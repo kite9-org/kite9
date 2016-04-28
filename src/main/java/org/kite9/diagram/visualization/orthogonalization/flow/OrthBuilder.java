@@ -1,0 +1,17 @@
+package org.kite9.diagram.visualization.orthogonalization.flow;
+
+import org.kite9.diagram.common.algorithms.fg.FlowGraph;
+import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
+import org.kite9.diagram.visualization.planarization.Planarization;
+
+/**
+ * Converts an optimised flow graph and planarization into an orthogonal model.
+ * 
+ * @author robmoffat
+ *
+ */
+public interface OrthBuilder<X extends FlowGraph> {
+
+	public abstract OrthogonalizationImpl build(Planarization pln, X fg);
+
+}

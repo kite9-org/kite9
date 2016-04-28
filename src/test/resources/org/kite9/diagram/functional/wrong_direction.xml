@@ -1,0 +1,372 @@
+<?xml version="1.0" ?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:218209">
+ <glyph id="x10y15" stereotype="" label="x 10y 15">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x0y5" stereotype="" label="x 0y 5">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x6y12" stereotype="" label="x 6y 12">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x6y9" stereotype="" label="x 6y 9">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x4y12" stereotype="" label="x 4y 12">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x4y3" stereotype="" label="x 4y 3">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x3y15" stereotype="" label="x 3y 15">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x12y0" stereotype="" label="x 12y 0">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x7y11" stereotype="" label="x 7y 11">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x3y3" stereotype="" label="x 3y 3">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x5y10" stereotype="" label="x 5y 10">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x13y9" stereotype="" label="x 13y 9">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x5y2" stereotype="" label="x 5y 2">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x15y11" stereotype="" label="x 15y 11">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x3y2" stereotype="" label="x 3y 2">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x7y15" stereotype="" label="x 7y 15">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x12y3" stereotype="" label="x 12y 3">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x15y4" stereotype="" label="x 15y 4">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x8y8" stereotype="" label="x 8y 8">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x12y6" stereotype="" label="x 12y 6">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x1y14" stereotype="" label="x 1y 14">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x11y12" stereotype="" label="x 11y 12">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x7y10" stereotype="" label="x 7y 10">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x2y15" stereotype="" label="x 2y 15">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x3y7" stereotype="" label="x 3y 7">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x1y6" stereotype="" label="x 1y 6">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x0y15" stereotype="" label="x 0y 15">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x15y3" stereotype="" label="x 15y 3">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x7y4" stereotype="" label="x 7y 4">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="x0y10" stereotype="" label="x 0y 10">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <allLinks>
+  <link id="auto:218162" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x7y15"></from>
+   <to xsi:type="glyph" reference="x10y15"></to>
+  </link>
+  <link id="auto:218190" style="DOTTED">
+   <from xsi:type="glyph" reference="x12y3"></from>
+   <to xsi:type="glyph" reference="x10y15"></to>
+  </link>
+  <link id="auto:218201" style="DOTTED">
+   <from xsi:type="glyph" reference="x10y15"></from>
+   <to xsi:type="glyph" reference="x11y12"></to>
+  </link>
+  <link id="auto:218163" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x0y5"></from>
+   <to xsi:type="glyph" reference="x0y10"></to>
+  </link>
+  <link id="auto:218191" style="DOTTED">
+   <from xsi:type="glyph" reference="x15y11"></from>
+   <to xsi:type="glyph" reference="x0y5"></to>
+  </link>
+  <link id="auto:218157" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x4y12"></from>
+   <to xsi:type="glyph" reference="x6y12"></to>
+  </link>
+  <link id="auto:218158" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x6y12"></from>
+   <to xsi:type="glyph" reference="x11y12"></to>
+  </link>
+  <link id="auto:218171" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x6y9"></from>
+   <to xsi:type="glyph" reference="x6y12"></to>
+  </link>
+  <link id="auto:218184" style="DOTTED">
+   <from xsi:type="glyph" reference="x2y15"></from>
+   <to xsi:type="glyph" reference="x6y12"></to>
+  </link>
+  <link id="auto:218187" style="DOTTED">
+   <from xsi:type="glyph" reference="x6y12"></from>
+   <to xsi:type="glyph" reference="x3y3"></to>
+  </link>
+  <link id="auto:218189" style="DOTTED">
+   <from xsi:type="glyph" reference="x6y12"></from>
+   <to xsi:type="glyph" reference="x3y3"></to>
+  </link>
+  <link id="auto:218153" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x6y9"></from>
+   <to xsi:type="glyph" reference="x13y9"></to>
+  </link>
+  <link id="auto:218185" style="DOTTED">
+   <from xsi:type="glyph" reference="x3y2"></from>
+   <to xsi:type="glyph" reference="x6y9"></to>
+  </link>
+  <link id="auto:218186" style="DOTTED">
+   <from xsi:type="glyph" reference="x11y12"></from>
+   <to xsi:type="glyph" reference="x6y9"></to>
+  </link>
+  <link id="auto:218202" style="DOTTED">
+   <from xsi:type="glyph" reference="x3y2"></from>
+   <to xsi:type="glyph" reference="x6y9"></to>
+  </link>
+  <link id="auto:218169" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x4y3"></from>
+   <to xsi:type="glyph" reference="x4y12"></to>
+  </link>
+  <link id="auto:218194" style="DOTTED">
+   <from xsi:type="glyph" reference="x8y8"></from>
+   <to xsi:type="glyph" reference="x4y12"></to>
+  </link>
+  <link id="auto:218148" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x3y3"></from>
+   <to xsi:type="glyph" reference="x4y3"></to>
+  </link>
+  <link id="auto:218149" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x4y3"></from>
+   <to xsi:type="glyph" reference="x12y3"></to>
+  </link>
+  <link id="auto:218207" style="DOTTED">
+   <from xsi:type="glyph" reference="x4y3"></from>
+   <to xsi:type="glyph" reference="x7y15"></to>
+  </link>
+  <link id="auto:218160" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x2y15"></from>
+   <to xsi:type="glyph" reference="x3y15"></to>
+  </link>
+  <link id="auto:218161" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x3y15"></from>
+   <to xsi:type="glyph" reference="x7y15"></to>
+  </link>
+  <link id="auto:218168" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x3y7"></from>
+   <to xsi:type="glyph" reference="x3y15"></to>
+  </link>
+  <link id="auto:218197" style="DOTTED">
+   <from xsi:type="glyph" reference="x3y3"></from>
+   <to xsi:type="glyph" reference="x3y15"></to>
+  </link>
+  <link id="auto:218206" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y4"></from>
+   <to xsi:type="glyph" reference="x3y15"></to>
+  </link>
+  <link id="auto:218175" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x12y0"></from>
+   <to xsi:type="glyph" reference="x12y3"></to>
+  </link>
+  <link id="auto:218196" style="DOTTED">
+   <from xsi:type="glyph" reference="x11y12"></from>
+   <to xsi:type="glyph" reference="x12y0"></to>
+  </link>
+  <link id="auto:218208" style="DOTTED">
+   <from xsi:type="glyph" reference="x12y0"></from>
+   <to xsi:type="glyph" reference="x8y8"></to>
+  </link>
+  <link id="auto:218156" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x7y11"></from>
+   <to xsi:type="glyph" reference="x15y11"></to>
+  </link>
+  <link id="auto:218173" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x7y10"></from>
+   <to xsi:type="glyph" reference="x7y11"></to>
+  </link>
+  <link id="auto:218174" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x7y11"></from>
+   <to xsi:type="glyph" reference="x7y15"></to>
+  </link>
+  <link id="auto:218192" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y11"></from>
+   <to xsi:type="glyph" reference="x7y4"></to>
+  </link>
+  <link id="auto:218166" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x3y2"></from>
+   <to xsi:type="glyph" reference="x3y3"></to>
+  </link>
+  <link id="auto:218167" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x3y3"></from>
+   <to xsi:type="glyph" reference="x3y7"></to>
+  </link>
+  <link id="auto:218188" style="DOTTED">
+   <from xsi:type="glyph" reference="x3y7"></from>
+   <to xsi:type="glyph" reference="x3y3"></to>
+  </link>
+  <link id="auto:218154" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x0y10"></from>
+   <to xsi:type="glyph" reference="x5y10"></to>
+  </link>
+  <link id="auto:218155" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x5y10"></from>
+   <to xsi:type="glyph" reference="x7y10"></to>
+  </link>
+  <link id="auto:218170" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x5y2"></from>
+   <to xsi:type="glyph" reference="x5y10"></to>
+  </link>
+  <link id="auto:218204" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y10"></from>
+   <to xsi:type="glyph" reference="x5y10"></to>
+  </link>
+  <link id="auto:218198" style="DOTTED">
+   <from xsi:type="glyph" reference="x13y9"></from>
+   <to xsi:type="glyph" reference="x1y14"></to>
+  </link>
+  <link id="auto:218199" style="DOTTED">
+   <from xsi:type="glyph" reference="x13y9"></from>
+   <to xsi:type="glyph" reference="x15y3"></to>
+  </link>
+  <link id="auto:218147" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x3y2"></from>
+   <to xsi:type="glyph" reference="x5y2"></to>
+  </link>
+  <link id="auto:218178" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x15y4"></from>
+   <to xsi:type="glyph" reference="x15y11"></to>
+  </link>
+  <link id="auto:218182" style="DOTTED">
+   <from xsi:type="glyph" reference="x0y15"></from>
+   <to xsi:type="glyph" reference="x15y11"></to>
+  </link>
+  <link id="auto:218180" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y15"></from>
+   <to xsi:type="glyph" reference="x3y2"></to>
+  </link>
+  <link id="auto:218200" style="DOTTED">
+   <from xsi:type="glyph" reference="x3y2"></from>
+   <to xsi:type="glyph" reference="x8y8"></to>
+  </link>
+  <link id="auto:218150" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x12y3"></from>
+   <to xsi:type="glyph" reference="x15y3"></to>
+  </link>
+  <link id="auto:218176" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x12y3"></from>
+   <to xsi:type="glyph" reference="x12y6"></to>
+  </link>
+  <link id="auto:218193" style="DOTTED">
+   <from xsi:type="glyph" reference="x0y10"></from>
+   <to xsi:type="glyph" reference="x12y3"></to>
+  </link>
+  <link id="auto:218195" style="DOTTED">
+   <from xsi:type="glyph" reference="x12y3"></from>
+   <to xsi:type="glyph" reference="x11y12"></to>
+  </link>
+  <link id="auto:218205" style="DOTTED">
+   <from xsi:type="glyph" reference="x12y3"></from>
+   <to xsi:type="glyph" reference="x11y12"></to>
+  </link>
+  <link id="auto:218151" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x7y4"></from>
+   <to xsi:type="glyph" reference="x15y4"></to>
+  </link>
+  <link id="auto:218177" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x15y3"></from>
+   <to xsi:type="glyph" reference="x15y4"></to>
+  </link>
+  <link id="auto:218179" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y4"></from>
+   <to xsi:type="glyph" reference="x15y4"></to>
+  </link>
+  <link id="auto:218181" style="DOTTED">
+   <from xsi:type="glyph" reference="x8y8"></from>
+   <to xsi:type="glyph" reference="x0y15"></to>
+  </link>
+  <link id="auto:218152" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x1y6"></from>
+   <to xsi:type="glyph" reference="x12y6"></to>
+  </link>
+  <link id="auto:218165" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x1y6"></from>
+   <to xsi:type="glyph" reference="x1y14"></to>
+  </link>
+  <link id="auto:218183" style="DOTTED">
+   <from xsi:type="glyph" reference="x1y6"></from>
+   <to xsi:type="glyph" reference="x11y12"></to>
+  </link>
+  <link id="auto:218172" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x7y4"></from>
+   <to xsi:type="glyph" reference="x7y10"></to>
+  </link>
+  <link id="auto:218159" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="x0y15"></from>
+   <to xsi:type="glyph" reference="x2y15"></to>
+  </link>
+  <link id="auto:218164" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="x0y10"></from>
+   <to xsi:type="glyph" reference="x0y15"></to>
+  </link>
+  <link id="auto:218203" style="DOTTED">
+   <from xsi:type="glyph" reference="x7y4"></from>
+   <to xsi:type="glyph" reference="x15y3"></to>
+  </link>
+ </allLinks>
+</diagram>

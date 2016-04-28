@@ -1,0 +1,113 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="DOWN">
+ 
+ <glyph id="id_16" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="id_12" layout="HORIZONTAL" bordered="false">
+  
+  <glyph id="id_17" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_18" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_30" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_13">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_14" layout="HORIZONTAL" bordered="false">
+  
+  <glyph id="id_20" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_21" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_19" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_15">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_10" layout="HORIZONTAL" bordered="false">
+  
+  <glyph id="id_22" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_11">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+<allLinks>
+  <link id="id_28">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_17"/>
+  </link>
+  <link id="id_29">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_18"/>
+  </link>
+  <link id="id_24">
+   
+   <from xsi:type="glyph" reference="id_21"/>
+   <to xsi:type="glyph" reference="id_17"/>
+  </link>
+  <link id="id_25">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_19"/>
+  </link>
+  <link id="id_26">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_20"/>
+  </link>
+  <link id="id_27" style="DOTTED">
+   
+   <from xsi:type="glyph" reference="id_18"/>
+   <to xsi:type="glyph" reference="id_22"/>
+  </link>
+  <link id="id_23">
+   
+   <from xsi:type="glyph" reference="id_21"/>
+   <to xsi:type="glyph" reference="id_22"/>
+  </link>
+ </allLinks></diagram>

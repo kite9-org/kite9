@@ -1,0 +1,30 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ 
+ <glyph id="id_7" label="Your Data">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_8" label="xml it!">
+  
+ </arrow>
+ <glyph id="id_9" stereotype="your site" label="Diagrams">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+<allLinks>
+  <link id="id_10">
+   
+   <from xsi:type="arrow" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_7"/>
+  </link>
+  <link id="id_12" drawDirection="DOWN" style="NORMAL">
+   
+   <from xsi:type="arrow" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_9"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+ </allLinks></diagram>

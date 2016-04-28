@@ -1,0 +1,32 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+<context id="auto:33480" layout="HORIZONTAL" bordered="false">
+
+ <glyph id="id_3" label="4">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_2" label="2">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context>
+<context id="auto:33398" layout="HORIZONTAL" bordered="false">
+
+ <glyph id="id_0" stereotype="corking" label="1">
+
+  <text-lines><text-line><text>New Text Line</text><symbols/></text-line><text-line><text>New Text Line</text><symbols/></text-line><text-line><text>New Text Line</text><symbols/></text-line></text-lines>
+  <symbols>
+
+  <symbol theChar="d" shape="HEXAGON"/></symbols>
+ </glyph>
+ <glyph id="id_1" label="3">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context>
+
+<allLinks/></diagram>

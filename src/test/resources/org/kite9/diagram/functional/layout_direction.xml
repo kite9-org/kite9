@@ -1,0 +1,103 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="HORIZONTAL">
+
+<glyph id="id_46" stereotype="" label="AND I NEED YOU">
+
+ <text-lines/>
+ <symbols/>
+</glyph>
+<arrow id="id_37" label="Fall Apart">
+
+</arrow>
+<context id="id_30" layout="VERTICAL" bordered="true">
+
+ <glyph id="id_59" stereotype="" label="terrified and then I see the look in your eyes">
+
+  <text-lines/>
+  <symbols>
+   <symbol theChar="4" shape="CIRCLE"/>
+  </symbols>
+ </glyph>
+ <glyph id="id_41" stereotype="" label="Every now and then I">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="id_2" layout="VERTICAL" bordered="true">
+
+  <label xsi:type="text-line" id="id_4">
+
+   <text>Gazebo</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_0" layout="HORIZONTAL" bordered="true">
+
+  <glyph id="id_48" stereotype="" label="Now, Tonight">
+
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_1">
+
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <label xsi:type="text-line" id="id_31">
+
+  <text>Croon</text>
+  <symbols/>
+ </label>
+</context>
+<label xsi:type="key" id="id_65">
+
+ <boldText>Total Eclipse of The Heart</boldText>
+ <bodyText>For the better understanding of it... and showing the basic Kite9 diagram components</bodyText>
+ <symbols>
+  <text-line id="auto:41962">
+
+   <text>Bonnie Tyler</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:41963">
+
+   <text>See also: "I get a little bit helpless and I'm lying like a child in your arms"</text>
+   <symbols>
+    <symbol theChar="1" shape="CIRCLE"/>
+    <symbol theChar="2" shape="CIRCLE"/>
+    <symbol theChar="3" shape="CIRCLE"/>
+    <symbol theChar="4" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:41964">
+
+   <text>With thanks to http://jeannr.tumblr.com/</text>
+   <symbols/>
+  </text-line>
+ </symbols>
+</label>
+
+<allLinks>
+ <link id="id_51" style="DOTTED">
+
+  <from xsi:type="arrow" reference="id_37"/>
+  <to xsi:type="glyph" reference="id_46"/>
+  <toDecoration>ARROW</toDecoration>
+ </link>
+ <link id="id_50" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_46"/>
+  <to xsi:type="glyph" reference="id_48"/>
+  <toDecoration>ARROW</toDecoration>
+ </link>
+ <link id="id_42" drawDirection="LEFT" style="DOTTED">
+
+  <from xsi:type="glyph" reference="id_41"/>
+  <to xsi:type="arrow" reference="id_37"/>
+ </link>
+ <link id="id_5">
+
+  <from xsi:type="glyph" reference="id_41"/>
+  <to xsi:type="glyph" reference="id_48"/>
+ </link>
+</allLinks></diagram>

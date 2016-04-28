@@ -1,0 +1,263 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309" layout="RIGHT">
+
+<hints py1="0.001499" py2="0.998501" px2="0.998252" px1="0.001748001"/>
+<context id="id_30" shape="umlCONTAINER" layout="DOWN" bordered="true">
+
+ <hints py1="0.001499" py2="0.998501" px2="0.250251" px1="0.001748001" y1="12.0" y2="326.0" x2="168.0" x1="12.0"/>
+ <glyph id="id_32" shape="fcDOCUMENT">
+
+  <hints py1="0.001997102" py2="0.4990029" px2="0.2502509" px1="0.001748101" y1="36.0" y2="144.0" x2="144.0" x1="24.0"/>
+  <stereotype/>
+  <label>Code</label>
+  <text-lines>
+   <text-line id="auto:133750">
+
+    <hints y1="61.0" y2="130.0" x2="132.0" x1="36.0"/>
+    <text>Calc Components
+DSL
+Orchestrator 
+etc.</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <label xsi:type="text-line" id="id_31">
+
+  <hints y1="303.0" y2="324.0" x2="98.0" x1="72.0"/>
+  <text>SVN</text>
+  <symbols/>
+ </label>
+</context>
+<context id="id_7" shape="umlCONTAINER" layout="DOWN" bordered="true">
+
+ <hints py1="0.001499" py2="0.998501" px2="0.499252" px1="0.250749" y1="12.0" y2="326.0" x2="428.0" x1="180.0"/>
+ <glyph id="id_39" shape="fcPROCESS">
+
+  <hints py1="0.50124425" py2="0.56287426" px2="0.4990034" px1="0.2509976" y1="146.0" y2="182.0" x2="404.0" x1="200.0"/>
+  <stereotype/>
+  <label>Orchestrator Release Build</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_35" shape="fcPROCESS">
+
+  <hints py1="0.7497491" py2="0.9982519" px2="0.4990034" px1="0.2509976" y1="206.0" y2="242.0" x2="374.0" x1="230.0"/>
+  <stereotype/>
+  <label>DSL Release Build</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <label xsi:type="text-line" id="id_8">
+
+  <hints y1="303.0" y2="324.0" x2="327.5" x1="270.5"/>
+  <text>Team City</text>
+  <symbols/>
+ </label>
+</context>
+<context id="id_2" shape="umlCONTAINER" layout="DOWN" bordered="true">
+
+ <hints py1="0.001499" py2="0.998501" px2="0.62487525" px1="0.50087225" y1="12.0" y2="326.0" x2="604.0" x1="440.0"/>
+ <glyph id="id_5" shape="umlCOMPONENT">
+
+  <hints py1="0.50124425" py2="0.56287426" px2="0.62475115" px1="0.50099635" y1="140.0" y2="188.0" x2="580.0" x1="460.0"/>
+  <stereotype/>
+  <label>Orchestrator</label>
+  <text-lines>
+   <text-line id="auto:100390">
+
+    <hints y1="165.5" y2="183.5" x2="573.5" x1="486.5"/>
+    <text>ref version</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <glyph id="id_4" shape="umlCOMPONENT">
+
+  <hints py1="0.56306" py2="0.6248135" px2="0.6246274" px1="0.5011201" y1="200.0" y2="248.0" x2="574.0" x1="472.0"/>
+  <stereotype/>
+  <label>DSL</label>
+  <text-lines>
+   <text-line id="auto:100077">
+
+    <hints y1="225.5" y2="243.5" x2="562.0" x1="504.0"/>
+    <text>ref version</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <glyph id="id_6" shape="umlCOMPONENT">
+
+  <hints py1="0.6251236" py2="0.7488784" px2="0.6246274" px1="0.5011201" y1="260.0" y2="296.0" x2="562.0" x1="484.0"/>
+  <stereotype/>
+  <label>..etc</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <label xsi:type="text-line" id="id_3">
+
+  <hints y1="303.0" y2="324.0" x2="566.0" x1="468.0"/>
+  <text>Nexus Repository</text>
+  <symbols/>
+ </label>
+</context>
+<context id="id_0" shape="umlCONTAINER" layout="DOWN" bordered="true">
+
+ <hints py1="0.001499" py2="0.998501" px2="0.74912673" px1="0.62512374" y1="12.0" y2="326.0" x2="864.0" x1="616.0"/>
+ <glyph id="id_25" shape="fcPROCESS">
+
+  <hints py1="0.002494108" py2="0.4985059" px2="0.74900264" px1="0.62524784" y1="72.0" y2="108.0" x2="810.0" x1="666.0"/>
+  <stereotype/>
+  <label>TC Snapshot Build</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_12" shape="fcPROCESS">
+
+  <hints py1="0.5012446" py2="0.7487544" px2="0.74900264" px1="0.62524784" y1="152.0" y2="290.0" x2="840.0" x1="636.0"/>
+  <stereotype/>
+  <label>TC Versioned Build (regular)</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <label xsi:type="text-line" id="id_1">
+
+  <hints y1="303.0" y2="324.0" x2="763.5" x1="706.5"/>
+  <text>Team City</text>
+  <symbols/>
+ </label>
+</context>
+<context id="auto:101020" layout="DOWN" bordered="false">
+
+ <hints py1="0.001499" py2="0.998501" px2="0.998252" px1="0.749749" y1="6.0" y2="326.0" x2="1082.0" x1="870.0"/>
+ <context id="id_23" shape="umlCONTAINER" bordered="true">
+
+  <hints py1="0.001499" py2="0.499501" px2="0.998252" px1="0.749749" y1="12.0" y2="182.0" x2="1076.0" x1="876.0"/>
+  <glyph id="id_26" shape="umlCOMPONENT">
+
+   <hints py1="0.002494108" py2="0.4985059" px2="0.9982519" px1="0.7497491" y1="54.0" y2="126.0" x2="1046.0" x1="914.0"/>
+   <stereotype/>
+   <label>Built REF</label>
+   <text-lines>
+    <text-line id="auto:103241">
+
+     <hints y1="82.5" y2="100.5" x2="1036.5" x1="943.5"/>
+     <text>snapshot version</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:103242">
+
+     <hints y1="100.5" y2="118.5" x2="1036.5" x1="943.5"/>
+     <text>smoke testing</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_24">
+
+   <hints y1="159.0" y2="180.0" x2="999.5" x1="942.5"/>
+   <text>Container</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_15" shape="umlCONTAINER" bordered="true">
+
+  <hints py1="0.500499" py2="0.998501" px2="0.998252" px1="0.749749" y1="194.0" y2="320.0" x2="1076.0" x1="876.0"/>
+  <glyph id="id_18" shape="umlCOMPONENT">
+
+   <hints py1="0.5012446" py2="0.7487544" px2="0.9982519" px1="0.7497491" y1="218.0" y2="290.0" x2="1052.0" x1="896.0"/>
+   <stereotype/>
+   <label>Built REF</label>
+   <text-lines>
+    <text-line id="auto:103626">
+
+     <hints y1="246.5" y2="264.5" x2="1043.5" x1="924.5"/>
+     <text>ref version</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:103627">
+
+     <hints y1="264.5" y2="282.5" x2="1043.5" x1="924.5"/>
+     <text>full automated testing</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_16">
+
+   <hints y1="297.0" y2="318.0" x2="1020.5" x1="921.5"/>
+   <text>Test Environment</text>
+   <symbols/>
+  </label>
+ </context>
+</context>
+
+<allLinks>
+ <link id="id_38" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_32"/>
+  <to xsi:type="glyph" reference="id_39"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_42" shape="DOTTED" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_32"/>
+  <to xsi:type="glyph" reference="id_25"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_40" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_39"/>
+  <to xsi:type="glyph" reference="id_5"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_36" shape="NORMAL" style="">
+
+  <from xsi:type="glyph" reference="id_35"/>
+  <to xsi:type="glyph" reference="id_4"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_13" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_5"/>
+  <to xsi:type="glyph" reference="id_12"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_11" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_4"/>
+  <to xsi:type="glyph" reference="id_12"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_14" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_6"/>
+  <to xsi:type="glyph" reference="id_12"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_44" shape="DOTTED" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_25"/>
+  <to xsi:type="glyph" reference="id_26"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_17" shape="NORMAL" style="" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_12"/>
+  <to xsi:type="glyph" reference="id_18"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+</allLinks></diagram>

@@ -1,0 +1,255 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <glyph id="id_0" shape="umlACTOR">
+  
+  <stereotype/>
+  <label>Customer
+Service
+Assistant</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="auto:3223" layout="DOWN" bordered="true">
+  
+  <context id="id_2" shape="umlPACKAGE" style="fill: #cfe1ea;" bordered="true">
+   
+   <glyph id="id_6" shape="umlUSECASE">
+    
+    <stereotype/>
+    <label>Handle 
+Goods Return</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_14" shape="umlUSECASE">
+    
+    <stereotype/>
+    <label>Check 
+Order Status</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_12" shape="umlUSECASE">
+    
+    <stereotype/>
+    <label>Place Order</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_8" shape="umlUSECASE">
+    
+    <stereotype/>
+    <label>Process Order</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_10" shape="umlUSECASE">
+    
+    <stereotype/>
+    <label>Schedule
+Delivery</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line" id="id_3" style="">
+    
+    <text>Order Processing</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="auto:30206" bordered="true">
+   
+   <context id="id_21" shape="umlPACKAGE" style="fill: #cfe1ea;" bordered="true">
+    
+    <glyph id="id_23" shape="umlUSECASE">
+     
+     <stereotype/>
+     <label>Receive Goods</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <glyph id="id_29" shape="umlUSECASE">
+     
+     <stereotype/>
+     <label>Delivery
+Goods</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <glyph id="id_31" shape="umlUSECASE">
+     
+     <stereotype/>
+     <label>Order Goods</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <label xsi:type="text-line" id="id_22" style="">
+     
+     <text>Inventory Control</text>
+     <symbols/>
+    </label>
+   </context>
+   <context id="id_16" shape="umlPACKAGE" style="fill: #cfe1ea;" bordered="true">
+    
+    <glyph id="id_25" shape="umlUSECASE">
+     
+     <stereotype/>
+     <label>Update Membership
+Record</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <glyph id="id_34" shape="umlUSECASE" style="">
+     
+     <stereotype style=""/>
+     <label style="">Register 
+New Member</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <glyph id="id_18" shape="umlUSECASE">
+     
+     <stereotype/>
+     <label>Archive
+Membership</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <glyph id="id_24" shape="umlUSECASE" style="">
+     
+     <stereotype style=""/>
+     <label style="">Find A Member</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <label xsi:type="text-line" id="id_17" style="">
+     
+     <text>Membership</text>
+     <symbols/>
+    </label>
+   </context>
+   <label xsi:type="text-line" id="auto:31761">
+    <renderingInformation xsi:type="rectangle" rendered="false">
+     <path/>
+     <position x="-7.0" y="0.0"/>
+     <size x="14.0" y="0.0"/>
+     <internalPosition x="0.0" y="0.0"/>
+     <internalSize x="0.0" y="0.0"/>
+    </renderingInformation>
+    <text/>
+    <symbols/>
+   </label>
+  </context>
+  <label xsi:type="text-line" id="id_37">
+   
+   <text>Mail Order System</text>
+   <symbols/>
+  </label>
+ </context>
+ <glyph id="id_27" shape="umlACTOR">
+  
+  <stereotype/>
+  <label>Inventory Control
+Clerk</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_4" shape="umlACTOR">
+  
+  <stereotype/>
+  <label>Order
+Processing
+Clerk</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+<allLinks>
+  <link id="id_5">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_6"/>
+  </link>
+  <link id="id_11">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_13">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_14"/>
+  </link>
+  <link id="id_19" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_18"/>
+  </link>
+  <link id="id_33">
+   
+   <from xsi:type="glyph" reference="id_25"/>
+   <to xsi:type="glyph" reference="id_0"/>
+  </link>
+  <link id="id_35">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_34"/>
+  </link>
+  <link id="id_43" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_14"/>
+  </link>
+  <link id="id_32" shape="DOTTED" style="">
+   
+   <from xsi:type="glyph" reference="id_24"/>
+   <to xsi:type="glyph" reference="id_6"/>
+   <fromDecoration>BARBED ARROW</fromDecoration>
+  </link>
+  <link id="id_44" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_7" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_8"/>
+  </link>
+  <link id="id_9" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_10"/>
+  </link>
+  <link id="id_26" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_23"/>
+   <to xsi:type="glyph" reference="id_27"/>
+  </link>
+  <link id="id_28" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_27"/>
+   <to xsi:type="glyph" reference="id_29"/>
+  </link>
+  <link id="id_30" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_27"/>
+   <to xsi:type="glyph" reference="id_31"/>
+  </link>
+  <link id="id_39" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_25"/>
+   <to xsi:type="glyph" reference="id_34"/>
+  </link>
+  <link id="id_38" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_18"/>
+   <to xsi:type="glyph" reference="id_25"/>
+  </link>
+  <link id="id_36" shape="DOTTED" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_34"/>
+   <to xsi:type="glyph" reference="id_24"/>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+ </allLinks></diagram>

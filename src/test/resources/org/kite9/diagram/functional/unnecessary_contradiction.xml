@@ -1,0 +1,114 @@
+<?xml version="1.0" ?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ <glyph id="id_0">
+  <stereotype></stereotype>
+  <label>id_0</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="id_4">
+  <stereotype></stereotype>
+  <label>id_4</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="id_2">
+  <stereotype></stereotype>
+  <label>id_2</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="id_6">
+  <stereotype></stereotype>
+  <label>id_6</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="id_16">
+  <stereotype></stereotype>
+  <label>id_16</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="id_17">
+  <stereotype></stereotype>
+  <label>id_17</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <context id="auto:8977" layout="VERTICAL" bordered="true">
+  <glyph id="id_9">
+   <stereotype></stereotype>
+   <label>id_9</label>
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="id_11">
+   <stereotype></stereotype>
+   <label>id_11</label>
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="id_13">
+   <stereotype></stereotype>
+   <label>id_13</label>
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+ </context>
+ <glyph id="id_14">
+  <stereotype></stereotype>
+  <label>id_14</label>
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <allLinks>
+  <link id="id_1" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_0"></from>
+   <to xsi:type="glyph" reference="id_2"></to>
+  </link>
+  <link id="id_3" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_0"></from>
+   <to xsi:type="glyph" reference="id_4"></to>
+  </link>
+  <link id="id_5" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_0"></from>
+   <to xsi:type="glyph" reference="id_6"></to>
+  </link>
+  <link id="id_15" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_4"></from>
+   <to xsi:type="glyph" reference="id_16"></to>
+  </link>
+  <link id="id_20">
+   <from xsi:type="glyph" reference="id_2"></from>
+   <to xsi:type="glyph" reference="id_4"></to>
+  </link>
+  <link id="id_8" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_2"></from>
+   <to xsi:type="glyph" reference="id_9"></to>
+  </link>
+  <link id="id_10" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_2"></from>
+   <to xsi:type="glyph" reference="id_11"></to>
+  </link>
+  <link id="id_12" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_2"></from>
+   <to xsi:type="glyph" reference="id_13"></to>
+  </link>
+  <link id="id_19" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="id_6"></from>
+   <to xsi:type="glyph" reference="id_2"></to>
+  </link>
+  <link id="id_18" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="id_6"></from>
+   <to xsi:type="glyph" reference="id_17"></to>
+  </link>
+  <link id="id_21" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="id_11"></from>
+   <to xsi:type="glyph" reference="id_13"></to>
+  </link>
+  <link id="id_7" drawDirection="DOWN">
+   <from xsi:type="glyph" reference="id_13"></from>
+   <to xsi:type="glyph" reference="id_14"></to>
+  </link>
+ </allLinks>
+</diagram>

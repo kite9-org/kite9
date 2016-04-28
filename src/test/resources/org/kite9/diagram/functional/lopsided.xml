@@ -1,0 +1,56 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <glyph id="id_2">
+  
+  <stereotype/>
+  <label>B</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_0">
+  
+  <stereotype/>
+  <label>C</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_4">
+  
+  <stereotype/>
+  <label>A</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+<allLinks>
+  <link id="id_1">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_5" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_15">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_0"/>
+  </link>
+  <link id="id_16">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_0"/>
+  </link>
+  <link id="id_17">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_0"/>
+  </link>
+  <link id="id_14" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_0"/>
+  </link>
+ </allLinks></diagram>

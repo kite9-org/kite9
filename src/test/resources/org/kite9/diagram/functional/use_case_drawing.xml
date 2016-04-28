@@ -1,0 +1,130 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+
+<glyph id="id_0" shape="umlACTOR">
+
+ <stereotype/>
+ <label>Customer
+Service
+Assistant</label>
+ <text-lines/>
+ <symbols/>
+</glyph>
+<context id="c1" layout="DOWN" bordered="true">
+
+ <context id="c2" bordered="true" style="" shape="umlPACKAGE">
+
+  <glyph id="id_18" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Update
+Membership
+Record</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_16" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Archive
+Membership</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ <context id="c3" bordered="true">
+
+  <glyph id="id_2" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Handle
+Goods Return</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_4" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Check Order
+Status</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_12" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Process
+Order</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_6" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Place
+Order</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_13" shape="umlUSECASE">
+
+   <stereotype/>
+   <label>Schedule
+Delivery</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_14">
+
+   <text>Order Processing</text>
+   <symbols/>
+  </label>
+ </context>
+</context>
+<glyph id="id_10" shape="umlACTOR">
+
+ <stereotype/>
+ <label>Order
+Processing
+Clerk</label>
+ <text-lines/>
+ <symbols/>
+</glyph>
+
+<allLinks>
+ <link id="id_1" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_2"/>
+ </link>
+ <link id="id_3" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_4"/>
+ </link>
+ <link id="id_7" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_6"/>
+ </link>
+ <link id="id_15" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_16"/>
+ </link>
+ <link id="id_17" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_18"/>
+ </link>
+
+ <link id="id_11" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_10"/>
+  <to xsi:type="glyph" reference="id_12"/>
+ </link>
+ <link id="id_9.1" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_13"/>
+  <to xsi:type="glyph" reference="id_10"/>
+ </link>
+</allLinks></diagram>

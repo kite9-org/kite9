@@ -1,0 +1,922 @@
+<?xml version="1.0" ?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="project_java_class:org.kite9.diagram.Diagrams/diagramClassHierarchy()">
+  <glyph id="project_java_class:org.kite9.diagram.adl.Arrow" stereotype="class" label="Arrow">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Context" stereotype="class" label="Context">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Diagram" stereotype="class" label="Diagram">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Glyph" stereotype="class" label="Glyph">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Key" stereotype="class" label="Key">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.KeyHelper" stereotype="class" label="KeyHelper">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey" stereotype="class" label="UsedKey">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Link" stereotype="class" label="Link">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.LinkEndStyle" stereotype="enum" label="LinkEndStyle">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.LinkLineStyle" stereotype="enum" label="LinkLineStyle">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Symbol" stereotype="class" label="Symbol">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape" stereotype="enum" label="SymbolShape">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.adl.TextLine" stereotype="class" label="TextLine">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional" stereotype="class" label="AbstractBiDirectional">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained" stereotype="class" label="AbstractConnectedContained">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer" stereotype="class" label="AbstractConnectedContainer">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractConnection" stereotype="class" label="AbstractConnection">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement" stereotype="class" label="AbstractIdentifiableDiagramElement">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.AbstractLabel" stereotype="class" label="AbstractLabel">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.BiDirectional" stereotype="interface" label="BiDirectional">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement" stereotype="interface" label="CompositionalDiagramElement">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Connected" stereotype="interface" label="Connected">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Connection" stereotype="interface" label="Connection">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Contained" stereotype="interface" label="Contained">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Container" stereotype="interface" label="Container">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.DiagramElement" stereotype="interface" label="DiagramElement">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement" stereotype="interface" label="IdentifiableDiagramElement">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Label" stereotype="interface" label="Label">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.Leaf" stereotype="interface" label="Leaf">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement" stereotype="interface" label="PositionableDiagramElement">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.SymbolTarget" stereotype="interface" label="SymbolTarget">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="project_java_class:org.kite9.diagram.primitives.VertexOnEdge" stereotype="interface" label="VertexOnEdge">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Context/container/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Diagram/allLinks/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Glyph/text/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Glyph/symbols/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Key/symbols/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.KeyHelper/used/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey/shape/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Link/style/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Link/fromDecoration/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Link/toDecoration/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkEndStyle/ARROW/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkEndStyle/NONE/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkEndStyle/$VALUES/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkLineStyle/DOTTED/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkLineStyle/INVISIBLE/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkLineStyle/NORMAL/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.LinkLineStyle/$VALUES/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol/shape/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/HEXAGON/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/CIRCLE/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/DIAMOND/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/$VALUES/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.TextLine/symbols/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/links/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/c/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/contents/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/label/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/fromLabel/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/toLabel/rel_is a" label="is a"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Glyph/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Key/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Symbol/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.TextLine/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractLabel/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Connected/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Connection/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Contained/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Container/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Label/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.Leaf/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement/rel_implements" label="implements"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Arrow/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Context/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Diagram/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Glyph/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Key/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.Link/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.adl.TextLine/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_extends" label="extends"></arrow>
+  <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_extends" label="extends"></arrow>
+  <allLinks>
+   <link id="auto:58" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></to>
+   </link>
+   <link id="auto:104" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_extends"></to>
+   </link>
+   <link id="auto:0">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Context"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Context/container/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>container</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:106" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Context"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Context/rel_extends"></to>
+   </link>
+   <link id="auto:2">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Diagram"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Diagram/allLinks/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>allLinks</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:108" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Diagram"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Diagram/rel_extends"></to>
+   </link>
+   <link id="auto:4">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Glyph"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/text/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>text</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:6">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Glyph"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/symbols/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>symbols</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:61" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Glyph"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/rel_implements"></to>
+   </link>
+   <link id="auto:110" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Glyph"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/rel_extends"></to>
+   </link>
+   <link id="auto:8">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Key"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/symbols/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>symbols</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:64" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Key"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/rel_implements"></to>
+   </link>
+   <link id="auto:112" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Key"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/rel_extends"></to>
+   </link>
+   <link id="auto:10">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.KeyHelper"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.KeyHelper/used/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>used</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:11">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.KeyHelper/used/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey"></to>
+    <toLabel xsi:type="text-line">
+     <text>Set of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:12">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey/shape/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>shape</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:14">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Link"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/style/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>style</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:16">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Link"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/fromDecoration/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>fromDecoration</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:18">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Link"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/toDecoration/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>toDecoration</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:114" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Link"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/rel_extends"></to>
+   </link>
+   <link id="auto:17">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/fromDecoration/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:19">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/toDecoration/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:20">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/ARROW/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>ARROW</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:21">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/ARROW/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:22">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/NONE/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>NONE</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:23">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/NONE/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:24">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/$VALUES/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>$VALUES</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:25">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle/$VALUES/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkEndStyle"></to>
+    <toLabel xsi:type="text-line">
+     <text>array of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:15">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/style/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:26">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/DOTTED/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>DOTTED</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:27">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/DOTTED/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:28">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/INVISIBLE/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>INVISIBLE</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:29">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/INVISIBLE/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:30">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/NORMAL/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>NORMAL</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:31">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/NORMAL/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:32">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/$VALUES/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>$VALUES</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:33">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle/$VALUES/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkLineStyle"></to>
+    <toLabel xsi:type="text-line">
+     <text>array of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:7">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/symbols/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol"></to>
+    <toLabel xsi:type="text-line">
+     <text>List of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:9">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/symbols/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol"></to>
+    <toLabel xsi:type="text-line">
+     <text>List of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:34">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol/shape/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>shape</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:45">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/symbols/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol"></to>
+    <toLabel xsi:type="text-line">
+     <text>List of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:66" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol/rel_implements"></to>
+   </link>
+   <link id="auto:13">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.KeyHelper.UsedKey/shape/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:35">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol/shape/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:36">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/HEXAGON/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>HEXAGON</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:37">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/HEXAGON/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:38">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/CIRCLE/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>CIRCLE</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:39">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/CIRCLE/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:40">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/DIAMOND/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>DIAMOND</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:41">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/DIAMOND/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:42">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/$VALUES/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>$VALUES</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:43">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape/$VALUES/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Symbol.SymbolShape"></to>
+    <toLabel xsi:type="text-line">
+     <text>array of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:5">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/text/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.TextLine"></to>
+    <toLabel xsi:type="text-line">
+     <text>List of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:44">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.TextLine"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/symbols/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>symbols</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:68" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.TextLine"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/rel_implements"></to>
+   </link>
+   <link id="auto:116" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.TextLine"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/rel_extends"></to>
+   </link>
+   <link id="auto:71" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_implements"></to>
+   </link>
+   <link id="auto:118" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_extends"></to>
+   </link>
+   <link id="auto:125" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:46">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/links/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>links</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:48">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/c/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>c</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:73" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_implements"></to>
+   </link>
+   <link id="auto:105" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:111" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:120" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_extends"></to>
+   </link>
+   <link id="auto:123" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:50">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/contents/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>contents</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:52">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/label/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>label</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:76" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_implements"></to>
+   </link>
+   <link id="auto:107" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Context/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:109" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Diagram/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:122" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_extends"></to>
+   </link>
+   <link id="auto:54">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/fromLabel/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>fromLabel</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:56">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/toLabel/rel_is a"></to>
+    <fromLabel xsi:type="text-line">
+     <text>toLabel</text>
+     <symbols></symbols>
+    </fromLabel>
+   </link>
+   <link id="auto:78" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_implements"></to>
+   </link>
+   <link id="auto:115" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Link/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:124" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_extends"></to>
+   </link>
+   <link id="auto:80" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:119" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:121" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:82" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractLabel"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractLabel/rel_implements"></to>
+   </link>
+   <link id="auto:113" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractLabel"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:117" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/rel_extends"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.AbstractLabel"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:72" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractBiDirectional/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.BiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:90" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Connection/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.BiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:67" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Symbol/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:84" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:99" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Label/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:74" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connected"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:86" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connected"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Connected/rel_implements"></to>
+   </link>
+   <link id="auto:95" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Container/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connected"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:3">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Diagram/allLinks/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connection"></to>
+    <toLabel xsi:type="text-line">
+     <text>LinkedHashSet of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:47">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/links/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connection"></to>
+    <toLabel xsi:type="text-line">
+     <text>LinkedHashSet of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:79" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connection"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:88" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Connection"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Connection/rel_implements"></to>
+   </link>
+   <link id="auto:51">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/contents/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Contained"></to>
+    <toLabel xsi:type="text-line">
+     <text>List of </text>
+     <symbols></symbols>
+    </toLabel>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:75" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Contained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:91" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Contained"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Contained/rel_implements"></to>
+   </link>
+   <link id="auto:1">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Context/container/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Container"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:49">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/c/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Container"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:77" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Container"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:93" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Container"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Container/rel_implements"></to>
+   </link>
+   <link id="auto:83" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractLabel/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.DiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:103" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.DiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:81" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:87" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Connected/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:92" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Contained/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:94" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Container/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:96" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:101" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Leaf/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:53">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/label/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:55">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/fromLabel/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:57">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.AbstractConnection/toLabel/rel_is a"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:65" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Key/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:69" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:98" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Label"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Label/rel_implements"></to>
+   </link>
+   <link id="auto:60" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Leaf"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:62" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Leaf"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:100" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.Leaf"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Leaf/rel_implements"></to>
+   </link>
+   <link id="auto:85" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.CompositionalDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:89" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.Connection/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:97" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.IdentifiableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:102" drawDirection="UP">
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement"></from>
+    <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.primitives.PositionableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:63" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Glyph/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.SymbolTarget"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:70" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.TextLine/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.SymbolTarget"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:59" drawDirection="UP">
+    <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></from>
+    <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.VertexOnEdge"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+  </allLinks>
+ </diagram>

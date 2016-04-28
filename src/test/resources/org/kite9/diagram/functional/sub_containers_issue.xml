@@ -1,0 +1,220 @@
+<?xml version="1.0" ?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:5141">
+ <context id="c0" bordered="true">
+  <glyph id="g8(c0)" stereotype="" label="g8">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5105">
+   <text>Context 0</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <context id="c1" bordered="true">
+  <glyph id="g0(c1)" stereotype="" label="g0">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g12(c1)" stereotype="" label="g12">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g14(c1)" stereotype="" label="g14">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5106">
+   <text>Context 1</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <context id="c2" bordered="true">
+  <glyph id="g1(c2)" stereotype="" label="g1">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g4(c2)" stereotype="" label="g4">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g6(c2)" stereotype="" label="g6">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5107">
+   <text>Context 2</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <context id="c3" bordered="true">
+  <glyph id="g5(c3)" stereotype="" label="g5">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g7(c3)" stereotype="" label="g7">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g10(c3)" stereotype="" label="g10">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5108">
+   <text>Context 3</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <context id="c4" bordered="true">
+  <glyph id="g3(c4)" stereotype="" label="g3">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g9(c4)" stereotype="" label="g9">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5109">
+   <text>Context 4</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <context id="c5" bordered="true">
+  <glyph id="g2(c5)" stereotype="" label="g2">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g11(c5)" stereotype="" label="g11">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <glyph id="g13(c5)" stereotype="" label="g13">
+   <text-lines></text-lines>
+   <symbols></symbols>
+  </glyph>
+  <label xsi:type="text-line" id="auto:5110">
+   <text>Context 5</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ <allLinks>
+  <link id="auto:5112">
+   <from xsi:type="glyph" reference="g9(c4)"></from>
+   <to xsi:type="context" reference="c0"></to>
+  </link>
+  <link id="auto:5117">
+   <from xsi:type="glyph" reference="g7(c3)"></from>
+   <to xsi:type="context" reference="c0"></to>
+  </link>
+  <link id="auto:5130">
+   <from xsi:type="context" reference="c0"></from>
+   <to xsi:type="glyph" reference="g0(c1)"></to>
+  </link>
+  <link id="auto:5131">
+   <from xsi:type="context" reference="c0"></from>
+   <to xsi:type="glyph" reference="g13(c5)"></to>
+  </link>
+  <link id="auto:5140">
+   <from xsi:type="context" reference="c0"></from>
+   <to xsi:type="glyph" reference="g5(c3)"></to>
+  </link>
+  <link id="auto:5139">
+   <from xsi:type="glyph" reference="g1(c2)"></from>
+   <to xsi:type="glyph" reference="g8(c0)"></to>
+  </link>
+  <link id="auto:5111">
+   <from xsi:type="glyph" reference="g1(c2)"></from>
+   <to xsi:type="context" reference="c1"></to>
+  </link>
+  <link id="auto:5118">
+   <from xsi:type="context" reference="c1"></from>
+   <to xsi:type="glyph" reference="g9(c4)"></to>
+  </link>
+  <link id="auto:5125">
+   <from xsi:type="context" reference="c1"></from>
+   <to xsi:type="glyph" reference="g3(c4)"></to>
+  </link>
+  <link id="auto:5129">
+   <from xsi:type="context" reference="c5"></from>
+   <to xsi:type="context" reference="c1"></to>
+  </link>
+  <link id="auto:5113">
+   <from xsi:type="context" reference="c5"></from>
+   <to xsi:type="glyph" reference="g12(c1)"></to>
+  </link>
+  <link id="auto:5124">
+   <from xsi:type="glyph" reference="g12(c1)"></from>
+   <to xsi:type="glyph" reference="g10(c3)"></to>
+  </link>
+  <link id="auto:5133">
+   <from xsi:type="glyph" reference="g12(c1)"></from>
+   <to xsi:type="glyph" reference="g11(c5)"></to>
+  </link>
+  <link id="auto:5135">
+   <from xsi:type="context" reference="c3"></from>
+   <to xsi:type="glyph" reference="g12(c1)"></to>
+  </link>
+  <link id="auto:5119">
+   <from xsi:type="glyph" reference="g13(c5)"></from>
+   <to xsi:type="glyph" reference="g14(c1)"></to>
+  </link>
+  <link id="auto:5121">
+   <from xsi:type="context" reference="c3"></from>
+   <to xsi:type="glyph" reference="g14(c1)"></to>
+  </link>
+  <link id="auto:5126">
+   <from xsi:type="glyph" reference="g10(c3)"></from>
+   <to xsi:type="glyph" reference="g14(c1)"></to>
+  </link>
+  <link id="auto:5127">
+   <from xsi:type="glyph" reference="g14(c1)"></from>
+   <to xsi:type="glyph" reference="g1(c2)"></to>
+  </link>
+  <link id="auto:5128">
+   <from xsi:type="glyph" reference="g10(c3)"></from>
+   <to xsi:type="context" reference="c2"></to>
+  </link>
+  <link id="auto:5114">
+   <from xsi:type="glyph" reference="g4(c2)"></from>
+   <to xsi:type="glyph" reference="g5(c3)"></to>
+  </link>
+  <link id="auto:5136">
+   <from xsi:type="glyph" reference="g11(c5)"></from>
+   <to xsi:type="glyph" reference="g6(c2)"></to>
+  </link>
+  <link id="auto:5122">
+   <from xsi:type="context" reference="c4"></from>
+   <to xsi:type="context" reference="c3"></to>
+  </link>
+  <link id="auto:5134">
+   <from xsi:type="context" reference="c3"></from>
+   <to xsi:type="glyph" reference="g11(c5)"></to>
+  </link>
+  <link id="auto:5138">
+   <from xsi:type="glyph" reference="g2(c5)"></from>
+   <to xsi:type="context" reference="c3"></to>
+  </link>
+  <link id="auto:5120">
+   <from xsi:type="glyph" reference="g5(c3)"></from>
+   <to xsi:type="glyph" reference="g13(c5)"></to>
+  </link>
+  <link id="auto:5123">
+   <from xsi:type="context" reference="c5"></from>
+   <to xsi:type="glyph" reference="g7(c3)"></to>
+  </link>
+  <link id="auto:5132">
+   <from xsi:type="glyph" reference="g10(c3)"></from>
+   <to xsi:type="glyph" reference="g11(c5)"></to>
+  </link>
+  <link id="auto:5137">
+   <from xsi:type="context" reference="c4"></from>
+   <to xsi:type="context" reference="c5"></to>
+  </link>
+  <link id="auto:5115">
+   <from xsi:type="glyph" reference="g13(c5)"></from>
+   <to xsi:type="glyph" reference="g3(c4)"></to>
+  </link>
+  <link id="auto:5116">
+   <from xsi:type="glyph" reference="g13(c5)"></from>
+   <to xsi:type="glyph" reference="g11(c5)"></to>
+  </link>
+ </allLinks>
+</diagram>

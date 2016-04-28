@@ -1,0 +1,218 @@
+package org.kite9.diagram.visualization.orthogonalization.vertices;
+
+import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
+import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.kite9.diagram.common.elements.CornerVertex;
+import org.kite9.diagram.common.elements.DirectionEnforcingElement;
+import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.primitives.Container;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.framework.logging.LogicException;
+
+/**
+ * Transforms darts for undirected links to a container.  
+ * Each link begins on a different vertex around the container's perimeter.
+ * 
+ * @author robmoffat
+ *
+ */
+public class ContainerCornerVertexArranger extends FanInVertexArranger {
+	
+	
+
+	public ContainerCornerVertexArranger(CompleteDisplayer cd) {
+		super(cd);
+	}
+
+	@Override
+	protected void convertVertex(Orthogonalization o, Vertex v) {
+		if (v instanceof ContainerVertex) {
+			ContainerVertex cv = (ContainerVertex) v;
+			Container und = cv.getOriginalUnderlying();
+			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
+			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
+			
+			if (cv.getYOrdinal() == LOWEST_ORD) {
+				if (cv.getXOrdinal() == LOWEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
+				} else if (cv.getXOrdinal() == HIGHEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.LEFT);
+				} else {
+					processSide(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
+				}
+			}
+			
+			if (cv.getYOrdinal() == HIGHEST_ORD) {
+				if (cv.getXOrdinal() == LOWEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.RIGHT);
+				} else if (cv.getXOrdinal() == HIGHEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
+				} else {
+					processSide(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
+				}
+			}
+
+			if (cv.getXOrdinal() == LOWEST_ORD) {
+				if (cv.getYOrdinal() == LOWEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.DOWN);
+				} else if (cv.getYOrdinal() == HIGHEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
+				} else {
+					processSide(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
+				}
+			}
+			
+			if (cv.getXOrdinal() == HIGHEST_ORD) {
+				if (cv.getYOrdinal() == LOWEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
+				} else if (cv.getYOrdinal() == HIGHEST_ORD) {
+					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.UP);
+				} else {
+					processSide(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
+				}
+			}
+			
+		} else {
+			super.convertVertex(o, v);
+		}
+	}
+
+	private void processCorner(Orthogonalization o, ContainerVertex cv, Container und,
+			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
+		
+		boolean reverse = Direction.rotateAntiClockwise(splitInDirection) == outwards;
+		
+		List<Dart> outDarts = dartDirections.get(outwards);
+		if (outDarts.size() > 0) {
+			if (checkDirection(outDarts, und)) {
+				if (reverse) {
+					Collections.reverse(outDarts);
+				}
+				processDarts(und, cv, splitInDirection, outDarts, getDartGoing(cv, splitInDirection), o);
+			}
+		}
+	}
+	
+	private void processSide(Orthogonalization o, ContainerVertex cv, Container und,
+			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
+				
+		List<Dart> outDarts = dartDirections.get(outwards);
+		if (outDarts.size() > 1) {
+			if (checkDirection(outDarts, und)) {
+				outDarts.remove(0);  // don't split the first one
+				processDarts(und, cv, splitInDirection, outDarts, getDartGoing(cv, splitInDirection), o);
+			}
+		}
+	}
+
+	/**
+	 * Makes sure we are looking at darts leaving the container
+	 */
+	private boolean checkDirection(List<Dart> outDarts, Container und) {
+		if (outDarts.size() == 1) {
+			return (outDarts.get(0).getOriginalUnderlying() != und);
+		}
+		
+		return true;
+	}
+
+	private Dart getDartGoing(ContainerVertex cv, Direction d) {
+		for (Edge e : cv.getEdges()) {
+			if ((e instanceof Dart) && ((e.getDrawDirectionFrom(cv) == d))) {
+				return (Dart) e;
+			}
+		}
+		
+		throw new LogicException("Couldn't find side dart going "+d+" from "+cv);
+	}
+
+	protected void processDarts(Container underlying, CornerVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
+		Edge thisEdge = (Edge) toSplit.getUnderlying();
+		
+		
+		for (int j = 0; j < leaversToMove.size(); j++) {
+			Dart leaving = leaversToMove.get(j);
+			Vertex from = toSplit.otherEnd(cv);
+			Vertex vsv = createSideVertex(splitDirection, cv, j, thisEdge instanceof DirectionEnforcingElement);
+			double dist = sizer.getLinkMargin(underlying, splitDirection);
+			Dart sideDart = o.createDart(cv, vsv, underlying, splitDirection, dist);
+			
+			cv.removeEdge(leaving);
+			replaceEnd(cv, leaving, vsv);
+			
+			cv.removeEdge(toSplit);
+			replaceEnd(cv, toSplit, vsv);
+			
+			vsv.addEdge(leaving);
+			vsv.addEdge(toSplit);
+
+			insertInWaypointMap(thisEdge, cv, from, vsv, o);
+			updateWaypointMap((Edge) leaving.getUnderlying(), cv, vsv, o);
+
+			toSplit = sideDart;
+			
+			// very inefficient - add a map
+			for (DartFace df : o.getFaces()) {
+				repairFace(cv, vsv, df, sideDart);
+			}
+			o.getAllDarts().add(sideDart);
+			o.getAllVertices().add(vsv);
+		}
+	}
+
+	private void repairFace(Vertex in, Vertex out, DartFace df, Dart newDart) {
+		int size = df.dartsInFace.size();
+		for (int i = 0; i < size; i++) {
+			DartDirection before = df.dartsInFace.get(i);
+			int ai = (i+1+size) % size;
+			DartDirection after = df.dartsInFace.get(ai);
+			if (before.getDart().meets(in) && after.getDart().meets(out)) {
+				// needs to go here.
+				df.dartsInFace.add(ai, new DartDirection(newDart, newDart.getDrawDirection()));
+				return;
+			} else if (before.getDart().meets(out) && after.getDart().meets(in)) {
+				// or here
+				df.dartsInFace.add(ai, new DartDirection(newDart, Direction.reverse(newDart.getDrawDirection())));
+				return;
+			}
+		}
+	}
+
+	private void insertInWaypointMap(Edge thisEdge, CornerVertex before, Vertex after, Vertex insert, Orthogonalization o) {
+		List<Vertex> waypoints = o.getWaypointMap().get(thisEdge);
+		for (int i = 0; i < waypoints.size()-1; i++) {
+			Vertex b = waypoints.get(i);
+			Vertex a = waypoints.get((i+1+waypoints.size()) % waypoints.size());
+			
+			if (((before == a) && (after==b)) || ((before == b) && (after == a))) {
+				waypoints.add(i+1, insert);
+				return;
+			}
+		}
+
+		throw new LogicException("Waypoint map can't add between "+before+" and "+after+ " "+waypoints);
+	}
+
+	private void replaceEnd(CornerVertex old, Dart leaving, Vertex to) {
+		if (leaving.getFrom().equals(old)) {
+			leaving.setFrom(to);
+		} else if (leaving.getTo().equals(old)) {
+			leaving.setTo(to);
+		} else {
+			throw new LogicException("logic error");
+		}
+	}
+}

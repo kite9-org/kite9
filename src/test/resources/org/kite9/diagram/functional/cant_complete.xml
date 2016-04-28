@@ -1,0 +1,86 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+
+<glyph id="id_1" stereotype="" label="id_1">
+
+ <text-lines/>
+ <symbols/>
+</glyph>
+<glyph id="id_29" stereotype="" label="id-29">
+
+ <text-lines/>
+ <symbols/>
+</glyph>
+
+<glyph id="id_21" label="id_21">
+
+ <text-lines/>
+ <symbols/>
+</glyph>
+
+<context id="id_26" layout="HORIZONTAL" bordered="true">
+
+ <label xsi:type="text-line" id="id_27">
+
+  <text>id_26</text>
+  <symbols/>
+ </label>
+<glyph id="id_41" stereotype="" label="id_41">
+
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_3" stereotype="" label="id_3">
+
+ <text-lines/>
+ <symbols/>
+</glyph><arrow id="id_39" label="id_39">
+
+</arrow></context>
+
+<allLinks>
+ <link id="id_5" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_3"/>
+  <to xsi:type="glyph" reference="id_1"/>
+ </link>
+ <link id="id_16" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_3"/>
+  <to xsi:type="arrow" reference="id_39"/>
+ </link>
+ <link id="id_0" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_29"/>
+  <to xsi:type="glyph" reference="id_1"/>
+ </link>
+ <link id="id_12" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_1"/>
+  <to xsi:type="arrow" reference="id_39"/>
+  <toLabel xsi:type="text-line" id="id_24">
+
+   <text>My New Label</text>
+   <symbols/>
+  </toLabel>
+ </link>
+ <link id="id_38" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_29"/>
+  <to xsi:type="arrow" reference="id_39"/>
+ </link>
+ <link id="id_7" drawDirection="LEFT">
+
+  <from xsi:type="arrow" reference="id_39"/>
+  <to xsi:type="glyph" reference="id_41"/>
+ </link>
+ <link id="id_20" drawDirection="DOWN">
+
+  <from xsi:type="arrow" reference="id_39"/>
+  <to xsi:type="glyph" reference="id_21"/>
+ </link>
+<link id="id_33" drawDirection="RIGHT">
+<from xsi:type="glyph" reference="id_21"/>
+<to xsi:type="glyph" reference="id_41"/>
+</link>
+</allLinks>
+</diagram>

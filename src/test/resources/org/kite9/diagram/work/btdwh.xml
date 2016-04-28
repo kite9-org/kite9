@@ -1,0 +1,276 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <hints py1="0.0019962555" py2="0.998501" px2="0.9980035" px1="0.001748001"/>
+ <glyph id="id_0" shape="fcDOCUMENT">
+  
+  <hints py1="0.0019963556" py2="0.12575115" px2="0.2502509" px1="0.001748101" y1="78.0" y2="234.0" x2="180.0" x1="12.0"/>
+  <stereotype/>
+  <label>High Level Project Plan</label>
+  <text-lines>
+   <text-line id="auto:51293">
+    
+    <hints y1="120.0" y2="138.0" x2="172.5" x1="19.5"/>
+    <text>by Backtesting PM</text>
+    <symbols/>
+   </text-line>
+   <comp-shape id="auto:51294" shape="divider">
+    
+    <hints y1="138.0" y2="151.0" x2="172.5" x1="19.5"/>
+   </comp-shape>
+   <text-line id="auto:51295">
+    
+    <hints y1="151.0" y2="203.0" x2="172.5" x1="19.5"/>
+    <text>2 releases planned:  
+  Portfolio Backtesting
+  REF Backtesting</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <glyph id="id_12" shape="fcDOCUMENT">
+  
+  <hints py1="0.063997485" py2="0.12562752" px2="0.4987554" px1="0.25124562" y1="168.0" y2="274.0" x2="376.0" x1="220.0"/>
+  <stereotype/>
+  <label>QA Test Plan</label>
+  <text-lines>
+   <text-line id="auto:52833">
+    
+    <hints y1="209.0" y2="244.0" x2="365.0" x1="231.0"/>
+    <text>Written in Quality Centre
+by QA Team</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <glyph id="id_5" shape="fcDOCUMENT">
+  
+  <hints py1="0.0021199868" py2="0.06375002" px2="0.4990034" px1="0.2509976" y1="60.0" y2="120.0" x2="370.0" x1="226.0"/>
+  <stereotype/>
+  <label>Design Document</label>
+  <text-lines>
+   <text-line id="auto:51372">
+    
+    <hints y1="86.5" y2="104.5" x2="358.5" x1="237.5"/>
+    <text>Written by Developers</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <glyph id="id_29" shape="umlNOTE">
+  
+  <hints py1="0.2507491" py2="0.4992519" px2="0.4987554" px1="0.25124562" y1="314.0" y2="374.0" x2="388.0" x1="208.0"/>
+  <stereotype/>
+  <label>QA Team report to PTG
+and BTDWH </label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="auto:58031" bordered="true">
+  
+  <hints py1="0.0022430238" py2="0.06362698" px2="0.62487525" px1="0.50087225" y1="12.0" y2="156.0" x2="526.0" x1="390.0"/>
+  <glyph id="id_8" shape="fcPROCESS">
+   
+   <hints py1="0.002243124" py2="0.063626885" px2="0.6248751" px1="0.5008724" y1="54.0" y2="126.0" x2="506.0" x1="410.0"/>
+   <stereotype/>
+   <label>Coding</label>
+   <text-lines>
+    <text-line id="auto:59986">
+     
+     <hints y1="83.0" y2="118.0" x2="499.0" x1="417.0"/>
+     <text>By BTDWH Dev
+Team</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_31">
+   
+   <hints y1="133.0" y2="154.0" x2="509.0" x1="407.0"/>
+   <text>Dev Environments</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="auto:52468" bordered="true">
+  
+  <hints py1="0.0022430238" py2="0.1256276" px2="0.74900275" px1="0.6252478" y1="12.0" y2="380.0" x2="744.0" x1="538.0"/>
+  <glyph id="id_10" shape="fcDATABASE">
+   
+   <hints py1="0.002243124" py2="0.063626885" px2="0.74900264" px1="0.62524784" y1="24.0" y2="156.0" x2="690.0" x1="558.0"/>
+   <stereotype/>
+   <label>Deployment of
+Data Warehouse</label>
+   <text-lines>
+    <text-line id="auto:53890">
+     
+     <hints y1="101.0" y2="136.0" x2="682.0" x1="566.0"/>
+     <text>snapshots, individual 
+component testing</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_3" shape="fcPROCESS">
+   
+   <hints py1="0.063997485" py2="0.12562752" px2="0.7488789" px1="0.62537163" y1="196.0" y2="268.0" x2="684.0" x1="564.0"/>
+   <stereotype/>
+   <label>testing</label>
+   <text-lines>
+    <text-line id="auto:55164">
+     
+     <hints y1="224.5" y2="242.5" x2="674.0" x1="574.0"/>
+     <text>(jira, toad, QC)</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:55165">
+     
+     <hints y1="242.5" y2="260.5" x2="674.0" x1="574.0"/>
+     <text>no automation yet</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_14">
+   
+   <hints y1="340.0" y2="378.0" x2="738.25" x1="630.25"/>
+   <text>QA Process
+UAT 2 Environment</text>
+   <symbols/>
+  </label>
+ </context>
+ <glyph id="id_16" shape="fcDOCUMENT">
+  
+  <hints py1="0.5004991" py2="0.9985009" px2="0.7488789" px1="0.62537163" y1="400.0" y2="484.0" x2="690.0" x1="558.0"/>
+  <stereotype/>
+  <label>PTG Status</label>
+  <text-lines>
+   <text-line id="auto:53243">
+    
+    <hints y1="430.0" y2="465.0" x2="678.5" x1="569.5"/>
+    <text>Weekly reporting of
+release status (RAG)</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <context id="auto:54602" bordered="true">
+  
+  <hints py1="0.002181517" py2="0.25012675" px2="0.9980035" px1="0.7499975" y1="12.0" y2="484.0" x2="996.0" x1="756.0"/>
+  <glyph id="id_21" shape="fcDATABASE">
+   
+   <hints py1="0.002181617" py2="0.06368839" px2="0.9980034" px1="0.7499976" y1="42.0" y2="138.0" x2="960.0" x1="792.0"/>
+   <stereotype/>
+   <label>Production Candidate
+Data Warehouse </label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_26" shape="fcPROCESS">
+   
+   <hints py1="0.12612385" py2="0.25012666" px2="0.9980034" px1="0.7499976" y1="313.0" y2="397.0" x2="984.0" x1="768.0"/>
+   <stereotype/>
+   <label>REF User Acceptance Testing</label>
+   <text-lines>
+    <text-line id="auto:56085">
+     
+     <hints y1="339.5" y2="391.5" x2="973.5" x1="778.5"/>
+     <text>The only user of BTDWH is REF
+So it is on the REF teams to perform
+UAT.</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_23">
+   
+   <hints y1="444.0" y2="482.0" x2="930.0" x1="822.0"/>
+   <text>UAT Process
+UAT 1 Environment</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+<allLinks>
+  <link id="id_4" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_5"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_11" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_12"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_13" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_2" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_3"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_28" shape="DOTTED" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_29"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_7" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_8"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_9" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_10"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_6" shape="NORMAL" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_10"/>
+   <to xsi:type="glyph" reference="id_3"/>
+   <fromDecoration>BARBED ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_20" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_10"/>
+   <to xsi:type="glyph" reference="id_21"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_15" shape="DOTTED" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_16"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_25" shape="NORMAL" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_21"/>
+   <to xsi:type="glyph" reference="id_26"/>
+   <fromDecoration>BARBED ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+ </allLinks></diagram>

@@ -1,0 +1,312 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:39">
+ 
+ <context id="auto:11" bordered="true">
+  
+  <label xsi:type="text-line" id="auto:10">
+   
+   <text>Simple Label</text>
+   <symbols>
+    <symbol text="Some" theChar="A" shape="HEXAGON"/>
+    <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+    <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+   </symbols>
+  </label>
+ </context>
+ <context id="auto:12" bordered="true">
+  
+  
+  
+  
+  
+  
+ <glyph id="fullGlyph" stereotype="Some complex stereotype" label="Full Glyph">
+   
+   <text-lines>
+    <text-line id="auto:5">
+     
+     <text>Small amount of text</text>
+     <symbols>
+      <symbol text="Some description blah blah blah" theChar="M" shape="DIAMOND"/>
+      <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+      <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+      <symbol text="Some description da fsdfdsf" theChar="o" shape="CIRCLE"/>
+     </symbols>
+    </text-line>
+    <text-line id="auto:6">
+     
+     <text>Bit more text</text>
+     <symbols>
+      <symbol text="Some description blah blah blah" theChar="M" shape="DIAMOND"/>
+      <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+      <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+      <symbol text="Some description da fsdfdsf" theChar="o" shape="CIRCLE"/>
+     </symbols>
+    </text-line>
+    <text-line id="auto:7">
+     
+     <text>Another text line</text>
+     <symbols>
+      <symbol text="Some description blah blah blah" theChar="M" shape="DIAMOND"/>
+      <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+      <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+      <symbol text="Some description da fsdfdsf" theChar="o" shape="CIRCLE"/>
+     </symbols>
+    </text-line>
+   </text-lines>
+   <symbols>
+    <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+    <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+   </symbols>
+  </glyph><glyph id="text1" label="With Text 1">
+   
+   <text-lines>
+    <text-line id="auto:0">
+     
+     <text>This is a piece of text on one line</text>
+     <symbols>
+      <symbol text="Some" theChar="A" shape="HEXAGON"/>
+     </symbols>
+    </text-line>
+    <text-line id="auto:1">
+     
+     <text>A pair of lines in a text
+line without symbols</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:2">
+     
+     <text>This is a piece of text
+on two lines</text>
+     <symbols>
+      <symbol text="Some" theChar="A" shape="HEXAGON"/>
+      <symbol text="Some description" theChar="O" shape="CIRCLE"/>
+     </symbols>
+    </text-line>
+    <text-line id="auto:3">
+     
+     <text>Some line of text without symbols</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:4">
+     
+     <text>This is a piece
+ of text
+on three lines</text>
+     <symbols>
+      <symbol text="Some" theChar="A" shape="HEXAGON"/>
+      <symbol text="Some description" theChar="O" shape="CIRCLE"/>
+     </symbols>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph><context id="auto:9" bordered="true">
+   
+   <glyph id="simple" label="Simple Label">
+    
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="withStereo" stereotype="Stereotype" label="With Stereo">
+    
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line" id="auto:8">
+    
+    <text>Multiline label
+for this context</text>
+    <symbols/>
+   </label>
+  </context><arrow id="a1" label="Arrow with a label">
+   
+  </arrow><glyph id="other" label="4th Man">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="withSymbols" label="With Symbols">
+   
+   <text-lines/>
+   <symbols>
+    <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+    <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+   </symbols>
+  </glyph></context>
+ <arrow id="a2">
+  
+ </arrow>
+ 
+ <label xsi:type="key" id="auto:20">
+  
+  <boldText>This is a test card</boldText>
+  <bodyText>It demonstrates all the elements in the ADL
+language to allow you to check rendering</bodyText>
+  <symbols>
+   <text-line id="auto:13">
+    
+    <text>Some description
+ taking multiple lines</text>
+    <symbols>
+     <symbol text="Some description  taking multiple lines" theChar="a" shape="DIAMOND"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:14">
+    
+    <text>Some description sdkjfsd flksdjf</text>
+    <symbols>
+     <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:15">
+    
+    <text>Some description</text>
+    <symbols>
+     <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:16">
+    
+    <text>Some</text>
+    <symbols>
+     <symbol text="Some" theChar="A" shape="HEXAGON"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:17">
+    
+    <text>Some description</text>
+    <symbols>
+     <symbol text="Some description" theChar="O" shape="CIRCLE"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:18">
+    
+    <text>Some description blah blah blah</text>
+    <symbols>
+     <symbol text="Some description blah blah blah" theChar="M" shape="DIAMOND"/>
+    </symbols>
+   </text-line>
+   <text-line id="auto:19">
+    
+    <text>Some description da fsdfdsf</text>
+    <symbols>
+     <symbol text="Some description da fsdfdsf" theChar="o" shape="CIRCLE"/>
+    </symbols>
+   </text-line>
+  </symbols>
+ </label>
+ <allLinks>
+  <link id="auto:30">
+   
+   <from xsi:type="arrow" reference="a2"/>
+   <to xsi:type="context" reference="auto:11"/>
+  </link>
+  <link id="auto:26">
+   
+   <from xsi:type="context" reference="auto:9"/>
+   <to xsi:type="glyph" reference="fullGlyph"/>
+   <fromLabel xsi:type="text-line" id="auto:24">
+    
+    <text>From Label</text>
+    <symbols>
+     <symbol text="Some" theChar="A" shape="HEXAGON"/>
+     <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+     <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    </symbols>
+   </fromLabel>
+   <toLabel xsi:type="text-line" id="auto:25">
+    
+    <text>To
+ Label
+with
+ line
+breaks
+
+
+flip</text>
+    <symbols>
+     <symbol text="Some" theChar="A" shape="HEXAGON"/>
+     <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+     <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    </symbols>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:27">
+   
+   <from xsi:type="context" reference="auto:9"/>
+   <to xsi:type="glyph" reference="fullGlyph"/>
+  </link>
+  <link id="auto:28">
+   
+   <from xsi:type="arrow" reference="a2"/>
+   <to xsi:type="glyph" reference="fullGlyph"/>
+  </link>
+  <link id="auto:31">
+   
+   <from xsi:type="glyph" reference="text1"/>
+   <to xsi:type="glyph" reference="simple"/>
+  </link>
+  <link id="auto:32">
+   
+   <from xsi:type="glyph" reference="text1"/>
+   <to xsi:type="glyph" reference="withStereo"/>
+  </link>
+  <link id="auto:33">
+   
+   <from xsi:type="glyph" reference="text1"/>
+   <to xsi:type="glyph" reference="other"/>
+  </link>
+  <link id="auto:29">
+   
+   <from xsi:type="arrow" reference="a2"/>
+   <to xsi:type="context" reference="auto:9"/>
+  </link>
+  <link id="auto:21">
+   
+   <from xsi:type="glyph" reference="simple"/>
+   <to xsi:type="arrow" reference="a1"/>
+  </link>
+  <link id="auto:34" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="simple"/>
+   <to xsi:type="glyph" reference="other"/>
+  </link>
+  <link id="auto:38">
+   
+   <from xsi:type="arrow" reference="a1"/>
+   <to xsi:type="glyph" reference="withStereo"/>
+  </link>
+  <link id="auto:36">
+   
+   <from xsi:type="glyph" reference="withStereo"/>
+   <to xsi:type="glyph" reference="other"/>
+  </link>
+  <link id="auto:23">
+   
+   <from xsi:type="glyph" reference="withSymbols"/>
+   <to xsi:type="arrow" reference="a1"/>
+   <fromLabel xsi:type="text-line" id="auto:22">
+    
+    <text>From Label</text>
+    <symbols>
+     <symbol text="Some" theChar="A" shape="HEXAGON"/>
+     <symbol text="Some description" theChar="g" shape="HEXAGON"/>
+     <symbol text="Some description sdkjfsd flksdjf" theChar="Q" shape="CIRCLE"/>
+    </symbols>
+   </fromLabel>
+   <fromDecoration>ARROW</fromDecoration>
+  </link>
+  <link id="auto:37">
+   
+   <from xsi:type="arrow" reference="a1"/>
+   <to xsi:type="glyph" reference="other"/>
+  </link>
+  <link id="auto:35">
+   
+   <from xsi:type="glyph" reference="withSymbols"/>
+   <to xsi:type="glyph" reference="other"/>
+  </link>
+ </allLinks>
+</diagram>

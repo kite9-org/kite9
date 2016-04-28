@@ -1,0 +1,357 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <context id="auto:16877" bordered="true">
+  
+  <context id="auto:35755" bordered="true">
+   
+   <context id="auto:18222" bordered="true">
+    
+    <glyph id="id_31" shape="fcPROCESS">
+     
+     <stereotype/>
+     <label>Additional Information set 
+out in subsection 7(3)</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <label xsi:type="text-line" id="id_33">
+     
+     <text>If releases exceed 3kg 
+per day per site</text>
+     <symbols/>
+    </label>
+   </context>
+   <context id="auto:31488" bordered="true">
+    
+    <glyph id="id_48" shape="fcPROCESS">
+     
+     <stereotype/>
+     <label>Additional information set 
+out in subsection 7(3)</label>
+     <text-lines/>
+     <symbols/>
+    </glyph>
+    <label xsi:type="text-line" id="id_50">
+     
+     <text>If significant
+public exposure</text>
+     <symbols/>
+    </label>
+   </context>
+   <glyph id="id_10" shape="fcPROCESS">
+    
+    <stereotype/>
+    <label>Schedule 4</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_18" shape="fcPROCESS">
+    
+    <stereotype/>
+    <label>Schedule 5</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+  </context>
+  <glyph id="id_26" shape="fcDECISION" style="stroke-dasharray: '--';">
+   
+   <stereotype style=""/>
+   <label style="">75 days before
+exceeding 50000kg
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_16" shape="fcDECISION">
+   
+   <stereotype/>
+   <label>60 days before 
+exceeding 10000kg
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_6" shape="fcDECISION" style="">
+   
+   <stereotype style=""/>
+   <label style="font-size: 12px;">30 days before
+exceeding 1000kg
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_2" shape="fcPREDEFINED" style="">
+   
+   <stereotype style=""/>
+   <label style="">Specified
+on the NDSL?</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_23">
+   
+   <label/>
+  </arrow>
+  <arrow id="id_14">
+   
+   <label/>
+  </arrow>
+  <arrow id="id_11">
+   
+   <label/>
+  </arrow>
+ </context>
+ <glyph id="id_0" shape="fcSTART1">
+  
+  <stereotype/>
+  <label>Chemical/Biochemical</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="auto:20510" bordered="true">
+  
+  <glyph id="id_4" shape="fcPREDEFINED" style="">
+   
+   <stereotype style=""/>
+   <label style="">NOT Specified 
+on the NDSL</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_35">
+   
+   <label/>
+  </arrow>
+  <arrow id="id_37">
+   
+   <label/>
+  </arrow>
+  <arrow id="id_39">
+   
+   <label/>
+  </arrow>
+  <glyph id="id_8" shape="fcDECISION">
+   
+   <stereotype/>
+   <label>75 days before 
+exceeding 10000kg 
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_45" shape="fcDECISION">
+   
+   <stereotype/>
+   <label>60 days before
+exceeding 1000kg 
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_43" shape="fcDECISION">
+   
+   <stereotype/>
+   <label>5 days before
+exceeding 100kg
+per year</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_22" shape="fcPROCESS">
+   
+   <stereotype/>
+   <label>Schedule 4</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_32" shape="fcPROCESS">
+   
+   <stereotype/>
+   <label>Schedule 5(4)</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_46" shape="fcPROCESS">
+   
+   <stereotype/>
+   <label>Schedule 6(4)</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ 
+<allLinks>
+  <link id="id_41" shape="INVISIBLE" drawDirection="LEFT">
+   
+   <from xsi:type="context" reference="auto:20510"/>
+   <to xsi:type="context" reference="auto:16877"/>
+  </link>
+  <link id="id_56" shape="INVISIBLE" drawDirection="DOWN">
+   <renderingInformation xsi:type="route" rendered="false">
+    <fromDecoration>
+     <name>NONE</name>
+    </fromDecoration>
+    <toDecoration>
+     <name>NONE</name>
+    </toDecoration>
+    <contradicting>true</contradicting>
+   </renderingInformation>
+   <from xsi:type="glyph" reference="id_18"/>
+   <to xsi:type="context" reference="auto:35755"/>
+  </link>
+  <link id="id_30" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_26"/>
+   <to xsi:type="glyph" reference="id_31"/>
+  </link>
+  <link id="id_54" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_31"/>
+   <to xsi:type="glyph" reference="id_48"/>
+  </link>
+  <link id="id_47">
+   
+   <from xsi:type="glyph" reference="id_26"/>
+   <to xsi:type="glyph" reference="id_48"/>
+  </link>
+  <link id="id_28" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_10"/>
+   <to xsi:type="glyph" reference="id_18"/>
+  </link>
+  <link id="id_9" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_10"/>
+  </link>
+  <link id="id_17" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_18"/>
+  </link>
+  <link id="id_27" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_26"/>
+  </link>
+  <link id="id_25" drawDirection="LEFT">
+   
+   <from xsi:type="arrow" reference="id_23"/>
+   <to xsi:type="glyph" reference="id_26"/>
+  </link>
+  <link id="id_15" drawDirection="LEFT">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_16"/>
+  </link>
+  <link id="id_19" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_16"/>
+  </link>
+  <link id="id_5" drawDirection="LEFT">
+   
+   <from xsi:type="arrow" reference="id_11"/>
+   <to xsi:type="glyph" reference="id_6"/>
+  </link>
+  <link id="id_1" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_5.1" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="arrow" reference="id_11"/>
+  </link>
+  <link id="id_57" shape="INVISIBLE" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_24" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="arrow" reference="id_23"/>
+  </link>
+  <link id="id_63" shape="INVISIBLE" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_23"/>
+   <to xsi:type="arrow" reference="id_39"/>
+  </link>
+  <link id="id_13" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_11"/>
+   <to xsi:type="arrow" reference="id_14"/>
+  </link>
+  <link id="id_59" shape="INVISIBLE" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="arrow" reference="id_37"/>
+  </link>
+  <link id="id_58" shape="INVISIBLE" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_11"/>
+   <to xsi:type="arrow" reference="id_35"/>
+  </link>
+  <link id="id_3" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_34" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="arrow" reference="id_35"/>
+  </link>
+  <link id="id_36" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_35"/>
+   <to xsi:type="arrow" reference="id_37"/>
+  </link>
+  <link id="id_42" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_35"/>
+   <to xsi:type="glyph" reference="id_43"/>
+  </link>
+  <link id="id_38" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_37"/>
+   <to xsi:type="arrow" reference="id_39"/>
+  </link>
+  <link id="id_44" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_37"/>
+   <to xsi:type="glyph" reference="id_45"/>
+  </link>
+  <link id="id_7" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_39"/>
+   <to xsi:type="glyph" reference="id_8"/>
+  </link>
+  <link id="id_20" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_45"/>
+   <to xsi:type="glyph" reference="id_8"/>
+  </link>
+  <link id="id_40" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_46"/>
+  </link>
+  <link id="id_12" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_43"/>
+   <to xsi:type="glyph" reference="id_45"/>
+  </link>
+  <link id="id_29" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_45"/>
+   <to xsi:type="glyph" reference="id_32"/>
+  </link>
+  <link id="id_21" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_43"/>
+   <to xsi:type="glyph" reference="id_22"/>
+  </link>
+ </allLinks></diagram>

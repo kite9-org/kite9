@@ -1,0 +1,153 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="RIGHT">
+ 
+ <context id="id_1" layout="DOWN" bordered="true">
+  
+  <context id="auto:3143" bordered="true">
+   
+   <glyph id="id_20" label="New Glyph">
+    
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line">
+    <text/>
+    <symbols/>
+   </label>
+  </context>
+  <glyph id="id_19" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_17" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   <text/>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_2" layout="DOWN" bordered="true">
+  
+  <context id="id_5" bordered="true">
+   
+   <label xsi:type="text-line">
+    
+    <text>null</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="id_6" bordered="true">
+   
+   <label xsi:type="text-line">
+    
+    <text>null</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="id_7" bordered="true">
+   
+   <label xsi:type="text-line">
+    
+    <text>null</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="id_8" bordered="true">
+   
+   <label xsi:type="text-line">
+    
+    <text>null</text>
+    <symbols/>
+   </label>
+  </context>
+  <label xsi:type="text-line">
+   <text/>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_3" layout="DOWN" bordered="true">
+  
+  <context id="auto:2591" bordered="true">
+   
+   <glyph id="id_24" label="New Glyph">
+    
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line">
+    <text/>
+    <symbols/>
+   </label>
+  </context>
+  <glyph id="id_23" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_22" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <context id="auto:2594" bordered="true">
+   
+   <glyph id="id_21" label="New Glyph">
+    
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line">
+    <text/>
+    <symbols/>
+   </label>
+  </context>
+  <label xsi:type="text-line">
+   <text/>
+   <symbols/>
+  </label>
+ </context>
+ 
+ 
+<label xsi:type="key">
+  
+  <boldText>Empty Diagram</boldText>
+  <bodyText>Double click to edit the key</bodyText>
+  <symbols/>
+ </label><allLinks>
+  <link id="id_25">
+   
+   <from xsi:type="glyph" reference="id_20"/>
+   <to xsi:type="glyph" reference="id_24"/>
+  </link>
+  <link id="id_26" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_19"/>
+   <to xsi:type="glyph" reference="id_23"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_28">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_21"/>
+  </link>
+  <link id="id_9">
+   
+   <from xsi:type="glyph" reference="id_22"/>
+   <to xsi:type="glyph" reference="id_24"/>
+  </link>
+  <link id="id_10">
+   
+   <from xsi:type="glyph" reference="id_23"/>
+   <to xsi:type="glyph" reference="id_21"/>
+  </link>
+ </allLinks></diagram>

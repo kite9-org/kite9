@@ -1,0 +1,57 @@
+package org.kite9.diagram.visualization.compaction.position.optstep;
+
+import org.kite9.diagram.common.algorithms.so.AlignStyle;
+import org.kite9.diagram.common.algorithms.so.OptimisationStep;
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.visualization.compaction.Compaction;
+import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
+
+/**
+ * Handles the following compaction optimisations:
+ * <ul>
+ * <li>Moving sections of edges up or down, if they have a preference</li>
+ * </ul>
+ * 
+ * @author robmoffat
+ * 
+ */
+public class EdgeAlignmentOptimisationStep implements OptimisationStep {
+
+	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
+		centerContentRule(xo);
+		centerContentRule(yo);
+	}
+
+	private void centerContentRule(SegmentSlackOptimisation so) {
+		for (Slideable s : so.getCanonicalOrder()) {
+			if (s.getAlignStyle() == AlignStyle.RIGHT) {
+				Slideable from = s;
+				Slideable to = s.getAlignTo();
+
+				if (to == null) {
+					// aligning a single slideable (e.g. edge length)
+					int slack1 = from.getMaximumPosition() - from.getMinimumPosition();
+					if (slack1 > 0) {
+						int amt = from.getMinimumPosition() + slack1;
+						from.increaseMinimum(amt);
+						from.decreaseMaximum(amt);
+					}
+				}
+			} else if (s.getAlignStyle() == AlignStyle.LEFT) {
+				Slideable from = s;
+				Slideable to = s.getAlignTo();
+
+				if (to == null) {
+					// aligning a single slideable (e.g. edge length)
+					int slack1 = from.getMaximumPosition() - from.getMinimumPosition();
+					if (slack1 > 0) {
+						int amt = from.getMinimumPosition();
+						from.increaseMinimum(amt);
+						from.decreaseMaximum(amt);
+					}
+				}
+			} 
+		}
+
+	}
+}

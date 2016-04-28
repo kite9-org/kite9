@@ -1,0 +1,134 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ 
+ <context id="top" layout="RIGHT" bordered="true">
+  
+  <glyph id="A" label="A">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="B" label="B">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="C" label="C">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>Top</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="bottom" layout="RIGHT" bordered="true">
+  
+  <glyph id="D" label="D">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="E" label="E">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="F" label="F">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>Bottom</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+ 
+<label xsi:type="key">
+  
+  <boldText/>
+  <bodyText/>
+  <symbols/>
+ </label><allLinks>
+  <link id="id_18" drawDirection="DOWN" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="A"/>
+   <to xsi:type="glyph" reference="D"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_19" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="D"/>
+   <to xsi:type="glyph" reference="B"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_20" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="B"/>
+   <to xsi:type="glyph" reference="E"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_21" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="C"/>
+   <to xsi:type="glyph" reference="E"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>sometimes</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>is</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_22" drawDirection="UP" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="F"/>
+   <to xsi:type="glyph" reference="C"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+ </allLinks></diagram>

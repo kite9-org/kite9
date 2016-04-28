@@ -1,0 +1,76 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:12081" layout="VERTICAL">
+ 
+ <context id="auto:1395" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+  
+  <context id="auto:2796" layout="RIGHT" style="stroke: white; stroke-dasharray: none">
+   
+   <glyph id="palette:id_0">
+    
+    <stereotype/>
+    <label>New Part</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="palette:id_2">
+    
+    <stereotype>Part Type</stereotype>
+    <label>New Part</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+  </context>
+  <context id="auto:2964" layout="RIGHT" style="stroke: white; stroke-dasharray: none">
+   
+   <arrow id="palette:id_11">
+    
+    <label>Connection Body</label>
+   </arrow>
+   <glyph id="palette:id_4">
+    
+    <stereotype/>
+    <label>New Part</label>
+    <text-lines>
+     <comp-shape id="auto:1743" shape="divider">
+      
+     </comp-shape>
+     <text-line id="auto:1744">
+      
+      <text>Details...</text>
+      <symbols/>
+     </text-line>
+    </text-lines>
+    <symbols/>
+   </glyph>
+  </context>
+  <context id="palette:id_8" layout="RIGHT" bordered="true">
+   
+   <label xsi:type="text-line" id="pid_9">
+    
+    <text>Left-To-Right
+Container</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="palette:id_6" layout="DOWN" bordered="true">
+   
+   <label xsi:type="text-line" id="pid_7">
+    
+    <text>Top-To-Bottom
+Container</text>
+    <symbols/>
+   </label>
+  </context>
+ </context>
+ 
+<allLinks>
+  <link id="pid_0" drawDirection="DOWN" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none">
+   
+   <from xsi:type="glyph" reference="palette:id_0"/>
+   <to xsi:type="arrow" reference="palette:id_11"/>
+  </link>
+  <link id="pid_1" drawDirection="DOWN" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none">
+   
+   <from xsi:type="glyph" reference="palette:id_2"/>
+   <to xsi:type="glyph" reference="palette:id_4"/>
+  </link>
+ </allLinks></diagram>

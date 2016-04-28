@@ -1,0 +1,142 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+
+
+
+
+
+
+
+<glyph id="id_53" label="New Part">
+
+ <text-lines/>
+ <symbols/>
+</glyph><context id="auto:56597" layout="DOWN" bordered="false">
+
+ <glyph id="id_55" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_57" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context><context id="auto:58321" layout="DOWN" bordered="false">
+
+ <glyph id="id_65" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_69" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_72" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context><context id="auto:56918" layout="DOWN" bordered="false">
+
+ <glyph id="id_60" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_62" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_71" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context><context id="auto:59342" layout="DOWN" bordered="false">
+
+ <glyph id="id_76" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_77" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_74" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context><context id="auto:60741" layout="DOWN" bordered="false">
+
+ <glyph id="id_79" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+</context><glyph id="id_83" label="New Part">
+
+ <text-lines/>
+ <symbols/>
+</glyph><allLinks>
+ <link id="id_54" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_53"/>
+  <to xsi:type="glyph" reference="id_55"/>
+ </link>
+ <link id="id_56" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_55"/>
+  <to xsi:type="glyph" reference="id_57"/>
+ </link>
+ <link id="id_59" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_55"/>
+  <to xsi:type="glyph" reference="id_60"/>
+ </link>
+ <link id="id_67" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_65"/>
+  <to xsi:type="glyph" reference="id_57"/>
+ </link>
+ <link id="id_68" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_65"/>
+  <to xsi:type="glyph" reference="id_69"/>
+ </link>
+ <link id="id_78" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_65"/>
+  <to xsi:type="glyph" reference="id_79"/>
+ </link>
+ <link id="id_61" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_60"/>
+  <to xsi:type="glyph" reference="id_62"/>
+ </link>
+ <link id="id_73" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_71"/>
+  <to xsi:type="glyph" reference="id_74"/>
+ </link>
+ <link id="id_81" drawDirection="DOWN">
+  <renderingInformation xsi:type="route" rendered="false">
+   <fromDecoration>
+    <name>NONE</name>
+   </fromDecoration>
+   <toDecoration>
+    <name>NONE</name>
+   </toDecoration>
+   <contradicting>true</contradicting>
+  </renderingInformation>
+  <from xsi:type="context" reference="auto:60741"/>
+  <to xsi:type="context" reference="auto:59342"/>
+ </link>
+<link id="id_82" drawDirection="RIGHT"><from xsi:type="glyph" reference="id_74"/><to xsi:type="glyph" reference="id_83"/></link></allLinks></diagram>

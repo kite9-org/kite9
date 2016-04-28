@@ -1,0 +1,23 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+<context id="id_32" layout="HORIZONTAL" bordered="true">
+
+  <glyph id="id_47" stereotype="" label="id_47" />
+  <glyph id="id_46" stereotype="" label="id_46" />
+ </context>
+
+<arrow id="id_37" label="id_37" />
+
+<allLinks>
+ <link id="id_1" drawDirection="UP">
+
+  <from xsi:type="arrow" reference="id_37"/>
+  <to xsi:type="glyph" reference="id_46"/>
+ </link>
+ <link id="id_5" drawDirection="LEFT">
+
+  <from xsi:type="arrow" reference="id_37"/>
+  <to xsi:type="glyph" reference="id_47"/>
+ </link>
+ 
+</allLinks></diagram>

@@ -1,0 +1,202 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3768">
+ 
+ <hints py1="0.002245505" py2="0.998003" px2="0.99800384" px1="0.001499"/>
+
+<glyph id="id_39">
+  
+  <hints py1="0.5009971" py2="0.9980029" px2="0.7492509" px1="0.5007481" y1="260.0" y2="380.0" x2="96.0" x1="12.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_26">
+  
+  <hints py1="0.2507486" py2="0.49875438" px2="0.9980038" px1="0.9362502" y1="140.0" y2="176.0" x2="586.0" x1="502.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_36">
+  
+  <hints py1="0.002493611" py2="0.2500034" px2="0.4995009" px1="0.0014991" y1="18.0" y2="54.0" x2="192.0" x1="108.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><context id="auto:52168" layout="DOWN" bordered="true">
+  
+  <hints py1="0.002493511" py2="0.4986305" px2="0.87338173" px1="0.75036776" y1="12.0" y2="196.0" x2="340.0" x1="204.0"/>
+  <glyph id="id_4">
+   
+   <hints py1="0.002493611" py2="0.2500034" px2="0.8732586" px1="0.7504909" y1="24.0" y2="60.0" x2="320.0" x1="236.0"/>
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_6">
+   
+   <hints py1="0.25099635" py2="0.37450364" px2="0.8732586" px1="0.7504909" y1="100.0" y2="136.0" x2="320.0" x1="236.0"/>
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_2">
+   
+   <hints py1="0.3748756" py2="0.4986304" px2="0.8733816" px1="0.7503679" y1="148.0" y2="184.0" x2="320.0" x1="236.0"/>
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context><glyph id="id_8">
+  
+  <hints py1="0.74999636" py2="0.8735036" px2="0.8736284" px1="0.7501211" y1="302.0" y2="338.0" x2="296.0" x1="212.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_11">
+  
+  <hints py1="0.8738756" py2="0.9976304" px2="0.8737521" px1="0.7499974" y1="350.0" y2="386.0" x2="296.0" x1="212.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_9">
+  
+  <hints py1="0.5012456" py2="0.7492514" px2="0.8735049" px1="0.7502446" y1="254.0" y2="290.0" x2="290.0" x1="242.0"/>
+  <stereotype/>
+  <label>ggg</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_0">
+  
+  <hints py1="0.25099635" py2="0.37450364" px2="0.93600225" px1="0.87424874" y1="98.0" y2="170.0" x2="462.0" x1="378.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_13">
+  
+  <hints py1="0.74999636" py2="0.8735036" px2="0.93600225" px1="0.87424874" y1="302.0" y2="338.0" x2="462.0" x1="378.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph id="id_22">
+  
+  <hints py1="0.002245605" py2="0.25025138" px2="0.9980038" px1="0.9362502" y1="92.0" y2="128.0" x2="586.0" x1="502.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph><allLinks>
+  <link id="id_35" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_9"/>
+   <to xsi:type="glyph" reference="id_36"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_41" shape="INVISIBLE" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_36"/>
+  </link>
+  <link id="id_26.1" shape="NORMAL" style="" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_9"/>
+   <to xsi:type="glyph" reference="id_39"/>
+   <fromDecoration>NONE</fromDecoration>
+  </link>
+  <link id="id_14" shape="INVISIBLE" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_11"/>
+   <to xsi:type="glyph" reference="id_39"/>
+  </link>
+  <link id="id_31" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_28" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_3" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_5" shape="NORMAL" style="" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_6"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_1" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_2"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_18" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_9"/>
+  </link>
+  <link id="id_7" shape="NORMAL" style="" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_8"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_19" shape="INVISIBLE" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_9"/>
+  </link>
+  <link id="id_20" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  <link id="id_21" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_22"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_25" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_26"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_27" shape="NORMAL" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_13"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_29" shape="INVISIBLE" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="id_26"/>
+   <to xsi:type="glyph" reference="id_22"/>
+  </link>
+ <link id="id_30" drawDirection="UP" shape="INVISIBLE"><from xsi:type="glyph" reference="id_39"/><to xsi:type="glyph" reference="id_26"/></link></allLinks></diagram>

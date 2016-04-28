@@ -1,0 +1,169 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <glyph id="id_0" shape="umlACTOR" style="fill: '270-#68a0d3-#497094';">
+  
+  <stereotype style="">Actor</stereotype>
+  <label style="">Ticket
+Clerk</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="auto:3951" bordered="true">
+  
+  <glyph id="id_2" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Check In
+Passenger</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_14">
+   
+   <label>&lt;&lt;uses&gt;&gt;</label>
+  </arrow>
+  <glyph id="id_20" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Assign
+Window Seat</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_21">
+   
+   <label>&lt;&lt;extends&gt;&gt;</label>
+  </arrow>
+  <arrow id="id_15">
+   
+   <label>&lt;&lt;uses&gt;&gt;</label>
+  </arrow>
+  <glyph id="id_7" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Add Reservation</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_13" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Assign Seat</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_4" shape="umlUSECASE" style="fill: '270-#ff0000-#df0000';">
+   
+   <stereotype style=""/>
+   <label style="">Cancel
+Reservation</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_11" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Weigh Luggage</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_18" shape="umlUSECASE">
+   
+   <stereotype/>
+   <label>Assign Aisle
+Seat</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_22">
+   
+   <label>&lt;&lt;extends&gt;&gt;</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_9">
+   
+   <text>Reservation System</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+<allLinks>
+  <link id="id_1" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_5" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_6" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="glyph" reference="id_7"/>
+  </link>
+  <link id="id_12" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="arrow" reference="id_14"/>
+  </link>
+  <link id="id_10" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="arrow" reference="id_15"/>
+  </link>
+  <link id="id_12.1" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_13"/>
+   <toDecoration>ARROW OPEN</toDecoration>
+  </link>
+  <link id="id_26" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_15"/>
+   <to xsi:type="arrow" reference="id_14"/>
+  </link>
+  <link id="id_19" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_21"/>
+   <to xsi:type="glyph" reference="id_20"/>
+  </link>
+  <link id="id_19.1" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="arrow" reference="id_21"/>
+   <fromDecoration>ARROW OPEN</fromDecoration>
+  </link>
+  <link id="id_10.1" drawDirection="RIGHT">
+   
+   <from xsi:type="arrow" reference="id_15"/>
+   <to xsi:type="glyph" reference="id_11"/>
+   <toDecoration>ARROW OPEN</toDecoration>
+  </link>
+  <link id="id_23" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_17" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="arrow" reference="id_22"/>
+   <fromDecoration>ARROW OPEN</fromDecoration>
+  </link>
+  <link id="id_25" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_11"/>
+   <to xsi:type="glyph" reference="id_13"/>
+  </link>
+  <link id="id_24" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  <link id="id_17.1" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_22"/>
+   <to xsi:type="glyph" reference="id_18"/>
+  </link>
+ </allLinks></diagram>

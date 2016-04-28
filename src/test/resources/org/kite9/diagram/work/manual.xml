@@ -1,0 +1,263 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="srvuniq_ne5v93" layout="RIGHT" name="CS - REF Build Process Manual 2">
+ 
+ <hints py1="0.0010" py2="0.999" px2="0.998252" px1="0.0018722526"/>
+ <context id="id_30" shape="umlCONTAINER" layout="DOWN" bordered="true">
+  
+  <hints py1="0.0010" py2="0.999" px2="0.12587525" px1="0.0018722526" y1="12.0" y2="344.0" x2="168.0" x1="12.0"/>
+  <glyph id="id_32" shape="fcDOCUMENT">
+   
+   <hints py1="0.0010001" py2="0.9989999" px2="0.12587515" px1="0.0018723524" y1="184.0" y2="292.0" x2="144.0" x1="24.0"/>
+   <stereotype/>
+   <label>Code</label>
+   <text-lines>
+    <text-line id="auto:133750">
+     
+     <hints y1="209.0" y2="278.0" x2="132.0" x1="36.0"/>
+     <text>Calc Components
+DSL
+Orchestrator 
+etc.</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_31">
+   
+   <hints y1="321.0" y2="342.0" x2="98.0" x1="72.0"/>
+   <text>SVN</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_7" shape="umlCONTAINER" layout="DOWN" bordered="true">
+  
+  <hints py1="0.0010" py2="0.999" px2="0.25012675" px1="0.12612376" y1="12.0" y2="344.0" x2="428.0" x1="180.0"/>
+  <glyph id="id_39" shape="fcPROCESS">
+   
+   <hints py1="0.25124535" py2="0.37475264" px2="0.25000265" px1="0.12624785" y1="146.0" y2="182.0" x2="404.0" x1="200.0"/>
+   <stereotype/>
+   <label>Orchestrator Release Build</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_35" shape="fcPROCESS">
+   
+   <hints py1="0.37524822" py2="0.43687826" px2="0.25000265" px1="0.12624785" y1="220.0" y2="256.0" x2="374.0" x1="230.0"/>
+   <stereotype/>
+   <label>DSL Release Build</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_8">
+   
+   <hints y1="321.0" y2="342.0" x2="327.5" x1="270.5"/>
+   <text>Team City</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_2" shape="umlCONTAINER" layout="DOWN" bordered="true">
+  
+  <hints py1="0.0010" py2="0.999" px2="0.499252" px1="0.250749" y1="12.0" y2="344.0" x2="604.0" x1="440.0"/>
+  <glyph id="id_5" shape="umlCOMPONENT">
+   
+   <hints py1="0.25124535" py2="0.37475264" px2="0.4990034" px1="0.2509976" y1="140.0" y2="188.0" x2="580.0" x1="460.0"/>
+   <stereotype/>
+   <label>Orchestrator</label>
+   <text-lines>
+    <text-line id="auto:100390">
+     
+     <hints y1="165.5" y2="183.5" x2="573.5" x1="486.5"/>
+     <text>ref version</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_4" shape="umlCOMPONENT">
+   
+   <hints py1="0.37524822" py2="0.43687826" px2="0.4987554" px1="0.25124562" y1="214.0" y2="262.0" x2="568.0" x1="466.0"/>
+   <stereotype/>
+   <label>DSL</label>
+   <text-lines>
+    <text-line id="auto:100077">
+     
+     <hints y1="239.5" y2="257.5" x2="556.0" x1="498.0"/>
+     <text>ref version</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_6" shape="umlCOMPONENT">
+   
+   <hints py1="0.43706396" py2="0.4988175" px2="0.4987554" px1="0.25124562" y1="274.0" y2="310.0" x2="556.0" x1="478.0"/>
+   <stereotype/>
+   <label>..etc</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_3">
+   
+   <hints y1="321.0" y2="342.0" x2="566.0" x1="468.0"/>
+   <text>Nexus Repository</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_0" shape="umlCONTAINER" layout="DOWN" bordered="true">
+  
+  <hints py1="0.0010" py2="0.999" px2="0.749251" px1="0.500748" y1="12.0" y2="344.0" x2="816.0" x1="616.0"/>
+  <glyph id="id_12" shape="fcPROCESS">
+   
+   <hints py1="0.25124562" py2="0.4987554" px2="0.7492509" px1="0.5007481" y1="152.0" y2="304.0" x2="792.0" x1="636.0"/>
+   <stereotype/>
+   <label>REF Versioned Build</label>
+   <text-lines>
+    <text-line id="auto:137020">
+     
+     <hints y1="221.0" y2="256.0" x2="781.0" x1="647.0"/>
+     <text>For a given set of 
+component versions</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_1">
+   
+   <hints y1="321.0" y2="342.0" x2="739.5" x1="682.5"/>
+   <text>Team City</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="auto:101020" layout="DOWN" bordered="false">
+  
+  <hints py1="0.0010" py2="0.999" px2="0.998252" px1="0.749749" y1="6.0" y2="344.0" x2="1134.0" x1="822.0"/>
+  <context id="id_15" shape="umlCONTAINER" bordered="true">
+   
+   <hints py1="0.001748001" py2="0.998501" px2="0.998252" px1="0.749749" y1="12.0" y2="338.0" x2="1128.0" x1="828.0"/>
+   <glyph id="id_10" shape="umlCOMPONENT">
+    
+    <hints py1="0.001748101" py2="0.2502509" px2="0.8737521" px1="0.7499974" y1="36.0" y2="96.0" x2="1080.0" x1="948.0"/>
+    <stereotype/>
+    <label>Dependent
+Component 2</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_18" shape="umlCOMPONENT">
+    
+    <hints py1="0.25124562" py2="0.4987554" px2="0.8737521" px1="0.7499974" y1="136.0" y2="208.0" x2="1104.0" x1="924.0"/>
+    <stereotype/>
+    <label>Built REF</label>
+    <text-lines>
+     <text-line id="auto:103626">
+      
+      <hints y1="164.5" y2="182.5" x2="1095.0" x1="953.0"/>
+      <text>ref version</text>
+      <symbols/>
+     </text-line>
+     <text-line id="auto:103627">
+      
+      <hints y1="182.5" y2="200.5" x2="1095.0" x1="953.0"/>
+      <text>manual testing performed</text>
+      <symbols/>
+     </text-line>
+    </text-lines>
+    <symbols/>
+   </glyph>
+   <glyph id="id_9" shape="umlCOMPONENT">
+    
+    <hints py1="0.5004991" py2="0.9985009" px2="0.99812764" px1="0.8741248" y1="248.0" y2="308.0" x2="1080.0" x1="948.0"/>
+    <stereotype/>
+    <label>Dependent
+Component 1</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line" id="id_16">
+    
+    <hints y1="315.0" y2="336.0" x2="1048.5" x1="897.5"/>
+    <text>Reserved Test Environment</text>
+    <symbols/>
+   </label>
+  </context>
+ </context>
+ 
+<allLinks>
+  <link id="id_38" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_32"/>
+   <to xsi:type="glyph" reference="id_39"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_48" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_32"/>
+   <to xsi:type="glyph" reference="id_35"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_40" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_39"/>
+   <to xsi:type="glyph" reference="id_5"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_36" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_35"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_13" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_12"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_11" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="glyph" reference="id_12"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_14" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_12"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_17" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_18"/>
+   <toLabel xsi:type="text-line" id="id_52">
+    
+    <hints y1="148.0" y2="169.0" x2="910.0" x1="840.0"/>
+    <text>nolio deploy</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_19" shape="NORMAL" style="" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_10"/>
+   <to xsi:type="glyph" reference="id_18"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_20" shape="NORMAL" style="">
+   
+   <from xsi:type="glyph" reference="id_9"/>
+   <to xsi:type="glyph" reference="id_18"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+ </allLinks></diagram>

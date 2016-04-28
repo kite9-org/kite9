@@ -1,0 +1,242 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="HORIZONTAL">
+ 
+ <context id="id_15" bordered="true">
+  
+  
+  
+  
+  
+  
+  <label xsi:type="text-line">
+   
+   <text>ScormCloud</text>
+   <symbols/>
+  </label>
+ <glyph id="id_18" label="Launch">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_19" label="Registration">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_16" label="Course">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_8" stereotype="" label="Realm">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_17" label="App">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph></context>
+ <context id="id_2" bordered="true">
+  
+  <glyph id="id_4" stereotype="" label="BillingAccountUsers">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_1" stereotype="" label="BillingAccount">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_7" stereotype="" label="Realm">
+   
+   <text-lines>
+    <text-line>
+     <text>New Text Line</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_3" stereotype="" label="Users">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_12" stereotype="" label="RealmUser">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>Bright</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+ 
+<label xsi:type="key">
+  
+  <boldText/>
+  <bodyText/>
+  <symbols>
+   
+  <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="K" shape="CIRCLE"/></symbols>
+ </label><allLinks>
+  <link id="id_23" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_18"/>
+   <to xsi:type="glyph" reference="id_19"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_22" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_19"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_20" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_16"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_11" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_8"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_21" style="NORMAL">
+   
+   
+   
+  <from xsi:type="glyph" reference="id_8"/><to xsi:type="glyph" reference="id_7"/><fromLabel xsi:type="text-line"><text>1</text><symbols/></fromLabel><toLabel xsi:type="text-line"><text>m</text><symbols/></toLabel><fromDecoration>NONE</fromDecoration><toDecoration>ARROW</toDecoration></link>
+  <link id="id_5" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_6" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_10" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_1"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_13" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_7"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_14" style="NORMAL">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_3"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>m</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>1</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>ARROW</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+ </allLinks></diagram>

@@ -1,0 +1,70 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <hints py1="0.001996504" py2="0.998501" px2="0.998003" px1="0.001997002"/>
+ <context id="id_6" layout="VERTICAL" bordered="true">
+  
+  <hints py1="0.001996504" py2="0.998501" px2="0.499003" px1="0.001997002" y1="12.0" y2="214.0" x2="128.0" x1="12.0"/>
+  
+  
+  <label xsi:type="text-line" id="id_7">
+   
+   <hints y1="174.0" y2="212.0" x2="106.5" x1="33.5"/>
+   <text>Left-To-Right
+Container</text>
+   <symbols/>
+  </label>
+ <glyph id="id_8" shape="fcPROCESS">
+   
+   <hints py1="0.5004991" py2="0.9985009" px2="0.4990029" px1="0.001997102" y1="136.0" y2="172.0" x2="102.0" x1="30.0"/>
+   <stereotype/>
+   <label>process</label>
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_3">
+   
+   <hints py1="0.2509976" py2="0.4990034" px2="0.4990029" px1="0.001997102" y1="88.0" y2="124.0" x2="108.0" x1="24.0"/>
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph></context>
+ <glyph id="id_1">
+  
+  <hints py1="0.001996604" py2="0.25000238" px2="0.9980029" px1="0.5009971" y1="12.0" y2="48.0" x2="252.0" x1="168.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_5">
+  
+  <hints py1="0.2509976" py2="0.4990034" px2="0.9980029" px1="0.5009971" y1="88.0" y2="124.0" x2="252.0" x1="168.0"/>
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+<allLinks>
+  <link id="id_2" shape="NORMAL" style="" drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="context" reference="id_6"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_4" shape="NORMAL" style="" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_5"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_0" shape="NORMAL" style="" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_1"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+ </allLinks></diagram>

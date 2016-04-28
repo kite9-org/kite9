@@ -1,0 +1,70 @@
+<?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:12081" layout="DOWN">
+ 
+ <context id="auto:4314" layout="RIGHT" style="stroke: white; stroke-dasharray: none">
+  
+  <context id="auto:341" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+   
+   <glyph id="palette:id_0" shape="umlACTOR">
+    
+    <label>Actor</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="palette:id_1" shape="umlUSECASE">
+    
+    <label>Use Case</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+  </context>
+  <context id="auto:1561" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+   
+   <glyph id="palette:id_6" shape="umlCOMPONENT">
+    
+    <stereotype/>
+    <label>Component</label>
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <context id="palette:id_8" bordered="true" shape="umlCONTAINER">
+    
+    <label xsi:type="text-line" id="pid_9">
+     
+     <text>Container</text>
+     <symbols/>
+    </label>
+   </context>
+  </context>
+ </context>
+ <context id="auto:4765" layout="RIGHT"  style="stroke: white; stroke-dasharray: none">
+  
+  <context id="palette:id_4" layout="RIGHT" bordered="true">
+   
+   <label xsi:type="text-line" id="pid_5">
+    
+    <text>Horizontal 
+Group</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="palette:id_2" layout="DOWN" bordered="true">
+   
+   <label xsi:type="text-line" id="pid_3">
+    
+    <text>Vertical
+Group</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="palette:id_12" layout="RIGHT" bordered="true">
+   
+   <label xsi:type="text-line" id="pid_13">
+    
+    <text>Layoutless
+Group</text>
+    <symbols/>
+   </label>
+  </context>
+ </context>
+ 
+<allLinks/></diagram>

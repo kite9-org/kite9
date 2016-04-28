@@ -1,0 +1,260 @@
+package org.kite9.diagram.functional;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Key;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.primitives.Contained;
+
+
+public class Test13Key extends AbstractFunctionalTest {
+
+	@Test
+	public void test_13_1_SimpleKey() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text" , null, null);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_2_TextKey() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text" , "some regular text that goes underneath.\nThis can sit on multiple lines.", null);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_3_With1Symbol() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text" , null, createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_4_With2Symbols() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some text" , null, 
+				createLongSymbolList(2)
+			);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_5_WithLotsOfSymbols() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text" , null, 
+				createLongSymbolList(10)
+			);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	private static final Symbol[] OPTIONS = new Symbol[] { 
+		new Symbol("Some information", 'S', SymbolShape.CIRCLE),
+		new Symbol("Partridge", 'P', SymbolShape.CIRCLE),
+		new Symbol("Gemstone Beta", 'G', SymbolShape.HEXAGON),
+		new Symbol("Multiline and very complicated\ndescription of the symbol\nitself", 'P', SymbolShape.DIAMOND),
+		new Symbol("Par\ntwo lines", 'V', SymbolShape.CIRCLE) };
+
+		
+	private List<Symbol> createLongSymbolList(int size) {
+		int next = 0;
+		ArrayList<Symbol> out = new ArrayList<Symbol>(size);
+		for (int i = 0; i < size; i++) {
+			out.add(OPTIONS[next++]);
+			next = next % OPTIONS.length;
+		}
+		return out;
+	}
+	
+	private List<Symbol> createNarrowSymbolList(int size) {
+		int next = 0;
+		ArrayList<Symbol> out = new ArrayList<Symbol>(size);
+		while( out.size() < size) {
+			Symbol symbol = OPTIONS[next++];
+			if (symbol.getText().length()<20) {
+				out.add(symbol);
+			}
+			next = next % OPTIONS.length;
+		}
+		return out;
+	}
+	
+	@Test
+	public void test_13_6_WithLotsOfWidth() throws IOException {
+		
+		Glyph a = new Glyph("", "fairly tediously long arrow", null, null);
+		Arrow b = new Arrow("Gordon bennett this is a very long arrow");
+		new Link(a, b, null, null, null, null, Direction.RIGHT);
+		
+		
+		Key k = new Key("some bold text" , null, 
+				createLongSymbolList(7)
+			);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a, b), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_7_WithLotsOfLabelWidth() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		Arrow b = new Arrow("b");
+		new Link(a, b, null, null, null, null, Direction.RIGHT);
+		
+		
+		Key k = new Key("Here is a very long item of bold text which takes up a lot of width" , "shamu", 
+				createLongSymbolList(7)
+			);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a, b), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	
+	@Test
+	public void test_13_8_separateGlyphsWithKey() throws IOException {
+		Symbol s = new Symbol("Brother of Tony Scott", 'T', SymbolShape.CIRCLE);
+		Glyph hf = new Glyph("HF", "Actor","Harrison Ford", null, null);
+		Glyph rs = new Glyph("RS", "Director", "Ridley Scott", createList(new TextLine("Directed: Thelma & Louise"), new TextLine("Directed: Gladiator")),
+				createList(s));
+		Diagram d1 = new Diagram("my_diagram", listOf(hf, rs), new Key("Big Movies", "", createList(s)));
+		renderDiagramNoSerialize(d1);
+	}
+	
+	@Test
+	public void test_13_9_WonkyContextLabel() throws IOException {
+			Glyph hf = new Glyph("harrison_ford","Actor","Harrison Ford", null, null);
+			Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
+			Arrow ww = new Arrow("worked_with", "worked with");
+			
+			new Link(ww, hf, null, null, null, null, Direction.RIGHT);
+			new Link(ww, rs);
+
+			Context bladerunner = new Context("bladerunner", listOf(hf, rs, ww), true, new TextLine("Bladerunner"), null);
+
+			
+			Diagram d1 = new Diagram("my_diagram", listOf(bladerunner), null);
+			renderDiagramNoSerialize(d1);
+		
+	}
+	
+	@Test
+	public void test_13_10_separateGlyphsWithKey2() throws IOException {
+		Glyph a = new Glyph("a", "", "a", null, null);
+		Glyph b = new Glyph("b", "", "b", null, null);
+		Glyph c = new Glyph("c", "", "c", createList(new TextLine("some\nstuff"), new TextLine("here")), null);
+		Glyph d = new Glyph("d", "", "d", null, null);
+		Glyph e = new Glyph("e", "", "e", null, null);
+		new Link(c, d, null, null, null, null, Direction.UP);
+		new Link(c, e);
+		
+		Context ctx = new Context("ctx", listOf(a, b, c), true, new Key("Big Movies", "some text\nhere blah blah bah", null), null);
+		Diagram d1 = new Diagram("my_diagram", listOf(ctx, d, e), null);
+		renderDiagramNoSerialize(d1);
+	}
+	
+	@Test
+	public void test_13_11_AllTextAndWith1Symbol() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text" , "some body text\nspanning two lines", createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_12_TwoColumns() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj ds" , null , createNarrowSymbolList(7));
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_13_ThreeColumns() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_14_FourColumns() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		
+		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_15_InvisibleContext() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		Context c1 = new Context("c1", listOf(a), false, null, null);
+		
+
+		Key k = new Key("mon cle" , null , null);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) c1), k);
+		renderDiagramNoSerialize(d);
+	}
+	
+	@Test
+	public void test_13_16_InvisibleContext() throws IOException {
+		
+		Glyph a = new Glyph("", "a", null, null);
+		Glyph b = new Glyph("", "b", null, null);
+		Context c1 = new Context("c1", listOf(a), false, null, null);
+		
+
+		Key k = new Key("mon cle" , null , null);
+		
+		new Link(a, b, null, null, null, null, Direction.RIGHT);
+		
+		Diagram d = new Diagram("The Diagram", createList((Contained) c1, b), k);
+		renderDiagramNoSerialize(d);
+	}
+}

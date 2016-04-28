@@ -1,0 +1,110 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ 
+ <glyph id="idd" stereotype="double click to edit" label="A Glyph">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="id_2" bordered="true">
+  
+  <glyph id="id_3" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_1" label="A Connection">
+   
+  </arrow>
+  <glyph id="id_4" stereotype="" label="Edit Me">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>A Context</text>
+   <symbols>
+    <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="C" shape="CIRCLE"/>
+   </symbols>
+  </label>
+ </context>
+ <context id="id_8" bordered="false">
+  
+  <arrow id="id_10" label="New Connection Body">
+   
+  </arrow>
+  <label xsi:type="text-line">
+   
+   <text>New Context</text>
+   <symbols/>
+  </label>
+ </context>
+ <arrow id="id_5" label="New Arrow Body">
+  
+ </arrow>
+ 
+ 
+<label xsi:type="key">
+  
+  <boldText>This is the key</boldText>
+  <bodyText>Double click to provide text to describe your diagram</bodyText>
+  <symbols>
+   <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="C" shape="CIRCLE"/>
+  </symbols>
+ </label><allLinks>
+  <link id="id_6" style="NORMAL">
+   
+   <from xsi:type="arrow" reference="id_1"/>
+   <to xsi:type="glyph" reference="idd"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>from</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_20">
+   
+   <from xsi:type="arrow" reference="id_10"/>
+   <to xsi:type="glyph" reference="idd"/>
+  </link>
+  <link id="id_12">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="idd"/>
+  </link>
+  <link id="id_17">
+   
+   <from xsi:type="arrow" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_3"/>
+  </link>
+  <link id="id_19">
+   
+   <from xsi:type="arrow" reference="id_10"/>
+   <to xsi:type="glyph" reference="id_3"/>
+  </link>
+  <link id="id_7" style="NORMAL">
+   
+   <from xsi:type="arrow" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <text>to</text>
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_13">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+ <link id="id_9"><from xsi:type="arrow" reference="id_5"/><to xsi:type="glyph" reference="id_3"/></link></allLinks></diagram>
