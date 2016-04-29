@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.format;
 import java.awt.Graphics2D;
 
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 
 /**
  * This is a renderer that uses an underlying {@link Graphics2D} implementation, 
@@ -18,9 +18,9 @@ public interface GraphicsSourceRenderer<X> extends Renderer<X> {
 	/**
 	 * Returns a graphics context that the displayer can use.
 	 */
-	public Graphics2D getGraphicsLayer(int layer, float transparency, Dimension2D size);
+	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size);
 	
-	public void setDisplayer(RequiresGraphics2DCompleteDisplayer cd);
+	public void setDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer cd);
 	
 	/**
 	 * Returns the size of the image for a given diagram size.

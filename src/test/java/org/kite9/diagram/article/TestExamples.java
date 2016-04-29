@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.builders.java.DiagramBuilder;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.OutlinerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.alias.PropertyAliaser;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.model.ProjectModel;

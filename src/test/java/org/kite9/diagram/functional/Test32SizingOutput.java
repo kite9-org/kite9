@@ -12,10 +12,10 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.visualization.display.java2d.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.style.Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 

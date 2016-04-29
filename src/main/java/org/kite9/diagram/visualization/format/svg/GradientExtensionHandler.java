@@ -16,7 +16,7 @@ import org.apache.batik.svggen.DefaultExtensionHandler;
 import org.apache.batik.svggen.SVGColor;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGPaintDescriptor;
-import org.kite9.diagram.visualization.display.java2d.TransformedPaint;
+import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 

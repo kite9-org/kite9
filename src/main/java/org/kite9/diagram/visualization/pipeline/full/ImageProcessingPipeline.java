@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.pipeline.full;
 
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline;
 
@@ -17,7 +17,7 @@ public class ImageProcessingPipeline<X> extends AbstractArrangementPipeline impl
 
 	ImageRenderingPipeline<X> renderPl;
 	
-	public ImageProcessingPipeline(RequiresGraphics2DCompleteDisplayer displayer, GraphicsSourceRenderer<X> renderer) {
+	public ImageProcessingPipeline(RequiresGraphicsSourceRendererCompleteDisplayer displayer, GraphicsSourceRenderer<X> renderer) {
 		super();
 		this.renderPl = new ImageRenderingPipeline<X>(displayer, renderer);
 	}

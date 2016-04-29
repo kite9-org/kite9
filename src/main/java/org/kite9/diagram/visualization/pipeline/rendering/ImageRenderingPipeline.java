@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.pipeline.rendering;
 
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.Renderer;
 
@@ -15,7 +15,7 @@ import org.kite9.diagram.visualization.format.Renderer;
  */
 public class ImageRenderingPipeline<X> implements RenderingPipeline<X> {
 	
-	RequiresGraphics2DCompleteDisplayer displayer;
+	RequiresGraphicsSourceRendererCompleteDisplayer displayer;
 	GraphicsSourceRenderer<X> renderer;
 
 	public X render(Diagram d) {
@@ -30,7 +30,7 @@ public class ImageRenderingPipeline<X> implements RenderingPipeline<X> {
 		return renderer;
 	}
 
-	public ImageRenderingPipeline(RequiresGraphics2DCompleteDisplayer displayer, GraphicsSourceRenderer<X> renderer) {
+	public ImageRenderingPipeline(RequiresGraphicsSourceRendererCompleteDisplayer displayer, GraphicsSourceRenderer<X> renderer) {
 		super();
 		this.renderer = renderer;
 		this.displayer = displayer;

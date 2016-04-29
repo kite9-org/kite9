@@ -9,7 +9,7 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.Leaf;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.ComponentDisplayer;
+import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -29,13 +29,13 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 	private VertexArranger cvtf;
 
 	
-	public static void setInitialSizes(Collection<Vertex> vertices, ComponentDisplayer ded) {
+	public static void setInitialSizes(Collection<Vertex> vertices, Displayer ded) {
 		for (Vertex vertex : vertices) {
 			setInitialSize(ded, vertex);
 		}
 	}
 
-	public static void setInitialSize(ComponentDisplayer ded, Vertex tl) {
+	public static void setInitialSize(Displayer ded, Vertex tl) {
 		DiagramElement originalUnderlying = tl.getOriginalUnderlying();
 		
 		if (originalUnderlying instanceof Leaf) {

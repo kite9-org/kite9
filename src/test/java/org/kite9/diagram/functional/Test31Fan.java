@@ -12,7 +12,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test31Fan extends AbstractFunctionalTest {

@@ -14,8 +14,8 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.DesignerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 
 public class Test20PDF extends AbstractFunctionalTest {
 

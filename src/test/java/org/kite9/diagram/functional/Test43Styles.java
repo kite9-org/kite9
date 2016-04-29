@@ -12,8 +12,8 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.StyledText;
-import org.kite9.diagram.visualization.display.java2d.style.io.DasharrayValueManager;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.io.DasharrayValueManager;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 

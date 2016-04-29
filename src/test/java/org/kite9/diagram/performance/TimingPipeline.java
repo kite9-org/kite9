@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 
 public class TimingPipeline extends BufferedImageProcessingPipeline {
 	
-	public TimingPipeline(RequiresGraphics2DCompleteDisplayer displayer,
+	public TimingPipeline(RequiresGraphicsSourceRendererCompleteDisplayer displayer,
 			GraphicsSourceRenderer<BufferedImage> renderer) {
 		super(displayer, renderer);
 	}

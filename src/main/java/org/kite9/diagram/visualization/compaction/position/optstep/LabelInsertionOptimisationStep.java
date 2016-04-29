@@ -33,7 +33,7 @@ import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.style.DirectionalValues;
+import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;

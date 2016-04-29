@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class TestWebSupport extends AbstractFunctionalTest {

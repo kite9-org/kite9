@@ -19,7 +19,7 @@ import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.OutlinerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 

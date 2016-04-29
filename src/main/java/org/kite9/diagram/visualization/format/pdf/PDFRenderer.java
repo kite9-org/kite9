@@ -11,6 +11,9 @@ import java.util.TreeMap;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
+import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.framework.logging.LogicException;
 
 import com.itextpdf.text.Document;
@@ -34,30 +37,32 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
     Document doc;
     ByteArrayOutputStream baos;
     PdfContentByte cb;
-    SortedMap<Float, PdfTemplate> layers;
-    Map<Float, Graphics2D> layerGraphics;
+    SortedMap<GraphicsLayerName, PdfTemplate> layers;
+    Map<GraphicsLayerName, GraphicsLayer> layerGraphics;
     Dimension2D size;
     
-	public Graphics2D getGraphics(int layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		if ((this.size == null) || (!this.size.equals(imageSize))) {
 			initialize(imageSize);
 			this.size = imageSize;
 		}
 		
-		Graphics2D graphics2d = layerGraphics.get(transparency);
-		if (graphics2d!=null) {
-			return graphics2d;
+		GraphicsLayer graphicsLayer= layerGraphics.get(layer);
+		if (graphicsLayer!=null) {
+			return graphicsLayer;
 		}
 		
 		PdfTemplate tp = cb.createTemplate((float) imageSize.x(), (float) imageSize.y());
 		PdfTransparencyGroup group = new PdfTransparencyGroup();
 		tp.setGroup(group);
-	    graphics2d = tp.createGraphics((float) imageSize.x(), (float) imageSize.y());
-	    applyScaleAndTranslate(graphics2d, scale, imageSize, diagramSize);
-		layerGraphics.put(transparency, graphics2d);
-		setRenderingHints(graphics2d);
-		layers.put(transparency, tp);
-		return graphics2d;
+		
+	    Graphics2D g2 = tp.createGraphics((float) imageSize.x(), (float) imageSize.y());
+	    graphicsLayer = new BasicGraphicsLayer(g2);
+	    applyScaleAndTranslate(g2, scale, imageSize, diagramSize);
+		layerGraphics.put(layer, graphicsLayer);
+		setRenderingHints(g2);
+		layers.put(layer, tp);
+		return graphicsLayer;
 	}
 
 	private void initialize(Dimension2D size) {
@@ -70,8 +75,8 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 			PdfWriter writer = PdfWriter.getInstance(doc, baos);
 			doc.open();
 			cb = writer.getDirectContent();
-			layerGraphics = new HashMap<Float, Graphics2D>();
-			layers = new TreeMap<Float, PdfTemplate>();
+			layerGraphics = new HashMap<GraphicsLayerName, GraphicsLayer>();
+			layers = new TreeMap<GraphicsLayerName, PdfTemplate>();
 		} catch (DocumentException e) {
 			throw new LogicException("Could not create PDF in memory", e);
 		}
@@ -85,7 +90,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 			drawDiagramElements(d);
 			dea.finish();
 			
-			for (Graphics2D g2 : layerGraphics.values()) {
+			for (GraphicsLayer g2 : layerGraphics.values()) {
 				g2.dispose();
 			}
 			

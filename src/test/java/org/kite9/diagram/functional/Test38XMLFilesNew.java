@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.CGWhiteStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.DesignerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.TestingHelp;
 

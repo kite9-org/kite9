@@ -6,10 +6,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.CGWhiteStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.DesignerStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.OutlinerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.logging.Kite9Log;
 
 public class Test37XMLFiles extends AbstractFunctionalTest {

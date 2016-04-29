@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.builders.java.DiagramBuilder;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.CGWhiteStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
 import org.kite9.framework.alias.PropertyAliaser;
 import org.kite9.framework.model.ProjectModel;
 import org.kite9.java.examples.orders.Order;

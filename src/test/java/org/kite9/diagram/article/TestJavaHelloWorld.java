@@ -14,7 +14,7 @@ import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.functional.HopLink;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 
 public class TestJavaHelloWorld extends AbstractFunctionalTest {
 	

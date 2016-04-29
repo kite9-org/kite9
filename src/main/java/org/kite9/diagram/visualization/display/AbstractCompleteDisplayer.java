@@ -18,10 +18,10 @@ import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.AbstractRouteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.java2d.style.Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.TerminatorShape;
+import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
+import org.kite9.diagram.visualization.display.style.ShapeStyle;
+import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -43,8 +43,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		this.buffer = buffer ? ss.getGridSize() : 0;
 	}
 
-	public ComponentDisplayer getDisplayer(DiagramElement de) {
-		for (ComponentDisplayer c : displayers) {
+	public Displayer getDisplayer(DiagramElement de) {
+		for (Displayer c : displayers) {
 			if (c.canDisplay(de)) {
 				return c;
 			}
@@ -54,7 +54,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	public boolean isVisibleElement(DiagramElement de) {
-		ComponentDisplayer ded = getDisplayer(de);
+		Displayer ded = getDisplayer(de);
 		if (ded == null) {
 			return false;
 		} else if ((de instanceof PositionableDiagramElement) && 
@@ -68,12 +68,12 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	public boolean canDisplay(DiagramElement element) {
-		ComponentDisplayer d = getDisplayer(element);
+		Displayer d = getDisplayer(element);
 		return d.canDisplay(element);
 	}
 	
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
-		for (ComponentDisplayer cd : displayers) {
+		for (Displayer cd : displayers) {
 			if (cd.canDisplay(element)) {
 				return cd.size(element, within);
 			}

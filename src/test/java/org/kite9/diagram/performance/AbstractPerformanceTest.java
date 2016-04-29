@@ -29,11 +29,11 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
-import org.kite9.diagram.visualization.display.java2d.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.style.Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
@@ -151,7 +151,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 
 	private BufferedImageProcessingPipeline getPipeline(boolean watermark, final Metrics m) {
 		Stylesheet ss = new BasicStylesheet();
-		final RequiresGraphics2DCompleteDisplayer cd = new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, watermark, false),ss);
+		final RequiresGraphicsSourceRendererCompleteDisplayer cd = new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, watermark, false),ss);
 		GraphicsSourceRenderer<BufferedImage> renderer = new BufferedImageRenderer();
 		return new TimingPipeline(cd, renderer);
 	}

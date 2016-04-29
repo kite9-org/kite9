@@ -7,9 +7,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.kite9.diagram.position.CostedDimension;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.BasicSizeSorter;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.SizeSorter;
-import org.kite9.diagram.visualization.display.java2d.adl_basic.SmoothingSizeSorter;
+import org.kite9.diagram.visualization.display.components.BasicSizeSorter;
+import org.kite9.diagram.visualization.display.components.SizeSorter;
+import org.kite9.diagram.visualization.display.components.SmoothingSizeSorter;
 
 public class TestSizeSorter {
 

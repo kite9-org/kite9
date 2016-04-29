@@ -14,15 +14,16 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.DesignerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 
 public class Test49SVG extends AbstractFunctionalTest {
 
 	@Test
 	public void test_49_1_GlyphFinal() throws IOException {
 		Contained one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
-		Diagram d = new Diagram("The Diagram", createList(one), null);
+		Context c1 = new Context(createList(one), true, null, null);
+		Diagram d = new Diagram("The Diagram", listOf(c1), null);
 
 		renderDiagramSVG(d, new Designer2012Stylesheet());
 	}

@@ -15,7 +15,7 @@ import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 
 /**
@@ -27,13 +27,13 @@ import org.kite9.diagram.visualization.format.pos.DiagramChecker;
  */
 public abstract class AbstractGraphicsSourceRenderer<X> implements GraphicsSourceRenderer<X> {
 
-	protected RequiresGraphics2DCompleteDisplayer dea;
+	protected RequiresGraphicsSourceRendererCompleteDisplayer dea;
 	
 	public AbstractGraphicsSourceRenderer() {
 		super();
 	}
 
-	public void setDisplayer(RequiresGraphics2DCompleteDisplayer dea) {
+	public void setDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer dea) {
 		this.dea = dea;
 		dea.initialize(this, new Dimension2D(1,1));
 	}

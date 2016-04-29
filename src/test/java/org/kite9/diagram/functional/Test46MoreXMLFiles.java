@@ -9,8 +9,8 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.OutlinerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test46MoreXMLFiles extends AbstractFunctionalTest {
@@ -65,7 +65,7 @@ public class Test46MoreXMLFiles extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_49_10_KeyTooSmall() throws IOException {
-		 renderDiagram(new Diagram(HelpMethods.createList(new Glyph("stereo", "Some Label", 
+		renderDiagram(new Diagram(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
 				new TextLine("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(
@@ -80,7 +80,7 @@ public class Test46MoreXMLFiles extends AbstractFunctionalTest {
 	}
 	
 	protected Diagram createDiagram() {
-		Diagram d = new Diagram(HelpMethods.createList(new Glyph("stereo", "Some Label", 
+		Diagram d = new Diagram(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
 				new TextLine("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(

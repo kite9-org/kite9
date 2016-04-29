@@ -27,7 +27,7 @@ public abstract class AbstractScalingGraphicsSourceRenderer<X> extends AbstractG
 		this.height = height;
 	}
 	
-	public final Graphics2D getGraphicsLayer(int layer, float transparency, Dimension2D size) {
+	public final GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size) {
 		if (size.getWidth() == 1) {
 			return getGraphics(layer, transparency, 1f, size, size);
 		}
@@ -70,5 +70,5 @@ public abstract class AbstractScalingGraphicsSourceRenderer<X> extends AbstractG
 		return getScaling(diagramSize).size;
 	}
 
-	protected abstract Graphics2D getGraphics(int layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramArea);
+	protected abstract GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramArea);
 }

@@ -6,8 +6,11 @@ import java.awt.image.BufferedImage;
 
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.visualization.display.java2d.RequiresGraphics2DCompleteDisplayer;
+import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.AbstractGraphicsSourceRenderer;
+import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 
 /**
  * Position info renderer doesn't render an image, it returns the diagram containing information about each graphical
@@ -23,7 +26,7 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 	Graphics2D g2;
 	SVGPathConverter pathConverter = new SVGPathConverter();
 
-	public Graphics2D getGraphicsLayer(int layer, float transparency, Dimension2D size) {
+	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size) {
 		if (bi == null) {
 			bi = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
 			g2 = bi.createGraphics();
@@ -32,11 +35,11 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
 
-		return g2;
+		return new BasicGraphicsLayer(g2);
 	}
 
 	@Override
-	public void setDisplayer(RequiresGraphics2DCompleteDisplayer dea) {
+	public void setDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer dea) {
 		super.setDisplayer(dea);
 		dea.setOutputting(false);
 		dea.setPathConverter(pathConverter);

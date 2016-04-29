@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.format.svg;
 
 import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -11,14 +10,18 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
+import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 
 	private DOMImplementation domImpl;
 	private Document document;
+	private Element topGroup;
 	private SVGGraphics2D g2;
 	private Integer internalWidth, internalHeight;
 	
@@ -37,21 +40,29 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 			dea.initialize(this, out);
 			drawDiagramElements(something);
 			dea.finish();
-			g2.dispose();
-			
+			g2.setTopLevelGroup(topGroup);
 			Writer outw = new StringWriter();
 			g2.stream(outw, true);
 			outw.flush();
 			outw.close();
+			g2.dispose();
 			return outw.toString();
 		} catch (Exception e) {
 			throw new Kite9ProcessingException("Couldn't create SVG Graphics:", e);
 		}
 	}
 
-	public Graphics2D getGraphics(int layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		
 		if ((internalWidth==null) || (internalWidth != imageSize.getWidth()) ||  (internalHeight != imageSize.getHeight())) {
+			// starting a new image size
+			if (g2 != null) {
+				g2.dispose();
+			}
+			
+			this.internalWidth = (int) imageSize.getWidth();
+			this.internalHeight = (int) imageSize.getHeight();
+			
 			domImpl = GenericDOMImplementation.getDOMImplementation();
 		    String svgNS = "http://www.w3.org/2000/svg";
 		    document = domImpl.createDocument(svgNS, "svg", null);
@@ -59,15 +70,19 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 		    context.setExtensionHandler(new GradientExtensionHandler());
 		    
 			g2 = new SVGGraphics2D(context, false);	
+			topGroup = g2.getTopLevelGroup();
+			
 			setRenderingHints(g2);
 			applyScaleAndTranslate(g2, scale, imageSize, diagramSize);
-			this.internalWidth = (int) imageSize.getWidth();
-			this.internalHeight = (int) imageSize.getHeight();
 		}
-
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,transparency));
 		
-		return g2;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,transparency));
+
+		return createGraphicsLayer(layer);
+	}
+
+	protected SVGGraphicsLayer createGraphicsLayer(GraphicsLayerName layer) {
+		return new SVGGraphicsLayer(g2, layer, document, topGroup);
 	}
 
 }

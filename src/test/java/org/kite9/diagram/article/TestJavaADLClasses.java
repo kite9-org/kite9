@@ -15,8 +15,8 @@ import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.CGWhiteStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
 import org.kite9.framework.Kite9Item;
 
 public class TestJavaADLClasses extends AbstractFunctionalTest {

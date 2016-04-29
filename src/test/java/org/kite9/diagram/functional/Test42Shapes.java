@@ -15,12 +15,12 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.java2d.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.java2d.style.Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.shapes.FlowchartShapes;
-import org.kite9.diagram.visualization.display.java2d.style.shapes.UMLShapes;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.FlexibleShape;
+import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
+import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.logging.Kite9Log;
 
 public class Test42Shapes extends AbstractFunctionalTest {

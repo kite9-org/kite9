@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.kite9</groupId>
-	<artifactId>kite9-diagram-visualization</artifactId>
+	<artifactId>kite9-visualization</artifactId>
 	<version>1.0.RC1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 

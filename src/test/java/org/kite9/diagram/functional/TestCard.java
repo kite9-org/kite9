@@ -14,12 +14,12 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicBlueStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.CGWhiteStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.DesignerStylesheet;
-import org.kite9.diagram.visualization.display.java2d.style.sheets.OutlinerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicBlueStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
+import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class TestCard extends AbstractFunctionalTest {

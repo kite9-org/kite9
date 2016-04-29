@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGPath;
-import org.kite9.diagram.visualization.display.java2d.style.io.PathConverter;
+import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
