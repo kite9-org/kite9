@@ -42,7 +42,7 @@ public abstract class AbstractOrderedDisplayer extends AbstractGraphicsSourceRen
 				if (disp.canDisplay(d.de)) {
 					disp.getLayer().startElement(d.de);
 					disp.draw(d.de, d.ri);
-					disp.getLayer().endElement();
+					disp.getLayer().endElement(d.de);
 				}
 			}
 		}
