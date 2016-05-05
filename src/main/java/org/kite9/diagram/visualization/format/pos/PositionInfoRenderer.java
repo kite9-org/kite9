@@ -24,7 +24,6 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 
 	BufferedImage bi;
 	Graphics2D g2;
-	SVGPathConverter pathConverter = new SVGPathConverter();
 
 	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size) {
 		if (bi == null) {
@@ -42,7 +41,6 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 	public void setDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer dea) {
 		super.setDisplayer(dea);
 		dea.setOutputting(false);
-		dea.setPathConverter(pathConverter);
 	}
 
 	@Override

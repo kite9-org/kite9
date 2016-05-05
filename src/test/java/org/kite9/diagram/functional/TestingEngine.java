@@ -48,6 +48,7 @@ import org.kite9.diagram.visualization.format.pos.DiagramChecker.ConnectionActio
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ExpectedLayoutException;
 import org.kite9.diagram.visualization.format.pos.HopChecker;
 import org.kite9.diagram.visualization.format.pos.HopChecker.HopAction;
+import org.kite9.diagram.visualization.format.svg.ADLAndSVGRenderer;
 import org.kite9.diagram.visualization.format.svg.SVGRenderer;
 import org.kite9.diagram.visualization.format.pos.PositionInfoRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
@@ -268,7 +269,13 @@ public class TestingEngine extends TestingHelp {
 	
 	public void renderDiagramSVG(Diagram d) throws IOException {
 		renderDiagramSVG(d, new BasicStylesheet());
+	}
+	
 
+	public void renderDiagramADLAndSVG(Diagram d, Stylesheet s) throws IOException {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Class<?> theTest = m.getDeclaringClass();
+		renderDiagramADLAndSVG(d, theTest, m.getName(), s, true);
 	}
 
 	public void renderDiagramPDF(Diagram d, Stylesheet ss) throws IOException {
@@ -280,7 +287,7 @@ public class TestingEngine extends TestingHelp {
 	public void renderDiagramSVG(Diagram d, Stylesheet ss) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramSVG(d, theTest, m.getName(), ss);
+		renderDiagramSVG(d, theTest, m.getName(), ss, true);
 	}
 
 	public static void renderToFile(Class<?> theTest, String subtest, String item, byte[] bytes) {
@@ -313,7 +320,7 @@ public class TestingEngine extends TestingHelp {
 		// can't test pdfs, sadly
 	}
 	
-	private void renderDiagramSVG(Diagram d, Class<?> theTest, String subtest, Stylesheet ss) throws IOException {
+	private void renderDiagramSVG(Diagram d, Class<?> theTest, String subtest, Stylesheet ss, boolean checkImage) throws IOException {
 		XMLHelper helper = new XMLHelper();
 		String xml = helper.toXML(d);
 
@@ -329,7 +336,16 @@ public class TestingEngine extends TestingHelp {
 		renderToFile(theTest, subtest, subtest + "-graph.svg", svg.getBytes());
 		testConnectionPresence(d, false, false, false);
 
-		// can't test pdfs, sadly
+		boolean ok = true;
+		
+		if (checkImage) {
+			ok = checkIdentical(theTest, subtest, subtest+"-graph.svg") || ok;
+		}
+
+		if (!ok) {
+			Assert.fail("No test results found for test");
+		}
+		
 	}
 
 	public boolean checkOutputs(Class<?> theTest, String subtest, String item) throws IOException {
@@ -652,4 +668,35 @@ public class TestingEngine extends TestingHelp {
 		// TODO Auto-generated method stub
 
 	}
+
+	private void renderDiagramADLAndSVG(Diagram d, Class<?> theTest, String subtest, Stylesheet ss, boolean checkImage) throws IOException {
+		// no watermarks
+		ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(
+				new ADLBasicCompleteDisplayer(ss, false, false), ss), new ADLAndSVGRenderer());
+		String out = pipeline.process(d);
+	
+		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
+		renderToFile(theTest, subtest, subtest + "-graph.adlsvg.xml", out.getBytes());
+		testConnectionPresence(d, false, false, false);
+
+		// check convert back again
+		String xml = new XMLHelper().toXML(d);
+		Diagram d2 = (Diagram) new XMLHelper().fromXML(xml);
+		String xml2 = new XMLHelper().toXML(d2);
+
+		Assert.assertEquals(xml, xml2);
+		boolean ok = true;
+		
+		if (checkImage) {
+			ok = checkIdentical(theTest, subtest, subtest+"-graph.adlsvg.xml") || ok;
+		}
+
+		if (!ok) {
+			Assert.fail("No test results found for test");
+		}
+
+		
+		
+	}
+
 }

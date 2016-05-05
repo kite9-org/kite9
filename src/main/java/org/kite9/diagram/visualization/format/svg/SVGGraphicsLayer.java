@@ -36,12 +36,16 @@ public class SVGGraphicsLayer extends BasicGraphicsLayer {
 	@Override
 	public void endElement(DiagramElement de) {
 		Element topGroup = ((SVGGraphics2D)g2).getTopLevelGroup();
-		if (topGroup.getChildNodes().getLength() > 0) {
+		if (worthKeeping(topGroup)) {
 			originalTopGroup.appendChild(topGroup);
 		}
 		
 		super.endElement(de);
 		((SVGGraphics2D)g2).setTopLevelGroup(topGroup);
+	}
+
+	protected boolean worthKeeping(Element topGroup) {
+		return topGroup.getChildNodes().getLength() > 0;
 	}
 	
 	

@@ -112,6 +112,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new OutlinerStylesheet());
 		renderDiagramPDF(d, new OutlinerStylesheet());
 		renderDiagram(d, new OutlinerStylesheet());
+		renderDiagramADLAndSVG(d, new OutlinerStylesheet());
 	}
 	
 	@Test
@@ -120,6 +121,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new BasicStylesheet());
 		renderDiagramPDF(d, new BasicStylesheet());
 		renderDiagram(d, new BasicStylesheet());
+		renderDiagramADLAndSVG(d, new BasicStylesheet());
 	}
 	
 	@Test
@@ -128,6 +130,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new DesignerStylesheet());
 		renderDiagramPDF(d, new DesignerStylesheet());
 		renderDiagram(d, new DesignerStylesheet());
+		renderDiagramADLAndSVG(d, new DesignerStylesheet());
 	}
 	
 	@Test
@@ -136,6 +139,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new Designer2012Stylesheet());
 		renderDiagramPDF(d, new Designer2012Stylesheet());
 		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
 	}
 	
 	@Test
@@ -144,6 +148,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new CGWhiteStylesheet());
 		renderDiagramPDF(d, new CGWhiteStylesheet());
 		renderDiagram(d, new CGWhiteStylesheet());
+		renderDiagramADLAndSVG(d, new CGWhiteStylesheet());
 	}
 	
 	@Test
@@ -152,6 +157,7 @@ public class TestCard extends AbstractFunctionalTest {
 		renderDiagramSVG(d, new BasicBlueStylesheet());
 		renderDiagramPDF(d, new BasicBlueStylesheet());
 		renderDiagram(d, new BasicBlueStylesheet());
+		renderDiagramADLAndSVG(d, new BasicBlueStylesheet());
 	}
 
 	@Override

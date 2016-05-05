@@ -31,7 +31,7 @@ import org.kite9.framework.common.HelpMethods;
 @Ignore
 public class TestTextLineRendering extends AbstractRenderingTest {
 
-	@Test
+/*	@Test
 	public void testContextLabel1() throws IOException {
 		Dimension2D size = new Dimension2D(1000, 400);
 		BufferedImage bi = newImage(size);
@@ -197,7 +197,7 @@ public class TestTextLineRendering extends AbstractRenderingTest {
 		te.checkOutputs(this.getClass(), "testConnectionLabel", imageName);
 	}
 
-	public void testConnectionLabel(final int lfs, final int sfs, final float ss, VPos vert, HPos horz, int x, int y, Graphics2D g2, boolean syms) throws IOException {
+/*	public void testConnectionLabel(final int lfs, final int sfs, final float ss, VPos vert, HPos horz, int x, int y, Graphics2D g2, boolean syms) throws IOException {
 		
 		g2.setPaint(Color.WHITE);
 		Rectangle2D.Double r = new Rectangle2D.Double((double) x, (double) y, 200d, 80d);
@@ -315,5 +315,5 @@ public class TestTextLineRendering extends AbstractRenderingTest {
 	
 	}
 	
-	
+	*/
 }

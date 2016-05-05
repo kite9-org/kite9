@@ -69,6 +69,11 @@ public class AbstractFunctionalTest extends HelpMethods {
 		te.renderDiagramSVG(d);
 	}
 	
+	public void renderDiagramADLAndSVG(Diagram d, Stylesheet ss) throws IOException {
+		TestingEngine te = new TestingEngine(getZipName());
+		te.renderDiagramADLAndSVG(d, ss);
+	}
+	
 	public TestingEngine getTestingEngine() {
 		return new TestingEngine(getZipName());
 	}

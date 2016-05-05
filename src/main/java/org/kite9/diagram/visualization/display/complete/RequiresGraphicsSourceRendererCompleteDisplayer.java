@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.display.complete;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
-import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 
 /**
@@ -15,8 +14,4 @@ public interface RequiresGraphicsSourceRendererCompleteDisplayer extends Complet
 
 	public void initialize(GraphicsSourceRenderer<?> gs, Dimension2D diagramSize);
 	
-	public void setPathConverter(PathConverter pc);
-	
-	public PathConverter getPathConverter();
-
 }
