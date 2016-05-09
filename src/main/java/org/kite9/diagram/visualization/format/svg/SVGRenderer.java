@@ -43,7 +43,6 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 			dea.initialize(this, out);
 			drawDiagramElements(something);
 			dea.finish();
-			g2.setTopLevelGroup(topGroup);
 			String outString = output(something);
 			g2.dispose();
 			return outString;
@@ -53,6 +52,7 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 	}
 
 	protected String output(Diagram something) throws SVGGraphics2DIOException, IOException {
+		g2.setTopLevelGroup(topGroup);
 		Writer outw = new StringWriter();
 		g2.stream(outw, true);
 		outw.flush();
@@ -77,11 +77,10 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 		    SVGGeneratorContext context = SVGGeneratorContext.createDefault(document);
 		    context.setExtensionHandler(new GradientExtensionHandler());
 		    
-			g2 = new SVGGraphics2D(context, false);	
+			g2 = new SVGGraphics2D(context, false); 
+			
 			topGroup = g2.getTopLevelGroup();
-			
-			List l = g2.getDefinitionSet();
-			
+						
 			setRenderingHints(g2);
 			applyScaleAndTranslate(g2, scale, imageSize, diagramSize);
 		}

@@ -21,7 +21,8 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 	@Test
 	public void test_50_1_GlyphFinal() throws IOException {
 		Contained one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
-		Context c1 = new Context(createList(one), true, null, null);
+		Contained two = new Glyph("RG", "Stereo", "Rob's Second Glyph", null, null);
+		Context c1 = new Context(createList(one, two), true, null, null);
 		Diagram d = new Diagram("The Diagram", listOf(c1), null);
 
 		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
