@@ -91,7 +91,11 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 	}
 
 	protected SVGGraphicsLayer createGraphicsLayer(GraphicsLayerName layer) {
-		return new SVGGraphicsLayer(g2, layer, document, topGroup);
+		return new SVGGraphicsLayer(g2, layer, document, topGroup, externalizeFonts());
+	}
+
+	protected boolean externalizeFonts() {
+		return false;
 	}
 
 }

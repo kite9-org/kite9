@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.format.svg;
 import java.io.IOException;
 
 import org.apache.batik.svggen.DOMTreeManager;
+import org.apache.batik.svggen.SVGCSSStyler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.kite9.diagram.adl.Diagram;
@@ -34,6 +35,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 	@Override
 	protected String output(Diagram something) throws SVGGraphics2DIOException, IOException {
 		ensureDisplayData(getDiagramDefs(), diagramRendering);
+		ensureDisplayData(getDiagramDefaultStyles(), diagramRendering);
 		g2.setTopLevelGroup(topGroup);
 		return new XMLHelper().toXML(something);
 	}
@@ -42,14 +44,14 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 	
 	@Override
 	protected SVGGraphicsLayer createGraphicsLayer(GraphicsLayerName name) {
-		return new SVGGraphicsLayer(g2, name, document, topGroup) {
+		return new SVGGraphicsLayer(g2, name, document, topGroup, externalizeFonts()) {
 
 			@Override
 			public void endElement(DiagramElement de) {
 				Element thisGroup= getTopLevelGroup();
 				if ((worthKeeping(thisGroup)) && (de instanceof PositionableDiagramElement)) {
 					RenderingInformation ri = ((PositionableDiagramElement)de).getRenderingInformation();
-					
+					SVGCSSStyler.style(thisGroup);
 					ensureDisplayData(thisGroup, ri);
 				}
 					
@@ -71,8 +73,15 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 		Element e3 = getDOMTreeManager().getTopLevelGroup(true);
 		return (Element) e3.getChildNodes().item(0);
 	}
+	
+	private Element getDiagramDefaultStyles() {
+		Element out = document.createElement("svg");
+		getDOMTreeManager().applyDefaultRenderingStyle(out);
+		SVGCSSStyler.style(out);
+		return out;
+	}
 
-	private void ensureDisplayData(Element topGroup, RenderingInformation ri) {
+	private void ensureDisplayData(Element xml, RenderingInformation ri) {
 		Object displayData = ri.getDisplayData();
 		
 		if (displayData == null) {
@@ -81,7 +90,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 		}
 		
 		if (displayData instanceof XMLFragments) {
-			((XMLFragments) displayData).getParts().add(topGroup);
+			((XMLFragments) displayData).getParts().add(xml);
 		} else {
 			throw new Kite9ProcessingException("Mixed rendering: "+displayData.getClass());
 		}

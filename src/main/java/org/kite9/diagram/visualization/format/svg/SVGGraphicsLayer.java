@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.format.svg;
 
+import java.awt.Font;
+
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.IdentifiableDiagramElement;
@@ -13,12 +15,14 @@ public class SVGGraphicsLayer extends BasicGraphicsLayer {
 	GraphicsLayerName name;
 	Document document;
 	Element originalTopGroup;
+	boolean externalFonts;
 
-	public SVGGraphicsLayer(SVGGraphics2D g2, GraphicsLayerName name, Document document, Element topGroup) {
+	public SVGGraphicsLayer(SVGGraphics2D g2, GraphicsLayerName name, Document document, Element topGroup, boolean externalFonts) {
 		super(g2);
 		this.name = name;
 		this.document = document;
 		this.originalTopGroup = topGroup;
+		this.externalFonts = externalFonts;
 	}
 
 	@Override
@@ -50,6 +54,16 @@ public class SVGGraphicsLayer extends BasicGraphicsLayer {
 
 	protected boolean worthKeeping(Element topGroup) {
 		return topGroup.getChildNodes().getLength() > 0;
+	}
+
+	@Override
+	public void outputText(Font font, double y, double x, String line) {
+		if (!externalFonts) {
+			super.outputText(font, y, x, line);
+		} else {
+			g2.setFont(font);
+			g2.drawString(line, (float) x, (float) y); 
+		}
 	}
 	
 	

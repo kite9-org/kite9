@@ -8,6 +8,7 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
@@ -114,4 +115,28 @@ public class BasicGraphicsLayer implements GraphicsLayer {
 	public void dispose() {
 		g2.dispose();
 	}
+	
+	public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(
+			AffineTransform.getScaleInstance(1, 1), true, true);
+	
+	/**
+	 * This method is required for outputting text in a platform-independent
+	 * way. i.e. ignoring stuff about dpi, etc.
+	 */
+	public void outputText(Font font, double y, double x, String line) {
+		java.awt.Shape outline;
+		try {
+			GlyphVector gv = font.createGlyphVector(FONT_RENDER_CONTEXT,
+					line.toCharArray());
+			outline = gv.getOutline((float) (x), (float) y);
+			fill(outline);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Rectangle2D r2 = outline.getBounds2D();
+		// debugBox(r2.getMinX(), r2.getMinY(), r2.getWidth(), r2.getHeight(),
+		// Color.YELLOW, g2);
+	}
+
 }

@@ -42,6 +42,8 @@ public interface GraphicsLayer {
 	public FontRenderContext getFontRenderContext();
 	
 	public Rectangle2D getStringBounds(FontMetrics fm, String s);
+	
+	public void outputText(Font font, double y, double x, String line);
 
 	/* Affine Transform */
 	

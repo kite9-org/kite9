@@ -7,7 +7,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -31,9 +30,6 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  * 
  */
 public abstract class AbstractADLDisplayer implements ComponentDisplayer {
-
-	public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(
-			AffineTransform.getScaleInstance(1, 1), true, true);
 
 	public enum Justification {
 		LEFT, RIGHT, CENTER;
@@ -130,33 +126,13 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 				double margin = within.getWidth() - usedWidth;
 				double indent = justification.getIndent(margin);
 				g2.setColor(color);
-				outputText(font, y, x + indent, line.trim(), g2);
+				g2.outputText(font, y, x + indent, line.trim());
 
 				y += metrics.getHeight();
 			}
 		}
 
 		return out;
-	}
-
-	/**
-	 * This method is required for outputting text in a platform-independent
-	 * way. i.e. ignoring stuff about dpi, etc.
-	 */
-	public static void outputText(Font font, double y, double x, String line, GraphicsLayer g2) {
-		java.awt.Shape outline;
-		try {
-			GlyphVector gv = font.createGlyphVector(FONT_RENDER_CONTEXT,
-					line.toCharArray());
-			outline = gv.getOutline((float) (x), (float) y);
-			g2.fill(outline);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Rectangle2D r2 = outline.getBounds2D();
-		// debugBox(r2.getMinX(), r2.getMinY(), r2.getWidth(), r2.getHeight(),
-		// Color.YELLOW, g2);
 	}
 
 	public CostedDimension sizeText(String str, FontMetrics metrics,
@@ -289,7 +265,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 //		g2.drawRect((int) x, (int) (y), (int) ss.getSymbolSize(), (int) ss.getSymbolSize());
 
 		g2.setColor(ss.getSymbolTextStyle().getColor());
-		outputText(symbolFont, ypos, xpos, sym, g2);
+		g2.outputText(symbolFont, ypos, xpos, sym);
 		// g2.setColor(Color.RED);
 		// Shape s = new Rectangle2D.Double(xpos, ypos - textSize.getHeight(),
 		// textSize.getWidth(), textSize.getHeight());

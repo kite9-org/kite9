@@ -23,9 +23,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Diagram;
@@ -48,12 +45,13 @@ import org.kite9.diagram.visualization.format.pos.DiagramChecker.ConnectionActio
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ExpectedLayoutException;
 import org.kite9.diagram.visualization.format.pos.HopChecker;
 import org.kite9.diagram.visualization.format.pos.HopChecker.HopAction;
+import org.kite9.diagram.visualization.format.pos.PositionInfoRenderer;
 import org.kite9.diagram.visualization.format.svg.ADLAndSVGRenderer;
 import org.kite9.diagram.visualization.format.svg.SVGRenderer;
-import org.kite9.diagram.visualization.format.pos.PositionInfoRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.pipeline.full.ImageProcessingPipeline;
 import org.kite9.diagram.visualization.pipeline.rendering.ClientSideMapRenderingPipeline;
+import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
@@ -67,6 +65,9 @@ import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.XMLHelper;
+
+import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 
 @Ignore
 public class TestingEngine extends TestingHelp {
@@ -327,10 +328,16 @@ public class TestingEngine extends TestingHelp {
 		writeOutput(theTest, subtest, "diagram.xml", xml);
 		d = (Diagram) helper.fromXML(xml);
 
-		// no watermarks
-		ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(
-				new ADLBasicCompleteDisplayer(ss, false, false), ss), new SVGRenderer());
-		String svg = pipeline.process(d);
+		// 2-stage rendering
+		ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(
+				new ADLBasicCompleteDisplayer(ss, false, true), ss), new PositionInfoRenderer());
+		
+		Diagram processed = pipeline.process(d);
+		
+		ImageRenderingPipeline<String> p = new ImageRenderingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, false),ss),
+				new SVGRenderer());
+		
+		String svg = p.render(processed);
 
 		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
 		renderToFile(theTest, subtest, subtest + "-graph.svg", svg.getBytes());

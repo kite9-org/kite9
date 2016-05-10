@@ -78,7 +78,7 @@ public class WatermarkRenderer {
 		
 		g2.setFont(f);
 		g2.setColor(ts.getColor());
-		AbstractADLDisplayer.outputText(f, (size.getHeight() - descent - bottom), ((size.getWidth() / 2d) - (width / 2d)), text, g2);
+		g2.outputText(f, (size.getHeight() - descent - bottom), ((size.getWidth() / 2d) - (width / 2d)), text);
 		
 		g2.setTransform(at);
 		
