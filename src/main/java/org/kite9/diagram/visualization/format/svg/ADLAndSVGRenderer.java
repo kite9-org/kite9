@@ -95,6 +95,10 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 			throw new Kite9ProcessingException("Mixed rendering: "+displayData.getClass());
 		}
 	}
-	
+
+	@Override
+	protected boolean externalizeFonts() {
+		return true;
+	}
 	
 }

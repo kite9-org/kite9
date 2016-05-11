@@ -21,4 +21,15 @@ public class LocalFont extends Font {
 	public String getFontFileName() {
 		return file;
 	}
+
+	@Override
+	public String getFamily() {
+		String name = file.substring(file.lastIndexOf("/")+1);
+		if (name.contains(".")) {
+			name = name.substring(0, name.indexOf("."));
+		}
+		
+		return name.replace("-"," ");
+	}
+	
 }
