@@ -16,12 +16,6 @@
 
 	<repositories>
 		<repository>
-			<id>itextpdf.com</id>
-			<name>Maven Repository for iText</name>
-			<url>http://maven.itextpdf.com/</url>
-		</repository>
-
-		<repository>
 			<id>maven.central</id>
 			<name>Maven Central Repo</name>
 			<url>http://repo1.maven.org/maven2</url>
