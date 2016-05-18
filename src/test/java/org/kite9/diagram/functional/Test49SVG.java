@@ -1,7 +1,14 @@
 package org.kite9.diagram.functional;
 
+import java.awt.image.RenderedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 
+import javax.imageio.ImageIO;
+
+import org.apache.batik.ext.awt.image.spi.ImageWriter;
+import org.apache.batik.ext.awt.image.spi.ImageWriterParams;
+import org.apache.batik.ext.awt.image.spi.ImageWriterRegistry;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -108,6 +115,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new TurnLink(a, three);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+		
 		renderDiagramSVG(d, new DesignerStylesheet());
 	}
 }

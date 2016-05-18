@@ -1,9 +1,6 @@
 package org.kite9.diagram.visualization.display.complete;
 
-import java.awt.Paint;
-import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -11,19 +8,19 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.display.components.AbstractBoxModelDisplayer;
+import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;
 import org.kite9.diagram.visualization.display.components.ConnectionBodyDisplayer;
 import org.kite9.diagram.visualization.display.components.ConnectionLabelTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.ContextDisplayer;
 import org.kite9.diagram.visualization.display.components.ContextLabelTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.DebugLineDisplayer;
-import org.kite9.diagram.visualization.display.components.DiagramDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphCompositionalShapeDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.KeyDisplayer;
 import org.kite9.diagram.visualization.display.components.KeyTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
-import org.kite9.diagram.visualization.display.components.WatermarkRenderer;
+import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
@@ -70,6 +67,8 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 		initBackgroundLayer();			
 		initShadows();		
 		initMainLayer();	
+		initWatermarkLayer();
+		initCopyrightLayer();
 		initFlannelLayer();
 		initDebugLayer();
 	}
@@ -77,6 +76,16 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 	private void initFlannelLayer() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void initWatermarkLayer() {
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, .3f, diagramSize);
+		displayers.add(new WatermarkDisplayer(this, ss, g2, true));		// watermark
+	}
+	
+	private void initCopyrightLayer() {
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, 1f, diagramSize);
+		displayers.add(new WatermarkDisplayer(this, ss, g2, false));	// copyright
 	}
 
 	public void initDebugLayer() {
@@ -96,15 +105,13 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 
 	public void initBackgroundLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, 1f, diagramSize);
-		Paint p = ss.getBackground();
-		this.imageSize = gs.getImageSize(diagramSize);
-		paintBackground(g2, imageSize, p);
+		displayers.add(new BackgroundDisplayer(this, ss, g2));
 	}
 
 
 
 	private void orderedRender(GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		displayers.add(new DiagramDisplayer(this, ss, g2, shadow, xo, yo));
+//		displayers.add(new AbstractDiagramDisplayer(this, ss, g2, shadow, xo, yo));
 		displayers.add(new ContextDisplayer(this, ss, g2, shadow, xo, yo));
 		displayers.add(new LinkDisplayer(this, ss, g2, shadow, xo, yo) {
 
@@ -127,31 +134,12 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 		displayers.add(new KeyDisplayer(this, ss, g2, shadow, xo, yo));
 		displayers.add(new KeyTextLineDisplayer(this, g2, ss, shadow, xo, yo));
 		displayers.add(new ConnectionBodyDisplayer(this, ss, g2, shadow, xo, yo));
-		
 	}
    
-	@Override
+	@Override 
 	public void finish() {
 		super.finish();
-		
-		if (watermark) {
-			new WatermarkRenderer().display(gs, this.imageSize, ss);
-		}
 	}
-
-
-	public void paintBackground(GraphicsLayer g2, Dimension2D d, Paint p) {
-		if (d != null) {
-			g2.setPaint(p);
-			AffineTransform at = g2.getTransform();
-			AffineTransform at2 = new AffineTransform();
-			at2.scale(d.getWidth(), d.getHeight());
-			g2.setTransform(at2);
-			g2.fill(new Rectangle(0, 0, 1, 1));
-			g2.setTransform(at);
-		}
-	}
-
 
 
 	@Override

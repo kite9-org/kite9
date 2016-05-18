@@ -127,9 +127,9 @@ public class TestCard extends AbstractFunctionalTest {
 	@Test
 	public void testCardDesigner() throws IOException {
 		Diagram d = createTestCard();
-		renderDiagramSVG(d, new DesignerStylesheet());
 		renderDiagramPDF(d, new DesignerStylesheet());
 		renderDiagram(d, new DesignerStylesheet());
+		renderDiagramSVG(d, new DesignerStylesheet());
 		renderDiagramADLAndSVG(d, new DesignerStylesheet());
 	}
 	

@@ -1,12 +1,19 @@
 package org.kite9.diagram.visualization.format.svg;
 
 import java.awt.AlphaComposite;
+import java.awt.image.RenderedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.apache.batik.dom.GenericDOMImplementation;
+import org.apache.batik.ext.awt.image.spi.ImageWriter;
+import org.apache.batik.ext.awt.image.spi.ImageWriterParams;
+import org.apache.batik.ext.awt.image.spi.ImageWriterRegistry;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
@@ -34,6 +41,27 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 	
 	public SVGRenderer(Integer width, Integer height) {
 		super(width, height);
+		
+		// ensure we can embed textures in svg
+		if (ImageWriterRegistry.getInstance().getWriterFor("image/png") == null) {
+			ImageWriterRegistry.getInstance().register(new ImageWriter() {
+				
+				@Override
+				public void writeImage(RenderedImage image, OutputStream out, ImageWriterParams params) throws IOException {
+					ImageIO.write(image, "PNG", out);
+				}
+				
+				@Override
+				public void writeImage(RenderedImage image, OutputStream out) throws IOException {
+					ImageIO.write(image, "PNG", out);
+				}
+				
+				@Override
+				public String getMIMEType() {
+					return "image/png";
+				}
+			});
+		}
 	}
 
 

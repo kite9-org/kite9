@@ -15,11 +15,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.primitives.DiagramElement;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
-import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -31,27 +33,35 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class WatermarkRenderer {
+public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 	
+	public WatermarkDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g, boolean watermark) {
+		super(parent, ss, g, watermark, 0, 0);
+	}
+
 	public static final String COPYRIGHT_NORMAL = "diagrams rendered by kite9.com";
 	public static final String COPYRIGHT_SHORT = "kite9.com";
 	
 	public static final int COPYRIGHT_MIN_DIMENSION = 250;	
+	
+	
 
-	public static void main(String[] args) {
-		new WatermarkRenderer().displayWatermark(null, new Dimension2D(300, 300), null);
+	@Override
+	public void draw(DiagramElement element, RenderingInformation ri) {
+		Dimension2D size = ((RectangleRenderingInformation)ri).getSize();
+		
+		if (shadow) {
+			displayWatermark(g2, size, ss);
+		} else {
+			if ((size.getWidth() < COPYRIGHT_MIN_DIMENSION) || (size.getHeight() < COPYRIGHT_MIN_DIMENSION)) {
+				// in these cases, the image is too small to complicate further with a watermark
+				return;
+			}
+				
+			displayCopyright(g2, size, ss); 
+		}
 	}
 	
-	public void display(GraphicsSourceRenderer<?> gs, Dimension2D size, Stylesheet ss) {
-		displayWatermark(gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, (float) .15, size), size, ss);
-
-		if ((size.getWidth() < COPYRIGHT_MIN_DIMENSION) || (size.getHeight() < COPYRIGHT_MIN_DIMENSION)) {
-			// in these cases, the image is too small to complicate further with a watermark
-			return;
-		}
-			
-		displayCopyright(gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, (float) 1, size), size, ss); 
-	}
 	
 	public void displayCopyright(GraphicsLayer g2, Dimension2D size, Stylesheet ss) {
 		AffineTransform at = g2.getTransform();
@@ -217,4 +227,5 @@ public class WatermarkRenderer {
 			throw new LogicException("Could not parse: "+substring+" args: "+args,e);
 		}
 	}
+
 }

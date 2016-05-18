@@ -17,7 +17,7 @@ public class TimingPipeline extends BufferedImageProcessingPipeline {
 		super(displayer, renderer);
 	}
 
-	Metrics m;
+	Metrics m = new Metrics(this.getClass().getName());
 	
 	@Override
 	public Compaction compactOrthogonalization(Orthogonalization o) {
