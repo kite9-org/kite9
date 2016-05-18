@@ -300,6 +300,10 @@ public abstract class AbstractADLStylesheet extends AbstractStylesheet implement
 
 	}
 	
+	@Override
+	public final Color getWatermarkColour() {
+		return new Color(0f, 0f, 0f, .2f);
+	}
 	
 	
 }

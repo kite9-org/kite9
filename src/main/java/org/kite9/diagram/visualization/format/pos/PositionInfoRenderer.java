@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.format.pos;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -25,14 +24,12 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 	BufferedImage bi;
 	Graphics2D g2;
 
-	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size) {
+	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, Dimension2D size) {
 		if (bi == null) {
 			bi = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
 			g2 = bi.createGraphics();
 			setRenderingHints(g2);
 		}
-
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
 
 		return new BasicGraphicsLayer(g2);
 	}

@@ -41,7 +41,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
     Map<GraphicsLayerName, GraphicsLayer> layerGraphics;
     Dimension2D size;
     
-	public GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		if ((this.size == null) || (!this.size.equals(imageSize))) {
 			initialize(imageSize);
 			this.size = imageSize;

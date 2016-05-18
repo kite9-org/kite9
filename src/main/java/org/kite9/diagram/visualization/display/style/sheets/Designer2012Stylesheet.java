@@ -115,11 +115,6 @@ public class Designer2012Stylesheet extends AbstractADLStylesheet implements Sty
 	}
 
 	@Override
-	public Color getWatermarkColour() {
-		return getContextColour();
-	}
-
-	@Override
 	public float getInterSymbolPadding() {
 		return 2;
 	}

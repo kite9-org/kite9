@@ -43,10 +43,6 @@ public class BasicStylesheet extends AbstractADLStylesheet implements Stylesheet
 
 	public static final Color COPYRIGHT_TEXT = new Color(130, 130, 130);
 
-	public Color getWatermarkColour() {
-		return getDarkColour();
-	}
-
 	protected Color getDarkColour() {
 		return Color.BLACK;
 	}

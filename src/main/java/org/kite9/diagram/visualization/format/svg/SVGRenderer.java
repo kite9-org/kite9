@@ -1,12 +1,10 @@
 package org.kite9.diagram.visualization.format.svg;
 
-import java.awt.AlphaComposite;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -88,7 +86,7 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 		return outw.toString();
 	}
 
-	public GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		
 		if ((internalWidth==null) || (internalWidth != imageSize.getWidth()) ||  (internalHeight != imageSize.getHeight())) {
 			// starting a new image size
@@ -113,8 +111,6 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 			applyScaleAndTranslate(g2, scale, imageSize, diagramSize);
 		}
 		
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,transparency));
-
 		return createGraphicsLayer(layer);
 	}
 

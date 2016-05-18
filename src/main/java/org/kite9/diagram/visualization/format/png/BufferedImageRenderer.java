@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.format.png;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -34,7 +33,7 @@ public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer
 		return bi;
 	}
 
-	public GraphicsLayer getGraphics(GraphicsLayerName layer, float transparency, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		
 		if ((bi==null) || (bi.getWidth() != imageSize.getWidth()) ||  (bi.getHeight() != imageSize.getHeight())) {
 			bi = new BufferedImage((int) imageSize.getWidth(), (int) imageSize.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -42,8 +41,6 @@ public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer
 			setRenderingHints(g2);
 			applyScaleAndTranslate(g2, scale, imageSize, diagramSize);
 		}
-
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,transparency));
 		
 		return new BasicGraphicsLayer(g2);
 	}

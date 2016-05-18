@@ -133,11 +133,6 @@ public class DesignerStylesheet extends AbstractADLStylesheet implements Stylesh
 	}
 
 	@Override
-	public Color getWatermarkColour() {
-		return getContextColour();
-	}
-
-	@Override
 	public float getInterSymbolPadding() {
 		return 2;
 	}

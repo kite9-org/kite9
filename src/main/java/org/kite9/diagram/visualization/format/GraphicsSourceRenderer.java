@@ -18,7 +18,7 @@ public interface GraphicsSourceRenderer<X> extends Renderer<X> {
 	/**
 	 * Returns a graphics context that the displayer can use.
 	 */
-	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, float transparency, Dimension2D size);
+	public GraphicsLayer getGraphicsLayer(GraphicsLayerName layer, Dimension2D size);
 	
 	public void setDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer cd);
 	

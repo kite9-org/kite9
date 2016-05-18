@@ -44,7 +44,6 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 		this.watermark = watermark;
 	}
 
-	private Dimension2D imageSize;
 	private PathConverter pc = new PathConverter() {
 		
 		@Override
@@ -79,32 +78,32 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 	}
 	
 	private void initWatermarkLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, .3f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, diagramSize);
 		displayers.add(new WatermarkDisplayer(this, ss, g2, true));		// watermark
 	}
 	
 	private void initCopyrightLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, 1f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, diagramSize);
 		displayers.add(new WatermarkDisplayer(this, ss, g2, false));	// copyright
 	}
 
 	public void initDebugLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.DEBUG, 1f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.DEBUG, diagramSize);
 		displayers.add(new DebugLineDisplayer(this, ss, g2));
 	}
 
 	public void initMainLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.MAIN, 1f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.MAIN, diagramSize);
 		orderedRender(g2, false, 0, 0);
 	}
 
 	public void initShadows() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.SHADOW, 1f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.SHADOW, diagramSize);
 		orderedRender(g2, true, ss.getShadowXOffset(), ss.getShadowYOffset());
 	}
 
 	public void initBackgroundLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, 1f, diagramSize);
+		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, diagramSize);
 		displayers.add(new BackgroundDisplayer(this, ss, g2));
 	}
 
