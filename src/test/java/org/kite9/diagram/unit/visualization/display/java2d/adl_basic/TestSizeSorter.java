@@ -32,13 +32,13 @@ public class TestSizeSorter {
 		
 		SizeSorter ss = new BasicSizeSorter();
 		
-		Assert.assertEquals(12, ss.getOptimalColumnSize(4, items, 10).getHeight());
-		Assert.assertEquals(9, ss.getOptimalColumnSize(5, items, 10).getHeight());
+		Assert.assertEquals(12, (int) ss.getOptimalColumnSize(4, items, 10).getHeight());
+		Assert.assertEquals(9, (int) ss.getOptimalColumnSize(5, items, 10).getHeight());
 		
 		SizeSorter sss = new SmoothingSizeSorter();
 
-		Assert.assertEquals(12, sss.getOptimalColumnSize(4, items, 10).getHeight());
-		Assert.assertEquals(8, sss.getOptimalColumnSize(5, items, 10).getHeight());
+		Assert.assertEquals(12, (int) sss.getOptimalColumnSize(4, items, 10).getHeight());
+		Assert.assertEquals(8, (int) sss.getOptimalColumnSize(5, items, 10).getHeight());
 
 	}
 	
