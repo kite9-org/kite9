@@ -16,12 +16,6 @@
 
 	<repositories>
 		<repository>
-			<id>itextpdf.com</id>
-			<name>Maven Repository for iText</name>
-			<url>http://maven.itextpdf.com/</url>
-		</repository>
-
-		<repository>
 			<id>maven.central</id>
 			<name>Maven Central Repo</name>
 			<url>http://repo1.maven.org/maven2</url>
@@ -263,7 +257,7 @@
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itextpdf</artifactId>
-			<version>5.0.2</version>
+			<version>5.0.6</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.bouncycastle</groupId>
