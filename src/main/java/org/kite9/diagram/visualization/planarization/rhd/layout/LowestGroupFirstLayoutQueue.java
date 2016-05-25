@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 
@@ -12,7 +12,7 @@ public class LowestGroupFirstLayoutQueue implements LayoutQueue {
 
 	public LowestGroupFirstLayoutQueue(int size) {
 		super();
-		completedGroups = new HashSet<Group>(size*2);
+		completedGroups = new UnorderedSet<Group>(size*2);
 		todo = new PriorityQueue<Group>(size, new Comparator<Group>() {
 
 			/**

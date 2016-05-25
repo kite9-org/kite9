@@ -3,6 +3,7 @@ package org.kite9.diagram.common.algorithms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -74,7 +75,7 @@ public class Tools {
 	}
 
 	public static <X> Set<X> createSet(X... d1) {
-		HashSet<X> out = new HashSet<X>();
+		LinkedHashSet<X> out = new LinkedHashSet<X>();
 		for (X x : d1) {
 			out.add(x);
 		}

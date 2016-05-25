@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.planarization;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.primitives.DiagramElement;
@@ -108,7 +108,7 @@ public class EdgeMapping {
 			if (edges.size() == 0)
 				return;
 			
-			Set<Vertex> met = new HashSet<Vertex>();
+			Set<Vertex> met = new UnorderedSet<Vertex>();
 			//System.out.println("CHECKTEST for: "+underlying+"\n"+this);
 			
 			Vertex f = getStartVertex();

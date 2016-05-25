@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.CompactionHelperVertex;
+import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -151,7 +151,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		
 		existing = secMap.get(second);
 		if (existing==null) {
-			existing = new HashSet<Dart>();
+			existing = new LinkedHashSet<Dart>();
 			secMap.put(second, existing);
 		} else {
 			// we potentially have some darts that could be used instead
@@ -212,7 +212,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				
 		Set<Dart> theSet = secMap.get(second);
 		if (theSet==null) {
-			theSet = new HashSet<Dart>();
+			theSet = new UnorderedSet<Dart>();
 			secMap.put(second, theSet);
 		}
 		

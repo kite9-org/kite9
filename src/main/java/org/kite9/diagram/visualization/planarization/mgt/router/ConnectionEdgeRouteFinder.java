@@ -207,7 +207,6 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (ci instanceof ConnectionEdge) {
 			String id = ((ConnectionEdge)ci).getID();
 			int hash = id.hashCode();
-			System.out.println("ID:"+id+" hash: "+(hash % 2 == 1));
 			return (hash % 2 == 1) ? PlanarizationSide.ENDING_ABOVE : PlanarizationSide.ENDING_BELOW;
 		} else {
 			return null;

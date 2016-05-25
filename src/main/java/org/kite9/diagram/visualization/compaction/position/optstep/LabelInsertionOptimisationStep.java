@@ -2,12 +2,13 @@ package org.kite9.diagram.visualization.compaction.position.optstep;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.CornerVertex;
@@ -373,7 +374,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 					Set<Dart> lowest = lowestDartsInContainer.get(l);
 					Integer lowestPos = lowestDartsInContainerLevel.get(l);
 					if (lowest == null) {
-						lowest = new HashSet<Dart>();
+						lowest = new DetHashSet<Dart>();
 						lowestDartsInContainer.put(l, lowest);
 						lowestPos = Integer.MIN_VALUE;
 					}
@@ -895,7 +896,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			opps = new ArrayList<Slideable>(10);
 			int slideableNo = spine.getPositionalOrder();
 			int increment = (spineDirection == Direction.DOWN || spineDirection == Direction.RIGHT) ? 1 : -1;
-			Set<Slideable> done = new HashSet<Slideable>();
+			Set<Slideable> done = new UnorderedSet<Slideable>();
 
 			do {
 				slideableNo += increment;

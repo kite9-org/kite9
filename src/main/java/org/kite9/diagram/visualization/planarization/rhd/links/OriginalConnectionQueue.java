@@ -205,7 +205,14 @@ public class OriginalConnectionQueue implements ConnectionManager, Logable {
 
 	@Override
 	public Object[] toArray() {
-		throw new UnsupportedOperationException();
+		Object[] out = new Object[size()];
+		int i = 0;
+		for (Iterator<BiDirectional<Connected>> iterator = u.iterator(); iterator.hasNext();) {
+			BiDirectional<Connected> biDirectional = iterator.next();
+			out[i] = biDirectional;
+			i++;
+		}
+		return out;
 	}
 
 

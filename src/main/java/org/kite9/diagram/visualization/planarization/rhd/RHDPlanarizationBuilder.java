@@ -116,7 +116,10 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			LayoutStrategy layout = new DirectionLayoutStrategy(rh);
 			GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch);
 			GroupResult mr = strategy.group(gp);
-			log.send(log.go() ? null : "Created Groups:" + mr.groups());
+			
+			if (!log.go()) {
+				log.send("Created Groups:", mr.groups());
+			}
 	
 			if (mr.groups().size() > 1) {
 				throw new LogicException("Should end up with a single group");

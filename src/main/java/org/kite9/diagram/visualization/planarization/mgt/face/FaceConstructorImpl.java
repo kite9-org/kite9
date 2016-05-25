@@ -1,16 +1,16 @@
 package org.kite9.diagram.visualization.planarization.mgt.face;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge.RemovalType;
+import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -206,7 +206,7 @@ public class FaceConstructorImpl implements FaceConstructor {
 
 	public void removeTemporaries(MGTPlanarization p) {
 
-		Set<Edge> toRemove = new HashSet<Edge>();
+		Set<Edge> toRemove = new DetHashSet<Edge>();
 		for (Vertex v : p.getVertexOrder()) {
 			traverseAllLinks(v, toRemove);
 		}

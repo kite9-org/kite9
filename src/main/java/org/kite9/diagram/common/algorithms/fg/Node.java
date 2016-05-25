@@ -2,12 +2,14 @@ package org.kite9.diagram.common.algorithms.fg;
 
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.Deterministic;
+
 /**
  * A node is a join point for an arc.  
  * @author robmoffat
  *
  */
-public interface Node {
+public interface Node extends Deterministic {
 	
 	public enum ResidualStatus { SATISFIED, SOURCE, SINK };
 	

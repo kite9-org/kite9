@@ -5,13 +5,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
@@ -247,7 +248,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 			}
 			
 			sns += "\t\t"+subdivisionNode.getId()+" --- ";
-			Set<Node> to = new HashSet<Node>();
+			Set<Node> to = new DetHashSet<Node>();
 			for (Arc a : subdivisionNode.getArcs()) {
 				Node otherEnd = a.otherEnd(subdivisionNode);
 				to.add(otherEnd);
@@ -503,11 +504,11 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 	}
 	
 	public void getReachable(Node source, Node sink) {
-		Set<Node> foundSource = new HashSet<Node>();
-		Set<Node> foundSink = new HashSet<Node>();
+		Set<Node> foundSource = new DetHashSet<Node>();
+		Set<Node> foundSink = new DetHashSet<Node>();
 		reach(source, foundSource, true);
 		reach(sink, foundSink, false);
-		Set<Node> common = new HashSet<Node>(foundSink);
+		Set<Node> common = new DetHashSet<Node>(foundSink);
 		common.retainAll(foundSource);
 		
 		log.send("Total Nodes.  source="+foundSource.size()+" sink="+foundSink.size()+" coincindent="+common.size(), sort(new ArrayList<Node>(common)));

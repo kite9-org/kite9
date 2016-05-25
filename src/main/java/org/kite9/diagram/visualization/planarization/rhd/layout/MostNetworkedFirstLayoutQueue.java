@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.planarization.rhd.layout;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
@@ -55,7 +55,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 	public MostNetworkedFirstLayoutQueue(int size) {
 		super();
 		networkSizes = new HashMap<Group, Integer>(size*2);
-		completedGroups = new HashSet<Group>(size*2);
+		completedGroups = new UnorderedSet<Group>(size*2);
 		todo = new PriorityQueue<NetworkedItem>(size, new Comparator<NetworkedItem>() {
 
 			/**

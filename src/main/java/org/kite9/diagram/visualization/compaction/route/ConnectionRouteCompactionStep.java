@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.compaction.route;
 
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.Edge;
@@ -41,7 +41,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	}
 
 	private Set<Connection> createTopElementSet(Set<Edge> allEdges) {
-		Set<Connection> out  = new HashSet<Connection>();
+		Set<Connection> out  = new LinkedHashSet<Connection>();
 		for (Edge e : allEdges) {
 			DiagramElement underlying = e.getOriginalUnderlying();
 			if (underlying instanceof Connection) {

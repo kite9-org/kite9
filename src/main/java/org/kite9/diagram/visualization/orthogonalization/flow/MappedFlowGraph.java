@@ -3,10 +3,10 @@ package org.kite9.diagram.visualization.orthogonalization.flow;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.FlowGraph;
 import org.kite9.diagram.common.algorithms.fg.Node;
@@ -48,7 +48,7 @@ public abstract class MappedFlowGraph extends FlowGraph {
 	}
 
 	public Set<Arc> getValueArcs() {
-		Set<Arc> out = new HashSet<Arc>();
+		Set<Arc> out = new UnorderedSet<Arc>();
 		for (Arc arc : allArcs) {
 			if (arc.getFlow() == 0) {
 				// ignore

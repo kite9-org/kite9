@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -78,7 +78,7 @@ public abstract class AbstractGroupingStrategy implements GroupingStrategy, Loga
 	protected void updateContainers(CompoundGroup group, GroupPhase gp, BasicMergeState ms) {
 		Map<Container, GroupContainerState> containersA = ms.getContainersFor(group.getA());
 		Map<Container, GroupContainerState> containersB = ms.getContainersFor(group.getB());
-		Set<Container> combined = new HashSet<Container>(containersA.keySet());
+		Set<Container> combined = new LinkedHashSet<Container>(containersA.keySet());
 		
 		combined.addAll(containersB.keySet());
  		

@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.planarization.ordering;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.DiagramElement;
@@ -160,7 +160,7 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 	public Set<DiagramElement> getUnderlyingLeavers() {
 		if (underlyingCache==null) {
 			List<Edge> edges = getEdgesAsList();
-			underlyingCache = new HashSet<DiagramElement>(edges.size() * 2);
+			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
 			for (Edge e : edges) {
 				DiagramElement und = e.getOriginalUnderlying();
 				if (und != null) {

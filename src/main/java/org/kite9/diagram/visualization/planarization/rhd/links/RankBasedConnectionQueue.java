@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
@@ -42,7 +42,7 @@ public class RankBasedConnectionQueue extends OriginalConnectionQueue {
 		
 	}
 
-	private Set<BiDirectional<Connected>> alreadyAdded = new HashSet<BiDirectional<Connected>>(1000);
+	private Set<BiDirectional<Connected>> alreadyAdded = new UnorderedSet<BiDirectional<Connected>>(1000);
 
 	@Override
 	protected boolean considerThis(BiDirectional<Connected> c, CompoundGroup cg) {

@@ -3,11 +3,12 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -69,8 +70,8 @@ public class BasicMergeState extends GroupResult {
 		bestOptions = new HashMap<MergeKey, MergeOption>(capacity * 5);
 		containerStates = new HashMap<Container, ContainerStateInfo>(containers * 2);
 		groupContainers = new HashMap<Group, Map<Container, GroupContainerState>>(capacity);
-		liveContainers = new HashSet<Container>(containers * 2);
-		liveGroups = new HashSet<Group>(capacity * 2);
+		liveContainers = new UnorderedSet<Container>(containers * 2);
+		liveGroups = new DetHashSet<Group>(capacity * 2);
 		this.log = log;
 	}
 

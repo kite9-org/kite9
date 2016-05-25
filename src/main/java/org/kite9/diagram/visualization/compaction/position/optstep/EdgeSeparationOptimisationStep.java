@@ -2,9 +2,11 @@ package org.kite9.diagram.visualization.compaction.position.optstep;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.Edge;
@@ -68,7 +70,7 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 						count ++;
 					}
 				} else {
-					from = new HashSet<Slideable>(2);
+					from = new LinkedHashSet<Slideable>(2);
 				}
 				
 				from.clear();
@@ -76,7 +78,7 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 			}
 			
 			
-			Set<Slideable> pushing = new HashSet<Slideable>();
+			Set<Slideable> pushing = new LinkedHashSet<Slideable>();
 			
 			// work out what this slideable pushes on
 			for (Vertex v : ((Segment) s.getUnderlying()).getVerticesInSegment()) {

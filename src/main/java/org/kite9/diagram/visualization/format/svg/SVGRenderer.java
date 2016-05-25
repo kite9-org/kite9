@@ -80,7 +80,7 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 	protected String output(Diagram something) throws SVGGraphics2DIOException, IOException {
 		g2.setTopLevelGroup(topGroup);
 		Writer outw = new StringWriter();
-		g2.stream(outw, true);
+		g2.stream(outw, false);
 		outw.flush();
 		outw.close();
 		return outw.toString();

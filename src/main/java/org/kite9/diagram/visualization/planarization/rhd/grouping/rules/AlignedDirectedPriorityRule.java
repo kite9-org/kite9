@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
@@ -242,7 +243,7 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 		if ((ac == null) || (bc == null))
 			throw new LogicException("Group has no containers?");
 		
-		Set<Container> done = new HashSet<Container>(ac.size() + bc.size());
+		Set<Container> done = new UnorderedSet<Container>(ac.size() + bc.size());
 		boolean cont = false;
 		
 		for (Container c1 : ac) {
@@ -266,7 +267,7 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 	}
 
 	private Set<Container> getParentContainers(Set<Container> ac, Set<Container> done) {
-		Set<Container> out = new HashSet<Container>(ac.size());
+		Set<Container> out = new UnorderedSet<Container>(ac.size());
 		for (Container c : ac) {
 			if ((!done.contains(c)) && (c instanceof Contained)) {
 				out.add(((Contained)c).getContainer());

@@ -3,18 +3,18 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.Tools;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.CornerVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.SideVertex;
+import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
@@ -26,8 +26,8 @@ import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -138,7 +138,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		Side bls = createSide(bl, tl, Direction.LEFT, v, leftDarts, o, rightDarts.size(), cd.y(), requiresMinSize);
 
 		// join segments
-		Set<Vertex> allNewVertices = new HashSet<Vertex>();
+		Set<Vertex> allNewVertices = new UnorderedSet<Vertex>();
 		allNewVertices.addAll(tls.vertices);
 		allNewVertices.addAll(trs.vertices);
 		allNewVertices.addAll(brs.vertices);

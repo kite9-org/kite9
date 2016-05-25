@@ -1,10 +1,11 @@
 package org.kite9.diagram.visualization.compaction;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
@@ -115,7 +116,7 @@ public class Segment implements Comparable<Segment> {
 	 * This is a utility method, used to set the positions of the darts for the diagram
 	 */
 	public Collection<Dart> getDartsInSegment() {
-		Collection<Dart> darts = new HashSet<Dart>();
+		Collection<Dart> darts = new DetHashSet<Dart>();
 		for (Vertex v : verticesInSegment) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) { 

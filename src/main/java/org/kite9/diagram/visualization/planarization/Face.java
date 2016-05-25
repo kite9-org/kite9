@@ -2,12 +2,13 @@ package org.kite9.diagram.visualization.planarization;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.annotation.K9OnDiagram;
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.docs.PlanarizationDiagrams;
@@ -40,7 +41,7 @@ import org.kite9.framework.logging.Table;
  *
  */
 @K9OnDiagram(on=PlanarizationDiagrams.class)
-public class Face {
+public class Face implements Deterministic {
 	
 	private List<Edge> boundary = new ArrayList<Edge>();
 	
@@ -81,7 +82,7 @@ public class Face {
 		this.pln = pln;
 	}
 	
-	public String id;
+	public final String id;
 
 	/**
 	 * This is a simple check to make sure that the boundary and list of corners reconciles ok.
@@ -258,6 +259,18 @@ public class Face {
 		}
 	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.id.equals(((Face)obj).id);
+	}
+
 	/**
 	 * A specific vertex being followed by a specific edge occurs uniquely in a face.
 	 * This is because each edge can only occur twice in a face, and the ends of the edge
@@ -431,7 +444,7 @@ public class Face {
 		return id;
 	}
 	
-	private Set<Face> containedFaces = new HashSet<Face>();
+	private Set<Face> containedFaces = new DetHashSet<Face>();
 	
 	private Face containedBy;
 	

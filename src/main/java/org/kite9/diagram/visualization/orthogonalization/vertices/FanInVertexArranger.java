@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.Tools;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.CornerVertex;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -15,9 +15,9 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.EdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.LogicException;
 
@@ -203,7 +203,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	
 	protected Set<DiagramElement> buildNoFanList(List<Dart> onSide,
 			float firstStraight, float lastStraight, Vertex from) {
-		HashSet<DiagramElement> out = new HashSet<DiagramElement>((int) (lastStraight - firstStraight) * 2);
+		Set<DiagramElement> out = new UnorderedSet<DiagramElement>((int) (lastStraight - firstStraight) * 2);
 		
 		for (int i = 0; i < onSide.size(); i++) {
 			if ((i>=firstStraight) && (i<=lastStraight)) {

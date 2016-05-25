@@ -383,7 +383,8 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	/**
 	 * Although we have a planarization line (1d) and a set of positions (2d), there is no description of how the planarization
 	 * line progresses through 2d space.   So, we make the assumption that it always moves to the right or down as it goes forward.
-	 * This assumptio
+	 * This assumption appears to be true for all of the test cases we have constructed, but it's not guaranteed by the system, it's only a
+	 * result of the grid-based layout that we are using.
 	 */
 	private static final boolean THROW_ON_ASSUMPTION_FAIL = true;
 	

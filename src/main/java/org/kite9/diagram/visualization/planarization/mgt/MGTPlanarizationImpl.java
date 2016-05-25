@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -71,10 +71,10 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	List<Vertex> unmodifiableVO;
 
 	@K9Exclude
-	private Set<Edge> aboveSet = new HashSet<Edge>();
+	private Set<Edge> aboveSet = new LinkedHashSet<Edge>();
 
 	@K9Exclude
-	private Set<Edge> belowSet = new HashSet<Edge>();
+	private Set<Edge> belowSet = new LinkedHashSet<Edge>();
 	
 	public Set<Edge> getAboveLineEdges() {
 		return aboveSet;

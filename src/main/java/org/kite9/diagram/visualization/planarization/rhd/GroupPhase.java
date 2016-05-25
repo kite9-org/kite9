@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.rhd;
 
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -13,6 +12,8 @@ import java.util.TreeSet;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkLineStyle;
+import org.kite9.diagram.common.algorithms.det.Deterministic;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
@@ -62,7 +63,7 @@ public class GroupPhase {
 	
 	private Map<Contained, LeafGroup> pMap;
 	private GroupBuilder ab;
-	private Set<Connection> allLinks = new HashSet<Connection>(1000);
+	private Set<Connection> allLinks = new UnorderedSet<Connection>(1000);
 	private ContradictionHandler ch;
 	
 	public GroupPhase(Kite9Log log, Diagram top, int elements, GroupBuilder ab, ContradictionHandler ch) {
@@ -220,7 +221,7 @@ public class GroupPhase {
 	public int groupCount = 0;
 	public int containerCount = 0;	
 	
-	public abstract class Group {
+	public abstract class Group implements Deterministic {
 		
 		protected Group(GroupAxis axis, LinkManager lm) {
 			this.axis = axis;

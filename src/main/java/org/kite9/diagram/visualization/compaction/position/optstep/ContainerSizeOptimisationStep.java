@@ -2,11 +2,12 @@ package org.kite9.diagram.visualization.compaction.position.optstep;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.Edge;
@@ -81,8 +82,8 @@ public class ContainerSizeOptimisationStep implements OptimisationStep, Logable 
 	 * This works by tracing darts with the same underlying, and looking at which direction they go in.
 	 */
 	private Direction getSegmentUnderlyingSide(Segment s, DiagramElement underlying) {
-		Set<Direction> sides = new HashSet<Direction>();
-		Set<Direction> planeDirection = new HashSet<Direction>(4);
+		Set<Direction> sides = new LinkedHashSet<Direction>();
+		Set<Direction> planeDirection = new LinkedHashSet<Direction>(4);
 		if (s.getDimension()==PositionAction.XAction) {
 			planeDirection.add(Direction.LEFT);
 			planeDirection.add(Direction.RIGHT);

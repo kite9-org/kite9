@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
@@ -20,8 +20,8 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult.ContainerStateInfo;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
@@ -118,7 +118,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 		if (isLinkAgainstAxis(out, ld)) {
 			Map<Container, GroupContainerState> aContainerMap = ms.getContainersFor(out.getA());
 			Map<Container, GroupContainerState> bContainerMap = ms.getContainersFor(out.getB());
-			final Set<Container> expandingContainers = new HashSet<Container>(aContainerMap.keySet());
+			final Set<Container> expandingContainers = new UnorderedSet<Container>(aContainerMap.keySet());
 			expandingContainers.retainAll(bContainerMap.keySet());
 			
 			LinkProcessor axisChecker = new LinkProcessor() {

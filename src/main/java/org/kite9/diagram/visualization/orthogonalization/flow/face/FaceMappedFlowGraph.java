@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.flow.face;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -28,7 +28,7 @@ public class FaceMappedFlowGraph extends MappedFlowGraph {
 	@Override
 	public Collection<Node> getNodesForEdgePart(Face f, Edge e, Vertex startVertex) {
 		List<PortionNode> faceNodes = facePortionMap.get(f);
-		Collection<Node> out = new HashSet<Node>(faceNodes.size()*2);
+		Collection<Node> out = new UnorderedSet<Node>(faceNodes.size()*2);
 		int pos = f.indexOf(startVertex, e);
 		for (PortionNode node : faceNodes) {
 			if (node.containsFacePart(pos)) {

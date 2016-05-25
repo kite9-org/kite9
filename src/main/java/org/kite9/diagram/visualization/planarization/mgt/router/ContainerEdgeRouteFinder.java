@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -22,7 +22,7 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 		this.to = e.getTo();
 		this.entryDirection = e.getDrawDirection();
 		this.current = (Container) e.getOriginalUnderlying();
-		this.parents = new HashSet<Container>();
+		this.parents = new UnorderedSet<Container>();
 		while (container instanceof Contained) {
 			container = ((Contained)container).getContainer();
 			parents.add((Container)container);

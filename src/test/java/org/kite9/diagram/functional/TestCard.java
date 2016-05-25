@@ -125,6 +125,7 @@ public class TestCard extends AbstractFunctionalTest {
 	}
 	
 	@Test
+	@NotAddressed("Problem with ADL+SVG Format - can't reload due to inlined PNG entity")
 	public void testCardDesigner() throws IOException {
 		Diagram d = createTestCard();
 		renderDiagramPDF(d, new DesignerStylesheet());

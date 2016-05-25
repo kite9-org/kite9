@@ -1,9 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.flow.face;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -43,7 +44,7 @@ public class ConstraintGroupGenerator implements Logable {
 		while (constrainedEdges.size() > 1) {
 			Edge startEdge = constrainedEdges.iterator().next();
 			constrainedEdges.remove(startEdge);
-			Set<Face> visitedFaces = new HashSet<Face>();
+			Set<Face> visitedFaces = new UnorderedSet<Face>();
 			Face firstFace = pln.getEdgeFaceMap().get(startEdge).get(0);
 			visitFace(firstFace, firstFace.indexOf(startEdge).iterator().next(), visitedFaces, out, null, constrainedEdges, pln, 0, true);
 		}
@@ -120,7 +121,7 @@ public class ConstraintGroupGenerator implements Logable {
 	 * Creates one constraint group from each constrained edge in the diagram
 	 */
 	private Set<Edge> gatherConstrainedEdges(Planarization pln) {
-		Set<Edge> constrainedEdges = new HashSet<Edge>();
+		Set<Edge> constrainedEdges = new DetHashSet<Edge>();
 		for (Face f : pln.getFaces()) {
 			for (Edge edge : f.edgeIterator()) {
 				if (AbstractFlowOrthogonalizer.isConstrained(edge) && (!constrainedEdges.contains(edge))) {

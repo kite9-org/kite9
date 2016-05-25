@@ -3,27 +3,27 @@ package org.kite9.diagram.visualization.orthogonalization.flow.face;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.visualization.planarization.Face;
 
 class ConstraintGroup {
 
-	private Set<Edge> fixedConstraints = new HashSet<Edge>();
+	private final Set<Edge> fixedConstraints;
 
 	public ConstraintGroup(Set<Edge> fixedConstraints, int faces) {
 		super();
-		this.fixedConstraints = new HashSet<Edge>(fixedConstraints);
+		this.fixedConstraints = new DetHashSet<Edge>(fixedConstraints);
 		this.faceCount = faces;
 	}
 
-	private Set<Edge> floatingConstraints = new HashSet<Edge>();
+	private Set<Edge> floatingConstraints = new DetHashSet<Edge>();
 
 	private List<Route> requiredRoutes = new ArrayList<Route>();
 	

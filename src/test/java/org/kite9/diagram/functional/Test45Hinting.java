@@ -143,7 +143,7 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		System.out.println(d2.getContents());
 		
 		// make sure the ordinal order has changed to reflect the layout.
-		Assert.assertEquals(HelpMethods.listOf(c, a, b).toString(), d2.getContents().toString());
+		Assert.assertEquals(HelpMethods.listOf(b, a, c).toString(), d2.getContents().toString());
 	}
 	
 	private List<Contained> getInOrder(List<Contained> contents) {

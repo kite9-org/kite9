@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.compaction.insertion;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -79,10 +79,10 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		// get space for the darts to be inserted - this must be an empty
 		// rectangle in the
 		// rectangularization
-		Set<Segment> topSeg = new HashSet<Segment>();
-		Set<Segment> rightSeg = new HashSet<Segment>();
-		Set<Segment> leftSeg = new HashSet<Segment>();
-		Set<Segment> bottomSeg = new HashSet<Segment>();
+		Set<Segment> topSeg = new LinkedHashSet<Segment>();
+		Set<Segment> rightSeg = new LinkedHashSet<Segment>();
+		Set<Segment> leftSeg = new LinkedHashSet<Segment>();
+		Set<Segment> bottomSeg = new LinkedHashSet<Segment>();
 		topSeg.add(border[0]);
 		rightSeg.add(border[1]);
 		bottomSeg.add(border[2]);

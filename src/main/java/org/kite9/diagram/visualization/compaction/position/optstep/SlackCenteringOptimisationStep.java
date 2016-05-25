@@ -3,12 +3,12 @@ package org.kite9.diagram.visualization.compaction.position.optstep;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -78,7 +78,7 @@ public class SlackCenteringOptimisationStep implements OptimisationStep, Logable
 		
 		int capacity = xo.getCanonicalOrder().size()*2;
 		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, SlackCenteringOptimisationStep.SlackPool>(capacity);
-		Set<SlackPool> slackPools = new HashSet<SlackCenteringOptimisationStep.SlackPool>(capacity);
+		Set<SlackPool> slackPools = new UnorderedSet<SlackCenteringOptimisationStep.SlackPool>(capacity);
 		
 		for (Slideable s : xo.getCanonicalOrder()) {
 			int slack = s.getMaximumPosition() - s.getMinimumPosition();

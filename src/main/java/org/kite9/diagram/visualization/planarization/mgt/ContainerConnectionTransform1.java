@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map.Entry;
 
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.primitives.BiDirectional;
@@ -45,7 +45,7 @@ public class ContainerConnectionTransform1 implements PlanarizationTransform, Lo
 	
 	@SuppressWarnings("unchecked")
 	private void modifyInternalEdges(Planarization pln) {		
-		Collection<Edge> toRemove = new HashSet<Edge>();
+		Collection<Edge> toRemove = new DetHashSet<Edge>();
 		for (Entry<DiagramElement, EdgeMapping> mapping : pln.getEdgeMappings().entrySet()) {
 			DiagramElement de = mapping.getKey();
 			if (de instanceof BiDirectional<?>) {

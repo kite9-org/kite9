@@ -2,10 +2,11 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Turn;
@@ -188,7 +189,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 	@Override
 	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack) {
 		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
-		HashSet<VertexTurn> onStack = new HashSet<VertexTurn>(theStack);
+		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
 		for (int i = 0; i < theStack.size(); i++) {
 			addNewRectOptions(c, result, theStack, pq, i);
 		}
@@ -253,7 +254,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 		}
 	}
 
-	private boolean checkRectOptionIsOk(HashSet<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq) {
+	private boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq) {
 		boolean allThere = onStack.contains(ro.getExtender()) && onStack.contains(ro.getMeets()) && onStack.contains(ro.getPar())
 				&& onStack.contains(ro.getLink()) && onStack.contains(ro.getPost());
 		if (!allThere) {

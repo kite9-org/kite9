@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.planarization.transform;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -29,7 +29,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 		Diagram d = pln.getDiagram();
 		EdgeMapping em = pln.getEdgeMappings().get(d);
 		Face outerFace = getDiagramOuterFace(em, pln);
-		Set<Face> done = new HashSet<Face>(pln.getFaces().size()*2);
+		Set<Face> done = new UnorderedSet<Face>(pln.getFaces().size()*2);
 		handleOuterFace(outerFace, null, pln, 0, done);
 	}
 	

@@ -1,6 +1,8 @@
 package org.kite9.diagram.common.algorithms.fg;
 
-public interface Arc {
+import org.kite9.diagram.common.algorithms.det.Deterministic;
+
+public interface Arc extends Deterministic {
 
 	public abstract int getFlowFrom(Node n);
 

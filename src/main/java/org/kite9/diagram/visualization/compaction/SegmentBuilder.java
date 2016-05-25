@@ -2,10 +2,11 @@ package org.kite9.diagram.visualization.compaction;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
@@ -30,13 +31,13 @@ public class SegmentBuilder implements Logable {
 	Kite9Log log = new Kite9Log(this);
 	
 	public List<Segment> buildSegmentList(Orthogonalization o, Set<Direction> planeDirection, PositionAction direction) {
-		Set<Direction> transversePlane = new HashSet<Direction>();
+		Set<Direction> transversePlane = new LinkedHashSet<Direction>();
 		for (Direction d2 : planeDirection) {
 			transversePlane.add(Direction.rotateClockwise(d2));
 		}
 		
 		List<Segment> result = new ArrayList<Segment>();
-		Set<Vertex> done = new HashSet<Vertex>();
+		Set<Vertex> done = new UnorderedSet<Vertex>();
 		int segNo = 1;
 	
 		for (Vertex v : o.getAllVertices()) {
@@ -85,7 +86,7 @@ public class SegmentBuilder implements Logable {
 	 * This works by tracing darts with the same underlying, and looking at which direction they go in.
 	 */
 	private Direction getContainedSegmentUnderlyingSide(Segment s, DiagramElement underlying, Set<Direction> planeDirection) {
-		Set<Direction> sides = new HashSet<Direction>();
+		Set<Direction> sides = new LinkedHashSet<Direction>();
 		for (Direction direction : planeDirection) {
 			boolean yes = checkDiagramElementContinues(s, underlying, direction);
 			if (!yes) {

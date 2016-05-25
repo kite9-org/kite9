@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -36,7 +36,7 @@ public class ContainerUndirectedNeighbourMergeGenerator extends AbstractMergeGen
 	@Override
 	public void containerIsLive(Container c) {
 		super.containerIsLive(c);
-		dontDo.put(c, new HashSet<GroupPhase.Group>());
+		dontDo.put(c, new UnorderedSet<GroupPhase.Group>());
 	}
 
 	// keeps track of groups we've already done

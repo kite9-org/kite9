@@ -1,7 +1,8 @@
 package org.kite9.diagram.common.algorithms.fg;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
 
 /**
  * Basic implementation of the flow graph node
@@ -30,7 +31,7 @@ public class SimpleNode implements Node {
 		this.representation = memento;
 	}
 	
-	private Set<Arc> arcs = new HashSet<Arc>();
+	private Set<Arc> arcs = new DetHashSet<Arc>();
 
 	public Set<Arc> getArcs() {
 		return arcs;

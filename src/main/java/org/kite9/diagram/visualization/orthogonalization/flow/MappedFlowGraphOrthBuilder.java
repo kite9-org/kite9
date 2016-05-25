@@ -3,10 +3,10 @@ package org.kite9.diagram.visualization.orthogonalization.flow;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.Edge;
@@ -77,7 +77,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 	public OrthogonalizationImpl build(Planarization pln, MappedFlowGraph fg) {
 		OrthogonalizationImpl o = new OrthogonalizationImpl(pln);
 
-		Set<Face> doneFaces = new HashSet<Face>();
+		Set<Face> doneFaces = new UnorderedSet<Face>();
 		List<StartPoint> startPoints = selectBestStartPoints(pln);
 		
 		for (StartPoint startPoint : startPoints) {
