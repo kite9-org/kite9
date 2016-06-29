@@ -4,15 +4,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.anim.dom.SVGOMRectElement;
 import org.apache.batik.bridge.CSSUtilities;
 import org.apache.batik.bridge.UserAgentAdapter;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.dom.svg.SVGDOMImplementation;
-import org.apache.batik.dom.svg.SVGOMDocument;
-import org.apache.batik.dom.svg.SVGOMRectElement;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVGConstants;

@@ -1,5 +1,6 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.primitives.Label;
@@ -52,10 +53,6 @@ public abstract class AbstractPlanarizationEdge extends AbstractEdge implements 
 		return "["+getID()+"/"+from+"-"+to+"]";
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.kite9.diagram.common.elements.PlanarizationEdge#reverseDirection()
-	 */
 	public void reverseDirection() {
 		Vertex temp = from;
 		from = to;
@@ -97,7 +94,7 @@ public abstract class AbstractPlanarizationEdge extends AbstractEdge implements 
 
 	public RouteRenderingInformation getRenderingInformation() {
 		if (rri==null) {
-			rri = new RouteRenderingInformation() {
+			rri = new BasicRenderingInformation() {
 
 				private static final long serialVersionUID = 1L;
 

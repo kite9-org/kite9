@@ -19,8 +19,6 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge {
 	
 	GeneratedLayoutElement underlying;
 	
-	private static final long serialVersionUID = -6739599453082948732L;
-
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
 		super(from, to, null, null, null, null, null);
 		this.drawDirection = d;

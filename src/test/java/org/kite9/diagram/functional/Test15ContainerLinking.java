@@ -150,7 +150,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
-		Diagram d = new Diagram("D", createList((Contained) con1, con2), null, null);
+		Diagram d = new Diagram("D", createList((Contained) con1, con2), null);
 		renderDiagram(d);
 	}
 	

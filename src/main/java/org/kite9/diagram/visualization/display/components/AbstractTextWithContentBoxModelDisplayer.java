@@ -2,9 +2,11 @@ package org.kite9.diagram.visualization.display.components;
 
 import java.util.List;
 
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
@@ -26,7 +28,7 @@ public abstract class AbstractTextWithContentBoxModelDisplayer extends AbstractT
 		super(g2, ss);
 	}
 	
-	public abstract List<DiagramElement> getContents(DiagramElement de);
+	public abstract List<CompositionalDiagramElement> getContents(DiagramElement de);
 	
 	
 	
@@ -35,7 +37,7 @@ public abstract class AbstractTextWithContentBoxModelDisplayer extends AbstractT
 		// do top half of box
 		super.drawBoxContents(element, r);
 		
-		List<DiagramElement> contents = getContents(element);
+		List<CompositionalDiagramElement> contents = getContents(element);
 		
 		if ((contents!=null) && (contents.size()>0)) {
 			Dimension2D size = super.sizeBoxContents(element, new Dimension2D(r.getSize().getWidth(), r.getSize().getHeight()));
@@ -45,7 +47,7 @@ public abstract class AbstractTextWithContentBoxModelDisplayer extends AbstractT
 
 	
 	public Dimension2D sizeContent(DiagramElement de, Dimension2D within) { 
-		List<DiagramElement> tl = getContents(de);
+		List<CompositionalDiagramElement> tl = getContents(de);
 		Dimension2D result = new CostedDimension();
 		if ((tl!= null) && (tl.size()>0)) {
 			for (DiagramElement line : tl) {
@@ -60,7 +62,7 @@ public abstract class AbstractTextWithContentBoxModelDisplayer extends AbstractT
 	public void drawContent(double x, double y, DiagramElement t, Dimension2D dim) { 
 		for (DiagramElement line : getContents(t)) {
 			Dimension2D size = parent.size(line, dim);
-			RectangleRenderingInformation ri = new RectangleRenderingInformation(
+			RectangleRenderingInformation ri = new BasicRenderingInformation(
 					new Dimension2D(x, y), 
 					new Dimension2D(dim.getWidth(), size.getHeight()),
 					null, null, true);

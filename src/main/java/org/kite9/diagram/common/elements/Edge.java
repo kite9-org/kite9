@@ -26,9 +26,7 @@ public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Determin
 	 * Means that the edge goes from a higher vertex index to a lower one.
 	 */
 	public boolean isReversed();
-	
-	public void setDrawDirectionFrom(Vertex vertex, Direction d);
-	
+		
 	/**
 	 * Unlinks the edge from the from, to vertices it is connected to.
 	 */

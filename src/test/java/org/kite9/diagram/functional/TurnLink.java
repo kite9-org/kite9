@@ -23,7 +23,7 @@ public class TurnLink extends Link {
 
 	public TurnLink(Connected from, Connected to, String fromStyle, Label fromLabel, String toEndStyle,
 			Label toLabel) {
-		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel);
+		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, null);
 	}
 
 	public TurnLink(Connected from, Connected to) {

@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
@@ -7,6 +8,7 @@ import org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement;
 import org.kite9.diagram.primitives.Label;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.framework.logging.LogicException;
+import org.w3c.dom.Node;
 
 /**
  * A container around a label which manages the padding of the label away from the things that
@@ -31,7 +33,7 @@ public class LabelFrame extends AbstractIdentifiableDiagramElement {
 		super();
 		this.label = l;
 		this.label_rri = (RectangleRenderingInformation) l.getRenderingInformation();
-		this.rri = new RectangleRenderingInformation() {
+		this.rri = new BasicRenderingInformation() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -47,7 +49,6 @@ public class LabelFrame extends AbstractIdentifiableDiagramElement {
 				label_rri.setSize(new Dimension2D(size.x() - padding.getRight() - padding.getLeft(), size.y() - padding.getTop() - padding.getBottom()));
 			}
 			
-			
 		};
 		this.padding = p;
 	}
@@ -62,5 +63,16 @@ public class LabelFrame extends AbstractIdentifiableDiagramElement {
 
 	public DirectionalValues getPadding() {
 		return padding;
+	}
+
+	@Override
+	public String getShapeName() {
+		return null;
+	}
+
+	@Override
+	protected Node newNode() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

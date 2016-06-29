@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization;
 import org.kite9.diagram.common.elements.AbstractEdge;
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
@@ -150,16 +151,24 @@ public class Dart extends AbstractEdge {
 
 	@Override
 	public void setFrom(Vertex v) {
-		o.unlinkDartFromMap(this);
+		if (o != null) {
+			o.unlinkDartFromMap(this);
+		}
 		super.setFrom(v);
-		o.relinkDartInMap(this);
+		if (o != null) {
+			o.relinkDartInMap(this);
+		}
 	}
 
 	@Override
 	public void setTo(Vertex v) {
-		o.unlinkDartFromMap(this);
+		if (o != null) {
+			o.unlinkDartFromMap(this);
+		}
 		super.setTo(v);
-		o.relinkDartInMap(this);
+		if (o != null) {
+			o.relinkDartInMap(this);
+		}
 	}
 
 	public void remove() {
@@ -184,7 +193,7 @@ public class Dart extends AbstractEdge {
 		drawDirection = Direction.reverse(drawDirection);
 	}
 
-	RectangleRenderingInformation rri = new RectangleRenderingInformation();
+	RectangleRenderingInformation rri = new BasicRenderingInformation();
 	
 	public RenderingInformation getRenderingInformation() {
 		return rri;

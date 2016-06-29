@@ -153,7 +153,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 		g2.setStroke(stroke);
 		g2.setPaint(shadow ? ss.getShadowColour() : lineColour);
 
-		if ((r == null) || (r.getPositions().size()==0)) {
+		if ((r == null) || (r.getRoutePositions().size()==0)) {
 			return;
 		}
 

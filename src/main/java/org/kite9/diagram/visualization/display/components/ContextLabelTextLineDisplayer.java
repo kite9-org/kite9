@@ -1,17 +1,17 @@
 package org.kite9.diagram.visualization.display.components;
 
-import java.util.List;
-
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
@@ -50,7 +50,7 @@ public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer
 		double slacky = ri.getSize().y() - cd.y();
 		double slackx = ri.getSize().x() - cd.x();
 		
-		List<Symbol> symbols = getSymbols(element);
+		ContainerProperty<Symbol> symbols = getSymbols(element);
 		boolean syms = (symbols != null) && (symbols.size() > 0);
 		
 		if (!syms) {
@@ -62,24 +62,24 @@ public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer
 			yStart += slacky;
 		}
 		
-		super.draw(element, new RectangleRenderingInformation(
+		super.draw(element, new BasicRenderingInformation(
 				new Dimension2D(xStart, yStart),
 				new Dimension2D(xEnd - xStart, yEnd - yStart),
 				ri.getHorizontalJustification(), ri.getVerticalJustification(), ri.isRendered()));
 	}
 
 	@Override
-	public StyledText getLabel(DiagramElement de) {
-		return ((TextLine)de).getText();
+	public TextContainingDiagramElement getLabel(DiagramElement de) {
+		return ((TextLine)de);
 	}
 
 	@Override
-	public List<Symbol> getSymbols(DiagramElement de) {
+	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
 		return ((TextLine)de).getSymbols();
 	}
 
 	@Override
-	public StyledText getStereotype(DiagramElement de) {
+	public TextContainingDiagramElement getStereotype(DiagramElement de) {
 		return null;
 	}
 

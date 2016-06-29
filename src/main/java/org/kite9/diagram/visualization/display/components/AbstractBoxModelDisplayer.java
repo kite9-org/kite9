@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D.Double;
 
 import org.apache.batik.util.CSSConstants;
 import org.kite9.diagram.common.hints.PositioningHints;
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -163,13 +164,11 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 				yEnd -= rHeight /2;
 			}
 			
-			r2.setInternalPosition(new Dimension2D(xStart, yStart));
-			r2.setInternalSize(new Dimension2D(xEnd - xStart, yEnd - yStart));
 			
 //			g2.setColor(new Color(1f, 0f, 0f, .3f));
 //			g2.drawRect((int) xStart, (int) yStart, (int) (xEnd-xStart), (int) (yEnd - yStart));
 //			
-			RectangleRenderingInformation r3 = new RectangleRenderingInformation(
+			RectangleRenderingInformation r3 = new BasicRenderingInformation(
 					new Dimension2D(xStart, yStart),
 					new Dimension2D(xEnd - xStart, yEnd - yStart), r2.getHorizontalJustification(), r2.getVerticalJustification(), r2.isRendered());
 			

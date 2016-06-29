@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
@@ -27,6 +25,8 @@ import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
+
+import junit.framework.Assert;
 
 public class Test33Contradictions extends AbstractFunctionalTest {
 

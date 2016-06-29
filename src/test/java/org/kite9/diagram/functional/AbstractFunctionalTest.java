@@ -6,17 +6,18 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import org.junit.Before;
+import org.kite9.diagram.adl.ADLDocument;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.AbstractConnectedContained;
+import org.kite9.diagram.primitives.AbstractDiagramElement;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.IdentifiableDiagramElement;
-import org.kite9.diagram.primitives.StyledText;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
@@ -143,6 +144,12 @@ public class AbstractFunctionalTest extends HelpMethods {
 		}
 	}
 	
+	@Before
+	public void initTestDocument() {
+		AbstractDiagramElement.TESTING_DOCUMENT =  new ADLDocument();
+	}
+
+	
 
 	public void generate(String name, Stylesheet ss) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
@@ -170,27 +177,27 @@ public class AbstractFunctionalTest extends HelpMethods {
 	}
 
 	public void relabel(DiagramElement de, int[] i) {
-		if (de instanceof IdentifiableDiagramElement) {
-			((IdentifiableDiagramElement) de).setID("id_"+i[0]);
-			i[0]++;
-		}
-		if (de instanceof Glyph) {
-			((Glyph) de).setLabel(new StyledText(((Glyph) de).getID()));
-		} else if (de instanceof Arrow) {
-			((Arrow) de).setLabel(new StyledText(((Arrow) de).getID()));
-		} else {
-			if (de instanceof Container) {
-				if (de instanceof Context) {
-					((Context) de).setBordered(true);
-					((Context) de).setLabel(new TextLine(((Context) de).getID()));
-				}
-				
-			}
-			
-			for (Contained d : ((Container)de).getContents()) {
-				relabel(d, i);
-			}
-		} 
+//		if (de instanceof IdentifiableDiagramElement) {
+//			((IdentifiableDiagramElement) de).setID("id_"+i[0]);
+//			i[0]++;
+//		}
+//		if (de instanceof Glyph) {
+//			((Glyph) de).setLabel(new TextLine(((Glyph) de).getID()));
+//		} else if (de instanceof Arrow) {
+//			((Arrow) de).setLabel(new TextLine(((Arrow) de).getID()));
+//		} else {
+//			if (de instanceof Container) {
+//				if (de instanceof Context) {
+//					((Context) de).setBordered(true);
+//					((Context) de).setLabel(new TextLine(((Context) de).getID()));
+//				}
+//				
+//			}
+//			
+//			for (Contained d : ((Container)de).getContents()) {
+//				relabel(d, i);
+//			}
+//		} 
 	}
 	
 	public void generateSizes(String name, Stylesheet ss) throws IOException {

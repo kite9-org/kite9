@@ -11,7 +11,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.StyledText;
 import org.kite9.diagram.visualization.display.style.io.DasharrayValueManager;
 import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.common.HelpMethods;
@@ -61,7 +60,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 	@Test
 	public void test_43_5_OverrideGlyphFont() throws IOException {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
-		g1.setLabel(new StyledText("Hello Biggie", "font-size: 20px"));
+		g1.setLabel(new TextLine("Hello Biggie", "font-size: 20px"));
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
 		renderDiagram(d, new Designer2012Stylesheet());
 	}

@@ -3,20 +3,23 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.ADLDocument;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
+import org.kite9.diagram.primitives.AbstractDiagramElement;
 import org.kite9.diagram.primitives.Contained;
 
 public class Test2BasicArrows extends AbstractFunctionalTest {
+	
 	@Test(expected=ElementsMissingException.class)
 	public void test_2_1_1GlyphsOneEdge() throws IOException {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		new TurnLink(one, one);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one));
 
 		renderDiagram(d);
 	}
@@ -28,7 +31,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		Arrow a = new Arrow("meets", "meets");
 		new Link(a, one);
 		new Link(a, two);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a));
 
 		renderDiagram(d);
 	}
@@ -40,7 +43,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		Arrow a = new Arrow("meets");
 		new Link(a, one);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, null);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a));
 
 		renderDiagram(d);
 	}
@@ -55,7 +58,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new TurnLink(a, two);
 		new TurnLink(b, one);
 		new TurnLink(b, two);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a, b), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, a, b));
 
 		renderDiagram(d);
 	}
@@ -71,7 +74,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new Link(a, two);
 		new Link(b, three);
 		new Link(b, two);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, three, a, b), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, three, a, b));
 
 		renderDiagram(d);
 	}
@@ -90,7 +93,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new TurnLink(a, one);
 		new TurnLink(a, one);
 		new TurnLink(a, one);
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, a), null);
+		Diagram d = new Diagram("The Diagram", createList((Contained) one, a));
 
 		renderDiagram(d);
 	}

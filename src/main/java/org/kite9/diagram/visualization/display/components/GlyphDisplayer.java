@@ -3,10 +3,12 @@ package org.kite9.diagram.visualization.display.components;
 import java.util.Collections;
 import java.util.List;
 
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
@@ -30,17 +32,17 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	}
 
 	@Override
-	public StyledText getLabel(DiagramElement de) {
+	public TextContainingDiagramElement getLabel(DiagramElement de) {
 		return ((Glyph)de).getLabel();
 	}
 
 	@Override
-	public List<Symbol> getSymbols(DiagramElement de) {
+	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
 		return ((Glyph)de).getSymbols();
 	}
 
 	@Override
-	public StyledText getStereotype(DiagramElement de) {
+	public TextContainingDiagramElement getStereotype(DiagramElement de) {
 		return ((Glyph)de).getStereotype();
 	}
 
@@ -53,14 +55,14 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	 * Adds a divider if necessary
 	 */
 	@Override
-	public List<DiagramElement> getContents(DiagramElement de) {
+	public List<CompositionalDiagramElement> getContents(DiagramElement de) {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<DiagramElement> out =  (List<DiagramElement>) (List) ((Glyph)de).getText();
+		ContainerProperty<CompositionalDiagramElement> out =  ((Glyph)de).getText();
 
 		if ((out == null) || (out.size() == 0)) {
 			return Collections.emptyList();
 		} else {
-			return out;
+			return out.asList();
 		}
 	}
 

@@ -87,7 +87,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 		new Link(out[1][2], out2[7],null, null, null, null, Direction.RIGHT);
 		new Link(out[1][3], out2[5],null, null, null, null, Direction.RIGHT);
 		
-		renderDiagram(new Diagram("bob", contents, null, null));
+		renderDiagram(new Diagram("bob", contents, null));
 
 	}
 	

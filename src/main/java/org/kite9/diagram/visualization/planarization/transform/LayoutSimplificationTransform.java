@@ -119,7 +119,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 		Direction connectionDirection = c.getDrawDirectionFrom(cs);
 		
 		if (connectionDirection == null) {
-			c.setDrawDirectionFrom(cs, Direction.reverse(layoutDirection));
+			c.setDrawDirectionFrom(Direction.reverse(layoutDirection), cs);
 		}
 		
 		((PlanarizationEdge)c).setLayoutEnforcing(true);

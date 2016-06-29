@@ -6,6 +6,7 @@ import java.awt.Paint;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.PaintServer;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
@@ -13,7 +14,6 @@ import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.AbstractValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.svg.SVGPaintManager;
-import org.apache.batik.dom.svg.SVGOMDocument;
 import org.apache.batik.gvt.ShapeNode;
 import org.apache.batik.util.CSSConstants;
 import org.w3c.css.sac.LexicalUnit;

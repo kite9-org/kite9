@@ -2,8 +2,9 @@ package org.kite9.diagram.visualization.display.components;
 
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
+import java.util.Iterator;
 
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.CostedDimension;
@@ -11,7 +12,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.TextBoxStyle;
@@ -45,7 +46,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		Rectangle2D ri = getDrawingRectangle(element, r);
 //		g2.setColor(Color.GREEN);
 //		g2.draw(ri);
-		List<Symbol> symbols = getSymbols(element);
+		ContainerProperty<Symbol> symbols = getSymbols(element);
 		String stereo = safeGetText(getStereotype(element));
 		String label = safeGetText(getLabel(element));
 		boolean syms = (symbols != null) && (symbols.size() > 0);
@@ -82,21 +83,22 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		}
 	}
 	
-	private void drawSymbols(List<Symbol> syms, double x, double y, double w, double baseline) {
+	private void drawSymbols(ContainerProperty<Symbol> syms, double x, double y, double w, double baseline) {
+		Iterator<Symbol> it = syms.iterator();
 		for (int i = 0; i < syms.size(); i++) {
-			Symbol sym = syms.get(i);
+			Symbol sym = it.next();
 			drawSymbol(""+sym.getChar(), g2, x + w - ((i+1) * getSymbolWidth()), y, ss.getSymbolShapes().get(sym.getShape().name()), ss.getSymbolTextStyle().getFont(), baseline);
 		}
 	}
 	
-	public abstract StyledText getLabel(DiagramElement de);
+	public abstract TextContainingDiagramElement getLabel(DiagramElement de);
 	
-	public abstract List<Symbol> getSymbols(DiagramElement de);
+	public abstract ContainerProperty<Symbol> getSymbols(DiagramElement de);
 	
-	public abstract StyledText getStereotype(DiagramElement de);
+	public abstract TextContainingDiagramElement getStereotype(DiagramElement de);
 	
 	public boolean hasContent(DiagramElement de) {
-		List<Symbol> symbols = getSymbols(de);
+		ContainerProperty<Symbol> symbols = getSymbols(de);
 		String stereo = safeGetText(getStereotype(de));
 		boolean syms = (symbols != null) && (symbols.size() > 0);
 		String label = safeGetText(getLabel(de));
@@ -112,7 +114,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 	
 	public TextStyle getLabelStyle(DiagramElement de) {
 		TextStyle ts = getBoxStyle(de).getLabelTextFormat();
-		StyledText st = getLabel(de);
+		TextContainingDiagramElement st = getLabel(de);
 			
 		if ((st !=null) && (st.getStyle()!= null)) {
 			ts = TextStyle.override(st.getStyle(), ts);
@@ -123,7 +125,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 	
 	public TextStyle getTypeStyle(DiagramElement de) {
 		TextStyle ts = getBoxStyle(de).getTypeTextFormat();
-		StyledText st = getStereotype(de);
+		TextContainingDiagramElement st = getStereotype(de);
 			
 		if ((st != null) && (st.getStyle()!= null)) {
 			ts = TextStyle.override(st.getStyle(), ts);
@@ -174,7 +176,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 //		}
 	}
 
-	private String safeGetText(StyledText st) {
+	private String safeGetText(TextContainingDiagramElement st) {
 		return st == null ? null : st.getText();
 	}
 	

@@ -16,7 +16,6 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
  */
 public class ConnectionEdge extends AbstractPlanarizationEdge {
 
-	private static final long serialVersionUID = 5984517814504832598L;
 	Connection underlying;
 
 	public ConnectionEdge(Vertex from, Vertex to, Connection underlying, Direction d) {

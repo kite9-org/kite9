@@ -123,7 +123,7 @@ public class Test26VertexOrderingUndirected extends AbstractFunctionalTest {
 		new Link(out[2][2], out[3][2]);
 		new TurnLink(out[2][3], out[0][3]);
 
-		renderDiagram(new Diagram("bob", out2, null, null));
+		renderDiagram(new Diagram("bob", out2, null));
 
 	}
 	
@@ -144,7 +144,7 @@ public class Test26VertexOrderingUndirected extends AbstractFunctionalTest {
 		new Link(out[2][2], out[3][2]);
 		new Link(out[2][3], out[0][3]);
 
-		renderDiagram(new Diagram("bob", out2, null, null));
+		renderDiagram(new Diagram("bob", out2, null));
 
 	}
 	
@@ -181,7 +181,7 @@ public class Test26VertexOrderingUndirected extends AbstractFunctionalTest {
 
 		new Link(out[2][3], out[0][3]);
 
-		renderDiagram(new Diagram("bob", out2, null, null));
+		renderDiagram(new Diagram("bob", out2, null));
 
 	}
 	

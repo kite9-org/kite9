@@ -80,7 +80,7 @@ import junit.framework.AssertionFailedError;
 @Ignore
 public class TestingEngine extends TestingHelp {
 
-	boolean serialize = true;
+	boolean serialize = false;
 
 	String resultsFile;
 

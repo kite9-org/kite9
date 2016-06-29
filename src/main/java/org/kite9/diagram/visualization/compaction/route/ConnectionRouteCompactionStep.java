@@ -81,7 +81,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	}
 
 	private void addToRoute(RouteRenderingInformation r, RouteRenderingInformation out, boolean reverse) {
-		Dimension2D last = out.getPositions().size()==0 ? null : out.getPositions().get(out.getPositions().size()-1);
+		Dimension2D last = out.getRoutePositions().size()==0 ? null : (Dimension2D) out.getRoutePositions().getLastElementChild();
 		if (!reverse) {
 			for (int i = 0; i < r.size(); i++) {
 				Dimension2D p1 = r.getWaypoint(i);

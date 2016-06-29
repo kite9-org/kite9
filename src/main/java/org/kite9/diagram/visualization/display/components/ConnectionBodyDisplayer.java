@@ -1,14 +1,13 @@
 package org.kite9.diagram.visualization.display.components;
 
-import java.util.List;
-
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
@@ -32,17 +31,17 @@ public class ConnectionBodyDisplayer extends AbstractTextBoxModelDisplayer {
 	}
 
 	@Override
-	public StyledText getLabel(DiagramElement de) {
+	public TextContainingDiagramElement getLabel(DiagramElement de) {
 		return ((Arrow)de).getLabel();
 	}
 
 	@Override
-	public List<Symbol> getSymbols(DiagramElement de) {
+	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
 		return null;
 	}
 
 	@Override
-	public StyledText getStereotype(DiagramElement de) {
+	public TextContainingDiagramElement getStereotype(DiagramElement de) {
 		return null;
 	}
 	
@@ -62,7 +61,7 @@ public class ConnectionBodyDisplayer extends AbstractTextBoxModelDisplayer {
 	
 	@Override
 	public boolean requiresDimension(DiagramElement de) {
-		StyledText label = getLabel(de);
+		TextContainingDiagramElement label = getLabel(de);
 		if ((label==null) || (label.getText() == null) || (label.getText().trim().length()==0)) {
 			return false;
 		} else {

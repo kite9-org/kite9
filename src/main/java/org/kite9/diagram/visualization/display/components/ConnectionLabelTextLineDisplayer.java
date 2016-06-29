@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.display.components;
 
-import java.util.List;
-
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
@@ -13,7 +13,7 @@ import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.Label;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
@@ -77,7 +77,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 			yEnd -= slacky;
 		}
 		
-		super.draw(element, new RectangleRenderingInformation(
+		super.draw(element, new BasicRenderingInformation(
 				new Dimension2D(xStart, yStart),
 				new Dimension2D(xEnd - xStart, yEnd - yStart),
 				ri.getHorizontalJustification(), ri.getVerticalJustification(), ri.isRendered()));
@@ -118,17 +118,17 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	}
 
 	@Override
-	public StyledText getLabel(DiagramElement de) {
-		return ((TextLine)de).getText();
+	public TextContainingDiagramElement getLabel(DiagramElement de) {
+		return ((TextLine)de);
 	}
 
 	@Override
-	public List<Symbol> getSymbols(DiagramElement de) {
+	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
 		return ((TextLine)de).getSymbols();
 	}
 
 	@Override
-	public StyledText getStereotype(DiagramElement de) {
+	public TextContainingDiagramElement getStereotype(DiagramElement de) {
 		return null;
 	}
 

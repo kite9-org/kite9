@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
@@ -14,6 +15,7 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
 
@@ -27,9 +29,12 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 		for (int i = 0; i < count; i++) {
 			id ++;
 			Glyph g = new Glyph("id"+id, "bob", "id"+id, null, null);
+			List<CompositionalDiagramElement> textLines = new ArrayList<>();
 			for (int j = 0; j < i; j++) {
-				g.getText().add(new TextLine("Some text"));
+				textLines.add(new TextLine("Some text"));
 			}
+			ContainerProperty<CompositionalDiagramElement> cp = new ContainerProperty<>("text-lines", ContainerProperty.TESTING_DOCUMENT, textLines);
+			g.setText(cp);
 			out.add(g);
 		}
 		return out;

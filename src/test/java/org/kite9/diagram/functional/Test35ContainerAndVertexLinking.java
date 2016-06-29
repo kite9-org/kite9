@@ -214,7 +214,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(con1, g10);
 		new Link(con1, g11);
 		
-		Diagram d = new Diagram("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null, null);
+		Diagram d = new Diagram("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 	
@@ -249,7 +249,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(con1, g10, null, null, null, null, Direction.UP);
 		new Link(con1, g11, null, null, null, null, Direction.UP);
 		
-		Diagram d = new Diagram("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null, null);
+		Diagram d = new Diagram("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 

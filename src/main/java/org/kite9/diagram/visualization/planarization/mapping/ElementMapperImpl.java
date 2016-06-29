@@ -124,7 +124,7 @@ public class ElementMapperImpl implements ElementMapper {
 			vto.addEdge(e);
 			e.setTo(vto);
 
-			e.setDrawDirectionFrom(vfrom, dd);
+			e.setDrawDirectionFrom(dd, vfrom);
 			return e;
 		}
 	}

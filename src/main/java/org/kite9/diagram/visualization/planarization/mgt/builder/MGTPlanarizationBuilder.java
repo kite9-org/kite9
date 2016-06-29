@@ -5,18 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
@@ -41,32 +36,13 @@ public abstract class MGTPlanarizationBuilder extends RHDPlanarizationBuilder im
 	
 	protected Kite9Log log = new Kite9Log(this);
 		
-	public static boolean debug = false;
-	
 	protected MGTPlanarizationImpl buildPlanarization(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Contained>> sortedContainerContents) {
 		MGTPlanarizationImpl p = new MGTPlanarizationImpl(d, vertexOrder, initialUninsertedConnections, sortedContainerContents);
 		logPlanarEmbeddingDetails(p, log);
 		getRoutableReader().initRoutableOrdering(vertexOrder);
 		completeEmbedding(p);
 		log.send(log.go() ? null : "Initial Planar Embedding: \n" + p.toString());
-		if (debug) 
-			addDebugInfo(vertexOrder);
 		return p;
-	}
-
-	protected void addDebugInfo(List<Vertex> vo) {
-		for (Vertex vertex : vo) {
-			DiagramElement originalUnderlying = vertex.getOriginalUnderlying();
-			if (originalUnderlying instanceof Glyph) {
-				String text = "X="+vertex.getRoutingInfo().outputX()+"\nY="+vertex.getRoutingInfo().outputY();
-				((Glyph) originalUnderlying).getText().add(new TextLine(text));
-			} else if (originalUnderlying instanceof Arrow) {
-				String text = "X="+vertex.getRoutingInfo().outputX()+"\nY="+vertex.getRoutingInfo().outputY();
-				StyledText orig = ((Arrow) originalUnderlying).getLabel();
-				String origText = orig == null ? "" : orig.getText();
-				((Arrow) originalUnderlying).setLabel(new StyledText(origText+"\n"+text));
-			}
-		}
 	}
 
 	public static void logPlanarEmbeddingDetails(MGTPlanarization pln, Kite9Log log) {

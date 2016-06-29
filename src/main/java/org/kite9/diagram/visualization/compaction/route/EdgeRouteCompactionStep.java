@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.compaction.route;
 import java.util.Collections;
 import java.util.List;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.DiagramRenderingInformation;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
@@ -79,7 +79,7 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 		double x = v.getX();
 		double y = v.getY();
 		
-		if (rri instanceof DiagramRenderingInformation) {
+		if (de instanceof Diagram) {
 			increaseBounds(rri, x, y);
 		} else if ((rri.getPosition().x() == 0) && (rri.getPosition().y() == 0)) {
 			// initialize bounds

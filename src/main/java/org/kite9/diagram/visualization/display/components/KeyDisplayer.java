@@ -1,17 +1,17 @@
 package org.kite9.diagram.visualization.display.components;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledText;
+import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.Stylesheet;
@@ -85,7 +85,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 					
 					Dimension2D from = new Dimension2D(x + (currentColumn * ( actualColumnWidth + ss.getKeyInternalSpacing() ) ), y + pos);
 					Dimension2D size = new Dimension2D(actualColumnWidth, currentHeight);
-					parent.draw(contents.get(i), new RectangleRenderingInformation(from, size, null, null, true));
+					parent.draw(contents.get(i), new BasicRenderingInformation(from, size, null, null, true));
 					
 					pos += currentHeight;
 				}
@@ -149,18 +149,11 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	@Override
 	public List<DiagramElement> getContents(DiagramElement de) {
 		@SuppressWarnings("rawtypes")
-		List syms = ((Key)de).getSymbols();
+		ContainerProperty<TextLine> syms = ((Key)de).getSymbols();
 		List<DiagramElement> out = new ArrayList<DiagramElement>(syms == null ? 0 : syms.size());
 		if (syms != null) {
-			for (Object s : syms) {
-				if (s instanceof TextLine) {
-					out.add((TextLine)s);
-					((TextLine) s).setParent(de);
-				} else if (s instanceof Symbol) {
-					TextLine tl =new TextLine(((Symbol) s).getText(), Collections.singletonList((Symbol) s));
-					out.add(tl);
-					tl.setParent(de);
-				}
+			for (TextLine s : syms) {
+				out.add(s);
 			}
 		}
 		
@@ -168,17 +161,17 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	}
 	
 	@Override
-	public StyledText getLabel(DiagramElement de) {
+	public TextContainingDiagramElement getLabel(DiagramElement de) {
 		return ((Key)de).getBodyText();
 	}
 
 	@Override
-	public List<Symbol> getSymbols(DiagramElement de) {
+	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
 		return null;
 	}
 
 	@Override
-	public StyledText getStereotype(DiagramElement de) {
+	public TextContainingDiagramElement getStereotype(DiagramElement de) {
 		return ((Key)de).getBoldText();
 	}
 
