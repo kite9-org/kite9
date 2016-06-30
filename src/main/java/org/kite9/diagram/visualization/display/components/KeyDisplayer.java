@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -50,7 +51,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	}
 	
 	public CostedDimension sizeOrDrawContent(double x, double y, DiagramElement element, double width, double height, boolean draw) {
-		List<DiagramElement> contents = getContents(element);
+		List<CompositionalDiagramElement> contents = getContents(element);
 		Dimension2D within = new Dimension2D(width, height);
 
 		if ((contents!=null) && (contents.size()>0)) {
@@ -147,10 +148,10 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	 * This supports both collections of symbols (legacy) and collections of text-lines
 	 */
 	@Override
-	public List<DiagramElement> getContents(DiagramElement de) {
+	public List<CompositionalDiagramElement> getContents(DiagramElement de) {
 		@SuppressWarnings("rawtypes")
 		ContainerProperty<TextLine> syms = ((Key)de).getSymbols();
-		List<DiagramElement> out = new ArrayList<DiagramElement>(syms == null ? 0 : syms.size());
+		List<CompositionalDiagramElement> out = new ArrayList<CompositionalDiagramElement>(syms == null ? 0 : syms.size());
 		if (syms != null) {
 			for (TextLine s : syms) {
 				out.add(s);

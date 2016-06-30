@@ -60,7 +60,9 @@ public class Test43Styles extends AbstractFunctionalTest {
 	@Test
 	public void test_43_5_OverrideGlyphFont() throws IOException {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
-		g1.setLabel(new TextLine("Hello Biggie", "font-size: 20px"));
+		TextLine tl = new TextLine("Hello Biggie");
+		tl.setStyle("font-size: 20px");
+		g1.setLabel(tl);
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
 		renderDiagram(d, new Designer2012Stylesheet());
 	}

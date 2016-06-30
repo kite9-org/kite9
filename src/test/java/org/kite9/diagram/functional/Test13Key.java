@@ -79,33 +79,37 @@ public class Test13Key extends AbstractFunctionalTest {
 		renderDiagramNoSerialize(d);
 	}
 	
-	private static final Symbol[] OPTIONS = new Symbol[] { 
-		new Symbol("Some information", 'S', SymbolShape.CIRCLE),
-		new Symbol("Partridge", 'P', SymbolShape.CIRCLE),
-		new Symbol("Gemstone Beta", 'G', SymbolShape.HEXAGON),
-		new Symbol("Multiline and very complicated\ndescription of the symbol\nitself", 'P', SymbolShape.DIAMOND),
-		new Symbol("Par\ntwo lines", 'V', SymbolShape.CIRCLE) };
+	private Symbol[] getOptions() {
+		return  new Symbol[] { 
+			new Symbol("Some information", 'S', SymbolShape.CIRCLE),
+			new Symbol("Partridge", 'P', SymbolShape.CIRCLE),
+			new Symbol("Gemstone Beta", 'G', SymbolShape.HEXAGON),
+			new Symbol("Multiline and very complicated\ndescription of the symbol\nitself", 'P', SymbolShape.DIAMOND),
+			new Symbol("Par\ntwo lines", 'V', SymbolShape.CIRCLE) };
+	}
 
 		
 	private List<Symbol> createLongSymbolList(int size) {
 		int next = 0;
+		Symbol[] options = getOptions();
 		ArrayList<Symbol> out = new ArrayList<Symbol>(size);
 		for (int i = 0; i < size; i++) {
-			out.add(OPTIONS[next++]);
-			next = next % OPTIONS.length;
+			out.add(options[next++]);
+			next = next % options.length;
 		}
 		return out;
 	}
 	
 	private List<Symbol> createNarrowSymbolList(int size) {
 		int next = 0;
+		Symbol[] options = getOptions();
 		ArrayList<Symbol> out = new ArrayList<Symbol>(size);
 		while( out.size() < size) {
-			Symbol symbol = OPTIONS[next++];
+			Symbol symbol = options[next++];
 			if (symbol.getText().length()<20) {
 				out.add(symbol);
 			}
-			next = next % OPTIONS.length;
+			next = next % options.length;
 		}
 		return out;
 	}
