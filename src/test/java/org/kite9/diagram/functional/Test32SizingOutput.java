@@ -18,6 +18,7 @@ import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
+import org.kite9.framework.common.HelpMethods;
 
 public class Test32SizingOutput extends AbstractFunctionalTest {
 	@Test
@@ -49,8 +50,7 @@ public class Test32SizingOutput extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_32_5_TestDiagramHeightAndWidthScaling() throws IOException {
-		Diagram d = new Diagram();
-		d.getContents().add(new Glyph("", "New Part", null, null, null));
+		Diagram d = new Diagram("blo", HelpMethods.listOf(new Glyph("", "New Part", null, null)));
 		TestingEngine te = getTestingEngineSettingSize(200, 200);
 		renderDiagram(d, te, false, new BasicStylesheet());
  	}

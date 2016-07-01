@@ -131,8 +131,8 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		Designer2012Stylesheet ss = new Designer2012Stylesheet();
 		
 		for (String s : ss.getLinkTerminatorStyles().keySet()) {
-			Glyph a = new Glyph("a", "", "A", null, null);
-			Glyph b = new Glyph("b", "", "B", null, null);
+			Glyph a = new Glyph("", "A", null, null);
+			Glyph b = new Glyph("", "B", null, null);
 			new Link(a, b, s, null, s, null, Direction.RIGHT);
 			Link l2 = new Link(a, b, s, null, s, null, Direction.RIGHT);
 			l2.setStyle("stroke-width: 1px; stroke-dasharray: '-..'; stroke: red");

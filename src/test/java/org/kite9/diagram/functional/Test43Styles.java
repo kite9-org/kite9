@@ -92,7 +92,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g2 = new Glyph("b", null, "b", null, null);
 		Diagram d= new Diagram(HelpMethods.listOf(g1, g2),  null);
 		TextLine oneEnd = new TextLine("label 1 hhh hhh");
-		oneEnd.getText().setStyle("font-size: 20px;");
+		//oneEnd.getText().setStyle("font-size: 20px;");
 		oneEnd.setStyle("fill: \"270-#363525-#756365\"");
 		TextLine otherEnd = new TextLine("label 1 hhh jhgjhg");
 		otherEnd.setStyle("stroke-width: 8px");

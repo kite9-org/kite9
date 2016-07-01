@@ -6,6 +6,7 @@ import org.apache.batik.svggen.DOMTreeManager;
 import org.apache.batik.svggen.SVGCSSStyler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
+import org.kite9.diagram.adl.ADLDocument;
 import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.RenderingInformation;
@@ -13,6 +14,7 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.framework.serialization.XMLHelper;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -81,8 +83,17 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 	}
 
 	private void ensureDisplayData(Element xml, RenderingInformation ri) {
+		ADLDocument d = (ADLDocument) ri.getOwnerDocument();
 		ContainerProperty<Element> displayData = ri.getDisplayData();
-		displayData.appendChild(xml);
+		
+		if (displayData == null) {
+			displayData = new ContainerProperty<Element>("displayData", d);
+			ri.setDisplayData(displayData);
+		}
+		
+		Element newNode = (Element) d.importNode(xml, true);
+		
+		displayData.appendChild(newNode);
 	}
 
 	@Override

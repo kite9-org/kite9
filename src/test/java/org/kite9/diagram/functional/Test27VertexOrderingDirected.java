@@ -106,12 +106,12 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][0], out[0][2], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
-		new Link(out[0][0], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
-		new Link(out[0][0], out[0][4], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		new Link(out[0][0], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
 		new Link(out[0][0], out[0][6], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
 		new Link(out[0][0], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.UP);
 		new Link(out[0][0], out[0][8], LinkEndStyle.ARROW, null, null, null, Direction.UP);
+		new Link(out[0][0], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
+		new Link(out[0][0], out[0][4], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 
 		renderDiagram(new Diagram(out2, null));
 
