@@ -1,0 +1,112 @@
+
+.background {
+	
+	
+}
+
+.copyright {
+	font-weight: normal;
+	font-size: 12px;
+	font-family: "opensans-light-webfont";
+	stroke: black;
+}
+
+.shadow {
+	fill: #040404;
+	offset-x: 2px;
+	offset-y: 2px;
+}
+
+
+/* Symbols */
+
+.symbol {
+	font-weight: bold;
+	font-size: 10px;
+	font-family: "opensans-bold-webfont";
+	text-align:  middle;
+	width: 14px;
+	height: 14px;
+}
+
+.symbol.label {
+	color: white;
+}
+
+.symbol.circle {
+	fill: rgb(0, 150, 73);
+}
+
+.symbol.hexagon {
+	fill: rgb(207, 36, 42);
+}
+
+.symbol.diamond {
+	fill: rgb(237, 106, 86);
+}
+
+/* Glyph */
+.glyph {
+	shape: "rounded-rect";
+	padding: 3px 6px 3px 6px; 
+	margin: 0;
+	stroke-width: 2px;
+	stroke: black;
+	fill: white;
+	box-shadow: 4px 4px 0px #333333;
+}
+
+.glyph .label {
+	font-size: 15px;
+	text-align: middle;
+	font-family: "opensans-regular-webfont";
+}
+
+.glyph .stereotype {
+	font-family: "opensans-bold-webfont";
+	font-size: 12px;
+	stroke: black;
+}
+
+.glyph .text-line {
+	padding-top: 5px;
+	padding-bottom: 3px;
+	margin: 0 0 0 0; 
+	font-size: 12px;
+	stroke: black;
+	fill: none;
+	
+}
+
+/* Arrow */
+.arrow {
+	padding: 2px 3px 2px 3px; 
+	margin: 0 0 0 0; 
+	fill: black;
+	stroke: none;
+}
+
+.arrow label {
+	
+}
+
+/* Context */
+
+/* Key */
+
+/* Link */
+
+.link {
+	
+}
+
+.link.dotted {
+	stroke-dasharray: 5px 5px;
+	
+}
+
+
+
+.copyright {
+	font-size: 12px;
+}

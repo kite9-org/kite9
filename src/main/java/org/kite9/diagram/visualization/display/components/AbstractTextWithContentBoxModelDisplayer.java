@@ -9,7 +9,6 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -20,12 +19,12 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  */
 public abstract class AbstractTextWithContentBoxModelDisplayer extends AbstractTextBoxModelDisplayer {
 
-	public AbstractTextWithContentBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public AbstractTextWithContentBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
-	public AbstractTextWithContentBoxModelDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public AbstractTextWithContentBoxModelDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 	
 	public abstract List<CompositionalDiagramElement> getContents(DiagramElement de);

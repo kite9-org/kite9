@@ -6,22 +6,21 @@ import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class GlyphCompositionalShapeDisplayer extends AbstractBoxModelDisplayer {
 
-	public GlyphCompositionalShapeDisplayer(CompleteDisplayer parent, GraphicsLayer g2,
-			Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public GlyphCompositionalShapeDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
 	@Override
 	public BoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getGlyphCompositionalShapeStyle();
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	@Override

@@ -13,18 +13,18 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class BackgroundDisplayer extends AbstractDiagramDisplayer {
 
-	public BackgroundDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2) {
-		super(parent, ss, g2, false, 0, 0);
+	public BackgroundDisplayer(CompleteDisplayer parent, GraphicsLayer g2) {
+		super(parent, g2, false);
 	}
 
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri) {
-		Paint p = ss.getBackground();
+		Paint p = StaticStyle.getBackground();
 		Dimension2D size = ((RectangleRenderingInformation)ri).getSize();
 		paintBackground(size, p);
 	}

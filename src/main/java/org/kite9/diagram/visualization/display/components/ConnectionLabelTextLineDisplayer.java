@@ -18,8 +18,6 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -30,12 +28,12 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  */
 public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer {
 
-	public ConnectionLabelTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public ConnectionLabelTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
-	public ConnectionLabelTextLineDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public ConnectionLabelTextLineDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
 	public boolean canDisplay(DiagramElement element) {
@@ -88,12 +86,12 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	 * round, same for down instead of up
 	 */
 	@Override
-	public TextBoxStyle getBoxStyle(DiagramElement de) {
+	public BoxStyle getBoxStyle(DiagramElement de) {
 		RectangleRenderingInformation rri = (RectangleRenderingInformation) ((Label)de).getRenderingInformation();
 		HPos hj = rri.getHorizontalJustification();
 		VPos vj = rri.getVerticalJustification();
 	
-		TextBoxStyle original = super.getBoxStyle(de);
+		BoxStyle original = super.getBoxStyle(de);
 		DirectionalValues margins = original.getMargin();
 
 		boolean revx = hj ==HPos.RIGHT;

@@ -10,15 +10,15 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class DebugLineDisplayer extends AbstractRouteDisplayer {
 
 	boolean active = false;
 	
-	public DebugLineDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2) {
-		super(ss, g2);
+	public DebugLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2) {
+		super(g2);
 		this.parent = parent;
 	}
  
@@ -44,9 +44,9 @@ public class DebugLineDisplayer extends AbstractRouteDisplayer {
 	public void draw(DiagramElement element, RenderingInformation ri) {
 		if (isOutputting()) {
 			RouteRenderingInformation ri2 = (RouteRenderingInformation) ri;
-			drawRouting(ri2, ss.getDebugLinkStroke(), Color.BLUE, null, NULL_END_DISPLAYER, NULL_END_DISPLAYER, STRAIGHT_DISPLAYER, false, true, 0);
-			arrangeString(ss.getDebugTextFont(), Color.RED, ((DebugLine)element).getL1(), ri2.getWaypoint(0), new Dimension2D(10,10), new Dimension2D(0, 0), new Dimension2D(0,0), true, Justification.LEFT, 10);
-			arrangeString(ss.getDebugTextFont(), Color.GREEN, ((DebugLine)element).getL2(), ri2.getWaypoint(1), new Dimension2D(10,10), new Dimension2D(0, 0), new Dimension2D(0,0), true, Justification.LEFT, 10);
+			drawRouting(ri2, StaticStyle.getDebugLinkStroke(), Color.BLUE, null, NULL_END_DISPLAYER, NULL_END_DISPLAYER, STRAIGHT_DISPLAYER, false, true, 0);
+			arrangeString(StaticStyle.getDebugTextFont(), Color.RED, ((DebugLine)element).getL1(), ri2.getWaypoint(0), new Dimension2D(10,10), new Dimension2D(0, 0), new Dimension2D(0,0), true, Justification.LEFT, 10);
+			arrangeString(StaticStyle.getDebugTextFont(), Color.GREEN, ((DebugLine)element).getL2(), ri2.getWaypoint(1), new Dimension2D(10,10), new Dimension2D(0, 0), new Dimension2D(0,0), true, Justification.LEFT, 10);
 		}
 	}
 

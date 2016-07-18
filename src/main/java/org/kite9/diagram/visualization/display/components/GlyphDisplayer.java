@@ -9,10 +9,10 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 
@@ -21,8 +21,8 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	AbstractBoxModelDisplayer lineDisplayer; 
 	
 
-	public GlyphDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public GlyphDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
 	
@@ -47,8 +47,8 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	}
 
 	@Override
-	public TextBoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getGlyphBoxStyle();
+	public BoxStyle getUnderlyingStyle(DiagramElement de) {
+		return new BoxStyle((StyledDiagramElement)de);
 	}
 
 	/**
@@ -56,7 +56,6 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	 */
 	@Override
 	public List<CompositionalDiagramElement> getContents(DiagramElement de) {
-		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ContainerProperty<CompositionalDiagramElement> out =  ((Glyph)de).getText();
 
 		if ((out == null) || (out.size() == 0)) {
@@ -71,10 +70,8 @@ public class GlyphDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 		return true;
 	}
 
-
-
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return ss.getGlyphDefaultShape();
+		return AbstractBoxModelDisplayer.DEFAULT_SHAPE;
 	}
 }

@@ -1,6 +1,7 @@
 package org.kite9.diagram.functional;
 
 import java.io.IOException;
+import java.net.URL;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Diagram;
@@ -9,6 +10,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.primitives.StylesheetReference;
 
 public class Test5GlyphLayout extends AbstractFunctionalTest {
 
@@ -21,7 +23,8 @@ public class Test5GlyphLayout extends AbstractFunctionalTest {
 	public void test_5_1_SimpleGlyphFinal() throws IOException {
 		Contained one = new Glyph("", "Rob's Glyph", null, null);
 		Diagram d = new Diagram("The Diagram", createList(one), null);
-
+		URL u = getClass().getResource("/stylesheets/designer2012.css");
+		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
 		renderDiagram(d);
 	}
 

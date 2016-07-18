@@ -14,13 +14,16 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.primitives.AbstractStyledDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.TextStyle;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
@@ -35,8 +38,8 @@ import org.w3c.dom.NodeList;
  */
 public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 	
-	public WatermarkDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g, boolean watermark) {
-		super(parent, ss, g, watermark, 0, 0);
+	public WatermarkDisplayer(CompleteDisplayer parent, GraphicsLayer g, boolean watermark) {
+		super(parent, g, watermark);
 	}
 
 	public static final String COPYRIGHT_NORMAL = "diagrams rendered by kite9.com";
@@ -51,23 +54,46 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 		Dimension2D size = ((RectangleRenderingInformation)ri).getSize();
 		
 		if (shadow) {
-			displayWatermark(g2, size, ss);
+			displayWatermark(g2, size);
 		} else {
 			if ((size.getWidth() < COPYRIGHT_MIN_DIMENSION) || (size.getHeight() < COPYRIGHT_MIN_DIMENSION)) {
 				// in these cases, the image is too small to complicate further with a watermark
 				return;
 			}
 				
-			displayCopyright(g2, size, ss); 
+			displayCopyright(g2, size, element); 
 		}
 	}
 	
+	private StyledDiagramElement getCopyrightElement(Diagram d) {
+		return new AbstractStyledDiagramElement("copyright", d.getOwnerDocument()) {
+			
+			@Override
+			public int compareTo(DiagramElement o) {
+				return 0;
+			}
+			
+			@Override
+			public String getXMLId() {
+				return null;
+			}
+			
+			@Override
+			protected Node newNode() {
+				return null;
+			}
+		};
+	}
 	
-	public void displayCopyright(GraphicsLayer g2, Dimension2D size, Stylesheet ss) {
+	
+	public void displayCopyright(GraphicsLayer g2, Dimension2D size, DiagramElement de) {
 		AffineTransform at = g2.getTransform();
 		g2.setTransform(new AffineTransform());
+		
+		Diagram d = (Diagram) de;
+		StyledDiagramElement copy = getCopyrightElement(d);
 
-		TextStyle ts = ss.getCopyrightStyle();
+		TextStyle ts = new TextStyle(copy);
 		Font f = ts.getFont();
 		
 		FontMetrics fontMetrics = g2.getFontMetrics(f);
@@ -94,7 +120,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 		
 	}
 	
-	public void displayWatermark(GraphicsLayer g2, Dimension2D size, Stylesheet ss) {
+	public void displayWatermark(GraphicsLayer g2, Dimension2D size) {
 		try {
 			AffineTransform at = g2.getTransform();
 			g2.setTransform(new AffineTransform());
@@ -131,7 +157,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 					// center in image
 					gp.transform(AffineTransform.getTranslateInstance(size.getWidth() / 2.0d, size.getHeight() / 2.0d));
 					
-					g2.setColor(ss.getWatermarkColour());
+					g2.setColor(StaticStyle.getWatermarkColour());
 					g2.fill(gp);
 				}
 			}

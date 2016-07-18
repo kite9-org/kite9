@@ -7,22 +7,14 @@ import java.io.StringWriter;
 
 import org.junit.Before;
 import org.kite9.diagram.adl.ADLDocument;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.AbstractConnectedContained;
 import org.kite9.diagram.primitives.AbstractDiagramElement;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.IdentifiableDiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.logging.Kite9Log;
@@ -34,28 +26,23 @@ public class AbstractFunctionalTest extends HelpMethods {
 		return "/functional-test.zip";
 	}
 	
-	public Diagram renderDiagram(Diagram d, TestingEngine te, boolean watermark, Stylesheet ss) throws IOException {
-		return te.renderDiagram(d, true, checkDiagramSize(), checkEdgeDirections(), checkNoHops(), checkEverythingStraight(), checkLayout(), checkNoContradictions(), checkImage(), ss);
-	}
-
-	public Diagram renderDiagram(Diagram d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		return renderDiagram(d, te, true, new BasicStylesheet());
+	public Diagram renderDiagram(Diagram d, TestingEngine te, boolean watermark) throws IOException {
+		return te.renderDiagram(d, true, checkDiagramSize(), checkEdgeDirections(), checkNoHops(), checkEverythingStraight(), checkLayout(), checkNoContradictions(), checkImage());
 	}
 
 	public Diagram renderDiagramNoSerialize(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName(), false);
-		return renderDiagram(d, te, true, new BasicStylesheet());
+		return renderDiagram(d, te, true);
 	}
 
-	public Diagram renderDiagramNoWM(Diagram d, Stylesheet ss) throws IOException {
+	public Diagram renderDiagramNoWM(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
-		return renderDiagram(d, te, false, ss);
+		return renderDiagram(d, te, false);
 	}
 	
-	public Diagram renderDiagram(Diagram d, Stylesheet ss) throws IOException {
+	public Diagram renderDiagram(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
-		return renderDiagram(d, te, true, ss);
+		return renderDiagram(d, te, true);
 	}
 
 	public void renderDiagramPDF(Diagram d) throws IOException {
@@ -70,33 +57,23 @@ public class AbstractFunctionalTest extends HelpMethods {
 		te.renderDiagramSVG(d);
 	}
 	
-	public void renderDiagramADLAndSVG(Diagram d, Stylesheet ss) throws IOException {
+	public void renderDiagramADLAndSVG(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramADLAndSVG(d, ss);
+		te.renderDiagramADLAndSVG(d);
 	}
 	
 	public TestingEngine getTestingEngine() {
 		return new TestingEngine(getZipName());
 	}
 	
-	public void renderDiagramPDF(Diagram d, Stylesheet ss) throws IOException {
+	public void renderDiagramSizes(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramPDF(d, ss);
+		te.renderDiagramSizes(d);
 	}
 	
-	public void renderDiagramSVG(Diagram d, Stylesheet ss) throws IOException {
+	public void renderMap(Diagram d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramSVG(d, ss);
-	}
-	
-	public void renderDiagramSizes(Diagram d, Stylesheet ss) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramSizes(d, ss);
-	}
-	
-	public void renderMap(Diagram d, Stylesheet ss) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		te.renderMap(d, ss);
+		te.renderMap(d);
 	}
 	
 	protected boolean checkDiagramSize() {
@@ -151,7 +128,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 
 	
 
-	public void generate(String name, Stylesheet ss) throws IOException {
+	public void generate(String name) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
@@ -160,20 +137,20 @@ public class AbstractFunctionalTest extends HelpMethods {
 		Diagram d = (Diagram) o;
 		final int[] i =  { 0 } ;
 		relabel(d, i);
-		renderDiagram(d, ss);
-		//renderDiagramSizes(d, ss);
+		renderDiagram(d);
+		//renderDiagramSizes(d);
 		
 	}
 	
-	public Diagram generateNoRename(String name, Stylesheet ss) throws IOException {
+	public Diagram generateNoRename(String name) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Object o = new XMLHelper().fromXML(sw.getBuffer().toString());
 		Diagram d = (Diagram) o;
-		return renderDiagram(d, ss);
-		//renderDiagramSizes(d, ss);
+		return renderDiagram(d);
+		//renderDiagramSizes(d);
 	}
 
 	public void relabel(DiagramElement de, int[] i) {
@@ -200,23 +177,23 @@ public class AbstractFunctionalTest extends HelpMethods {
 //		} 
 	}
 	
-	public void generateSizes(String name, Stylesheet ss) throws IOException {
+	public void generateSizes(String name) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Diagram d = (Diagram) new XMLHelper().fromXML(sw.getBuffer().toString());
-		renderDiagramSizes(d, ss);
+		renderDiagramSizes(d);
 	}
 	
-	public void generatePDF(String name, Stylesheet ss) throws IOException {
+	public void generatePDF(String name) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Diagram d = (Diagram) new XMLHelper().fromXML(sw.getBuffer().toString());
-		renderDiagramPDF(d, ss);
-		//renderDiagramSizes(d, ss);
+		renderDiagramPDF(d);
+		//renderDiagramSizes(d);
 	}
 	
 	@Before

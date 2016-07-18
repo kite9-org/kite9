@@ -1,22 +1,21 @@
 package org.kite9.diagram.visualization.display.style;
 
-import static org.apache.batik.util.SVGConstants.SVG_FILL_ATTRIBUTE;
-import static org.apache.batik.util.SVGConstants.SVG_FILL_OPACITY_ATTRIBUTE;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.bridge.PaintServer;
+import org.apache.batik.css.engine.value.InheritValue;
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.engine.value.svg12.SVG12ValueConstants;
 import org.apache.batik.gvt.ShapeNode;
-import org.apache.batik.svggen.SVGPaint;
-import org.apache.batik.svggen.SVGPaintDescriptor;
 import org.apache.batik.util.CSSConstants;
+import org.apache.batik.util.SVG12CSSConstants;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractADLDisplayer.Justification;
-import org.kite9.diagram.visualization.display.style.io.SVGHelper;
-import org.kite9.diagram.visualization.display.style.sheets.AbstractStylesheet;
+import org.kite9.diagram.visualization.display.style.io.FontHelper;
 import org.w3c.dom.Element;
+import org.w3c.dom.css.CSS2Properties;
 
 /**
  * Captures the details of the format that text will appear in.
@@ -26,23 +25,8 @@ import org.w3c.dom.Element;
  */
 public class TextStyle extends SVGAttributedStyle {
 	
-	Justification just;
-
-	public TextStyle(SVGHelper h, Font font, Color color, Justification just, String fontName) {
+	public TextStyle(StyledDiagramElement h) {
 		super(h);
-		attr.put("font-family", fontName);
-		attr.put("font-size", ""+font.getSize());
-		
-		if (color != null) {
-			final SVGPaint paintConverter = new SVGPaint(getHelper().getContext());
-			SVGPaintDescriptor pd = paintConverter.toSVG(color);
-			outputAttributes(pd, SVG_FILL_ATTRIBUTE, SVG_FILL_OPACITY_ATTRIBUTE);
-			if (pd.getDef() != null) {
-				getHelper().getRoot().appendChild(pd.getDef());
-			}
-		}
-		
-		this.just = just;
 	}
 	
 	public Color getColor() {
@@ -50,14 +34,14 @@ public class TextStyle extends SVGAttributedStyle {
 		ShapeNode sn = new ShapeNode();
 		sn.setShape(new Rectangle2D.Double(1,1,1,1));
 		
-		return (Color)  PaintServer.convertFillPaint(e, sn, getHelper().getBridge());
+		return (Color)  PaintServer.convertStrokePaint(e, sn, getBridgeContext());
 	}
 
 	public Font getFont() {
-		Value fontName = SVGHelper.getCSSStyleProperty(getStyleElement(), CSSConstants.CSS_FONT_FAMILY_PROPERTY);
-		Value fontSize = SVGHelper.getCSSStyleProperty(getStyleElement(), CSSConstants.CSS_FONT_SIZE_PROPERTY);
-//		return AbstractStylesheet.getFont(fontName.getCssText(), fontSize.);
-		return AbstractStylesheet.getFont(stripQuotes(fontName.getCssText()), (int) fontSize.getFloatValue());
+		Value fontName = getCSSStyleProperty(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
+		Value fontSize = getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
+		
+		return FontHelper.getFont(stripQuotes(fontName.getCssText()), (int) fontSize.getFloatValue());
 	}
 
 	private String stripQuotes(String cssText) {
@@ -65,7 +49,18 @@ public class TextStyle extends SVGAttributedStyle {
 	}
 
 	public Justification getJust() {
-		return just;
+		Value textAlign = getCSSStyleProperty( SVG12CSSConstants.CSS_TEXT_ALIGN_PROPERTY);
+		if (textAlign instanceof InheritValue) {
+			return Justification.CENTER;
+		} else {
+			if (textAlign.getStringValue()==SVG12CSSConstants.CSS_START_VALUE) {
+				return Justification.LEFT;
+			} else if (textAlign.getStringValue()==SVG12CSSConstants.CSS_END_VALUE) {
+				return Justification.RIGHT;
+			} else {
+				return Justification.CENTER;
+			}
+		}
 	}
 	
 }

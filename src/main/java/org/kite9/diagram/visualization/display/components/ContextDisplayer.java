@@ -4,17 +4,17 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.Label;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 
 public class ContextDisplayer extends AbstractBoxModelDisplayer {
 
-	public ContextDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public ContextDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
 	public boolean canDisplay(DiagramElement element) {
@@ -23,7 +23,7 @@ public class ContextDisplayer extends AbstractBoxModelDisplayer {
 	
 	@Override
 	public BoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ((Context)de).isBordered() ? ss.getContextBoxStyle() : ss.getContextBoxInvisibleStyle();
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	/**
@@ -42,6 +42,6 @@ public class ContextDisplayer extends AbstractBoxModelDisplayer {
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return ss.getContextBoxDefaultShape();
+		return AbstractBoxModelDisplayer.DEFAULT_SHAPE;
 	}
 }

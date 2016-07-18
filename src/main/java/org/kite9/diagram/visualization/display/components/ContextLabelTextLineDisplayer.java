@@ -14,18 +14,16 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer {
 
-	public ContextLabelTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public ContextLabelTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
-	public ContextLabelTextLineDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public ContextLabelTextLineDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
 	public boolean canDisplay(DiagramElement element) {

@@ -4,14 +4,13 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 
 public abstract class AbstractDiagramDisplayer extends AbstractADLDisplayer {
 
-	public AbstractDiagramDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public AbstractDiagramDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 	
 	public boolean canDisplay(DiagramElement element) {

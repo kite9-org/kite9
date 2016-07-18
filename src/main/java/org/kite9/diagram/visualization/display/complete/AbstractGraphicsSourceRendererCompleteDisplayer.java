@@ -4,7 +4,6 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.display.NullDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 
 /**
@@ -20,8 +19,8 @@ public abstract class AbstractGraphicsSourceRendererCompleteDisplayer extends Ab
 	protected Dimension2D diagramSize;
 	protected GraphicsSourceRenderer<?> gs;
 		
-	public AbstractGraphicsSourceRendererCompleteDisplayer(Stylesheet ss, boolean buffer) {
-		super(ss, buffer);
+	public AbstractGraphicsSourceRendererCompleteDisplayer(boolean buffer, int gridSize) {
+		super(buffer, gridSize);
 	}
 
 

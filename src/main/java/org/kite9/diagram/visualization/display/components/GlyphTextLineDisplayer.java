@@ -7,10 +7,10 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class GlyphTextLineDisplayer extends AbstractTextBoxModelDisplayer {
@@ -29,14 +29,13 @@ public class GlyphTextLineDisplayer extends AbstractTextBoxModelDisplayer {
 
 
 
-	public GlyphTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2,
-			Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public GlyphTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
 
-	public GlyphTextLineDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public GlyphTextLineDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
 
@@ -56,8 +55,8 @@ public class GlyphTextLineDisplayer extends AbstractTextBoxModelDisplayer {
 	}
 	
 	@Override
-	public TextBoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getGlyphTextLineStyle();
+	public BoxStyle getUnderlyingStyle(DiagramElement de) {
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	@Override

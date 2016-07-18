@@ -8,7 +8,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
-import org.apache.batik.util.CSSConstants;
 import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
@@ -20,14 +19,14 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.HintMap;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.style.ShapedDiagramElement;
-import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
+import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -37,25 +36,19 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  *
  */
 public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
+	
+	public static final FlexibleShape DEFAULT_SHAPE = new RoundedRectFlexibleShape(8);
 
-	public AbstractBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public AbstractBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
-	public AbstractBoxModelDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public AbstractBoxModelDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
 	public BoxStyle getBoxStyle(DiagramElement de) {
-		BoxStyle bs = getUnderlyingStyle(de);
-		
-		if (de instanceof StyledDiagramElement) {
-			String style = ((StyledDiagramElement) de).getStyle();
-			if (style != null) {
-				bs = BoxStyle.override(style, bs);
-			}
-		}
-		
+		BoxStyle bs = getUnderlyingStyle(de);		
 		return bs;
 	}
 	
@@ -65,9 +58,9 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		FlexibleShape out = null;
 		if (de instanceof ShapedDiagramElement) {
 			String name = ((ShapedDiagramElement) de).getShapeName();
-			out = ss.getFlexibleShapes().get(name);
+			out = ShapeHelper.getFlexibleShapes().get(name);
 			if ((out == null) && (name != null)) {
-				out = ss.getFlexibleShapes().get(name.toUpperCase());
+				out = ShapeHelper.getFlexibleShapes().get(name.toUpperCase());
 			}
 		}
 		
@@ -113,7 +106,9 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		if (fs != null) {
 			// draw the border
 			if (shadow && (sh != null) && (sh.castsShadow()) && (!sh.isInvisible())) {
-				Paint background = ss.getShadowColour();
+				int xo = sh.getShadowXOffset();
+				int yo = sh.getShadowYOffset();
+				Paint background = bs.getShadowPaint();
 				if (background != null) {
 					g2.setPaint(background);
 					Shape path = getShape(bs, fs, ( xStart + xo), (yStart +yo), (xEnd + xo), (yEnd + yo));
@@ -335,7 +330,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 				} else {
 					// handles gradient fills by centering the painting 
 					// context on what is being drawn
-					Paint back2 = new TransformedPaint(p, paintTransform, (String) borderStyle.get(CSSConstants.CSS_FILL_PROPERTY));
+					Paint back2 = new TransformedPaint(p, paintTransform, (String) borderStyle.getBackgroundKey());
 					
 					g2.setPaint(back2);
 				}

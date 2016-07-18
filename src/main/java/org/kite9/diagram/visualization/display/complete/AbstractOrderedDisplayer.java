@@ -6,7 +6,6 @@ import java.util.List;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 
 /**
  * Extends the basic displayer to allow ordering of component drawing, via a command buffer.
@@ -18,8 +17,8 @@ import org.kite9.diagram.visualization.display.style.Stylesheet;
 public abstract class AbstractOrderedDisplayer extends AbstractGraphicsSourceRendererCompleteDisplayer {
 
 
-	public AbstractOrderedDisplayer(Stylesheet ss, boolean buffer) {
-		super(ss, buffer);
+	public AbstractOrderedDisplayer(boolean buffer, int gridSize) {
+		super(buffer, gridSize);
 	}
 
 	class DrawItem {

@@ -15,8 +15,6 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -29,8 +27,8 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  */
 public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	
-	public KeyDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss,  shadow, xo, yo);
+	public KeyDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 		
 	private SizeSorter sorter = new SmoothingSizeSorter();

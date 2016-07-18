@@ -4,6 +4,7 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.kite9.diagram.visualization.display.style.io.SVGHelper;
 
 public class TerminatorShape extends FixedShape {
@@ -15,8 +16,8 @@ public class TerminatorShape extends FixedShape {
 		return minLength;
 	}
 
-	public TerminatorShape(SVGHelper h, Stroke stroke, Paint background, Shape path, DirectionalValues margin, double minLength, boolean filled) {
-		super(h, stroke, null, background, path, margin);
+	public TerminatorShape(CSSStylableElement h) {
+		super(h);
 		this.minLength = minLength;
 		this.filled = filled;
 	}

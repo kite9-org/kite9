@@ -21,9 +21,8 @@ import org.kite9.diagram.visualization.display.components.KeyDisplayer;
 import org.kite9.diagram.visualization.display.components.KeyTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
 import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
@@ -37,10 +36,13 @@ import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 
 	boolean watermark;
-	private boolean flannel;
 	
-	public ADLBasicCompleteDisplayer(Stylesheet ss, boolean watermark, boolean buffer) {
-		super(ss == null ? new BasicStylesheet() : ss, buffer);
+	public ADLBasicCompleteDisplayer(boolean watermark, boolean buffer) {
+		this(watermark, buffer, 12);
+	}
+	
+	public ADLBasicCompleteDisplayer(boolean watermark, boolean buffer, int gridSize) {
+		super(buffer, gridSize);
 		this.watermark = watermark;
 	}
 
@@ -79,40 +81,40 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 	
 	private void initWatermarkLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, diagramSize);
-		displayers.add(new WatermarkDisplayer(this, ss, g2, true));		// watermark
+		displayers.add(new WatermarkDisplayer(this, g2, true));		// watermark
 	}
 	
 	private void initCopyrightLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, diagramSize);
-		displayers.add(new WatermarkDisplayer(this, ss, g2, false));	// copyright
+		displayers.add(new WatermarkDisplayer(this, g2, false));	// copyright
 	}
 
 	public void initDebugLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.DEBUG, diagramSize);
-		displayers.add(new DebugLineDisplayer(this, ss, g2));
+		displayers.add(new DebugLineDisplayer(this, g2));
 	}
 
 	public void initMainLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.MAIN, diagramSize);
-		orderedRender(g2, false, 0, 0);
+		orderedRender(g2, false);
 	}
 
 	public void initShadows() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.SHADOW, diagramSize);
-		orderedRender(g2, true, ss.getShadowXOffset(), ss.getShadowYOffset());
+		orderedRender(g2, true);
 	}
 
 	public void initBackgroundLayer() {
 		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, diagramSize);
-		displayers.add(new BackgroundDisplayer(this, ss, g2));
+		displayers.add(new BackgroundDisplayer(this, g2));
 	}
 
 
 
-	private void orderedRender(GraphicsLayer g2, boolean shadow, int xo, int yo) {
-//		displayers.add(new AbstractDiagramDisplayer(this, ss, g2, shadow, xo, yo));
-		displayers.add(new ContextDisplayer(this, ss, g2, shadow, xo, yo));
-		displayers.add(new LinkDisplayer(this, ss, g2, shadow, xo, yo) {
+	private void orderedRender(GraphicsLayer g2, boolean shadow) {
+//		displayers.add(new AbstractDiagramDisplayer(this, ss, g2, shadow));
+		displayers.add(new ContextDisplayer(this, g2, shadow));
+		displayers.add(new LinkDisplayer(this, g2, shadow) {
 
 			@Override
 			protected Shape getPerimeterShape(DiagramElement de) {
@@ -125,14 +127,14 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 				}
 			}			
 		});
-		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, ss, shadow, xo, yo));
-		displayers.add(new ContextLabelTextLineDisplayer(this, g2, ss, shadow, xo, yo));
-		displayers.add(new GlyphDisplayer(this, ss, g2, shadow, xo, yo));
-		displayers.add(new GlyphTextLineDisplayer(this, g2, ss, shadow, xo, yo));
-		displayers.add(new GlyphCompositionalShapeDisplayer(this, g2, ss, shadow, xo, yo));
-		displayers.add(new KeyDisplayer(this, ss, g2, shadow, xo, yo));
-		displayers.add(new KeyTextLineDisplayer(this, g2, ss, shadow, xo, yo));
-		displayers.add(new ConnectionBodyDisplayer(this, ss, g2, shadow, xo, yo));
+		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, shadow));
+		displayers.add(new ContextLabelTextLineDisplayer(this, g2, shadow));
+		displayers.add(new GlyphDisplayer(this, g2, shadow));
+		displayers.add(new GlyphTextLineDisplayer(this, g2, shadow));
+		displayers.add(new GlyphCompositionalShapeDisplayer(this, g2, shadow));
+		displayers.add(new KeyDisplayer(this, g2, shadow));
+		displayers.add(new KeyTextLineDisplayer(this, g2, shadow));
+		displayers.add(new ConnectionBodyDisplayer(this, g2, shadow));
 	}
    
 	@Override 

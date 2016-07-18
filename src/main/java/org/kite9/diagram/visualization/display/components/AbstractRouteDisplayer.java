@@ -18,7 +18,6 @@ import org.kite9.diagram.style.ShapedDiagramElement;
 import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
 
@@ -32,13 +31,12 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	
-	public AbstractRouteDisplayer(CompleteDisplayer parent, Stylesheet ss, GraphicsLayer g2, boolean shadow,
-			int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public AbstractRouteDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
-	public AbstractRouteDisplayer(Stylesheet ss, GraphicsLayer g2) {
-		super(g2, ss);
+	public AbstractRouteDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
 	static interface EndDisplayer {
@@ -151,7 +149,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 		    Paint lineColour, Paint fillColour, EndDisplayer start, EndDisplayer end, LineDisplayer line,	boolean closed, boolean visible, double perimeterWidth) {
  
 		g2.setStroke(stroke);
-		g2.setPaint(shadow ? ss.getShadowColour() : lineColour);
+		g2.setPaint(shadow ? getShadowColour() : lineColour);
 
 		if ((r == null) || (r.getRoutePositions().size()==0)) {
 			return;
@@ -397,21 +395,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	}
 	
 	public ShapeStyle getStyle(DiagramElement de) {
-		ShapeStyle toUse = ss.getLinkStyles().get(LinkLineStyle.NORMAL);
-		if (de instanceof ShapedDiagramElement) {
-			String shapeName = ((ShapedDiagramElement) de).getShapeName();
-			if ((shapeName != null) && (ss.getLinkStyles().containsKey(shapeName))) {
-				toUse= ss.getLinkStyles().get(shapeName);
-			}
-		}
-		
-		if (de instanceof StyledDiagramElement) {
-			// now override if necessary
-			String style = ((StyledDiagramElement) de).getStyle();
-			toUse = ShapeStyle.override(style, toUse);
-		}
-		
-		return toUse;
+		return new ShapeStyle((StyledDiagramElement) de);
 	}
 
 }

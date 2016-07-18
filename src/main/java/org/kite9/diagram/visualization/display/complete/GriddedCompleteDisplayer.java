@@ -15,7 +15,6 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.framework.logging.Logable;
 
@@ -61,10 +60,14 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 		Boolean result = needsDoubleGrid.get(c);
 		return (Boolean.TRUE==result);
 	}
+	
+	public GriddedCompleteDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer com) {
+		this(com, 12);
+	}
 
-	public GriddedCompleteDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer com, Stylesheet ss) {
+	public GriddedCompleteDisplayer(RequiresGraphicsSourceRendererCompleteDisplayer com, int gridSize) {
 		ded = com;
-		this.gridSize = ss.getGridSize();
+		this.gridSize = gridSize;
 	}
 	
 	

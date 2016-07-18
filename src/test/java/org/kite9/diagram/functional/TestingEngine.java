@@ -39,8 +39,6 @@ import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.style.ShapedDiagramElement;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.pdf.PDFRenderer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ConnectionAction;
@@ -93,18 +91,18 @@ public class TestingEngine extends TestingHelp {
 		this.serialize = serialize;
 	}
 
-	public BufferedImageProcessingPipeline getPipeline(Stylesheet ss, Class<?> test, String subtest, boolean watermark) {
-		return new BufferedImageProcessingPipeline(ss, subtest, test, watermark);
+	public BufferedImageProcessingPipeline getPipeline(Class<?> test, String subtest, boolean watermark) {
+		return new BufferedImageProcessingPipeline(subtest, test, watermark);
 	}
 
 	public Diagram renderDiagram(Diagram d, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops, boolean everythingStraight, boolean checkLayout,
-			boolean checkNoContradictions, boolean checkImage, Stylesheet ss) throws IOException {
+			boolean checkNoContradictions, boolean checkImage) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
 		try {
-			BufferedImageProcessingPipeline pipeline = getPipeline(ss, theTest, m.getName(), watermark);
-			return renderDiagram(d, theTest, m.getName(), watermark, checkDiagramSize, checkEdgeDirections, checkNoHops, everythingStraight, checkLayout, checkNoContradictions, checkImage, ss,
+			BufferedImageProcessingPipeline pipeline = getPipeline(theTest, m.getName(), watermark);
+			return renderDiagram(d, theTest, m.getName(), watermark, checkDiagramSize, checkEdgeDirections, checkNoHops, everythingStraight, checkLayout, checkNoContradictions, checkImage,
 					addressed, pipeline);
 		} catch (RuntimeException t) {
 			if (!addressed) {
@@ -120,7 +118,7 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private Diagram renderDiagram(Diagram d2, Class<?> theTest, String subtest, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops,
-			boolean everythingStraight, boolean checkLayout, boolean checkNoContradictions, boolean checkImage, Stylesheet ss, boolean addressed, BufferedImageProcessingPipeline pipeline)
+			boolean everythingStraight, boolean checkLayout, boolean checkNoContradictions, boolean checkImage, boolean addressed, BufferedImageProcessingPipeline pipeline)
 					throws IOException {
 
 		try {
@@ -272,21 +270,12 @@ public class TestingEngine extends TestingHelp {
 		moveToError(theTest, subtest, emptyIt);
 	}
 
-	public void renderDiagramPDF(Diagram d) throws IOException {
-		renderDiagramPDF(d, new BasicStylesheet());
-
-	}
-
-	public void renderDiagramSVG(Diagram d) throws IOException {
-		renderDiagramSVG(d, new BasicStylesheet());
-	}
-
-	public void renderDiagramADLAndSVG(Diagram d, Stylesheet s) throws IOException {
+	public void renderDiagramADLAndSVG(Diagram d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
 		try {
-			renderDiagramADLAndSVG(d, theTest, m.getName(), s, true, addressed);
+			renderDiagramADLAndSVG(d, theTest, m.getName(), true, addressed);
 		} catch (RuntimeException t) {
 			if (!addressed) {
 				if (!System.getProperties().containsKey("ignoreNotAddressed")) {
@@ -301,17 +290,17 @@ public class TestingEngine extends TestingHelp {
 		System.out.println("d");
 	}
 
-	public void renderDiagramPDF(Diagram d, Stylesheet ss) throws IOException {
+	public void renderDiagramPDF(Diagram d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramPDF(d, theTest, m.getName(), ss);
+		renderDiagramPDF(d, theTest, m.getName());
 	}
 
-	public void renderDiagramSVG(Diagram d, Stylesheet ss) throws IOException {
+	public void renderDiagramSVG(Diagram d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramSVG(d, theTest, m.getName(), ss, true, addressed);
+		renderDiagramSVG(d, theTest, m.getName(), true, addressed);
 	}
 
 	public static void renderToFile(Class<?> theTest, String subtest, String item, byte[] bytes) {
@@ -325,7 +314,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private void renderDiagramPDF(Diagram d, Class<?> theTest, String subtest, Stylesheet ss) throws IOException {
+	private void renderDiagramPDF(Diagram d, Class<?> theTest, String subtest) throws IOException {
 		XMLHelper helper = new XMLHelper();
 		String xml = helper.toXML(d);
 
@@ -333,7 +322,7 @@ public class TestingEngine extends TestingHelp {
 		d = (Diagram) helper.fromXML(xml);
 
 		// no watermarks
-		ImageProcessingPipeline<byte[]> pipeline = new ImageProcessingPipeline<byte[]>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, false), ss), new PDFRenderer());
+		ImageProcessingPipeline<byte[]> pipeline = new ImageProcessingPipeline<byte[]>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new PDFRenderer());
 		byte[] bytes = pipeline.process(d);
 
 		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
@@ -343,7 +332,7 @@ public class TestingEngine extends TestingHelp {
 		// can't test pdfs, sadly
 	}
 
-	private void renderDiagramSVG(Diagram d, Class<?> theTest, String subtest, Stylesheet ss, boolean checkImage, boolean addressed) throws IOException {
+	private void renderDiagramSVG(Diagram d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
 		try {
 			XMLHelper helper = new XMLHelper();
 			String xml = helper.toXML(d);
@@ -352,12 +341,12 @@ public class TestingEngine extends TestingHelp {
 			d = (Diagram) helper.fromXML(xml);
 
 			// 2-stage rendering
-			ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, true), ss),
+			ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)),
 					new PositionInfoRenderer());
 
 			Diagram processed = pipeline.process(d);
 
-			ImageRenderingPipeline<String> p = new ImageRenderingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, false), ss), new SVGRenderer());
+			ImageRenderingPipeline<String> p = new ImageRenderingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new SVGRenderer());
 
 			String svg = p.render(processed);
 
@@ -633,20 +622,20 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public void renderDiagramSizes(Diagram d, Stylesheet ss) throws IOException {
+	public void renderDiagramSizes(Diagram d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramSizes(d, theTest, m.getName(), ss);
+		renderDiagramSizes(d, theTest, m.getName());
 	}
 
-	public void renderDiagramSizes(Diagram d, Class<?> theTest, String subtest, Stylesheet ss) throws IOException {
+	public void renderDiagramSizes(Diagram d, Class<?> theTest, String subtest) throws IOException {
 		XMLHelper helper = new XMLHelper();
 		String xml = helper.toXML(d);
 
 		writeOutput(theTest, subtest, "diagram.xml", xml);
 
 		// no watermarks
-		ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, true), ss), new PositionInfoRenderer());
+		ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)), new PositionInfoRenderer());
 		Diagram out = pipeline.process(d);
 
 		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
@@ -665,7 +654,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public void renderMap(Diagram d, Stylesheet ss) throws IOException {
+	public void renderMap(Diagram d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 
@@ -676,7 +665,7 @@ public class TestingEngine extends TestingHelp {
 		writeOutput(theTest, subtest, "diagram.xml", xml);
 
 		// no watermarks
-		BufferedImageProcessingPipeline pipeline = getPipeline(ss, theTest, subtest, true);
+		BufferedImageProcessingPipeline pipeline = getPipeline(theTest, subtest, true);
 		pipeline.process(d);
 
 		ClientSideMapRenderingPipeline csmr = new ClientSideMapRenderingPipeline();
@@ -693,15 +682,15 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public void renderDiagramNoCopy(Diagram d, boolean b, boolean checkDiagram, Stylesheet ss) {
+	public void renderDiagramNoCopy(Diagram d, boolean b, boolean checkDiagram) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void renderDiagramADLAndSVG(Diagram d, Class<?> theTest, String subtest, Stylesheet ss, boolean checkImage, boolean addressed) throws IOException {
+	private void renderDiagramADLAndSVG(Diagram d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
 		// no watermarks
 		try {
-			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, false, false), ss), new ADLAndSVGRenderer());
+			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false), 12), new ADLAndSVGRenderer());
 			String out = pipeline.process(d);
 
 			writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));

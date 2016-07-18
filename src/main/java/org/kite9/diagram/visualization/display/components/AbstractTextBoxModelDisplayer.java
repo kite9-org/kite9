@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.display.components;
 
+import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
@@ -14,9 +15,9 @@ import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
+import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.TextStyle;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -33,12 +34,12 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  */
 public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisplayer {
 
-	public AbstractTextBoxModelDisplayer(GraphicsLayer g2, Stylesheet ss) {
-		super(g2, ss);
+	public AbstractTextBoxModelDisplayer(GraphicsLayer g2) {
+		super(g2);
 	}
 
-	public AbstractTextBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow, int xo, int yo) {
-		super(parent, g2, ss, shadow, xo, yo);
+	public AbstractTextBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 
 	@Override
@@ -52,8 +53,8 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		boolean syms = (symbols != null) && (symbols.size() > 0);
 		double xStart = ri.getMinX();
 		double yStart = ri.getMinY();
-		TextStyle symStyle = ss.getSymbolTextStyle();
-		double symWidth = syms ? getSymbolWidth() : 0;
+		TextStyle symStyle = syms ? getSymbolTextStyle(symbols.iterator().next()) : null;
+		double symWidth = syms ? StaticStyle.getSymbolWidth() : 0;
 		CostedDimension cd = CostedDimension.ZERO;
 		
 		// draw stereotype, and symbols next to it if there are any
@@ -83,11 +84,19 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		}
 	}
 	
+	/**
+	 * @TODO: fix this.
+	 */
+	private TextStyle getSymbolTextStyle(Symbol symbol) {
+		return new TextStyle(symbol);
+	}
+
 	private void drawSymbols(ContainerProperty<Symbol> syms, double x, double y, double w, double baseline) {
 		Iterator<Symbol> it = syms.iterator();
 		for (int i = 0; i < syms.size(); i++) {
 			Symbol sym = it.next();
-			drawSymbol(""+sym.getChar(), g2, x + w - ((i+1) * getSymbolWidth()), y, ss.getSymbolShapes().get(sym.getShape().name()), ss.getSymbolTextStyle().getFont(), baseline);
+			FixedShape shape = new FixedShape(sym);
+			drawSymbol(""+sym.getChar(), g2, x + w - ((i+1) * StaticStyle.getSymbolWidth()), y, shape, getSymbolTextStyle(sym).getFont(), baseline, Color.RED);
 		}
 	}
 	
@@ -107,31 +116,12 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		return syms || lab || ster;
 	}
 	
-	@Override
-	public TextBoxStyle getBoxStyle(DiagramElement de) {
-		return (TextBoxStyle) super.getBoxStyle(de);
-	}
-	
 	public TextStyle getLabelStyle(DiagramElement de) {
-		TextStyle ts = getBoxStyle(de).getLabelTextFormat();
-		TextContainingDiagramElement st = getLabel(de);
-			
-		if ((st !=null) && (st.getStyle()!= null)) {
-			ts = TextStyle.override(st.getStyle(), ts);
-		}
-		
-		return ts;
+		return new TextStyle(getLabel(de));
 	}
 	
 	public TextStyle getTypeStyle(DiagramElement de) {
-		TextStyle ts = getBoxStyle(de).getTypeTextFormat();
-		TextContainingDiagramElement st = getStereotype(de);
-			
-		if ((st != null) && (st.getStyle()!= null)) {
-			ts = TextStyle.override(st.getStyle(), ts);
-		}
-		
-		return ts;
+		return new TextStyle(getStereotype(de));
 	}
 	
 	
@@ -145,7 +135,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 			TextStyle ts = getTypeStyle(e);
 			TextStyle ls = getLabelStyle(e);
 			
-			double symbolWidth = getSymbolWidth();
+			double symbolWidth = StaticStyle.getSymbolWidth();
 			CostedDimension typeSize = ts != null ? arrangeString(ts.getFont(), ts.getColor(), safeGetText(getStereotype(e)), 
 					CostedDimension.ZERO, CostedDimension.UNBOUNDED, false, Justification.CENTER, 0) : CostedDimension.ZERO;
 			CostedDimension nameSize = ls != null ? arrangeString(ls.getFont(), ls.getColor(), safeGetText(getLabel(e)), 
@@ -153,7 +143,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 			
 			int syms = getSymbols(e)==null ? 0 : getSymbols(e).size();
 			if (syms > 0) {
-				CostedDimension symd = new CostedDimension(ss.getInterSymbolPadding() + (syms * symbolWidth), symbolWidth, 0);
+				CostedDimension symd = new CostedDimension(StaticStyle.getInterSymbolPadding() + (syms * symbolWidth), symbolWidth, 0);
 				if (!typeSize.equals(CostedDimension.ZERO)) {
 					FontMetrics fm = g2.getFontMetrics(ts.getFont());
 					double descent = fm.getMaxDescent();

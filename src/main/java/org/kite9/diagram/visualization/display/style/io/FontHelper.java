@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.display.style.sheets;
+package org.kite9.diagram.visualization.display.style.io;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.kite9.diagram.visualization.display.style.LocalFont;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -18,7 +17,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  *
  */
-public abstract class AbstractStylesheet implements Stylesheet {
+public abstract class FontHelper {
 
 	private static Map<String, LocalFont> fontMap = new HashMap<String, LocalFont>();
 	
@@ -46,31 +45,19 @@ public abstract class AbstractStylesheet implements Stylesheet {
 		return out;
 	}
 
-	public AbstractStylesheet() {
+	public FontHelper() {
 		super();
 	}
 
 	public static InputStream getFontStream(String name) {
 		String file = "/fonts/"+name+".TTF";
-		InputStream is = AbstractStylesheet.class.getResourceAsStream(file);
+		InputStream is = FontHelper.class.getResourceAsStream(file);
 		if (is==null) {
 			file =  "/fonts/"+name+".ttf";
-			is = AbstractStylesheet.class.getResourceAsStream(file);
+			is = FontHelper.class.getResourceAsStream(file);
 		}
 		
 		return is;
-	}
-
-	
-	
-	private Map<String, LocalFont> familyMap;
-
-	@Override
-	public Map<String, ? extends Font> getFontFamilies() {
-		if (familyMap == null) {
-			familyMap = getFontsInternal();
-		}
-		return familyMap;
 	}
 
 	protected abstract Map<String, LocalFont> getFontsInternal();

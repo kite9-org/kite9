@@ -18,8 +18,8 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -48,8 +48,6 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 
 	protected GraphicsLayer g2;
 
-	protected Stylesheet ss;
-
 	protected boolean shadow;
 
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
@@ -57,25 +55,19 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 				"Size is not implemented for this component" + element);
 	}
 
-	int xo, yo;
 	protected CompleteDisplayer parent;
 	
-	public AbstractADLDisplayer(GraphicsLayer g2, Stylesheet ss) {
+	public AbstractADLDisplayer(GraphicsLayer g2) {
 		this.g2 = g2;
-		this.ss = ss;
 	}
 	
 	public PathConverter getPathConverter() {
 		return ((ADLBasicCompleteDisplayer)parent).getPathConverter();
 	}
 
-	public AbstractADLDisplayer(CompleteDisplayer parent, GraphicsLayer g2, Stylesheet ss, boolean shadow,
-			int xo, int yo) {
+	public AbstractADLDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		this.g2 = g2;
 		this.shadow = shadow;
-		this.xo = xo;
-		this.yo = yo;
-		this.ss = ss;
 		this.parent = parent;
 	}
 
@@ -179,10 +171,6 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 		return true;
 	}
 
-	protected double getSymbolWidth() {
-		return ss.getSymbolSize() + ss.getInterSymbolPadding();
-	}
-
 	protected static void debugBox(double x, double y, double width,
 			double height, Color k, Graphics2D g2) {
 		Stroke old = g2.getStroke();
@@ -216,30 +204,24 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 	}
 
 	protected double getSymbolBaseline(Font textFont, Font f, GraphicsLayer g2) {
-//		//double desc = 0;
-//		if (textFont != null) {
-//			FontMetrics textSize = g2.getFontMetrics(textFont);
-//			//desc = textSize.getMaxDescent();
-//		}
-
-		return ss.getSymbolSize();
+		return StaticStyle.getSymbolWidth();
 	}
 
 	protected CostedDimension drawSymbol(String sym, GraphicsLayer g2, double ox,
 			double oy, FixedShape shape, Font symbolFont,
-			double baseline) {
+			double baseline, Color c) {
 		g2.setFont(symbolFont);
 		FontMetrics symFontMetrics = g2.getFontMetrics(symbolFont);
 		GlyphVector gv = symbolFont.createGlyphVector(
 				g2.getFontRenderContext(), sym);
 		Rectangle2D textSize = gv.getLogicalBounds();
 
-		double outerSize = ss.getSymbolSize() + ss.getInterSymbolPadding() * 2;
-		double innerSize = ss.getSymbolSize();
+		double outerSize = StaticStyle.getSymbolWidth() + StaticStyle.getInterSymbolPadding() * 2;
+		double innerSize = StaticStyle.getSymbolWidth();
 		double symbolBaseline = symFontMetrics.getMaxAscent();
 		double symbolDesc = symFontMetrics.getMaxDescent();
 		double y = oy + baseline - innerSize;
-		double x = ox + ss.getInterSymbolPadding();
+		double x = ox + StaticStyle.getInterSymbolPadding();
 
 		// draw the shape
 		Shape path = shape.getPath();
@@ -264,7 +246,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 //		g2.setColor(Color.RED);
 //		g2.drawRect((int) x, (int) (y), (int) ss.getSymbolSize(), (int) ss.getSymbolSize());
 
-		g2.setColor(ss.getSymbolTextStyle().getColor());
+		g2.setColor(c);
 		g2.outputText(symbolFont, ypos, xpos, sym);
 		// g2.setColor(Color.RED);
 		// Shape s = new Rectangle2D.Double(xpos, ypos - textSize.getHeight(),
@@ -291,5 +273,5 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 	public GraphicsLayer getLayer() {
 		return g2;
 	}
-	
+
 }

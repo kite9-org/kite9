@@ -20,17 +20,17 @@ import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
 public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSpacer, Logable {
 	
+	private int gridSize = 12;
+
 	public static final CompleteDisplayer NULL = new NullDisplayer();
 
 	protected List<ComponentDisplayer> displayers = new ArrayList<ComponentDisplayer>();
-	protected Stylesheet ss;
 	double buffer;
 	protected Kite9Log log = new Kite9Log(this);
 
@@ -38,9 +38,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	/**
 	 * Set buffer > 0 to ensure gaps even around invisible attr.  0 should be used for correct rendering
 	 */
-	public AbstractCompleteDisplayer(Stylesheet ss, boolean buffer) {
-		this.ss = ss;
-		this.buffer = buffer ? ss.getGridSize() : 0;
+	public AbstractCompleteDisplayer(boolean buffer, int gridSize) {
+		this.buffer = buffer ? gridSize : 0;
+		this.gridSize = gridSize;
 	}
 
 	public Displayer getDisplayer(DiagramElement de) {
@@ -110,16 +110,16 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse) {
 		if (a == b) {
 			if (a instanceof Glyph) {
-				return MINIMUM_GLYPH_SIZE * ss.getGridSize();
+				return MINIMUM_GLYPH_SIZE * gridSize;
 			} else if (a instanceof Context) {
-				return MINIMUM_CONTEXT_SIZE * ss.getGridSize();
+				return MINIMUM_CONTEXT_SIZE * gridSize;
 			} else if (a instanceof Diagram) {
-				return MINIMUM_CONTEXT_SIZE * ss.getGridSize();
+				return MINIMUM_CONTEXT_SIZE * gridSize;
 			} else if (a == null) {
 				return 0;
 			} else if (a instanceof Arrow) {
 				if (needsDistance(a)) {
-					return MINIMUM_ARROW_SIZE * ss.getGridSize();
+					return MINIMUM_ARROW_SIZE * gridSize;
 				} else {
 					return 0;
 				}
@@ -142,26 +142,26 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			if (b instanceof Connection) {
 				if (((Connection) b).meets((Connected) a)) {
 					if (needsDistance(a)) {
-						return paddingA + paddingB + EDGE_TO_SAME_VERTEX * ss.getGridSize();
+						return paddingA + paddingB + EDGE_TO_SAME_VERTEX * gridSize;
 					} else {
 						return 0;
 					}
 				} else {
-					double cda = EDGE_DISTANCE * ss.getGridSize() / 2;
-					double cdb = EDGE_DISTANCE * ss.getGridSize() / 2;
+					double cda = EDGE_DISTANCE * gridSize / 2;
+					double cdb = EDGE_DISTANCE * gridSize / 2;
 					return paddingA + paddingB + cda + cdb;
 				}
 			} 
 			
-			double cda = CONNECTED_DISTANCE * ss.getGridSize() / 2;
-			double cdb = CONNECTED_DISTANCE * ss.getGridSize() / 2;
+			double cda = CONNECTED_DISTANCE * gridSize / 2;
+			double cdb = CONNECTED_DISTANCE * gridSize / 2;
 			return paddingA + paddingB + cda + cdb;
 		} 
 
 		if (a instanceof Connection) {
 			if ((b instanceof Connection) || (b==null)) {
-				double cda = EDGE_DISTANCE * ss.getGridSize() / 2;
-				double cdb = EDGE_DISTANCE * ss.getGridSize() / 2;
+				double cda = EDGE_DISTANCE * gridSize / 2;
+				double cdb = EDGE_DISTANCE * gridSize / 2;
 				return paddingA + paddingB + cda + cdb;
 			} 
 		}
@@ -179,7 +179,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	
 	@Override
 	public double getLinkGutter(DiagramElement element, Direction d) {
-		return EDGE_DISTANCE * ss.getGridSize();
+		return EDGE_DISTANCE * gridSize;
 	}
 
 	private boolean needsDistance(DiagramElement a, DiagramElement b) {

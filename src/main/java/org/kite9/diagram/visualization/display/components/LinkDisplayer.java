@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
 
@@ -31,8 +31,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 
 	public static boolean debug = true;
 
-	public LinkDisplayer(CompleteDisplayer parent,Stylesheet ss, GraphicsLayer g2, boolean shadow, int xo, int yo) {
-		super(parent, ss, g2, shadow, xo, yo);
+	public LinkDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+		super(parent, g2, shadow);
 	}
 	
 	/**
@@ -232,7 +232,7 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 			}
 		}
 
-		float hopSize = ss.getLinkHopSize();
+		float hopSize = StaticStyle.getLinkHopSize();
 
 		public double drawHopStart(double x1, double y1, double x2, double y2, GeneralPath gp) {
 			if (x1 < x2) {
