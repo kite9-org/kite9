@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.Container;
+import org.kite9.diagram.primitives.StylesheetReference;
 import org.kite9.diagram.style.ShapedDiagramElement;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
@@ -101,6 +103,12 @@ public class TestingEngine extends TestingHelp {
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
 		try {
+			if (d.getStylesheetReference() == null) {
+				URL u = getClass().getResource("/stylesheets/designer2012.css");
+				d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
+			}
+			
+			
 			BufferedImageProcessingPipeline pipeline = getPipeline(theTest, m.getName(), watermark);
 			return renderDiagram(d, theTest, m.getName(), watermark, checkDiagramSize, checkEdgeDirections, checkNoHops, everythingStraight, checkLayout, checkNoContradictions, checkImage,
 					addressed, pipeline);

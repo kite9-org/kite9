@@ -1,3 +1,7 @@
+* {
+	font-family: "opensans-light-webfont";
+}
+
 
 .background {
 	
@@ -7,7 +11,6 @@
 .copyright {
 	font-weight: normal;
 	font-size: 12px;
-	font-family: "opensans-light-webfont";
 	stroke: black;
 }
 
@@ -74,8 +77,10 @@
 }
 
 .glyph .text-line {
-	padding-top: 5px;
-	padding-bottom: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
 	margin: 0 0 0 0; 
 	font-size: 12px;
 	stroke: black;

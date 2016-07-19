@@ -18,7 +18,7 @@ public class GlyphTextLineDisplayer extends AbstractTextBoxModelDisplayer {
 	@Override
 	public boolean canDisplay(DiagramElement element) {
 		return ((element instanceof TextLine) 
-				&& ((TextLine)element).getParent() instanceof Glyph);
+				&& ((TextLine)element).getOwner() instanceof Glyph);
 	}
 		
 	@Override

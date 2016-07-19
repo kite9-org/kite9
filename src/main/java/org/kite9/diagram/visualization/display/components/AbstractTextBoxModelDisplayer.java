@@ -14,6 +14,7 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.TextStyle;
@@ -117,11 +118,13 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 	}
 	
 	public TextStyle getLabelStyle(DiagramElement de) {
-		return new TextStyle(getLabel(de));
+		StyledDiagramElement sde = getLabel(de);
+		return sde == null ? null : new TextStyle(sde);
 	}
 	
 	public TextStyle getTypeStyle(DiagramElement de) {
-		return new TextStyle(getStereotype(de));
+		StyledDiagramElement sde = getStereotype(de);
+		return sde == null ? null : new TextStyle(sde);
 	}
 	
 	

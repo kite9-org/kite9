@@ -23,8 +23,6 @@ public class Test5GlyphLayout extends AbstractFunctionalTest {
 	public void test_5_1_SimpleGlyphFinal() throws IOException {
 		Contained one = new Glyph("", "Rob's Glyph", null, null);
 		Diagram d = new Diagram("The Diagram", createList(one), null);
-		URL u = getClass().getResource("/stylesheets/designer2012.css");
-		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
 		renderDiagram(d);
 	}
 
