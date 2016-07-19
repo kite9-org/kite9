@@ -11,7 +11,9 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.gvt.ShapeNode;
 import org.apache.batik.util.CSSConstants;
+import org.kite9.diagram.adl.ADLDocument;
 import org.kite9.diagram.style.StyledDiagramElement;
+import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
 import org.w3c.dom.Element;
 
 /**
@@ -63,25 +65,28 @@ public class ShapeStyle extends SVGAttributedStyle {
 		return getShadowColor() != null;
 	}
 	
-	public int getShadowXOffset() {
-		return getCSSStyleProperty("box-shadow-x-offset").getLength();
+	public float getShadowXOffset() {
+		return getCSSStyleProperty("box-shadow-x-offset").getFloatValue();
 	}
 	
-	public int getShadowYOffset() {
-		return getCSSStyleProperty("box-shadow-y-offset").getLength();
+	public float getShadowYOffset() {
+		return getCSSStyleProperty("box-shadow-y-offset").getFloatValue();
 	}
 	
 	public Paint getShadowColor() {
 		Element e = getStyleElement();
 		ShapeNode sn = new ShapeNode();
 		sn.setShape(new Rectangle2D.Double(1,1,1,1));
-		Value v = getCSSStyleProperty("box-shadow-color");
 		
-		if (v == ValueConstants.NONE_VALUE) {
+		Value v = getCSSStyleProperty("box-shadow-opacity");
+		float opacity = PaintServer.convertOpacity(v);
+		
+		v = getCSSStyleProperty("box-shadow-color");
+		
+		if (v == ADLExtensibleDOMImplementation.NO_COLOR) {
 			return null;
 		}
 		
-		float opacity = PaintServer.convertOpacity(v);
 		return PaintServer.convertPaint(e, sn, v, opacity, getBridgeContext());
 	}
 	

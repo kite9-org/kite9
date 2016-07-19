@@ -106,8 +106,8 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		if (fs != null) {
 			// draw the border
 			if (shadow && (sh != null) && (sh.castsShadow()) && (!sh.isInvisible())) {
-				int xo = sh.getShadowXOffset();
-				int yo = sh.getShadowYOffset();
+				float xo = sh.getShadowXOffset();
+				float yo = sh.getShadowYOffset();
 				Paint background = bs.getShadowPaint();
 				if (background != null) {
 					g2.setPaint(background);
