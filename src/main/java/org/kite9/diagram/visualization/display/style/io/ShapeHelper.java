@@ -261,10 +261,4 @@ public abstract class ShapeHelper {
 
 	}
 	
-	@Override
-	public final Color getWatermarkColour() {
-		return new Color(0f, 0f, 0f, .2f);
-	}
-	
-	
 }

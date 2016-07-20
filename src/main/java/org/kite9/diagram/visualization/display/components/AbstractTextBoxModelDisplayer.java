@@ -97,7 +97,8 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		for (int i = 0; i < syms.size(); i++) {
 			Symbol sym = it.next();
 			FixedShape shape = new FixedShape(sym);
-			drawSymbol(""+sym.getChar(), g2, x + w - ((i+1) * StaticStyle.getSymbolWidth()), y, shape, getSymbolTextStyle(sym).getFont(), baseline, Color.RED);
+			TextStyle symbolTextStyle = getSymbolTextStyle(sym);
+			drawSymbol(""+sym.getChar(), g2, x + w - ((i+1) * StaticStyle.getSymbolWidth()), y, shape, symbolTextStyle.getFont(), baseline, symbolTextStyle.getColor());
 		}
 	}
 	

@@ -30,6 +30,7 @@
 	text-align:  middle;
 	width: 14px;
 	height: 14px;
+	stroke: white;
 }
 
 .symbol.label {
@@ -38,14 +39,17 @@
 
 .symbol.circle {
 	fill: rgb(0, 150, 73);
+	shape: "CIRCLE";
 }
 
 .symbol.hexagon {
 	fill: rgb(207, 36, 42);
+	shape: "HEXAGON";
 }
 
 .symbol.diamond {
 	fill: rgb(237, 106, 86);
+	shape: "DIAMOND";
 }
 
 /* Glyph */
