@@ -14,8 +14,6 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 
 public class Test20PDF extends AbstractFunctionalTest {
 
@@ -72,7 +70,7 @@ public class Test20PDF extends AbstractFunctionalTest {
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
 		Diagram d = new Diagram("D", createList((Contained) con1, con5, con4, con3, con2), null);
-		renderDiagramPDF(d, new Designer2012Stylesheet());
+		renderDiagramPDF(d);
 	}
 
 	@Test
@@ -88,7 +86,7 @@ public class Test20PDF extends AbstractFunctionalTest {
 		new Link(a, two);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a, two), null);
-		renderDiagramPDF(d, new Designer2012Stylesheet());
+		renderDiagramPDF(d);
 	}
 
 	@Test
@@ -106,6 +104,6 @@ public class Test20PDF extends AbstractFunctionalTest {
 		new TurnLink(a, three);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
-		renderDiagramPDF(d, new DesignerStylesheet());
+		renderDiagramPDF(d);
 	}
 }

@@ -14,12 +14,11 @@ import org.kite9.diagram.adl.KeyHelper;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 
@@ -211,7 +210,7 @@ public class Test12LabelledArrows extends AbstractFunctionalTest {
 
 	@Test
 	public void test_12_11_PushingRect() throws IOException {
-		generate("label_push_error.xml", new OutlinerStylesheet());
+		generate("label_push_error.xml");
 	}
 
 	@Override

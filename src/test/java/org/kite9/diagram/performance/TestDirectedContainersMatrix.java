@@ -16,7 +16,6 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
@@ -25,7 +24,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.planarization.mgt.builder.MGTPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -34,12 +32,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMer
 import org.kite9.framework.logging.LogicException;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
-
-	
-	@BeforeClass
-	public static void setDebugOn() {
-		MGTPlanarizationBuilder.debug = true;
-	}
 
 	public Map<Metrics, Diagram> generateSuite(int minConnected, int maxConnected, int step1, int size) {
 		Map<Metrics, Diagram> out = new HashMap<Metrics, Diagram>();

@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 
 public class Test10CrossingEdges extends AbstractFunctionalTest {
 
@@ -19,7 +18,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 		
 		Diagram d = new Diagram("D", vertices, null);
 
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 

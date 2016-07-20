@@ -25,7 +25,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		Context c1 = new Context(createList(one, two), true, null, null);
 		Diagram d = new Diagram("The Diagram", listOf(c1), null);
 
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 
@@ -36,7 +36,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 				"Some text", 'A', SymbolShape.HEXAGON))), new TextLine("Here is line 2"),
 				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		Diagram d = new Diagram("The Diagram", createList(one), null);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		Contained one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
 				new Symbol("Some text", 'a', SymbolShape.DIAMOND), new Symbol("Some text", 'a', SymbolShape.HEXAGON)));
 		Diagram d = new Diagram("The Diagram", createList(one), null);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 				SymbolShape.CIRCLE)));
 
 		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
 		Diagram d = new Diagram("D", createList((Contained) con1, con5, con4, con3, con2), null);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new Link(a, two);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a, two), null);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 
 	@Test
@@ -108,6 +108,6 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new TurnLink(a, three);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
+		renderDiagramADLAndSVG(d);
 	}
 }

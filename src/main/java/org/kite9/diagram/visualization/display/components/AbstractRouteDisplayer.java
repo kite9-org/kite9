@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.display.components;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -10,11 +11,9 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.LinkLineStyle;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.style.ShapedDiagramElement;
 import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
@@ -30,6 +29,10 @@ import org.kite9.framework.logging.LogicException;
  * 
  */
 public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
+	
+	float xo = 4;
+	float yo = 4;
+	Color shadowColour = Color.DARK_GRAY;
 	
 	public AbstractRouteDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
@@ -149,7 +152,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 		    Paint lineColour, Paint fillColour, EndDisplayer start, EndDisplayer end, LineDisplayer line,	boolean closed, boolean visible, double perimeterWidth) {
  
 		g2.setStroke(stroke);
-		g2.setPaint(shadow ? getShadowColour() : lineColour);
+		g2.setPaint(shadow ? shadowColour : lineColour);
 
 		if ((r == null) || (r.getRoutePositions().size()==0)) {
 			return;

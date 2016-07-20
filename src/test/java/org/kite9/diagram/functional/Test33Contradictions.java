@@ -18,10 +18,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
@@ -168,7 +165,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 	@Ignore
 	public void test_33_8_HierarchyContradiction() throws IOException {
 		try {
-			generate("hierarchy_contradiction.xml", new BasicStylesheet());
+			generate("hierarchy_contradiction.xml");
 		} catch (ElementsMissingException e) {
 			Assert.assertEquals(1, e.getCountOfMissingElements());
 			return;
@@ -180,7 +177,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 	@Test
 	public void test_33_9_HierarchyContradiction2() throws IOException {
 		try {
-			generate("hierarchy_contradiction2.xml", new BasicStylesheet());
+			generate("hierarchy_contradiction2.xml");
 		} catch (ElementsMissingException e) {
 			Assert.assertEquals(1, e.getCountOfMissingElements());
 			return;
@@ -297,7 +294,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 	@Test
 	public void test_33_15_TooManyContradictions() throws IOException {
-		generate("too_many_contradictions.xml", new BasicStylesheet());
+		generate("too_many_contradictions.xml");
 	}
 
 	@Test
@@ -412,17 +409,17 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 	@Test
 	public void test_33_21_BadRequest() throws IOException {
-		generate("badrequest.xml", new OutlinerStylesheet());
+		generate("badrequest.xml");
 	}
 
 	@Test
 	public void test_33_22_BretsError() throws IOException {
-		generate("brets_error.xml", new DesignerStylesheet());
+		generate("brets_error.xml");
 	}
 
 	@Test
 	public void test_33_23_BentContainer() throws IOException {
-		generate("bent_container.xml", new OutlinerStylesheet());
+		generate("bent_container.xml");
 	}
 
 	@Test
@@ -441,13 +438,13 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 	@Test
 	@Ignore // too many attr to work
 	public void test_33_27_30KElements() throws IOException {
-		generate("30k.xml", new DesignerStylesheet());
+		generate("30k.xml");
 	}
 
 	@Test
 	public void test_33_28_ADLHierarchyStrict() throws IOException {
 		Kite9Log.setLogging(false);
-		generate("ContradictingADLClassHierarchy.xml", new DesignerStylesheet());
+		generate("ContradictingADLClassHierarchy.xml");
 	}
 
 	@Test
@@ -476,27 +473,27 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 	@Test
 	public void test_33_30_ADLHierarchy() throws IOException {
-		generate("ADLClassHierarchy.xml", new DesignerStylesheet());
+		generate("ADLClassHierarchy.xml");
 	}
 	
 	@Test
 	public void test_33_31_ADLHierarchyNoBorder() throws IOException {
-		generatePDF("ADLClassHierarchyNoBorder.xml", new Designer2012Stylesheet());
+		generatePDF("ADLClassHierarchyNoBorder.xml");
 	}
 	
 	@Test
 	public void test_33_32_ADLHierarchyStrictNoBorder() throws IOException {
-		generate("ContradictingADLClassHierarchyNoBorder.xml", new Designer2012Stylesheet());
+		generate("ContradictingADLClassHierarchyNoBorder.xml");
 	}
 	
 	@Test
 	public void test_33_33_LayoutDirection() throws IOException {
-		generate("layout_direction.xml", new Designer2012Stylesheet());
+		generate("layout_direction.xml");
 	}
 	
 	@Test
 	public void test_33_34_CouldntEstablishDirection() throws IOException {
-		generate("couldnt_establish_direction.xml", new DesignerStylesheet());
+		generate("couldnt_establish_direction.xml");
 	}
 	
 	@Test

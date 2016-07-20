@@ -39,7 +39,7 @@
 
 .symbol.circle {
 	fill: rgb(0, 150, 73);
-	shape: "CIRCLE";
+	shape: "CIRCLE";	/* Not used yet, but easy to do */
 }
 
 .symbol.hexagon {
@@ -89,6 +89,7 @@
 	font-size: 12px;
 	stroke: black;
 	fill: none;
+	text-align: start;
 	
 }
 
@@ -100,11 +101,17 @@
 	stroke: none;
 }
 
-.arrow label {
-	
+.arrow .label {
+	stroke: white;
 }
 
 /* Context */
+
+.context {
+	fill: none;
+	stroke: black;
+	stroke-width: 2px;
+}
 
 /* Key */
 

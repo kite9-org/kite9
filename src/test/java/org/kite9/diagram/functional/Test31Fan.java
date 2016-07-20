@@ -12,7 +12,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test31Fan extends AbstractFunctionalTest {
@@ -240,6 +239,6 @@ public class Test31Fan extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_31_9_UnnecessaryDogleg() throws IOException {
-		generate("dogleg.xml", new BasicStylesheet());
+		generate("dogleg.xml");
 	}
 }

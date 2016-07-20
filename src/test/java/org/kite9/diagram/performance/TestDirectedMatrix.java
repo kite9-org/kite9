@@ -86,7 +86,6 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		List<Contained> cl = new ArrayList<Contained>(items.length);
 		Collections.addAll(cl, items);
 		m.connections = connections;
-		MGTPlanarizationBuilder.debug = true;
 		
 		Diagram out = new Diagram(cl, null);
 		return out;

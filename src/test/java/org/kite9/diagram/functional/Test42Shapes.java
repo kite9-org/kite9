@@ -16,11 +16,8 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
 import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
 import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.logging.Kite9Log;
 
 public class Test42Shapes extends AbstractFunctionalTest {
@@ -187,14 +184,9 @@ public class Test42Shapes extends AbstractFunctionalTest {
 
 	private void renderDiagramLocal(Diagram d) throws IOException {
 		renderDiagram(d);
-		renderDiagramSizes(d, new BasicStylesheet());
+		renderDiagramSizes(d);
 	}
 	
-	private void renderDiagramLocal(Diagram d, Stylesheet s) throws IOException {
-		renderDiagram(d);
-		renderDiagramSizes(d, s);
-	}
-
 	@Override
 	protected boolean checkEverythingStraight() {
 		return false;
@@ -286,7 +278,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, c, "DIAMOND", new TextLine("Watch me move"), "BARBED ARROW", new TextLine("Yowzer"), Direction.RIGHT);
 		
 		Diagram d = new Diagram(out, null);
-		renderDiagramLocal(d, new Designer2012Stylesheet());
+		renderDiagramLocal(d);
 	}
 	
 	@Test
@@ -301,7 +293,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g2, null, null, null, null, Direction.DOWN);
 		
 		Diagram d = new Diagram(out, null);
-		renderDiagramLocal(d, new Designer2012Stylesheet());
+		renderDiagramLocal(d);
 	}
 	
 	@Test
@@ -320,7 +312,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g3, null, null, null, null, Direction.RIGHT);
 		
 		Diagram d = new Diagram(out, null);
-		renderDiagramLocal(d, new Designer2012Stylesheet());
+		renderDiagramLocal(d);
 	}
 	
 	@Test
@@ -338,6 +330,6 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g3, null, null, null, null, Direction.RIGHT);
 		
 		Diagram d = new Diagram(out, null);
-		renderDiagramLocal(d, new Designer2012Stylesheet());
+		renderDiagramLocal(d);
 	}
 }

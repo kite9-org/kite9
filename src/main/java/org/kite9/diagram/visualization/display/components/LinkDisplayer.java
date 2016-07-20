@@ -23,6 +23,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
+import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
@@ -34,6 +35,12 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 	public LinkDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
+	
+	private String getLinkTerminator(Link ae, boolean from) {
+		String out = (String) (from ? ae.getFromDecoration() : ae.getToDecoration());
+		return out == null ? "NONE" : out;
+	}
+	
 	
 	/**
 	 * Extends the end of the link into the connected shape so that it meets the 
@@ -281,8 +288,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 		RouteRenderingInformation rr = (RouteRenderingInformation) r;
 		rr.setContradicting(ae.getRenderingInformation().isContradicting() || rr.isContradicting());
 		ae.setRenderingInformation(r);
-		String fromEnd = ss.getLinkTerminator(ae, true);
-		String toEnd = ss.getLinkTerminator(ae, false);
+		String fromEnd = getLinkTerminator(ae, true);
+		String toEnd = getLinkTerminator(ae, false);
 		
 		if (rr.size()==0) {
 			// && ((rr.getPerimeterPath()==null) || (rr.getPerimeterPath().length()==0))) {
@@ -294,8 +301,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 
 		ShapeStyle drawStroke = getStyle(ae);
 		double width = drawStroke.getStrokeWidth();
-		StyledEndDisplayer head = new StyledEndDisplayer(ae.getFrom(), ss.getLinkTerminatorStyles().get(fromEnd));
-		StyledEndDisplayer tail = new StyledEndDisplayer(ae.getTo(), ss.getLinkTerminatorStyles().get(toEnd));
+		StyledEndDisplayer head = new StyledEndDisplayer(ae.getFrom(), ShapeHelper.getLinkTerminatorStyles().get(fromEnd));
+		StyledEndDisplayer tail = new StyledEndDisplayer(ae.getTo(), ShapeHelper.getLinkTerminatorStyles().get(toEnd));
 
 		if (drawStroke != null) {
 			Paint lc = (debug && ae.getRenderingInformation().isContradicting()) ? Color.RED : drawStroke.getStrokeColour();

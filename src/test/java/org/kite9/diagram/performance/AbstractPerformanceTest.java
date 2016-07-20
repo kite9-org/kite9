@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -32,13 +31,10 @@ import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.mgt.builder.MGTPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -48,17 +44,12 @@ import org.kite9.framework.serialization.XMLHelper;
 
 public class AbstractPerformanceTest extends TestingHelp {
 	
-	@AfterClass
-	public static void setDebugOff() {
-		MGTPlanarizationBuilder.debug = false;
-	}
 	
 	public static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	public void render(Map<Metrics, Diagram> diagrams) throws IOException {
 		if (diagrams.size()>2) {
 			Kite9Log.setLogging(false);
-			MGTPlanarizationBuilder.debug = true;
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
@@ -150,8 +141,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 	}
 
 	private BufferedImageProcessingPipeline getPipeline(boolean watermark, final Metrics m) {
-		Stylesheet ss = new BasicStylesheet();
-		final RequiresGraphicsSourceRendererCompleteDisplayer cd = new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, watermark, false),ss);
+		final RequiresGraphicsSourceRendererCompleteDisplayer cd = new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(watermark, false));
 		GraphicsSourceRenderer<BufferedImage> renderer = new BufferedImageRenderer();
 		return new TimingPipeline(cd, renderer);
 	}
@@ -184,7 +174,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 				m.totalGlyphSize += width * height;
 			} else {
 				RouteRenderingInformation rri = (RouteRenderingInformation) ri;
-				Dimension2D bounds = rri.getBoundingSize();
+				Dimension2D bounds = rri.getSize();
 				double width = bounds.getWidth();
 				double height = bounds.getHeight();
 				m.totalGlyphSize += width * height;

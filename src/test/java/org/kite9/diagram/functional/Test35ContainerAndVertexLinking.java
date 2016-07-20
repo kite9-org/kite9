@@ -13,7 +13,6 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
@@ -27,7 +26,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 
 	@Test
 	public void test_35_1_ContentsAndContainerLinked() throws IOException {
-		generate("edge_route_problem.xml", new DesignerStylesheet());
+		generate("edge_route_problem.xml");
 	}
 	
 	@Test

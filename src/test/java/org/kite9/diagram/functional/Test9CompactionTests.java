@@ -147,7 +147,7 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 			public void visit(DiagramElement de) {
 				if (de instanceof Link) {
 					RouteRenderingInformation rri = ((Link)de).getRenderingInformation();
-					Dimension2D size = rri.getBoundingSize();
+					Dimension2D size = rri.getSize();
 					if ((size.getWidth() > 20) || (size.getHeight() > 20)) {
 						throw new LogicException("Link too long: "+de);
 					}

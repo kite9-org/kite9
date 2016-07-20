@@ -11,15 +11,9 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.visualization.display.style.sheets.BasicBlueStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.OutlinerStylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 public class TestCard extends AbstractFunctionalTest {
@@ -107,59 +101,14 @@ public class TestCard extends AbstractFunctionalTest {
 	}
 	
 	@Test
-	public void testCardOutliner() throws IOException {
-		Diagram d = createTestCard();
-		renderDiagramSVG(d, new OutlinerStylesheet());
-		renderDiagramPDF(d, new OutlinerStylesheet());
-		renderDiagram(d, new OutlinerStylesheet());
-		renderDiagramADLAndSVG(d, new OutlinerStylesheet());
-	}
-	
-	@Test
 	public void testCardBasic() throws IOException {
 		Diagram d = createTestCard();
-		renderDiagramSVG(d, new BasicStylesheet());
-		renderDiagramPDF(d, new BasicStylesheet());
-		renderDiagram(d, new BasicStylesheet());
-		renderDiagramADLAndSVG(d, new BasicStylesheet());
+		renderDiagramSVG(d);
+		renderDiagramPDF(d);
+		renderDiagram(d);
+		renderDiagramADLAndSVG(d);
 	}
 	
-	@Test
-	@NotAddressed("Problem with ADL+SVG Format - can't reload due to inlined PNG entity")
-	public void testCardDesigner() throws IOException {
-		Diagram d = createTestCard();
-		renderDiagramPDF(d, new DesignerStylesheet());
-		renderDiagram(d, new DesignerStylesheet());
-		renderDiagramSVG(d, new DesignerStylesheet());
-		renderDiagramADLAndSVG(d, new DesignerStylesheet());
-	}
-	
-	@Test
-	public void testCardDesigner2012() throws IOException {
-		Diagram d = createTestCard();
-		renderDiagramSVG(d, new Designer2012Stylesheet());
-		renderDiagramPDF(d, new Designer2012Stylesheet());
-		renderDiagram(d, new Designer2012Stylesheet());
-		renderDiagramADLAndSVG(d, new Designer2012Stylesheet());
-	}
-	
-	@Test
-	public void testCardCGWhite() throws IOException {
-		Diagram d = createTestCard();
-		renderDiagramSVG(d, new CGWhiteStylesheet());
-		renderDiagramPDF(d, new CGWhiteStylesheet());
-		renderDiagram(d, new CGWhiteStylesheet());
-		renderDiagramADLAndSVG(d, new CGWhiteStylesheet());
-	}
-	
-	@Test
-	public void testCardBasicBlue() throws IOException {
-		Diagram d = createTestCard();
-		renderDiagramSVG(d, new BasicBlueStylesheet());
-		renderDiagramPDF(d, new BasicBlueStylesheet());
-		renderDiagram(d, new BasicBlueStylesheet());
-		renderDiagramADLAndSVG(d, new BasicBlueStylesheet());
-	}
 
 	@Override
 	protected boolean checkEverythingStraight() {

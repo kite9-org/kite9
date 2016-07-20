@@ -12,7 +12,6 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 
 public class Test8ContainersAndDirectedArrows extends AbstractFunctionalTest {
 
@@ -116,7 +115,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractFunctionalTest {
 
 		
 		Diagram d = new Diagram("The Diagram", createList(con1, two), null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 
 	}
 

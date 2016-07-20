@@ -15,8 +15,6 @@ import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.CGWhiteStylesheet;
 import org.kite9.framework.Kite9Item;
 
 public class TestJavaADLClasses extends AbstractFunctionalTest {
@@ -25,7 +23,7 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 	public void javaArchitecture1() throws IOException {
 		Diagram d = architecture();
 
-		renderDiagramNoWM(d, new CGWhiteStylesheet());
+		renderDiagramNoWM(d);
 	}
 
 	@Kite9Item
@@ -109,7 +107,7 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 		new Link(receives, client, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(receives, response);
 
-		renderDiagramNoWM(d, new BasicStylesheet());
+		renderDiagramNoWM(d);
 	}
 
 }

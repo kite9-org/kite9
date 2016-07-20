@@ -1,25 +1,31 @@
 package org.kite9.diagram.visualization.display.style;
 
+import java.awt.BasicStroke;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
-
-import org.apache.batik.css.engine.CSSStylableElement;
-import org.kite9.diagram.visualization.display.style.io.SVGHelper;
 
 public class TerminatorShape extends FixedShape {
 	
 	private double minLength;
 	private boolean filled;
+	Stroke s;
+	Shape p;
+	DirectionalValues margin;
+	Paint paint;
 
 	public double getMinInputLinkLength() {
 		return minLength;
 	}
 
-	public TerminatorShape(CSSStylableElement h) {
-		super(h);
-		this.minLength = minLength;
-		this.filled = filled;
+	public TerminatorShape(BasicStroke s, Paint paint, Shape p, DirectionalValues margin, float f, boolean b) {
+		super(null);
+		this.p = p;
+		this.margin = margin;
+		this.minLength = f;
+		this.filled = b;
+		this.paint = paint;
+		this.s = s;
 	}
 
 	@Override
@@ -30,4 +36,27 @@ public class TerminatorShape extends FixedShape {
 	public double getReservedLength(double strokeWidth) {
 		 return getMargin().getTop() + getMargin().getBottom() + strokeWidth;
 	}
+
+	@Override
+	public DirectionalValues getMargin() {
+		return margin;
+	}
+
+	@Override
+	public float getWidth() {
+		return 2;
+	}
+
+	@Override
+	public Shape getPath() {
+		return p;
+	}
+
+	@Override
+	public Stroke getStroke() {
+		return s;
+	}
+	
+	
+	
 }

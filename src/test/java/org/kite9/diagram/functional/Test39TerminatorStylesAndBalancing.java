@@ -122,7 +122,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 	@Test
 	public void test_39_8_Terminators2012() throws IOException {
 		Diagram d = createTerminatorDiagram();
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test 
@@ -141,7 +141,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		}
 		
 		Diagram d= new Diagram(elems, null);
-		renderDiagram(d, ss);
+		renderDiagram(d);
 
 	}
 	

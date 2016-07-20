@@ -11,7 +11,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.io.DasharrayValueManager;
 import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.common.HelpMethods;
 
@@ -30,7 +29,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
 		g1.setStyle("stroke-width: 8px");
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -38,7 +37,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
 		g1.setStyle("fill: red");
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -46,7 +45,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
 		g1.setStyle("fill: \"270-#363525-#756365\"");
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -54,7 +53,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
 		g1.setStyle("stroke: rgb(200, 5, 5)");
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -64,7 +63,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		tl.setStyle("font-size: 20px");
 		g1.setLabel(tl);
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -72,7 +71,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
 		g1.setStyle("stroke-dasharray: \"-..\"");
 		Diagram d= new Diagram(HelpMethods.listOf(g1),  null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	
@@ -83,7 +82,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Diagram d= new Diagram(HelpMethods.listOf(g1, g2),  null);
 		Link l2 = new Link(g1, g2, "DIAMOND", new TextLine("label 1"), "DIAMOND OPEN", new TextLine("label 2"), Direction.RIGHT);
 		l2.setStyle("stroke-width: 1px; stroke-dasharray: '-..'; stroke: red");
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -98,7 +97,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		otherEnd.setStyle("stroke-width: 8px");
 		new Link(g1, g2, "DIAMOND", oneEnd, "DIAMOND OPEN", otherEnd, Direction.RIGHT);
 	
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -115,7 +114,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Diagram d= new Diagram(elems,  null);
 		
 		
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	
@@ -126,6 +125,6 @@ public class Test43Styles extends AbstractFunctionalTest {
 		Diagram d= new Diagram(HelpMethods.listOf(g1, g2),  null);
 		Link l1 = new Link(g1, g2, "DIAMOND", new TextLine("label 1 hhh "), "DIAMOND OPEN", new TextLine("label 2 hh h"), Direction.RIGHT);
 		l1.setStyle("stroke-width: 7px; stroke-dasharray: '--'");
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 }

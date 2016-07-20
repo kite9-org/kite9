@@ -66,7 +66,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		
 		
 		
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		new Link(receives, kite9Lib, null, null, null, null, Direction.LEFT);
 		
 		
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 	@Test
@@ -141,7 +141,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		new HopLink(receives, response, null, null, null, null, Direction.DOWN);
 		
 		
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 	
 }

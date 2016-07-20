@@ -85,7 +85,7 @@ public abstract class ShapeHelper {
 		return null;
 	}
 
-	@Override
+
 	public static Map<String, TerminatorShape> getLinkTerminatorStyles() {
 		Map<String, TerminatorShape> out = new LinkedHashMap<String, TerminatorShape>();
 		// up facing arrow
@@ -99,24 +99,24 @@ public abstract class ShapeHelper {
 		DirectionalValues margin = new DirectionalValues(0, half, ahs, half);
 		
 		
-		out.put("ARROW", new TerminatorShape(h, new BasicStroke(1), null, p, margin, getLinkEndSize() * 2, true));
-		out.put("ARROW OPEN", new TerminatorShape(h, new BasicStroke(1),getOpenTerminatorFill(), p, margin, getLinkEndSize() * 2, true));
+		out.put("ARROW", new TerminatorShape(new BasicStroke(1), null, p, margin, getLinkEndSize() * 2, true));
+		out.put("ARROW OPEN", new TerminatorShape(new BasicStroke(1),getOpenTerminatorFill(), p, margin, getLinkEndSize() * 2, true));
 		
 		
 		// circle at the end of the line
 		float radius = half;
 		Ellipse2D e = new Ellipse2D.Float(- radius, - radius, radius * 2, radius * 2);
 		margin = new DirectionalValues(0, 0, 0, 0);
-		out.put("CIRCLE", new TerminatorShape(h, null, null, e, margin, getLinkEndSize() * 2, true));
+		out.put("CIRCLE", new TerminatorShape(null, null, e, margin, getLinkEndSize() * 2, true));
 		
 		// gap
 		float gap = getLinkGapSize();
 		margin = new DirectionalValues(0, gap, gap, gap);
-		out.put("GAP", new TerminatorShape(h, null, null, null, margin, getLinkEndSize() * 2, false));
+		out.put("GAP", new TerminatorShape(null, null, null, margin, getLinkEndSize() * 2, false));
 		
 		// none
 		margin = new DirectionalValues(0, 0, 0, 0);
-		out.put("NONE", new TerminatorShape(h, null, null, null, margin, getLinkEndSize() * 2, false));
+		out.put("NONE", new TerminatorShape(null, null, null, margin, getLinkEndSize() * 2, false));
 		
 		// diamond
 		p = new Polygon2D(
@@ -124,8 +124,8 @@ public abstract class ShapeHelper {
 				new float[] { ahs*2, ahs, 0, ahs  }, 4);
 		
 		margin = new DirectionalValues(0, half, ahs, half);
-		out.put("DIAMOND", new TerminatorShape(h, null, null, p, margin, getLinkEndSize() * 3, true));
-		out.put("DIAMOND OPEN", new TerminatorShape(h, new BasicStroke(1), getOpenTerminatorFill(), p, margin, getLinkEndSize() * 3, true));
+		out.put("DIAMOND", new TerminatorShape(null, null, p, margin, getLinkEndSize() * 3, true));
+		out.put("DIAMOND OPEN", new TerminatorShape(new BasicStroke(1), getOpenTerminatorFill(), p, margin, getLinkEndSize() * 3, true));
 		
 		
 		// taily arrow
@@ -139,7 +139,7 @@ public abstract class ShapeHelper {
 		
 		margin = new DirectionalValues(0, half, ahs, half);
 		
-		out.put("BARBED ARROW", new TerminatorShape(h, new BasicStroke(1), null, s, margin, getLinkEndSize() * 2, false));
+		out.put("BARBED ARROW", new TerminatorShape(new BasicStroke(1), null, s, margin, getLinkEndSize() * 2, false));
 		
 		return out;
 	}
@@ -155,13 +155,15 @@ public abstract class ShapeHelper {
 		return out;
 	}
 
-	protected Paint getOpenTerminatorFill() {
+	protected static Paint getOpenTerminatorFill() {
 		return Color.WHITE;
 	}
 
-	protected abstract float getLinkEndSize();
+	protected static float getLinkEndSize() {
+		return 10;
+	}
 	
-	protected float getLinkGapSize() {
+	protected static float getLinkGapSize() {
 		return 4;
 	}
 
@@ -228,37 +230,5 @@ public abstract class ShapeHelper {
 		return border;
 	}
 	
-	
-	public Paint createGradientPaintFor(Color c) {
-	return new LinearGradientPaint(
-			new Point2D.Double(.5d,0), 
-			new Point2D.Double(.5d,1), 
-			new float[] { 0f, 1f}, new Color[] {
-				c.brighter(), 
-				c
-			});
-	}
-
-	@Override
-	public static Map<String, Paint> getBoxFills() {
-		Map<String, Paint>  out = new LinkedHashMap<String, Paint>();
-		out.put("Yellow", createGradientPaintFor(new Color(0xff, 0xe6, 0x5f)));
-		out.put("Orange", createGradientPaintFor(new Color(0xfb, 0xaa, 0x24)));
-		out.put("Light Blue", createGradientPaintFor(new Color(0x24, 0xa5, 0xfb)));
-		out.put("Grey", createGradientPaintFor(Color.GRAY));
-		out.put("Dark Grey", createGradientPaintFor(Color.DARK_GRAY));
-		out.put("Dark Blue", createGradientPaintFor(new Color(0x49, 0x70, 0x94)));
-		out.put("Red", createGradientPaintFor(new Color(0xdf, 0, 0)));
-		return out;
-	}
-
-	@Override
-	public BoxStyle getContextBoxInvisibleStyle() {
-		return new BoxStyle(h,
-				DirectionalValues.ZERO, 
-				DirectionalValues.ZERO, 
-				new ShapeStyle(h, new BasicStroke(.5f), new Color(160, 160, 255), null, "..-", true, false), false);
-
-	}
 	
 }

@@ -14,8 +14,6 @@ import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.framework.common.HelpMethods;
@@ -24,44 +22,44 @@ public class Test32SizingOutput extends AbstractFunctionalTest {
 	@Test
 	public void test_32_1_TestSizesAreCreated() throws IOException {
 		Diagram d = createADiagram();
-		renderDiagramSizes(d, new BasicStylesheet());
+		renderDiagramSizes(d);
 
 	}
 	
 	@Test
 	public void test_32_2_TestMapIsCreated() throws IOException {
 		Diagram d = createADiagram();
-		renderMap(d, new BasicStylesheet());
+		renderMap(d);
 	}
 	
 	@Test
 	public void test_32_3_TestDiagramSizeCanBeSet() throws IOException {
 		Diagram d = createADiagram();
 		TestingEngine te = getTestingEngineSettingSize(900, 200);
-		renderDiagram(d, te, false, new BasicStylesheet());
+		renderDiagram(d, te, false);
  	}
 	
 	@Test
 	public void test_32_4_TestDiagramHeightScaling() throws IOException {
 		Diagram d = createADiagram();
 		TestingEngine te = getTestingEngineSettingSize(200, 400);
-		renderDiagram(d, te, false, new BasicStylesheet());
+		renderDiagram(d, te, false);
  	}
 	
 	@Test
 	public void test_32_5_TestDiagramHeightAndWidthScaling() throws IOException {
 		Diagram d = new Diagram("blo", HelpMethods.listOf(new Glyph("", "New Part", null, null)));
 		TestingEngine te = getTestingEngineSettingSize(200, 200);
-		renderDiagram(d, te, false, new BasicStylesheet());
+		renderDiagram(d, te, false);
  	}
 
 	protected TestingEngine getTestingEngineSettingSize(final int width, final int height) {
 		TestingEngine te = new TestingEngine(getZipName()) {
 
 			@Override
-			public BufferedImageProcessingPipeline getPipeline(Stylesheet ss,
+			public BufferedImageProcessingPipeline getPipeline(
 					Class<?> test, String subtest, boolean watermark) {
-				return new BufferedImageProcessingPipeline(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(ss, watermark, false), ss), 
+				return new BufferedImageProcessingPipeline(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(watermark, false)), 
 						new BufferedImageRenderer(width, height));
 			}
 		};

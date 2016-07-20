@@ -45,7 +45,7 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 		Contained one = new Glyph("Stereo", "Rob's Glyph", null, null);
 		Diagram d = new Diagram("The Diagram", createList(one));
 
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 
 }

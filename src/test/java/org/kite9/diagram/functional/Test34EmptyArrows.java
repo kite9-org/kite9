@@ -9,9 +9,6 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.style.Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.framework.common.HelpMethods;
@@ -94,14 +91,14 @@ public class Test34EmptyArrows extends AbstractFunctionalTest  {
 		TestingEngine te = new TestingEngine(getZipName(), false) {
 
 			@Override
-			public BufferedImageProcessingPipeline getPipeline(Stylesheet ss, Class<?> test, String subtest, boolean watermark) {
-				return new BufferedImageProcessingPipeline(new ADLBasicCompleteDisplayer(ss, watermark, true), new BufferedImageRenderer());
+			public BufferedImageProcessingPipeline getPipeline(Class<?> test, String subtest, boolean watermark) {
+				return new BufferedImageProcessingPipeline(new ADLBasicCompleteDisplayer(watermark, true), new BufferedImageRenderer());
 			}
 			
 			
 		};
 		
-		te.renderDiagram(d, true, true, true, true, true, true, true, true, new BasicStylesheet());
+		te.renderDiagram(d, true, true, true, true, true, true, true, true);
 	}
 	
 	@Test
@@ -115,6 +112,6 @@ public class Test34EmptyArrows extends AbstractFunctionalTest  {
 		new Link(a, gc,null, null, "ARROW", null);
 		
 		Diagram d = new Diagram(HelpMethods.listOf(a, ga, gb, gc), null);
-		renderDiagram(d, new Designer2012Stylesheet());
+		renderDiagram(d);
 	}
 }

@@ -1,14 +1,7 @@
 package org.kite9.diagram.functional;
 
-import java.awt.image.RenderedImage;
 import java.io.IOException;
-import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
-
-import org.apache.batik.ext.awt.image.spi.ImageWriter;
-import org.apache.batik.ext.awt.image.spi.ImageWriterParams;
-import org.apache.batik.ext.awt.image.spi.ImageWriterRegistry;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -21,8 +14,6 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
-import org.kite9.diagram.visualization.display.style.sheets.DesignerStylesheet;
 
 public class Test49SVG extends AbstractFunctionalTest {
 
@@ -33,7 +24,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		Context c1 = new Context(createList(one, two), true, null, null);
 		Diagram d = new Diagram("The Diagram", listOf(c1), null);
 
-		renderDiagramSVG(d, new Designer2012Stylesheet());
+		renderDiagramSVG(d);
 	}
 
 	@Test
@@ -81,7 +72,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
 		Diagram d = new Diagram("D", createList((Contained) con1, con5, con4, con3, con2), null);
-		renderDiagramSVG(d, new Designer2012Stylesheet());
+		renderDiagramSVG(d);
 	}
 
 	@Test
@@ -97,7 +88,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new Link(a, two);
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a, two), null);
-		renderDiagramSVG(d, new Designer2012Stylesheet());
+		renderDiagramSVG(d);
 	}
 
 	@Test
@@ -116,6 +107,6 @@ public class Test49SVG extends AbstractFunctionalTest {
 
 		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
 		
-		renderDiagramSVG(d, new DesignerStylesheet());
+		renderDiagramSVG(d);
 	}
 }

@@ -57,6 +57,6 @@ public class TestWebSupport extends AbstractFunctionalTest {
 		new Link(server, map, null, new TextLine("creates"), LinkEndStyle.ARROW, null);
 		
 		Diagram d = new Diagram(HelpMethods.listOf(kite9Host, yourHost), null);
-		renderDiagramNoWM(d, new Designer2012Stylesheet());
+		renderDiagramNoWM(d);
 	}
 }
