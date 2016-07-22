@@ -9,6 +9,7 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkLineStyle;
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -21,7 +22,6 @@ import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
-import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -239,9 +239,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	@Override
-	public double getTerminatorLength(Object terminator) {
-		TerminatorShape fs = ShapeHelper.getLinkTerminatorStyles().get(terminator);
-		if (fs != null) {
+	public double getTerminatorLength(LinkTerminator terminator) {
+		if (terminator != null) {
+			TerminatorShape fs = new TerminatorShape(terminator);
 			return fs.getMinInputLinkLength();
 		} else {
 			return 0;
@@ -249,9 +249,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 	
 	@Override
-	public double getTerminatorReserved(Object terminator, Connection on) {
-		TerminatorShape fs = ShapeHelper.getLinkTerminatorStyles().get(terminator);
-		if (fs != null) {
+	public double getTerminatorReserved(LinkTerminator terminator, Connection on) {
+		if (terminator != null) {
+			TerminatorShape fs = new TerminatorShape(terminator);
 			ShapeStyle ss = ((AbstractRouteDisplayer) getDisplayer(on)).getStyle(on);
 			double width = ss.getStrokeWidth();
 			return fs.getReservedLength(width);

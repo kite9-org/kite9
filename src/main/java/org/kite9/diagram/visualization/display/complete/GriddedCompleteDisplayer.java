@@ -9,6 +9,7 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -135,12 +136,12 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 
 	@Override
-	public double getTerminatorLength(Object terminator) {
+	public double getTerminatorLength(LinkTerminator terminator) {
 		return ded.getTerminatorLength(terminator);
 	}
 
 	@Override
-	public double getTerminatorReserved(Object terminator, Connection c) {
+	public double getTerminatorReserved(LinkTerminator terminator, Connection c) {
 		return ded.getTerminatorReserved(terminator, c);
 	}
 

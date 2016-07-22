@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.display;
 
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.DiagramElement;
@@ -20,12 +21,12 @@ public interface DiagramSpacer {
 	/**
 	 * Minimum length that an edge section must be to contain this terminator
 	 */
-	public double getTerminatorLength(Object terminator);
+	public double getTerminatorLength(LinkTerminator terminator);
 	
 	/**
 	 * Length of edge consumed by the terminator
 	 */
-	public double getTerminatorReserved(Object terminator, Connection on);
+	public double getTerminatorReserved(LinkTerminator terminator, Connection on);
 	
 	/**
 	 * Link gutter is the distance between two links arriving at this diagram element

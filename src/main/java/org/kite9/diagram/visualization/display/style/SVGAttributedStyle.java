@@ -25,7 +25,8 @@ public class SVGAttributedStyle {
 	}
 	
 	protected BridgeContext getBridgeContext() {
-		CSSEngine e = ((ADLDocument) getStyleElement().getOwnerDocument()).getCSSEngine();
+		CSSEngine e = ((ADLDocument) getStyleElement().getOwnerDocument())
+				.getCSSEngine();
 		return (BridgeContext) e.getCSSContext();
 	}
 

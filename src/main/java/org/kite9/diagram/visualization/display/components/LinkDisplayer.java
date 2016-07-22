@@ -10,6 +10,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -23,7 +24,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
+import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
@@ -36,9 +37,9 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 		super(parent, g2, shadow);
 	}
 	
-	private String getLinkTerminator(Link ae, boolean from) {
-		String out = (String) (from ? ae.getFromDecoration() : ae.getToDecoration());
-		return out == null ? "NONE" : out;
+	private LinkTerminator getLinkTerminator(Link ae, boolean from) {
+		LinkTerminator out = (from ? ae.getFromDecoration() : ae.getToDecoration());
+		return out == null ? new LinkTerminator(from ? "fromDecoration" : "toDecoration", ae.getOwnerDocument(), "NONE") : out;
 	}
 	
 	
@@ -288,8 +289,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 		RouteRenderingInformation rr = (RouteRenderingInformation) r;
 		rr.setContradicting(ae.getRenderingInformation().isContradicting() || rr.isContradicting());
 		ae.setRenderingInformation(r);
-		String fromEnd = getLinkTerminator(ae, true);
-		String toEnd = getLinkTerminator(ae, false);
+		LinkTerminator fromEnd = getLinkTerminator(ae, true);
+		LinkTerminator toEnd = getLinkTerminator(ae, false);
 		
 		if (rr.size()==0) {
 			// && ((rr.getPerimeterPath()==null) || (rr.getPerimeterPath().length()==0))) {
@@ -301,8 +302,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 
 		ShapeStyle drawStroke = getStyle(ae);
 		double width = drawStroke.getStrokeWidth();
-		StyledEndDisplayer head = new StyledEndDisplayer(ae.getFrom(), ShapeHelper.getLinkTerminatorStyles().get(fromEnd));
-		StyledEndDisplayer tail = new StyledEndDisplayer(ae.getTo(), ShapeHelper.getLinkTerminatorStyles().get(toEnd));
+		StyledEndDisplayer head = new StyledEndDisplayer(ae.getFrom(), new TerminatorShape(fromEnd));
+		StyledEndDisplayer tail = new StyledEndDisplayer(ae.getTo(), new TerminatorShape(toEnd));
 
 		if (drawStroke != null) {
 			Paint lc = (debug && ae.getRenderingInformation().isContradicting()) ? Color.RED : drawStroke.getStrokeColour();
@@ -311,8 +312,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 					false, !drawStroke.isInvisible(), width+3);
 		}
 		
-		rr.setFromDecoration(new Decoration(fromEnd, head.getDirection(), head.getPosition()));
-		rr.setToDecoration(new Decoration(toEnd, tail.getDirection(), tail.getPosition()));
+		rr.setFromDecoration(new Decoration(fromEnd.getTextContent(), head.getDirection(), head.getPosition()));
+		rr.setToDecoration(new Decoration(toEnd.getTextContent(), tail.getDirection(), tail.getPosition()));
 	}
 
 	private void setRendered(Link ae, RouteRenderingInformation rr, boolean state) {

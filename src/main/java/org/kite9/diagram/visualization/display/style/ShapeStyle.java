@@ -7,14 +7,14 @@ import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.bridge.PaintServer;
+import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.gvt.ShapeNode;
 import org.apache.batik.util.CSSConstants;
-import org.kite9.diagram.adl.ADLDocument;
 import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
 import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * Encapsulates the details of a shape, whether the border of a box, a divider, a connection or an arrow end.
@@ -107,6 +107,31 @@ public class ShapeStyle extends SVGAttributedStyle {
 		
 		return fill ? PaintServer.convertFillPaint(e, sn, getBridgeContext()) : 
 			PaintServer.convertStrokePaint(e, sn, getBridgeContext());			
+	}
+	
+	protected DirectionalValues getDirectionalValues(String name) {
+		return new DirectionalValues(pixels(name+"-top"), pixels(name+"-right"),
+				pixels(name+"-bottom"), pixels(name+"-left"));
+	}
+	
+	private double pixels(String name) {
+		Value v = getCSSStyleProperty(name);
+		if (v instanceof FloatValue) {
+			if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
+				return (double) v.getFloatValue();
+			} else if (v.getFloatValue() == 0) {
+				return 0d;
+			} else {
+				throw new UnsupportedOperationException("Can only do pixels so far");
+			}
+		} else {
+			throw new UnsupportedOperationException("Not a float value: "+v);
+		}
+		
+	}
+	
+	public DirectionalValues getMargin() {
+		return getDirectionalValues("margin");
 	}
 
 }

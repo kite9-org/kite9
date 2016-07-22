@@ -1,24 +1,21 @@
 package org.kite9.diagram.visualization.display.style;
 
-import java.awt.BasicStroke;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.kite9.diagram.adl.LinkTerminator;
 
 public class TerminatorShape extends FixedShape {
 	
-	private double minLength;
+	/*private double minLength;
 	private boolean filled;
 	Stroke s;
 	Shape p;
 	DirectionalValues margin;
-	Paint paint;
+	Paint paint;*/
 
 	public double getMinInputLinkLength() {
-		return minLength;
+		return 20;  // minLength;
 	}
 
-	public TerminatorShape(BasicStroke s, Paint paint, Shape p, DirectionalValues margin, float f, boolean b) {
+	/*public TerminatorShape(BasicStroke s, Paint paint, Shape p, DirectionalValues margin, float f, boolean b) {
 		super(null);
 		this.p = p;
 		this.margin = margin;
@@ -26,37 +23,41 @@ public class TerminatorShape extends FixedShape {
 		this.filled = b;
 		this.paint = paint;
 		this.s = s;
+	}*/
+
+	public TerminatorShape(LinkTerminator s) {
+		super(s);
 	}
 
-	@Override
+	/*@Override
 	public boolean isFilled() {
 		return this.filled;
-	}
+	}*/
 
 	public double getReservedLength(double strokeWidth) {
 		 return getMargin().getTop() + getMargin().getBottom() + strokeWidth;
 	}
 
-	@Override
-	public DirectionalValues getMargin() {
-		return margin;
-	}
-
-	@Override
-	public float getWidth() {
-		return 2;
-	}
-
-	@Override
-	public Shape getPath() {
-		return p;
-	}
-
-	@Override
-	public Stroke getStroke() {
-		return s;
-	}
-	
+//	@Override
+//	public DirectionalValues getMargin() {
+//		return margin;
+//	}
+//
+//	@Override
+//	public float getWidth() {
+//		return 2;
+//	}
+//
+//	@Override
+//	public Shape getPath() {
+//		return p;
+//	}
+//
+//	@Override
+//	public Stroke getStroke() {
+//		return s;
+//	}
+//	
 	
 	
 }
