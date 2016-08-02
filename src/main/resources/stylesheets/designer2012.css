@@ -68,6 +68,21 @@
 	box-shadow: 4px 4px 0px #333333; 
 }
 
+.key {
+	shape: "rounded-rect";
+	padding: 3px 6px 3px 6px; 
+	margin: 12px 12px 12px 12px;
+	stroke-width: 2px;
+	stroke: black;
+	fill: white;
+	/*box-shadow-x-offset: 4px;
+	box-shadow-y-offset: 4px;
+	box-shadow-color: teal;
+	box-shadow-opacity: .3; */
+	
+	box-shadow: 4px 4px 0px #333333; 
+}
+
 .glyph .label {
 	font-size: 15px;
 	text-align: middle;
@@ -113,6 +128,19 @@
 	stroke-width: 2px;
 }
 
+/* Labels */
+
+.toLabel, 
+.fromLabel,
+.context .label {
+	fill: #CCC;
+	fill-transparency: 60%;
+	stroke: black;
+	font-size: 10px;
+	font-family: "opensans-light-webfont";
+}
+
+
 /* Key */
 
 /* Link */
@@ -130,9 +158,19 @@
 
 .link-terminator {
 	margin: 0 5px 10px 5px;
+	height: 10px;
+	fill: black;
+	stroke: black;
+	stroke-width: 1px;
 }
 
+.link-terminator.open {
+	fill: none;	
+}
 
+.link-terminator.none {
+	margin: 0 0 0 0;
+}
 
 
 .copyright {

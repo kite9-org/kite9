@@ -1,12 +1,10 @@
 package org.kite9.diagram.visualization.display.style.io;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.LinearGradientPaint;
 import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -17,12 +15,8 @@ import java.util.Set;
 
 import org.apache.batik.ext.awt.geom.Polygon2D;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.ConnectionTemplate;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
-import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.diagram.visualization.display.style.shapes.CircleFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.DiamondFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.DividerFlexibleShape;
@@ -31,6 +25,7 @@ import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
 import org.kite9.diagram.visualization.display.style.shapes.HexagonFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Provides logic to create the ADL symbol shapes and arrow ends.
@@ -62,7 +57,7 @@ public abstract class ShapeHelper {
 		return out;
 	}
 	
-	public static java.awt.Shape createShape(SymbolShape shape, double innerSize, double x, double y) {
+	public static java.awt.Shape createSymbolShape(SymbolShape shape, double innerSize, double x, double y) {
 
 		switch (shape) {
 		case HEXAGON:
@@ -85,63 +80,41 @@ public abstract class ShapeHelper {
 		return null;
 	}
 
-
-	public static Map<String, TerminatorShape> getLinkTerminatorStyles() {
-		Map<String, TerminatorShape> out = new LinkedHashMap<String, TerminatorShape>();
-		// up facing arrow
+	public static Shape getTerminatorShape(String shape) {
 		float ahs = getLinkEndSize();
 		float half = ahs / 2;
-		
-		Polygon2D p = new Polygon2D(
-				new float[] { 0, 0 - half, 0, half }, 
-				new float[] { ahs, ahs, 0, ahs  }, 4);
-		
-		DirectionalValues margin = new DirectionalValues(0, half, ahs, half);
-		
-		
-		out.put("ARROW", new TerminatorShape(new BasicStroke(1), null, p, margin, getLinkEndSize() * 2, true));
-		out.put("ARROW OPEN", new TerminatorShape(new BasicStroke(1),getOpenTerminatorFill(), p, margin, getLinkEndSize() * 2, true));
-		
-		
-		// circle at the end of the line
-		float radius = half;
-		Ellipse2D e = new Ellipse2D.Float(- radius, - radius, radius * 2, radius * 2);
-		margin = new DirectionalValues(0, 0, 0, 0);
-		out.put("CIRCLE", new TerminatorShape(null, null, e, margin, getLinkEndSize() * 2, true));
-		
-		// gap
-		float gap = getLinkGapSize();
-		margin = new DirectionalValues(0, gap, gap, gap);
-		out.put("GAP", new TerminatorShape(null, null, null, margin, getLinkEndSize() * 2, false));
-		
-		// none
-		margin = new DirectionalValues(0, 0, 0, 0);
-		out.put("NONE", new TerminatorShape(null, null, null, margin, getLinkEndSize() * 2, false));
-		
-		// diamond
-		p = new Polygon2D(
-				new float[] { 0, 0 - half, 0, half }, 
-				new float[] { ahs*2, ahs, 0, ahs  }, 4);
-		
-		margin = new DirectionalValues(0, half, ahs, half);
-		out.put("DIAMOND", new TerminatorShape(null, null, p, margin, getLinkEndSize() * 3, true));
-		out.put("DIAMOND OPEN", new TerminatorShape(new BasicStroke(1), getOpenTerminatorFill(), p, margin, getLinkEndSize() * 3, true));
-		
-		
-		// taily arrow
-		GeneralPath s = new GeneralPath();
-		s.moveTo(0, ahs);
-		s.lineTo(0, 0);
-		s.lineTo(-half, ahs);
-		s.moveTo(0, 0);
-		s.lineTo(half, ahs);
-		s.moveTo(0, 0);
-		
-		margin = new DirectionalValues(0, half, ahs, half);
-		
-		out.put("BARBED ARROW", new TerminatorShape(new BasicStroke(1), null, s, margin, getLinkEndSize() * 2, false));
-		
-		return out;
+
+		switch (shape) {
+		case "ARROW":
+		case "ARROW OPEN":
+			return new Polygon2D(
+					new float[] { 0, 0 - half, 0, half }, 
+					new float[] { ahs, ahs, 0, ahs  }, 4);
+		case "CIRCLE":
+			float radius = half;
+			return new Ellipse2D.Float(- radius, - radius, radius * 2, radius * 2);
+		case "GAP":
+		case "NONE":
+			return null;
+			
+		case "DIAMOND":
+		case "DIAMOND OPEN":
+			return  new Polygon2D(
+					new float[] { 0, 0 - half, 0, half }, 
+					new float[] { ahs*2, ahs, 0, ahs  }, 4);
+		case "BARBED ARROW":
+			// taily arrow
+			GeneralPath s = new GeneralPath();
+			s.moveTo(0, ahs);
+			s.lineTo(0, 0);
+			s.lineTo(-half, ahs);
+			s.moveTo(0, 0);
+			s.lineTo(half, ahs);
+			s.moveTo(0, 0);
+			return s;
+		default:
+			return null;
+		}
 	}
 	
 	public static Map<String, ConnectionTemplate> getConnectionTemplates() {

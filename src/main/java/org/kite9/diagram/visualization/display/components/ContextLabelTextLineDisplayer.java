@@ -12,8 +12,12 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
+import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer {
@@ -27,7 +31,8 @@ public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer
 	}
 
 	public boolean canDisplay(DiagramElement element) {
-		return ((element instanceof TextLine) && ((TextLine)element).getParent() instanceof Context);
+		return ((element instanceof TextLine)
+				&& ((TextLine)element).getParentNode() instanceof Context);
 	}
 
 	@Override
@@ -82,13 +87,13 @@ public class ContextLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer
 	}
 
 	@Override
-	public TextBoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getContextLabelStyle();
+	public BoxStyle getUnderlyingStyle(DiagramElement de) {
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return ss.getContextLabelDefaultShape();
+		return new RoundedRectFlexibleShape(5, 0, 0);
 	}
 
 }

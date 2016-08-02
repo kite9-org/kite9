@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.display.components;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
@@ -73,15 +72,17 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		}
 		// draw label, and syms if they haven't already been done
 		TextStyle ls = getLabelStyle(element);
-		double baseline2 = Math.max(getBaseline(ls.getFont(), g2, label), syms ? getSymbolBaseline(ls.getFont(), symStyle.getFont(), g2) : 0);
-//		g2.setColor(Color.RED);
-//		g2.drawRect((int) xStart, (int) (yStart+baseline), 100, 1);
-		cd = arrangeString(ls.getFont(), ls.getColor(), label, new Dimension2D(xStart, yStart), new Dimension2D(ri.getWidth(), ri.getHeight()), true, syms ? Justification.LEFT : ls.getJust(), baseline2);
-		if (syms) {
-			drawSymbols(symbols, xStart, yStart, ri.getWidth(), baseline2);
-			yStart += Math.max(cd.getHeight(), symWidth) ;
-		} else {
-			yStart += cd.getHeight();
+		if (ls != null) {
+			double baseline2 = Math.max(getBaseline(ls.getFont(), g2, label), syms ? getSymbolBaseline(ls.getFont(), symStyle.getFont(), g2) : 0);
+	//		g2.setColor(Color.RED);
+	//		g2.drawRect((int) xStart, (int) (yStart+baseline), 100, 1);
+			cd = arrangeString(ls.getFont(), ls.getColor(), label, new Dimension2D(xStart, yStart), new Dimension2D(ri.getWidth(), ri.getHeight()), true, syms ? Justification.LEFT : ls.getJust(), baseline2);
+			if (syms) {
+				drawSymbols(symbols, xStart, yStart, ri.getWidth(), baseline2);
+				yStart += Math.max(cd.getHeight(), symWidth) ;
+			} else {
+				yStart += cd.getHeight();
+			}
 		}
 	}
 	

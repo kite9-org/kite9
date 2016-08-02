@@ -7,7 +7,6 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 
 public class Test1BasicLinkage extends AbstractFunctionalTest {
 

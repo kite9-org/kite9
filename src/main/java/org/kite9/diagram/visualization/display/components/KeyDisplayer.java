@@ -13,8 +13,12 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
+import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -64,7 +68,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 				totalHeight += symSize.getHeight();
 			}
 		
-			int maxColumns = getMaxColumnCount(maxWidth, width, ss.getKeyInternalSpacing(), contents.size());
+			int maxColumns = getMaxColumnCount(maxWidth, width, StaticStyle.getKeyInternalSpacing(), contents.size());
 			maxColumns = Math.min(contents.size(), maxColumns);
 			
 			if (draw) {
@@ -72,7 +76,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 				int currentColumn = 0;
 				double pos = 0;
 				maxColumns = getColumnsUsed(symSizes, availHeight);
-				double actualColumnWidth = getColumnWidth(width, maxColumns, ss.getKeyInternalSpacing());
+				double actualColumnWidth = getColumnWidth(width, maxColumns, StaticStyle.getKeyInternalSpacing());
 				
 				for (int i = 0; i < symSizes.size(); i++) {
 					double currentHeight = symSizes.get(i).getHeight();
@@ -82,7 +86,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 						pos = 0;
 					}
 					
-					Dimension2D from = new Dimension2D(x + (currentColumn * ( actualColumnWidth + ss.getKeyInternalSpacing() ) ), y + pos);
+					Dimension2D from = new Dimension2D(x + (currentColumn * ( actualColumnWidth + StaticStyle.getKeyInternalSpacing() ) ), y + pos);
 					Dimension2D size = new Dimension2D(actualColumnWidth, currentHeight);
 					parent.draw(contents.get(i), new BasicRenderingInformation(from, size, null, null, true));
 					
@@ -92,7 +96,7 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 			} else {
 				CostedDimension columnSize = getOptimalColumnSize(maxColumns, symSizes, totalHeight, width);
 				double height2 = columnSize.getHeight() > 0 ? columnSize.getHeight() : 0;
-				CostedDimension symCost = new CostedDimension(maxWidth  * maxColumns + (ss.getKeyInternalSpacing() * (maxColumns -1)), height2, 0);
+				CostedDimension symCost = new CostedDimension(maxWidth  * maxColumns + (StaticStyle.getKeyInternalSpacing() * (maxColumns -1)), height2, 0);
 				return symCost;
 			}
 		} else {
@@ -175,13 +179,13 @@ public class KeyDisplayer extends AbstractTextWithContentBoxModelDisplayer {
 	}
 
 	@Override
-	public TextBoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getKeyBoxStyle();
+	public BoxStyle getUnderlyingStyle(DiagramElement de) {
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return ss.getKeyBoxDefaultShape();
+		return new RoundedRectFlexibleShape(0, 0, 0);
 	}
 	
 };

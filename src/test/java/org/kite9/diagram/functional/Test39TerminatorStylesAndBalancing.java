@@ -14,7 +14,6 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 import org.kite9.framework.common.HelpMethods;
 
 
@@ -125,17 +124,17 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 	
+	public static final String[] STYLES = {"ARROW", "ARROW OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND OPEN", "BARBED ARROW"};
 	@Test 
 	public void test_39_9_AllTheTerminators2012() throws IOException {
 		List<Contained> elems = new ArrayList<Contained>();
-		Designer2012Stylesheet ss = new Designer2012Stylesheet();
 		
-		for (String s : ss.getLinkTerminatorStyles().keySet()) {
+		for (String s : STYLES) {
 			Glyph a = new Glyph("", "A", null, null);
 			Glyph b = new Glyph("", "B", null, null);
 			new Link(a, b, s, null, s, null, Direction.RIGHT);
 			Link l2 = new Link(a, b, s, null, s, null, Direction.RIGHT);
-			l2.setStyle("stroke-width: 1px; stroke-dasharray: '-..'; stroke: red");
+			l2.setStyle("stroke-width: 1px; stroke-dasharray: 5px 3px 5px; stroke: red");
 			elems.add(a);
 			elems.add(b);
 		}

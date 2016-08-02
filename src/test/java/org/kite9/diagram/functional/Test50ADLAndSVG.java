@@ -14,7 +14,6 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.visualization.display.style.sheets.Designer2012Stylesheet;
 
 public class Test50ADLAndSVG extends AbstractFunctionalTest {
 

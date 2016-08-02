@@ -14,10 +14,12 @@ import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.Label;
 import org.kite9.diagram.primitives.TextContainingDiagramElement;
+import org.kite9.diagram.style.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
+import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
@@ -104,15 +106,14 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 				revx ? margins.getRight() : margins.getLeft());
 		
 		
-		original.setMargin(margins);
-		return original;
+		return new BoxStyle(original, margins);
 	}
 	
 	
 
 	@Override
 	public BoxStyle getUnderlyingStyle(DiagramElement de) {
-		return ss.getConnectionLabelStyle();
+		return new BoxStyle((StyledDiagramElement) de);
 	}
 
 	@Override
@@ -132,6 +133,6 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return ss.getConnectionLabelDefaultShape();
+		return new RoundedRectFlexibleShape(5, 0, 0);
 	}
 }

@@ -24,10 +24,10 @@ public class FixedShape extends ShapeStyle {
 	public java.awt.Shape getPath() {
 		if (styleElement instanceof Symbol) {
 			SymbolShape shape = ((Symbol) styleElement).getShape();
-			return ShapeHelper.createShape(shape, getWidth(), 0, 0);
+			return ShapeHelper.createSymbolShape(shape, getWidth(), 0, 0);
 		} else if (styleElement instanceof LinkTerminator) {
 			String shape = ((LinkTerminator)styleElement).getShapeName();
-			return ShapeHelper.createShape(shape);
+			return ShapeHelper.getTerminatorShape(shape);
 		} else {
 			throw new UnsupportedOperationException("Can't get shape for "+styleElement);
 		}

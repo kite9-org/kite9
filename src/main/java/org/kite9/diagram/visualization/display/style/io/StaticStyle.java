@@ -96,14 +96,6 @@ public class StaticStyle {
 		return out;
 	}
 	
-	public static FixedShape getSymbolShape(StyledDiagramElement h) {
-		Map<String, FixedShape> out = new HashMap<String, FixedShape>();
-		out.put(SymbolShape.CIRCLE.name(), new FixedShape(h, null, null, getSymbolBackgroundColor(SymbolShape.CIRCLE), createShape(SymbolShape.CIRCLE, getSymbolWidth(), 0, 0), null));
-		out.put(SymbolShape.HEXAGON.name(), new FixedShape(h, null, null, getSymbolBackgroundColor(SymbolShape.HEXAGON), createShape(SymbolShape.HEXAGON, getSymbolWidth(),0, 0), null));
-		out.put(SymbolShape.DIAMOND.name(), new FixedShape(h, null, null, getSymbolBackgroundColor(SymbolShape.DIAMOND), createShape(SymbolShape.DIAMOND, getSymbolWidth(), 0,0), null));
-		return out;
-	}
-
 	public static Color getSymbolBackgroundColor(SymbolShape ss) {
 		switch (ss) {
 		case CIRCLE:
@@ -116,5 +108,9 @@ public class StaticStyle {
 		}
 
 		return new Color(0, 117, 178);
+	}
+
+	public static int getKeyInternalSpacing() {
+		return 15;
 	}
 }
