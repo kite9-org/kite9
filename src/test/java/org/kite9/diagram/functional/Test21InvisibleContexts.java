@@ -18,7 +18,6 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.CompositionalDiagramElement;
 import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Contained;
 
 public class Test21InvisibleContexts extends AbstractFunctionalTest {
 
@@ -34,7 +33,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 			for (int j = 0; j < i; j++) {
 				textLines.add(new TextLine("Some text"));
 			}
-			ContainerProperty<XMLElement> cp = new ContainerProperty<>("text-lines", ContainerProperty.TESTING_DOCUMENT, textLines);
+			ContainerProperty<XMLElement> cp = new ContainerProperty<XMLElement>("text-lines", ContainerProperty.TESTING_DOCUMENT, textLines);
 			g.setText(cp);
 			out.add(g);
 		}

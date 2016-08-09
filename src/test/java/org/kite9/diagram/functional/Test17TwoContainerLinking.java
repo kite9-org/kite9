@@ -28,7 +28,7 @@ public class Test17TwoContainerLinking extends AbstractFunctionalTest {
     	Glyph two = new Glyph("b", "Stereo", "b", null, null);
     	Glyph three = new Glyph("c", "Stereo", "c", null, null);
     	
-    	Contained con1 = new Context("b1", createList((Contained) one, (Contained) two, (Contained) three), true, null, c1);
+    	Context con1 = new Context("b1", createList((Contained) one, (Contained) two, (Contained) three), true, null, c1);
     	
     	Glyph four = new Glyph("d", "Stereo", "d", null, null);
     	Glyph five = new Glyph("e", "Stereo", "e", null, null);
@@ -37,9 +37,9 @@ public class Test17TwoContainerLinking extends AbstractFunctionalTest {
     	new TurnLink(one, four, null, null, null, null, l1);
     	new TurnLink(two, five, null, null, null, null, l2);
     	
-    	Contained con2 = new Context("b2", createList((Contained) four, (Contained) five, (Contained) six), true, null, c2);
+    	Context con2 = new Context("b2", createList((Contained) four, (Contained) five, (Contained) six), true, null, c2);
     
-    	Contained con3 = new Context("b3", createList(con1, con2), true, null, c3);
+    	Context con3 = new Context("b3", createList(con1, con2), true, null, c3);
     
     	Diagram d = new Diagram("The Diagram", createList(con3), null);
     	renderDiagram(d);

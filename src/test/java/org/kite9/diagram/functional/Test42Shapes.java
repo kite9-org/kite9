@@ -13,9 +13,9 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
 import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
@@ -41,7 +41,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		createLinks(one, two);
 		createDownLinks(one, four);
 		
-		Diagram d = new Diagram("The Diagram", createList((Contained) one, two, three, four), null);
+		Diagram d = new Diagram("The Diagram", createList((XMLElement) one, two, three, four), null);
 		return d;
 	}
 	
@@ -85,7 +85,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_6_FlowChartSymbolsGlyphs() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : FlowchartShapes.getShapes().keySet()) {
 			Glyph g = new Glyph(type, type, type, null, null);
 			g.setShapeName(type);
@@ -98,11 +98,11 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		renderDiagramLocal(d);
 	}
 	
-	private void addConnectors(List<Contained> out) {
+	private void addConnectors(List<XMLElement> out) {
 		addConnectors(out, 1);
 	}
 	
-	private void addConnectors(List<Contained> out, int distance) {
+	private void addConnectors(List<XMLElement> out, int distance) {
 		for (int i = 0; i < out.size(); i++) {
 			int next = (i + distance) % out.size();
 			Connected from =(Connected) out.get(i);
@@ -115,7 +115,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 
 	@Test
 	public void test_42_7_FlowChartSymbolsGlyphsNoStereo() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : FlowchartShapes.getShapes().keySet()) {
 			Glyph g = new Glyph(type, "", type, null, null);
 			g.setShapeName(type);
@@ -130,7 +130,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_8_FlowChartSymbolsGlyphsNoContent() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : FlowchartShapes.getShapes().keySet()) {
 			Glyph g = new Glyph(type, "", "", null, null);
 			g.setShapeName("fc"+type);
@@ -145,11 +145,11 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_9_FlowChartSymbolsContexts() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : FlowchartShapes.getShapes().keySet()) {
 			FlexibleShape shape = FlowchartShapes.getShape(type);
 			if (shape.canUseForContext()) {
-				List<Contained> content = new ArrayList<Contained>();
+				List<XMLElement> content = new ArrayList<XMLElement>();
 				content.add(new Glyph("blah", "blah dhjsfgjg sdhfgjdgs", null, null));
 				Context g = new Context(content, true, new TextLine(type), null);
 				g.setShapeName(type);
@@ -167,7 +167,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	@Test
 	public void test_42_10_FlowChartSymbolsGlyphsMultiConnected() throws IOException {
 		Kite9Log.setLogging(false);
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : FlowchartShapes.getShapes().keySet()) {
 			Glyph g = new Glyph(type, "a", type, null, null);
 			g.setShapeName(type);
@@ -204,7 +204,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 
 	@Test
 	public void test_42_11_UMLSymbolsGlyphs() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : UMLShapes.getShapes().keySet()) {
 				Glyph g = new Glyph("somet", type, null, null);
 				g.setShapeName(type);
@@ -219,7 +219,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_12_UMLSymbolsGlyphsNoStereo() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : UMLShapes.getShapes().keySet()) {
 				Glyph g = new Glyph(null, type, null, null);
 				g.setShapeName(type);
@@ -234,7 +234,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_13_UMLSymbolsGlyphsNoContent() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : UMLShapes.getShapes().keySet()) {
 				Glyph g = new Glyph(null, null, null, null);
 				g.setShapeName(type);
@@ -249,10 +249,10 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_14_UMLSymbolsContexts() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		for (String type : UMLShapes.getShapes().keySet()) {
 				if (UMLShapes.getShape(type).canUseForContext()) {
-					List<Contained> content = new ArrayList<Contained>();
+					List<XMLElement> content = new ArrayList<XMLElement>();
 					Glyph gl = new Glyph("blah", "blah blah rarsdff", null, null);
 					gl.setShapeName("umlACTOR");
 					content.add(gl);
@@ -270,7 +270,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_20_ArrowReservingLabels() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		Glyph g = new Glyph("g", "blah", "blah", null, null);
 		Context c = new Context("context", null, true, new TextLine("database my old boy"), null);
 		c.setShapeName("fcDECISION");
@@ -285,7 +285,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_42_21_ArrowReservingConvex() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		Glyph g = new Glyph("g", "blah", "blah", null, null);
 		Glyph g2 = new Glyph("g", "blah", "blah", null, null);
 		g.setShapeName("fcDOCUMENT");
@@ -300,7 +300,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_22_ArrowReservingPrevent() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		Glyph g = new Glyph("diam", "blah", "blah", null, null);
 		Glyph g2 = new Glyph("g2", "blah", "blah", null, null);
 		Glyph g3 = new Glyph("g3", "blah", "blah", null, null);
@@ -319,7 +319,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_23_ArrowReservingOkay() throws IOException {
-		List<Contained> out = new LinkedList<Contained>();
+		List<XMLElement> out = new LinkedList<XMLElement>();
 		Glyph g = new Glyph("diam", "blah", "blah", null, null);
 		Glyph g2 = new Glyph("g2", "blah", "blah", null, null);
 		Glyph g3 = new Glyph("g3", "blah", "blah", null, null);

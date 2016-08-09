@@ -393,11 +393,11 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		
 		Context ac1 = new Context("ac1", HelpMethods.listOf(a1, a2), true, null, Layout.RIGHT);
 		Context ac2 = new Context("ac2", HelpMethods.listOf(a3, a4), true, null, Layout.RIGHT);
-		Contained a = new Context("a", HelpMethods.listOf(ac1, ac2, a5), true, null, Layout.RIGHT);
+		Context a = new Context("a", HelpMethods.listOf(ac1, ac2, a5), true, null, Layout.RIGHT);
 		
 		Context bc1 = new Context("bc1", HelpMethods.listOf(b2, b3), true, null, Layout.RIGHT);
 		Context bc2 = new Context("bc2", HelpMethods.listOf(b4, b5), true, null, Layout.RIGHT);
-		Contained b = new Context("b", HelpMethods.listOf(b1, bc1, bc2), true, null, Layout.RIGHT);
+		Context b = new Context("b", HelpMethods.listOf(b1, bc1, bc2), true, null, Layout.RIGHT);
 		
 		new Link(a1, b1, null, null, null, null, Direction.DOWN);
 		new Link(a2, b2, null, null, null, null, Direction.DOWN);

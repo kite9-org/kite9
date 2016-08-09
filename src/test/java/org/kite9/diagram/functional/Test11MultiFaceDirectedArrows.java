@@ -28,7 +28,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside);
 		
 		
-		Contained c1 = new Context("if", createList((Contained) inside, i1), true, null, null);
+		Context c1 = new Context("if", createList((Contained) inside, i1), true, null, null);
 		
 		Diagram d = new Diagram("The Diagram", createList(c1, outside, o1), null);
 		renderDiagram(d);
@@ -49,11 +49,11 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside);
 		
 		
-		Contained c1 = new Context("if 1", createList((Contained) inside, i1), true, null,null);
-		Contained c2 = new Context("if 2", createList(c1), true, null,null);
-		Contained c3 = new Context("if 3", createList(c2), true, null,null);
-		Contained c4 = new Context("if 4", createList(c3), true, null,null);
-		Contained c5 = new Context("if 5", createList(c4), true, null,null);
+		Context c1 = new Context("if 1", createList((Contained) inside, i1), true, null,null);
+		Context c2 = new Context("if 2", createList(c1), true, null,null);
+		Context c3 = new Context("if 3", createList(c2), true, null,null);
+		Context c4 = new Context("if 4", createList(c3), true, null,null);
+		Context c5 = new Context("if 5", createList(c4), true, null,null);
 		
 		
 		
@@ -75,10 +75,10 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside, null, null, null, null, Direction.UP);
 		
 		
-		Contained c1 = new Context("if 1", createList((Contained) inside, i1), true, null, null);
-		Contained c2 = new Context("if 2", createList(c1), true, null, null);
-		Contained c3 = new Context("if 3", createList(c2), true, null, null);
-		Contained c4 = new Context("if 4", createList(c3), true, null, null);
+		Context c1 = new Context("if 1", createList((Contained) inside, i1), true, null, null);
+		Context c2 = new Context("if 2", createList(c1), true, null, null);
+		Context c3 = new Context("if 3", createList(c2), true, null, null);
+		Context c4 = new Context("if 4", createList(c3), true, null, null);
 	//	Contained c5 = new Context("if 5", createList(c4), true);
 		
 		

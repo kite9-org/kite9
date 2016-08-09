@@ -12,6 +12,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.framework.common.HelpMethods;
@@ -127,7 +128,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 	public static final String[] STYLES = {"ARROW", "ARROW OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND OPEN", "BARBED ARROW"};
 	@Test 
 	public void test_39_9_AllTheTerminators2012() throws IOException {
-		List<Contained> elems = new ArrayList<Contained>();
+		List<XMLElement> elems = new ArrayList<XMLElement>();
 		
 		for (String s : STYLES) {
 			Glyph a = new Glyph("", "A", null, null);

@@ -175,7 +175,7 @@ public class Test12LabelledArrows extends AbstractFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		Connected c = new Context("c1", Collections.EMPTY_LIST, true, new TextLine("Big C"), null);
+		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLine("Big C"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLine("Arrow Holder"), null);
 		
 		new Link(c, i1, null, null, null, new TextLine("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
@@ -194,7 +194,7 @@ public class Test12LabelledArrows extends AbstractFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		Connected c = new Context("c1", Collections.EMPTY_LIST, true, new TextLine("Big C"), null);
+		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLine("Big C"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLine("", new ArrayList<Symbol>()), null);
 		
 		new Link(c, i1, null, null, null, new TextLine(null), Direction.RIGHT);

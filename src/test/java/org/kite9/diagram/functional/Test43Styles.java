@@ -10,8 +10,8 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Contained;
 import org.kite9.framework.common.HelpMethods;
 
 
@@ -102,7 +102,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_43_9_Dasharrays() throws IOException {
-		List<Contained> elems = new ArrayList<Contained>();
+		List<XMLElement> elems = new ArrayList<XMLElement>();
 		for (String s : DasharrayValueManager.DASH_PATTERNS.keySet()) {
 			Glyph g1 = new Glyph("a", null, "a", null, null);
 			Glyph g2 = new Glyph("b", null, "b", null, null);

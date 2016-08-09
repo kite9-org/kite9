@@ -7,13 +7,14 @@ import java.util.List;
 import org.junit.Test;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.primitives.Contained;
 
 public class Test10CrossingEdges extends AbstractFunctionalTest {
 
 	@Test
 	public void test_10_1_Grid() throws IOException {
-		List<Contained> vertices = new ArrayList<Contained>();
+		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
 		
 		Diagram d = new Diagram("D", vertices, null);
@@ -28,7 +29,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 	 */
 	@Test
 	public void test_10_2_CrossingEdges() throws IOException {
-		List<Contained> vertices = new ArrayList<Contained>();
+		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createGrid(2, 5, vertices, true);
 		
 		new TurnLink(out[0][0], out[0][2]);
@@ -53,7 +54,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 
 	@Test
 	public void test_10_3_SmallGrid() throws IOException {
-		List<Contained> vertices = new ArrayList<Contained>();
+		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(2, 2, vertices, true);
 		
 		Diagram d = new Diagram("D", vertices, null);
