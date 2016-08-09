@@ -7,9 +7,9 @@ import java.io.StringWriter;
 
 import org.junit.Before;
 import org.kite9.diagram.adl.ADLDocument;
+import org.kite9.diagram.adl.AbstractXMLElement;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.primitives.AbstractConnectedContained;
-import org.kite9.diagram.primitives.AbstractDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.IdentifiableDiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
@@ -123,7 +123,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void initTestDocument() {
-		AbstractDiagramElement.TESTING_DOCUMENT =  new ADLDocument();
+		AbstractXMLElement.TESTING_DOCUMENT =  new ADLDocument();
 	}
 
 	

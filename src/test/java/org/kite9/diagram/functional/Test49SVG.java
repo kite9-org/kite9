@@ -19,8 +19,8 @@ public class Test49SVG extends AbstractFunctionalTest {
 
 	@Test
 	public void test_49_1_TwoGlyphs() throws IOException {
-		Contained one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
-		Contained two = new Glyph("RG", "Stereo", "Rob's Other Glyph", null, null);
+		Glyph one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
+		Glyph two = new Glyph("RG", "Stereo", "Rob's Other Glyph", null, null);
 		Context c1 = new Context(createList(one, two), true, null, null);
 		Diagram d = new Diagram("The Diagram", listOf(c1), null);
 
@@ -29,7 +29,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 
 	@Test
 	public void test_49_2_GlyphWithTextSymbol() throws IOException {
-		Contained one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
+		Glyph one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
 				"Some text", 'A', SymbolShape.HEXAGON))), new TextLine("Here is line 2"),
 				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
@@ -39,7 +39,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 
 	@Test
 	public void test_49_3_GlyphWithSymbolOnly() throws IOException {
-		Contained one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
+		Glyph one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
 				new Symbol("Some text", 'a', SymbolShape.DIAMOND), new Symbol("Some text", 'a', SymbolShape.HEXAGON)));
 		Diagram d = new Diagram("The Diagram", createList(one), null);
 		renderDiagramSVG(d);
@@ -80,7 +80,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
-		Contained con1 = new Context("b1", createList((Contained) one), true, null, null);
+		Context con1 = new Context("b1", createList((Contained) one), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 
@@ -97,7 +97,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		Glyph two = new Glyph("two", "", "two", null, null);
 		Glyph three = new Glyph("three", "", "three", null, null);
 
-		Contained con1 = new Context("b1", createList((Contained) one, two, three), true, null, null);
+		Context con1 = new Context("b1", createList((Contained) one, two, three), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 

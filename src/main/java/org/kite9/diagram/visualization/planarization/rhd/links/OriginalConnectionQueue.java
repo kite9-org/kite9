@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
 
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.visualization.planarization.Tools;

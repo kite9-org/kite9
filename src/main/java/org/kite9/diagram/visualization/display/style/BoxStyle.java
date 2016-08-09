@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.display.style;
 import java.awt.Color;
 import java.awt.Paint;
 
-import org.kite9.diagram.style.StyledDiagramElement;
+import org.kite9.diagram.primitives.StyledDiagramElement;
 
 
 /**

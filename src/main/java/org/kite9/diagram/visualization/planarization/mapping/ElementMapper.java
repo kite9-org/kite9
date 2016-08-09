@@ -2,9 +2,9 @@ package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.Collection;
 
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.primitives.DiagramElement;

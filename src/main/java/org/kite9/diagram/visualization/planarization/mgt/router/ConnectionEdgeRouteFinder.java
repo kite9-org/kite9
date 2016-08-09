@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.primitives.Container;

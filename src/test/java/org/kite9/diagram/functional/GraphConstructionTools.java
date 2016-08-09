@@ -8,17 +8,17 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
 
 public class GraphConstructionTools {
 
-	public static Glyph[][] createGrid(int x, int y, List<Contained> collection, boolean fixDirection) {
+	public static Glyph[][] createGrid(int x, int y, List<XMLElement> collection, boolean fixDirection) {
 		return createGrid("", x, y, collection, fixDirection);
 	}
 
-	public static Glyph[][] createGrid(String prefix, int x, int y, List<Contained> collection, boolean fixDirection) {
+	public static Glyph[][] createGrid(String prefix, int x, int y, List<XMLElement> collection, boolean fixDirection) {
 		int arrowNo = 0;
 		Glyph[][] out = new Glyph[x][];
 		for (int i = 0; i < x; i++) {
@@ -48,12 +48,12 @@ public class GraphConstructionTools {
 	}
 
 	public static Glyph[][] createXContainers(String prefix, int glyphsPerContainer, int containers,
-			List<Contained> out, Layout containerLayout) {
+			List<XMLElement> out, Layout containerLayout) {
 		int gi = 0;
 		Glyph[][] result = new Glyph[containers][];
 		for (int i = 0; i < containers; i++) {
 			result[i] = new Glyph[glyphsPerContainer];
-			List<Contained> contents = new ArrayList<Contained>(glyphsPerContainer);
+			List<XMLElement> contents = new ArrayList<XMLElement>(glyphsPerContainer);
 			for (int j = 0; j < glyphsPerContainer; j++) {
 				Glyph g = new Glyph(prefix + (gi), "", "" + gi, null, null);
 				gi++;
@@ -67,7 +67,7 @@ public class GraphConstructionTools {
 		return result;
 	}
 
-	public static Glyph[] createX(String prefix, int glyphs, List<Contained> out) {
+	public static Glyph[] createX(String prefix, int glyphs, List<XMLElement> out) {
 		int gi = 0;
 		Glyph[] result = new Glyph[glyphs];
 		for (int j = 0; j < glyphs; j++) {

@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
@@ -92,11 +93,11 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 	
 	@Test
     public void test_9_4_HierarchicalContainers() throws IOException {
-		Contained one = new Glyph("Stereo", "one", null, null);
-		Contained two = new Glyph("Stereo", "two", null, null);
-		Contained con1 = new Context("b1", createList(one), true, null, null);
-		Contained con2 = new Context("b2", createList(two), true, null, null);
-		Contained con3 = new Context("b3", createList(con1, con2), true, null, null);
+		XMLElement one = new Glyph("Stereo", "one", null, null);
+		XMLElement two = new Glyph("Stereo", "two", null, null);
+		XMLElement con1 = new Context("b1", createList(one), true, null, null);
+		XMLElement con2 = new Context("b2", createList(two), true, null, null);
+		XMLElement con3 = new Context("b3", createList(con1, con2), true, null, null);
 			
 		Diagram d = new Diagram("The Diagram",createList(con3), null);
 		renderDiagram(d);

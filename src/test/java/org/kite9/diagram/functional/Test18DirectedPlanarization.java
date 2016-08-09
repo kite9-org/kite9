@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
@@ -299,7 +300,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		renderDiagram(diag);
 	}
 
-	private List<Contained> emptyContained() {
+	private List<XMLElement> emptyContained() {
 		return Collections.emptyList();
 	}
 	@Test

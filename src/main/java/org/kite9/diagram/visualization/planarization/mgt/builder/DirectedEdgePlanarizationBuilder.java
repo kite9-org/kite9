@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 import java.util.Iterator;
 
 import org.kite9.diagram.annotation.K9OnDiagram;
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.Contained;

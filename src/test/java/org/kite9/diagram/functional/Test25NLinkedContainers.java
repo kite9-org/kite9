@@ -12,9 +12,9 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
 import org.kite9.framework.logging.Kite9Log;
 
 
@@ -24,7 +24,7 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 	
 	public void testGrid(int glyphs, int containers, Layout withinContainer, Layout overallL, Direction d) throws IOException {
 		Random r = new Random(101);
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", glyphs, containers, contents, withinContainer);
 		
 		for (int i = 0; i < glyphs; i++) {
@@ -33,12 +33,12 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 			}
 		}
 		
-		for (Contained c : contents) {
+		for (XMLElement c : contents) {
 			Collections.shuffle(((Context)c).getContents(), r);
 		}
 		
 		Context overall = new Context("co", contents, true, null, overallL);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 		
 		renderDiagram(new Diagram(out2, null));
@@ -95,7 +95,7 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 		Kite9Log.setLogging(false);
 		Random r = new Random(101);
 		int n = 30;
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", n, 3, contents, Layout.HORIZONTAL);
 		
 		for (int i = 0; i < n; i++) {
@@ -106,12 +106,12 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 		
 		((Context)contents.get(0)).setLayoutDirection(Layout.RIGHT);
 		
-		for (Contained c : contents) {
+		for (XMLElement c : contents) {
 			Collections.shuffle(((Context)c).getContents(), r);
 		}
 		
 		Context overall = new Context("co", contents, true, null, Layout.VERTICAL);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 		
 		renderDiagram(new Diagram(out2, null));

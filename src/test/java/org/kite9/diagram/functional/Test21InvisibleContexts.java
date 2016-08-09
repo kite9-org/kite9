@@ -13,6 +13,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.CompositionalDiagramElement;
@@ -24,8 +25,8 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 	int id = 0;
 	
 	
-	List<Contained> createGlyphs(int count) {
-		List<Contained> out = new ArrayList<Contained>(count);
+	List<XMLElement> createGlyphs(int count) {
+		List<XMLElement> out = new ArrayList<XMLElement>(count);
 		for (int i = 0; i < count; i++) {
 			id ++;
 			Glyph g = new Glyph("id"+id, "bob", "id"+id, null, null);
@@ -33,7 +34,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 			for (int j = 0; j < i; j++) {
 				textLines.add(new TextLine("Some text"));
 			}
-			ContainerProperty<CompositionalDiagramElement> cp = new ContainerProperty<>("text-lines", ContainerProperty.TESTING_DOCUMENT, textLines);
+			ContainerProperty<XMLElement> cp = new ContainerProperty<>("text-lines", ContainerProperty.TESTING_DOCUMENT, textLines);
 			g.setText(cp);
 			out.add(g);
 		}
@@ -43,46 +44,46 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_21_1_3x3NoLinks() throws IOException {
-		List<Contained> row1 = createGlyphs(3);
-		List<Contained> row2 = createGlyphs(3);
-		List<Contained> row3 = createGlyphs(3);
+		List<XMLElement> row1 = createGlyphs(3);
+		List<XMLElement> row2 = createGlyphs(3);
+		List<XMLElement> row3 = createGlyphs(3);
 		
 		Context c1 = new Context("ctx1", row1, false, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, false, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Contained) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, Layout.DOWN);
 		
-		Diagram d = new Diagram("d", createList((Contained) cc), null);
+		Diagram d = new Diagram("d", createList((XMLElement) cc), null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_2_Nx3NoLinks() throws IOException {
-		List<Contained> row1 = createGlyphs(8);
-		List<Contained> row2 = createGlyphs(7);
-		List<Contained> row3 = createGlyphs(5);
+		List<XMLElement> row1 = createGlyphs(8);
+		List<XMLElement> row2 = createGlyphs(7);
+		List<XMLElement> row3 = createGlyphs(5);
 		
 		Context c1 = new Context("ctx1", row1, false, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, false, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Contained) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, Layout.DOWN);
 		
-		Diagram d = new Diagram("d", createList((Contained) cc), null);
+		Diagram d = new Diagram("d", createList((XMLElement) cc), null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_3_Nx3SomeLinksWithDirectedContext() throws IOException {
-		List<Contained> row1 = createGlyphs(8);
-		List<Contained> row2 = createGlyphs(7);
-		List<Contained> row3 = createGlyphs(15);
+		List<XMLElement> row1 = createGlyphs(8);
+		List<XMLElement> row2 = createGlyphs(7);
+		List<XMLElement> row3 = createGlyphs(15);
 		
 		Context c1 = new Context("ctx1", row1, true, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, true, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, true, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Contained) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, Layout.DOWN);
 		
 //		new Link(c1, c2, null, null, null, null, Direction.DOWN);
 //		new Link(c2, c3, null, null, null, null, Direction.DOWN);
@@ -92,21 +93,21 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
 		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
 //		
-		Diagram d = new Diagram("d", createList((Contained) cc), Layout.DOWN, null);
+		Diagram d = new Diagram("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_4_Nx3SomeLinksWithLinkedContexts() throws IOException {
-		List<Contained> row1 = createGlyphs(8);
-		List<Contained> row2 = createGlyphs(7);
-		List<Contained> row3 = createGlyphs(15);
+		List<XMLElement> row1 = createGlyphs(8);
+		List<XMLElement> row2 = createGlyphs(7);
+		List<XMLElement> row3 = createGlyphs(15);
 		
 		Context c1 = new Context("ctx1", row1, true, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, true, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, true, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Contained) c1, c2, c3), true, null, null);
+		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, null);
 		
 		new Link(c1, c2, null, null, null, null, Direction.DOWN);
 		new Link(c2, c3, null, null, null, null, Direction.DOWN);
@@ -116,7 +117,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
 		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
 //		
-		Diagram d = new Diagram("d", createList((Contained) cc), Layout.DOWN, null);
+		Diagram d = new Diagram("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}

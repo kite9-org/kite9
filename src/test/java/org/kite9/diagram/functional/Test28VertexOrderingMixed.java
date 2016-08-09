@@ -10,19 +10,19 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
 
 public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 
 	@Test
 	public void test_28_1_VertexPushing() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, Layout.HORIZONTAL);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -37,11 +37,11 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 
 	@Test
 	public void test_28_2_VertexPushing() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -60,11 +60,11 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 
 	@Test
 	public void test_28_3_BigERelaxed() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 5, 2, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -89,11 +89,11 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_28_4_FragmentDirected() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 6, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -109,11 +109,11 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_28_5_BuddiesAndSeparateOrderMerging() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);

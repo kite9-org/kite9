@@ -12,6 +12,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.primitives.Contained;
@@ -29,7 +30,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 
 	@Test
 	public void test_22_1_UnconnectedWindows() throws IOException {
-		List<Contained> glyphs = new ArrayList<Contained>();
+		List<XMLElement> glyphs = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 		
@@ -41,7 +42,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 	
 	@Test
 	public void test_22_2_NextToWindows() throws IOException {
-		List<Contained> glyphs = new ArrayList<Contained>();
+		List<XMLElement> glyphs = new ArrayList<XMLElement>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 		
@@ -55,7 +56,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 	
 	@Test
 	public void test_22_3_EmbeddedToWindows() throws IOException {
-		List<Contained> glyphs = new ArrayList<Contained>();
+		List<XMLElement> glyphs = new ArrayList<XMLElement>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 		

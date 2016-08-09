@@ -10,11 +10,11 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Connection;
 import org.kite9.diagram.primitives.Contained;

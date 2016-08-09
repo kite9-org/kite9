@@ -20,7 +20,7 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.AbstractStyledDiagramElement;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.style.StyledDiagramElement;
+import org.kite9.diagram.primitives.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;

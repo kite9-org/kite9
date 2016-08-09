@@ -9,9 +9,9 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test31Fan extends AbstractFunctionalTest {
@@ -75,9 +75,9 @@ public class Test31Fan extends AbstractFunctionalTest {
 	@Test
 	public void test_31_3_LotsInABox() throws IOException {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Contained> out = new ArrayList<Contained>();
+		List<XMLElement> out = new ArrayList<XMLElement>();
 		out.add(g1);
-		List<Contained> cc = new ArrayList<Contained>();
+		List<XMLElement> cc = new ArrayList<XMLElement>();
 		Glyph[] l = GraphConstructionTools.createX("fan", 15, cc);
 		Context c1 = new Context("c1", cc,  true, null, null);
 		out.add(c1);
@@ -110,7 +110,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 	@Test
 	public void test_31_4_RightFanFixedFirst() throws IOException {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Contained> out = new ArrayList<Contained>();
+		List<XMLElement> out = new ArrayList<XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -137,7 +137,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 	@Test
 	public void test_31_5_LeftFanFixedFirst() throws IOException {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Contained> out = new ArrayList<Contained>();
+		List<XMLElement> out = new ArrayList<XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -163,7 +163,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 	@Test
 	public void test_31_6_DownFanFixedMiddles() throws IOException {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Contained> out = new ArrayList<Contained>();
+		List<XMLElement> out = new ArrayList<XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 8, out);
 		

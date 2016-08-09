@@ -18,7 +18,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
-		Contained con1 = new Context("b1", createList((Contained) one), true, null, null);
+		Context con1 = new Context("b1", createList((Contained) one), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 
@@ -35,7 +35,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		Glyph two = new Glyph("", "two", null, null);
 		Arrow a = new Arrow("links");
 
-		Contained con1 = new Context("b1", createList((Contained) one, a), true, null, null);
+		Context con1 = new Context("b1", createList((Contained) one, a), true, null, null);
 
 		new Link(a, one);
 		new Link(a, two);
@@ -50,7 +50,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		Glyph two = new Glyph("two", "", "two", null, null);
 		Glyph three = new Glyph("three", "", "three", null, null);
 
-		Contained con1 = new Context("b1", createList((Contained) one, two, three), true, null, null);
+		Context con1 = new Context("b1", createList((Contained) one, two, three), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 

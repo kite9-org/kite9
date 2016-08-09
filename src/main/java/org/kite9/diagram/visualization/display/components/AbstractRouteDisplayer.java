@@ -14,7 +14,7 @@ import java.util.List;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.style.StyledDiagramElement;
+import org.kite9.diagram.primitives.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;

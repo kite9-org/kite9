@@ -18,7 +18,7 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.primitives.HintMap;
 import org.kite9.diagram.primitives.PositionableDiagramElement;
-import org.kite9.diagram.style.ShapedDiagramElement;
+import org.kite9.diagram.primitives.ShapedDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.diagram.visualization.display.style.BoxStyle;

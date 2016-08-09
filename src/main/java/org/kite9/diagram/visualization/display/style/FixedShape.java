@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.display.style;
 import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.style.StyledDiagramElement;
+import org.kite9.diagram.primitives.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 

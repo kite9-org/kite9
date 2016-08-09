@@ -9,20 +9,20 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
 
 public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 
 	@Test
 	public void test_30_1_BigSquareDirected() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, Layout.HORIZONTAL);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -37,12 +37,12 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 
 	@Test
 	public void test_30_2_BigL() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, null);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -61,7 +61,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_30_4_DifferentContainerDepths() throws IOException {
-		List<Contained> contents = new ArrayList<Contained>();
+		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 2, contents, null);
 
 		Glyph[] out2 = GraphConstructionTools.createX("h", 12, contents);
@@ -99,7 +99,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 	
 		Context top = new Context("top", listOf(a, b), true, null, Layout.RIGHT);
 		Context bottom = new Context("bottom", listOf(c), true, null, Layout.HORIZONTAL);
-		List<Contained> out2 = new ArrayList<Contained>();
+		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 	

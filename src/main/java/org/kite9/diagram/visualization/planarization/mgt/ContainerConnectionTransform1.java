@@ -3,10 +3,10 @@ package org.kite9.diagram.visualization.planarization.mgt;
 import java.util.Collection;
 import java.util.Map.Entry;
 
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.primitives.BiDirectional;
 import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.primitives.DiagramElement;

@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.primitives.Contained;
 import org.kite9.framework.common.HelpMethods;
@@ -20,7 +21,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 
 	public interface ContainedCreator {
 		
-		Contained create(Double px, Double py);
+		XMLElement create(Double px, Double py);
 		
 	}
 	
@@ -29,7 +30,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public Contained create(Double preferredWidth, Double preferredHeight) {
+			public XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph("test"+preferredWidth+"/"+preferredHeight, "This is my Label", null, HelpMethods
 						.createList(new Symbol("g", 'x', SymbolShape.CIRCLE)));
 				return g;
@@ -44,7 +45,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public Contained create(Double preferredWidth, Double preferredHeight) {
+			public XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label "+preferredWidth+" "+preferredHeight, null, null);
 				return g;
 			}
@@ -57,7 +58,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public Contained create(Double preferredWidth, Double preferredHeight) {
+			public XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label", null, HelpMethods.createList(new Symbol("sdfds", 'x', SymbolShape.CIRCLE)));
 				return g;
 			}
@@ -70,7 +71,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public Contained create(Double preferredWidth, Double preferredHeight) {
+			public XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label", HelpMethods.createList(
 						new TextLine("This is one line"), 
 						new TextLine("This is another line")),
@@ -85,7 +86,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 
 	
 	private void createDiagram(ContainedCreator cc) throws IOException {
-		List<Contained> out = new ArrayList<Contained>();
+		List<XMLElement> out = new ArrayList<XMLElement>();
 		Double widths[] = { null, 0d, 30d, 100d, 300d }; 
 		Double heights[] = { null, 0d, 30d, 100d, 300d };
 		
@@ -93,7 +94,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 			for (int y = 0; y < heights.length; y++) {
 				Double preferredWidth = widths[x];
 				Double preferredHeight = heights[y];
-				Contained g = cc.create(preferredWidth, preferredHeight);
+				XMLElement g = cc.create(preferredWidth, preferredHeight);
 				RectangleRenderingInformation rri = (RectangleRenderingInformation) g.getRenderingInformation();
 //				TODO: these shouldn't even be in the rri
 				//				rri.setPreferredWidth(preferredWidth);
