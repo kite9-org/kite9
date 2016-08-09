@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.Arrow;
@@ -17,8 +16,9 @@ import org.kite9.diagram.xml.KeyHelper;
 import org.kite9.diagram.xml.Link;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.diagram.xml.Symbol.SymbolShape;
+import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 
@@ -195,10 +195,10 @@ public class Test12LabelledArrows extends AbstractFunctionalTest {
 		Arrow i2 = new Arrow("i2", "i2");
 		
 		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLine("Big C"), null);
-		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLine("", new ArrayList<Symbol>()), null);
+		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLine("", new ArrayList<XMLElement>()), null);
 		
 		new Link(c, i1, null, null, null, new TextLine(null), Direction.RIGHT);
-		new Link(c, i2, null, null, null, new TextLine("  ", new ArrayList<Symbol>()), Direction.RIGHT);
+		new Link(c, i2, null, null, null, new TextLine("  ", new ArrayList<XMLElement>()), Direction.RIGHT);
 		
 		new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		

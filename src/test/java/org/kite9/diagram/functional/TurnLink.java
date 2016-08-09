@@ -16,13 +16,13 @@ public class TurnLink extends Link {
 		super();
 	}
 
-	public TurnLink(XMLElement from, XMLElement to, String fromStyle, Label fromLabel, String toEndStyle,
-			Label toLabel, Direction drawDirection) {
+	public TurnLink(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle,
+			XMLElement toLabel, Direction drawDirection) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection);
 	}
 
-	public TurnLink(XMLElement from, XMLElement to, String fromStyle, Label fromLabel, String toEndStyle,
-			Label toLabel) {
+	public TurnLink(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle,
+			XMLElement toLabel) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, null);
 	}
 
