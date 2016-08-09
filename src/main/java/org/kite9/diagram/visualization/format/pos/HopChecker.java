@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.format.pos;
 
-import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.primitives.Connection;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ExpectedLayoutException;
+import org.kite9.diagram.xml.Diagram;
 
 public class HopChecker {
 	

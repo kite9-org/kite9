@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Container;
 
 /**
  * This edge is used for the surrounding of a container.

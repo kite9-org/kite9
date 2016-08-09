@@ -3,22 +3,22 @@ package org.kite9.diagram.visualization.compaction.route;
 import java.util.Collections;
 import java.util.List;
 
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.primitives.Connection;
-import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Link;
 
 /**
  * Having identified the position of each segment, this step sets the rendering information

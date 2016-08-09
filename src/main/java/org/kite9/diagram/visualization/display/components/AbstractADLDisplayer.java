@@ -11,9 +11,9 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;

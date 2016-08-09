@@ -3,14 +3,14 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test34EmptyArrows extends AbstractFunctionalTest  {

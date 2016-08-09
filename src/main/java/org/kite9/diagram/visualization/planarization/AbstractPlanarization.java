@@ -7,15 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
+import org.kite9.diagram.xml.Diagram;
 
 /**
  * Contains methods for:

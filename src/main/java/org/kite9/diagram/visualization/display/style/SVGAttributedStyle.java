@@ -4,7 +4,7 @@ import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.adl.ADLDocument;
+import org.kite9.diagram.xml.ADLDocument;
 
 public class SVGAttributedStyle {
 		

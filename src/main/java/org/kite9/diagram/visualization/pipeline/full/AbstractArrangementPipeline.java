@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.pipeline.full;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.algorithms.so.LoggingOptimisationStep;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.WidthOptimisationStep;
@@ -29,6 +28,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangem
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
+import org.kite9.diagram.xml.Diagram;
 
 /**
  * Basic pipeline that can render to any form of output.

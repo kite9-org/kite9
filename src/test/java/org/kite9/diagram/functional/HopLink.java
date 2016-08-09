@@ -1,10 +1,10 @@
 package org.kite9.diagram.functional;
 
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.XMLElement;
+import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Label;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.XMLElement;
 
 /** 
  * Link which allows hops 

@@ -17,18 +17,18 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Contained;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
 import org.kite9.framework.logging.LogicException;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {

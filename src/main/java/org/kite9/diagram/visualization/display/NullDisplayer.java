@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.display;
 
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.primitives.Connection;
-import org.kite9.diagram.primitives.DiagramElement;
+import org.kite9.diagram.xml.LinkTerminator;
 
 public class NullDisplayer implements CompleteDisplayer {
 

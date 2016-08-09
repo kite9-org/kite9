@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkLineStyle;
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.framework.logging.LogicException;
 
 

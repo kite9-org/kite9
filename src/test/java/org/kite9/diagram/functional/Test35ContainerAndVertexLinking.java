@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.util.Collections;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkLineStyle;
-import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkLineStyle;
+import org.kite9.diagram.xml.TextLine;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {

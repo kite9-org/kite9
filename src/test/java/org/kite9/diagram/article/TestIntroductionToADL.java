@@ -4,15 +4,15 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.TextLine;
 
 public class TestIntroductionToADL extends AbstractFunctionalTest  {
 
@@ -28,7 +28,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		Diagram d = new Diagram("", createList((Contained) john, ledger, writes), null);
+		Diagram d = new Diagram("", createList((XMLElement) john, ledger, writes), null);
 		
 		renderDiagram(d);
 		
@@ -58,7 +58,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		Diagram d = new Diagram("", createList((Contained) john, ledger, writes), null);
+		Diagram d = new Diagram("", createList((XMLElement) john, ledger, writes), null);
 		
 		renderDiagram(d);
 		

@@ -1,10 +1,10 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.PositionableDiagramElement;
 
 /**
  * During the orthogonalization process, an underlying rectangular diagram element is given dimension, and therefore

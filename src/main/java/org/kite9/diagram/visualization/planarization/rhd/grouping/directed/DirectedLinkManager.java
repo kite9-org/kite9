@@ -14,10 +14,10 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;

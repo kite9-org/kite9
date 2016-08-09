@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.SideVertex;
-import org.kite9.diagram.primitives.DiagramElement;
 
 /**
  * This is used in the special case of non-visible edges arriving at the vertex.

@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.CornerVertex;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.primitives.Container;
 
 /**
  * Represents the special start and end vertices in the diagram, and for each container which are added

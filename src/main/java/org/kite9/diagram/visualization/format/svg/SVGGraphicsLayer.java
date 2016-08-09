@@ -3,8 +3,8 @@ package org.kite9.diagram.visualization.format.svg;
 import java.awt.Font;
 
 import org.apache.batik.svggen.SVGGraphics2D;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.IdentifiableDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.IdentifiableDiagramElement;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.w3c.dom.Document;

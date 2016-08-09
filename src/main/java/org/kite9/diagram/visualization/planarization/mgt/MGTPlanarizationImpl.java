@@ -11,7 +11,10 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.BiDirectional;
@@ -20,14 +23,11 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.ContainerEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
+import org.kite9.diagram.xml.Diagram;
 import org.kite9.framework.logging.LogicException;
 
 @K9OnDiagram(on=PlanarizationDiagrams.class)

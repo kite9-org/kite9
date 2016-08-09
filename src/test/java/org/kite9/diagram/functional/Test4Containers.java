@@ -3,11 +3,11 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
 
 public class Test4Containers extends AbstractFunctionalTest {
 

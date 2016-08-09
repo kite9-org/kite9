@@ -5,8 +5,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 
 /**

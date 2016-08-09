@@ -2,10 +2,10 @@ package org.kite9.diagram.visualization.display.complete;
 
 import java.awt.Shape;
 
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.PositionableDiagramElement;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.display.components.AbstractBoxModelDisplayer;
 import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;

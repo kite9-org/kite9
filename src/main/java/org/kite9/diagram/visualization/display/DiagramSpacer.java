@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.display;
 
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Connection;
-import org.kite9.diagram.primitives.DiagramElement;
+import org.kite9.diagram.xml.LinkTerminator;
 
 /**
  * Handles spacing between diagram components

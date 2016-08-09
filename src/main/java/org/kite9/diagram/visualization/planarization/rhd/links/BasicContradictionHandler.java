@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
+import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Connected;
-import org.kite9.diagram.primitives.Connection;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;

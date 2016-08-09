@@ -8,12 +8,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.CornerVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Container;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;

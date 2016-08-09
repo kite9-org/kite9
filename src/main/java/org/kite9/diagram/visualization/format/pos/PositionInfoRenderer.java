@@ -3,13 +3,13 @@ package org.kite9.diagram.visualization.format.pos;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.AbstractGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.xml.Diagram;
 
 /**
  * Position info renderer doesn't render an image, it returns the diagram containing information about each graphical

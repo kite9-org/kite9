@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.common.elements.Routable;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.hints.PositioningHints;
@@ -16,7 +17,6 @@ import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.HintMap;
 import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.framework.logging.Kite9Log;

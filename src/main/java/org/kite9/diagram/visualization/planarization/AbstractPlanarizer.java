@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
@@ -16,6 +15,7 @@ import org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemov
 import org.kite9.diagram.visualization.planarization.transform.LayoutSimplificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.OuterFaceIdentificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
+import org.kite9.diagram.xml.Diagram;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;

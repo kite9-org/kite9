@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.ContainerProperty;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.XMLElement;
+import org.kite9.diagram.adl.CompositionalDiagramElement;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.CompositionalDiagramElement;
-import org.kite9.diagram.primitives.Connected;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.ContainerProperty;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.XMLElement;
 
 public class Test21InvisibleContexts extends AbstractFunctionalTest {
 

@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
-import org.kite9.diagram.primitives.PositionableDiagramElement;
 
 /**
  * Hints are attached to {@link PositionableDiagramElement}s.  These allow the grouping and layout 

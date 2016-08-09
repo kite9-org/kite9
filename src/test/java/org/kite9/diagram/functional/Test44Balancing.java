@@ -3,12 +3,12 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Key;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Key;
+import org.kite9.diagram.xml.Link;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test44Balancing extends AbstractFunctionalTest {

@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.display.style;
 
-import org.kite9.diagram.primitives.StyledDiagramElement;
+import org.kite9.diagram.adl.StyledDiagramElement;
 
 /**
  * Takes a base style defined in the Stylesheet and applies it to the current element.

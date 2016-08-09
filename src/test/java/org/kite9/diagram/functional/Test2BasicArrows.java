@@ -3,15 +3,15 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.ADLDocument;
-import org.kite9.diagram.adl.AbstractStyleableXMLElement;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.xml.ADLDocument;
+import org.kite9.diagram.xml.AbstractStyleableXMLElement;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
 
 public class Test2BasicArrows extends AbstractFunctionalTest {
 	

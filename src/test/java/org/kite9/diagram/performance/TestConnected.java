@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Random;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
 
 public class TestConnected extends AbstractPerformanceTest {
 

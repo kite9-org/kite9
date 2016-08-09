@@ -2,15 +2,15 @@ package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.Set;
 
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 
 public class ContainerEdgeRouteFinder extends AbstractRouteFinder {

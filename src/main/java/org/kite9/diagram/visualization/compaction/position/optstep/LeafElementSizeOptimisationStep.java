@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.Leaf;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;

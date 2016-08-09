@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
+import org.kite9.diagram.adl.AbstractIdentifiableDiagramElement;
+import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement;
-import org.kite9.diagram.primitives.Label;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Node;

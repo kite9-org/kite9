@@ -3,11 +3,11 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.primitives.Contained;
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
 
 public class Test3MultiArrows extends AbstractFunctionalTest {
 

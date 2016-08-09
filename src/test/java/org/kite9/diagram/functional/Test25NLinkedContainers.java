@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.XMLElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 
 

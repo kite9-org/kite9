@@ -3,12 +3,12 @@ package org.kite9.diagram.visualization.format.png;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.xml.Diagram;
 
 public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer<BufferedImage> {
 

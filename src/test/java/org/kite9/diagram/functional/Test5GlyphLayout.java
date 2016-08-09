@@ -3,11 +3,11 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Symbol;
+import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.Symbol.SymbolShape;
 
 public class Test5GlyphLayout extends AbstractFunctionalTest {
 

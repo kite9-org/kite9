@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractVertex;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.primitives.DiagramElement;
 
 public class EdgeVertex {
 

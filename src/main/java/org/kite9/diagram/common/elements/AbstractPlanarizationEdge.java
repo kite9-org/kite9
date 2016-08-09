@@ -1,9 +1,9 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.primitives.Label;
 import org.kite9.framework.logging.LogicException;
 
 /**

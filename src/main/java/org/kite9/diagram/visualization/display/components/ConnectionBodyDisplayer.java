@@ -1,18 +1,18 @@
 package org.kite9.diagram.visualization.display.components;
 
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.ContainerProperty;
-import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.StyledDiagramElement;
+import org.kite9.diagram.adl.TextContainingDiagramElement;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.StyledDiagramElement;
-import org.kite9.diagram.primitives.TextContainingDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.ContainerProperty;
+import org.kite9.diagram.xml.Symbol;
 
 
 public class ConnectionBodyDisplayer extends AbstractTextBoxModelDisplayer {

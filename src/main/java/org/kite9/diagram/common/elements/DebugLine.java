@@ -1,13 +1,13 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.adl.ADLDocument;
-import org.kite9.diagram.adl.LinkLineStyle;
+import org.kite9.diagram.adl.AbstractIdentifiableDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.primitives.AbstractIdentifiableDiagramElement;
-import org.kite9.diagram.primitives.DiagramElement;
-import org.kite9.diagram.primitives.HintMap;
-import org.kite9.diagram.primitives.PositionableDiagramElement;
+import org.kite9.diagram.xml.ADLDocument;
+import org.kite9.diagram.xml.LinkLineStyle;
 import org.w3c.dom.Node;
 
 /**

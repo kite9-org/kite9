@@ -4,19 +4,19 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.Symbol;
+import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.Symbol.SymbolShape;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test32SizingOutput extends AbstractFunctionalTest {

@@ -5,12 +5,12 @@ import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.primitives.Connected;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
+import org.kite9.diagram.xml.Link;
 
 public class RankBasedConnectionQueue extends OriginalConnectionQueue {
 

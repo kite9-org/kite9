@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractVertex;
-import org.kite9.diagram.primitives.Container;
-import org.kite9.diagram.primitives.DiagramElement;
 
 
 

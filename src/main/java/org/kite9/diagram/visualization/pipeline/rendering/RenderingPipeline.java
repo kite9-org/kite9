@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.pipeline.rendering;
 
-import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.xml.Diagram;
 
 /**
  * Handles conversion of a sized {@link Diagram} object into a rendered X.

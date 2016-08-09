@@ -7,10 +7,10 @@ import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;

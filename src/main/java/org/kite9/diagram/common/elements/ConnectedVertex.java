@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.primitives.Connected;
+import org.kite9.diagram.adl.Connected;
 
 public class ConnectedVertex extends AbstractVertex {
 

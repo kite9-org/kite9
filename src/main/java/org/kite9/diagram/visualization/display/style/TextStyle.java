@@ -11,7 +11,7 @@ import org.apache.batik.css.engine.value.svg12.SVG12ValueConstants;
 import org.apache.batik.gvt.ShapeNode;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVG12CSSConstants;
-import org.kite9.diagram.primitives.StyledDiagramElement;
+import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractADLDisplayer.Justification;
 import org.kite9.diagram.visualization.display.style.io.FontHelper;
 import org.w3c.dom.Element;

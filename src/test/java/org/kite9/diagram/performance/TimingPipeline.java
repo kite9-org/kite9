@@ -2,13 +2,13 @@ package org.kite9.diagram.performance;
 
 import java.awt.image.BufferedImage;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.diagram.xml.Diagram;
 
 public class TimingPipeline extends BufferedImageProcessingPipeline {
 	

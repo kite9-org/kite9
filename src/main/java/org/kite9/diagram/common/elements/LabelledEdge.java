@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.primitives.Label;
+import org.kite9.diagram.adl.Label;
 
 public interface LabelledEdge extends Edge {
 

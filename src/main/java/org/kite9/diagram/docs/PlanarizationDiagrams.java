@@ -1,12 +1,12 @@
 package org.kite9.diagram.docs;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.builders.java.DiagramBuilder;
 import org.kite9.diagram.builders.wizards.classdiagram.ClassDiagramWizard;
 import org.kite9.diagram.builders.wizards.objectgraph.ObjectDependencyWizard;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
+import org.kite9.diagram.xml.Diagram;
 import org.kite9.framework.Kite9Item;
 
 public class PlanarizationDiagrams {

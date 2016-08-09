@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.xml.Diagram;
 import org.kite9.framework.logging.LogicException;
 
 import com.itextpdf.text.Document;

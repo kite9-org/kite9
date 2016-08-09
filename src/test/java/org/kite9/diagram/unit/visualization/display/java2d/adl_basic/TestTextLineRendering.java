@@ -8,9 +8,6 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
@@ -26,6 +23,9 @@ import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
 import org.kite9.diagram.visualization.format.pos.SVGPathConverter;
+import org.kite9.diagram.xml.Symbol;
+import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.Symbol.SymbolShape;
 import org.kite9.framework.common.HelpMethods;
 
 @Ignore

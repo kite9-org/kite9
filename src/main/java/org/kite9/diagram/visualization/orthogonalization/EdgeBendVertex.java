@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractVertex;
 import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.primitives.DiagramElement;
 
 /**
  * Models a bend within an Edge.  Darts are horizontal or vertical, so this allows

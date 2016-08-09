@@ -4,20 +4,20 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.XMLElement;
+import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.primitives.Contained;
-import org.kite9.diagram.primitives.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
+import org.kite9.diagram.xml.Arrow;
+import org.kite9.diagram.xml.Context;
+import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class Test9CompactionTests extends AbstractFunctionalTest {
