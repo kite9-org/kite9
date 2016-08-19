@@ -66,7 +66,7 @@ public class GroupPhase {
 	private Set<Connection> allLinks = new UnorderedSet<Connection>(1000);
 	private ContradictionHandler ch;
 	
-	public GroupPhase(Kite9Log log, Diagram top, int elements, GroupBuilder ab, ContradictionHandler ch) {
+	public GroupPhase(Kite9Log log, Container top, int elements, GroupBuilder ab, ContradictionHandler ch) {
 		this.pMap = new LinkedHashMap<Contained, LeafGroup>(elements * 2);
 		allGroups = new LinkedHashSet<LeafGroup>(elements * 2);
 		this.ab = ab;

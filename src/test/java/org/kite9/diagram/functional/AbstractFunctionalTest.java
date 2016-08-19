@@ -198,7 +198,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void resetCounter() {
-		AbstractConnectedContained.resetCounter();
+		AbstractXMLElement.resetCounter();
 	}
 	
 	public DiagramElement getById(final String id, Diagram d) {

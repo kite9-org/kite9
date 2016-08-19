@@ -89,9 +89,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return rh;
 	}
 
-	protected abstract Planarization buildPlanarization(Diagram c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Contained>> sortedContainerContents);
+	protected abstract Planarization buildPlanarization(Container c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Contained>> sortedContainerContents);
 
-	public Planarization planarize(Diagram c) {
+	public Planarization planarize(Container c) {
 		final int[] elements = new int[1];
 
 		new DiagramElementVisitor().visit(c, new VisitorAction() {

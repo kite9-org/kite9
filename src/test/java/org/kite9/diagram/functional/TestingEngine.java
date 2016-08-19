@@ -169,7 +169,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			if (checkLayout) {
-				testLayout(d);
+				testLayout(d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now

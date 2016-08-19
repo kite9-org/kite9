@@ -36,12 +36,12 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	private static final Map<Class<? extends DiagramElement>, Boolean> needsDoubleGrid = new HashMap<Class<? extends DiagramElement>, Boolean>();
 	
 	static {
-		needsDoubleGrid.put(Arrow.class, Boolean.TRUE);
+	/*	needsDoubleGrid.put(Arrow.class, Boolean.TRUE);
 		needsDoubleGrid.put(Link.class, Boolean.FALSE);
 		needsDoubleGrid.put(Glyph.class, Boolean.TRUE);
 		needsDoubleGrid.put(Context.class, Boolean.TRUE);
 		needsDoubleGrid.put(Key.class, Boolean.FALSE);
-		needsDoubleGrid.put(Diagram.class, Boolean.TRUE);
+		needsDoubleGrid.put(Diagram.class, Boolean.TRUE); */
 	}
 	
 	private double snap(double width, DiagramElement de) {
@@ -55,6 +55,7 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 	
 	private boolean isDoubleGrid(DiagramElement de) {
+		System.out.println("Double grid needs fixing");
 		if (de==null)
 			return false;
 		Class<?> c = de.getClass();
