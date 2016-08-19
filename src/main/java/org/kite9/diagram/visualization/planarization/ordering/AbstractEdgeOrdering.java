@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;

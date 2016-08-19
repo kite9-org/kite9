@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
@@ -16,6 +15,7 @@ import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.ordering.BasicVertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.logging.Kite9Log;

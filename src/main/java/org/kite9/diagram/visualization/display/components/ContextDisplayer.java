@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.display.components;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;

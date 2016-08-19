@@ -5,12 +5,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.adl.TextContainingDiagramElement;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.TextStyle;

@@ -102,7 +102,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		Diagram d = new Diagram("abc", createList((Contained) peter, loves, mary, despises), null);
+		Diagram d = new Diagram("abc", createList(peter, loves, mary, despises), null);
 		
 		renderDiagram(d);
 		

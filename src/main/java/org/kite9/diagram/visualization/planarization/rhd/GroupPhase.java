@@ -9,12 +9,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.hints.PositioningHints;

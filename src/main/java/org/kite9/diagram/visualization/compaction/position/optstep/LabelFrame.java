@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
-import org.kite9.diagram.adl.AbstractIdentifiableDiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.style.AbstractXMLDiagramElement;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Node;
@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class LabelFrame extends AbstractIdentifiableDiagramElement {
+public class LabelFrame extends AbstractXMLDiagramElement {
 
 	private static final long serialVersionUID = 3287011609590439600L;
 	DirectionalValues padding;

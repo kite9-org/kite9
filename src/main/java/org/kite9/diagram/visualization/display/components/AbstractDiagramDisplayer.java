@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.display.components;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.xml.Diagram;

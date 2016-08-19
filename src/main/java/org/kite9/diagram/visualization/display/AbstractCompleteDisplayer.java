@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kite9.diagram.adl.CompositionalDiagramElement;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.PositionableDiagramElement;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;

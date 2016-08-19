@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization;
 
-import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.xml.Diagram;
 
 /**

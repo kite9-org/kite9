@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP;
 import org.kite9.diagram.common.algorithms.ssp.PathLocation;
 import org.kite9.diagram.common.algorithms.ssp.State;
@@ -13,6 +12,7 @@ import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;

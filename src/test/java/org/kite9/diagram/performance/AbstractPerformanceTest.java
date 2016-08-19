@@ -14,7 +14,6 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
@@ -22,6 +21,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;

@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.format.pos;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ExpectedLayoutException;

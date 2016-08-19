@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;

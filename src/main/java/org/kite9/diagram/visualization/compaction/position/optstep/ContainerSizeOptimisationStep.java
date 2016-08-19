@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -17,6 +16,7 @@ import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;

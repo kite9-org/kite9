@@ -3,9 +3,9 @@ package org.kite9.diagram.visualization.pipeline.rendering;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.IdentifiableDiagramElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.format.Renderer;

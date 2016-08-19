@@ -3,8 +3,8 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.Arrow;
 import org.kite9.diagram.xml.Context;

@@ -3,8 +3,8 @@ package org.kite9.diagram.visualization.display.complete;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 
 /**

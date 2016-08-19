@@ -7,8 +7,8 @@ import java.io.StringWriter;
 
 import org.junit.Before;
 import org.kite9.diagram.adl.AbstractConnectedContained;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.IdentifiableDiagramElement;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;

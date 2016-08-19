@@ -10,13 +10,13 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.xml.Diagram;
 import org.kite9.diagram.xml.Glyph;
 import org.kite9.diagram.xml.Link;

@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Random;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.Context;
 import org.kite9.diagram.xml.Diagram;

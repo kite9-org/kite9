@@ -1,11 +1,11 @@
 package org.kite9.diagram.functional;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 
 public class DiagramAssert {
