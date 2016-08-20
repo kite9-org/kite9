@@ -10,7 +10,7 @@ import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructor;
 import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructorImpl;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class MGTPlanarizer extends AbstractPlanarizer implements Planarizer {
 
@@ -28,7 +28,7 @@ public class MGTPlanarizer extends AbstractPlanarizer implements Planarizer {
 	}
 
 	@Override
-	protected Planarization buildPlanarization(Diagram c) {
+	protected Planarization buildPlanarization(DiagramXMLElement c) {
 		Planarization pln = super.buildPlanarization(c);
 		getFaceConstructor().createFaces((MGTPlanarization) pln);
 		return pln;

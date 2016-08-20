@@ -1,9 +1,9 @@
 package org.kite9.diagram.functional;
 
 import org.kite9.diagram.adl.Label;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Link;
 import org.kite9.diagram.xml.XMLElement;
 
 /** 

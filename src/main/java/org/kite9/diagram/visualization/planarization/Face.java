@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
@@ -13,7 +14,6 @@ import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
 

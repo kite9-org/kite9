@@ -29,9 +29,8 @@ import javax.xml.transform.Source;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.ShapedDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Layout;
@@ -58,7 +57,7 @@ import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.DiffException;
 import org.kite9.framework.common.FileDiff;
@@ -97,7 +96,7 @@ public class TestingEngine extends TestingHelp {
 		return new BufferedImageProcessingPipeline(subtest, test, watermark);
 	}
 
-	public Diagram renderDiagram(Diagram d, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops, boolean everythingStraight, boolean checkLayout,
+	public DiagramXMLElement renderDiagram(DiagramXMLElement d, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops, boolean everythingStraight, boolean checkLayout,
 			boolean checkNoContradictions, boolean checkImage) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
@@ -125,7 +124,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private Diagram renderDiagram(Diagram d2, Class<?> theTest, String subtest, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops,
+	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops,
 			boolean everythingStraight, boolean checkLayout, boolean checkNoContradictions, boolean checkImage, boolean addressed, BufferedImageProcessingPipeline pipeline)
 					throws IOException {
 
@@ -135,7 +134,7 @@ public class TestingEngine extends TestingHelp {
 
 			writeOutput(theTest, subtest, "diagram.xml", xml);
 
-			Diagram d = serialize ? (Diagram) helper.fromXML(xml) : d2;
+			DiagramXMLElement d = serialize ? (DiagramXMLElement) helper.fromXML(xml) : d2;
 			LogicException out = null;
 			Planarization pln = null;
 			try {
@@ -278,7 +277,7 @@ public class TestingEngine extends TestingHelp {
 		moveToError(theTest, subtest, emptyIt);
 	}
 
-	public void renderDiagramADLAndSVG(Diagram d) throws IOException {
+	public void renderDiagramADLAndSVG(DiagramXMLElement d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
@@ -298,13 +297,13 @@ public class TestingEngine extends TestingHelp {
 		System.out.println("d");
 	}
 
-	public void renderDiagramPDF(Diagram d) throws IOException {
+	public void renderDiagramPDF(DiagramXMLElement d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 		renderDiagramPDF(d, theTest, m.getName());
 	}
 
-	public void renderDiagramSVG(Diagram d) throws IOException {
+	public void renderDiagramSVG(DiagramXMLElement d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
@@ -322,12 +321,12 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private void renderDiagramPDF(Diagram d, Class<?> theTest, String subtest) throws IOException {
+	private void renderDiagramPDF(DiagramXMLElement d, Class<?> theTest, String subtest) throws IOException {
 		XMLHelper helper = new XMLHelper();
 		String xml = helper.toXML(d);
 
 		writeOutput(theTest, subtest, "diagram.xml", xml);
-		d = (Diagram) helper.fromXML(xml);
+		d = (DiagramXMLElement) helper.fromXML(xml);
 
 		// no watermarks
 		ImageProcessingPipeline<byte[]> pipeline = new ImageProcessingPipeline<byte[]>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new PDFRenderer());
@@ -340,19 +339,19 @@ public class TestingEngine extends TestingHelp {
 		// can't test pdfs, sadly
 	}
 
-	private void renderDiagramSVG(Diagram d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
+	private void renderDiagramSVG(DiagramXMLElement d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
 		try {
 			XMLHelper helper = new XMLHelper();
 			String xml = helper.toXML(d);
 
 			writeOutput(theTest, subtest, "diagram.xml", xml);
-			d = (Diagram) helper.fromXML(xml);
+			d = (DiagramXMLElement) helper.fromXML(xml);
 
 			// 2-stage rendering
-			ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)),
+			ImageProcessingPipeline<DiagramXMLElement> pipeline = new ImageProcessingPipeline<DiagramXMLElement>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)),
 					new PositionInfoRenderer());
 
-			Diagram processed = pipeline.process(d);
+			DiagramXMLElement processed = pipeline.process(d);
 
 			ImageRenderingPipeline<String> p = new ImageRenderingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new SVGRenderer());
 
@@ -421,7 +420,7 @@ public class TestingEngine extends TestingHelp {
 		return zip.getInputStream(ze);
 	}
 
-	public static void testConnectionPresence(Diagram d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
+	public static void testConnectionPresence(DiagramXMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
 		final int[] notPresent = { 0 };
 
 		ConnectionAction ca = new ConnectionAction() {
@@ -463,11 +462,7 @@ public class TestingEngine extends TestingHelp {
 			 * It's ok not to render invisible items sometimes.
 			 */
 			private boolean isInvisible(Connection c) {
-				if (c instanceof ShapedDiagramElement) {
-					return "INVISIBLE".equals(((ShapedDiagramElement) c).getShapeName());
-				}
-
-				return false;
+				return "INVISIBLE".equals(c.getShapeName());
 			}
 		};
 
@@ -477,7 +472,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testHopCount(Diagram d) {
+	public static void testHopCount(DiagramXMLElement d) {
 		HopChecker.checkHops(d, new HopAction() {
 
 			@Override
@@ -492,7 +487,7 @@ public class TestingEngine extends TestingHelp {
 	public static void testLayout(Container d) {
 		Layout l = d.getLayoutDirection();
 
-		Contained prev = null;
+		DiagramElement prev = null;
 
 		if (d.getContents() != null) {
 			if (l != null) {
@@ -508,7 +503,7 @@ public class TestingEngine extends TestingHelp {
 					checkContentsOverlap(d, l);
 				}
 			}
-			for (Contained cc : d.getContents()) {
+			for (DiagramElement cc : d.getContents()) {
 				if (cc instanceof Container) {
 					testLayout((Container) cc);
 				}
@@ -518,7 +513,7 @@ public class TestingEngine extends TestingHelp {
 
 	private static void checkContentsOverlap(Container d, final Layout l) {
 		List<RectangleRenderingInformation> contRI = new ArrayList<RectangleRenderingInformation>(d.getContents().size());
-		for (Contained c : d.getContents()) {
+		for (DiagramElement c : d.getContents()) {
 			RectangleRenderingInformation cRI = (RectangleRenderingInformation) c.getRenderingInformation();
 			contRI.add(cRI);
 		}
@@ -554,8 +549,8 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private static void checkLayoutOrder(Container d, Layout l, Contained prev) {
-		for (Contained cc : d.getContents()) {
+	private static void checkLayoutOrder(Container d, Layout l, DiagramElement prev) {
+		for (DiagramElement cc : d.getContents()) {
 			if (prev != null) {
 				RectangleRenderingInformation prevRI = (RectangleRenderingInformation) prev.getRenderingInformation();
 				RectangleRenderingInformation ccRI = (RectangleRenderingInformation) cc.getRenderingInformation();
@@ -597,13 +592,13 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private static void checkBefore(double x1, double w1, double x2, double w2, Contained prev, Contained cc, Layout l) {
+	private static void checkBefore(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
 		if (x1 + w1 > x2) {
 			throw new ExpectedLayoutException("Was expecting " + prev + " before" + cc + " " + l);
 		}
 	}
 
-	private static void checkAligned(double x1, double w1, double x2, double w2, Contained prev, Contained cc, Layout l) {
+	private static void checkAligned(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
 		if (x1 + w1 < x2) {
 			throw new ExpectedLayoutException("Was expecting alignment of " + prev + "  and " + cc + " " + l);
 		}
@@ -630,21 +625,21 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public void renderDiagramSizes(Diagram d) throws IOException {
+	public void renderDiagramSizes(DiagramXMLElement d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 		renderDiagramSizes(d, theTest, m.getName());
 	}
 
-	public void renderDiagramSizes(Diagram d, Class<?> theTest, String subtest) throws IOException {
+	public void renderDiagramSizes(DiagramXMLElement d, Class<?> theTest, String subtest) throws IOException {
 		XMLHelper helper = new XMLHelper();
 		String xml = helper.toXML(d);
 
 		writeOutput(theTest, subtest, "diagram.xml", xml);
 
 		// no watermarks
-		ImageProcessingPipeline<Diagram> pipeline = new ImageProcessingPipeline<Diagram>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)), new PositionInfoRenderer());
-		Diagram out = pipeline.process(d);
+		ImageProcessingPipeline<DiagramXMLElement> pipeline = new ImageProcessingPipeline<DiagramXMLElement>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)), new PositionInfoRenderer());
+		DiagramXMLElement out = pipeline.process(d);
 
 		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
 		writeOutput(theTest, subtest, "sizes.xml", helper.toXML(out));
@@ -662,7 +657,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public void renderMap(Diagram d) throws IOException {
+	public void renderMap(DiagramXMLElement d) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 
@@ -690,12 +685,12 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public void renderDiagramNoCopy(Diagram d, boolean b, boolean checkDiagram) {
+	public void renderDiagramNoCopy(DiagramXMLElement d, boolean b, boolean checkDiagram) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void renderDiagramADLAndSVG(Diagram d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
+	private void renderDiagramADLAndSVG(DiagramXMLElement d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
 		// no watermarks
 		try {
 			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false), 12), new ADLAndSVGRenderer());
@@ -708,7 +703,7 @@ public class TestingEngine extends TestingHelp {
 			// check convert back again
 			String xml = new XMLHelper().toXML(d);
 			Object o = new XMLHelper().fromXML(xml);
-			Diagram d2 = (Diagram) o;
+			DiagramXMLElement d2 = (DiagramXMLElement) o;
 			String xml2 = new XMLHelper().toXML(d2);
 
 			Assert.assertEquals(xml, xml2);

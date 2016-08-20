@@ -3,13 +3,13 @@ package org.kite9.diagram.visualization.pipeline.rendering;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.IdentifiableDiagramElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.format.Renderer;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Outputs details for use as a HTML client-side map, for use with the PNG format.
@@ -24,7 +24,7 @@ public class ClientSideMapRenderingPipeline implements Renderer<String> {
 	public ClientSideMapRenderingPipeline() {
 	}
 
-	public String render(Diagram d) {
+	public String render(DiagramXMLElement d) {
 		final StringBuilder out = new StringBuilder(1000);
 
 		DiagramElementVisitor vis = new DiagramElementVisitor();

@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization;
 
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Interface for creating a Planarization of a set of diagram attr suitable for further layout.
@@ -10,6 +10,6 @@ import org.kite9.diagram.xml.Diagram;
  */
 public interface Planarizer {
 
-	public Planarization planarize(Diagram d);
+	public Planarization planarize(DiagramXMLElement d);
 	
 }

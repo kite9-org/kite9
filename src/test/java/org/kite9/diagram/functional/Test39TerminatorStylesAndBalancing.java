@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
@@ -38,7 +38,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new Link(g1, a1);
 		new Link(g2, a1);
 		
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, a1), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, a1), null));
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new Link(g1, a1);
 		new Link(g2, a1);
 		new Link(g3, a1);	
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, g3, a1), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, g3, a1), null));
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new Link(g3, a1);	
 		new Link(g4, a1);	
 		
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new TurnLink(g3, a1);	
 		new Link(g4, a1, LinkEndStyle.ARROW, null, null, null);	
 		
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new TurnLink(g3, a1);	
 		new Link(g4, a1, LinkEndStyle.CIRCLE, null, null, null);	
 		
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
 	
 	@Test
@@ -110,18 +110,18 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new TurnLink(g3, a1, LinkEndStyle.CIRCLE, null, null, null);	
 		new TurnLink(g4, a1);	
 		
-		renderDiagram(new Diagram(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
+		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
 	
 	@Test
 	public void test_39_7_TerminatorsBasic() throws IOException {
-		Diagram d = createTerminatorDiagram();
+		DiagramXMLElement d = createTerminatorDiagram();
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_39_8_Terminators2012() throws IOException {
-		Diagram d = createTerminatorDiagram();
+		DiagramXMLElement d = createTerminatorDiagram();
 		renderDiagram(d);
 	}
 	
@@ -140,13 +140,13 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 			elems.add(b);
 		}
 		
-		Diagram d= new Diagram(elems, null);
+		DiagramXMLElement d= new DiagramXMLElement(elems, null);
 		renderDiagram(d);
 
 	}
 	
 
-	private Diagram createTerminatorDiagram() {
+	private DiagramXMLElement createTerminatorDiagram() {
 		Glyph g1 = new Glyph("g1", null, "g1", null, null);
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
@@ -161,7 +161,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractFunctionalTest {
 		new Link(g3, c3, LinkEndStyle.GAP, null, LinkEndStyle.GAP, null, Direction.LEFT);	
 		new Link(g4, c4, LinkEndStyle.NONE, null, LinkEndStyle.NONE, null, Direction.LEFT);	
 		
-		Diagram d = new Diagram(HelpMethods.listOf(g1, c1, g2, c2, g3, c3, g4, c4), null);
+		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(g1, c1, g2, c2, g3, c3, g4, c4), null);
 		//d.setLayoutDirection(Layout.RIGHT);
 		return d;
 	}

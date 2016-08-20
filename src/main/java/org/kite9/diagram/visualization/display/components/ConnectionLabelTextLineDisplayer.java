@@ -1,8 +1,12 @@
 package org.kite9.diagram.visualization.display.components;
 
+import org.kite9.diagram.adl.ContainerProperty;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.StyledDiagramElement;
-import org.kite9.diagram.adl.TextContainingDiagramElement;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.Text;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
@@ -11,16 +15,12 @@ import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
-import org.kite9.diagram.xml.ContainerProperty;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
 
 /**
  * Labels for the Connections in the diagram 
@@ -117,7 +117,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	}
 
 	@Override
-	public TextContainingDiagramElement getLabel(DiagramElement de) {
+	public Text getLabel(DiagramElement de) {
 		return ((TextLine)de);
 	}
 
@@ -127,7 +127,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	}
 
 	@Override
-	public TextContainingDiagramElement getStereotype(DiagramElement de) {
+	public Text getStereotype(DiagramElement de) {
 		return null;
 	}
 

@@ -8,7 +8,7 @@ import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRende
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer<BufferedImage> {
 
@@ -23,7 +23,7 @@ public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer
 	BufferedImage bi;
 	Graphics2D g2;
 
-	public BufferedImage render(Diagram something) {
+	public BufferedImage render(DiagramXMLElement something) {
 		Dimension2D out = size(something);
 		dea.initialize(this, out);
 		drawDiagramElements(something);

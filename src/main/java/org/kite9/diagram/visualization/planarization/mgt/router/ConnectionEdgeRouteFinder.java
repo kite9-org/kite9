@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
@@ -14,7 +15,6 @@ import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ConnectionEdge;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
@@ -24,7 +24,7 @@ import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.ContainerEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
@@ -161,7 +161,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	 * otherwise there will be a contradiction in the planarization.
 	 */
 	protected boolean canCross(Edge e2, EdgePath ep, boolean goingDown) {
-		if (e2.getOriginalUnderlying() instanceof Diagram) {
+		if (e2.getOriginalUnderlying() instanceof DiagramXMLElement) {
 			// you can't leave the top container
 			return false;
 		}

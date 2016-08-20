@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 @Ignore
@@ -27,7 +27,7 @@ public class Test41OrthogonalisationEdgeCases extends AbstractFunctionalTest {
 		
 		Glyph bottom = new Glyph("bottom", "", "bottom", null, null);
 		
-		Diagram d = new Diagram("d", HelpMethods.listOf(top, ctx, bottom), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(top, ctx, bottom), Layout.DOWN, null);
 	
 		new TurnLink(top, a);
 		new Link(top, b);

@@ -3,20 +3,20 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
-import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test36LayoutChoices extends AbstractFunctionalTest {
 
-	public static Diagram doNestedDirected(Layout cl1, Layout cl2, Layout dl, Direction going) throws IOException {
+	public static DiagramXMLElement doNestedDirected(Layout cl1, Layout cl2, Layout dl, Direction going) throws IOException {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -33,11 +33,11 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		createLink(going, g2, g3);
 		createLink(going, g0, g3);
 		
-		Diagram d = new Diagram("D", HelpMethods.listOf(con1, con2),dl, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
 
-	public static Diagram doSimpleComb(Layout cl, Layout dl, Direction going, boolean misorder) throws IOException {
+	public static DiagramXMLElement doSimpleComb(Layout cl, Layout dl, Direction going, boolean misorder) throws IOException {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -73,7 +73,7 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		createLink(going, g4, gn4);
 		createLink(going, g5, gn4);
 		
-		Diagram d = new Diagram("D", HelpMethods.listOf(con1, con2),dl, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
 
@@ -85,7 +85,7 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		}
 	}
 	
-	public static Diagram doArrowComb(Layout conl, Layout dl, Direction going) throws IOException {
+	public static DiagramXMLElement doArrowComb(Layout conl, Layout dl, Direction going) throws IOException {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -126,13 +126,13 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		new Link(a5, g6, null, null, null, null, going);
 		new Link(a6, g6, null, null, null, null, going);
 		
-		Diagram d = new Diagram("D", HelpMethods.listOf(con1, con2, cona), dl, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2, cona), dl, null);
 		return d;
 	}
 	
 	
 
-	public static Diagram doPyramid(Layout l, Layout dl, Direction going) throws IOException {
+	public static DiagramXMLElement doPyramid(Layout l, Layout dl, Direction going) throws IOException {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
@@ -175,7 +175,7 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		new Link(a7, g6, null, null, null, null, going);
 		new Link(a8, g6, null, null, null, null, going);
 		
-		Diagram d = new Diagram("D", HelpMethods.listOf(con1, con2, con3, cona),dl, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2, con3, cona),dl, null);
 		return d;
 	}
 	
@@ -206,7 +206,7 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 		
 	}
 
-	private boolean assertDirection(Diagram d2, Direction d) {
+	private boolean assertDirection(DiagramXMLElement d2, Direction d) {
 		try {
 			DiagramAssert.assertInDirection(d, 
 					getById("g5", d2), 
@@ -267,7 +267,7 @@ public class Test36LayoutChoices extends AbstractFunctionalTest {
 
 	@Test
 	public void test_36_14_SimpleCombSlackAllButOrdered() throws IOException {
-		Diagram d2 = renderDiagram(doSimpleComb(null, null, null, false));
+		DiagramXMLElement d2 = renderDiagram(doSimpleComb(null, null, null, false));
 		if ((assertDirection(d2, Direction.UP) || assertDirection(d2, Direction.DOWN))) {
 			// ok
 		}  else {

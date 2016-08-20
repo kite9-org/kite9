@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 
 public class Test30VertexOrderingContained extends AbstractFunctionalTest {
@@ -31,7 +31,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 		new HopLink(out[2][2], out[3][2],null, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][3], out[2][3],null, null, null, null, Direction.DOWN);
 
-		renderDiagram(new Diagram("bob", out2, Layout.VERTICAL, null));
+		renderDiagram(new DiagramXMLElement("bob", out2, Layout.VERTICAL, null));
 
 	}
 
@@ -53,7 +53,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 		new Link(out[2][1], out[3][0],null, null, null, null, Direction.LEFT);
 		new Link(out[2][0], out[3][1],null, null, null, null, Direction.LEFT);
 
-		renderDiagram(new Diagram("bob", out2, Layout.VERTICAL, null));
+		renderDiagram(new DiagramXMLElement("bob", out2, Layout.VERTICAL, null));
 
 	}
 	
@@ -87,7 +87,7 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 		new Link(out[1][2], out2[7],null, null, null, null, Direction.RIGHT);
 		new Link(out[1][3], out2[5],null, null, null, null, Direction.RIGHT);
 		
-		renderDiagram(new Diagram("bob", contents, null));
+		renderDiagram(new DiagramXMLElement("bob", contents, null));
 
 	}
 	
@@ -106,6 +106,6 @@ public class Test30VertexOrderingContained extends AbstractFunctionalTest {
 		new Link(a, b, null, null, null, null, null);
 		new Link(a,c, null, null, null, null, null);
 	
-		renderDiagram(new Diagram("bob", out2, Layout.DOWN, null));
+		renderDiagram(new DiagramXMLElement("bob", out2, Layout.DOWN, null));
 	}
 }

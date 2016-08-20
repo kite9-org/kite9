@@ -12,7 +12,7 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.kite9.diagram.style.DiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 
 /**
  * Wraps around Java's Graphics2D class.

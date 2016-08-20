@@ -6,13 +6,13 @@ import org.apache.batik.svggen.DOMTreeManager;
 import org.apache.batik.svggen.SVGCSSStyler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
+import org.kite9.diagram.adl.ContainerProperty;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.ContainerProperty;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.serialization.XMLHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,7 +34,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 	}
 
 	@Override
-	protected String output(Diagram something) throws SVGGraphics2DIOException, IOException {
+	protected String output(DiagramXMLElement something) throws SVGGraphics2DIOException, IOException {
 		ensureDisplayData(getDiagramDefs(), diagramRendering);
 		ensureDisplayData(getDiagramDefaultStyles(), diagramRendering);
 		g2.setTopLevelGroup(topGroup);
@@ -57,7 +57,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 				}
 					
 				// to make sure topGroup defs get added to the diagram
-				if (de instanceof Diagram) {
+				if (de instanceof DiagramXMLElement) {
 					diagramRendering = ((PositionableDiagramElement)de).getRenderingInformation();
 				}
 				

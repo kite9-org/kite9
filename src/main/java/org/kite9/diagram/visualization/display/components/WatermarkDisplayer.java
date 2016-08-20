@@ -14,17 +14,17 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.style.AbstractStyledXMLDiagramElement;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -65,7 +65,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 		}
 	}
 	
-	private StyledDiagramElement getCopyrightElement(Diagram d) {
+	private StyledDiagramElement getCopyrightElement(DiagramXMLElement d) {
 		return new AbstractStyledXMLDiagramElement("copyright", d.getOwnerDocument()) {
 			
 			@Override
@@ -90,7 +90,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 		AffineTransform at = g2.getTransform();
 		g2.setTransform(new AffineTransform());
 		
-		Diagram d = (Diagram) de;
+		DiagramXMLElement d = (DiagramXMLElement) de;
 		StyledDiagramElement copy = getCopyrightElement(d);
 
 		TextStyle ts = new TextStyle(copy);

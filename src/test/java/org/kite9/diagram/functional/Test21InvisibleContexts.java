@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.CompositionalDiagramElement;
+import org.kite9.diagram.adl.ContainerProperty;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.ContainerProperty;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.diagram.xml.XMLElement;
 
 public class Test21InvisibleContexts extends AbstractFunctionalTest {
@@ -52,7 +52,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
 		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, Layout.DOWN);
 		
-		Diagram d = new Diagram("d", createList((XMLElement) cc), null);
+		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), null);
 		renderDiagram(d);
 		
 	}
@@ -68,7 +68,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
 		Context cc = new Context("ctxn", createList((XMLElement) c1, c2, c3), true, null, Layout.DOWN);
 		
-		Diagram d = new Diagram("d", createList((XMLElement) cc), null);
+		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), null);
 		renderDiagram(d);
 		
 	}
@@ -92,7 +92,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
 		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
 //		
-		Diagram d = new Diagram("d", createList((XMLElement) cc), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}
@@ -116,7 +116,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
 		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
 //		
-		Diagram d = new Diagram("d", createList((XMLElement) cc), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}
@@ -138,7 +138,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 
 		Context hidden = new Context(listOf(bladerunner, glad, thelma), false, null, Layout.RIGHT);
 		
-		Diagram d1 = new Diagram("my_diagram", listOf(rs, directed, hidden), null);
+		DiagramXMLElement d1 = new DiagramXMLElement("my_diagram", listOf(rs, directed, hidden), null);
 		renderDiagram(d1);
 	
 }

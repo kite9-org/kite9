@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.display.style;
 
-import org.kite9.diagram.xml.LinkTerminator;
+import org.kite9.diagram.adl.LinkTerminator;
 
 public class TerminatorShape extends FixedShape {
 	

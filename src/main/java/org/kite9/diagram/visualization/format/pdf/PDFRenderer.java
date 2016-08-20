@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRende
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 
 import com.itextpdf.text.Document;
@@ -83,7 +83,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 		
 	}
 
-	public byte[] render(Diagram d)  {
+	public byte[] render(DiagramXMLElement d)  {
 		try {
 			Dimension2D out = size(d);
 			dea.initialize(this, out);

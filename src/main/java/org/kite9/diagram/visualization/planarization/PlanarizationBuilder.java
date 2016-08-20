@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization;
 
 import org.kite9.diagram.common.Connected;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Creates an initial {@link Planarization} of the graph, upon which transforms are applied.
@@ -14,6 +14,6 @@ public interface PlanarizationBuilder {
     /**
      * Planarization of a hierarchically contained arrangement of {@link Connected}s
      */
-    public abstract Planarization planarize(Diagram c);
+    public abstract Planarization planarize(DiagramXMLElement c);
 
 }

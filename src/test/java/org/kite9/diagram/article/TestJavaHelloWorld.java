@@ -3,18 +3,18 @@ package org.kite9.diagram.article;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.functional.HopLink;
 import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 
 public class TestJavaHelloWorld extends AbstractFunctionalTest {
 	
@@ -44,7 +44,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		
 		Context server = new Context("server side", createList((Contained) project, diagramServer), true, new TextLine("Kite9 Servers"), null);
 		
-		Diagram d = new Diagram("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
 		
 		
 		// scans
@@ -90,7 +90,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		
 		Context internet = new Context("internet", createList((Contained) diagram, sends, receives, response), false, null, null);
 		
-		Diagram d = new Diagram("Arch", createList((Contained) client, server, internet), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, internet), null);
 		
 		
 		// scans
@@ -126,7 +126,7 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		
 		Context server = new Context("server side", null, true, new TextLine("Kite9 Servers"), null);
 		
-		Diagram d = new Diagram("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
 		
 		
 		// sends

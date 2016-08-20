@@ -5,11 +5,11 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test24ThreeContainerLinking extends AbstractFunctionalTest {
 
@@ -47,7 +47,7 @@ public class Test24ThreeContainerLinking extends AbstractFunctionalTest {
     
     	Context con4 = new Context("b4", createList(con1, con2, con3), true, null, c4);
     
-    	Diagram d = new Diagram("The Diagram", createList(con4), null);
+    	DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con4), null);
     	renderDiagram(d);
     }
 

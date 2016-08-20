@@ -8,7 +8,7 @@ import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class TimingPipeline extends BufferedImageProcessingPipeline {
 	
@@ -36,7 +36,7 @@ public class TimingPipeline extends BufferedImageProcessingPipeline {
 	}
 
 	@Override
-	public Planarization createPlanarization(Diagram d) {
+	public Planarization createPlanarization(DiagramXMLElement d) {
 		long start = System.currentTimeMillis();
 		Planarization out =  super.createPlanarization(d);
 		m.planarizationTime = System.currentTimeMillis() - start;

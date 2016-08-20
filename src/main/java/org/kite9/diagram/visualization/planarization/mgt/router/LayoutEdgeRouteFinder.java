@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;

@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 
 public class Test10CrossingEdges extends AbstractFunctionalTest {
@@ -17,7 +17,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
 		
-		Diagram d = new Diagram("D", vertices, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
 
 		renderDiagram(d);
 	}
@@ -37,7 +37,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 		new TurnLink(out[0][1], out[0][4]);
 		
 		
-		Diagram d = new Diagram("D", vertices, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
 
 		renderDiagram(d);
 		
@@ -57,7 +57,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(2, 2, vertices, true);
 		
-		Diagram d = new Diagram("D", vertices, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
 
 		renderDiagram(d);
 	}

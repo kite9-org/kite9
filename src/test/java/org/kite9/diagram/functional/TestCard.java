@@ -3,22 +3,22 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Key;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Key;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
-import org.kite9.diagram.xml.Symbol.SymbolShape;
 import org.kite9.framework.common.HelpMethods;
 
 public class TestCard extends AbstractFunctionalTest {
 
-	public Diagram createTestCard() {
+	public DiagramXMLElement createTestCard() {
 		Symbol aDia = new Symbol("Some description\n taking multiple lines", 'a', SymbolShape.DIAMOND);
 		Symbol MDia = new Symbol("Some description blah blah blah", 'M', SymbolShape.DIAMOND);
 		Symbol QCir = new Symbol("Some description sdkjfsd flksdjf", 'Q', SymbolShape.CIRCLE);
@@ -96,13 +96,13 @@ public class TestCard extends AbstractFunctionalTest {
 		
 		
 
-		Diagram d = new Diagram(HelpMethods.listOf(emptyContext, otherContext, a2, withSymbols, text1, other), k);
+		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(emptyContext, otherContext, a2, withSymbols, text1, other), k);
 		return d;
 	}
 	
 	@Test
 	public void testCardBasic() throws IOException {
-		Diagram d = createTestCard();
+		DiagramXMLElement d = createTestCard();
 		renderDiagramSVG(d);
 		renderDiagramPDF(d);
 		renderDiagram(d);

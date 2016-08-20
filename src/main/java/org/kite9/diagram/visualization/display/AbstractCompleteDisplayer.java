@@ -3,25 +3,25 @@ package org.kite9.diagram.visualization.display;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.CompositionalDiagramElement;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.PositionableDiagramElement;
+import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkLineStyle;
-import org.kite9.diagram.xml.LinkTerminator;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -58,11 +58,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		Displayer ded = getDisplayer(de);
 		if (ded == null) {
 			return false;
-		} else if ((de instanceof PositionableDiagramElement) && 
-				(((PositionableDiagramElement)de).getRenderingInformation().isRendered())) {
+		} else if (de.getRenderingInformation().isRendered()) {
 			return ded.isVisibleElement(de);			
-		} else if (de instanceof CompositionalDiagramElement) {
-			return ded.isVisibleElement(de);
+//		} else if (de instanceof CompositionalDiagramElement) {
+//			return ded.isVisibleElement(de);
 		} else {
 			return false;
 		}
@@ -114,7 +113,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 				return MINIMUM_GLYPH_SIZE * gridSize;
 			} else if (a instanceof Context) {
 				return MINIMUM_CONTEXT_SIZE * gridSize;
-			} else if (a instanceof Diagram) {
+			} else if (a instanceof DiagramXMLElement) {
 				return MINIMUM_CONTEXT_SIZE * gridSize;
 			} else if (a == null) {
 				return 0;
@@ -190,10 +189,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	private boolean needsDistance(DiagramElement d) {
 		if (d==null) {
 			return false;
-		} else if (d instanceof Context) {
-			return ((Context)d).isBordered();
-		} else if (d instanceof Link){
-			Link l = (Link) d;
+		} else if (d instanceof Container) {
+			return ((Container)d).isBordered();
+		} else if (d instanceof Connection){
+			Connection l = (Connection) d;
 			if (l.getStyle()==LinkLineStyle.INVISIBLE) {
 				return false;
 			} else {
@@ -201,11 +200,11 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			}
 		} else if (d instanceof Diagram) {
 			return true;
-		} else if (d instanceof PositionableDiagramElement) {
+		} else {
 			boolean rd = requiresDimension(d);
 			if (!rd) {
-				if (((PositionableDiagramElement) d).getRenderingInformation() instanceof RectangleRenderingInformation) {
-					RectangleRenderingInformation rri =(RectangleRenderingInformation) ((PositionableDiagramElement) d).getRenderingInformation();
+				if (d.getRenderingInformation() instanceof RectangleRenderingInformation) {
+					RectangleRenderingInformation rri =(RectangleRenderingInformation) d.getRenderingInformation();
 					return rri.isMultipleHorizontalLinks() || rri.isMultipleVerticalLinks();
 				}
 			}

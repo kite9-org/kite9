@@ -4,15 +4,15 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 
 public class Test23LinkBucketing extends AbstractFunctionalTest {
 
@@ -28,7 +28,7 @@ public class Test23LinkBucketing extends AbstractFunctionalTest {
 	Glyph seven;
 
 	Context con1;
-	Diagram d;
+	DiagramXMLElement d;
 
 	@Before
 	public void setUp() {
@@ -43,7 +43,7 @@ public class Test23LinkBucketing extends AbstractFunctionalTest {
 		
 		con1 = new Context("b1", listOf(one, two, three, four, five, six, seven),
 				true, new TextLine("inside"), Layout.RIGHT);
-		d = new Diagram("The Diagram", listOf(con1), null);
+		d = new DiagramXMLElement("The Diagram", listOf(con1), null);
 	}
 
 	@Test

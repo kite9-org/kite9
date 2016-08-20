@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
@@ -25,8 +26,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHand
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
 import org.kite9.framework.logging.Kite9Log;
@@ -520,7 +520,7 @@ public class GroupPhase {
 			
 		@Override
 		public String toString() {
-			return "["+getGroupNumber()+ o + "("+(c instanceof Diagram ? "" :" c: "+c)+","+getAxis()+")]";
+			return "["+getGroupNumber()+ o + "("+(c instanceof DiagramXMLElement ? "" :" c: "+c)+","+getAxis()+")]";
 		}
 	
 		@Override

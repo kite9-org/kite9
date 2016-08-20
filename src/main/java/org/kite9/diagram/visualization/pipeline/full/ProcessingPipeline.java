@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.pipeline.full;
 
 import org.kite9.diagram.visualization.pipeline.rendering.RenderingPipeline;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Performs the complete process of arrangement then rendering.
@@ -12,5 +12,5 @@ import org.kite9.diagram.xml.Diagram;
  */
 public interface ProcessingPipeline<X> extends ArrangementPipeline, RenderingPipeline<X> {
 
-	public X process(Diagram d);
+	public X process(DiagramXMLElement d);
 }

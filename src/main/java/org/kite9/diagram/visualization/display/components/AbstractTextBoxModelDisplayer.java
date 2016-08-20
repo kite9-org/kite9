@@ -5,20 +5,20 @@ import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.ContainerProperty;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.StyledDiagramElement;
-import org.kite9.diagram.adl.TextContainingDiagramElement;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.Text;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
-import org.kite9.diagram.xml.ContainerProperty;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
 
 /**
  * Handles rendering and sizing of text objects within the diagram. 
@@ -103,11 +103,11 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 		}
 	}
 	
-	public abstract TextContainingDiagramElement getLabel(DiagramElement de);
+	public abstract Text getLabel(DiagramElement de);
 	
 	public abstract ContainerProperty<Symbol> getSymbols(DiagramElement de);
 	
-	public abstract TextContainingDiagramElement getStereotype(DiagramElement de);
+	public abstract Text getStereotype(DiagramElement de);
 	
 	public boolean hasContent(DiagramElement de) {
 		ContainerProperty<Symbol> symbols = getSymbols(de);
@@ -171,7 +171,7 @@ public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisp
 //		}
 	}
 
-	private String safeGetText(TextContainingDiagramElement st) {
+	private String safeGetText(Text st) {
 		return st == null ? null : st.getText();
 	}
 	

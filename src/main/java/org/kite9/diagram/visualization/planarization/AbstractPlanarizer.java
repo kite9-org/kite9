@@ -15,7 +15,7 @@ import org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemov
 import org.kite9.diagram.visualization.planarization.transform.LayoutSimplificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.OuterFaceIdentificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -42,7 +42,7 @@ public abstract class AbstractPlanarizer implements Logable {
 		return em;
 	}
 
-	public Planarization planarize(Diagram c) {
+	public Planarization planarize(DiagramXMLElement c) {
 		Planarization pln = buildPlanarization(c);
 		
 		try {
@@ -64,7 +64,7 @@ public abstract class AbstractPlanarizer implements Logable {
 		}
 	}
 
-	protected Planarization buildPlanarization(Diagram c) {
+	protected Planarization buildPlanarization(DiagramXMLElement c) {
 		PlanarizationBuilder po = getPlanarizationBuilder(createElementMapper());
 		Planarization pln = po.planarize(c);
 		return pln;

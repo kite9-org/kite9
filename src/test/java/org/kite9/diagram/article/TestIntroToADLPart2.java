@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Key;
+import org.kite9.diagram.adl.KeyHelper;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Key;
-import org.kite9.diagram.xml.KeyHelper;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
 
 public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 
@@ -39,7 +39,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		new Link(likes, biscuits, null, null, LinkEndStyle.ARROW, null, null);
 		
 		
-		Diagram d = new Diagram("", createList((Contained) rover, english, isa, likes, biscuits), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) rover, english, isa, likes, biscuits), null);
 		
 		renderDiagram(d);
 		
@@ -78,7 +78,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		new Link(ellen, ellen_is_2,null, null,  null, null, Direction.UP);
 		new Link(ellen_is_2, female, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 	
-		Diagram d = new Diagram("", createList((Contained) john, ellen, emile, english, french, male, female, john_is_1, john_is_2, emile_is_1, emile_is_2, ellen_is_1, ellen_is_2), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, ellen, emile, english, french, male, female, john_is_1, john_is_2, emile_is_1, emile_is_2, ellen_is_1, ellen_is_2), null);
 		
 		renderDiagram(d);
 		
@@ -94,7 +94,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 
 		Context english = new Context("English people", createList((Contained) john, ellen), true, new TextLine("English people"), null);
 	
-		Diagram d = new Diagram("abc", createList((Contained)english, french), null);
+		DiagramXMLElement d = new DiagramXMLElement("abc", createList((Contained)english, french), null);
 		
 		renderDiagram(d);
 		
@@ -113,7 +113,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 
 		Context english = new Context("English people", createList((Contained) male2, female1), true, new TextLine("English people"), null);
 	
-		Diagram d = new Diagram("abc", createList((Contained)english, french), null);
+		DiagramXMLElement d = new DiagramXMLElement("abc", createList((Contained)english, french), null);
 		
 		renderDiagram(d);
 		
@@ -139,7 +139,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", createList((Contained) accounts, sales), true, new TextLine("Head Office"), Layout.UP);
 		
-		Diagram d = new Diagram("", createList((Contained) c1, sends, report, c2), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) c1, sends, report, c2), null);
 		
 		renderDiagram(d);
 		
@@ -160,7 +160,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		
 		Key k = new Key("Explanation of Symbols", null, new ArrayList<Symbol>(helper.getUsedSymbols()));
 		
-		Diagram d = new Diagram("", createList((Contained) john, ellen, emile), k);
+		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, ellen, emile), k);
 		
 		renderDiagram(d);
 		

@@ -5,14 +5,14 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
-import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test14ContainerOrdering extends AbstractFunctionalTest {
 
@@ -25,7 +25,7 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 
 	Context con1;
 	Arrow outside;
-	Diagram d;
+	DiagramXMLElement d;
 
 	@Before
 	public void setUp() {
@@ -36,7 +36,7 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 		con1 = new Context("b1", createList((Contained) one, (Contained) two, (Contained) three, (Contained) four),
 				true, new TextLine("inside"),  Layout.RIGHT);
 		outside = new Arrow("outside", "outside");
-		d = new Diagram("The Diagram", createList((Contained) con1, (Contained) outside), null);
+		d = new DiagramXMLElement("The Diagram", createList((Contained) con1, (Contained) outside), null);
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 		Context topToBottom = new Context(listOf(g[6], g[7], g[8]), true, new TextLine("Top to Bottom"), Layout.DOWN);
 		Context rightToLeft = new Context(listOf(g[9], g[10], g[11]), true, new TextLine("Right to Left"), Layout.LEFT);
 		
-		Diagram d1 = new Diagram("my_diagram", listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
+		DiagramXMLElement d1 = new DiagramXMLElement("my_diagram", listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
 		
 		renderDiagram(d1);
 		

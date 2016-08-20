@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
@@ -42,7 +42,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.listOf(g2, g3), true, null, null);
 
 		
-		Diagram d1 = new Diagram(HelpMethods.listOf(g1, c1, g6, g5, g7), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1, g6, g5, g7), null);
 		renderDiagram(d1);
 		
 		
@@ -66,7 +66,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.listOf(g2, g3, g4), true, null, null);
 		
 		
-		Diagram d1 = new Diagram(HelpMethods.listOf(g1, c1, g5, g6), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1, g5, g6), null);
 		renderDiagram(d1);
 		
 		
@@ -101,7 +101,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(g1, l[13], null, null, null, null, null);
 		new Link(g1, l[14], null, null, null, null, null);
 		
-		Diagram d1 = new Diagram(out, null);
+		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -127,7 +127,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(l[3], l[4], null, null, null, null, Direction.DOWN);
 		new Link(l[4], l[5], null, null, null, null, Direction.DOWN);
 		
-		Diagram d1 = new Diagram(out, null);
+		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -154,7 +154,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(l[3], l[4], null, null, null, null, Direction.DOWN);
 		new Link(l[4], l[5], null, null, null, null, Direction.DOWN);
 		
-		Diagram d1 = new Diagram(out, null);
+		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -184,7 +184,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(l[5], l[6], null, null, null, null, Direction.RIGHT);
 		new Link(l[6], l[7], null, null, null, null, Direction.RIGHT);
 		
-		Diagram d1 = new Diagram(out, null);
+		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -208,7 +208,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(g1, g5, null, null, null, null, Direction.UP);
 	
 		
-		Diagram d1 = new Diagram(HelpMethods.listOf(g1, c1), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1), null);
 		renderDiagram(d1);
 	}
 	
@@ -232,7 +232,7 @@ public class Test31Fan extends AbstractFunctionalTest {
 		new Link(g1, g5, null, null, null, null, null);
 	
 		
-		Diagram d1 = new Diagram(HelpMethods.listOf(c1, g5), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, g5), null);
 		d1.setLayoutDirection(Layout.RIGHT);
 		renderDiagram(d1);
 	}

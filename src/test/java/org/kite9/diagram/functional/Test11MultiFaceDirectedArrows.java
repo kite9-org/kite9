@@ -3,13 +3,13 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 
 public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
@@ -30,7 +30,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		
 		Context c1 = new Context("if", createList((Contained) inside, i1), true, null, null);
 		
-		Diagram d = new Diagram("The Diagram", createList(c1, outside, o1), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c1, outside, o1), null);
 		renderDiagram(d);
 	}
 
@@ -57,7 +57,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		
 		
 		
-		Diagram d = new Diagram("The Diagram", createList(c5, outside, o1), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c5, outside, o1), null);
 		renderDiagram(d);
 	}
 	
@@ -83,7 +83,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		
 		
 		
-		Diagram d = new Diagram("The Diagram", createList(c4, outside, o1), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c4, outside, o1), null);
 		renderDiagram(d);
 	}
 	

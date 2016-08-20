@@ -13,13 +13,13 @@ import java.util.Map;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.framework.logging.LogicException;
 
 public class ElementMapperImpl implements ElementMapper {

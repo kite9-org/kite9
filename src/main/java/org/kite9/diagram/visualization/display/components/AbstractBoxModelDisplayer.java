@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.adl.ShapedDiagramElement;
@@ -18,7 +19,6 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.diagram.visualization.display.style.BoxStyle;

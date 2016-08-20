@@ -6,11 +6,11 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test17TwoContainerLinking extends AbstractFunctionalTest {
@@ -41,7 +41,7 @@ public class Test17TwoContainerLinking extends AbstractFunctionalTest {
     
     	Context con3 = new Context("b3", createList(con1, con2), true, null, c3);
     
-    	Diagram d = new Diagram("The Diagram", createList(con3), null);
+    	DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
     	renderDiagram(d);
     }
 
@@ -104,7 +104,7 @@ public class Test17TwoContainerLinking extends AbstractFunctionalTest {
     	Context i4 = new Context("i4", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	
     	Context outer = new Context("outer", HelpMethods.listOf(i1, i2, i3, i4), true, null, Layout.RIGHT);
-    	Diagram d= new Diagram(HelpMethods.listOf(outer), null);
+    	DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(outer), null);
     	renderDiagram(d);
     }
     

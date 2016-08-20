@@ -11,27 +11,27 @@ import java.util.Random;
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
-import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class TestContainers extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, Diagram> generateSuite(int minConnected, int maxConnected, int step1, int minConnection,
+	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int minConnection,
 			int maxConnection, int step2, int containers, Layout l) {
-		Map<Metrics, Diagram> out = new HashMap<Metrics, Diagram>();
+		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			for (int j = minConnection; j <= maxConnection; j += step2) {
 				Metrics m = new Metrics("c+" + containers + "r" + i + "x" + j);
 				System.out.println("Generating Metrics: " + m);
 				m.connecteds = i;
 				m.connections = j;
-				Diagram d = generateDiagram(m, containers, l);
+				DiagramXMLElement d = generateDiagram(m, containers, l);
 				out.put(m, d);
 			}
 		}
@@ -39,7 +39,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private Diagram generateDiagram(Metrics m, int containers, Layout l) {
+	private DiagramXMLElement generateDiagram(Metrics m, int containers, Layout l) {
 		Random r = new Random(m.name.hashCode());
 
 		System.out.println("Generating diagram for " + m);
@@ -82,7 +82,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		List<Contained> cl = new ArrayList<Contained>(items.length);
 		Collections.addAll(cl, contexts);
 
-		Diagram out = new Diagram(cl, null);
+		DiagramXMLElement out = new DiagramXMLElement(cl, null);
 		return out;
 	}
 
@@ -100,31 +100,31 @@ public class TestContainers extends AbstractPerformanceTest {
 	 */
 	@Test
 	public void increasingConnections3Containers() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, null);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, null);
 		render(suite1);
 	}
 
 	@Test
 	public void increasingConnections3ContainersHorizontal() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, Layout.HORIZONTAL);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, Layout.HORIZONTAL);
 		render(suite1);
 	}
 
 	@Test
 	public void increasingConnections6Containers() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 6, null);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 6, null);
 		render(suite1);
 	}
 	
 	@Test
 	public void increasingConnections8Containers() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 8, null);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 8, null);
 		render(suite1);
 	}
 	
 	@Test
 	public void brokenEdgesOutAndIn() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(17, 17, 1, 5, 5, 5 , 6, null);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(17, 17, 1, 5, 5, 5 , 6, null);
 		render(suite1);
 	}
 

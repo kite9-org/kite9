@@ -3,11 +3,11 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test16BendyArrows extends AbstractFunctionalTest {
 
@@ -27,7 +27,7 @@ public class Test16BendyArrows extends AbstractFunctionalTest {
 		new Link(bc, b);
 		new Link(bc, c);
 		
-		Diagram d= new Diagram("bendy", createList((Contained) a, b, c, ab, ac, bc), null);
+		DiagramXMLElement d= new DiagramXMLElement("bendy", createList((Contained) a, b, c, ab, ac, bc), null);
 		renderDiagram(d);
 	}
 	
@@ -47,7 +47,7 @@ public class Test16BendyArrows extends AbstractFunctionalTest {
 		new Link(bc, b);
 		new Link(bc, c);
 		
-		Diagram d= new Diagram("bendy", createList((Contained) a, b, c, ab, ac, bc), null);
+		DiagramXMLElement d= new DiagramXMLElement("bendy", createList((Contained) a, b, c, ab, ac, bc), null);
 		renderDiagram(d);
 	}
 

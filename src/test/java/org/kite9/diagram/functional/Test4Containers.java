@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test4Containers extends AbstractFunctionalTest {
 
@@ -18,7 +18,7 @@ public class Test4Containers extends AbstractFunctionalTest {
 		Context con2 = new Context("b2", createList(con1), true, null, null);
 		Context con3 = new Context("b3", createList(con2), true, null, null);
 
-		Diagram d = new Diagram("The Diagram", createList(con3), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 
@@ -30,7 +30,7 @@ public class Test4Containers extends AbstractFunctionalTest {
 		Context con2 = new Context("b2", createList(two), true, null, null);
 		Context con3 = new Context("b3", createList(con1, con2), true, null, null);
 
-		Diagram d = new Diagram("The Diagram", createList(con3), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 	
@@ -52,7 +52,7 @@ public class Test4Containers extends AbstractFunctionalTest {
 	
 		Context con3 = new Context("b3", createList(con1, con2), true, null, Layout.UP);
 
-		Diagram d = new Diagram("The Diagram", createList(con3), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 

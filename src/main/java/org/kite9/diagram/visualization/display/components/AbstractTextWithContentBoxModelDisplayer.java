@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.display.components;
 import java.util.List;
 
 import org.kite9.diagram.adl.CompositionalDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 

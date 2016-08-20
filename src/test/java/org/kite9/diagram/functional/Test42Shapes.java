@@ -7,17 +7,17 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
 import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 
@@ -25,11 +25,11 @@ public class Test42Shapes extends AbstractFunctionalTest {
 
 	@Test
 	public void test_42_1_DiamondShapedGlyph() throws IOException {
-		Diagram d = createDiagram("DIAMOND");
+		DiagramXMLElement d = createDiagram("DIAMOND");
 		renderDiagramLocal(d);
 	}
 
-	private Diagram createDiagram(String shape) {
+	private DiagramXMLElement createDiagram(String shape) {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
 		Glyph two = new Glyph("two", null, "A slightly longer one", null, null);
 		Glyph three = new Glyph("three", null, "Thinny", null, null);
@@ -41,13 +41,13 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		createLinks(one, two);
 		createDownLinks(one, four);
 		
-		Diagram d = new Diagram("The Diagram", createList((XMLElement) one, two, three, four), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((XMLElement) one, two, three, four), null);
 		return d;
 	}
 	
 	@Test
 	public void test_42_2_HexagonShapedGlyph() throws IOException {
-		Diagram d = createDiagram("HEXAGON");
+		DiagramXMLElement d = createDiagram("HEXAGON");
 		renderDiagramLocal(d);
 	}
 
@@ -67,19 +67,19 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_42_3_EllipseShapedGlyph() throws IOException {
-		Diagram d = createDiagram("ELLIPSE");
+		DiagramXMLElement d = createDiagram("ELLIPSE");
 		renderDiagramLocal(d);
 	}
 	
 	@Test
 	public void test_42_4_CircleShapedGlyph() throws IOException {
-		Diagram d = createDiagram("CIRCLE");
+		DiagramXMLElement d = createDiagram("CIRCLE");
 		renderDiagramLocal(d);
 	}
 	
 	@Test
 	public void test_42_5_RoundedRectangleShapedGlyph() throws IOException {
-		Diagram d = createDiagram(null);
+		DiagramXMLElement d = createDiagram(null);
 		renderDiagramLocal(d);
 	}
 	
@@ -94,7 +94,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		
 		addConnectors(out);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -124,7 +124,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		
 		addConnectors(out);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -139,7 +139,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -160,7 +160,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -178,12 +178,12 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		addConnectors(out, 5);
 		addConnectors(out, 3);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
 
-	private void renderDiagramLocal(Diagram d) throws IOException {
+	private void renderDiagramLocal(DiagramXMLElement d) throws IOException {
 		renderDiagram(d);
 		renderDiagramSizes(d);
 	}
@@ -213,7 +213,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		}
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -228,7 +228,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		}
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -243,7 +243,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		}
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -264,7 +264,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		}
 		addConnectors(out);
 
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -278,7 +278,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		out.add(c);
 		new Link(g, c, "DIAMOND", new TextLine("Watch me move"), "BARBED ARROW", new TextLine("Yowzer"), Direction.RIGHT);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -294,7 +294,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g2, null, null, null, null, Direction.DOWN);
 		new Link(g, g2, null, null, null, null, Direction.DOWN);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -313,7 +313,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g3, null, null, null, null, Direction.RIGHT);
 		new Link(g, g3, null, null, null, null, Direction.RIGHT);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 	
@@ -331,7 +331,7 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		new Link(g, g2, null, null, null, null, Direction.DOWN);
 		new Link(g, g3, null, null, null, null, Direction.RIGHT);
 		
-		Diagram d = new Diagram(out, null);
+		DiagramXMLElement d = new DiagramXMLElement(out, null);
 		renderDiagramLocal(d);
 	}
 }

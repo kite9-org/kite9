@@ -3,13 +3,13 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
-import org.kite9.diagram.xml.TextLine;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test29ContainerSizing extends AbstractFunctionalTest {
@@ -27,7 +27,7 @@ public class Test29ContainerSizing extends AbstractFunctionalTest {
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
 		
 		
-		Diagram d1 = new Diagram(HelpMethods.listOf(c1), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1), null);
 		renderDiagram(d1);
 		
 		
@@ -47,7 +47,7 @@ public class Test29ContainerSizing extends AbstractFunctionalTest {
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
 				
-		Diagram d1 = new Diagram(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		renderDiagram(d1);
 		
 		
@@ -73,7 +73,7 @@ public class Test29ContainerSizing extends AbstractFunctionalTest {
 		new Link(g5, g4, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 				
-		Diagram d1 = new Diagram(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		d1.setLayoutDirection(Layout.RIGHT);
 		
 		renderDiagram(d1);
@@ -100,7 +100,7 @@ public class Test29ContainerSizing extends AbstractFunctionalTest {
 		
 		
 				
-		Diagram d1 = new Diagram(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		
 		renderDiagram(d1);
 		
@@ -109,7 +109,7 @@ public class Test29ContainerSizing extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_29_5_EmptyDiagram() throws IOException {
-		Diagram d1 = new Diagram();
+		DiagramXMLElement d1 = new DiagramXMLElement();
 		renderDiagram(d1);
 	}
 	

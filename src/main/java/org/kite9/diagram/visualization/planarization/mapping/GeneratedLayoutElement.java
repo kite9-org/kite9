@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.AbstractBiDirectional;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.framework.logging.LogicException;
 
 /**

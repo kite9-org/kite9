@@ -1,13 +1,13 @@
 package org.kite9.diagram.visualization.format.pos;
 
 import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class DiagramChecker {
@@ -18,7 +18,7 @@ public class DiagramChecker {
 		
 	}
 
-	public static void checkConnnectionElements(Diagram d, final ConnectionAction ca) {
+	public static void checkConnnectionElements(DiagramXMLElement d, final ConnectionAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
 		dev.visit(d, new VisitorAction() {
 

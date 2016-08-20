@@ -3,17 +3,17 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Key;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Key;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
-import org.kite9.diagram.xml.Symbol.SymbolShape;
 
 public class Test49SVG extends AbstractFunctionalTest {
 
@@ -22,7 +22,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		Glyph one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
 		Glyph two = new Glyph("RG", "Stereo", "Rob's Other Glyph", null, null);
 		Context c1 = new Context(createList(one, two), true, null, null);
-		Diagram d = new Diagram("The Diagram", listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", listOf(c1), null);
 
 		renderDiagramSVG(d);
 	}
@@ -33,7 +33,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
 				"Some text", 'A', SymbolShape.HEXAGON))), new TextLine("Here is line 2"),
 				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
-		Diagram d = new Diagram("The Diagram", createList(one), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
 		renderDiagramSVG(d);
 	}
 
@@ -41,7 +41,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 	public void test_49_3_GlyphWithSymbolOnly() throws IOException {
 		Glyph one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
 				new Symbol("Some text", 'a', SymbolShape.DIAMOND), new Symbol("Some text", 'a', SymbolShape.HEXAGON)));
-		Diagram d = new Diagram("The Diagram", createList(one), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
 		renderDiagramSVG(d);
 	}
 
@@ -53,7 +53,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		Key k = new Key("some bold text", null, createList(new Symbol("Some unholy information", 'S',
 				SymbolShape.CIRCLE)));
 
-		Diagram d = new Diagram("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
 		renderDiagramSVG(d);
 	}
 
@@ -71,7 +71,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
-		Diagram d = new Diagram("D", createList((Contained) con1, con5, con4, con3, con2), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con5, con4, con3, con2), null);
 		renderDiagramSVG(d);
 	}
 
@@ -87,7 +87,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new Link(a, one);
 		new Link(a, two);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a, two), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
 		renderDiagramSVG(d);
 	}
 
@@ -105,7 +105,7 @@ public class Test49SVG extends AbstractFunctionalTest {
 		new Link(a, two);
 		new TurnLink(a, three);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
 		
 		renderDiagramSVG(d);
 	}

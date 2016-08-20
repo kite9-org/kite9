@@ -3,12 +3,12 @@ package org.kite9.diagram.visualization.display.components;
 import java.awt.Color;
 import java.awt.geom.GeneralPath;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.DebugLine;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;

@@ -9,7 +9,7 @@ import org.kite9.diagram.visualization.format.AbstractGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Position info renderer doesn't render an image, it returns the diagram containing information about each graphical
@@ -19,7 +19,7 @@ import org.kite9.diagram.xml.Diagram;
  * @author robmoffat
  * 
  */
-public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram> {
+public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<DiagramXMLElement> {
 
 	BufferedImage bi;
 	Graphics2D g2;
@@ -41,7 +41,7 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 	}
 
 	@Override
-	public Diagram render(Diagram d) {
+	public DiagramXMLElement render(DiagramXMLElement d) {
 		DiagramChecker.checkConnnectionElements(d, DiagramChecker.SET_CONTRADICTING);
 		Dimension2D out = size(d);
 		dea.initialize(this, out);

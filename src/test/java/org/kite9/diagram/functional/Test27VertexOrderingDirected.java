@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 
@@ -35,7 +35,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][4], out[0][9], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][4], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -60,7 +60,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 		new TurnLink(out[0][0], out[0][1]);
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -89,7 +89,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[1][3], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -115,7 +115,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][0], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		new Link(out[0][0], out[0][4], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -135,7 +135,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
 		new Link(out[0][5], out[0][3]);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -162,7 +162,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new HopLink(out[0][3], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 		
 	}
 
@@ -193,7 +193,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][6], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][7], out[0][8], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	
@@ -217,7 +217,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 	
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	
@@ -241,7 +241,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][5], out[0][6], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	
@@ -270,7 +270,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		new Link(out[0][3], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 		
 		
 	}
@@ -294,7 +294,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 		new TurnLink(out[0][0], out[0][1]);
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 }

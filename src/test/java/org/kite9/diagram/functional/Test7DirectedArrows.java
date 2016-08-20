@@ -3,12 +3,12 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 
 /**
@@ -28,7 +28,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two);
 		new Link(a, three);
-		Diagram d = new Diagram("D", createList((Contained) one, two, three, a),
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -44,7 +44,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
-		Diagram d = new Diagram("D", createList((Contained) one, two, meets,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, meets,
 				sees), null);
 
 		renderDiagram(d);
@@ -66,7 +66,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(asks, three, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(looks, four, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		Diagram d = new Diagram("D", createList((Contained) one, two, meets,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, meets,
 				sees, asks, looks, three, four), null);
 
 		renderDiagram(d);
@@ -85,7 +85,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new TurnLink(sees, one);
 		new TurnLink(meets, two);
 
-		Diagram d = new Diagram("D", createList((Contained) one, two, meets,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, meets,
 				sees), null);
 
 		renderDiagram(d);
@@ -100,7 +100,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
-		Diagram d = new Diagram("D", createList((Contained) one, two, three, a),
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -115,7 +115,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		Diagram d = new Diagram("D", createList((Contained) one, two, three, a),
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -143,7 +143,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br);
 
-		Diagram d = new Diagram("D", createList((Contained) tl, tr, bl, br, top,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);
@@ -171,7 +171,7 @@ public class Test7DirectedArrows extends AbstractFunctionalTest {
 		new Link(right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 
-		Diagram d = new Diagram("D", createList((Contained) tl, tr, bl, br, top,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);

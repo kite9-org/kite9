@@ -2,12 +2,12 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 
 import java.util.Collection;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;

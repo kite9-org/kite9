@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
@@ -23,7 +23,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		Glyph a = new Glyph("", "A", null, null);
 		Glyph b = new Glyph("", "B", null, null);
 		new Link(a, b, null, null, null, null, Direction.UP);
-		Diagram d = new Diagram("test", createList((Contained) a, b), null);
+		DiagramXMLElement d = new DiagramXMLElement("test", createList((Contained) a, b), null);
 
 		renderDiagram(d);
 
@@ -41,7 +41,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(b, c, null, null, null, null, Direction.DOWN);
 		new Link(d, c, null, null, null, null, Direction.UP);
 		new Link(e, c, null, null, null, null, Direction.LEFT);
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, e), null);
 
 		renderDiagram(diag);
 
@@ -64,7 +64,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(e, two, null, null, null, null, Direction.LEFT);
 		new Link(e, three, null, null, null, null, Direction.LEFT);
 
-		Diagram d = new Diagram("test", createList((Contained) s, e, one, two, three), null);
+		DiagramXMLElement d = new DiagramXMLElement("test", createList((Contained) s, e, one, two, three), null);
 
 		renderDiagram(d);
 
@@ -98,7 +98,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(d1, d2, null, null, null, null, Direction.RIGHT);
 		new Link(e1, e2, null, null, null, null, Direction.DOWN);
 
-		Diagram diag = new Diagram("test", createList((Contained) a1, b1, c, d1, e1, a2, b2, d2, e2), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a1, b1, c, d1, e1, a2, b2, d2, e2), null);
 
 		renderDiagram(diag);
 
@@ -121,7 +121,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		// the loop - must go round the outside
 		new TurnLink(a, e);
 
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, e), null);
 
 		renderDiagram(diag);
 
@@ -149,7 +149,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new TurnLink(to, d);
 		new TurnLink(to, e);
 
-		Diagram diag = new Diagram("dia", createList((Contained) from, to, a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) from, to, a, b, c, d, e), null);
 
 		renderDiagram(diag);
 
@@ -175,7 +175,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(budb2, mid2, null, null, null, null, Direction.LEFT);
 		new Link(buda2, mid2, null, null, null, null, Direction.RIGHT);
 
-		Diagram diag = new Diagram("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
 
 		renderDiagram(diag);
 
@@ -201,7 +201,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(budb2, mid2, null, null, null, null, Direction.UP);
 		new Link(buda2, mid2, null, null, null, null, Direction.DOWN);
 
-		Diagram diag = new Diagram("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
 
 		renderDiagram(diag);
 
@@ -226,7 +226,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new HopLink(c, m3, null, null, null, null, Direction.UP);
 		new HopLink(d, m2, null, null, null, null, Direction.LEFT);
 		new HopLink(d, m3, null, null, null, null, Direction.LEFT);
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, m1, m2, m3, m4), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, m1, m2, m3, m4), null);
 
 		renderDiagram(diag);
 
@@ -252,7 +252,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(budb2, mid2, null, null, null, null, Direction.LEFT);
 		new Link(buda2, mid1, null, null, null, null, Direction.RIGHT);
 
-		Diagram diag = new Diagram("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) flat, buda, budb, buda2, budb2, mid1, mid2), null);
 
 		renderDiagram(diag);
 
@@ -272,7 +272,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(buda, mid1, null, null, null, null, Direction.UP);
 		new Link(budb, mid1, null, null, null, null, Direction.DOWN);
 
-		Diagram diag = new Diagram("dia", createList((Contained) flat, buda, budb, mid1), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) flat, buda, budb, mid1), null);
 
 		renderDiagram(diag);
 
@@ -295,7 +295,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		// tricky bit, crossing the 's' like  a dollar sign
 		new Link(a, e, null, null, null, null, Direction.DOWN);
 
-		Diagram diag = new Diagram("dia", createList((Contained) a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) a, b, c, d, e), null);
 
 		renderDiagram(diag);
 	}
@@ -326,7 +326,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		// tricky bit, crossing the 's' like  a dollar sign
 		new HopLink(a, e, null, null, null, null, Direction.DOWN);
 
-		Diagram diag = new Diagram("dia", createList((Contained) a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) a, b, c, d, e), null);
 
 		renderDiagram(diag);
 	}
@@ -373,7 +373,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(e2, e3, null, null, null, null, Direction.RIGHT);
 		new Link(e3, e4, null, null, null, null, Direction.RIGHT);
 
-		Diagram diag = new Diagram("dia", createList((Contained) a, b1, c, d, b2, b3, e1, e2, e3, e4), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) a, b1, c, d, b2, b3, e1, e2, e3, e4), null);
 
 		renderDiagram(diag);
 	}
@@ -405,7 +405,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(a4, b4, null, null, null, null, Direction.DOWN);
 		new Link(a5, b5, null, null, null, null, Direction.DOWN);
 		
-		Diagram diag = new Diagram("dia", createList(a, b ), Layout.DOWN,null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList(a, b ), Layout.DOWN,null);
 
 		renderDiagram(diag);
 	}
@@ -435,7 +435,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(b, d, null, null, null, null, Direction.RIGHT);
 		new HopLink(c, d, null, null, null, null, Direction.RIGHT);
 		
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, m1, m2, m3, m4), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, m1, m2, m3, m4), null);
 
 		renderDiagram(diag);
 
@@ -459,7 +459,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(m1, m2, null, null, null, null, Direction.DOWN);
 		new Link(d, b, null, null, null, null, Direction.DOWN);
 		
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, m1, m2), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, m1, m2), null);
 
 		renderDiagram(diag);
 
@@ -480,7 +480,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(d, e, null, null, null, null, Direction.RIGHT);
 		new Link(d, b, null, null, null, null, Direction.DOWN);
 		
-		Diagram diag = new Diagram("test", createList((Contained) a, b, c, d, e), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) a, b, c, d, e), null);
 
 		renderDiagram(diag);
 
@@ -522,7 +522,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		Context ac3 = new Context("left", HelpMethods.listOf(ml, bl), true, null, null);
 		Context ac4 = new Context("bottom", HelpMethods.listOf(bm, br), true, null, null);
 
-		Diagram diag = new Diagram("test", createList((Contained) ac1, ac2, ac3, ac4, mm), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) ac1, ac2, ac3, ac4, mm), null);
 
 		renderDiagram(diag);
 	}
@@ -551,7 +551,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 //		new Link(a, b, null, null, null, null, Direction.RIGHT);
 //		new Link(b, c, null, null, null, null, Direction.RIGHT);
 		
-		Diagram diag = new Diagram("test", createList((Contained) ac1, one, two, three, four), null);
+		DiagramXMLElement diag = new DiagramXMLElement("test", createList((Contained) ac1, one, two, three, four), null);
 
 		renderDiagram(diag);
 	}
@@ -586,7 +586,7 @@ public class Test18DirectedPlanarization extends AbstractFunctionalTest {
 		new Link(a,longone, null, null, null, null, Direction.RIGHT);
 		new Link(longone,d, null, null, null, null, Direction.RIGHT);
 		
-		Diagram dia = new Diagram("dia", HelpMethods.listOf(a, b1, b2, c1, c2, c3, d, longone), null);
+		DiagramXMLElement dia = new DiagramXMLElement("dia", HelpMethods.listOf(a, b1, b2, c1, c2, c3, d, longone), null);
 		renderDiagram(dia);
 	}
 }

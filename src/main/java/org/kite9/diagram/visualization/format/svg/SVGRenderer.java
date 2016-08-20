@@ -19,7 +19,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -63,7 +63,7 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 	}
 
 
-	public String render(Diagram something) {
+	public String render(DiagramXMLElement something) {
 		try {
 			Dimension2D out = size(something);
 			dea.initialize(this, out);
@@ -77,7 +77,7 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 		}
 	}
 
-	protected String output(Diagram something) throws SVGGraphics2DIOException, IOException {
+	protected String output(DiagramXMLElement something) throws SVGGraphics2DIOException, IOException {
 		g2.setTopLevelGroup(topGroup);
 		Writer outw = new StringWriter();
 		g2.stream(outw, false);

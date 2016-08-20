@@ -13,7 +13,11 @@ import java.util.Map.Entry;
 import java.util.TreeSet;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
@@ -21,7 +25,6 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
@@ -31,10 +34,7 @@ import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -47,7 +47,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 	
 	public static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-	public void render(Map<Metrics, Diagram> diagrams) throws IOException {
+	public void render(Map<Metrics, DiagramXMLElement> diagrams) throws IOException {
 		if (diagrams.size()>2) {
 			Kite9Log.setLogging(false);
 		}
@@ -57,7 +57,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 		TreeSet<Metrics> metrics = new TreeSet<Metrics>();
 		Throwable fail = null;
 
-		for (Entry<Metrics, Diagram> d1 : diagrams.entrySet()) {
+		for (Entry<Metrics, DiagramXMLElement> d1 : diagrams.entrySet()) {
 			try {
 				renderDiagram(d1.getValue(), theTest, m.getName(), true, d1.getKey());
 				metrics.add(d1.getKey());
@@ -106,11 +106,11 @@ public class AbstractPerformanceTest extends TestingHelp {
 		}
 	}
 
-	private void writeFailedDiagram(Metrics key, Diagram value) {
+	private void writeFailedDiagram(Metrics key, DiagramXMLElement value) {
 		writeOutput(this.getClass(), "failed" , key.name+".xml", new XMLHelper().toXML(value));
 	}
 
-	private void renderDiagram(Diagram d2, Class<?> theTest, String subtest, boolean watermark, Metrics m)
+	private void renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, Metrics m)
 			throws Exception {
 		try {
 			System.out.println("Beginning: "+m);
@@ -119,7 +119,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 
 			writeOutput(theTest, subtest, "diagram.xml", xml);
 
-			Diagram d = (Diagram) helper.fromXML(xml);
+			DiagramXMLElement d = (DiagramXMLElement) helper.fromXML(xml);
 			BufferedImageProcessingPipeline pipeline = getPipeline(watermark, m);
 			BufferedImage bi = pipeline.process(d);
 
@@ -146,7 +146,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 		return new TimingPipeline(cd, renderer);
 	}
 
-	private void measure(Diagram d, final Metrics m) {
+	private void measure(DiagramXMLElement d, final Metrics m) {
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 
 			public void visit(DiagramElement de) {

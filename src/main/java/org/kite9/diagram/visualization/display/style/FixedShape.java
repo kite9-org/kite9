@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.display.style;
 
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.adl.StyledDiagramElement;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
-import org.kite9.diagram.xml.LinkTerminator;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.Symbol.SymbolShape;
 
 /**
  * This applies to symbols and arrow ends:  it extends the ShapeStyle to provide details of the shape as well.

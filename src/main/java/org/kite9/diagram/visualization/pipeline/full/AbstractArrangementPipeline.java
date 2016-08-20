@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangem
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 /**
  * Basic pipeline that can render to any form of output.
@@ -46,7 +46,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	Orthogonalization orth;
 	Compaction c;
 
-	protected Planarization createPlanarization(Diagram d) {
+	protected Planarization createPlanarization(DiagramXMLElement d) {
 		return createPlanarizer().planarize(d);
 	}
 
@@ -101,7 +101,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 		return false;
 	}
 		
-	public Diagram arrange(Diagram d) {
+	public DiagramXMLElement arrange(DiagramXMLElement d) {
 		
 		pln = createPlanarization(d);
 		orth = createOrthogonalization(pln);

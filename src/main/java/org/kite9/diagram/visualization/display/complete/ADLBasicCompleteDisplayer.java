@@ -2,10 +2,9 @@ package org.kite9.diagram.visualization.display.complete;
 
 import java.awt.Shape;
 
-import org.kite9.diagram.adl.PositionableDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.display.components.AbstractBoxModelDisplayer;
 import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;
@@ -22,7 +21,6 @@ import org.kite9.diagram.visualization.display.components.KeyTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
 import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
-import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
@@ -121,7 +119,7 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 				Displayer cd = getDisplayer(de);
 				if (cd instanceof AbstractBoxModelDisplayer) {
 					return ((AbstractBoxModelDisplayer)cd).getPerimeter(de, 
-							(RectangleRenderingInformation) ((PositionableDiagramElement)de).getRenderingInformation());
+							(RectangleRenderingInformation) de.getRenderingInformation());
 				} else {
 					return null;
 				}

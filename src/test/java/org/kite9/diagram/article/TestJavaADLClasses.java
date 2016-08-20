@@ -4,30 +4,30 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.framework.Kite9Item;
 
 public class TestJavaADLClasses extends AbstractFunctionalTest {
 
 	@Test
 	public void javaArchitecture1() throws IOException {
-		Diagram d = architecture();
+		DiagramXMLElement d = architecture();
 
 		renderDiagramNoWM(d);
 	}
 
 	@Kite9Item
-	public Diagram architecture() {
+	public DiagramXMLElement architecture() {
 		Glyph diagram = new Glyph("xml", "A Diagram Definition", null, null);
 		Glyph response = new Glyph("zip file", "Response", createList(new TextLine("PNG Image (or) "), new TextLine(
 				"PDF Image"), new TextLine("Client-side image map")), null);
@@ -46,7 +46,7 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 		Context ourside = new Context("ours", createList((Contained) diagramServer), true, new TextLine(
 				"Kite9 Servers"), null);
 
-		Diagram d = new Diagram("Arch", createList((Contained) yourside, transport, ourside), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) yourside, transport, ourside), null);
 
 		// sends
 		new Link(client, sends, null, null, null, null, Direction.RIGHT);
@@ -89,7 +89,7 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 		Context ourside = new Context("ours", createList((Contained) diagramServer), true, new TextLine(
 				"Kite9 Servers"), null);
 
-		Diagram d = new Diagram("Arch", createList((Contained) yourside, transport, ourside), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) yourside, transport, ourside), null);
 
 		// converts
 

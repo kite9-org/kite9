@@ -3,13 +3,13 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 
@@ -25,7 +25,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		new Link(a, one, null, null, null, null, Direction.UP);
 		new Link(a, two);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a, two), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
 		renderDiagram(d);
 	}
 
@@ -40,7 +40,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		new Link(a, one);
 		new Link(a, two);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, two), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 	}
 
@@ -58,7 +58,7 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 }

@@ -10,22 +10,22 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test45Hinting extends AbstractFunctionalTest {
 
 
-	private void checkInVerticalLine(Diagram d2) {
+	private void checkInVerticalLine(DiagramXMLElement d2) {
 		DiagramElement up = getById("up", d2);
 		DiagramElement mid = getById("mid", d2);
 		DiagramElement down = getById("down", d2);
@@ -33,7 +33,7 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		DiagramAssert.assertInDirection(mid, down, Direction.DOWN);
 	}
 	
-	private void checkInOrdinalHorizontalLine(Diagram d2) {
+	private void checkInOrdinalHorizontalLine(DiagramXMLElement d2) {
 		DiagramElement up = getById("up", d2);
 		DiagramElement mid = getById("mid", d2);
 		DiagramElement down = getById("down", d2);
@@ -43,7 +43,7 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		DiagramAssert.assertInDirection(mid, up, Direction.RIGHT);
 	}
 	
-	private void checkInHorizontalLine(Diagram d2) {
+	private void checkInHorizontalLine(DiagramXMLElement d2) {
 		Contained prev = null;
 		for (Contained c : d2.getContents()) {
 			if (prev != null) {
@@ -53,16 +53,16 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		}
 	}
 	
-	private Diagram create8Glyphs() {
+	private DiagramXMLElement create8Glyphs() {
 		List<Contained> created = new ArrayList<Contained>();
 		for (int i = 0; i < 8; i++) {
 			created.add(new Glyph("glyph"+i, "", "G"+i, null, null));
 		}
 		
-		return new Diagram("d", created, Layout.HORIZONTAL, null);
+		return new DiagramXMLElement("d", created, Layout.HORIZONTAL, null);
 	}
 
-	private Diagram create4Glyphs(boolean addLinks, boolean addHints) {
+	private DiagramXMLElement create4Glyphs(boolean addLinks, boolean addHints) {
 		Glyph up = new Glyph("up", null, "UP", null, null);
 		Glyph mid = new Glyph("mid", null, "MID", null, null);
 		Glyph down = new Glyph("down", null, "DOWN", null, null);
@@ -78,7 +78,7 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		}
 		
 		Glyph next = new Glyph("next", null, "NEXT", null, null);
-		Diagram d= new Diagram(HelpMethods.listOf(next, down, mid, up), null);
+		DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(next, down, mid, up), null);
 		
 		if (addLinks) {
 			new Link(up, next, null, null, null, null, Direction.RIGHT);
@@ -90,23 +90,23 @@ public class Test45Hinting extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_45_1_UpDownPlanarizationHinting() throws IOException {
-		Diagram d = create4Glyphs(true, true);
-		Diagram d2 = renderDiagram(d);
+		DiagramXMLElement d = create4Glyphs(true, true);
+		DiagramXMLElement d2 = renderDiagram(d);
 		checkInVerticalLine(d2);
 	}
 	
 	@Test
 	public void test_45_2_UpDownPlanarizationHinting2() throws IOException {
-		Diagram d= create4Glyphs(false, true);
-		Diagram d2 = renderDiagram(d);
+		DiagramXMLElement d= create4Glyphs(false, true);
+		DiagramXMLElement d2 = renderDiagram(d);
 		checkInHorizontalLine(d2);
 	}
 	
 	@Test
 	public void test_45_3_OrdinalOrder() throws IOException {
-		Diagram d= create4Glyphs(false, false);
+		DiagramXMLElement d= create4Glyphs(false, false);
 		List<Contained> ordered1 = d.getContents();
-		Diagram d2 = renderDiagram(d);
+		DiagramXMLElement d2 = renderDiagram(d);
 		checkInOrdinalHorizontalLine(d2);
 		List<Contained> ordered2 = getInOrder(new ArrayList<Contained>(d2.getContents()));
 		Assert.assertEquals(ordered1.toString(), ordered2.toString());
@@ -115,8 +115,8 @@ public class Test45Hinting extends AbstractFunctionalTest {
 	@Test
 	public void test_45_4_OrdinalOrderOverridesPositionHinting() throws IOException {
 		// check that diagram orders glyphs in the collection order
-		Diagram d = create8Glyphs();
-		Diagram d2 = renderDiagram(d);
+		DiagramXMLElement d = create8Glyphs();
+		DiagramXMLElement d2 = renderDiagram(d);
 		checkInHorizontalLine(d2);
 		
 		// change the collection order, and check that it is preserved
@@ -125,7 +125,7 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		Collections.swap(d2.getContents(), 6, 2);
 		
 		List<Contained> ordered2 = new ArrayList<Contained>(d2.getContents());
-		Diagram d3 = renderDiagram(d2);
+		DiagramXMLElement d3 = renderDiagram(d2);
 		List<Contained> ordered3 = getInOrder(new ArrayList<Contained>(d3.getContents()));
 		Assert.assertEquals(ordered2.toString(), ordered3.toString());
 	}
@@ -136,10 +136,10 @@ public class Test45Hinting extends AbstractFunctionalTest {
 		Glyph b = new Glyph("b", "", "b", null, null);
 		Glyph c = new Glyph("c", "", "c", null, null);
 		
-		Diagram d = new Diagram("d", HelpMethods.listOf(a, b, c), Layout.VERTICAL, null);
+		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a, b, c), Layout.VERTICAL, null);
 		new Link(a, b);
 		new Link(a, c);
-		Diagram d2 = renderDiagram(d);
+		DiagramXMLElement d2 = renderDiagram(d);
 		System.out.println(d2.getContents());
 		
 		// make sure the ordinal order has changed to reflect the layout.

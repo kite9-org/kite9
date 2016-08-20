@@ -10,20 +10,20 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class TestHierarchy extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, Diagram> generateSuite(int minConnected, int maxConnected, int step1, int size, Direction dir) {
-		Map<Metrics, Diagram> out = new LinkedHashMap<Metrics, Diagram>();
+	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size, Direction dir) {
+		Map<Metrics, DiagramXMLElement> out = new LinkedHashMap<Metrics, DiagramXMLElement>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("hi" + i+" s "+size);
 			m.connecteds = i;
-			Diagram d = generateDiagram(m, size, dir);
+			DiagramXMLElement d = generateDiagram(m, size, dir);
 			out.put(m, d);
 
 		}
@@ -31,7 +31,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private Diagram generateDiagram(Metrics m, int size, Direction d) {
+	private DiagramXMLElement generateDiagram(Metrics m, int size, Direction d) {
 		List<Contained> allGlyphs = new ArrayList<Contained>();
 		Deque<Contained> needChildren = new ArrayDeque<Contained>();
 		
@@ -44,7 +44,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 			createNewLevel(top, allGlyphs, m.connecteds, size, d, needChildren);
 		}
 
-		Diagram out = new Diagram(allGlyphs, null);
+		DiagramXMLElement out = new DiagramXMLElement(allGlyphs, null);
 		return out;
 	}
 
@@ -63,31 +63,31 @@ public class TestHierarchy extends AbstractPerformanceTest {
 
 	@Test
 	public void downwardsBy3() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(20, 50, 5, 3, Direction.DOWN);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 3, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void downwardsBy3_broken() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(50, 50, 5, 3, Direction.DOWN);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(50, 50, 5, 3, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void rightBy3() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(20, 50, 5, 3, Direction.RIGHT);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 3, Direction.RIGHT);
 		render(suite1);
 	}
 	
 	@Test
 	public void downwardsBy6() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(20, 50, 5, 6, Direction.DOWN);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 6, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void rightBy6() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(20, 50, 5, 6, Direction.RIGHT);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 6, Direction.RIGHT);
 		render(suite1);
 	}
 	

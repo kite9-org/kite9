@@ -6,15 +6,15 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.diagram.xml.XMLElement;
@@ -34,7 +34,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.LEFT);
 
@@ -51,7 +51,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 
@@ -68,7 +68,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.HORIZONTAL);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 
@@ -85,7 +85,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.VERTICAL);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 
@@ -103,7 +103,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3), true, null, null);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
@@ -129,7 +129,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new ContradictingLink(g1, g3, null, null, null, null, Direction.DOWN);
 
@@ -149,7 +149,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l1 = new Link(g1, g3, null, null, null, null, Direction.RIGHT);
 		Link l2 = new Link(g1, g4, null, null, null, null, Direction.RIGHT);
@@ -191,7 +191,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Glyph g1 = new Glyph("0", null, "0", null, null);
 		Glyph g2 = new Glyph("1", null, "1", null, null);
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1), true, null, Layout.DOWN);
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1, g2), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2), Layout.DOWN, null);
 
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 
@@ -205,7 +205,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1), true, null, Layout.DOWN);
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
 
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g1, g3, null, null, null, null, Direction.UP);
@@ -226,7 +226,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g0, g1, g2, g3), true, null,
 				Layout.HORIZONTAL);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l1 = new ContradictingLink(g0, g2, null, null, null, null, Direction.DOWN);
 		Link l2 = new ContradictingLink(g0, g3, null, null, null, null, Direction.DOWN);
@@ -246,7 +246,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) i1, i2, i3), true, null, null);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1, o2), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, o2), null);
 
 		Link l2 = new Link(o2, i3, null, null, null, null, Direction.DOWN);
 		Link l3 = new Link(i1, o2, null, null, null, null, Direction.RIGHT);
@@ -274,7 +274,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) o1, o2), true, null, null);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
 
 		Link l2 = new Link(o2, i2, null, null, null, null, Direction.UP);
 
@@ -325,7 +325,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		new Link(out[3][0], out[3][2], null, null, null, null, Direction.RIGHT);
 		new Link(out[3][1], out[3][2], null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new Diagram("bob", out2, Layout.HORIZONTAL, null));
+		renderDiagram(new DiagramXMLElement("bob", out2, Layout.HORIZONTAL, null));
 
 	}
 
@@ -346,7 +346,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
@@ -367,7 +367,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 
-		Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
@@ -385,7 +385,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link c = new ContradictingLink(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		Link d = new Link(out[0][3], out[0][0], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 	}
 
 	@Test
@@ -402,7 +402,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link c = new ContradictingLink(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		Link d = new ContradictingLink(out[0][3], out[0][0], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -459,7 +459,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 			new Link((Connected) one, (Connected) con1);
 			new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 
-			Diagram d = new Diagram("The Diagram", createList(con1, a), null);
+			DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
 			renderDiagram(d);
 		} catch (ElementsMissingException e) {
 			Assert.assertEquals(1, e.getCountOfMissingElements());
@@ -505,7 +505,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3), true, null, null);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
@@ -528,7 +528,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, null);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1, g3), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g3), null);
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
@@ -551,7 +551,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
 
-		Diagram d = new Diagram("d1", HelpMethods.listOf(c1), null);
+		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 		Link l = new Link(g1, g2, null, null, null, null, Direction.LEFT);
 		l.setShapeName(LinkLineStyle.INVISIBLE);

@@ -6,13 +6,13 @@ import org.kite9.diagram.builders.wizards.objectgraph.ObjectDependencyWizard;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.Kite9Item;
 
 public class PlanarizationDiagrams {
 
 	@Kite9Item
-	public Diagram planarizationView(DiagramBuilder db) {
+	public DiagramXMLElement planarizationView(DiagramBuilder db) {
 		ClassDiagramWizard erw = new ClassDiagramWizard(db);
 		erw.show(db.withAnnotatedClasses());
 		db.withKeyText("Planarization Diagram", "This diagram shows how the main attr of a planarization come together");
@@ -20,7 +20,7 @@ public class PlanarizationDiagrams {
 	}
 	
 	@Kite9Item 
-	public Diagram planarizationDependencyGraph(final DiagramBuilder db) {
+	public DiagramXMLElement planarizationDependencyGraph(final DiagramBuilder db) {
 		ObjectDependencyWizard odw = new ObjectDependencyWizard(db, null);
 		odw.setShowMethodReturnValues(true);
 		odw.setValueFilter(db.and(

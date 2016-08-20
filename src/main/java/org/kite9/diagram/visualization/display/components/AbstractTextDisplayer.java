@@ -2,9 +2,9 @@ package org.kite9.diagram.visualization.display.components;
 
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;

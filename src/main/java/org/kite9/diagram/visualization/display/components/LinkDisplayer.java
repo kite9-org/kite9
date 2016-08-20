@@ -9,6 +9,9 @@ import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Dimension2D;
@@ -17,7 +20,6 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation.Decoration;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
@@ -25,8 +27,6 @@ import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
-import org.kite9.diagram.xml.Link;
-import org.kite9.diagram.xml.LinkTerminator;
 import org.kite9.framework.logging.LogicException;
 
 public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDisplayer {

@@ -3,18 +3,18 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Symbol;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.Symbol;
-import org.kite9.diagram.xml.TextLine;
-import org.kite9.diagram.xml.Symbol.SymbolShape;
 
 public class Test15ContainerLinking extends AbstractFunctionalTest {
 
@@ -32,7 +32,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
-		Diagram d = new Diagram("D", createList((Contained) con1, con5, con4, con3, con2), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con5, con4, con3, con2), null);
 		renderDiagram(d);
 	}
 
@@ -49,7 +49,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 				"meets 2"));
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine("meets 3") ) ;
 
-		Diagram d = new Diagram("D", createList((Contained) con1, g1, g2, g3), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -68,7 +68,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine(
 				"meets 3"), Direction.RIGHT);
 
-		Diagram d = new Diagram("D", createList((Contained) con1, g1, g2, g3), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -86,7 +86,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine(
 				"meets 3"), Direction.LEFT);
 
-		Diagram d = new Diagram("D", createList((Contained) con1, g1, g2, g3), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -101,7 +101,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, g1, LinkEndStyle.ARROW, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine(
 				"meets"));
 
-		Diagram d = new Diagram("D", createList((Contained) con2, g1), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con2, g1), null);
 		renderDiagram(d);
 	}
 	
@@ -112,7 +112,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		Context con3 = new Context("con3", null, true, new TextLine("c3"), null);
 		//Context con4 = new Context("con4", null, true, new TextLine("c4"), null);
 		new Link(con1, con3);
-		Diagram d = new Diagram("D", createList((Contained) con1, con3), Layout.RIGHT, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con3), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -123,7 +123,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new TurnLink(con1, con2);
 		new TurnLink(con1, con2);
 		new TurnLink(con1, con2);
-		Diagram d = new Diagram("D", createList((Contained) con1, con2), Layout.RIGHT, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con2), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -139,7 +139,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, g2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null);
 		new Link(con1, g3, null, null, LinkEndStyle.ARROW, null ) ;
 
-		Diagram d = new Diagram("D", createList((Contained) con1, g1, g2, g3), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -150,7 +150,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
 		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
-		Diagram d = new Diagram("D", createList((Contained) con1, con2), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con2), null);
 		renderDiagram(d);
 	}
 	
@@ -166,7 +166,7 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
-		Diagram d = new Diagram("D", createList((Contained) con1, con3, con2), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, con3, con2), null);
 		renderDiagram(d);
 	}
 

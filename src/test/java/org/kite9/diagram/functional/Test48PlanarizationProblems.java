@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test48PlanarizationProblems extends AbstractFunctionalTest {
 
@@ -53,7 +53,7 @@ public class Test48PlanarizationProblems extends AbstractFunctionalTest {
 		
 		
 		
-		Diagram diag = new Diagram("dia", createList((Contained) a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11), null);
+		DiagramXMLElement diag = new DiagramXMLElement("dia", createList((Contained) a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11), null);
 
 		renderDiagram(diag);
 	}

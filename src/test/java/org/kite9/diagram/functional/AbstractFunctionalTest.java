@@ -6,15 +6,13 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import org.junit.Before;
-import org.kite9.diagram.adl.AbstractConnectedContained;
-import org.kite9.diagram.adl.IdentifiableDiagramElement;
-import org.kite9.diagram.style.DiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.LinkDisplayer;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractXMLElement;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.logging.Kite9Log;
@@ -26,38 +24,38 @@ public class AbstractFunctionalTest extends HelpMethods {
 		return "/functional-test.zip";
 	}
 	
-	public Diagram renderDiagram(Diagram d, TestingEngine te, boolean watermark) throws IOException {
+	public DiagramXMLElement renderDiagram(DiagramXMLElement d, TestingEngine te, boolean watermark) throws IOException {
 		return te.renderDiagram(d, true, checkDiagramSize(), checkEdgeDirections(), checkNoHops(), checkEverythingStraight(), checkLayout(), checkNoContradictions(), checkImage());
 	}
 
-	public Diagram renderDiagramNoSerialize(Diagram d) throws IOException {
+	public DiagramXMLElement renderDiagramNoSerialize(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName(), false);
 		return renderDiagram(d, te, true);
 	}
 
-	public Diagram renderDiagramNoWM(Diagram d) throws IOException {
+	public DiagramXMLElement renderDiagramNoWM(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		return renderDiagram(d, te, false);
 	}
 	
-	public Diagram renderDiagram(Diagram d) throws IOException {
+	public DiagramXMLElement renderDiagram(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		return renderDiagram(d, te, true);
 	}
 
-	public void renderDiagramPDF(Diagram d) throws IOException {
+	public void renderDiagramPDF(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		renderDiagram(d);
 		te.renderDiagramPDF(d);
 	}
 	
-	public void renderDiagramSVG(Diagram d) throws IOException {
+	public void renderDiagramSVG(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		renderDiagram(d);
 		te.renderDiagramSVG(d);
 	}
 	
-	public void renderDiagramADLAndSVG(Diagram d) throws IOException {
+	public void renderDiagramADLAndSVG(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		te.renderDiagramADLAndSVG(d);
 	}
@@ -66,12 +64,12 @@ public class AbstractFunctionalTest extends HelpMethods {
 		return new TestingEngine(getZipName());
 	}
 	
-	public void renderDiagramSizes(Diagram d) throws IOException {
+	public void renderDiagramSizes(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		te.renderDiagramSizes(d);
 	}
 	
-	public void renderMap(Diagram d) throws IOException {
+	public void renderMap(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		te.renderMap(d);
 	}
@@ -134,21 +132,21 @@ public class AbstractFunctionalTest extends HelpMethods {
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Object o = new XMLHelper().fromXML(sw.getBuffer().toString());
-		Diagram d = (Diagram) o;
+		DiagramXMLElement d = (DiagramXMLElement) o;
 		final int[] i =  { 0 } ;
-		relabel(d, i);
+		relabel(d.getDiagramElement(), i);
 		renderDiagram(d);
 		//renderDiagramSizes(d);
 		
 	}
 	
-	public Diagram generateNoRename(String name) throws IOException {
+	public DiagramXMLElement generateNoRename(String name) throws IOException {
 		InputStream is = this.getClass().getResourceAsStream(name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Object o = new XMLHelper().fromXML(sw.getBuffer().toString());
-		Diagram d = (Diagram) o;
+		DiagramXMLElement d = (DiagramXMLElement) o;
 		return renderDiagram(d);
 		//renderDiagramSizes(d);
 	}
@@ -182,7 +180,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
-		Diagram d = (Diagram) new XMLHelper().fromXML(sw.getBuffer().toString());
+		DiagramXMLElement d = (DiagramXMLElement) new XMLHelper().fromXML(sw.getBuffer().toString());
 		renderDiagramSizes(d);
 	}
 	
@@ -191,7 +189,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
-		Diagram d = (Diagram) new XMLHelper().fromXML(sw.getBuffer().toString());
+		DiagramXMLElement d = (DiagramXMLElement) new XMLHelper().fromXML(sw.getBuffer().toString());
 		renderDiagramPDF(d);
 		//renderDiagramSizes(d);
 	}
@@ -201,17 +199,15 @@ public class AbstractFunctionalTest extends HelpMethods {
 		AbstractXMLElement.resetCounter();
 	}
 	
-	public DiagramElement getById(final String id, Diagram d) {
+	public DiagramElement getById(final String id, DiagramXMLElement d) {
 		DiagramElementVisitor vis = new DiagramElementVisitor();
 		final DiagramElement[] found = { null };
-		vis.visit(d, new VisitorAction() {
+		vis.visit(d.getDiagramElement(), new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if (de instanceof IdentifiableDiagramElement) {
-					if (((IdentifiableDiagramElement) de).getID().equals(id)) {
+				if (de.getID().equals(id)) {
 						found[0] = de;
-					}
 				}
 			}
 		});

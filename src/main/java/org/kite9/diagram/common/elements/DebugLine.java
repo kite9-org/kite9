@@ -1,11 +1,11 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.style.AbstractXMLDiagramElement;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.w3c.dom.Node;

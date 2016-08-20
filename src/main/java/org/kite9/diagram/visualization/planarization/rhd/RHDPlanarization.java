@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Planarization;
 
 /**

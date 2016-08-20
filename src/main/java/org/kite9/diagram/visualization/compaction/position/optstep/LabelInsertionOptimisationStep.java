@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.common.Connected;
@@ -27,7 +28,6 @@ import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.style.DiagramElement;
 import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;

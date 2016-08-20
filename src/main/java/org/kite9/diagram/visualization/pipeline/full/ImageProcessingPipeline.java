@@ -4,7 +4,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline;
-import org.kite9.diagram.xml.Diagram;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 
 /**
@@ -23,13 +23,13 @@ public class ImageProcessingPipeline<X> extends AbstractArrangementPipeline impl
 	}
 
 	@Override
-	public X process(Diagram d) {
+	public X process(DiagramXMLElement d) {
 		d = arrange(d);
 		return render(d);
 	}
 
 	@Override
-	public X render(Diagram d) {
+	public X render(DiagramXMLElement d) {
 		return renderPl.render(d);
 	}
 

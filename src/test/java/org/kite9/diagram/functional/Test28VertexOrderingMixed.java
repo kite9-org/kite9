@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 
@@ -30,7 +30,7 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 
 		new TurnLink(out[0][1], out[0][2]);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -54,7 +54,7 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 
 		new Link(out[0][5], out[0][0]);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 
@@ -83,7 +83,7 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 		new TurnLink(out[1][3], out[0][1]);
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	
@@ -102,7 +102,7 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 		new Link(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][1], out[0][2]);
 
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	
@@ -130,7 +130,7 @@ public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
 		new Link(out[0][5], out[0][7]);
 		
 		
-		renderDiagram(new Diagram(out2, null));
+		renderDiagram(new DiagramXMLElement(out2, null));
 
 	}
 	

@@ -18,6 +18,9 @@ import javax.imageio.ImageIO;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
@@ -25,20 +28,17 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGrou
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
-	public Map<Metrics, Diagram> generateSuite(int minConnected, int maxConnected, int step1, int size) {
-		Map<Metrics, Diagram> out = new HashMap<Metrics, Diagram>();
+	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size) {
+		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("d-r" + i+" s "+size);
 			m.connecteds = i;
-			Diagram d = generateDiagram(m, size);
+			DiagramXMLElement d = generateDiagram(m, size);
 			out.put(m, d);
 
 		}
@@ -47,7 +47,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private Diagram generateDiagram(Metrics m, int size) {
+	private DiagramXMLElement generateDiagram(Metrics m, int size) {
 		System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
 
@@ -158,32 +158,32 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		m.connections = connections;
 
 		@SuppressWarnings("unchecked")
-		Diagram out = new Diagram(new ArrayList(cl), null);
+		DiagramXMLElement out = new DiagramXMLElement(new ArrayList(cl), null);
 		//System.out.println(new XMLHelper().toXML(out));
 		return out;
 	}
 
 	@Test
 	public void increasingConnectedsSize12() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(10, 45, 2, 12);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 45, 2, 12);
 		render(suite1);
 	}
 	
 	@Test
 	public void increasingConnectedsSize15() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(45, 60, 2, 15);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(45, 60, 2, 15);
 		render(suite1);
 	}
 	
 	@Test
 	public void increasingConnectedsSize20() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(60, 90, 2, 20);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(60, 90, 2, 20);
 		render(suite1);
 	}
 	
 	@Test
 	public void broken() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(62, 62, 2, 20);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(62, 62, 2, 20);
 		render(suite1);
 	}
 	

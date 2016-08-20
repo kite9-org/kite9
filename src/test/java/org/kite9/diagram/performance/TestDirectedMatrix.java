@@ -10,21 +10,21 @@ import java.util.Random;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.builder.MGTPlanarizationBuilder;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class TestDirectedMatrix extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, Diagram> generateSuite(int minConnected, int maxConnected, int step1, int size) {
-		Map<Metrics, Diagram> out = new HashMap<Metrics, Diagram>();
+	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size) {
+		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("d-r" + i+" s "+size);
 			m.connecteds = i;
-			Diagram d = generateDiagram(m, size);
+			DiagramXMLElement d = generateDiagram(m, size);
 			out.put(m, d);
 
 		}
@@ -32,7 +32,7 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private Diagram generateDiagram(Metrics m, int size) {
+	private DiagramXMLElement generateDiagram(Metrics m, int size) {
 		Random r = new Random(666);
 
 		Glyph[][] space = new Glyph[size][];
@@ -87,20 +87,20 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		Collections.addAll(cl, items);
 		m.connections = connections;
 		
-		Diagram out = new Diagram(cl, null);
+		DiagramXMLElement out = new DiagramXMLElement(cl, null);
 		return out;
 	}
 
 	@Test
 	public void size12IncreasingConnecteds() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(30, 90, 10, 12);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(30, 90, 10, 12);
 		render(suite1);
 	}
 
 	
 	@Test
 	public void size6IncreasingConnecteds() throws IOException {
-		Map<Metrics, Diagram> suite1 = generateSuite(15, 5, 5, 6);
+		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(15, 5, 5, 6);
 		render(suite1);
 	}
 	

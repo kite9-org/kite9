@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.builder.DirectedEdgePlanarizationBuilder;
-import org.kite9.diagram.xml.Arrow;
-import org.kite9.diagram.xml.Context;
-import org.kite9.diagram.xml.Diagram;
-import org.kite9.diagram.xml.Glyph;
-import org.kite9.diagram.xml.Link;
+import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
-import org.kite9.diagram.xml.TextLine;
 import org.kite9.diagram.xml.XMLElement;
 
 /**
@@ -34,7 +34,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 		
-		Diagram d = new Diagram("D", glyphs, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 		
@@ -48,7 +48,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		
 		new Link(a[1][1], b[0][0], null, null,null, null, Direction.RIGHT);
 		
-		Diagram d = new Diagram("D", glyphs, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 		
@@ -64,7 +64,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		new Link(b[1][1], a[1][1], null, null,null, null, Direction.RIGHT);
 		
 		
-		Diagram d = new Diagram("D", glyphs, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 		
@@ -96,7 +96,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		Context yourside = new Context("yours", createList((Contained)converts, client, xstream, objects),true, new TextLine("Your Server / PC"), null);
 		Context ourside = new Context("ours", createList((Contained) diagramServer),true, new TextLine("Kite9 Servers"), null);
 		
-		Diagram d = new Diagram("Arch", createList((Contained) yourside, transport,ourside), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) yourside, transport,ourside), null);
 		
 		// converts
 		
@@ -122,7 +122,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		
-		Diagram d = new Diagram("Arch",  listOf(a, b), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch",  listOf(a, b), null);
 		
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, b, null, null, null, null, null);
@@ -141,7 +141,7 @@ public class Test22DirectedEdgeInsertion extends AbstractFunctionalTest{
 		Glyph b = new Glyph("b", "", "b", null, null);
 		Glyph c = new Glyph("c", "", "c", null, null);
 		
-		Diagram d = new Diagram("Arch",  listOf(a, b, c), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch",  listOf(a, b, c), null);
 		
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, c, null, null, null, null, Direction.DOWN);
