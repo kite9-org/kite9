@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.orthogonalization.flow.balanced;
 import java.util.List;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.VertexOnEdge;
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
@@ -217,18 +216,18 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		} else if (from instanceof PlanarizationCrossingVertex) {
 			return ((PlanarizationCrossingVertex)from).getContainer();
 		} else if (from instanceof ConnectedVertex) {
-			return ((Contained) ((ConnectedVertex)from).getOriginalUnderlying()).getContainer();
+			return (Container) ((ConnectedVertex)from).getOriginalUnderlying().getParent();
 		}
 		
 		return null;
 	}
 	
 	private int getContainerDepth(Container c) {
-		if (c instanceof Contained) {
-			return getContainerDepth(((Contained)c).getContainer())+1;
+		if (c.getParent() == null) {
+			return 0;
+		} else {
+			return getContainerDepth((Container) c.getParent())+1;
 		}
-		
-		return 0;
 	}
 	
 }

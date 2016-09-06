@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;

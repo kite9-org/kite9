@@ -6,7 +6,6 @@ import java.awt.RenderingHints;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -62,9 +61,8 @@ public abstract class AbstractGraphicsSourceRenderer<X> implements GraphicsSourc
 					RouteRenderingInformation rri = (RouteRenderingInformation) ((Connection) de).getRenderingInformation();
 					Object d = DiagramChecker.getRouteDirection(rri);
 					DiagramChecker.SET_CONTRADICTING.action(rri, d, (Connection)de);
-				}
-				if (de instanceof PositionableDiagramElement) {
-					dea.draw(de, ((PositionableDiagramElement)de).getRenderingInformation());
+				} else {
+					dea.draw(de, de.getRenderingInformation());
 				}
 			}
 		};

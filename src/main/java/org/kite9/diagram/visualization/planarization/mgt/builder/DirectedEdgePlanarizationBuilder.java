@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 import java.util.Iterator;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9OnDiagram;
@@ -17,8 +16,8 @@ import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.mgt.router.EdgeRouter;
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
+import org.kite9.diagram.visualization.planarization.mgt.router.EdgeRouter;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
@@ -192,12 +191,12 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 			int depthFrom = em.getContainerDepth(from);
 			int depthTo = em.getContainerDepth(to);
 			if (depthFrom < depthTo) {
-				to = ((Contained)to).getContainer();
+				to = to.getParent();
 			} else if (depthFrom > depthTo) {
-				from = ((Contained)from).getContainer();
+				from = from.getParent();
 			} else {
-				to = ((Contained)to).getContainer();
-				from = ((Contained)from).getContainer();
+				to = to.getParent();
+				from = from.getParent();
 			}
 		}
 		

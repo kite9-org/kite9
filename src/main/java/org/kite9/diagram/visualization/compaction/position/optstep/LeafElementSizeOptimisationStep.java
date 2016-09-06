@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;

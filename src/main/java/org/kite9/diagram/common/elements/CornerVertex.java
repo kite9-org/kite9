@@ -1,7 +1,6 @@
 package org.kite9.diagram.common.elements;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.VPos;
@@ -37,7 +36,7 @@ public class CornerVertex extends AbstractVertex {
 
 
 	private RectangleRenderingInformation getRI() {
-		return (RectangleRenderingInformation) ((PositionableDiagramElement)getOriginalUnderlying()).getRenderingInformation();
+		return (RectangleRenderingInformation) getOriginalUnderlying().getRenderingInformation();
 	}
 	
 	public void setY(double y) {

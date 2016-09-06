@@ -6,15 +6,13 @@ import org.apache.batik.svggen.DOMTreeManager;
 import org.apache.batik.svggen.SVGCSSStyler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
-import org.kite9.diagram.adl.ContainerProperty;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.serialization.XMLHelper;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -50,15 +48,15 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 			@Override
 			public void endElement(DiagramElement de) {
 				Element thisGroup= getTopLevelGroup();
-				if ((worthKeeping(thisGroup)) && (de instanceof PositionableDiagramElement)) {
-					RenderingInformation ri = ((PositionableDiagramElement)de).getRenderingInformation();
+				if (worthKeeping(thisGroup)) {
+					RenderingInformation ri = de.getRenderingInformation();
 					SVGCSSStyler.style(thisGroup);
 					ensureDisplayData(thisGroup, ri);
 				}
 					
 				// to make sure topGroup defs get added to the diagram
-				if (de instanceof DiagramXMLElement) {
-					diagramRendering = ((PositionableDiagramElement)de).getRenderingInformation();
+				if (de instanceof Diagram) {
+					diagramRendering = de.getRenderingInformation();
 				}
 				
 				super.endElement(de);

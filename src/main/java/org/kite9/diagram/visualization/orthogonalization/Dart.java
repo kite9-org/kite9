@@ -4,9 +4,9 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractEdge;
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.framework.logging.LogicException;
 
@@ -28,7 +28,6 @@ import org.kite9.framework.logging.LogicException;
  *
  */
 public class Dart extends AbstractEdge {
-	private static final long serialVersionUID = 3007898355633881252L;
 
 	private OrthogonalizationImpl o;
 	
@@ -193,7 +192,7 @@ public class Dart extends AbstractEdge {
 		drawDirection = Direction.reverse(drawDirection);
 	}
 
-	RectangleRenderingInformation rri = new BasicRenderingInformation();
+	RectangleRenderingInformation rri = new RectangleRenderingInformationImpl();
 	
 	public RenderingInformation getRenderingInformation() {
 		return rri;

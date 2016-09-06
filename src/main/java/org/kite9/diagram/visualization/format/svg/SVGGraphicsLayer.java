@@ -4,7 +4,6 @@ import java.awt.Font;
 
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.IdentifiableDiagramElement;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.w3c.dom.Document;
@@ -29,10 +28,7 @@ public class SVGGraphicsLayer extends BasicGraphicsLayer {
 	public void startElement(DiagramElement de) {
 		Element group = document.createElement("g");
 		group.setAttribute("layer", name.name());
-		if (de instanceof IdentifiableDiagramElement) {
-			group.setAttribute("element-id", ((IdentifiableDiagramElement) de).getID());
-		}
-		
+		group.setAttribute("element-id",de.getID());
 		((SVGGraphics2D)g2).setTopLevelGroup(group);
 		super.startElement(de);
 	}

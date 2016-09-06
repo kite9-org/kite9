@@ -11,7 +11,6 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
@@ -162,14 +161,14 @@ public class ElementMapperImpl implements ElementMapper {
 
 	@Override
 	public int getContainerDepth(DiagramElement c) {
-		if (((!(c instanceof Contained)) || ((Contained) c).getContainer() == null)) {
+		if (c.getParent()==null) {
 			return 0;
 		} else {
 			Integer depth = containerDepths.get(c);
 			if (depth != null) {
 				return depth;
 			} else {
-				depth = getContainerDepth(((Contained) c).getContainer()) + 1;
+				depth = getContainerDepth(c.getParent()) + 1;
 				containerDepths.put(c, depth);
 			}
 			return depth;

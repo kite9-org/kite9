@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.format.pos;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
 import org.kite9.diagram.visualization.format.AbstractGraphicsSourceRenderer;
@@ -42,10 +43,11 @@ public class PositionInfoRenderer extends AbstractGraphicsSourceRenderer<Diagram
 
 	@Override
 	public DiagramXMLElement render(DiagramXMLElement d) {
+		Diagram de = d.getDiagramElement();
 		DiagramChecker.checkConnnectionElements(d, DiagramChecker.SET_CONTRADICTING);
-		Dimension2D out = size(d);
+		Dimension2D out = size(de);
 		dea.initialize(this, out);
-		drawDiagramElements(d);
+		drawDiagramElements(de);
 		dea.finish();
 		bi.flush();
 		g2.dispose();

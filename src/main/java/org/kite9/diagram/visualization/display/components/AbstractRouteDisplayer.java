@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -398,7 +397,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	}
 	
 	public ShapeStyle getStyle(DiagramElement de) {
-		return new ShapeStyle((StyledDiagramElement) de);
+		return new ShapeStyle(de);
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.Vertex;
@@ -114,11 +113,11 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 						return false;
 					}
 					
-					if (originalUnderlying instanceof Link) {
+					if (originalUnderlying instanceof Connection) {
 						// TODO: remove link ref here
 						if (edgeStyle==null) {
-							edgeStyle = ((Link)originalUnderlying).getStyle();
-						} else if (edgeStyle != ((Link)originalUnderlying).getStyle()) {
+							edgeStyle = ((Connection)originalUnderlying).getStyle();
+						} else if (edgeStyle != ((Connection)originalUnderlying).getStyle()) {
 							// means incident edges are diferent styles, no hop needed
 							return false;
 						}

@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.ext.awt.geom.Polygon2D;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.visualization.display.style.ConnectionTemplate;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.CircleFlexibleShape;
@@ -25,7 +24,6 @@ import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;
 import org.kite9.diagram.visualization.display.style.shapes.HexagonFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.UMLShapes;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Provides logic to create the ADL symbol shapes and arrow ends.

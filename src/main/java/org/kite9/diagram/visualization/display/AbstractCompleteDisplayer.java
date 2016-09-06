@@ -3,15 +3,12 @@ package org.kite9.diagram.visualization.display;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -20,7 +17,6 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -109,21 +105,19 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	 */
 	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse) {
 		if (a == b) {
-			if (a instanceof Glyph) {
+			if (a instanceof Text) {
 				return MINIMUM_GLYPH_SIZE * gridSize;
-			} else if (a instanceof Context) {
-				return MINIMUM_CONTEXT_SIZE * gridSize;
-			} else if (a instanceof DiagramXMLElement) {
+			} else if (a instanceof Container) {
 				return MINIMUM_CONTEXT_SIZE * gridSize;
 			} else if (a == null) {
 				return 0;
-			} else if (a instanceof Arrow) {
+			} /*else if (a instanceof Arrow) {
 				if (needsDistance(a)) {
 					return MINIMUM_ARROW_SIZE * gridSize;
 				} else {
 					return 0;
 				}
-			}
+			}*/
 		}
 
 		if (!needsDistance(a, b)) {

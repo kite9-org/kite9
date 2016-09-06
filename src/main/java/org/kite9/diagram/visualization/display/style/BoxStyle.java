@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.display.style;
 import java.awt.Color;
 import java.awt.Paint;
 
-import org.kite9.diagram.adl.StyledDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 
 
 /**
@@ -15,12 +15,12 @@ public class BoxStyle extends ShapeStyle {
 
 	DirectionalValues overrideMargin = null;
 
-	public BoxStyle(StyledDiagramElement h) {
+	public BoxStyle(DiagramElement h) {
 		super(h);
 	}
 	
 	public BoxStyle(BoxStyle original, DirectionalValues overrideMargin) {
-		super((StyledDiagramElement) original.styleElement);
+		super((DiagramElement) original.styleElement);
 		this.overrideMargin = overrideMargin;
 	}
 	

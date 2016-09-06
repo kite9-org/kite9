@@ -3,10 +3,8 @@ package org.kite9.diagram.visualization.planarization.mgt;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 
 /**
@@ -16,7 +14,6 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
  * @author moffatr
  * 
  */
-@K9OnDiagram(on={PlanarizationDiagrams.class})
 public interface MGTPlanarization extends RHDPlanarization {
 
     public boolean isAdjacency(Edge edge);

@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 

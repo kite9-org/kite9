@@ -11,7 +11,6 @@ import java.util.Set;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.LinkTerminator;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.CornerVertex;
@@ -99,7 +98,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		
 		
 		convert(v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
-		RectangleRenderingInformation rri = (RectangleRenderingInformation) ((PositionableDiagramElement)(v.getOriginalUnderlying())).getRenderingInformation();
+		RectangleRenderingInformation rri = (RectangleRenderingInformation) (v.getOriginalUnderlying()).getRenderingInformation();
 		// temporarily set
 		rri.setMultipleHorizontalLinks(mulitpleHorizDarts);
 		rri.setMultipleVerticalLinks(multipleVertDarts);

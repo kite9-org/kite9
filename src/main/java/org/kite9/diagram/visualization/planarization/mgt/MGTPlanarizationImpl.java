@@ -11,16 +11,13 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9Exclude;
-import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -30,12 +27,11 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 
-@K9OnDiagram(on=PlanarizationDiagrams.class)
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
 
 	public MGTPlanarizationImpl(DiagramXMLElement d, List<Vertex> vertexOrder, 
 			Collection<BiDirectional<Connected>> uninsertedConnections,
-			Map<Container, List<Contained>> containerOrderingMap) {
+			Map<Container, List<DiagramElement>> containerOrderingMap) {
 		super(d, containerOrderingMap);
 		this.vertexOrder = vertexOrder;
 		this.unmodifiableVO = Collections.unmodifiableList(vertexOrder);

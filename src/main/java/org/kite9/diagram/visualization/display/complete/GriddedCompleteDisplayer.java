@@ -3,20 +3,14 @@ package org.kite9.diagram.visualization.display.complete;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Key;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkTerminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.Logable;
 
 

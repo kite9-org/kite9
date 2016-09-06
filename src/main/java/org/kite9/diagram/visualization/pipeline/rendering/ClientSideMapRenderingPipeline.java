@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.IdentifiableDiagramElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
@@ -28,27 +27,23 @@ public class ClientSideMapRenderingPipeline implements Renderer<String> {
 		final StringBuilder out = new StringBuilder(1000);
 
 		DiagramElementVisitor vis = new DiagramElementVisitor();
-		vis.visit(d, new VisitorAction() {
+		vis.visit(d.getDiagramElement(), new VisitorAction() {
 
-			public void visit(DiagramElement de) {
-				if (de instanceof IdentifiableDiagramElement) {
-					IdentifiableDiagramElement rde = (IdentifiableDiagramElement) de;
-					if (rde.getRenderingInformation() instanceof RectangleRenderingInformation) {
-						RectangleRenderingInformation rri = (RectangleRenderingInformation) rde
-								.getRenderingInformation();
-						out.append("\t<area shape=\"rect\" coords=\"");
-						out.append(format(rri.getPosition().x()));
-						out.append(",");
-						out.append(format(rri.getPosition().y()));
-						out.append(",");
-						out.append(format((rri.getPosition().x() + rri.getSize().x())));
-						out.append(",");
-						out.append(format((rri.getPosition().y() + rri.getSize().y())));
-						out.append("\" id=\"");
-						out.append(rde.getID());
-						out.append("\" />\n");
-					}
-
+			public void visit(DiagramElement rde) {
+				if (rde.getRenderingInformation() instanceof RectangleRenderingInformation) {
+					RectangleRenderingInformation rri = (RectangleRenderingInformation) rde
+							.getRenderingInformation();
+					out.append("\t<area shape=\"rect\" coords=\"");
+					out.append(format(rri.getPosition().x()));
+					out.append(",");
+					out.append(format(rri.getPosition().y()));
+					out.append(",");
+					out.append(format((rri.getPosition().x() + rri.getSize().x())));
+					out.append(",");
+					out.append(format((rri.getPosition().y() + rri.getSize().y())));
+					out.append("\" id=\"");
+					out.append(rde.getID());
+					out.append("\" />\n");
 				}
 			}
 

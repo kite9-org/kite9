@@ -18,7 +18,7 @@ public class HopChecker {
 
 	public static void checkHops(DiagramXMLElement d, final HopAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
-		dev.visit(d, new VisitorAction() {
+		dev.visit(d.getDiagramElement(), new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {

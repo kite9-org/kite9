@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -66,39 +64,35 @@ public class AbstractSegmentModifier {
 		}
 		
 		// side checking
-		if ((fromde instanceof Contained) && (tode instanceof Contained)) {
-			if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
-				if (fromUnderlyingSide==toUnderlyingSide) {
-					// check whether there is containment
-					boolean containment =  contains(fromde, tode);
-					
-					if (!containment) {
-						return 0;
-					}
-					
+		if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
+			if (fromUnderlyingSide==toUnderlyingSide) {
+				// check whether there is containment
+				boolean containment =  contains(fromde, tode);
+				
+				if (!containment) {
+					return 0;
 				}
+				
 			}
 		}
+		
 		
 		return displayer.getMinimumDistanceBetween(fromde, fromUnderlyingSide, tode, toUnderlyingSide, horizontalDart ? Direction.RIGHT : Direction.DOWN);
 	}
 	
 	private int getDepth(DiagramElement de) {
-		if (de instanceof Contained) {
-			 Container c = ((Contained)de).getContainer();
-			 if (c==null) {
-				 return 0;
-			 } else {
-				 return getDepth(c)+1;
-			 }
-		} else {
+		DiagramElement c = de.getParent();
+		if (c == null) {
 			return 0;
+		} else {
+			return getDepth(c) + 1;
 		}
+
 	}
 	
 	private DiagramElement moveUp(DiagramElement move, int toDepth, int cDepth) {
 		while (cDepth > toDepth) {
-			move = ((Contained)move).getContainer();
+			move = move.getParent();
 			cDepth--;
 		}
 		
@@ -250,6 +244,10 @@ public class AbstractSegmentModifier {
 		}
 	}
 	
+	/**
+	 * Better ways of doing this in the future - everything should be visible.
+	 */
+	@Deprecated
 	protected boolean checkVisibility(Segment current) {
 		DiagramElement underlying = current.getUnderlying();
 		
@@ -257,14 +255,14 @@ public class AbstractSegmentModifier {
 			return false;
 		}
 		
-		if (underlying instanceof Link) {
-			if (((Link)underlying).getStyle()==LinkLineStyle.INVISIBLE) {
+		if (underlying instanceof Connection) {
+			if (((Connection)underlying).getStyle()==LinkLineStyle.INVISIBLE) {
 				return false;
 			}
 		}
 		
-		if (underlying instanceof Context) {
-			if (!((Context)underlying).isBordered()) {
+		if (underlying instanceof Container) {
+			if (!((Container)underlying).isBordered()) {
 				return false;
 			}
 		}

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.planarization.rhd;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -17,6 +16,6 @@ public interface RHDPlanarization extends Planarization {
 
 	public RoutingInfo getPlacedPosition(DiagramElement de);
 
-	public Map<Container, List<Contained>> getContainerOrderingMap();
+	public Map<Container, List<DiagramElement>> getContainerOrderingMap();
 
 }

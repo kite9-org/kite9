@@ -1,9 +1,9 @@
 package org.kite9.diagram.common.elements;
 
 import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.position.RouteRenderingInformationImpl;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -94,7 +94,7 @@ public abstract class AbstractPlanarizationEdge extends AbstractEdge implements 
 
 	public RouteRenderingInformation getRenderingInformation() {
 		if (rri==null) {
-			rri = new BasicRenderingInformation() {
+			rri = new RouteRenderingInformationImpl() {
 
 				private static final long serialVersionUID = 1L;
 

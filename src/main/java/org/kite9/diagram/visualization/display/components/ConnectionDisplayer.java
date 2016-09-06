@@ -9,10 +9,9 @@ import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkTerminator;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -29,17 +28,17 @@ import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 import org.kite9.framework.logging.LogicException;
 
-public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDisplayer {
+public class ConnectionDisplayer extends AbstractRouteDisplayer implements ComponentDisplayer {
 
 	public static boolean debug = true;
 
-	public LinkDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public ConnectionDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 	
-	private LinkTerminator getLinkTerminator(Link ae, boolean from) {
+	private LinkTerminator getLinkTerminator(Connection ae, boolean from) {
 		LinkTerminator out = (from ? ae.getFromDecoration() : ae.getToDecoration());
-		return out == null ? new LinkTerminator(from ? "fromDecoration" : "toDecoration", ae.getOwnerDocument(), "NONE") : out;
+		return out == null ? new LinkTerminator("NONE") : out;
 	}
 	
 	
@@ -285,7 +284,7 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 	};
 
 	public void draw(DiagramElement al, RenderingInformation r) {
-		Link ae = (Link) al;
+		Connection ae = (Connection) al;
 		RouteRenderingInformation rr = (RouteRenderingInformation) r;
 		rr.setContradicting(ae.getRenderingInformation().isContradicting() || rr.isContradicting());
 		ae.setRenderingInformation(r);
@@ -312,11 +311,11 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 					false, !drawStroke.isInvisible(), width+3);
 		}
 		
-		rr.setFromDecoration(new Decoration(fromEnd.getTextContent(), head.getDirection(), head.getPosition()));
-		rr.setToDecoration(new Decoration(toEnd.getTextContent(), tail.getDirection(), tail.getPosition()));
+		rr.setFromDecoration(new Decoration(fromEnd.getShapeName(), head.getDirection(), head.getPosition()));
+		rr.setToDecoration(new Decoration(toEnd.getShapeName(), tail.getDirection(), tail.getPosition()));
 	}
 
-	private void setRendered(Link ae, RouteRenderingInformation rr, boolean state) {
+	private void setRendered(Connection ae, RouteRenderingInformation rr, boolean state) {
 		rr.setRendered(state);
 		if (ae.getFromLabel()!=null) {
 			ae.getFromLabel().getRenderingInformation().setRendered(state);
@@ -328,7 +327,7 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 
 
 	public boolean canDisplay(DiagramElement element) {
-		return (element instanceof Link);
+		return (element instanceof Connection);
 	}
 
 	@Override
@@ -351,8 +350,8 @@ public class LinkDisplayer extends AbstractRouteDisplayer implements ComponentDi
 	}
 
 	private boolean canAdjustForPerimeter(DiagramElement d) {
-		if (((PositionableDiagramElement) d).getRenderingInformation() instanceof RectangleRenderingInformation) {
-			RectangleRenderingInformation rri =(RectangleRenderingInformation) ((PositionableDiagramElement) d).getRenderingInformation();
+		if (d.getRenderingInformation() instanceof RectangleRenderingInformation) {
+			RectangleRenderingInformation rri =(RectangleRenderingInformation) d.getRenderingInformation();
 			return !(rri.isMultipleHorizontalLinks() && rri.isMultipleVerticalLinks());
 		}
 		

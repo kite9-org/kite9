@@ -8,9 +8,9 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.display.components.AbstractBoxModelDisplayer;
 import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;
-import org.kite9.diagram.visualization.display.components.ConnectionBodyDisplayer;
+import org.kite9.diagram.visualization.display.components.TextDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.components.ConnectionLabelTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.ContextDisplayer;
+import org.kite9.diagram.visualization.display.components.ContainerDisplayer;
 import org.kite9.diagram.visualization.display.components.ContextLabelTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.DebugLineDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphCompositionalShapeDisplayer;
@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.display.components.GlyphDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.KeyDisplayer;
 import org.kite9.diagram.visualization.display.components.KeyTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.LinkDisplayer;
+import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
@@ -111,8 +111,8 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 
 	private void orderedRender(GraphicsLayer g2, boolean shadow) {
 //		displayers.add(new AbstractDiagramDisplayer(this, ss, g2, shadow));
-		displayers.add(new ContextDisplayer(this, g2, shadow));
-		displayers.add(new LinkDisplayer(this, g2, shadow) {
+		displayers.add(new ContainerDisplayer(this, g2, shadow));
+		displayers.add(new ConnectionDisplayer(this, g2, shadow) {
 
 			@Override
 			protected Shape getPerimeterShape(DiagramElement de) {
@@ -125,14 +125,14 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 				}
 			}			
 		});
-		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, shadow));
-		displayers.add(new ContextLabelTextLineDisplayer(this, g2, shadow));
-		displayers.add(new GlyphDisplayer(this, g2, shadow));
-		displayers.add(new GlyphTextLineDisplayer(this, g2, shadow));
-		displayers.add(new GlyphCompositionalShapeDisplayer(this, g2, shadow));
-		displayers.add(new KeyDisplayer(this, g2, shadow));
-		displayers.add(new KeyTextLineDisplayer(this, g2, shadow));
-		displayers.add(new ConnectionBodyDisplayer(this, g2, shadow));
+//		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, shadow));
+//		displayers.add(new ContextLabelTextLineDisplayer(this, g2, shadow));
+//		displayers.add(new GlyphDisplayer(this, g2, shadow));
+//		displayers.add(new GlyphTextLineDisplayer(this, g2, shadow));
+//		displayers.add(new GlyphCompositionalShapeDisplayer(this, g2, shadow));
+//		displayers.add(new KeyDisplayer(this, g2, shadow));
+//		displayers.add(new KeyTextLineDisplayer(this, g2, shadow));
+		displayers.add(new TextDiagramElementDisplayer(this, g2, shadow));
 	}
    
 	@Override 

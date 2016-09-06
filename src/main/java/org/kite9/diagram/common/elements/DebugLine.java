@@ -1,14 +1,12 @@
 package org.kite9.diagram.common.elements;
 
+import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.style.AbstractXMLDiagramElement;
-import org.kite9.diagram.xml.ADLDocument;
+import org.kite9.diagram.style.AbstractDiagramElement;
 import org.kite9.diagram.xml.LinkLineStyle;
-import org.w3c.dom.Node;
 
 /**
  * A straight line from some point to some other point.
@@ -16,31 +14,34 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class DebugLine extends AbstractXMLDiagramElement implements PositionableDiagramElement {
+public class DebugLine extends AbstractDiagramElement implements DiagramElement {
 
 	RouteRenderingInformation rri = null;
-
+	private String l1;
+	private String l2;
+	
+	
 	public String getL1() {
-		return getAttribute("l1");
+		return l1;
 	}
 
 	public String getL2() {
-		return getAttribute("l2");
+		return l2;
 	}
 
 	
-	public DebugLine(RouteRenderingInformation rri, String l1, String l2, ADLDocument doc) {
-		setRenderingInformation(rri);
-		setL1(l1);
-		setL2(l2);
+	public DebugLine(RouteRenderingInformation rri, String l1, String l2) {
+		this.rri = rri;
+		this.l1 = l1;
+		this.l2 = l2;
 	}
 
 	public void setL1(String l1) {
-		setAttribute("l1", l1);
+		this.l1 = l1;
 	}
 	
 	public void setL2(String l2) {
-		setAttribute("l2", l2);
+		this.l2 = l2;
 	}
 
 	@Override
@@ -58,23 +59,28 @@ public class DebugLine extends AbstractXMLDiagramElement implements Positionable
 	}
 
 	@Override
-	public void setParent(Object parent) {
-		// TODO Auto-generated method stub	
-	}
-
-	@Override
-	protected Node newNode() {
-		return new DebugLine(null, null, null, (ADLDocument) ownerDocument);
-	}
-
-	@Override
 	public RenderingInformation getRenderingInformation() {
-		return getBasicRenderingInformation();
+		return rri;
 	}
 
 	@Override
 	public String getShapeName() {
 		return LinkLineStyle.NORMAL;
+	}
+
+	@Override
+	public String getID() {
+		return null;
+	}
+
+	@Override
+	public Value getCSSStyleProperty(String prop) {
+		return null;
+	}
+
+	@Override
+	public void setRenderingInformation(RenderingInformation ri) {
+		this.rri = (RouteRenderingInformation) ri;
 	}
 
 }

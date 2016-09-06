@@ -33,7 +33,7 @@ public class FixedShape extends ShapeStyle {
 		}
 	}
 
-	public FixedShape(StyledDiagramElement stylableElement) {
+	public FixedShape(DiagramElement stylableElement) {
 		super(stylableElement);
 	}
 

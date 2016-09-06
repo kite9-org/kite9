@@ -1,10 +1,6 @@
 package org.kite9.diagram.visualization.display.components;
 
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.StyledDiagramElement;
-import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -15,36 +11,26 @@ import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 
-public class ConnectionBodyDisplayer extends AbstractTextBoxModelDisplayer {
+public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
 
-	public ConnectionBodyDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public TextDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
 	public boolean canDisplay(DiagramElement element) {
-		return element instanceof Arrow;
+		return element instanceof Text;
 	}
 
 	@Override
 	public BoxStyle getUnderlyingStyle(DiagramElement de) {
-		return new BoxStyle((StyledDiagramElement) de);
+		return new BoxStyle(de);
 	}
 
 	@Override
-	public Text getLabel(DiagramElement de) {
-		return ((Arrow)de).getLabel();
+	public String getLabel(DiagramElement de) {
+		return ((Text)de).getText();
 	}
 
-	@Override
-	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
-		return null;
-	}
-
-	@Override
-	public Text getStereotype(DiagramElement de) {
-		return null;
-	}
-	
 	
 
 	@Override
@@ -61,8 +47,8 @@ public class ConnectionBodyDisplayer extends AbstractTextBoxModelDisplayer {
 	
 	@Override
 	public boolean requiresDimension(DiagramElement de) {
-		Text label = getLabel(de);
-		if ((label==null) || (label.getText() == null) || (label.getText().trim().length()==0)) {
+		String label = getLabel(de);
+		if ((label==null) || (label.trim().length()==0)) {
 			return false;
 		} else {
 			return true;

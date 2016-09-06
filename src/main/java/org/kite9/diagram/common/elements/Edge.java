@@ -1,10 +1,7 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
-import org.kite9.diagram.docs.PlanarizationDiagrams;
-import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 
 /**
@@ -14,7 +11,6 @@ import org.kite9.diagram.position.RenderingInformation;
  * @author robmoffat
  *
  */
-@K9OnDiagram(on=PlanarizationDiagrams.class)
 public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Deterministic {
 	
 	/**

@@ -15,6 +15,7 @@ import org.apache.batik.ext.awt.image.spi.ImageWriterRegistry;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
@@ -65,9 +66,10 @@ public class SVGRenderer extends AbstractScalingGraphicsSourceRenderer<String> {
 
 	public String render(DiagramXMLElement something) {
 		try {
-			Dimension2D out = size(something);
+			Diagram de = something.getDiagramElement();
+			Dimension2D out = size(de);
 			dea.initialize(this, out);
-			drawDiagramElements(something);
+			drawDiagramElements(de);
 			dea.finish();
 			String outString = output(something);
 			g2.dispose();

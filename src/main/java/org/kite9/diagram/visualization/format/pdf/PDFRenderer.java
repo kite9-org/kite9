@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
@@ -85,9 +86,10 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 
 	public byte[] render(DiagramXMLElement d)  {
 		try {
-			Dimension2D out = size(d);
+			Diagram de = d.getDiagramElement();
+			Dimension2D out = size(de);
 			dea.initialize(this, out);
-			drawDiagramElements(d);
+			drawDiagramElements(de);
 			dea.finish();
 			
 			for (GraphicsLayer g2 : layerGraphics.values()) {

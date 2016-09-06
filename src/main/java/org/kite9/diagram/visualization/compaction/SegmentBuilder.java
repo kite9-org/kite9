@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;

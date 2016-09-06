@@ -10,14 +10,12 @@ import java.awt.geom.Rectangle2D.Double;
 
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
-import org.kite9.diagram.adl.PositionableDiagramElement;
-import org.kite9.diagram.adl.ShapedDiagramElement;
 import org.kite9.diagram.common.hints.PositioningHints;
-import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
@@ -56,12 +54,10 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 	
 	public FlexibleShape getBorderShape(DiagramElement de) {
 		FlexibleShape out = null;
-		if (de instanceof ShapedDiagramElement) {
-			String name = ((ShapedDiagramElement) de).getShapeName();
-			out = ShapeHelper.getFlexibleShapes().get(name);
-			if ((out == null) && (name != null)) {
-				out = ShapeHelper.getFlexibleShapes().get(name.toUpperCase());
-			}
+		String name = de.getShapeName();
+		out = ShapeHelper.getFlexibleShapes().get(name);
+		if ((out == null) && (name != null)) {
+			out = ShapeHelper.getFlexibleShapes().get(name.toUpperCase());
 		}
 		
 		if (out == null) {
@@ -87,18 +83,16 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		double xEnd = ri.getMaxX();
 		double yEnd = ri.getMaxY();
 		
-		if (element instanceof PositionableDiagramElement) {
-			// set hint positions
-			HintMap hints = ((PositionableDiagramElement)element).getPositioningHints();
-			if (hints == null) {
-				hints = new HintMap();
-				((PositionableDiagramElement)element).setPositioningHints(hints);
-			}
-			hints.put(PositioningHints.MIN_X, (float) xStart);
-			hints.put(PositioningHints.MAX_X, (float) xEnd);
-			hints.put(PositioningHints.MIN_Y, (float) yStart);
-			hints.put(PositioningHints.MAX_Y, (float) yEnd);
+		// set hint positions
+		HintMap hints = element.getPositioningHints();
+		if (hints == null) {
+			hints = new HintMap();
+			element.setPositioningHints(hints);
 		}
+		hints.put(PositioningHints.MIN_X, (float) xStart);
+		hints.put(PositioningHints.MAX_X, (float) xEnd);
+		hints.put(PositioningHints.MIN_Y, (float) yStart);
+		hints.put(PositioningHints.MAX_Y, (float) yEnd);
 		
 		if (!isOutputting())
 			return;
@@ -163,7 +157,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 //			g2.setColor(new Color(1f, 0f, 0f, .3f));
 //			g2.drawRect((int) xStart, (int) yStart, (int) (xEnd-xStart), (int) (yEnd - yStart));
 //			
-			RectangleRenderingInformation r3 = new BasicRenderingInformation(
+			RectangleRenderingInformation r3 = new RectangleRenderingInformationImpl(
 					new Dimension2D(xStart, yStart),
 					new Dimension2D(xEnd - xStart, yEnd - yStart), r2.getHorizontalJustification(), r2.getVerticalJustification(), r2.isRendered());
 			
@@ -172,9 +166,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 			drawBoxContents(element, r3);
 		}
 		
-		if (element instanceof PositionableDiagramElement) {
-			((PositionableDiagramElement)element).setRenderingInformation(r2);
-		}
+		element.setRenderingInformation(r2);
 		
 	}
 	
@@ -191,7 +183,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 	
 	@Override
 	public double getPadding(DiagramElement element, Direction d) {
-		Dimension2D rect = ((RectangleRenderingInformation)(((PositionableDiagramElement)element).getRenderingInformation())).getInternalSize();
+		Dimension2D rect = ((RectangleRenderingInformation)(element.getRenderingInformation())).getInternalSize();
 		BoxStyle bs = getBoxStyle(element);
 		if (requiresDimension(element)) {
 			FlexibleShape fs = getBorderShape(element);

@@ -1,11 +1,12 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
+import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.AbstractXMLDiagramElement;
+import org.kite9.diagram.style.AbstractDiagramElement;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Node;
@@ -17,9 +18,8 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class LabelFrame extends AbstractXMLDiagramElement {
+public class LabelFrame extends AbstractDiagramElement {
 
-	private static final long serialVersionUID = 3287011609590439600L;
 	DirectionalValues padding;
 	RectangleRenderingInformation rri;
 	Label label;
@@ -33,7 +33,7 @@ public class LabelFrame extends AbstractXMLDiagramElement {
 		super();
 		this.label = l;
 		this.label_rri = (RectangleRenderingInformation) l.getRenderingInformation();
-		this.rri = new BasicRenderingInformation() {
+		this.rri = new RectangleRenderingInformationImpl() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -71,8 +71,12 @@ public class LabelFrame extends AbstractXMLDiagramElement {
 	}
 
 	@Override
-	protected Node newNode() {
-		// TODO Auto-generated method stub
+	public String getID() {
+		return null;
+	}
+
+	@Override
+	public Value getCSSStyleProperty(String prop) {
 		return null;
 	}
 }
