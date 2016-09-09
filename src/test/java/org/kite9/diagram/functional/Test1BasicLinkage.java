@@ -3,6 +3,7 @@ package org.kite9.diagram.functional;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -44,6 +45,14 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 		XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
 
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_1_5_TwoArrowsFinal() throws IOException {
+		XMLElement one = new Arrow("One");
+		XMLElement two = new Arrow("Two");
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two));
 		renderDiagram(d);
 	}
 

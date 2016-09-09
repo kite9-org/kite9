@@ -4,12 +4,9 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 
@@ -43,7 +40,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		Arrow a = new Arrow("meets");
 		new Link(a, one);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, null);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, a));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
