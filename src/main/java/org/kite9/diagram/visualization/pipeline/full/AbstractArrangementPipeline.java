@@ -47,7 +47,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	Compaction c;
 
 	protected Planarization createPlanarization(DiagramXMLElement d) {
-		return createPlanarizer().planarize(d);
+		return createPlanarizer().planarize(d.getDiagramElement());
 	}
 
 	public Planarizer createPlanarizer() {

@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
@@ -23,8 +22,8 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 		this.entryDirection = e.getDrawDirection();
 		this.current = (Container) e.getOriginalUnderlying();
 		this.parents = new UnorderedSet<Container>();
-		while (container instanceof Contained) {
-			container = ((Contained)container).getContainer();
+		while (container.getParent() != null) {
+			container = container.getContainer();
 			parents.add((Container)container);
 		}
 	}
@@ -86,7 +85,7 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 			return out;
 		}
 		
-		boolean elementWithinContainer = (und instanceof Contained) ? ((Contained) und).getContainer()==e.getOriginalUnderlying() : null;
+		boolean elementWithinContainer = und.getContainer()==e.getOriginalUnderlying();
 		boolean elementWithinEpicentre = ((!(und instanceof Container)) && (v.getRoutingInfo() != null)) ? rh.isWithin(epicentre, v.getRoutingInfo()) : false;
 			
 		if (elementWithinContainer) {

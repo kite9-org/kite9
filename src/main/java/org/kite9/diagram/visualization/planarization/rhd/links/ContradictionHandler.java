@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
@@ -18,7 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 public interface ContradictionHandler {
 
 	public abstract void checkOrdinalContradiction(Layout l, Direction d,
-			Contained from, Contained to, Container fromC, Connection c);
+			Connected from, Connected to, Container fromC, Connection c);
 
 	public abstract void checkForContainerContradiction(Connection c);
 

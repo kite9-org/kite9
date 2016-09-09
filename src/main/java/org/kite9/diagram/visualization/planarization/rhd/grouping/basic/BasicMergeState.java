@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -141,7 +141,7 @@ public class BasicMergeState extends GroupResult {
 			csi = new ContainerStateInfo(c2);
 			super.containerStates.put(c2, csi);
 			
-			for (Contained c : c2.getContents()) {
+			for (DiagramElement c : c2.getContents()) {
 				if (c instanceof Container) {
 					ContainerStateInfo csi2 = getStateFor((Container) c);
 					if (csi2 != null) {

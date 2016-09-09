@@ -15,11 +15,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.StyledDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.AbstractStyledXMLDiagramElement;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;

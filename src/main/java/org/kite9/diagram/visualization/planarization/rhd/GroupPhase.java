@@ -10,10 +10,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.PositionableDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
@@ -61,19 +59,19 @@ public class GroupPhase {
 		}
 	});
 	
-	private Map<Contained, LeafGroup> pMap;
+	private Map<Connected, LeafGroup> pMap;
 	private GroupBuilder ab;
 	private Set<Connection> allLinks = new UnorderedSet<Connection>(1000);
 	private ContradictionHandler ch;
 	
-	public GroupPhase(Kite9Log log, Container top, int elements, GroupBuilder ab, ContradictionHandler ch) {
-		this.pMap = new LinkedHashMap<Contained, LeafGroup>(elements * 2);
+	public GroupPhase(Kite9Log log, DiagramElement top, int elements, GroupBuilder ab, ContradictionHandler ch) {
+		this.pMap = new LinkedHashMap<Connected, LeafGroup>(elements * 2);
 		allGroups = new LinkedHashSet<LeafGroup>(elements * 2);
 		this.ab = ab;
 		this.ch = ch;
 		this.hashCodeGenerator = new Random(elements);
 		
-		createLeafGroup(top, null, pMap);
+		createLeafGroup((Connected) top, null, pMap);
 		setupLinks(top);
 		
 		for (LeafGroup group : allGroups) {
@@ -81,11 +79,11 @@ public class GroupPhase {
 		}
 	}
 	
-	public LeafGroup getLeafGroupFor(Contained ord) {
+	public LeafGroup getLeafGroupFor(Connected ord) {
 		return pMap.get(ord);
 	}
 
-	private void createLeafGroup(Contained ord, Contained prev, Map<Contained, LeafGroup> pMap) {
+	private void createLeafGroup(Connected ord, Connected prev, Map<Connected, LeafGroup> pMap) {
 		if (pMap.get(ord) != null) {
 			throw new LogicException("Diagram Element "+ord+" appears multiple times in the diagram definition");
 		}
@@ -105,36 +103,40 @@ public class GroupPhase {
 
 		if (ord instanceof Container) {
 			prev = null;
-			for (Contained c : ((Container)ord).getContents()) {
-				createLeafGroup(c, prev, pMap);				
-				prev = c;
+			for (DiagramElement c : ((Container)ord).getContents()) {
+				if (c instanceof Connected) {
+					createLeafGroup((Connected) c, prev, pMap);	
+				}
+				prev = (Connected) c;
 			}
 		}
 	}
 	
-	private void setupLinks(Contained o) {
-		for (Connection c : ((Connected) o).getLinks()) {
-			if (!allLinks.contains(c)) {
-				allLinks.add(c);
-				ch.checkForContainerContradiction(c);
-				LeafGroup to = getConnectionEnd((Contained) c.otherEnd((Connected) o));
-				LeafGroup from = getConnectionEnd(o);
-				
-				if ((to != null) && (to != o)) {
-					Direction d = c.getDrawDirectionFrom((Connected) o);
-					if (Tools.isConnectionContradicting(c)) {
-						d = null;
-					}
+	private void setupLinks(DiagramElement o) {
+		if (o instanceof Connected) {
+			for (Connection c : ((Connected) o).getLinks()) {
+				if (!allLinks.contains(c)) {
+					allLinks.add(c);
+					ch.checkForContainerContradiction(c);
+					LeafGroup to = getConnectionEnd(c.otherEnd((Connected) o));
+					LeafGroup from = getConnectionEnd((Connected) o);
 					
-					boolean ordering = c instanceof OrderingTemporaryConnection;
-					from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
-					to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+					if ((to != null) && (to != o)) {
+						Direction d = c.getDrawDirectionFrom((Connected) o);
+						if (Tools.isConnectionContradicting(c)) {
+							d = null;
+						}
+						
+						boolean ordering = c instanceof OrderingTemporaryConnection;
+						from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+						to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+					}
 				}
-			}
-		}		
+			}		
+		}
 		
 		if (o instanceof Container) {
-			for (Contained o2 : ((Container)o).getContents()) {
+			for (DiagramElement o2 : ((Container)o).getContents()) {
 				setupLinks(o2);
 			}
 		}
@@ -143,8 +145,8 @@ public class GroupPhase {
 	private int getLinkRank(Connection c) {
 		if (c instanceof OrderingTemporaryConnection) {
 			return Integer.MAX_VALUE;
-		} else if ((c instanceof Link) && (c.getDrawDirection() != null)) {
-			return ((Link) c).getRank();
+		} else if (c.getDrawDirection() != null) {
+			return c.getRank();
 		} else {
 			return 0;
 		}
@@ -161,14 +163,14 @@ public class GroupPhase {
 		return (drawDirection==Direction.UP) || (drawDirection==Direction.DOWN);
 	}
 
-	private boolean needsGroup(Contained ord) {
+	private boolean needsGroup(Connected ord) {
 		if (ord instanceof Container) {
 			
 			// if it has stuff inside, don't create a group
 			boolean hasSize = ((Container)ord).getContents().size()>0;
 			
 			// if it has links, don't create a group - the links will be groups
-			boolean hasLinks = ((Container)ord).getLinks().size()>0;
+			boolean hasLinks = ord.getLinks().size()>0;
 			
 			// if it is in a directed container, with other stuff, then the directed edge will be a group,
 			// so don't group
@@ -200,7 +202,7 @@ public class GroupPhase {
 
 	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN);
 	
-	private void addContainerOrderingInfo(Contained current, Contained prev, Container cnr) {
+	private void addContainerOrderingInfo(Connected current, Connected prev, Container cnr) {
 		if (prev == null)
 			return;
 
@@ -208,7 +210,7 @@ public class GroupPhase {
 		Layout l = cnr.getLayoutDirection();
 		if (TEMPORARY_NEEDED.contains(l)) {
 			Direction d = getDirectionForLayout(l);
-			OrderingTemporaryConnection tc = new OrderingTemporaryConnection((Connected) prev, (Connected) current, d, cnr);
+			OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prev, current, d, cnr);
 			LeafGroup from = getConnectionEnd(prev);
 			LeafGroup to = getConnectionEnd(current);
 			
@@ -492,10 +494,10 @@ public class GroupPhase {
 	 * Represents a single vertex (glyph, context) within the diagram
 	 */
 	public class LeafGroup extends Group {		
-		Contained o;
+		Connected o;
 		Container c;
 		
-		public Contained getContained() {
+		public Connected getContained() {
 			return o;
 		}
 		
@@ -503,7 +505,7 @@ public class GroupPhase {
 			return c;
 		}
 
-		public LeafGroup(Contained o, Container parent, GroupAxis axis, LinkManager lm) {
+		public LeafGroup(Connected o, Container parent, GroupAxis axis, LinkManager lm) {
 			super(axis, lm);
 			this.o = o;
 			this.c = parent;
@@ -543,11 +545,9 @@ public class GroupPhase {
 		}
 		
 		public Map<String, Float> getHints() {
-			if (o instanceof PositionableDiagramElement) {
-				Map<String, Float> positioningHints = o.getPositioningHints();
-				if (positioningHints!= null){
-					return positioningHints;
-				}
+			Map<String, Float> positioningHints = o.getPositioningHints();
+			if (positioningHints!= null){
+				return positioningHints;
 			}
 			
 			return Collections.emptyMap();
@@ -607,7 +607,7 @@ public class GroupPhase {
 	/**
 	 * This has to handle decomposition 
 	 */
-	private LeafGroup getConnectionEnd(Contained oe) {
+	private LeafGroup getConnectionEnd(Connected oe) {
 		LeafGroup otherGroup = pMap.get(oe);
 		if (otherGroup == null) {
 			LeafGroup decomp = new LeafGroup(null, (Container) oe, ab.createAxis(), ab.createLinkManager());
@@ -622,7 +622,7 @@ public class GroupPhase {
 	 * An invisible link need not be shown at all if it is causing a contradiction
 	 */
 	public static boolean isRemoveableLink(BiDirectional<Connected> bic) {
-		return (bic instanceof Link) && (LinkLineStyle.INVISIBLE.equals(((Link)bic).getShapeName()));
+		return (bic instanceof DiagramElement) && (LinkLineStyle.INVISIBLE.equals(((DiagramElement)bic).getShapeName()));
 	}
 
 

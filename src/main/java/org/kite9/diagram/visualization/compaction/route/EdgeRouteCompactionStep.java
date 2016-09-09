@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
@@ -78,7 +79,7 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 		double x = v.getX();
 		double y = v.getY();
 		
-		if (de instanceof DiagramXMLElement) {
+		if (de instanceof Diagram) {
 			increaseBounds(rri, x, y);
 		} else if ((rri.getPosition().x() == 0) && (rri.getPosition().y() == 0)) {
 			// initialize bounds

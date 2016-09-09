@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
@@ -177,7 +176,7 @@ public abstract class AbstractGroupingStrategy implements GroupingStrategy, Loga
 		ms.removeLiveContainer(c);
 
 		
-		Container cc = ((Contained)c).getContainer();
+		Container cc = c.getContainer();
 		if (cc != null) {
 			// push groups from this container into parent
 			ContainerStateInfo csiParent = ms.getStateFor(cc);

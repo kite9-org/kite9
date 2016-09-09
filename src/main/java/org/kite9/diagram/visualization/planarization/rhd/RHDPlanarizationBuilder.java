@@ -12,11 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -50,7 +49,6 @@ import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnecti
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -89,16 +87,16 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return rh;
 	}
 
-	protected abstract Planarization buildPlanarization(Container c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Contained>> sortedContainerContents);
+	protected abstract Planarization buildPlanarization(Diagram c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<DiagramElement>> sortedContainerContents);
 
-	public Planarization planarize(Container c) {
+	public Planarization planarize(Diagram c) {
 		final int[] elements = new int[1];
 
 		new DiagramElementVisitor().visit(c, new VisitorAction() {
 
 			@Override
 			public void visit(DiagramElement de) {
-				if (de instanceof Contained) {
+				if (de instanceof Connected) {
 					elements[0]++;
 				}
 			}
@@ -106,7 +104,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		boolean firstGo = true, redo = false;
 		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
 		ConnectionManager connections = null;
-		Map<Container, List<Contained>> sortedContainerContents = null;
+		Map<Container, List<DiagramElement>> sortedContainerContents = null;
 		
 		while (firstGo || redo) {
 			redo = false;
@@ -149,7 +147,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 					}
 				}
 				
-				sortedContainerContents = new HashMap<Container, List<Contained>>(gp.containerCount * 2);
+				sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
 				buildVertexList(null, c, null, out, sortedContainerContents);
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 			}
@@ -167,11 +165,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * Potentially expensive, but checks to make sure that none of the positions overlap.
 	 */
 	private boolean checkLayoutIsConsistent(Container c) {
-		List<Contained> contents = c.getContents();
+		List<DiagramElement> contents = c.getContents();
 		for (int i = 0; i < contents.size(); i++) {
-			Contained ci = contents.get(i);
+			DiagramElement ci = contents.get(i);
 			for (int j = 0; j < i; j++) {
-				Contained cj = contents.get(j);
+				DiagramElement cj = contents.get(j);
 				if (overlaps(ci, cj)) {
 					log.error("Overlap in positions of: "+ci+"  "+cj);
 					return false;
@@ -188,7 +186,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return true;
 	}
 
-	private boolean overlaps(Contained a, Contained b) {
+	private boolean overlaps(DiagramElement a, DiagramElement b) {
 		RoutingInfo ria = rh.getPlacedPosition(a);
 		RoutingInfo rib = rh.getPlacedPosition(b);
 		return (rh.overlaps(ria, rib));
@@ -265,7 +263,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			LeafGroup lg = (LeafGroup) start;
 			log.send("Processing Group: " + lg);
 			// g is a leaf group.  can we place it?
-			Contained l = lg.getContained();
+			Connected l = lg.getContained();
 			Container c = lg.getContainer();
 			
 			// sizing
@@ -279,7 +277,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	}
 	
 	private void ensureContainerBoundsAreLargeEnough(RoutingInfo ri, Container c) {
-		Contained l;
+		Connected l;
 		while (c != null) {
 			// make sure container bounds are big enough for the contents
 			RoutingInfo cri = rh.getPlacedPosition(c);
@@ -289,7 +287,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 			cri = rh.increaseBounds(cri, ri);
 			rh.setPlacedPosition(c, cri);
-			l = (Contained) c;
+			l = (Connected) c;
 			c = l.getContainer();
 		}
 	}
@@ -297,7 +295,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	/**
 	 * Constructs the list of vertices in no particular order.
 	 */
-	private void buildVertexList(Contained before, Contained c, Contained after, List<Vertex> out, Map<Container, List<Contained>> sortedContainerContents) {
+	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
 		if (c instanceof Container) {
 			Container container = (Container) c;
 			
@@ -323,30 +321,30 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
 
-	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<Contained>> sortedContainerContents) {
+	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {
 		boolean layingOut = container.getLayoutDirection() != null;
-		List<Contained> contents = container.getContents();
+		List<DiagramElement> contents = container.getContents();
 		if (layingOut) {
 			// sort the contents so that we can connect the right elements together
 			contents = getContainerContentsHolder(container.getLayoutDirection(), contents);
 			
-			Collections.sort(contents, new Comparator<Contained>() {
+			Collections.sort(contents, new Comparator<DiagramElement>() {
 				@Override
-				public int compare(Contained arg0, Contained arg1) {
-					return compareContained(arg0, arg1);
+				public int compare(DiagramElement arg0, DiagramElement arg1) {
+					return compareDiagramElements(arg0, arg1);
 				}
 			});
 			
 			sortedContainerContents.put(container, contents);
 		} 
 		
-		Contained conBefore = null, current = null, conAfter = null;
+		Connected conBefore = null, current = null, conAfter = null;
 		boolean start =true;
-		Iterator<Contained> iterator = contents.iterator();
+		Iterator<DiagramElement> iterator = contents.iterator();
 		while (start || (current != null)) {
 			conBefore = current;
 			current = conAfter;
-			conAfter = iterator.hasNext() ? iterator.next() : null;
+			conAfter = getNextConnected(iterator);
 			if (current != null) {
 				buildVertexList(conBefore, current, conAfter, out, sortedContainerContents);	
 				start = false;
@@ -354,7 +352,18 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private List<Contained> getContainerContentsHolder(Layout ld, List<Contained> contents) {
+	private Connected getNextConnected(Iterator<DiagramElement> iterator) {
+		while (iterator.hasNext()) {
+			DiagramElement de= iterator.next();
+			if (de instanceof Connected) {
+				return (Connected) de;
+			}
+		}
+		
+		return null;
+	}
+
+	private List<DiagramElement> getContainerContentsHolder(Layout ld, List<DiagramElement> contents) {
 		if (CHANGE_CONTAINER_ORDER) {
 			if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
 				// we are going to modify the original diagram
@@ -363,22 +372,20 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		} 
 		
 		// leave original intact
-		return new ArrayList<Contained>(contents);
+		return new ArrayList<DiagramElement>(contents);
 	} 
 
 	private void setPlanarizationHints(DiagramElement c, RoutingInfo bounds) {
-		if (c instanceof PositionableDiagramElement) {
-			HintMap hints = ((PositionableDiagramElement)c).getPositioningHints();
-			if (hints == null) {
-				hints = new HintMap();
-				((PositionableDiagramElement)c).setPositioningHints(hints);
-			}
-			rh.setHints(hints, bounds);
+		HintMap hints = c.getPositioningHints();
+		if (hints == null) {
+			hints = new HintMap();
+			c.setPositioningHints(hints);
 		}
+		rh.setHints(hints, bounds);
 	}
 	
-	private void setContainerVertexPositions(Contained before, Container c, Contained after, ContainerVertices cvs) {
-		Container within = (c instanceof Contained) ? ((Contained)c).getContainer():  null;
+	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs) {
+		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayoutDirection();
 		if (l != null) {
@@ -425,9 +432,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		rh.setPlacedPosition(c, rh.createRouting(nx, ny));
 	}
 
-	private void addExtraContainerVertex(Container c, Direction d, Contained to, ContainerVertices cvs) {
+	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs) {
 		if (to != null) {
-			int comp = compareContained((Contained) c, to);
+			int comp = compareDiagramElements((Connected) c, to);
 			if (comp == 1) {
 				d = Direction.reverse(d);
 			}
@@ -617,13 +624,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * Returns the sort order for the two elements according to their groupwise position
 	 * within a container.
 	 */
-	protected int compareContained(Contained a, Contained b) {
-		Container parent =a.getContainer();
-		if (b.getContainer() != parent) {
+	protected int compareDiagramElements(DiagramElement a, DiagramElement b) {
+		DiagramElement parent =a.getParent();
+		if (b.getParent() != parent) {
 			throw new LogicException("a and b must share a container");
 		}
 		
-		Layout l = parent.getLayoutDirection();
+		Layout l = ((Container) parent).getLayoutDirection();
 		
 		if (l == null) {
 			return 0;

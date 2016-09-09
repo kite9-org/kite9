@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PositionAction;
@@ -51,7 +52,7 @@ public class SegmentBuilder implements Logable {
 		for (Segment s : result) {
 			setSegmentUnderlying(s);
 			
-			if (s.underlying instanceof Contained) {
+			if (s.underlying instanceof Connected) {
 				s.underlyingSide = getContainedSegmentUnderlyingSide(s, s.underlying, transversePlane);
 			}
 			log.send(log.go() ? null : "Segment: "+s.i+" has underlying "+s.underlying+" on side "+s.underlyingSide);

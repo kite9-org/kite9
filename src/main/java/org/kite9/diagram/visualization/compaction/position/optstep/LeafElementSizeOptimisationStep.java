@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -111,7 +112,7 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 		List<ElementSlidables> toDo = new ArrayList<ElementSlidables>(glyphParts.size());
 		
 		for (Entry<DiagramElement, List<Slideable>> entry : glyphParts.entrySet()) {
-			if (entry.getKey() instanceof Contained) {
+			if (entry.getKey() instanceof Connected) {
 				List<Slideable> val = entry.getValue();
 				ElementSlidables es = new ElementSlidables();
 				es.ls = val.get(0);

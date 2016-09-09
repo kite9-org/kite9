@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
@@ -84,7 +83,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * one.   If it does, and the container is directed, then we use that edge to
 	 * maintain the container direction
 	 */
-	private boolean checkIfNewBackEdgeNeeded(Contained current, Contained prev, MGTPlanarization pln, Container inside) {
+	private boolean checkIfNewBackEdgeNeeded(DiagramElement current, DiagramElement prev, MGTPlanarization pln, Container inside) {
 		boolean needed = checkForInsertedBackEdge(current, prev, pln, inside);
 		if (!needed) {
 			return false;
@@ -99,7 +98,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 
-	private boolean checkForUninsertedBackEdge(Contained vUnd, Contained prevUnd, MGTPlanarization pln, Container inside) {
+	private boolean checkForUninsertedBackEdge(DiagramElement vUnd, DiagramElement prevUnd, MGTPlanarization pln, Container inside) {
 		if ((vUnd instanceof Connected) && (prevUnd instanceof Connected)) {
 			for (Connection c : ((Connected)prevUnd).getLinks()) {
 				if (c.meets((Connected) vUnd)) {
@@ -123,7 +122,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 
-	private boolean checkForInsertedBackEdge(Contained vUnd, Contained prevUnd, MGTPlanarization pln, Container inside) {
+	private boolean checkForInsertedBackEdge(DiagramElement vUnd, DiagramElement prevUnd, MGTPlanarization pln, Container inside) {
 		Direction d= getDirectionForLayout(inside);
 
 		if ((vUnd instanceof Connected) && (prevUnd instanceof Connected)) {
@@ -257,7 +256,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * below the planarization line to contain their content vertices.
 	 */
 	protected void setupContainerBoundaryEdges(MGTPlanarization p, Container outer) {
-		for (Contained c : outer.getContents()) {
+		for (DiagramElement c : outer.getContents()) {
 			if (c instanceof Container) {
 				setupContainerBoundaryEdges(p, (Container)c);
 			}
@@ -308,7 +307,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {
-		List<Contained> contents;
+		List<DiagramElement> contents;
 		boolean layingOut = c.getLayoutDirection() != null;
 		if (layingOut) {
 			contents = p.getContainerOrderingMap().get(c);
@@ -317,8 +316,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		}
 			
 		if (contents != null) {
-			Contained prev = null;
-			for (Contained current : contents) {
+			DiagramElement prev = null;
+			for (DiagramElement current : contents) {
 				if ((prev != null) && (layingOut)) {
 					log.send("Ensuring layout between " + current + " and " + prev);
 					checkAddLayoutEdge(p, c, toAdd, prev, current);
@@ -336,7 +335,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	
 
 
-	private void checkAddLayoutEdge(MGTPlanarization p, Container c, List<Edge> newEdges, Contained prev, Contained current) {
+	private void checkAddLayoutEdge(MGTPlanarization p, Container c, List<Edge> newEdges, DiagramElement prev, DiagramElement current) {
 		boolean needsDirectingBackEdge = checkIfNewBackEdgeNeeded(current, prev, p, c);
 		// create a directing back edge
 		if (needsDirectingBackEdge) {

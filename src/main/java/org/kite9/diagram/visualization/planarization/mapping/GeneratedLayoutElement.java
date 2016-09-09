@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
 import org.apache.batik.css.engine.value.Value;
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.common.Connected;
@@ -62,6 +63,10 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 
 	@Override
 	public DiagramElement getParent() {
+		return null;
+	}
+	
+	public Container getContainer() {
 		return null;
 	}
 

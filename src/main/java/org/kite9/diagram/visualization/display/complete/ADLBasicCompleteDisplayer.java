@@ -66,8 +66,8 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 		initBackgroundLayer();			
 		initShadows();		
 		initMainLayer();	
-		initWatermarkLayer();
-		initCopyrightLayer();
+		//initWatermarkLayer();
+		//initCopyrightLayer();
 		initFlannelLayer();
 		initDebugLayer();
 	}

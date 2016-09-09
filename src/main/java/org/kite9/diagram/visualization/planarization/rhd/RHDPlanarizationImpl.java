@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
-import org.kite9.diagram.xml.DiagramXMLElement;
 
 public abstract class RHDPlanarizationImpl extends AbstractPlanarization implements RHDPlanarization {
 
-	public RHDPlanarizationImpl(DiagramXMLElement d, Map<Container, List<DiagramElement>> containerOrderingMap) {
+	public RHDPlanarizationImpl(Diagram d, Map<Container, List<DiagramElement>> containerOrderingMap) {
 		super(d);
 		this.containerOrderingMap = containerOrderingMap;
 	}

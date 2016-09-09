@@ -4,16 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.annotation.K9OnDiagram;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.docs.PlanarizationDiagrams;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.diagram.xml.DiagramXMLElement;
 
 
 /**
@@ -23,7 +21,6 @@ import org.kite9.diagram.xml.DiagramXMLElement;
  * @author robmoffat
  *
  */
-@K9OnDiagram(on=PlanarizationDiagrams.class)
 public interface Planarization {
 
 	/**
@@ -80,7 +77,7 @@ public interface Planarization {
 	/**
 	 * Returns the diagram itself
 	 */
-	public DiagramXMLElement getDiagram();
+	public Diagram getDiagram();
 	
 	/**
 	 * Creates an empty face in the planarization

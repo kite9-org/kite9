@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
@@ -150,13 +152,13 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		for (Vertex b : ef.cornerIterator()) {
 			Object de = Tools.getUltimateElement(b);
 			
-			if (de instanceof Contained) {
-				Container c = ((Contained)de).getContainer();
+			if (de instanceof Connected) {
+				Container c = ((Connected)de).getContainer();
 				
 				if (c!=null) {
-					List<Contained> content = c.getContents();
+					List<DiagramElement> content = c.getContents();
 					// since the collection is ordered, position is important
-					int index = ((List<Contained>) content).indexOf(de);
+					int index = content.indexOf(de);
 					if (index != -1) {
 						out = Math.min(out, index);
 						outDir = getDirectionOfInsertion(c.getLayoutDirection());

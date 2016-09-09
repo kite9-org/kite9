@@ -1,6 +1,7 @@
 package org.kite9.diagram.common.elements;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.VPos;
@@ -28,9 +29,9 @@ public class CornerVertex extends AbstractVertex {
 		RectangleRenderingInformation ri = getRI();
 		
 		if (lr==HPos.LEFT) {
-			ri.setPosition(ri.getPosition().setX(x));
+			ri.setPosition(Dimension2D.setX(ri.getPosition(), x));
 		} else {
-			ri.setSize(ri.getSize().setX(x - ri.getPosition().x()));
+			ri.setSize(Dimension2D.setX(ri.getSize(), x - ri.getPosition().x()));
 		}
 	}
 
@@ -44,9 +45,9 @@ public class CornerVertex extends AbstractVertex {
 		RectangleRenderingInformation ri = getRI();
 
 		if (ud==VPos.UP) {
-			ri.setPosition(ri.getPosition().setY(y));
+			ri.setPosition(Dimension2D.setY(ri.getPosition(), y));
 		} else {
-			ri.setSize(ri.getSize().setY(y - ri.getPosition().y()));
+			ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
 		}
 	}
 

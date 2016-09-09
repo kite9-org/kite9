@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
@@ -27,8 +27,8 @@ public class RankBasedConnectionQueue extends OriginalConnectionQueue {
 			}
 
 			private int getRankFor(BiDirectional<Connected> arg0) {
-				if (arg0 instanceof Link) {
-					return ((Link)arg0).getRank();
+				if (arg0 instanceof Connection) {
+					return ((Connection)arg0).getRank();
 				} else {
 					return 0;
 				}

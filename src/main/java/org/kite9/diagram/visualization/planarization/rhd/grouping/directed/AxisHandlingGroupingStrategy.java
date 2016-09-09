@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
@@ -156,15 +156,15 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 					} else if (x == null) {
 						return false;
 					} else {
-						return isParentOrSelf(((Contained)x).getContainer(), parent);
+						return isParentOrSelf(x.getContainer(), parent);
 					}
 				}
 
 				private Container getFirstExpandingContainer(BasicMergeState ms, Container from) {
 					if (expandingContainers.contains(from)) {
 						return from;
-					} else if (from instanceof Contained) {
-						return getFirstExpandingContainer(ms, ((Contained)from).getContainer());
+					} else if (from instanceof Connected) {
+						return getFirstExpandingContainer(ms, from.getContainer());
 					} else {
 						return null;
 					}

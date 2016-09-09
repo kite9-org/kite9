@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -14,7 +16,6 @@ import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.Table;
@@ -35,7 +36,7 @@ public abstract class MGTPlanarizationBuilder extends RHDPlanarizationBuilder im
 	
 	protected Kite9Log log = new Kite9Log(this);
 		
-	protected MGTPlanarizationImpl buildPlanarization(DiagramXMLElement d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Contained>> sortedContainerContents) {
+	protected MGTPlanarizationImpl buildPlanarization(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<DiagramElement>> sortedContainerContents) {
 		MGTPlanarizationImpl p = new MGTPlanarizationImpl(d, vertexOrder, initialUninsertedConnections, sortedContainerContents);
 		logPlanarEmbeddingDetails(p, log);
 		getRoutableReader().initRoutableOrdering(vertexOrder);

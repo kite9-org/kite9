@@ -2,11 +2,10 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.rules;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
@@ -269,8 +268,8 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 	private Set<Container> getParentContainers(Set<Container> ac, Set<Container> done) {
 		Set<Container> out = new UnorderedSet<Container>(ac.size());
 		for (Container c : ac) {
-			if ((!done.contains(c)) && (c instanceof Contained)) {
-				out.add(((Contained)c).getContainer());
+			if ((!done.contains(c)) && (c instanceof Connected)) {
+				out.add(((Connected)c).getContainer());
 			}
 		}
 		

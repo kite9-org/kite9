@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.transform;
 import java.util.List;
 import java.util.Set;
 
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -12,7 +13,6 @@ import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -26,7 +26,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 	
 	@Override
 	public void transform(Planarization pln) {
-		DiagramXMLElement d = pln.getDiagram();
+		Diagram d = pln.getDiagram();
 		EdgeMapping em = pln.getEdgeMappings().get(d);
 		Face outerFace = getDiagramOuterFace(em, pln);
 		Set<Face> done = new UnorderedSet<Face>(pln.getFaces().size()*2);

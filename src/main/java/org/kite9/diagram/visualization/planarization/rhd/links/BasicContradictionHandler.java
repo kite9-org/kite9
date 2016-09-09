@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
@@ -113,12 +113,12 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	public void checkForContainerContradiction(Connection c) {
 		Direction drawDirection = c.getDrawDirection();
 		if (drawDirection != null) {
-			Contained from = (Contained) c.getFrom();
-			Contained to = (Contained) c.getTo();
+			DiagramElement from = c.getFrom();
+			DiagramElement to = c.getTo();
 			
 			while (true) {
-				Container fromC = ((Contained) from).getContainer();
-				Container toC = ((Contained) to).getContainer();
+				Container fromC = ((Connected)from).getContainer();
+				Container toC = ((Connected)to).getContainer();
 				
 				if (fromC == toC) {
 					Layout l = fromC.getLayoutDirection();
@@ -136,7 +136,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 						case DOWN:
 						case LEFT:
 						case RIGHT:
-							checkOrdinalContradiction(l, drawDirection, from, to, fromC, c);
+							checkOrdinalContradiction(l, drawDirection, (Connected) from, (Connected) to, fromC, c);
 							return;
 						}
 					}
@@ -145,19 +145,19 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				int depthFrom = em.getContainerDepth(fromC);
 				int depthTo = em.getContainerDepth(toC);
 				if (depthFrom < depthTo) {
-					to = (Contained)toC;
+					to = toC;
 				} else if (depthFrom > depthTo) {
-					from = (Contained)fromC;
+					from = fromC;
 				} else {
-					to = (Contained)toC;
-					from = (Contained)fromC;
+					to = toC;
+					from = fromC;
 				}
 			}
 		}
 	}
 
 	@Override
-	public void checkOrdinalContradiction(Layout l, Direction d, Contained from, Contained to, Container fromC, Connection c) {
+	public void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
 		Direction ld = GroupPhase.getDirectionForLayout(l);
 		if (GroupPhase.isHorizontalDirection(ld) != GroupPhase.isHorizontalDirection(d)) {
 			setContradiction(c);

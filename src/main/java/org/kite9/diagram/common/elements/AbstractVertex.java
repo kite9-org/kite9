@@ -78,11 +78,11 @@ public abstract class AbstractVertex implements Vertex {
 	}
 
 	public void setX(double x) {
-		position = position.setX(x);
+		position = Dimension2D.setX(position,x);
 	}
 
 	public void setY(double y) {
-		position = position.setY(y);
+		position = Dimension2D.setY(position, y);
 	}
 
 	public Dimension2D getPosition() {

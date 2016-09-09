@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.List;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP;
@@ -388,7 +387,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 				DiagramElement crossingContainer = crossing.getOriginalUnderlying();
 				if (crossingContainer == inside) {
 					// we are leaving the container
-					inContainer = ((Contained)inside).getContainer();
+					inContainer = inside.getContainer();
 				} else {
 					// we are entering a new container
 					inContainer = (Container) crossingContainer;
@@ -669,11 +668,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		public Container insideContainer() {
 			Vertex v = l.v;
 			DiagramElement de = v.getOriginalUnderlying();
-			if (de instanceof Contained) {
-				return ((Contained)de).getContainer();
-			}
-			
-			throw new LogicException("Was expecting something to have a container");
+			return de.getContainer();
 		}
 
 	}

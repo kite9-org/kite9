@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
-import org.kite9.diagram.visualization.display.components.LinkDisplayer;
+import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -79,7 +79,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	}
 	
 	protected boolean checkEdgeDirections() {
-		LinkDisplayer.debug = true;
+		ConnectionDisplayer.debug = true;
 		return true;
 	}
 	

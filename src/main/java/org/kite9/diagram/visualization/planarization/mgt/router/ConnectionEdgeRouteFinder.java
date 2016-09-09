@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
@@ -339,7 +338,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			}
 			
 			if (allowConnectionsToContainerContents()) {
-				for (Contained con : c.getContents()) {
+				for (DiagramElement con : c.getContents()) {
 					if (!(con instanceof Container)) {
 						Vertex vcon = em.getVertex((Connected) con);
 						createInitialPathsFrom(pq, vcon);
@@ -449,11 +448,9 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			
 			boolean out = false;
 			if (allowConnectionsToContainerContents()) {
-				if (und instanceof Contained) {
-					// return false if this element is not in the correct container.
-					if ((((Contained)und).getContainer() != originalUnderlying)) {
-						return false;
-					}
+				// return false if this element is not in the correct container.
+				if (und.getContainer() != originalUnderlying) {
+					return false;
 				}
 				
 				RoutingInfo ri = candidate.getRoutingInfo();
