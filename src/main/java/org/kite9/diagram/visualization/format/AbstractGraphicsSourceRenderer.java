@@ -61,6 +61,7 @@ public abstract class AbstractGraphicsSourceRenderer<X> implements GraphicsSourc
 					RouteRenderingInformation rri = (RouteRenderingInformation) ((Connection) de).getRenderingInformation();
 					Object d = DiagramChecker.getRouteDirection(rri);
 					DiagramChecker.SET_CONTRADICTING.action(rri, d, (Connection)de);
+					dea.draw(de, rri);
 				} else {
 					dea.draw(de, de.getRenderingInformation());
 				}

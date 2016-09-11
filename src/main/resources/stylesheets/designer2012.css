@@ -9,6 +9,7 @@ diagram {
 }
 
 glyph,
+arrow,
 arrow2,
 arrow3 {
 	type: text;
@@ -18,10 +19,10 @@ link {
 	type: link;
 }
 
-/*from,
+from,
 to {
 	type: link-end;
-} */
+} 
 
 
 .background {
@@ -74,7 +75,7 @@ to {
 }
 
 /* Glyph */
-.glyph {
+glyph {
 	shape: "rounded-rect";
 	padding: 3px 6px 3px 6px; 
 	margin: 0;
@@ -104,19 +105,19 @@ to {
 	box-shadow: 4px 4px 0px #333333; 
 }
 
-.glyph .label {
+glyph .label {
 	font-size: 15px;
 	text-align: middle;
 	font-family: "opensans-regular-webfont";
 }
 
-.glyph .stereotype {
+glyph .stereotype {
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	stroke: black;
 }
 
-.glyph .text-line {
+glyph .text-line {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	padding-left: 0px;
@@ -130,14 +131,14 @@ to {
 }
 
 /* Arrow */
-.arrow {
+arrow {
 	padding: 2px 3px 2px 3px; 
 	margin: 0 0 0 0; 
 	fill: black;
 	stroke: none;
 }
 
-.arrow .label {
+arrow label {
 	stroke: white;
 }
 
@@ -166,11 +167,13 @@ to {
 
 /* Link */
 
-.link {
+link {
+	stroke: black;
+	stroke-width: 2px;
 	
 }
 
-.link.dotted {
+link.dotted {
 	stroke-dasharray: 5px 5px;
 	
 }
