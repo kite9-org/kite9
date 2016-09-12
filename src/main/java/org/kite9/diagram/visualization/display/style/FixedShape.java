@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.display.style;
 
-import org.kite9.diagram.adl.LinkTerminator;
-import org.kite9.diagram.adl.StyledDiagramElement;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
@@ -25,8 +25,8 @@ public class FixedShape extends ShapeStyle {
 		if (styleElement instanceof Symbol) {
 			SymbolShape shape = ((Symbol) styleElement).getShape();
 			return ShapeHelper.createSymbolShape(shape, getWidth(), 0, 0);
-		} else if (styleElement instanceof LinkTerminator) {
-			String shape = ((LinkTerminator)styleElement).getShapeName();
+		} else if (styleElement instanceof Terminator) {
+			String shape = ((Terminator)styleElement).getShapeName();
 			return ShapeHelper.getTerminatorShape(shape);
 		} else {
 			throw new UnsupportedOperationException("Can't get shape for "+styleElement);

@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.display;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -55,12 +55,12 @@ public class NullDisplayer implements CompleteDisplayer {
 	}
 
 	@Override
-	public double getTerminatorLength(LinkTerminator terminator) {
+	public double getTerminatorLength(Terminator terminator) {
 		return 0;
 	}
 
 	@Override
-	public double getTerminatorReserved(LinkTerminator terminator, Connection c) {
+	public double getTerminatorReserved(Terminator terminator, Connection c) {
 		return 0;
 	}
 

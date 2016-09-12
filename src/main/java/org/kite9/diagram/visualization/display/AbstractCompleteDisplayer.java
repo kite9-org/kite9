@@ -7,7 +7,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.CostedDimension;
@@ -232,7 +232,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	@Override
-	public double getTerminatorLength(LinkTerminator terminator) {
+	public double getTerminatorLength(Terminator terminator) {
 		if (terminator != null) {
 			TerminatorShape fs = new TerminatorShape(terminator);
 			return fs.getMinInputLinkLength();
@@ -242,7 +242,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 	
 	@Override
-	public double getTerminatorReserved(LinkTerminator terminator, Connection on) {
+	public double getTerminatorReserved(Terminator terminator, Connection on) {
 		if (terminator != null) {
 			TerminatorShape fs = new TerminatorShape(terminator);
 			ShapeStyle ss = ((AbstractRouteDisplayer) getDisplayer(on)).getStyle(on);

@@ -114,7 +114,7 @@ public class ShapeStyle extends SVGAttributedStyle {
 				pixels(name+"-bottom"), pixels(name+"-left"));
 	}
 	
-	private double pixels(String name) {
+	private double pixels(String name) {		 
 		Value v = getCSSStyleProperty(name);
 		if (v instanceof FloatValue) {
 			if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {

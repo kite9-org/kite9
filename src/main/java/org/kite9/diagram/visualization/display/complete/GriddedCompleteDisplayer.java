@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -131,12 +131,12 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 
 	@Override
-	public double getTerminatorLength(LinkTerminator terminator) {
+	public double getTerminatorLength(Terminator terminator) {
 		return ded.getTerminatorLength(terminator);
 	}
 
 	@Override
-	public double getTerminatorReserved(LinkTerminator terminator, Connection c) {
+	public double getTerminatorReserved(Terminator terminator, Connection c) {
 		return ded.getTerminatorReserved(terminator, c);
 	}
 

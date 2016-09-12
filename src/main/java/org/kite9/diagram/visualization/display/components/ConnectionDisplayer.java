@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -36,9 +36,9 @@ public class ConnectionDisplayer extends AbstractRouteDisplayer implements Compo
 		super(parent, g2, shadow);
 	}
 	
-	private LinkTerminator getLinkTerminator(Connection ae, boolean from) {
-		LinkTerminator out = (from ? ae.getFromDecoration() : ae.getToDecoration());
-		return out == null ? new LinkTerminator("NONE") : out;
+	private Terminator getLinkTerminator(Connection ae, boolean from) {
+		Terminator out = (from ? ae.getFromDecoration() : ae.getToDecoration());
+		return out;
 	}
 	
 	
@@ -288,8 +288,8 @@ public class ConnectionDisplayer extends AbstractRouteDisplayer implements Compo
 		RouteRenderingInformation rr = (RouteRenderingInformation) r;
 		rr.setContradicting(ae.getRenderingInformation().isContradicting() || rr.isContradicting());
 		ae.setRenderingInformation(r);
-		LinkTerminator fromEnd = getLinkTerminator(ae, true);
-		LinkTerminator toEnd = getLinkTerminator(ae, false);
+		Terminator fromEnd = getLinkTerminator(ae, true);
+		Terminator toEnd = getLinkTerminator(ae, false);
 		
 		if (rr.size()==0) {
 			// && ((rr.getPerimeterPath()==null) || (rr.getPerimeterPath().length()==0))) {

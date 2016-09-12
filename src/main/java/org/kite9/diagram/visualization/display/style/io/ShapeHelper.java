@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.ext.awt.geom.Polygon2D;
+import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.visualization.display.style.ConnectionTemplate;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.CircleFlexibleShape;

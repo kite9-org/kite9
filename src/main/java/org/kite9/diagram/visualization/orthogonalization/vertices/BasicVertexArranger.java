@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.CornerVertex;
@@ -473,8 +473,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * Ensures that there is enough length on the dart to include the terminator shape
 	 */
 	protected double getMinimumDartLength(Dart d, Edge underlyingEdge) {
-		LinkTerminator terminatorFrom = getTerminator(underlyingEdge, d.getFrom());
-		LinkTerminator terminatorTo = getTerminator(underlyingEdge, d.getTo());
+		Terminator terminatorFrom = getTerminator(underlyingEdge, d.getFrom());
+		Terminator terminatorTo = getTerminator(underlyingEdge, d.getTo());
 		
 		double fromSize = sizer.getTerminatorLength(terminatorFrom);
 		double toSize = sizer.getTerminatorLength(terminatorTo);
@@ -482,7 +482,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		return fromSize + toSize;
 	}
 
-	protected LinkTerminator getTerminator(Edge underlyingEdge, Vertex v) {
+	protected Terminator getTerminator(Edge underlyingEdge, Vertex v) {
 		DiagramElement underlyingDestination = v.getOriginalUnderlying();
 		DiagramElement underlyingLink = underlyingEdge.getOriginalUnderlying();
 		if (underlyingLink instanceof Connection) {

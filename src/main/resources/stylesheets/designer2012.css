@@ -180,6 +180,12 @@ link.dotted {
 
 /* Terminators */
 
+terminator,
+fromDecoration, 
+toDecoration {
+	type: terminator;
+}
+
 .link-terminator {
 	margin: 0 5px 10px 5px;
 	height: 10px;

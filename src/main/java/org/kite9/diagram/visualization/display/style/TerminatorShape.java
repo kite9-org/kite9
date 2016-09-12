@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.display.style;
 
-import org.kite9.diagram.adl.LinkTerminator;
+import org.kite9.diagram.adl.Terminator;
 
 public class TerminatorShape extends FixedShape {
 	
@@ -25,7 +25,7 @@ public class TerminatorShape extends FixedShape {
 		this.s = s;
 	}*/
 
-	public TerminatorShape(LinkTerminator s) {
+	public TerminatorShape(Terminator s) {
 		super(s);
 	}
 
