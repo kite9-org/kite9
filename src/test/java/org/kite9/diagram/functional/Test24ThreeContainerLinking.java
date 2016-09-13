@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Map.Entry;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.position.Direction;
@@ -26,19 +25,19 @@ public class Test24ThreeContainerLinking extends AbstractFunctionalTest {
     	Glyph two = new Glyph("b", "Stereo", "b", null, null);
     	Glyph three = new Glyph("c", "Stereo", "c", null, null);
     	
-    	Context con1 = new Context("b1", createList((Contained) one, (Contained) two, (Contained) three), true, null, c1);
+    	Context con1 = new Context("b1", createList(one, two,three), true, null, c1);
     	
     	Glyph four = new Glyph("d", "Stereo", "d", null, null);
     	Glyph five = new Glyph("e", "Stereo", "e", null, null);
     	Glyph six = new Glyph("f", "Stereo", "f", null, null);
     	
-    	Context con2 = new Context("b2", createList((Contained) four, (Contained) five, (Contained) six), true, null, c2);
+    	Context con2 = new Context("b2", createList(four, five, six), true, null, c2);
         
     	Glyph seven = new Glyph("g", "Stereo", "g", null, null);
     	Glyph eight = new Glyph("h", "Stereo", "h", null, null);
     	Glyph nine = new Glyph("i", "Stereo", "i", null, null);
     	
-    	Context con3 = new Context("b3", createList((Contained) seven, (Contained) eight, (Contained) nine), true, null, c3);
+    	Context con3 = new Context("b3", createList( seven, eight,  nine), true, null, c3);
 
        	
        	new TurnLink(one, eight, null, null, null, null, l1);

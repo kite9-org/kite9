@@ -1,8 +1,6 @@
 package org.kite9.diagram.functional;
 
-import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.XMLElement;
 
@@ -17,13 +15,13 @@ public class HopLink extends Link {
 		super();
 	}
 
-	public HopLink(XMLElement from, XMLElement to, String fromStyle, Label fromLabel, String toEndStyle,
-			Label toLabel, Direction drawDirection) {
+	public HopLink(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle,
+			XMLElement toLabel, Direction drawDirection) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection);
 	}
 
-	public HopLink(XMLElement from, XMLElement to, String fromStyle, Label fromLabel, String toEndStyle,
-			Label toLabel) {
+	public HopLink(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle,
+			XMLElement toLabel) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel);
 	}
 

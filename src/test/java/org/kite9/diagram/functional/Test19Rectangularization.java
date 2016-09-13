@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -39,8 +38,8 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 
 	@Test
 	public void test_19_1_LinksOnDifferentSides() throws IOException {
-		Context inner = new Context("inner", createList((Contained) a, b, c, d), true, null, null);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) inner, a1, b1, c1, d1), null);
+		Context inner = new Context("inner", createList(a, b, c, d), true, null, null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		new Link(a, a1, null, null, null, null, Direction.UP);
 		new Link(b, b1, null, null, null, null, Direction.LEFT);
@@ -53,8 +52,8 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_19_2_LinksOnSameSides() throws IOException {
-		Context inner = new Context("inner", createList((Contained) a, b, c, d), true, null, null);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) inner, a1, b1, c1, d1), null);
+		Context inner = new Context("inner", createList(a, b, c, d), true, null, null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		new Link(a, a1, null, null, null, null, Direction.UP);
 		new Link(b, b1, null, null, null, null, Direction.DOWN);
@@ -67,8 +66,8 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_19_3_UndirectedLinks() throws IOException {
-		Context inner = new Context("inner", createList((Contained) a, b, c, d), true, null, null);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) inner, a1, b1, c1, d1), null);
+		Context inner = new Context("inner", createList(a, b, c, d), true, null, null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		new Link(a, a1);
 		new Link(b, b1);
@@ -81,8 +80,8 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_19_4_TallArrow() throws IOException {
-		Context inner = new Context("inner", createList((Contained) a, b, c, d), true, null, null);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) inner, a1), null);
+		Context inner = new Context("inner", createList(a, b, c, d), true, null, null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1), null);
 		
 		new Link(a, a1, null, null, null, null, Direction.RIGHT);
 		new TurnLink(b, a1);
@@ -95,8 +94,8 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_19_5_WideArrow() throws IOException {
-		Context inner = new Context("inner", createList((Contained) a, b, c, d), true, null, null);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) inner, a1), null);
+		Context inner = new Context("inner", createList(a, b, c, d), true, null, null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1), null);
 		
 		new Link(a, a1, null, null, null, null, Direction.UP);
 		new TurnLink(b, a1);
@@ -109,7 +108,7 @@ public class Test19Rectangularization extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_19_6_WideAndTallArrow() throws IOException {
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList((Contained) a,b,c,d, a1), null);
+		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(a,b,c,d, a1), null);
 		
 		new Link(a, a1, null, null, null, null, Direction.UP);
 		new Link(b, a1, null, null, null, null, Direction.UP);

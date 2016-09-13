@@ -86,9 +86,4 @@ public class Key extends AbstractStyleableXMLElement {
 		return new Key();
 	}
 
-	public DiagramElement getOwner() {
-		return (DiagramElement) getParent();
-	}
-	
-	
 }

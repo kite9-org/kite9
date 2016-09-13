@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -37,14 +36,14 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		Arrow sends = new Arrow("sends");
 		Arrow receives = new Arrow("receives");
 		
-		Context client = new Context("client side", createList((Contained) javaCode, kite9Lib, scans), true, new TextLine("Your PC (Client)"), null);
+		Context client = new Context("client side", createList(javaCode, kite9Lib, scans), true, new TextLine("Your PC (Client)"), null);
 		
 		Glyph project = new Glyph(null, "Project Definitions", null, null);
 		Glyph diagramServer = new Glyph("web-app", "Kite9 Diagram Server", null, null);
 		
-		Context server = new Context("server side", createList((Contained) project, diagramServer), true, new TextLine("Kite9 Servers"), null);
+		Context server = new Context("server side", createList(project, diagramServer), true, new TextLine("Kite9 Servers"), null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(client, server, diagram, sends, receives, response), null);
 		
 		
 		// scans
@@ -81,16 +80,16 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		Arrow sends = new Arrow("sends");
 		Arrow receives = new Arrow("receives");
 		
-		Context client = new Context("client side", createList((Contained) javaCode, kite9Lib, scans), true, new TextLine("Your PC (Client)"), null);
+		Context client = new Context("client side", createList(javaCode, kite9Lib, scans), true, new TextLine("Your PC (Client)"), null);
 		
 		Glyph project = new Glyph(null, "Project Definitions", null, null);
 		Glyph diagramServer = new Glyph("web-app", "Kite9 Diagram Server", null, null);
 		
-		Context server = new Context("server side", createList((Contained) project, diagramServer), true, new TextLine("Kite9 Servers"), null);
+		Context server = new Context("server side", createList(project, diagramServer), true, new TextLine("Kite9 Servers"), null);
 		
-		Context internet = new Context("internet", createList((Contained) diagram, sends, receives, response), false, null, null);
+		Context internet = new Context("internet", createList(diagram, sends, receives, response), false, null, null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, internet), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(client, server, internet), null);
 		
 		
 		// scans
@@ -121,12 +120,12 @@ public class TestJavaHelloWorld extends AbstractFunctionalTest {
 		Arrow sends = new Arrow("sends");
 		Arrow receives = new Arrow("receives");
 		
-		Context client = new Context("client side", createList((Contained) kite9Lib), true, new TextLine("Your PC (Client)"), null);
+		Context client = new Context("client side", createList(kite9Lib), true, new TextLine("Your PC (Client)"), null);
 		
 		
 		Context server = new Context("server side", null, true, new TextLine("Kite9 Servers"), null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) client, server, diagram, sends, receives, response), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(client, server, diagram, sends, receives, response), null);
 		
 		
 		// sends

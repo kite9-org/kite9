@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
@@ -39,7 +38,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		new Link(likes, biscuits, null, null, LinkEndStyle.ARROW, null, null);
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) rover, english, isa, likes, biscuits), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(rover, english, isa, likes, biscuits), null);
 		
 		renderDiagram(d);
 		
@@ -78,7 +77,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		new Link(ellen, ellen_is_2,null, null,  null, null, Direction.UP);
 		new Link(ellen_is_2, female, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 	
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, ellen, emile, english, french, male, female, john_is_1, john_is_2, emile_is_1, emile_is_2, ellen_is_1, ellen_is_2), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(john, ellen, emile, english, french, male, female, john_is_1, john_is_2, emile_is_1, emile_is_2, ellen_is_1, ellen_is_2), null);
 		
 		renderDiagram(d);
 		
@@ -87,14 +86,14 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 	@Test
 	public void peopleContext1() throws IOException {
 		Glyph emile = new Glyph("", "Emile", null, null);
-		Context french = new Context("French people", createList((Contained) emile), true, new TextLine("French people"), null);
+		Context french = new Context("French people", createList(emile), true, new TextLine("French people"), null);
 
 		Glyph john = new Glyph("", "John", null, null);
 		Glyph ellen = new Glyph("", "Ellen", null, null);
 
-		Context english = new Context("English people", createList((Contained) john, ellen), true, new TextLine("English people"), null);
+		Context english = new Context("English people", createList(john, ellen), true, new TextLine("English people"), null);
 	
-		DiagramXMLElement d = new DiagramXMLElement("abc", createList((Contained)english, french), null);
+		DiagramXMLElement d = new DiagramXMLElement("abc", createList(english, french), null);
 		
 		renderDiagram(d);
 		
@@ -103,17 +102,17 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 	@Test
 	public void peopleContext2() throws IOException {
 		Glyph emile = new Glyph("", "Emile", null, null);
-		Context male1 = new Context("Male", createList((Contained) emile), true, new TextLine("Male"), null);
-		Context french = new Context("French people", createList((Contained) male1), true, new TextLine("French people"), null);
+		Context male1 = new Context("Male", createList(emile), true, new TextLine("Male"), null);
+		Context french = new Context("French people", createList(male1), true, new TextLine("French people"), null);
 
 		Glyph john = new Glyph("", "John", null, null);
-		Context male2 = new Context("Male", createList((Contained) john), true, new TextLine("Male") , null);
+		Context male2 = new Context("Male", createList(john), true, new TextLine("Male") , null);
 		Glyph ellen = new Glyph("", "Ellen", null, null);
-		Context female1 = new Context("Female", createList((Contained) ellen), true, new TextLine("Female"), null);
+		Context female1 = new Context("Female", createList(ellen), true, new TextLine("Female"), null);
 
-		Context english = new Context("English people", createList((Contained) male2, female1), true, new TextLine("English people"), null);
+		Context english = new Context("English people", createList(male2, female1), true, new TextLine("English people"), null);
 	
-		DiagramXMLElement d = new DiagramXMLElement("abc", createList((Contained)english, french), null);
+		DiagramXMLElement d = new DiagramXMLElement("abc", createList(english, french), null);
 		
 		renderDiagram(d);
 		
@@ -122,7 +121,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 	@Test
 	public void systemDiagram() throws IOException {
 		Glyph john = new Glyph("john","", "John", null, null);
-		Context c2 = new Context("c2", createList((Contained) john), true, new TextLine("Ohio Office"), Layout.UP);
+		Context c2 = new Context("c2", createList(john), true, new TextLine("Ohio Office"), Layout.UP);
 
 		Glyph report = new Glyph("report", "", "Report", null, null);
 		Glyph accounts = new Glyph("ad", "", "Accounts Department", null, null);
@@ -137,9 +136,9 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		
 		new Link(sends, report,null, null,  null, null, Direction.UP);
 
-		Context c1 = new Context("c1", createList((Contained) accounts, sales), true, new TextLine("Head Office"), Layout.UP);
+		Context c1 = new Context("c1", createList(accounts, sales), true, new TextLine("Head Office"), Layout.UP);
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) c1, sends, report, c2), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(c1, sends, report, c2), null);
 		
 		renderDiagram(d);
 		
@@ -160,7 +159,7 @@ public class TestIntroToADLPart2 extends AbstractFunctionalTest {
 		
 		Key k = new Key("Explanation of Symbols", null, new ArrayList<Symbol>(helper.getUsedSymbols()));
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, ellen, emile), k);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(john, ellen, emile), k);
 		
 		renderDiagram(d);
 		

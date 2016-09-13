@@ -105,8 +105,8 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	private void addConnectors(List<XMLElement> out, int distance) {
 		for (int i = 0; i < out.size(); i++) {
 			int next = (i + distance) % out.size();
-			Connected from =(Connected) out.get(i);
-			Connected to = (Connected) out.get(next);
+			XMLElement from =(XMLElement) out.get(i);
+			XMLElement to = (XMLElement) out.get(next);
 			
 			new Link(from, to, null, null, null, null, null);
 		}

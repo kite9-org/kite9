@@ -29,7 +29,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 		for (int i = 0; i < count; i++) {
 			id ++;
 			Glyph g = new Glyph("id"+id, "bob", "id"+id, null, null);
-			List<CompositionalDiagramElement> textLines = new ArrayList<>();
+			List<XMLElement> textLines = new ArrayList<>();
 			for (int j = 0; j < i; j++) {
 				textLines.add(new TextLine("Some text"));
 			}

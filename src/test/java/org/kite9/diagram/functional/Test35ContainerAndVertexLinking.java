@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -51,7 +50,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(g6, con1);
 		new Link(g0, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) g0, con1, g4, g5, g6), Layout.RIGHT, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList( g0, con1, g4, g5, g6), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -79,7 +78,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(g6, con1);
 		new Link(g0, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) g0, con2, g6), Layout.RIGHT, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList(g0, con2, g6), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -112,7 +111,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) g0, con1, con2, g7), Layout.HORIZONTAL, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList(g0, con1, con2, g7), Layout.HORIZONTAL, null);
 		renderDiagram(d);
 	}
 	
@@ -145,7 +144,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) g0, con1, g7, con2), Layout.RIGHT, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList( g0, con1, g7, con2), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 
@@ -178,7 +177,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g0, g7, con2), Layout.DOWN, null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g0, g7, con2), Layout.DOWN, null);
 		renderDiagram(d);
 	}
 	
@@ -213,7 +212,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(con1, g10);
 		new Link(con1, g11);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList( con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 	
@@ -248,7 +247,7 @@ public class Test35ContainerAndVertexLinking extends AbstractFunctionalTest  {
 		new Link(con1, g10, null, null, null, null, Direction.UP);
 		new Link(con1, g11, null, null, null, null, Direction.UP);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
+		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 

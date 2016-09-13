@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -20,7 +19,7 @@ public class Test3MultiArrows extends AbstractFunctionalTest {
 		new Link( a, one);
 		new Link(a, two);
 		new Link( a, three);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, three, a), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, two, three, a), null);
 
 		renderDiagram(d);
 	}
@@ -41,7 +40,7 @@ public class Test3MultiArrows extends AbstractFunctionalTest {
 		new Link(b, two);
 		new Link( b, three);
 		new Link(b, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, three, four, a, b), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b), null);
 
 		renderDiagram(d);
 	}
@@ -67,7 +66,7 @@ public class Test3MultiArrows extends AbstractFunctionalTest {
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, three, four, a, b, c), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
 
 		renderDiagram(d);
 	}
@@ -93,7 +92,7 @@ public class Test3MultiArrows extends AbstractFunctionalTest {
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, three, four, a, b, c), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
 
 		renderDiagram(d);
 	}

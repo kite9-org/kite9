@@ -16,7 +16,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 	public void test_2_1_1GlyphsOneEdge() throws IOException {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		new TurnLink(one, one);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
 
 		renderDiagram(d);
 	}
@@ -28,7 +28,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		Arrow a = new Arrow("meets", "meets");
 		new Link(a, one);
 		new Link(a, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, a));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
@@ -55,7 +55,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new TurnLink(a, two);
 		new TurnLink(b, one);
 		new TurnLink(b, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, a, b));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a, b));
 
 		renderDiagram(d);
 	}
@@ -71,7 +71,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new Link(a, two);
 		new Link(b, three);
 		new Link(b, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, two, three, a, b));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, a, b));
 
 		renderDiagram(d);
 	}
@@ -90,7 +90,7 @@ public class Test2BasicArrows extends AbstractFunctionalTest {
 		new TurnLink(a, one);
 		new TurnLink(a, one);
 		new TurnLink(a, one);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, a));
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, a));
 
 		renderDiagram(d);
 	}

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
@@ -37,7 +37,7 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 		new Link(c, three);
 		new Link(c, one, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) one, b, two, c, three), null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, b, two, c, three), null);
 		renderDiagram(d);
 	}
 	
@@ -63,7 +63,7 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 		new Link( right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) tl, tr, bl, br, top,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList(tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);
@@ -85,7 +85,7 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link( asks, three, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(looks, four, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList((Contained) one, two, meets,
+		DiagramXMLElement d = new DiagramXMLElement("D", createList( one, two, meets,
 				sees, asks, looks, three, four), null);
 
 		renderDiagram(d);
@@ -140,14 +140,14 @@ public class Test9CompactionTests extends AbstractFunctionalTest {
 		new Link(one, four, null, null, null, null, d);
 		
 		
-		DiagramXMLElement d1 = new DiagramXMLElement("The Diagram",createList((Contained) one, two, three, four), null);
+		DiagramXMLElement d1 = new DiagramXMLElement("The Diagram",createList(one, two, three, four), null);
 		DiagramXMLElement d2 = renderDiagram(d1);
-		new DiagramElementVisitor().visit(d2, new VisitorAction() {
+		new DiagramElementVisitor().visit(d2.getDiagramElement(), new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if (de instanceof Link) {
-					RouteRenderingInformation rri = ((Link)de).getRenderingInformation();
+				if (de instanceof Connection) {
+					RouteRenderingInformation rri = ((Connection)de).getRenderingInformation();
 					Dimension2D size = rri.getSize();
 					if ((size.getWidth() > 20) || (size.getHeight() > 20)) {
 						throw new LogicException("Link too long: "+de);

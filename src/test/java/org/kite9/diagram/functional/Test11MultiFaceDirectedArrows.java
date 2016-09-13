@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -28,7 +27,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside);
 		
 		
-		Context c1 = new Context("if", createList((Contained) inside, i1), true, null, null);
+		Context c1 = new Context("if", createList(inside, i1), true, null, null);
 		
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c1, outside, o1), null);
 		renderDiagram(d);
@@ -49,7 +48,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside);
 		
 		
-		Context c1 = new Context("if 1", createList((Contained) inside, i1), true, null,null);
+		Context c1 = new Context("if 1", createList(inside, i1), true, null,null);
 		Context c2 = new Context("if 2", createList(c1), true, null,null);
 		Context c3 = new Context("if 3", createList(c2), true, null,null);
 		Context c4 = new Context("if 4", createList(c3), true, null,null);
@@ -75,7 +74,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
 		new Link(inside, outside, null, null, null, null, Direction.UP);
 		
 		
-		Context c1 = new Context("if 1", createList((Contained) inside, i1), true, null, null);
+		Context c1 = new Context("if 1", createList(inside, i1), true, null, null);
 		Context c2 = new Context("if 2", createList(c1), true, null, null);
 		Context c3 = new Context("if 3", createList(c2), true, null, null);
 		Context c4 = new Context("if 4", createList(c3), true, null, null);

@@ -14,6 +14,7 @@ import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.LinkLineStyle;
@@ -40,7 +41,15 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		renderDiagramNoSerialize(d);
 
-		Assert.assertTrue(l.getRenderingInformation().isContradicting());
+		assertContradicting(l);
+	}
+
+	private void assertContradicting(Link l) {
+		Assert.assertTrue(isContradicting(l));
+	}
+
+	private boolean isContradicting(Link l) {
+		return ((RouteRenderingInformation) l.getDiagramElement().getRenderingInformation()).isContradicting();
 	}
 
 	@Test
@@ -56,8 +65,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l.getRenderingInformation().isContradicting());
-
+		assertContradicting(l);
 	}
 
 	@Test
@@ -73,8 +81,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l.getRenderingInformation().isContradicting());
-
+		assertContradicting(l);
 	}
 
 	@Test
@@ -90,8 +97,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l.getRenderingInformation().isContradicting());
-
+		assertContradicting(l);
 	}
 
 	@Test
@@ -111,9 +117,9 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		renderDiagramNoSerialize(d);
 		int count = 0;
-		count = count + (l1.getRenderingInformation().isContradicting() ? 1 : 0);
-		count = count + (l2.getRenderingInformation().isContradicting() ? 1 : 0);
-		count = count + (l3.getRenderingInformation().isContradicting() ? 1 : 0);
+		count = count + (isContradicting(l1) ? 1 : 0);
+		count = count + (isContradicting(l2) ? 1 : 0);
+		count = count + (isContradicting(l3) ? 1 : 0);
 
 		Assert.assertTrue(count > 0);
 
@@ -135,7 +141,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		renderDiagramNoSerialize(d);
 
-		Assert.assertTrue(l.getRenderingInformation().isContradicting());
+		assertContradicting(l);
 
 	}
 
@@ -155,8 +161,8 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l2 = new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertFalse(l1.getRenderingInformation().isContradicting());
-		Assert.assertFalse(l2.getRenderingInformation().isContradicting());
+		Assert.assertFalse(isContradicting(l1));
+		Assert.assertFalse(isContradicting(l2));
 
 	}
 
@@ -196,7 +202,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l1.getRenderingInformation().isContradicting());
+		assertContradicting(l1);
 	}
 
 	@Test
@@ -211,8 +217,8 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l2 = new ContradictingLink(g1, g3, null, null, null, null, Direction.UP);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l1.getRenderingInformation().isContradicting());
-		Assert.assertTrue(!l2.getRenderingInformation().isContradicting());
+		Assert.assertTrue(isContradicting(l1));
+		Assert.assertTrue(!isContradicting(l2));
 	}
 
 	@Test
@@ -232,9 +238,9 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		Link l2 = new ContradictingLink(g0, g3, null, null, null, null, Direction.DOWN);
 
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l1.getRenderingInformation().isContradicting());
-		Assert.assertTrue(l2.getRenderingInformation().isContradicting());
-
+		assertContradicting(l1);
+		assertContradicting(l2);
+		
 	}
 
 	@Test
@@ -256,10 +262,10 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		renderDiagramNoSerialize(d);
 		
 		int contCount = 0;
-		contCount = contCount + (l2.getRenderingInformation().isContradicting() ? 1 :0);
-		contCount = contCount + (l3.getRenderingInformation().isContradicting() ? 1 :0);
-		contCount = contCount + (l4.getRenderingInformation().isContradicting() ? 1 :0);
-		contCount = contCount + (l5.getRenderingInformation().isContradicting() ? 1 :0);
+		contCount = contCount + (isContradicting(l2) ? 1 :0);
+		contCount = contCount + (isContradicting(l3) ? 1 :0);
+		contCount = contCount + (isContradicting(l4) ? 1 :0);
+		contCount = contCount + (isContradicting(l5) ? 1 :0);
 		
 		Assert.assertTrue(contCount <=2);
 	}
@@ -456,7 +462,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 			Arrow a = new Arrow("links", "links");
 
-			new Link((Connected) one, (Connected) con1);
+			new Link(one, con1);
 			new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 
 			DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
@@ -516,7 +522,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		l3.setRank(15);
 		
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l1.getRenderingInformation().isContradicting());
+		assertContradicting(l1);
 
 	}
 	
@@ -539,7 +545,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 		l3.setRank(15);
 		
 		renderDiagramNoSerialize(d);
-		Assert.assertTrue(l1.getRenderingInformation().isContradicting());
+		assertContradicting(l1);
 	}
 	
 	
@@ -558,7 +564,7 @@ public class Test33Contradictions extends AbstractFunctionalTest {
 
 		renderDiagramNoSerialize(d);
 
-		Assert.assertFalse(l.getRenderingInformation().isRendered());
+		Assert.assertFalse(l.getDiagramElement().getRenderingInformation().isRendered());
 
 	}
 

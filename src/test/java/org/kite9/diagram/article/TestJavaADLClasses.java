@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -39,14 +38,14 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 
 		Glyph diagramServer = new Glyph("web-app", "Kite9 Diagram Server", null, null);
 
-		Context transport = new Context("Over the wire", createList((Contained) diagram, sends, receives, response),
+		Context transport = new Context("Over the wire", createList(diagram, sends, receives, response),
 				true, new TextLine("HTTP Over Internet"), Layout.DOWN);
-		Context yourside = new Context("yours", createList((Contained) client), true, new TextLine(
+		Context yourside = new Context("yours", createList(client), true, new TextLine(
 				"Your Server / PC"), null);
-		Context ourside = new Context("ours", createList((Contained) diagramServer), true, new TextLine(
+		Context ourside = new Context("ours", createList(diagramServer), true, new TextLine(
 				"Kite9 Servers"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) yourside, transport, ourside), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(yourside, transport, ourside), null);
 
 		// sends
 		new Link(client, sends, null, null, null, null, Direction.RIGHT);
@@ -81,15 +80,15 @@ public class TestJavaADLClasses extends AbstractFunctionalTest {
 
 		Glyph diagramServer = new Glyph("web-app", "Kite9 Diagram Server", null, null);
 
-		Context transport = new Context("Over the wire", createList((Contained) diagram, sends, receives, response),
+		Context transport = new Context("Over the wire", createList(diagram, sends, receives, response),
 				true, new TextLine("HTTP Over Internet"), null);
 		
-		Context yourside = new Context("yours", createList((Contained) converts, client, xstream, objects), true,
+		Context yourside = new Context("yours", createList(converts, client, xstream, objects), true,
 				new TextLine("Your Server / PC"), null);
-		Context ourside = new Context("ours", createList((Contained) diagramServer), true, new TextLine(
+		Context ourside = new Context("ours", createList(diagramServer), true, new TextLine(
 				"Kite9 Servers"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList((Contained) yourside, transport, ourside), null);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(yourside, transport, ourside), null);
 
 		// converts
 

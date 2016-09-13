@@ -6,11 +6,10 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
@@ -95,7 +94,7 @@ public class Test47PreferredSize extends AbstractFunctionalTest {
 				Double preferredWidth = widths[x];
 				Double preferredHeight = heights[y];
 				XMLElement g = cc.create(preferredWidth, preferredHeight);
-				RectangleRenderingInformation rri = (RectangleRenderingInformation) g.getRenderingInformation();
+				RectangleRenderingInformation rri = (RectangleRenderingInformation) g.getDiagramElement().getRenderingInformation();
 //				TODO: these shouldn't even be in the rri
 				//				rri.setPreferredWidth(preferredWidth);
 //				rri.setPreferredHeight(preferredHeight);

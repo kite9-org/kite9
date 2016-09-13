@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
@@ -13,6 +12,7 @@ import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.XMLElement;
 
 public class TestIntroductionToADL extends AbstractFunctionalTest  {
 
@@ -28,7 +28,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((XMLElement) john, ledger, writes), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(john, ledger, writes), null);
 		
 		renderDiagram(d);
 		
@@ -40,7 +40,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		Glyph ledger = new Glyph("", "Ledger", null, null);
 		Glyph HoAccounts = new Glyph("", "Head of Accounts", null, null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, ledger, HoAccounts), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(john, ledger, HoAccounts), null);
 		
 		renderDiagram(d);
 		
@@ -76,7 +76,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) peter, loves, dan), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(peter, loves, dan), null);
 		
 		renderDiagram(d);
 		
@@ -123,7 +123,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) john, felixstowe, audi, goes), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(john, felixstowe, audi, goes), null);
 		
 		renderDiagram(d);
 		
@@ -146,7 +146,7 @@ public class TestIntroductionToADL extends AbstractFunctionalTest  {
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("", createList((Contained) database, server, user, transaction, distributed), null);
+		DiagramXMLElement d = new DiagramXMLElement("", createList(database, server, user, transaction, distributed), null);
 		
 		renderDiagram(d);
 		

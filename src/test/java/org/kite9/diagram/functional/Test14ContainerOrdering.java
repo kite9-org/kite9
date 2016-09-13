@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -33,10 +32,10 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 		two = new Glyph("a1", "", "a1", null, null);
 		three = new Glyph("a2", "", "a2", null, null);
 		four = new Glyph("a3", "", "a3", null, null);
-		con1 = new Context("b1", createList((Contained) one, (Contained) two, (Contained) three, (Contained) four),
+		con1 = new Context("b1", createList(one, two, three, four),
 				true, new TextLine("inside"),  Layout.RIGHT);
 		outside = new Arrow("outside", "outside");
-		d = new DiagramXMLElement("The Diagram", createList((Contained) con1, (Contained) outside), null);
+		d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 	}
 
 	@Test

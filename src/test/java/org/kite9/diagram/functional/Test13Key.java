@@ -6,14 +6,13 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
@@ -27,7 +26,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text" , null, null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -38,7 +37,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text" , "some regular text that goes underneath.\nThis can sit on multiple lines.", null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -49,7 +48,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text" , null, createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -62,7 +61,7 @@ public class Test13Key extends AbstractFunctionalTest {
 				createLongSymbolList(2)
 			);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -75,7 +74,7 @@ public class Test13Key extends AbstractFunctionalTest {
 				createLongSymbolList(10)
 			);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -126,7 +125,7 @@ public class Test13Key extends AbstractFunctionalTest {
 				createLongSymbolList(7)
 			);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a, b), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, b), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -142,7 +141,7 @@ public class Test13Key extends AbstractFunctionalTest {
 				createLongSymbolList(7)
 			);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a, b), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, b), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -196,7 +195,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text" , "some body text\nspanning two lines", createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -207,7 +206,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj ds" , null , createNarrowSymbolList(7));
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -218,7 +217,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -229,7 +228,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) a), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -242,7 +241,7 @@ public class Test13Key extends AbstractFunctionalTest {
 
 		Key k = new Key("mon cle" , null , null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) c1), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c1), k);
 		renderDiagramNoSerialize(d);
 	}
 	
@@ -258,7 +257,7 @@ public class Test13Key extends AbstractFunctionalTest {
 		
 		new Link(a, b, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList((Contained) c1, b), k);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c1, b), k);
 		renderDiagramNoSerialize(d);
 	}
 }

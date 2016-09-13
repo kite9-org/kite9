@@ -20,6 +20,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test45Hinting extends AbstractFunctionalTest {
@@ -44,10 +45,10 @@ public class Test45Hinting extends AbstractFunctionalTest {
 	}
 	
 	private void checkInHorizontalLine(DiagramXMLElement d2) {
-		Contained prev = null;
-		for (Contained c : d2.getContents()) {
+		XMLElement prev = null;
+		for (XMLElement c : d2) {
 			if (prev != null) {
-				DiagramAssert.assertInDirection(prev, c, Direction.RIGHT);
+				DiagramAssert.assertInDirection(prev.getDiagramElement(), c.getDiagramElement(), Direction.RIGHT);
 			} 
 			prev = c;
 		}

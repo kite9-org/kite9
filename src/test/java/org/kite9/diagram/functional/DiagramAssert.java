@@ -1,7 +1,6 @@
 package org.kite9.diagram.functional;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.PositionableDiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -22,8 +21,8 @@ public class DiagramAssert {
 	}
 
 	public static void assertInDirection(DiagramElement a, DiagramElement b, Direction d) {
-		RenderingInformation ria = ((PositionableDiagramElement) a).getRenderingInformation();
-		RenderingInformation rib = ((PositionableDiagramElement) b).getRenderingInformation();
+		RenderingInformation ria = a.getRenderingInformation();
+		RenderingInformation rib = b.getRenderingInformation();
 		
 		if ((ria instanceof RectangleRenderingInformation) && (rib instanceof RectangleRenderingInformation)) {
 			Dimension2D posa = ((RectangleRenderingInformation)ria).getPosition();
