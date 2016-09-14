@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;

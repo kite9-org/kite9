@@ -36,6 +36,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.style.AbstractXMLDiagramElement;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.format.pdf.PDFRenderer;
@@ -439,7 +440,7 @@ public class TestingEngine extends TestingHelp {
 				} else {
 					if (d == DiagramChecker.MULTIPLE_DIRECTIONS) {
 						if (checkStraight) {
-							if (!(c instanceof TurnLink)) {
+							if (!isTurnLink(c)) {
 								throw new ExpectedLayoutException("Connection not straight: " + c);
 							}
 						}
@@ -456,6 +457,10 @@ public class TestingEngine extends TestingHelp {
 						}
 					}
 				}
+			}
+
+			private boolean isTurnLink(Connection c) {
+				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof TurnLink;
 			}
 
 			/**
@@ -477,9 +482,13 @@ public class TestingEngine extends TestingHelp {
 
 			@Override
 			public void action(RouteRenderingInformation rri, int hopCount, Connection c) {
-				if ((hopCount > 0) && (!(c instanceof HopLink))) {
+				if ((hopCount > 0) && (!isHopLink(c))) {
 					throw new ExpectedLayoutException("Connection overlap on: " + c);
 				}
+			}
+
+			private boolean isHopLink(Connection c) {
+				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof HopLink;
 			}
 		});
 	}

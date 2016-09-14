@@ -223,7 +223,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 	
 	private int getContainerDepth(Container c) {
-		if (c.getParent() == null) {
+		if (c == null) {
 			return 0;
 		} else {
 			return getContainerDepth((Container) c.getParent())+1;
