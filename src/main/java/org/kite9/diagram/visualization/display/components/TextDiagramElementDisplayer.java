@@ -47,12 +47,14 @@ public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
 	
 	@Override
 	public boolean requiresDimension(DiagramElement de) {
-		String label = getLabel(de);
-		if ((label==null) || (label.trim().length()==0)) {
-			return false;
-		} else {
-			return true;
-		}
+//		String label = getLabel(de);
+//		if ((label==null) || (label.trim().length()==0)) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+		
+		return true;
 	}
 
 	@Override

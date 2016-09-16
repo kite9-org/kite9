@@ -449,7 +449,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			boolean out = false;
 			if (allowConnectionsToContainerContents()) {
 				// return false if this element is not in the correct container.
-				if (und.getContainer() != originalUnderlying) {
+				if ((und != null) && (und.getContainer() != originalUnderlying)) {
 					return false;
 				}
 				
