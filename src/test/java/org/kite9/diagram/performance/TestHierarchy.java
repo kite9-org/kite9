@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 
 public class TestHierarchy extends AbstractPerformanceTest {
 
@@ -32,8 +34,9 @@ public class TestHierarchy extends AbstractPerformanceTest {
 	}
 
 	private DiagramXMLElement generateDiagram(Metrics m, int size, Direction d) {
-		List<Contained> allGlyphs = new ArrayList<Contained>();
-		Deque<Contained> needChildren = new ArrayDeque<Contained>();
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		List<XMLElement> allGlyphs = new ArrayList<XMLElement>();
+		Deque<XMLElement> needChildren = new ArrayDeque<XMLElement>();
 		
 		Glyph top = new Glyph("g"+allGlyphs.size(), null, "top", null, null);
 		allGlyphs.add(top);
@@ -45,10 +48,11 @@ public class TestHierarchy extends AbstractPerformanceTest {
 		}
 
 		DiagramXMLElement out = new DiagramXMLElement(allGlyphs, null);
+		TestingEngine.setDesignerStylesheetReference(out);
 		return out;
 	}
 
-	private void createNewLevel(Glyph top, List<Contained> allGlyphs, int connecteds, int size, Direction d, Deque<Contained> needChildren) {
+	private void createNewLevel(Glyph top, List<XMLElement> allGlyphs, int connecteds, int size, Direction d, Deque<XMLElement> needChildren) {
 		List<Glyph> newOnes = new ArrayList<Glyph>();
 		for (int i = 0; i < size; i++) {
 			Glyph g = new Glyph("g"+allGlyphs.size(), null, "g"+allGlyphs.size(), null, null);

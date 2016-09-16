@@ -6,6 +6,7 @@ import java.util.List;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractStyleableXMLElement;
+import org.kite9.diagram.xml.GenericXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.w3c.dom.Node;
 
@@ -29,8 +30,8 @@ public class Key extends AbstractStyleableXMLElement {
 		replaceProperty("boldText", boldText);
 	}
 	
-	public ContainerProperty convert(List<Symbol> symbols) {
-		ContainerProperty out = (ContainerProperty) ownerDocument.createElement("text-lines");
+	public GenericXMLElement convert(List<Symbol> symbols) {
+		GenericXMLElement out = (GenericXMLElement) ownerDocument.createElement("text-lines");
 		if (symbols == null) {
 			return out;
 		}

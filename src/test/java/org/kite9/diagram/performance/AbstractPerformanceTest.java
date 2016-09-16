@@ -18,7 +18,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.PositionableDiagramElement;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -35,6 +35,7 @@ import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -59,7 +60,10 @@ public class AbstractPerformanceTest extends TestingHelp {
 
 		for (Entry<Metrics, DiagramXMLElement> d1 : diagrams.entrySet()) {
 			try {
-				renderDiagram(d1.getValue(), theTest, m.getName(), true, d1.getKey());
+				String xml = new XMLHelper().toXML(d1.getValue());
+				System.out.println(xml);
+				DiagramXMLElement rebuilt = new XMLHelper().fromXML(xml);
+				renderDiagram(rebuilt, theTest, m.getName(), true, d1.getKey());
 				metrics.add(d1.getKey());
 			} catch (Throwable e) {
 				e.printStackTrace();
@@ -128,7 +132,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
-			TestingEngine.testLayout(d);
+			TestingEngine.testLayout(d.getDiagramElement());
 			
 			// write the outputs
 			measure(d, m);
@@ -147,7 +151,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 	}
 
 	private void measure(DiagramXMLElement d, final Metrics m) {
-		new DiagramElementVisitor().visit(d, new VisitorAction() {
+		new DiagramElementVisitor().visit(d.getDiagramElement(), new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {
@@ -157,7 +161,7 @@ public class AbstractPerformanceTest extends TestingHelp {
 				}
 			}
 		});
-		Dimension2D ds = d.getRenderingInformation().getSize();
+		Dimension2D ds = d.getDiagramElement().getRenderingInformation().getSize();
 		
 		m.totalDiagramSize =(long) (ds.getWidth() * ds.getHeight());
 		m.crossings = m.crossings / 4;
@@ -165,20 +169,18 @@ public class AbstractPerformanceTest extends TestingHelp {
 	}
 
 	public void measureElement(DiagramElement o, Metrics m) {
-		if (o instanceof PositionableDiagramElement) {
-			RenderingInformation ri = ((PositionableDiagramElement) o).getRenderingInformation();
-			if (ri instanceof RectangleRenderingInformation) {
-				RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-				double width = rri.getSize().getWidth();
-				double height = rri.getSize().getHeight();
-				m.totalGlyphSize += width * height;
-			} else {
-				RouteRenderingInformation rri = (RouteRenderingInformation) ri;
-				Dimension2D bounds = rri.getSize();
-				double width = bounds.getWidth();
-				double height = bounds.getHeight();
-				m.totalGlyphSize += width * height;
-			}
+		RenderingInformation ri = o.getRenderingInformation();
+		if (ri instanceof RectangleRenderingInformation) {
+			RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
+			double width = rri.getSize().getWidth();
+			double height = rri.getSize().getHeight();
+			m.totalGlyphSize += width * height;
+		} else {
+			RouteRenderingInformation rri = (RouteRenderingInformation) ri;
+			Dimension2D bounds = rri.getSize();
+			double width = bounds.getWidth();
+			double height = bounds.getHeight();
+			m.totalGlyphSize += width * height;
 		}
 	}
 

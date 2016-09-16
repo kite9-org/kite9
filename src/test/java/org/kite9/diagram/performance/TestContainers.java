@@ -4,20 +4,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 
 public class TestContainers extends AbstractPerformanceTest {
 
@@ -40,6 +43,7 @@ public class TestContainers extends AbstractPerformanceTest {
 	}
 
 	private DiagramXMLElement generateDiagram(Metrics m, int containers, Layout l) {
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.name.hashCode());
 
 		System.out.println("Generating diagram for " + m);
@@ -54,41 +58,50 @@ public class TestContainers extends AbstractPerformanceTest {
 		Context[] contexts = new Context[containers];
 
 		for (int i = 0; i < contexts.length; i++) {
-			contexts[i] = new Context("c" + i, new ArrayList<Contained>(), true, new TextLine("Context " + i), l);
+			contexts[i] = new Context("c" + i, new ArrayList<XMLElement>(), true, new TextLine("Context " + i), l);
 		}
 
 		for (int i = 0; i < items.length; i++) {
 			int c = r.nextInt(containers);
-			contexts[c].getContents().add(items[i]);
+			contexts[c].appendChild(items[i]);
 			items[i].setID(items[i].getID()+"("+contexts[c].getID()+")");
 		}
 
 		int tc = 0;
+		
+		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
+		Collections.addAll(cl, contexts);
+		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+		TestingEngine.setDesignerStylesheetReference(out);
+		Set<String> connections = new HashSet<>();
 
 		while (tc < m.connections) {
 			int g1 = r.nextInt(items.length + contexts.length);
 			int g2 = r.nextInt(items.length + contexts.length);
 
 			if (g1 != g2) {
-				Connected g1g = (g1 < items.length) ? items[g1] : contexts[g1 - items.length];
-				Connected g2g = (g2 < items.length) ? items[g2] : contexts[g2 - items.length];
-				if (!g1g.isConnectedDirectlyTo(g2g) && checkContainment(g1g, g2g) && checkContainment(g2g, g1g)) {
+				String conId = Math.min(g1, g2)+"-"+Math.max(g1, g2);
+				XMLElement g1g = (g1 < items.length) ? items[g1] : contexts[g1 - items.length];
+				XMLElement g2g = (g2 < items.length) ? items[g2] : contexts[g2 - items.length];
+				if (!connections.contains(conId) && checkContainment(g1g, g2g) && checkContainment(g2g, g1g)) {
 					new Link(g1g, g2g);
+					connections.add(conId);
 					tc++;
 				}
 			}
 		}
 
-		List<Contained> cl = new ArrayList<Contained>(items.length);
-		Collections.addAll(cl, contexts);
-
-		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+	
 		return out;
 	}
 
-	private boolean checkContainment(Connected i, Connected c) {
-		if (c instanceof Container) {
-			return  !(((Container) c).getContents().contains((Contained) i));
+	private boolean checkContainment(XMLElement i, XMLElement c) {
+		if (c instanceof Context) {
+			for (XMLElement e : c) {
+				if (e == i) {
+					return false;
+				}
+			}
 		}
 		
 		return true;

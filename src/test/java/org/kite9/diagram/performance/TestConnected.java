@@ -9,11 +9,13 @@ import java.util.Map;
 import java.util.Random;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 
 public class TestConnected extends AbstractPerformanceTest {
 
@@ -52,6 +54,8 @@ public class TestConnected extends AbstractPerformanceTest {
 	}
 
 	private DiagramXMLElement generateDiagram(Metrics m) {
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
 		for (int i = 0; i < items.length; i++) {
@@ -75,10 +79,11 @@ public class TestConnected extends AbstractPerformanceTest {
 			}
 		}
 
-		List<Contained> cl = new ArrayList<Contained>(items.length);
+		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
 		Collections.addAll(cl, items);
 
-		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+		DiagramXMLElement out = new DiagramXMLElement( cl, null);
+		TestingEngine.setDesignerStylesheetReference(out);
 		return out;
 	}
 

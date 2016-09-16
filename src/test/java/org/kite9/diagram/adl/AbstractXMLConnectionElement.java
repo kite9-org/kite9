@@ -1,8 +1,6 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.diagram.xml.XMLElement;
@@ -48,6 +46,9 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		if (tolabel!=null) { 
 			setToLabel(tolabel);
 		}
+		
+		doc.addConnection(this);
+		
 	}
 	
 	public abstract XMLElement getFromDecoration();

@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.logging.Kite9Log;
@@ -133,6 +134,12 @@ public class AbstractFunctionalTest extends HelpMethods {
 		RepositoryHelp.streamCopy(isr, sw, true);
 		Object o = new XMLHelper().fromXML(sw.getBuffer().toString());
 		DiagramXMLElement d = (DiagramXMLElement) o;
+		
+		StylesheetReference sr = d.getStylesheetReference();
+		if (sr == null) {
+			TestingEngine.setDesignerStylesheetReference(d);
+		}
+		
 		final int[] i =  { 0 } ;
 		relabel(d.getDiagramElement(), i);
 		renderDiagram(d);

@@ -104,10 +104,8 @@ public class TestingEngine extends TestingHelp {
 		Class<?> theTest = m.getDeclaringClass();
 		try {
 			if (d.getStylesheetReference() == null) {
-				URL u = getClass().getResource("/stylesheets/designer2012.css");
-				d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
+				setDesignerStylesheetReference(d);
 			}
-			
 			
 			BufferedImageProcessingPipeline pipeline = getPipeline(theTest, m.getName(), watermark);
 			return renderDiagram(d, theTest, m.getName(), watermark, checkDiagramSize, checkEdgeDirections, checkNoHops, everythingStraight, checkLayout, checkNoContradictions, checkImage,
@@ -123,6 +121,11 @@ public class TestingEngine extends TestingHelp {
 				throw t;
 			}
 		}
+	}
+
+	public static void setDesignerStylesheetReference(DiagramXMLElement d) {
+		URL u = d.getClass().getResource("/stylesheets/designer2012.css");
+		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
 	}
 
 	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops,

@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Random;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkLineStyle;
+import org.kite9.diagram.xml.XMLElement;
 
 public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 
@@ -33,6 +35,7 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 	}
 
 	private DiagramXMLElement generateDiagram(Metrics m, int size) {
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.hashCode());
 
 		Glyph[][] space = new Glyph[size][];
@@ -94,11 +97,12 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 			
 		}
 
-		List<Contained> cl = new ArrayList<Contained>(items.length);
+		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
 		Collections.addAll(cl, items);
 		m.connections = connections;
 
 		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+		TestingEngine.setDesignerStylesheetReference(out);
 		return out;
 	}
 

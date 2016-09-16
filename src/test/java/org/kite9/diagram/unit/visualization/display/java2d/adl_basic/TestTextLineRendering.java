@@ -1,32 +1,6 @@
 package org.kite9.diagram.unit.visualization.display.java2d.adl_basic;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import org.junit.Ignore;
-import org.junit.Test;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.HPos;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.visualization.display.components.ConnectionLabelTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.ContextLabelTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.AbstractADLDisplayer.Justification;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
-import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.TextBoxStyle;
-import org.kite9.diagram.visualization.display.style.TextStyle;
-import org.kite9.diagram.visualization.display.style.io.PathConverter;
-import org.kite9.diagram.visualization.display.style.sheets.BasicStylesheet;
-import org.kite9.diagram.visualization.format.pos.SVGPathConverter;
-import org.kite9.framework.common.HelpMethods;
 
 @Ignore
 public class TestTextLineRendering extends AbstractRenderingTest {

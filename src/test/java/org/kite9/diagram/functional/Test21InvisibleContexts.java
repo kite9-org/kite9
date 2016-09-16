@@ -10,7 +10,6 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -84,9 +83,9 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 //		new Link(c2, c3, null, null, null, null, Direction.DOWN);
 		
 		
-		new Link((Connected) c1.getContents().get(2), (Connected) c2.getContents().get(3), null, null, null, null, null);
+		new Link((XMLElement)c1.getChildNodes().item(2), (XMLElement) c2.getChildNodes().item(3), null, null, null, null, null);
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
-		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
+		new Link((XMLElement) c1.getChildNodes().item(4), (XMLElement) c3.getChildNodes().item(4), null, null, null, null, null);
 //		
 		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);
@@ -108,9 +107,9 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 		new Link(c2, c3, null, null, null, null, Direction.DOWN);
 		
 		
-		new Link((Connected) c1.getContents().get(2), (Connected) c2.getContents().get(3), null, null, null, null, null);
+		new Link((XMLElement) c1.getChildNodes().item(2), (XMLElement) c2.getChildNodes().item(3), null, null, null, null, null);
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
-		new Link((Connected) c1.getContents().get(4), (Connected) c3.getContents().get(4), null, null, null, null, null);
+		new Link((XMLElement) c1.getChildNodes().item(4), (XMLElement) c3.getChildNodes().item(4), null, null, null, null, null);
 //		
 		DiagramXMLElement d = new DiagramXMLElement("d", createList((XMLElement) cc), Layout.DOWN, null);
 		renderDiagram(d);

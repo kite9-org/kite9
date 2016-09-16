@@ -17,18 +17,20 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Contained;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
@@ -48,12 +50,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 	@SuppressWarnings("rawtypes")
 	private DiagramXMLElement generateDiagram(Metrics m, int size) {
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
 
-		Connected[][] space = new Connected[size][];
+		XMLElement[][] space = new XMLElement[size][];
 		for (int i = 0; i < space.length; i++) {
-			space[i] = new Connected[size];
+			space[i] = new XMLElement[size];
 		}
 		
 		List<Glyph> items = new ArrayList<Glyph>(m.connecteds);
@@ -73,7 +76,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join horiz
 		for (int y = 0; y < size; y++) {
-			Connected current = null;
+			XMLElement current = null;
 			for (int x = 0; x < size; x++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -87,7 +90,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join vert
 		for (int x = 0; x < size; x++) {
-			Connected current = null;
+			XMLElement current = null;
 			for (int y = 0; y < size; y++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -114,13 +117,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			int x3 = horiz ? Math.min(size-1, x1+x2) : x1;
 			int y3 = !horiz ? Math.min(size-1, y1+y2) : y1;
 
-			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<Contained>(), true, null, null);
+			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<XMLElement>(), true, null, null);
 
-			List<Connected> contents = new ArrayList<Connected>();
+			List<XMLElement> contents = new ArrayList<XMLElement>();
 			boolean fail = false;
 			for (int x = x1; x <= x3; x++) {
 				for (int y = y1; y <= y3; y++) {
-					Connected contained = space[x][y];
+					XMLElement contained = space[x][y];
 					if (contained != null) {
 						contents.add(contained);
 					}
@@ -137,8 +140,8 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			
 			if (!fail) {
 				
-				for (Connected connected : contents) {
-					c.getContents().add((Contained) connected);
+				for (XMLElement connected : contents) {
+					c.appendChild(connected);
 					items.remove(connected);
 					System.out.println("Context "+c+" contains "+contents);
 					System.out.println("Context size: "+x1+", "+y1+" - "+x2+", "+y2);
@@ -152,14 +155,14 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		}
 		
 
-		Set<Connected> cl = new LinkedHashSet<Connected>(size*size);
+		Set<XMLElement> cl = new LinkedHashSet<XMLElement>(size*size);
 		cl.addAll(contexts);
 		cl.addAll(items);
 		m.connections = connections;
 
 		@SuppressWarnings("unchecked")
 		DiagramXMLElement out = new DiagramXMLElement(new ArrayList(cl), null);
-		//System.out.println(new XMLHelper().toXML(out));
+		TestingEngine.setDesignerStylesheetReference(out);
 		return out;
 	}
 
@@ -257,7 +260,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 	private static void extendBounds(int[] bounds, Group g) {
 		if (g instanceof LeafGroup) {
-			Contained c = ((LeafGroup)g).getContained();
+			Connected c = ((LeafGroup)g).getContained();
 			if (c instanceof Glyph) {
 				int x = extract('x', c.getID());
 				int y = extract('y', c.getID());

@@ -545,7 +545,7 @@ public class GroupPhase {
 		}
 		
 		public Map<String, Float> getHints() {
-			Map<String, Float> positioningHints = o.getPositioningHints();
+			Map<String, Float> positioningHints = o != null ? o.getPositioningHints() : null;
 			if (positioningHints!= null){
 				return positioningHints;
 			}
