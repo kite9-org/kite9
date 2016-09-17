@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
@@ -55,9 +56,16 @@ public class Test4Containers extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 
-	// top-to-bottom and left-to-right ordering
+	@Test
+	public void test_4_4_LabelledContainers() throws IOException {
+		Glyph one = new Glyph("Stereo", "one", null, null);
+		Context con1 = new Context("b1", createList(one), true, new TextLine("Here is my label"), null);
 
-	// container labels
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1), null);
+		renderDiagram(d);
+	}
+	
+	// top-to-bottom and left-to-right ordering
 
 	// invisible containers
 }

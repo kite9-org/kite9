@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.display.components;
 
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
@@ -34,7 +33,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	}
 
 	public boolean canDisplay(DiagramElement element) {
-		return ((element instanceof Label) && ((Label) element).isConnectionLabel());
+		return (element instanceof Label) && ((Label) element).isConnectionLabel() && ((Label)element).hasContent();
 	}
 
 	@Override
