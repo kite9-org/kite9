@@ -33,11 +33,9 @@ public abstract class AbstractPlanarizationEdge extends AbstractEdge implements 
 		this.toDecoration = toDecoration;
 		if (fromLabel!=null) {
 			this.fromLabel = fromLabel;
-			this.fromLabel.setParent(this);
 		}
 		if (toLabel!=null) {
 			this.toLabel = toLabel;
-			this.toLabel.setParent(this);
 		}
 		
 		from.addEdge(this);

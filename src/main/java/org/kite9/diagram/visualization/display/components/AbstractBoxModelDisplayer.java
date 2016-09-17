@@ -71,6 +71,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 
 	@Override
 	public void draw(DiagramElement element, RenderingInformation r) {
+		System.out.println("Drawing from "+this.getClass()+" el "+element);
 		BoxStyle bs = getBoxStyle(element);
 		ShapeStyle sh = bs;
 		RectangleRenderingInformation r2 = (RectangleRenderingInformation) r;

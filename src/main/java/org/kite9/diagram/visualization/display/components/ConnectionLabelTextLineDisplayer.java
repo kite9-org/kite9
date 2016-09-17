@@ -1,18 +1,13 @@
 package org.kite9.diagram.visualization.display.components;
 
-import org.kite9.diagram.adl.ContainerProperty;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.adl.StyledDiagramElement;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.Text;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.position.BasicRenderingInformation;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -39,7 +34,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 	}
 
 	public boolean canDisplay(DiagramElement element) {
-		return ((element instanceof TextLine) && ((TextLine) element).getParent() instanceof BiDirectional<?>);
+		return ((element instanceof Label) && ((Label) element).isConnectionLabel());
 	}
 
 	@Override
@@ -77,7 +72,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 			yEnd -= slacky;
 		}
 		
-		super.draw(element, new BasicRenderingInformation(
+		super.draw(element, new RectangleRenderingInformationImpl(
 				new Dimension2D(xStart, yStart),
 				new Dimension2D(xEnd - xStart, yEnd - yStart),
 				ri.getHorizontalJustification(), ri.getVerticalJustification(), ri.isRendered()));
@@ -113,23 +108,14 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 
 	@Override
 	public BoxStyle getUnderlyingStyle(DiagramElement de) {
-		return new BoxStyle((StyledDiagramElement) de);
+		return new BoxStyle(de);
 	}
 
 	@Override
-	public Text getLabel(DiagramElement de) {
-		return ((TextLine)de);
+	public String getLabel(DiagramElement de) {
+		return ((Label)de).getText();
 	}
 
-	@Override
-	public ContainerProperty<Symbol> getSymbols(DiagramElement de) {
-		return ((TextLine)de).getSymbols();
-	}
-
-	@Override
-	public Text getStereotype(DiagramElement de) {
-		return null;
-	}
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {

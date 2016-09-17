@@ -11,7 +11,7 @@ import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;
 import org.kite9.diagram.visualization.display.components.TextDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.components.ConnectionLabelTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.ContainerDisplayer;
-import org.kite9.diagram.visualization.display.components.ContextLabelTextLineDisplayer;
+import org.kite9.diagram.visualization.display.components.ContextLabelDisplayer;
 import org.kite9.diagram.visualization.display.components.DebugLineDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphCompositionalShapeDisplayer;
 import org.kite9.diagram.visualization.display.components.GlyphDisplayer;
@@ -125,8 +125,8 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 				}
 			}			
 		});
-//		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, shadow));
-//		displayers.add(new ContextLabelTextLineDisplayer(this, g2, shadow));
+		displayers.add(new ConnectionLabelTextLineDisplayer(this, g2, shadow));
+		displayers.add(new ContextLabelDisplayer(this, g2, shadow));
 //		displayers.add(new GlyphDisplayer(this, g2, shadow));
 //		displayers.add(new GlyphTextLineDisplayer(this, g2, shadow));
 //		displayers.add(new GlyphCompositionalShapeDisplayer(this, g2, shadow));
