@@ -12,6 +12,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.framework.common.HelpMethods;
@@ -19,6 +20,7 @@ import org.kite9.framework.common.HelpMethods;
 public class TestCard extends AbstractFunctionalTest {
 
 	public DiagramXMLElement createTestCard() {
+		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Symbol aDia = new Symbol("Some description\n taking multiple lines", 'a', SymbolShape.DIAMOND);
 		Symbol MDia = new Symbol("Some description blah blah blah", 'M', SymbolShape.DIAMOND);
 		Symbol QCir = new Symbol("Some description sdkjfsd flksdjf", 'Q', SymbolShape.CIRCLE);

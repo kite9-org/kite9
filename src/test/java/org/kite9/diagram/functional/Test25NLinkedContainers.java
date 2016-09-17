@@ -16,6 +16,8 @@ import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.Kite9Log;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 public class Test25NLinkedContainers extends AbstractFunctionalTest {
@@ -34,7 +36,7 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 		}
 		
 		for (XMLElement c : contents) {
-			Collections.shuffle(((Context)c).getContents(), r);
+			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, overallL);
@@ -42,6 +44,21 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 		out2.add(overall);
 		
 		renderDiagram(new DiagramXMLElement(out2, null));
+	}
+
+	private void shuffleElements(Random r, XMLElement c) {
+		NodeList l = c.getChildNodes();
+		List<Node> items = new ArrayList<>(l.getLength());
+		for (int i = 0; i < l.getLength(); i++) {
+			items.add(l.item(i));
+			c.removeChild(l.item(i));
+		}
+		
+		Collections.shuffle(items, r);
+		
+		for (Node node : items) {
+			c.appendChild(node);
+		}
 	}
 	
 	@Test
@@ -107,7 +124,7 @@ public class Test25NLinkedContainers extends AbstractFunctionalTest {
 		((Context)contents.get(0)).setLayoutDirection(Layout.RIGHT);
 		
 		for (XMLElement c : contents) {
-			Collections.shuffle(((Context)c).getContents(), r);
+			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, Layout.VERTICAL);
