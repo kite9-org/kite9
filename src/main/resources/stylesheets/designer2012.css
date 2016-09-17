@@ -12,7 +12,8 @@ glyph,
 arrow,
 arrow2,
 arrow3 {
-	type: text;
+	type: connected;
+	sizing: text;
 }
 
 link {
@@ -25,7 +26,8 @@ to {
 } 
 
 context {
-	type: container;
+	type: connected;
+	sizing: container;
 }
 
 .background {
@@ -155,9 +157,10 @@ arrow label {
 
 /* Labels */
 
-.toLabel, 
-.fromLabel,
-.context .label {
+toLabel, 
+fromLabel,
+context label {
+	type: label; 
 	fill: #CCC;
 	fill-transparency: 60%;
 	stroke: black;
