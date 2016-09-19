@@ -85,15 +85,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		double yEnd = ri.getMaxY();
 		
 		// set hint positions
-		HintMap hints = element.getPositioningHints();
-		if (hints == null) {
-			hints = new HintMap();
-			element.setPositioningHints(hints);
-		}
-		hints.put(PositioningHints.MIN_X, (float) xStart);
-		hints.put(PositioningHints.MAX_X, (float) xEnd);
-		hints.put(PositioningHints.MIN_Y, (float) yStart);
-		hints.put(PositioningHints.MAX_Y, (float) yEnd);
+		addPositioningHints(element, xStart, yStart, xEnd, yEnd);
 		
 		if (!isOutputting())
 			return;
@@ -169,6 +161,19 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 		
 		element.setRenderingInformation(r2);
 		
+	}
+
+	@Deprecated
+	private void addPositioningHints(DiagramElement element, double xStart, double yStart, double xEnd, double yEnd) {
+//		HintMap hints = element.getPositioningHints();
+//		if (hints == null) {
+//			hints = new HintMap();
+//			element.setPositioningHints(hints);
+//		}
+//		hints.put(PositioningHints.MIN_X, (float) xStart);
+//		hints.put(PositioningHints.MAX_X, (float) xEnd);
+//		hints.put(PositioningHints.MIN_Y, (float) yStart);
+//		hints.put(PositioningHints.MAX_Y, (float) yEnd);
 	}
 	
 	public DirectionalValues getBorderSizes(DiagramElement de, Dimension2D contents, BoxStyle bs, FlexibleShape borderShape) {

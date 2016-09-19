@@ -375,13 +375,14 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return new ArrayList<DiagramElement>(contents);
 	} 
 
+	@Deprecated
 	private void setPlanarizationHints(DiagramElement c, RoutingInfo bounds) {
-		HintMap hints = c.getPositioningHints();
-		if (hints == null) {
-			hints = new HintMap();
-			c.setPositioningHints(hints);
-		}
-		rh.setHints(hints, bounds);
+//		HintMap hints = c.getPositioningHints();
+//		if (hints == null) {
+//			hints = new HintMap();
+//			c.setPositioningHints(hints);
+//		}
+//		rh.setHints(hints, bounds);
 	}
 	
 	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs) {
