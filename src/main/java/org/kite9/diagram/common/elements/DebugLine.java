@@ -55,10 +55,6 @@ public class DebugLine extends AbstractDiagramElement implements DiagramElement 
 	}
 
 	@Override
-	public void setPositioningHints(HintMap hints) {
-	}
-
-	@Override
 	public RenderingInformation getRenderingInformation() {
 		return rri;
 	}

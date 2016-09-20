@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
 import org.apache.batik.css.engine.value.Value;
+import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -77,6 +78,11 @@ public class LabelFrame extends AbstractDiagramElement {
 
 	@Override
 	public Value getCSSStyleProperty(String prop) {
+		return null;
+	}
+
+	@Override
+	public HintMap getPositioningHints() {
 		return null;
 	}
 }

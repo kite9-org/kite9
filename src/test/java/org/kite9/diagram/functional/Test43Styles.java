@@ -15,7 +15,6 @@ import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 
-@Ignore("Broken in sprint 7")
 public class Test43Styles extends AbstractFunctionalTest {
 
 	
@@ -40,10 +39,11 @@ public class Test43Styles extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 	
+	@NotAddressed("Need to use SVG-first rendering for this to work")
 	@Test
 	public void test_43_3_OverrideGlyphFillGradient() throws IOException {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
-		g1.setStyle("fill: \"270-#363525-#756365\"");
+		g1.setStyle("background-image: linear-gradient(red, orange);");
 		DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(g1),  null);
 		renderDiagram(d);
 	}
@@ -69,7 +69,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 	@Test
 	public void test_43_6_OverrideGlyphStrokeDasharray() throws IOException {
 		Glyph g1 = new Glyph("Stereo", "label", null, null);
-		g1.setStyle("stroke-dasharray: \"-..\"");
+		g1.setStyle("stroke-dasharray: 5");
 		DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(g1),  null);
 		renderDiagram(d);
 	}
@@ -99,25 +99,7 @@ public class Test43Styles extends AbstractFunctionalTest {
 	
 		renderDiagram(d);
 	}
-	
-	@Test
-	public void test_43_9_Dasharrays() throws IOException {
-		List<XMLElement> elems = new ArrayList<XMLElement>();
-		for (String s : DasharrayValueManager.DASH_PATTERNS.keySet()) {
-			Glyph g1 = new Glyph("a", null, "a", null, null);
-			Glyph g2 = new Glyph("b", null, "b", null, null);
-			Link l1 = new Link(g1, g2);
-			l1.setStyle("stroke-dasharray: '"+s+"'");	
-			elems.add(g1);
-			elems.add(g2);
-		}
-		DiagramXMLElement d= new DiagramXMLElement(elems,  null);
 		
-		
-		renderDiagram(d);
-	}
-	
-	
 	@Test
 	public void test_43_10_OverrideLinkStroke2() throws IOException {
 		Glyph g1 = new Glyph("a", null, "a", null, null);

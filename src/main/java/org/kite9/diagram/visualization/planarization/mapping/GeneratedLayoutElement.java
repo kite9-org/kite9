@@ -74,8 +74,4 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 	public HintMap getPositioningHints() {
 		return null;
 	}
-
-	@Override
-	public void setPositioningHints(HintMap hints) {
-	}
 }
