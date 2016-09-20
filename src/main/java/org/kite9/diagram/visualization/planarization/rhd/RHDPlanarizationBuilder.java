@@ -15,7 +15,6 @@ import java.util.Map;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -54,8 +53,15 @@ import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * Rob's Hierarchical Decomposition vertex orderer is a 3-phase process: grouping, layout and ordering. The
- * grouping phase divides the orderables at each level into hierarchical groups
+ * Rob's Hierarchical Decomposition vertex orderer is a 4-phase process:
+ * <ul>
+ * <li>grouping
+ * <li>layout
+ * <li>positioning 
+ * <li>vertex ordering
+ * </ul>
+ * 
+ * The grouping phase divides the orderables at each level into hierarchical groups
  * based on how many connections they have with other groups.
  * 
  * The layout phase takes a group and works out whether the two merge groups
@@ -63,8 +69,10 @@ import org.kite9.framework.logging.LogicException;
  * This means there are 4^c options for this merge where c is the number of
  * containers with parts of both groups.
  * 
+ * Positioning is the process of assigning x/y positions to the leaf groups and containers.
+ * 
  * Finally, the results of this are used to create the list of vertices to
- * return, with their positions set by the layout strategy.
+ * return, with their positions set by the layout strategy.  We also add vertices for any container corners at this stage.
  * 
  * @author moffatr
  * 
@@ -111,7 +119,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			rh =  new PositionRoutableHandler2D();
 			ContradictionHandler ch = new BasicContradictionHandler(em);
 			GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
-			LayoutStrategy layout = new DirectionLayoutStrategy(rh);
+			
+			// Grouping
 			GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch);
 			GroupResult mr = strategy.group(gp);
 			
@@ -121,36 +130,38 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	
 			if (mr.groups().size() > 1) {
 				throw new LogicException("Should end up with a single group");
-			} else {
-				Group topGroup = mr.groups().iterator().next();
+			} 
+			
+			Group topGroup = mr.groups().iterator().next();
 				
-				if (!log.go()) {
-					outputGroupInfo(topGroup, 0);
-				}
-				
-				
-				layout.layout(gp, mr, new MostNetworkedFirstLayoutQueue(gp.groupCount));
-				connections = new RankBasedConnectionQueue(rh);
-				
-				buildPositionMap(topGroup, connections);
-				if (!log.go()) {
-					outputGroupInfo(topGroup, 0);
-				}
-				
-				if (connections.hasContradictions()) {
-					if (!checkLayoutIsConsistent(c)) {
-						if (firstGo) {
-							log.send("Contradiction forces regroup");
-							redo = true;
-							continue;
-						}
+			if (!log.go()) {
+				outputGroupInfo(topGroup, 0);
+			}
+			
+			// Layout
+			LayoutStrategy layout = new DirectionLayoutStrategy(rh);
+			layout.layout(gp, mr, new MostNetworkedFirstLayoutQueue(gp.groupCount));
+			
+			// positioning
+			connections = new RankBasedConnectionQueue(rh);
+			buildPositionMap(topGroup, connections);
+			if (!log.go()) {
+				outputGroupInfo(topGroup, 0);
+			}
+			if (connections.hasContradictions()) {
+				if (!checkLayoutIsConsistent(c)) {
+					if (firstGo) {
+						log.send("Contradiction forces regroup");
+						redo = true;
+						continue;
 					}
 				}
-				
-				sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
-				buildVertexList(null, c, null, out, sortedContainerContents);
-				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 			}
+				
+			// vertex ordering
+			sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
+			buildVertexList(null, c, null, out, sortedContainerContents);
+			sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 			
 			firstGo = false;
 		}

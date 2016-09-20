@@ -19,14 +19,6 @@ import org.w3c.dom.Node;
 public class Glyph extends AbstractStyleableXMLElement {
 
 	private static final long serialVersionUID = -6572545083931316651L;
-		
-	public XMLElement getLabel() {
-		return getProperty("label");
-	}
-
-	public void setLabel(XMLElement name) {
-		replaceProperty("label", name);
-	}
 	
 	public Glyph() {
 		this.tagName = "glyph";
@@ -92,6 +84,13 @@ public class Glyph extends AbstractStyleableXMLElement {
 		return true;
 	}
 	
+	public XMLElement getLabel() {
+		return getProperty("label");
+	}
+
+	public void setLabel(XMLElement name) {
+		replaceProperty("label", name);
+	}
 	
 	public String toString() {
 		return "[G:"+getID()+"]";
