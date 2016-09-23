@@ -116,7 +116,7 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 				
 				if ((conInA || conInB) && axis) {
 					// container must allow alignedSide to occur
-					Layout l = con.getLayoutDirection();
+					Layout l = con.getLayout();
 					if (!allowsMergeDirection(l, alignedSide)) {
 						return false;
 					}
@@ -225,11 +225,11 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 	
 	private boolean checkContainerAllowsAlignedMerge(Container c, MergePlane alignedState) {
 		// exclude merge options where the aligned merge is incompatible with the container
-		if (c.getLayoutDirection() == Layout.HORIZONTAL) {
+		if (c.getLayout() == Layout.HORIZONTAL) {
 			if (alignedState == MergePlane.X_FIRST_MERGE) {
 				return false;
 			}
-		} else if (c.getLayoutDirection() == Layout.VERTICAL) {
+		} else if (c.getLayout() == Layout.VERTICAL) {
 			if (alignedState == MergePlane.Y_FIRST_MERGE) {
 				return false;
 			}

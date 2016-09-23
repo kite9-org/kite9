@@ -150,8 +150,8 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 				// stops edges wrapping round containers with layout - go in a straight line
 				Container comm = getCommonContainer(e.getFrom().getOriginalUnderlying(), e.getTo().getOriginalUnderlying());
 				Direction d = null;
-				if (comm.getLayoutDirection()!=null) {
-					d = getInsertionDirection(comm.getLayoutDirection(), e.getFrom(), e.getTo());
+				if (comm.getLayout()!=null) {
+					d = getInsertionDirection(comm.getLayout(), e.getFrom(), e.getTo());
 					done = er.addEdgeToPlanarization(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED);
 				}
 			}

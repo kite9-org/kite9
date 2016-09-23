@@ -161,7 +161,7 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 					int index = content.indexOf(de);
 					if (index != -1) {
 						out = Math.min(out, index);
-						outDir = getDirectionOfInsertion(c.getLayoutDirection());
+						outDir = getDirectionOfInsertion(c.getLayout());
 					} else {
 						throw new LogicException("The contained object is not contained in the face or something?");
 					}

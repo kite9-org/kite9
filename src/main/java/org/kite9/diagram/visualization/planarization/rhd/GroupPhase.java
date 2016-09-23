@@ -1,9 +1,11 @@
 package org.kite9.diagram.visualization.planarization.rhd;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -20,6 +22,7 @@ import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.rhd.grid.GridHelp;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
@@ -30,6 +33,8 @@ import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporary
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.serialization.CSSConstants;
+import org.kite9.framework.serialization.IntegerRangeValue;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the
@@ -71,7 +76,7 @@ public class GroupPhase {
 		this.ch = ch;
 		this.hashCodeGenerator = new Random(elements);
 		
-		createLeafGroup((Connected) top, null, pMap);
+		createLeafGroup((Connected) top, null, null, pMap);
 		setupLinks(top);
 		
 		for (LeafGroup group : allGroups) {
@@ -83,7 +88,14 @@ public class GroupPhase {
 		return pMap.get(ord);
 	}
 
-	private void createLeafGroup(Connected ord, Connected prev, Map<Connected, LeafGroup> pMap) {
+	/**
+	 * Creates leaf groups and any ordering between them, recursively.
+	 * @param ord  The object to create the group for
+	 * @param prev1 Previous element in the container
+	 * @param prev2 Previous element in the container (y-order if in grid, otherwise unused)
+	 * @param pMap Map of Connected to LeafGroups (created)
+	 */
+	private void createLeafGroup(Connected ord, Connected prev1, Connected prev2, Map<Connected, LeafGroup> pMap) {
 		if (pMap.get(ord) != null) {
 			throw new LogicException("Diagram Element "+ord+" appears multiple times in the diagram definition");
 		}
@@ -96,22 +108,43 @@ public class GroupPhase {
 			allGroups.add(g);
 		}
 		
-		if (prev != null) {
-			addContainerOrderingInfo(ord, prev, cnr);
+		if ((prev1 != null) && (prev1 != ord)) {
+			addContainerOrderingInfo(ord, prev1, cnr, true);
+		}
+		
+		if ((prev2 != null) && (prev2 != ord)) {
+			addContainerOrderingInfo(ord, prev2, cnr, false);
 		}
 		
 
 		if (ord instanceof Container) {
-			prev = null;
-			for (DiagramElement c : ((Container)ord).getContents()) {
-				if (c instanceof Connected) {
-					createLeafGroup((Connected) c, prev, pMap);	
+			Layout l = ((Container) ord).getLayout();
+			
+			if (l==Layout.GRID) {
+				// need to iterate in 2d
+				DiagramElement[][] grid = GridHelp.placeOnGrid((Container) ord);
+				for (int x = 0; x < grid.length; x++) {
+					for (int y = 0; y < grid[0].length; y++) {
+						Connected prevx = (Connected) (x > 0 ? grid[x-1][y] : null);
+						Connected prevy = (Connected) (y > 0 ? grid[x][y-1] : null);
+						DiagramElement de = grid[x][y];
+						Connected c = (Connected) de;
+						createLeafGroup(c, prevx, prevy, pMap);
+					}
 				}
-				prev = (Connected) c;
+			} else {
+				Connected prev = null;
+				for (DiagramElement c : ((Container)ord).getContents()) {
+					if (c instanceof Connected) {
+						createLeafGroup((Connected) c, prev, null, pMap);	
+					}
+					prev = (Connected) c;
+				}
 			}
 		}
 	}
 	
+
 	private void setupLinks(DiagramElement o) {
 		if (o instanceof Connected) {
 			for (Connection c : ((Connected) o).getLinks()) {
@@ -151,9 +184,6 @@ public class GroupPhase {
 			return 0;
 		}
 	}
-
-	
-
 	
 	public static boolean isHorizontalDirection(Direction drawDirection) {
 		return (drawDirection==Direction.LEFT) || (drawDirection==Direction.RIGHT);
@@ -177,8 +207,8 @@ public class GroupPhase {
 			Container c = ord.getContainer();
 			boolean directedContainer = false;
 			if (c!= null) {
-				if (c.getLayoutDirection() != null) {
-					switch (c.getLayoutDirection()) {
+				if (c.getLayout() != null) {
+					switch (c.getLayout()) {
 					case UP:
 					case DOWN:
 					case LEFT:
@@ -200,16 +230,16 @@ public class GroupPhase {
 		}	
 	}
 
-	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN);
+	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);
 	
-	private void addContainerOrderingInfo(Connected current, Connected prev, Container cnr) {
+	private void addContainerOrderingInfo(Connected current, Connected prev, Container cnr, boolean primary) {
 		if (prev == null)
 			return;
 
 
-		Layout l = cnr.getLayoutDirection();
+		Layout l = cnr.getLayout();
 		if (TEMPORARY_NEEDED.contains(l)) {
-			Direction d = getDirectionForLayout(l);
+			Direction d = getDirectionForLayout(l, primary);
 			OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prev, current, d, cnr);
 			LeafGroup from = getConnectionEnd(prev);
 			LeafGroup to = getConnectionEnd(current);
@@ -511,7 +541,7 @@ public class GroupPhase {
 			this.c = parent;
 			
 			// layout is the container layout at this level
-			this.layout = c != null ? c.getLayoutDirection() : null;
+			this.layout = c != null ? c.getLayout() : null;
 			if (o instanceof Container) {
 				containerCount++;
 			}
@@ -581,7 +611,7 @@ public class GroupPhase {
 		}
 	}
 	
-	public static Direction getDirectionForLayout(Layout currentDirection) {
+	public static Direction getDirectionForLayout(Layout currentDirection, boolean primary) {
 		switch (currentDirection) {
 		case RIGHT:
 			return Direction.RIGHT;
@@ -591,6 +621,8 @@ public class GroupPhase {
 			return Direction.DOWN;
 		case UP:
 			return Direction.UP;
+		case GRID:
+			return primary ? Direction.RIGHT : Direction.DOWN;
 
 		case VERTICAL:
 		case HORIZONTAL:

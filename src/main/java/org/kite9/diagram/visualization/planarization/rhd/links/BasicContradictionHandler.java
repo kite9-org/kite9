@@ -121,7 +121,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				Container toC = ((Connected)to).getContainer();
 				
 				if (fromC == toC) {
-					Layout l = fromC.getLayoutDirection();
+					Layout l = fromC.getLayout();
 					if (l==null) {
 						return;
 					} else {

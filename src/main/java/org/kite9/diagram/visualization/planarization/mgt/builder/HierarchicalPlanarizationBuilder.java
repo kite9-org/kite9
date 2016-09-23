@@ -155,7 +155,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private Direction getDirectionForLayout(Container inside) {
-		switch (inside.getLayoutDirection()) {
+		switch (inside.getLayout()) {
 		case UP:
 		case DOWN:
 		case VERTICAL:
@@ -166,7 +166,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			return Direction.RIGHT;
 		}
 		
-		throw new LogicException("Unexpected layout: "+inside.getLayoutDirection());
+		throw new LogicException("Unexpected layout: "+inside.getLayout());
 	}
 
 	private void paintRoute(Bounds b, List<Edge> edges, Direction d) {
@@ -308,7 +308,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {
 		List<DiagramElement> contents;
-		boolean layingOut = c.getLayoutDirection() != null;
+		boolean layingOut = c.getLayout() != null;
 		if (layingOut) {
 			contents = p.getContainerOrderingMap().get(c);
 		} else {

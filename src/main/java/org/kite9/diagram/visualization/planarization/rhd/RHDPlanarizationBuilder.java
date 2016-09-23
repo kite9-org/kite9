@@ -333,11 +333,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
 
 	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {
-		boolean layingOut = container.getLayoutDirection() != null;
+		boolean layingOut = container.getLayout() != null;
 		List<DiagramElement> contents = container.getContents();
 		if (layingOut) {
 			// sort the contents so that we can connect the right elements together
-			contents = getContainerContentsHolder(container.getLayoutDirection(), contents);
+			contents = getContainerContentsHolder(container.getLayout(), contents);
 			
 			Collections.sort(contents, new Comparator<DiagramElement>() {
 				@Override
@@ -399,7 +399,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs) {
 		Container within = c.getContainer();
 		
-		Layout l = within == null ? null : within.getLayoutDirection();
+		Layout l = within == null ? null : within.getLayout();
 		if (l != null) {
 			switch (l) {
 			case UP:
@@ -642,7 +642,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			throw new LogicException("a and b must share a container");
 		}
 		
-		Layout l = ((Container) parent).getLayoutDirection();
+		Layout l = ((Container) parent).getLayout();
 		
 		if (l == null) {
 			return 0;

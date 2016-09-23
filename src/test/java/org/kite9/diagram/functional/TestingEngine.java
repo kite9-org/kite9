@@ -497,7 +497,7 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	public static void testLayout(Container d) {
-		Layout l = d.getLayoutDirection();
+		Layout l = d.getLayout();
 
 		DiagramElement prev = null;
 

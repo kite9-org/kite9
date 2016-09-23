@@ -230,7 +230,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 	private Layout getAxisLayoutForContainer(Container c) {
 		if (c==null)
 			return null;
-		Layout layoutDirection = c.getLayoutDirection();
+		Layout layoutDirection = c.getLayout();
 		
 		// sanitize to a single axis
 		if (layoutDirection != null) {
@@ -266,7 +266,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 				GroupContainerState bContained = commonContainers.get(container);
 				if ((bContained != null) && (bContained.hasContent())) {
 	
-					if ((common == null) || (common.getLayoutDirection() == null)) {
+					if ((common == null) || (common.getLayout() == null)) {
 						common = container;
 					}
 				}
