@@ -53,7 +53,7 @@ import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * Rob's Hierarchical Decomposition vertex orderer is a 4-phase process:
+ * Rob's Hierarchical Decomposition Planarization Builder is a 4-phase process:
  * <ul>
  * <li>grouping
  * <li>layout
@@ -316,7 +316,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			
 			ContainerVertices cvs = em.getContainerVertices(container);
 			setContainerVertexPositions(before, container, after, cvs);
-			for (Vertex vertex : cvs.getVertices()) {
+			for (Vertex vertex : cvs.getPerimeterVertices()) {
 				out.add(vertex);
 			}
 		} else {
@@ -375,12 +375,12 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	}
 
 	private List<DiagramElement> getContainerContentsHolder(Layout ld, List<DiagramElement> contents) {
-		if (CHANGE_CONTAINER_ORDER) {
-			if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
-				// we are going to modify the original diagram
-				return contents;
-			}
-		} 
+//		if (CHANGE_CONTAINER_ORDER) {
+//			if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
+//				// we are going to modify the original diagram
+//				return contents;
+//			}
+//		} 
 		
 		// leave original intact
 		return new ArrayList<DiagramElement>(contents);
@@ -426,7 +426,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		double b1 = CONTAINER_VERTEX_SIZE - (CONTAINER_VERTEX_SIZE / (double) (depth + 1));
 		double b2 = CONTAINER_VERTEX_SIZE - (CONTAINER_VERTEX_SIZE / (double) (depth + 2));
 	
-		for (ContainerVertex cv : cvs.getVertices()) {
+		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
 			setRouting(cv, bx, by, b1, b2);
 		}
 		setPlanarizationHints(c, bounds);
@@ -454,7 +454,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
 			Bounds x = rh.getBoundsOf(cbounds, true);
 			Bounds y = rh.getBoundsOf(cbounds, false);
-			ContainerVertex cvNew = cvs.getCentralVertexOnSide(d);
+			ContainerVertex cvNew = cvs.createVertex(ContainerVertex.getOrdForXDirection(d), ContainerVertex.getOrdForYDirection(d));
 			// set position
 			switch (d) {
 			case UP:
@@ -658,6 +658,10 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				case RIGHT:
 				case HORIZONTAL:
 					dp = rh.compare(a, b, true);
+					break;
+				case GRID:
+					dp = rh.compare(a, b, false);
+					dp = (dp == DPos.OVERLAP) ? rh.compare(a, b, true) : dp;
 			}
 			
 			if (dp == DPos.BEFORE) {

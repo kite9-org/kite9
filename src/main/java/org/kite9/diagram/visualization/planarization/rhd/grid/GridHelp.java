@@ -69,7 +69,7 @@ public class GridHelp {
 		
 		// add remaining/dummy elements elements, by adding extra rows if need be.
 		int xr = 0;
-		while ((overlaps.size() > 0) && (xr < out.size())) {
+		while ((overlaps.size() > 0) || (xr < out.size())) {
 			if (xr == out.size()) {
 				DiagramElement[] ys = new DiagramElement[size.height];
 				out.add(ys);

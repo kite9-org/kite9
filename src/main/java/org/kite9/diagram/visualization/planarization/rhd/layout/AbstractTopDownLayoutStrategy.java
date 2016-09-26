@@ -80,9 +80,9 @@ public abstract class AbstractTopDownLayoutStrategy implements LayoutStrategy, L
 		case DOWN:
 		case UP:
 			return vert ? naturalLayout : null;
+		default:
+			throw new LogicException("Layout should be definite for an approach: "+naturalLayout);
 		}
-		
-		throw new LogicException("Layout should be definite for an approach: "+naturalLayout);
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.CornerVertex;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -38,7 +38,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Side createSide(CornerVertex tl, CornerVertex tr, Direction d, Vertex from, List<Dart> onSide,
+	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, Vertex from, List<Dart> onSide,
 			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize) {
 		Side out = super.createSide(tl, tr, d, from, onSide, o, oppositeDarts, minLength, requiresSize);
 

@@ -13,6 +13,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.CornerVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
@@ -109,10 +110,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		String name = v.getID();
 		// first, need to create the four corner vertices
 		DiagramElement originalUnderlying = v.getOriginalUnderlying();
-		CornerVertex tl = new CornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
-		CornerVertex tr = new CornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
-		CornerVertex bl = new CornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
-		CornerVertex br = new CornerVertex(name + "br", HPos.RIGHT, VPos.DOWN, originalUnderlying);
+		AbstractAnchoringVertex tl = new CornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
+		AbstractAnchoringVertex tr = new CornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
+		AbstractAnchoringVertex bl = new CornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
+		AbstractAnchoringVertex br = new CornerVertex(name + "br", HPos.RIGHT, VPos.DOWN, originalUnderlying);
 		
 		
 		List<Dart> upDarts = dartDirections.get(Direction.UP);
@@ -377,7 +378,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	}
 
-	protected Side createSide(CornerVertex tl, CornerVertex tr, Direction d, Vertex from, List<Dart> onSide,
+	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, Vertex from, List<Dart> onSide,
 			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize) {
 		int i = 0;
 		Side out = new Side();

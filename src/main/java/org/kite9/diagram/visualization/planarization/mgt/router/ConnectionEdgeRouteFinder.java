@@ -331,7 +331,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (und instanceof Container) {
 			Container c = (Container) und;
 			ContainerVertices cvs = em.getContainerVertices(c);
-			for (Vertex v : cvs.getVertices()) {
+			for (Vertex v : cvs.getPerimeterVertices()) {
 				if (onCorrectSideOfContainer((ContainerVertex) v, false)) {
 					createInitialPathsFrom(pq, v);
 				}

@@ -39,7 +39,7 @@ public class LayoutEdgeRouteFinder extends ConnectionEdgeRouteFinder {
 		if (und instanceof Container) {
 			Container c = (Container) und;
 			ContainerVertices cvs = em.getContainerVertices(c);
-			ContainerVertex leaver = cvs.getCentralVertexOnSide(d);
+			ContainerVertex leaver = cvs.createVertex(ContainerVertex.getOrdForXDirection(d), ContainerVertex.getOrdForYDirection(d));
 			return leaver;
 		} else {
 			return edgeVertex;

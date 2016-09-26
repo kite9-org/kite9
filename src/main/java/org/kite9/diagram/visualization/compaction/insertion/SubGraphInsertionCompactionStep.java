@@ -186,6 +186,7 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		case VERTICAL:
 		case DOWN:
 		case UP:
+		case GRID:
 			return Direction.DOWN;
 			
 		default:

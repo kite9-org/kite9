@@ -19,6 +19,7 @@ import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -84,6 +85,10 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * maintain the container direction
 	 */
 	private boolean checkIfNewBackEdgeNeeded(DiagramElement current, DiagramElement prev, MGTPlanarization pln, Container inside) {
+		if (inside.getLayout() == Layout.GRID) {
+			return false;		// back edges not needed as elements are connected together.
+		}
+		
 		boolean needed = checkForInsertedBackEdge(current, prev, pln, inside);
 		if (!needed) {
 			return false;
@@ -254,6 +259,10 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	/**
 	 * This ensures that the containers' terminal vertices have edges outsideEdge and
 	 * below the planarization line to contain their content vertices.
+	 * 
+	 * This creates an {@link EdgeMapping} in the planarization, which is an ordered list
+	 * of edges.  So, we have to journey round the perimeter vertices of the container and
+	 * create edges between them in order.
 	 */
 	protected void setupContainerBoundaryEdges(MGTPlanarization p, Container outer) {
 		for (DiagramElement c : outer.getContents()) {
@@ -271,7 +280,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 		int i = 0;
 		ContainerVertex fromv, tov = null;
-		Iterator<ContainerVertex> iterator = cv.getVertices().listIterator();
+		Iterator<ContainerVertex> iterator = cv.getPerimeterVertices().iterator();
 		while (iterator.hasNext()) {
 			fromv = tov;
 			tov = iterator.next();
@@ -282,7 +291,9 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		}
 		
 		// join back into a circle
-		addEdgeBetween(p, outer, originalLabel, em, i, cv.getVertices().getLast(), cv.getVertices().getFirst());
+		addEdgeBetween(p, outer, originalLabel, em, i, 
+				cv.getPerimeterVertices().get(cv.getPerimeterVertices().size()-1), 
+				cv.getPerimeterVertices().get(0));
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i,
@@ -351,7 +362,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private Vertex getVertexFor(DiagramElement c) {
 		if (c instanceof Container) {
-			return em.getContainerVertices((Container) c).getVertices().getFirst();  // any one will do
+			return em.getContainerVertices((Container) c).getPerimeterVertices().getFirst();  // any one will do
 		} else if (c instanceof Connected) {
 			return em.getVertex((Connected) c); 
 		} else {

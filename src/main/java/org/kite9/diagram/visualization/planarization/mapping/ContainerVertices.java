@@ -3,19 +3,28 @@
  */
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Deque;
 
-import org.kite9.diagram.position.Direction;
-
+/**
+ * This automatically comes populated with the four corner vertices, but 
+ * by using the <pre>createVertex</pre> method, you can add extra ones.
+ * 
+ * @author robmoffat
+ *
+ */
 public interface ContainerVertices {
 		
 	/**
-	 * Clockwise ordering of vertices around the container, from top left.
+	 * Ordering of vertices around the container, from top left clockwise.
 	 */
-	public LinkedList<ContainerVertex> getVertices();
+	public ArrayList<ContainerVertex> getPerimeterVertices();
 	
 	/**
-	 * Creates or returns a middle vertex for the side d.
+	 * Creates or returns a middle vertex.
+	 * 
+	 * @param x A value between 0 and 1000.
+	 * @param y A value between 0 and 1000
 	 */
-	public ContainerVertex getCentralVertexOnSide(Direction d);
+	public ContainerVertex createVertex(int x, int y);
 }

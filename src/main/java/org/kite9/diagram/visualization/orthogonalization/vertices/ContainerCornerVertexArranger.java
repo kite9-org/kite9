@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.common.elements.CornerVertex;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -17,8 +17,8 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.framework.logging.LogicException;
 
@@ -139,7 +139,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		throw new LogicException("Couldn't find side dart going "+d+" from "+cv);
 	}
 
-	protected void processDarts(Container underlying, CornerVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
+	protected void processDarts(Container underlying, AbstractAnchoringVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
 		Edge thisEdge = (Edge) toSplit.getUnderlying();
 		
 		
@@ -191,7 +191,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 
-	private void insertInWaypointMap(Edge thisEdge, CornerVertex before, Vertex after, Vertex insert, Orthogonalization o) {
+	private void insertInWaypointMap(Edge thisEdge, AbstractAnchoringVertex before, Vertex after, Vertex insert, Orthogonalization o) {
 		List<Vertex> waypoints = o.getWaypointMap().get(thisEdge);
 		for (int i = 0; i < waypoints.size()-1; i++) {
 			Vertex b = waypoints.get(i);
@@ -206,7 +206,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		throw new LogicException("Waypoint map can't add between "+before+" and "+after+ " "+waypoints);
 	}
 
-	private void replaceEnd(CornerVertex old, Dart leaving, Vertex to) {
+	private void replaceEnd(AbstractAnchoringVertex old, Dart leaving, Vertex to) {
 		if (leaving.getFrom().equals(old)) {
 			leaving.setFrom(to);
 		} else if (leaving.getTo().equals(old)) {
