@@ -14,6 +14,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
@@ -36,8 +37,8 @@ import org.kite9.framework.logging.LogicException;
 public abstract class DirectedEdgePlanarizationBuilder extends
 		MGTPlanarizationBuilder {
 
-	public DirectedEdgePlanarizationBuilder(ElementMapper em) {
-		super(em);
+	public DirectedEdgePlanarizationBuilder(ElementMapper em, GridPositioner gp) {
+		super(em, gp);
 	}
 	
 	@K9OnDiagram(alias="edge router")

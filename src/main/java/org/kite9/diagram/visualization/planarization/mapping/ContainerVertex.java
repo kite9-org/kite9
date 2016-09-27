@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.mapping;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
@@ -22,31 +23,26 @@ import org.kite9.diagram.position.VPos;
  * 
  */
 public class ContainerVertex extends AbstractAnchoringVertex {
-
-	public static final int LOWEST_ORD = 0;
-	public static final int HIGHEST_ORD = 1000;
-	public static final int MID_ORD = 500;
 	
-	
-	public static int getOrdForXDirection(Direction d) {
+	public static BigFraction getOrdForXDirection(Direction d) {
 		switch (d) {
 		case LEFT:
-			return LOWEST_ORD;
+			return BigFraction.ZERO;
 		case RIGHT:
-			return HIGHEST_ORD;
+			return BigFraction.ONE;
 		default:
-			return MID_ORD;
+			return BigFraction.ONE_HALF;
 		}
 	}
 	
-	public static int getOrdForYDirection(Direction d) {
+	public static BigFraction getOrdForYDirection(Direction d) {
 		switch (d) {
 		case UP:
-			return LOWEST_ORD;
+			return BigFraction.ZERO;
 		case DOWN:
-			return HIGHEST_ORD;
+			return BigFraction.ONE;
 		default:
-			return MID_ORD;
+			return BigFraction.ONE_HALF;
 		}
 	}
 	
@@ -55,11 +51,11 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return false;
 	}
 
-	private int xOrd, yOrd;
+	private BigFraction xOrd, yOrd;
 	private Container c;
 	private List<Anchor> anchors = new ArrayList<AbstractAnchoringVertex.Anchor>(4);
 	
-	public ContainerVertex(Container c, int xOrd, int yOrd) {
+	public ContainerVertex(Container c, BigFraction xOrd, BigFraction yOrd) {
 		super(c.getID()+"_"+xOrd+"_"+yOrd);
 		this.c = c;
 		this.xOrd = xOrd;
@@ -70,7 +66,7 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return c;
 	}
 	
-	public int getXOrdinal() {
+	public BigFraction getXOrdinal() {
 		return xOrd;
 	}
 	
@@ -90,7 +86,7 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		}
 	}
 
-	public int getYOrdinal() {
+	public BigFraction getYOrdinal() {
 		return yOrd;
 	}
 	

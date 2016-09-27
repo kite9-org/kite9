@@ -1,11 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -22,19 +20,17 @@ import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.rhd.grid.GridHelp;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
+import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkLineStyle;
-import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.IntegerRangeValue;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the
@@ -68,12 +64,14 @@ public class GroupPhase {
 	private GroupBuilder ab;
 	private Set<Connection> allLinks = new UnorderedSet<Connection>(1000);
 	private ContradictionHandler ch;
+	private GridPositioner gp;
 	
-	public GroupPhase(Kite9Log log, DiagramElement top, int elements, GroupBuilder ab, ContradictionHandler ch) {
+	public GroupPhase(Kite9Log log, DiagramElement top, int elements, GroupBuilder ab, ContradictionHandler ch, GridPositioner gp) {
 		this.pMap = new LinkedHashMap<Connected, LeafGroup>(elements * 2);
 		allGroups = new LinkedHashSet<LeafGroup>(elements * 2);
 		this.ab = ab;
 		this.ch = ch;
+		this.gp = gp;
 		this.hashCodeGenerator = new Random(elements);
 		
 		createLeafGroup((Connected) top, null, null, pMap);
@@ -122,7 +120,7 @@ public class GroupPhase {
 			
 			if (l==Layout.GRID) {
 				// need to iterate in 2d
-				DiagramElement[][] grid = GridHelp.placeOnGrid((Container) ord);
+				DiagramElement[][] grid = gp.placeOnGrid((Container) ord);
 				for (int x = 0; x < grid.length; x++) {
 					for (int y = 0; y < grid[0].length; y++) {
 						Connected prevx = (Connected) (x > 0 ? grid[x-1][y] : null);

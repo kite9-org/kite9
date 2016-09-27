@@ -12,6 +12,7 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
@@ -30,8 +31,8 @@ import org.kite9.framework.logging.Table;
  */
 public abstract class MGTPlanarizationBuilder extends RHDPlanarizationBuilder implements Logable {
 	
-	public MGTPlanarizationBuilder(ElementMapper em) {
-		super(em);
+	public MGTPlanarizationBuilder(ElementMapper em, GridPositioner gp) {
+		super(em, gp);
 	}
 	
 	protected Kite9Log log = new Kite9Log(this);

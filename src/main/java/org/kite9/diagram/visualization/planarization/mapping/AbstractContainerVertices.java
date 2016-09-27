@@ -1,49 +1,52 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
-import org.kite9.framework.common.Kite9ProcessingException;
-
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.position.HPos;
+import org.kite9.diagram.position.VPos;
 
 public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	private final Container c;
 	private transient ArrayList<ContainerVertex> plist;
 	private transient int pListSize;
-	private final Map<Dimension, ContainerVertex> elements;
+	final Map<OPair<BigFraction>, ContainerVertex> elements;
 
-	private int minx, maxx, miny, maxy;
+	private OPair<BigFraction> cx, cy;
 
-	public AbstractContainerVertices(Container c, int minx, int maxx, int miny, int maxy, Map<Dimension, ContainerVertex> elements) {
+	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy, Map<OPair<BigFraction>, ContainerVertex> elements) {
 		super();
 		this.c = c;
-		this.minx = minx;
-		this.maxx = maxx;
-		this.miny = miny;
-		this.maxy = maxy;
+		this.cx = cx;
+		this.cy = cy;
 		this.elements = elements;
+		
+		ContainerVertex tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
+		ContainerVertex tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
+		ContainerVertex br = createVertex(BigFraction.ONE, BigFraction.ONE);
+		ContainerVertex bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
+		
+		tl.addAnchor(HPos.LEFT, VPos.UP, c);
+		tr.addAnchor(HPos.RIGHT, VPos.UP, c);
+		bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
+		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
 	}
 	
 	
 	
 	@Override 
-	public ContainerVertex createVertex(int x, int y) {
-		if ((x<LOWEST_ORD) || (x>HIGHEST_ORD) ||(y <LOWEST_ORD) || (y>HIGHEST_ORD)) {
-			throw new Kite9ProcessingException("Out of range: "+x+" "+y);
-		}
+	public ContainerVertex createVertex(BigFraction x, BigFraction y) {
+		x = scale(x, cx);
+		y = scale(y, cy);
 		
-		x = scaleX(x);
-		y = scaleY(y);
-		
-		Dimension d = new Dimension(x, y);
+		OPair<BigFraction> d = new OPair<BigFraction>(x, y);
 		
 		ContainerVertex cv = elements.get(d);
 		
@@ -58,22 +61,22 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		
 	}
 	
-	protected int scaleY(int y) {
-		int size = maxy - miny;
-		
+	public static BigFraction scale(BigFraction y, OPair<BigFraction> range) {
+		BigFraction size = range.getB().subtract(range.getA());
+		y = y.multiply(size);
+		y = y.add(range.getA());
+		return y;
 	}
-
-	protected int scaleX(int x) {
-		
-	}
-
 
 	@Override
 	public ArrayList<ContainerVertex> getPerimeterVertices() {
 		if (pListSize != elements.size()) {
+			BigFraction minx = cx.getA();
+			BigFraction maxx = cx.getB();
+			BigFraction miny = cy.getA();
+			BigFraction maxy = cy.getB();
 			
-			
-			List<ContainerVertex> top = sort(+1, 0, collect(minx, maxy, miny, miny));
+			List<ContainerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny));
 			List<ContainerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy));
 			List<ContainerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy));
 			List<ContainerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy));
@@ -96,8 +99,8 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 
 			@Override
 			public int compare(ContainerVertex o1, ContainerVertex o2) {
-				int ys = ((Integer) o1.getYOrdinal()).compareTo(o2.getYOrdinal()) * yorder;
-				int xs = ((Integer) o1.getXOrdinal()).compareTo(o2.getXOrdinal()) * xorder;
+				int ys = o1.getYOrdinal().compareTo(o2.getYOrdinal()) * yorder;
+				int xs = o1.getXOrdinal().compareTo(o2.getXOrdinal()) * xorder;
 				
 				return xs + ys;
 			}
@@ -115,18 +118,39 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		}
 	}
 
-	private List<ContainerVertex> collect(int minx2, int maxy2, int miny2, int miny3) {
+	private List<ContainerVertex> collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy) {
 		List<ContainerVertex> out = new ArrayList<>();
 		for (ContainerVertex cv : elements.values()) {
-			int x = cv.getXOrdinal();
-			int y = cv.getYOrdinal();
-			if ((x >= minx) && (x<=maxx) && (y>=miny) && (y<=maxy)) {
+			BigFraction x = cv.getXOrdinal();
+			BigFraction y = cv.getYOrdinal();
+			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
 				out.add(cv);
-			
 			}
 		}
 		
 		return out;
 	}
+	
+	private boolean afterEq(BigFraction in, BigFraction with) {
+		int c = in.compareTo(with);
+		return c > -1;
+	}
+	
+	private boolean beforeEq(BigFraction in, BigFraction with) {
+		int c = in.compareTo(with);
+		return c < 1;
+	}
+	
+
+	public OPair<BigFraction> getXRange() {
+		return cx;
+	}
+
+
+
+	public OPair<BigFraction> getYRange() {
+		return cy;
+	}
+
 
 }

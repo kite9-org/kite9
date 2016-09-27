@@ -1,13 +1,18 @@
-package org.kite9.diagram.visualization.planarization.rhd.grid;
+package org.kite9.diagram.visualization.planarization.grid;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.IntegerRangeValue;
 
@@ -18,11 +23,14 @@ import org.kite9.framework.serialization.IntegerRangeValue;
  * @author robmoffat
  *
  */
-public class GridHelp {
+public class GridPositionerImpl implements GridPositioner {
 
-
+	Map<Container, DiagramElement[][]> placed = new HashMap<>();
+	Map<DiagramElement, OPair<BigFraction>> xPositions = new HashMap<>(100);
+	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
 	
-	private static Dimension calculateGridSize(Container ord) {
+	
+	private Dimension calculateGridSize(Container ord) {
 		// these are a minimum size, but contents can exceed them and push this out.
 		int xSize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_COLUMNS_PROPERTY).getFloatValue();
 		int ySize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_ROWS_PROPERTY).getFloatValue();
@@ -42,7 +50,11 @@ public class GridHelp {
 	}
 	
 	
-	public static DiagramElement[][] placeOnGrid(Container ord) {
+	public DiagramElement[][] placeOnGrid(Container ord) {
+		if (placed.containsKey(ord)) {
+			return placed.get(ord);
+		}
+		
 		Dimension size = calculateGridSize(ord);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
@@ -61,8 +73,10 @@ public class GridHelp {
 				
 				if ((!xpos.notSet()) && (!ypos.notSet()) && (ensureGrid(out, xpos, ypos, null))) {
 					ensureGrid(out, xpos, ypos, diagramElement);
+					storeCoordinates(diagramElement, xpos.getFrom(), xpos.getTo(), ypos.getFrom(), ypos.getTo(), size);
 				} else {
 					overlaps.add(diagramElement);
+					
 				}
 			}
 		}
@@ -80,6 +94,7 @@ public class GridHelp {
 				if (ys[y] == null) {
 					if (!overlaps.isEmpty()) {
 						ys[y] = overlaps.remove(overlaps.size()-1);
+						storeCoordinates(ys[y], xr, xr, y, y, size);
 					} else {
 						ys[y] = new GridTemporaryConnected(ord, xr, y);
 					}
@@ -89,8 +104,17 @@ public class GridHelp {
 			xr++;
 		}
 		
-		return (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
+		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
+		placed.put(ord, done);
+		return done;
 	}
+
+	
+	private void storeCoordinates(DiagramElement diagramElement, int sx, int ex, int sy, int ey, Dimension size) {
+		xPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sx, size.width), BigFraction.getReducedFraction(ex+1, size.width)));
+		yPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sy, size.height), BigFraction.getReducedFraction(ey+1, size.height)));
+	}
+
 
 	/**
 	 * Iterates over the grid squares occupied by the ranges and either checks that they are empty, 
@@ -112,6 +136,27 @@ public class GridHelp {
 			}
 			
 		}
+		
 		return true;
+	}
+
+
+	@Override
+	public OPair<BigFraction> getGridXPosition(DiagramElement elem) {
+		if (!xPositions.containsKey(elem)) {
+			throw new Kite9ProcessingException("Would expect the element to have been given a grid position: "+elem);
+		}
+		
+		return xPositions.get(elem);
+	}
+
+
+	@Override
+	public OPair<BigFraction> getGridYPosition(DiagramElement elem) {
+		if (!yPositions.containsKey(elem)) {
+			throw new Kite9ProcessingException("Would expect the element to have been given a grid position: "+elem);
+		}
+		
+		return yPositions.get(elem);
 	}
 }

@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.planarization.rhd;
 
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
@@ -27,6 +25,7 @@ import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
@@ -84,11 +83,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private Kite9Log log = new Kite9Log(this);
 
 	protected ElementMapper em;
+	protected GridPositioner gridHelp;
 	private RoutableHandler2D rh;
 
-	public RHDPlanarizationBuilder(ElementMapper em) {
+	public RHDPlanarizationBuilder(ElementMapper em, GridPositioner gridHelp) {
 		super();
 		this.em = em;
+		this.gridHelp = gridHelp;
 	}
 	
 	public RoutableReader getRoutableReader() {
@@ -121,7 +122,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
 			
 			// Grouping
-			GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch);
+			GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp);
 			GroupResult mr = strategy.group(gp);
 			
 			if (!log.go()) {
@@ -475,17 +476,17 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	}
 
 	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double b1, double b2) {
-		if (cv.getXOrdinal() == LOWEST_ORD) {
+		if (cv.getXOrdinal() == BigFraction.ZERO) {
 			bx = bx.keepMin(b1, b2);
-		} else if (cv.getXOrdinal() == HIGHEST_ORD) {
+		} else if (cv.getXOrdinal() == BigFraction.ONE) {
 			bx = bx.keepMax(b1, b2);
 		} else {
 			bx = rh.getBoundsOf(cv.getRoutingInfo(), true);  // whole side, narrowed later
 		}
 		
-		if (cv.getYOrdinal() == LOWEST_ORD) {
+		if (cv.getYOrdinal() == BigFraction.ZERO) {
 			by = by.keepMin(b1, b2);
-		} else if (cv.getYOrdinal() == HIGHEST_ORD) {
+		} else if (cv.getYOrdinal() == BigFraction.ONE) {
 			by = by.keepMax(b1, b2);
 		} else {
 			by = rh.getBoundsOf(cv.getRoutingInfo(), false);  // whole side, narrowed later

@@ -1,15 +1,11 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -18,11 +14,20 @@ import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.framework.logging.LogicException;
 
 public class ElementMapperImpl implements ElementMapper {
+	
+	private GridPositioner gp;
+
+	public ElementMapperImpl(GridPositioner gp) {
+		super();
+		this.gp = gp;
+	}
 
 	Map<Connected, Vertex> vertices = new HashMap<Connected, Vertex>();
 	Map<Container, ContainerVertices> containers = new HashMap<Container, ContainerVertices>();
@@ -33,9 +38,10 @@ public class ElementMapperImpl implements ElementMapper {
 		if (v == null) {
 			if (hasParentGridLayout(c)) {
 				ContainerVertices parentCV = getContainerVertices((Container)c.getParent());
-				return new SubwindowContainerVertices(c, parentCV);
+				OPair<BigFraction> xspan = gp.getGridXPosition(c);
+				OPair<BigFraction> yspan = gp.getGridXPosition(c);
+				return new SubwindowContainerVertices(c, xspan, yspan, parentCV);
 			} else {
-			
 				v = new IndependentContainerVertices(c);
 				containers.put(c, v);
 			}

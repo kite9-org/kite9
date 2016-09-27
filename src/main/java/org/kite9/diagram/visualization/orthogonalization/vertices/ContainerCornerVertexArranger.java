@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
@@ -45,10 +46,10 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
-			if (cv.getYOrdinal() == LOWEST_ORD) {
-				if (cv.getXOrdinal() == LOWEST_ORD) {
+			if (cv.getYOrdinal() == BigFraction.ZERO) {
+				if (cv.getXOrdinal() == BigFraction.ZERO) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
-				} else if (cv.getXOrdinal() == HIGHEST_ORD) {
+				} else if (cv.getXOrdinal() == BigFraction.ONE) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.LEFT);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);

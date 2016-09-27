@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.ArrayList;
-
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.objects.OPair;
 
 /**
  * Adds vertices to the parent container vertices, and operates in a narrower range.
@@ -12,34 +12,22 @@ import org.kite9.diagram.adl.Container;
  */
 public class SubwindowContainerVertices extends AbstractContainerVertices {
 	
-	private ContainerVertices parent;
+	public SubwindowContainerVertices(Container c, OPair<BigFraction> x, OPair<BigFraction> y, ContainerVertices parentCV) {
+		super(c, getXSpan(x, parentCV), getYSpan(y, parentCV), ((AbstractContainerVertices)parentCV).elements);
+	}
+
+	private static OPair<BigFraction> getYSpan(OPair<BigFraction> y, ContainerVertices parentCV) {
+		return new OPair<BigFraction>(
+				scale(y.getA(), ((AbstractContainerVertices)parentCV).getYRange()),
+				scale(y.getB(), ((AbstractContainerVertices)parentCV).getYRange())
+				);
+	}
+
+	private static OPair<BigFraction> getXSpan(OPair<BigFraction> x, ContainerVertices parentCV) {
+		return new OPair<BigFraction>(
+				scale(x.getA(), ((AbstractContainerVertices)parentCV).getXRange()),
+				scale(x.getB(), ((AbstractContainerVertices)parentCV).getXRange())
+				);
+	}
 	
-	private int minx, miny, maxx, maxy;
-
-	public SubwindowContainerVertices(Container c, ContainerVertices parentCV) {
-	
-		this.parent = parentCV;
-		while (parentCV instanceof SubwindowContainerVertices) {
-			parentCV = parentCV.
-		}
-	}
-
-	@Override
-	public ArrayList<ContainerVertex> getPerimeterVertices() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<ContainerVertex> getVerticesInXOrder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ContainerVertex createVertex(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

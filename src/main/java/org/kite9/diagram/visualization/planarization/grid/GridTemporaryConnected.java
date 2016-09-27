@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.rhd.grid;
+package org.kite9.diagram.visualization.planarization.grid;
 
 import java.util.ArrayList;
 import java.util.Collection;

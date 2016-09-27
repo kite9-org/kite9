@@ -4,7 +4,8 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.ArrayList;
-import java.util.Deque;
+
+import org.apache.commons.math.fraction.BigFraction;
 
 /**
  * This automatically comes populated with the four corner vertices, but 
@@ -21,10 +22,8 @@ public interface ContainerVertices {
 	public ArrayList<ContainerVertex> getPerimeterVertices();
 	
 	/**
-	 * Creates or returns a middle vertex.
+	 * Creates or returns a vertex from within the rectangle of the container.
 	 * 
-	 * @param x A value between 0 and 1000.
-	 * @param y A value between 0 and 1000
 	 */
-	public ContainerVertex createVertex(int x, int y);
+	public ContainerVertex createVertex(BigFraction x, BigFraction y);
 }

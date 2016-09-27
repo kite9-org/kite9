@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
+import org.kite9.diagram.visualization.planarization.grid.GridPositionerImpl;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapperImpl;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerConnectionTransform1;
@@ -31,11 +33,12 @@ public abstract class AbstractPlanarizer implements Logable {
 
 	protected Kite9Log log = new Kite9Log(this);
    	
-	private ElementMapper em;
+	private GridPositioner gp = new GridPositionerImpl();
 
-	protected ElementMapper createElementMapper() {
-		em = new ElementMapperImpl();
-		return em;
+	private ElementMapper em = new ElementMapperImpl(gp);
+	
+	public GridPositioner getGridPositioner() {
+		return gp;
 	}
 	
 	public ElementMapper getElementMapper() {
@@ -65,7 +68,7 @@ public abstract class AbstractPlanarizer implements Logable {
 	}
 
 	protected Planarization buildPlanarization(Diagram c) {
-		PlanarizationBuilder po = getPlanarizationBuilder(createElementMapper());
+		PlanarizationBuilder po = getPlanarizationBuilder();
 		Planarization pln = po.planarize(c);
 		return pln;
 	}
@@ -117,7 +120,7 @@ public abstract class AbstractPlanarizer implements Logable {
 		return out;
 	}
 
-	protected abstract PlanarizationBuilder getPlanarizationBuilder(ElementMapper elementMapper);
+	protected abstract PlanarizationBuilder getPlanarizationBuilder();
 
 	protected abstract FaceConstructor getFaceConstructor();
 

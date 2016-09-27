@@ -5,7 +5,6 @@ import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.Planarizer;
-import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.builder.HierarchicalPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructor;
 import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructorImpl;
@@ -23,8 +22,8 @@ public class MGTPlanarizer extends AbstractPlanarizer implements Planarizer {
 	}
 
 	@Override
-	protected PlanarizationBuilder getPlanarizationBuilder(ElementMapper elementMapper) {
-		return new HierarchicalPlanarizationBuilder(getRoutableHandler(), elementMapper);
+	protected PlanarizationBuilder getPlanarizationBuilder() {
+		return new HierarchicalPlanarizationBuilder(getRoutableHandler(), getElementMapper(), getGridPositioner());
 	}
 
 	@Override

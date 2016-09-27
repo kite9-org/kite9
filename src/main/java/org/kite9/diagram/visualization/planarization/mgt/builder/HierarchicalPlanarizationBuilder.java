@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.planarization.mgt.builder;
 
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
@@ -23,6 +20,7 @@ import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
@@ -45,8 +43,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationBuilder {
 
-	public HierarchicalPlanarizationBuilder(RoutableHandler2D rh, ElementMapper em) {
-		super(em);
+	public HierarchicalPlanarizationBuilder(RoutableHandler2D rh, ElementMapper em, GridPositioner gp) {
+		super(em, gp);
 	}
 
 	@Override
