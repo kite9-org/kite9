@@ -10,6 +10,7 @@ import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Represents the special start and end vertices in the diagram, and for each container which are added
@@ -92,6 +93,26 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	
 	public void addAnchor(HPos lr, VPos ud, DiagramElement underlying) {
 		anchors.add(new Anchor(ud, lr, underlying));
+	}
+	
+	public VPos getVPosFor(Container c) {
+		for (Anchor anchor : anchors) {
+			if (anchor.getDe() == c) {
+				return anchor.getUd();
+			}
+		}
+		
+		throw new Kite9ProcessingException("No anchor found for container "+c);
+	}
+	
+	public HPos getHPosFor(Container c) {
+		for (Anchor anchor : anchors) {
+			if (anchor.getDe() == c) {
+				return anchor.getLr();
+			}
+		}
+		
+		throw new Kite9ProcessingException("No anchor found for container "+c);
 	}
 	
 }

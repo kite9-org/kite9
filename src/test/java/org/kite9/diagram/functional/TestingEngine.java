@@ -26,6 +26,7 @@ import java.util.zip.ZipFile;
 
 import javax.xml.transform.Source;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
@@ -238,12 +239,12 @@ public class TestingEngine extends TestingHelp {
 			int xoffset = 0;
 			int yoffset = 0;
 			if (vertex instanceof ContainerVertex) {
-				if (((ContainerVertex) vertex).getXOrdinal() == ContainerVertex.HIGHEST_ORD) {
+				if (((ContainerVertex) vertex).getXOrdinal().equals(BigFraction.ONE)) {
 					xoffset = -20;
 				} else {
 					yoffset = 5;
 				}
-				if (((ContainerVertex) vertex).getYOrdinal() == ContainerVertex.HIGHEST_ORD) {
+				if (((ContainerVertex) vertex).getYOrdinal().equals(BigFraction.ONE)) {
 					yoffset = -20;
 				} else {
 					yoffset = 5;

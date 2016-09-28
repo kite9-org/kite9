@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.transform;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
@@ -51,7 +52,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 	private boolean isAntiClockwise(Vertex v, Edge e) {
 		if (v instanceof ContainerVertex) {
 			ContainerVertex cv = (ContainerVertex) v;
-			if ((cv.getXOrdinal() == 0) && (cv.getYOrdinal() == 0)) {
+			if ((BigFraction.ZERO.equals(cv.getXOrdinal())) && (BigFraction.ZERO.equals(cv.getYOrdinal()))) {
 				return e.getDrawDirectionFrom(v) == Direction.DOWN;
 				
 				

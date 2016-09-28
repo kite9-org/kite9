@@ -476,17 +476,17 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	}
 
 	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double b1, double b2) {
-		if (cv.getXOrdinal() == BigFraction.ZERO) {
+		if (BigFraction.ZERO.equals(cv.getXOrdinal())) {
 			bx = bx.keepMin(b1, b2);
-		} else if (cv.getXOrdinal() == BigFraction.ONE) {
+		} else if (BigFraction.ONE.equals(cv.getXOrdinal())) {
 			bx = bx.keepMax(b1, b2);
 		} else {
 			bx = rh.getBoundsOf(cv.getRoutingInfo(), true);  // whole side, narrowed later
 		}
 		
-		if (cv.getYOrdinal() == BigFraction.ZERO) {
+		if (BigFraction.ZERO.equals(cv.getYOrdinal())) {
 			by = by.keepMin(b1, b2);
-		} else if (cv.getYOrdinal() == BigFraction.ONE) {
+		} else if (BigFraction.ONE.equals(cv.getYOrdinal())) {
 			by = by.keepMax(b1, b2);
 		} else {
 			by = rh.getBoundsOf(cv.getRoutingInfo(), false);  // whole side, narrowed later

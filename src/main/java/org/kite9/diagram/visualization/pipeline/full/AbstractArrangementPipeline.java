@@ -24,6 +24,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraphOrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertices.ContainerCornerVertexArranger;
+import org.kite9.diagram.visualization.orthogonalization.vertices.FanInVertexArranger;
 import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangementOrthogonalizationDecorator;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
@@ -64,7 +65,9 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	public Orthogonalizer createOrthogonalizer() {
 		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
 		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic, getDisplayer(),
- 				new ContainerCornerVertexArranger(getDisplayer()));
+ 				new FanInVertexArranger(getDisplayer()));
+				
+				//new ContainerCornerVertexArranger(getDisplayer()));
 		return orthogonalizer;
 	}
 

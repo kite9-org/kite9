@@ -18,16 +18,16 @@ public class CornerVertex extends AbstractAnchoringVertex {
 
 	
 	public HPos getLr() {
-		return a.lr;
+		return a.getLr();
 	}
 
 
 	public VPos getUd() {
-		return a.ud;
+		return a.getUd();
 	}
 
 	public DiagramElement getOriginalUnderlying() {
-		return a.de;
+		return a.getDe();
 	}
 
 

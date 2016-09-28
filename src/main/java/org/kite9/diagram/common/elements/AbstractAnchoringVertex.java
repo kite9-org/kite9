@@ -16,9 +16,21 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 	
 	protected static class Anchor {
 		
-		VPos ud;
-		HPos lr;
-		DiagramElement de;
+		private VPos ud;
+		public VPos getUd() {
+			return ud;
+		}
+
+		public HPos getLr() {
+			return lr;
+		}
+
+		public DiagramElement getDe() {
+			return de;
+		}
+
+		private HPos lr;
+		private DiagramElement de;
 
 		public Anchor(VPos ud, HPos lr, DiagramElement de) {
 			super();

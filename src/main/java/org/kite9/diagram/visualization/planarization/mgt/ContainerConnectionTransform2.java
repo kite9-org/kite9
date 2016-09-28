@@ -26,7 +26,7 @@ import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * Edges connecting to a container either connect to either the container start vertex or the container end vertex,
+ * Edges connecting to a container either connect to either a container corner vertex or
  * a container side vertex (or a vertex within the container == to be deprecated)
  * 
  * Where multiple edges connect to a container vertex, these need to be split out so that they connect 

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -294,25 +295,31 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				cv.getPerimeterVertices().get(0));
 	}
 
-	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i,
-			ContainerVertex fromv, ContainerVertex tov) {
+	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
 		Edge edge = getEdge(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i);
 		em.add(edge);			
 		getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 	}
 
-	private Edge getEdge(String l, Container c, ContainerVertex from, ContainerVertex to, int ax, int ay, int bx, int by, int i) {
-		if ((ay == LOWEST_ORD) && (by == LOWEST_ORD)) {
-			return new ContainerBorderEdge(from, to, l+"-top-"+i, c, Direction.RIGHT);
-		} else if ((ay == HIGHEST_ORD) && (by == HIGHEST_ORD)) {
-			return new ContainerBorderEdge(from, to, l+"-bottom-"+i, c, Direction.LEFT);
-		} else if ((ax == LOWEST_ORD) && (bx == LOWEST_ORD)) {
-			return new ContainerBorderEdge(from, to, l+"-left-"+i, c, Direction.UP);
-		} else if ((ax == HIGHEST_ORD) && (bx == HIGHEST_ORD)) {
-			return new ContainerBorderEdge(from, to, l+"-right-"+i, c, Direction.DOWN);
-		}
-	
-		throw new LogicException("Not dealt with this");
+	private Edge getEdge(String l, Container c, ContainerVertex from, ContainerVertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i) {
+		if (ax.equals(bx)) {
+			int comp = ay.compareTo(by);
+			if (comp == -1) {
+				return new ContainerBorderEdge(from, to, l+"-right-"+i, c, Direction.DOWN);
+			} else if (comp == 1) {
+				return new ContainerBorderEdge(from, to, l+"-left-"+i, c, Direction.UP);
+			}
+		} else if (ay.equals(by)) {
+			int comp = ax.compareTo(bx);
+			if (comp == -1) {
+				return new ContainerBorderEdge(from, to, l+"-top-"+i, c, Direction.RIGHT);
+			} else if (comp == 1) {
+				return new ContainerBorderEdge(from, to, l+"-bottom-"+i, c, Direction.LEFT);
+			}
+		} 
+		
+		
+		throw new LogicException("Not dealt with this ");
 	}
 
 	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {
@@ -360,7 +367,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private Vertex getVertexFor(DiagramElement c) {
 		if (c instanceof Container) {
-			return em.getContainerVertices((Container) c).getPerimeterVertices().getFirst();  // any one will do
+			return em.getContainerVertices((Container) c).getPerimeterVertices().get(0);  // any one will do
 		} else if (c instanceof Connected) {
 			return em.getVertex((Connected) c); 
 		} else {
