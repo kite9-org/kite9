@@ -293,7 +293,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	protected boolean canAddToQueue(LocatedEdgePath ep) {
 		if (maximumBoundedAxisDistance != null) {
 			double currentAxisTotal = ep.costing.minimumBoundedAxisDistance;
-			boolean out = currentAxisTotal <= maximumBoundedAxisDistance + TOLERANCE;
+			boolean out = currentAxisTotal <= maximumBoundedAxisDistance + tolerance;
 			if (!out) {
 				log.send("Exceeded maximumBoundedAxisDistance: "+currentAxisTotal+" (max="+maximumBoundedAxisDistance+")");
 			}

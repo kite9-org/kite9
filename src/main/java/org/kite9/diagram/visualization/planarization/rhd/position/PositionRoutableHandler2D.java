@@ -489,9 +489,9 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	}
 
 	@Override
-	public RoutingInfo narrow(RoutingInfo bounds, double vertexTrim) {
+	public RoutingInfo narrow(RoutingInfo bounds, double vertexTrimX, double vertexTrimY) {
 		BoundsBasedPositionRoutingInfo pri = (BoundsBasedPositionRoutingInfo) bounds;
-		return new BoundsBasedPositionRoutingInfo(narrow(pri.x, vertexTrim), narrow(pri.y, vertexTrim));
+		return new BoundsBasedPositionRoutingInfo(narrow(pri.x, vertexTrimX), narrow(pri.y, vertexTrimY));
 	}
 
 	private Bounds narrow(Bounds bbounds, double vertexTrim) {

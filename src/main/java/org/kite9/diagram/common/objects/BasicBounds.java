@@ -95,12 +95,18 @@ public class BasicBounds implements Bounds {
 
 	@Override
 	public Bounds keepMax(double lb, double ub) {
+		if ((lb == 0) && (ub == 0)) {
+			return this;
+		}
 		return new BasicBounds(this.max - ub, this.max - lb);
 	}
 
 
 	@Override
 	public Bounds keepMin(double lb, double ub) {
+		if ((lb == 0) && (ub == 0)) {
+			return this;
+		}
 		return new BasicBounds(this.min+lb ,this.min+ub);
 	}
 	

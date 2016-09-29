@@ -15,7 +15,6 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
-import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -45,7 +44,8 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		return false;
 	}
 
-	public static final Double TOLERANCE = RHDPlanarizationBuilder.CONTAINER_VERTEX_SIZE / 10000;
+	@Deprecated
+	protected final Double tolerance = 1e-20;
 
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -142,7 +142,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		}
 		
 		private boolean equalWithinTolerance(double a, double b) {
-			return Math.abs(a - b) < TOLERANCE;
+			return Math.abs(a - b) < tolerance;
 		}
 
 		@Override

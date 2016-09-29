@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 
@@ -117,5 +118,20 @@ public class Test8ContainersAndDirectedArrows extends AbstractFunctionalTest {
 
 	}
 
-	
+	@Test
+	public void test_8_7_ArrowToMultipleContainers() throws IOException {
+		Glyph one = new Glyph("one", "", "one", null, null);
+		Glyph two = new Glyph("two", "", "two", null, null);
+		Glyph three = new Glyph("three", "", "three", null, null);
+
+		Context con1 = new Context("b1", createList(one, two), true, null, Layout.RIGHT);
+		Context con2 = new Context("b2", createList(con1), true, null, null);
+		Context con3 = new Context("b2", createList(con2), true, null, null);
+		Context con4 = new Context("b2", createList(con3), true, null, null);
+
+		new Link(three, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
+
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(three, con4), null);
+		renderDiagram(d);
+	}
 }

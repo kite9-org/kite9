@@ -93,7 +93,7 @@ public interface RoutableHandler2D extends RoutableReader {
 	/**
 	 * Trims an existing bounds by a given amount
 	 */
-	public RoutingInfo narrow(RoutingInfo bounds, double vertexTrim);
+	public RoutingInfo narrow(RoutingInfo bounds, double vertexTrimX, double vertexTrimY);
 	
 
 }

@@ -45,6 +45,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.ConnectionManager
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnectionQueue;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
+import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos;
 import org.kite9.framework.logging.Kite9Log;
@@ -78,13 +79,17 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, Logable {
 
-	public static final double CONTAINER_VERTEX_SIZE = 1E-10; 
 
 	private Kite9Log log = new Kite9Log(this);
 
 	protected ElementMapper em;
 	protected GridPositioner gridHelp;
 	private RoutableHandler2D rh;
+	
+	// temp workspace
+	private double borderTrimAreaX = Double.MAX_VALUE; 
+	private double borderTrimAreaY = Double.MAX_VALUE; 
+	
 
 	public RHDPlanarizationBuilder(ElementMapper em, GridPositioner gridHelp) {
 		super();
@@ -281,13 +286,21 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			// sizing
 			RoutingInfo ri = lg.getAxis().getPosition(rh, false);
 			if (l != null) {
+				checkMinimumGridSizes(ri);
 				rh.setPlacedPosition(l, ri);
 			}
 			ensureContainerBoundsAreLargeEnough(ri, c);
 		}	
-	
 	}
 	
+	private void checkMinimumGridSizes(RoutingInfo ri) {
+		if (ri instanceof PositionRoutingInfo) {
+			PositionRoutingInfo pri = (PositionRoutingInfo) ri;
+			borderTrimAreaX = Math.min(borderTrimAreaX, pri.getWidth() /4d);
+			borderTrimAreaY = Math.min(borderTrimAreaY, pri.getHeight() /4d);
+		}
+	}
+
 	private void ensureContainerBoundsAreLargeEnough(RoutingInfo ri, Container c) {
 		Connected l;
 		while (c != null) {
@@ -311,20 +324,22 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		if (c instanceof Container) {
 			Container container = (Container) c;
 			
-			if (container.getContents().size() > 0) {
-				buildVertexListForContainerContents(out, container, sortedContainerContents);
-			}
 			
 			ContainerVertices cvs = em.getContainerVertices(container);
 			setContainerVertexPositions(before, container, after, cvs);
 			for (Vertex vertex : cvs.getPerimeterVertices()) {
 				out.add(vertex);
 			}
+			
+			if (container.getContents().size() > 0) {
+				buildVertexListForContainerContents(out, container, sortedContainerContents);
+			}
+
 		} else {
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			Vertex v = em.getVertex((Connected) c);
 			out.add(v);
-			bounds = rh.narrow(bounds, CONTAINER_VERTEX_SIZE);
+			bounds = rh.narrow(bounds, borderTrimAreaX, borderTrimAreaY);
 			v.setRoutingInfo(bounds);
 			setPlanarizationHints(c, bounds);
 		}
@@ -401,6 +416,17 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
+		
+		RoutingInfo bounds = rh.getPlacedPosition(c);
+		Bounds bx = rh.getBoundsOf(bounds, true);
+		Bounds by = rh.getBoundsOf(bounds, false);
+		int depth = em.getContainerDepth(c);
+		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
+		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
+		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
+		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
+	
+		
 		if (l != null) {
 			switch (l) {
 			case UP:
@@ -417,18 +443,19 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				addExtraContainerVertex(c, Direction.RIGHT, before, cvs);
 				addExtraContainerVertex(c, Direction.RIGHT, after, cvs);
 				break;			
+			case GRID:
+				// this makes sure we don't inset the vertices
+//				xs = 0;
+//				xe = 0;
+				
+				break;
+				
 			}
 		}
 		
-		RoutingInfo bounds = rh.getPlacedPosition(c);
-		Bounds bx = rh.getBoundsOf(bounds, true);
-		Bounds by = rh.getBoundsOf(bounds, false);
-		int depth = em.getContainerDepth(c);
-		double b1 = CONTAINER_VERTEX_SIZE - (CONTAINER_VERTEX_SIZE / (double) (depth + 1));
-		double b2 = CONTAINER_VERTEX_SIZE - (CONTAINER_VERTEX_SIZE / (double) (depth + 2));
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
-			setRouting(cv, bx, by, b1, b2);
+			setRouting(cv, bx, by, xs, xe, ys, ye);
 		}
 		setPlanarizationHints(c, bounds);
 	}
@@ -462,32 +489,32 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			case DOWN:
 				Bounds newX = x.narrow(rh.getBoundsOf(toBounds, true));
 				x = newX == BasicBounds.EMPTY_BOUNDS ? x: newX;
-				x = x.keepMid(CONTAINER_VERTEX_SIZE);
+				x = x.keepMid(borderTrimAreaX);
 				break;
 			case LEFT:
 			case RIGHT:
 				Bounds newY = y.narrow(rh.getBoundsOf(toBounds, false));
 				y = newY == BasicBounds.EMPTY_BOUNDS ? y : newY;
-				y = y.keepMid(CONTAINER_VERTEX_SIZE);
+				y = y.keepMid(borderTrimAreaY);
 				break;
 			}
 			cvNew.setRoutingInfo(rh.createRouting(x, y));
 		}
 	}
 
-	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double b1, double b2) {
+	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye) {
 		if (BigFraction.ZERO.equals(cv.getXOrdinal())) {
-			bx = bx.keepMin(b1, b2);
+			bx = bx.keepMin(xs, xe);
 		} else if (BigFraction.ONE.equals(cv.getXOrdinal())) {
-			bx = bx.keepMax(b1, b2);
+			bx = bx.keepMax(xs, xe);
 		} else {
 			bx = rh.getBoundsOf(cv.getRoutingInfo(), true);  // whole side, narrowed later
 		}
 		
 		if (BigFraction.ZERO.equals(cv.getYOrdinal())) {
-			by = by.keepMin(b1, b2);
+			by = by.keepMin(ys, ye);
 		} else if (BigFraction.ONE.equals(cv.getYOrdinal())) {
-			by = by.keepMax(b1, b2);
+			by = by.keepMax(ys, ye);
 		} else {
 			by = rh.getBoundsOf(cv.getRoutingInfo(), false);  // whole side, narrowed later
 		}
