@@ -443,13 +443,6 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				addExtraContainerVertex(c, Direction.RIGHT, before, cvs);
 				addExtraContainerVertex(c, Direction.RIGHT, after, cvs);
 				break;			
-			case GRID:
-				// this makes sure we don't inset the vertices
-//				xs = 0;
-//				xe = 0;
-				
-				break;
-				
 			}
 		}
 		

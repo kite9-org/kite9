@@ -128,14 +128,18 @@ public class ElementMapperImpl implements ElementMapper {
 
 	@Override
 	public int getContainerDepth(DiagramElement c) {
-		if (c.getParent()==null) {
+		DiagramElement parent = c.getParent();
+		if (parent==null) {
 			return 0;
 		} else {
 			Integer depth = containerDepths.get(c);
 			if (depth != null) {
 				return depth;
 			} else {
-				depth = getContainerDepth(c.getParent()) + 1;
+				// we don't count nested grids, because these containers are parts of the whole.
+				
+				Layout l = ((Container) parent).getLayout();
+				depth = getContainerDepth(parent) + ((l==Layout.GRID) ? 0 : 1);
 				containerDepths.put(c, depth);
 			}
 			return depth;
