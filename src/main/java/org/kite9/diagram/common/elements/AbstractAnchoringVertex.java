@@ -62,6 +62,10 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 				ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
 			}
 		}
+		
+		public String toString() {
+			return de.toString()+"-"+lr+"-"+ud; 
+		}
 	}
 
 	public AbstractAnchoringVertex(String id) {

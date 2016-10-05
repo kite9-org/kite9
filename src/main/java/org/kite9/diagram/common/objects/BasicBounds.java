@@ -3,6 +3,7 @@ package org.kite9.diagram.common.objects;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.framework.logging.LogicException;
 
 public class BasicBounds implements Bounds {
@@ -94,30 +95,41 @@ public class BasicBounds implements Bounds {
 
 
 	@Override
-	public Bounds keepMax(double lb, double ub) {
-		if ((lb == 0) && (ub == 0)) {
-			return this;
-		}
-		return new BasicBounds(this.max - ub, this.max - lb);
+	public Bounds keep(double buffer, double width, BigFraction atFraction) {
+		double span = max - min - (buffer * 2d);
+		double pos = atFraction.doubleValue() * span;
+		double lower = min + pos - (width / 2d) + buffer;
+		double upper = min + pos + (width / 2d) + buffer;
+		lower = Math.max(min+buffer, lower);
+		upper = Math.min(max-buffer, upper);
+		return new BasicBounds(lower, upper);
 	}
 
-
-	@Override
-	public Bounds keepMin(double lb, double ub) {
-		if ((lb == 0) && (ub == 0)) {
-			return this;
-		}
-		return new BasicBounds(this.min+lb ,this.min+ub);
-	}
-	
-
-	@Override
-	public Bounds keepMid(double w) {
-		double mid = (this.min + this.max) / 2d;
-		if ((mid <0) || (mid > 1)) {
-			return BasicBounds.EMPTY_BOUNDS;
-		}
-		return new BasicBounds(mid-(w/2),mid+(w/2));
-	}
+//	@Override
+//	public Bounds keepMax(double lb, double ub) {
+//		if ((lb == 0) && (ub == 0)) {
+//			return this;
+//		}
+//		return new BasicBounds(this.max - ub, this.max - lb);
+//	}
+//
+//
+//	@Override
+//	public Bounds keepMin(double lb, double ub) {
+//		if ((lb == 0) && (ub == 0)) {
+//			return this;
+//		}
+//		return new BasicBounds(this.min+lb ,this.min+ub);
+//	}
+//	
+//
+//	@Override
+//	public Bounds keepMid(double w) {
+//		double mid = (this.min + this.max) / 2d;
+//		if ((mid <0) || (mid > 1)) {
+//			return BasicBounds.EMPTY_BOUNDS;
+//		}
+//		return new BasicBounds(mid-(w/2),mid+(w/2));
+//	}
 
 }

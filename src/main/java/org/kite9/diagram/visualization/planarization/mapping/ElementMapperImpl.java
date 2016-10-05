@@ -39,8 +39,9 @@ public class ElementMapperImpl implements ElementMapper {
 			if (hasParentGridLayout(c)) {
 				ContainerVertices parentCV = getContainerVertices((Container)c.getParent());
 				OPair<BigFraction> xspan = gp.getGridXPosition(c);
-				OPair<BigFraction> yspan = gp.getGridXPosition(c);
-				return new SubwindowContainerVertices(c, xspan, yspan, parentCV);
+				OPair<BigFraction> yspan = gp.getGridYPosition(c);
+				v = new SubwindowContainerVertices(c, xspan, yspan, parentCV);
+				containers.put(c, v);
 			} else {
 				v = new IndependentContainerVertices(c);
 				containers.put(c, v);

@@ -323,13 +323,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
 		if (c instanceof Container) {
 			Container container = (Container) c;
-			
-			
 			ContainerVertices cvs = em.getContainerVertices(container);
-			setContainerVertexPositions(before, container, after, cvs);
-			for (Vertex vertex : cvs.getPerimeterVertices()) {
-				out.add(vertex);
-			}
+			
+			setContainerVertexPositions(before, container, after, cvs, out);
 			
 			if (container.getContents().size() > 0) {
 				buildVertexListForContainerContents(out, container, sortedContainerContents);
@@ -412,20 +408,12 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 //		rh.setHints(hints, bounds);
 	}
 	
-	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs) {
+	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
 		
-		RoutingInfo bounds = rh.getPlacedPosition(c);
-		Bounds bx = rh.getBoundsOf(bounds, true);
-		Bounds by = rh.getBoundsOf(bounds, false);
-		int depth = em.getContainerDepth(c);
-		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
-		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
-		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
-		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
-	
+		RoutingInfo bounds =  rh.getPlacedPosition(c);
 		
 		if (l != null) {
 			switch (l) {
@@ -442,13 +430,28 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				expandContainerSpace(c, within, false);
 				addExtraContainerVertex(c, Direction.RIGHT, before, cvs);
 				addExtraContainerVertex(c, Direction.RIGHT, after, cvs);
-				break;			
+				break;	
+			
+			case GRID:
+				Container containerWithNonGridParent = c;
+				while (containerWithNonGridParent.getContainer().getLayout()==Layout.GRID) {
+					containerWithNonGridParent = containerWithNonGridParent.getContainer();
+				}
+				bounds = rh.getPlacedPosition(containerWithNonGridParent);
+				break;
 			}
 		}
 		
+		Bounds bx = rh.getBoundsOf(bounds, true);
+		Bounds by = rh.getBoundsOf(bounds, false);
+		int depth = em.getContainerDepth(c);
+		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
+		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
+		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
+		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
-			setRouting(cv, bx, by, xs, xe, ys, ye);
+			setRouting(cv, bx, by, xs, xe, ys, ye, out);
 		}
 		setPlanarizationHints(c, bounds);
 	}
@@ -482,36 +485,27 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			case DOWN:
 				Bounds newX = x.narrow(rh.getBoundsOf(toBounds, true));
 				x = newX == BasicBounds.EMPTY_BOUNDS ? x: newX;
-				x = x.keepMid(borderTrimAreaX);
+				x = x.keep(0, borderTrimAreaX, BigFraction.ONE_HALF);
 				break;
 			case LEFT:
 			case RIGHT:
 				Bounds newY = y.narrow(rh.getBoundsOf(toBounds, false));
 				y = newY == BasicBounds.EMPTY_BOUNDS ? y : newY;
-				y = y.keepMid(borderTrimAreaY);
+				y = y.keep(0, borderTrimAreaY, BigFraction.ONE_HALF);
 				break;
 			}
 			cvNew.setRoutingInfo(rh.createRouting(x, y));
 		}
 	}
 
-	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye) {
-		if (BigFraction.ZERO.equals(cv.getXOrdinal())) {
-			bx = bx.keepMin(xs, xe);
-		} else if (BigFraction.ONE.equals(cv.getXOrdinal())) {
-			bx = bx.keepMax(xs, xe);
-		} else {
-			bx = rh.getBoundsOf(cv.getRoutingInfo(), true);  // whole side, narrowed later
+	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out) {
+		if (cv.getRoutingInfo() == null) {
+			bx = bx.keep(xs, xe - xs, cv.getXOrdinal());
+			by = by.keep(ys, ye - ys, cv.getYOrdinal());
+			cv.setRoutingInfo(rh.createRouting(bx,by));
+			out.add(cv);
+			log.send("Setting routing info: "+cv+" "+bx+" "+by);
 		}
-		
-		if (BigFraction.ZERO.equals(cv.getYOrdinal())) {
-			by = by.keepMin(ys, ye);
-		} else if (BigFraction.ONE.equals(cv.getYOrdinal())) {
-			by = by.keepMax(ys, ye);
-		} else {
-			by = rh.getBoundsOf(cv.getRoutingInfo(), false);  // whole side, narrowed later
-		}
-		cv.setRoutingInfo(rh.createRouting(bx,by));
 	}
 
 	/**

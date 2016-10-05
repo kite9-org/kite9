@@ -1,5 +1,7 @@
 package org.kite9.diagram.common.objects;
 
+import org.apache.commons.math.fraction.BigFraction;
+
 public interface Bounds extends Comparable<Bounds> {
 
 	public abstract double getDistanceMin();
@@ -18,10 +20,12 @@ public interface Bounds extends Comparable<Bounds> {
 	 */
 	public Bounds narrow(Bounds other);
 	
-	public Bounds keepMax(double lb, double ub);
+	public Bounds keep(double buffer, double width, BigFraction atFraction);
 	
-	public Bounds keepMin(double ub, double lb);
-	
-	public Bounds keepMid(double w);
+//	public Bounds keepMax(double lb, double ub);
+//	
+//	public Bounds keepMin(double ub, double lb);
+//	
+//	public Bounds keepMid(double w);
 
 }

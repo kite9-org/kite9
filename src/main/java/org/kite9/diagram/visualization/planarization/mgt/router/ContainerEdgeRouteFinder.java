@@ -10,17 +10,18 @@ import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 
 public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 
 	public ContainerEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, Edge e) {
 		super(p, rh, e.getTo().getRoutingInfo(), getExpensiveAxis(e), getBoundedAxis(e), e);
-		DiagramElement container = e.getOriginalUnderlying();
+		DiagramElement container = ((ContainerBorderEdge)e).getContainers().iterator().next();
 		this.epicentre = rh.getPlacedPosition(container);
 		this.to = e.getTo();
 		this.entryDirection = e.getDrawDirection();
-		this.current = (Container) e.getOriginalUnderlying();
+		this.current = (Container) container;
 		this.parents = new UnorderedSet<Container>();
 		while (container.getParent() != null) {
 			container = container.getContainer();

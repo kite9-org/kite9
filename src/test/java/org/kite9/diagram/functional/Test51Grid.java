@@ -34,7 +34,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		ctx.setStyle("layout: grid; grid-columns: 2;"); 
 		
 		
-		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test

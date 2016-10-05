@@ -32,6 +32,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -297,29 +298,56 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
 		Edge edge = getEdge(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i);
-		em.add(edge);			
-		getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+		if (edge != null) {
+			em.add(edge);			
+			getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+		}
 	}
 
 	private Edge getEdge(String l, Container c, ContainerVertex from, ContainerVertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i) {
+		Direction d = null;
+		
 		if (ax.equals(bx)) {
 			int comp = ay.compareTo(by);
 			if (comp == -1) {
-				return new ContainerBorderEdge(from, to, l+"-right-"+i, c, Direction.DOWN);
+				d = Direction.DOWN;
 			} else if (comp == 1) {
-				return new ContainerBorderEdge(from, to, l+"-left-"+i, c, Direction.UP);
+				d = Direction.UP;
 			}
 		} else if (ay.equals(by)) {
 			int comp = ax.compareTo(bx);
 			if (comp == -1) {
-				return new ContainerBorderEdge(from, to, l+"-top-"+i, c, Direction.RIGHT);
+				d = Direction.RIGHT;
 			} else if (comp == 1) {
-				return new ContainerBorderEdge(from, to, l+"-bottom-"+i, c, Direction.LEFT);
+				d = Direction.LEFT;
 			}
 		} 
 		
+		if (d != null) {
+			Edge e = getLeaverInDirection(from, d);
+			if (e != null) {
+				if (e instanceof ContainerBorderEdge) {
+					((ContainerBorderEdge)e).addContainer(c);
+					return null;
+				} else {
+					throw new Kite9ProcessingException("What is this?");
+				}
+			} else {
+				return new ContainerBorderEdge(from, to, l+"-right-"+i, c, Direction.DOWN);
+			} 
+		}
 		
 		throw new LogicException("Not dealt with this ");
+	}
+
+	private Edge getLeaverInDirection(ContainerVertex from, Direction d) {
+		for (Edge e : from.getEdges()) {
+			if (e.getDrawDirectionFrom(from) == d) {
+				return e;
+			}
+		}
+		
+		return null;
 	}
 
 	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {

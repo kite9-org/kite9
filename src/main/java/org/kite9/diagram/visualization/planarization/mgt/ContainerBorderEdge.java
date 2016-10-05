@@ -1,5 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
@@ -20,27 +23,28 @@ import org.kite9.diagram.position.Direction;
  */
 public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 
-	private static final long serialVersionUID = -7522780988891187580L;
-
-	Container container;
+	List<Container> containers = new ArrayList<>(2);
 	String label;
 	
 	public ContainerBorderEdge(Vertex from, Vertex to, String label, Container c, Direction d) {
 		super(from, to, null, null, null, null, null);
-		this.container = c;
+		this.containers.add(c);
 		this.label = label;
 		this.drawDirection = d;
 	}
 	
-	private ContainerBorderEdge(Vertex from, Vertex toIntroduce, String string, Container container2, Direction d, boolean reversed) {
-		this(from, toIntroduce, string, container2, d);
-		this.reversed = reversed;
-	}
-
 	public Container getOriginalUnderlying() {
-		return container;
+		return null; // container;
+	}
+	
+	public void addContainer(Container c) {
+		this.containers.add(c);
 	}
 
+	public List<Container> getContainers() {
+		return containers;
+	}
+	
 	@Override
 	public String toString() {
 		return label;
