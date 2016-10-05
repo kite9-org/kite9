@@ -14,6 +14,8 @@ import org.kite9.diagram.position.RouteRenderingInformationImpl;
 /**
  * This connection is used with a {@link ContainerLayoutEdge} and is used to create a layout between
  * two elements of a container.  
+ * 
+ * Also, with {@link ContainerBorderEdge}, when two containers border each other.
  */
 public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> implements DiagramElement {
 	

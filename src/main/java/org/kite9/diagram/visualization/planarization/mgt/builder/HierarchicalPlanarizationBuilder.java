@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -271,6 +272,13 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			}
 		}
 		
+		Layout l = outer.getLayout();
+		
+		if (l == Layout.GRID) {
+			// we don't need to layout the grid, just the contents.
+			return;
+		}
+		
 		ContainerVertices cv = em.getContainerVertices(outer);
 		String originalLabel = outer.getID();
 				
@@ -280,7 +288,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 		int i = 0;
 		ContainerVertex fromv, tov = null;
-		Iterator<ContainerVertex> iterator = cv.getPerimeterVertices().iterator();
+		ArrayList<ContainerVertex> perimeterVertices = cv.getPerimeterVertices();
+		Iterator<ContainerVertex> iterator = perimeterVertices.iterator();
 		while (iterator.hasNext()) {
 			fromv = tov;
 			tov = iterator.next();
@@ -292,8 +301,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		
 		// join back into a circle
 		addEdgeBetween(p, outer, originalLabel, em, i, 
-				cv.getPerimeterVertices().get(cv.getPerimeterVertices().size()-1), 
-				cv.getPerimeterVertices().get(0));
+				perimeterVertices.get(perimeterVertices.size()-1), 
+				perimeterVertices.get(0));
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
@@ -326,14 +335,13 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		if (d != null) {
 			Edge e = getLeaverInDirection(from, d);
 			if (e != null) {
-				if (e instanceof ContainerBorderEdge) {
-					((ContainerBorderEdge)e).addContainer(c);
+				if ((e instanceof ContainerBorderEdge) && ((ContainerBorderEdge)e).getContainers().contains(c)) {
 					return null;
 				} else {
 					throw new Kite9ProcessingException("What is this?");
 				}
 			} else {
-				return new ContainerBorderEdge(from, to, l+"-right-"+i, c, Direction.DOWN);
+				return new ContainerBorderEdge(from, to, l+d+i, d);
 			} 
 		}
 		

@@ -21,10 +21,10 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_1_SimpleGrid() throws IOException {
-		Context tl = new Context("tl", null, true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context("tr", null, true,  new TextLine("Top Right"), null);
-		Context bl = new Context("bl", null, true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", null, true,  new TextLine("Bottom Right"), null);
+		Context tl = new Context("tl", null, true,  null, null);
+		Context tr = new Context("tr", null, true,  null, null);
+		Context bl = new Context("bl", null, true,  null, null);
+		Context br = new Context("br", null, true,  null, null);
 		
 		tr.setStyle("occupies-x: 1; occupies-y: 0;");
 		bl.setStyle("occupies-x: 0; occupies-y: 1 1;");
