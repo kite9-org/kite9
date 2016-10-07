@@ -75,18 +75,18 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_3_GridWithMissingBits() throws IOException {
-		Context tl = new Context(null, true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context(null, true,  new TextLine("Top Right"), null);
-		Context br = new Context(null, true,  new TextLine("Bottom Right"), null);
+		Context tl = new Context("tl", null, true,  new TextLine("Top \n Left"), null);
+		Context tr = new Context("tr", null, true,  new TextLine("Top Right"), null);
+		Context br = new Context("br", null, true,  new TextLine("Bottom Right"), null);
 		tl.setStyle("occupies-x: 0; occupies-y: 0;");
 		tr.setStyle("occupies-x: 1; occupies-y: 0;");
 		br.setStyle("occupies-x: 1; occupies-y: 1;");
 		
-		Context ctx = new Context(Arrays.asList(tl, tr, br), true, null, Layout.GRID);
+		Context ctx = new Context("inner", Arrays.asList(tl, tr, br), true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;"); 
 		
 		
-		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 

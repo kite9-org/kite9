@@ -1,11 +1,10 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.Edge;
@@ -58,61 +57,61 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		for (Vertex v : ((MGTPlanarization) pln).getVertexOrder()) {
 			if ((v instanceof ContainerVertex) && (sideOrd((ContainerVertex)v)) && (v.getEdgeCount() > 3)) {
 				Direction edgeDirectionToSplit = getDirectionForSideVertex((ContainerVertex)v);
-				Direction startContainerEdgeDirection = Direction.rotateAntiClockwise(edgeDirectionToSplit);
-				
-				number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (ContainerVertex) v, pln, number);
-				
+				if (edgeDirectionToSplit != null) {
+					Direction startContainerEdgeDirection = Direction.rotateAntiClockwise(edgeDirectionToSplit);
+					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (ContainerVertex) v, pln, number);
+				}
 				
 			} else if ((v instanceof ContainerVertex) && (v.getEdgeCount() > 2)) {
 				ContainerVertex cv = (ContainerVertex) v;
 								
-				if ((cv.getXOrdinal() == LOWEST_ORD) && (cornerOrd(cv.getYOrdinal()))) {
-					number = splitEdgesGoing(Direction.LEFT, cv.getYOrdinal()==LOWEST_ORD ? Direction.DOWN : Direction.UP, 
-							cv.getYOrdinal()==LOWEST_ORD, cv, pln, number);
+				if ((cv.getXOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getYOrdinal()))) {
+					number = splitEdgesGoing(Direction.LEFT, cv.getYOrdinal()==BigFraction.ZERO ? Direction.DOWN : Direction.UP, 
+							cv.getYOrdinal()==BigFraction.ZERO, cv, pln, number);
 				}
 				
-				if ((cv.getXOrdinal() == HIGHEST_ORD) && (cornerOrd(cv.getYOrdinal()))) {
-					number = splitEdgesGoing(Direction.RIGHT, cv.getYOrdinal()==LOWEST_ORD ? Direction.DOWN : Direction.UP, 
-							cv.getYOrdinal()==HIGHEST_ORD, cv, pln, number);
+				if ((cv.getXOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getYOrdinal()))) {
+					number = splitEdgesGoing(Direction.RIGHT, cv.getYOrdinal()==BigFraction.ZERO ? Direction.DOWN : Direction.UP, 
+							cv.getYOrdinal()==BigFraction.ONE, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == LOWEST_ORD) && (cornerOrd(cv.getXOrdinal()))) {
-					number = splitEdgesGoing(Direction.UP, cv.getXOrdinal() == LOWEST_ORD ? Direction.RIGHT : Direction.LEFT, 
-							cv.getXOrdinal() == HIGHEST_ORD, cv, pln, number);
+				if ((cv.getYOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getXOrdinal()))) {
+					number = splitEdgesGoing(Direction.UP, cv.getXOrdinal() == BigFraction.ZERO ? Direction.RIGHT : Direction.LEFT, 
+							cv.getXOrdinal() == BigFraction.ONE, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == HIGHEST_ORD) && (cornerOrd(cv.getXOrdinal()))) {
-					number = splitEdgesGoing(Direction.DOWN, cv.getXOrdinal() == LOWEST_ORD ? Direction.RIGHT : Direction.LEFT, 
-							cv.getXOrdinal() == LOWEST_ORD, cv, pln, number);
+				if ((cv.getYOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getXOrdinal()))) {
+					number = splitEdgesGoing(Direction.DOWN, cv.getXOrdinal() == BigFraction.ZERO ? Direction.RIGHT : Direction.LEFT, 
+							cv.getXOrdinal() == BigFraction.ZERO, cv, pln, number);
 				}
 			}
 		}
 	}
 
 	private Direction getDirectionForSideVertex(ContainerVertex v) {
-		int xOrd = v.getXOrdinal();
-		if (xOrd == ContainerVertex.LOWEST_ORD) {
+		BigFraction xOrd = v.getXOrdinal();
+		if (xOrd == BigFraction.ZERO) {
 			return Direction.LEFT;
-		} else if (xOrd == HIGHEST_ORD) {
+		} else if (xOrd == BigFraction.ONE) {
 			return Direction.RIGHT;
 		}
 		
-		int yOrd = v.getYOrdinal();
-		if (yOrd == ContainerVertex.LOWEST_ORD) {
+		BigFraction yOrd = v.getYOrdinal();
+		if (yOrd == BigFraction.ZERO) {
 			return Direction.UP;
-		} else if (yOrd == HIGHEST_ORD) {
+		} else if (yOrd == BigFraction.ONE) {
 			return Direction.DOWN;
 		}
 		
-		throw new LogicException("Was expecting a Vertex Container on a side: "+v);
+		return null; 	// container vertex embedded within a grid
 	}
 
 	private boolean sideOrd(ContainerVertex v) {
 		return (!cornerOrd(v.getXOrdinal())) || (!cornerOrd(v.getYOrdinal()));
 	}
 
-	private boolean cornerOrd(int ord) {
-		return (ord == HIGHEST_ORD) || (ord == LOWEST_ORD);
+	private boolean cornerOrd(BigFraction ord) {
+		return (ord == BigFraction.ZERO) || (ord == BigFraction.ONE);
 	}
 
 	private int splitEdgesGoing(Direction edgeDirectionToSplit, Direction startContainerEdgeDirection, boolean turnClockwise, ContainerVertex v, Planarization pln, int n) {

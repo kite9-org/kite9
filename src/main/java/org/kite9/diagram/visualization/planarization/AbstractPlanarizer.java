@@ -115,7 +115,7 @@ public abstract class AbstractPlanarizer implements Logable {
 		out.add(new ExcessVertexRemovalTransform());
 		out.add(new ContainerConnectionTransform1(getElementMapper()));
 		out.add(new LayoutSimplificationTransform());
-//		out.add(new ContainerConnectionTransform2(getElementMapper()));
+		out.add(new ContainerConnectionTransform2(getElementMapper()));
 		out.add(new OuterFaceIdentificationTransform());
 		return out;
 	}

@@ -38,6 +38,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.planarization.grid.GridInterfaceDiagramElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -370,34 +371,10 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			Vertex dTo = d.getTo();
 
 			if (de instanceof Container) {
-				Label l = ((Container) de).getLabel();
-				if ((l != null) && (l.hasContent()) && ((Container)de).isBordered()) {
-					Set<Dart> lowest = lowestDartsInContainer.get(l);
-					Integer lowestPos = lowestDartsInContainerLevel.get(l);
-					if (lowest == null) {
-						lowest = new DetHashSet<Dart>();
-						lowestDartsInContainer.put(l, lowest);
-						lowestPos = Integer.MIN_VALUE;
-					}
-
-					Slideable s1 = yo.getVertexToSlidableMap().get(dFrom);
-					Slideable s2 = yo.getVertexToSlidableMap().get(dTo);
-					if (s2 == s1) {
-						// we have a horizontal slideable
-						Integer pos = s1.getPositionalOrder();
-						if ((lowestPos == null) || (pos > lowestPos)) {
-							lowest.clear();
-							lowest.add(d);
-							lowestDartsInContainerLevel.put(l, pos);
-						} else if (pos == lowestPos) {
-							lowest.add(d);
-						}
-					}
-					RenderingInformation rri = (RenderingInformation) l.getRenderingInformation();
-					rri.setRendered(true);
-				} else if (l != null) {
-					RenderingInformation rri = (RenderingInformation) l.getRenderingInformation();
-					rri.setRendered(false);
+				mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, de, dFrom, dTo);
+			} else if (de instanceof GridInterfaceDiagramElement) {
+				for (Container co : ((GridInterfaceDiagramElement) de).getContainers()) {
+					mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
 				}
 			}
 		}
@@ -418,6 +395,39 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			placeLabel(c, xo, yo, entry.getKey(), possibles, true);
 		}
 
+	}
+
+	private void mapDartToContainer(SegmentSlackOptimisation yo, Map<Label, Set<Dart>> lowestDartsInContainer, Map<Label, Integer> lowestDartsInContainerLevel, Dart d, Object de, Vertex dFrom,
+			Vertex dTo) {
+		Label l = ((Container) de).getLabel();
+		if ((l != null) && (l.hasContent()) && ((Container)de).isBordered()) {
+			Set<Dart> lowest = lowestDartsInContainer.get(l);
+			Integer lowestPos = lowestDartsInContainerLevel.get(l);
+			if (lowest == null) {
+				lowest = new DetHashSet<Dart>();
+				lowestDartsInContainer.put(l, lowest);
+				lowestPos = Integer.MIN_VALUE;
+			}
+
+			Slideable s1 = yo.getVertexToSlidableMap().get(dFrom);
+			Slideable s2 = yo.getVertexToSlidableMap().get(dTo);
+			if (s2 == s1) {
+				// we have a horizontal slideable
+				Integer pos = s1.getPositionalOrder();
+				if ((lowestPos == null) || (pos > lowestPos)) {
+					lowest.clear();
+					lowest.add(d);
+					lowestDartsInContainerLevel.put(l, pos);
+				} else if (pos == lowestPos) {
+					lowest.add(d);
+				}
+			}
+			RenderingInformation rri = (RenderingInformation) l.getRenderingInformation();
+			rri.setRendered(true);
+		} else if (l != null) {
+			RenderingInformation rri = (RenderingInformation) l.getRenderingInformation();
+			rri.setRendered(false);
+		}
 	}
 
 	static class End {

@@ -1,22 +1,17 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
-import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.AbstractDiagramElement;
+import org.kite9.diagram.visualization.planarization.grid.GridInterfaceDiagramElement;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -34,55 +29,6 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 
-	static class ContainerInterfaceDiagramElement extends AbstractDiagramElement {
-		
-		private List<Container> containers;
-		private String id; 
-		
-		public ContainerInterfaceDiagramElement(Container a, Container b) {
-			this.containers = Arrays.asList(a, b);
-			this.id = a.getID()+"-|-"+b.getID();
-		}
-
-		@Override
-		public String getID() {
-			return id;
-		}
-
-		@Override
-		public RenderingInformation getRenderingInformation() {
-			return null;
-			//throw new Kite9ProcessingException();
-		}
-
-		@Override
-		public Value getCSSStyleProperty(String prop) {
-			return null;
-		}
-
-		@Override
-		public void setRenderingInformation(RenderingInformation ri) {
-			throw new Kite9ProcessingException();
-		}
-
-		@Override
-		public HintMap getPositioningHints() {
-			return null;
-		}
-
-		@Override
-		public String getShapeName() {
-			return null;
-		}
-
-		public List<Container> getContainers() {
-			return containers;
-		}
-
-
-	}
-	
-	
 	DiagramElement cide;
 	String label;
 	
@@ -108,7 +54,7 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 			return both.iterator().next();
 		} else if (both.size() == 2) {
 			Iterator<DiagramElement> it = both.iterator();
-			return new ContainerInterfaceDiagramElement((Container) it.next(), (Container) it.next());
+			return new GridInterfaceDiagramElement((Container) it.next(), (Container) it.next());
 		} else {
 			throw new Kite9ProcessingException("Found border of too many/few containers: "+both);
 		}
@@ -123,7 +69,7 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 		if (cide instanceof Container) {
 			return Collections.singleton((Container) cide);
 		} else {
-			return ((ContainerInterfaceDiagramElement)cide).containers;
+			return ((GridInterfaceDiagramElement)cide).getContainers();
 		}
 	}
  	

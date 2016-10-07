@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
@@ -19,23 +16,23 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
  */
 public class ConnectionEdge extends AbstractPlanarizationEdge {
 
-	Collection<Connection> underlying;
+	Connection underlying;
 
 	public ConnectionEdge(Vertex from, Vertex to, Connection underlying, Direction d) {
 		super(from, to, underlying.getFromDecoration(), underlying.getFromLabel(), underlying.getToDecoration(),
 				underlying.getToLabel(), d);
-		this.underlying = Collections.singleton(underlying);
+		this.underlying = underlying;
 	}
 	
 	private ConnectionEdge(Vertex from, Vertex to, Connection underlying, Object fromDecoration, 
 			Label fromLabel, Object toDecoration, Label toLabel, Direction d, boolean reversed, boolean straight) {
 		super(from, to, fromDecoration, fromLabel, toDecoration, toLabel, d);
-		this.underlying = Collections.singleton(underlying);
+		this.underlying = underlying;
 		this.reversed = reversed;
 		this.straight = straight;
 	}
 
-	public Collection<Connection> getOriginalUnderlying() {
+	public Connection getOriginalUnderlying() {
 		return underlying;
 	}
 

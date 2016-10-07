@@ -124,6 +124,8 @@ public class ShapeStyle extends SVGAttributedStyle {
 			} else {
 				throw new UnsupportedOperationException("Can only do pixels so far");
 			}
+		} else if (v == null) {
+			return 0;
 		} else {
 			throw new UnsupportedOperationException("Not a float value: "+v);
 		}

@@ -347,6 +347,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {
 		boolean layingOut = container.getLayout() != null;
 		List<DiagramElement> contents = container.getContents();
+		
 		if (layingOut) {
 			// sort the contents so that we can connect the right elements together
 			contents = getContainerContentsHolder(container.getLayout(), contents);

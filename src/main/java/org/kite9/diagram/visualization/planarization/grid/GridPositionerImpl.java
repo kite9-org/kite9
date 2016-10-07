@@ -94,10 +94,11 @@ public class GridPositionerImpl implements GridPositioner {
 				if (ys[y] == null) {
 					if (!overlaps.isEmpty()) {
 						ys[y] = overlaps.remove(overlaps.size()-1);
-						storeCoordinates(ys[y], xr, xr, y, y, size);
 					} else {
 						ys[y] = new GridTemporaryConnected(ord, xr, y);
+						modifyContainerContents(ord, ys[y]);
 					}
+					storeCoordinates(ys[y], xr, xr, y, y, size);
 				}
 			}
 		
@@ -107,6 +108,15 @@ public class GridPositionerImpl implements GridPositioner {
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
 		placed.put(ord, done);
 		return done;
+	}
+
+
+	/**
+	 * Deprecated, because we wanted to have immutable containers.
+	 */
+	@Deprecated
+	private void modifyContainerContents(Container ord, DiagramElement d) {
+		ord.getContents().add(d);
 	}
 
 	
