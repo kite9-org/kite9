@@ -49,7 +49,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Context[4];
 			for (int j = 0; j < elems[i].length; j++) {
-				elems[i][j] = new Context("c" + i + "-" + j, null, true, null, null);
+				elems[i][j] = new Context("c" + i + "-" + j, null, true,  null , null);
 				elems[i][j].setStyle("occupies: "+i+" "+i+" "+j+" "+j+";");
 				if (addLinks) {
 					if (j > 0) {

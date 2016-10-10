@@ -9,6 +9,7 @@ import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 
 /**
@@ -59,6 +60,12 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 				out = f;
 				depth = currentDepth;
 			}
+		}
+		
+		DiagramElement parent = out.getParent();
+		while ((parent != null) && (((Container)parent).getLayout() == Layout.GRID)) {
+			out = parent;
+			parent = out.getParent();
 		}
 		
 		return (Container) out;
