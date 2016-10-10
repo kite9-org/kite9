@@ -1,8 +1,6 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Container;
@@ -11,9 +9,7 @@ import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.visualization.planarization.grid.GridInterfaceDiagramElement;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * This edge is used for the surrounding of a container.
@@ -29,48 +25,66 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 
-	DiagramElement cide;
+	Container cide;
+	Collection<DiagramElement> containers;
 	String label;
 	
-	public ContainerBorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide) {
+	public ContainerBorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Container cide, Collection<DiagramElement> containers) {
 		super(from, to, null, null, null, null, null);
 		this.cide = cide;
 		this.label = label;
 		this.drawDirection = d;
 		this.reversed = reversed;
+		this.containers = containers;
 	}
 	
 	public ContainerBorderEdge(ContainerVertex from, ContainerVertex to, String label, Direction d) {
-		this(from, to, label, d, false, createContainerInterfaceElement(from, to));
-		this.label = label;
-		this.drawDirection = d;
+		this(from, to, label, d, false, getOuterContainer(from, to), createContainerCollection((ContainerVertex) from, (ContainerVertex) to));
 	}
 	
-	private static DiagramElement createContainerInterfaceElement(ContainerVertex from, ContainerVertex to) {
+	private static Container getOuterContainer(ContainerVertex from, ContainerVertex to) {
+		int depth = Integer.MAX_VALUE;
+		DiagramElement out = null;
+		for (DiagramElement f : from.getAllAnchoredContainers()) {
+			int currentDepth = getDepth(f);
+			if (currentDepth < depth ) {
+				out = f;
+				depth = currentDepth;
+			}
+		}
+		
+		for (DiagramElement f : to.getAllAnchoredContainers()) {
+			int currentDepth = getDepth(f);
+			if (currentDepth < depth ) {
+				out = f;
+				depth = currentDepth;
+			}
+		}
+		
+		return (Container) out;
+	}
+
+	private static int getDepth(DiagramElement f) {
+		DiagramElement parent = f.getParent();
+		if (parent==null) {
+			return 0;
+		} else {
+			return 1 + getDepth(parent);
+		}
+	}
+
+	private static Collection<DiagramElement> createContainerCollection(ContainerVertex from, ContainerVertex to) {
 		Set<DiagramElement> both = from.getAllAnchoredContainers();
 		both.retainAll(to.getAllAnchoredContainers());
-		
-		if (both.size() == 1) {
-			return both.iterator().next();
-		} else if (both.size() == 2) {
-			Iterator<DiagramElement> it = both.iterator();
-			return new GridInterfaceDiagramElement((Container) it.next(), (Container) it.next());
-		} else {
-			throw new Kite9ProcessingException("Found border of too many/few containers: "+both);
-		}
+		return both;
 	}
 
 	public DiagramElement getOriginalUnderlying() {
 		return cide;
 	}
 	
-	@Deprecated
-	public Collection<Container> getContainers() {
-		if (cide instanceof Container) {
-			return Collections.singleton((Container) cide);
-		} else {
-			return ((GridInterfaceDiagramElement)cide).getContainers();
-		}
+	public Collection<DiagramElement> getContainers() {
+		return containers;
 	}
  	
 	@Override
@@ -99,8 +113,8 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new ContainerBorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), cide);
-		out[1] = new ContainerBorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), cide);
+		out[0] = new ContainerBorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), cide, containers);
+		out[1] = new ContainerBorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), cide, containers);
 		return out;
 	}
 

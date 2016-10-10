@@ -38,7 +38,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.planarization.grid.GridInterfaceDiagramElement;
+import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -366,14 +366,11 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		Map<Label, Integer> lowestDartsInContainerLevel = new HashMap<Label, Integer>();
 
 		for (Dart d : c.getOrthogonalization().getAllDarts()) {
-			Object de = Tools.getUltimateElement(d);
-			Vertex dFrom = d.getFrom();
-			Vertex dTo = d.getTo();
-
-			if (de instanceof Container) {
-				mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, de, dFrom, dTo);
-			} else if (de instanceof GridInterfaceDiagramElement) {
-				for (Container co : ((GridInterfaceDiagramElement) de).getContainers()) {
+			Object underlying = d.getUnderlying();
+			if (underlying instanceof ContainerBorderEdge) {
+				Vertex dFrom = d.getFrom();
+				Vertex dTo = d.getTo();
+				for (DiagramElement co : ((ContainerBorderEdge) underlying).getContainers()) {
 					mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
 				}
 			}

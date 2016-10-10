@@ -40,7 +40,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 	@Test
 	public void test_51_2_SupergridMockup() throws IOException {
 		Context ctx = createSupergrid(true);
-		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	private Context createSupergrid(boolean addLinks) {
@@ -69,7 +69,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		elems[1][3].appendChild(new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null));
 		
 		
-		Context ctx = new Context(contents, true, null, null);
+		Context ctx = new Context("outer", contents, true, null, null);
 		return ctx;
 	}
 	
@@ -94,7 +94,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 	public void test_51_4_ProperSupergrid() throws IOException {
 		Context ctx = createSupergrid(false);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
-		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
@@ -115,6 +115,21 @@ public class Test51Grid extends AbstractFunctionalTest {
 		
 		
 		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+	}
+	
+	@Test
+	public void test_51_6_GridWithUndirectedConnections() throws IOException {
+		
+	}
+	
+	@Test
+	public void test_51_7_GridWithDirectedConnections() throws IOException {
+		
+	}
+	
+	@Test
+	public void test_51_8_ContainerConnections() throws IOException {
+		
 	}
 	
 }
