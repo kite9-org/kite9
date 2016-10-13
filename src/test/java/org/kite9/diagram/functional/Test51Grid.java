@@ -39,11 +39,11 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_2_SupergridMockup() throws IOException {
-		Context ctx = createSupergrid(true);
+		Context ctx = createSupergrid(true, false);
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
-	private Context createSupergrid(boolean addLinks) {
+	private Context createSupergrid(boolean addLinks, boolean addContentLink) {
 		List<XMLElement> contents = new ArrayList<>();
 		Context[][] elems = new Context[4][];
 		for (int i = 0; i < elems.length; i++) {
@@ -53,10 +53,10 @@ public class Test51Grid extends AbstractFunctionalTest {
 				elems[i][j].setStyle("occupies: "+i+" "+i+" "+j+" "+j+";");
 				if (addLinks) {
 					if (j > 0) {
-						Link l = new Link((XMLElement) elems[i][j], (XMLElement) elems[i][j - 1], "", null, "", null, Direction.RIGHT);
+						new Link((XMLElement) elems[i][j], (XMLElement) elems[i][j - 1], "", null, "", null, Direction.RIGHT);
 					}
 					if (i > 0) {
-						Link l = new Link((XMLElement) elems[i][j], (XMLElement) elems[i - 1][j], "", null, "", null, Direction.UP);
+						new Link((XMLElement) elems[i][j], (XMLElement) elems[i - 1][j], "", null, "", null, Direction.UP);
 					}
 				}
 				
@@ -65,8 +65,14 @@ public class Test51Grid extends AbstractFunctionalTest {
 		}
 		
 		
-		elems[2][1].appendChild(new Glyph("one", "","Some gylph", null, null));
-		elems[1][3].appendChild(new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null));
+		Glyph g1 = new Glyph("one", "","Some gylph", null, null);
+		Glyph g2 = new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		elems[2][1].appendChild(g1);
+		elems[1][3].appendChild(g2);
+		
+		if (addContentLink) {
+			new Link(g1, g2);
+		}
 		
 		
 		Context ctx = new Context("outer", contents, true, null, null);
@@ -92,7 +98,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 
 	@Test
 	public void test_51_4_ProperSupergrid() throws IOException {
-		Context ctx = createSupergrid(false);
+		Context ctx = createSupergrid(false, false);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -112,14 +118,15 @@ public class Test51Grid extends AbstractFunctionalTest {
 		
 		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
-		
-		
+
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
 	public void test_51_6_GridWithUndirectedConnections() throws IOException {
-		
+		Context ctx = createSupergrid(false, true);
+		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
