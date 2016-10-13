@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
@@ -484,13 +485,13 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			
 		switch (entryDirection) {
 		case UP:
-			return v.getYOrdinal() == (termination ? ContainerVertex.HIGHEST_ORD : ContainerVertex.LOWEST_ORD);
+			return v.getYOrdinal() == (termination ? BigFraction.ONE : BigFraction.ZERO);
 		case DOWN:
-			return v.getYOrdinal() == (termination ? ContainerVertex.LOWEST_ORD : ContainerVertex.HIGHEST_ORD);
+			return v.getYOrdinal() == (termination ? BigFraction.ZERO : BigFraction.ONE);
 		case LEFT:
-			return v.getXOrdinal() == (termination ? ContainerVertex.HIGHEST_ORD : ContainerVertex.LOWEST_ORD);
+			return v.getXOrdinal() == (termination ? BigFraction.ONE : BigFraction.ZERO);
 		case RIGHT:
-			return v.getXOrdinal() == (termination ? ContainerVertex.LOWEST_ORD : ContainerVertex.HIGHEST_ORD);			
+			return v.getXOrdinal() == (termination ? BigFraction.ZERO : BigFraction.ONE);			
 		}
 		
 		throw new LogicException("Can't determine whether we can arrive/leave at this vertex");

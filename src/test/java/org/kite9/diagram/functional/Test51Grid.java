@@ -67,11 +67,19 @@ public class Test51Grid extends AbstractFunctionalTest {
 		
 		Glyph g1 = new Glyph("one", "","Some gylph", null, null);
 		Glyph g2 = new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g3 = new Glyph("three", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g4 = new Glyph("four", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
 		elems[2][1].appendChild(g1);
 		elems[1][3].appendChild(g2);
+		elems[3][0].appendChild(g3);
+		elems[0][0].appendChild(g4);
 		
 		if (addContentLink) {
-			new Link(g1, g2);
+			new TurnLink(g1, g2);
+			new TurnLink(g1, g2);
+			new TurnLink(g1, g3);
+			new TurnLink(g1, g4);
+			new TurnLink(g2, g4);
 		}
 		
 		

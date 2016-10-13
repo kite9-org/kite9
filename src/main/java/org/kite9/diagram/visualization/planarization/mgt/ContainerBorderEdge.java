@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -81,7 +80,7 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 		}
 	}
 
-	public DiagramElement getOriginalUnderlying() {
+	public Container getOriginalUnderlying() {
 		return cide;
 	}
 	
