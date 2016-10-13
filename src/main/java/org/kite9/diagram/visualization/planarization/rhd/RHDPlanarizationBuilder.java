@@ -167,7 +167,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			// vertex ordering
 			sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
 			buildVertexList(null, c, null, out, sortedContainerContents);
-			sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
+			sortContentsOldStyle(out);  //, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 			
 			firstGo = false;
 		}
@@ -632,7 +632,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 					throw new LogicException("Contents overlap: "+arg0+" "+arg1);
 				}
 					
-				//System.out.println("Comparing: "+arg0+" "+arg1+" "+out);
+				System.out.println("Comparing: "+arg0+" "+arg1+" "+out);
 				return out;
 			}
  		});

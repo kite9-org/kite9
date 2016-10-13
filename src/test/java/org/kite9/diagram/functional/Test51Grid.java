@@ -99,22 +99,22 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_5_GridWithSpanningSquares() throws IOException {
-		Context tl = new Context(null, true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context(null, true,  new TextLine("Top Right"), null);
-		Context bl = new Context(null, true,  new TextLine("Bottom Left"), null);
-		Context br = new Context(null, true,  new TextLine("Bottom Right"), null);
+		Context tl = new Context("tl", null, true,  new TextLine("Top \n Left"), null);
+		Context tr = new Context("tr", null, true,  new TextLine("Top Right"), null);
+		Context bl = new Context("bl", null, true,  new TextLine("Bottom Left"), null);
+		Context br = new Context("br", null, true,  new TextLine("Bottom Right"), null);
 		
 		tl.setStyle("occupies: 0 1 0 1;");
-		tr.setStyle("occupies: 0 2;");
+		tr.setStyle("occupies: 2 0;");
 		
 		bl.setStyle("occupies: 0 1 2 2");
 		br.setStyle("occupies: 2 2 1 2");
 		
-		Context ctx = new Context(Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
+		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
 		
 		
-		renderDiagram(new DiagramXMLElement(Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test

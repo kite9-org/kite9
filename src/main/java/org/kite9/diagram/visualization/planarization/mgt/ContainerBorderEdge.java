@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Container;
@@ -40,7 +41,7 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 	}
 	
 	public ContainerBorderEdge(ContainerVertex from, ContainerVertex to, String label, Direction d) {
-		this(from, to, label, d, false, getOuterContainer(from, to), createContainerCollection((ContainerVertex) from, (ContainerVertex) to));
+		this(from, to, label, d, false, getOuterContainer(from, to), new HashSet<>());
 	}
 	
 	private static Container getOuterContainer(ContainerVertex from, ContainerVertex to) {
@@ -78,12 +79,6 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 		} else {
 			return 1 + getDepth(parent);
 		}
-	}
-
-	private static Collection<DiagramElement> createContainerCollection(ContainerVertex from, ContainerVertex to) {
-		Set<DiagramElement> both = from.getAllAnchoredContainers();
-		both.retainAll(to.getAllAnchoredContainers());
-		return both;
 	}
 
 	public DiagramElement getOriginalUnderlying() {

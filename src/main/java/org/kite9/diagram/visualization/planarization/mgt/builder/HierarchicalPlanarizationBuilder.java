@@ -278,7 +278,6 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			// we don't need to layout the grid, just the contents.
 			return;
 		}
-		
 		ContainerVertices cv = em.getContainerVertices(outer);
 		String originalLabel = outer.getID();
 				
@@ -306,14 +305,14 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
-		Edge edge = getEdge(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i);
-		if (edge != null) {
-			em.add(edge);			
-			getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i);
+		if (newEdge != null) {
+			em.add(newEdge);			
+			getEdgeRouter().addEdgeToPlanarization(p, newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
-	private Edge getEdge(String l, Container c, ContainerVertex from, ContainerVertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i) {
+	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i) {
 		Direction d = null;
 		
 		if (ax.equals(bx)) {
@@ -333,22 +332,29 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		} 
 		
 		if (d != null) {
-			Edge e = getLeaverInDirection(from, d);
-			if (e != null) {
-				if ((e instanceof ContainerBorderEdge) && ((ContainerBorderEdge)e).getContainers().contains(c)) {
-					return null;
-				} else {
+			while (from != to) {
+				Edge e = getLeaverInDirection(from, d);
+				if (e==null) {
+					ContainerBorderEdge cbe = new ContainerBorderEdge((ContainerVertex) from, (ContainerVertex) to, l+d+i, d);
+					cbe.getContainers().add(c);
+					return cbe;
+				}
+				
+				if (!(e instanceof ContainerBorderEdge)) {
 					throw new Kite9ProcessingException("What is this?");
 				}
-			} else {
-				return new ContainerBorderEdge(from, to, l+d+i, d);
-			} 
+				
+				((ContainerBorderEdge)e).getContainers().add(c);
+				from = e.otherEnd(from);
+			}
+			
+		 	return null;
+		} else {
+			throw new LogicException("Not dealt with this ");
 		}
-		
-		throw new LogicException("Not dealt with this ");
 	}
 
-	private Edge getLeaverInDirection(ContainerVertex from, Direction d) {
+	private Edge getLeaverInDirection(Vertex from, Direction d) {
 		for (Edge e : from.getEdges()) {
 			if (e.getDrawDirectionFrom(from) == d) {
 				return e;

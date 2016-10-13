@@ -127,7 +127,9 @@ public class GroupPhase {
 						Connected prevy = (Connected) (y > 0 ? grid[x][y-1] : null);
 						DiagramElement de = grid[x][y];
 						Connected c = (Connected) de;
-						createLeafGroup(c, prevx, prevy, pMap);
+						if ((c != prevx) && (c != prevy)) {
+							createLeafGroup(c, prevx, prevy, pMap);
+						}
 					}
 				}
 			} else {
