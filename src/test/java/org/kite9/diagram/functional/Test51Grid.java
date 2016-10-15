@@ -139,7 +139,26 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_7_GridWithDirectedConnections() throws IOException {
+		Glyph g1 = new Glyph("one", "","Some gylph", null, null);
+		Glyph g2 = new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g3 = new Glyph("three", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g4 = new Glyph("four", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
 		
+		Context tl = new Context("tl", listOf(g1), true,  new TextLine("Top \n Left"), null);
+		Context tr = new Context("tr", listOf(g2), true,  new TextLine("Top Right"), null);
+		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
+		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
+		
+		tl.setStyle("occupies: 0 1 0 1;");
+		tr.setStyle("occupies: 2 0;");
+		
+		bl.setStyle("occupies: 0 1 2 2");
+		br.setStyle("occupies: 2 2 1 2");
+		
+		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test

@@ -10,8 +10,16 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.position.HPos;
+import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.IntegerRangeValue;
@@ -28,6 +36,7 @@ public class GridPositionerImpl implements GridPositioner {
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
 	Map<DiagramElement, OPair<BigFraction>> xPositions = new HashMap<>(100);
 	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
+	Map<Container, OPair<Map<BigFraction, Double>>> fracMaps = new HashMap<>();
 	
 	
 	private Dimension calculateGridSize(Container ord) {
@@ -168,5 +177,81 @@ public class GridPositionerImpl implements GridPositioner {
 		}
 		
 		return yPositions.get(elem);
+	}
+
+
+	@Override
+	public OPair<Map<BigFraction, Double>> getFracMapForGrid(Container c, RoutableHandler2D rh, ContainerVertices containerVertices) {
+		OPair<Map<BigFraction, Double>> out = fracMaps.get(c);
+		if (out != null) {
+			return out;
+		}
+		
+		RoutingInfo ri = rh.getPlacedPosition(c);
+		Bounds xBounds = rh.getBoundsOf(ri, true);
+		Bounds yBounds = rh.getBoundsOf(ri, false);
+		
+		Map<BigFraction, Bounds> left = new HashMap<>(), right  = new HashMap<>() , up  = new HashMap<>() , down  = new HashMap<>();
+		
+		// work out where this appears in relation to the neighbouring container's positions.
+		for (ContainerVertex cv : containerVertices.getAllVertices()) {
+			for (Anchor a : cv.getAnchors()) {
+				RoutingInfo place = rh.getPlacedPosition(a.getDe());
+				Bounds x = rh.getBoundsOf(place, true);
+				if (a.getLr() == HPos.RIGHT) {
+					expand(left, x, cv.getXOrdinal());
+				} else if (a.getLr() == HPos.LEFT) {
+					expand(right, x, cv.getXOrdinal());
+				}
+				
+				Bounds y = rh.getBoundsOf(place, false);
+				if (a.getUd() == VPos.DOWN) {
+					expand(up, y, cv.getYOrdinal());
+				} else if (a.getUd() == VPos.UP) {
+					expand(down, y, cv.getYOrdinal());
+				}
+			}
+		}
+		
+		Map<BigFraction, Double> xOut = new HashMap<>();
+		xOut.put(BigFraction.ZERO, 0d);
+		xOut.put(BigFraction.ONE, 1d);
+		for (BigFraction bf : left.keySet()) {
+			if (!xOut.containsKey(bf)) {
+				Bounds bleft = left.get(bf);
+				Bounds bright = right.get(bf);
+				double midPoint = (bleft.getDistanceMax() + bright.getDistanceMin()) /2d;
+				double frac = (midPoint-xBounds.getDistanceMin()) / (xBounds.getDistanceMax() - xBounds.getDistanceMin());
+				xOut.put(bf, frac);
+			}
+		}
+		
+		Map<BigFraction, Double> yOut = new HashMap<>();
+		yOut.put(BigFraction.ZERO, 0d);
+		yOut.put(BigFraction.ONE, 1d);
+
+		for (BigFraction bf : up.keySet()) {
+			if (!yOut.containsKey(bf)) {
+				Bounds bup = up.get(bf);
+				Bounds bdown = down.get(bf);
+				double midPoint = (bup.getDistanceMax() + bdown.getDistanceMin()) /2d;
+				double frac = (midPoint - yBounds.getDistanceMin()) / (yBounds.getDistanceMax() - yBounds.getDistanceMin());
+				yOut.put(bf, frac);
+			}
+		}
+		
+		out = new OPair<Map<BigFraction,Double>>(xOut, yOut);
+		fracMaps.put(c, out);
+		return out;
+	}
+
+
+	private void expand(Map<BigFraction, Bounds> boundsMap, Bounds newBounds, BigFraction ord) {
+		Bounds oldBounds = boundsMap.get(ord);
+		if (oldBounds == null) {
+			boundsMap.put(ord, newBounds);
+		} else {
+			boundsMap.put(ord, oldBounds.expand(newBounds));
+		}
 	}
 }

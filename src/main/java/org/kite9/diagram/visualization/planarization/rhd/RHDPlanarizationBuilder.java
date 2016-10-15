@@ -19,6 +19,8 @@ import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
@@ -166,6 +168,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				
 			// vertex ordering
 			sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
+			instantiateContainerVertices(c);
 			buildVertexList(null, c, null, out, sortedContainerContents);
 			sortContentsOldStyle(out);  //, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 			
@@ -176,6 +179,18 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		((RHDPlanarizationImpl)planOut).setRoutableReader(rh);
 		
 		return planOut;
+	}
+
+	/**
+	 * This makes sure all the container vertices have the correct anchors before we position them.
+	 */
+	private void instantiateContainerVertices(Container c) {
+		em.getContainerVertices(c);
+		for (DiagramElement de : c.getContents()) {
+			if (de instanceof Container) {
+				instantiateContainerVertices((Container) de);
+			}
+		}
 	}
 
 	/**
@@ -324,15 +339,18 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		if (c instanceof Container) {
 			Container container = (Container) c;
 			ContainerVertices cvs = em.getContainerVertices(container);
-			
-			setContainerVertexPositions(before, container, after, cvs, out);
-			
+			RoutingInfo bounds = rh.getPlacedPosition(c);
+			log.send("Placed position of container: "+c+" is "+bounds);
+
 			if (container.getContents().size() > 0) {
 				buildVertexListForContainerContents(out, container, sortedContainerContents);
 			}
+			
+			setContainerVertexPositions(before, container, after, cvs, out);
 
 		} else {
 			RoutingInfo bounds = rh.getPlacedPosition(c);
+			log.send("Placed position: "+c+" is "+bounds);
 			Vertex v = em.getVertex((Connected) c);
 			out.add(v);
 			bounds = rh.narrow(bounds, borderTrimAreaX, borderTrimAreaY);
@@ -409,12 +427,22 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 //		rh.setHints(hints, bounds);
 	}
 	
+	public static final Map<BigFraction, Double> NON_GRID_FRAC_MAP = new HashMap<>();
+	
+	static {
+		NON_GRID_FRAC_MAP.put(BigFraction.ZERO, 0d);
+		NON_GRID_FRAC_MAP.put(BigFraction.ONE, 1d);
+	}
+	
 	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
 		
 		RoutingInfo bounds =  rh.getPlacedPosition(c);
+		
+		Map<BigFraction, Double> fracMapX = NON_GRID_FRAC_MAP;
+		Map<BigFraction, Double> fracMapY = NON_GRID_FRAC_MAP;
 		
 		if (l != null) {
 			switch (l) {
@@ -434,14 +462,16 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				break;	
 			
 			case GRID:
-				Container containerWithNonGridParent = c;
-				while (containerWithNonGridParent.getContainer().getLayout()==Layout.GRID) {
-					containerWithNonGridParent = containerWithNonGridParent.getContainer();
-				}
+				Container containerWithNonGridParent = getGridParent(c);
 				bounds = rh.getPlacedPosition(containerWithNonGridParent);
+				OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(containerWithNonGridParent, rh, em.getContainerVertices(containerWithNonGridParent));
+				fracMapX = fracMaps.getA();
+				fracMapY = fracMaps.getB();
+				
 				break;
 			}
 		}
+		
 		
 		Bounds bx = rh.getBoundsOf(bounds, true);
 		Bounds by = rh.getBoundsOf(bounds, false);
@@ -452,9 +482,20 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
-			setRouting(cv, bx, by, xs, xe, ys, ye, out);
+			setRouting(cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
 		}
 		setPlanarizationHints(c, bounds);
+	}
+
+	/**
+	 * Gets the parent-level container in a nested grid structure
+	 */
+	public static Container getGridParent(Container c) {
+		Container containerWithNonGridParent = c;
+		while (containerWithNonGridParent.getContainer().getLayout()==Layout.GRID) {
+			containerWithNonGridParent = containerWithNonGridParent.getContainer();
+		}
+		return containerWithNonGridParent;
 	}
 	
 	private void expandContainerSpace(Container c, Container within, boolean horiz) {
@@ -499,143 +540,62 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out) {
+	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
-			bx = bx.keep(xs, xe - xs, cv.getXOrdinal());
-			by = by.keep(ys, ye - ys, cv.getYOrdinal());
+			BigFraction xOrdinal = cv.getXOrdinal();
+			BigFraction yOrdinal = cv.getYOrdinal();
+			
+			double xfrac = fracMapX.get(xOrdinal);
+			double yfrac = fracMapY.get(yOrdinal);
+			bx = bx.keep(xs, xe - xs, xfrac);
+			by = by.keep(ys, ye - ys, yfrac);
 			cv.setRoutingInfo(rh.createRouting(bx,by));
 			out.add(cv);
 			log.send("Setting routing info: "+cv+" "+bx+" "+by);
 		}
 	}
 
-	/**
-	 * This implements a kind of quad sort, where we look at each vertex and ascribe it to TL, TR, BL, BR
-	 * quadrants.  We do that over and over until there's only a single vertex in each quadrant.
+	/** 
+	 * Simple Y,X sort, where Y has priority
 	 */
-	private void sortContents(List<Vertex> in, Bounds x, Bounds y) {
-		if (in.size() > 1) {
-			log.send("Sorting: "+in);
-			Bounds left = rh.narrow(Layout.LEFT, x, true, false); 
-			Bounds right =rh.narrow(Layout.RIGHT, x, true, false);
-			Bounds top =rh.narrow(Layout.UP, y, false, false);
-			Bounds bottom = rh.narrow(Layout.DOWN, y, false, false);
-			
-			List<Vertex> topRight = new ArrayList<Vertex>(in.size()/2);
-			List<Vertex> topLeft = new ArrayList<Vertex>(in.size()/2);
-			List<Vertex> bottomRight = new ArrayList<Vertex>(in.size()/2);
-			List<Vertex> bottomLeft = new ArrayList<Vertex>(in.size()/2);
-			
-			boolean mergeTopAndBottom = false;
-			boolean mergeLeftAndRight = false;
-			
-			for (Vertex vertex : in) {
-				RoutingInfo vri = vertex.getRoutingInfo();
-				Bounds vx = rh.getBoundsOf(vri, true);
-				Bounds vy = rh.getBoundsOf(vri, false);
-				boolean inLeft = rh.compareBounds(vx, left) == DPos.OVERLAP;
-				boolean inRight = rh.compareBounds(vx, right) == DPos.OVERLAP;
-				boolean inTop = rh.compareBounds(vy, top) == DPos.OVERLAP;
-				boolean inBottom = rh.compareBounds(vy, bottom) == DPos.OVERLAP;
-				
-				if (inTop && inBottom) {
-					mergeTopAndBottom = true;
-				}
-				
-				if (inLeft && inRight) {
-					mergeLeftAndRight = true;
-				}
-				
-				if ((!inTop && !inBottom) || (!inLeft && !inRight)) {
-					throw new LogicException("Vertex not within either bounds"+vri+" "+vertex);
-				}
-				
-				if (inLeft) {
-					if (inTop) {
-						topLeft.add(vertex);
-					} else {
-						bottomLeft.add(vertex);
-					}  
-				} else {
-					if (inTop) {
-						topRight.add(vertex);
-					} else {
-						bottomRight.add(vertex);
-					}  
-				}
-			}
-			
-			if (mergeLeftAndRight && mergeTopAndBottom) {
-				// we should have a single vertex, so you need to sort the old fashioned way
-				sortContentsOldStyle(in);
-			} else if (mergeLeftAndRight) {
-				in.clear();
-				topRight.addAll(topLeft);
-				bottomRight.addAll(bottomLeft);
-				sortContents(topRight, x, top);
-				sortContents(bottomRight, x, bottom);
-				in.addAll(topRight);
-				in.addAll(bottomRight);
-			} else if (mergeTopAndBottom) {
-				in.clear();
-				topRight.addAll(bottomRight);
-				topLeft.addAll(bottomLeft);
-				sortContents(topRight, right, y);
-				sortContents(topLeft, left, y);
-				in.addAll(topLeft);
-				in.addAll(topRight);
-			} else {
-				in.clear();
-				sortContents(topLeft, left, top);
-				sortContents(topRight, right, top);
-				sortContents(bottomLeft, left, bottom);
-				sortContents(bottomRight, right, bottom);
-				in.addAll(topLeft);
-				in.addAll(topRight);
-				in.addAll(bottomLeft);
-				in.addAll(bottomRight);
-			}
-		
-			
-		}
-		
-		
-	}
-
-	
 	private void sortContentsOldStyle(List<Vertex> c) {		
- 		Collections.sort(c, new Comparator<Vertex>() {
+ 		try {
+			Collections.sort(c, new Comparator<Vertex>() {
 
-			@Override
-			public int compare(Vertex arg0, Vertex arg1) {
-				RoutingInfo ri0 = arg0.getRoutingInfo();
-				RoutingInfo ri1 = arg1.getRoutingInfo();
-				int out = 0;
-				
-				DPos yc = rh.compare(ri0, ri1, false);
-				if (yc == DPos.BEFORE) {
-					out = -1;
-				} else if (yc==DPos.AFTER) {
-					out = 1;
-				}
-				
-				if (out == 0) {
-					DPos xc = rh.compare(ri0, ri1, true);
-					if (xc == DPos.BEFORE) {
+				@Override
+				public int compare(Vertex arg0, Vertex arg1) {
+					RoutingInfo ri0 = arg0.getRoutingInfo();
+					RoutingInfo ri1 = arg1.getRoutingInfo();
+					int out = 0;
+					
+					DPos yc = rh.compare(ri0, ri1, false);
+					if (yc == DPos.BEFORE) {
 						out = -1;
-					} else if (xc == DPos.AFTER) {
+					} else if (yc==DPos.AFTER) {
 						out = 1;
 					}
-				}
-				
-				if (out == 0) {
-					throw new LogicException("Contents overlap: "+arg0+" "+arg1);
-				}
 					
-				System.out.println("Comparing: "+arg0+" "+arg1+" "+out);
-				return out;
-			}
- 		});
+					if (out == 0) {
+						DPos xc = rh.compare(ri0, ri1, true);
+						if (xc == DPos.BEFORE) {
+							out = -1;
+						} else if (xc == DPos.AFTER) {
+							out = 1;
+						}
+					}
+					
+					if (out == 0) {
+						throw new LogicException("Contents overlap: "+arg0+" "+arg1);
+					}
+						
+					System.out.println("Comparing: "+arg0+" "+arg1+" "+out);
+					return out;
+				}
+			});
+		} catch (LogicException e) {
+			TestingEngine.drawPositions(c, RHDPlanarization.class, "error", "positions.png");
+			throw e;
+		}
 	}
 
 	@Override

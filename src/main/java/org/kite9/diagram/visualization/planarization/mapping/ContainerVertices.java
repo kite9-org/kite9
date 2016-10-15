@@ -4,6 +4,7 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.math.fraction.BigFraction;
 
@@ -26,4 +27,10 @@ public interface ContainerVertices {
 	 * 
 	 */
 	public ContainerVertex createVertex(BigFraction x, BigFraction y);
+	
+	/**
+	 * Returns all vertices in the container.
+	 * @return
+	 */
+	public Collection<ContainerVertex> getAllVertices();
 }

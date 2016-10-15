@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -152,5 +153,11 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return cy;
 	}
 
+
+
+	@Override
+	public Collection<ContainerVertex> getAllVertices() {
+		return elements.values();
+	}
 
 }

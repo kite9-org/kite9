@@ -14,7 +14,7 @@ import org.kite9.diagram.position.VPos;
  */
 public abstract class AbstractAnchoringVertex extends AbstractVertex {
 	
-	protected static class Anchor {
+	public static class Anchor {
 		
 		private VPos ud;
 		public VPos getUd() {

@@ -104,6 +104,17 @@ public class BasicBounds implements Bounds {
 		upper = Math.min(max-buffer, upper);
 		return new BasicBounds(lower, upper);
 	}
+	
+	@Override
+	public Bounds keep(double buffer, double width, double fraction) {
+		double span = max - min - (buffer * 2d);
+		double pos = fraction * span;
+		double lower = min + pos - (width / 2d) + buffer;
+		double upper = min + pos + (width / 2d) + buffer;
+		lower = Math.max(min+buffer, lower);
+		upper = Math.min(max-buffer, upper);
+		return new BasicBounds(lower, upper);
+	}
 
 //	@Override
 //	public Bounds keepMax(double lb, double ub) {

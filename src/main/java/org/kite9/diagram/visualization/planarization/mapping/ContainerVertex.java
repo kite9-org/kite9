@@ -27,6 +27,15 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 public class ContainerVertex extends AbstractAnchoringVertex {
 	
+	public static final boolean isMin(BigFraction b) {
+		return b.equals(BigFraction.ZERO);
+	}
+	
+	public static final boolean isMax(BigFraction b) {
+		return b.equals(BigFraction.ZERO);
+	}
+	
+	
 	public static BigFraction getOrdForXDirection(Direction d) {
 		switch (d) {
 		case LEFT:
@@ -58,6 +67,10 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	private Container c;
 	private List<Anchor> anchors = new ArrayList<AbstractAnchoringVertex.Anchor>(4);
 	
+	public List<Anchor> getAnchors() {
+		return anchors;
+	}
+
 	public ContainerVertex(Container c, BigFraction xOrd, BigFraction yOrd) {
 		super(c.getID()+"_"+xOrd+"_"+yOrd);
 		this.c = c;

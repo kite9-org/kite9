@@ -65,9 +65,9 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 			} else if ((v instanceof ContainerVertex) && (v.getEdgeCount() > 2)) {
 				ContainerVertex cv = (ContainerVertex) v;
 								
-				if ((cv.getXOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getYOrdinal()))) {
-					number = splitEdgesGoing(Direction.LEFT, cv.getYOrdinal()==BigFraction.ZERO ? Direction.DOWN : Direction.UP, 
-							cv.getYOrdinal()==BigFraction.ZERO, cv, pln, number);
+				if (ContainerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
+					number = splitEdgesGoing(Direction.LEFT, ContainerVertex.isMin(cv.getYOrdinal()) ? Direction.DOWN : Direction.UP, 
+							ContainerVertex.isMin(cv.getYOrdinal()), cv, pln, number);
 				}
 				
 				if ((cv.getXOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getYOrdinal()))) {
@@ -90,16 +90,16 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 
 	private Direction getDirectionForSideVertex(ContainerVertex v) {
 		BigFraction xOrd = v.getXOrdinal();
-		if (xOrd == BigFraction.ZERO) {
+		if (ContainerVertex.isMin(xOrd)) {
 			return Direction.LEFT;
-		} else if (xOrd == BigFraction.ONE) {
+		} else if (ContainerVertex.isMax(xOrd)) {
 			return Direction.RIGHT;
 		}
 		
 		BigFraction yOrd = v.getYOrdinal();
-		if (yOrd == BigFraction.ZERO) {
+		if (ContainerVertex.isMin(yOrd)) {
 			return Direction.UP;
-		} else if (yOrd == BigFraction.ONE) {
+		} else if (ContainerVertex.isMax(yOrd)) {
 			return Direction.DOWN;
 		}
 		
@@ -111,7 +111,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	}
 
 	private boolean cornerOrd(BigFraction ord) {
-		return (ord == BigFraction.ZERO) || (ord == BigFraction.ONE);
+		return ContainerVertex.isMin(ord) || ContainerVertex.isMax(ord);
 	}
 
 	private int splitEdgesGoing(Direction edgeDirectionToSplit, Direction startContainerEdgeDirection, boolean turnClockwise, ContainerVertex v, Planarization pln, int n) {
