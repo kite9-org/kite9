@@ -271,13 +271,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				setupContainerBoundaryEdges(p, (Container)c);
 			}
 		}
-		
-		Layout l = outer.getLayout();
-		
-		if (l == Layout.GRID) {
-			// we don't need to layout the grid, just the contents.
-			return;
-		}
+	
 		ContainerVertices cv = em.getContainerVertices(outer);
 		String originalLabel = outer.getID();
 				
@@ -305,14 +299,13 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
-		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i);
+		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i, em);
 		if (newEdge != null) {
-			em.add(newEdge);			
 			getEdgeRouter().addEdgeToPlanarization(p, newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
-	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i) {
+	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i, EdgeMapping em) {
 		Direction d = null;
 		
 		if (ax.equals(bx)) {
@@ -337,6 +330,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				if (e==null) {
 					ContainerBorderEdge cbe = new ContainerBorderEdge((ContainerVertex) from, (ContainerVertex) to, l+d+i, d);
 					cbe.getContainers().add(c);
+					em.add(cbe);			
 					return cbe;
 				}
 				
@@ -345,6 +339,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				}
 				
 				((ContainerBorderEdge)e).getContainers().add(c);
+				em.add(e);			
 				from = e.otherEnd(from);
 			}
 			

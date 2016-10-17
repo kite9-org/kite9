@@ -303,8 +303,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			if (l != null) {
 				checkMinimumGridSizes(ri);
 				rh.setPlacedPosition(l, ri);
+				ensureContainerBoundsAreLargeEnough(ri, c, lg);
 			}
-			ensureContainerBoundsAreLargeEnough(ri, c);
 		}	
 	}
 	
@@ -316,7 +316,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private void ensureContainerBoundsAreLargeEnough(RoutingInfo ri, Container c) {
+	private void ensureContainerBoundsAreLargeEnough(RoutingInfo ri, Container c, LeafGroup lg) {
 		Connected l;
 		while (c != null) {
 			// make sure container bounds are big enough for the contents
@@ -326,6 +326,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 
 			cri = rh.increaseBounds(cri, ri);
+			log.send("Increased bounds of "+c+" to "+cri+" due to "+lg);
 			rh.setPlacedPosition(c, cri);
 			l = (Connected) c;
 			c = l.getContainer();
@@ -645,7 +646,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			} else if (dp == DPos.AFTER) {
 				return 1; 
 			} else {
-				throw new LogicException("Elements within a container shouldn't overlap");
+				return 0;
+			//	throw new LogicException("Elements within a container shouldn't overlap");
 			}
 		}
 		
