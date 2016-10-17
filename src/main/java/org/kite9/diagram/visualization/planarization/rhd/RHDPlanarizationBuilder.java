@@ -121,58 +121,64 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
 		ConnectionManager connections = null;
 		Map<Container, List<DiagramElement>> sortedContainerContents = null;
-		
-		while (firstGo || redo) {
-			redo = false;
-			rh =  new PositionRoutableHandler2D();
-			ContradictionHandler ch = new BasicContradictionHandler(em);
-			GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
+		try {
 			
-			// Grouping
-			GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp);
-			GroupResult mr = strategy.group(gp);
-			
-			if (!log.go()) {
-				log.send("Created Groups:", mr.groups());
-			}
-	
-			if (mr.groups().size() > 1) {
-				throw new LogicException("Should end up with a single group");
-			} 
-			
-			Group topGroup = mr.groups().iterator().next();
+			while (firstGo || redo) {
+				redo = false;
+				rh =  new PositionRoutableHandler2D();
+				ContradictionHandler ch = new BasicContradictionHandler(em);
+				GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
 				
-			if (!log.go()) {
-				outputGroupInfo(topGroup, 0);
-			}
-			
-			// Layout
-			LayoutStrategy layout = new DirectionLayoutStrategy(rh);
-			layout.layout(gp, mr, new MostNetworkedFirstLayoutQueue(gp.groupCount));
-			
-			// positioning
-			connections = new RankBasedConnectionQueue(rh);
-			buildPositionMap(topGroup, connections);
-			if (!log.go()) {
-				outputGroupInfo(topGroup, 0);
-			}
-			if (connections.hasContradictions()) {
-				if (!checkLayoutIsConsistent(c)) {
-					if (firstGo) {
-						log.send("Contradiction forces regroup");
-						redo = true;
-						continue;
+				// Grouping
+				GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp);
+				GroupResult mr = strategy.group(gp);
+				
+				if (!log.go()) {
+					log.send("Created Groups:", mr.groups());
+				}
+
+				if (mr.groups().size() > 1) {
+					throw new LogicException("Should end up with a single group");
+				} 
+				
+				Group topGroup = mr.groups().iterator().next();
+					
+				if (!log.go()) {
+					outputGroupInfo(topGroup, 0);
+				}
+				
+				// Layout
+				LayoutStrategy layout = new DirectionLayoutStrategy(rh);
+				layout.layout(gp, mr, new MostNetworkedFirstLayoutQueue(gp.groupCount));
+				
+				// positioning
+				connections = new RankBasedConnectionQueue(rh);
+				buildPositionMap(topGroup, connections);
+				if (!log.go()) {
+					outputGroupInfo(topGroup, 0);
+				}
+				if (connections.hasContradictions()) {
+					if (!checkLayoutIsConsistent(c)) {
+						if (firstGo) {
+							log.send("Contradiction forces regroup");
+							redo = true;
+							continue;
+						}
 					}
 				}
-			}
+					
+				// vertex ordering
+				sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
+				instantiateContainerVertices(c);
+				buildVertexList(null, c, null, out, sortedContainerContents);
+				sortContentsOldStyle(out);  //, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 				
-			// vertex ordering
-			sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
-			instantiateContainerVertices(c);
-			buildVertexList(null, c, null, out, sortedContainerContents);
-			sortContentsOldStyle(out);  //, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
-			
-			firstGo = false;
+				firstGo = false;
+			}
+		} finally {
+			if (!log.go()) {
+				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "pos.png");
+			}
 		}
 
 		Planarization planOut = buildPlanarization(c, out, connections, sortedContainerContents);
@@ -451,15 +457,15 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			case DOWN:
 			case VERTICAL:
 				expandContainerSpace(c, within, true);
-				addExtraContainerVertex(c, Direction.DOWN, before, cvs);
-				addExtraContainerVertex(c, Direction.DOWN, after, cvs);
+				addExtraContainerVertex(c, Direction.DOWN, before, cvs, out);
+				addExtraContainerVertex(c, Direction.DOWN, after, cvs, out);
 				break;
 			case LEFT:
 			case RIGHT:
 			case HORIZONTAL:
 				expandContainerSpace(c, within, false);
-				addExtraContainerVertex(c, Direction.RIGHT, before, cvs);
-				addExtraContainerVertex(c, Direction.RIGHT, after, cvs);
+				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, out);
+				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, out);
 				break;	
 			
 			case GRID:
@@ -511,7 +517,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		rh.setPlacedPosition(c, rh.createRouting(nx, ny));
 	}
 
-	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs) {
+	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs, List<Vertex> out) {
 		if (to != null) {
 			int comp = compareDiagramElements((Connected) c, to);
 			if (comp == 1) {
@@ -538,6 +544,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				break;
 			}
 			cvNew.setRoutingInfo(rh.createRouting(x, y));
+			out.add(cvNew);
 		}
 	}
 
@@ -556,47 +563,44 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	/** 
+	/**
 	 * Simple Y,X sort, where Y has priority
 	 */
-	private void sortContentsOldStyle(List<Vertex> c) {		
- 		try {
-			Collections.sort(c, new Comparator<Vertex>() {
+	private void sortContentsOldStyle(List<Vertex> c) {
+		Collections.sort(c, new Comparator<Vertex>() {
 
-				@Override
-				public int compare(Vertex arg0, Vertex arg1) {
-					RoutingInfo ri0 = arg0.getRoutingInfo();
-					RoutingInfo ri1 = arg1.getRoutingInfo();
-					int out = 0;
-					
-					DPos yc = rh.compare(ri0, ri1, false);
-					if (yc == DPos.BEFORE) {
+			@Override
+			public int compare(Vertex arg0, Vertex arg1) {
+				RoutingInfo ri0 = arg0.getRoutingInfo();
+				RoutingInfo ri1 = arg1.getRoutingInfo();
+				int out = 0;
+
+				DPos yc = rh.compare(ri0, ri1, false);
+				if (yc == DPos.BEFORE) {
+					out = -1;
+				} else if (yc == DPos.AFTER) {
+					out = 1;
+				}
+
+				if (out == 0) {
+					DPos xc = rh.compare(ri0, ri1, true);
+					if (xc == DPos.BEFORE) {
 						out = -1;
-					} else if (yc==DPos.AFTER) {
+					} else if (xc == DPos.AFTER) {
 						out = 1;
 					}
-					
-					if (out == 0) {
-						DPos xc = rh.compare(ri0, ri1, true);
-						if (xc == DPos.BEFORE) {
-							out = -1;
-						} else if (xc == DPos.AFTER) {
-							out = 1;
-						}
-					}
-					
-					if (out == 0) {
-						throw new LogicException("Contents overlap: "+arg0+" "+arg1);
-					}
-						
-					System.out.println("Comparing: "+arg0+" "+arg1+" "+out);
-					return out;
 				}
-			});
-		} catch (LogicException e) {
-			TestingEngine.drawPositions(c, RHDPlanarization.class, "error", "positions.png");
-			throw e;
-		}
+
+				if (out == 0) {
+					return 0;
+					// throw new LogicException("Contents overlap: "+arg0+"
+					// "+arg1);
+				}
+
+				System.out.println("Comparing: " + arg0 + " " + arg1 + " " + out);
+				return out;
+			}
+		});
 	}
 
 	@Override

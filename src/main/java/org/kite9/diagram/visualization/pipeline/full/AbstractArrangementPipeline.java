@@ -65,9 +65,9 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	public Orthogonalizer createOrthogonalizer() {
 		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
 		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic, getDisplayer(),
- 				new FanInVertexArranger(getDisplayer()));
+ //				new FanInVertexArranger(getDisplayer()));
 				
-				//new ContainerCornerVertexArranger(getDisplayer()));
+				new ContainerCornerVertexArranger(getDisplayer()));
 		return orthogonalizer;
 	}
 
