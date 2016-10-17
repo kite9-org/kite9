@@ -439,6 +439,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	static {
 		NON_GRID_FRAC_MAP.put(BigFraction.ZERO, 0d);
 		NON_GRID_FRAC_MAP.put(BigFraction.ONE, 1d);
+		NON_GRID_FRAC_MAP.put(BigFraction.ONE_HALF,.5d);
 	}
 	
 	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs, List<Vertex> out) {
@@ -451,21 +452,29 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		Map<BigFraction, Double> fracMapX = NON_GRID_FRAC_MAP;
 		Map<BigFraction, Double> fracMapY = NON_GRID_FRAC_MAP;
 		
+		Bounds bx = rh.getBoundsOf(bounds, true);
+		Bounds by = rh.getBoundsOf(bounds, false);
+		int depth = em.getContainerDepth(c);
+		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
+		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
+		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
+		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
+		
 		if (l != null) {
 			switch (l) {
 			case UP:
 			case DOWN:
 			case VERTICAL:
 				expandContainerSpace(c, within, true);
-				addExtraContainerVertex(c, Direction.DOWN, before, cvs, out);
-				addExtraContainerVertex(c, Direction.DOWN, after, cvs, out);
+				addExtraContainerVertex(c, Direction.DOWN, before, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
+				addExtraContainerVertex(c, Direction.DOWN, after, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				break;
 			case LEFT:
 			case RIGHT:
 			case HORIZONTAL:
 				expandContainerSpace(c, within, false);
-				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, out);
-				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, out);
+				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
+				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				break;	
 			
 			case GRID:
@@ -478,15 +487,6 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				break;
 			}
 		}
-		
-		
-		Bounds bx = rh.getBoundsOf(bounds, true);
-		Bounds by = rh.getBoundsOf(bounds, false);
-		int depth = em.getContainerDepth(c);
-		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
-		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
-		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
-		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
 			setRouting(cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
@@ -517,7 +517,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		rh.setPlacedPosition(c, rh.createRouting(nx, ny));
 	}
 
-	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs, List<Vertex> out) {
+	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
 			int comp = compareDiagramElements((Connected) c, to);
 			if (comp == 1) {
@@ -534,15 +534,15 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			case DOWN:
 				Bounds newX = x.narrow(rh.getBoundsOf(toBounds, true));
 				x = newX == BasicBounds.EMPTY_BOUNDS ? x: newX;
-				x = x.keep(0, borderTrimAreaX, BigFraction.ONE_HALF);
 				break;
 			case LEFT:
 			case RIGHT:
 				Bounds newY = y.narrow(rh.getBoundsOf(toBounds, false));
 				y = newY == BasicBounds.EMPTY_BOUNDS ? y : newY;
-				y = y.keep(0, borderTrimAreaY, BigFraction.ONE_HALF);
 				break;
 			}
+			x = x.keep(xs, xe-xs, fracMapX.get(cvNew.getXOrdinal()));
+			y = y.keep(ys, ye-ys, fracMapY.get(cvNew.getYOrdinal()));
 			cvNew.setRoutingInfo(rh.createRouting(x, y));
 			out.add(cvNew);
 		}
