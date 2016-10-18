@@ -117,7 +117,7 @@ public class Test21InvisibleContexts extends AbstractFunctionalTest {
 	}
 	
 	@Test
-	public void test_21_4_hiddenContext() throws IOException {
+	public void test_21_5_hiddenContext() throws IOException {
 		Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
 		Arrow directed = new Arrow("directed");
 		

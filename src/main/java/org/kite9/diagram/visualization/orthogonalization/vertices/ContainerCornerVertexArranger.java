@@ -1,14 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.HIGHEST_ORD;
-import static org.kite9.diagram.visualization.planarization.mapping.ContainerVertex.LOWEST_ORD;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
@@ -46,40 +42,40 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
-			if (cv.getYOrdinal() == BigFraction.ZERO) {
-				if (cv.getXOrdinal() == BigFraction.ZERO) {
+			if (ContainerVertex.isMin(cv.getYOrdinal())) {
+				if (ContainerVertex.isMin(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
-				} else if (cv.getXOrdinal() == BigFraction.ONE) {
+				} else if (ContainerVertex.isMax(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.LEFT);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
 				}
 			}
 			
-			if (cv.getYOrdinal() == HIGHEST_ORD) {
-				if (cv.getXOrdinal() == LOWEST_ORD) {
+			if (ContainerVertex.isMax(cv.getYOrdinal())) {
+				if (ContainerVertex.isMin(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.RIGHT);
-				} else if (cv.getXOrdinal() == HIGHEST_ORD) {
+				} else if (ContainerVertex.isMax(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
 				}
 			}
 
-			if (cv.getXOrdinal() == LOWEST_ORD) {
-				if (cv.getYOrdinal() == LOWEST_ORD) {
+			if (ContainerVertex.isMin(cv.getXOrdinal())) {
+				if (ContainerVertex.isMin(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.DOWN);
-				} else if (cv.getYOrdinal() == HIGHEST_ORD) {
+				} else if (ContainerVertex.isMax(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
 				}
 			}
 			
-			if (cv.getXOrdinal() == HIGHEST_ORD) {
-				if (cv.getYOrdinal() == LOWEST_ORD) {
+			if (ContainerVertex.isMax(cv.getXOrdinal())) {
+				if (ContainerVertex.isMin(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
-				} else if (cv.getYOrdinal() == HIGHEST_ORD) {
+				} else if (ContainerVertex.isMax(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.UP);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
