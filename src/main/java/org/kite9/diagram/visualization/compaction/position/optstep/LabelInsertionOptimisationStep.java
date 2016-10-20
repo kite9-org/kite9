@@ -148,6 +148,10 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 
 			}
 		}
+		
+		if (best == null) {
+			throw new LogicException("Found nowhere to place "+key);
+		}
 
 		log.send(log.go() ? null : "Best rectangle: " + best + " " + best.getCost());
 		return best;

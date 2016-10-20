@@ -32,7 +32,7 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	}
 	
 	public static final boolean isMax(BigFraction b) {
-		return b.equals(BigFraction.ZERO);
+		return b.equals(BigFraction.ONE);
 	}
 	
 	

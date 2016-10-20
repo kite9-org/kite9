@@ -177,7 +177,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 		} finally {
 			if (!log.go()) {
-				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "pos.png");
+				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "vertex.png");
 			}
 		}
 
@@ -238,7 +238,10 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 		DirectedGroupAxis axis = DirectedGroupAxis.getType(g);
 		Layout l = g.getLayout();
-		log.send(sb.toString() + g.getGroupNumber() + " "+ ((g instanceof LeafGroup) ? g.toString() : axis) + "   " + rh.getPlacedPosition(g)+"  "+l+" "+(g.getAxis().isLayoutRequired() ? "LR" : ""));
+		log.send(sb.toString() + g.getGroupNumber() +
+				" "+ ((g instanceof LeafGroup) ? g.toString() : axis) 
+				+ "   " + rh.getPlacedPosition(g)+"  "+l+" "+(g.getAxis().isLayoutRequired() ? "LR " : " ")
+				+ ((g instanceof CompoundGroup) ? (((CompoundGroup)g).getA().groupNumber)+" "+(((CompoundGroup)g).getB().groupNumber) : "" ));
 		
 		if (g instanceof CompoundGroup) {		
 //			if ((l==Layout.UP) || (l==Layout.LEFT)) {
@@ -309,8 +312,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			if (l != null) {
 				checkMinimumGridSizes(ri);
 				rh.setPlacedPosition(l, ri);
-				ensureContainerBoundsAreLargeEnough(ri, c, lg);
 			}
+			ensureContainerBoundsAreLargeEnough(ri, c, lg);
 		}	
 	}
 	
@@ -331,9 +334,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				cri = rh.emptyBounds();
 			}
 
-			cri = rh.increaseBounds(cri, ri);
-			log.send("Increased bounds of "+c+" to "+cri+" due to "+lg);
-			rh.setPlacedPosition(c, cri);
+			RoutingInfo cri2 = rh.increaseBounds(cri, ri);
+			if (!cri2.equals(cri)) {
+				log.send("Increased bounds of "+c+" to "+cri2+" due to "+lg);
+			}
+			rh.setPlacedPosition(c, cri2);
 			l = (Connected) c;
 			c = l.getContainer();
 		}
@@ -592,12 +597,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 
 				if (out == 0) {
-					return 0;
-					// throw new LogicException("Contents overlap: "+arg0+"
-					// "+arg1);
+					// return 0;
+					throw new LogicException("Contents overlap: "+arg0+" "+arg1);
 				}
 
-				System.out.println("Comparing: " + arg0 + " " + arg1 + " " + out);
+				//System.out.println("Comparing: " + arg0 + " " + arg1 + " " + out);
 				return out;
 			}
 		});

@@ -21,6 +21,7 @@ import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.IntegerRangeValue;
 
@@ -220,6 +221,11 @@ public class GridPositionerImpl implements GridPositioner {
 			if (!xOut.containsKey(bf)) {
 				Bounds bleft = left.get(bf);
 				Bounds bright = right.get(bf);
+				
+				if (bleft.getDistanceMax() > bright.getDistanceMin()) {
+					throw new LogicException("Overlapping bounds in grid");
+				}
+				
 				double midPoint = (bleft.getDistanceMax() + bright.getDistanceMin()) /2d;
 				double frac = (midPoint-xBounds.getDistanceMin()) / (xBounds.getDistanceMax() - xBounds.getDistanceMin());
 				xOut.put(bf, frac);
@@ -234,6 +240,12 @@ public class GridPositionerImpl implements GridPositioner {
 			if (!yOut.containsKey(bf)) {
 				Bounds bup = up.get(bf);
 				Bounds bdown = down.get(bf);
+				
+				if (bup.getDistanceMax() > bdown.getDistanceMin()) {
+					throw new LogicException("Overlapping bounds in grid");
+				}
+
+				
 				double midPoint = (bup.getDistanceMax() + bdown.getDistanceMin()) /2d;
 				double frac = (midPoint - yBounds.getDistanceMin()) / (yBounds.getDistanceMax() - yBounds.getDistanceMin());
 				yOut.put(bf, frac);

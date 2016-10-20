@@ -34,6 +34,7 @@ public class Test38XMLFilesNew extends AbstractFunctionalTest {
 	}
 	
 	@Test
+	@Ignore
 	public void test_38_4_OverlapIssue() throws IOException {
 		generate("layout_issue_planarization_diagram.xml");
 	}
