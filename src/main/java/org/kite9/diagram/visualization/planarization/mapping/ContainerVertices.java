@@ -3,7 +3,6 @@
  */
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.math.fraction.BigFraction;
@@ -18,9 +17,9 @@ import org.apache.commons.math.fraction.BigFraction;
 public interface ContainerVertices {
 		
 	/**
-	 * Ordering of vertices around the container, from top left clockwise.
+	 * Unordered collection of vertices around the container.
 	 */
-	public ArrayList<ContainerVertex> getPerimeterVertices();
+	public Collection<ContainerVertex> getPerimeterVertices();
 	
 	/**
 	 * Creates or returns a vertex from within the rectangle of the container.

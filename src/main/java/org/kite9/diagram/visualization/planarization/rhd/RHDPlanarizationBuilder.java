@@ -86,7 +86,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 	protected ElementMapper em;
 	protected GridPositioner gridHelp;
-	private RoutableHandler2D rh;
+	protected RoutableHandler2D rh;
 	
 	// temp workspace
 	private double borderTrimAreaX = Double.MAX_VALUE; 

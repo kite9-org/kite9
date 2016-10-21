@@ -1,9 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
@@ -130,13 +128,14 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		throw new Kite9ProcessingException("No anchor found for container "+c);
 	}
 	
-	public Set<DiagramElement> getAllAnchoredContainers() {
-		Set<DiagramElement> out = new HashSet<>();
-		for (Anchor a : anchors) {
-			out.add(a.getDe());
+	public boolean hasAnchorFor(Container c) {
+		for (Anchor anchor : anchors) {
+			if (anchor.getDe() == c) {
+				return true;
+			}
 		}
 		
-		return out;
+		return false;
 	}
 	
 }

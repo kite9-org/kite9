@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
@@ -46,18 +47,18 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 	private static Container getOuterContainer(ContainerVertex from, ContainerVertex to) {
 		int depth = Integer.MAX_VALUE;
 		DiagramElement out = null;
-		for (DiagramElement f : from.getAllAnchoredContainers()) {
-			int currentDepth = getDepth(f);
+		for (Anchor f : from.getAnchors()) {
+			int currentDepth = getDepth(f.getDe());
 			if (currentDepth < depth ) {
-				out = f;
+				out = f.getDe();
 				depth = currentDepth;
 			}
 		}
 		
-		for (DiagramElement f : to.getAllAnchoredContainers()) {
-			int currentDepth = getDepth(f);
+		for (Anchor f : to.getAnchors()) {
+			int currentDepth = getDepth(f.getDe());
 			if (currentDepth < depth ) {
-				out = f;
+				out = f.getDe();
 				depth = currentDepth;
 			}
 		}

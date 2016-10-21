@@ -1,11 +1,9 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
@@ -16,7 +14,7 @@ import org.kite9.diagram.position.VPos;
 public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	private final Container c;
-	private transient ArrayList<ContainerVertex> plist;
+	private transient Set<ContainerVertex> pset;
 	private transient int pListSize;
 	final Map<OPair<BigFraction>, ContainerVertex> elements;
 
@@ -70,78 +68,54 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	}
 
 	@Override
-	public ArrayList<ContainerVertex> getPerimeterVertices() {
+	public Collection<ContainerVertex> getPerimeterVertices() {
 		if (pListSize != elements.size()) {
 			BigFraction minx = cx.getA();
 			BigFraction maxx = cx.getB();
 			BigFraction miny = cy.getA();
 			BigFraction maxy = cy.getB();
 			
-			List<ContainerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny));
-			List<ContainerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy));
-			List<ContainerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy));
-			List<ContainerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy));
+			pset = new HashSet<>(10);
+			collect(minx, maxx, miny, miny, pset);
+			collect(maxx, maxx, miny, maxy, pset);
+			collect(minx, maxx, maxy, maxy, pset);
+			collect(minx, minx, miny, maxy, pset);
 			
-			plist = new ArrayList<>(top.size()+right.size()+left.size()+bottom.size());
 			
-			addAllExceptLast(plist, top);
-			addAllExceptLast(plist, right);
-			addAllExceptLast(plist, bottom);
-			addAllExceptLast(plist, left);
 			pListSize = elements.size();
 		}
 		
-		return plist;
+		return pset;
 		
-	}
-	
-	private List<ContainerVertex> sort(int xorder, int yorder, List<ContainerVertex> collect) {
-		Collections.sort(collect, new Comparator<ContainerVertex>() {
-
-			@Override
-			public int compare(ContainerVertex o1, ContainerVertex o2) {
-				int ys = o1.getYOrdinal().compareTo(o2.getYOrdinal()) * yorder;
-				int xs = o1.getXOrdinal().compareTo(o2.getXOrdinal()) * xorder;
-				
-				return xs + ys;
-			}
-		});
-		
-		return collect;
-	}
-
-	/*
-	 * Prevents duplicating the corner vertices
-	 */
-	private void addAllExceptLast(ArrayList<ContainerVertex> out, List<ContainerVertex> in) {
-		for (int i = 0; i < in.size()-1; i++) {
-			out.add(in.get(i));
-		}
-	}
-
-	private List<ContainerVertex> collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy) {
-		List<ContainerVertex> out = new ArrayList<>();
-		for (ContainerVertex cv : elements.values()) {
-			BigFraction x = cv.getXOrdinal();
-			BigFraction y = cv.getYOrdinal();
-			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
-				out.add(cv);
-			}
-		}
-		
-		return out;
 	}
 	
 	private boolean afterEq(BigFraction in, BigFraction with) {
+		if (in == null) {
+			return true;	
+		}
 		int c = in.compareTo(with);
 		return c > -1;
 	}
 	
 	private boolean beforeEq(BigFraction in, BigFraction with) {
+		if (in == null) {
+			return true;	
+		}
 		int c = in.compareTo(with);
 		return c < 1;
 	}
 	
+	private void collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<ContainerVertex> out) {
+		for (ContainerVertex cv : elements.values()) {
+			if (cv.hasAnchorFor(this.c)) {
+				BigFraction x = cv.getXOrdinal();
+				BigFraction y = cv.getYOrdinal();
+				if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
+					out.add(cv);
+				}
+			}
+		}
+	}
 
 	public OPair<BigFraction> getXRange() {
 		return cx;

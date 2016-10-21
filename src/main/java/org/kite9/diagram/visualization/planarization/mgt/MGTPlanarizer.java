@@ -23,7 +23,7 @@ public class MGTPlanarizer extends AbstractPlanarizer implements Planarizer {
 
 	@Override
 	protected PlanarizationBuilder getPlanarizationBuilder() {
-		return new HierarchicalPlanarizationBuilder(getRoutableHandler(), getElementMapper(), getGridPositioner());
+		return new HierarchicalPlanarizationBuilder(getElementMapper(), getGridPositioner());
 	}
 
 	@Override
