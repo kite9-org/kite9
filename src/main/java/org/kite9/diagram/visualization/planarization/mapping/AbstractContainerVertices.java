@@ -107,12 +107,10 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	
 	private void collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<ContainerVertex> out) {
 		for (ContainerVertex cv : elements.values()) {
-			if (cv.hasAnchorFor(this.c)) {
-				BigFraction x = cv.getXOrdinal();
-				BigFraction y = cv.getYOrdinal();
-				if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
-					out.add(cv);
-				}
+			BigFraction x = cv.getXOrdinal();
+			BigFraction y = cv.getYOrdinal();
+			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
+				out.add(cv);
 			}
 		}
 	}

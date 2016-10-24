@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
@@ -492,6 +493,15 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				break;
 			}
 		}
+		
+		// add border vertices for directed edges.
+		if (c instanceof Connected) {
+			for (Connection conn : ((Connected) c).getLinks()) {
+				if (conn.getDrawDirection() != null) {
+					addExtraContainerVertex(c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
+				}
+			}
+		}
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
 			setRouting(cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
@@ -532,22 +542,43 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
 			Bounds x = rh.getBoundsOf(cbounds, true);
 			Bounds y = rh.getBoundsOf(cbounds, false);
-			ContainerVertex cvNew = cvs.createVertex(ContainerVertex.getOrdForXDirection(d), ContainerVertex.getOrdForYDirection(d));
+			BigFraction xOrd = null, yOrd = null;
+			double fracX = 0d, fracY = 0d;
 			// set position
 			switch (d) {
 			case UP:
 			case DOWN:
 				Bounds newX = x.narrow(rh.getBoundsOf(toBounds, true));
+				double containerWidth = x.getDistanceMax() - x.getDistanceMin();
+				int denom = Math.round((float) (containerWidth / (xe-xs)));
+				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
+				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
+				double numerd = fracX * (double) denom;
+				int numer = Math.round((float) numerd);
 				x = newX == BasicBounds.EMPTY_BOUNDS ? x: newX;
+				yOrd = ContainerVertex.getOrdForYDirection(d);
+				xOrd = BigFraction.getReducedFraction(numer, denom);
+				fracY = fracMapY.get(yOrd);
 				break;
 			case LEFT:
 			case RIGHT:
 				Bounds newY = y.narrow(rh.getBoundsOf(toBounds, false));
+				double containerHeight = y.getDistanceMax() - y.getDistanceMin();
+				denom = Math.round((float) (containerHeight / (ye-ys)));
+				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
+				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
+				numerd = fracY * (double) denom;
+				numer = Math.round((float) numerd);
 				y = newY == BasicBounds.EMPTY_BOUNDS ? y : newY;
+				xOrd = ContainerVertex.getOrdForXDirection(d);
+				yOrd = BigFraction.getReducedFraction(numer, denom);
 				break;
 			}
-			x = x.keep(xs, xe-xs, fracMapX.get(cvNew.getXOrdinal()));
-			y = y.keep(ys, ye-ys, fracMapY.get(cvNew.getYOrdinal()));
+			
+			ContainerVertex cvNew = cvs.createVertex(xOrd, yOrd);			
+			
+			x = x.keep(xs, xe-xs, fracX);
+			y = y.keep(ys, ye-ys, fracY);
 			cvNew.setRoutingInfo(rh.createRouting(x, y));
 			out.add(cvNew);
 		}
