@@ -471,14 +471,12 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			case UP:
 			case DOWN:
 			case VERTICAL:
-				expandContainerSpace(c, within, true);
 				addExtraContainerVertex(c, Direction.DOWN, before, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				addExtraContainerVertex(c, Direction.DOWN, after, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				break;
 			case LEFT:
 			case RIGHT:
 			case HORIZONTAL:
-				expandContainerSpace(c, within, false);
 				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				break;	
@@ -519,18 +517,6 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 		return containerWithNonGridParent;
 	}
-	
-	private void expandContainerSpace(Container c, Container within, boolean horiz) {
-		Bounds nx, ny;
-		if (horiz) {
-			nx = rh.getBoundsOf(rh.getPlacedPosition(within), true);
-			ny = rh.getBoundsOf(rh.getPlacedPosition(c), false);
-		} else {
-			ny = rh.getBoundsOf(rh.getPlacedPosition(within), false);
-			nx = rh.getBoundsOf(rh.getPlacedPosition(c), true);			
-		}
-		rh.setPlacedPosition(c, rh.createRouting(nx, ny));
-	}
 
 	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
@@ -548,38 +534,38 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			switch (d) {
 			case UP:
 			case DOWN:
-				Bounds newX = x.narrow(rh.getBoundsOf(toBounds, true));
+				x = x.narrow(rh.getBoundsOf(toBounds, true));
 				double containerWidth = x.getDistanceMax() - x.getDistanceMin();
 				int denom = Math.round((float) (containerWidth / (xe-xs)));
 				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
 				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
 				double numerd = fracX * (double) denom;
 				int numer = Math.round((float) numerd);
-				x = newX == BasicBounds.EMPTY_BOUNDS ? x: newX;
 				yOrd = ContainerVertex.getOrdForYDirection(d);
 				xOrd = BigFraction.getReducedFraction(numer, denom);
 				fracY = fracMapY.get(yOrd);
 				break;
 			case LEFT:
 			case RIGHT:
-				Bounds newY = y.narrow(rh.getBoundsOf(toBounds, false));
+				y = y.narrow(rh.getBoundsOf(toBounds, false));
 				double containerHeight = y.getDistanceMax() - y.getDistanceMin();
 				denom = Math.round((float) (containerHeight / (ye-ys)));
 				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
 				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
 				numerd = fracY * (double) denom;
 				numer = Math.round((float) numerd);
-				y = newY == BasicBounds.EMPTY_BOUNDS ? y : newY;
 				xOrd = ContainerVertex.getOrdForXDirection(d);
 				yOrd = BigFraction.getReducedFraction(numer, denom);
+				fracX = fracMapX.get(xOrd);
 				break;
 			}
 			
 			ContainerVertex cvNew = cvs.createVertex(xOrd, yOrd);			
 			
-			x = x.keep(xs, xe-xs, fracX);
-			y = y.keep(ys, ye-ys, fracY);
-			cvNew.setRoutingInfo(rh.createRouting(x, y));
+			Bounds xNew = x.keep(xs, xe-xs, fracX);
+			Bounds yNew = y.keep(ys, ye-ys, fracY);
+			
+			cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
 			out.add(cvNew);
 		}
 	}
