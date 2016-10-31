@@ -77,8 +77,8 @@ public class Tools implements Logable {
 		pln.getEdgeOrderings().put(split, splitEdgeOrdering);
 
 		// update the from/to edge ordering
-		switchElement(fromEdgeOrdering, e, newEdges[0]);
-		switchElement(toEdgeOrdering, e, newEdges[1]);
+		fromEdgeOrdering.replace(e, newEdges[0].meets(from) ? newEdges[0] : newEdges[1]);
+		toEdgeOrdering.replace(e, newEdges[1].meets(to) ? newEdges[1] : newEdges[0]);
 		log.send(log.go() ? null : "New edge order around " + from + " = " + fromEdgeOrdering);
 		log.send(log.go() ? null : "New edge order around " + to + " = " + toEdgeOrdering);
 		log.send(log.go() ? null : "New edge order around " + split + " = " + splitEdgeOrdering);
@@ -107,13 +107,6 @@ public class Tools implements Logable {
 		}
 
 		return split;
-	}
-
-	/**
-	 * Switches an element in a list for a replacement
-	 */
-	private void switchElement(VertexEdgeOrdering list, Edge e, Edge back) {
-		list.replace(e, back);
 	}
 
 	/**

@@ -48,11 +48,6 @@ public class BasicVertexEdgeOrdering extends AbstractListBasedEdgeOrdering imple
 	}
 
 	@Override
-	public void replaceAll(List<Edge> allNewEdges) {
-		underlying = allNewEdges;
-	}
-
-	@Override
 	public List<Edge> getEdgesAsList() {
 		return underlying;
 	}

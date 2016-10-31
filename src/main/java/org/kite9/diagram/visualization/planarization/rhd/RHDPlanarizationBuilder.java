@@ -18,7 +18,6 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.functional.TestingEngine;
@@ -526,9 +525,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 			RoutingInfo cbounds = rh.getPlacedPosition(c);
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
+			if (!(to instanceof Container)) {
+				toBounds = rh.narrow(toBounds, borderTrimAreaX, borderTrimAreaY);
+			}
 			Bounds x = rh.getBoundsOf(cbounds, true);
 			Bounds y = rh.getBoundsOf(cbounds, false);
 			BigFraction xOrd = null, yOrd = null;
+			Bounds xNew = null, yNew = null;
 			double fracX = 0d, fracY = 0d;
 			// set position
 			switch (d) {
@@ -544,6 +547,14 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				yOrd = ContainerVertex.getOrdForYDirection(d);
 				xOrd = BigFraction.getReducedFraction(numer, denom);
 				fracY = fracMapY.get(yOrd);
+				
+				if (to instanceof Container) {
+					xNew = x.keep(xs, xe-xs, fracX);	// we are connecting to a container vertex
+				} else {
+					xNew = x;
+				}
+				yNew = y.keep(ys, ye-ys, fracY);
+				
 				break;
 			case LEFT:
 			case RIGHT:
@@ -557,16 +568,24 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				xOrd = ContainerVertex.getOrdForXDirection(d);
 				yOrd = BigFraction.getReducedFraction(numer, denom);
 				fracX = fracMapX.get(xOrd);
+				
+				if (to instanceof Container) {
+					yNew = y.keep(ys, ye-ys, fracY);
+				} else {
+					yNew = y;
+				}
+				xNew = x.keep(xs, xe-xs, fracX);
 				break;
 			}
 			
-			ContainerVertex cvNew = cvs.createVertex(xOrd, yOrd);			
+			ContainerVertex cvNew = cvs.createVertex(xOrd, yOrd);	
 			
-			Bounds xNew = x.keep(xs, xe-xs, fracX);
-			Bounds yNew = y.keep(ys, ye-ys, fracY);
+			if (cvNew.getRoutingInfo() == null) {
+				// new vertex				
+				cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
+				out.add(cvNew);
+			}
 			
-			cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
-			out.add(cvNew);
 		}
 	}
 

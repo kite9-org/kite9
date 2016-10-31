@@ -45,7 +45,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	}
 
 	@Deprecated
-	protected final Double tolerance = 1e-20;
+	protected final Double tolerance = 1e-10;
 
 	protected Kite9Log log = new Kite9Log(this);
 	

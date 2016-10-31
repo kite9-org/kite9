@@ -100,18 +100,6 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 		}
 	}
 
-
-	@Override
-	public void replaceAll(List<Edge> allNewEdges) {
-		af.clear();
-		bf.clear();
-		bb.clear();
-		ab.clear();
-		bf.addAll(allNewEdges);
-		changed();
-	}
-
-
 	@Override
 	protected Direction getInterceptDirection(Edge e) {
 		return e.getDrawDirectionFrom(v);

@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.planarization.ordering;
 
-import java.util.List;
-
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.position.Direction;
 
@@ -19,6 +17,4 @@ public interface VertexEdgeOrdering extends EdgeOrdering {
 
 	public void replace(Edge b, Edge a);
 	
-	public void replaceAll(List<Edge> allNewEdges);
-
 }

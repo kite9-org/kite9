@@ -296,7 +296,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			double currentAxisTotal = ep.costing.minimumBoundedAxisDistance;
 			boolean out = currentAxisTotal <= maximumBoundedAxisDistance + tolerance;
 			if (!out) {
-				log.send("Exceeded maximumBoundedAxisDistance: "+currentAxisTotal+" (max="+maximumBoundedAxisDistance+")");
+				log.send("Exceeded maximumBoundedAxisDistance: "+currentAxisTotal+" (max="+maximumBoundedAxisDistance+")"+" for: "+ep);
 			}
 			return out;
 		} else {
@@ -485,13 +485,13 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			
 		switch (entryDirection) {
 		case UP:
-			return v.getYOrdinal() == (termination ? BigFraction.ONE : BigFraction.ZERO);
+			return termination ? ContainerVertex.isMax(v.getYOrdinal()) : ContainerVertex.isMin(v.getYOrdinal());
 		case DOWN:
-			return v.getYOrdinal() == (termination ? BigFraction.ZERO : BigFraction.ONE);
+			return termination ? ContainerVertex.isMin(v.getYOrdinal()) : ContainerVertex.isMax(v.getYOrdinal());
 		case LEFT:
-			return v.getXOrdinal() == (termination ? BigFraction.ONE : BigFraction.ZERO);
+			return termination ? ContainerVertex.isMax(v.getXOrdinal()) : ContainerVertex.isMin(v.getXOrdinal());
 		case RIGHT:
-			return v.getXOrdinal() == (termination ? BigFraction.ZERO : BigFraction.ONE);			
+			return termination ? ContainerVertex.isMin(v.getXOrdinal()) : ContainerVertex.isMax(v.getXOrdinal());		
 		}
 		
 		throw new LogicException("Can't determine whether we can arrive/leave at this vertex");

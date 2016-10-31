@@ -19,8 +19,8 @@ import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
 /**
- * Edges connecting to a container either connect to either the container start vertex or the container end vertex,
- * or one of the vertices witin the container.
+ * Edges connecting to a container either connect to either a container vertex,
+ * or one of the vertices within the container.
  * 
  * When connecting to one of the vertices within the container, we must remove the remainder of the edge
  * which is inside the container itself, leaving just the part connecting to the container edge.

@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.math.fraction.BigFraction;
@@ -25,7 +24,7 @@ import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * Edges connecting to a container either connect to either a container corner vertex or
+ * Edges connecting to a container can connect to either a container corner vertex or
  * a container side vertex (or a vertex within the container == to be deprecated)
  * 
  * Where multiple edges connect to a container vertex, these need to be split out so that they connect 
@@ -62,27 +61,31 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (ContainerVertex) v, pln, number);
 				}
 				
-			} else if ((v instanceof ContainerVertex) && (v.getEdgeCount() > 2)) {
+			} else if ((v instanceof ContainerVertex) && (v.getEdgeCount() > 3)) {
 				ContainerVertex cv = (ContainerVertex) v;
+				boolean ymin = ContainerVertex.isMin(cv.getYOrdinal());
+				boolean xmin = ContainerVertex.isMin(cv.getXOrdinal());
+				boolean ymax = ContainerVertex.isMax(cv.getYOrdinal());
+				boolean xmax = ContainerVertex.isMax(cv.getXOrdinal());
 								
 				if (ContainerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
-					number = splitEdgesGoing(Direction.LEFT, ContainerVertex.isMin(cv.getYOrdinal()) ? Direction.DOWN : Direction.UP, 
-							ContainerVertex.isMin(cv.getYOrdinal()), cv, pln, number);
+					number = splitEdgesGoing(Direction.LEFT, ymin ? Direction.DOWN : Direction.UP, 
+							ymin, cv, pln, number);
 				}
 				
 				if ((cv.getXOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getYOrdinal()))) {
-					number = splitEdgesGoing(Direction.RIGHT, cv.getYOrdinal()==BigFraction.ZERO ? Direction.DOWN : Direction.UP, 
-							cv.getYOrdinal()==BigFraction.ONE, cv, pln, number);
+					number = splitEdgesGoing(Direction.RIGHT, ymin ? Direction.DOWN : Direction.UP, 
+							ymax, cv, pln, number);
 				}
 				
 				if ((cv.getYOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getXOrdinal()))) {
-					number = splitEdgesGoing(Direction.UP, cv.getXOrdinal() == BigFraction.ZERO ? Direction.RIGHT : Direction.LEFT, 
-							cv.getXOrdinal() == BigFraction.ONE, cv, pln, number);
+					number = splitEdgesGoing(Direction.UP, xmin ? Direction.RIGHT : Direction.LEFT, 
+							xmax, cv, pln, number);
 				}
 				
 				if ((cv.getYOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getXOrdinal()))) {
-					number = splitEdgesGoing(Direction.DOWN, cv.getXOrdinal() == BigFraction.ZERO ? Direction.RIGHT : Direction.LEFT, 
-							cv.getXOrdinal() == BigFraction.ZERO, cv, pln, number);
+					number = splitEdgesGoing(Direction.DOWN, xmin ? Direction.RIGHT : Direction.LEFT, 
+							xmin, cv, pln, number);
 				}
 			}
 		}
@@ -137,7 +140,6 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		Edge receivingEdge = getRot(originalOrder, startPoint);
 		
 		if (edgesRequiringSplit > 0) {
-			List<Edge> newOrder = new ArrayList<Edge>(originalOrder);
 			int edgesDoneSplit = 0;
 			for (int i = startPoint +(turnClockwise ? 1 : -1); edgesDoneSplit < edgesRequiringSplit; i=i+(turnClockwise ? 1 : -1)) {
 				Edge edgeMoving = getRot(originalOrder, i);
@@ -146,10 +148,9 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 				}
 
 				receivingEdge = splitEdgeFromVertex(v.getOriginalUnderlying().getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
-					v.getOriginalUnderlying(), v, pln, receivingEdge, newOrder, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
+					v.getOriginalUnderlying(), v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
 				
 			}
-			eo.replaceAll(newOrder);
 			
 			log.send("Changed vertex "+v+" order now: ", eo.getEdgesAsList());
 		}
@@ -176,7 +177,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	/**
 	 * Splits the receivingEdge with a new vertex, and moves "mover" onto it.  "after" is the edge following mover in the current ordering
 	 */
-	private Edge splitEdgeFromVertex(String vertexName, Container c, Vertex v, Planarization pln, Edge receivingEdge, List<Edge> newOrder, Edge mover, Edge after, boolean clockwise) {
+	private Edge splitEdgeFromVertex(String vertexName, Container c, Vertex v, Planarization pln, Edge receivingEdge, Edge mover, Edge after, boolean clockwise) {
 		// ok, splitting time - create a new vertex for the 'next' edge
 		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName, c);
 
@@ -224,10 +225,12 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		t.fixVertexFaceMap(pln, offFace, offFace.cornerIterator(), false);
 		
 		
-		// fix the vertex edge ordering
+		// fix the vertex edge ordering for v
+		VertexEdgeOrdering newOrder = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
 		newOrder.remove(mover);
-		int brokenEdge = newOrder.indexOf(receivingEdge);
-		newOrder.set(brokenEdge, newArc.meets(v) ? newArc : oldArc);
+		newOrder.replace(receivingEdge, newArc.meets(v) ? newArc : oldArc);
+
+		// fix vertex edge ordering for newVertex
 		List<Edge> otherEndOrder = pln.getEdgeOrderings().get(newVertex).getEdgesAsList();
 		int oldArcI = otherEndOrder.indexOf(clockwise ? oldArc : newArc);
 		if (oldArcI==-1) {
