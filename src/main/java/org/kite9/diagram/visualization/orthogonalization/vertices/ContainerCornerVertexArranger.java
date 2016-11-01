@@ -17,6 +17,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -138,14 +139,14 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 
 	protected void processDarts(Container underlying, AbstractAnchoringVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
 		Edge thisEdge = (Edge) toSplit.getUnderlying();
-		
+		ContainerBorderEdge cbe = (ContainerBorderEdge) toSplit.getUnderlying();
 		
 		for (int j = 0; j < leaversToMove.size(); j++) {
 			Dart leaving = leaversToMove.get(j);
 			Vertex from = toSplit.otherEnd(cv);
 			Vertex vsv = createSideVertex(splitDirection, cv, j, thisEdge instanceof DirectionEnforcingElement);
 			double dist = sizer.getLinkMargin(underlying, splitDirection);
-			Dart sideDart = o.createDart(cv, vsv, underlying, splitDirection, dist);
+			Dart sideDart = o.createDart(cv, vsv, cbe, splitDirection, dist);
 			
 			cv.removeEdge(leaving);
 			replaceEnd(cv, leaving, vsv);

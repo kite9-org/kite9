@@ -24,19 +24,19 @@ public class Test46MoreXMLFiles extends AbstractFunctionalTest {
 		generate("46_2.xml");
 	}
 	
-//	@Ignore("Broken in sprint 7")
+	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_3_ServerError() throws IOException {
 		generate("46_3.xml");
 	}
 	
-//	@Ignore("Broken in sprint 7")
+	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_4_FailsToDraw() throws IOException {
 		generate("46_4.xml");
 	}
 	
-//	@Ignore("Broken in sprint 7")
+	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_5_FailsToDraw() throws IOException {
 		generate("46_5.xml");

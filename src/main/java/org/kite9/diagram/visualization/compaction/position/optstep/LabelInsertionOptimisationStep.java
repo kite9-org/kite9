@@ -371,13 +371,13 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 
 		for (Dart d : c.getOrthogonalization().getAllDarts()) {
 			Object underlying = d.getUnderlying();
+			Vertex dFrom = d.getFrom();
+			Vertex dTo = d.getTo();
 			if (underlying instanceof ContainerBorderEdge) {
-				Vertex dFrom = d.getFrom();
-				Vertex dTo = d.getTo();
 				for (DiagramElement co : ((ContainerBorderEdge) underlying).getContainers()) {
 					mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
 				}
-			}
+			} 
 		}
 
 		// having established above the darts making the bottom edge of the

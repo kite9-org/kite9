@@ -282,7 +282,6 @@ public class Test42Shapes extends AbstractFunctionalTest {
 		renderDiagramLocal(d);
 	}
 	
-//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_42_21_ArrowReservingConvex() throws IOException {
 		List<XMLElement> out = new LinkedList<XMLElement>();
