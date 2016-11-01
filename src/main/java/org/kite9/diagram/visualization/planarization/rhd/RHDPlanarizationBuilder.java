@@ -309,8 +309,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			
 			// sizing
 			RoutingInfo ri = lg.getAxis().getPosition(rh, false);
+			checkMinimumGridSizes(ri);
 			if (l != null) {
-				checkMinimumGridSizes(ri);
 				rh.setPlacedPosition(l, ri);
 			}
 			ensureContainerBoundsAreLargeEnough(ri, c, lg);

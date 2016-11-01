@@ -11,6 +11,7 @@ import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -36,6 +37,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		log.error("Contradiction: "+bic);
 		if (bic instanceof Connection) {
 			Tools.setConnectionContradiction((Connection)bic, true);
+		} else {
+			throw new LogicException("Can't set a contradiction here for some reason");
 		}
 	}
 
@@ -126,6 +129,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 						return;
 					} else {
 						switch (l) {
+						case GRID:
+							throw new Kite9ProcessingException("Not handled this case yet");
 						case HORIZONTAL:
 							verticalContradiction(c, drawDirection);
 							return;
@@ -158,7 +163,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 
 	@Override
 	public void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
-		Direction ld = GroupPhase.getDirectionForLayout(l);
+		Direction ld = GroupPhase.getDirectionForLayout(l, true);		// TODO: probably need to fix later.
 		if (GroupPhase.isHorizontalDirection(ld) != GroupPhase.isHorizontalDirection(d)) {
 			setContradiction(c);
 			return;

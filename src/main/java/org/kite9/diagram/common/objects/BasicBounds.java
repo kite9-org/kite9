@@ -107,7 +107,7 @@ public class BasicBounds implements Bounds {
 	
 	@Override
 	public Bounds keep(double buffer, double width, double fraction) {
-		double span = max - min - (buffer * 2d);
+		double span = (max - min) - (buffer * 2d);
 		double pos = fraction * span;
 		double lower = min + pos - (width / 2d) + buffer;
 		double upper = min + pos + (width / 2d) + buffer;
