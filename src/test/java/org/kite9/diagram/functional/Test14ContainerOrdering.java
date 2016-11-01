@@ -81,7 +81,7 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 	
-	@Ignore("Broken in sprint 7")
+//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_14_7_contextDirection() throws IOException {
 		Glyph[] g = new Glyph[12];

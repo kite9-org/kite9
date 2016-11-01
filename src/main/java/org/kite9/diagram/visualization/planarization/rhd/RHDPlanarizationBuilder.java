@@ -494,7 +494,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		// add border vertices for directed edges.
 		if (c instanceof Connected) {
 			for (Connection conn : ((Connected) c).getLinks()) {
-				if (conn.getDrawDirection() != null) {
+				if ((conn.getDrawDirection() != null) && (!conn.getRenderingInformation().isContradicting())) {
 					addExtraContainerVertex(c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				}
 			}
@@ -660,7 +660,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	protected int compareDiagramElements(DiagramElement a, DiagramElement b) {
 		DiagramElement parent =a.getParent();
 		if (b.getParent() != parent) {
-			throw new LogicException("a and b must share a container");
+			parent = getCommonContainer(a, b);
 		}
 		
 		Layout l = ((Container) parent).getLayout();
@@ -695,5 +695,22 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 		}
 		
+	}
+	
+	protected Container getCommonContainer(DiagramElement from, DiagramElement to) {
+		while (from != to) {
+			int depthFrom = em.getContainerDepth(from);
+			int depthTo = em.getContainerDepth(to);
+			if (depthFrom < depthTo) {
+				to = to.getParent();
+			} else if (depthFrom > depthTo) {
+				from = from.getParent();
+			} else {
+				to = to.getParent();
+				from = from.getParent();
+			}
+		}
+		
+		return (Container) from;
 	}
 }

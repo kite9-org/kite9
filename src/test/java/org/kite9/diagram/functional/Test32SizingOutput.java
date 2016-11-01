@@ -21,7 +21,7 @@ import org.kite9.framework.common.HelpMethods;
 
 public class Test32SizingOutput extends AbstractFunctionalTest {
 
-	@Ignore("Broken in sprint 7")
+//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_32_1_TestSizesAreCreated() throws IOException {
 		DiagramXMLElement d = createADiagram();
@@ -29,7 +29,7 @@ public class Test32SizingOutput extends AbstractFunctionalTest {
 
 	}
 	
-	@Ignore("Broken in sprint 7")
+//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_32_2_TestMapIsCreated() throws IOException {
 		DiagramXMLElement d = createADiagram();

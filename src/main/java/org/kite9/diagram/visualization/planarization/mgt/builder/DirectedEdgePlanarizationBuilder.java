@@ -187,22 +187,5 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		throw new LogicException("Couldn't determine direction to insert in");
 	}
 
-	private Container getCommonContainer(DiagramElement from, DiagramElement to) {
-		while (from != to) {
-			int depthFrom = em.getContainerDepth(from);
-			int depthTo = em.getContainerDepth(to);
-			if (depthFrom < depthTo) {
-				to = to.getParent();
-			} else if (depthFrom > depthTo) {
-				from = from.getParent();
-			} else {
-				to = to.getParent();
-				from = from.getParent();
-			}
-		}
-		
-		return (Container) from;
-	}
-
 	protected abstract Edge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p);
 }

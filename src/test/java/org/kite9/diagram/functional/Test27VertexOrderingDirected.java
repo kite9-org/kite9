@@ -95,7 +95,7 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 	
 	
-	@Ignore("Broken in sprint 7")
+//	@Ignore("Broken in sprint 7")
 	@Test
     /** @see http://www.kite9.com/content/non-optimal-creation-routes-ie-one-route-prevents-another */
 	public void test_27_4_BigPatch() throws IOException {

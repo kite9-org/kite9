@@ -11,7 +11,6 @@ import junit.framework.Assert;
 
 public class Test37XMLFiles extends AbstractFunctionalTest {
 
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_37_1_LibraryExample() throws IOException {
 		generate("library1.xml");
@@ -67,7 +66,6 @@ public class Test37XMLFiles extends AbstractFunctionalTest {
 		generate("sizings.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_37_12_GlyphTooBig() throws IOException {
 		generate("glyph_too_big.xml");
@@ -106,13 +104,12 @@ public class Test37XMLFiles extends AbstractFunctionalTest {
 		generate("excess_bend_introduced.xml");
 	}
 
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_37_20_LongLines() throws IOException {
 		generate("long_lines.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
+//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_37_21_SSPError() throws IOException {
 		generate("ssp_error.xml");
