@@ -171,7 +171,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
 				instantiateContainerVertices(c);
 				buildVertexList(null, c, null, out, sortedContainerContents);
-				sortContentsOldStyle(out);  //, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
+				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 				
 				firstGo = false;
 			}
@@ -604,8 +604,107 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
+	
 	/**
-	 * Simple Y,X sort, where Y has priority
+	 * This implements a kind of quad sort, where we look at each vertex and ascribe it to TL, TR, BL, BR
+	 * quadrants.  We do that over and over until there's only a single vertex in each quadrant.
+	 */
+	private void sortContents(List<Vertex> in, Bounds x, Bounds y) {
+		if (in.size() > 1) {
+			log.send("Sorting: "+in);
+			Bounds left = rh.narrow(Layout.LEFT, x, true, false); 
+			Bounds right =rh.narrow(Layout.RIGHT, x, true, false);
+			Bounds top =rh.narrow(Layout.UP, y, false, false);
+			Bounds bottom = rh.narrow(Layout.DOWN, y, false, false);
+			
+			List<Vertex> topRight = new ArrayList<Vertex>(in.size()/2);
+			List<Vertex> topLeft = new ArrayList<Vertex>(in.size()/2);
+			List<Vertex> bottomRight = new ArrayList<Vertex>(in.size()/2);
+			List<Vertex> bottomLeft = new ArrayList<Vertex>(in.size()/2);
+			
+			boolean mergeTopAndBottom = false;
+			boolean mergeLeftAndRight = false;
+			
+			for (Vertex vertex : in) {
+				RoutingInfo vri = vertex.getRoutingInfo();
+				Bounds vx = rh.getBoundsOf(vri, true);
+				Bounds vy = rh.getBoundsOf(vri, false);
+				boolean inLeft = rh.compareBounds(vx, left) == DPos.OVERLAP;
+				boolean inRight = rh.compareBounds(vx, right) == DPos.OVERLAP;
+				boolean inTop = rh.compareBounds(vy, top) == DPos.OVERLAP;
+				boolean inBottom = rh.compareBounds(vy, bottom) == DPos.OVERLAP;
+				
+				if (inTop && inBottom) {
+					mergeTopAndBottom = true;
+				}
+				
+				if (inLeft && inRight) {
+					mergeLeftAndRight = true;
+				}
+				
+				if ((!inTop && !inBottom) || (!inLeft && !inRight)) {
+					throw new LogicException("Vertex not within either bounds"+vri+" "+vertex);
+				}
+				
+				if (inLeft) {
+					if (inTop) {
+						topLeft.add(vertex);
+					} else {
+						bottomLeft.add(vertex);
+					}  
+				} else {
+					if (inTop) {
+						topRight.add(vertex);
+					} else {
+						bottomRight.add(vertex);
+					}  
+				}
+			}
+			
+			if (mergeLeftAndRight && mergeTopAndBottom) {
+				// we should have a single vertex, so you need to sort the old fashioned way
+				sortContentsOldStyle(in);
+			} else if (mergeLeftAndRight) {
+				in.clear();
+				topRight.addAll(topLeft);
+				bottomRight.addAll(bottomLeft);
+				sortContents(topRight, x, top);
+				sortContents(bottomRight, x, bottom);
+				in.addAll(topRight);
+				in.addAll(bottomRight);
+			} else if (mergeTopAndBottom) {
+				in.clear();
+				topRight.addAll(bottomRight);
+				topLeft.addAll(bottomLeft);
+				sortContents(topRight, right, y);
+				sortContents(topLeft, left, y);
+				in.addAll(topLeft);
+				in.addAll(topRight);
+			} else {
+				in.clear();
+				sortContents(topLeft, left, top);
+				sortContents(topRight, right, top);
+				sortContents(bottomLeft, left, bottom);
+				sortContents(bottomRight, right, bottom);
+				in.addAll(topLeft);
+				in.addAll(topRight);
+				in.addAll(bottomLeft);
+				in.addAll(bottomRight);
+			}
+		
+			
+		}
+		
+		
+	}
+
+	
+	/**
+	 * Simple Y,X sort, where Y has priority.
+	 * 
+	 * This is insufficient on it's own, because we end up with situations where in order to "get around" one large vertex we
+	 * move out-of-position with respect to another vertex.  Because of the difference in vertex sizes, you basically
+	 * can't just sort on middle position and hope things are in the right order.
 	 */
 	private void sortContentsOldStyle(List<Vertex> c) {
 		Collections.sort(c, new Comparator<Vertex>() {

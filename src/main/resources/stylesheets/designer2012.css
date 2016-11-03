@@ -140,7 +140,7 @@ arrow {
 	padding: 2px 3px 2px 3px; 
 	margin: 0 0 0 0; 
 	fill: black;
-	stroke: none;
+	stroke: white;
 }
 
 arrow label {
