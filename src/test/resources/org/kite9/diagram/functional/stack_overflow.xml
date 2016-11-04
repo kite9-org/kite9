@@ -69,7 +69,7 @@
 </arrow>
 
 <allLinks>
- <link id="id_9" drawDirection="UP">
+ <link id="id_9">
   <renderingInformation rendered="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="route">
    <fromDecoration>
     <name>NONE</name>
@@ -77,7 +77,6 @@
    <toDecoration>
     <name>NONE</name>
    </toDecoration>
-   <contradicting>true</contradicting>
   </renderingInformation>
   <from xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="arrow" reference="id_54" />
   <to xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="context" reference="id_30" />

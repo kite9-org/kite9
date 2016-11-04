@@ -37,9 +37,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		log.error("Contradiction: "+bic);
 		if (bic instanceof Connection) {
 			Tools.setConnectionContradiction((Connection)bic, true);
-		} else {
-			throw new LogicException("Can't set a contradiction here for some reason");
-		}
+		} 
 	}
 
 	@Override

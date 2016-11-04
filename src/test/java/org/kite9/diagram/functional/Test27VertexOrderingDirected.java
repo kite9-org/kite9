@@ -148,14 +148,14 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 		List<XMLElement> out2 = new ArrayList<XMLElement>();
 		out2.add(overall);
 
-		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
+		new HopLink(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][0], out[0][2], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		new Link(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][1], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		
 		new Link(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][4], out[0][6], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
-		new Link(out[0][6], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
+		new HopLink(out[0][6], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][5], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		
 		new HopLink(out[0][0], out[0][4], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);

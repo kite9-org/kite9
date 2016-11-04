@@ -71,14 +71,17 @@ public class Link extends AbstractXMLConnectionElement {
 	/**
 	 * Contains the ordering of the field within the diagram allLinks() list.
 	 */
-	int rank;
-
 	public int getRank() {
-		return rank;
+		String out = getAttribute("rank");
+		if ("".equals(out)) {
+			return 0;
+		} else {
+			return Integer.parseInt(out);
+		}
 	}
 
 	public void setRank(int rank) {
-		this.rank = rank;
+		setAttribute("rank", ""+rank);
 	}
 
 	@Override
