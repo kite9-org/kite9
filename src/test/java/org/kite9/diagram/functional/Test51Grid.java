@@ -166,18 +166,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
-	@Test
-	public void test_51_8_ContainerConnections() throws IOException {
-		
-	}
-	
-	@Test
-	public void test_51_9_IllegalDirectedConnections() throws IOException {
-		Glyph g1 = new Glyph("one", "","one", null, null);
-		Glyph g2 = new Glyph("two", "","two ", null, null);
-		Glyph g3 = new Glyph("three", "","three ", null, null);
-		Glyph g4 = new Glyph("four", "","four ", null, null);
-		
+	private List<XMLElement> createContexts(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
 		Context tr = new Context("tr", listOf(g2), true,  new TextLine("Top Right"), null);
 		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
@@ -189,8 +178,18 @@ public class Test51Grid extends AbstractFunctionalTest {
 		bl.setStyle("occupies: 0 1 2 2");
 		br.setStyle("occupies: 2 2 1 2");
 		
-		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
+		List<XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
+		return contexts;
+	}
+	
+	@Test
+	public void test_51_9_IllegalDirectedConnections() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		
+		Context ctx = setupContext(g1, g2, g3, g4); 
 		
 		new ContradictingLink(g1, g3, null, null, null, null, Direction.RIGHT);
 
@@ -204,24 +203,164 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		
-		Context tl = new Context("tl", listOf(g1), true,  null, null);
-		Context tr = new Context("tr", listOf(g2), true,  new TextLine("Top Right"), null);
-		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
-		
-		tl.setStyle("occupies: 0 1 0 1;");
-		tr.setStyle("occupies: 2 0;");
-		
-		bl.setStyle("occupies: 0 1 2 2");
-		br.setStyle("occupies: 2 2 1 2");
-		
-		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
+		Context ctx = setupContext(g1, g2, g3, g4); 
 		
 		new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
+
+	private Context setupContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+		Context ctx = new Context("outer", createContexts(g1, g2, g3, g4), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		return ctx;
+	}
+	
+	@Test
+	public void test_51_11_ContainerConnectionInsideDirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(contexts.get(0), g3, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_12_ContainerConnectionInsideUndirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(contexts.get(0), g3, null, null, null, null, null);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_13_ContainerConnectionOutsideUndirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(contexts.get(3), g5, null, null, null, null, null);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_14_ContainerConnectionOutsideDirectedFacing() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(contexts.get(3), g5, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_15_ContainerConnectionOutsideDirectedThroughContainer() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(contexts.get(0), g5, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_16_ContainerConnectionParentOutsideUndirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(ctx, g5, null, null, null, null, null);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_17_ContainerConnectionParentInsideUndirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(ctx, g2, null, null, null, null, null);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	@Test
+	public void test_51_18_ContainerConnectionParentInsideDirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(ctx, g2, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+	
+	
+	@Test
+	public void test_51_19_ContainerConnectionParentOutsideDirected() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g5 = new Glyph("five", "","five ", null, null);
+		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		
+		new ContradictingLink(ctx, g5, null, null, null, null, Direction.DOWN);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+	}
+
 	
 	
 }
