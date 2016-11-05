@@ -8,6 +8,7 @@ import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.grid.GridPositionerImpl;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
@@ -15,6 +16,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.serialization.IntegerRangeValue;
 
 public class BasicContradictionHandler implements Logable, ContradictionHandler {
 	
@@ -131,8 +133,6 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 						return;
 					} else {
 						switch (l) {
-						case GRID:
-							throw new Kite9ProcessingException("Not handled this case yet");
 						case HORIZONTAL:
 							verticalContradiction(c, drawDirection);
 							return;
@@ -149,6 +149,28 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 					}
 				}
 				
+				if ((fromC.getContainer() == toC.getContainer()) && (fromC.getContainer().getLayout() == Layout.GRID)) {
+					// do special grid checking
+					switch (c.getDrawDirection()) {
+					case LEFT:
+						gridPositionLessOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+						break;
+					case RIGHT:
+						gridPositionLessOrContradiction(GridPositionerImpl.getXOccupies(toC), GridPositionerImpl.getXOccupies(fromC), c);
+						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+						break;
+					case UP:
+						gridPositionLessOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+						break;
+					case DOWN:
+						gridPositionLessOrContradiction(GridPositionerImpl.getYOccupies(toC), GridPositionerImpl.getYOccupies(fromC), c);
+						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+						break;
+					}
+				}
+				
 				int depthFrom = em.getContainerDepth(fromC);
 				int depthTo = em.getContainerDepth(toC);
 				if (depthFrom < depthTo) {
@@ -160,6 +182,20 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 					from = fromC;
 				}
 			}
+		}
+	}
+
+	private void gridPositionOverlapOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
+		boolean fromInside = (a.getFrom() <= b.getFrom()) && (a.getFrom() >= b.getTo());
+		boolean toInside = (a.getTo() <= b.getFrom()) && (a.getTo() >= b.getTo());
+		if (!(fromInside || toInside)) {
+			setContradiction(c);
+		} 
+	}
+
+	private void gridPositionLessOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
+		if (a.getTo() >= b.getFrom()) {
+			setContradiction(c);
 		}
 	}
 

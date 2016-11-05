@@ -49,14 +49,24 @@ public class GridPositionerImpl implements GridPositioner {
 		// fit as many elements as possible into the grid
 		for (DiagramElement diagramElement : ord.getContents()) {
 			if (diagramElement instanceof Connected) {
-				IntegerRangeValue xpos = (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
-				IntegerRangeValue ypos = (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+				IntegerRangeValue xpos = getXOccupies(diagramElement);
+				IntegerRangeValue ypos = getYOccupies(diagramElement);
 				xSize = Math.max(xpos.getTo()+1, xSize);
 				ySize = Math.max(ypos.getTo()+1, ySize);
 			}
 		}
 		
 		return new Dimension(xSize, ySize);
+	}
+
+
+	public static IntegerRangeValue getYOccupies(DiagramElement diagramElement) {
+		return (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+	}
+
+
+	public static IntegerRangeValue getXOccupies(DiagramElement diagramElement) {
+		return (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
 	}
 	
 	
@@ -78,8 +88,8 @@ public class GridPositionerImpl implements GridPositioner {
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
 			if (diagramElement instanceof Connected) {
-				IntegerRangeValue xpos = (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
-				IntegerRangeValue ypos = (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);	
+				IntegerRangeValue xpos = getXOccupies(diagramElement);
+				IntegerRangeValue ypos = getYOccupies(diagramElement);	
 				
 				if ((!xpos.notSet()) && (!ypos.notSet()) && (ensureGrid(out, xpos, ypos, null))) {
 					ensureGrid(out, xpos, ypos, diagramElement);

@@ -38,6 +38,7 @@ import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.style.AbstractXMLDiagramElement;
+import org.kite9.diagram.style.ConnectionImpl;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.format.pdf.PDFRenderer;
@@ -436,7 +437,7 @@ public class TestingEngine extends TestingHelp {
 				}
 
 				if (rri.isContradicting()) {
-					if (checkNoContradictions && (!(c instanceof ContradictingLink))) {
+					if (checkNoContradictions && !isContradictingLink(c)) {
 						throw new ExpectedLayoutException("Connection contradiction set: " + c);
 					}
 				} else {
@@ -459,6 +460,10 @@ public class TestingEngine extends TestingHelp {
 						}
 					}
 				}
+			}
+
+			private boolean isContradictingLink(Connection c) {
+				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof ContradictingLink;
 			}
 
 			private boolean isTurnLink(Connection c) {

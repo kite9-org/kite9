@@ -481,8 +481,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				break;	
 			
 			case GRID:
+				// use the bounds of the non-grid parent container, and fracMaps.
 				Container containerWithNonGridParent = getGridParent(c);
 				bounds = rh.getPlacedPosition(containerWithNonGridParent);
+				bx = rh.getBoundsOf(bounds, true);
+				by = rh.getBoundsOf(bounds, false);
 				OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(containerWithNonGridParent, rh, em.getContainerVertices(containerWithNonGridParent));
 				fracMapX = fracMaps.getA();
 				fracMapY = fracMaps.getB();
