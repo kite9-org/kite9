@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.grid;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class GridPositionerImpl implements GridPositioner {
 	Map<Container, OPair<Map<BigFraction, Double>>> fracMaps = new HashMap<>();
 	
 	
-	private Dimension calculateGridSize(Container ord) {
+	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
 		// these are a minimum size, but contents can exceed them and push this out.
 		int xSize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_COLUMNS_PROPERTY).getFloatValue();
 		int ySize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_ROWS_PROPERTY).getFloatValue();
@@ -51,8 +52,14 @@ public class GridPositionerImpl implements GridPositioner {
 			if (diagramElement instanceof Connected) {
 				IntegerRangeValue xpos = getXOccupies(diagramElement);
 				IntegerRangeValue ypos = getYOccupies(diagramElement);
-				xSize = Math.max(xpos.getTo()+1, xSize);
-				ySize = Math.max(ypos.getTo()+1, ySize);
+				
+				if (allowSpanning) {
+					xSize = Math.max(xpos.getTo()+1, xSize);
+					ySize = Math.max(ypos.getTo()+1, ySize);
+				} else {
+					xSize = Math.max(xpos.getFrom()+1, xSize);
+					ySize = Math.max(ypos.getFrom()+1, ySize);
+				}
 			}
 		}
 		
@@ -70,12 +77,12 @@ public class GridPositionerImpl implements GridPositioner {
 	}
 	
 	
-	public DiagramElement[][] placeOnGrid(Container ord) {
+	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning) {
 		if (placed.containsKey(ord)) {
 			return placed.get(ord);
 		}
 		
-		Dimension size = calculateGridSize(ord);
+		Dimension size = calculateGridSize(ord, allowSpanning);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
 		List<DiagramElement[]> out = new ArrayList<>();
@@ -91,9 +98,11 @@ public class GridPositionerImpl implements GridPositioner {
 				IntegerRangeValue xpos = getXOccupies(diagramElement);
 				IntegerRangeValue ypos = getYOccupies(diagramElement);	
 				
-				if ((!xpos.notSet()) && (!ypos.notSet()) && (ensureGrid(out, xpos, ypos, null))) {
-					ensureGrid(out, xpos, ypos, diagramElement);
-					storeCoordinates(diagramElement, xpos.getFrom(), xpos.getTo(), ypos.getFrom(), ypos.getTo(), size);
+				if ((!xpos.notSet()) && (!ypos.notSet()) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
+					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
+					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
+					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
+					storeCoordinates(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo, size);
 				} else {
 					overlaps.add(diagramElement);
 					
@@ -149,13 +158,16 @@ public class GridPositionerImpl implements GridPositioner {
 	/**
 	 * Iterates over the grid squares occupied by the ranges and either checks that they are empty, 
 	 * or sets their value.
+	 * @param allowSpanning 
 	 */
-	private static boolean ensureGrid(List<DiagramElement[]> out, IntegerRangeValue xpos, IntegerRangeValue ypos, DiagramElement in) {
+	private static boolean ensureGrid(List<DiagramElement[]> out, IntegerRangeValue xpos, IntegerRangeValue ypos, DiagramElement in, boolean allowSpanning) {
 		// ensure grid is large enough for the elements.
-		for (int x = xpos.getFrom(); x < xpos.getTo()+1; x++) {
+		int xTo = allowSpanning ? xpos.getTo()+1 : xpos.getFrom()+1;
+		for (int x = xpos.getFrom(); x < xTo; x++) {
 			DiagramElement[] ys = out.get(x);
 			
-			for (int y = ypos.getFrom(); y < ypos.getTo()+1; y++) {
+			int yTo = allowSpanning ? ypos.getTo()+1: ypos.getFrom() + 1;
+			for (int y = ypos.getFrom(); y < yTo; y++) {
 				if (in == null) {
 					if (ys[y] != null) {
 						return false;
@@ -192,20 +204,20 @@ public class GridPositionerImpl implements GridPositioner {
 
 
 	@Override
-	public OPair<Map<BigFraction, Double>> getFracMapForGrid(Container c, RoutableHandler2D rh, ContainerVertices containerVertices) {
+	public OPair<Map<BigFraction, Double>> getFracMapForGrid(Container c, RoutableHandler2D rh, ContainerVertices containerVertices, RoutingInfo ri) {
 		OPair<Map<BigFraction, Double>> out = fracMaps.get(c);
 		if (out != null) {
 			return out;
 		}
-		
-		RoutingInfo ri = rh.getPlacedPosition(c);
+	
 		Bounds xBounds = rh.getBoundsOf(ri, true);
 		Bounds yBounds = rh.getBoundsOf(ri, false);
 		
 		Map<BigFraction, Bounds> left = new HashMap<>(), right  = new HashMap<>() , up  = new HashMap<>() , down  = new HashMap<>();
 		
 		// work out where this appears in relation to the neighbouring container's positions.
-		for (ContainerVertex cv : containerVertices.getAllVertices()) {
+		Collection<ContainerVertex> allVertices = containerVertices.getAllVertices();
+		for (ContainerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
 				RoutingInfo place = rh.getPlacedPosition(a.getDe());
 				Bounds x = rh.getBoundsOf(place, true);
@@ -263,10 +275,19 @@ public class GridPositionerImpl implements GridPositioner {
 		}
 		
 		out = new OPair<Map<BigFraction,Double>>(xOut, yOut);
+		
+		// add half for connecting vertices, in case needed
+		if (!xOut.containsKey(BigFraction.ONE_HALF)) {
+			xOut.put(BigFraction.ONE_HALF,.5d);
+		}
+		
+		if (!yOut.containsKey(BigFraction.ONE_HALF)) {
+			yOut.put(BigFraction.ONE_HALF, .5d);
+		}
+		
 		fracMaps.put(c, out);
 		return out;
 	}
-
 
 	private void expand(Map<BigFraction, Bounds> boundsMap, Bounds newBounds, BigFraction ord) {
 		Bounds oldBounds = boundsMap.get(ord);

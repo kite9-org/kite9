@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,17 +17,18 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	private final Container c;
 	private transient Set<ContainerVertex> pset;
 	private transient int pListSize;
-	final Map<OPair<BigFraction>, ContainerVertex> elements;
 
 	private OPair<BigFraction> cx, cy;
+	Collection<ContainerVertices> children = new LinkedHashSet<>();
 
-	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy, Map<OPair<BigFraction>, ContainerVertex> elements) {
+	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
 		this.c = c;
 		this.cx = cx;
 		this.cy = cy;
-		this.elements = elements;
-		
+	}
+
+	protected void createInitialVertices(Container c) {
 		ContainerVertex tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
 		ContainerVertex tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
 		ContainerVertex br = createVertex(BigFraction.ONE, BigFraction.ONE);
@@ -38,27 +40,29 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
 	}
 	
+	public abstract ContainerVertex createVertex(BigFraction x, BigFraction y);
 	
-	
-	@Override 
-	public ContainerVertex createVertex(BigFraction x, BigFraction y) {
-		x = scale(x, cx);
-		y = scale(y, cy);
-		
+	public abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);
+	 
+	public ContainerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, ContainerVertex> elements) {
 		OPair<BigFraction> d = new OPair<BigFraction>(x, y);
 		
-		ContainerVertex cv = elements.get(d);
+		ContainerVertex cv = getExistingVertex(d);
 		
 		if (cv != null) {
 			// we already have this
 			return cv;
 		} else {
-			cv = new ContainerVertex(c, x, y);
+			if (cv == null) {
+				cv = new ContainerVertex(c, x, y);
+			}
+			
 			elements.put(d, cv);
 			return cv;
 		}
-		
 	}
+
+	protected abstract ContainerVertex getExistingVertex(OPair<BigFraction> d);
 	
 	public static BigFraction scale(BigFraction y, OPair<BigFraction> range) {
 		BigFraction size = range.getB().subtract(range.getA());
@@ -69,7 +73,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	@Override
 	public Collection<ContainerVertex> getPerimeterVertices() {
-		if (pListSize != elements.size()) {
+		if (pListSize != getAllVertices().size()) {
 			BigFraction minx = cx.getA();
 			BigFraction maxx = cx.getB();
 			BigFraction miny = cy.getA();
@@ -82,7 +86,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 			collect(minx, minx, miny, maxy, pset);
 			
 			
-			pListSize = elements.size();
+			pListSize = getAllVertices().size();
 		}
 		
 		return pset;
@@ -106,7 +110,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	}
 	
 	private void collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<ContainerVertex> out) {
-		for (ContainerVertex cv : elements.values()) {
+		for (ContainerVertex cv : getAllVertices()) {
 			BigFraction x = cv.getXOrdinal();
 			BigFraction y = cv.getYOrdinal();
 			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
@@ -119,17 +123,11 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return cx;
 	}
 
-
-
 	public OPair<BigFraction> getYRange() {
 		return cy;
 	}
 
-
-
 	@Override
-	public Collection<ContainerVertex> getAllVertices() {
-		return elements.values();
-	}
+	public abstract Collection<ContainerVertex> getAllVertices();
 
 }

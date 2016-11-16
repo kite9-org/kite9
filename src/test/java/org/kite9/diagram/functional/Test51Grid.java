@@ -113,19 +113,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_5_GridWithSpanningSquares() throws IOException {
-		Context tl = new Context("tl", null, true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context("tr", null, true,  new TextLine("Top Right"), null);
-		Context bl = new Context("bl", null, true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", null, true,  new TextLine("Bottom Right"), null);
-		
-		tl.setStyle("occupies: 0 1 0 1;");
-		tr.setStyle("occupies: 2 0;");
-		
-		bl.setStyle("occupies: 0 1 2 2");
-		br.setStyle("occupies: 2 2 1 2");
-		
-		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
+		Context ctx = createTwoLayerGridContext(null, null, null, null);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -144,20 +132,8 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four", null, null);
 		
-		Context tl = new Context("tl", listOf(g1), true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context("tr", listOf(g2), true,  new TextLine("Top Right"), null);
-		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
-		
-		tl.setStyle("occupies: 0 1 0 1;");
-		tr.setStyle("occupies: 2 0;");
-		
-		bl.setStyle("occupies: 0 1 2 2");
-		br.setStyle("occupies: 2 2 1 2");
-		
-		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;"); 
-		
+		Context ctx = createTwoLayerGridContext(g1, g2, g3, g4); 
+
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g3, null, null, null, null, Direction.DOWN);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
@@ -165,18 +141,62 @@ public class Test51Grid extends AbstractFunctionalTest {
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
+
+	private Context createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+		Context tl = new Context("tl", Arrays.asList(g1), true,  new TextLine("Top \n Left"), null);
+		Context tr = new Context("tr", Arrays.asList(g2), true,  new TextLine("Top Right"), null);
+		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("Bottom Left"), null);
+		Context br = new Context("br", Arrays.asList(g4), true,  new TextLine("Bottom Right"), null);
+		
+		tl.setStyle("occupies: 0 0;");
+		bl.setStyle("occupies: 0 1;");
+
+		tr.setStyle("occupies: 0 0;");
+		br.setStyle("occupies: 0 1;");
+
+		Context l = new Context("l", Arrays.asList(tl, bl), true,  null, null);
+		Context r = new Context("r", Arrays.asList(tr, br), true,  null, null);
+		l.setStyle("layout: grid; grid-size: 1 2; occupies: 0 0;"); 
+		r.setStyle("layout: grid; grid-size: 1 2; occupies: 1 0;"); 
+		
+		Context ctx = new Context("outer", Arrays.asList(l, r), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 1;");
+		return ctx;
+	}
 	
-	private List<XMLElement> createContexts(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	private Context createThreeLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+		Context tl1 = new Context("tl1", Arrays.asList(g1), true,  new TextLine("Top Left 1"), null);
+		Context tl2 = new Context("tl2", Arrays.asList(g2), true,  new TextLine("Top Left 2"), null);
+		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("Bottom Left"), null);
+		Context r = new Context("r", Arrays.asList(g4), true,  new TextLine("Right"), null);
+		
+		tl1.setStyle("occupies: 0 0;");
+		tl2.setStyle("occupies: 1 0;");
+
+		Context tl = new Context("tl", Arrays.asList(tl1, tl2), true,  null, Layout.GRID);
+		tl.setStyle("occupies: 0 0; grid-size: 2 1; layout: grid;");
+		bl.setStyle("occupies: 0 1;");
+		
+		Context l = new Context("l", Arrays.asList(tl, bl), true,  null, Layout.GRID);
+		l.setStyle("layout: grid; grid-size: 1 2; occupies: 0 0;"); 
+		r.setStyle("occupies: 1 0;"); 
+		
+		Context ctx = new Context("outer", Arrays.asList(l, r), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 1;");
+		return ctx;
+	}
+	
+	private List<XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
 		Context tr = new Context("tr", listOf(g2), true,  new TextLine("Top Right"), null);
 		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
 		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
 		
-		tl.setStyle("occupies: 0 1 0 1;");
-		tr.setStyle("occupies: 2 0;");
+		tl.setStyle("occupies: 0 0;");
+		tr.setStyle("occupies: 1 0;");
 		
-		bl.setStyle("occupies: 0 1 2 2");
-		br.setStyle("occupies: 2 2 1 2");
+		bl.setStyle("occupies: 0 1");
+		br.setStyle("occupies: 1 1");
 		
 		List<XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
@@ -211,8 +231,8 @@ public class Test51Grid extends AbstractFunctionalTest {
 	}
 
 	private Context setupContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
-		Context ctx = new Context("outer", createContexts(g1, g2, g3, g4), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		Context ctx = new Context("outer", createSquareGridContext(g1, g2, g3, g4), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		return ctx;
 	}
 	
@@ -223,9 +243,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(0), g3, null, null, null, null, Direction.RIGHT);
 
@@ -239,9 +259,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(0), g3, null, null, null, null, null);
 
@@ -255,9 +275,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(3), g5, null, null, null, null, null);
 
@@ -271,9 +291,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(3), g5, null, null, null, null, Direction.RIGHT);
 
@@ -287,9 +307,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(0), g5, null, null, null, null, Direction.RIGHT);
 
@@ -303,9 +323,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(ctx, g5, null, null, null, null, null);
 
@@ -319,9 +339,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(ctx, g2, null, null, null, null, null);
 
@@ -335,9 +355,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(ctx, g2, null, null, null, null, Direction.RIGHT);
 
@@ -352,15 +372,30 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createContexts(g1, g2, g3, g4);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 3 3;");
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(ctx, g5, null, null, null, null, Direction.DOWN);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 
-	
+	@Test
+	public void test_51_20_3LayerGridWithDirectedConnections() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four", null, null);
+		
+		Context ctx = createThreeLayerGridContext(g1, g2, g3, g4); 
+
+		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g3, null, null, null, null, Direction.DOWN);
+		new Link(g2, g4, null, null, null, null, Direction.RIGHT);
+		new Link(g3, g4, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+	}
 	
 }

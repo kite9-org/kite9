@@ -153,19 +153,19 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 					// do special grid checking
 					switch (c.getDrawDirection()) {
 					case LEFT:
-						gridPositionLessOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+						gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
 						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
 						break;
 					case RIGHT:
-						gridPositionLessOrContradiction(GridPositionerImpl.getXOccupies(toC), GridPositionerImpl.getXOccupies(fromC), c);
+						gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(toC), GridPositionerImpl.getXOccupies(fromC), c);
 						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
 						break;
 					case UP:
-						gridPositionLessOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+						gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
 						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
 						break;
 					case DOWN:
-						gridPositionLessOrContradiction(GridPositionerImpl.getYOccupies(toC), GridPositionerImpl.getYOccupies(fromC), c);
+						gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(toC), GridPositionerImpl.getYOccupies(fromC), c);
 						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
 						break;
 					}
@@ -193,8 +193,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		} 
 	}
 
-	private void gridPositionLessOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
-		if (a.getTo() >= b.getFrom()) {
+	private void gridPositionAfterOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
+		if (a.getTo() < b.getFrom()) {
 			setContradiction(c);
 		}
 	}

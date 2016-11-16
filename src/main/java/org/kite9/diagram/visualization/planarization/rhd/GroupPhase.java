@@ -120,7 +120,7 @@ public class GroupPhase {
 			
 			if (l==Layout.GRID) {
 				// need to iterate in 2d
-				DiagramElement[][] grid = gp.placeOnGrid((Container) ord);
+				DiagramElement[][] grid = gp.placeOnGrid((Container) ord, false);
 				for (int x = 0; x < grid.length; x++) {
 					for (int y = 0; y < grid[0].length; y++) {
 						Connected prevx = (Connected) (x > 0 ? grid[x-1][y] : null);

@@ -353,12 +353,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			ContainerVertices cvs = em.getContainerVertices(container);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			log.send("Placed position of container: "+c+" is "+bounds);
+			setContainerVertexPositions(before, container, after, cvs, out);
+
 
 			if (container.getContents().size() > 0) {
 				buildVertexListForContainerContents(out, container, sortedContainerContents);
 			}
 			
-			setContainerVertexPositions(before, container, after, cvs, out);
 
 		} else {
 			RoutingInfo bounds = rh.getPlacedPosition(c);
@@ -439,32 +440,38 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 //		rh.setHints(hints, bounds);
 	}
 	
-	public static final Map<BigFraction, Double> NON_GRID_FRAC_MAP = new HashMap<>();
-	
-	static {
-		NON_GRID_FRAC_MAP.put(BigFraction.ZERO, 0d);
-		NON_GRID_FRAC_MAP.put(BigFraction.ONE, 1d);
-		NON_GRID_FRAC_MAP.put(BigFraction.ONE_HALF,.5d);
-	}
-	
 	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
 		
-		RoutingInfo bounds =  rh.getPlacedPosition(c);
-		
-		Map<BigFraction, Double> fracMapX = NON_GRID_FRAC_MAP;
-		Map<BigFraction, Double> fracMapY = NON_GRID_FRAC_MAP;
-		
-		Bounds bx = rh.getBoundsOf(bounds, true);
-		Bounds by = rh.getBoundsOf(bounds, false);
 		int depth = em.getContainerDepth(c);
 		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
 		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
 		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
 		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
 		
+		RoutingInfo bounds;
+		Bounds bx, by;
+		if (l==Layout.GRID) {
+			// use the bounds of the non-grid parent container.
+			Container containerWithNonGridParent = getGridParent(c);
+			bounds = rh.getPlacedPosition(containerWithNonGridParent);
+			bx = rh.getBoundsOf(bounds, true);
+			by = rh.getBoundsOf(bounds, false);				
+		} else {
+			bounds =  rh.getPlacedPosition(c);
+			bx = rh.getBoundsOf(bounds, true);
+			by = rh.getBoundsOf(bounds, false);
+		}
+
+		// set up frac maps to control where the vertices will be positioned
+		OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(c, rh, em.getContainerVertices(c), bounds);
+		Map<BigFraction, Double> fracMapX = fracMaps.getA();
+		Map<BigFraction, Double> fracMapY = fracMaps.getB();
+		
+		
+		// add extra vertices for connections to keep the layout
 		if (l != null) {
 			switch (l) {
 			case UP:
@@ -479,18 +486,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				break;	
-			
-			case GRID:
-				// use the bounds of the non-grid parent container, and fracMaps.
-				Container containerWithNonGridParent = getGridParent(c);
-				bounds = rh.getPlacedPosition(containerWithNonGridParent);
-				bx = rh.getBoundsOf(bounds, true);
-				by = rh.getBoundsOf(bounds, false);
-				OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(containerWithNonGridParent, rh, em.getContainerVertices(containerWithNonGridParent));
-				fracMapX = fracMaps.getA();
-				fracMapY = fracMaps.getB();
-				
-				break;
+			default:
+				// do nothing
 			}
 		}
 		
@@ -504,7 +501,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	
 		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
-			setRouting(cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
+			setRouting(cvs, cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
 		}
 		setPlanarizationHints(c, bounds);
 	}
@@ -592,7 +589,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private void setRouting(ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	private void setRouting(ContainerVertices cvs, ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
 			BigFraction xOrdinal = cv.getXOrdinal();
 			BigFraction yOrdinal = cv.getYOrdinal();
@@ -602,8 +599,12 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			bx = bx.keep(xs, xe - xs, xfrac);
 			by = by.keep(ys, ye - ys, yfrac);
 			cv.setRoutingInfo(rh.createRouting(bx,by));
-			out.add(cv);
-			log.send("Setting routing info: "+cv+" "+bx+" "+by);
+			cv = cvs.mergeDuplicates(cv, rh);
+			
+			if (cv != null) {
+				out.add(cv);
+				log.send("Setting routing info: "+cv+" "+bx+" "+by);
+			}
 		}
 	}
 

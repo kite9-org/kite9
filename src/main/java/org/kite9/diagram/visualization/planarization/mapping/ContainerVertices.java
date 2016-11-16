@@ -6,6 +6,7 @@ package org.kite9.diagram.visualization.planarization.mapping;
 import java.util.Collection;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 /**
  * This automatically comes populated with the four corner vertices, but 
@@ -32,4 +33,12 @@ public interface ContainerVertices {
 	 * @return
 	 */
 	public Collection<ContainerVertex> getAllVertices();
+	
+	/**
+	 * Looks at the hierarchy of container vertices, and merges any that overlap before 
+	 * they are added to the planarization.
+	 * 
+	 * Returns null if there is already a vertex occupying the same place/position.
+	 */
+	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh);
 }

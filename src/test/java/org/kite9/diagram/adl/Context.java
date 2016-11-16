@@ -34,7 +34,9 @@ public class Context extends AbstractXMLContainerElement {
 		
 		if (contents != null) {
 			for (XMLElement contained : contents) {
-				appendChild(contained);
+				if (contained != null) {
+					appendChild(contained);
+				}
 			}
 		}
 		
