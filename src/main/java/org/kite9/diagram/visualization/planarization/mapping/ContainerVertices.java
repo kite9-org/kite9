@@ -39,6 +39,9 @@ public interface ContainerVertices {
 	 * they are added to the planarization.
 	 * 
 	 * Returns null if there is already a vertex occupying the same place/position.
+	 * 
+	 * This is potentially a costly operation, as we have to check every vertex.
+	 * 
 	 */
 	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh);
 }

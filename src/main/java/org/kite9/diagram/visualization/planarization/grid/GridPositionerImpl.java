@@ -216,7 +216,7 @@ public class GridPositionerImpl implements GridPositioner {
 		Map<BigFraction, Bounds> left = new HashMap<>(), right  = new HashMap<>() , up  = new HashMap<>() , down  = new HashMap<>();
 		
 		// work out where this appears in relation to the neighbouring container's positions.
-		Collection<ContainerVertex> allVertices = containerVertices.getAllVertices();
+		Iterable<ContainerVertex> allVertices = containerVertices.getAllVertices();
 		for (ContainerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
 				RoutingInfo place = rh.getPlacedPosition(a.getDe());

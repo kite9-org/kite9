@@ -1,12 +1,13 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
@@ -48,7 +49,29 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 
 	@Override
 	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh) {
-		return cv;
+		if (elements.values().contains(cv)) {
+			ContainerVertex out = getTopContainerVertices().findOverlappingVertex(cv, rh);
+			
+			if (out != null) {
+				// merge the anchors
+				for (Anchor a : cv.getAnchors()) {
+					out.addAnchor(a.getLr(), a.getUd(), a.getDe());
+				}
+				
+				// replace the element in the map
+				elements.put(new OPair<BigFraction>(cv.getXOrdinal(), cv.getYOrdinal()), out);
+				
+				return null;
+			}
+			
+			return cv;
+		} else {
+			return parent.mergeDuplicates(cv, rh);
+		}
+	}
+	
+	protected AbstractContainerVertices getTopContainerVertices() {
+		return parent.getTopContainerVertices();
 	}
 
 	@Override
@@ -64,19 +87,13 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 		return createVertexHere(x, y, elements);
 	}
 
-	private Collection<ContainerVertex> allVertices = new LinkedHashSet<>();
-	private transient int parentSize = 0, elementsSize = 0;
 	
 	@Override
 	public Collection<ContainerVertex> getAllVertices() {
-		Collection<ContainerVertex> parentAllVertices = parent.getAllVertices();
-		if ((parentSize != parentAllVertices.size()) || (elementsSize != elements.size())) {
-			allVertices.addAll(parentAllVertices);
-			allVertices.addAll(elements.values());
-			this.parentSize = parentAllVertices.size();
-			this.elementsSize = elements.size();
-		}
-		return allVertices;
+		Collection<ContainerVertex> out = new ArrayList<>();
+		out.addAll(parent.getAllVertices());
+		out.addAll(elements.values());
+		return out;
 	}
 
 	@Override

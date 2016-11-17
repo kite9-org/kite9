@@ -1,25 +1,26 @@
 package org.kite9.diagram.visualization.planarization.mapping;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	private final Container c;
-	private transient Set<ContainerVertex> pset;
-	private transient int pListSize;
+	//private transient Set<ContainerVertex> pset;
+	//private transient int pListSize;
 
 	private OPair<BigFraction> cx, cy;
-	Collection<ContainerVertices> children = new LinkedHashSet<>();
+	Collection<ContainerVertices> children = new ArrayList<>(5);
 
 	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
@@ -73,21 +74,21 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	@Override
 	public Collection<ContainerVertex> getPerimeterVertices() {
-		if (pListSize != getAllVertices().size()) {
+		//if (pListSize != getAllVertices().size()) {
 			BigFraction minx = cx.getA();
 			BigFraction maxx = cx.getB();
 			BigFraction miny = cy.getA();
 			BigFraction maxy = cy.getB();
 			
-			pset = new HashSet<>(10);
+			HashSet<ContainerVertex> pset = new HashSet<>(10);
 			collect(minx, maxx, miny, miny, pset);
 			collect(maxx, maxx, miny, maxy, pset);
 			collect(minx, maxx, maxy, maxy, pset);
 			collect(minx, minx, miny, maxy, pset);
 			
 			
-			pListSize = getAllVertices().size();
-		}
+//			pListSize = getAllVertices().size();
+//		}
 		
 		return pset;
 		
@@ -126,8 +127,31 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	public OPair<BigFraction> getYRange() {
 		return cy;
 	}
+	
+	protected abstract AbstractContainerVertices getTopContainerVertices();
 
-	@Override
-	public abstract Collection<ContainerVertex> getAllVertices();
+	protected ContainerVertex findOverlappingVertex(ContainerVertex cv, RoutableHandler2D rh) {
+		RoutingInfo cvRoutingInfo = cv.getRoutingInfo();
+		for (ContainerVertex cv2 : getPerimeterVertices()) {
+			if (cv2 != cv) {
+				RoutingInfo cv2routingInfo = cv2.getRoutingInfo();
+				if (cv2routingInfo != null) {
+					if (rh.overlaps(cvRoutingInfo, cv2routingInfo)) {
+						return cv2;
+					}
+				}
+			}
+		}
+		
+		for (ContainerVertices c : children) {
+			ContainerVertex found = ((AbstractContainerVertices)c).findOverlappingVertex(cv, rh);
+			if (found != null) {
+				return found;
+			}
+		}
+		
+		return null;
+	}
 
+	
 }

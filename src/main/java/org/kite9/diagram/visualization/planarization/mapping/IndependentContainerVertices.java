@@ -47,4 +47,9 @@ public class IndependentContainerVertices extends AbstractContainerVertices {
 		return elements.values();
 	}
 
+	@Override
+	protected AbstractContainerVertices getTopContainerVertices() {
+		return this;
+	}
+
 }
