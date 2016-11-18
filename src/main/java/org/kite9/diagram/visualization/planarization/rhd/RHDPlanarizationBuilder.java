@@ -500,7 +500,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 		}
 	
-		for (ContainerVertex cv : cvs.getPerimeterVertices()) {
+		for (ContainerVertex cv : cvs.getVerticesAtThisLevel()) {
 			setRouting(cvs, cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
 		}
 		setPlanarizationHints(c, bounds);

@@ -43,13 +43,26 @@ public class IndependentContainerVertices extends AbstractContainerVertices {
 	}
 
 	@Override
-	public Collection<ContainerVertex> getAllVertices() {
-		return elements.values();
-	}
-
-	@Override
 	protected AbstractContainerVertices getTopContainerVertices() {
 		return this;
 	}
+
+	@Override
+	public Collection<ContainerVertex> getAllAscendentVertices() {
+		return elements.values();
+	}
+
+	public Collection<ContainerVertex> getVerticesAtThisLevel() {
+		return elements.values();
+	}
+	
+	
+	@Override
+	public Collection<ContainerVertex> getAllDescendentVertices() {
+		Collection<ContainerVertex> out = super.getAllDescendentVertices();
+		out.addAll(elements.values());
+		return out;
+	}
+
 
 }

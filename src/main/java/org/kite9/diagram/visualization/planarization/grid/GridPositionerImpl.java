@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.grid;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,8 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.Connected;
-import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
@@ -216,7 +215,7 @@ public class GridPositionerImpl implements GridPositioner {
 		Map<BigFraction, Bounds> left = new HashMap<>(), right  = new HashMap<>() , up  = new HashMap<>() , down  = new HashMap<>();
 		
 		// work out where this appears in relation to the neighbouring container's positions.
-		Iterable<ContainerVertex> allVertices = containerVertices.getAllVertices();
+		Iterable<ContainerVertex> allVertices = containerVertices.getAllAscendentVertices();
 		for (ContainerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
 				RoutingInfo place = rh.getPlacedPosition(a.getDe());

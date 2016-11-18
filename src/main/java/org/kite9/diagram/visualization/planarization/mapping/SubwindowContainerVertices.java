@@ -87,11 +87,17 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 		return createVertexHere(x, y, elements);
 	}
 
+	@Override
+	public Collection<ContainerVertex> getAllAscendentVertices() {
+		Collection<ContainerVertex> out = new ArrayList<>();
+		out.addAll(parent.getAllAscendentVertices());
+		out.addAll(elements.values());
+		return out;
+	}
 	
 	@Override
-	public Collection<ContainerVertex> getAllVertices() {
-		Collection<ContainerVertex> out = new ArrayList<>();
-		out.addAll(parent.getAllVertices());
+	public Collection<ContainerVertex> getAllDescendentVertices() {
+		Collection<ContainerVertex> out = super.getAllDescendentVertices();
 		out.addAll(elements.values());
 		return out;
 	}
@@ -106,6 +112,8 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 		}
 	}
 	
-	
+	public Collection<ContainerVertex> getVerticesAtThisLevel() {
+		return elements.values();
+	}
 	
 }

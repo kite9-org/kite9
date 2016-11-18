@@ -117,7 +117,7 @@ public class ElementMapperImpl implements ElementMapper {
 	public Collection<Vertex> allVertices() {
 		Collection<Vertex> out = new ArrayList<Vertex>(vertices.values());
 		for (ContainerVertices cv : containers.values()) {
-			for (ContainerVertex vertex : cv.getPerimeterVertices()) {
+			for (ContainerVertex vertex : cv.getVerticesAtThisLevel()) {
 				out.add(vertex);
 			}
 		}

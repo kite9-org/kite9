@@ -309,6 +309,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		Bounds miny = null;
 		Bounds maxy = null;
 			
+		cvs.identifyPerimeterVertices(rh);
+		
 		Collection<ContainerVertex> perimeterVertices = cvs.getPerimeterVertices();
 		for (ContainerVertex cv : perimeterVertices) {
 			RoutingInfo ri = cv.getRoutingInfo();
@@ -389,23 +391,28 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
-		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, fromv.getXOrdinal(), fromv.getYOrdinal(), tov.getXOrdinal(), tov.getYOrdinal(), i, em);
+		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, i, em);
 		if (newEdge != null) {
 			getEdgeRouter().addEdgeToPlanarization(p, newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
-	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, BigFraction ax, BigFraction ay, BigFraction bx, BigFraction by, int i, EdgeMapping em) {
+	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, int i, EdgeMapping em) {
 		Direction d = null;
+		Bounds ax = rh.getBoundsOf(from.getRoutingInfo(), true);
+		Bounds ay = rh.getBoundsOf(from.getRoutingInfo(), false);
+		Bounds bx = rh.getBoundsOf(to.getRoutingInfo(), true);
+		Bounds by = rh.getBoundsOf(to.getRoutingInfo(), false);
 		
-		if (ax.equals(bx)) {
+		
+		if (ax.compareTo(bx) == 0) {
 			int comp = ay.compareTo(by);
 			if (comp == -1) {
 				d = Direction.DOWN;
 			} else if (comp == 1) {
 				d = Direction.UP;
 			}
-		} else if (ay.equals(by)) {
+		} else if (ay.compareTo(by) == 0) {
 			int comp = ax.compareTo(bx);
 			if (comp == -1) {
 				d = Direction.RIGHT;

@@ -20,6 +20,8 @@ public interface ContainerVertices {
 	/**
 	 * Unordered collection of vertices around the container.
 	 */
+	public void identifyPerimeterVertices(RoutableHandler2D rh);
+	
 	public Collection<ContainerVertex> getPerimeterVertices();
 	
 	/**
@@ -29,10 +31,20 @@ public interface ContainerVertices {
 	public ContainerVertex createVertex(BigFraction x, BigFraction y);
 	
 	/**
-	 * Returns all vertices in the container.
-	 * @return
+	 * Returns all vertices in the container, and in any parent containers (if a gridded container).
 	 */
-	public Collection<ContainerVertex> getAllVertices();
+	public Collection<ContainerVertex> getAllAscendentVertices();
+	
+	/**
+	 * Returns all vertices in the container, and in any child containers (if a gridded container).
+	 */
+	public Collection<ContainerVertex> getAllDescendentVertices();
+	
+	/**
+	 * Returns vertices uniquely declared by this later of the container vertices.
+	 */
+	public Collection<ContainerVertex> getVerticesAtThisLevel();
+	
 	
 	/**
 	 * Looks at the hierarchy of container vertices, and merges any that overlap before 

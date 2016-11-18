@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
@@ -21,6 +22,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	private OPair<BigFraction> cx, cy;
 	Collection<ContainerVertices> children = new ArrayList<>(5);
+	private ContainerVertex tl, tr, bl, br;
 
 	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
@@ -30,10 +32,10 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	}
 
 	protected void createInitialVertices(Container c) {
-		ContainerVertex tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
-		ContainerVertex tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
-		ContainerVertex br = createVertex(BigFraction.ONE, BigFraction.ONE);
-		ContainerVertex bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
+		tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
+		tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
+		br = createVertex(BigFraction.ONE, BigFraction.ONE);
+		bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
 		
 		tl.addAnchor(HPos.LEFT, VPos.UP, c);
 		tr.addAnchor(HPos.RIGHT, VPos.UP, c);
@@ -72,29 +74,29 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return y;
 	}
 
-	@Override
+	private Collection<ContainerVertex> perimeterVertices = null;
+	
 	public Collection<ContainerVertex> getPerimeterVertices() {
-		//if (pListSize != getAllVertices().size()) {
-			BigFraction minx = cx.getA();
-			BigFraction maxx = cx.getB();
-			BigFraction miny = cy.getA();
-			BigFraction maxy = cy.getB();
-			
-			HashSet<ContainerVertex> pset = new HashSet<>(10);
-			collect(minx, maxx, miny, miny, pset);
-			collect(maxx, maxx, miny, maxy, pset);
-			collect(minx, maxx, maxy, maxy, pset);
-			collect(minx, minx, miny, maxy, pset);
-			
-			
-//			pListSize = getAllVertices().size();
-//		}
-		
-		return pset;
-		
+		return perimeterVertices;
 	}
 	
-	private boolean afterEq(BigFraction in, BigFraction with) {
+	@Override
+	public void identifyPerimeterVertices(RoutableHandler2D rh) {
+		Bounds minx = rh.getBoundsOf(tl.getRoutingInfo(), true);
+		Bounds maxx = rh.getBoundsOf(br.getRoutingInfo(), true);
+		Bounds miny = rh.getBoundsOf(tl.getRoutingInfo(), false);
+		Bounds maxy = rh.getBoundsOf(br.getRoutingInfo(), false);
+		
+		HashSet<ContainerVertex> pset = new HashSet<>(10);
+		collect(minx, maxx, miny, miny, pset, rh);
+		collect(maxx, maxx, miny, maxy, pset, rh);
+		collect(minx, maxx, maxy, maxy, pset, rh);
+		collect(minx, minx, miny, maxy, pset, rh);
+		
+		perimeterVertices = pset;
+	}
+	
+	private boolean afterEq(Bounds in, Bounds with) {
 		if (in == null) {
 			return true;	
 		}
@@ -102,7 +104,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return c > -1;
 	}
 	
-	private boolean beforeEq(BigFraction in, BigFraction with) {
+	private boolean beforeEq(Bounds in, Bounds with) {
 		if (in == null) {
 			return true;	
 		}
@@ -110,16 +112,26 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return c < 1;
 	}
 	
-	private void collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<ContainerVertex> out) {
-		for (ContainerVertex cv : getAllVertices()) {
-			BigFraction x = cv.getXOrdinal();
-			BigFraction y = cv.getYOrdinal();
+	private void collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<ContainerVertex> out, RoutableHandler2D rh) {
+		for (ContainerVertex cv : getTopContainerVertices().getAllDescendentVertices()) {
+			Bounds x = rh.getBoundsOf(cv.getRoutingInfo(), true);
+			Bounds y = rh.getBoundsOf(cv.getRoutingInfo(), false);
 			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
 				out.add(cv);
 			}
 		}
 	}
 
+	public Collection<ContainerVertex> getAllDescendentVertices() {
+		Collection<ContainerVertex> out = new ArrayList<>();
+		for (ContainerVertices child : children) {
+			out.addAll(child.getAllDescendentVertices());
+		}
+		
+		return out;
+	}
+
+	
 	public OPair<BigFraction> getXRange() {
 		return cx;
 	}
@@ -132,7 +144,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	protected ContainerVertex findOverlappingVertex(ContainerVertex cv, RoutableHandler2D rh) {
 		RoutingInfo cvRoutingInfo = cv.getRoutingInfo();
-		for (ContainerVertex cv2 : getPerimeterVertices()) {
+		for (ContainerVertex cv2 : getAllDescendentVertices()) {
 			if (cv2 != cv) {
 				RoutingInfo cv2routingInfo = cv2.getRoutingInfo();
 				if (cv2routingInfo != null) {
@@ -140,13 +152,6 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 						return cv2;
 					}
 				}
-			}
-		}
-		
-		for (ContainerVertices c : children) {
-			ContainerVertex found = ((AbstractContainerVertices)c).findOverlappingVertex(cv, rh);
-			if (found != null) {
-				return found;
 			}
 		}
 		
