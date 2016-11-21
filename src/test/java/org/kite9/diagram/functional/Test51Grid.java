@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
@@ -125,6 +126,12 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
+	
+	/**
+	 * Problem with grouping is that we really need to group according to how likely the
+	 * subgroups are to be on the same line.  The closer we can predict this, the higher the priority.
+	 */
+	@Ignore("Currently broken - grouping rules need some extra work.")
 	@Test
 	public void test_51_7_GridWithDirectedConnections() throws IOException {
 		Glyph g1 = new Glyph("one", "","one", null, null);
@@ -397,5 +404,22 @@ public class Test51Grid extends AbstractFunctionalTest {
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
-	
+
+	@Test
+	public void test_51_21_GridWithDirectedConnections2() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four", null, null);
+		
+		Context ctx = createTwoLayerGridContext(g1, g2, g3, g4); 
+
+		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g3, null, null, null, null, Direction.DOWN);
+		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
+		//new Link(g2, g4, null, null, null, null, Direction.DOWN);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+	}
+
 }

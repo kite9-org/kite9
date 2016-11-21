@@ -143,12 +143,6 @@ public class MergeOption implements Comparable<MergeOption> {
 			break;
 			
 		default: // neighbour merge
-			// try and merge smallest first, to achieve b-tree
-			// and also to allow for more buddy merging
-			if (arg0.size != size) {
-				return ((Integer) size).compareTo(arg0.size);
-			}
-
 			// merge together neighbours with least chance of being moved from the outside
 			int thistl = Math.round(this.totalLinks);
 			int arg0tl = Math.round(arg0.totalLinks);
@@ -163,6 +157,11 @@ public class MergeOption implements Comparable<MergeOption> {
 				return ((Integer)ordinalDistance).compareTo(arg0.ordinalDistance);
 			}
 			
+			// try and merge smallest first, to achieve b-tree
+			// and also to allow for more buddy merging
+			if (arg0.size != size) {
+				return ((Integer) size).compareTo(arg0.size);
+			}
 			
 			break;
 		}
