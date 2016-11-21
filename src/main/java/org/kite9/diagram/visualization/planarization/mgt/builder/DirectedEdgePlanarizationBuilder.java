@@ -169,6 +169,10 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 			
 			break;
 		}
+		
+		if (!done) {
+			p.getEdgeMappings().remove(c);
+		}
 		return done;
 	}
 	

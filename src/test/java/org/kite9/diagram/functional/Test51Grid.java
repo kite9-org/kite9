@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -243,7 +244,10 @@ public class Test51Grid extends AbstractFunctionalTest {
 		return ctx;
 	}
 	
-	@Test
+	/**
+	 * Shouldn't be able to link the container border to something inside itself.
+	 */
+	@Test(expected=ElementsMissingException.class)
 	public void test_51_11_ContainerConnectionInsideDirected() throws IOException {
 		Glyph g1 = new Glyph("one", "","one", null, null);
 		Glyph g2 = new Glyph("two", "","two ", null, null);
