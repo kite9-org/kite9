@@ -228,7 +228,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		if (index > 0) {
 			for (int i = 0; i < index; i++) {
 				Edge around = list.get(i);
-				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, nearestContainer(vertexIndex, p), around.getOriginalUnderlying());
+				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, around.getOriginalUnderlying());
 				Edge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				insertVertices(vertexIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
@@ -263,7 +263,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		if (index > 0) {
 			for (int i = 0; i < index; i++) {
 				Edge around = list.get(i);
-				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, nearestContainer(vertexIndex - 1, p), around.getOriginalUnderlying());
+				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, around.getOriginalUnderlying());
 				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				insertVertices(outIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
@@ -307,17 +307,6 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			}
 			ep = ep.prev;
 		}
-	}
-
-	public Container nearestContainer(int vertex, MGTPlanarization p) {
-		for (int i = vertex; i < p.getVertexOrder().size(); i++) {
-			Vertex v = p.getVertexOrder().get(i);
-			if (v.getOriginalUnderlying() instanceof Container) {
-				return (Container) v.getOriginalUnderlying();
-			}
-		}
-
-		throw new LogicException("Could not find container: " + vertex);
 	}
 
 	@Override
@@ -386,7 +375,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			Vertex before = beforeStart;
 			int beforeI = p.getVertexIndex(before);
 			// insert the vertex after beforeI
-			Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, nearestContainer(beforeI, p), und);
+			Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, und);
 			insertVertices(beforeI, ep.prev, p, crossing);
 			((PlanarizationCrossPath)ep).setCrossingPoint(crossing);
 			log.send("Crossing Vertex created: "+crossing+" for "+ep);

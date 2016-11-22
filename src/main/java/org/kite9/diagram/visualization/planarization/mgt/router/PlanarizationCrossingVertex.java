@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractVertex;
 
@@ -15,9 +14,8 @@ public class PlanarizationCrossingVertex extends AbstractVertex {
 
 	DiagramElement und;
 	
-	public PlanarizationCrossingVertex(String name, Container inside, DiagramElement und) {
+	public PlanarizationCrossingVertex(String name, DiagramElement und) {
 		super(name);
-		this.container = inside;
 		this.und = und;
 	}
 
@@ -25,9 +23,4 @@ public class PlanarizationCrossingVertex extends AbstractVertex {
 		return und;
 	}
 	
-	public Container getContainer() {
-		return container;
-	}
-	
-	Container container;
 }

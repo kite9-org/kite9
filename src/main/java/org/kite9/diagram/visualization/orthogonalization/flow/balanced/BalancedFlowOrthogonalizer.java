@@ -22,6 +22,7 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.router.PlanarizationCrossingVertex;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Implements several balancing improvements to multi-edge. These are as
@@ -214,7 +215,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		if (from instanceof ContainerVertex) {
 			return (Container) ((ContainerVertex)from).getOriginalUnderlying();
 		} else if (from instanceof PlanarizationCrossingVertex) {
-			return ((PlanarizationCrossingVertex)from).getContainer();
+			throw new Kite9ProcessingException("These should've all been removed");
 		} else if (from instanceof ConnectedVertex) {
 			return (Container) ((ConnectedVertex)from).getOriginalUnderlying().getParent();
 		}
