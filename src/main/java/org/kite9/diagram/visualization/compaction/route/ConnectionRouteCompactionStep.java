@@ -17,6 +17,7 @@ import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.framework.logging.LogicException;
 
 
@@ -57,9 +58,9 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		Vertex start = partSet.getStartVertex();
 		Vertex end = traceRoute(start, out, partSet.getEdges());
 		
-		if (tle.getFrom() == start.getOriginalUnderlying()) {
+		if (ContainerVertex.isPartOf(start, tle.getFrom())) {
 			// right way round
-		} else if (tle.getFrom() == end.getOriginalUnderlying()) {
+		} else if (ContainerVertex.isPartOf(end, tle.getFrom())) {
 			out.reverse();
 		} else {
 			throw new LogicException("Can't determine whether route is right way round");

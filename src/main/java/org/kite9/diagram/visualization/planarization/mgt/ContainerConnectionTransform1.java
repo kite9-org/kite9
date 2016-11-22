@@ -13,6 +13,7 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
 import org.kite9.framework.logging.Kite9Log;
@@ -77,9 +78,10 @@ public class ContainerConnectionTransform1 implements PlanarizationTransform, Lo
 		EraseState clear = EraseState.BEFORE;
 		
 		for (Edge edge : mapping.getEdges()) {
-			
 			DiagramElement under = start.getOriginalUnderlying();
-			if ((under == from) || (under==to)) {
+			boolean part1 = ContainerVertex.isPartOf(start, from) || ContainerVertex.isPartOf(start, to);
+			//boolean part2 = (under == from) || (under==to);
+			if (part1) {
 				if (clear == EraseState.BEFORE) {
 					clear = EraseState.OK;
 				} else if (clear == EraseState.OK) {

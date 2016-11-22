@@ -22,7 +22,9 @@ import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -533,6 +535,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			BigFraction xOrd = null, yOrd = null;
 			Bounds xNew = null, yNew = null;
 			double fracX = 0d, fracY = 0d;
+			HPos hpos = null;
+			VPos vpos = null;
 			// set position
 			switch (d) {
 			case UP:
@@ -554,7 +558,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 					xNew = x;
 				}
 				yNew = y.keep(ys, ye-ys, fracY);
-				
+				vpos = d == Direction.UP ? VPos.UP : VPos.DOWN;
 				break;
 			case LEFT:
 			case RIGHT:
@@ -575,6 +579,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 					yNew = y;
 				}
 				xNew = x.keep(xs, xe-xs, fracX);
+				hpos = d == Direction.LEFT ? HPos.LEFT: HPos.RIGHT;
 				break;
 			}
 			
@@ -583,6 +588,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			if (cvNew.getRoutingInfo() == null) {
 				// new vertex				
 				cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
+				cvNew.addAnchor(hpos, vpos, c);
 				out.add(cvNew);
 			}
 			

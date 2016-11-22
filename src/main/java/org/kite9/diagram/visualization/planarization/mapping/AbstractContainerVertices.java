@@ -45,7 +45,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	
 	public abstract ContainerVertex createVertex(BigFraction x, BigFraction y);
 	
-	public abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);
+	protected abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);
 	 
 	public ContainerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, ContainerVertex> elements) {
 		OPair<BigFraction> d = new OPair<BigFraction>(x, y);

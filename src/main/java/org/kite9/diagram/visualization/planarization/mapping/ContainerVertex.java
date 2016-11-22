@@ -6,7 +6,9 @@ import java.util.List;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
+import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
@@ -128,7 +130,7 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		throw new Kite9ProcessingException("No anchor found for container "+c);
 	}
 	
-	public boolean hasAnchorFor(Container c) {
+	public boolean hasAnchorFor(DiagramElement c) {
 		for (Anchor anchor : anchors) {
 			if (anchor.getDe() == c) {
 				return true;
@@ -138,4 +140,12 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return false;
 	}
 	
+
+	public static boolean isPartOf(Vertex v, Connected c) {
+		if (v instanceof ContainerVertex) {
+			return ((ContainerVertex) v).hasAnchorFor(c);
+		} else {
+			return v.getOriginalUnderlying() == c;
+		}
+	}
 }
