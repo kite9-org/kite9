@@ -8,7 +8,6 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
@@ -78,6 +77,9 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		this.yOrd = yOrd;
 	}
 
+	/**
+	 * Not reliable with ContainerVertices.  Consider removing, or using isPartOf, below.
+	 */
 	public Container getOriginalUnderlying() {
 		return c;
 	}
@@ -141,11 +143,7 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	}
 	
 
-	public static boolean isPartOf(Vertex v, Connected c) {
-		if (v instanceof ContainerVertex) {
-			return ((ContainerVertex) v).hasAnchorFor(c);
-		} else {
-			return v.getOriginalUnderlying() == c;
-		}
+	public boolean isPartOf(Connected c) {
+		return hasAnchorFor(c);
 	}
 }

@@ -1,5 +1,7 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.adl.DiagramElement;
+
 /**
  * Represents any positionable shape in the diagram, for topological 
  * arrangers that don't have to care about what they are arranging.
@@ -33,4 +35,5 @@ public interface Vertex extends Comparable<Vertex>, ArtificialElement, Positione
 
 	public void addEdge(Edge e);
 
+	public boolean isPartOf(DiagramElement de);
 }

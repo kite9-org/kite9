@@ -57,7 +57,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	@Override
 	protected void completeEmbedding(MGTPlanarization p) { 
-		setupContainerBoundaryEdges(p, ((ContainerVertex) p.getVertexOrder().get(0)).getOriginalUnderlying());
+		setupContainerBoundaryEdges(p, p.getDiagram());
 		super.completeEmbedding(p);
 		if (!log.go()) {
 			try {

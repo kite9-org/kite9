@@ -42,7 +42,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
 		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
 	}
-	
+
 	public abstract ContainerVertex createVertex(BigFraction x, BigFraction y);
 	
 	protected abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);

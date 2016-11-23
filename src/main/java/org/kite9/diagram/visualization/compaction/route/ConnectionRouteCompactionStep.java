@@ -58,9 +58,9 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		Vertex start = partSet.getStartVertex();
 		Vertex end = traceRoute(start, out, partSet.getEdges());
 		
-		if (ContainerVertex.isPartOf(start, tle.getFrom())) {
+		if (start.isPartOf(tle.getFrom())) {
 			// right way round
-		} else if (ContainerVertex.isPartOf(end, tle.getFrom())) {
+		} else if (end.isPartOf(tle.getFrom())) {
 			out.reverse();
 		} else {
 			throw new LogicException("Can't determine whether route is right way round");
