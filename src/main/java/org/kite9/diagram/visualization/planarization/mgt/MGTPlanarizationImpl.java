@@ -17,11 +17,13 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.ordering.ContainerEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
@@ -29,9 +31,7 @@ import org.kite9.framework.logging.LogicException;
 
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
 
-	public MGTPlanarizationImpl(Diagram d, List<Vertex> vertexOrder, 
-			Collection<BiDirectional<Connected>> uninsertedConnections,
-			Map<Container, List<DiagramElement>> containerOrderingMap) {
+	public MGTPlanarizationImpl(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> uninsertedConnections, Map<Container, List<DiagramElement>> containerOrderingMap) {
 		super(d, containerOrderingMap);
 		this.vertexOrder = vertexOrder;
 		this.unmodifiableVO = Collections.unmodifiableList(vertexOrder);
@@ -71,17 +71,17 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 
 	@K9Exclude
 	private Set<Edge> belowSet = new LinkedHashSet<Edge>();
-	
+
 	public Set<Edge> getAboveLineEdges() {
 		return aboveSet;
 	}
-	
+
 	public Set<Edge> getBelowLineEdges() {
 		return belowSet;
 	}
 
 	public Collection<BiDirectional<Connected>> uninsertedConnections;
-	
+
 	@K9Exclude
 	private List<List<Edge>> aboveForwardLinks;
 	@K9Exclude
@@ -90,19 +90,19 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	private List<List<Edge>> belowForwardLinks;
 	@K9Exclude
 	private List<List<Edge>> belowBackwardLinks;
-	
+
 	public List<Edge> getAboveForwardLinks(Vertex v) {
 		return aboveForwardLinks.get(getVertexIndex(v));
 	}
-	
+
 	public List<Edge> getAboveBackwardLinks(Vertex v) {
 		return aboveBackwardLinks.get(getVertexIndex(v));
 	}
-	
+
 	public List<Edge> getBelowForwardLinks(Vertex v) {
 		return belowForwardLinks.get(getVertexIndex(v));
 	}
-	
+
 	public List<Edge> getBelowBackwardLinks(Vertex v) {
 		return belowBackwardLinks.get(getVertexIndex(v));
 	}
@@ -131,17 +131,17 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		int lastPos = 0;
 		for (Vertex b : vertexOrder) {
 			tr.getPositions().put(b, new Dimension2D(lastPos, 0));
-			String name = b.getID()+"["+(voi++)+"]";
+			String name = b.getID() + "[" + (voi++) + "]";
 			lastPos += name.length() + 2;
 		}
 		tr.setLength(lastPos);
 
 		voi = 0;
 		for (Vertex v : vertexOrder) {
-			tr.outputString(0, (int) tr.getPositions().get(v).x(), v.getID()+"["+(voi++)+"]");
+			tr.outputString(0, (int) tr.getPositions().get(v).x(), v.getID() + "[" + (voi++) + "]");
 		}
 
-		Map<Edge, Integer> nestings = new HashMap<Edge, Integer>(aboveSet.size()*2);
+		Map<Edge, Integer> nestings = new HashMap<Edge, Integer>(aboveSet.size() * 2);
 		for (Edge e : aboveSet) {
 			Vertex from = e.getFrom();
 			Vertex to = e.getTo();
@@ -153,8 +153,8 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			tr.vLine(-1, toi, -height, hl);
 			tr.hLine(-height - 1, fromi + 1, toi - 1, hl);
 		}
-		
-		nestings = new HashMap<Edge, Integer>(belowSet.size()*2);
+
+		nestings = new HashMap<Edge, Integer>(belowSet.size() * 2);
 		for (Edge e : belowSet) {
 			Vertex from = e.getFrom();
 			Vertex to = e.getTo();
@@ -176,7 +176,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		if (out != null) {
 			return out;
 		}
-		
+
 		int nestings = 0;
 		int from = vertexOrder.indexOf(e.getFrom());
 		int to = vertexOrder.indexOf(e.getTo());
@@ -191,7 +191,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 				}
 			}
 		}
-		
+
 		nestCache.put(e, nestings);
 
 		return nestings;
@@ -207,7 +207,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		int fromvi = getVertexIndex(cross.getFrom());
 		int tovi = getVertexIndex(cross.getTo());
 		if (found) {
-			if (fromvi > -1) { 
+			if (fromvi > -1) {
 				aboveForwardLinks.get(fromvi).remove(cross);
 			}
 			if (tovi > -1) {
@@ -256,7 +256,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 
 	public int getVertexIndex(Vertex v) {
 		Integer i = vertexIndex.get(v);
-		if (i==null) {
+		if (i == null) {
 			return -1;
 		} else {
 			return i;
@@ -315,7 +315,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		float jb = Math.max(j1, j2);
 		return ((i1 > ja) && (i1 < jb));
 	}
-	
+
 	public void addEdge(Edge edge, boolean above, Edge outsideOf) {
 		int fromi = getVertexIndex(edge.getFrom());
 		int toi = getVertexIndex(edge.getTo());
@@ -325,11 +325,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			fromi = toi;
 			toi = temp;
 		}
-		
+
 		if ((outsideOf != null) && (!outsideOf.meets(edge.getFrom()) || !outsideOf.meets(edge.getTo()))) {
 			outsideOf = null;
 		}
-		
+
 		if (above) {
 			aboveSet.add(edge);
 			orderedInsert(aboveForwardLinks.get(fromi), edge, outsideOf);
@@ -342,7 +342,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		boolean contradicting = Tools.isUnderlyingContradicting(edge);
 		checkEdgeOrdering(edge.getFrom(), edge.getDrawDirectionFrom(edge.getFrom()), contradicting);
 		checkEdgeOrdering(edge.getTo(), edge.getDrawDirectionFrom(edge.getTo()), contradicting);
-		
+
 		checkOrderingAround(edge.getFrom());
 		checkOrderingAround(edge.getTo());
 	}
@@ -359,20 +359,21 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			eo.changed();
 		}
 		
-		DiagramElement underlying = from.getOriginalUnderlying();
-		if (underlying instanceof Container) {
-			// fix the ordering around the container
-			ContainerEdgeOrdering ceo = (ContainerEdgeOrdering) getEdgeOrderings().get(underlying);
-			if (ceo==null) {
-				ceo = new ContainerEdgeOrdering(this, (Container) underlying);
-				getEdgeOrderings().put(underlying, ceo);
+		if (from instanceof ContainerVertex) {
+			for (Anchor a : ((ContainerVertex) from).getAnchors()) {
+				DiagramElement underlying = a.getDe();
+				// fix the ordering around the container
+				ContainerEdgeOrdering ceo = (ContainerEdgeOrdering) getEdgeOrderings().get(underlying);
+				if (ceo == null) {
+					ceo = new ContainerEdgeOrdering(this, (Container) underlying);
+					getEdgeOrderings().put(underlying, ceo);
+				}
+				ceo.changed();
 			}
-				
-			ceo.changed();
 		}
 
 	}
-	
+
 	private void checkOrderingAround(Vertex from) {
 		List<Edge> byQuad = new ArrayList<Edge>();
 		List<Edge> c1 = new ArrayList<Edge>(getAboveForwardLinks(from));
@@ -383,49 +384,49 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		Collections.reverse(c1);
 		byQuad.addAll(c1);
 		byQuad.addAll(getAboveBackwardLinks(from));
-		
+
 		List<Edge> cmp = getEdgeOrderings().get(from).getEdgesAsList();
 		int i = byQuad.indexOf(cmp.get(0));
 		Collections.rotate(byQuad, -i);
-		
+
 		if (!cmp.equals(byQuad)) {
-			throw new LogicException("Collections not same: \n"+cmp+"\n"+byQuad);
+			throw new LogicException("Collections not same: \n" + cmp + "\n" + byQuad);
 		}
-		
+
 	}
 
 	public Edge getFirstEdgeAfterPlanarizationLine(Vertex from, boolean forward, boolean above) {
 		Edge outsideOf;
-		boolean clockwise = !(above==forward);
-		Quadrant q = getQuadrantFor(above, forward);		
+		boolean clockwise = !(above == forward);
+		Quadrant q = getQuadrantFor(above, forward);
 		List<Edge> edgeSet = getEdgeSetByQuadrant(q, from);
-		while (edgeSet.size()==0) {
-			int ord = (q.ordinal() + (clockwise ? -1 : 1) + 4) %4;
+		while (edgeSet.size() == 0) {
+			int ord = (q.ordinal() + (clockwise ? -1 : 1) + 4) % 4;
 			q = Quadrant.values()[ord];
 			edgeSet = getEdgeSetByQuadrant(q, from);
 		}
-		
-		outsideOf = q.clockwise == clockwise ? edgeSet.get(0) : edgeSet.get(edgeSet.size()-1);
+
+		outsideOf = q.clockwise == clockwise ? edgeSet.get(0) : edgeSet.get(edgeSet.size() - 1);
 		return outsideOf;
 	}
-	
+
 	private Quadrant getQuadrantFor(boolean above, boolean forward) {
 		if (above) {
 			return forward ? Quadrant.ABOVE_FORWARD : Quadrant.ABOVE_BACKWARD;
 		} else {
-			return forward? Quadrant.BELOW_FORWARD : Quadrant.BELOW_BACKWARD;
+			return forward ? Quadrant.BELOW_FORWARD : Quadrant.BELOW_BACKWARD;
 		}
 	}
-	
-	enum Quadrant { ABOVE_FORWARD(false), ABOVE_BACKWARD(true), BELOW_BACKWARD(false), BELOW_FORWARD(true);
-	
+
+	enum Quadrant {
+		ABOVE_FORWARD(false), ABOVE_BACKWARD(true), BELOW_BACKWARD(false), BELOW_FORWARD(true);
+
 		private boolean clockwise;
-		
+
 		private Quadrant(boolean clockwise) {
 			this.clockwise = clockwise;
 		}
 	}
-
 
 	public List<Edge> getEdgeSetByQuadrant(Quadrant quadrant, Vertex v) {
 		switch (quadrant) {
@@ -433,7 +434,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			return getAboveBackwardLinks(v);
 		case ABOVE_FORWARD:
 			return getAboveForwardLinks(v);
-		case BELOW_BACKWARD: 
+		case BELOW_BACKWARD:
 			return getBelowBackwardLinks(v);
 		case BELOW_FORWARD:
 		default:
@@ -441,27 +442,25 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		}
 	}
 
-
 	private void orderedInsert(List<Edge> abl, Edge e, Edge outsideOf) {
 		int o1d = edgeSpan(e);
 		ListIterator<Edge> li = abl.listIterator();
 		while (li.hasNext()) {
 			Edge n = li.next();
 			int o2d = edgeSpan(n);
-			if ((o2d > o1d) || ((o2d == o1d) && (outsideOf==null))) {
+			if ((o2d > o1d) || ((o2d == o1d) && (outsideOf == null))) {
 				li.previous();
 				li.add(e);
 				return;
-			} 
-			if ((o2d == o1d) && (outsideOf==n)) {
+			}
+			if ((o2d == o1d) && (outsideOf == n)) {
 				li.add(e);
 				return;
 			}
 		}
-	
+
 		li.add(e);
 	}
-	
 
 	private int edgeSpan(Edge e) {
 		return Math.abs(getVertexIndex(e.getFrom()) - getVertexIndex(e.getTo()));
