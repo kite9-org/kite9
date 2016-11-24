@@ -1,8 +1,9 @@
 package org.kite9.diagram.common.elements;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.kite9.diagram.adl.DiagramElement;
-
-
 
 /**
  * This is used where two edges are required to cross each other.  This vertex is added at the crossing 
@@ -12,7 +13,9 @@ import org.kite9.diagram.adl.DiagramElement;
  */
 public class EdgeCrossingVertex extends AbstractVertex {
 
-	DiagramElement underlying = null;
+	Set<DiagramElement> underlyings = new HashSet<>();
+	DiagramElement originalUnderlying;
+	
 
 	public EdgeCrossingVertex(String name) {
 		super(name);
@@ -20,7 +23,8 @@ public class EdgeCrossingVertex extends AbstractVertex {
 	
 	public EdgeCrossingVertex(String name, DiagramElement underlying) {
 		super(name);
-		this.underlying = underlying;
+		this.underlyings.add(underlying);
+		this.originalUnderlying = underlying;
 	}
 
 	@Override
@@ -29,8 +33,18 @@ public class EdgeCrossingVertex extends AbstractVertex {
 	}
 
 	public DiagramElement getOriginalUnderlying() {
-		return underlying;
+		return originalUnderlying;
 	}
 
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return underlyings.contains(de);
+	}
+	
+	public void addUnderlying(DiagramElement de) {
+		if (de != null) {
+			underlyings.add(de);
+		}
+	}
 	
 }

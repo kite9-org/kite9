@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
@@ -117,6 +118,14 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
 		out[0] = new ContainerBorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), cide, containers);
 		out[1] = new ContainerBorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), cide, containers);
+		
+		if (toIntroduce instanceof EdgeCrossingVertex) {
+			// track the containers that we are involved in
+			for (DiagramElement c : containers) {
+				((EdgeCrossingVertex)toIntroduce).addUnderlying(c);
+			}
+		}
+		
 		return out;
 	}
 

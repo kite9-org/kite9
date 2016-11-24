@@ -33,10 +33,11 @@ public class ContainerSizeOptimisationStep implements OptimisationStep, Logable 
 		Map<Container, Pair<List<Slideable>>> containerMap = new HashMap<Container, Pair<List<Slideable>>>();
 
 		for (Slideable s : xo.getCanonicalOrder()) {
-			DiagramElement de = ((Segment)s.getUnderlying()).getUnderlying();
+			Segment segment = (Segment)s.getUnderlying();
+			DiagramElement de = segment.getUnderlying();
 			if (de instanceof Container) {
 				Container con = (Container) de;
-				Direction d = getSegmentUnderlyingSide((Segment) s.getUnderlying(), con);
+				Direction d = segment.getUnderlyingSide();
 
 				if (d != null) {
 					Pair<List<Slideable>> mapItem = containerMap.get(con);
@@ -70,10 +71,6 @@ public class ContainerSizeOptimisationStep implements OptimisationStep, Logable 
 
 	}
 	
-	private Direction getSegmentUnderlyingSide(Segment s, DiagramElement underlying) {
-		return s.getUnderlyingSide();
-	}
-
 	private void maximizeDistance(SegmentSlackOptimisation xo, Slideable from, Slideable to) {
 		int slackAvailable = to.getMaximumPosition() - from.getMinimumPosition();
 		from.decreaseMaximum(from.getMinimumPosition());

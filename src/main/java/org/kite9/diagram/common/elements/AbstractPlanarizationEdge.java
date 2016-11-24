@@ -15,7 +15,6 @@ import org.kite9.framework.logging.LogicException;
 public abstract class AbstractPlanarizationEdge extends AbstractEdge implements LabelledEdge, PlanarizationEdge {
 
 	private static final String EDGE_CONT_MSG = "Edges don't have contradiction flags set";
-	private static final long serialVersionUID = 3701310306763145747L;
 
 	public int getBendCost() {
 		return 1;

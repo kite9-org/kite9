@@ -36,4 +36,5 @@ public interface Vertex extends Comparable<Vertex>, ArtificialElement, Positione
 	public void addEdge(Edge e);
 
 	public boolean isPartOf(DiagramElement de);
+	
 }

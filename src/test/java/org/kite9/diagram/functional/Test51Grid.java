@@ -41,15 +41,15 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_2_SupergridMockup() throws IOException {
-		Context ctx = createSupergrid(true, false);
+		Context ctx = createSupergrid(true, false, 4);
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
-	private Context createSupergrid(boolean addLinks, boolean addContentLink) {
+	private Context createSupergrid(boolean addLinks, boolean addContentLink, int size) {
 		List<XMLElement> contents = new ArrayList<>();
-		Context[][] elems = new Context[4][];
+		Context[][] elems = new Context[size][];
 		for (int i = 0; i < elems.length; i++) {
-			elems[i] = new Context[4];
+			elems[i] = new Context[size];
 			for (int j = 0; j < elems[i].length; j++) {
 				elems[i][j] = new Context("c" + i + "-" + j, null, true,  null , null);
 				elems[i][j].setStyle("occupies: "+i+" "+i+" "+j+" "+j+";");
@@ -108,7 +108,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 
 	@Test
 	public void test_51_4_ProperSupergrid() throws IOException {
-		Context ctx = createSupergrid(false, false);
+		Context ctx = createSupergrid(false, false, 4);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -122,7 +122,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_51_6_GridWithUndirectedConnections() throws IOException {
-		Context ctx = createSupergrid(false, true);
+		Context ctx = createSupergrid(false, true, 4);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -426,4 +426,10 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
+	@Test
+	public void test_51_22_OddSupergrid() throws IOException {
+		Context ctx = createSupergrid(false, false, 5);
+		ctx.setStyle("layout: grid; grid-size: 5 5;"); 
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+	}
 }

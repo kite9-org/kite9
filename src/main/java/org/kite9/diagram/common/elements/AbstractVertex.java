@@ -109,6 +109,6 @@ public abstract class AbstractVertex implements Vertex {
 	@Override
 	public boolean isPartOf(DiagramElement de) {
 		return getOriginalUnderlying() == de;
-	}	
-	
+	}
+
 }
