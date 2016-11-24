@@ -12,6 +12,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.balanced.BalancedF
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 
 /**
  * Handles the case where a corner of a container has several edges arriving at it.
@@ -58,11 +59,11 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 
 		BalanceChoice side;
 		
-		if ((before.getOriginalUnderlying() != c) && (after.getOriginalUnderlying() != c)) {
-			side = decideSide(v, fn, before, after, hn, fg.getPlanarization().getEdgeOrderings().get(v).getEdgesAsList());
+		if ((before instanceof ContainerBorderEdge) || (after instanceof ContainerBorderEdge)) {
+            // different side is always true if we are dealing with an edge of the container
+            side = BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;
 		} else {
-			// different side is always true if we are dealing with an edge of the container
-			side = BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;
+			side = decideSide(v, fn, before, after, hn, fg.getPlanarization().getEdgeOrderings().get(v).getEdgesAsList());
 		}
 
 		log.send(log.go() ? null : "V: "+v+" Between Edge "+before+" and "+after+": "+side);
