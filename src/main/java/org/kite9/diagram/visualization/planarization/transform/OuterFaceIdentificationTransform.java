@@ -115,6 +115,6 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 
 	@Override
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 }

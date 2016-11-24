@@ -1,6 +1,9 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.kite9.diagram.adl.Container;
@@ -13,6 +16,7 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
 import org.kite9.framework.logging.Kite9Log;
@@ -53,10 +57,16 @@ public class ContainerConnectionTransform1 implements PlanarizationTransform, Lo
 				Connected to = ((BiDirectional<Connected>) de).getTo();
 				
 				if ((from instanceof Container) || (to instanceof Container)) {
-					eraseEnds(mapping.getValue(), de, from, to, toRemove);
+					EdgeMapping edgeMapping = mapping.getValue();
+					List<Edge> forwardList = edgeMapping.getEdges();
+					List<Edge> backwardList = new ArrayList<>(forwardList);
+					Collections.reverse(backwardList);
+					eraseEnd(edgeMapping, de, from, to, toRemove, forwardList, edgeMapping.getStartVertex());
+					eraseEnd(edgeMapping, de, from, to, toRemove, backwardList, edgeMapping.getEndVertex());
+					
 					
 					if (toRemove.size() > 0) {
-						mapping.getValue().remove(toRemove);
+						edgeMapping.remove(toRemove);
 						for (Edge edge : toRemove) {
 							t.removeEdge(edge, pln);
 						}
@@ -66,34 +76,29 @@ public class ContainerConnectionTransform1 implements PlanarizationTransform, Lo
 			}
 		}
 	}
-	
-	private static enum EraseState { BEFORE, OK, AFTER };
-	
-	private void eraseEnds(EdgeMapping mapping,
-			DiagramElement de, Connected from, Connected to, Collection<Edge> toRemove) {
 		
-		Vertex start = mapping.getStartVertex();
+	private void eraseEnd(EdgeMapping mapping, DiagramElement de, DiagramElement from, DiagramElement to, Collection<Edge> toRemove, List<Edge> edges, Vertex start) {
 		
-		EraseState clear = EraseState.BEFORE;
+		from = rootContainer(from);
+		to = rootContainer(to);
 		
-		for (Edge edge : mapping.getEdges()) {
-			boolean part1 = start.isPartOf(from) || start.isPartOf(to);
-			if (part1) {
-				if (clear == EraseState.BEFORE) {
-					clear = EraseState.OK;
-				} else if (clear == EraseState.OK) {
-					clear = EraseState.AFTER;
-				}
+		for (Edge edge : edges) {
+			DiagramElement under = start.getOriginalUnderlying();
+			under = rootContainer(under);
+			boolean part2 = (under == from) || (under==to) ;
+			if (part2) {
+				return;
 			}
 			
-			if ((clear == EraseState.BEFORE) || (clear == EraseState.AFTER)) {
-				log.send(log.go() ? null : "Removing edge "+edge+" as it's not part of "+de);
-				toRemove.add(edge);
-			}
+			log.send(log.go() ? null : "Removing edge "+edge+" as it's not part of "+de);
+			toRemove.add(edge);
 			
 			start = edge.otherEnd(start);
-			
 		}
+	}
+
+	private DiagramElement rootContainer(DiagramElement from) {
+		return from instanceof Container ? ContainerVertex.getRootGridContainer((Container) from) : from;
 	}
 
 	public String getPrefix() {

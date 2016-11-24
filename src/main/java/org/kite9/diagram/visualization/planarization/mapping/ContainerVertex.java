@@ -9,6 +9,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.VPos;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -146,5 +147,18 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	@Override
 	public boolean isPartOf(DiagramElement c) {
 		return hasAnchorFor(c);
+	}
+	
+	public static Container getRootGridContainer(Container cc) {
+		Container parent = cc.getContainer();
+		if (parent == null) {
+			return cc;
+		}
+		
+		if (parent.getLayout() == Layout.GRID) {
+			return getRootGridContainer(parent);
+		}
+		
+		return cc;
 	}
 }
