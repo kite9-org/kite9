@@ -192,7 +192,8 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		this.it = it;
 		this.gt = gt;
 		
-		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
+		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci.getFrom()), ocEnd = getRoutingInfoForOuterContainer(rh, ci.getTo());
+		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
 		
@@ -230,6 +231,15 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		throw new Kite9ProcessingException("Couldn't get underlying for "+v);
 	}
 	
+	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, Vertex v) {
+		if (v instanceof ContainerVertex) {
+			DiagramElement und = v.getOriginalUnderlying();
+			return rh.getPlacedPosition(und);					
+		} 
+		
+		return v.getRoutingInfo();
+	}
+ 	
 	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {
 		if (v instanceof ContainerVertex) {
 			DiagramElement und = getCorrectUnderlying(ci, v);

@@ -78,6 +78,8 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 
 	/**
 	 * Not reliable with ContainerVertices.  Consider removing, or using isPartOf, below.
+	 * Will return the top-level container of a grid structure, but within a grid a vertex
+	 * could be involved in multiple containers.
 	 */
 	public Container getOriginalUnderlying() {
 		return c;
