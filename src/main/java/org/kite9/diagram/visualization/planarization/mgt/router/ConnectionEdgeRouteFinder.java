@@ -24,6 +24,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.ContainerEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
@@ -53,13 +54,13 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 				// check that the two edges intersect
 				@SuppressWarnings("unchecked")
 				BiDirectional<Connected> c = (BiDirectional<Connected>) a.getOriginalUnderlying();
-				RoutingInfo from = getRoutingInfo(c.getFrom(), rh);
-				RoutingInfo to = getRoutingInfo(c.getTo(), rh);
+				RoutingInfo from = rh.getPlacedPosition(c.getFrom());
+				RoutingInfo to = rh.getPlacedPosition(c.getTo());
 				RoutingInfo area = rh.increaseBounds(from, to);
 				if (rh.overlaps(area, completeZone)) {
 					return true;
 				}  else {
-					log.send(c+" is not local to "+e+" - no cross");
+					log.send(a+" is not local to "+e+" - no cross");
 					return false;
 				}
 			}
@@ -180,7 +181,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	
 	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, Edge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
-		this.startZone = getRoutingInfo(ci.getFrom(), rh);
+		this.startZone = getRoutingInfo(rh, ci, ci.getFrom());
 		this.completeZone = getCompleteZone(ci);
 		
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
@@ -213,12 +214,34 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	private static RoutingInfo getEndZone(RoutableReader rh, Edge ci) {
-		return getRoutingInfo(ci.getTo(), rh);
+		return getRoutingInfo(rh, ci, ci.getTo());
+	}
+	
+	private static DiagramElement getCorrectUnderlying(Edge ci, Vertex v) {
+		DiagramElement und = ci.getOriginalUnderlying();
+		DiagramElement fromUnd = (DiagramElement) ((BiDirectional<?>) und).getFrom();
+		DiagramElement toUnd = (DiagramElement) ((BiDirectional<?>) und).getTo();
+		if (v.isPartOf(fromUnd)) {
+			return fromUnd;					
+		} else if (v.isPartOf(toUnd)) {
+			return toUnd;					
+		}
+
+		throw new Kite9ProcessingException("Couldn't get underlying for "+v);
+	}
+	
+	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {
+		if (v instanceof ContainerVertex) {
+			DiagramElement und = getCorrectUnderlying(ci, v);
+			return rh.getPlacedPosition(und);					
+		} 
+		
+		return v.getRoutingInfo();
 	}
 
 	private RoutingInfo getCompleteZone(Edge ci) {
-		RoutingInfo from = getRoutingInfo(ci.getFrom(), rh);
-		RoutingInfo to = getRoutingInfo(ci.getTo(), rh);
+		RoutingInfo from = getRoutingInfo(rh, ci, ci.getFrom());
+		RoutingInfo to = getRoutingInfo(rh, ci, ci.getTo());
 		return rh.increaseBounds(from, to);
 	}
 
@@ -277,19 +300,6 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		return null;
 	}
 
-	private static RoutingInfo getRoutingInfo(Vertex f, RoutableReader rh) {
-		DiagramElement und = f.getOriginalUnderlying();
-		if (und instanceof Container) {
-			return rh.getPlacedPosition(und);
-		} else {
-			return f.getRoutingInfo();
-		}
-	}
-	
-	private static RoutingInfo getRoutingInfo(Connected c, RoutableReader rh) {
-		return rh.getPlacedPosition(c);
-	}
-
 	protected boolean canAddToQueue(LocatedEdgePath ep) {
 		if (maximumBoundedAxisDistance != null) {
 			double currentAxisTotal = ep.costing.minimumBoundedAxisDistance;
@@ -326,10 +336,9 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	@Override
 	protected void createInitialPaths(State<LocatedEdgePath> pq) {
 		Vertex from = e.getFrom();
-		DiagramElement und = from.getOriginalUnderlying();
 		
-		if (und instanceof Container) {
-			Container c = (Container) und;
+		if (from instanceof ContainerVertex) {
+			Container c = (Container) getCorrectUnderlying(e, from);
 			ContainerVertices cvs = em.getContainerVertices(c);
 			for (Vertex v : cvs.getPerimeterVertices()) {
 				if (onCorrectSideOfContainer((ContainerVertex) v, false)) {

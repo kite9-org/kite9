@@ -179,7 +179,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			}
 		} finally {
 			if (!log.go()) {
-//				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "vertex.png");
+				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "vertex.png");
 			}
 		}
 
