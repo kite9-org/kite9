@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
@@ -70,8 +69,8 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return anchors;
 	}
 
-	public ContainerVertex(Container c, BigFraction xOrd, BigFraction yOrd) {
-		super(c.getID()+"_"+xOrd+"_"+yOrd);
+	public ContainerVertex(String id, Container c, BigFraction xOrd, BigFraction yOrd) {
+		super(id+"_"+xOrd+"_"+yOrd);
 		this.c = c;
 		this.xOrd = xOrd;
 		this.yOrd = yOrd;
@@ -142,8 +141,8 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return false;
 	}
 	
-
-	public boolean isPartOf(Connected c) {
+	@Override
+	public boolean isPartOf(DiagramElement c) {
 		return hasAnchorFor(c);
 	}
 }

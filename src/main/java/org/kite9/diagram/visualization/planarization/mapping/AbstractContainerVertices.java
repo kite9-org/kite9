@@ -11,12 +11,14 @@ import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 public abstract class AbstractContainerVertices implements ContainerVertices {
 
 	private final Container c;
+	private final Container rootContainer;
 	//private transient Set<ContainerVertex> pset;
 	//private transient int pListSize;
 
@@ -27,6 +29,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
 		this.c = c;
+		this.rootContainer = getRootGridContainer(c);
 		this.cx = cx;
 		this.cy = cy;
 	}
@@ -43,6 +46,19 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
 	}
 
+	private Container getRootGridContainer(Container cc) {
+		Container parent = cc.getContainer();
+		if (parent == null) {
+			return cc;
+		}
+		
+		if (parent.getLayout() == Layout.GRID) {
+			return getRootGridContainer(parent);
+		}
+		
+		return cc;
+	}
+
 	public abstract ContainerVertex createVertex(BigFraction x, BigFraction y);
 	
 	protected abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);
@@ -57,7 +73,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 			return cv;
 		} else {
 			if (cv == null) {
-				cv = new ContainerVertex(c, x, y);
+				cv = new ContainerVertex(rootContainer.getID(), rootContainer, x, y);
 			}
 			
 			elements.put(d, cv);

@@ -39,7 +39,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	protected void convertVertex(Orthogonalization o, Vertex v) {
 		if (v instanceof ContainerVertex) {
 			ContainerVertex cv = (ContainerVertex) v;
-			Container und = cv.getOriginalUnderlying();
+			Container und = null; //cv.getOriginalUnderlying();
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
