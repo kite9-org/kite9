@@ -350,7 +350,12 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (from instanceof ContainerVertex) {
 			Container c = (Container) getCorrectUnderlying(e, from);
 			ContainerVertices cvs = em.getContainerVertices(c);
-			for (Vertex v : cvs.getPerimeterVertices()) {
+			for (ContainerVertex v : cvs.getPerimeterVertices()) {
+				if (!v.isPartOf(c)) {
+					// ensure anchors are set correctly for the perimeter.
+					v.addAnchor(null, null, c);
+				}
+				
 				if (onCorrectSideOfContainer((ContainerVertex) v, false)) {
 					createInitialPathsFrom(pq, v);
 				}
@@ -368,7 +373,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			createInitialPathsFrom(pq, from);
 		}
 	}
-
+	
 	protected void createInitialPathsFrom(State<LocatedEdgePath> pq, Vertex from) {
 		generatePaths(null, p.getAboveBackwardLinks(from), pq, from,Going.BACKWARDS, PlanarizationSide.ENDING_ABOVE);
 		generatePaths(null, p.getAboveForwardLinks(from), pq, from, Going.FORWARDS, PlanarizationSide.ENDING_ABOVE);

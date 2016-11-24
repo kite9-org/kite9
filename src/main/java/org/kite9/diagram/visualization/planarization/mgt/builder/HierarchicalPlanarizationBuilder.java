@@ -501,12 +501,19 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private Vertex getVertexFor(DiagramElement c) {
 		if (c instanceof Container) {
-			return em.getContainerVertices((Container) c).getPerimeterVertices().iterator().next();  // any one will do
-		} else if (c instanceof Connected) {
+			Collection<ContainerVertex> vertices = em.getContainerVertices((Container) c).getPerimeterVertices();
+			for (ContainerVertex cv : vertices) {
+				if (cv.hasAnchorFor(c)) {
+					return cv;
+				}
+			}
+		} 
+		
+		if (c instanceof Connected) {
 			return em.getVertex((Connected) c); 
-		} else {
-			throw new LogicException("Can't get a vertex for "+c);
-		}
+		} 
+		
+		throw new LogicException("Can't get a vertex for "+c);
 	}
 
 	@Override

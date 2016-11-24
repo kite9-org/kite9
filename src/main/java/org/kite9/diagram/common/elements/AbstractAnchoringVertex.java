@@ -48,7 +48,7 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 			
 			if (lr==HPos.LEFT) {
 				ri.setPosition(Dimension2D.setX(ri.getPosition(), x));
-			} else {
+			} else if (lr==HPos.RIGHT){
 				ri.setSize(Dimension2D.setX(ri.getSize(), x - ri.getPosition().x()));
 			}
 		}
@@ -58,7 +58,7 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		
 			if (ud==VPos.UP) {
 				ri.setPosition(Dimension2D.setY(ri.getPosition(), y));
-			} else {
+			} else if (ud == VPos.DOWN){
 				ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
 			}
 		}

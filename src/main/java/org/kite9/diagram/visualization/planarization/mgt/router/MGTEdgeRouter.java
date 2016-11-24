@@ -14,6 +14,7 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerLayoutEdge;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
@@ -26,6 +27,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFin
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.PlanarizationCrossPath;
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.PlanarizationSide;
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.StartPath;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -334,7 +336,9 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 				((AbstractPlanarizationEdge)ci).setStraight(false);
 			}
 
-			return applyRoute(ci, ep, ep, p);
+			applyRoute(ci, ep, ep, p);
+			
+			return true;
 		} catch (NoFurtherPathException nfe) {
 			log.error("Could not route " + ci+" in direction "+ci.getDrawDirection());
 			return false;
