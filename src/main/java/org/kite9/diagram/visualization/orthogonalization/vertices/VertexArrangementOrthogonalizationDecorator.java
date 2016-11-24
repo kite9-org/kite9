@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 
 /**
  * Decorates a regular {@link Orthogonalizer} by converting all vertices to faces, which allows
@@ -36,6 +37,10 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 	}
 
 	public static void setInitialSize(Displayer ded, Vertex tl) {
+		if (tl instanceof ContainerVertex) {
+			return;
+		}
+		
 		DiagramElement originalUnderlying = tl.getOriginalUnderlying();
 		
 		if (originalUnderlying instanceof Leaf) {

@@ -55,8 +55,6 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 			return;
 		}
 		
-		Container c = v.getOriginalUnderlying();
-
 		BalanceChoice side;
 		
 		if ((before instanceof ContainerBorderEdge) || (after instanceof ContainerBorderEdge)) {

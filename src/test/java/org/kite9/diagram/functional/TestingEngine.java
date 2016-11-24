@@ -253,7 +253,7 @@ public class TestingEngine extends TestingHelp {
 			}
 			PositionRoutingInfo pri = (PositionRoutingInfo) vertex.getRoutingInfo();
 			if (pri != null) {
-				g.setColor(cols[Math.abs(vertex.getOriginalUnderlying().hashCode()) % 4]);
+				g.setColor(cols[Math.abs(vertex.hashCode()) % 4]);
 				g.setStroke(new BasicStroke(1));
 				g.drawRoundRect((int) (pri.getMinX() * size + 20), (int) (pri.getMinY() * size + 20), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
 				g.drawString(vertex.getID(), (int) (pri.centerX() * size + 20) + xoffset, (int) (pri.centerY() * size + 20) + yoffset);
