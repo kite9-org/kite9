@@ -370,7 +370,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(ctx, g2, null, null, null, null, Direction.RIGHT);
+		new ContradictingLink(ctx, g2, null, null, null, null, Direction.LEFT);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}

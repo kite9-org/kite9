@@ -513,6 +513,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			int comp = compareDiagramElements((Connected) c, to);
 			if (comp == 1) {
 				d = Direction.reverse(d);
+			} else if (comp == -1) {
+				// ok
+			} else {
+				// zero means overlap
+				return;
 			}
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
 			if (!(to instanceof Container)) {

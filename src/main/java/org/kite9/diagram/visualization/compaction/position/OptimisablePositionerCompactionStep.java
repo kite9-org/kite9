@@ -31,6 +31,7 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 		SegmentSlackOptimisation yso = new SegmentSlackOptimisation(c.getHorizontalSegments(), Direction.DOWN);
 		
 		for (OptimisationStep step : steps) {
+			log.send("Running Optimisation Step: "+step.getClass());
 			step.optimise(c, xso, yso);
 		}
 		

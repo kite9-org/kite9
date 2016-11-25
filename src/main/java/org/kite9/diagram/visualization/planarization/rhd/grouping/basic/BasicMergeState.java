@@ -169,7 +169,7 @@ public class BasicMergeState extends GroupResult {
 	}
 
 	public MergeOption nextMergeOption() {
-		log.send("Merge options:", optionQueue);
+		//log.send("Merge options:", optionQueue);
 		MergeOption mo = optionQueue.remove();
 		bestOptions.remove(mo.mk);
 		
