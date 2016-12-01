@@ -16,7 +16,7 @@ import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.AbstractDiagramElement;
+import org.kite9.diagram.style.impl.AbstractDiagramElement;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.

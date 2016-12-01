@@ -8,7 +8,11 @@ diagram {
 	fill: none;
 }
 
-glyph,
+glyph {
+	type: connected;
+	sizing: container;	
+}
+
 arrow,
 arrow2,
 arrow3 {
@@ -28,6 +32,11 @@ to {
 context {
 	type: connected;
 	sizing: container;
+}
+
+stereotype {
+	type: label;
+	sizing: text;
 }
 
 .background {
@@ -116,7 +125,8 @@ glyph .label {
 	font-family: "opensans-regular-webfont";
 }
 
-glyph .stereotype {
+
+glyph stereotype {
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	stroke: black;

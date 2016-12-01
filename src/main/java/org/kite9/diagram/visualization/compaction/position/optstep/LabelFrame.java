@@ -7,7 +7,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.AbstractDiagramElement;
+import org.kite9.diagram.style.impl.AbstractDiagramElement;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Node;
