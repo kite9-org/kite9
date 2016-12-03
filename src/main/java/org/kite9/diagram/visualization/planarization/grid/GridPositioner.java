@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 /**
@@ -47,5 +47,5 @@ public interface GridPositioner {
 	 * @param containerVertices 
 	 * @param bounds 
 	 */
-	public OPair<Map<BigFraction, Double>> getFracMapForGrid(Container c, RoutableHandler2D rh, ContainerVertices containerVertices, RoutingInfo bounds);
+	public OPair<Map<BigFraction, Double>> getFracMapForGrid(DiagramElement c, RoutableHandler2D rh, CornerVertices containerVertices, RoutingInfo bounds);
 }

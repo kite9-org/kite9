@@ -11,8 +11,8 @@ import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.balanced.BalancedFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 
 /**
  * Handles the case where a corner of a container has several edges arriving at it.
@@ -31,13 +31,13 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 	@Override
 	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, Edge before, Edge after,
 			Planarization pln) {
-		if (v instanceof ContainerVertex) {
+		if (v instanceof MultiCornerVertex) {
 			Node vn = checkCreateVertexNode(pln, fg, v, before, after);
 			Node hn = createHelperNode(fg, f, v, vn, before, after);
 			log.send("Creating container vertex "+v+" in portion "+fn);
 			
 			if (hn != null) {
-				createContainerCornerVertexHelperArcs(fg, fn, (ContainerVertex) v, fn, before, after, hn, vn, pln);
+				createContainerCornerVertexHelperArcs(fg, fn, (MultiCornerVertex) v, fn, before, after, hn, vn, pln);
 			}
 			
 			
@@ -47,7 +47,7 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 	}
 
 
-	protected void createContainerCornerVertexHelperArcs(MappedFlowGraph fg, Node p, ContainerVertex v, Node fn, Edge before,
+	protected void createContainerCornerVertexHelperArcs(MappedFlowGraph fg, Node p, MultiCornerVertex v, Node fn, Edge before,
 			Edge after, Node hn, Node vn, Planarization pln) {
 		
 		if (before==after) {
@@ -57,7 +57,7 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 		
 		BalanceChoice side;
 		
-		if ((before instanceof ContainerBorderEdge) || (after instanceof ContainerBorderEdge)) {
+		if ((before instanceof BorderEdge) || (after instanceof BorderEdge)) {
             // different side is always true if we are dealing with an edge of the container
             side = BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;
 		} else {

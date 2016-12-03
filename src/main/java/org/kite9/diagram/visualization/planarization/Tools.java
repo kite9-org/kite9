@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.Edge;
@@ -46,7 +45,7 @@ public class Tools implements Logable {
 	 * This inserts the new EdgeCrossingVertex into an edge to break it in two
 	 * @param underlying if provided, it is assumed we are breaking the container boundary.
 	 */
-	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name, Container underlying) {
+	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name, DiagramElement underlying) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
 		Vertex from = e.getFrom();
 		Vertex to = e.getTo();

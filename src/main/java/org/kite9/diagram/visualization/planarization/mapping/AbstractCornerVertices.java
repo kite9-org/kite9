@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
@@ -14,26 +15,21 @@ import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
-public abstract class AbstractContainerVertices implements ContainerVertices {
+public abstract class AbstractCornerVertices implements CornerVertices {
 
-	private final Container c;
 	private final Container rootContainer;
-	//private transient Set<ContainerVertex> pset;
-	//private transient int pListSize;
-
 	private OPair<BigFraction> cx, cy;
-	Collection<ContainerVertices> children = new ArrayList<>(5);
-	private ContainerVertex tl, tr, bl, br;
+	Collection<CornerVertices> children = new ArrayList<>(5);
+	private MultiCornerVertex tl, tr, bl, br;
 
-	public AbstractContainerVertices(Container c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
+	public AbstractCornerVertices(DiagramElement c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
-		this.c = c;
-		this.rootContainer = ContainerVertex.getRootGridContainer(c);
+		this.rootContainer = MultiCornerVertex.getRootGridContainer(c);
 		this.cx = cx;
 		this.cy = cy;
 	}
 
-	protected void createInitialVertices(Container c) {
+	protected void createInitialVertices(DiagramElement c) {
 		tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
 		tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
 		br = createVertex(BigFraction.ONE, BigFraction.ONE);
@@ -45,21 +41,21 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
 	}
 
-	public abstract ContainerVertex createVertex(BigFraction x, BigFraction y);
+	public abstract MultiCornerVertex createVertex(BigFraction x, BigFraction y);
 	
-	protected abstract ContainerVertex createVertexHere(BigFraction x, BigFraction y);
+	protected abstract MultiCornerVertex createVertexHere(BigFraction x, BigFraction y);
 	 
-	public ContainerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, ContainerVertex> elements) {
+	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, MultiCornerVertex> elements) {
 		OPair<BigFraction> d = new OPair<BigFraction>(x, y);
 		
-		ContainerVertex cv = getExistingVertex(d);
+		MultiCornerVertex cv = getExistingVertex(d);
 		
 		if (cv != null) {
 			// we already have this
 			return cv;
 		} else {
 			if (cv == null) {
-				cv = new ContainerVertex(rootContainer.getID(), rootContainer, x, y);
+				cv = new MultiCornerVertex(rootContainer.getID(), rootContainer, x, y);
 			}
 			
 			elements.put(d, cv);
@@ -67,7 +63,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		}
 	}
 
-	protected abstract ContainerVertex getExistingVertex(OPair<BigFraction> d);
+	protected abstract MultiCornerVertex getExistingVertex(OPair<BigFraction> d);
 	
 	public static BigFraction scale(BigFraction y, OPair<BigFraction> range) {
 		BigFraction size = range.getB().subtract(range.getA());
@@ -76,9 +72,9 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return y;
 	}
 
-	private Collection<ContainerVertex> perimeterVertices = null;
+	private Collection<MultiCornerVertex> perimeterVertices = null;
 	
-	public Collection<ContainerVertex> getPerimeterVertices() {
+	public Collection<MultiCornerVertex> getPerimeterVertices() {
 		return perimeterVertices;
 	}
 	
@@ -89,7 +85,7 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		Bounds miny = rh.getBoundsOf(tl.getRoutingInfo(), false);
 		Bounds maxy = rh.getBoundsOf(br.getRoutingInfo(), false);
 		
-		HashSet<ContainerVertex> pset = new HashSet<>(10);
+		HashSet<MultiCornerVertex> pset = new HashSet<>(10);
 		collect(minx, maxx, miny, miny, pset, rh);
 		collect(maxx, maxx, miny, maxy, pset, rh);
 		collect(minx, maxx, maxy, maxy, pset, rh);
@@ -114,8 +110,8 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return c < 1;
 	}
 	
-	private void collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<ContainerVertex> out, RoutableHandler2D rh) {
-		for (ContainerVertex cv : getTopContainerVertices().getAllDescendentVertices()) {
+	private void collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<MultiCornerVertex> out, RoutableHandler2D rh) {
+		for (MultiCornerVertex cv : getTopContainerVertices().getAllDescendentVertices()) {
 			Bounds x = rh.getBoundsOf(cv.getRoutingInfo(), true);
 			Bounds y = rh.getBoundsOf(cv.getRoutingInfo(), false);
 			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
@@ -124,9 +120,9 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		}
 	}
 
-	public Collection<ContainerVertex> getAllDescendentVertices() {
-		Collection<ContainerVertex> out = new ArrayList<>();
-		for (ContainerVertices child : children) {
+	public Collection<MultiCornerVertex> getAllDescendentVertices() {
+		Collection<MultiCornerVertex> out = new ArrayList<>();
+		for (CornerVertices child : children) {
 			out.addAll(child.getAllDescendentVertices());
 		}
 		
@@ -142,11 +138,11 @@ public abstract class AbstractContainerVertices implements ContainerVertices {
 		return cy;
 	}
 	
-	protected abstract AbstractContainerVertices getTopContainerVertices();
+	protected abstract AbstractCornerVertices getTopContainerVertices();
 
-	protected ContainerVertex findOverlappingVertex(ContainerVertex cv, RoutableHandler2D rh) {
+	protected MultiCornerVertex findOverlappingVertex(MultiCornerVertex cv, RoutableHandler2D rh) {
 		RoutingInfo cvRoutingInfo = cv.getRoutingInfo();
-		for (ContainerVertex cv2 : getAllDescendentVertices()) {
+		for (MultiCornerVertex cv2 : getAllDescendentVertices()) {
 			if (cv2 != cv) {
 				RoutingInfo cv2routingInfo = cv2.getRoutingInfo();
 				if (cv2routingInfo != null) {

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.Routable;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.hints.PositioningHints;

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
@@ -19,38 +20,38 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * @author robmoffat
  *
  */
-public class SubwindowContainerVertices extends AbstractContainerVertices {
+public class SubwindowCornerVertices extends AbstractCornerVertices {
 	
-	AbstractContainerVertices parent;
+	AbstractCornerVertices parent;
 	
-	private final Map<OPair<BigFraction>, ContainerVertex> elements;
+	private final Map<OPair<BigFraction>, MultiCornerVertex> elements;
 	
-	public SubwindowContainerVertices(Container c, OPair<BigFraction> x, OPair<BigFraction> y, ContainerVertices parentCV) {
+	public SubwindowCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y, CornerVertices parentCV) {
 		super(c, getXSpan(x, parentCV), getYSpan(y, parentCV));
-		((AbstractContainerVertices) parentCV).children.add(this);
-		this.parent = (AbstractContainerVertices) parentCV;
+		((AbstractCornerVertices) parentCV).children.add(this);
+		this.parent = (AbstractCornerVertices) parentCV;
 		this.elements = new HashMap<>();
 		createInitialVertices(c);
 	}
 
-	private static OPair<BigFraction> getYSpan(OPair<BigFraction> y, ContainerVertices parentCV) {
+	private static OPair<BigFraction> getYSpan(OPair<BigFraction> y, CornerVertices parentCV) {
 		return new OPair<BigFraction>(
-				scale(y.getA(), ((AbstractContainerVertices)parentCV).getYRange()),
-				scale(y.getB(), ((AbstractContainerVertices)parentCV).getYRange())
+				scale(y.getA(), ((AbstractCornerVertices)parentCV).getYRange()),
+				scale(y.getB(), ((AbstractCornerVertices)parentCV).getYRange())
 				);
 	}
 
-	private static OPair<BigFraction> getXSpan(OPair<BigFraction> x, ContainerVertices parentCV) {
+	private static OPair<BigFraction> getXSpan(OPair<BigFraction> x, CornerVertices parentCV) {
 		return new OPair<BigFraction>(
-				scale(x.getA(), ((AbstractContainerVertices)parentCV).getXRange()),
-				scale(x.getB(), ((AbstractContainerVertices)parentCV).getXRange())
+				scale(x.getA(), ((AbstractCornerVertices)parentCV).getXRange()),
+				scale(x.getB(), ((AbstractCornerVertices)parentCV).getXRange())
 				);
 	}
 
 	@Override
-	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh) {
+	public MultiCornerVertex mergeDuplicates(MultiCornerVertex cv, RoutableHandler2D rh) {
 		if (elements.values().contains(cv)) {
-			ContainerVertex out = getTopContainerVertices().findOverlappingVertex(cv, rh);
+			MultiCornerVertex out = getTopContainerVertices().findOverlappingVertex(cv, rh);
 			
 			if (out != null) {
 				// merge the anchors
@@ -70,12 +71,12 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 		}
 	}
 	
-	protected AbstractContainerVertices getTopContainerVertices() {
+	protected AbstractCornerVertices getTopContainerVertices() {
 		return parent.getTopContainerVertices();
 	}
 
 	@Override
-	public ContainerVertex createVertex(BigFraction x, BigFraction y) {
+	public MultiCornerVertex createVertex(BigFraction x, BigFraction y) {
 		x = scale(x, getXRange());
 		y = scale(y, getYRange());
 		
@@ -83,28 +84,28 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 	}
 
 	@Override
-	public ContainerVertex createVertexHere(BigFraction x, BigFraction y) {
+	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y) {
 		return createVertexHere(x, y, elements);
 	}
 
 	@Override
-	public Collection<ContainerVertex> getAllAscendentVertices() {
-		Collection<ContainerVertex> out = new ArrayList<>();
+	public Collection<MultiCornerVertex> getAllAscendentVertices() {
+		Collection<MultiCornerVertex> out = new ArrayList<>();
 		out.addAll(parent.getAllAscendentVertices());
 		out.addAll(elements.values());
 		return out;
 	}
 	
 	@Override
-	public Collection<ContainerVertex> getAllDescendentVertices() {
-		Collection<ContainerVertex> out = super.getAllDescendentVertices();
+	public Collection<MultiCornerVertex> getAllDescendentVertices() {
+		Collection<MultiCornerVertex> out = super.getAllDescendentVertices();
 		out.addAll(elements.values());
 		return out;
 	}
 
 	@Override
-	protected ContainerVertex getExistingVertex(OPair<BigFraction> d) {
-		ContainerVertex out = parent.getExistingVertex(d);
+	protected MultiCornerVertex getExistingVertex(OPair<BigFraction> d) {
+		MultiCornerVertex out = parent.getExistingVertex(d);
 		if (out == null) {
 			return elements.get(d);
 		} else {
@@ -112,7 +113,7 @@ public class SubwindowContainerVertices extends AbstractContainerVertices {
 		}
 	}
 	
-	public Collection<ContainerVertex> getVerticesAtThisLevel() {
+	public Collection<MultiCornerVertex> getVerticesAtThisLevel() {
 		return elements.values();
 	}
 	

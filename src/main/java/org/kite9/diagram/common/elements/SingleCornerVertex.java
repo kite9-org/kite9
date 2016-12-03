@@ -7,11 +7,11 @@ import org.kite9.diagram.position.VPos;
 /**
  * Used to model any old corner within the diagram. e.g. bend in a connection, corner of a vertex etc.
  */
-public class CornerVertex extends AbstractAnchoringVertex {
+public class SingleCornerVertex extends AbstractAnchoringVertex {
 
 	private Anchor a;
 		
-	public CornerVertex(String name, HPos lr, VPos ud, DiagramElement underlying) {
+	public SingleCornerVertex(String name, HPos lr, VPos ud, DiagramElement underlying) {
 		super(name);
 		this.a = new Anchor(ud, lr, underlying);
 	}

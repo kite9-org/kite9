@@ -57,7 +57,7 @@ import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -238,13 +238,13 @@ public class TestingEngine extends TestingHelp {
 		for (Vertex vertex : out) {
 			int xoffset = 0;
 			int yoffset = 0;
-			if (vertex instanceof ContainerVertex) {
-				if (((ContainerVertex) vertex).getXOrdinal().equals(BigFraction.ONE)) {
+			if (vertex instanceof MultiCornerVertex) {
+				if (((MultiCornerVertex) vertex).getXOrdinal().equals(BigFraction.ONE)) {
 					xoffset = -20;
 				} else {
 					yoffset = 5;
 				}
-				if (((ContainerVertex) vertex).getYOrdinal().equals(BigFraction.ONE)) {
+				if (((MultiCornerVertex) vertex).getYOrdinal().equals(BigFraction.ONE)) {
 					yoffset = -20;
 				} else {
 					yoffset = 5;

@@ -12,40 +12,40 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 
 /**
- * This edge is used for the surrounding of a container.
+ * This edge is used for the surrounding of a diagram element.
  * 
  * Since all diagrams are containers
  * of vertices, these edges will be used around the perimeter of the diagram.
  * 
- * A new constraint on ContainerBorder edge is that "from" must be before "to" in the clockwise ordering of the edges 
+ * A new constraint on Border edge is that "from" must be before "to" in the clockwise ordering of the edges 
  * on the face, when the edge is created.  That way, we always know whether a face is inside or outside a container.
  * 
  * @author robmoffat
  *
  */
-public class ContainerBorderEdge extends AbstractPlanarizationEdge {
+public class BorderEdge extends AbstractPlanarizationEdge {
 
-	Container cide;
-	Collection<DiagramElement> containers;
+	DiagramElement underlying;
+	Collection<DiagramElement> forElements;
 	String label;
 	
-	public ContainerBorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Container cide, Collection<DiagramElement> containers) {
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide, Collection<DiagramElement> forELements) {
 		super(from, to, null, null, null, null, null);
-		this.cide = cide;
+		this.underlying = cide;
 		this.label = label;
 		this.drawDirection = d;
 		this.reversed = reversed;
-		this.containers = containers;
+		this.forElements = forELements;
 	}
 	
-	public ContainerBorderEdge(ContainerVertex from, ContainerVertex to, String label, Direction d) {
+	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
 		this(from, to, label, d, false, getOuterContainer(from, to), new HashSet<>());
 	}
 	
-	private static Container getOuterContainer(ContainerVertex from, ContainerVertex to) {
+	private static Container getOuterContainer(MultiCornerVertex from, MultiCornerVertex to) {
 		int depth = Integer.MAX_VALUE;
 		DiagramElement out = null;
 		for (Anchor f : from.getAnchors()) {
@@ -82,12 +82,12 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 		}
 	}
 
-	public Container getOriginalUnderlying() {
-		return cide;
+	public DiagramElement getOriginalUnderlying() {
+		return underlying;
 	}
 	
-	public Collection<DiagramElement> getContainers() {
-		return containers;
+	public Collection<DiagramElement> getDiagramElements() {
+		return forElements;
 	}
  	
 	@Override
@@ -116,12 +116,12 @@ public class ContainerBorderEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new ContainerBorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), cide, containers);
-		out[1] = new ContainerBorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), cide, containers);
+		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), underlying, forElements);
+		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), underlying, forElements);
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in
-			for (DiagramElement c : containers) {
+			for (DiagramElement c : forElements) {
 				((EdgeCrossingVertex)toIntroduce).addUnderlying(c);
 			}
 		}

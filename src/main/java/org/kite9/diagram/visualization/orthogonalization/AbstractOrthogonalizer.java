@@ -9,7 +9,7 @@ import java.util.Map;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -38,7 +38,7 @@ public abstract class AbstractOrthogonalizer implements Orthogonalizer, Logable 
 	public static void createDartOrdering(Planarization pln,
 			Orthogonalization om) {
 		for (Vertex v : om.getAllVertices()) {
-			if (v.hasDimension() || (v instanceof ContainerVertex)) {
+			if (v.hasDimension() || (v instanceof MultiCornerVertex)) {
 				List<Dart> ld = new ArrayList<Dart>();
 				for (Edge e : v.getEdges()) {
 					if (e instanceof Dart) {

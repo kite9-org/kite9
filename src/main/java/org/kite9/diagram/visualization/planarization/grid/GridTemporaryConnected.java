@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.batik.css.engine.value.Value;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HintMap;
 import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.common.Connected;
+import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;

@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.hints.PositioningHints;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;

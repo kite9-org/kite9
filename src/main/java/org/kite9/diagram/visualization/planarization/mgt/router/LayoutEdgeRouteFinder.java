@@ -6,8 +6,8 @@ import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 
@@ -38,8 +38,8 @@ public class LayoutEdgeRouteFinder extends ConnectionEdgeRouteFinder {
 		
 		if (und instanceof Container) {
 			Container c = (Container) und;
-			ContainerVertices cvs = em.getContainerVertices(c);
-			ContainerVertex leaver = cvs.createVertex(ContainerVertex.getOrdForXDirection(d), ContainerVertex.getOrdForYDirection(d));
+			CornerVertices cvs = em.getCornerVertices(c);
+			MultiCornerVertex leaver = cvs.createVertex(MultiCornerVertex.getOrdForXDirection(d), MultiCornerVertex.getOrdForYDirection(d));
 			return leaver;
 		} else {
 			return edgeVertex;

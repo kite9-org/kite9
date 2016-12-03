@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.common.Connected;
 
 /**
  * Creates an initial {@link Planarization} of the graph, upon which transforms are applied.

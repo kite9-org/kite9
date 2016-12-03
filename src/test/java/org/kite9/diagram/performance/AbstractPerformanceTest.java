@@ -14,11 +14,11 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;

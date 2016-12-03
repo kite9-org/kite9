@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -15,8 +15,8 @@ import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ConnectionEdge;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
 import org.kite9.framework.logging.Kite9Log;
@@ -54,21 +54,21 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	private void createContainerEdgeVertices(Planarization pln) {
 		int number = 0;
 		for (Vertex v : ((MGTPlanarization) pln).getVertexOrder()) {
-			if ((v instanceof ContainerVertex) && (sideOrd((ContainerVertex)v)) && (v.getEdgeCount() > 3)) {
-				Direction edgeDirectionToSplit = getDirectionForSideVertex((ContainerVertex)v);
+			if ((v instanceof MultiCornerVertex) && (sideOrd((MultiCornerVertex)v)) && (v.getEdgeCount() > 3)) {
+				Direction edgeDirectionToSplit = getDirectionForSideVertex((MultiCornerVertex)v);
 				if (edgeDirectionToSplit != null) {
 					Direction startContainerEdgeDirection = Direction.rotateAntiClockwise(edgeDirectionToSplit);
-					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (ContainerVertex) v, pln, number);
+					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (MultiCornerVertex) v, pln, number);
 				}
 				
-			} else if ((v instanceof ContainerVertex) && (v.getEdgeCount() > 3)) {
-				ContainerVertex cv = (ContainerVertex) v;
-				boolean ymin = ContainerVertex.isMin(cv.getYOrdinal());
-				boolean xmin = ContainerVertex.isMin(cv.getXOrdinal());
-				boolean ymax = ContainerVertex.isMax(cv.getYOrdinal());
-				boolean xmax = ContainerVertex.isMax(cv.getXOrdinal());
+			} else if ((v instanceof MultiCornerVertex) && (v.getEdgeCount() > 3)) {
+				MultiCornerVertex cv = (MultiCornerVertex) v;
+				boolean ymin = MultiCornerVertex.isMin(cv.getYOrdinal());
+				boolean xmin = MultiCornerVertex.isMin(cv.getXOrdinal());
+				boolean ymax = MultiCornerVertex.isMax(cv.getYOrdinal());
+				boolean xmax = MultiCornerVertex.isMax(cv.getXOrdinal());
 								
-				if (ContainerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
+				if (MultiCornerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
 					number = splitEdgesGoing(Direction.LEFT, ymin ? Direction.DOWN : Direction.UP, 
 							ymin, cv, pln, number);
 				}
@@ -91,33 +91,33 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		}
 	}
 
-	private Direction getDirectionForSideVertex(ContainerVertex v) {
+	private Direction getDirectionForSideVertex(MultiCornerVertex v) {
 		BigFraction xOrd = v.getXOrdinal();
-		if (ContainerVertex.isMin(xOrd)) {
+		if (MultiCornerVertex.isMin(xOrd)) {
 			return Direction.LEFT;
-		} else if (ContainerVertex.isMax(xOrd)) {
+		} else if (MultiCornerVertex.isMax(xOrd)) {
 			return Direction.RIGHT;
 		}
 		
 		BigFraction yOrd = v.getYOrdinal();
-		if (ContainerVertex.isMin(yOrd)) {
+		if (MultiCornerVertex.isMin(yOrd)) {
 			return Direction.UP;
-		} else if (ContainerVertex.isMax(yOrd)) {
+		} else if (MultiCornerVertex.isMax(yOrd)) {
 			return Direction.DOWN;
 		}
 		
 		return null; 	// container vertex embedded within a grid
 	}
 
-	private boolean sideOrd(ContainerVertex v) {
+	private boolean sideOrd(MultiCornerVertex v) {
 		return (!cornerOrd(v.getXOrdinal())) || (!cornerOrd(v.getYOrdinal()));
 	}
 
 	private boolean cornerOrd(BigFraction ord) {
-		return ContainerVertex.isMin(ord) || ContainerVertex.isMax(ord);
+		return MultiCornerVertex.isMin(ord) || MultiCornerVertex.isMax(ord);
 	}
 
-	private int splitEdgesGoing(Direction edgeDirectionToSplit, Direction startContainerEdgeDirection, boolean turnClockwise, ContainerVertex v, Planarization pln, int n) {
+	private int splitEdgesGoing(Direction edgeDirectionToSplit, Direction startContainerEdgeDirection, boolean turnClockwise, MultiCornerVertex v, Planarization pln, int n) {
 		// find out the starting point for the turn, and how many edges go in the direction we want to split
 		log.send("Fixing edges around vertex: "+v+" going "+edgeDirectionToSplit);
 
@@ -158,7 +158,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		return n;
 	}
 
-	private Direction getUsedEdgeDirection(ContainerVertex v, Edge edge) {
+	private Direction getUsedEdgeDirection(MultiCornerVertex v, Edge edge) {
 		if (edge instanceof ConnectionEdge) {
 			Connection und = ((ConnectionEdge)edge).getOriginalUnderlying();
 			RouteRenderingInformation rri = (RouteRenderingInformation) und.getRenderingInformation();
@@ -177,7 +177,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	/**
 	 * Splits the receivingEdge with a new vertex, and moves "mover" onto it.  "after" is the edge following mover in the current ordering
 	 */
-	private Edge splitEdgeFromVertex(String vertexName, Container c, Vertex v, Planarization pln, Edge receivingEdge, Edge mover, Edge after, boolean clockwise) {
+	private Edge splitEdgeFromVertex(String vertexName, DiagramElement c, Vertex v, Planarization pln, Edge receivingEdge, Edge mover, Edge after, boolean clockwise) {
 		// ok, splitting time - create a new vertex for the 'next' edge
 		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName, c);
 

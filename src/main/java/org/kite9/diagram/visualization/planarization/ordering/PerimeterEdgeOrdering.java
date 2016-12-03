@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -14,17 +14,18 @@ import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * Provides an edge ordering for all the edges leaving a container.
+ * Provides an edge ordering for all the edges leaving a diagram element, which is
+ * not represented by a single vertex.
  * 
  * @author robmoffat
  *
  */
-public class ContainerEdgeOrdering extends AbstractCachingEdgeOrdering {
+public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 	
 	Planarization pln;
-	Container c;
+	DiagramElement c;
 
-	public ContainerEdgeOrdering(Planarization pln, Container c) {
+	public PerimeterEdgeOrdering(Planarization pln, DiagramElement c) {
 		this.pln = pln;
 		this.c = c;
 	}

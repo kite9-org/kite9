@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.position;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
-import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.Routable;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;

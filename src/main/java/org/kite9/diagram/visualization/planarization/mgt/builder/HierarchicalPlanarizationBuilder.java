@@ -11,12 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -29,22 +28,21 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerLayoutEdge;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
- * This handles the creation of edges for the container boundary, and the
- * introduction of edges to respect the container ordering / direction settings
- * provided on the container.
+ * This handles the creation of edges for a diagram element border, and the
+ * introduction of edges to respect the ordering / direction settings
+ * provided on the element.
  * 
  * @author robmoffat
  * 
@@ -57,7 +55,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	@Override
 	protected void completeEmbedding(MGTPlanarization p) { 
-		setupContainerBoundaryEdges(p, p.getDiagram());
+		setupElementBorderEdges(p, p.getDiagram());
 		super.completeEmbedding(p);
 		if (!log.go()) {
 			try {
@@ -270,40 +268,42 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * of edges.  So, we have to journey round the perimeter vertices of the container and
 	 * create edges between them in order.
 	 */
-	protected void setupContainerBoundaryEdges(MGTPlanarization p, Container outer) {
-		for (DiagramElement c : outer.getContents()) {
-			if (c instanceof Container) {
-				setupContainerBoundaryEdges(p, (Container)c);
+	protected void setupElementBorderEdges(MGTPlanarization p, DiagramElement outer) {
+		if (outer instanceof Container) {
+			for (DiagramElement c : ((Container)outer).getContents()) {
+				setupElementBorderEdges(p, c);
 			}
 		}
 	
-		ContainerVertices cv = em.getContainerVertices(outer);
-		String originalLabel = outer.getID();
-				
-		LinkedList<Edge> out = new LinkedList<Edge>();
-		EdgeMapping em = new EdgeMapping(outer, out);
-		p.getEdgeMappings().put(outer, em);
-
-		int i = 0;
-		ContainerVertex fromv, tov = null;
-		List<ContainerVertex> perimeterVertices = getClockwiseOrderedContainerVertices(cv);
-		Iterator<ContainerVertex> iterator = perimeterVertices.iterator();
-		while (iterator.hasNext()) {
-			fromv = tov;
-			tov = iterator.next();
-			if (fromv != null) {
-				addEdgeBetween(p, outer, originalLabel, em, i, fromv, tov);
-				i++;
+		if (em.hasCornerVertices(outer)) {
+			CornerVertices cv = em.getCornerVertices(outer);
+			String originalLabel = outer.getID();
+					
+			LinkedList<Edge> out = new LinkedList<Edge>();
+			EdgeMapping em = new EdgeMapping(outer, out);
+			p.getEdgeMappings().put(outer, em);
+	
+			int i = 0;
+			MultiCornerVertex fromv, tov = null;
+			List<MultiCornerVertex> perimeterVertices = getClockwiseOrderedContainerVertices(cv);
+			Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
+			while (iterator.hasNext()) {
+				fromv = tov;
+				tov = iterator.next();
+				if (fromv != null) {
+					addEdgeBetween(p, outer, originalLabel, em, i, fromv, tov);
+					i++;
+				}
 			}
+			
+			// join back into a circle
+			addEdgeBetween(p, outer, originalLabel, em, i, 
+					perimeterVertices.get(perimeterVertices.size()-1), 
+					perimeterVertices.get(0));
 		}
-		
-		// join back into a circle
-		addEdgeBetween(p, outer, originalLabel, em, i, 
-				perimeterVertices.get(perimeterVertices.size()-1), 
-				perimeterVertices.get(0));
 	}
 
-	private List<ContainerVertex> getClockwiseOrderedContainerVertices(ContainerVertices cvs) {
+	private List<MultiCornerVertex> getClockwiseOrderedContainerVertices(CornerVertices cvs) {
 		Bounds minx = null;
 		Bounds maxx = null;
 		Bounds miny = null;
@@ -311,8 +311,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			
 		cvs.identifyPerimeterVertices(rh);
 		
-		Collection<ContainerVertex> perimeterVertices = cvs.getPerimeterVertices();
-		for (ContainerVertex cv : perimeterVertices) {
+		Collection<MultiCornerVertex> perimeterVertices = cvs.getPerimeterVertices();
+		for (MultiCornerVertex cv : perimeterVertices) {
 			RoutingInfo ri = cv.getRoutingInfo();
 			Bounds xb = rh.getBoundsOf(ri, true);
 			Bounds yb = rh.getBoundsOf(ri, false);
@@ -323,12 +323,12 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			maxy = limit(maxy, yb, 1);		
 		}
 			
-		List<ContainerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny, perimeterVertices));
-		List<ContainerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices));
-		List<ContainerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices));
-		List<ContainerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices));
+		List<MultiCornerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny, perimeterVertices));
+		List<MultiCornerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices));
+		List<MultiCornerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices));
+		List<MultiCornerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices));
 		
-		List<ContainerVertex> plist = new ArrayList<>(top.size()+right.size()+left.size()+bottom.size());
+		List<MultiCornerVertex> plist = new ArrayList<>(top.size()+right.size()+left.size()+bottom.size());
 		
 		addAllExceptLast(plist, top);
 		addAllExceptLast(plist, right);
@@ -345,11 +345,11 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		return current;
 	}
 	
-	private List<ContainerVertex> sort(int xorder, int yorder, List<ContainerVertex> collect) {
-		Collections.sort(collect, new Comparator<ContainerVertex>() {
+	private List<MultiCornerVertex> sort(int xorder, int yorder, List<MultiCornerVertex> collect) {
+		Collections.sort(collect, new Comparator<MultiCornerVertex>() {
 
 			@Override
-			public int compare(ContainerVertex o1, ContainerVertex o2) {
+			public int compare(MultiCornerVertex o1, MultiCornerVertex o2) {
 				Bounds xb1 = rh.getBoundsOf(o1.getRoutingInfo(), true);
 				Bounds yb1 = rh.getBoundsOf(o1.getRoutingInfo(), false);
 				
@@ -369,15 +369,15 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	/*
 	 * Prevents duplicating the corner vertices
 	 */
-	private void addAllExceptLast(List<ContainerVertex> out, List<ContainerVertex> in) {
+	private void addAllExceptLast(List<MultiCornerVertex> out, List<MultiCornerVertex> in) {
 		for (int i = 0; i < in.size()-1; i++) {
 			out.add(in.get(i));
 		}
 	}
 
-	private List<ContainerVertex> collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<ContainerVertex> elements) {
-		List<ContainerVertex> out = new ArrayList<>();
-		for (ContainerVertex cv : elements) {
+	private List<MultiCornerVertex> collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<MultiCornerVertex> elements) {
+		List<MultiCornerVertex> out = new ArrayList<>();
+		for (MultiCornerVertex cv : elements) {
 			Bounds xb = rh.getBoundsOf(cv.getRoutingInfo(), true);
 			Bounds yb = rh.getBoundsOf(cv.getRoutingInfo(), false);
 			
@@ -390,14 +390,14 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		return out;
 	}
 
-	private void addEdgeBetween(MGTPlanarization p, Container outer, String originalLabel, EdgeMapping em, int i, ContainerVertex fromv, ContainerVertex tov) {
+	private void addEdgeBetween(MGTPlanarization p, DiagramElement outer, String originalLabel, EdgeMapping em, int i, MultiCornerVertex fromv, MultiCornerVertex tov) {
 		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, i, em);
 		if (newEdge != null) {
 			getEdgeRouter().addEdgeToPlanarization(p, newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
-	private Edge updateEdges(String l, Container c, Vertex from, Vertex to, int i, EdgeMapping em) {
+	private Edge updateEdges(String l, DiagramElement c, Vertex from, Vertex to, int i, EdgeMapping em) {
 		Direction d = null;
 		Bounds ax = rh.getBoundsOf(from.getRoutingInfo(), true);
 		Bounds ay = rh.getBoundsOf(from.getRoutingInfo(), false);
@@ -425,17 +425,17 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			while (from != to) {
 				Edge e = getLeaverInDirection(from, d);
 				if (e==null) {
-					ContainerBorderEdge cbe = new ContainerBorderEdge((ContainerVertex) from, (ContainerVertex) to, l+d+i, d);
-					cbe.getContainers().add(c);
+					BorderEdge cbe = new BorderEdge((MultiCornerVertex) from, (MultiCornerVertex) to, l+d+i, d);
+					cbe.getDiagramElements().add(c);
 					em.add(cbe);			
 					return cbe;
 				}
 				
-				if (!(e instanceof ContainerBorderEdge)) {
+				if (!(e instanceof BorderEdge)) {
 					throw new Kite9ProcessingException("What is this?");
 				}
 				
-				((ContainerBorderEdge)e).getContainers().add(c);
+				((BorderEdge)e).getDiagramElements().add(c);
 				em.add(e);			
 				from = e.otherEnd(from);
 			}
@@ -501,8 +501,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private Vertex getVertexFor(DiagramElement c) {
 		if (c instanceof Container) {
-			Collection<ContainerVertex> vertices = em.getContainerVertices((Container) c).getPerimeterVertices();
-			for (ContainerVertex cv : vertices) {
+			Collection<MultiCornerVertex> vertices = em.getCornerVertices((Container) c).getPerimeterVertices();
+			for (MultiCornerVertex cv : vertices) {
 				if (cv.hasAnchorFor(c)) {
 					return cv;
 				}

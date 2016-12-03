@@ -12,7 +12,7 @@ import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
 import org.kite9.framework.logging.Kite9Log;
@@ -382,7 +382,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			
 			initTrail(prev);
 			
-			if (crossing instanceof ContainerBorderEdge) {
+			if (crossing instanceof BorderEdge) {
 				Container inside = prev.insideContainer();
 				DiagramElement crossingContainer = crossing.getOriginalUnderlying();
 				if (crossingContainer == inside) {

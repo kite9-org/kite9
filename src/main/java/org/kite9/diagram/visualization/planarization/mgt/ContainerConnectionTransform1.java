@@ -6,17 +6,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
 import org.kite9.framework.logging.Kite9Log;
@@ -98,7 +98,7 @@ public class ContainerConnectionTransform1 implements PlanarizationTransform, Lo
 	}
 
 	private DiagramElement rootContainer(DiagramElement from) {
-		return from instanceof Container ? ContainerVertex.getRootGridContainer((Container) from) : from;
+		return from instanceof Container ? MultiCornerVertex.getRootGridContainer((Container) from) : from;
 	}
 
 	public String getPrefix() {

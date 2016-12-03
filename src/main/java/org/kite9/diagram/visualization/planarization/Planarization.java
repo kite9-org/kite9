@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;

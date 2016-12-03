@@ -2,10 +2,9 @@ package org.kite9.diagram.visualization.planarization.mapping;
 
 import java.util.Collection;
 
-import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 
@@ -14,9 +13,11 @@ import org.kite9.diagram.common.elements.Vertex;
  */
 public interface ElementMapper {
 	
-	public ContainerVertices getContainerVertices(Container c);
+	public boolean hasCornerVertices(DiagramElement c);
+	
+	public CornerVertices getCornerVertices(DiagramElement c);
     
-    public Vertex getVertex(Connected c); 
+    public Vertex getVertex(DiagramElement c); 
     
     public PlanarizationEdge getEdge(Connected from, Vertex vfrom, Connected to, Vertex vto, BiDirectional<Connected> element);
     

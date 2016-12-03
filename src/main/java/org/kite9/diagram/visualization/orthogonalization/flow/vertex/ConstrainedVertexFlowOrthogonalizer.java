@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;

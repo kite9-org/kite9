@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.VertexOnEdge;
+import org.kite9.diagram.common.VertexOnEdge;
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
@@ -20,7 +20,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.router.PlanarizationCrossingVertex;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -212,8 +212,8 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private Container getContainerFor(Vertex from) {
-		if (from instanceof ContainerVertex) {
-			return (Container) ((ContainerVertex)from).getOriginalUnderlying();
+		if (from instanceof MultiCornerVertex) {
+			return (Container) ((MultiCornerVertex)from).getOriginalUnderlying();
 		} else if (from instanceof PlanarizationCrossingVertex) {
 			throw new Kite9ProcessingException("These should've all been removed");
 		} else if (from instanceof ConnectedVertex) {

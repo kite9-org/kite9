@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
@@ -18,6 +18,7 @@ import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class ElementMapperImpl implements ElementMapper {
@@ -29,31 +30,35 @@ public class ElementMapperImpl implements ElementMapper {
 		this.gp = gp;
 	}
 
-	Map<Connected, Vertex> vertices = new HashMap<Connected, Vertex>();
-	Map<Container, ContainerVertices> containers = new HashMap<Container, ContainerVertices>();
+	Map<DiagramElement, Vertex> singleVertices = new HashMap<DiagramElement, Vertex>();
+	Map<DiagramElement, CornerVertices> cornerVertices = new HashMap<DiagramElement, CornerVertices>();
 	Map<BiDirectional<Connected>, PlanarizationEdge> edges = new HashMap<BiDirectional<Connected>, PlanarizationEdge>();
 
-	public ContainerVertices getContainerVertices(final Container c) {
-		ContainerVertices v = containers.get(c);
+	public boolean hasCornerVertices(DiagramElement d) {
+		return cornerVertices.containsKey(d);
+	}
+	
+	public CornerVertices getCornerVertices(final DiagramElement c) {
+		CornerVertices v = cornerVertices.get(c);
 		if (v == null) {
 			if (hasParentGridLayout(c)) {
-				ContainerVertices parentCV = getContainerVertices((Container)c.getParent());
+				CornerVertices parentCV = getCornerVertices((Container)c.getParent());
 				OPair<BigFraction> xspan = gp.getGridXPosition(c);
 				OPair<BigFraction> yspan = gp.getGridYPosition(c);
-				v = new SubwindowContainerVertices(c, xspan, yspan, parentCV);
-				containers.put(c, v);
+				v = new SubwindowCornerVertices(c, xspan, yspan, parentCV);
+				cornerVertices.put(c, v);
 			} else {
-				v = new IndependentContainerVertices(c);
-				containers.put(c, v);
+				v = new IndependentCornerVertices(c);
+				cornerVertices.put(c, v);
 			}
 		}
 
 		return v;
 	}
 
-	private boolean hasParentGridLayout(Container c) {
+	private boolean hasParentGridLayout(DiagramElement c) {
 		DiagramElement parent = c.getParent();
-		if (parent != null) {
+		if ((parent != null) && (parent instanceof Container)) {
 			return ((Container)parent).getLayout()==Layout.GRID;
 		}
 		
@@ -96,11 +101,16 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 	}
 
-	public Vertex getVertex(Connected c) {
-		Vertex v = vertices.get(c);
+	public Vertex getVertex(DiagramElement c) {
+		Vertex v = singleVertices.get(c);
 		if (v == null) {
-			v = new ConnectedVertex(c.getID(), c);
-			vertices.put(c, v);
+			
+			if (c instanceof Connected) {
+				v = new ConnectedVertex(c.getID(), (Connected) c);
+				singleVertices.put(c, v);
+			} else {
+				throw new Kite9ProcessingException("Not sure how to create vertex for "+c);
+			}
 		}
 
 		return v;
@@ -115,9 +125,9 @@ public class ElementMapperImpl implements ElementMapper {
 	 */
 	@Override
 	public Collection<Vertex> allVertices() {
-		Collection<Vertex> out = new ArrayList<Vertex>(vertices.values());
-		for (ContainerVertices cv : containers.values()) {
-			for (ContainerVertex vertex : cv.getVerticesAtThisLevel()) {
+		Collection<Vertex> out = new ArrayList<Vertex>(singleVertices.values());
+		for (CornerVertices cv : cornerVertices.values()) {
+			for (MultiCornerVertex vertex : cv.getVerticesAtThisLevel()) {
 				out.add(vertex);
 			}
 		}

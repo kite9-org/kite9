@@ -6,21 +6,22 @@ import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
-public class IndependentContainerVertices extends AbstractContainerVertices {
+public class IndependentCornerVertices extends AbstractCornerVertices {
 	
 	private static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.ZERO, BigFraction.ONE);
 	
-	private final Map<OPair<BigFraction>, ContainerVertex> elements = new HashMap<>();
+	private final Map<OPair<BigFraction>, MultiCornerVertex> elements = new HashMap<>();
 
-	public IndependentContainerVertices(Container c) {
+	public IndependentCornerVertices(DiagramElement c) {
 		super(c, FULL_RANGE, FULL_RANGE);
 		createInitialVertices(c);
 	}
 
-	protected ContainerVertex getExistingVertex(OPair<BigFraction> d) {
+	protected MultiCornerVertex getExistingVertex(OPair<BigFraction> d) {
 		return elements.get(d);
 	}
 	
@@ -28,38 +29,38 @@ public class IndependentContainerVertices extends AbstractContainerVertices {
 	 * There are no duplicates for independent container vertices.
 	 */
 	@Override
-	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh) {
+	public MultiCornerVertex mergeDuplicates(MultiCornerVertex cv, RoutableHandler2D rh) {
 		return cv;
 	}
 
 	@Override
-	public ContainerVertex createVertex(BigFraction x, BigFraction y) {
+	public MultiCornerVertex createVertex(BigFraction x, BigFraction y) {
 		return createVertexHere(x, y);
 	}
 
 	@Override
-	public ContainerVertex createVertexHere(BigFraction x, BigFraction y) {
+	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y) {
 		return createVertexHere(x, y, elements);
 	}
 
 	@Override
-	protected AbstractContainerVertices getTopContainerVertices() {
+	protected AbstractCornerVertices getTopContainerVertices() {
 		return this;
 	}
 
 	@Override
-	public Collection<ContainerVertex> getAllAscendentVertices() {
+	public Collection<MultiCornerVertex> getAllAscendentVertices() {
 		return elements.values();
 	}
 
-	public Collection<ContainerVertex> getVerticesAtThisLevel() {
+	public Collection<MultiCornerVertex> getVerticesAtThisLevel() {
 		return elements.values();
 	}
 	
 	
 	@Override
-	public Collection<ContainerVertex> getAllDescendentVertices() {
-		Collection<ContainerVertex> out = super.getAllDescendentVertices();
+	public Collection<MultiCornerVertex> getAllDescendentVertices() {
+		Collection<MultiCornerVertex> out = super.getAllDescendentVertices();
 		out.addAll(elements.values());
 		return out;
 	}

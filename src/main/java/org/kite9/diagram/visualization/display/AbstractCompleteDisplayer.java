@@ -3,13 +3,13 @@ package org.kite9.diagram.visualization.display;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Text;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;

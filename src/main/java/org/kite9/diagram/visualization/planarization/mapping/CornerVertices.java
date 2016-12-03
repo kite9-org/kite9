@@ -15,35 +15,35 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * @author robmoffat
  *
  */
-public interface ContainerVertices {
+public interface CornerVertices {
 		
 	/**
 	 * Unordered collection of vertices around the container.
 	 */
 	public void identifyPerimeterVertices(RoutableHandler2D rh);
 	
-	public Collection<ContainerVertex> getPerimeterVertices();
+	public Collection<MultiCornerVertex> getPerimeterVertices();
 	
 	/**
 	 * Creates or returns a vertex from within the rectangle of the container.
 	 * 
 	 */
-	public ContainerVertex createVertex(BigFraction x, BigFraction y);
+	public MultiCornerVertex createVertex(BigFraction x, BigFraction y);
 	
 	/**
 	 * Returns all vertices in the container, and in any parent containers (if a gridded container).
 	 */
-	public Collection<ContainerVertex> getAllAscendentVertices();
+	public Collection<MultiCornerVertex> getAllAscendentVertices();
 	
 	/**
 	 * Returns all vertices in the container, and in any child containers (if a gridded container).
 	 */
-	public Collection<ContainerVertex> getAllDescendentVertices();
+	public Collection<MultiCornerVertex> getAllDescendentVertices();
 	
 	/**
 	 * Returns vertices uniquely declared by this later of the container vertices.
 	 */
-	public Collection<ContainerVertex> getVerticesAtThisLevel();
+	public Collection<MultiCornerVertex> getVerticesAtThisLevel();
 	
 	
 	/**
@@ -55,5 +55,5 @@ public interface ContainerVertices {
 	 * This is potentially a costly operation, as we have to check every vertex.
 	 * 
 	 */
-	public ContainerVertex mergeDuplicates(ContainerVertex cv, RoutableHandler2D rh);
+	public MultiCornerVertex mergeDuplicates(MultiCornerVertex cv, RoutableHandler2D rh);
 }

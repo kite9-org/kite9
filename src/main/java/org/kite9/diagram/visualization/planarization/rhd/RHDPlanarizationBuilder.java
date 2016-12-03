@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Bounds;
@@ -30,9 +30,9 @@ import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -192,11 +192,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	/**
 	 * This makes sure all the container vertices have the correct anchors before we position them.
 	 */
-	private void instantiateContainerVertices(Container c) {
-		em.getContainerVertices(c);
-		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Container) {
-				instantiateContainerVertices((Container) de);
+	private void instantiateContainerVertices(DiagramElement c) {
+		if (requiresCornerVertices(c)) {
+			em.getCornerVertices(c);
+		}
+		if (c instanceof Container) {
+			for (DiagramElement de : ((Container)c).getContents()) {
+				instantiateContainerVertices(de);
 			}
 		}
 	}
@@ -216,7 +218,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 			}
 			
-			if (ci instanceof Container) {
+			if (c instanceof Container) {
 				if (!checkLayoutIsConsistent((Container) ci)) {
 					return false;
 				}
@@ -350,18 +352,18 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * Constructs the list of vertices in no particular order.
 	 */
 	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
-		if (c instanceof Container) {
-			Container container = (Container) c;
-			ContainerVertices cvs = em.getContainerVertices(container);
+		if (requiresCornerVertices(c)) {
+			CornerVertices cvs = em.getCornerVertices(c);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			log.send("Placed position of container: "+c+" is "+bounds);
-			setContainerVertexPositions(before, container, after, cvs, out);
+			setCornerVertexPositions(before, c, after, cvs, out);
 
-
-			if (container.getContents().size() > 0) {
-				buildVertexListForContainerContents(out, container, sortedContainerContents);
+			if (c instanceof Container) {
+				Container container = (Container) c;
+				if (container.getContents().size() > 0) {
+					buildVertexListForContainerContents(out, container, sortedContainerContents);
+				}
 			}
-			
 
 		} else {
 			RoutingInfo bounds = rh.getPlacedPosition(c);
@@ -373,6 +375,15 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			setPlanarizationHints(c, bounds);
 		}
 		return;
+	}
+
+	private boolean requiresCornerVertices(DiagramElement c) {
+		if (c instanceof Container) {
+			return true;
+		}
+		
+		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
+		return (l == Layout.GRID);
 	}
 	
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
@@ -442,7 +453,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 //		rh.setHints(hints, bounds);
 	}
 	
-	private void setContainerVertexPositions(Connected before, Container c, Connected after, ContainerVertices cvs, List<Vertex> out) {
+	private void setCornerVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
@@ -457,7 +468,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		Bounds bx, by;
 		if (l==Layout.GRID) {
 			// use the bounds of the non-grid parent container.
-			Container containerWithNonGridParent = ContainerVertex.getRootGridContainer(c);
+			Container containerWithNonGridParent = MultiCornerVertex.getRootGridContainer(c);
 			bounds = rh.getPlacedPosition(containerWithNonGridParent);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);				
@@ -468,47 +479,47 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 
 		// set up frac maps to control where the vertices will be positioned
-		OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(c, rh, em.getContainerVertices(c), bounds);
+		OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(c, rh, em.getCornerVertices(c), bounds);
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
 		
-		
-		// add extra vertices for connections to keep the layout
-		if (l != null) {
-			switch (l) {
-			case UP:
-			case DOWN:
-			case VERTICAL:
-				addExtraContainerVertex(c, Direction.DOWN, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-				addExtraContainerVertex(c, Direction.DOWN, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-				break;
-			case LEFT:
-			case RIGHT:
-			case HORIZONTAL:
-				addExtraContainerVertex(c, Direction.RIGHT, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-				addExtraContainerVertex(c, Direction.RIGHT, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-				break;	
-			default:
-				// do nothing
+		if (c instanceof Connected) {
+			
+			// add extra vertices for connections to keep the layout
+			if (l != null) {
+				switch (l) {
+				case UP:
+				case DOWN:
+				case VERTICAL:
+					addExtraSideVertex((Connected) c, Direction.DOWN, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, Direction.DOWN, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					break;
+				case LEFT:
+				case RIGHT:
+				case HORIZONTAL:
+					addExtraSideVertex((Connected) c, Direction.RIGHT, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, Direction.RIGHT, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					break;	
+				default:
+					// do nothing
+				}
 			}
-		}
 		
 		// add border vertices for directed edges.
-		if (c instanceof Connected) {
 			for (Connection conn : ((Connected) c).getLinks()) {
 				if ((conn.getDrawDirection() != null) && (!conn.getRenderingInformation().isContradicting())) {
-					addExtraContainerVertex(c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				}
 			}
 		}
 	
-		for (ContainerVertex cv : cvs.getVerticesAtThisLevel()) {
+		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
 			setRouting(cvs, cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
 		}
 		setPlanarizationHints(c, bounds);
 	}
 
-	private void addExtraContainerVertex(Container c, Direction d, Connected to, ContainerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	private void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
 			int comp = compareDiagramElements((Connected) c, to);
 			if (comp == 1) {
@@ -528,7 +539,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			double fracX = 0d, fracY = 0d;
 			HPos hpos = null;
 			VPos vpos = null;
-			ContainerVertex cvNew = null;	
+			MultiCornerVertex cvNew = null;	
 
 			// set position
 			switch (d) {
@@ -541,7 +552,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
 				double numerd = fracX * (double) denom;
 				int numer = Math.round((float) numerd);
-				yOrd = ContainerVertex.getOrdForYDirection(d);
+				yOrd = MultiCornerVertex.getOrdForYDirection(d);
 				xOrd = BigFraction.getReducedFraction(numer, denom);
 				cvNew = cvs.createVertex(xOrd, yOrd);	
 				yOrd = cvNew.getYOrdinal();
@@ -564,7 +575,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
 				numerd = fracY * (double) denom;
 				numer = Math.round((float) numerd);
-				xOrd = ContainerVertex.getOrdForXDirection(d);
+				xOrd = MultiCornerVertex.getOrdForXDirection(d);
 				yOrd = BigFraction.getReducedFraction(numer, denom);
 				cvNew = cvs.createVertex(xOrd, yOrd);	
 				xOrd = cvNew.getXOrdinal();
@@ -591,7 +602,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private void setRouting(ContainerVertices cvs, ContainerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	private void setRouting(CornerVertices cvs, MultiCornerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
 			BigFraction xOrdinal = cv.getXOrdinal();
 			BigFraction yOrdinal = cv.getYOrdinal();

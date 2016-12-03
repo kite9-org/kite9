@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -37,7 +37,7 @@ public class GridPositionerImpl implements GridPositioner {
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
 	Map<DiagramElement, OPair<BigFraction>> xPositions = new HashMap<>(100);
 	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
-	Map<Container, OPair<Map<BigFraction, Double>>> fracMaps = new HashMap<>();
+	Map<DiagramElement, OPair<Map<BigFraction, Double>>> fracMaps = new HashMap<>();
 	
 	
 	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
@@ -101,7 +101,7 @@ public class GridPositionerImpl implements GridPositioner {
 					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
 					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
 					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
-					storeCoordinates(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo, size);
+					storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
 				} else {
 					overlaps.add(diagramElement);
 					
@@ -112,9 +112,11 @@ public class GridPositionerImpl implements GridPositioner {
 		// add remaining/dummy elements elements, by adding extra rows if need be.
 		int xr = 0;
 		while ((overlaps.size() > 0) || (xr < out.size())) {
+			// add another (empty) column
 			if (xr == out.size()) {
 				DiagramElement[] ys = new DiagramElement[size.height];
 				out.add(ys);
+				size = new Dimension(size.width+1, size.height);
 			}
 			
 			DiagramElement[] ys = out.get(xr);
@@ -126,7 +128,7 @@ public class GridPositionerImpl implements GridPositioner {
 						ys[y] = new GridTemporaryConnected(ord, xr, y);
 						modifyContainerContents(ord, ys[y]);
 					}
-					storeCoordinates(ys[y], xr, xr, y, y, size);
+					storeCoordinates1(ys[y], xr, xr, y, y);
 				}
 			}
 		
@@ -134,6 +136,12 @@ public class GridPositionerImpl implements GridPositioner {
 		}
 		
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
+		
+		for (DiagramElement de : ord.getContents()) {
+			scaleCoordinates(de, size);
+		}
+		
+		
 		placed.put(ord, done);
 		return done;
 	}
@@ -148,9 +156,18 @@ public class GridPositionerImpl implements GridPositioner {
 	}
 
 	
-	private void storeCoordinates(DiagramElement diagramElement, int sx, int ex, int sy, int ey, Dimension size) {
-		xPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sx, size.width), BigFraction.getReducedFraction(ex+1, size.width)));
-		yPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sy, size.height), BigFraction.getReducedFraction(ey+1, size.height)));
+	private void storeCoordinates1(DiagramElement diagramElement, int sx, int ex, int sy, int ey) {
+		xPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sx, 1), BigFraction.getReducedFraction(ex+1, 1)));
+		yPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sy, 1), BigFraction.getReducedFraction(ey+1, 1)));
+	}
+	
+	private void scaleCoordinates(DiagramElement de, Dimension size) {
+		OPair<BigFraction> xin = xPositions.get(de);
+		OPair<BigFraction> yin = yPositions.get(de);
+		xin = new OPair<BigFraction>(BigFraction.getReducedFraction(xin.getA().intValue(), size.width), BigFraction.getReducedFraction(xin.getB().intValue(), size.width));
+		yin = new OPair<BigFraction>(BigFraction.getReducedFraction(yin.getA().intValue(), size.height), BigFraction.getReducedFraction(yin.getB().intValue(), size.height));
+		xPositions.put(de, xin);
+		yPositions.put(de, yin);
 	}
 
 
@@ -203,7 +220,7 @@ public class GridPositionerImpl implements GridPositioner {
 
 
 	@Override
-	public OPair<Map<BigFraction, Double>> getFracMapForGrid(Container c, RoutableHandler2D rh, ContainerVertices containerVertices, RoutingInfo ri) {
+	public OPair<Map<BigFraction, Double>> getFracMapForGrid(DiagramElement c, RoutableHandler2D rh, CornerVertices containerVertices, RoutingInfo ri) {
 		OPair<Map<BigFraction, Double>> out = fracMaps.get(c);
 		if (out != null) {
 			return out;
@@ -215,8 +232,8 @@ public class GridPositionerImpl implements GridPositioner {
 		Map<BigFraction, Bounds> left = new HashMap<>(), right  = new HashMap<>() , up  = new HashMap<>() , down  = new HashMap<>();
 		
 		// work out where this appears in relation to the neighbouring container's positions.
-		Iterable<ContainerVertex> allVertices = containerVertices.getAllAscendentVertices();
-		for (ContainerVertex cv : allVertices) {
+		Iterable<MultiCornerVertex> allVertices = containerVertices.getAllAscendentVertices();
+		for (MultiCornerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
 				RoutingInfo place = rh.getPlacedPosition(a.getDe());
 				Bounds x = rh.getBoundsOf(place, true);

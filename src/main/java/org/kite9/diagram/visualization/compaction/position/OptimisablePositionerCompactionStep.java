@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction.position;
 
+import java.util.List;
+
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.position.Direction;
@@ -50,7 +52,8 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 
 	
 	private void setSegmentPostions(SegmentSlackOptimisation opt) {
-		for (Slideable s : opt.getCanonicalOrder()) {
+		List<Slideable> slideables = opt.getCanonicalOrder();
+		for (Slideable s : slideables) {
 			double pos = s.getMinimumPosition();
 			Segment seg = (Segment) s.getUnderlying();
 			seg.setPosition(pos);

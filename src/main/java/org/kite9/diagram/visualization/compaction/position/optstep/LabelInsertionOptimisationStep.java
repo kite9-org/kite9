@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.Leaf;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
-import org.kite9.diagram.common.elements.CornerVertex;
+import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
@@ -38,7 +38,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -347,10 +347,10 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		int ln = labelNumber;
 		labelNumber++;
 		LabelFrame lf = new LabelFrame(l, padding);
-		AbstractAnchoringVertex tl = new CornerVertex("label_" + ln + "_tl", HPos.LEFT, VPos.UP, lf);
-		AbstractAnchoringVertex tr = new CornerVertex("label_" + ln + "_tr", HPos.RIGHT, VPos.UP, lf);
-		AbstractAnchoringVertex br = new CornerVertex("label_" + ln + "_br", HPos.RIGHT, VPos.DOWN, lf);
-		AbstractAnchoringVertex bl = new CornerVertex("label_" + ln + "_bl", HPos.LEFT, VPos.DOWN, lf);
+		AbstractAnchoringVertex tl = new SingleCornerVertex("label_" + ln + "_tl", HPos.LEFT, VPos.UP, lf);
+		AbstractAnchoringVertex tr = new SingleCornerVertex("label_" + ln + "_tr", HPos.RIGHT, VPos.UP, lf);
+		AbstractAnchoringVertex br = new SingleCornerVertex("label_" + ln + "_br", HPos.RIGHT, VPos.DOWN, lf);
+		AbstractAnchoringVertex bl = new SingleCornerVertex("label_" + ln + "_bl", HPos.LEFT, VPos.DOWN, lf);
 		o.getAllVertices().add(tl);
 		o.getAllVertices().add(tr);
 		o.getAllVertices().add(bl);
@@ -373,9 +373,11 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			Object underlying = d.getUnderlying();
 			Vertex dFrom = d.getFrom();
 			Vertex dTo = d.getTo();
-			if (underlying instanceof ContainerBorderEdge) {
-				for (DiagramElement co : ((ContainerBorderEdge) underlying).getContainers()) {
-					mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
+			if (underlying instanceof BorderEdge) {
+				for (DiagramElement co : ((BorderEdge) underlying).getDiagramElements()) {
+					if (labelledContainer(co)) {
+						mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
+					}
 				}
 			} 
 		}
@@ -396,6 +398,21 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			placeLabel(c, xo, yo, entry.getKey(), possibles, true);
 		}
 
+	}
+
+	/**
+	 * We shouldn't be doing this like this.
+	 */
+	@Deprecated
+	private boolean labelledContainer(DiagramElement co) {
+		if (co instanceof Container) {
+			Label l = ((Container)co).getLabel();
+			if (l != null) {
+				return l.hasContent();
+			}
+		}
+		
+		return false;
 	}
 
 	private void mapDartToContainer(SegmentSlackOptimisation yo, Map<Label, Set<Dart>> lowestDartsInContainer, Map<Label, Integer> lowestDartsInContainerLevel, Dart d, Object de, Vertex dFrom,

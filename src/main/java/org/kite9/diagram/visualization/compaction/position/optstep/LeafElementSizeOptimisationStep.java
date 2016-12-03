@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;

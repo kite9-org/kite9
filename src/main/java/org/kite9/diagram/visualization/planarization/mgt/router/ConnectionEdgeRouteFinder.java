@@ -4,10 +4,10 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
@@ -16,12 +16,12 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ConnectionEdge;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertices;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.ordering.ContainerEdgeOrdering;
+import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -70,12 +70,12 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 
-	protected boolean canCrossContainerBorderEdge(ContainerBorderEdge crossing, EdgePath ep) {
+	protected boolean canCrossBorderEdge(BorderEdge crossing, EdgePath ep) {
 		if (entryDirection==null) {
 			return true;
 		}
 		
-		Container c = crossing.getOriginalUnderlying();
+		DiagramElement c = crossing.getOriginalUnderlying();
 
 		// check that the container is positioned somewhere that intersects with the edge direction
 		if (!checkContainerPathIntersection(ep, c, entryDirection)) {
@@ -83,7 +83,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			return false;
 		}
 	
-		ContainerEdgeOrdering containerOrdering = (ContainerEdgeOrdering) p.getEdgeOrderings().get(c);
+		PerimeterEdgeOrdering containerOrdering = (PerimeterEdgeOrdering) p.getEdgeOrderings().get(c);
 		
 		if (containerOrdering == null) {
 			return true;
@@ -109,7 +109,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		return out;
 	}
 
-	private boolean checkContainerPathIntersection(EdgePath ep, Container c,
+	private boolean checkContainerPathIntersection(EdgePath ep, DiagramElement c,
 			Direction ed) {
 		RoutingInfo cri = rh.getPlacedPosition(c);
 		return rh.isInPlane(cri, startZone, (entryDirection == Direction.RIGHT) || (entryDirection == Direction.LEFT));
@@ -171,8 +171,8 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			return false;
 		}
 	
-		if (e2 instanceof ContainerBorderEdge) {
-			return canCrossContainerBorderEdge((ContainerBorderEdge) e2, ep);
+		if (e2 instanceof BorderEdge) {
+			return canCrossBorderEdge((BorderEdge) e2, ep);
 		} else {
 			// regular connection edge
 			return canCrossConnectionEdge(e2, goingDown);
@@ -232,7 +232,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 	
 	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, Vertex v) {
-		if (v instanceof ContainerVertex) {
+		if (v instanceof MultiCornerVertex) {
 			DiagramElement und = v.getOriginalUnderlying();
 			return rh.getPlacedPosition(und);					
 		} 
@@ -241,7 +241,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
  	
 	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {
-		if (v instanceof ContainerVertex) {
+		if (v instanceof MultiCornerVertex) {
 			DiagramElement und = getCorrectUnderlying(ci, v);
 			return rh.getPlacedPosition(und);					
 		} 
@@ -347,16 +347,16 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	protected void createInitialPaths(State<LocatedEdgePath> pq) {
 		Vertex from = e.getFrom();
 		
-		if (from instanceof ContainerVertex) {
+		if (from instanceof MultiCornerVertex) {
 			Container c = (Container) getCorrectUnderlying(e, from);
-			ContainerVertices cvs = em.getContainerVertices(c);
-			for (ContainerVertex v : cvs.getPerimeterVertices()) {
+			CornerVertices cvs = em.getCornerVertices(c);
+			for (MultiCornerVertex v : cvs.getPerimeterVertices()) {
 				if (!v.isPartOf(c)) {
 					// ensure anchors are set correctly for the perimeter.
 					v.addAnchor(null, null, c);
 				}
 				
-				if (onCorrectSideOfContainer((ContainerVertex) v, false)) {
+				if (onCorrectSideOfContainer((MultiCornerVertex) v, false)) {
 					createInitialPathsFrom(pq, v);
 				}
 			}
@@ -431,7 +431,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 	
 	private Double getMaximumBoundedAxisDistance(Axis ax) {
-		if ((e.getFrom() instanceof ContainerVertex) || (e.getTo() instanceof ContainerVertex)) {
+		if ((e.getFrom() instanceof MultiCornerVertex) || (e.getTo() instanceof MultiCornerVertex)) {
 			// this method is unsafe for containers because they have gutters around the positions of the things inside them.
 			return null;
 		}
@@ -463,9 +463,9 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (originalUnderlying instanceof Container) {
 			Vertex candidate = p.getVertexOrder().get(v);
 			DiagramElement und = candidate.getOriginalUnderlying();
-			if (candidate instanceof ContainerVertex) {
+			if (candidate instanceof MultiCornerVertex) {
 				// return true if this is a container vertex for the container we're trying to get to
-				if ((und == originalUnderlying) && (onCorrectSideOfContainer((ContainerVertex) candidate, true))) {
+				if ((und == originalUnderlying) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
 					return true;
 				}
 			}
@@ -497,7 +497,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	 * Ensures that we are starting/terminating on a vertex on the right side of the 
 	 * container we are leaving/arriving at.
 	 */
-	private boolean onCorrectSideOfContainer(ContainerVertex v, boolean termination) {
+	private boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
 		if (entryDirection == null) {
 			return true;
 		}
@@ -508,13 +508,13 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			
 		switch (entryDirection) {
 		case UP:
-			return termination ? ContainerVertex.isMax(v.getYOrdinal()) : ContainerVertex.isMin(v.getYOrdinal());
+			return termination ? MultiCornerVertex.isMax(v.getYOrdinal()) : MultiCornerVertex.isMin(v.getYOrdinal());
 		case DOWN:
-			return termination ? ContainerVertex.isMin(v.getYOrdinal()) : ContainerVertex.isMax(v.getYOrdinal());
+			return termination ? MultiCornerVertex.isMin(v.getYOrdinal()) : MultiCornerVertex.isMax(v.getYOrdinal());
 		case LEFT:
-			return termination ? ContainerVertex.isMax(v.getXOrdinal()) : ContainerVertex.isMin(v.getXOrdinal());
+			return termination ? MultiCornerVertex.isMax(v.getXOrdinal()) : MultiCornerVertex.isMin(v.getXOrdinal());
 		case RIGHT:
-			return termination ? ContainerVertex.isMin(v.getXOrdinal()) : ContainerVertex.isMax(v.getXOrdinal());		
+			return termination ? MultiCornerVertex.isMin(v.getXOrdinal()) : MultiCornerVertex.isMax(v.getXOrdinal());		
 		}
 		
 		throw new LogicException("Can't determine whether we can arrive/leave at this vertex");

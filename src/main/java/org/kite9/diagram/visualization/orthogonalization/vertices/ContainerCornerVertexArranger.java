@@ -16,8 +16,8 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -37,46 +37,46 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 
 	@Override
 	protected void convertVertex(Orthogonalization o, Vertex v) {
-		if (v instanceof ContainerVertex) {
-			ContainerVertex cv = (ContainerVertex) v;
+		if (v instanceof MultiCornerVertex) {
+			MultiCornerVertex cv = (MultiCornerVertex) v;
 			Container und = null; //cv.getOriginalUnderlying();
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
-			if (ContainerVertex.isMin(cv.getYOrdinal())) {
-				if (ContainerVertex.isMin(cv.getXOrdinal())) {
+			if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
+				if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
-				} else if (ContainerVertex.isMax(cv.getXOrdinal())) {
+				} else if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.LEFT);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
 				}
 			}
 			
-			if (ContainerVertex.isMax(cv.getYOrdinal())) {
-				if (ContainerVertex.isMin(cv.getXOrdinal())) {
+			if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
+				if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.RIGHT);
-				} else if (ContainerVertex.isMax(cv.getXOrdinal())) {
+				} else if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
 				}
 			}
 
-			if (ContainerVertex.isMin(cv.getXOrdinal())) {
-				if (ContainerVertex.isMin(cv.getYOrdinal())) {
+			if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
+				if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.DOWN);
-				} else if (ContainerVertex.isMax(cv.getYOrdinal())) {
+				} else if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
 				}
 			}
 			
-			if (ContainerVertex.isMax(cv.getXOrdinal())) {
-				if (ContainerVertex.isMin(cv.getYOrdinal())) {
+			if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
+				if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
-				} else if (ContainerVertex.isMax(cv.getYOrdinal())) {
+				} else if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.UP);
 				} else {
 					processSide(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
@@ -88,7 +88,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 
-	private void processCorner(Orthogonalization o, ContainerVertex cv, Container und,
+	private void processCorner(Orthogonalization o, MultiCornerVertex cv, Container und,
 			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
 		
 		boolean reverse = Direction.rotateAntiClockwise(splitInDirection) == outwards;
@@ -104,7 +104,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 	
-	private void processSide(Orthogonalization o, ContainerVertex cv, Container und,
+	private void processSide(Orthogonalization o, MultiCornerVertex cv, Container und,
 			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
 				
 		List<Dart> outDarts = dartDirections.get(outwards);
@@ -127,7 +127,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		return true;
 	}
 
-	private Dart getDartGoing(ContainerVertex cv, Direction d) {
+	private Dart getDartGoing(MultiCornerVertex cv, Direction d) {
 		for (Edge e : cv.getEdges()) {
 			if ((e instanceof Dart) && ((e.getDrawDirectionFrom(cv) == d))) {
 				return (Dart) e;
@@ -139,7 +139,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 
 	protected void processDarts(Container underlying, AbstractAnchoringVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
 		Edge thisEdge = (Edge) toSplit.getUnderlying();
-		ContainerBorderEdge cbe = (ContainerBorderEdge) toSplit.getUnderlying();
+		BorderEdge cbe = (BorderEdge) toSplit.getUnderlying();
 		
 		for (int j = 0; j < leaversToMove.size(); j++) {
 			Dart leaving = leaversToMove.get(j);

@@ -14,17 +14,11 @@ import org.kite9.diagram.position.VPos;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
- * Represents the special start and end vertices in the diagram, and for each container which are added
- * to assist planarization and orthogonalization to represent corners and points along the sides of the container.
- * 
- * For containers with grid-layout, these also represent points within the grid that will need to be connected up.
- * 
- * other vertices
- * 
- * @author robmoffat
- * 
+ * Represents corners of diagrams, containers and any other rectangular content.
+ * For elements with grid-layout, these also represent points within the grid that will need to be connected up.
+ * Multi-corners can be the corners of multiple different diagram elements.
  */
-public class ContainerVertex extends AbstractAnchoringVertex {
+public class MultiCornerVertex extends AbstractAnchoringVertex {
 	
 	public static final boolean isMin(BigFraction b) {
 		return b.equals(BigFraction.ZERO);
@@ -63,14 +57,14 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	}
 
 	private BigFraction xOrd, yOrd;
-	private Container c;
+	private DiagramElement c;
 	private List<Anchor> anchors = new ArrayList<AbstractAnchoringVertex.Anchor>(4);
 	
 	public List<Anchor> getAnchors() {
 		return anchors;
 	}
 
-	public ContainerVertex(String id, Container c, BigFraction xOrd, BigFraction yOrd) {
+	public MultiCornerVertex(String id, DiagramElement c, BigFraction xOrd, BigFraction yOrd) {
 		super(id+"_"+xOrd+"_"+yOrd);
 		this.c = c;
 		this.xOrd = xOrd;
@@ -78,11 +72,11 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 	}
 
 	/**
-	 * Not reliable with ContainerVertices.  Consider removing, or using isPartOf, below.
+	 * Not reliable with MultiCornerVertex.  Consider removing, or using isPartOf, below.
 	 * Will return the top-level container of a grid structure, but within a grid a vertex
 	 * could be involved in multiple containers.
 	 */
-	public Container getOriginalUnderlying() {
+	public DiagramElement getOriginalUnderlying() {
 		return c;
 	}
 	
@@ -149,16 +143,16 @@ public class ContainerVertex extends AbstractAnchoringVertex {
 		return hasAnchorFor(c);
 	}
 	
-	public static Container getRootGridContainer(Container cc) {
+	public static Container getRootGridContainer(DiagramElement cc) {
 		Container parent = cc.getContainer();
 		if (parent == null) {
-			return cc;
+			return (Container) cc;
 		}
 		
 		if (parent.getLayout() == Layout.GRID) {
 			return getRootGridContainer(parent);
 		}
 		
-		return cc;
+		return (Container) cc;
 	}
 }

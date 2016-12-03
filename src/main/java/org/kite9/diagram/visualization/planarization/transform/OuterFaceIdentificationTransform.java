@@ -11,7 +11,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -49,9 +49,9 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 	}
 	
 	private boolean isAntiClockwise(Vertex v, Edge e) {
-		if (v instanceof ContainerVertex) {
-			ContainerVertex cv = (ContainerVertex) v;
-			if ((ContainerVertex.isMin(cv.getXOrdinal())) && (ContainerVertex.isMin(cv.getYOrdinal()))) {
+		if (v instanceof MultiCornerVertex) {
+			MultiCornerVertex cv = (MultiCornerVertex) v;
+			if ((MultiCornerVertex.isMin(cv.getXOrdinal())) && (MultiCornerVertex.isMin(cv.getYOrdinal()))) {
 				return e.getDrawDirectionFrom(v) == Direction.DOWN;
 			}
 		}

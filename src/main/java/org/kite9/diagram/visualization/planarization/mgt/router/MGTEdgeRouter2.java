@@ -14,9 +14,9 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ContainerLayoutEdge;
-import org.kite9.diagram.visualization.planarization.mapping.ContainerVertex;
+import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
-import org.kite9.diagram.visualization.planarization.mgt.ContainerBorderEdge;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
 import org.kite9.diagram.visualization.planarization.mgt.builder.MGTPlanarizationBuilder;
@@ -319,7 +319,7 @@ public class MGTEdgeRouter2 implements EdgeRouter, Logable {
 			MGTPlanarizationBuilder.logPlanarEmbeddingDetails(p, log);
 			AbstractRouteFinder f = 
 				ci instanceof ContainerLayoutEdge ? new LayoutEdgeRouteFinder(p, rh, ci, em, d) : 
-				ci instanceof ContainerBorderEdge ? new ContainerEdgeRouteFinder(p, rh, ci) :
+				ci instanceof BorderEdge ? new ContainerEdgeRouteFinder(p, rh, ci) :
 				new ConnectionEdgeRouteFinder(p, rh, ci, em, d, it, gt);
 			log.send("Routing "+ci+" from "+ci.getFrom()+" to "+ci.getTo()+"d="+ci.getDrawDirection());
 			EdgePath ep = f.createShortestPath();		

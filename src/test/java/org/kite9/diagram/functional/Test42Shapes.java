@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.FlowchartShapes;

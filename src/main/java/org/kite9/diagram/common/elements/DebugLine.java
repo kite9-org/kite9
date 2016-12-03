@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements;
 
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HintMap;
+import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.style.impl.AbstractDiagramElement;

@@ -42,7 +42,7 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_1_4_GlyphFinalDesignerStylesheet() throws IOException {
-		XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
+		XMLElement one = new Glyph("one", "Stereo", "Rob's Glyph", null, null);
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
 
 		renderDiagram(d);

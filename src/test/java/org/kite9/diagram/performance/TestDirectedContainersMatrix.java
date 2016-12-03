@@ -17,10 +17,10 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.common.Connected;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
