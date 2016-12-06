@@ -460,8 +460,10 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	@Override
 	protected boolean isTerminationVertex(int v) {
 		DiagramElement originalUnderlying = e.getTo().getOriginalUnderlying();
-		if (originalUnderlying instanceof Container) {
-			Vertex candidate = p.getVertexOrder().get(v);
+		Vertex candidate = p.getVertexOrder().get(v);
+		
+		if (candidate instanceof MultiCornerVertex) {
+			
 			DiagramElement und = candidate.getOriginalUnderlying();
 			if (candidate instanceof MultiCornerVertex) {
 				// return true if this is a container vertex for the container we're trying to get to
@@ -487,8 +489,8 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			}
 			
 			return out;
+			
 		} else {
-			Vertex candidate = p.getVertexOrder().get(v);
 			return candidate == e.getTo();
 		}
 	}

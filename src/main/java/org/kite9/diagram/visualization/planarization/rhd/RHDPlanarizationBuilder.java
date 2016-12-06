@@ -195,10 +195,11 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private void instantiateContainerVertices(DiagramElement c) {
 		if (requiresCornerVertices(c)) {
 			em.getCornerVertices(c);
-		}
-		if (c instanceof Container) {
-			for (DiagramElement de : ((Container)c).getContents()) {
-				instantiateContainerVertices(de);
+			
+			if (c instanceof Container) {
+				for (DiagramElement de : ((Container)c).getContents()) {
+					instantiateContainerVertices(de);
+				}
 			}
 		}
 	}
@@ -377,15 +378,48 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return;
 	}
 
-	private boolean requiresCornerVertices(DiagramElement c) {
-		if (c instanceof Container) {
-			return true;
+	Map<DiagramElement, Boolean> hasConnections = new HashMap<>();
+	
+	private boolean hasConnections(DiagramElement c) {
+		if (hasConnections.containsKey(c)) {
+			return hasConnections.get(c);
+		} 
+		
+		boolean has = false;
+		
+		if (c instanceof Connected) {
+			has = ((Connected)c).getLinks().size() > 0;
 		}
 		
+		if ((has == false) && (c instanceof Container)) {
+			for (DiagramElement de : ((Container)c).getContents()) {
+				if (hasConnections(de)) {
+					has = true;
+					break;
+				}
+			}
+		}
+		
+		hasConnections.put(c, has);
+		return has;
+	}
+	
+	private boolean requiresCornerVertices(DiagramElement c) {
+		// does anything inside it have connections?
+		if (c instanceof Container) {
+			for (DiagramElement de : ((Container) c).getContents()) {
+				if (hasConnections(de)) {
+					return true;
+				}
+			}
+		}
+		
+		// is it embedded in a grid?  If yes, use corners
 		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
 		return (l == Layout.GRID);
 	}
-	
+
+
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
 
 	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {

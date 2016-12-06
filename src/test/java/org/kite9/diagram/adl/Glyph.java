@@ -49,7 +49,7 @@ public class Glyph extends AbstractStyleableXMLElement {
 	}
 	
 	public Glyph(String stereotype, String label,  List<XMLElement> text, List<XMLElement> symbols) {
-		this(createID(), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
+		this(createID()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
 	public Glyph(String id, String stereotype, String label,  List<XMLElement> text, List<XMLElement> symbols) {

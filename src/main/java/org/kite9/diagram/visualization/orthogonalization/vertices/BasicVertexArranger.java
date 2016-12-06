@@ -508,7 +508,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 
 }

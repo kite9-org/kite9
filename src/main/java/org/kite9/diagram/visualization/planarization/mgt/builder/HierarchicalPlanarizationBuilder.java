@@ -500,7 +500,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private Vertex getVertexFor(DiagramElement c) {
-		if (c instanceof Container) {
+		if (em.hasCornerVertices(c)) {
 			Collection<MultiCornerVertex> vertices = em.getCornerVertices((Container) c).getPerimeterVertices();
 			for (MultiCornerVertex cv : vertices) {
 				if (cv.hasAnchorFor(c)) {
