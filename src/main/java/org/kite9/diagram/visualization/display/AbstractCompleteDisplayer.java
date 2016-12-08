@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
@@ -68,7 +69,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return d.canDisplay(element);
 	}
 	
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		for (Displayer cd : displayers) {
 			if (cd.canDisplay(element)) {
 				return cd.size(element, within);

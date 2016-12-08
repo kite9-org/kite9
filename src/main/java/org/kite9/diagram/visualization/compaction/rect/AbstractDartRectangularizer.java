@@ -97,7 +97,7 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 			if (!df.outerFace) {
 
 				if (theStack.size() != 4) {
-					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df.getUnderlyingPlanarizationFace().id);
+					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df.getUnderlying());
 				}
 				
 				for (int i = 0; i < theStack.size(); i++) {

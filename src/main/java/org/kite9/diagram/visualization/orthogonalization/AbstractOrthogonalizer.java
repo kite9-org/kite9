@@ -26,10 +26,6 @@ public abstract class AbstractOrthogonalizer implements Orthogonalizer, Logable 
 	
 	protected Kite9Log log = new Kite9Log(this);
 
-	public abstract Orthogonalization createOrthogonalization(Planarization pln);
-
-	
-
 	/**
 	 * Used to create the dart ordering map, ensuring that darts leaving a
 	 * vertex are ordered in the same order as in the Planarization. Ensures

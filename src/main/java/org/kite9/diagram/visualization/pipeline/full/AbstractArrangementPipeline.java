@@ -24,7 +24,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraphOrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertices.ContainerCornerVertexArranger;
-import org.kite9.diagram.visualization.orthogonalization.vertices.FanInVertexArranger;
 import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangementOrthogonalizationDecorator;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;

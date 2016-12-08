@@ -107,8 +107,6 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		return belowBackwardLinks.get(getVertexIndex(v));
 	}
 
-	double cost;
-
 	public List<Vertex> getVertexOrder() {
 		return unmodifiableVO;
 	}
@@ -224,14 +222,6 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 				}
 			}
 		}
-	}
-
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
 	}
 
 	private Map<Vertex, Integer> vertexIndex = null;

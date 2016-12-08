@@ -405,6 +405,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	}
 	
 	private boolean requiresCornerVertices(DiagramElement c) {
+		if (c instanceof Diagram) {
+			return true;
+		}
 		// does anything inside it have connections?
 		if (c instanceof Container) {
 			for (DiagramElement de : ((Container) c).getContents()) {

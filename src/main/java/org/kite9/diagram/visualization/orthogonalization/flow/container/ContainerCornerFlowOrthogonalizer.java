@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.orthogonalization.flow.container;
 
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;

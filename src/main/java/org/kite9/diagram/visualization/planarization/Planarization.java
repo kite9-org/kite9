@@ -65,11 +65,6 @@ public interface Planarization {
 	public void removeEdge(Edge e);
 	
 	/**
-	 * Returns some suitability score for this planarization, the lower the better.
-	 */
-	public double getCost();
-	
-	/**
 	 * Manages the mapping of edges to diagram attr.   
 	 */
 	public Map<DiagramElement, EdgeMapping> getEdgeMappings();

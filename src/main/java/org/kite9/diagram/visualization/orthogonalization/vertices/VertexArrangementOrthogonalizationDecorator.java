@@ -36,6 +36,7 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 		}
 	}
 
+	
 	public static void setInitialSize(Displayer ded, Vertex tl) {
 		if (tl instanceof MultiCornerVertex) {
 			return;
@@ -44,7 +45,7 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 		DiagramElement originalUnderlying = tl.getOriginalUnderlying();
 		
 		if (originalUnderlying instanceof Leaf) {
-			Dimension2D size = ded.size(originalUnderlying, CostedDimension.UNBOUNDED);
+			Dimension2D size = ded.size((Leaf) originalUnderlying, CostedDimension.UNBOUNDED);
 			RectangleRenderingInformation ri = (RectangleRenderingInformation) ((Leaf)originalUnderlying).getRenderingInformation();
 			ri.setSize(size);
 		}

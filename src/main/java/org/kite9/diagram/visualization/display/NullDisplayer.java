@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.display;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -13,7 +14,7 @@ public class NullDisplayer implements CompleteDisplayer {
 	public void draw(DiagramElement element, RenderingInformation ri) {
 	}
 
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		return CostedDimension.NOT_DISPLAYABLE;
 	}
 

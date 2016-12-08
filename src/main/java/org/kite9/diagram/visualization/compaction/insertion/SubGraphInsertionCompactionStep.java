@@ -51,9 +51,9 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		// builds a handy map of faces to dart faces
 		Map<Face, DartFace> faceMap = new HashMap<Face, DartFace>();
 		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			Face underlying = dartFace.getUnderlyingPlanarizationFace();
-			if (underlying != null) {
-				faceMap.put(underlying, dartFace);
+			Object underlying = dartFace.getUnderlying();
+			if (underlying instanceof Face) {
+				faceMap.put((Face) underlying, dartFace);
 			}
 		}
 
@@ -69,12 +69,13 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
 		}
-		Face underlying = dartFace.getUnderlyingPlanarizationFace();
+		
+		Face underlyingFace = dartFace.getUnderlying();
 
-		if ((underlying == null) || (underlying.getContainedFaces().size() == 0)) {
+		if (underlyingFace.getContainedFaces().size() == 0) {
 			return;
 		}
-
+		
 		Segment[] border = c.getFaceSpace(dartFace);
 
 		// get space for the darts to be inserted - this must be an empty
@@ -92,7 +93,7 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		Direction directionOfInsertion = null;
 		Map<Integer, Face> faceInsertionOrder = new HashMap<Integer, Face>();
 
-		for (Face ef : underlying.getContainedFaces()) {
+		for (Face ef : underlyingFace.getContainedFaces()) {
 			Direction returned = addLowestContainmentIndex(ef, faceInsertionOrder);
 			if (directionOfInsertion == null) {
 				directionOfInsertion = returned;

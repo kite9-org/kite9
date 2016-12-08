@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.display;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -19,7 +20,7 @@ public interface Displayer {
 	 * (hyphenation is not performed).  Height constraints can be exceeded when too 
 	 * many rows of text are required.
 	 */
-	CostedDimension size(DiagramElement element, Dimension2D within);
+	CostedDimension size(Leaf element, Dimension2D within);
 
 	boolean isVisibleElement(DiagramElement element);
 

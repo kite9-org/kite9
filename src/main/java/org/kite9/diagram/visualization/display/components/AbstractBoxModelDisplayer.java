@@ -9,8 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.common.hints.PositioningHints;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -218,7 +217,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 	}
 
 	@Override
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		BoxStyle bs = getBoxStyle(element);
 		FlexibleShape fs = getBorderShape(element);
 		Dimension2D innerWithin = getContentArea(within, fs, bs);

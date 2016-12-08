@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -71,7 +72,7 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 		ded.draw(element, ri);
 	}
 	
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
 		if (cd==CostedDimension.NOT_DISPLAYABLE) {
 			return cd;

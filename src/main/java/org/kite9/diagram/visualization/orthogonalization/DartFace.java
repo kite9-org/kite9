@@ -57,7 +57,7 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 	public DartFace(Face f, boolean outerFace) {
 		this.f = f;
 		this.outerFace = outerFace;
-		this.faceDepth = getFaceDepth(f);
+		this.faceDepth = f instanceof Face ? getFaceDepth((Face) f) : Integer.MAX_VALUE;
 	}
 
 	private int getFaceDepth(Face f2) {
@@ -77,7 +77,7 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 	private int faceDepth;
 
 	
-	public Face getUnderlyingPlanarizationFace() {
+	public Face getUnderlying() {
 		return f;
 	}
 

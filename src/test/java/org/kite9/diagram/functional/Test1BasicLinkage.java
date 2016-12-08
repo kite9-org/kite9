@@ -56,4 +56,12 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 
+	@Test
+	public void test_1_6_TwoGlyphsInContainerFinal() throws IOException {
+		XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
+		XMLElement two = new Glyph("Stereo", "Two", null, null);
+		XMLElement con = new Context("Context", createList(one, two), true, null, null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con));
+		renderDiagram(d);
+	}
 }

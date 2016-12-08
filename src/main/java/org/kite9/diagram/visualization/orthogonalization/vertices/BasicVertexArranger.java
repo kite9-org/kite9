@@ -7,29 +7,35 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
-import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.SideVertex;
+import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.Face;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -95,21 +101,34 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			(dartDirections.get(Direction.RIGHT).size() > 1);
 		
 		boolean multipleVertDarts = (dartDirections.get(Direction.UP).size() > 1) || 
-		(dartDirections.get(Direction.DOWN).size() > 1);
+			(dartDirections.get(Direction.DOWN).size() > 1);
 		
-		
-		convert(v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
+		convert(v.getOriginalUnderlying(), v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
 		RectangleRenderingInformation rri = (RectangleRenderingInformation) (v.getOriginalUnderlying()).getRenderingInformation();
 		// temporarily set
 		rri.setMultipleHorizontalLinks(mulitpleHorizDarts);
 		rri.setMultipleVerticalLinks(multipleVertDarts);
 	}
+	
+	protected void convertContainer(Orthogonalization o, Container c, DartFace inner) {
+		
+		if (c.getLayout() == Layout.GRID) {
+			// special stuff
+		} else {
+			Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+			for (DiagramElement de : c.getContents()) {
+				DartFace df = convert(de, null, o, emptyMap, Collections.emptyList(), false);
+				inner.getUnderlying().getContainedFaces().add(df.getUnderlying());
+				df.getUnderlying().setContainedBy(inner.getUnderlying());
+			}
+		}
+		
+	}
 
-	public void convert(Vertex v, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
-		log.send(log.go() ? null : "Converting: " + v + " with edges: ", dartOrdering);
-		String name = v.getID();
+	public DartFace convert(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
+		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartOrdering);
+		String name = originalUnderlying.getID();
 		// first, need to create the four corner vertices
-		DiagramElement originalUnderlying = v.getOriginalUnderlying();
 		AbstractAnchoringVertex tl = new SingleCornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
 		AbstractAnchoringVertex tr = new SingleCornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
 		AbstractAnchoringVertex bl = new SingleCornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
@@ -123,20 +142,25 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 		
 		// create darts for the minimum size of the vertex
-		CostedDimension cd = sizer.size(originalUnderlying, CostedDimension.UNBOUNDED);
-
-		Dart dx = o.createDart(tl, tr, v, Direction.RIGHT, cd.x());
-		Dart dy = o.createDart(tl, bl, v, Direction.DOWN, cd.y());
-
+		double xSize = Integer.MAX_VALUE;
+		double ySize = Integer.MAX_VALUE;
+		if (originalUnderlying instanceof Leaf) {
+			CostedDimension cd = sizer.size((Leaf) originalUnderlying, CostedDimension.UNBOUNDED);
+			xSize = cd.x();
+			ySize = cd.y();
+			Dart dx = o.createDart(tl, tr, originalUnderlying, Direction.RIGHT,  xSize);
+			Dart dy = o.createDart(tl, bl, originalUnderlying, Direction.DOWN, ySize);
+			o.getAllDarts().add(dx);
+			o.getAllDarts().add(dy);
+		}
+		
 		// put together darts for the edges of the vertex and join them up with
 		// nominal directions for now
 		// going in clockwise order
-	
-
-		Side tls = createSide(tl, tr, Direction.UP, v, upDarts, o, downDarts.size(), cd.x(), requiresMinSize);
-		Side trs = createSide(tr, br, Direction.RIGHT, v, rightDarts, o, leftDarts.size(),  cd.y(), requiresMinSize);
-		Side brs = createSide(br, bl, Direction.DOWN, v, downDarts, o, upDarts.size(), cd.x(), requiresMinSize);
-		Side bls = createSide(bl, tl, Direction.LEFT, v, leftDarts, o, rightDarts.size(), cd.y(), requiresMinSize);
+		Side tls = createSide(tl, tr, Direction.UP, originalUnderlying, optionalExistingVertex, upDarts, o, downDarts.size(), xSize, requiresMinSize);
+		Side trs = createSide(tr, br, Direction.RIGHT, originalUnderlying, optionalExistingVertex, rightDarts, o, leftDarts.size(),  ySize, requiresMinSize);
+		Side brs = createSide(br, bl, Direction.DOWN, originalUnderlying, optionalExistingVertex, downDarts, o, upDarts.size(), xSize, requiresMinSize);
+		Side bls = createSide(bl, tl, Direction.LEFT, originalUnderlying, optionalExistingVertex, leftDarts, o, rightDarts.size(), ySize, requiresMinSize);
 
 		// join segments
 		Set<Vertex> allNewVertices = new UnorderedSet<Vertex>();
@@ -167,40 +191,69 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				throw new LogicException("Part of boundary not added to dart face: "+boundary);
 			}
 		}
-
+		
 		o.getAllVertices().addAll(allNewVertices);
-		o.getAllDarts().add(dx);
-		o.getAllDarts().add(dy);
 
 		// remove the converted vertex from the orthogonalization
-		o.getAllVertices().remove(v);
+		o.getAllVertices().remove(optionalExistingVertex);
 
-		// unconnected vertex in face
 		if (dartOrdering.size() == 0) {
-			handleUnconnectedVertex(o, v, allSideDarts, tl);
+			createOuterFace(o, optionalExistingVertex, allSideDarts, tl);
 		}
+		
+		DartFace inner = createInnerFace(o, allSideDarts);
+		
+		// convert content
+		if (originalUnderlying instanceof Container) {
+			convertContainer(o, (Container) originalUnderlying, inner); 
+		}
+		
+		return inner;
+	}
+
+	/**
+	 * This ensures that any 
+	 */
+	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts) {
+		Face f = o.getPlanarization().createFace();
+		f.setOuterFace(false);
+		DartFace inner = o.createDartFace(f, false);
+		inner.dartsInFace = allSideDarts.stream().map(d -> new DartDirection(d, d.getDrawDirection())).collect(Collectors.toList());
+		return inner;
 	}
 
 	/**
 	 * An unconnected vertex should also be an outer dart face in the diagram.
-	 * The face exists, but the dart face currently does not.
-	 * @param start 
+	 * The face exists, but the dart face currently does not.  By adding this, we ensure the vertex 
+	 * will be added to the diagram by the {@link SubGraphInsertionCompactionStep}. 
 	 */
-	private void handleUnconnectedVertex(Orthogonalization o, Vertex v, LinkedHashSet<Dart> allDarts, Vertex vs) {
-		for (Face f : o.getPlanarization().getFaces()) {
-			if (f.contains(v) && f.isOuterFace()) {
-				DartFace df = o.createDartFace(f, f.isOuterFace());
-				df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
-				
-				for (Dart dart : allDarts) {
-					Direction d = Direction.reverse(dart.getDrawDirectionFrom(vs));
-					df.dartsInFace.add(new DartDirection(dart, d));
-					vs = dart.otherEnd(vs);
-				} 
-				
-				Collections.reverse(df.dartsInFace);
-				return;
+	private DartFace createOuterFace(Orthogonalization o, Vertex v, LinkedHashSet<Dart> allDarts, Vertex vs) {
+		DartFace df = null;
+		if (v != null) {
+			for (Face f : o.getPlanarization().getFaces()) {
+				if (f.contains(v) && f.isOuterFace()) {
+					df = o.createDartFace(f, f.isOuterFace());
+					break;
+				}
 			}
+		} else {
+			Face outer = o.getPlanarization().createFace();
+			df = o.createDartFace(outer, true);
+		}
+		
+		if (df != null) {
+			df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
+			
+			for (Dart dart : allDarts) {
+				Direction d = Direction.reverse(dart.getDrawDirectionFrom(vs));
+				df.dartsInFace.add(new DartDirection(dart, d));
+				vs = dart.otherEnd(vs);
+			} 
+			
+			Collections.reverse(df.dartsInFace);
+			return df;
+		} else {
+			throw new Kite9ProcessingException("Couldn't find dart face for "+v);
 		}
 	}
 
@@ -378,7 +431,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	}
 
-	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, Vertex from, List<Dart> onSide,
+	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
 			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize) {
 		int i = 0;
 		Side out = new Side();
@@ -395,10 +448,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			boolean invisible = thisEdge instanceof DirectionEnforcingElement;
 			if (lastEdge != thisEdge) {
 				// need to add a dart for this segment
-				vsv = createSideVertex(d, from, i, invisible);
+				vsv = createSideVertex(d, underlying, i, invisible);
 				i++;
 
-				Dart sideDart = createSideDart(from, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize);
+				Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize);
 				sideDart.setOrthogonalPositionPreference(d);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);
@@ -407,16 +460,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				vsv = out.vertices.get(out.vertices.size() - 1);
 			}
 
-			updateWaypointMap(thisEdge, from, vsv, o);
-
-			from.removeEdge(dart);
-			vsv.addEdge(dart);
-			if (dart.getFrom().equals(from)) {
-				dart.setFrom(vsv);
-			} else if (dart.getTo().equals(from)) {
-				dart.setTo(vsv);
-			} else {
-				throw new LogicException("logic error");
+			if (optionalOriginal != null) {
+				replaceOriginal(o, dart, thisEdge, vsv, optionalOriginal);
 			}
 			
 			double len = dart.getLength();
@@ -428,36 +473,48 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 
 		// finally, join to corner
-		Dart sideDart = createSideDart(from, o, last, segmentDirection, oppDarts, lengthOpt, true, tr, onSide.size(), null, lastEdge, requiresMinSize);
+		Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, true, tr, onSide.size(), null, lastEdge, requiresMinSize);
 		sideDart.setOrthogonalPositionPreference(d);
 		out.newEdgeDarts.add(sideDart);
 		return out;
 	}
 
-	protected Vertex createSideVertex(Direction d, Vertex from, int i, boolean invisible) {
+	private void replaceOriginal(Orthogonalization o, Dart dart, Edge thisEdge, Vertex vsv, Vertex from) {
+		updateWaypointMap(thisEdge, from, vsv, o);
+		from.removeEdge(dart);
+		vsv.addEdge(dart);
+		if (dart.getFrom().equals(from)) {
+			dart.setFrom(vsv);
+		} else if (dart.getTo().equals(from)) {
+			dart.setTo(vsv);
+		} else {
+			throw new LogicException("logic error");
+		}
+	}
+
+	protected Vertex createSideVertex(Direction d, DiagramElement underlying, int i, boolean invisible) {
 		Vertex vsv;
 		if (invisible) {
-			vsv = new HiddenSideVertex(from.getID() + "/" + d.toString() + i, from
-					.getOriginalUnderlying());
+			vsv = new HiddenSideVertex(underlying.getID() + "/" + d.toString() + i, underlying);
 		} else {
-			vsv = new SideVertex(from.getID() + "/" + d.toString() + i, from.getOriginalUnderlying());
+			vsv = new SideVertex(underlying.getID() + "/" + d.toString() + i, underlying);
 		}
 		return vsv;
 	}
 
-	protected Dart createSideDart(Vertex from, Orthogonalization o, Vertex last, Direction segmentDirection,
+	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
 			int oppDarts, double lengthOpt, boolean endDart, Vertex vsv, int sideDarts, Edge currentEdge, Edge lastEdge, boolean requiresMinSize) {
 	
 		// dist can be set for the first and last darts only if fixed length and
 		// one dart on side
 		boolean knownLength = oppDarts<=1 && sideDarts <= 1;
-		double dist = requiresMinSize ? sizer.getLinkMargin(from.getOriginalUnderlying(), segmentDirection) : 0;
+		double dist = requiresMinSize ? sizer.getLinkMargin(underlying, segmentDirection) : 0;
 		if (knownLength) {
 			double distDueToSize = Math.ceil(lengthOpt / (sideDarts + 1.0));
 			dist = Math.max(distDueToSize, dist); 
 		}
 
-		Dart out =  o.createDart(last, vsv, from, segmentDirection, dist);
+		Dart out =  o.createDart(last, vsv, underlying, segmentDirection, dist);
 		out.setVertexLengthKnown(knownLength);
 		return out;
 	}

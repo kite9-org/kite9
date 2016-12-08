@@ -12,6 +12,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -50,7 +51,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 
 	protected boolean shadow;
 
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		throw new UnsupportedOperationException(
 				"Size is not implemented for this component" + element);
 	}
