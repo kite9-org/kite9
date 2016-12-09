@@ -11,7 +11,6 @@ import java.util.Set;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
@@ -22,6 +21,7 @@ import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -91,10 +91,10 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		leftSeg.add(border[3]);
 
 		Direction directionOfInsertion = null;
-		Map<Integer, Face> faceInsertionOrder = new HashMap<Integer, Face>();
+		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
 
 		for (Face ef : underlyingFace.getContainedFaces()) {
-			Direction returned = addLowestContainmentIndex(ef, faceInsertionOrder);
+			Direction returned = addLowestContainmentIndex(faceMap.get(ef), faceInsertionOrder);
 			if (directionOfInsertion == null) {
 				directionOfInsertion = returned;
 			} else if (directionOfInsertion != returned) {
@@ -106,8 +106,7 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		Collections.sort(order);
 
 		for (Integer i : order) {
-			Face embeddedFace = faceInsertionOrder.get(i);
-			DartFace embeddedDartFace = faceMap.get(embeddedFace);
+			DartFace embeddedDartFace = faceInsertionOrder.get(i);
 			log.send(log.go() ? null : "Inserting face: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
 			insertSubFaces(embeddedDartFace, faceMap, newDarts, c);
 
@@ -146,12 +145,12 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 	 * Used for populating the faceInsertionOrder map, and working out the
 	 * direction in which faces are inserted
 	 */
-	private Direction addLowestContainmentIndex(Face ef, Map<Integer, Face> faceInsertionOrder) {
+	private Direction addLowestContainmentIndex(DartFace ef, Map<Integer, DartFace> faceInsertionOrder) {
 		int out = Integer.MAX_VALUE;
 		Direction outDir = null;
 
-		for (Vertex b : ef.cornerIterator()) {
-			Object de = Tools.getUltimateElement(b);
+		for (DartDirection dd : ef.dartsInFace) {
+			Object de = Tools.getUltimateElement(dd.getDart().getFrom());
 			
 			if (de instanceof Connected) {
 				Container c = ((Connected)de).getContainer();

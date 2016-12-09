@@ -38,9 +38,9 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, Vertex from, List<Dart> onSide,
+	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
 			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize) {
-		Side out = super.createSide(tl, tr, d, from, onSide, o, oppositeDarts, minLength, requiresSize);
+		Side out = super.createSide(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize);
 
 		
 		if (onSide.size() > 1) {
@@ -234,11 +234,11 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Dart createSideDart(Vertex from, Orthogonalization o, Vertex last, Direction segmentDirection,
+	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
 			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength) {
 		
-		double endDist = requiresMinLength ? sizer.getLinkMargin(from.getOriginalUnderlying(), segmentDirection) : 0;
-		double interDist = sizer.getLinkGutter(from.getOriginalUnderlying(), segmentDirection);
+		double endDist = requiresMinLength ? sizer.getLinkMargin(underlying, segmentDirection) : 0;
+		double interDist = sizer.getLinkGutter(underlying, segmentDirection);
 		
 		double oppSideDist = (endDist * 2) + (Math.max(0, oppSideDarts - 1) * interDist);
 		double thisSideDist = (endDist * 2) + (Math.max(0, onSideDarts - 1) * interDist);
@@ -246,15 +246,15 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		
 		if (thisSideDist == totalDistDueToFan) {
 			// all lengths on side are known
-			Dart out = o.createDart(last, vsv, from, segmentDirection, endDart ? endDist : interDist);
+			Dart out = o.createDart(last, vsv, underlying, segmentDirection, endDart ? endDist : interDist);
 			out.setVertexLengthKnown(true);
 			return out;
 		} else if ((oppSideDarts<=1) && (onSideDarts <= 1)) {
 			// we can use the basic vertex arranger approach
-			return super.createSideDart(from, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength);
+			return super.createSideDart(underlying, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength);
 		} else {
 			// side lengths could go larger than the amount provided
-			Dart out = o.createDart(last, vsv, from, segmentDirection, endDart ? endDist : interDist);
+			Dart out = o.createDart(last, vsv, underlying, segmentDirection, endDart ? endDist : interDist);
 			return out;
 		}
 	}

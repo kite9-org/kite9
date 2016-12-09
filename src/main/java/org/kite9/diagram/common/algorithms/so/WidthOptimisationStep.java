@@ -33,7 +33,7 @@ public class WidthOptimisationStep implements OptimisationStep, Logable {
 	}
 
 	public String getPrefix() {
-		return "DWOS";
+		return "WOS ";
 	}
 
 	public boolean isLoggingEnabled() {

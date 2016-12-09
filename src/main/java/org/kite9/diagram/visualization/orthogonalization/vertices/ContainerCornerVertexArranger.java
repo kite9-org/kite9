@@ -144,7 +144,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		for (int j = 0; j < leaversToMove.size(); j++) {
 			Dart leaving = leaversToMove.get(j);
 			Vertex from = toSplit.otherEnd(cv);
-			Vertex vsv = createSideVertex(splitDirection, cv, j, thisEdge instanceof DirectionEnforcingElement);
+			Vertex vsv = createSideVertex(splitDirection, underlying, j, thisEdge instanceof DirectionEnforcingElement);
 			double dist = sizer.getLinkMargin(underlying, splitDirection);
 			Dart sideDart = o.createDart(cv, vsv, cbe, splitDirection, dist);
 			

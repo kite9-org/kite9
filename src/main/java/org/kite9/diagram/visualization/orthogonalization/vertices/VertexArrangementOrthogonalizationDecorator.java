@@ -1,10 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
-import java.util.Collection;
-
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -13,7 +11,6 @@ import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 
 /**
  * Decorates a regular {@link Orthogonalizer} by converting all vertices to faces, which allows
@@ -30,30 +27,23 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 	private VertexArranger cvtf;
 
 	
-	public static void setInitialSizes(Collection<Vertex> vertices, Displayer ded) {
-		for (Vertex vertex : vertices) {
-			setInitialSize(ded, vertex);
-		}
-	}
-
-	
-	public static void setInitialSize(Displayer ded, Vertex tl) {
-		if (tl instanceof MultiCornerVertex) {
-			return;
+	public static void setInitialSizes(DiagramElement d, Displayer ded) {
+		if (d instanceof Container) {
+			for (DiagramElement child : ((Container)d).getContents()) {
+				setInitialSizes(child, ded);
+			}
 		}
 		
-		DiagramElement originalUnderlying = tl.getOriginalUnderlying();
-		
-		if (originalUnderlying instanceof Leaf) {
-			Dimension2D size = ded.size((Leaf) originalUnderlying, CostedDimension.UNBOUNDED);
-			RectangleRenderingInformation ri = (RectangleRenderingInformation) ((Leaf)originalUnderlying).getRenderingInformation();
+		if (d instanceof Leaf) {
+			Dimension2D size = ded.size((Leaf) d, CostedDimension.UNBOUNDED);
+			RectangleRenderingInformation ri = (RectangleRenderingInformation) ((Leaf)d).getRenderingInformation();
 			ri.setSize(size);
 		}
 	}
 
 	public Orthogonalization createOrthogonalization(Planarization pln) {
 		Orthogonalization orth = decorated.createOrthogonalization(pln);
-		setInitialSizes(orth.getAllVertices(), sizer);
+		setInitialSizes(orth.getPlanarization().getDiagram(), sizer);
 		cvtf.convertAllVerticesWithDimension(orth);
 		return orth;
 	}

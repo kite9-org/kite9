@@ -142,8 +142,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 		
 		// create darts for the minimum size of the vertex
-		double xSize = Integer.MAX_VALUE;
-		double ySize = Integer.MAX_VALUE;
+		double xSize = 0;
+		double ySize = 0;
 		if (originalUnderlying instanceof Leaf) {
 			CostedDimension cd = sizer.size((Leaf) originalUnderlying, CostedDimension.UNBOUNDED);
 			xSize = cd.x();

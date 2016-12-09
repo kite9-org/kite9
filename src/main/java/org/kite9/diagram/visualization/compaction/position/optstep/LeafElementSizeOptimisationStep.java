@@ -156,7 +156,7 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 	}
 
 	public String getPrefix() {
-		return "CEAO";
+		return "LESO";
 	}
 
 	public boolean isLoggingEnabled() {

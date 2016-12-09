@@ -64,4 +64,13 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con));
 		renderDiagram(d);
 	}
+	
+	@Test
+	public void test_1_7_TwoArrowsInContainerFinal() throws IOException {
+		XMLElement one = new Arrow("One");
+		XMLElement two = new Arrow("Two");
+		XMLElement con = new Context("Context", createList(one, two), true, null, null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con));
+		renderDiagram(d);
+	}
 }
