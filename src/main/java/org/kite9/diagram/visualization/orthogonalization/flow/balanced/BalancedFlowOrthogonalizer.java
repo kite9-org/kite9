@@ -12,6 +12,7 @@ import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.LabelledEdge;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Pair;
@@ -20,7 +21,6 @@ import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.router.PlanarizationCrossingVertex;
 import org.kite9.framework.common.Kite9ProcessingException;
 

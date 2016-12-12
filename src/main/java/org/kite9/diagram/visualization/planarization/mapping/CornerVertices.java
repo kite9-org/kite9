@@ -6,6 +6,7 @@ package org.kite9.diagram.visualization.planarization.mapping;
 import java.util.Collection;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 /**

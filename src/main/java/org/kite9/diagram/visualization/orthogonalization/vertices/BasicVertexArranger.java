@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -16,12 +17,13 @@ import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.SideVertex;
 import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
@@ -35,6 +37,9 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.Face;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
+import org.kite9.diagram.visualization.planarization.grid.GridPositionerImpl;
+import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -49,6 +54,8 @@ import org.kite9.framework.logging.LogicException;
 public class BasicVertexArranger implements Logable, VertexArranger {
 
 	protected CompleteDisplayer sizer;
+	
+	protected GridPositioner gp = new GridPositionerImpl();
 	
 	public BasicVertexArranger(CompleteDisplayer cd) {
 		super();
@@ -103,38 +110,137 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		boolean multipleVertDarts = (dartDirections.get(Direction.UP).size() > 1) || 
 			(dartDirections.get(Direction.DOWN).size() > 1);
 		
-		convert(v.getOriginalUnderlying(), v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
+		convertDiagramElementToInnerFace(v.getOriginalUnderlying(), v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
 		RectangleRenderingInformation rri = (RectangleRenderingInformation) (v.getOriginalUnderlying()).getRenderingInformation();
 		// temporarily set
 		rri.setMultipleHorizontalLinks(mulitpleHorizDarts);
 		rri.setMultipleVerticalLinks(multipleVertDarts);
 	}
 	
-	protected void convertContainer(Orthogonalization o, Container c, DartFace inner) {
-		
+	protected void convertContainerContents(Orthogonalization o, Container c, DartFace inner) {
 		if (c.getLayout() == Layout.GRID) {
-			// special stuff
+			if (c.getContents().size() > 0) {
+				DartFace outer = createGridFaceForContainerContents(o, c);
+				inner.getUnderlying().getContainedFaces().add(outer.getUnderlying());
+				outer.getUnderlying().setContainedBy(inner.getUnderlying());
+			}
 		} else {
 			Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 			for (DiagramElement de : c.getContents()) {
-				DartFace df = convert(de, null, o, emptyMap, Collections.emptyList(), false);
+				DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap, Collections.emptyList(), false);
 				inner.getUnderlying().getContainedFaces().add(df.getUnderlying());
 				df.getUnderlying().setContainedBy(inner.getUnderlying());
 			}
 		}
-		
 	}
 
-	public DartFace convert(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
+	/**
+	 * This is a bit like duplication of the code in {@link RHDPlanarizationBuilder},
+	 * but I think I'll live with it for now.
+	 * 
+	 * @return the outerface to embed in the container.
+	 */
+	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
+		gp.placeOnGrid(c, true);
+		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+		Map<OPair<BigFraction>, MultiCornerVertex> corners = new HashMap<>();
+		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners);
+		o.getAllVertices().addAll(corners.values());
+		return convertGridToOuterFace(o, corners);
+	}
+
+	private void placeContainerContentsOntoGrid(Orthogonalization o, Container root, Container c, Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
+		for (DiagramElement de : c.getContents()) {
+			OPair<BigFraction> xPos = gp.getGridXPosition(de);
+			OPair<BigFraction> yPos = gp.getGridYPosition(de);
+			
+			Vertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
+			Vertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
+			Vertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
+			Vertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
+			convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, tl, tr, bl, br);
+			
+			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
+				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
+			}
+		}
+	}
+
+	private DartFace convertGridToOuterFace(Orthogonalization o, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
+		Vertex current = corners.get(new OPair<>(BigFraction.ZERO, BigFraction.ZERO)), orig = current;
+		Direction d = Direction.DOWN;
+		List<DartDirection> out = new ArrayList<>(); 
+		do {
+			Dart dart = getDartInDirection(current, d);
+			if (dart == null) {
+				// turn the corner when we reach the end of the side
+				d = Direction.rotateAntiClockwise(d);
+				dart = getDartInDirection(current, d);
+			}
+			
+			out.add(new DartDirection(dart, d));
+			
+			if (dart == null) {
+				throw new Kite9ProcessingException("Can't follow perimeter !"+current);
+			}
+
+			current = dart.otherEnd(current);
+			
+		} while (current != orig);
+		
+		Face outer = o.getPlanarization().createFace();
+		outer.setOuterFace(true);
+		DartFace result = o.createDartFace(outer, true);
+		result.dartsInFace = out;
+		return result;
+	}
+
+	private Vertex createOrReuse(DiagramElement de, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, BigFraction x, BigFraction y, HPos hp, VPos vp) {
+		OPair<BigFraction> key = new OPair<BigFraction>(x, y);
+		MultiCornerVertex out = corners.get(key);
+		if (out == null) {
+			out = new MultiCornerVertex(root.getID(), root, x, y);
+			corners.put(key, out);
+		}
+		out.addAnchor(hp, vp, de);
+		return out;
+	}
+
+	private Dart getDartInDirection(Vertex current, Direction d) {
+		for (Edge e : current.getEdges()) {
+			if ((e instanceof Dart) && (e.getDrawDirectionFrom(current) == d)) {
+				return (Dart) e;
+			}
+		}
+		
+		return null;
+	}
+
+	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartOrdering);
 		String name = originalUnderlying.getID();
 		// first, need to create the four corner vertices
-		AbstractAnchoringVertex tl = new SingleCornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
-		AbstractAnchoringVertex tr = new SingleCornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
-		AbstractAnchoringVertex bl = new SingleCornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
-		AbstractAnchoringVertex br = new SingleCornerVertex(name + "br", HPos.RIGHT, VPos.DOWN, originalUnderlying);
+		Vertex tl = new SingleCornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
+		Vertex tr = new SingleCornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
+		Vertex bl = new SingleCornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
+		Vertex br = new SingleCornerVertex(name + "br", HPos.RIGHT, VPos.DOWN, originalUnderlying);
+		o.getAllVertices().add(tl);
+		o.getAllVertices().add(tr);
+		o.getAllVertices().add(bl);
+		o.getAllVertices().add(br);
 		
+		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, tl, tr, bl, br);
 		
+		// convert content
+		if (originalUnderlying instanceof Container) {
+			convertContainerContents(o, (Container) originalUnderlying, inner); 
+		}
+		
+		return inner;
+	}
+
+	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering,
+			boolean requiresMinSize, Vertex tl, Vertex tr, Vertex bl, Vertex br) {
 		List<Dart> upDarts = dartDirections.get(Direction.UP);
 		List<Dart> rightDarts =  dartDirections.get(Direction.RIGHT);
 		List<Dart> downDarts = dartDirections.get(Direction.DOWN);
@@ -175,7 +281,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		allSideDarts.addAll(brs.newEdgeDarts);
 		allSideDarts.addAll(bls.newEdgeDarts);
 
-		if (allSideDarts.size() != allNewVertices.size())
+		if (allSideDarts.size() != allNewVertices.size()+4)
 			throw new LogicException("Logic Error");
 
 		List<Boundary> interveningDarts = getInterveningDarts(allNewVertices, allSideDarts, dartOrdering, originalUnderlying);
@@ -202,11 +308,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 		
 		DartFace inner = createInnerFace(o, allSideDarts);
-		
-		// convert content
-		if (originalUnderlying instanceof Container) {
-			convertContainer(o, (Container) originalUnderlying, inner); 
-		}
 		
 		return inner;
 	}
@@ -431,11 +532,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	}
 
-	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
+	protected Side createSide(Vertex tl, Vertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
 			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize) {
 		int i = 0;
 		Side out = new Side();
-		out.vertices.add(tl);
 		Vertex last = tl;
 		Direction segmentDirection = Direction.rotateClockwise(d);
 		Edge lastEdge = null;

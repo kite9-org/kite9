@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;

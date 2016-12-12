@@ -38,7 +38,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Side createSide(AbstractAnchoringVertex tl, AbstractAnchoringVertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
+	protected Side createSide(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
 			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize) {
 		Side out = super.createSide(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize);
 

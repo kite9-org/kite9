@@ -1,8 +1,10 @@
 package org.kite9.diagram.visualization.compaction.insertion;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -58,14 +60,15 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		}
 
 		List<Dart> newDarts = new ArrayList<Dart>();
+		Collection<Face> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
 		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			insertSubFaces(dartFace, faceMap, newDarts, c);
+			insertSubFaces(dartFace, faceMap, newDarts, done, c);
 		}
 	}
 
-	private void insertSubFaces(DartFace dartFace, Map<Face, DartFace> faceMap, List<Dart> newDarts, Compaction c) {
+	private void insertSubFaces(DartFace dartFace, Map<Face, DartFace> faceMap, List<Dart> newDarts, Collection<Face> done, Compaction c) {
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
 		}
@@ -104,40 +107,50 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 
 		List<Integer> order = new ArrayList<Integer>(faceInsertionOrder.keySet());
 		Collections.sort(order);
+		boolean addedSomething = false;
 
 		for (Integer i : order) {
 			DartFace embeddedDartFace = faceInsertionOrder.get(i);
-			log.send(log.go() ? null : "Inserting face: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
-			insertSubFaces(embeddedDartFace, faceMap, newDarts, c);
-
-			// find the segment border of the subgraph being inserted
-			Set<Segment> lLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
-					Direction.LEFT);
-			Set<Segment> rLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
-					Direction.RIGHT);
-			Set<Segment> uLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
-					.getHorizontalVertexSegmentMap(), Direction.UP);
-			Set<Segment> dLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
-					.getHorizontalVertexSegmentMap(), Direction.DOWN);
-
-			if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
-					|| (directionOfInsertion == Direction.LEFT)) {
-				separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
-				separate(bottomSeg, dLimit, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
-				separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
-				leftSeg = rLimit;
-			} else {
-				separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
-				separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
-				separate(rightSeg, rLimit, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
-				topSeg = dLimit;
+			if (!done.contains(embeddedDartFace.getUnderlying())) {
+				log.send(log.go() ? null : "Inserting face: " + embeddedDartFace.getUnderlying().id + " into: " + dartFace.getUnderlying().id);
+				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
+				
+				insertSubFaces(embeddedDartFace, faceMap, newDarts, done, c);
+	
+				// find the segment border of the subgraph being inserted
+				Set<Segment> lLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
+						Direction.LEFT);
+				Set<Segment> rLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
+						Direction.RIGHT);
+				Set<Segment> uLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
+						.getHorizontalVertexSegmentMap(), Direction.UP);
+				Set<Segment> dLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
+						.getHorizontalVertexSegmentMap(), Direction.DOWN);
+	
+				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
+						|| (directionOfInsertion == Direction.LEFT)) {
+					separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
+					separate(bottomSeg, dLimit, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
+					separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
+					leftSeg = rLimit;
+				} else {
+					separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
+					separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
+					separate(rightSeg, rLimit, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
+					topSeg = dLimit;
+				}
+				
+				addedSomething = true;
+				done.add(embeddedDartFace.getUnderlying());
 			}
 		}
 
-		if ((directionOfInsertion == Direction.DOWN) || (directionOfInsertion == Direction.UP)) {
-			separate(bottomSeg, topSeg, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
-		} else {
-			separate(rightSeg, leftSeg, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
+		if (addedSomething) {
+			if ((directionOfInsertion == Direction.DOWN) || (directionOfInsertion == Direction.UP)) {
+				separate(bottomSeg, topSeg, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
+			} else {
+				separate(rightSeg, leftSeg, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
+			}
 		}
 	}
 

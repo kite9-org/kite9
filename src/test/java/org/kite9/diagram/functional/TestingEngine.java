@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Layout;
@@ -57,7 +58,6 @@ import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.diagram.xml.DiagramXMLElement;

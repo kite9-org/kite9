@@ -424,7 +424,7 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 	}
 
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 
 }

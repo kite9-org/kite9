@@ -9,6 +9,7 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -16,7 +17,6 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
@@ -62,7 +62,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 					processSide(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
 				}
 			}
-
+ 
 			if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
 				if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
 					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.DOWN);

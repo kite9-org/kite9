@@ -16,6 +16,7 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Bounds;
@@ -29,10 +30,11 @@ import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.grid.FracMapper;
+import org.kite9.diagram.visualization.planarization.grid.FracMapperImpl;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
-import org.kite9.diagram.visualization.planarization.mapping.MultiCornerVertex;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
@@ -93,7 +95,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	// temp workspace
 	private double borderTrimAreaX = .25d; 
 	private double borderTrimAreaY = .25d; 
-	
+	private FracMapper fracMapper = new FracMapperImpl();
 
 	public RHDPlanarizationBuilder(ElementMapper em, GridPositioner gridHelp) {
 		super();
@@ -516,7 +518,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 
 		// set up frac maps to control where the vertices will be positioned
-		OPair<Map<BigFraction, Double>> fracMaps = gridHelp.getFracMapForGrid(c, rh, em.getCornerVertices(c), bounds);
+		OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getCornerVertices(c), bounds);
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
 		
@@ -555,7 +557,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 		setPlanarizationHints(c, bounds);
 	}
-
+	
 	private void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
 			int comp = compareDiagramElements((Connected) c, to);

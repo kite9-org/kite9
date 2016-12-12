@@ -128,7 +128,7 @@ public class AbstractSegmentModifier {
 	 * Returns all segments at the extreme <direction> edge within the face.
 	 */
 	protected Set<Segment> getLimits(DartFace df, List<Segment> segs, Map<Vertex, Segment> map, Direction direction) {
-		Set<Segment> out = new LinkedHashSet<Segment>();
+		Set<Segment> out = new LinkedHashSet<Segment>(4);
 		for (DartDirection dd : df.dartsInFace) {
 			Dart d = dd.getDart();
 			Vertex from = d.getFrom();

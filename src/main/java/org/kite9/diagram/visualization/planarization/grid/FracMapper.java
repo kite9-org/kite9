@@ -1,0 +1,22 @@
+package org.kite9.diagram.visualization.planarization.grid;
+
+import java.util.Map;
+
+import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
+
+public interface FracMapper {
+
+	/**
+	 * Given a laid-out container (i.e. post phase 2 of RHD) this works out, for each fraction used on Grid X/Y positions, 
+	 * where within the bounds of the container's PositionInfo the fractions should be placed.
+	 * @param containerVertices 
+	 * @param bounds 
+	 */
+	public OPair<Map<BigFraction, Double>> getFracMapForGrid(DiagramElement c, RoutableHandler2D rh, CornerVertices containerVertices, RoutingInfo bounds);
+
+}

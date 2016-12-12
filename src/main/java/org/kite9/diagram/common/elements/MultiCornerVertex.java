@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.mapping;
+package org.kite9.diagram.common.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.Layout;
@@ -108,7 +107,7 @@ public class MultiCornerVertex extends AbstractAnchoringVertex {
 		anchors.add(new Anchor(ud, lr, underlying));
 	}
 	
-	public VPos getVPosFor(Container c) {
+	public VPos getVPosFor(DiagramElement c) {
 		for (Anchor anchor : anchors) {
 			if (anchor.getDe() == c) {
 				return anchor.getUd();
@@ -118,7 +117,7 @@ public class MultiCornerVertex extends AbstractAnchoringVertex {
 		throw new Kite9ProcessingException("No anchor found for container "+c);
 	}
 	
-	public HPos getHPosFor(Container c) {
+	public HPos getHPosFor(DiagramElement c) {
 		for (Anchor anchor : anchors) {
 			if (anchor.getDe() == c) {
 				return anchor.getLr();
