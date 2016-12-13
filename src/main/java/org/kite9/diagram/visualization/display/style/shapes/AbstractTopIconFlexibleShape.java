@@ -6,7 +6,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 
 public abstract class AbstractTopIconFlexibleShape extends AbstractRectangularFlexibleShape {
 

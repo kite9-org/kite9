@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -31,6 +32,11 @@ public class VertexArrangementOrthogonalizationDecorator implements Orthogonaliz
 		if (d instanceof Container) {
 			for (DiagramElement child : ((Container)d).getContents()) {
 				setInitialSizes(child, ded);
+			}
+			
+			Label l = ((Container)d).getLabel();
+			if (l != null) {
+				setInitialSizes(l, ded);
 			}
 		}
 		

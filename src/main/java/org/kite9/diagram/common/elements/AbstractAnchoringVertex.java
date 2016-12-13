@@ -44,7 +44,6 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		}
 	
 		public void setX(double x) {
-			System.out.println(this);
 			RectangleRenderingInformation ri = getRI();
 			
 			if (lr==HPos.LEFT) {

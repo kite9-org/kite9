@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.grid.GridPositionerImpl;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
@@ -158,7 +160,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			Vertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
 			Vertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
 			Vertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
-			convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, tl, tr, bl, br);
+			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, tl, tr, bl, br);
 			
 			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
 				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
@@ -307,19 +309,20 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			createOuterFace(o, optionalExistingVertex, allSideDarts, tl);
 		}
 		
-		DartFace inner = createInnerFace(o, allSideDarts);
+		DartFace inner = createInnerFace(o, allSideDarts, tl);
 		
 		return inner;
 	}
 
 	/**
 	 * This ensures that any 
+	 * @param start 
 	 */
-	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts) {
+	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start) {
 		Face f = o.getPlanarization().createFace();
 		f.setOuterFace(false);
 		DartFace inner = o.createDartFace(f, false);
-		inner.dartsInFace = allSideDarts.stream().map(d -> new DartDirection(d, d.getDrawDirection())).collect(Collectors.toList());
+		dartsToDartFace(allSideDarts, start, inner, false);
 		return inner;
 	}
 
@@ -343,18 +346,26 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 		
 		if (df != null) {
-			df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
+			dartsToDartFace(allDarts, vs, df, true); 
 			
-			for (Dart dart : allDarts) {
-				Direction d = Direction.reverse(dart.getDrawDirectionFrom(vs));
-				df.dartsInFace.add(new DartDirection(dart, d));
-				vs = dart.otherEnd(vs);
-			} 
-			
-			Collections.reverse(df.dartsInFace);
 			return df;
 		} else {
 			throw new Kite9ProcessingException("Couldn't find dart face for "+v);
+		}
+	}
+
+	private void dartsToDartFace(LinkedHashSet<Dart> allDarts, Vertex vs, DartFace df, boolean reverse) {
+		df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
+		
+		for (Dart dart : allDarts) {
+			Direction d = dart.getDrawDirectionFrom(vs);
+			d = reverse ? Direction.reverse(d) : d;
+			df.dartsInFace.add(new DartDirection(dart, d));
+			vs = dart.otherEnd(vs);
+		}
+		
+		if (reverse) {
+			Collections.reverse(df.dartsInFace);
 		}
 	}
 
@@ -540,6 +551,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		Direction segmentDirection = Direction.rotateClockwise(d);
 		Edge lastEdge = null;
 		Dart dart = null;
+		
+		Edge borderEdge = getBorderEdge(underlying, tl, tr, d, o);
 
 		for (int j = 0; j < onSide.size(); j++) {
 			dart = onSide.get(j);
@@ -551,7 +564,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				vsv = createSideVertex(d, underlying, i, invisible);
 				i++;
 
-				Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize);
+				Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize, borderEdge);
 				sideDart.setOrthogonalPositionPreference(d);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);
@@ -573,10 +586,25 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 
 		// finally, join to corner
-		Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, true, tr, onSide.size(), null, lastEdge, requiresMinSize);
+		Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, true, tr, onSide.size(), null, lastEdge, requiresMinSize, borderEdge);
 		sideDart.setOrthogonalPositionPreference(d);
 		out.newEdgeDarts.add(sideDart);
 		return out;
+	}
+
+	private Edge getBorderEdge(DiagramElement underlying, Vertex a, Vertex b, Direction d, Orthogonalization o) {
+		// try and find the existing border edge.
+		for (Edge e : a.getEdges()) {
+			if ((e instanceof BorderEdge) && (e.getDrawDirectionFrom(a) == d)) {
+				((BorderEdge)e).getDiagramElements().add(underlying);
+				return e;
+			}
+		} 
+		
+		// create a new one
+		BorderEdge be = new BorderEdge(a, b, "bva"+a.getID()+"-"+b.getID(), d, false, underlying, new HashSet<>());
+		be.getDiagramElements().add(underlying);
+		return be;
 	}
 
 	private void replaceOriginal(Orthogonalization o, Dart dart, Edge thisEdge, Vertex vsv, Vertex from) {
@@ -603,7 +631,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
-			int oppDarts, double lengthOpt, boolean endDart, Vertex vsv, int sideDarts, Edge currentEdge, Edge lastEdge, boolean requiresMinSize) {
+			int oppDarts, double lengthOpt, boolean endDart, Vertex vsv, int sideDarts, Edge currentEdge, Edge lastEdge, boolean requiresMinSize, Edge borderEdge) {
 	
 		// dist can be set for the first and last darts only if fixed length and
 		// one dart on side
@@ -614,7 +642,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			dist = Math.max(distDueToSize, dist); 
 		}
 
-		Dart out =  o.createDart(last, vsv, underlying, segmentDirection, dist);
+		Dart out =  o.createDart(last, vsv, borderEdge, segmentDirection, dist);
 		out.setVertexLengthKnown(knownLength);
 		return out;
 	}

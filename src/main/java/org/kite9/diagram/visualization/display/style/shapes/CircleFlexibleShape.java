@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.display.style.shapes;
 
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 
 
 public class CircleFlexibleShape extends EllipseFlexibleShape {

@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.display.style.shapes;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 
 public class AbstractRectangularFlexibleShape extends AbstractReservedFlexibleShape {
 

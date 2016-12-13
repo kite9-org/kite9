@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.display.components;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -41,7 +42,7 @@ public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
 	}
 
 	@Override
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension size(Leaf element, Dimension2D within) {
 		return super.size(element, within);
 	}
 	

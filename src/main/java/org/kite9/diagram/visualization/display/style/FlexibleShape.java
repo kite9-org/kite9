@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.display.style;
 import java.awt.Shape;
 
 import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.position.DirectionalValues;
 
 public interface FlexibleShape {
 

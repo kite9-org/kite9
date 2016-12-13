@@ -235,7 +235,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	
 	@Override
 	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
-			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength) {
+			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength, Edge borderEdge) {
 		
 		double endDist = requiresMinLength ? sizer.getLinkMargin(underlying, segmentDirection) : 0;
 		double interDist = sizer.getLinkGutter(underlying, segmentDirection);
@@ -246,15 +246,15 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		
 		if (thisSideDist == totalDistDueToFan) {
 			// all lengths on side are known
-			Dart out = o.createDart(last, vsv, underlying, segmentDirection, endDart ? endDist : interDist);
+			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection, endDart ? endDist : interDist);
 			out.setVertexLengthKnown(true);
 			return out;
 		} else if ((oppSideDarts<=1) && (onSideDarts <= 1)) {
 			// we can use the basic vertex arranger approach
-			return super.createSideDart(underlying, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength);
+			return super.createSideDart(underlying, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength, borderEdge);
 		} else {
 			// side lengths could go larger than the amount provided
-			Dart out = o.createDart(last, vsv, underlying, segmentDirection, endDart ? endDist : interDist);
+			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection, endDart ? endDist : interDist);
 			return out;
 		}
 	}

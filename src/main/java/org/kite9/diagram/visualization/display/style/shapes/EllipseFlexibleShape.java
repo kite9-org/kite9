@@ -4,7 +4,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 
 public class EllipseFlexibleShape extends AbstractFlexibleShape {
 	

@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 
 public class TubeFlexibleShape extends AbstractFlexibleShape implements FlexibleShape {

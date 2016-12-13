@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.display.components;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -37,7 +38,11 @@ public class ContextLabelDisplayer extends AbstractTextBoxModelDisplayer {
 		VPos vj = ri.getVerticalJustification();
 
 		// get label actual size
-		CostedDimension cd = size(element, CostedDimension.UNBOUNDED);
+		CostedDimension cd = size((Leaf) element, CostedDimension.UNBOUNDED);
+		
+		if (ri.getPosition() == null) {
+			return;
+		}
 
 		// set initial bounds on label
 		double xStart = ri.getPosition().x();

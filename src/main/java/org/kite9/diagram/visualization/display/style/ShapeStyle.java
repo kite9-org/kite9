@@ -12,6 +12,7 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.ShapeNode;
 import org.apache.batik.util.CSSConstants;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.DirectionalValues;
 import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
 import org.w3c.dom.Element;
 import org.w3c.dom.css.CSSPrimitiveValue;

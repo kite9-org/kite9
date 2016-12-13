@@ -2,8 +2,10 @@ package org.kite9.diagram.visualization.display.components;
 
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
+import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.position.DirectionalValues;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
@@ -11,7 +13,6 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
@@ -44,7 +45,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDispla
 		VPos vj = ri.getVerticalJustification();
 
 		// get label actual size
-		CostedDimension cd = size(element, CostedDimension.UNBOUNDED);
+		CostedDimension cd = size((Leaf) element, CostedDimension.UNBOUNDED);
 
 		// set initial bounds on label
 		double xStart = ri.getPosition().x();

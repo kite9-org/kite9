@@ -102,7 +102,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		ctx.setStyle("layout: grid; grid-size: 2 2;"); 
 		
 		
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), new TextLine("Bits missing")));
 	}
 	
 

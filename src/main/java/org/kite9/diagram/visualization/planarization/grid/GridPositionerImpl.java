@@ -42,12 +42,14 @@ public class GridPositionerImpl implements GridPositioner {
 				IntegerRangeValue xpos = getXOccupies(diagramElement);
 				IntegerRangeValue ypos = getYOccupies(diagramElement);
 				
-				if (allowSpanning) {
-					xSize = Math.max(xpos.getTo()+1, xSize);
-					ySize = Math.max(ypos.getTo()+1, ySize);
-				} else {
-					xSize = Math.max(xpos.getFrom()+1, xSize);
-					ySize = Math.max(ypos.getFrom()+1, ySize);
+				if ((xpos != null) && (ypos != null)) {
+					if (allowSpanning) {
+						xSize = Math.max(xpos.getTo()+1, xSize);
+						ySize = Math.max(ypos.getTo()+1, ySize);
+					} else {
+						xSize = Math.max(xpos.getFrom()+1, xSize);
+						ySize = Math.max(ypos.getFrom()+1, ySize);
+					}
 				}
 			}
 		}
@@ -83,19 +85,17 @@ public class GridPositionerImpl implements GridPositioner {
 		
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (diagramElement instanceof Connected) {
-				IntegerRangeValue xpos = getXOccupies(diagramElement);
-				IntegerRangeValue ypos = getYOccupies(diagramElement);	
+			IntegerRangeValue xpos = getXOccupies(diagramElement);
+			IntegerRangeValue ypos = getYOccupies(diagramElement);	
+			
+			if ((!IntegerRangeValue.notSet(xpos)) && (!IntegerRangeValue.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
+				ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
+				int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
+				int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
+				storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
+			} else {
+				overlaps.add(diagramElement);
 				
-				if ((!xpos.notSet()) && (!ypos.notSet()) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
-					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
-					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
-					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
-					storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
-				} else {
-					overlaps.add(diagramElement);
-					
-				}
 			}
 		}
 		

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Paint;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.DirectionalValues;
 
 
 /**

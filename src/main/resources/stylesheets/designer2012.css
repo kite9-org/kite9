@@ -35,7 +35,8 @@ context {
 	sizing: container;
 }
 
-stereotype, label {
+stereotype, 
+label {
 	type: connected;
 	sizing: text;
 }
@@ -105,7 +106,8 @@ glyph {
 	box-shadow: 4px 4px 0px #333333; 
 }
 
-.key {
+key {
+	type: label;
 	shape: "rounded-rect";
 	padding: 3px 6px 3px 6px; 
 	margin: 12px 12px 12px 12px;
@@ -121,6 +123,7 @@ glyph {
 }
 
 glyph label {
+	type: connected; 
 	font-size: 15px;
 	text-align: middle;
 	font-family: "opensans-regular-webfont";

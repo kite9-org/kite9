@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.kite9.diagram.visualization.display.style.DirectionalValues;
+import org.kite9.diagram.position.DirectionalValues;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 
 /**
