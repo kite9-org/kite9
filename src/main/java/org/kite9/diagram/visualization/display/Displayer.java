@@ -13,14 +13,14 @@ public interface Displayer {
 	void draw(DiagramElement element, RenderingInformation ri);
 
 	/**
-	 * If within is not provided, this returns the default size for an element.
+	 * If within is not provided, this returns the *minimum* size for an element.
 	 * If within is provided, it attempts to fix the element within the size given.
 	 * If the size given is too small, then a costed dimension will be returned with a
 	 * positive cost.  Width constraints can be exceeded when a too-long word is added
 	 * (hyphenation is not performed).  Height constraints can be exceeded when too 
 	 * many rows of text are required.
 	 */
-	CostedDimension size(Leaf element, Dimension2D within);
+	CostedDimension size(DiagramElement element, Dimension2D within);
 
 	boolean isVisibleElement(DiagramElement element);
 

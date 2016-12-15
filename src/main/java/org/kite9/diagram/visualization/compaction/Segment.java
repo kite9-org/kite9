@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
@@ -23,11 +22,12 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
  */
 public class Segment implements Comparable<Segment> {
 	
-	public PositionAction dimension;
-	public int i;
-	public boolean positioned = false;
-	public double position;
-	public DiagramElement underlying;
+	private PositionAction dimension;
+	private int i;
+	private boolean positioned = false;
+	private double position;
+	private DiagramElement underlying;
+	
 	public DiagramElement getUnderlying() {
 		return underlying;
 	}
@@ -44,7 +44,7 @@ public class Segment implements Comparable<Segment> {
 		this.underlyingSide = underlyingSide;
 	}
 
-	public Direction underlyingSide;
+	private Direction underlyingSide;
 	
 	public Segment(PositionAction dimension, int i) {
 		this.dimension = dimension;
@@ -134,5 +134,9 @@ public class Segment implements Comparable<Segment> {
 		}
 		
 		return darts;
+	}
+
+	public int getNumber() {
+		return i;
 	}
 }

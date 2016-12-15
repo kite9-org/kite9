@@ -78,7 +78,7 @@ public class CompactionImpl implements Compaction {
 	}
 	
 	private void setupVertex(Vertex v, Segment s) {
-		if (s.dimension==PositionAction.XAction) {
+		if (s.getDimension()==PositionAction.XAction) {
 			vMap.put(v, s);
 		} else {
 			hMap.put(v, s);

@@ -9,7 +9,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
-public abstract class AbstractTextDisplayer extends AbstractBoxModelDisplayer {
+public abstract class AbstractTextDisplayer extends AbstractRectangularDiagramElementDisplayer {
 
 	public AbstractTextDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);

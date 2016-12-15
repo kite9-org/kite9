@@ -9,7 +9,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
@@ -32,15 +31,15 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  * @author robmoffat
  *
  */
-public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
+public abstract class AbstractRectangularDiagramElementDisplayer extends AbstractADLDisplayer {
 	
 	public static final FlexibleShape DEFAULT_SHAPE = new RoundedRectFlexibleShape(8);
 
-	public AbstractBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractRectangularDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
-	public AbstractBoxModelDisplayer(GraphicsLayer g2) {
+	public AbstractRectangularDiagramElementDisplayer(GraphicsLayer g2) {
 		super(g2);
 	}
 
@@ -217,7 +216,7 @@ public abstract class AbstractBoxModelDisplayer extends AbstractADLDisplayer {
 	}
 
 	@Override
-	public CostedDimension size(Leaf element, Dimension2D within) {
+	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		BoxStyle bs = getBoxStyle(element);
 		FlexibleShape fs = getBorderShape(element);
 		Dimension2D innerWithin = getContentArea(within, fs, bs);

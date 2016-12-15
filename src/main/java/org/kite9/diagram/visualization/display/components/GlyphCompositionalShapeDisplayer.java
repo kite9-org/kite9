@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
-public class GlyphCompositionalShapeDisplayer extends AbstractBoxModelDisplayer {
+public class GlyphCompositionalShapeDisplayer extends AbstractRectangularDiagramElementDisplayer {
 
 	public GlyphCompositionalShapeDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);

@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  * @author robmoffat
  * 
  */
-public class ConnectionLabelTextLineDisplayer extends AbstractTextBoxModelDisplayer {
+public class ConnectionLabelTextLineDisplayer extends AbstractTextDiagramElementDisplayer {
 
 	public ConnectionLabelTextLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);

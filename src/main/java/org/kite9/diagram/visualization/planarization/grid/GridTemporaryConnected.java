@@ -2,17 +2,12 @@ package org.kite9.diagram.visualization.planarization.grid;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
@@ -24,7 +19,7 @@ import org.kite9.diagram.style.impl.AbstractDiagramElement;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Container {
+public class GridTemporaryConnected extends AbstractDiagramElement implements Connected {
 
 	private final String id;
 	
@@ -85,26 +80,5 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	public RectangleRenderingInformation getRenderingInformation() {
 		return rri;
 	}
-
-	@Override
-	public List<DiagramElement> getContents() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public Layout getLayout() {
-		return null;
-	}
-
-	@Override
-	public Label getLabel() {
-		return null;
-	}
-
-	@Override
-	public boolean isBordered() {
-		return false;
-	}
-
 	
 }

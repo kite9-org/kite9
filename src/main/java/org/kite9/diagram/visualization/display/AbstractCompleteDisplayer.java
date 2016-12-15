@@ -69,7 +69,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return d.canDisplay(element);
 	}
 	
-	public CostedDimension size(Leaf element, Dimension2D within) {
+	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		for (Displayer cd : displayers) {
 			if (cd.canDisplay(element)) {
 				return cd.size(element, within);

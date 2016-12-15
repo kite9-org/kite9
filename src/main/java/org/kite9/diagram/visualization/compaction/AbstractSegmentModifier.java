@@ -54,10 +54,10 @@ public class AbstractSegmentModifier {
 
 	protected double getMinimumDistance(boolean horizontalDart, Segment froms,
 			Segment tos) {
-		DiagramElement fromde = froms.underlying;
-		DiagramElement tode = tos.underlying;
-		Direction fromUnderlyingSide = froms.underlyingSide;
-		Direction toUnderlyingSide = tos.underlyingSide;
+		DiagramElement fromde = froms.getUnderlying();
+		DiagramElement tode = tos.getUnderlying();
+		Direction fromUnderlyingSide = froms.getUnderlyingSide();
+		Direction toUnderlyingSide = tos.getUnderlyingSide();
 		
 		if (!needsLength(fromde, tode)) {
 			return 0;

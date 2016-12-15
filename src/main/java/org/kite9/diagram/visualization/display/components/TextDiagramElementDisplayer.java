@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 
-public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
+public class TextDiagramElementDisplayer extends AbstractTextDiagramElementDisplayer {
 
 	public TextDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
@@ -40,11 +40,6 @@ public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
 			super.draw(element, r);
 		}
 	}
-
-	@Override
-	public CostedDimension size(Leaf element, Dimension2D within) {
-		return super.size(element, within);
-	}
 	
 	@Override
 	public boolean requiresDimension(DiagramElement de) {
@@ -65,7 +60,7 @@ public class TextDiagramElementDisplayer extends AbstractTextBoxModelDisplayer {
 
 	@Override
 	protected FlexibleShape getDefaultBorderShape(DiagramElement de) {
-		return AbstractBoxModelDisplayer.DEFAULT_SHAPE;
+		return AbstractRectangularDiagramElementDisplayer.DEFAULT_SHAPE;
 	}
 	
 	

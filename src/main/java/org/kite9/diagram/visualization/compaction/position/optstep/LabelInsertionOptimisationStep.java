@@ -170,8 +170,8 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		if (dart.getUnderlying() == null)
 			return true;
 
-		if (((Segment) a.getUnderlying()).underlying instanceof Connected) {
-			if (((Segment) a.getUnderlying()).underlyingSide != d) {
+		if (((Segment) a.getUnderlying()).getUnderlying() instanceof Connected) {
+			if (((Segment) a.getUnderlying()).getUnderlyingSide() != d) {
 				return false;
 			}
 		}
@@ -827,32 +827,6 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		}
 	}
 
-	private static boolean occupiedBetween(Slideable slideable, Slideable p1, Slideable p2, SegmentSlackOptimisation perp) {
-		double pos1 = Math.min(p1.getMinimumPosition(), p2.getMinimumPosition());
-		double pos2 = Math.max(p2.getMinimumPosition(), p1.getMinimumPosition());
-
-		for (Dart d : ((Segment) slideable.getUnderlying()).getDartsInSegment()) {
-			if (d.getUnderlying() != null) {
-				Vertex from = d.getFrom();
-				Vertex to = d.getTo();
-				Slideable sFrom = perp.getVertexToSlidableMap().get(from);
-				double pfrom = sFrom.getMinimumPosition();
-				Slideable sTo = perp.getVertexToSlidableMap().get(to);
-				double pto = sTo.getMinimumPosition();
-				double d1 = Math.min(pfrom, pto);
-				double d2 = Math.max(pfrom, pto);
-
-				boolean nooverlap = d2 <= pos1 || d1 >= pos2;
-
-				if (!nooverlap) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private static int getPerpPosition(Vertex v, SegmentSlackOptimisation perp) {
 		Slideable cs = perp.getVertexToSlidableMap().get(v);
 		int cpos = cs.getMinimumPosition();
@@ -919,6 +893,10 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 
 		List<Slideable> opps;
 
+		/**
+		 * Tries to give the *furthest away* possible slideables back, to give the 
+		 * label the most room possible.  
+		 */
 		public List<Slideable> getOppositeSlideables() {
 			if (opps != null)
 				return opps;
@@ -936,7 +914,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 
 				Slideable next = parallel.getPositionalOrder().get(slideableNo);
 				if (!done.contains(next)) {
-					if (occupiedBetween(next, getHighEndSlideable(), getZeroEndSlideable(), perp)) {
+					if (occupiedBetween(next, perp)) {
 						opps.add(next);
 						excludeAllDependents(next, done, increment);
 					}
@@ -944,6 +922,37 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			} while (true);
 
 			return opps;
+		}
+		
+		private boolean occupiedBetween(Slideable slideable, SegmentSlackOptimisation perp) {
+			// need to improve this logic for when a distance hasn't been set for the container.
+			// minimally.  But, maybe there should be some kind of minimal distance eh?
+			
+			Slideable p1 = getZeroEndSlideable();
+			Slideable p2 = getHighEndSlideable();
+			double pos1 = Math.min(p1.getMinimumPosition(), p2.getMinimumPosition());
+			double pos2 = Math.max(p2.getMinimumPosition(), p1.getMinimumPosition());
+
+			for (Dart d : ((Segment) slideable.getUnderlying()).getDartsInSegment()) {
+				if (d.getUnderlying() != null) {
+					Vertex from = d.getFrom();
+					Vertex to = d.getTo();
+					Slideable sFrom = perp.getVertexToSlidableMap().get(from);
+					double pfrom = sFrom.getMinimumPosition();
+					Slideable sTo = perp.getVertexToSlidableMap().get(to);
+					double pto = sTo.getMinimumPosition();
+					double d1 = Math.min(pfrom, pto);
+					double d2 = Math.max(pfrom, pto);
+
+					boolean nooverlap = d2 <= pos1 || d1 >= pos2;
+
+					if (!nooverlap) {
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 
 		private void excludeAllDependents(Slideable next, Set<Slideable> done, int increment) {
@@ -959,11 +968,19 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		}
 
 		public Slideable getZeroEndSlideable() {
-			return perp.getVertexToSlidableMap().get(tynes.get(0).getFrom());
+			return perp.getVertexToSlidableMap().get(getZeroEndVertex());
+		}
+
+		private Vertex getZeroEndVertex() {
+			return tynes.get(0).getFrom();
 		}
 
 		public Slideable getHighEndSlideable() {
-			return perp.getVertexToSlidableMap().get(tynes.get(tyneCount - 1).getFrom());
+			return perp.getVertexToSlidableMap().get(getHighEndVertex());
+		}
+
+		private Vertex getHighEndVertex() {
+			return tynes.get(tyneCount - 1).getFrom();
 		}
 
 		private Comb(Slideable spine, List<Dart> tynes, int count, Direction spineDirection,

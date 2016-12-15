@@ -11,44 +11,30 @@ import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
 /**
- * Handles rendering and sizing of text objects within the diagram. 
- * 
- * Pieces of text generally have a label, symbols and a type.  Any of those pieces are optional.
- * 
- * These can be used as labels for containers or
- * connections, so there are various subclasses for those.
- * 
- * 
+ * Handles rendering and sizing of `Text` `DiagramElements`. 
  * @author robmoffat
  * 
  */
-public abstract class AbstractTextBoxModelDisplayer extends AbstractBoxModelDisplayer {
+public abstract class AbstractTextDiagramElementDisplayer extends AbstractRectangularDiagramElementDisplayer {
 
-	public AbstractTextBoxModelDisplayer(GraphicsLayer g2) {
+	public AbstractTextDiagramElementDisplayer(GraphicsLayer g2) {
 		super(g2);
 	}
 
-	public AbstractTextBoxModelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractTextDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
 	@Override
 	protected void drawBoxContents(DiagramElement element, RectangleRenderingInformation r) {
 		Rectangle2D ri = getDrawingRectangle(element, r);
-//		g2.setColor(Color.GREEN);
-//		g2.draw(ri);
 		String label = safeGetText(getLabel(element));
 		double xStart = ri.getMinX();
 		double yStart = ri.getMinY();
-		
-		// draw label, and syms if they haven't already been done
 		TextStyle ls = getLabelStyle(element);
 		if (ls != null) {
 			double baseline2 =getBaseline(ls.getFont(), g2, label);
-	//		g2.setColor(Color.RED);
-	//		g2.drawRect((int) xStart, (int) (yStart+baseline), 100, 1);
 			arrangeString(ls.getFont(), ls.getColor(), label, new Dimension2D(xStart, yStart), new Dimension2D(ri.getWidth(), ri.getHeight()), true, ls.getJust(), baseline2);
-			
 		}
 	}
 	

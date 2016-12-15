@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
 
-public class ContextLabelDisplayer extends AbstractTextBoxModelDisplayer {
+public class ContextLabelDisplayer extends AbstractTextDiagramElementDisplayer {
 
 	public ContextLabelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
 		super(parent, g2, shadow);

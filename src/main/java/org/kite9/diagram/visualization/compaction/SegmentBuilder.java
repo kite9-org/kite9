@@ -2,17 +2,21 @@ package org.kite9.diagram.visualization.compaction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Connected;
+import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;
@@ -52,14 +56,16 @@ public class SegmentBuilder implements Logable {
 		for (Segment s : result) {
 			setSegmentUnderlying(s);
 			
-			if (s.underlying instanceof Connected) {
-				s.underlyingSide = getContainedSegmentUnderlyingSide(s, s.underlying, transversePlane);
+			if (s.getUnderlying() instanceof Connected) {
+				s.setUnderlyingSide(getContainedSegmentUnderlyingSide(s, s.getUnderlying(), transversePlane));
 			}
-			log.send(log.go() ? null : "Segment: "+s.i+" has underlying "+s.underlying+" on side "+s.underlyingSide);
+			log.send(log.go() ? null : "Segment: "+s.getNumber()+" has underlying "+s.getUnderlying()+" on side "+s.getUnderlyingSide());
 		}
 		
 		return result;
 	}
+	
+	private Map<Container, GridContentsDiagramElement> gridElements = new HashMap<>();
 
 	private void setSegmentUnderlying(Segment s) {
 		DiagramElement underlying = null;
@@ -69,16 +75,30 @@ public class SegmentBuilder implements Logable {
 			
 			if (u!=null) {
 				if (underlying==null) {
-					underlying = u;
-				} 
+					if (embeddedInGrid(u)) {
+						Container parent = (Container) u.getParent();
+						underlying = gridElements.get(parent);
+						if (underlying == null) {
+							underlying = new GridContentsDiagramElement(parent);
+							gridElements.put(parent, (GridContentsDiagramElement) underlying);
+						}
+					} else {
+						underlying = u;
+					} 	
+				}
 			}
 			
 			if (d.getOrthogonalPositionPreference()!=null) {
-				s.underlyingSide = d.getOrthogonalPositionPreference();
+				s.setUnderlyingSide(d.getOrthogonalPositionPreference());
 			}
 		}
 		
-		s.underlying = underlying;
+		s.setUnderlying(underlying);
+	}
+
+	private boolean embeddedInGrid(DiagramElement u) {
+		DiagramElement parent = u.getParent();
+		return (parent instanceof Container) && (((Container)parent).getLayout()==Layout.GRID);
 	}
 
 	/**

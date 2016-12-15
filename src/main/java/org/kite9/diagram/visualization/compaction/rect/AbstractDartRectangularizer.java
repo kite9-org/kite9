@@ -267,7 +267,7 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 		Orthogonalization o = c.getOrthogonalization();
 
 		// create the replacement for link
-		Segment newLinkSeg = c.newSegment(link.getSegment().dimension);
+		Segment newLinkSeg = c.newSegment(link.getSegment().getDimension());
 		Vertex parV = c.createCompactionVertex(newLinkSeg, par.getSegment());
 		Vertex meetsV = c.createCompactionVertex(newLinkSeg, meets.getSegment());
 		VertexTurn newLinkTurn = new VertexTurn(newLinkSeg, c, link.d);

@@ -6,19 +6,14 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.Displayer;
-import org.kite9.diagram.visualization.display.components.AbstractBoxModelDisplayer;
+import org.kite9.diagram.visualization.display.components.AbstractRectangularDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.components.BackgroundDisplayer;
-import org.kite9.diagram.visualization.display.components.TextDiagramElementDisplayer;
+import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.visualization.display.components.ConnectionLabelTextLineDisplayer;
 import org.kite9.diagram.visualization.display.components.ContainerDisplayer;
 import org.kite9.diagram.visualization.display.components.ContextLabelDisplayer;
 import org.kite9.diagram.visualization.display.components.DebugLineDisplayer;
-import org.kite9.diagram.visualization.display.components.GlyphCompositionalShapeDisplayer;
-import org.kite9.diagram.visualization.display.components.GlyphDisplayer;
-import org.kite9.diagram.visualization.display.components.GlyphTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.KeyDisplayer;
-import org.kite9.diagram.visualization.display.components.KeyTextLineDisplayer;
-import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
+import org.kite9.diagram.visualization.display.components.TextDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
@@ -117,8 +112,8 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 			@Override
 			protected Shape getPerimeterShape(DiagramElement de) {
 				Displayer cd = getDisplayer(de);
-				if (cd instanceof AbstractBoxModelDisplayer) {
-					return ((AbstractBoxModelDisplayer)cd).getPerimeter(de, 
+				if (cd instanceof AbstractRectangularDiagramElementDisplayer) {
+					return ((AbstractRectangularDiagramElementDisplayer)cd).getPerimeter(de, 
 							(RectangleRenderingInformation) de.getRenderingInformation());
 				} else {
 					return null;

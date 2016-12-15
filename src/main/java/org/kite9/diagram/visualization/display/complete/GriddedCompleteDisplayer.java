@@ -72,7 +72,7 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 		ded.draw(element, ri);
 	}
 	
-	public CostedDimension size(Leaf element, Dimension2D within) {
+	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
 		if (cd==CostedDimension.NOT_DISPLAYABLE) {
 			return cd;

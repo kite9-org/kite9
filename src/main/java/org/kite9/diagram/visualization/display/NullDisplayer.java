@@ -14,7 +14,7 @@ public class NullDisplayer implements CompleteDisplayer {
 	public void draw(DiagramElement element, RenderingInformation ri) {
 	}
 
-	public CostedDimension size(Leaf element, Dimension2D within) {
+	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		return CostedDimension.NOT_DISPLAYABLE;
 	}
 

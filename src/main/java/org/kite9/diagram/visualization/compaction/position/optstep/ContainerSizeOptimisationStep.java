@@ -17,7 +17,7 @@ import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisat
 import org.kite9.framework.logging.Logable;
 
 /**
- * Pushes the left sides of containers as far right as possible. </ul>
+ * Makes containers as large as possible, within existing constraints. </ul>
  * 
  * @author robmoffat
  * 
