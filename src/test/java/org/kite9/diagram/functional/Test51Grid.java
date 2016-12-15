@@ -67,9 +67,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 		}
 		
 		
-		Glyph g1 = new Glyph("one", "","Some gylph", null, null);
-		Glyph g2 = new Glyph("two", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
-		Glyph g3 = new Glyph("three", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g1 = new Glyph("one", "ster","Some gylph", null, null);
+		Glyph g2 = new Glyph("two", "ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g3 = new Glyph("three", "ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
 		Glyph g4 = new Glyph("four", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
 		elems[2][1].appendChild(g1);
 		elems[1][3].appendChild(g2);
@@ -99,7 +99,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		br.setStyle("occupies-x: 1; occupies-y: 1;");
 		
 		Context ctx = new Context("inner", Arrays.asList(tl, tr, br), true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 2 2;"); 
+		ctx.setStyle("layout: grid; grid-size: 2 2; padding: 4px; "); 
 		
 		
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), new TextLine("Bits missing")));

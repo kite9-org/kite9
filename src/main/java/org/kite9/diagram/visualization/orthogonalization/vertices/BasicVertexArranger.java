@@ -162,8 +162,13 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			Vertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
 			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, tl, tr, bl, br);
 			
-			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
-				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
+			if (de instanceof Container) {
+				if (((Container)de).getLayout()==Layout.GRID) {
+					// nest the grids further.
+					placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
+				} else {
+					convertContainerContents(o, (Container) de, done); 
+				}
 			}
 		}
 	}
