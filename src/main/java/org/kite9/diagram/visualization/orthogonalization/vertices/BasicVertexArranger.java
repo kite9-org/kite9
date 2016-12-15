@@ -164,7 +164,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			
 			if (de instanceof Container) {
 				if (((Container)de).getLayout()==Layout.GRID) {
-					// nest the grids further.
+					// nest the grid
 					placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
 				} else {
 					convertContainerContents(o, (Container) de, done); 

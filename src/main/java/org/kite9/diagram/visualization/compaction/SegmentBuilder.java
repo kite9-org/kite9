@@ -13,6 +13,7 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -65,23 +66,19 @@ public class SegmentBuilder implements Logable {
 		return result;
 	}
 	
-	private Map<Container, GridContentsDiagramElement> gridElements = new HashMap<>();
-
 	private void setSegmentUnderlying(Segment s) {
 		DiagramElement underlying = null;
+		boolean embeddedInGrid = false;
 		Collection<Dart> darts =s.getDartsInSegment();
 		for (Dart d : darts) {
 			DiagramElement u = getLowestLevelUnderlying(d);
 			
 			if (u!=null) {
 				if (underlying==null) {
-					if (embeddedInGrid(u)) {
-						Container parent = (Container) u.getParent();
-						underlying = gridElements.get(parent);
-						if (underlying == null) {
-							underlying = new GridContentsDiagramElement(parent);
-							gridElements.put(parent, (GridContentsDiagramElement) underlying);
-						}
+					embeddedInGrid = embeddedInGrid(u);
+					if (embeddedInGrid) {
+						Container parent = MultiCornerVertex.getRootGridContainer(u);
+						underlying = parent;
 					} else {
 						underlying = u;
 					} 	
@@ -91,6 +88,11 @@ public class SegmentBuilder implements Logable {
 			if (d.getOrthogonalPositionPreference()!=null) {
 				s.setUnderlyingSide(d.getOrthogonalPositionPreference());
 			}
+		}
+		
+		if (embeddedInGrid) {
+			// because grids can have multiple segments, and they are really all internal to the container.
+			s.setUnderlyingSide(null);
 		}
 		
 		s.setUnderlying(underlying);

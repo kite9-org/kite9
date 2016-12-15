@@ -62,7 +62,7 @@ public class AbstractSegmentModifier {
 		if (!needsLength(fromde, tode)) {
 			return 0;
 		}
-		
+				
 		// side checking
 		if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
 			if (fromUnderlyingSide==toUnderlyingSide) {

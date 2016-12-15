@@ -222,9 +222,8 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 		Dimension2D innerWithin = getContentArea(within, fs, bs);
 		Dimension2D sizeInner = sizeBoxContents(element, innerWithin);
 		DirectionalValues padding = getBorderSizes(element, sizeInner, bs, fs);
-		DirectionalValues margin = bs.getMargin();
-		double xpad = padding.getLeft() + padding.getRight() + margin.getLeft() + margin.getRight();
-		double ypad = padding.getTop() + padding.getBottom() + margin.getTop() + margin.getBottom();
+		double xpad = padding.getLeft() + padding.getRight();
+		double ypad = padding.getTop() + padding.getBottom();
 		return new CostedDimension((sizeInner != null ? sizeInner.getWidth() : 0 )+ xpad, (sizeInner != null ? sizeInner.getHeight() : 0) + ypad, within);
 	}
 
@@ -275,7 +274,6 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 	}
 
 	private Dimension2D getContentArea(Dimension2D within, FlexibleShape borderShape, BoxStyle bs) {
-		within = stripMargins(within, bs);
 		Dimension2D remaining = (borderShape != null)  ? borderShape.getContentArea(within) : within;
 		double stroke = trimForStroke(bs) * 2;
 		DirectionalValues internalPadding = bs.getInternalPadding();

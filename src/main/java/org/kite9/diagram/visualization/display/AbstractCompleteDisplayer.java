@@ -109,7 +109,17 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			if (a instanceof Text) {
 				return MINIMUM_GLYPH_SIZE * gridSize;
 			} else if (a instanceof Container) {
-				return MINIMUM_CONTEXT_SIZE * gridSize;
+				if ((aSide == null) && (bSide == null)) {
+					
+				} else if (bSide == null) {
+					return getDisplayer(a).getPadding(a, aSide);
+				} else if (aSide == null) {
+					return getDisplayer(b).getPadding(b, bSide);
+				} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
+					return getDisplayer(a).size(a, CostedDimension.ZERO).getWidth() * gridSize;
+				} else {
+					return getDisplayer(a).size(a, CostedDimension.ZERO).getHeight() * gridSize;
+				}
 			} else if (a == null) {
 				return 0;
 			} /*else if (a instanceof Arrow) {
