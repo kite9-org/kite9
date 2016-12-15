@@ -95,7 +95,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d) {
 		double distance = getMinimumDistanceInner(a,aSide,  b, bSide, d, true);
-		log.send(log.go() ? null : "Minimum distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + d + " is " + distance);
+		log.send(log.go() ? null : "Minimum distances between  " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + d + " is " + distance);
 		return distance;
 
 	}
@@ -110,15 +110,17 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 				return MINIMUM_GLYPH_SIZE * gridSize;
 			} else if (a instanceof Container) {
 				if ((aSide == null) && (bSide == null)) {
+					// two elements within a container grid
+					return 0;
 					
 				} else if (bSide == null) {
 					return getDisplayer(a).getPadding(a, aSide);
 				} else if (aSide == null) {
 					return getDisplayer(b).getPadding(b, bSide);
 				} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
-					return getDisplayer(a).size(a, CostedDimension.ZERO).getWidth() * gridSize;
+					return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getWidth();
 				} else {
-					return getDisplayer(a).size(a, CostedDimension.ZERO).getHeight() * gridSize;
+					return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getHeight();
 				}
 			} else if (a == null) {
 				return 0;

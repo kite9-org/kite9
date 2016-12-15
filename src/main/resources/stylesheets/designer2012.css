@@ -35,12 +35,6 @@ context {
 	sizing: container;
 }
 
-stereotype, 
-label {
-	type: connected;
-	sizing: text;
-}
-
 .background {
 	
 	
@@ -122,18 +116,22 @@ key {
 	box-shadow: 4px 4px 0px #333333; 
 }
 
-glyph label {
-	type: connected; 
+glyph > label {
+	type: connected;
+	sizing: text;
 	font-size: 15px;
 	text-align: middle;
 	font-family: "opensans-regular-webfont";
+	shape: none;
 }
 
-
 glyph stereotype {
+	type: connected;
+	sizing: text;
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	stroke: black;
+	shape: none;
 }
 
 glyph .text-line {
@@ -157,10 +155,6 @@ arrow {
 	stroke: white;
 }
 
-arrow label {
-	stroke: white;
-}
-
 /* Context */
 
 .context {
@@ -173,7 +167,7 @@ arrow label {
 
 toLabel, 
 fromLabel,
-context label {
+context > label {
 	type: label; 
 	fill: #CCC;
 	fill-transparency: 60%;

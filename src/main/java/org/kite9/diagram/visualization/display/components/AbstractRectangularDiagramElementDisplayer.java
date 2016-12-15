@@ -51,9 +51,9 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 	public abstract BoxStyle getUnderlyingStyle(DiagramElement de);
 	
 	public FlexibleShape getBorderShape(DiagramElement de) {
-		FlexibleShape out = null;
+		FlexibleShape out = null; 
 		String name = de.getShapeName();
-		out = ShapeHelper.getFlexibleShapes().get(name);
+		out = ShapeHelper.getFlexibleShape(name);
 		if ((out == null) && (name != null)) {
 			out = ShapeHelper.getFlexibleShapes().get(name.toUpperCase());
 		}
@@ -69,7 +69,6 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 
 	@Override
 	public void draw(DiagramElement element, RenderingInformation r) {
-		System.out.println("Drawing from "+this.getClass()+" el "+element);
 		BoxStyle bs = getBoxStyle(element);
 		ShapeStyle sh = bs;
 		RectangleRenderingInformation r2 = (RectangleRenderingInformation) r;
@@ -97,7 +96,9 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 				if (background != null) {
 					g2.setPaint(background);
 					Shape path = getShape(bs, fs, ( xStart + xo), (yStart +yo), (xEnd + xo), (yEnd + yo));
-					g2.fill(path);
+					if (path != null) {
+						g2.fill(path);
+					}
 				}
 			}
 		}
@@ -109,7 +110,7 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 			paintBackground(bs, fs, g2, xStart, yStart, xEnd, yEnd);
 			Stroke stroke = sh.getStroke();
 			Shape s = getShape(bs, fs, xStart, yStart, xEnd, yEnd);
-			if ((stroke != null) && (!sh.isInvisible())) {
+			if ((stroke != null) && (!sh.isInvisible()) && (s!=null)) {
 				Paint border = sh.getStrokeColour();
 				g2.setStroke(stroke);
 				g2.setPaint(border);
@@ -328,7 +329,10 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 					
 					g2.setPaint(back2);
 				}
-				g2.fill(shape);
+				
+				if (shape != null) {
+					g2.fill(shape);
+				}
 			}
 		}
 	}

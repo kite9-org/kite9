@@ -19,6 +19,8 @@ public interface Displayer {
 	 * positive cost.  Width constraints can be exceeded when a too-long word is added
 	 * (hyphenation is not performed).  Height constraints can be exceeded when too 
 	 * many rows of text are required.
+	 * 
+	 * Note that size will *not* consider nested elements.  
 	 */
 	CostedDimension size(DiagramElement element, Dimension2D within);
 

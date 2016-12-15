@@ -5,13 +5,13 @@ import java.util.Map;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
+import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
 
@@ -24,6 +24,8 @@ import org.kite9.framework.logging.Logable;
  *
  */
 public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererCompleteDisplayer, Logable {
+
+	protected Kite9Log log = new Kite9Log(this);
 
 	RequiresGraphicsSourceRendererCompleteDisplayer ded;
 	double gridSize;
@@ -87,7 +89,7 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 
 	public boolean isVisibleElement(DiagramElement element) {
@@ -108,7 +110,19 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy) {
-		return snap(ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy),1);
+		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy);
+		if (needsSnapping(a, aSide, b, bSide)) {
+			minDist = snap(minDist, 1);		
+			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
+			return minDist;
+		} else {
+			return minDist;
+		}
+	}
+
+	private boolean needsSnapping(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		return true;
+		//return (a!=b) || (a==null) || (b==null);
 	}
 
 	@Override

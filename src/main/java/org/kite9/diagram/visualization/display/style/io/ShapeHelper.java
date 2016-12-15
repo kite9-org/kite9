@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.apache.batik.ext.awt.geom.Polygon2D;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.visualization.display.components.AbstractRectangularDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.style.ConnectionTemplate;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.CircleFlexibleShape;
@@ -183,6 +184,8 @@ public abstract class ShapeHelper {
 				border = new DiamondFlexibleShape(10, 10);
 			} else if (ucStyle.equals("DIVIDER")) {
 				border = new DividerFlexibleShape();
+			} else if (ucStyle.equals("rounded-rect")) {
+				border = new RoundedRectFlexibleShape(20, 0, 0);
 			} else if (ucStyle.equals("HEXAGON")) {
 				border = new HexagonFlexibleShape(20, 0, 0);
 			} else if (ucStyle.equals("CIRCLE")) {
@@ -193,10 +196,11 @@ public abstract class ShapeHelper {
 				return FlowchartShapes.getShape(style);
 			} else if (style.startsWith("uml"))
 				return UMLShapes.getShape(style);
+			
 		}
 		
 		if (border == null) {
-			border = new RoundedRectFlexibleShape(20, 0, 0);
+			border = AbstractRectangularDiagramElementDisplayer.DEFAULT_SHAPE;
 		}
 		
 		return border;

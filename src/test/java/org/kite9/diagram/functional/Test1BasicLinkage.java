@@ -73,4 +73,12 @@ public class Test1BasicLinkage extends AbstractFunctionalTest {
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con));
 		renderDiagram(d);
 	}
+	
+	@Test
+	public void test_1_8_EmptyGlyph() throws IOException {
+		XMLElement one = new Glyph(null, null, null, null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
+
+		renderDiagram(d);
+	}
 }
