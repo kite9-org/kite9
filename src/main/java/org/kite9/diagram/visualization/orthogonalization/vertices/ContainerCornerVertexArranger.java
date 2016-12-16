@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
@@ -39,7 +39,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	protected void convertVertex(Orthogonalization o, Vertex v) {
 		if (v instanceof MultiCornerVertex) {
 			MultiCornerVertex cv = (MultiCornerVertex) v;
-			Container und = null; //cv.getOriginalUnderlying();
+			DiagramElement und = cv.getOriginalUnderlying();
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
@@ -88,7 +88,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 
-	private void processCorner(Orthogonalization o, MultiCornerVertex cv, Container und,
+	private void processCorner(Orthogonalization o, MultiCornerVertex cv, DiagramElement und,
 			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
 		
 		boolean reverse = Direction.rotateAntiClockwise(splitInDirection) == outwards;
@@ -104,7 +104,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 	
-	private void processSide(Orthogonalization o, MultiCornerVertex cv, Container und,
+	private void processSide(Orthogonalization o, MultiCornerVertex cv, DiagramElement und,
 			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
 				
 		List<Dart> outDarts = dartDirections.get(outwards);
@@ -119,7 +119,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	/**
 	 * Makes sure we are looking at darts leaving the container
 	 */
-	private boolean checkDirection(List<Dart> outDarts, Container und) {
+	private boolean checkDirection(List<Dart> outDarts, DiagramElement und) {
 		if (outDarts.size() == 1) {
 			return (outDarts.get(0).getOriginalUnderlying() != und);
 		}
@@ -137,7 +137,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		throw new LogicException("Couldn't find side dart going "+d+" from "+cv);
 	}
 
-	protected void processDarts(Container underlying, AbstractAnchoringVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
+	protected void processDarts(DiagramElement underlying, AbstractAnchoringVertex cv, Direction splitDirection, List<Dart> leaversToMove, Dart toSplit, Orthogonalization o) {
 		Edge thisEdge = (Edge) toSplit.getUnderlying();
 		BorderEdge cbe = (BorderEdge) toSplit.getUnderlying();
 		

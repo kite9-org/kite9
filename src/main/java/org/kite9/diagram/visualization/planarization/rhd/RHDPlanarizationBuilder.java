@@ -530,21 +530,25 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				case UP:
 				case DOWN:
 				case VERTICAL:
-					addExtraSideVertex((Connected) c, Direction.DOWN, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-					addExtraSideVertex((Connected) c, Direction.DOWN, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					Direction d1 = compareDiagramElements((Connected) c, before) == 1 ? Direction.UP : Direction.DOWN;
+					Direction d2 = compareDiagramElements((Connected) c, after) == 1 ? Direction.UP : Direction.DOWN;
+					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					break;
 				case LEFT:
 				case RIGHT:
 				case HORIZONTAL:
-					addExtraSideVertex((Connected) c, Direction.RIGHT, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-					addExtraSideVertex((Connected) c, Direction.RIGHT, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					d1 = compareDiagramElements((Connected) c, before) == 1 ? Direction.LEFT : Direction.RIGHT;
+					d2 = compareDiagramElements((Connected) c, after) == 1 ? Direction.LEFT : Direction.RIGHT;
+					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					break;	
 				default:
 					// do nothing
 				}
 			}
 		
-		// add border vertices for directed edges.
+			// add border vertices for directed edges.
 			for (Connection conn : ((Connected) c).getLinks()) {
 				if ((conn.getDrawDirection() != null) && (!conn.getRenderingInformation().isContradicting())) {
 					addExtraSideVertex((Connected) c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
@@ -560,17 +564,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	
 	private void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
-			int comp = compareDiagramElements((Connected) c, to);
-			if (comp == 1) {
-				d = Direction.reverse(d);
-			} else if (comp == -1) {
-				// ok
-			} else {
-				// zero means overlap
-				return;
-			}
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
-			if (!(to instanceof Container)) {
+			if (!(requiresCornerVertices(to))) {
 				toBounds = rh.narrow(toBounds, borderTrimAreaX, borderTrimAreaY);
 			}
 			BigFraction xOrd = null, yOrd = null;
@@ -620,7 +615,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				xOrd = cvNew.getXOrdinal();
 				fracX = fracMapX.get(xOrd);
 				
-				if (to instanceof Container) {
+				if (requiresCornerVertices(to)) {
 					yNew = y.keep(ys, ye-ys, fracY);
 				} else {
 					yNew = y;
