@@ -143,7 +143,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * @return the outerface to embed in the container.
 	 */
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
-		gp.placeOnGrid(c, true);
 		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 		Map<OPair<BigFraction>, MultiCornerVertex> corners = new HashMap<>();
 		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners);
@@ -152,6 +151,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container root, Container c, Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
+		gp.placeOnGrid(c, true);
 		for (DiagramElement de : c.getContents()) {
 			OPair<BigFraction> xPos = gp.getGridXPosition(de);
 			OPair<BigFraction> yPos = gp.getGridYPosition(de);
