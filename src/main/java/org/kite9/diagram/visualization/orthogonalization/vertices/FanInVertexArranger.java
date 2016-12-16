@@ -8,7 +8,6 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -18,6 +17,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.EdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.LogicException;
 
@@ -39,8 +39,8 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	
 	@Override
 	protected Side createSide(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
-			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize) {
-		Side out = super.createSide(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize);
+			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize, BorderEdge borderEdge) {
+		Side out = super.createSide(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize, borderEdge);
 
 		
 		if (onSide.size() > 1) {

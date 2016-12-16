@@ -40,6 +40,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.grid.GridPositionerImpl;
+import org.kite9.diagram.visualization.planarization.mapping.IndependentCornerVertices;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -145,33 +146,67 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
 		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 		Map<OPair<BigFraction>, MultiCornerVertex> corners = new HashMap<>();
-		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners);
+		Map<BigFraction, BorderEdge> xedges = new HashMap<>();
+		Map<BigFraction, BorderEdge> yedges = new HashMap<>();
+		
+		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners, xedges, yedges);
 		o.getAllVertices().addAll(corners.values());
 		return convertGridToOuterFace(o, corners);
 	}
 
-	private void placeContainerContentsOntoGrid(Orthogonalization o, Container root, Container c, Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
+	private OPair<BigFraction> within(OPair<BigFraction> outer, OPair<BigFraction> inner) {
+		BigFraction span = outer.getB().subtract(outer.getA());
+		BigFraction start = outer.getA().add(span.multiply(inner.getA()));
+		BigFraction end = outer.getA().add(span.multiply(inner.getB()));
+		return new OPair<BigFraction>(start, end);
+	}
+	
+	
+	private void placeContainerContentsOntoGrid(Orthogonalization o, Container root, Container c, 
+			Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners,
+			Map<BigFraction, BorderEdge> xedges, Map<BigFraction, BorderEdge> yedges) {
 		gp.placeOnGrid(c, true);
+		
+		OPair<BigFraction> parentXPos = (root == c) ? IndependentCornerVertices.FULL_RANGE : gp.getGridXPosition(c);
+		OPair<BigFraction> parentYPos = (root == c) ? IndependentCornerVertices.FULL_RANGE : gp.getGridYPosition(c);
+		
 		for (DiagramElement de : c.getContents()) {
-			OPair<BigFraction> xPos = gp.getGridXPosition(de);
-			OPair<BigFraction> yPos = gp.getGridYPosition(de);
+			OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
+			OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
 			
-			Vertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
-			Vertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
-			Vertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
-			Vertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
-			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, tl, tr, bl, br);
+			MultiCornerVertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
+			MultiCornerVertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
+			MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
+			MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
+			
+			Edge t = createOrReuse(de, yPos.getA(), yedges, o, root, corners, Direction.RIGHT);
+			Edge r = createOrReuse(de, xPos.getB(), xedges, o, root, corners, Direction.DOWN);
+			Edge b = createOrReuse(de, yPos.getB(), yedges, o, root, corners, Direction.LEFT);
+			Edge l = createOrReuse(de, xPos.getA(), xedges, o, root, corners, Direction.UP);
+			
+			Face f = o.getPlanarization().createFace();
+			f.add(tl, t);
+			f.add(tr, r);
+			f.add(br, b);
+			f.add(bl, l);
+			
+			// faces won't always make sense here
+			//f.checkFaceIntegrity();
+			
+			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f);
 			
 			if (de instanceof Container) {
 				if (((Container)de).getLayout()==Layout.GRID) {
 					// nest the grid
-					placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
+					placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners, xedges, yedges);
 				} else {
 					convertContainerContents(o, (Container) de, done); 
 				}
 			}
 		}
 	}
+
+
 
 	private DartFace convertGridToOuterFace(Orthogonalization o, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
 		Vertex current = corners.get(new OPair<>(BigFraction.ZERO, BigFraction.ZERO)), orig = current;
@@ -202,15 +237,37 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		return result;
 	}
 
-	private Vertex createOrReuse(DiagramElement de, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, BigFraction x, BigFraction y, HPos hp, VPos vp) {
+	private MultiCornerVertex createOrReuse(DiagramElement de, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, BigFraction x, BigFraction y, HPos hp, VPos vp) {
 		OPair<BigFraction> key = new OPair<BigFraction>(x, y);
 		MultiCornerVertex out = corners.get(key);
 		if (out == null) {
 			out = new MultiCornerVertex(root.getID(), root, x, y);
 			corners.put(key, out);
 		}
-		out.addAnchor(hp, vp, de);
+		if ((hp != null) || (vp != null)) {
+			out.addAnchor(hp, vp, de);
+		}
 		return out;
+	}
+	
+	private BorderEdge createOrReuse(DiagramElement de, BigFraction f, Map<BigFraction, BorderEdge> edges, Orthogonalization o, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, Direction d) {
+		BorderEdge be = edges.get(f);
+		boolean horiz = (d == Direction.LEFT) || (d==Direction.RIGHT);
+		if (be == null) {
+			BigFraction ax = horiz ? BigFraction.ZERO : f;
+			BigFraction ay = horiz ? f : BigFraction.ZERO;
+			BigFraction bx = horiz ? BigFraction.ONE : f;
+			BigFraction by = horiz ? f:  BigFraction.ONE;
+
+			MultiCornerVertex a = createOrReuse(de, root, corners, ax, ay, null, null);
+			MultiCornerVertex b = createOrReuse(de, root, corners, bx, by, null, null);
+			
+			be = new BorderEdge(a, b, "be"+a+"-"+b, d, false, root, new HashSet<>());
+			edges.put(f, be);
+		}
+		
+		be.getDiagramElements().add(de);
+		return be;
 	}
 
 	private Dart getDartInDirection(Vertex current, Direction d) {
@@ -236,7 +293,14 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		o.getAllVertices().add(bl);
 		o.getAllVertices().add(br);
 		
-		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, tl, tr, bl, br);
+		Face f = o.getPlanarization().createFace();
+		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, new HashSet<>()));
+		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, new HashSet<>()));
+		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, new HashSet<>()));
+		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, new HashSet<>()));
+		f.checkFaceIntegrity();
+		
+		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, f);
 		
 		// convert content
 		if (originalUnderlying instanceof Container) {
@@ -247,13 +311,27 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering,
-			boolean requiresMinSize, Vertex tl, Vertex tr, Vertex bl, Vertex br) {
+			boolean requiresMinSize, Face fourElementFace) {
+		
+		if (fourElementFace.size() != 4) {
+			throw new Kite9ProcessingException("Can't convert anything other than a rectangle: "+fourElementFace);
+		}
+
 		List<Dart> upDarts = dartDirections.get(Direction.UP);
 		List<Dart> rightDarts =  dartDirections.get(Direction.RIGHT);
 		List<Dart> downDarts = dartDirections.get(Direction.DOWN);
 		List<Dart> leftDarts =  dartDirections.get(Direction.LEFT);
-
 		
+		Vertex tl = fourElementFace.getCorner(0);
+		Vertex tr = fourElementFace.getCorner(1);
+		Vertex br = fourElementFace.getCorner(2);
+		Vertex bl = fourElementFace.getCorner(3);
+		
+		BorderEdge t = (BorderEdge) fourElementFace.getBoundary(0);
+		BorderEdge r = (BorderEdge) fourElementFace.getBoundary(1);
+		BorderEdge b = (BorderEdge) fourElementFace.getBoundary(2);
+		BorderEdge l = (BorderEdge) fourElementFace.getBoundary(3);
+				
 		// create darts for the minimum size of the vertex
 		double xSize = 0;
 		double ySize = 0;
@@ -270,10 +348,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		// put together darts for the edges of the vertex and join them up with
 		// nominal directions for now
 		// going in clockwise order
-		Side tls = createSide(tl, tr, Direction.UP, originalUnderlying, optionalExistingVertex, upDarts, o, downDarts.size(), xSize, requiresMinSize);
-		Side trs = createSide(tr, br, Direction.RIGHT, originalUnderlying, optionalExistingVertex, rightDarts, o, leftDarts.size(),  ySize, requiresMinSize);
-		Side brs = createSide(br, bl, Direction.DOWN, originalUnderlying, optionalExistingVertex, downDarts, o, upDarts.size(), xSize, requiresMinSize);
-		Side bls = createSide(bl, tl, Direction.LEFT, originalUnderlying, optionalExistingVertex, leftDarts, o, rightDarts.size(), ySize, requiresMinSize);
+		Side tls = createSide(tl, tr, Direction.UP, originalUnderlying, optionalExistingVertex, upDarts, o, downDarts.size(), xSize, requiresMinSize, t);
+		Side trs = createSide(tr, br, Direction.RIGHT, originalUnderlying, optionalExistingVertex, rightDarts, o, leftDarts.size(),  ySize, requiresMinSize, r);
+		Side brs = createSide(br, bl, Direction.DOWN, originalUnderlying, optionalExistingVertex, downDarts, o, upDarts.size(), xSize, requiresMinSize, b);
+		Side bls = createSide(bl, tl, Direction.LEFT, originalUnderlying, optionalExistingVertex, leftDarts, o, rightDarts.size(), ySize, requiresMinSize, l);
 
 		// join segments
 		Set<Vertex> allNewVertices = new UnorderedSet<Vertex>();
@@ -314,17 +392,12 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			createOuterFace(o, optionalExistingVertex, allSideDarts, tl);
 		}
 		
-		DartFace inner = createInnerFace(o, allSideDarts, tl);
+		DartFace inner = createInnerFace(o, allSideDarts, tl, fourElementFace);
 		
 		return inner;
 	}
 
-	/**
-	 * This ensures that any 
-	 * @param start 
-	 */
-	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start) {
-		Face f = o.getPlanarization().createFace();
+	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, Face f) {
 		f.setOuterFace(false);
 		DartFace inner = o.createDartFace(f, false);
 		dartsToDartFace(allSideDarts, start, inner, false);
@@ -549,7 +622,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	protected Side createSide(Vertex tl, Vertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
-			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize) {
+			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize, BorderEdge borderEdge) {
 		int i = 0;
 		Side out = new Side();
 		Vertex last = tl;
@@ -557,8 +630,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		Edge lastEdge = null;
 		Dart dart = null;
 		
-		Edge borderEdge = getBorderEdge(underlying, tl, tr, d, o);
-
 		for (int j = 0; j < onSide.size(); j++) {
 			dart = onSide.get(j);
 			Edge thisEdge = (Edge) dart.getUnderlying();
@@ -595,21 +666,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		sideDart.setOrthogonalPositionPreference(d);
 		out.newEdgeDarts.add(sideDart);
 		return out;
-	}
-
-	private Edge getBorderEdge(DiagramElement underlying, Vertex a, Vertex b, Direction d, Orthogonalization o) {
-		// try and find the existing border edge.
-		for (Edge e : a.getEdges()) {
-			if ((e instanceof BorderEdge) && (e.getDrawDirectionFrom(a) == d)) {
-				((BorderEdge)e).getDiagramElements().add(underlying);
-				return e;
-			}
-		} 
-		
-		// create a new one
-		BorderEdge be = new BorderEdge(a, b, "bva"+a.getID()+"-"+b.getID(), d, false, underlying, new HashSet<>());
-		be.getDiagramElements().add(underlying);
-		return be;
 	}
 
 	private void replaceOriginal(Orthogonalization o, Dart dart, Edge thisEdge, Vertex vsv, Vertex from) {

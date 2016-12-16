@@ -18,6 +18,8 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
@@ -391,14 +393,28 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 				Vertex dFrom = d.getFrom();
 				Vertex dTo = d.getTo();
 				if (d.getDrawDirectionFrom(dFrom) == Direction.RIGHT) {
-					addContainerRectangles(possibles, entry.getKey(), dFrom, xo, yo);
+					if (isLeftCornerOfContainer(dFrom, entry.getKey().getParent())) {
+						addContainerRectangles(possibles, entry.getKey(), dFrom, xo, yo);
+					}
 				} else {
-					addContainerRectangles(possibles, entry.getKey(), dTo, xo, yo);
+					if (isLeftCornerOfContainer(dTo, entry.getKey().getParent())) {
+						addContainerRectangles(possibles, entry.getKey(), dTo, xo, yo);
+					}
 				}
 			}
 			placeLabel(c, xo, yo, entry.getKey(), possibles, true);
 		}
 
+	}
+
+	private boolean isLeftCornerOfContainer(Vertex d, DiagramElement parent) {
+		for (Anchor a : ((MultiCornerVertex)d).getAnchors()) {
+			if (a.getDe() == parent) {
+				return a.getLr() == HPos.LEFT;
+			}
+		}
+	
+		return false;
 	}
 
 	/**
@@ -495,14 +511,15 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	}
 
 	private void addILinkRectangles(List<Comb> possibles, Label l, Vertex v, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo, boolean allowBelow, double terminatorReserve) {
+		DiagramElement parentElement = l.getParent();
 
 		Slideable sx = xo.getVertexToSlidableMap().get(v);
 		Slideable sy = yo.getVertexToSlidableMap().get(v);
 
-		Dart dUp = getIncidentDart(sx, sy, yo, false);
-		Dart dDown = getIncidentDart(sx, sy, yo, true);
-		Dart dLeft = getIncidentDart(sy, sx, xo, false);
-		Dart dRight = getIncidentDart(sy, sx, xo, true);
+		Dart dUp = getIncidentDart(sx, sy, yo, false, parentElement);
+		Dart dDown = getIncidentDart(sx, sy, yo, true, parentElement);
+		Dart dLeft = getIncidentDart(sy, sx, xo, false, parentElement);
+		Dart dRight = getIncidentDart(sy, sx, xo, true, parentElement);
 
 		boolean includeTopRight = okUnderlying(sx, dUp, Direction.RIGHT) && okUnderlying(sy, dRight, Direction.UP);
 		boolean includeTopLeft = okUnderlying(sx, dUp, Direction.LEFT) && okUnderlying(sy, dLeft, Direction.UP);
@@ -592,9 +609,9 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		Slideable sx = xo.getVertexToSlidableMap().get(v);
 		Slideable sy = yo.getVertexToSlidableMap().get(v);
 
-		log.send(log.go() ? null : "Trying to place label: " + l);
+		log.send(log.go() ? null : "Trying to place label: " + l+" "+l.getText());
 
-		Dart startDart = getIncidentDart(sx, sy, yo, false);
+		Dart startDart = getIncidentDart(sx, sy, yo, false, l.getParent());
 
 		if (startDart != null) {
 
@@ -733,7 +750,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			}
 
 			Slideable possible = canon.get(index);
-			Dart result = getIncidentDart(possible, line, perpDir, stopDir);
+			Dart result = getIncidentDart(possible, line, perpDir, stopDir, null);
 			if (result != null) {
 				if (result.getUnderlying() == null) {
 					out.add(result);
@@ -753,9 +770,10 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	 * looking further.
 	 * 
 	 * @param stopPos
+	 * @param optionalDiagramElement 
 	 * @return if a dart covers in such a way that progress is barred, stop.
 	 */
-	private static Dart getIncidentDart(Slideable s, Slideable c, SegmentSlackOptimisation perp, Boolean stopPos) {
+	private static Dart getIncidentDart(Slideable s, Slideable c, SegmentSlackOptimisation perp, Boolean stopPos, DiagramElement optionalDiagramElement) {
 		int cpos = c.getMinimumPosition();
 		Dart result = null;
 
@@ -769,22 +787,18 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 				if ((stopPos == null) || stopPos) {
 					// dart going positive will stop
 					if ((maxPos > cpos) || (dartDirectionFrom(dart, c) == 1)) {
-						if (Tools.getUltimateElement(dart) != null) {
-							result = dart;
-							if (dart.getUnderlying() != null) {
-								return dart;
-							}
+						result = checkIncidentDartUnderlying(dart, optionalDiagramElement, result);
+						if ((result != null) && (result.getUnderlying() != null)) {
+							return dart;
 						}
 					}
 				}
 				if ((stopPos == null) || (!stopPos)) {
 					// dart going negative will stop
 					if ((minPos < cpos) || (dartDirectionFrom(dart, c) == -1)) {
-						if (Tools.getUltimateElement(dart) != null) {
-							result = dart;
-							if (dart.getUnderlying() != null) {
-								return dart;
-							}
+						result = checkIncidentDartUnderlying(dart, optionalDiagramElement, result);
+						if ((result != null) && (result.getUnderlying() != null)) {
+							return dart;
 						}
 					}
 				}
@@ -793,6 +807,26 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		}
 
 		return result;
+	}
+
+	private static Dart checkIncidentDartUnderlying(Dart dart, DiagramElement optionalDiagramElement, Dart existingResult) {
+		Object ultimateElement = Tools.getUltimateElement(dart);
+		Object underlying = dart.getUnderlying();
+		if (optionalDiagramElement == null) {
+			if (ultimateElement != null) {
+				return dart;
+			}
+		} else {
+			if (ultimateElement == optionalDiagramElement) {
+				return dart;
+			} else if (underlying instanceof BorderEdge) {
+				if (((BorderEdge)underlying).getDiagramElements().contains(optionalDiagramElement)) {
+					return dart;
+				}
+			}
+		}
+		
+		return existingResult;
 	}
 
 	private static boolean hits(Dart dart, Slideable c) {

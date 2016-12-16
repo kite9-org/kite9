@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 public class IndependentCornerVertices extends AbstractCornerVertices {
 	
-	private static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.ZERO, BigFraction.ONE);
+	public static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.ZERO, BigFraction.ONE);
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements = new HashMap<>();
 
