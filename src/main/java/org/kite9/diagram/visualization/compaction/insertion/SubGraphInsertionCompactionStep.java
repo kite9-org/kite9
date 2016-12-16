@@ -107,6 +107,9 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 
 		List<Integer> order = new ArrayList<Integer>(faceInsertionOrder.keySet());
 		Collections.sort(order);
+		if ((directionOfInsertion == Direction.LEFT) || (directionOfInsertion == Direction.UP)) {
+			Collections.reverse(order);
+		}
 		boolean addedSomething = false;
 
 		for (Integer i : order) {
@@ -194,14 +197,16 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		switch (layoutDirection) {
 		case HORIZONTAL: 
 		case RIGHT:
-		case LEFT:
 			return Direction.RIGHT;
+		case LEFT:
+			return Direction.LEFT;
 		case VERTICAL:
 		case DOWN:
-		case UP:
 		case GRID:
 			return Direction.DOWN;
-			
+		case UP:
+			return Direction.UP;
+
 		default:
 			throw new LogicException("Wasn't expecting this direction: "+layoutDirection);
 		}
