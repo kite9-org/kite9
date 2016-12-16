@@ -221,7 +221,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 			}
 			
-			if (c instanceof Container) {
+			if (ci instanceof Container) {
 				if (!checkLayoutIsConsistent((Container) ci)) {
 					return false;
 				}

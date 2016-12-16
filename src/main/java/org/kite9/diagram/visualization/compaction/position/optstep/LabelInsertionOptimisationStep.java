@@ -408,12 +408,13 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	}
 
 	private boolean isLeftCornerOfContainer(Vertex d, DiagramElement parent) {
-		for (Anchor a : ((MultiCornerVertex)d).getAnchors()) {
-			if (a.getDe() == parent) {
-				return a.getLr() == HPos.LEFT;
+		if (d instanceof MultiCornerVertex) {
+			for (Anchor a : ((MultiCornerVertex)d).getAnchors()) {
+				if (a.getDe() == parent) {
+					return a.getLr() == HPos.LEFT;
+				}
 			}
 		}
-	
 		return false;
 	}
 
