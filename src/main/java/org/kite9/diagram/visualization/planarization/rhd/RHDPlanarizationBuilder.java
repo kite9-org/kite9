@@ -551,7 +551,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			// add border vertices for directed edges.
 			for (Connection conn : ((Connected) c).getLinks()) {
 				if ((conn.getDrawDirection() != null) && (!conn.getRenderingInformation().isContradicting())) {
-					addExtraSideVertex((Connected) c, conn.getDrawDirectionFrom((Connected) c), conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					Direction d = conn.getDrawDirectionFrom((Connected) c);
+					addExtraSideVertex((Connected) c, d, conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 				}
 			}
 		}

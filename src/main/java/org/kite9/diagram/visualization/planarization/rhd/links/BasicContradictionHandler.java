@@ -19,10 +19,10 @@ import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.IntegerRangeValue;
 
 public class BasicContradictionHandler implements Logable, ContradictionHandler {
-	
+
 	private Kite9Log log = new Kite9Log(this);
 	ElementMapper em;
-	
+
 	public BasicContradictionHandler(ElementMapper em) {
 		this.em = em;
 	}
@@ -36,12 +36,12 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 
 	@Override
 	public void setContradiction(BiDirectional<Connected> bic) {
-		log.error("Contradiction: "+bic);
+		log.error("Contradiction: " + bic);
 		if (bic instanceof Connection) {
-			Tools.setConnectionContradiction((Connection)bic, true);
+			Tools.setConnectionContradiction((Connection) bic, true);
 		} else {
 			// this will only get called when we are adding an illegal.
-			// however, this would be setting a contradiction on a layout, so 
+			// however, this would be setting a contradiction on a layout, so
 			// we should do nothing here.
 		}
 	}
@@ -50,22 +50,20 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	public Direction checkContradiction(LinkDetail ld1, LinkDetail ld2, Layout containerLayout) {
 		if (ld1 == null) {
 			return ld2.getDirection();
-		} else if (ld2==null) {
+		} else if (ld2 == null) {
 			return ld1.getDirection();
 		} else {
-			return checkContradiction(
-					ld1.getDirection(), ld1.isOrderingLink(), ld1.getLinkRank(), ld1.getConnections(), 
-					ld2.getDirection(), ld2.isOrderingLink(), ld2.getLinkRank(), ld2.getConnections(), containerLayout);
+			return checkContradiction(ld1.getDirection(), ld1.isOrderingLink(), ld1.getLinkRank(), ld1.getConnections(), ld2.getDirection(), ld2.isOrderingLink(), ld2.getLinkRank(),
+					ld2.getConnections(), containerLayout);
 		}
 	}
-	
-	
+
 	@Override
-	public Direction checkContradiction(Direction ad, boolean aOrdering, int aRank, Iterable<BiDirectional<Connected>> ac,
-			Direction bd, boolean bOrdering, int bRank, Iterable<BiDirectional<Connected>> bc, Layout containerLayout) {
-		
+	public Direction checkContradiction(Direction ad, boolean aOrdering, int aRank, Iterable<BiDirectional<Connected>> ac, Direction bd, boolean bOrdering, int bRank,
+			Iterable<BiDirectional<Connected>> bc, Layout containerLayout) {
+
 		if (containerLayout != null) {
-		switch (containerLayout) {
+			switch (containerLayout) {
 			case HORIZONTAL:
 				if (GroupPhase.isVerticalDirection(ad)) {
 					setContradicting(ac);
@@ -81,11 +79,10 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				if (GroupPhase.isHorizontalDirection(bd)) {
 					setContradicting(bc);
 				}
-				break;		
+				break;
 			default:
 			}
 		}
-		
 
 		if (ad == bd) {
 			return ad;
@@ -114,41 +111,46 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	/**
-	 * Simple test to make sure that c doesn't contradict the direction of the top-level container it passes through.
+	 * Simple test to make sure that c doesn't contradict the direction of the
+	 * top-level container it passes through. Or, that something is connecting
+	 * to an element inside itself.
 	 */
 	@Override
 	public void checkForContainerContradiction(Connection c) {
 		Direction drawDirection = c.getDrawDirection();
-		if (drawDirection != null) {
-			DiagramElement from = c.getFrom();
-			DiagramElement to = c.getTo();
-			
-			while (true) {
-				Container fromC = ((Connected)from).getContainer();
-				Container toC = ((Connected)to).getContainer();
-				
+		DiagramElement from = c.getFrom();
+		DiagramElement to = c.getTo();
+
+		while (true) {
+			Container fromC = ((Connected) from).getContainer();
+			Container toC = ((Connected) to).getContainer();
+
+			if (drawDirection != null) {
+
+				// directed connections breaking normal layouts
 				if (fromC == toC) {
 					Layout l = fromC.getLayout();
-					if (l==null) {
+					if (l == null) {
 						return;
 					} else {
 						switch (l) {
 						case HORIZONTAL:
 							verticalContradiction(c, drawDirection);
-							return;
+							break;
 						case VERTICAL:
 							horizontalContradiction(c, drawDirection);
-							return;
+							break;
 						case UP:
 						case DOWN:
 						case LEFT:
 						case RIGHT:
 							checkOrdinalContradiction(l, drawDirection, (Connected) from, (Connected) to, fromC, c);
-							return;
+							break;
 						}
 					}
 				}
-				
+
+				// directed connections breaking grid.
 				if ((fromC.getContainer() == toC.getContainer()) && (fromC.getContainer().getLayout() == Layout.GRID)) {
 					// do special grid checking
 					switch (c.getDrawDirection()) {
@@ -170,27 +172,45 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 						break;
 					}
 				}
-				
-				int depthFrom = em.getContainerDepth(fromC);
-				int depthTo = em.getContainerDepth(toC);
-				if (depthFrom < depthTo) {
-					to = toC;
-				} else if (depthFrom > depthTo) {
-					from = fromC;
-				} else {
-					to = toC;
-					from = fromC;
+			}
+
+			// check for illegal containment
+			if (to instanceof Container) {
+				if (((Container) to).getContents().contains(from)) {
+					setContradiction(c);
 				}
+			}
+
+			if (from instanceof Container) {
+				if (((Container) from).getContents().contains(to)) {
+					setContradiction(c);
+				}
+			}
+			
+			if (fromC == toC) {
+				return;
+			}
+
+			int depthFrom = em.getContainerDepth(fromC);
+			int depthTo = em.getContainerDepth(toC);
+			if (depthFrom < depthTo) {
+				to = toC;
+			} else if (depthFrom > depthTo) {
+				from = fromC;
+			} else {
+				to = toC;
+				from = fromC;
 			}
 		}
 	}
+
 
 	private void gridPositionOverlapOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
 		boolean fromInside = (a.getFrom() <= b.getFrom()) && (a.getFrom() >= b.getTo());
 		boolean toInside = (a.getTo() <= b.getFrom()) && (a.getTo() >= b.getTo());
 		if (!(fromInside || toInside)) {
 			setContradiction(c);
-		} 
+		}
 	}
 
 	private void gridPositionAfterOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
@@ -201,36 +221,38 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 
 	@Override
 	public void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
-		Direction ld = GroupPhase.getDirectionForLayout(l, true);		// TODO: probably need to fix later.
+		Direction ld = GroupPhase.getDirectionForLayout(l, true); // TODO:
+																	// probably
+																	// need to
+																	// fix
+																	// later.
 		if (GroupPhase.isHorizontalDirection(ld) != GroupPhase.isHorizontalDirection(d)) {
 			setContradiction(c);
 			return;
 		}
-		
+
 		// ld and d in the same axis
 		boolean reversed = ld != d;
 		int fromI = fromC.getContents().indexOf(from);
 		int toI = fromC.getContents().indexOf(to);
-		
+
 		boolean contradiction = fromI < toI ? reversed : !reversed;
 		if (contradiction)
 			setContradiction(c);
 	}
-	
+
 	private void horizontalContradiction(Connection c, Direction drawDirection) {
 		if (GroupPhase.isHorizontalDirection(drawDirection)) {
 			setContradiction(c);
 		}
 	}
-	
+
 	private void verticalContradiction(Connection c, Direction drawDirection) {
 		if (GroupPhase.isVerticalDirection(drawDirection)) {
 			setContradiction(c);
 		}
 	}
 
-
-	
 	@Override
 	public String getPrefix() {
 		return "CH  ";
@@ -240,5 +262,5 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	public boolean isLoggingEnabled() {
 		return true;
 	}
-	
+
 }
