@@ -414,6 +414,8 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 					return a.getLr() == HPos.LEFT;
 				}
 			}
+		} else if (d instanceof SingleCornerVertex) {
+			return d.isPartOf(parent) && (((SingleCornerVertex) d).getLr() == HPos.LEFT);
 		}
 		return false;
 	}

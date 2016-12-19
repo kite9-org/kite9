@@ -9,7 +9,7 @@ import org.kite9.framework.logging.Kite9Log;
 
 import junit.framework.Assert;
 
-@Ignore
+
 public class Test37XMLFiles extends AbstractFunctionalTest {
 
 	@Test
