@@ -514,15 +514,13 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	}
 
 	private void addILinkRectangles(List<Comb> possibles, Label l, Vertex v, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo, boolean allowBelow, double terminatorReserve) {
-		DiagramElement parentElement = l.getParent();
-
 		Slideable sx = xo.getVertexToSlidableMap().get(v);
 		Slideable sy = yo.getVertexToSlidableMap().get(v);
 
-		Dart dUp = getIncidentDart(sx, sy, yo, false, parentElement);
-		Dart dDown = getIncidentDart(sx, sy, yo, true, parentElement);
-		Dart dLeft = getIncidentDart(sy, sx, xo, false, parentElement);
-		Dart dRight = getIncidentDart(sy, sx, xo, true, parentElement);
+		Dart dUp = getIncidentDart(sx, sy, yo, false, null);
+		Dart dDown = getIncidentDart(sx, sy, yo, true, null);
+		Dart dLeft = getIncidentDart(sy, sx, xo, false, null);
+		Dart dRight = getIncidentDart(sy, sx, xo, true, null);
 
 		boolean includeTopRight = okUnderlying(sx, dUp, Direction.RIGHT) && okUnderlying(sy, dRight, Direction.UP);
 		boolean includeTopLeft = okUnderlying(sx, dUp, Direction.LEFT) && okUnderlying(sy, dLeft, Direction.UP);

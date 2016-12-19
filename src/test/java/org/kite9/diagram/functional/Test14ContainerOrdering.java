@@ -2,8 +2,6 @@ package org.kite9.diagram.functional;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -24,9 +22,7 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 
 	Context con1;
 	Arrow outside;
-	DiagramXMLElement d;
 
-	@Before
 	public void setUp() {
 		one = new Glyph("a0", "", "a0", null, null);
 		two = new Glyph("a1", "", "a1", null, null);
@@ -35,32 +31,39 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 		con1 = new Context("b1", createList(one, two, three, four),
 				true, new TextLine("inside"),  Layout.RIGHT);
 		outside = new Arrow("outside", "outside");
-		d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 	}
 
 	@Test
 	public void test_14_1_OneOutsideConnection() throws IOException {
+		setUp();
 		new Link(outside, two);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_14_2_OneInsideConnection() throws IOException {
+		setUp();
 		new Link(one, three);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_14_3_OneInsideOneOutside() throws IOException {
+		setUp();
 		new Link(outside, three);
 		new Link(one, four);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_14_4_OneInsideAndOutside() throws IOException {
+		setUp();
 		new Link(outside, two);
 		new Link(two, four);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -69,19 +72,22 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 	 * @see http://www.kite9.com/content/planarization-no-merges-available-145
 	 */
 	public void test_14_5_TwoSeparateInside() throws IOException {
+		setUp();
 		new Link(one, three);
 		new Link(two, four);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_14_6_TwoJoinedInside() throws IOException {
+		setUp();
 		new Link(one, three);
 		new Link(three, four);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
-//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_14_7_contextDirection() throws IOException {
 		Glyph[] g = new Glyph[12];
@@ -102,10 +108,12 @@ public class Test14ContainerOrdering extends AbstractFunctionalTest {
 	
 	@Test
 	public void test_14_8_PileOnFour() throws IOException {
+		setUp();
 		new Link(outside, four);
 		new Link(one, four);
 		new Link(two, four);
 		new Link(three, four);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 

@@ -146,30 +146,10 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 						case RIGHT:
 							checkOrdinalContradiction(l, drawDirection, (Connected) from, (Connected) to, fromC, c);
 							break;
+						case GRID:
+							gridContradiction(c, drawDirection, from, to);
+							break;
 						}
-					}
-				}
-
-				// directed connections breaking grid.
-				if ((fromC.getContainer() == toC.getContainer()) && (fromC.getContainer().getLayout() == Layout.GRID)) {
-					// do special grid checking
-					switch (c.getDrawDirection()) {
-					case LEFT:
-						gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
-						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
-						break;
-					case RIGHT:
-						gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(toC), GridPositionerImpl.getXOccupies(fromC), c);
-						gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
-						break;
-					case UP:
-						gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
-						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
-						break;
-					case DOWN:
-						gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(toC), GridPositionerImpl.getYOccupies(fromC), c);
-						gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
-						break;
 					}
 				}
 			}
@@ -201,6 +181,28 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				to = toC;
 				from = fromC;
 			}
+		}
+	}
+
+	private void gridContradiction(Connection c, Direction drawDirection, DiagramElement fromC, DiagramElement toC) {
+		// do special grid checking
+		switch (drawDirection) {
+		case LEFT:
+			gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+			gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+			break;
+		case RIGHT:
+			gridPositionAfterOrContradiction(GridPositionerImpl.getXOccupies(toC), GridPositionerImpl.getXOccupies(fromC), c);
+			gridPositionOverlapOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+			break;
+		case UP:
+			gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(fromC), GridPositionerImpl.getYOccupies(toC), c);
+			gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+			break;
+		case DOWN:
+			gridPositionAfterOrContradiction(GridPositionerImpl.getYOccupies(toC), GridPositionerImpl.getYOccupies(fromC), c);
+			gridPositionOverlapOrContradiction(GridPositionerImpl.getXOccupies(fromC), GridPositionerImpl.getXOccupies(toC), c);
+			break;
 		}
 	}
 
