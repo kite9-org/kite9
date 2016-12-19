@@ -9,6 +9,7 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.ConnectedVertex;
@@ -34,7 +35,7 @@ public class ElementMapperImpl implements ElementMapper {
 	Map<DiagramElement, Vertex> singleVertices = new HashMap<DiagramElement, Vertex>();
 	Map<DiagramElement, CornerVertices> cornerVertices = new HashMap<DiagramElement, CornerVertices>();
 	Map<BiDirectional<Connected>, PlanarizationEdge> edges = new HashMap<BiDirectional<Connected>, PlanarizationEdge>();
-
+	
 	public boolean hasCornerVertices(DiagramElement d) {
 		return cornerVertices.containsKey(d);
 	}
@@ -157,5 +158,49 @@ public class ElementMapperImpl implements ElementMapper {
 			return depth;
 		}
 	}
+	
+	public boolean requiresCornerVertices(DiagramElement c) {
+		if (c instanceof Diagram) {
+			return true;
+		}
+		// does anything inside it have connections?
+		if (c instanceof Container) {
+			for (DiagramElement de : ((Container) c).getContents()) {
+				if (hasNestedConnections(de)) {
+					return true;
+				}
+			}
+		}
+		
+		// is it embedded in a grid?  If yes, use corners
+		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
+		return (l == Layout.GRID);
+	}
 
+	Map<DiagramElement, Boolean> hasConnections = new HashMap<>();
+	
+	public boolean hasNestedConnections(DiagramElement c) {
+		if (hasConnections.containsKey(c)) {
+			return hasConnections.get(c);
+		} 
+		
+		boolean has = false;
+		
+		if (c instanceof Connected) {
+			has = ((Connected)c).getLinks().size() > 0;
+		}
+		
+		if ((has == false) && (c instanceof Container)) {
+			for (DiagramElement de : ((Container)c).getContents()) {
+				if (hasNestedConnections(de)) {
+					has = true;
+					break;
+				}
+			}
+		}
+		
+		hasConnections.put(c, has);
+		return has;
+	}
+	
 }

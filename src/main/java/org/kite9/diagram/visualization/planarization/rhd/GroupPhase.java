@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
@@ -21,6 +22,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
+import org.kite9.diagram.visualization.planarization.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
@@ -65,13 +67,15 @@ public class GroupPhase {
 	private Set<Connection> allLinks = new UnorderedSet<Connection>(1000);
 	private ContradictionHandler ch;
 	private GridPositioner gp;
+	private ElementMapper em;
 	
-	public GroupPhase(Kite9Log log, DiagramElement top, int elements, GroupBuilder ab, ContradictionHandler ch, GridPositioner gp) {
+	public GroupPhase(Kite9Log log, DiagramElement top, int elements, GroupBuilder ab, ContradictionHandler ch, GridPositioner gp, ElementMapper em) {
 		this.pMap = new LinkedHashMap<Connected, LeafGroup>(elements * 2);
 		allGroups = new LinkedHashSet<LeafGroup>(elements * 2);
 		this.ab = ab;
 		this.ch = ch;
 		this.gp = gp;
+		this.em = em;
 		this.hashCodeGenerator = new Random(elements);
 		
 		createLeafGroup((Connected) top, null, null, pMap);
@@ -85,6 +89,8 @@ public class GroupPhase {
 	public LeafGroup getLeafGroupFor(Connected ord) {
 		return pMap.get(ord);
 	}
+	
+	private enum Treatment { LEAF, CONTAINER, NONE };
 
 	/**
 	 * Creates leaf groups and any ordering between them, recursively.
@@ -100,7 +106,8 @@ public class GroupPhase {
 
 		Container cnr = ord.getContainer();
 
-		if (needsGroup(ord)) {
+		boolean leaf = needsLeafGroup(ord);
+		if (leaf) {
 			LeafGroup g = new LeafGroup(ord, cnr, ab.createAxis(), ab.createLinkManager());
 			pMap.put(ord, g);
 			allGroups.add(g);
@@ -115,7 +122,7 @@ public class GroupPhase {
 		}
 		
 
-		if (ord instanceof Container) {
+		if (!leaf) {
 			Layout l = ((Container) ord).getLayout();
 			
 			if (l==Layout.GRID) {
@@ -193,38 +200,49 @@ public class GroupPhase {
 		return (drawDirection==Direction.UP) || (drawDirection==Direction.DOWN);
 	}
 
-	private boolean needsGroup(Connected ord) {
-		if (ord instanceof Container) {
+	private boolean needsLeafGroup(Connected ord) {
+		if (ord instanceof Diagram) {
+			return false;
+		} else if (ord instanceof Container) {
 			
-			// if it has stuff inside, don't create a group
-			boolean hasSize = ((Container)ord).getContents().size()>0;
-			
-			// if it has links, don't create a group - the links will be groups
-			boolean hasLinks = ord.getLinks().size()>0;
-			
-			// if it is in a directed container, with other stuff, then the directed edge will be a group,
-			// so don't group
-			Container c = ord.getContainer();
-			boolean directedContainer = false;
-			if (c!= null) {
-				if (c.getLayout() != null) {
-					switch (c.getLayout()) {
-					case UP:
-					case DOWN:
-					case LEFT:
-					case RIGHT:
-						directedContainer = true;
-					default:
-					}
-					
-					int parentSize = c.getContents().size();
-					if (parentSize < 2) {
-						directedContainer = false;
-					}
+			for (DiagramElement	de : ((Container)ord).getContents()) {
+				
+				if (em.hasNestedConnections(de)) {
+					return false;
 				}
 			}
 			
-			return !directedContainer && !hasLinks && !hasSize;
+			return true;
+			
+//			// if it has stuff inside, don't create a group
+//			boolean hasSize = ((Container)ord).getContents().size()>0;
+//			
+//			// if it has links, don't create a group - the links will be groups
+//			boolean hasLinks = ord.getLinks().size()>0;
+//			
+//			// if it is in a directed container, with other stuff, then the directed edge will be a group,
+//			// so don't group
+//			Container c = ord.getContainer();
+//			boolean directedContainer = false;
+//			if (c!= null) {
+//				if (c.getLayout() != null) {
+//					switch (c.getLayout()) {
+//					case UP:
+//					case DOWN:
+//					case LEFT:
+//					case RIGHT:
+//						directedContainer = true;
+//					default:
+//					}
+//					
+//					int parentSize = c.getContents().size();
+//					if (parentSize < 2) {
+//						directedContainer = false;
+//					}
+//				}
+//			}
+//			
+//			return !directedContainer && !hasLinks && !hasSize;
 		} else {
 			return true;
 		}	

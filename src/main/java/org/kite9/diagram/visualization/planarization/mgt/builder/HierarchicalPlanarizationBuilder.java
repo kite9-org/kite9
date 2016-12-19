@@ -269,12 +269,6 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * create edges between them in order.
 	 */
 	protected void setupElementBorderEdges(MGTPlanarization p, DiagramElement outer) {
-		if (outer instanceof Container) {
-			for (DiagramElement c : ((Container)outer).getContents()) {
-				setupElementBorderEdges(p, c);
-			}
-		}
-	
 		if (em.hasCornerVertices(outer)) {
 			CornerVertices cv = em.getCornerVertices(outer);
 			String originalLabel = outer.getID();
@@ -300,6 +294,12 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			addEdgeBetween(p, outer, originalLabel, em, i, 
 					perimeterVertices.get(perimeterVertices.size()-1), 
 					perimeterVertices.get(0));
+			
+			if (outer instanceof Container) {
+				for (DiagramElement c : ((Container)outer).getContents()) {
+					setupElementBorderEdges(p, c);
+				}
+			}
 		}
 	}
 

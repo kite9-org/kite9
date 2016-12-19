@@ -129,12 +129,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			
 			while (firstGo || redo) {
 				redo = false;
+				firstGo = false;
 				rh =  new PositionRoutableHandler2D();
 				ContradictionHandler ch = new BasicContradictionHandler(em);
 				GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
 				
 				// Grouping
-				GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp);
+				GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp, em);
 				GroupResult mr = strategy.group(gp);
 				
 				if (!log.go()) {
@@ -176,8 +177,6 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				instantiateContainerVertices(c);
 				buildVertexList(null, c, null, out, sortedContainerContents);
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
-				
-				firstGo = false;
 			}
 		} finally {
 			if (!log.go()) {
@@ -195,7 +194,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * This makes sure all the container vertices have the correct anchors before we position them.
 	 */
 	private void instantiateContainerVertices(DiagramElement c) {
-		if (requiresCornerVertices(c)) {
+		if (em.requiresCornerVertices(c)) {
 			em.getCornerVertices(c);
 			
 			if (c instanceof Container) {
@@ -355,7 +354,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * Constructs the list of vertices in no particular order.
 	 */
 	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
-		if (requiresCornerVertices(c)) {
+		if (em.hasCornerVertices(c)) {
 			CornerVertices cvs = em.getCornerVertices(c);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			log.send("Placed position of container: "+c+" is "+bounds);
@@ -380,49 +379,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return;
 	}
 
-	Map<DiagramElement, Boolean> hasConnections = new HashMap<>();
+
 	
-	private boolean hasConnections(DiagramElement c) {
-		if (hasConnections.containsKey(c)) {
-			return hasConnections.get(c);
-		} 
-		
-		boolean has = false;
-		
-		if (c instanceof Connected) {
-			has = ((Connected)c).getLinks().size() > 0;
-		}
-		
-		if ((has == false) && (c instanceof Container)) {
-			for (DiagramElement de : ((Container)c).getContents()) {
-				if (hasConnections(de)) {
-					has = true;
-					break;
-				}
-			}
-		}
-		
-		hasConnections.put(c, has);
-		return has;
-	}
-	
-	private boolean requiresCornerVertices(DiagramElement c) {
-		if (c instanceof Diagram) {
-			return true;
-		}
-		// does anything inside it have connections?
-		if (c instanceof Container) {
-			for (DiagramElement de : ((Container) c).getContents()) {
-				if (hasConnections(de)) {
-					return true;
-				}
-			}
-		}
-		
-		// is it embedded in a grid?  If yes, use corners
-		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
-		return (l == Layout.GRID);
-	}
 
 
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
@@ -566,7 +524,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	private void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
-			if (!(requiresCornerVertices(to))) {
+			if (!(em.hasCornerVertices(to))) {
 				toBounds = rh.narrow(toBounds, borderTrimAreaX, borderTrimAreaY);
 			}
 			BigFraction xOrd = null, yOrd = null;
@@ -616,7 +574,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				xOrd = cvNew.getXOrdinal();
 				fracX = fracMapX.get(xOrd);
 				
-				if (requiresCornerVertices(to)) {
+				if (em.requiresCornerVertices(to)) {
 					yNew = y.keep(ys, ye-ys, fracY);
 				} else {
 					yNew = y;

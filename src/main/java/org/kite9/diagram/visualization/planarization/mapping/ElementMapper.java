@@ -13,7 +13,11 @@ import org.kite9.diagram.common.elements.Vertex;
  */
 public interface ElementMapper {
 	
+	public boolean hasNestedConnections(DiagramElement c);
+	
 	public boolean hasCornerVertices(DiagramElement c);
+		
+	public boolean requiresCornerVertices(DiagramElement c);
 	
 	public CornerVertices getCornerVertices(DiagramElement c);
     

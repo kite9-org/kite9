@@ -95,7 +95,6 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 	
 	
-//	@Ignore("Broken in sprint 7")
 	@Test
     /** @see http://www.kite9.com/content/non-optimal-creation-routes-ie-one-route-prevents-another */
 	public void test_27_4_BigPatch() throws IOException {
@@ -150,10 +149,10 @@ public class Test27VertexOrderingDirected extends AbstractFunctionalTest {
 
 		new HopLink(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][0], out[0][2], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
-		new Link(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
+		new HopLink(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][1], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		
-		new Link(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
+		new HopLink(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][4], out[0][6], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
 		new HopLink(out[0][6], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][5], out[0][7], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);
