@@ -10,7 +10,7 @@ diagram {
 
 glyph {
 	type: connected;
-	sizing: container;
+	sizing: minimize;
 	layout: grid;	
 }
 
@@ -32,7 +32,7 @@ to {
 
 context {
 	type: connected;
-	sizing: container;
+	sizing: maximize;
 }
 
 .background {

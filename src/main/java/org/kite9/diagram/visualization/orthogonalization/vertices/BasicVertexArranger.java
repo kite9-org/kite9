@@ -294,10 +294,11 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		o.getAllVertices().add(br);
 		
 		Face f = o.getPlanarization().createFace();
-		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, new HashSet<>()));
-		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, new HashSet<>()));
-		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, new HashSet<>()));
-		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, new HashSet<>()));
+		Set<DiagramElement> setOfElements = Collections.singleton(originalUnderlying);
+		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, setOfElements));
+		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, setOfElements));
+		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, setOfElements));
+		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, setOfElements));
 		f.checkFaceIntegrity();
 		
 		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, f);
@@ -339,8 +340,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		if (minimumSize != CostedDimension.NOT_DISPLAYABLE) {
 			xSize = minimumSize.x();
 			ySize = minimumSize.y();
-			Dart dx = o.createDart(tl, tr, originalUnderlying, Direction.RIGHT,  xSize);
-			Dart dy = o.createDart(tl, bl, originalUnderlying, Direction.DOWN, ySize);
+			Dart dx = o.createDart(tl, tr, t, Direction.RIGHT,  xSize);
+			Dart dy = o.createDart(tl, bl, l, Direction.DOWN, ySize);
 			o.getAllDarts().add(dx);
 			o.getAllDarts().add(dy);
 		}

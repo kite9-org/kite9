@@ -14,8 +14,8 @@ public class Test6ContainersAndArrows extends AbstractFunctionalTest {
 
 	@Test
 	public void test_6_1_ArrowOutsideContainer() throws IOException {
-		Glyph one = new Glyph("one", "", "one", null, null);
-		Glyph two = new Glyph("two", "", "two", null, null);
+		Glyph one = new Glyph("one", null, "one", null, null);
+		Glyph two = new Glyph("two", null, "two", null, null);
 
 		Context con1 = new Context("b1", createList(one), true, null, null);
 

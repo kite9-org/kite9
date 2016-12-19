@@ -530,16 +530,16 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				case UP:
 				case DOWN:
 				case VERTICAL:
-					Direction d1 = compareDiagramElements((Connected) c, before) == 1 ? Direction.UP : Direction.DOWN;
-					Direction d2 = compareDiagramElements((Connected) c, after) == 1 ? Direction.UP : Direction.DOWN;
+					Direction d1 = ((before != null) && (compareDiagramElements((Connected) c, before) == 1)) ? Direction.UP : Direction.DOWN;
+					Direction d2 = ((after != null) && (compareDiagramElements((Connected) c, after) == 1)) ? Direction.UP : Direction.DOWN;
 					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					break;
 				case LEFT:
 				case RIGHT:
 				case HORIZONTAL:
-					d1 = compareDiagramElements((Connected) c, before) == 1 ? Direction.LEFT : Direction.RIGHT;
-					d2 = compareDiagramElements((Connected) c, after) == 1 ? Direction.LEFT : Direction.RIGHT;
+					d1 = ((before != null) && (compareDiagramElements((Connected) c, before) == 1)) ? Direction.LEFT : Direction.RIGHT;
+					d2 = ((after != null) && (compareDiagramElements((Connected) c, after) == 1)) ? Direction.LEFT : Direction.RIGHT;
 					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
 					break;	

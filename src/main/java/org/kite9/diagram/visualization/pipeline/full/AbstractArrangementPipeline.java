@@ -81,8 +81,8 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new OptimisablePositionerCompactionStep(new OptimisationStep[] { 
 						new EdgeSeparationOptimisationStep(getDisplayer()),
 						new LabelInsertionOptimisationStep(getDisplayer()), 
-						new LeafElementSizeOptimisationStep(),
 						new WidthOptimisationStep(),
+						new LeafElementSizeOptimisationStep(),
 						new ContainerSizeOptimisationStep(),
 						//new LinkLengthReductionOptimisationStep(),
 						new EdgeAlignmentOptimisationStep(),

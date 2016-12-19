@@ -34,7 +34,12 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 		
 		for (OptimisationStep step : steps) {
 			log.send("Running Optimisation Step: "+step.getClass());
-			step.optimise(c, xso, yso);
+			try {
+				step.optimise(c, xso, yso);
+			} finally {
+				log.send("X Optimisation", xso.getCanonicalOrder());
+				log.send("Y Optimisation", yso.getCanonicalOrder());
+			}
 		}
 		
 		setSegmentPostions(xso);

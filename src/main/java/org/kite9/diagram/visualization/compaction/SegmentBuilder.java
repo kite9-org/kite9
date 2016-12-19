@@ -2,10 +2,8 @@ package org.kite9.diagram.visualization.compaction;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Connected;
@@ -20,6 +18,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -55,28 +54,25 @@ public class SegmentBuilder implements Logable {
 		}
 		
 		for (Segment s : result) {
-			setSegmentUnderlying(s);
+			setSegmentUnderlying(s, transversePlane);
 			
-			if (s.getUnderlying() instanceof Connected) {
-				s.setUnderlyingSide(getContainedSegmentUnderlyingSide(s, s.getUnderlying(), transversePlane));
-			}
-			log.send(log.go() ? null : "Segment: "+s.getNumber()+" has underlying "+s.getUnderlying()+" on side "+s.getUnderlyingSide());
+			log.send(log.go() ? null : "Segment: "+s.getNumber()+" has underlying "+s.getUnderlying()+" on side "+s.getUnderlyingSide()+" = "+s);
 		}
 		
 		return result;
 	}
 	
-	private void setSegmentUnderlying(Segment s) {
+	private void setSegmentUnderlying(Segment s, Set<Direction> transversePlane) {
 		DiagramElement underlying = null;
-		boolean embeddedInGrid = false;
+		boolean internalGridEdge = false;
 		Collection<Dart> darts =s.getDartsInSegment();
 		for (Dart d : darts) {
-			DiagramElement u = getLowestLevelUnderlying(d);
+			DiagramElement u = d.getOriginalUnderlying();
 			
 			if (u!=null) {
 				if (underlying==null) {
-					embeddedInGrid = embeddedInGrid(u);
-					if (embeddedInGrid) {
+					internalGridEdge = internalGridEdge(d);
+					if (internalGridEdge) {
 						Container parent = MultiCornerVertex.getRootGridContainer(u);
 						underlying = parent;
 					} else {
@@ -90,17 +86,23 @@ public class SegmentBuilder implements Logable {
 			}
 		}
 		
-		if (embeddedInGrid) {
+		s.setUnderlying(underlying);
+		if (internalGridEdge) {
 			// because grids can have multiple segments, and they are really all internal to the container.
 			s.setUnderlyingSide(null);
+		} else if (s.getUnderlying() instanceof Connected) {
+			s.setUnderlyingSide(getContainedSegmentUnderlyingSide(s, s.getUnderlying(), transversePlane));
 		}
-		
-		s.setUnderlying(underlying);
 	}
 
-	private boolean embeddedInGrid(DiagramElement u) {
-		DiagramElement parent = u.getParent();
-		return (parent instanceof Container) && (((Container)parent).getLayout()==Layout.GRID);
+	private boolean internalGridEdge(Dart d) {
+		DiagramElement parent = d.getOriginalUnderlying();
+		Object e = d.getUnderlying();
+		if (e instanceof BorderEdge) {
+			return !((BorderEdge)e).getDiagramElements().contains(parent);
+		}
+		
+		return false;
 	}
 
 	/**
@@ -128,7 +130,7 @@ public class SegmentBuilder implements Logable {
 		for (Vertex v : s.getVerticesInSegment()) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) {
-					DiagramElement dartUnderlying = getLowestLevelUnderlying((Dart) e);
+					DiagramElement dartUnderlying = ((Dart) e).getOriginalUnderlying();
 					if (dartUnderlying==underlying) {
 						Direction eDir = e.getDrawDirectionFrom(v);
 						if (eDir==direction) {
@@ -140,11 +142,6 @@ public class SegmentBuilder implements Logable {
 		}
 		
 		return false;
-	}
-
-	
-	private DiagramElement getLowestLevelUnderlying(Dart d) {
-		return d.getOriginalUnderlying();
 	}
 
 	private void extendSegmentFromVertex(Vertex v, Set<Direction> planeDirection, Segment samePlane, Set<Vertex> done) {
