@@ -3,7 +3,7 @@
  */
 package org.kite9.diagram.common.algorithms.so;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.kite9.framework.logging.LogicException;
 
@@ -48,8 +48,9 @@ public class Slideable implements PositionChangeNotifiable {
 	 * and then taking the max position for *this*.
 	 */
 	public int minimumDistanceTo(Slideable s) {
-		Integer slack1 = minimum.slackTo(s.minimum);
-		return s.getMinimumPosition() - this.getMinimumPosition() - slack1;
+		int slack1 = minimum.minimumDistanceTo(s.minimum);
+		int slack2 = s.maximum.minimumDistanceTo(maximum);
+		return Math.max(slack1, slack2);
 	}
 	
 	
@@ -92,31 +93,31 @@ public class Slideable implements PositionChangeNotifiable {
 		}
 	}
 	
-	public void withMinimumForwardConstraints(Function<Slideable, Object> action) {
-		for (SingleDirection sd : minimum.minForward.keySet()) {
-			action.apply((Slideable) sd.getOwner());
+	public void withMinimumForwardConstraints(Consumer<Slideable> action) {
+		for (SingleDirection sd : minimum.forward.keySet()) {
+			action.accept((Slideable) sd.getOwner());
 		}
 	}
 	
-	public void withMaximumForwardConstraints(Function<Slideable, Object> action) {
-		for (SingleDirection sd : maximum.minForward.keySet()) {
-			action.apply((Slideable) sd.getOwner());
+	public void withMaximumForwardConstraints(Consumer<Slideable> action) {
+		for (SingleDirection sd : maximum.forward.keySet()) {
+			action.accept((Slideable) sd.getOwner());
 		}
 	}
 
-	public void addMinimumForwardConstraint(Slideable to, int dist) {
+	void addMinimumForwardConstraint(Slideable to, int dist) {
 		minimum.addForwardConstraint(to.minimum, dist);
 	}
 	
-	public void addMinimumBackwardConstraint(Slideable to, int dist) {
+	void addMinimumBackwardConstraint(Slideable to, int dist) {
 		minimum.addBackwardConstraint(to.minimum, dist);
 	}
 	
-	public void addMaximumForwardConstraint(Slideable to, int dist) {
+	void addMaximumForwardConstraint(Slideable to, int dist) {
 		maximum.addForwardConstraint(to.maximum, dist);
 	}
 	
-	public void addMaximumBackwardConstraint(Slideable to, int dist) {
+	void addMaximumBackwardConstraint(Slideable to, int dist) {
 		maximum.addBackwardConstraint(to.maximum, dist);
 	}
 

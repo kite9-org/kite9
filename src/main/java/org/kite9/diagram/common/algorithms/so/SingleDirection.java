@@ -14,8 +14,8 @@ class SingleDirection {
 	
 	private Integer position = null;
 
-	Map<SingleDirection, Integer> minForward = new HashMap<>();
-	Map<SingleDirection, Integer> maxBackward = new HashMap<>();
+	Map<SingleDirection, Integer> forward = new HashMap<>();
+	Map<SingleDirection, Integer> backward = new HashMap<>();
 	
 	private Integer cachePosition;
 	private Object cacheItem;
@@ -39,14 +39,14 @@ class SingleDirection {
 		if ((moved) || (changedConstraints)) {
 			cachePosition = newPos;
 			
-			for (SingleDirection fwd : minForward.keySet()) {
-				int dist = minForward.get(fwd);
+			for (SingleDirection fwd : forward.keySet()) {
+				int dist = forward.get(fwd);
 				int newPositionFwd = increasing ? cachePosition + dist : cachePosition - dist;
 				fwd.update(newPositionFwd, ci, false);
 			}
 			
-			for (SingleDirection bck : maxBackward.keySet()) {
-				Integer dist = maxBackward.get(bck);
+			for (SingleDirection bck : backward.keySet()) {
+				Integer dist = backward.get(bck);
 				int newPositionBck = increasing ? cachePosition - dist : cachePosition + dist;
 				bck.update(newPositionBck, ci, false);
 			}
@@ -73,26 +73,17 @@ class SingleDirection {
 	 * To do this, we push the position of this up to ci, and work out how far ci moves.
 	 * If there is slack, ci will move less than *this*, and that's the slack.
 	 */
-	public Integer slackTo(SingleDirection ci) {
-		if ((this.position == null) || (ci.position == null)) {
-			return null;
-		}
-
-		int currentDistance = increasing ? 
-				ci.position - this.position : this.position - ci.position;
-		
-		this.update(ci.position, ci, false);
-		int newDistance = increasing ? ci.cachePosition - this.cachePosition :
-			this.cachePosition - ci.cachePosition;
-		
-		return currentDistance - newDistance;
+	public int minimumDistanceTo(SingleDirection ci) {
+		int startPosition = ci.position == null ? 1000 : ci.position;
+		this.update(startPosition, ci, false);		
+		return Math.abs(ci.cachePosition - startPosition);
 	}
 
 	
-	public void addForwardConstraint(SingleDirection to, int distance) {
-		Integer existing = minForward.get(to);
+	void addForwardConstraint(SingleDirection to, int distance) {
+		Integer existing = forward.get(to);
 		if ((existing == null) || (existing < distance)) {
-			minForward.put(to, distance);
+			forward.put(to, distance);
 			
 			if (position != null) {
 				update(position, null, true);
@@ -100,10 +91,10 @@ class SingleDirection {
 		}
 	}
 	
-	public void addBackwardConstraint(SingleDirection to, int distance) {
-		Integer existing = maxBackward.get(to);
+	void addBackwardConstraint(SingleDirection to, int distance) {
+		Integer existing = backward.get(to);
 		if ((existing == null) || (existing > distance)) {
-			maxBackward.put(to, distance);
+			backward.put(to, distance);
 			
 			if (position != null) {
 				update(position, null, true);
@@ -113,6 +104,11 @@ class SingleDirection {
 	
 	public PositionChangeNotifiable getOwner() {
 		return owner;
+	}
+
+	@Override
+	public String toString() {
+		return owner.toString();
 	}
 
 

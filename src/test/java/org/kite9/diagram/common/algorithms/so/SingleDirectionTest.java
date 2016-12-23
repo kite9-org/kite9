@@ -49,8 +49,8 @@ public class SingleDirectionTest {
 		e.increasePosition(0);
 		Assert.assertEquals(10, (int) b.getPosition());
 		Assert.assertEquals(0, (int) e.getPosition());
-		Assert.assertEquals(5, (int) e.slackTo(b));
-		Assert.assertEquals(5, (int) e.slackTo(d));
+		Assert.assertEquals(5, (int) e.minimumDistanceTo(b));
+		Assert.assertEquals(10, (int) e.minimumDistanceTo(d));
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class SingleDirectionTest {
 		Assert.assertEquals(90, (int) b.getPosition());
 		Assert.assertEquals(95, (int) c.getPosition());
 		Assert.assertEquals(80, (int) d.getPosition());
-		Assert.assertEquals(8, (int) b.slackTo(d));
+		Assert.assertEquals(2, (int) b.minimumDistanceTo(d));
 	}
 	
 	

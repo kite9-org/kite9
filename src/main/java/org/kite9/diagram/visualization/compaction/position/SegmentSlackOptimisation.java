@@ -101,10 +101,9 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	public void updateMaps(Slideable s) {
 		Segment seg = (Segment) s.getUnderlying();
 		seg.setPositioned(false);
+		DiagramElement underlying = seg.getUnderlying();
 		for (Vertex v : seg.getVerticesInSegment()) {
 			vertexToSlidableMap.put(v, s);
-			
-			DiagramElement underlying = v.getOriginalUnderlying();
 
 			if (isRectangular(underlying)) {
 				OPair<Slideable> parts = rectangularElementToSlideableMap.get(underlying);

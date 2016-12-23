@@ -42,70 +42,44 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 	public void optimise(Compaction c, SegmentSlackOptimisation xo,
 			SegmentSlackOptimisation yo) {
 		
-		xo.updatePositionalOrdering();
-		yo.updatePositionalOrdering();
-
-		int capacity = yo.getAllSlideables().size()*2;
-		checkLengths(yo, Direction.DOWN, new HashMap<Slideable,  Set<Slideable>>(capacity)); 
-		capacity = xo.getAllSlideables().size()*2;
-		checkLengths(xo, Direction.RIGHT, new HashMap<Slideable,  Set<Slideable>>(capacity)); 
-		
+		checkLengths(yo, Direction.DOWN); 
+		checkLengths(xo, Direction.RIGHT); 
 	}
 
-	private void checkLengths(SegmentSlackOptimisation so, Direction d, Map<Slideable, Set<Slideable>> toFromMap) {
-		int count = 0;
-		for (Slideable s : so.getPositionalOrder()) {
+	private void checkLengths(SegmentSlackOptimisation so, Direction d) {
+		log.send("Length checking order:", so.getAllSlideables());
+		
+		for (Slideable s : so.getAllSlideables()) {
 			boolean isVisible = checkVisibility((Segment) s.getUnderlying());
-			Set<Slideable> from = toFromMap.get(s);
-
+			
+			
 			if (isVisible) {
-				if (from != null) {
-					for (Slideable f : from) {
-						double mdNew = getMinimumDistance(d==Direction.RIGHT, (Segment) f.getUnderlying(), 
-								(Segment) s.getUnderlying());
-									
-						log.send(log.go() ? null : "Ensuring distance: "+f+"("+f.getPositionalOrder()+") to "+s+"("+s.getPositionalOrder()+") as "+mdNew+" as ends are both visible");
-						so.ensureMinimumDistance(f, s, (int) mdNew);
-						count ++;
-					}
-				} else {
-					from = new LinkedHashSet<Slideable>(2);
-				}
+				Set<Slideable> forwardVisibles = new HashSet<>();
+				s.withMinimumForwardConstraints(to -> collateVisibles(to, forwardVisibles));
 				
-				from.clear();
-				from.add(s);
-			}
-			
-			
-			Set<Slideable> pushing = new LinkedHashSet<Slideable>();
-			
-			// work out what this slideable pushes on
-			for (Vertex v : ((Segment) s.getUnderlying()).getVerticesInSegment()) {
-				for (Edge e : v.getEdges()) {
-					if ((e instanceof Dart) && (e.getDrawDirectionFrom(v) == d)) {
-						Slideable next = so.getVertexToSlidableMap().get(e.otherEnd(v));
-						if (next != s) {
-							pushing.add(next);
-						}
-					}
-				}
-			}
+				for (Slideable to : forwardVisibles) {
+					double mdNew = getMinimumDistance(d==Direction.RIGHT, (Segment) s.getUnderlying(), 
+							(Segment) to.getUnderlying());
+								
+					log.send(log.go() ? null : "Ensuring distance: "+s+"("+s.getPositionalOrder()+") to "+to+"("+to.getPositionalOrder()+") as "+mdNew+" as ends are both visible");
+					so.ensureMinimumDistance(s, to, (int) mdNew);
 
-			// make sure we track any forward pushes
-			for (Slideable to : pushing) {
-				Set<Slideable> fromMap = toFromMap.get(to);
-				if (fromMap == null) {
-					fromMap = new HashSet<Slideable>(10);
-					toFromMap.put(to, fromMap);
 				}
-				fromMap.addAll(from);
 			}
 		}
 
-		log.send(log.go() ? null : "Completed edge separation "+d+" with "+so.getAllSlideables().size()+" slideables and "+count+" checks");
+		log.send(log.go() ? null : "Completed edge separation "+d+" with "+so.getAllSlideables().size()+" slideables");
 
 	}
 
+	private void collateVisibles(Slideable v, Set<Slideable> forwardVisibles) {
+		boolean isVisible2 = checkVisibility((Segment) v.getUnderlying());
+		if (isVisible2) {
+			forwardVisibles.add(v);
+		} else {
+			v.withMinimumForwardConstraints(to2 -> collateVisibles(to2, forwardVisibles));
+		}
+	}
 
 	@Override
 	public String getPrefix() {

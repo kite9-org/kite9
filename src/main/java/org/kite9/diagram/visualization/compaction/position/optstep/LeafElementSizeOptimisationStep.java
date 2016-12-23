@@ -63,15 +63,26 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 	 * priority number receive preference on size.
 	 */
 	public void minimizeDiagramElementSizes(SegmentSlackOptimisation opt) {
+		opt.updatePositionalOrdering();
 		List<OPair<Slideable>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
 		
 		Collections.sort(toDo, new Comparator<OPair<Slideable>>() {
 
 			@Override
 			public int compare(OPair<Slideable> o1, OPair<Slideable> o2) {
-				int distO1 = o1.getA().getPositionalOrder() - o1.getB().getPositionalOrder();
-				int distO2 = o2.getA().getPositionalOrder() - o2.getB().getPositionalOrder();
+				int distO1 = getDist1(o1);
+				int distO2 = getDist1(o2);
 				return ((Integer)distO1).compareTo(distO2);
+			}
+
+			private int getDist1(OPair<Slideable> o1) {
+				Slideable a = o1.getA();
+				Slideable b = o1.getB();
+				if ((a == null) || (b == null)) {
+					return Integer.MAX_VALUE;
+				}
+				
+				return Math.abs(a.getPositionalOrder() - b.getPositionalOrder());
 			}
 			
 		});
@@ -81,15 +92,22 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 			Slideable from = es.getA();
 			Slideable to = es.getB();
 			
-			from.setAlignTo(to);
-			to.setAlignTo(from);
-			to.setAlignStyle(AlignStyle.RIGHT);
-			
-			log.send("Adjusting "+((Segment)from.getUnderlying()).getUnderlying());
-			Integer minDist = from.minimumDistanceTo(to);
-			log.send(log.go() ? null : "Minimum Possible Distance " +minDist+ " from "+from+" to "+to);	
-			opt.ensureMaximumDistance(from, to, minDist);
+			if  ((from != null) && (to != null)) {
+				alignPair(opt, from, to);
+			} 
 		}
+	}
+
+
+	private void alignPair(SegmentSlackOptimisation opt, Slideable from, Slideable to) {
+		from.setAlignTo(to);
+		to.setAlignTo(from);
+		to.setAlignStyle(AlignStyle.RIGHT);
+		
+		log.send("Adjusting "+((Segment)from.getUnderlying()).getUnderlying());
+		Integer minDist = from.minimumDistanceTo(to) + 1  ;
+		log.send(log.go() ? null : "Minimum Possible Distance " +minDist+ " from "+from+" to "+to);	
+		opt.ensureMaximumDistance(from, to, minDist);
 	}
 
 	public String getPrefix() {
