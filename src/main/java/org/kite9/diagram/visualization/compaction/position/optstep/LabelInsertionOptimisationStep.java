@@ -97,9 +97,6 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			rri.setHorizontalJustification(r.getHPos());
 			rri.setVerticalJustification(r.getVPos());
 
-			xo.updateCanonicalOrdering();
-			yo.updateCanonicalOrdering();
-
 			xo.updatePositionalOrdering();
 			yo.updatePositionalOrdering();
 		}
@@ -277,50 +274,52 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		// now we need to subdivide one way to add the label
 		((Segment) baseline.getUnderlying()).addToSegment(baselineVertex1);
 		((Segment) baseline.getUnderlying()).addToSegment(baselineVertex2);
-		par.updateVertexSlidableMap(baseline);
+		par.updateMaps(baseline);
 		Slideable s2 = createSlideable(slideableVertex1, slideableVertex2, par, c, r.getHighEndSlideable(), r
 				.getZeroEndSlideable(), l, r.getSpineDirection(), ((Segment) baseline.getUnderlying()).getDimension());
+		par.addSlideables(s2);
 
 		if (slideableSideIncreasingDirection) {
-			par.ensureMinimumDistance(baseline, s2, baselineOutDist, true);
+			par.ensureMinimumDistance(baseline, s2, baselineOutDist);
 		} else {
-			par.ensureMinimumDistance(s2, baseline, baselineOutDist, true);
+			par.ensureMinimumDistance(s2, baseline, baselineOutDist);
 		}
 
 		for (Slideable s : r.getOppositeSlideables()) {
 			double padding = getPadding(s, Direction.reverse(r.getSpineDirection()));
 			if (slideableSideIncreasingDirection) {
-				par.ensureMinimumDistance(s2, s, (int) padding, true);
+				par.ensureMinimumDistance(s2, s, (int) padding);
 			} else {
-				par.ensureMinimumDistance(s, s2, (int) padding, true);
+				par.ensureMinimumDistance(s, s2, (int) padding);
 			}
 		}
 		// now subdivide the other way
 		((Segment) r.getZeroEndSlideable().getUnderlying()).addToSegment(zeroEndVertex1);
 		((Segment) r.getZeroEndSlideable().getUnderlying()).addToSegment(zeroEndVertex2);
-		perp.updateVertexSlidableMap(r.getZeroEndSlideable());
+		perp.updateMaps(r.getZeroEndSlideable());
 		if (r.isAlignToZeroTyne()) {
 			// align to zero end
 			Slideable sn = createSlideable(highEndVertex1, highEndVertex2, perp, c, s2, baseline, l, r
 					.getTyneIncDirection(), ((Segment) r.getZeroEndSlideable().getUnderlying()).getDimension());
-
+			perp.addSlideables(sn);
+			
 			if (highEndIncreasingDirection) {
-				perp.ensureMinimumDistance(r.getZeroEndSlideable(), sn, tyneDist, true);
-				perp.ensureMinimumDistance(sn, r.getHighEndSlideable(), 0, true);
+				perp.ensureMinimumDistance(r.getZeroEndSlideable(), sn, tyneDist);
+				perp.ensureMinimumDistance(sn, r.getHighEndSlideable(), 0);
 			} else {
-				perp.ensureMinimumDistance(r.getHighEndSlideable(), sn, 0, true);
-				perp.ensureMinimumDistance(sn, r.getZeroEndSlideable(), tyneDist, true);
+				perp.ensureMinimumDistance(r.getHighEndSlideable(), sn, 0);
+				perp.ensureMinimumDistance(sn, r.getZeroEndSlideable(), tyneDist);
 			}
 
 		} else {
 			// align in the middle
 			((Segment) r.getHighEndSlideable().getUnderlying()).addToSegment(highEndVertex1);
 			((Segment) r.getHighEndSlideable().getUnderlying()).addToSegment(highEndVertex2);
-			perp.updateVertexSlidableMap(r.getHighEndSlideable());
+			perp.updateMaps(r.getHighEndSlideable());
 			if (highEndIncreasingDirection) {
-				perp.ensureMinimumDistance(r.getZeroEndSlideable(), r.getHighEndSlideable(), tyneDist, true);
+				perp.ensureMinimumDistance(r.getZeroEndSlideable(), r.getHighEndSlideable(), tyneDist);
 			} else {
-				perp.ensureMinimumDistance(r.getHighEndSlideable(), r.getZeroEndSlideable(), tyneDist, true);
+				perp.ensureMinimumDistance(r.getHighEndSlideable(), r.getZeroEndSlideable(), tyneDist);
 			}
 		}
 
@@ -990,16 +989,20 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			return false;
 		}
 
-		private void excludeAllDependents(Slideable next, Set<Slideable> done, int increment) {
-			if (done.contains(next))
-				return;
+		private Set<Slideable> excludeAllDependents(Slideable next, Set<Slideable> done, int increment) {
+			if (done.contains(next)) {
+				return done;
+			}
 
 			done.add(next);
-
-			List<Slideable> deps = increment == 1 ? next.getMinRight() : next.getMinLeft();
-			for (Slideable slideable : deps) {
-				excludeAllDependents(slideable, done, increment);
+			
+			if (increment == 1) {
+				next.withMinimumForwardConstraints(s -> excludeAllDependents(s, done, increment));
+			} else {
+				next.withMaximumForwardConstraints(s -> excludeAllDependents(s, done, increment));
 			}
+			
+			return done;
 		}
 
 		public Slideable getZeroEndSlideable() {

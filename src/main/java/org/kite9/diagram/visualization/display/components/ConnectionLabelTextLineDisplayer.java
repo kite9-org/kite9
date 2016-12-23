@@ -45,7 +45,7 @@ public class ConnectionLabelTextLineDisplayer extends AbstractTextDiagramElement
 		VPos vj = ri.getVerticalJustification();
 
 		// get label actual size
-		CostedDimension cd = size((Leaf) element, CostedDimension.UNBOUNDED);
+		CostedDimension cd = size(element, CostedDimension.UNBOUNDED);
 
 		// set initial bounds on label
 		double xStart = ri.getPosition().x();

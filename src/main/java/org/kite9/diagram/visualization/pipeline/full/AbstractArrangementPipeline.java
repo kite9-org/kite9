@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.pipeline.full;
 
 import org.kite9.diagram.common.algorithms.so.LoggingOptimisationStep;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
-import org.kite9.diagram.common.algorithms.so.WidthOptimisationStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -15,6 +14,7 @@ import org.kite9.diagram.visualization.compaction.position.optstep.EdgeSeparatio
 import org.kite9.diagram.visualization.compaction.position.optstep.LabelInsertionOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.LeafElementSizeOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.SlackCenteringOptimisationStep;
+import org.kite9.diagram.visualization.compaction.position.optstep.WidthOptimisationStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.route.ConnectionRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.route.EdgeRouteCompactionStep;
@@ -83,10 +83,10 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 						new LabelInsertionOptimisationStep(getDisplayer()), 
 						new WidthOptimisationStep(),
 						new LeafElementSizeOptimisationStep(),
-						new ContainerSizeOptimisationStep(),
+//						new ContainerSizeOptimisationStep(),
 						//new LinkLengthReductionOptimisationStep(),
-						new EdgeAlignmentOptimisationStep(),
-						new SlackCenteringOptimisationStep(),
+//						new EdgeAlignmentOptimisationStep(),
+//						new SlackCenteringOptimisationStep(),
 						new LoggingOptimisationStep(),
 					}
 

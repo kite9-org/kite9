@@ -38,7 +38,7 @@ public class ContextLabelDisplayer extends AbstractTextDiagramElementDisplayer {
 		VPos vj = ri.getVerticalJustification();
 
 		// get label actual size
-		CostedDimension cd = size((Leaf) element, CostedDimension.UNBOUNDED);
+		CostedDimension cd = size(element, CostedDimension.UNBOUNDED);
 		
 		if (ri.getPosition() == null) {
 			return;

@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction.position;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -37,8 +37,10 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 			try {
 				step.optimise(c, xso, yso);
 			} finally {
-				log.send("X Optimisation", xso.getCanonicalOrder());
-				log.send("Y Optimisation", yso.getCanonicalOrder());
+				xso.updatePositionalOrdering();
+				yso.updatePositionalOrdering();
+				log.send("X Optimisation", xso.getPositionalOrder());
+				log.send("Y Optimisation", yso.getPositionalOrder());
 			}
 		}
 		
@@ -57,7 +59,8 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 
 	
 	private void setSegmentPostions(SegmentSlackOptimisation opt) {
-		List<Slideable> slideables = opt.getCanonicalOrder();
+		opt.updatePositionalOrdering();
+		Collection<Slideable> slideables = opt.getPositionalOrder();
 		for (Slideable s : slideables) {
 			double pos = s.getMinimumPosition();
 			Segment seg = (Segment) s.getUnderlying();

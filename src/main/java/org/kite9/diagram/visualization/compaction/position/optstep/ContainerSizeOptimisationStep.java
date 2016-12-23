@@ -36,7 +36,7 @@ public class ContainerSizeOptimisationStep implements OptimisationStep, Logable 
 	private void sizeContainerRule(SegmentSlackOptimisation xo) {
 		Map<Container, Pair<List<Slideable>>> containerMap = new HashMap<Container, Pair<List<Slideable>>>();
 
-		for (Slideable s : xo.getCanonicalOrder()) {
+		for (Slideable s : xo.getAllSlideables()) {
 			Segment segment = (Segment)s.getUnderlying();
 			DiagramElement de = segment.getUnderlying();
 			if (de instanceof Container) {

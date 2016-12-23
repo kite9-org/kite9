@@ -23,7 +23,7 @@ public class EdgeAlignmentOptimisationStep implements OptimisationStep {
 	}
 
 	private void centerContentRule(SegmentSlackOptimisation so) {
-		for (Slideable s : so.getCanonicalOrder()) {
+		for (Slideable s : so.getAllSlideables()) {
 			if (s.getAlignStyle() == AlignStyle.RIGHT) {
 				Slideable from = s;
 				Slideable to = s.getAlignTo();

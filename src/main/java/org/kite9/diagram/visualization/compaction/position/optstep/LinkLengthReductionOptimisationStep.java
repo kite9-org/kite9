@@ -68,8 +68,8 @@ public class LinkLengthReductionOptimisationStep implements OptimisationStep, Lo
 	}
 
 	private void centerContentRule(SegmentSlackOptimisation so) {
-		PriorityQueue<SlideableLinkCount> queue = new PriorityQueue<SlideableLinkCount>(so.getCanonicalOrder().size());
-		for (Slideable s : so.getCanonicalOrder()) {
+		PriorityQueue<SlideableLinkCount> queue = new PriorityQueue<SlideableLinkCount>(so.getAllSlideables().size());
+		for (Slideable s : so.getAllSlideables()) {
 			Map<Slideable, Integer> costs = getCostsToNextSlideables((Segment) s.getUnderlying(), so.getDirection() == Direction.RIGHT, so.getVertexToSlidableMap());
 			
 			for (Map.Entry<Slideable, Integer> sm : costs.entrySet()) {

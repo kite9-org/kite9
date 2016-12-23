@@ -45,9 +45,9 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 		xo.updatePositionalOrdering();
 		yo.updatePositionalOrdering();
 
-		int capacity = yo.getCanonicalOrder().size()*2;
+		int capacity = yo.getAllSlideables().size()*2;
 		checkLengths(yo, Direction.DOWN, new HashMap<Slideable,  Set<Slideable>>(capacity)); 
-		capacity = xo.getCanonicalOrder().size()*2;
+		capacity = xo.getAllSlideables().size()*2;
 		checkLengths(xo, Direction.RIGHT, new HashMap<Slideable,  Set<Slideable>>(capacity)); 
 		
 	}
@@ -65,7 +65,7 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 								(Segment) s.getUnderlying());
 									
 						log.send(log.go() ? null : "Ensuring distance: "+f+"("+f.getPositionalOrder()+") to "+s+"("+s.getPositionalOrder()+") as "+mdNew+" as ends are both visible");
-						so.ensureMinimumDistance(f, s, (int) mdNew, true);
+						so.ensureMinimumDistance(f, s, (int) mdNew);
 						count ++;
 					}
 				} else {
@@ -102,7 +102,7 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 			}
 		}
 
-		log.send(log.go() ? null : "Completed edge separation "+d+" with "+so.getCanonicalOrder().size()+" slideables and "+count+" checks");
+		log.send(log.go() ? null : "Completed edge separation "+d+" with "+so.getAllSlideables().size()+" slideables and "+count+" checks");
 
 	}
 

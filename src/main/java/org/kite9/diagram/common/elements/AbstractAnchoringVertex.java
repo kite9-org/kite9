@@ -5,6 +5,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.VPos;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Provides the Anchor class, which can be used to set the position for a number of
@@ -44,22 +45,30 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		}
 	
 		public void setX(double x) {
-			RectangleRenderingInformation ri = getRI();
-			
-			if (lr==HPos.LEFT) {
-				ri.setPosition(Dimension2D.setX(ri.getPosition(), x));
-			} else if (lr==HPos.RIGHT){
-				ri.setSize(Dimension2D.setX(ri.getSize(), x - ri.getPosition().x()));
+			try {
+				RectangleRenderingInformation ri = getRI();
+				
+				if (lr==HPos.LEFT) {
+					ri.setPosition(Dimension2D.setX(ri.getPosition(), x));
+				} else if (lr==HPos.RIGHT){
+					ri.setSize(Dimension2D.setX(ri.getSize(), x - ri.getPosition().x()));
+				}
+			} catch (NullPointerException e) {
+				throw new LogicException("NPE setting position of "+this, e);
 			}
 		}
 		
 		public void setY(double y) {
-			RectangleRenderingInformation ri = getRI();
-		
-			if (ud==VPos.UP) {
-				ri.setPosition(Dimension2D.setY(ri.getPosition(), y));
-			} else if (ud == VPos.DOWN){
-				ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
+			try {
+				RectangleRenderingInformation ri = getRI();
+			
+				if (ud==VPos.UP) {
+					ri.setPosition(Dimension2D.setY(ri.getPosition(), y));
+				} else if (ud == VPos.DOWN){
+					ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
+				}
+			} catch (NullPointerException e) {
+				throw new LogicException("NPE setting position of "+this, e);
 			}
 		}
 		

@@ -76,11 +76,11 @@ public class SlackCenteringOptimisationStep implements OptimisationStep, Logable
 
 	private void shareSlack(SegmentSlackOptimisation xo, Compaction c) {
 		
-		int capacity = xo.getCanonicalOrder().size()*2;
+		int capacity = xo.getAllSlideables().size()*2;
 		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, SlackCenteringOptimisationStep.SlackPool>(capacity);
 		Set<SlackPool> slackPools = new UnorderedSet<SlackCenteringOptimisationStep.SlackPool>(capacity);
 		
-		for (Slideable s : xo.getCanonicalOrder()) {
+		for (Slideable s : xo.getAllSlideables()) {
 			int slack = s.getMaximumPosition() - s.getMinimumPosition();
 			
 			// ok, work through links to other elements
