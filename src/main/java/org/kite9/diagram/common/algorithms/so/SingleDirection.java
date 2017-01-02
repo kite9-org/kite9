@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.algorithms.so;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -14,8 +14,8 @@ class SingleDirection {
 	
 	private Integer position = null;
 
-	Map<SingleDirection, Integer> forward = new HashMap<>();
-	Map<SingleDirection, Integer> backward = new HashMap<>();
+	Map<SingleDirection, Integer> forward = new LinkedHashMap<>();
+	Map<SingleDirection, Integer> backward = new LinkedHashMap<>();
 	
 	private Integer cachePosition;
 	private Object cacheItem;
@@ -29,7 +29,7 @@ class SingleDirection {
 	}
 	
 	private void update(int newPos, Object ci, boolean changedConstraints) {
-		if (this.cacheItem != ci) {
+		if ((this.cacheItem != ci) || (ci == null)) {
 			this.cacheItem = ci;
 			this.cachePosition = position;
 		}
@@ -38,6 +38,7 @@ class SingleDirection {
 		
 		if ((moved) || (changedConstraints)) {
 			cachePosition = newPos;
+//			System.out.println("moving: "+this+" to "+newPos);
 			
 			for (SingleDirection fwd : forward.keySet()) {
 				int dist = forward.get(fwd);
@@ -51,12 +52,11 @@ class SingleDirection {
 				bck.update(newPositionBck, ci, false);
 			}
 			
+			if (ci == null) {
+				position = cachePosition;
+				owner.changedPosition(position);
+			}
 		} 
-		
-		if (ci == null) {
-			position = cachePosition;
-			owner.changedPosition(position);
-		}
 	}
 	
 	public Integer getPosition() {
@@ -68,15 +68,20 @@ class SingleDirection {
 	}
 	
 	/**
-	 * Slack is how far you can push *this* without moving ci.
-	 * 
-	 * To do this, we push the position of this up to ci, and work out how far ci moves.
-	 * If there is slack, ci will move less than *this*, and that's the slack.
+	 * Works out minimum distance to ci, given that our item is in a certain start position.
 	 */
-	public int minimumDistanceTo(SingleDirection ci) {
-		int startPosition = ci.position == null ? 1000 : ci.position;
-		this.update(startPosition, ci, false);		
-		return Math.abs(ci.cachePosition - startPosition);
+	public Integer minimumDistanceTo(SingleDirection ci, int startPosition) {
+		Object cacheMarker = new Object();
+		this.update(startPosition, cacheMarker, false);
+		if (ci.cacheItem != cacheMarker) {
+			if (ci.position == null) {
+				return null;
+			} else {
+				return increasing ? ci.position - this.position : this.position - ci.position;
+			}
+		} else {
+			return Math.abs(ci.cachePosition - startPosition);
+		}
 	}
 
 	

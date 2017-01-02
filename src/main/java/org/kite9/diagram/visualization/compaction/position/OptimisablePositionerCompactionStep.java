@@ -47,12 +47,12 @@ public class OptimisablePositionerCompactionStep extends AbstractSegmentPosition
 		setSegmentPostions(xso);
 		setSegmentPostions(yso);
 		
-		if (!setAndCheckDartPositions(c.getVerticalSegments())) {
-			throw new LogicException("vertical segments contain a cycle and cannot be positioned");
-		}
-		if (!setAndCheckDartPositions(c.getHorizontalSegments())) {
-			throw new LogicException("horizontal segments contain a cycle and cannot be positioned");
-		}
+//		if (!setAndCheckDartPositions(c.getVerticalSegments())) {
+//			throw new LogicException("vertical segments contain a cycle and cannot be positioned");
+//		}
+//		if (!setAndCheckDartPositions(c.getHorizontalSegments())) {
+//			throw new LogicException("horizontal segments contain a cycle and cannot be positioned");
+//		}
 	}
 
 

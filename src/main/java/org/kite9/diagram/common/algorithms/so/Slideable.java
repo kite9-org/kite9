@@ -46,11 +46,27 @@ public class Slideable implements PositionChangeNotifiable {
 	 * Works out how much closer the current slideable can get to s.
 	 * This works by fixing the position for s (temporarily, using the cache)
 	 * and then taking the max position for *this*.
+	 * 
+	 * We can't move the element any further than the max position without breaking other 
+	 * constraints.
 	 */
 	public int minimumDistanceTo(Slideable s) {
-		int slack1 = minimum.minimumDistanceTo(s.minimum);
-		int slack2 = s.maximum.minimumDistanceTo(maximum);
-		return Math.max(slack1, slack2);
+		so.log.send("Calculating minimum distance from "+this+" to "+s);
+		Integer maxSet = this.getMaximumPosition();
+		maxSet = maxSet == null ? 1000 : maxSet;		// 
+		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
+		so.log.send("Calculating minimum distance from "+s+" to "+this);
+//		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
+//		if (slack2 == null) {
+//			return slack1;
+//		}
+//		
+//		if (slack1.intValue() != slack2.intValue()) {
+//			throw new LogicException("Something went wrong");
+//		}
+//		return Math.max(slack1, slack2);
+		
+		return slack1;
 	}
 	
 	

@@ -13,6 +13,10 @@ public class SingleDirectionTest {
 			public void changedPosition(int pos) {
 				System.out.println(name+" moved to "+pos);
 			}
+			
+			public String toString() {
+				return name;
+			}
 		};
 	}
 	
@@ -46,11 +50,18 @@ public class SingleDirectionTest {
 		
 		// check e
 		e.addForwardConstraint(b, 5);
-		e.increasePosition(0);
 		Assert.assertEquals(10, (int) b.getPosition());
+		Assert.assertEquals(5, (int) e.minimumDistanceTo(b, 100));
+		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+
+		e.increasePosition(0);
 		Assert.assertEquals(0, (int) e.getPosition());
-		Assert.assertEquals(5, (int) e.minimumDistanceTo(b));
-		Assert.assertEquals(10, (int) e.minimumDistanceTo(d));
+		
+		// without moving e
+		Assert.assertEquals(15, (int) e.minimumDistanceTo(d, e.getPosition()));
+		// allow it to move
+		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+		
 	}
 	
 	/**
@@ -58,6 +69,7 @@ public class SingleDirectionTest {
 	 * |         B <---10-- A
 	 * |         | -5-> C  
 	 * | <----7---------|
+	 * | <-----5------------E
  	 * 
 	 */
 	@Test
@@ -66,19 +78,25 @@ public class SingleDirectionTest {
 		SingleDirection b = new SingleDirection(createNotifiable("B"), false);
 		SingleDirection c = new SingleDirection(createNotifiable("C"), false);
 		SingleDirection d = new SingleDirection(createNotifiable("D"), false);
+		SingleDirection e = new SingleDirection(createNotifiable("D"), false);
 		
 		// a, b, c to start with
 		a.addForwardConstraint(d, 20);
 		b.addBackwardConstraint(c, 5);
 		c.addForwardConstraint(d, 7);
 		a.addForwardConstraint(b, 10);
+		e.addForwardConstraint(d, 5);
+		Assert.assertEquals(5, (int) a.minimumDistanceTo(c, 100));
+		Assert.assertEquals(2, (int) b.minimumDistanceTo(d, 100));
+		Assert.assertEquals(null, e.minimumDistanceTo(a, 100));
+		
 		
 		a.increasePosition(100);
 		Assert.assertEquals(100, (int) a.getPosition());
 		Assert.assertEquals(90, (int) b.getPosition());
 		Assert.assertEquals(95, (int) c.getPosition());
 		Assert.assertEquals(80, (int) d.getPosition());
-		Assert.assertEquals(2, (int) b.minimumDistanceTo(d));
+		Assert.assertEquals(2, (int) b.minimumDistanceTo(d, 40));
 	}
 	
 	
