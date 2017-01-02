@@ -104,69 +104,69 @@ public class Test15ContainerLinking extends AbstractFunctionalTest {
 		renderDiagram(d);
 	}
 	
-	@Test
-	public void test_15_6_DifficultLink() throws IOException {
-		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
-		//Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
-		Context con3 = new Context("con3", null, true, new TextLine("c3"), null);
-		//Context con4 = new Context("con4", null, true, new TextLine("c4"), null);
-		new Link(con1, con3);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con3), Layout.RIGHT, null);
-		renderDiagram(d);
-	}
-	
-	@Test
-	public void test_15_7_MultipleLinks() throws IOException {
-		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
-		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
-		new TurnLink(con1, con2);
-		new TurnLink(con1, con2);
-		new TurnLink(con1, con2);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con2), Layout.RIGHT, null);
-		renderDiagram(d);
-	}
-	
-	@Test
-	public void test_15_8_LinkedToThreeUnlabelled() throws IOException {
-		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		Glyph g2 = new Glyph("g2", "", "g2", null, null);
-		Glyph g3 = new Glyph("g3", "", "g3", null, null);
-
-		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
-
-		new Link(con1, g1, null, null, LinkEndStyle.ARROW, null);
-		new Link(con1, g2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null);
-		new Link(con1, g3, null, null, LinkEndStyle.ARROW, null ) ;
-
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g1, g2, g3), null);
-		renderDiagram(d);
-	}
-
-	@Test
-	public void test_15_9_MultipleLinksNoLayout() throws IOException {
-		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
-		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
-		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
-		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
-		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con2), null);
-		renderDiagram(d);
-	}
-	
-	@Test
-	public void test_15_10_LabelledContainerLinksSimple() throws IOException {
-
-		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		Arrow a = new Arrow("a1");
-
-		Context con1 = new Context("con1", createList(g1), true, new TextLine("c1"), null);
-		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
-		Context con3 = new Context("con3", createList(a), true, new TextLine("c3"), null);
-		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
-		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
-
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con3, con2), null);
-		renderDiagram(d);
-	}
-
+//	@Test
+//	public void test_15_6_DifficultLink() throws IOException {
+//		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
+//		//Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
+//		Context con3 = new Context("con3", null, true, new TextLine("c3"), null);
+//		//Context con4 = new Context("con4", null, true, new TextLine("c4"), null);
+//		new Link(con1, con3);
+//		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con3), Layout.RIGHT, null);
+//		renderDiagram(d);
+//	}
+//	
+//	@Test
+//	public void test_15_7_MultipleLinks() throws IOException {
+//		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
+//		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
+//		new TurnLink(con1, con2);
+//		new TurnLink(con1, con2);
+//		new TurnLink(con1, con2);
+//		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con2), Layout.RIGHT, null);
+//		renderDiagram(d);
+//	}
+//	
+//	@Test
+//	public void test_15_8_LinkedToThreeUnlabelled() throws IOException {
+//		Glyph g1 = new Glyph("g1", "", "g1", null, null);
+//		Glyph g2 = new Glyph("g2", "", "g2", null, null);
+//		Glyph g3 = new Glyph("g3", "", "g3", null, null);
+//
+//		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
+//
+//		new Link(con1, g1, null, null, LinkEndStyle.ARROW, null);
+//		new Link(con1, g2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null);
+//		new Link(con1, g3, null, null, LinkEndStyle.ARROW, null ) ;
+//
+//		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g1, g2, g3), null);
+//		renderDiagram(d);
+//	}
+//
+//	@Test
+//	public void test_15_9_MultipleLinksNoLayout() throws IOException {
+//		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
+//		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
+//		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
+//		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
+//		new Link(con1, con2, null, null, null, null, Direction.RIGHT);
+//		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con2), null);
+//		renderDiagram(d);
+//	}
+//	
+//	@Test
+//	public void test_15_10_LabelledContainerLinksSimple() throws IOException {
+//
+//		Glyph g1 = new Glyph("g1", "", "g1", null, null);
+//		Arrow a = new Arrow("a1");
+//
+//		Context con1 = new Context("con1", createList(g1), true, new TextLine("c1"), null);
+//		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
+//		Context con3 = new Context("con3", createList(a), true, new TextLine("c3"), null);
+//		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
+//		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
+//
+//		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con3, con2), null);
+//		renderDiagram(d);
+//	}
+//
 }

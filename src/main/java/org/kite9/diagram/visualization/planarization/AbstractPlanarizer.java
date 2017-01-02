@@ -52,7 +52,7 @@ public abstract class AbstractPlanarizer implements Logable {
 			for (PlanarizationTransform pt : getPlanarizationTransforms()) {
 				log.send("PLan:"+pln.toString());
 				checkIntegrity(pln);
-				log.send("Applying transform: "+pt);
+				log.send("Applying transform: "+pt.getClass());
 				pt.transform(pln);
 			}
 			

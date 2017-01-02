@@ -54,7 +54,7 @@ public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier impl
 			
 			
 			if (isVisible) {
-				Set<Slideable> forwardVisibles = new HashSet<>();
+				Set<Slideable> forwardVisibles = new LinkedHashSet<>();
 				s.withMinimumForwardConstraints(to -> collateVisibles(to, forwardVisibles));
 				
 				for (Slideable to : forwardVisibles) {

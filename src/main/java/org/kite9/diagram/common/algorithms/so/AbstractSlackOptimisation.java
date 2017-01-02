@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.kite9.diagram.position.Direction;
@@ -25,7 +26,7 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	public int pushCount = 0;
 	public int maxCount = 0;
-	protected Collection<Slideable> allSlideables = new HashSet<>();
+	protected Collection<Slideable> allSlideables = new LinkedHashSet<>();
 
 	public void updatePositionalOrdering() {
 		positionalOrder = new ArrayList<Slideable>(allSlideables);
@@ -34,13 +35,20 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 			public int compare(Slideable o1, Slideable o2) {
 				Integer p1 = o1.getMinimumPosition();
 				Integer p2 = o2.getMinimumPosition();
-				int out = ((Integer) p1).compareTo(p2);
-				if (out == 0) {
-					// in the event of a tie, use the canonical ordering
-					out = ((Integer) o1.canonicalOrder).compareTo(o2.canonicalOrder);
+				if (p1 == null) {
+					return -1;
+				} else if (p2 == null) {
+					return 1;
+				} else {
+					int out = ((Integer) p1).compareTo(p2);
+					if (out == 0) {
+						// in the event of a tie, use the canonical ordering
+						out = ((Integer) o1.canonicalOrder).compareTo(o2.canonicalOrder);
+					}
+					
+		
+					return out;
 				}
-	
-				return out;
 			}
 		});
 	
