@@ -109,6 +109,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 	protected abstract Planarization buildPlanarization(Diagram c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<DiagramElement>> sortedContainerContents);
 
+	static enum PlanarizationRun { FIRST, REDO, DONE }
+	
 	public Planarization planarize(Diagram c) {
 		final int[] elements = new int[1];
 
@@ -121,15 +123,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 			}
 		});
-		boolean firstGo = true, redo = false;
+		PlanarizationRun run = PlanarizationRun.FIRST;
 		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
 		ConnectionManager connections = null;
 		Map<Container, List<DiagramElement>> sortedContainerContents = null;
 		try {
 			
-			while (firstGo || redo) {
-				redo = false;
-				firstGo = false;
+			while (run != PlanarizationRun.DONE) {
 				rh =  new PositionRoutableHandler2D();
 				ContradictionHandler ch = new BasicContradictionHandler(em);
 				GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
@@ -164,9 +164,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 				if (connections.hasContradictions()) {
 					if (!checkLayoutIsConsistent(c)) {
-						if (firstGo) {
+						if (run == PlanarizationRun.FIRST) {
 							log.send("Contradiction forces regroup");
-							redo = true;
+							run = PlanarizationRun.REDO;
 							continue;
 						}
 					}
@@ -177,6 +177,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				instantiateContainerVertices(c);
 				buildVertexList(null, c, null, out, sortedContainerContents);
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
+				run = PlanarizationRun.DONE;
 			}
 		} finally {
 			if (!log.go()) {
