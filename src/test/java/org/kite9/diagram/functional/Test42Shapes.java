@@ -285,8 +285,8 @@ public class Test42Shapes extends AbstractFunctionalTest {
 	@Test
 	public void test_42_21_ArrowReservingConvex() throws IOException {
 		List<XMLElement> out = new LinkedList<XMLElement>();
-		Glyph g = new Glyph("g", "blah", "blah", null, null);
-		Glyph g2 = new Glyph("g", "blah", "blah", null, null);
+		Glyph g = new Glyph("g1", "blah", "blah", null, null);
+		Glyph g2 = new Glyph("g2", "blah", "blah", null, null);
 		g.setShapeName("fcDOCUMENT");
 		out.add(g);
 		out.add(g2);
