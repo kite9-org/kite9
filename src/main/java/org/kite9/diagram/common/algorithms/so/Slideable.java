@@ -51,22 +51,22 @@ public class Slideable implements PositionChangeNotifiable {
 	 * constraints.
 	 */
 	public int minimumDistanceTo(Slideable s) {
-		so.log.send("Calculating minimum distance from "+this+" to "+s);
 		Integer maxSet = this.getMaximumPosition();
 		maxSet = maxSet == null ? 1000 : maxSet;		// 
 		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
-		so.log.send("Calculating minimum distance from "+s+" to "+this);
-//		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
-//		if (slack2 == null) {
-//			return slack1;
-//		}
-//		
+		so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
+		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
+		so.log.send("Calculating minimum distance from "+s+" to "+this+" "+slack2);
+		if (slack2 == null) {
+			return slack1;
+		}
+		
 //		if (slack1.intValue() != slack2.intValue()) {
 //			throw new LogicException("Something went wrong");
 //		}
-//		return Math.max(slack1, slack2);
+		return Math.max(slack1, slack2);
 		
-		return slack1;
+		//return slack1;
 	}
 	
 	
@@ -144,4 +144,5 @@ public class Slideable implements PositionChangeNotifiable {
 	public void setMaximumPosition(int i) {
 		maximum.increasePosition(i);
 	}
+
 }

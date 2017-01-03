@@ -5,15 +5,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.serialization.CSSConstants;
+import org.kite9.framework.serialization.EnumValue;
 
 /**
  * This optimisation annotates the {@link Slideable}'s in such a way as to
@@ -52,8 +56,8 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 	
 
 	public void optimise(Compaction c, SegmentSlackOptimisation x, SegmentSlackOptimisation y) {
-		minimizeDiagramElementSizes(x);
-		minimizeDiagramElementSizes(y);
+		orderDiagramElementSizes(x);
+		orderDiagramElementSizes(y);
 	}
 	
 	
@@ -62,7 +66,7 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 	 * and assigns a unique priority to the attr in the diagram, so that those with lowest
 	 * priority number receive preference on size.
 	 */
-	public void minimizeDiagramElementSizes(SegmentSlackOptimisation opt) {
+	public void orderDiagramElementSizes(SegmentSlackOptimisation opt) {
 		opt.updatePositionalOrdering();
 		List<OPair<Slideable>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
 		
@@ -87,27 +91,56 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 			
 		});
 		
+		setSizes(opt, toDo, DiagramElementSizing.MINIMIZE);
+		setSizes(opt, toDo, DiagramElementSizing.MAXIMIZE);
+		
+	}
+
+
+	private void setSizes(SegmentSlackOptimisation opt, List<OPair<Slideable>> toDo, DiagramElementSizing process) {
 		for (int i = 0; i < toDo.size(); i++) {
 			OPair<Slideable> es = toDo.get(i);
 			Slideable from = es.getA();
 			Slideable to = es.getB();
 			
-			if  ((from != null) && (to != null)) {
-				alignPair(opt, from, to);
-			} 
+			if ((from != null) && (to != null)) {
+				DiagramElement de = ((Segment) from.getUnderlying()).getUnderlying();
+				EnumValue ev = (EnumValue) de.getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
+				DiagramElementSizing sizing = (DiagramElementSizing) ev.getTheValue();
+				if (sizing == process) {
+					log.send("Aligning: "+de+" "+process+" "+from+" "+to);
+					alignPair(opt, from, to, sizing, de);
+				}
+			}
 		}
 	}
 
 
-	private void alignPair(SegmentSlackOptimisation opt, Slideable from, Slideable to) {
+	private void maximizeDistance(SegmentSlackOptimisation xo, Slideable from, Slideable to) {
+		int slackAvailable = to.getMaximumPosition() - from.getMinimumPosition();
+		from.setMaximumPosition(from.getMinimumPosition());
+		xo.ensureMinimumDistance(from, to, slackAvailable);
+	}
+	
+
+	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable from, Slideable to) {
+		Integer minDist = from.minimumDistanceTo(to);
+		
+		int slackAvailable = to.getMaximumPosition() - from.getMinimumPosition();
+		opt.ensureMaximumDistance(from, to, minDist);
+	}
+
+	private void alignPair(SegmentSlackOptimisation opt, Slideable from, Slideable to, DiagramElementSizing sizing, DiagramElement underlying) {
 		from.setAlignTo(to);
 		to.setAlignTo(from);
 		to.setAlignStyle(AlignStyle.RIGHT);
 		
-		log.send("Adjusting "+((Segment)from.getUnderlying()).getUnderlying());
-		Integer minDist = from.minimumDistanceTo(to) + 1  ;
-		log.send(log.go() ? null : "Minimum Possible Distance " +minDist+ " from "+from+" to "+to);	
-		opt.ensureMaximumDistance(from, to, minDist);
+		if (sizing == DiagramElementSizing.MAXIMIZE) {
+			maximizeDistance(opt, from, to);
+		} else if (sizing == DiagramElementSizing.MINIMIZE) {
+			minimizeDistance(opt, from, to);
+		}
+		
 	}
 
 	public String getPrefix() {

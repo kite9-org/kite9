@@ -60,7 +60,7 @@ public class GraphConstructionTools {
 				result[i][j] = g;
 				contents.add(g);
 			}
-			Context c = new Context("c" + i, contents, true, new TextLine("c" + i), containerLayout);
+			Context c = new Context("c" + i, contents, true, null, /*new TextLine("c" + i) ,*/ containerLayout);
 			out.add(c);
 		}
 

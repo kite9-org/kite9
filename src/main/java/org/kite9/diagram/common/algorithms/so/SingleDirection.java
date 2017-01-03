@@ -3,9 +3,13 @@ package org.kite9.diagram.common.algorithms.so;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.kite9.framework.logging.LogicException;
+
 /**
  * Handles the constraints for a {@link Slideable} in a single direction (e.g. 
  * increasing or decreasing).
+ * 
+ * This is a DAG, and we should be able to prove it.
  * 
  * @author robmoffat
  *
@@ -29,33 +33,39 @@ class SingleDirection {
 	}
 	
 	private void update(int newPos, Object ci, boolean changedConstraints) {
-		if ((this.cacheItem != ci) || (ci == null)) {
-			this.cacheItem = ci;
-			this.cachePosition = position;
-		}
-		
-		boolean moved = (cachePosition == null) || (increasing ? cachePosition < newPos : cachePosition > newPos);
-		
-		if ((moved) || (changedConstraints)) {
-			cachePosition = newPos;
-//			System.out.println("moving: "+this+" to "+newPos);
-			
-			for (SingleDirection fwd : forward.keySet()) {
-				int dist = forward.get(fwd);
-				int newPositionFwd = increasing ? cachePosition + dist : cachePosition - dist;
-				fwd.update(newPositionFwd, ci, false);
+		try {
+			if (this.cacheItem != ci) {
+				this.cacheItem = ci;
+				this.cachePosition = position;
 			}
 			
-			for (SingleDirection bck : backward.keySet()) {
-				Integer dist = backward.get(bck);
-				int newPositionBck = increasing ? cachePosition - dist : cachePosition + dist;
-				bck.update(newPositionBck, ci, false);
-			}
+			boolean moved = (cachePosition == null) || (increasing ? cachePosition < newPos : cachePosition > newPos);
 			
-			if (ci == null) {
-				position = cachePosition;
-				owner.changedPosition(position);
+			if ((moved) || (changedConstraints)) {
+				System.out.println("moving: "+this+" to "+newPos);
+				cachePosition = newPos;
+			System.out.println("(fwd)");
+				for (SingleDirection fwd : forward.keySet()) {
+					int dist = forward.get(fwd);
+					int newPositionFwd = increasing ? cachePosition + dist : cachePosition - dist;
+					fwd.update(newPositionFwd, ci, false);
+				}
+
+			System.out.println("(bck)");
+				for (SingleDirection bck : backward.keySet()) {
+					Integer dist = backward.get(bck);
+					int newPositionBck = increasing ? cachePosition - dist : cachePosition + dist;
+					bck.update(newPositionBck, ci, false);
+				}
+			System.out.println("(done)");
+				
+				if (ci == null) {
+					position = cachePosition;
+					owner.changedPosition(position);
+				}
 			}
+		} catch (StackOverflowError e) {
+			throw new LogicException("Couldn't adjust (SO): "+this+" pos: "+position+" cachePos: "+cachePosition);
 		} 
 	}
 	
@@ -116,6 +126,17 @@ class SingleDirection {
 		return owner.toString();
 	}
 
-
+	public int getMaxDepth() {
+		int depth = 0;
+		for (SingleDirection fwd : forward.keySet()) {
+			depth = Math.max(depth, fwd.getMaxDepth()+1);
+		}
+		
+		for (SingleDirection back : backward.keySet()) {
+			depth = Math.max(depth, back.getMaxDepth()+1);
+		}
+		
+		return depth;
+	}
 	
 }

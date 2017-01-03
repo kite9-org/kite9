@@ -46,6 +46,7 @@ public class SingleDirectionTest {
 
 		// check d
 		b.addForwardConstraint(d, 5);
+		c.addForwardConstraint(d, 8);
 		Assert.assertEquals(15, (int) d.getPosition());
 		
 		// check e
@@ -62,6 +63,9 @@ public class SingleDirectionTest {
 		// allow it to move
 		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
 		
+		Assert.assertEquals(0, d.getMaxDepth());
+		Assert.assertEquals(3, a.getMaxDepth());
+		Assert.assertEquals(1, c.getMaxDepth());
 	}
 	
 	/**
@@ -97,6 +101,12 @@ public class SingleDirectionTest {
 		Assert.assertEquals(95, (int) c.getPosition());
 		Assert.assertEquals(80, (int) d.getPosition());
 		Assert.assertEquals(2, (int) b.minimumDistanceTo(d, 40));
+		
+		Assert.assertEquals(0, d.getMaxDepth());
+		Assert.assertEquals(3, a.getMaxDepth());
+		Assert.assertEquals(1, c.getMaxDepth());
+		Assert.assertEquals(1, e.getMaxDepth());
+
 	}
 	
 	

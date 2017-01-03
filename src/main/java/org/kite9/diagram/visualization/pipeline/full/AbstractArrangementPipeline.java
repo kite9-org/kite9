@@ -8,12 +8,9 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.PluggableCompactor;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.OptimisablePositionerCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.ContainerSizeOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.EdgeAlignmentOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.EdgeSeparationOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.LabelInsertionOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.LeafElementSizeOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.SlackCenteringOptimisationStep;
 import org.kite9.diagram.visualization.compaction.position.optstep.WidthOptimisationStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.route.ConnectionRouteCompactionStep;
@@ -83,7 +80,6 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 						new LabelInsertionOptimisationStep(getDisplayer()), 
 						new WidthOptimisationStep(),
 						new LeafElementSizeOptimisationStep(),
-//						new ContainerSizeOptimisationStep(),
 						//new LinkLengthReductionOptimisationStep(),
 //						new EdgeAlignmentOptimisationStep(),
 //						new SlackCenteringOptimisationStep(),
