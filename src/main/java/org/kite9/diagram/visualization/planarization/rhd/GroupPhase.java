@@ -201,51 +201,7 @@ public class GroupPhase {
 	}
 
 	private boolean needsLeafGroup(Connected ord) {
-		if (ord instanceof Diagram) {
-			return false;
-		} else if (ord instanceof Container) {
-			
-			for (DiagramElement	de : ((Container)ord).getContents()) {
-				
-				if (em.hasNestedConnections(de)) {
-					return false;
-				}
-			}
-			
-			return true;
-			
-//			// if it has stuff inside, don't create a group
-//			boolean hasSize = ((Container)ord).getContents().size()>0;
-//			
-//			// if it has links, don't create a group - the links will be groups
-//			boolean hasLinks = ord.getLinks().size()>0;
-//			
-//			// if it is in a directed container, with other stuff, then the directed edge will be a group,
-//			// so don't group
-//			Container c = ord.getContainer();
-//			boolean directedContainer = false;
-//			if (c!= null) {
-//				if (c.getLayout() != null) {
-//					switch (c.getLayout()) {
-//					case UP:
-//					case DOWN:
-//					case LEFT:
-//					case RIGHT:
-//						directedContainer = true;
-//					default:
-//					}
-//					
-//					int parentSize = c.getContents().size();
-//					if (parentSize < 2) {
-//						directedContainer = false;
-//					}
-//				}
-//			}
-//			
-//			return !directedContainer && !hasLinks && !hasSize;
-		} else {
-			return true;
-		}	
+		return  !em.requiresCornerVertices(ord);
 	}
 
 	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);
