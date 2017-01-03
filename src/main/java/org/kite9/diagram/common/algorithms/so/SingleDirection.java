@@ -42,22 +42,22 @@ class SingleDirection {
 			boolean moved = (cachePosition == null) || (increasing ? cachePosition < newPos : cachePosition > newPos);
 			
 			if ((moved) || (changedConstraints)) {
-				System.out.println("moving: "+this+" to "+newPos);
+//				System.out.println("moving: "+this+" to "+newPos);
 				cachePosition = newPos;
-			System.out.println("(fwd)");
+//				System.out.println("(fwd)");
 				for (SingleDirection fwd : forward.keySet()) {
 					int dist = forward.get(fwd);
 					int newPositionFwd = increasing ? cachePosition + dist : cachePosition - dist;
 					fwd.update(newPositionFwd, ci, false);
 				}
 
-			System.out.println("(bck)");
+//				System.out.println("(bck)");
 				for (SingleDirection bck : backward.keySet()) {
 					Integer dist = backward.get(bck);
 					int newPositionBck = increasing ? cachePosition - dist : cachePosition + dist;
 					bck.update(newPositionBck, ci, false);
 				}
-			System.out.println("(done)");
+//				System.out.println("(done)");
 				
 				if (ci == null) {
 					position = cachePosition;
