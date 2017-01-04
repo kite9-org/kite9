@@ -89,8 +89,6 @@ public class GroupPhase {
 	public LeafGroup getLeafGroupFor(Connected ord) {
 		return pMap.get(ord);
 	}
-	
-	private enum Treatment { LEAF, CONTAINER, NONE };
 
 	/**
 	 * Creates leaf groups and any ordering between them, recursively.
@@ -107,6 +105,7 @@ public class GroupPhase {
 		Container cnr = ord.getContainer();
 
 		boolean leaf = needsLeafGroup(ord);
+		
 		if (leaf) {
 			LeafGroup g = new LeafGroup(ord, cnr, ab.createAxis(), ab.createLinkManager());
 			pMap.put(ord, g);
@@ -201,7 +200,7 @@ public class GroupPhase {
 	}
 
 	private boolean needsLeafGroup(Connected ord) {
-		return  !em.requiresCornerVertices(ord);
+		return !em.requiresCornerVertices(ord);
 	}
 
 	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);
