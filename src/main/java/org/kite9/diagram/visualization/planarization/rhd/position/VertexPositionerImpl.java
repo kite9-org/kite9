@@ -60,7 +60,6 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				toBounds = rh.narrow(toBounds, borderTrimAreaX, borderTrimAreaY);
 			}
 			BigFraction xOrd = null, yOrd = null;
-			Bounds xNew = null, yNew = null;
 			double fracX = 0d, fracY = 0d;
 			MultiCornerVertex cvNew = null;	
 
@@ -77,12 +76,9 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				yOrd = cvNew.getYOrdinal();
 				fracY = fracMapY.get(yOrd);
 				
-				if (toHasCornerVertices) {
-					xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);	// we are connecting to a container vertex
-				} else {
-					xNew = x;
-				}
-				yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
+				final Bounds xNew1 = getSideBounds(x, trim.xs, trim.xe, toHasCornerVertices, fracX);
+				final Bounds yNew1 = y.keep(trim.ys, trim.ye-trim.ys, fracY);
+				setSideVertexRoutingInfo(c, d, out, xNew1, yNew1, cvNew);
 				break;
 			case LEFT:
 			case RIGHT:
@@ -95,23 +91,28 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				xOrd = cvNew.getXOrdinal();
 				fracX = fracMapX.get(xOrd);
 				
-				if (toHasCornerVertices) {
-					yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
-				} else {
-					yNew = y;
-				}
-				xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
+				final Bounds yNew = getSideBounds(y, trim.ys, trim.ye, toHasCornerVertices, fracY);
+				final Bounds xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
+				setSideVertexRoutingInfo(c, d, out, xNew, yNew, cvNew);
 				break;
 			}
-			
-			
-			if (cvNew.getRoutingInfo() == null) {
-				// new vertex				
-				cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
-				cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c);
-				out.add(cvNew);
-			}
-			
+		}
+	}
+
+	private Bounds getSideBounds(Bounds b, double trims, double trime, boolean toHasCornerVertices, double frac) {
+		if (toHasCornerVertices) {
+			return b.keep(trims, trime-trims, frac);
+		} else {
+			return b;
+		}
+	}
+
+	private void setSideVertexRoutingInfo(Connected c, Direction d, List<Vertex> out, Bounds xNew, Bounds yNew, MultiCornerVertex cvNew) {
+		if (cvNew.getRoutingInfo() == null) {
+			// new vertex				
+			cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
+			cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c);
+			out.add(cvNew);
 		}
 	}
 
