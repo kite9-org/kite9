@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.thorough;
 
 import java.io.IOException;
 
@@ -9,6 +9,8 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 

@@ -80,7 +80,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				if (toHasCornerVertices) {
 					xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);	// we are connecting to a container vertex
 				} else {
-					xNew = x.narrow(borderTrimAreaX);
+					xNew = x;
 				}
 				yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				break;
@@ -98,7 +98,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				if (toHasCornerVertices) {
 					yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				} else {
-					yNew = y.narrow(borderTrimAreaY);
+					yNew = y;
 				}
 				xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
 				break;
