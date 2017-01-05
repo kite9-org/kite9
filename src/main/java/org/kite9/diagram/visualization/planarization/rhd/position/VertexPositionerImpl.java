@@ -62,8 +62,6 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			BigFraction xOrd = null, yOrd = null;
 			Bounds xNew = null, yNew = null;
 			double fracX = 0d, fracY = 0d;
-			HPos hpos = null;
-			VPos vpos = null;
 			MultiCornerVertex cvNew = null;	
 
 			// set position
@@ -89,7 +87,6 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 					xNew = x;
 				}
 				yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
-				vpos = d == Direction.UP ? VPos.UP : VPos.DOWN;
 				break;
 			case LEFT:
 			case RIGHT:
@@ -112,7 +109,6 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 					yNew = y;
 				}
 				xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
-				hpos = d == Direction.LEFT ? HPos.LEFT: HPos.RIGHT;
 				break;
 			}
 			
@@ -120,7 +116,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			if (cvNew.getRoutingInfo() == null) {
 				// new vertex				
 				cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
-				cvNew.addAnchor(hpos, vpos, c);
+				cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c);
 				out.add(cvNew);
 			}
 			
@@ -143,7 +139,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		return out;
 	}
 	
-	public void setCornerVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
+	public void setPerimeterVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
@@ -170,7 +166,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
 	
 		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
-			setRouting(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
+			setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
 		}
 	}
 
@@ -223,7 +219,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		v.setRoutingInfo(bounds);
 	}
 	
-	private void setRouting(DiagramElement c, CornerVertices cvs, MultiCornerVertex cv, Bounds bx, Bounds by, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	private void setCornerVertexRoutingAndMerge(DiagramElement c, CornerVertices mergeWith, MultiCornerVertex cv, Bounds bx, Bounds by, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
 			BorderTrim trim = calculateBorderTrims(c);
 			BigFraction xOrdinal = cv.getXOrdinal();
@@ -231,10 +227,12 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			
 			double xfrac = fracMapX.get(xOrdinal);
 			double yfrac = fracMapY.get(yOrdinal);
+			
 			bx = bx.keep(trim.xs, trim.xe - trim.xs, xfrac);
 			by = by.keep(trim.ys, trim.ye - trim.ys, yfrac);
+			
 			cv.setRoutingInfo(rh.createRouting(bx,by));
-			cv = cvs.mergeDuplicates(cv, rh);
+			cv = mergeWith.mergeDuplicates(cv, rh);
 			
 			if (cv != null) {
 				out.add(cv);

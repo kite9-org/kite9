@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.thorough;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.TestingHelp;

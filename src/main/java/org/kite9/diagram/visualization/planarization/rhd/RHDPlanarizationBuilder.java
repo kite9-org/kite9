@@ -341,7 +341,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			CornerVertices cvs = em.getCornerVertices(c);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			log.send("Placed position of container: "+c+" is "+bounds);
-			vp.setCornerVertexPositions(before, c, after, cvs, out);
+			vp.setPerimeterVertexPositions(before, c, after, cvs, out);
 
 			if (c instanceof Container) {
 				Container container = (Container) c;

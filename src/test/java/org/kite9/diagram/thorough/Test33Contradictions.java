@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.thorough;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,11 @@ import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.ContradictingLink;
+import org.kite9.diagram.functional.GraphConstructionTools;
+import org.kite9.diagram.functional.Test36LayoutChoices;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;

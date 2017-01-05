@@ -21,7 +21,7 @@ public interface VertexPositioner {
 	 */
 	void checkMinimumGridSizes(RoutingInfo ri);
 
-	void setCornerVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out);
+	void setPerimeterVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out);
 
 	void setCentralVertexPosition(DiagramElement c, List<Vertex> out);
 

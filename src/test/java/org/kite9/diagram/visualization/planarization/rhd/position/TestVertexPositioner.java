@@ -28,6 +28,8 @@ public class TestVertexPositioner {
 		Object a = new Object();
 		Object b = new Object();
 		
+		Glyph left = new Glyph
+		
 		rh.setPlacedPosition(a, rh.createRouting(new BasicBounds(0, .5), new BasicBounds(0, 1)));
 		rh.setPlacedPosition(b, rh.createRouting(new BasicBounds(.5, 1), new BasicBounds(0, 1)));
 		
