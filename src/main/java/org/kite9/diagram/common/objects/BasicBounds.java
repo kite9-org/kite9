@@ -142,5 +142,9 @@ public class BasicBounds implements Bounds {
 //		}
 //		return new BasicBounds(mid-(w/2),mid+(w/2));
 //	}
+	
+	public Bounds narrow(double vertexTrim) {
+		return new BasicBounds(this.getDistanceMin() + vertexTrim, this.getDistanceMax() - vertexTrim);
+	}
 
 }

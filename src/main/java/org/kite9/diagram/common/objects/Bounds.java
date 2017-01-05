@@ -23,6 +23,8 @@ public interface Bounds extends Comparable<Bounds> {
 	public Bounds keep(double buffer, double width, BigFraction atFraction);
 	
 	public Bounds keep(double buffer, double width, double atFraction);
+
+	public Bounds narrow(double trim);
 	
 //	public Bounds keepMax(double lb, double ub);
 //	

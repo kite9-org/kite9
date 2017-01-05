@@ -69,14 +69,10 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			case UP:
 			case DOWN:
 				x = x.narrow(rh.getBoundsOf(toBounds, true));
-				double containerWidth = x.getDistanceMax() - x.getDistanceMin();
-				int denom = Math.round((float) (containerWidth / (trim.xe-trim.xs)));
-				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
+				final double containerWidth = x.getDistanceMax() - x.getDistanceMin();
 				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
-				double numerd = fracX * (double) denom;
-				int numer = Math.round((float) numerd);
+				xOrd = calculateSideOrdinal(trim.xe, trim.xs, fracX, containerWidth);
 				yOrd = MultiCornerVertex.getOrdForYDirection(d);
-				xOrd = BigFraction.getReducedFraction(numer, denom);
 				cvNew = cvs.createVertex(xOrd, yOrd);	
 				yOrd = cvNew.getYOrdinal();
 				fracY = fracMapY.get(yOrd);
@@ -84,21 +80,17 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				if (toHasCornerVertices) {
 					xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);	// we are connecting to a container vertex
 				} else {
-					xNew = x;
+					xNew = x.narrow(borderTrimAreaX);
 				}
 				yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				break;
 			case LEFT:
 			case RIGHT:
 				y = y.narrow(rh.getBoundsOf(toBounds, false));
-				double containerHeight = y.getDistanceMax() - y.getDistanceMin();
-				denom = Math.round((float) (containerHeight / (trim.ye-trim.ys)));
-				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
+				final double containerHeight = y.getDistanceMax() - y.getDistanceMin();
 				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
-				numerd = fracY * (double) denom;
-				numer = Math.round((float) numerd);
+				yOrd = calculateSideOrdinal(trim.ye, trim.ys, fracY, containerHeight);
 				xOrd = MultiCornerVertex.getOrdForXDirection(d);
-				yOrd = BigFraction.getReducedFraction(numer, denom);
 				cvNew = cvs.createVertex(xOrd, yOrd);	
 				xOrd = cvNew.getXOrdinal();
 				fracX = fracMapX.get(xOrd);
@@ -106,7 +98,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				if (toHasCornerVertices) {
 					yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				} else {
-					yNew = y;
+					yNew = y.narrow(borderTrimAreaY);
 				}
 				xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
 				break;
@@ -122,7 +114,17 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			
 		}
 	}
-	
+
+	private BigFraction calculateSideOrdinal(double trime, double trims, double frac, final double containerSize) {
+		BigFraction yOrd;
+		int denom = Math.round((float) (containerSize / (trime-trims)));
+		denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
+		double numerd = frac * (double) denom;
+		int numer = Math.round((float) numerd);
+		yOrd = BigFraction.getReducedFraction(numer, denom);
+		return yOrd;
+	}
+
 	static class BorderTrim {
 		double xs, ys, xe, ye;
 	}
