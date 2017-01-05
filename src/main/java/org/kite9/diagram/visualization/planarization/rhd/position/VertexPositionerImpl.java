@@ -52,7 +52,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		}
 	}
 	
-	public void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, double xs, double xe, double ys, double ye, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	public void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, BorderTrim trim, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (to != null) {
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
 			boolean toHasCornerVertices = em.hasCornerVertices(to);
@@ -72,7 +72,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			case DOWN:
 				x = x.narrow(rh.getBoundsOf(toBounds, true));
 				double containerWidth = x.getDistanceMax() - x.getDistanceMin();
-				int denom = Math.round((float) (containerWidth / (xe-xs)));
+				int denom = Math.round((float) (containerWidth / (trim.xe-trim.xs)));
 				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
 				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
 				double numerd = fracX * (double) denom;
@@ -84,18 +84,18 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				fracY = fracMapY.get(yOrd);
 				
 				if (toHasCornerVertices) {
-					xNew = x.keep(xs, xe-xs, fracX);	// we are connecting to a container vertex
+					xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);	// we are connecting to a container vertex
 				} else {
 					xNew = x;
 				}
-				yNew = y.keep(ys, ye-ys, fracY);
+				yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				vpos = d == Direction.UP ? VPos.UP : VPos.DOWN;
 				break;
 			case LEFT:
 			case RIGHT:
 				y = y.narrow(rh.getBoundsOf(toBounds, false));
 				double containerHeight = y.getDistanceMax() - y.getDistanceMin();
-				denom = Math.round((float) (containerHeight / (ye-ys)));
+				denom = Math.round((float) (containerHeight / (trim.ye-trim.ys)));
 				denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
 				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
 				numerd = fracY * (double) denom;
@@ -107,11 +107,11 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				fracX = fracMapX.get(xOrd);
 				
 				if (toHasCornerVertices) {
-					yNew = y.keep(ys, ye-ys, fracY);
+					yNew = y.keep(trim.ys, trim.ye-trim.ys, fracY);
 				} else {
 					yNew = y;
 				}
-				xNew = x.keep(xs, xe-xs, fracX);
+				xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
 				hpos = d == Direction.LEFT ? HPos.LEFT: HPos.RIGHT;
 				break;
 			}
@@ -127,18 +127,27 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		}
 	}
 	
+	static class BorderTrim {
+		double xs, ys, xe, ye;
+	}
+	
+	private BorderTrim calculateBorderTrims(DiagramElement c) {
+		BorderTrim out = new BorderTrim();
+		
+		int depth = em.getContainerDepth(c);
+		out.xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
+		out.xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
+		out.ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
+		out.ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
+		
+		return out;
+	}
 	
 	public void setCornerVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
 		Container within = c.getContainer();
 		
 		Layout l = within == null ? null : within.getLayout();
-		
-		int depth = em.getContainerDepth(c);
-		double xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
-		double xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
-		double ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
-		double ye = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 2));
-		
+	
 		RoutingInfo bounds;
 		Bounds bx, by;
 		if (l==Layout.GRID) {
@@ -158,6 +167,17 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
 		
+		addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
+	
+		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
+			setRouting(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
+		}
+	}
+
+	private void addSideVertices(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out, Layout l, Bounds bx, Bounds by,
+			Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+		BorderTrim trim = calculateBorderTrims(c);
+		
 		if (c instanceof Connected) {
 			
 			// add extra vertices for connections to keep the layout
@@ -168,16 +188,16 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				case VERTICAL:
 					Direction d1 = ((before != null) && (cmp.compare((Connected) c, before) == 1)) ? Direction.UP : Direction.DOWN;
 					Direction d2 = ((after != null) && (cmp.compare((Connected) c, after) == 1)) ? Direction.UP : Direction.DOWN;
-					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, trim, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, trim, fracMapX, fracMapY);
 					break;
 				case LEFT:
 				case RIGHT:
 				case HORIZONTAL:
 					d1 = ((before != null) && (cmp.compare((Connected) c, before) == 1)) ? Direction.LEFT : Direction.RIGHT;
 					d2 = ((after != null) && (cmp.compare((Connected) c, after) == 1)) ? Direction.LEFT : Direction.RIGHT;
-					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
-					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d1, before, cvs, bx, by, out, trim, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d2, after, cvs, bx, by, out, trim, fracMapX, fracMapY);
 					break;	
 				default:
 					// do nothing
@@ -188,13 +208,9 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			for (Connection conn : ((Connected) c).getLinks()) {
 				if ((conn.getDrawDirection() != null) && (!conn.getRenderingInformation().isContradicting())) {
 					Direction d = conn.getDrawDirectionFrom((Connected) c);
-					addExtraSideVertex((Connected) c, d, conn.otherEnd((Connected) c), cvs, bx, by, out, xs, xe, ys, ye, fracMapX, fracMapY);
+					addExtraSideVertex((Connected) c, d, conn.otherEnd((Connected) c), cvs, bx, by, out, trim, fracMapX, fracMapY);
 				}
 			}
-		}
-	
-		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
-			setRouting(cvs, cv, bx, by, xs, xe, ys, ye, out, fracMapX, fracMapY);
 		}
 	}
 	
@@ -207,15 +223,16 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		v.setRoutingInfo(bounds);
 	}
 	
-	private void setRouting(CornerVertices cvs, MultiCornerVertex cv, Bounds bx, Bounds by, double xs, double xe, double ys, double ye, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+	private void setRouting(DiagramElement c, CornerVertices cvs, MultiCornerVertex cv, Bounds bx, Bounds by, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
+			BorderTrim trim = calculateBorderTrims(c);
 			BigFraction xOrdinal = cv.getXOrdinal();
 			BigFraction yOrdinal = cv.getYOrdinal();
 			
 			double xfrac = fracMapX.get(xOrdinal);
 			double yfrac = fracMapY.get(yOrdinal);
-			bx = bx.keep(xs, xe - xs, xfrac);
-			by = by.keep(ys, ye - ys, yfrac);
+			bx = bx.keep(trim.xs, trim.xe - trim.xs, xfrac);
+			by = by.keep(trim.ys, trim.ye - trim.ys, yfrac);
 			cv.setRoutingInfo(rh.createRouting(bx,by));
 			cv = cvs.mergeDuplicates(cv, rh);
 			

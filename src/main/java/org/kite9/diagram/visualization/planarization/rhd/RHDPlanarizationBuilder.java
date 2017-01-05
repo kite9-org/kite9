@@ -356,12 +356,6 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return;
 	}
 
-	
-
-
-	
-
-
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
 
 	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {
