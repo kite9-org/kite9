@@ -274,7 +274,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(contexts.get(0), g3, null, null, null, null, null);
+		new Link(contexts.get(0), g3, null, null, null, null, null);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
@@ -290,7 +290,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(contexts.get(3), g5, null, null, null, null, null);
+		new Link(contexts.get(3), g5, null, null, null, null, null);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
@@ -338,7 +338,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(ctx, g5, null, null, null, null, null);
+		new Link(ctx, g5, null, null, null, null, null);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
@@ -354,7 +354,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(ctx, g2, null, null, null, null, null);
+		new Link(ctx, g2, null, null, null, null, null);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
@@ -387,7 +387,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
-		new ContradictingLink(ctx, g5, null, null, null, null, Direction.DOWN);
+		new Link(ctx, g5, null, null, null, null, Direction.DOWN);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}

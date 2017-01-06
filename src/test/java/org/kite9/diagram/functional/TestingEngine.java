@@ -435,6 +435,13 @@ public class TestingEngine extends TestingHelp {
 						notPresent[0]++;
 					}
 				}
+				
+//				if (isContradictingLink(c)) {
+//					if (!rri.isContradicting()) {
+//						throw new ExpectedLayoutException("Connection contradiction expected: " + c);
+//					}
+//				}
+//				
 
 				if (rri.isContradicting()) {
 					if (checkNoContradictions && !isContradictingLink(c)) {

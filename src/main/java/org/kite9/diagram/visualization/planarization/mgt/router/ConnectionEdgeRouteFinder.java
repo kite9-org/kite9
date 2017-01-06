@@ -16,6 +16,7 @@ import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ConnectionEdge;
 import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
@@ -27,6 +28,8 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.serialization.CSSConstants;
+import org.kite9.framework.serialization.EnumValue;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
@@ -72,6 +75,18 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	protected boolean canCrossBorderEdge(BorderEdge crossing, EdgePath ep) {
+		Container insideContainer = ep.insideContainer();
+		boolean leaving = (crossing.getOriginalUnderlying() == insideContainer);
+
+		BorderTraversal traversalRule = getTraversalRule(crossing);
+		if (traversalRule == BorderTraversal.NONE) {
+			return false;
+		} else if (traversalRule == BorderTraversal.LEAVING) {
+			if (!leaving) {
+				return false;
+			}
+		}
+		
 		if (entryDirection==null) {
 			return true;
 		}
@@ -94,8 +109,6 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			return true;
 		}
 		
-		Container insideContainer = ep.insideContainer();
-		boolean leaving = (crossing.getOriginalUnderlying() == insideContainer);
 		Edge leaverBefore = containerOrdering.getLeaverBeforeBorder(crossing);
 	
 		if (leaverBefore.getDrawDirection()==null) {
@@ -108,6 +121,10 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		boolean out = containerOrdering.canInsert(leaverBefore, incidentDirection, true, log);
 		//System.out.println("Can cross: "+crossing+" between "+crossing.getFrom()+" "+crossing.getTo()+" leaving="+leaving+" result="+out+" direction="+incidentDirection+" currentlyInside="+insideContainer);
 		return out;
+	}
+
+	private BorderTraversal getTraversalRule(BorderEdge crossing) {
+		return crossing.getBorderTraversal();
 	}
 
 	private boolean checkContainerPathIntersection(EdgePath ep, DiagramElement c,

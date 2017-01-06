@@ -13,6 +13,9 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.style.BorderTraversal;
+import org.kite9.framework.serialization.CSSConstants;
+import org.kite9.framework.serialization.EnumValue;
 
 /**
  * This edge is used for the surrounding of a diagram element.
@@ -134,4 +137,36 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		return 0;
 	}
 	
+	private transient BorderTraversal bt = null;
+
+	public BorderTraversal getBorderTraversal() {
+		if (bt != null) {
+			return bt;
+		} else {
+			bt = calculateTraversalRule();
+			return bt;
+		}
+	}
+
+	private BorderTraversal calculateTraversalRule() {
+		switch (getDrawDirection()) {
+		case LEFT:
+			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_BOTTOM_PROPERTY);
+		case RIGHT:
+			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_TOP_PROPERTY);
+		case UP:
+			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_LEFT_PROPERTY);
+		case DOWN:
+			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_RIGHT_PROPERTY);
+		}
+		
+		return BorderTraversal.ALWAYS;
+	}
+	
+
+	private static BorderTraversal getTraversalRule(DiagramElement d, String p) {
+		EnumValue v = (EnumValue) d.getCSSStyleProperty(p);
+		BorderTraversal bt = (BorderTraversal) v.getTheValue();
+		return bt;
+	}
 }

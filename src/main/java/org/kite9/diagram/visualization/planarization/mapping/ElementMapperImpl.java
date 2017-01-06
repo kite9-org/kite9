@@ -193,8 +193,8 @@ public class ElementMapperImpl implements ElementMapper {
 				isElementTraversible(c, CSSConstants.TRAVERSAL_TOP_PROPERTY);
 	}
 
-	private boolean isElementTraversible(DiagramElement c, String traversalBottomProperty) {
-		EnumValue v = (EnumValue) c.getCSSStyleProperty(CSSConstants.TRAVERSAL_BOTTOM_PROPERTY);
+	private boolean isElementTraversible(DiagramElement c, String p) {
+		EnumValue v = (EnumValue) c.getCSSStyleProperty(p);
 		BorderTraversal bt = (BorderTraversal) v.getTheValue();
 		return (bt == BorderTraversal.ALWAYS);
 	}
