@@ -57,4 +57,10 @@ public interface CornerVertices {
 	 * 
 	 */
 	public MultiCornerVertex mergeDuplicates(MultiCornerVertex cv, RoutableHandler2D rh);
+	
+	public MultiCornerVertex getTopLeft();
+	public MultiCornerVertex getTopRight();
+	public MultiCornerVertex getBottomLeft();
+	public MultiCornerVertex getBottomRight();
+	
 }

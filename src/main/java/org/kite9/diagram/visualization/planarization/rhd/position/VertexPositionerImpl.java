@@ -12,6 +12,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Direction;
@@ -52,58 +53,70 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		}
 	}
 	
-	public void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, Bounds x, Bounds y, List<Vertex> out, BorderTrim trim, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
-		if (to != null) {
+	public void addExtraSideVertex(Connected c, Direction d, Connected to, CornerVertices cvs, final Bounds cx, final Bounds cy, List<Vertex> out, BorderTrim trim, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
+		if (to != null) {		
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
+			final Bounds tox = rh.getBoundsOf(toBounds, true);
+			final Bounds toy = rh.getBoundsOf(toBounds, false);
 			boolean toHasCornerVertices = em.hasCornerVertices(to);
-			if (!toHasCornerVertices) {
-				toBounds = rh.narrow(toBounds, borderTrimAreaX, borderTrimAreaY);
-			}
-			BigFraction xOrd = null, yOrd = null;
-			double fracX = 0d, fracY = 0d;
 			MultiCornerVertex cvNew = null;	
 
 			// set position
 			switch (d) {
 			case UP:
 			case DOWN:
-				x = x.narrow(rh.getBoundsOf(toBounds, true));
-				final double containerWidth = x.getDistanceMax() - x.getDistanceMin();
-				fracX = ((x.getDistanceCenter() - x.getDistanceMin()) / containerWidth);
-				xOrd = calculateSideOrdinal(trim.xe, trim.xs, fracX, containerWidth);
-				yOrd = MultiCornerVertex.getOrdForYDirection(d);
-				cvNew = cvs.createVertex(xOrd, yOrd);	
-				yOrd = cvNew.getYOrdinal();
-				fracY = fracMapY.get(yOrd);
+				final BigFraction yOrd = MultiCornerVertex.getOrdForYDirection(d);
+				cvNew = cvs.createVertex(BigFraction.ONE_HALF, yOrd);	
 				
-				final Bounds xNew1 = getSideBounds(x, trim.xs, trim.xe, toHasCornerVertices, fracX);
-				final Bounds yNew1 = y.keep(trim.ys, trim.ye-trim.ys, fracY);
-				setSideVertexRoutingInfo(c, d, out, xNew1, yNew1, cvNew);
+				MultiCornerVertex left = d == Direction.UP ? cvs.getTopLeft() : cvs.getBottomLeft();
+				MultiCornerVertex right = d == Direction.UP ? cvs.getTopRight() : cvs.getBottomRight();
+				
+				Bounds leftBounds = rh.getBoundsOf(left.getRoutingInfo(), true);
+				Bounds rightBounds = rh.getBoundsOf(right.getRoutingInfo(), true);
+				double gap = trim.xe - trim.xs;
+				Bounds cVertexBounds = new BasicBounds(leftBounds.getDistanceMax()+gap, rightBounds.getDistanceMin()-gap);
+				
+				Bounds yBounds = rh.getBoundsOf(left.getRoutingInfo(), false);
+				Bounds xBounds = getSideBounds(cx, tox, toHasCornerVertices, borderTrimAreaX, cVertexBounds, gap);
+				
+				setSideVertexRoutingInfo(c, d, out, xBounds, yBounds, cvNew);
 				break;
 			case LEFT:
 			case RIGHT:
-				y = y.narrow(rh.getBoundsOf(toBounds, false));
-				final double containerHeight = y.getDistanceMax() - y.getDistanceMin();
-				fracY = ((y.getDistanceCenter() - y.getDistanceMin()) / containerHeight);
-				yOrd = calculateSideOrdinal(trim.ye, trim.ys, fracY, containerHeight);
-				xOrd = MultiCornerVertex.getOrdForXDirection(d);
-				cvNew = cvs.createVertex(xOrd, yOrd);	
-				xOrd = cvNew.getXOrdinal();
-				fracX = fracMapX.get(xOrd);
+
+				final BigFraction xOrd = MultiCornerVertex.getOrdForXDirection(d);
+				cvNew = cvs.createVertex(xOrd, BigFraction.ONE_HALF);	
 				
-				final Bounds yNew = getSideBounds(y, trim.ys, trim.ye, toHasCornerVertices, fracY);
-				final Bounds xNew = x.keep(trim.xs, trim.xe-trim.xs, fracX);
-				setSideVertexRoutingInfo(c, d, out, xNew, yNew, cvNew);
-				break;
+				MultiCornerVertex up = d == Direction.LEFT ? cvs.getTopLeft() : cvs.getTopRight();
+				MultiCornerVertex down = d == Direction.LEFT ? cvs.getBottomLeft() : cvs.getBottomRight();
+				
+				Bounds upBounds = rh.getBoundsOf(up.getRoutingInfo(), false);
+				Bounds downBounds = rh.getBoundsOf(down.getRoutingInfo(), false);
+				double gap2 = trim.ye - trim.ys;
+				Bounds cVertexBounds2 = new BasicBounds(upBounds.getDistanceMax()+gap2, downBounds.getDistanceMin()-gap2);
+				
+				
+				Bounds xBounds2 = rh.getBoundsOf(up.getRoutingInfo(), true);
+				Bounds yBounds2 = getSideBounds(cy, toy, toHasCornerVertices, borderTrimAreaY, cVertexBounds2, gap2);
+				
+				setSideVertexRoutingInfo(c, d, out, xBounds2, yBounds2, cvNew);
 			}
 		}
 	}
 
-	private Bounds getSideBounds(Bounds b, double trims, double trime, boolean toHasCornerVertices, double frac) {
+	private Bounds getSideBounds(Bounds cBounds, Bounds toDeBounds, boolean toHasCornerVertices, double trimVertex, Bounds cVertexBounds, double gap) {
 		if (toHasCornerVertices) {
-			return b.keep(trims, trime-trims, frac);
+			// in this case, we need to find the mid-point of the common area between the two diagram-element bounds.
+			Bounds out = cBounds.narrow(toDeBounds);
+			double centre = out.getDistanceCenter();
+			double radius = (gap)/2d;
+			Bounds middle = new BasicBounds(centre-radius, centre+radius);
+			return middle;
 		} else {
-			return b;
+			// in the case that we are dealing with a regular vertex, we need to be the same size as that vertex.
+			Bounds toVertexBounds = toDeBounds.narrow(trimVertex);
+			Bounds out = cVertexBounds.narrow(toVertexBounds);
+			return out;
 		}
 	}
 
@@ -165,12 +178,12 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getCornerVertices(c), bounds);
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
-		
-		addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
 	
 		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
 			setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
 		}
+
+		addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
 	}
 
 	private void addSideVertices(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out, Layout l, Bounds bx, Bounds by,

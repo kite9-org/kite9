@@ -157,5 +157,25 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		return null;
 	}
 
+	@Override
+	public MultiCornerVertex getTopLeft() {
+		return tl;
+	}
+
+	@Override
+	public MultiCornerVertex getTopRight() {
+		return tr;
+	}
+
+	@Override
+	public MultiCornerVertex getBottomLeft() {
+		return bl;
+	}
+
+	@Override
+	public MultiCornerVertex getBottomRight() {
+		return br;
+	}
+
 	
 }

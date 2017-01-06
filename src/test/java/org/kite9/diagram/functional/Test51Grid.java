@@ -194,7 +194,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		return ctx;
 	}
 	
-	private List<XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	public static List<XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
 		Context tr = new Context("tr", listOf(g2), true, null, null); // new TextLine("Top Right"), null);
 		Context bl = new Context("bl", listOf(g3), true,  null, null); //  new TextLine("Bottom Left"), null);
@@ -431,5 +431,23 @@ public class Test51Grid extends AbstractFunctionalTest {
 		Context ctx = createSupergrid(false, false, 5);
 		ctx.setStyle("layout: grid; grid-size: 5 5;"); 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+	}
+	
+	@Test
+	public void test_51_23_ContainerConnectionOutsideDirectedThroughContainer2() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g6 = new Glyph("six", "","six ", null, null);
+		Context c5 = new Context("five", listOf(g6), true, null, null);
+		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		
+		new Link(g2, g6);
+		new ContradictingLink(contexts.get(0), c5, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5), null));
 	}
 }
