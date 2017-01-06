@@ -31,7 +31,7 @@ import org.kite9.framework.logging.LogicException;
  * to individual vertices around the perimeter of the container.  This means we have to add some new perimeter 
  * vertices and move the edges onto those.
  * 
- * This transform is necessary when you allow connections to containers.  This performs the transform on DIRECTED
+ * This transform is necessary when you allow connections to containers.  This performs the transform on DIRECTED, NOT CONTRADICTING
  * edges only.  ContainerCornerVertexArranger is used to perform the transform on undirected edges, as these 
  * need to be transformed after orthogonalization.
  * 

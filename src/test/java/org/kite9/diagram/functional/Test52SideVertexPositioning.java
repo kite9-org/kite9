@@ -30,7 +30,7 @@ public class Test52SideVertexPositioning extends AbstractFunctionalTest {
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(g2, g6);
-		new ContradictingLink(contexts.get(0), c5, null, null, null, null, Direction.RIGHT);
+		new Link(ctx, c5, null, null, null, null, Direction.RIGHT);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5), null));
 	}
@@ -48,7 +48,7 @@ public class Test52SideVertexPositioning extends AbstractFunctionalTest {
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(g2, g6);
-		new ContradictingLink(contexts.get(0), c5, null, null, null, null, Direction.DOWN);
+		new Link(ctx, c5, null, null, null, null, Direction.DOWN);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5), null));
 	}
@@ -107,6 +107,45 @@ public class Test52SideVertexPositioning extends AbstractFunctionalTest {
 		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, g5, g6), null);
 		
 		renderDiagram(d1);
+	}
+	
+	@Test
+	public void test_52_5_ContainerToContainerRightContradicting() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g6 = new Glyph("six", "","six ", null, null);
+		Context c5 = new Context("five", listOf(g6), true, null, null);
+		List<XMLElement> contexts = Test51Grid.createSquareGridContext(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		
+		new Link(g2, g6);
+		new ContradictingLink(contexts.get(0), c5, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5), null));
+	}
+	
+	@Test
+	public void test_52_6_ContainerToContainerDown2() throws IOException {
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+		Glyph g4 = new Glyph("four", "","four ", null, null);
+		Glyph g6 = new Glyph("six", "","six ", null, null);
+		Glyph g7 = new Glyph("seven", "","seven", null, null);
+		Context c5 = new Context("five", listOf(g6), true, null, null);
+		List<XMLElement> contexts = Test51Grid.createSquareGridContext(g1, g2, g3, g4);
+		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		
+		new Link(g2, g6);
+		new Link(ctx, c5, null, null, null, null, Direction.DOWN);
+		new Link(g4, g7, null, null, null, null, Direction.DOWN);
+		new Link(g6, g7, null, null, null, null, Direction.RIGHT);
+
+		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5, g7), null));
 	}
 	
 	

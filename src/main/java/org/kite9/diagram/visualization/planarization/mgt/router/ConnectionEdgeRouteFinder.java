@@ -15,6 +15,7 @@ import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mapping.ConnectionEdge;
 import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
@@ -191,7 +192,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		this.em = em;
 		this.it = it;
 		this.gt = gt;
-		
+				
 		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci.getFrom()), ocEnd = getRoutingInfoForOuterContainer(rh, ci.getTo());
 		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
@@ -229,6 +230,13 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		}
 
 		throw new Kite9ProcessingException("Couldn't get underlying for "+v);
+	}
+	
+	private static void checkContainerNotWithinGrid(Container c) {
+		Container parent = c.getContainer();
+		if ((parent != null) && (parent.getLayout() == Layout.GRID)) {
+			throw new EdgeRoutingException("Edge can't be routed as it can't come from a container embedded in a grid: "+c);
+		}				
 	}
 	
 	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, Vertex v) {
@@ -349,6 +357,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		
 		if (from instanceof MultiCornerVertex) {
 			Container c = (Container) getCorrectUnderlying(e, from);
+			checkContainerNotWithinGrid(c);
 			CornerVertices cvs = em.getCornerVertices(c);
 			for (MultiCornerVertex v : cvs.getPerimeterVertices()) {
 				if (!v.isPartOf(c)) {

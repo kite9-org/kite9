@@ -33,6 +33,7 @@ to {
 context {
 	type: connected;
 	sizing: maximize;
+	traversal: always;
 }
 
 .background {

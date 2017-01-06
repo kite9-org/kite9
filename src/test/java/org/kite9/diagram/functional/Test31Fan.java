@@ -242,31 +242,5 @@ public class Test31Fan extends AbstractFunctionalTest {
 		generate("dogleg.xml");
 	}
 	
-	@Test
-	public void test_31_10_NoFanTurn2() throws IOException {
-		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		Glyph g2 = new Glyph("g2", "", "g2", null, null);
-		Glyph g3 = new Glyph("g3", "", "g3", null, null);
-		Glyph g4 = new Glyph("g4", "", "g4", null, null);
-		Glyph g5 = new Glyph("g5", "", "g5", null, null);
-		Glyph g6 = new Glyph("g6", "", "g6", null, null);
-		
-		Context c1 = new Context("c1", HelpMethods.listOf(g2, g3, g1, g4), true, null, Layout.RIGHT);
-
-		
-		new Link(g1, g2, null, null, null, null, null);
-		new Link(g1, g2, null, null, null, null, null);
-		new Link(g1, g3, null, null, null, null, null);
-		new Link(g1, g3, null, null, null, null, null);
-		new Link(g1, g4, null, null, null, null, null);
-		new Link(g1, g4, null, null, null, null, null);
-		new Link(g1, g5, null, null, null, null, null);
 	
-		new Link(c1, g5, null, null, null, null, Direction.RIGHT);
-		new Link(g6, g5, null, null, null, null, Direction.RIGHT);
-		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, g5, g6), null);
-		
-		renderDiagram(d1);
-	}
 }

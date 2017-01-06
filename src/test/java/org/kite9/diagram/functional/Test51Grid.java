@@ -279,7 +279,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
-	@Test
+	@Test(expected=ElementsMissingException.class)
 	public void test_51_13_ContainerConnectionOutsideUndirected() throws IOException {
 		Glyph g1 = new Glyph("one", "","one", null, null);
 		Glyph g2 = new Glyph("two", "","two ", null, null);
@@ -295,7 +295,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
-	@Test
+	@Test(expected=ElementsMissingException.class)
 	public void test_51_14_ContainerConnectionOutsideDirectedFacing() throws IOException {
 		Glyph g1 = new Glyph("one", "","one", null, null);
 		Glyph g2 = new Glyph("two", "","two ", null, null);
@@ -311,7 +311,7 @@ public class Test51Grid extends AbstractFunctionalTest {
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
-	@Test
+	@Test(expected=ElementsMissingException.class)
 	public void test_51_15_ContainerConnectionOutsideDirectedThroughContainer() throws IOException {
 		Glyph g1 = new Glyph("one", "","one", null, null);
 		Glyph g2 = new Glyph("two", "","two ", null, null);
@@ -432,22 +432,5 @@ public class Test51Grid extends AbstractFunctionalTest {
 		ctx.setStyle("layout: grid; grid-size: 5 5;"); 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}
-	
-	@Test
-	public void test_51_23_ContainerConnectionOutsideDirectedThroughContainer2() throws IOException {
-		Glyph g1 = new Glyph("one", "","one", null, null);
-		Glyph g2 = new Glyph("two", "","two ", null, null);
-		Glyph g3 = new Glyph("three", "","three ", null, null);
-		Glyph g4 = new Glyph("four", "","four ", null, null);
-		Glyph g6 = new Glyph("six", "","six ", null, null);
-		Context c5 = new Context("five", listOf(g6), true, null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
-		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 2 2;");
-		
-		new Link(g2, g6);
-		new ContradictingLink(contexts.get(0), c5, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, c5), null));
-	}
 }

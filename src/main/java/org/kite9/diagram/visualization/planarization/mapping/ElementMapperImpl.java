@@ -19,9 +19,12 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.serialization.CSSConstants;
+import org.kite9.framework.serialization.EnumValue;
 
 public class ElementMapperImpl implements ElementMapper {
 	
@@ -170,11 +173,30 @@ public class ElementMapperImpl implements ElementMapper {
 					return true;
 				}
 			}
+			
+			// are connections allowed to pass through it?
+			boolean canTraverse = isElementTraversible(c);
+			if (canTraverse && hasNestedConnections(c)) {
+				return true;
+			}
 		}
 		
 		// is it embedded in a grid?  If yes, use corners
 		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
 		return (l == Layout.GRID);
+	}
+
+	private boolean isElementTraversible(DiagramElement c) {
+		return isElementTraversible(c, CSSConstants.TRAVERSAL_BOTTOM_PROPERTY) ||
+				isElementTraversible(c, CSSConstants.TRAVERSAL_LEFT_PROPERTY) ||
+				isElementTraversible(c, CSSConstants.TRAVERSAL_RIGHT_PROPERTY) ||
+				isElementTraversible(c, CSSConstants.TRAVERSAL_TOP_PROPERTY);
+	}
+
+	private boolean isElementTraversible(DiagramElement c, String traversalBottomProperty) {
+		EnumValue v = (EnumValue) c.getCSSStyleProperty(CSSConstants.TRAVERSAL_BOTTOM_PROPERTY);
+		BorderTraversal bt = (BorderTraversal) v.getTheValue();
+		return (bt == BorderTraversal.ALWAYS);
 	}
 
 	Map<DiagramElement, Boolean> hasConnections = new HashMap<>();
