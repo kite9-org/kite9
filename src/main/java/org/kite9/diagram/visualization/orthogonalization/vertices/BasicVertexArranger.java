@@ -145,10 +145,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
 		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 		Map<OPair<BigFraction>, MultiCornerVertex> corners = new HashMap<>();
-		Map<BigFraction, BorderEdge> xedges = new HashMap<>();
-		Map<BigFraction, BorderEdge> yedges = new HashMap<>();
 		
-		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners, xedges, yedges);
+		placeContainerContentsOntoGrid(o, c, c, emptyMap, corners);
 		o.getAllVertices().addAll(corners.values());
 		return convertGridToOuterFace(o, corners);
 	}
@@ -162,8 +160,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	
 	
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container root, Container c, 
-			Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners,
-			Map<BigFraction, BorderEdge> xedges, Map<BigFraction, BorderEdge> yedges) {
+			Map<Direction, List<Dart>> emptyMap, Map<OPair<BigFraction>, MultiCornerVertex> corners) {
 		gp.placeOnGrid(c, true);
 		
 		OPair<BigFraction> parentXPos = (root == c) ? IndependentCornerVertices.FULL_RANGE : gp.getGridXPosition(c);
@@ -172,7 +169,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		for (DiagramElement de : c.getContents()) {
 			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
 				// nest the grid
-				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners, xedges, yedges);
+				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
 			} else {
 				OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
 				OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
@@ -182,10 +179,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
 				MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
 				
-				Edge t = createOrReuse(de, yPos.getA(), yedges, o, root, corners, Direction.RIGHT);
-				Edge r = createOrReuse(de, xPos.getB(), xedges, o, root, corners, Direction.DOWN);
-				Edge b = createOrReuse(de, yPos.getB(), yedges, o, root, corners, Direction.LEFT);
-				Edge l = createOrReuse(de, xPos.getA(), xedges, o, root, corners, Direction.UP);
+				Edge t = createOrReuse(de, tl, tr,  o, root, corners, Direction.RIGHT);
+				Edge r = createOrReuse(de, tr, br, o, root, corners, Direction.DOWN);
+				Edge b = createOrReuse(de, br, bl, o, root, corners, Direction.LEFT);
+				Edge l = createOrReuse(de, bl, tl, o, root, corners, Direction.UP);
 				
 				Face f = o.getPlanarization().createFace();
 				f.add(tl, t);
@@ -249,20 +246,22 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		return out;
 	}
 	
-	private BorderEdge createOrReuse(DiagramElement de, BigFraction f, Map<BigFraction, BorderEdge> edges, Orthogonalization o, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, Direction d) {
-		BorderEdge be = edges.get(f);
-		boolean horiz = (d == Direction.LEFT) || (d==Direction.RIGHT);
+	private Edge getEdgeTo(MultiCornerVertex from, MultiCornerVertex to) {
+		for (Edge e : from.getEdges()) {
+			if (e.otherEnd(from) == to) {
+				return e;
+			}
+		}
+		
+		return null;
+	}
+	
+	private BorderEdge createOrReuse(DiagramElement de, MultiCornerVertex from, MultiCornerVertex to, Orthogonalization o, Container root, Map<OPair<BigFraction>, MultiCornerVertex> corners, Direction d) {
+		BorderEdge be = (BorderEdge) getEdgeTo(from, to);
+		
 		if (be == null) {
-			BigFraction ax = horiz ? BigFraction.ZERO : f;
-			BigFraction ay = horiz ? f : BigFraction.ZERO;
-			BigFraction bx = horiz ? BigFraction.ONE : f;
-			BigFraction by = horiz ? f:  BigFraction.ONE;
-
-			MultiCornerVertex a = createOrReuse(de, root, corners, ax, ay, null, null);
-			MultiCornerVertex b = createOrReuse(de, root, corners, bx, by, null, null);
-			
-			be = new BorderEdge(a, b, "be"+a+"-"+b, d, false, root, new LinkedHashMap<>());
-			edges.put(f, be);
+			be = new BorderEdge(from, to, "be"+from+"-"+to, d, false, root, new LinkedHashMap<>());
+			log.send("Created border edge"+be);
 		}
 		Direction borderSide = Direction.rotateAntiClockwise(d);
 		be.getDiagramElements().put(de, borderSide);
