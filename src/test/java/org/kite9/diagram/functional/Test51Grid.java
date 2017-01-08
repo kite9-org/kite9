@@ -196,9 +196,9 @@ public class Test51Grid extends AbstractFunctionalTest {
 	
 	public static List<XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
-		Context tr = new Context("tr", listOf(g2), true, null, null); // new TextLine("Top Right"), null);
-		Context bl = new Context("bl", listOf(g3), true,  null, null); //  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", listOf(g4), true,  null, null); //  new TextLine("Bottom Right"), null);
+		Context tr = new Context("tr", listOf(g2), true, new TextLine("Top Right"), null);
+		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
+		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
 		
 		tl.setStyle("occupies: 0 0;");
 		tr.setStyle("occupies: 1 0;");

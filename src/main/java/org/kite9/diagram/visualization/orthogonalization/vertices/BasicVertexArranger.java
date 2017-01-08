@@ -170,35 +170,35 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		OPair<BigFraction> parentYPos = (root == c) ? IndependentCornerVertices.FULL_RANGE : gp.getGridYPosition(c);
 		
 		for (DiagramElement de : c.getContents()) {
-			OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
-			OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
-			
-			MultiCornerVertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
-			MultiCornerVertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
-			MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
-			MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
-			
-			Edge t = createOrReuse(de, yPos.getA(), yedges, o, root, corners, Direction.RIGHT);
-			Edge r = createOrReuse(de, xPos.getB(), xedges, o, root, corners, Direction.DOWN);
-			Edge b = createOrReuse(de, yPos.getB(), yedges, o, root, corners, Direction.LEFT);
-			Edge l = createOrReuse(de, xPos.getA(), xedges, o, root, corners, Direction.UP);
-			
-			Face f = o.getPlanarization().createFace();
-			f.add(tl, t);
-			f.add(tr, r);
-			f.add(br, b);
-			f.add(bl, l);
-			
-			// faces won't always make sense here
-			//f.checkFaceIntegrity();
-			
-			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f);
-			
-			if (de instanceof Container) {
-				if (((Container)de).getLayout()==Layout.GRID) {
-					// nest the grid
-					placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners, xedges, yedges);
-				} else {
+			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
+				// nest the grid
+				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners, xedges, yedges);
+			} else {
+				OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
+				OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
+				
+				MultiCornerVertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
+				MultiCornerVertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
+				MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
+				MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
+				
+				Edge t = createOrReuse(de, yPos.getA(), yedges, o, root, corners, Direction.RIGHT);
+				Edge r = createOrReuse(de, xPos.getB(), xedges, o, root, corners, Direction.DOWN);
+				Edge b = createOrReuse(de, yPos.getB(), yedges, o, root, corners, Direction.LEFT);
+				Edge l = createOrReuse(de, xPos.getA(), xedges, o, root, corners, Direction.UP);
+				
+				Face f = o.getPlanarization().createFace();
+				f.add(tl, t);
+				f.add(tr, r);
+				f.add(br, b);
+				f.add(bl, l);
+				
+				// faces won't always make sense here
+				//f.checkFaceIntegrity();
+				
+				DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f);
+				
+				if (de instanceof Container) {
 					convertContainerContents(o, (Container) de, done); 
 				}
 			}
