@@ -3,12 +3,11 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connection;
@@ -262,11 +261,11 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			MultiCornerVertex a = createOrReuse(de, root, corners, ax, ay, null, null);
 			MultiCornerVertex b = createOrReuse(de, root, corners, bx, by, null, null);
 			
-			be = new BorderEdge(a, b, "be"+a+"-"+b, d, false, root, new HashSet<>());
+			be = new BorderEdge(a, b, "be"+a+"-"+b, d, false, root, new LinkedHashMap<>());
 			edges.put(f, be);
 		}
-		
-		be.getDiagramElements().add(de);
+		Direction borderSide = Direction.rotateAntiClockwise(d);
+		be.getDiagramElements().put(de, borderSide);
 		return be;
 	}
 
@@ -294,11 +293,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		o.getAllVertices().add(br);
 		
 		Face f = o.getPlanarization().createFace();
-		Set<DiagramElement> setOfElements = Collections.singleton(originalUnderlying);
-		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, setOfElements));
-		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, setOfElements));
-		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, setOfElements));
-		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, setOfElements));
+		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, mapFor(originalUnderlying, Direction.UP)));
+		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, mapFor(originalUnderlying, Direction.RIGHT)));
+		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, mapFor(originalUnderlying, Direction.DOWN)));
+		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, mapFor(originalUnderlying, Direction.LEFT)));
 		f.checkFaceIntegrity();
 		
 		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, f);
@@ -309,6 +307,12 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 		
 		return inner;
+	}
+	
+	private Map<DiagramElement, Direction> mapFor(DiagramElement de, Direction d) {
+		 Map<DiagramElement, Direction> out = new LinkedHashMap<>();
+		 out.put(de, d);
+		 return out;
 	}
 
 	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering,

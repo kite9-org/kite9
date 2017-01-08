@@ -376,8 +376,9 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			Vertex dFrom = d.getFrom();
 			Vertex dTo = d.getTo();
 			if (underlying instanceof BorderEdge) {
-				for (DiagramElement co : ((BorderEdge) underlying).getDiagramElements()) {
-					if (labelledContainer(co)) {
+				for (Map.Entry<DiagramElement, Direction> ent : ((BorderEdge) underlying).getDiagramElements().entrySet()) {
+					DiagramElement co = ent.getKey();
+					if ((labelledContainer(co)) && (ent.getValue() == Direction.DOWN)) {
 						mapDartToContainer(yo, lowestDartsInContainer, lowestDartsInContainerLevel, d, co, dFrom, dTo);
 					}
 				}
@@ -820,7 +821,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			if (ultimateElement == optionalDiagramElement) {
 				return dart;
 			} else if (underlying instanceof BorderEdge) {
-				if (((BorderEdge)underlying).getDiagramElements().contains(optionalDiagramElement)) {
+				if (((BorderEdge)underlying).getDiagramElements().keySet().contains(optionalDiagramElement)) {
 					return dart;
 				}
 			}

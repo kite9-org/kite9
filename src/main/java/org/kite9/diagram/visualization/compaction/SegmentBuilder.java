@@ -15,7 +15,6 @@ import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
@@ -99,7 +98,7 @@ public class SegmentBuilder implements Logable {
 		DiagramElement parent = d.getOriginalUnderlying();
 		Object e = d.getUnderlying();
 		if (e instanceof BorderEdge) {
-			return !((BorderEdge)e).getDiagramElements().contains(parent);
+			return !((BorderEdge)e).getDiagramElements().keySet().contains(parent);
 		}
 		
 		return false;

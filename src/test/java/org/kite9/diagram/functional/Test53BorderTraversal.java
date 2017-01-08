@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.framework.logging.LogicException;
 
 public class Test53BorderTraversal extends AbstractFunctionalTest {
 
@@ -26,19 +22,11 @@ public class Test53BorderTraversal extends AbstractFunctionalTest {
 		Context c5 = new Context("five", listOf(g6), true, null, null);
 		c5.setStyle("traversal: always none none none; ");
 		
-		new Link(g2, g6);
+		Link l = new Link(g2, g6);
 
 		DiagramXMLElement d = new DiagramXMLElement("diagram", Arrays.asList(g1, c5, g2, g3), Layout.RIGHT, null);
 		renderDiagram(d);
-		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
-			
-			@Override
-			public void action(RouteRenderingInformation rri, Object d, Connection c) {
-				if (d != DiagramChecker.MULTIPLE_DIRECTIONS) {
-					throw new LogicException("Should be turning");
-				}
-			}
-		});
+		mustTurn(d, l);
 	}
 
 	@Test
@@ -65,21 +53,10 @@ public class Test53BorderTraversal extends AbstractFunctionalTest {
 		DiagramXMLElement diag = new DiagramXMLElement("dia", createList(a, b, c, d, e), null);
 		renderDiagram(diag);
 
-		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
-			
-			@Override
-			public void action(RouteRenderingInformation rri, Object d, Connection c) {
-				if (c == l) {
-					if (d != DiagramChecker.SET_CONTRADICTING) {
-						throw new LogicException("Should be contradicting");
-					}
-				}
-			}
-		});
+		mustContradict(diag, l);
 		
 	}
-	
-	
+
 	@Override
 	protected boolean checkEverythingStraight() {
 		return false;

@@ -426,7 +426,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				Edge e = getLeaverInDirection(from, d);
 				if (e==null) {
 					BorderEdge cbe = new BorderEdge((MultiCornerVertex) from, (MultiCornerVertex) to, l+d+i, d);
-					cbe.getDiagramElements().add(c);
+					cbe.getDiagramElements().put(c, Direction.rotateAntiClockwise(d));
 					em.add(cbe);			
 					return cbe;
 				}
@@ -435,7 +435,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 					throw new Kite9ProcessingException("What is this?");
 				}
 				
-				((BorderEdge)e).getDiagramElements().add(c);
+				((BorderEdge)e).getDiagramElements().put(c, Direction.rotateAntiClockwise(d));
 				em.add(e);			
 				from = e.otherEnd(from);
 			}

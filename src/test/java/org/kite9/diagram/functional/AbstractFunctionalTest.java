@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import org.junit.Before;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
+import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -17,6 +21,7 @@ import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.XMLHelper;
 
 public class AbstractFunctionalTest extends HelpMethods {
@@ -220,5 +225,33 @@ public class AbstractFunctionalTest extends HelpMethods {
 		});
 		
 		return found[0];
+	}
+
+	protected void mustTurn(DiagramXMLElement d, Link l) {
+		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
+	
+			@Override
+			public void action(RouteRenderingInformation rri, Object d, Connection c) {
+				if (l == c) {
+					if (d != DiagramChecker.MULTIPLE_DIRECTIONS) {
+						throw new LogicException("Should be turning");
+					}
+				}
+			}
+		});
+	}
+
+	protected void mustContradict(DiagramXMLElement diag, Link l) {
+		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
+			
+			@Override
+			public void action(RouteRenderingInformation rri, Object d, Connection c) {
+				if (c == l) {
+					if (d != DiagramChecker.SET_CONTRADICTING) {
+						throw new LogicException("Should be contradicting");
+					}
+				}
+			}
+		});
 	}
 }

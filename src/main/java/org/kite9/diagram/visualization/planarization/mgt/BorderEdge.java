@@ -2,6 +2,8 @@ package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -32,10 +34,10 @@ import org.kite9.framework.serialization.EnumValue;
 public class BorderEdge extends AbstractPlanarizationEdge {
 
 	DiagramElement underlying;
-	Collection<DiagramElement> forElements;
+	Map<DiagramElement, Direction> forElements;
 	String label;
 	
-	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide, Collection<DiagramElement> forELements) {
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide, Map<DiagramElement, Direction> forELements) {
 		super(from, to, null, null, null, null, null);
 		this.underlying = cide;
 		this.label = label;
@@ -45,7 +47,7 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	}
 	
 	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
-		this(from, to, label, d, false, getOuterContainer(from, to), new HashSet<>());
+		this(from, to, label, d, false, getOuterContainer(from, to), new LinkedHashMap<>());
 	}
 	
 	private static Container getOuterContainer(MultiCornerVertex from, MultiCornerVertex to) {
@@ -89,7 +91,7 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		return underlying;
 	}
 	
-	public Collection<DiagramElement> getDiagramElements() {
+	public Map<DiagramElement, Direction> getDiagramElements() {
 		return forElements;
 	}
  	
@@ -124,7 +126,7 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in
-			for (DiagramElement c : forElements) {
+			for (DiagramElement c : forElements.keySet()) {
 				((EdgeCrossingVertex)toIntroduce).addUnderlying(c);
 			}
 		}
