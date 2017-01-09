@@ -69,7 +69,9 @@ public class Slideable implements PositionChangeNotifiable {
 		//return slack1;
 	}
 	
-	
+	public boolean hasTransitiveForwardConstraintTo(Slideable s2) {
+		return minimum.hasTransitiveForwardConstraintTo(s2.minimum, s2.getMinimumPosition());
+	}
 
 	@Override
 	public String toString() {

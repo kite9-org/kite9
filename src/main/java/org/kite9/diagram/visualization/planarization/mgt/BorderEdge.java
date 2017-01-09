@@ -1,18 +1,16 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.style.BorderTraversal;
@@ -26,7 +24,8 @@ import org.kite9.framework.serialization.EnumValue;
  * of vertices, these edges will be used around the perimeter of the diagram.
  * 
  * A new constraint on Border edge is that "from" must be before "to" in the clockwise ordering of the edges 
- * on the face, when the edge is created.  That way, we always know whether a face is inside or outside a container.
+ * on the face, when the edge is created.  That way, we always know whether a face is inside or outside a container 
+ * (this doesn't work for grids, because edges are used for multple parts of the face - is this an issue?)
  * 
  * @author robmoffat
  *

@@ -2,6 +2,9 @@ package org.kite9.diagram.visualization.planarization.grid;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +13,13 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
+import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.visualization.planarization.mapping.CornerVertices;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.IntegerRangeValue;
@@ -209,4 +217,85 @@ public class GridPositionerImpl implements GridPositioner {
 	}
 
 
+	public List<MultiCornerVertex> getClockwiseOrderedContainerVertices(CornerVertices cvs) {
+		BigFraction minx = null;
+		BigFraction maxx = null;
+		BigFraction miny = null;
+		BigFraction maxy = null;
+			
+		cvs.identifyPerimeterVertices();
+		
+		Collection<MultiCornerVertex> perimeterVertices = cvs.getPerimeterVertices();
+		for (MultiCornerVertex cv : perimeterVertices) {
+			BigFraction	xb = cv.getXOrdinal();
+			BigFraction yb = cv.getYOrdinal();
+			
+			minx = limit(minx, xb, -1);
+			miny = limit(miny, yb, -1);
+			maxx = limit(maxx, xb, 1);
+			maxy = limit(maxy, yb, 1);		
+		}
+			
+		List<MultiCornerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny, perimeterVertices));
+		List<MultiCornerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices));
+		List<MultiCornerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices));
+		List<MultiCornerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices));
+		
+		List<MultiCornerVertex> plist = new ArrayList<>(top.size()+right.size()+left.size()+bottom.size());
+		
+		addAllExceptLast(plist, top);
+		addAllExceptLast(plist, right);
+		addAllExceptLast(plist, bottom);
+		addAllExceptLast(plist, left);
+	
+		return plist;
+	}
+	
+
+	private BigFraction limit(BigFraction current, BigFraction in, int compare) {
+		if ((current == null) || (in.compareTo(current) == compare)) {
+			current = in;
+		}
+		return current;
+	}
+	
+	private List<MultiCornerVertex> sort(int xorder, int yorder, List<MultiCornerVertex> collect) {
+		Collections.sort(collect, new Comparator<MultiCornerVertex>() {
+
+			@Override
+			public int compare(MultiCornerVertex o1, MultiCornerVertex o2) {
+				
+				int ys = o1.getYOrdinal().compareTo(o2.getYOrdinal()) * yorder;
+				int xs = o1.getXOrdinal().compareTo(o2.getXOrdinal()) * xorder;
+				
+				return xs + ys;
+			}
+		});
+		
+		return collect;
+	}
+	
+	/*
+	 * Prevents duplicating the corner vertices
+	 */
+	private void addAllExceptLast(List<MultiCornerVertex> out, List<MultiCornerVertex> in) {
+		for (int i = 0; i < in.size()-1; i++) {
+			out.add(in.get(i));
+		}
+	}
+
+	private List<MultiCornerVertex> collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<MultiCornerVertex> elements) {
+		List<MultiCornerVertex> out = new ArrayList<>();
+		for (MultiCornerVertex cv : elements) {
+			BigFraction xb = cv.getXOrdinal();
+			BigFraction yb = cv.getYOrdinal();
+			
+			if ((minx.compareTo(xb) != 1) && (maxx.compareTo(xb) != -1)
+				&& (miny.compareTo(yb) != 1) && (maxy.compareTo(yb) != -1)) {
+					out.add(cv);
+				}
+		}
+		
+		return out;
+	}
 }

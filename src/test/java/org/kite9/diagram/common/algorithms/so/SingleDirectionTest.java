@@ -66,6 +66,11 @@ public class SingleDirectionTest {
 		Assert.assertEquals(0, d.getMaxDepth());
 		Assert.assertEquals(3, a.getMaxDepth());
 		Assert.assertEquals(1, c.getMaxDepth());
+		
+//		Assert.assertTrue(a.hasTransitiveForwardConstraintTo(d));
+//		Assert.assertFalse(c.hasTransitiveForwardConstraintTo(b));
+//		Assert.assertTrue(e.hasTransitiveForwardConstraintTo(b));
+//		
 	}
 	
 	/**

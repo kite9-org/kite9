@@ -21,7 +21,7 @@ public interface CornerVertices {
 	/**
 	 * Unordered collection of vertices around the container.
 	 */
-	public void identifyPerimeterVertices(RoutableHandler2D rh);
+	public void identifyPerimeterVertices();
 	
 	public Collection<MultiCornerVertex> getPerimeterVertices();
 	

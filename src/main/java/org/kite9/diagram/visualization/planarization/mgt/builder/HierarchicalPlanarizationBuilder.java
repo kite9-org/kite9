@@ -279,7 +279,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	
 			int i = 0;
 			MultiCornerVertex fromv, tov = null;
-			List<MultiCornerVertex> perimeterVertices = getClockwiseOrderedContainerVertices(cv);
+			List<MultiCornerVertex> perimeterVertices = gridHelp.getClockwiseOrderedContainerVertices(cv);
 			Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
 			while (iterator.hasNext()) {
 				fromv = tov;
@@ -301,93 +301,6 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				}
 			}
 		}
-	}
-
-	private List<MultiCornerVertex> getClockwiseOrderedContainerVertices(CornerVertices cvs) {
-		Bounds minx = null;
-		Bounds maxx = null;
-		Bounds miny = null;
-		Bounds maxy = null;
-			
-		cvs.identifyPerimeterVertices(rh);
-		
-		Collection<MultiCornerVertex> perimeterVertices = cvs.getPerimeterVertices();
-		for (MultiCornerVertex cv : perimeterVertices) {
-			RoutingInfo ri = cv.getRoutingInfo();
-			Bounds xb = rh.getBoundsOf(ri, true);
-			Bounds yb = rh.getBoundsOf(ri, false);
-			
-			minx = limit(minx, xb, -1);
-			miny = limit(miny, yb, -1);
-			maxx = limit(maxx, xb, 1);
-			maxy = limit(maxy, yb, 1);		
-		}
-			
-		List<MultiCornerVertex> top = sort(+1, 0, collect(minx, maxx, miny, miny, perimeterVertices));
-		List<MultiCornerVertex> right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices));
-		List<MultiCornerVertex> bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices));
-		List<MultiCornerVertex> left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices));
-		
-		List<MultiCornerVertex> plist = new ArrayList<>(top.size()+right.size()+left.size()+bottom.size());
-		
-		addAllExceptLast(plist, top);
-		addAllExceptLast(plist, right);
-		addAllExceptLast(plist, bottom);
-		addAllExceptLast(plist, left);
-	
-		return plist;
-	}
-
-	private Bounds limit(Bounds current, Bounds in, int compare) {
-		if ((current == null) || (in.compareTo(current) == compare)) {
-			current = in;
-		}
-		return current;
-	}
-	
-	private List<MultiCornerVertex> sort(int xorder, int yorder, List<MultiCornerVertex> collect) {
-		Collections.sort(collect, new Comparator<MultiCornerVertex>() {
-
-			@Override
-			public int compare(MultiCornerVertex o1, MultiCornerVertex o2) {
-				Bounds xb1 = rh.getBoundsOf(o1.getRoutingInfo(), true);
-				Bounds yb1 = rh.getBoundsOf(o1.getRoutingInfo(), false);
-				
-				Bounds xb2 = rh.getBoundsOf(o2.getRoutingInfo(), true);
-				Bounds yb2 = rh.getBoundsOf(o2.getRoutingInfo(), false);
-				
-				int ys = yb1.compareTo(yb2) * yorder;
-				int xs = xb1.compareTo(xb2) * xorder;
-				
-				return xs + ys;
-			}
-		});
-		
-		return collect;
-	}
-	
-	/*
-	 * Prevents duplicating the corner vertices
-	 */
-	private void addAllExceptLast(List<MultiCornerVertex> out, List<MultiCornerVertex> in) {
-		for (int i = 0; i < in.size()-1; i++) {
-			out.add(in.get(i));
-		}
-	}
-
-	private List<MultiCornerVertex> collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<MultiCornerVertex> elements) {
-		List<MultiCornerVertex> out = new ArrayList<>();
-		for (MultiCornerVertex cv : elements) {
-			Bounds xb = rh.getBoundsOf(cv.getRoutingInfo(), true);
-			Bounds yb = rh.getBoundsOf(cv.getRoutingInfo(), false);
-			
-			if ((minx.compareTo(xb) != 1) && (maxx.compareTo(xb) != -1)
-				&& (miny.compareTo(yb) != 1) && (maxy.compareTo(yb) != -1)) {
-					out.add(cv);
-				}
-		}
-		
-		return out;
 	}
 
 	private void addEdgeBetween(MGTPlanarization p, DiagramElement outer, String originalLabel, EdgeMapping em, int i, MultiCornerVertex fromv, MultiCornerVertex tov) {

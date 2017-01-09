@@ -392,32 +392,15 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			for (Dart d : entry.getValue()) {
 				Vertex dFrom = d.getFrom();
 				Vertex dTo = d.getTo();
-				if (d.getDrawDirectionFrom(dFrom) == Direction.RIGHT) {
-					if (isLeftCornerOfContainer(dFrom, entry.getKey().getParent())) {
-						addContainerRectangles(possibles, entry.getKey(), dFrom, xo, yo);
-					}
+				if (d.getDrawDirection() == Direction.RIGHT) {
+					addContainerRectangles(possibles, entry.getKey(), dFrom, xo, yo);
 				} else {
-					if (isLeftCornerOfContainer(dTo, entry.getKey().getParent())) {
-						addContainerRectangles(possibles, entry.getKey(), dTo, xo, yo);
-					}
+					addContainerRectangles(possibles, entry.getKey(), dTo, xo, yo);
 				}
 			}
 			placeLabel(c, xo, yo, entry.getKey(), possibles, true);
 		}
 
-	}
-
-	private boolean isLeftCornerOfContainer(Vertex d, DiagramElement parent) {
-		if (d instanceof MultiCornerVertex) {
-			for (Anchor a : ((MultiCornerVertex)d).getAnchors()) {
-				if (a.getDe() == parent) {
-					return a.getLr() == HPos.LEFT;
-				}
-			}
-		} else if (d instanceof SingleCornerVertex) {
-			return d.isPartOf(parent) && (((SingleCornerVertex) d).getLr() == HPos.LEFT);
-		}
-		return false;
 	}
 
 	/**

@@ -10,7 +10,6 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.VPos;
@@ -80,22 +79,22 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 	}
 	
 	@Override
-	public void identifyPerimeterVertices(RoutableHandler2D rh) {
-		Bounds minx = rh.getBoundsOf(tl.getRoutingInfo(), true);
-		Bounds maxx = rh.getBoundsOf(br.getRoutingInfo(), true);
-		Bounds miny = rh.getBoundsOf(tl.getRoutingInfo(), false);
-		Bounds maxy = rh.getBoundsOf(br.getRoutingInfo(), false);
+	public void identifyPerimeterVertices() {
+		BigFraction minx = tl.getXOrdinal();
+		BigFraction maxx = br.getXOrdinal();
+		BigFraction miny = tl.getYOrdinal();
+		BigFraction maxy = br.getYOrdinal();
 		
 		HashSet<MultiCornerVertex> pset = new HashSet<>(10);
-		collect(minx, maxx, miny, miny, pset, rh);
-		collect(maxx, maxx, miny, maxy, pset, rh);
-		collect(minx, maxx, maxy, maxy, pset, rh);
-		collect(minx, minx, miny, maxy, pset, rh);
+		collect(minx, maxx, miny, miny, pset);
+		collect(maxx, maxx, miny, maxy, pset);
+		collect(minx, maxx, maxy, maxy, pset);
+		collect(minx, minx, miny, maxy, pset);
 		
 		perimeterVertices = pset;
 	}
 	
-	private boolean afterEq(Bounds in, Bounds with) {
+	private boolean afterEq(BigFraction in, BigFraction with) {
 		if (in == null) {
 			return true;	
 		}
@@ -103,7 +102,7 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		return c > -1;
 	}
 	
-	private boolean beforeEq(Bounds in, Bounds with) {
+	private boolean beforeEq(BigFraction in, BigFraction with) {
 		if (in == null) {
 			return true;	
 		}
@@ -111,10 +110,10 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		return c < 1;
 	}
 	
-	private void collect(Bounds minx, Bounds maxx, Bounds miny, Bounds maxy, Collection<MultiCornerVertex> out, RoutableHandler2D rh) {
+	private void collect(BigFraction minx, BigFraction maxx, BigFraction miny, BigFraction maxy, Collection<MultiCornerVertex> out) {
 		for (MultiCornerVertex cv : getTopContainerVertices().getAllDescendentVertices()) {
-			Bounds x = rh.getBoundsOf(cv.getRoutingInfo(), true);
-			Bounds y = rh.getBoundsOf(cv.getRoutingInfo(), false);
+			BigFraction x = cv.getXOrdinal();
+			BigFraction y = cv.getYOrdinal();
 			if ((afterEq(x, minx)) && (beforeEq(x, maxx)) && (afterEq(y, miny)) && (beforeEq(y, maxy))) {
 				out.add(cv);
 			}

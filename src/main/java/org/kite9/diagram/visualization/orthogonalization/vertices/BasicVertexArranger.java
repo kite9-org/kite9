@@ -57,11 +57,12 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	protected CompleteDisplayer sizer;
 	
-	protected GridPositioner gp = new GridPositionerImpl();
+	protected GridPositioner gp;
 	
 	public BasicVertexArranger(CompleteDisplayer cd) {
 		super();
 		this.sizer = cd;
+		this.gp = new GridPositionerImpl();
 	}
 
 	public static final int INTER_EDGE_SEPARATION = 0;
@@ -123,6 +124,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		if (c.getLayout() == Layout.GRID) {
 			if (c.getContents().size() > 0) {
 				DartFace outer = createGridFaceForContainerContents(o, c);
+				log.send("Created container contents outer face: "+outer.getUnderlying().id+" "+outer);
 				inner.getUnderlying().getContainedFaces().add(outer.getUnderlying());
 				outer.getUnderlying().setContainedBy(inner.getUnderlying());
 			}
@@ -167,17 +169,18 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		OPair<BigFraction> parentYPos = (root == c) ? IndependentCornerVertices.FULL_RANGE : gp.getGridYPosition(c);
 		
 		for (DiagramElement de : c.getContents()) {
+			OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
+			OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
+			
+			MultiCornerVertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
+			MultiCornerVertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
+			MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
+			MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
+			
 			if ((de instanceof Container) && (((Container)de).getLayout()==Layout.GRID)) {
 				// nest the grid
 				placeContainerContentsOntoGrid(o, root, (Container) de, emptyMap, corners);
 			} else {
-				OPair<BigFraction> xPos = within(parentXPos, gp.getGridXPosition(de));
-				OPair<BigFraction> yPos = within(parentYPos, gp.getGridYPosition(de));
-				
-				MultiCornerVertex tl = createOrReuse(de, root, corners, xPos.getA(), yPos.getA(), HPos.LEFT, VPos.UP);
-				MultiCornerVertex tr = createOrReuse(de, root, corners, xPos.getB(), yPos.getA(), HPos.RIGHT, VPos.UP);
-				MultiCornerVertex bl = createOrReuse(de, root, corners, xPos.getA(), yPos.getB(), HPos.LEFT, VPos.DOWN);
-				MultiCornerVertex br = createOrReuse(de, root, corners, xPos.getB(), yPos.getB(), HPos.RIGHT, VPos.DOWN);
 				
 				Edge t = createOrReuse(de, tl, tr,  o, root, corners, Direction.RIGHT);
 				Edge r = createOrReuse(de, tr, br, o, root, corners, Direction.DOWN);

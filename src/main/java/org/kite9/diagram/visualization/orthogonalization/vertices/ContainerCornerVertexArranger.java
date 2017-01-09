@@ -17,6 +17,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
@@ -29,8 +30,6 @@ import org.kite9.framework.logging.LogicException;
  */
 public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	
-	
-
 	public ContainerCornerVertexArranger(CompleteDisplayer cd) {
 		super(cd);
 	}
