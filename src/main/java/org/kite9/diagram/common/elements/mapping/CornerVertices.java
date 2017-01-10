@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.kite9.diagram.visualization.planarization.mapping;
+package org.kite9.diagram.common.elements.mapping;
 
 import java.util.Collection;
 

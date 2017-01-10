@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.mapping;
+package org.kite9.diagram.common.elements.mapping;
 
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.DiagramElement;

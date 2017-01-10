@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.mapping;
+package org.kite9.diagram.common.elements.mapping;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +16,11 @@ import org.kite9.diagram.common.elements.ConnectedVertex;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.style.BorderTraversal;
-import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.CSSConstants;

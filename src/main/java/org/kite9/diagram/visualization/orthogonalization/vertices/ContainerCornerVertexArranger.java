@@ -11,13 +11,13 @@ import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.planarization.grid.GridPositioner;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 

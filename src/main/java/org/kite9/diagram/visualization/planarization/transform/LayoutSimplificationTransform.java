@@ -8,11 +8,11 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mapping.GeneratedLayoutElement;
 
 /**
  * Simplifies the layout of the planarization by looking for layout edges, and, if they are part of a small
