@@ -9,19 +9,17 @@ import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 
 /**
- * Given original (user defined) diagram attr, returns the planarization element relating to it.
+ * Given original (user defined) diagram element, returns the planarization element(s) relating to it.
  */
 public interface ElementMapper {
-	
-	public boolean hasNestedConnections(DiagramElement c);
-	
-	public boolean hasCornerVertices(DiagramElement c);
 		
-	public boolean requiresCornerVertices(DiagramElement c);
+	public boolean hasOuterCornerVertices(DiagramElement c);
+		
+	public boolean requiresPlanarizationCornerVertices(DiagramElement c);
 	
-	public CornerVertices getCornerVertices(DiagramElement c);
+	public CornerVertices getOuterCornerVertices(DiagramElement c);
     
-    public Vertex getVertex(DiagramElement c); 
+    public Vertex getPlanarizationVertex(DiagramElement c); 
     
     public PlanarizationEdge getEdge(Connected from, Vertex vfrom, Connected to, Vertex vto, BiDirectional<Connected> element);
     

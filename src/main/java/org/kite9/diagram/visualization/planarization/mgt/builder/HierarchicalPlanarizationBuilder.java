@@ -269,8 +269,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	 * create edges between them in order.
 	 */
 	protected void setupElementBorderEdges(MGTPlanarization p, DiagramElement outer) {
-		if (em.hasCornerVertices(outer)) {
-			CornerVertices cv = em.getCornerVertices(outer);
+		if (em.hasOuterCornerVertices(outer)) {
+			CornerVertices cv = em.getOuterCornerVertices(outer);
 			String originalLabel = outer.getID();
 					
 			LinkedList<Edge> out = new LinkedList<Edge>();
@@ -413,8 +413,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private Vertex getVertexFor(DiagramElement c) {
-		if (em.hasCornerVertices(c)) {
-			Collection<MultiCornerVertex> vertices = em.getCornerVertices((Container) c).getPerimeterVertices();
+		if (em.hasOuterCornerVertices(c)) {
+			Collection<MultiCornerVertex> vertices = em.getOuterCornerVertices((Container) c).getPerimeterVertices();
 			for (MultiCornerVertex cv : vertices) {
 				if (cv.hasAnchorFor(c)) {
 					return cv;
@@ -423,7 +423,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		} 
 		
 		if (c instanceof Connected) {
-			return em.getVertex((Connected) c); 
+			return em.getPlanarizationVertex((Connected) c); 
 		} 
 		
 		throw new LogicException("Can't get a vertex for "+c);

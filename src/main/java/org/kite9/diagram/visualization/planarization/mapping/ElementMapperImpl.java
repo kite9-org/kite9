@@ -39,15 +39,15 @@ public class ElementMapperImpl implements ElementMapper {
 	Map<DiagramElement, CornerVertices> cornerVertices = new HashMap<DiagramElement, CornerVertices>();
 	Map<BiDirectional<Connected>, PlanarizationEdge> edges = new HashMap<BiDirectional<Connected>, PlanarizationEdge>();
 	
-	public boolean hasCornerVertices(DiagramElement d) {
+	public boolean hasOuterCornerVertices(DiagramElement d) {
 		return cornerVertices.containsKey(d);
 	}
 	
-	public CornerVertices getCornerVertices(final DiagramElement c) {
+	public CornerVertices getOuterCornerVertices(final DiagramElement c) {
 		CornerVertices v = cornerVertices.get(c);
 		if (v == null) {
 			if (hasParentGridLayout(c)) {
-				CornerVertices parentCV = getCornerVertices((Container)c.getParent());
+				CornerVertices parentCV = getOuterCornerVertices((Container)c.getParent());
 				OPair<BigFraction> xspan = gp.getGridXPosition(c);
 				OPair<BigFraction> yspan = gp.getGridYPosition(c);
 				v = new SubwindowCornerVertices(c, xspan, yspan, parentCV);
@@ -106,7 +106,7 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 	}
 
-	public Vertex getVertex(DiagramElement c) {
+	public Vertex getPlanarizationVertex(DiagramElement c) {
 		Vertex v = singleVertices.get(c);
 		if (v == null) {
 			
@@ -162,7 +162,7 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 	}
 	
-	public boolean requiresCornerVertices(DiagramElement c) {
+	public boolean requiresPlanarizationCornerVertices(DiagramElement c) {
 		if (c instanceof Diagram) {
 			return true;
 		}

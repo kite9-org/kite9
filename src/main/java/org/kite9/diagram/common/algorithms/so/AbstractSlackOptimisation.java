@@ -43,13 +43,13 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 					int out = ((Integer) p1).compareTo(p2);
 					if (out == 0) {
 						// in the event of a tie, work it out from dependency
-						if (o1.hasTransitiveForwardConstraintTo(o2)) {
-							return -1;
-						} else if (o1.hasTransitiveForwardConstraintTo(o1)){
-							return 1;
-						} else {
+//						if (o1.hasTransitiveForwardConstraintTo(o2)) {
+//							return -1;
+//						} else if (o1.hasTransitiveForwardConstraintTo(o1)){
+//							return 1;
+//						} else {
 							return 0;
-						}
+//						}
 					}
 					
 		

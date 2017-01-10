@@ -206,7 +206,7 @@ public class GroupPhase {
 			return true;
 		}
 		
-		return !em.requiresCornerVertices(ord);
+		return !em.requiresPlanarizationCornerVertices(ord);
 	}
 
 	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);

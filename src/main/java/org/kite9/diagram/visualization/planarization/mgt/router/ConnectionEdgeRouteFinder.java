@@ -375,7 +375,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (from instanceof MultiCornerVertex) {
 			Container c = (Container) getCorrectUnderlying(e, from);
 			checkContainerNotWithinGrid(c);
-			CornerVertices cvs = em.getCornerVertices(c);
+			CornerVertices cvs = em.getOuterCornerVertices(c);
 			for (MultiCornerVertex v : cvs.getPerimeterVertices()) {
 				if (!v.isPartOf(c)) {
 					// ensure anchors are set correctly for the perimeter.
@@ -390,7 +390,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			if (allowConnectionsToContainerContents()) {
 				for (DiagramElement con : c.getContents()) {
 					if (!(con instanceof Container)) {
-						Vertex vcon = em.getVertex((Connected) con);
+						Vertex vcon = em.getPlanarizationVertex((Connected) con);
 						createInitialPathsFrom(pq, vcon);
 					}
 				}

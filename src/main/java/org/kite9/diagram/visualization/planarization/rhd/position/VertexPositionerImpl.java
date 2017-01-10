@@ -58,7 +58,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			RoutingInfo toBounds = rh.getPlacedPosition(to);
 			final Bounds tox = rh.getBoundsOf(toBounds, true);
 			final Bounds toy = rh.getBoundsOf(toBounds, false);
-			boolean toHasCornerVertices = em.hasCornerVertices(to);
+			boolean toHasCornerVertices = em.hasOuterCornerVertices(to);
 			MultiCornerVertex cvNew = null;	
 
 			// set position
@@ -175,7 +175,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		}
 
 		// set up frac maps to control where the vertices will be positioned
-		OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getCornerVertices(c), bounds);
+		OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(c), bounds);
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
 	
@@ -229,7 +229,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 	public void setCentralVertexPosition(DiagramElement c, List<Vertex> out) {
 		RoutingInfo bounds = rh.getPlacedPosition(c);
 		log.send("Placed position: "+c+" is "+bounds);
-		Vertex v = em.getVertex((Connected) c);
+		Vertex v = em.getPlanarizationVertex((Connected) c);
 		out.add(v);
 		bounds = rh.narrow(bounds, borderTrimAreaX, borderTrimAreaY);
 		v.setRoutingInfo(bounds);

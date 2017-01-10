@@ -185,8 +185,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * This makes sure all the container vertices have the correct anchors before we position them.
 	 */
 	private void instantiateContainerVertices(DiagramElement c) {
-		if (em.requiresCornerVertices(c)) {
-			em.getCornerVertices(c);
+		if (em.requiresPlanarizationCornerVertices(c)) {
+			em.getOuterCornerVertices(c);
 			
 			if (c instanceof Container) {
 				for (DiagramElement de : ((Container)c).getContents()) {
@@ -211,7 +211,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 			}
 			
-			if (em.requiresCornerVertices(ci)) {
+			if (em.requiresPlanarizationCornerVertices(ci)) {
 				if (!checkLayoutIsConsistent((Container) ci)) {
 					return false;
 				}
@@ -337,8 +337,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	 * Constructs the list of vertices in no particular order.
 	 */
 	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
-		if (em.hasCornerVertices(c)) {
-			CornerVertices cvs = em.getCornerVertices(c);
+		if (em.hasOuterCornerVertices(c)) {
+			CornerVertices cvs = em.getOuterCornerVertices(c);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
 			log.send("Placed position of container: "+c+" is "+bounds);
 			vp.setPerimeterVertexPositions(before, c, after, cvs, out);

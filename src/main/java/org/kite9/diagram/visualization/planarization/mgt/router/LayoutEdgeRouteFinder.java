@@ -36,9 +36,9 @@ public class LayoutEdgeRouteFinder extends ConnectionEdgeRouteFinder {
 	private Vertex identifyActualVertex(Vertex edgeVertex, Direction d) {
 		DiagramElement und = edgeVertex.getOriginalUnderlying();
 		
-		if (em.hasCornerVertices(und)) {
+		if (em.hasOuterCornerVertices(und)) {
 			Container c = (Container) und;
-			CornerVertices cvs = em.getCornerVertices(c);
+			CornerVertices cvs = em.getOuterCornerVertices(c);
 			MultiCornerVertex leaver = cvs.createVertex(MultiCornerVertex.getOrdForXDirection(d), MultiCornerVertex.getOrdForYDirection(d));
 			return leaver;
 		} else {
