@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -17,14 +16,14 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 public abstract class AbstractCornerVertices implements CornerVertices {
 
-	protected final Container rootContainer;
+	protected final DiagramElement rootContainer;
 	private OPair<BigFraction> cx, cy;
 	Collection<CornerVertices> children = new ArrayList<>(5);
 	private MultiCornerVertex tl, tr, bl, br;
 
-	public AbstractCornerVertices(DiagramElement c, OPair<BigFraction> cx, OPair<BigFraction> cy) {
+	public AbstractCornerVertices(DiagramElement rootContainer, OPair<BigFraction> cx, OPair<BigFraction> cy) {
 		super();
-		this.rootContainer = MultiCornerVertex.getRootGridContainer(c);
+		this.rootContainer = rootContainer;
 		this.cx = cx;
 		this.cy = cy;
 	}

@@ -63,7 +63,7 @@ public class ElementMapperImpl implements ElementMapper {
 		GridCornerVertices v;
 		OPair<BigFraction> xspan = gp.getGridXPosition(c);
 		OPair<BigFraction> yspan = gp.getGridYPosition(c);
-		v = new SubGridCornerVertices(c, xspan, yspan, parentCV);
+		v = new SubGridCornerVertices(parentCV.getGridContainer(), c, xspan, yspan, parentCV);
 		cornerVertices.put(c, v);
 		return v;
 	}

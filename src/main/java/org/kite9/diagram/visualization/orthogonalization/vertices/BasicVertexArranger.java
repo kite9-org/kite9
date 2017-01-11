@@ -24,7 +24,7 @@ import org.kite9.diagram.common.elements.SideVertex;
 import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
-import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
+import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.IndependentCornerVertices;
 import org.kite9.diagram.common.objects.OPair;
@@ -287,18 +287,14 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartOrdering);
-		String name = originalUnderlying.getID();
-		// first, need to create the four corner vertices
-		Vertex tl = new SingleCornerVertex(name + "tl", HPos.LEFT, VPos.UP, originalUnderlying);
-		Vertex tr = new SingleCornerVertex(name + "tr", HPos.RIGHT, VPos.UP, originalUnderlying);
-		Vertex bl = new SingleCornerVertex(name + "bl", HPos.LEFT, VPos.DOWN, originalUnderlying);
-		Vertex br = new SingleCornerVertex(name + "br", HPos.RIGHT, VPos.DOWN, originalUnderlying);
-		o.getAllVertices().add(tl);
-		o.getAllVertices().add(tr);
-		o.getAllVertices().add(bl);
-		o.getAllVertices().add(br);
+		
+		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
+		
+		o.getAllVertices().addAll(cv.getVerticesAtThisLevel());
 		
 		Face f = o.getPlanarization().createFace();
+		Vertex tl = cv.getTopLeft(), tr = cv.getTopRight(), br = cv.getBottomRight(), bl = cv.getBottomLeft();
+		
 		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, mapFor(originalUnderlying, Direction.UP)));
 		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, mapFor(originalUnderlying, Direction.RIGHT)));
 		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, mapFor(originalUnderlying, Direction.DOWN)));
