@@ -175,12 +175,14 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
 		}
 
-		//addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
+		addSideVertices(before, c, after, cvs, out, bx, by, fracMapX, fracMapY);
 	}
 
-	private void addSideVertices(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out, Layout l, Bounds bx, Bounds by,
+	private void addSideVertices(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out, Bounds bx, Bounds by,
 			Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		BorderTrim trim = calculateBorderTrims(cvs);
+		
+		final Layout l = (c.getParent() == null) ? null :((Container)  c.getParent()).getLayout();
 		
 		if (c instanceof Connected) {
 			
