@@ -8,9 +8,7 @@ import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
-import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerConnectionTransform1;
 import org.kite9.diagram.visualization.planarization.mgt.ContainerConnectionTransform2;
 import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructor;
@@ -33,12 +31,14 @@ public abstract class AbstractPlanarizer implements Logable {
 
 	protected Kite9Log log = new Kite9Log(this);
    	
-	private GridPositioner gp = new GridPositionerImpl();
-
-	private ElementMapper em = new ElementMapperImpl(gp);
+	private final ElementMapper em;
 	
+	public AbstractPlanarizer(ElementMapper elementMapper) {
+		this.em = elementMapper;
+	}
+
 	public GridPositioner getGridPositioner() {
-		return gp;
+		return em.getGridPositioner();
 	}
 	
 	public ElementMapper getElementMapper() {

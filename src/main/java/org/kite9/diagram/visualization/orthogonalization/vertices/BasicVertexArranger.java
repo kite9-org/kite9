@@ -25,6 +25,7 @@ import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.IndependentCornerVertices;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.position.CostedDimension;
@@ -59,10 +60,13 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	
 	protected GridPositioner gp;
 	
-	public BasicVertexArranger(CompleteDisplayer cd) {
+	protected ElementMapper em;
+	
+	public BasicVertexArranger(CompleteDisplayer cd, ElementMapper em) {
 		super();
 		this.sizer = cd;
-		this.gp = new GridPositionerImpl();
+		this.gp = em.getGridPositioner();
+		this.em = em;
 	}
 
 	public static final int INTER_EDGE_SEPARATION = 0;

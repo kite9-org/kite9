@@ -11,6 +11,7 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -34,8 +35,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public class FanInVertexArranger extends BasicVertexArranger {
 
-	public FanInVertexArranger(CompleteDisplayer cd) {
-		super(cd);
+	public FanInVertexArranger(CompleteDisplayer cd, ElementMapper em) {
+		super(cd, em);
 	}
 	
 	@Override

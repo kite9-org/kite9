@@ -2,6 +2,9 @@ package org.kite9.diagram.visualization.pipeline.full;
 
 import org.kite9.diagram.common.algorithms.so.LoggingOptimisationStep;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
+import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -42,13 +45,14 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	Planarization pln;
 	Orthogonalization orth;
 	Compaction c;
+	ElementMapper em;
 
 	protected Planarization createPlanarization(DiagramXMLElement d) {
 		return createPlanarizer().planarize(d.getDiagramElement());
 	}
 
 	public Planarizer createPlanarizer() {
-		planarizer = new MGTPlanarizer();
+		planarizer = new MGTPlanarizer(getElementMapper());
 		return planarizer;
 	}
 
@@ -57,13 +61,21 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public abstract CompleteDisplayer getDisplayer();
+	
+	public ElementMapper getElementMapper() {
+		if (em == null) {
+			em = new ElementMapperImpl(new GridPositionerImpl());
+		}
+		
+		return em;
+	}
 
 	public Orthogonalizer createOrthogonalizer() {
 		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
 		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic, getDisplayer(),
  //				new FanInVertexArranger(getDisplayer()));
 				
-				new ContainerCornerVertexArranger(getDisplayer()));
+				new ContainerCornerVertexArranger(getDisplayer(), getElementMapper()));
 		return orthogonalizer;
 	}
 

@@ -245,5 +245,10 @@ public class ElementMapperImpl implements ElementMapper {
 		hasConnections.put(c, has);
 		return has;
 	}
+
+	@Override
+	public GridPositioner getGridPositioner() {
+		return gp;
+	}
 	
 }

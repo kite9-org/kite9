@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 import org.kite9.diagram.adl.Diagram;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
@@ -12,6 +13,10 @@ import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutab
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 public class MGTPlanarizer extends AbstractPlanarizer implements Planarizer {
+
+	public MGTPlanarizer(ElementMapper elementMapper) {
+		super(elementMapper);
+	}
 
 	protected FaceConstructor getFaceConstructor() {
 		return new FaceConstructorImpl();
