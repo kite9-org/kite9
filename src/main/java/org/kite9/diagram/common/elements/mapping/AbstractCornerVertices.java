@@ -17,7 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 public abstract class AbstractCornerVertices implements CornerVertices {
 
-	private final Container rootContainer;
+	protected final Container rootContainer;
 	private OPair<BigFraction> cx, cy;
 	Collection<CornerVertices> children = new ArrayList<>(5);
 	private MultiCornerVertex tl, tr, bl, br;
@@ -42,28 +42,23 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 	}
 
 	public abstract MultiCornerVertex createVertex(BigFraction x, BigFraction y);
-	
-	protected abstract MultiCornerVertex createVertexHere(BigFraction x, BigFraction y);
-	 
-	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, MultiCornerVertex> elements) {
+		 
+	protected final MultiCornerVertex createVertexHere(BigFraction x, BigFraction y, Map<OPair<BigFraction>, MultiCornerVertex> elements) {
 		OPair<BigFraction> d = new OPair<BigFraction>(x, y);
 		
-		MultiCornerVertex cv = getExistingVertex(d);
+		MultiCornerVertex cv = elements.get(d);
 		
-		if (cv != null) {
-			// we already have this
-			return cv;
-		} else {
-			if (cv == null) {
-				cv = new MultiCornerVertex(rootContainer.getID(), rootContainer, x, y);
-			}
-			
+		if (cv == null) {
+			cv = new MultiCornerVertex(getVertexIDStem(), rootContainer, x, y);
 			elements.put(d, cv);
-			return cv;
 		}
+			
+		return cv;
 	}
 
-	protected abstract MultiCornerVertex getExistingVertex(OPair<BigFraction> d);
+	protected String getVertexIDStem() {
+		return rootContainer.getID();
+	}
 	
 	public static BigFraction scale(BigFraction y, OPair<BigFraction> range) {
 		BigFraction size = range.getB().subtract(range.getA());
@@ -176,5 +171,4 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		return br;
 	}
 
-	
 }

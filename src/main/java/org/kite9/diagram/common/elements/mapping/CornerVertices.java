@@ -63,4 +63,6 @@ public interface CornerVertices {
 	public MultiCornerVertex getBottomLeft();
 	public MultiCornerVertex getBottomRight();
 	
+	public int getContainerDepth();
+	
 }

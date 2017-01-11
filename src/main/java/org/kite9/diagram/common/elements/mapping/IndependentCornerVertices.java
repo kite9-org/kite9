@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
@@ -16,9 +15,12 @@ public class IndependentCornerVertices extends AbstractCornerVertices {
 	public static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.ZERO, BigFraction.ONE);
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements = new HashMap<>();
+	
+	private final int depth;
 
-	public IndependentCornerVertices(DiagramElement c) {
+	public IndependentCornerVertices(DiagramElement c, int depth) {
 		super(c, FULL_RANGE, FULL_RANGE);
+		this.depth = depth;
 		createInitialVertices(c);
 	}
 
@@ -36,11 +38,6 @@ public class IndependentCornerVertices extends AbstractCornerVertices {
 
 	@Override
 	public MultiCornerVertex createVertex(BigFraction x, BigFraction y) {
-		return createVertexHere(x, y);
-	}
-
-	@Override
-	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y) {
 		return createVertexHere(x, y, elements);
 	}
 
@@ -66,5 +63,9 @@ public class IndependentCornerVertices extends AbstractCornerVertices {
 		return out;
 	}
 
+	public int getContainerDepth() {
+		return depth;
+	}
+	
 
 }

@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
@@ -21,16 +20,16 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * @author robmoffat
  *
  */
-public class SubwindowCornerVertices extends AbstractCornerVertices {
+public class SubGridCornerVertices extends AbstractCornerVertices implements GridCornerVertices {
 	
-	AbstractCornerVertices parent;
+	GridCornerVertices parent;
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements;
 	
-	public SubwindowCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y, CornerVertices parentCV) {
+	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  GridCornerVertices parentCV) {
 		super(c, getXSpan(x, parentCV), getYSpan(y, parentCV));
 		((AbstractCornerVertices) parentCV).children.add(this);
-		this.parent = (AbstractCornerVertices) parentCV;
+		this.parent = parentCV;
 		this.elements = new HashMap<>();
 		createInitialVertices(c);
 	}
@@ -73,7 +72,7 @@ public class SubwindowCornerVertices extends AbstractCornerVertices {
 	}
 	
 	protected AbstractCornerVertices getTopContainerVertices() {
-		return parent.getTopContainerVertices();
+		return ((AbstractCornerVertices) parent).getTopContainerVertices();
 	}
 
 	@Override
@@ -81,12 +80,9 @@ public class SubwindowCornerVertices extends AbstractCornerVertices {
 		x = scale(x, getXRange());
 		y = scale(y, getYRange());
 		
-		return parent.createVertexHere(x, y);
-	}
-
-	@Override
-	public MultiCornerVertex createVertexHere(BigFraction x, BigFraction y) {
-		return createVertexHere(x, y, elements);
+		MultiCornerVertex out = ((AbstractCornerVertices) parent).createVertex(x, y);
+		elements.put(new OPair<BigFraction>(x, y), out);
+		return out;
 	}
 
 	@Override
@@ -103,19 +99,19 @@ public class SubwindowCornerVertices extends AbstractCornerVertices {
 		out.addAll(elements.values());
 		return out;
 	}
-
-	@Override
-	protected MultiCornerVertex getExistingVertex(OPair<BigFraction> d) {
-		MultiCornerVertex out = parent.getExistingVertex(d);
-		if (out == null) {
-			return elements.get(d);
-		} else {
-			return out;
-		}
-	}
 	
 	public Collection<MultiCornerVertex> getVerticesAtThisLevel() {
 		return elements.values();
+	}
+
+	@Override
+	public int getContainerDepth() {
+		return parent.getContainerDepth();
+	}
+
+	@Override
+	public DiagramElement getGridContainer() {
+		return parent.getGridContainer();
 	}
 	
 }

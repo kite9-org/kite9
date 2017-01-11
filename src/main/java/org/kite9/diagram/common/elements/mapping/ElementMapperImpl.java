@@ -37,6 +37,7 @@ public class ElementMapperImpl implements ElementMapper {
 
 	Map<DiagramElement, Vertex> singleVertices = new HashMap<DiagramElement, Vertex>();
 	Map<DiagramElement, CornerVertices> cornerVertices = new HashMap<DiagramElement, CornerVertices>();
+	Map<DiagramElement, BaseGridCornerVertices> baseGrids = new HashMap<>();
 	Map<BiDirectional<Connected>, PlanarizationEdge> edges = new HashMap<BiDirectional<Connected>, PlanarizationEdge>();
 	
 	public boolean hasOuterCornerVertices(DiagramElement d) {
@@ -46,14 +47,11 @@ public class ElementMapperImpl implements ElementMapper {
 	public CornerVertices getOuterCornerVertices(final DiagramElement c) {
 		CornerVertices v = cornerVertices.get(c);
 		if (v == null) {
-			if (hasParentGridLayout(c)) {
-				CornerVertices parentCV = getOuterCornerVertices((Container)c.getParent());
-				OPair<BigFraction> xspan = gp.getGridXPosition(c);
-				OPair<BigFraction> yspan = gp.getGridYPosition(c);
-				v = new SubwindowCornerVertices(c, xspan, yspan, parentCV);
-				cornerVertices.put(c, v);
+			if (isEmbeddedWithinGrid(c)) {
+				GridCornerVertices parentCV = getGridCornerVertices((Container)c.getParent());
+				v = createSubGridCornerVertices(c, parentCV);
 			} else {
-				v = new IndependentCornerVertices(c);
+				v = new IndependentCornerVertices(c, getContainerDepth(c));
 				cornerVertices.put(c, v);
 			}
 		}
@@ -61,7 +59,30 @@ public class ElementMapperImpl implements ElementMapper {
 		return v;
 	}
 
-	private boolean hasParentGridLayout(DiagramElement c) {
+	private GridCornerVertices createSubGridCornerVertices(final DiagramElement c, GridCornerVertices parentCV) {
+		GridCornerVertices v;
+		OPair<BigFraction> xspan = gp.getGridXPosition(c);
+		OPair<BigFraction> yspan = gp.getGridYPosition(c);
+		v = new SubGridCornerVertices(c, xspan, yspan, parentCV);
+		cornerVertices.put(c, v);
+		return v;
+	}
+
+	private GridCornerVertices getGridCornerVertices(Container c) {
+		if (isEmbeddedWithinGrid(c)) {
+			GridCornerVertices parentCV = getGridCornerVertices((Container) c.getParent());
+			return createSubGridCornerVertices(c, parentCV);
+		} else {
+			BaseGridCornerVertices bgcv = baseGrids.get(c);
+			if (bgcv == null) {
+				bgcv = new BaseGridCornerVertices(c, getContainerDepth(c)+1);
+				baseGrids.put(c, bgcv);
+			}
+			return bgcv;
+		}
+	}
+
+	private boolean isEmbeddedWithinGrid(DiagramElement c) {
 		DiagramElement parent = c.getParent();
 		if ((parent != null) && (parent instanceof Container)) {
 			return ((Container)parent).getLayout()==Layout.GRID;

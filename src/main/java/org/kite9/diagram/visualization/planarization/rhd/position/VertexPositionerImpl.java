@@ -16,6 +16,7 @@ import org.kite9.diagram.common.elements.grid.FracMapper;
 import org.kite9.diagram.common.elements.grid.FracMapperImpl;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.mapping.GridCornerVertices;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
@@ -129,24 +130,14 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		}
 	}
 
-	private BigFraction calculateSideOrdinal(double trime, double trims, double frac, final double containerSize) {
-		BigFraction yOrd;
-		int denom = Math.round((float) (containerSize / (trime-trims)));
-		denom = (denom % 2 == 1) ? denom + 1 : denom;  // make sure it's even
-		double numerd = frac * (double) denom;
-		int numer = Math.round((float) numerd);
-		yOrd = BigFraction.getReducedFraction(numer, denom);
-		return yOrd;
-	}
-
 	static class BorderTrim {
 		double xs, ys, xe, ye;
 	}
 	
-	private BorderTrim calculateBorderTrims(DiagramElement c) {
+	private BorderTrim calculateBorderTrims(CornerVertices c) {
 		BorderTrim out = new BorderTrim();
 		
-		int depth = em.getContainerDepth(c);
+		int depth = c.getContainerDepth();
 		out.xs = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 1));
 		out.xe = borderTrimAreaX - (borderTrimAreaX / (double) (depth + 2));
 		out.ys = borderTrimAreaY - (borderTrimAreaY / (double) (depth + 1));
@@ -156,26 +147,27 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 	}
 	
 	public void setPerimeterVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
-		Container within = c.getContainer();
+		final RoutingInfo bounds;
+		final Bounds bx, by;
+		final OPair<Map<BigFraction, Double>> fracMaps;
 		
-		Layout l = within == null ? null : within.getLayout();
-	
-		RoutingInfo bounds;
-		Bounds bx, by;
-		if (l==Layout.GRID) {
-			// use the bounds of the non-grid parent container.
-			Container containerWithNonGridParent = MultiCornerVertex.getRootGridContainer(c);
+		
+		if (cvs instanceof GridCornerVertices) {
+			GridCornerVertices gcv = (GridCornerVertices) cvs;
+			DiagramElement containerWithNonGridParent = gcv.getGridContainer();
 			bounds = rh.getPlacedPosition(containerWithNonGridParent);
 			bx = rh.getBoundsOf(bounds, true);
-			by = rh.getBoundsOf(bounds, false);				
+			by = rh.getBoundsOf(bounds, false);		
+			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(containerWithNonGridParent), bounds);
+
 		} else {
 			bounds =  rh.getPlacedPosition(c);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);
+			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(c), bounds);
 		}
 
 		// set up frac maps to control where the vertices will be positioned
-		OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(c), bounds);
 		Map<BigFraction, Double> fracMapX = fracMaps.getA();
 		Map<BigFraction, Double> fracMapY = fracMaps.getB();
 	
@@ -183,12 +175,12 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
 		}
 
-		addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
+		//addSideVertices(before, c, after, cvs, out, l, bx, by, fracMapX, fracMapY);
 	}
 
 	private void addSideVertices(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out, Layout l, Bounds bx, Bounds by,
 			Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
-		BorderTrim trim = calculateBorderTrims(c);
+		BorderTrim trim = calculateBorderTrims(cvs);
 		
 		if (c instanceof Connected) {
 			
@@ -237,7 +229,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 	
 	private void setCornerVertexRoutingAndMerge(DiagramElement c, CornerVertices mergeWith, MultiCornerVertex cv, Bounds bx, Bounds by, List<Vertex> out, Map<BigFraction, Double> fracMapX, Map<BigFraction, Double> fracMapY) {
 		if (cv.getRoutingInfo() == null) {
-			BorderTrim trim = calculateBorderTrims(c);
+			BorderTrim trim = calculateBorderTrims(mergeWith);
 			BigFraction xOrdinal = cv.getXOrdinal();
 			BigFraction yOrdinal = cv.getYOrdinal();
 			
