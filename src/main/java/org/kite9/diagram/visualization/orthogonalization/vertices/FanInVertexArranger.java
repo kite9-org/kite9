@@ -40,9 +40,9 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Side createSide(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
+	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
 			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize, BorderEdge borderEdge) {
-		Side out = super.createSide(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize, borderEdge);
+		Side out = super.convertEdgeToDarts(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize, borderEdge);
 
 		
 		if (onSide.size() > 1) {

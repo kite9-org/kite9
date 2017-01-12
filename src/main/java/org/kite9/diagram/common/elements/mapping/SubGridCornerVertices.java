@@ -26,8 +26,8 @@ public class SubGridCornerVertices extends AbstractCornerVertices implements Gri
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements;
 	
-	public SubGridCornerVertices(DiagramElement rootContainer, DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  GridCornerVertices parentCV) {
-		super(rootContainer, getXSpan(x, parentCV), getYSpan(y, parentCV));
+	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  GridCornerVertices parentCV) {
+		super(parentCV.getGridContainer(), getXSpan(x, parentCV), getYSpan(y, parentCV));
 		((AbstractCornerVertices) parentCV).children.add(this);
 		this.parent = parentCV;
 		this.elements = new HashMap<>();
