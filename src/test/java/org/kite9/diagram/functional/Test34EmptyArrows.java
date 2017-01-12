@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
@@ -98,7 +99,7 @@ public class Test34EmptyArrows extends AbstractFunctionalTest  {
 			
 		};
 		
-		te.renderDiagram(d, true, true, true, true, true, true, true, true);
+		te.renderDiagram(d, true, new Checks());
 	}
 	
 	@Test

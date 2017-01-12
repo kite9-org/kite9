@@ -81,6 +81,18 @@ import junit.framework.AssertionFailedError;
 
 @Ignore
 public class TestingEngine extends TestingHelp {
+	
+	static class Checks {
+		boolean checkDiagramSize = true;
+		boolean checkEdgeDirections = true;
+		boolean checkNoHops = true;
+		boolean everythingStraight = true;
+		boolean checkLayout = true;
+		boolean checkNoContradictions = true;
+		boolean checkImage = true;
+		boolean checkLabelOcclusion = true;
+	}
+	
 
 	boolean serialize = false;
 
@@ -99,8 +111,7 @@ public class TestingEngine extends TestingHelp {
 		return new BufferedImageProcessingPipeline(subtest, test, watermark);
 	}
 
-	public DiagramXMLElement renderDiagram(DiagramXMLElement d, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops, boolean everythingStraight, boolean checkLayout,
-			boolean checkNoContradictions, boolean checkImage) throws IOException {
+	public DiagramXMLElement renderDiagram(DiagramXMLElement d, boolean watermark, Checks c) throws IOException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
 		Class<?> theTest = m.getDeclaringClass();
@@ -110,8 +121,7 @@ public class TestingEngine extends TestingHelp {
 			}
 			
 			BufferedImageProcessingPipeline pipeline = getPipeline(theTest, m.getName(), watermark);
-			return renderDiagram(d, theTest, m.getName(), watermark, checkDiagramSize, checkEdgeDirections, checkNoHops, everythingStraight, checkLayout, checkNoContradictions, checkImage,
-					addressed, pipeline);
+			return renderDiagram(d, theTest, m.getName(), watermark, c, addressed, pipeline);
 		} catch (RuntimeException t) {
 			if (!addressed) {
 				if (!System.getProperties().containsKey("ignoreNotAddressed")) {
@@ -130,8 +140,7 @@ public class TestingEngine extends TestingHelp {
 		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
 	}
 
-	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, boolean checkDiagramSize, boolean checkEdgeDirections, boolean checkNoHops,
-			boolean everythingStraight, boolean checkLayout, boolean checkNoContradictions, boolean checkImage, boolean addressed, BufferedImageProcessingPipeline pipeline)
+	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, Checks c, boolean addressed, BufferedImageProcessingPipeline pipeline)
 					throws IOException {
 
 		try {
@@ -169,24 +178,24 @@ public class TestingEngine extends TestingHelp {
 				throw out;
 			}
 
-			if (checkNoHops) {
+			if (c.checkNoHops) {
 				testHopCount(d);
 			}
 
-			if (checkLayout) {
+			if (c.checkLayout) {
 				testLayout(d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now
 			boolean ok = false;
-			testConnectionPresence(d, everythingStraight, checkEdgeDirections, checkNoContradictions);
+			testConnectionPresence(d, c.everythingStraight, c.checkEdgeDirections, c.checkNoContradictions);
 
-			if (checkDiagramSize) {
+			if (c.checkDiagramSize) {
 				ok = checkOutputs(theTest, subtest, "positions-adl.txt") || ok;
 				ok = checkOutputs(theTest, subtest, "diagram.xml") || ok;
 			}
 
-			if (checkImage) {
+			if (c.checkImage) {
 				ok = checkIdentical(theTest, subtest, subtest + "-graph.png") || ok;
 			}
 

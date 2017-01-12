@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
@@ -31,7 +32,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	}
 	
 	public DiagramXMLElement renderDiagram(DiagramXMLElement d, TestingEngine te, boolean watermark) throws IOException {
-		return te.renderDiagram(d, true, checkDiagramSize(), checkEdgeDirections(), checkNoHops(), checkEverythingStraight(), checkLayout(), checkNoContradictions(), checkImage());
+		return te.renderDiagram(d, true, checks());
 	}
 
 	public DiagramXMLElement renderDiagramNoSerialize(DiagramXMLElement d) throws IOException {
@@ -78,6 +79,22 @@ public class AbstractFunctionalTest extends HelpMethods {
 	public void renderMap(DiagramXMLElement d) throws IOException {
 		TestingEngine te = new TestingEngine(getZipName());
 		te.renderMap(d);
+	}
+	
+	protected Checks checks() {
+		Checks out = new Checks();
+		out.checkDiagramSize = checkDiagramSize();
+		out.checkEdgeDirections = checkEdgeDirections();
+		out.checkImage = checkImage();
+		out.checkLabelOcclusion = checkLabelOcclusion();
+		out.checkLayout = checkLayout();
+		out.checkNoContradictions = checkNoContradictions();
+		out.checkNoHops = checkNoHops();
+		return out;
+	}
+	
+	protected boolean checkLabelOcclusion() {
+		return true;
 	}
 	
 	protected boolean checkDiagramSize() {
