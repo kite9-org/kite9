@@ -3,6 +3,7 @@ package org.kite9.diagram.functional;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -31,15 +32,21 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.position.RectangleRenderingInformationImpl;
+import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.style.impl.AbstractXMLDiagramElement;
 import org.kite9.diagram.style.impl.ConnectionImpl;
+import org.kite9.diagram.visitors.DiagramElementVisitor;
+import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.format.pdf.PDFRenderer;
@@ -184,6 +191,10 @@ public class TestingEngine extends TestingHelp {
 
 			if (c.checkLayout) {
 				testLayout(d.getDiagramElement());
+			}
+			
+			if (c.checkLabelOcclusion) {
+				checkLabelOverlap(d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now
@@ -532,6 +543,7 @@ public class TestingEngine extends TestingHelp {
 					break;
 				case HORIZONTAL:
 				case VERTICAL:
+					
 					checkContentsOverlap(d, l);
 				}
 			}
@@ -541,6 +553,48 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 		}
+	}
+	
+	private void checkLabelOverlap(final Diagram d) {
+		new DiagramElementVisitor().visit(d, new VisitorAction() {
+			
+			@Override
+			public void visit(DiagramElement de) {
+				if (de instanceof Label) {
+					checkLabelOverlap((Label) de, d);
+				}
+			}
+		});
+		
+	}
+	
+	private void checkLabelOverlap(Label l, Diagram d) {
+		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
+		final Rectangle2D labelRect = createRect(ri);
+		new DiagramElementVisitor().visit(d, new VisitorAction() {
+			
+			@Override
+			public void visit(DiagramElement de) {
+				if (de != l) {
+					RenderingInformation ri = de.getRenderingInformation();
+					if (ri instanceof RectangleRenderingInformation) {
+						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
+						if ((rect2.contains(labelRect)) && (de instanceof Container)) {
+							// probably ok
+							return;
+						}
+						if (rect2.intersects(labelRect)) {
+							throw new LogicException("Label should not be overlapped "+l+" by "+de);
+						}
+					}
+				}
+			}
+		});
+		
+	}
+
+	private Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
+		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
 	}
 
 	private static void checkContentsOverlap(Container d, final Layout l) {

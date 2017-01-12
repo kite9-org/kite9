@@ -123,8 +123,8 @@ public class Test12LabelledArrows extends AbstractFunctionalTest {
 		Arrow i3 = new Arrow("i3");
 		
 		new Link(i1, a, null, null, null, new TextLine("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
-		new Link(i2, a, null, null, LinkEndStyle.ARROW, new TextLine("to the safe side A"), Direction.UP);
-		new Link(i3, a, null, null, LinkEndStyle.ARROW, new TextLine("to the safe side B"), Direction.UP);
+		new Link(i2, a, null, null, LinkEndStyle.ARROW, null /* new TextLine("to the safe side A") */, Direction.UP);
+		new Link(i3, a, null, null, LinkEndStyle.ARROW, null /* new TextLine("to the safe side B") */, Direction.UP);
 		
 				
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, i1, i2, i3), null);

@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.compaction.position.optstep;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -66,6 +68,7 @@ import org.kite9.framework.logging.LogicException;
 public class LabelInsertionOptimisationStep extends AbstractSegmentModifier implements OptimisationStep, Logable {
 
 	int labelNumber = 0;
+	int combNumber = 0;
 
 	private Kite9Log log = new Kite9Log(this);
 
@@ -866,7 +869,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	/**
 	 * The comb models a space that a label can occupy.
 	 */
-	static class Comb {
+	class Comb {
 
 		Slideable spine;
 
@@ -909,47 +912,49 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			return alignToZeroTyne;
 		}
 
-		List<Slideable> opps;
+		LinkedHashSet<Slideable> opps;
 
 		/**
 		 * Tries to give the *furthest away* possible slideables back, to give the 
 		 * label the most room possible.  
 		 */
-		public List<Slideable> getOppositeSlideables() {
+		public Collection<Slideable> getOppositeSlideables() {
 			if (opps != null)
 				return opps;
 
-			opps = new ArrayList<Slideable>(10);
-			int slideableNo = spine.getPositionalOrder();
-			int increment = (spineDirection == Direction.DOWN || spineDirection == Direction.RIGHT) ? 1 : -1;
+			opps = new LinkedHashSet<Slideable>(10);
+			boolean increasing = (spineDirection == Direction.DOWN || spineDirection == Direction.RIGHT) ? true : false;
 			Set<Slideable> done = new UnorderedSet<Slideable>();
-
-			do {
-				slideableNo += increment;
-				if ((slideableNo == -1) || (slideableNo == parallel.getPositionalOrder().size())) {
-					break;
-				}
-
-				Slideable next = parallel.getPositionalOrder().get(slideableNo);
-				if (!done.contains(next)) {
-					if (occupiedBetween(next, perp)) {
-						opps.add(next);
-						excludeAllDependents(next, done, increment);
-					}
-				}
-			} while (true);
-
-			return opps;
-		}
-		
-		private boolean occupiedBetween(Slideable slideable, SegmentSlackOptimisation perp) {
-			// need to improve this logic for when a distance hasn't been set for the container.
-			// minimally.  But, maybe there should be some kind of minimal distance eh?
 			
 			Slideable p1 = getZeroEndSlideable();
 			Slideable p2 = getHighEndSlideable();
 			double pos1 = Math.min(p1.getMinimumPosition(), p2.getMinimumPosition());
 			double pos2 = Math.max(p2.getMinimumPosition(), p1.getMinimumPosition());
+			LabelInsertionOptimisationStep.this.log.send("Checking range "+pos1+" to "+pos2+ " for comb \n"+this);
+			
+			checkOppositeSlideables(spine.getForwardSlideables(increasing), done, opps, increasing, pos1, pos2);
+		
+			return opps;
+		}
+		
+		private void checkOppositeSlideables(Set<Slideable> forwardSlideables, Set<Slideable> done, Set<Slideable> occluding, boolean increasing, double fromPos, double toPos) {
+			for (Slideable s : forwardSlideables) {
+				if (!done.contains(s)) {
+					done.add(s);
+					
+					if (inOccupiedRange(s, fromPos, toPos)) {
+						occluding.add(s);
+					} else {
+						checkOppositeSlideables(s.getForwardSlideables(increasing), done, occluding, increasing, fromPos, toPos);
+					}
+				}
+			}
+		}
+
+		private boolean inOccupiedRange(Slideable slideable, double fromPos, double toPos) {
+			// need to improve this logic for when a distance hasn't been set for the container.
+			// minimally.  But, maybe there should be some kind of minimal distance eh?
+			
 
 			for (Dart d : ((Segment) slideable.getUnderlying()).getDartsInSegment()) {
 				if (d.getUnderlying() != null) {
@@ -962,14 +967,16 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 					double d1 = Math.min(pfrom, pto);
 					double d2 = Math.max(pfrom, pto);
 
-					boolean nooverlap = d2 <= pos1 || d1 >= pos2;
+					boolean nooverlap = d2 <= fromPos || d1 >= toPos;
 
 					if (!nooverlap) {
+						LabelInsertionOptimisationStep.this.log.send("Overlaps "+slideable+" due to "+d+ " "+d1+" "+d2);
 						return true;
 					}
 				}
 			}
 
+			LabelInsertionOptimisationStep.this.log.send("No overlap on "+slideable);
 			return false;
 		}
 
@@ -1016,13 +1023,15 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			this.parallel = parallel;
 			this.perp = perp;
 			this.tyneIncDirection = tyneIncDirection;
+			this.no = combNumber ++;
 
 			if (spine.getSlackOptimisation() != parallel) {
 				throw new LogicException("Parallel direction not set correctly");
 			}
 
 		}
-
+		
+		private int no;
 		SegmentSlackOptimisation parallel;
 		SegmentSlackOptimisation perp;
 
@@ -1058,7 +1067,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 		public String toString() {
 			StringBuilder out = new StringBuilder();
 
-			out.append("COMB:[");
+			out.append("COMB:["+no+" ");
 			out.append(spineDirection);
 			out.append(" ");
 			out.append(spine);

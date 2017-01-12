@@ -3,6 +3,8 @@
  */
 package org.kite9.diagram.common.algorithms.so;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.kite9.framework.logging.LogicException;
@@ -146,5 +148,22 @@ public class Slideable implements PositionChangeNotifiable {
 	public void setMaximumPosition(int i) {
 		maximum.increasePosition(i);
 	}
+
+	public Set<Slideable> getForwardSlideables(boolean increasing) {
+		Set<Slideable> out = new HashSet<>();
+		if (increasing) {
+			for (SingleDirection sd : minimum.forward.keySet()) {
+				out.add((Slideable) sd.getOwner());
+			}
+		} else {
+			for (SingleDirection sd : maximum.forward.keySet()) {
+				out.add((Slideable) sd.getOwner());
+			}
+		}
+		
+		return out;
+	}
+
+	
 
 }

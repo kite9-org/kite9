@@ -90,6 +90,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 		out.checkLayout = checkLayout();
 		out.checkNoContradictions = checkNoContradictions();
 		out.checkNoHops = checkNoHops();
+		out.everythingStraight = checkEverythingStraight();
 		return out;
 	}
 	
