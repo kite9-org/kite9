@@ -16,7 +16,7 @@ import org.kite9.diagram.common.elements.grid.FracMapper;
 import org.kite9.diagram.common.elements.grid.FracMapperImpl;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.common.elements.mapping.GridCornerVertices;
+import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
@@ -151,14 +151,13 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 		final Bounds bx, by;
 		final OPair<Map<BigFraction, Double>> fracMaps;
 		
-		
-		if (cvs instanceof GridCornerVertices) {
-			GridCornerVertices gcv = (GridCornerVertices) cvs;
-			DiagramElement containerWithNonGridParent = gcv.getGridContainer();
-			bounds = rh.getPlacedPosition(containerWithNonGridParent);
+		if (cvs instanceof SubGridCornerVertices) {
+			SubGridCornerVertices gcv = (SubGridCornerVertices) cvs;
+			DiagramElement container = gcv.getGridContainer();
+			bounds = rh.getPlacedPosition(container);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);		
-			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(containerWithNonGridParent), bounds);
+			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(container), bounds);
 
 		} else {
 			bounds =  rh.getPlacedPosition(c);
@@ -235,8 +234,8 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			BigFraction xOrdinal = cv.getXOrdinal();
 			BigFraction yOrdinal = cv.getYOrdinal();
 			
-			double xfrac = fracMapX.get(xOrdinal);
-			double yfrac = fracMapY.get(yOrdinal);
+			Double xfrac = fracMapX.get(xOrdinal);
+			Double yfrac = fracMapY.get(yOrdinal);
 			
 			bx = bx.keep(trim.xs, trim.xe - trim.xs, xfrac);
 			by = by.keep(trim.ys, trim.ye - trim.ys, yfrac);

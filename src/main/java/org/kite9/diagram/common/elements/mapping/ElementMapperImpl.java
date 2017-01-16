@@ -48,7 +48,7 @@ public class ElementMapperImpl implements ElementMapper {
 		CornerVertices v = cornerVertices.get(c);
 		if (v == null) {
 			if (isEmbeddedWithinGrid(c)) {
-				GridCornerVertices parentCV = getGridCornerVertices((Container)c.getParent());
+				BaseGridCornerVertices parentCV = getBaseGridCornerVertices((Container)c.getParent());
 				v = createSubGridCornerVertices(c, parentCV);
 			} else {
 				v = new IndependentCornerVertices(c, getContainerDepth(c));
@@ -59,27 +59,22 @@ public class ElementMapperImpl implements ElementMapper {
 		return v;
 	}
 
-	private GridCornerVertices createSubGridCornerVertices(final DiagramElement c, GridCornerVertices parentCV) {
-		GridCornerVertices v;
+	private SubGridCornerVertices createSubGridCornerVertices(final DiagramElement c, BaseGridCornerVertices parentCV) {
 		OPair<BigFraction> xspan = gp.getGridXPosition(c);
 		OPair<BigFraction> yspan = gp.getGridYPosition(c);
-		v = new SubGridCornerVertices(c, xspan, yspan, parentCV);
+		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV);
 		cornerVertices.put(c, v);
 		return v;
 	}
 
-	private GridCornerVertices getGridCornerVertices(Container c) {
-		if (isEmbeddedWithinGrid(c)) {
-			GridCornerVertices parentCV = getGridCornerVertices((Container) c.getParent());
-			return createSubGridCornerVertices(c, parentCV);
-		} else {
-			BaseGridCornerVertices bgcv = baseGrids.get(c);
-			if (bgcv == null) {
-				bgcv = new BaseGridCornerVertices(c, getContainerDepth(c)+1);
-				baseGrids.put(c, bgcv);
-			}
-			return bgcv;
+	private BaseGridCornerVertices getBaseGridCornerVertices(Container c) {
+		BaseGridCornerVertices bgcv = baseGrids.get(c);
+		if (bgcv == null) {
+			bgcv = new BaseGridCornerVertices(c, getContainerDepth(c)+1);
+			baseGrids.put(c, bgcv);
 		}
+		return bgcv;
+		
 	}
 
 	private boolean isEmbeddedWithinGrid(DiagramElement c) {

@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements.mapping;
 
 import org.kite9.diagram.adl.DiagramElement;
 
-public class BaseGridCornerVertices extends IndependentCornerVertices implements GridCornerVertices {
+public class BaseGridCornerVertices extends IndependentCornerVertices {
 
 	public BaseGridCornerVertices(DiagramElement container, int depth) {
 		super(container, depth);
@@ -13,7 +13,6 @@ public class BaseGridCornerVertices extends IndependentCornerVertices implements
 		return super.getVertexIDStem()+"-g";
 	}
 
-	@Override
 	public DiagramElement getGridContainer() {
 		return rootContainer;
 	}

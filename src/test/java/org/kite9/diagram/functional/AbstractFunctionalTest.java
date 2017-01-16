@@ -95,7 +95,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	}
 	
 	protected boolean checkLabelOcclusion() {
-		return true;
+		return false;
 	}
 	
 	protected boolean checkDiagramSize() {

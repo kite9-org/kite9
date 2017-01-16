@@ -20,13 +20,13 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * @author robmoffat
  *
  */
-public class SubGridCornerVertices extends AbstractCornerVertices implements GridCornerVertices {
+public class SubGridCornerVertices extends AbstractCornerVertices {
 	
-	GridCornerVertices parent;
+	BaseGridCornerVertices parent;
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements;
 	
-	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  GridCornerVertices parentCV) {
+	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  BaseGridCornerVertices parentCV) {
 		super(parentCV.getGridContainer(), getXSpan(x, parentCV), getYSpan(y, parentCV));
 		((AbstractCornerVertices) parentCV).children.add(this);
 		this.parent = parentCV;
@@ -109,7 +109,10 @@ public class SubGridCornerVertices extends AbstractCornerVertices implements Gri
 		return parent.getContainerDepth();
 	}
 
-	@Override
+	public BaseGridCornerVertices getBaseGrid() {
+		return parent;
+	}
+	
 	public DiagramElement getGridContainer() {
 		return parent.getGridContainer();
 	}

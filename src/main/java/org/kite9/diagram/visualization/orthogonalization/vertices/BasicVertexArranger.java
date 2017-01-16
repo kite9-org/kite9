@@ -26,7 +26,7 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.common.elements.mapping.GridCornerVertices;
+import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
@@ -44,8 +44,6 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
-
-import javafx.geometry.HPos;
 
 /**
  * This converts a vertex to a face, so that the shape of the vertex can be
@@ -162,7 +160,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 		
 		for (DiagramElement de : c.getContents()) {
-			GridCornerVertices cv = (GridCornerVertices) em.getOuterCornerVertices(de);
+			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 			createdVertices.addAll(cv.getVerticesAtThisLevel());
 			boolean continuesGrid = (de instanceof Container) && (((Container)de).getLayout()==Layout.GRID);
 
