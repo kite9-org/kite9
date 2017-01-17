@@ -11,7 +11,6 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Direction;
@@ -71,12 +70,7 @@ public class SegmentBuilder implements Logable {
 			if (u!=null) {
 				if (underlying==null) {
 					internalGridEdge = internalGridEdge(d);
-					if (internalGridEdge) {
-						Container parent = MultiCornerVertex.getRootGridContainer(u);
-						underlying = parent;
-					} else {
-						underlying = u;
-					} 	
+					underlying = u;
 				}
 			}
 			

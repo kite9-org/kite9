@@ -162,12 +162,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		for (DiagramElement de : c.getContents()) {
 			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 			createdVertices.addAll(cv.getVerticesAtThisLevel());
-			boolean continuesGrid = (de instanceof Container) && (((Container)de).getLayout()==Layout.GRID);
-
-			if (continuesGrid) {
-				// nest the grid
-				placeContainerContentsOntoGrid(o, (Container) de, emptyMap, createdVertices);
-			}
 			
 			// having created all the vertices, join them to form faces
 			MultiCornerVertex fromv, tov = null;
@@ -192,7 +186,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				
 			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f, cv);
 				
-			if ((de instanceof Container) && (!continuesGrid)) {
+			if (de instanceof Container) {
 				convertContainerContents(o, (Container) de, done); 
 			}
 		}

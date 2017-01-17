@@ -164,8 +164,8 @@ public class Test51Grid extends AbstractFunctionalTest {
 
 		Context l = new Context("l", Arrays.asList(tl, bl), true,  null, null);
 		Context r = new Context("r", Arrays.asList(tr, br), true,  null, null);
-		l.setStyle("layout: grid; grid-size: 1 2; occupies: 0 0;"); 
-		r.setStyle("layout: grid; grid-size: 1 2; occupies: 1 0;"); 
+		l.setStyle("layout: grid; grid-size: 1 2; occupies: 0 0; padding: 5px;"); 
+		r.setStyle("layout: grid; grid-size: 1 2; occupies: 1 0; padding: 10px;"); 
 		
 		Context ctx = new Context("outer", Arrays.asList(l, r), true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 1;");
