@@ -62,7 +62,7 @@ public class ElementMapperImpl implements ElementMapper {
 	private SubGridCornerVertices createSubGridCornerVertices(final DiagramElement c, BaseGridCornerVertices parentCV) {
 		OPair<BigFraction> xspan = gp.getGridXPosition(c);
 		OPair<BigFraction> yspan = gp.getGridYPosition(c);
-		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV);
+		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, getContainerDepth(c));
 		cornerVertices.put(c, v);
 		return v;
 	}
@@ -168,10 +168,7 @@ public class ElementMapperImpl implements ElementMapper {
 			if (depth != null) {
 				return depth;
 			} else {
-				// we don't count nested grids, because these containers are parts of the whole.
-				
-				Layout l = ((Container) parent).getLayout();
-				depth = getContainerDepth(parent) + ((l==Layout.GRID) ? 0 : 1);
+				depth = getContainerDepth(parent) + 1;
 				containerDepths.put(c, depth);
 			}
 			return depth;

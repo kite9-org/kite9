@@ -540,8 +540,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 
 				if (out == 0) {
-					return 0;
-					//throw new LogicException("Contents overlap: "+arg0+" "+arg1);
+					log.error("Contents overlap: "+arg0+" "+arg1);
+					//return 0;
+					throw new LogicException("Contents overlap: "+arg0+" "+arg1);
 				}
 
 				//System.out.println("Comparing: " + arg0 + " " + arg1 + " " + out);

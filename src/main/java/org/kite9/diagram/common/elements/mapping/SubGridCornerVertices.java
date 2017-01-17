@@ -26,8 +26,8 @@ public class SubGridCornerVertices extends AbstractCornerVertices {
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements;
 	
-	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  BaseGridCornerVertices parentCV) {
-		super(parentCV.getGridContainer(), getXSpan(x, parentCV), getYSpan(y, parentCV));
+	public SubGridCornerVertices(DiagramElement c, OPair<BigFraction> x, OPair<BigFraction> y,  BaseGridCornerVertices parentCV, int depth) {
+		super(parentCV.getGridContainer(), getXSpan(x, parentCV), getYSpan(y, parentCV), depth);
 		((AbstractCornerVertices) parentCV).children.add(this);
 		this.parent = parentCV;
 		this.elements = new HashMap<>();
@@ -102,11 +102,6 @@ public class SubGridCornerVertices extends AbstractCornerVertices {
 	
 	public Collection<MultiCornerVertex> getVerticesAtThisLevel() {
 		return elements.values();
-	}
-
-	@Override
-	public int getContainerDepth() {
-		return parent.getContainerDepth();
 	}
 
 	public BaseGridCornerVertices getBaseGrid() {

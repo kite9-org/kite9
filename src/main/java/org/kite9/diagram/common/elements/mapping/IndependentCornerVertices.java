@@ -16,11 +16,8 @@ public class IndependentCornerVertices extends AbstractCornerVertices {
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements = new HashMap<>();
 	
-	private final int depth;
-
 	public IndependentCornerVertices(DiagramElement c, int depth) {
-		super(c, FULL_RANGE, FULL_RANGE);
-		this.depth = depth;
+		super(c, FULL_RANGE, FULL_RANGE, depth);
 		createInitialVertices(c);
 	}
 
@@ -62,10 +59,5 @@ public class IndependentCornerVertices extends AbstractCornerVertices {
 		out.addAll(elements.values());
 		return out;
 	}
-
-	public int getContainerDepth() {
-		return depth;
-	}
-	
 
 }

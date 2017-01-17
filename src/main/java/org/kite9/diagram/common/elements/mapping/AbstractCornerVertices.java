@@ -20,12 +20,14 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 	private OPair<BigFraction> cx, cy;
 	Collection<CornerVertices> children = new ArrayList<>(5);
 	private MultiCornerVertex tl, tr, bl, br;
+	private final int depth;
 
-	public AbstractCornerVertices(DiagramElement rootContainer, OPair<BigFraction> cx, OPair<BigFraction> cy) {
+	public AbstractCornerVertices(DiagramElement rootContainer, OPair<BigFraction> cx, OPair<BigFraction> cy, int depth) {
 		super();
 		this.rootContainer = rootContainer;
 		this.cx = cx;
 		this.cy = cy;
+		this.depth = depth;
 	}
 
 	protected void createInitialVertices(DiagramElement c) {
@@ -169,5 +171,10 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 	public MultiCornerVertex getBottomRight() {
 		return br;
 	}
+
+	public int getContainerDepth() {
+		return depth;
+	}
+	
 
 }
