@@ -421,7 +421,6 @@ public class Test51Grid extends AbstractFunctionalTest {
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g3, null, null, null, null, Direction.DOWN);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
-		//new Link(g2, g4, null, null, null, null, Direction.DOWN);
 
 		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
 	}

@@ -149,7 +149,8 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 	public void setPerimeterVertexPositions(Connected before, DiagramElement c, Connected after, CornerVertices cvs, List<Vertex> out) {
 		final RoutingInfo bounds;
 		final Bounds bx, by;
-		final OPair<Map<BigFraction, Double>> fracMaps;
+		final Map<BigFraction, Double> fracMapX;
+		final Map<BigFraction, Double> fracMapY;
 		
 		if (cvs instanceof SubGridCornerVertices) {
 			SubGridCornerVertices gcv = (SubGridCornerVertices) cvs;
@@ -157,19 +158,18 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			bounds = rh.getPlacedPosition(container);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);		
-			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(container), bounds);
-
+			final OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, ((SubGridCornerVertices) cvs).getBaseGrid(), bounds);
+			fracMapX = fracMaps.getA();
+			fracMapY = fracMaps.getB();
 		} else {
 			bounds =  rh.getPlacedPosition(c);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);
-			fracMaps = fracMapper.getFracMapForGrid(c, rh, em.getOuterCornerVertices(c), bounds);
+			fracMapX = FracMapper.NULL_FRAC_MAP;
+			fracMapY = FracMapper.NULL_FRAC_MAP;
 		}
 
-		// set up frac maps to control where the vertices will be positioned
-		Map<BigFraction, Double> fracMapX = fracMaps.getA();
-		Map<BigFraction, Double> fracMapY = fracMaps.getB();
-	
+		// set up frac maps to control where the vertices will be positioned	
 		for (MultiCornerVertex cv : cvs.getVerticesAtThisLevel()) {
 			setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY);
 		}
