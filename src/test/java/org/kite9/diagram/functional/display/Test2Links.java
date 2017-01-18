@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 
@@ -7,10 +7,11 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
+import org.kite9.diagram.functional.TurnLink;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 
-public class Test2BasicArrows extends AbstractFunctionalTest {
+public class Test2Links extends AbstractDisplayFunctionalTest {
 	
 	@Test(expected=ElementsMissingException.class)
 	public void test_2_1_1GlyphsOneEdge() throws IOException {

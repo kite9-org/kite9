@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 @Ignore
-public class Test47PreferredSize extends AbstractFunctionalTest {
+public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 
 	public interface ContainedCreator {
 		

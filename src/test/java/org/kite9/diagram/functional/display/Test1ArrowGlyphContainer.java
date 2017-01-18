@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 
@@ -9,12 +9,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 
-public class Test1BasicLinkage extends AbstractFunctionalTest {
-
-	@Override
-	protected boolean checkDiagramSize() {
-		return true;
-	}
+public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_1_1_GlyphFinal() throws IOException {

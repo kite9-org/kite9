@@ -1,27 +1,18 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 
 
-public class Test43Styles extends AbstractFunctionalTest {
-
-	
-	@Override
-	protected boolean checkImage() {
-		return true;
-	}
+public class Test43Styles extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_43_1_OverrideGlyphStrokeWidth() throws IOException {

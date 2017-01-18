@@ -1,8 +1,7 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -12,43 +11,41 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.TurnLink;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.xml.XMLElement;
 
-@Ignore("Broken in sprint 7")
-public class Test50ADLAndSVG extends AbstractFunctionalTest {
+public class Test20PDF extends AbstractDisplayFunctionalTest {
 
 	@Test
-	public void test_50_1_GlyphFinal() throws IOException {
-		Glyph one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
-		Glyph two = new Glyph("RG", "Stereo", "Rob's Second Glyph", null, null);
-		Context c1 = new Context(createList(one, two), true, null, null);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", listOf(c1), null);
+	public void test_20_1_GlyphFinal() throws IOException {
+		XMLElement one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
 
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
-
 	@Test
-	public void test_50_2_GlyphWithTextSymbol() throws IOException {
-		Glyph one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
+	public void test_20_2_GlyphWithTextSymbol() throws IOException {
+		XMLElement one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
 				"Some text", 'A', SymbolShape.HEXAGON))), new TextLine("Here is line 2"),
 				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
 	@Test
-	public void test_50_3_GlyphWithSymbolOnly() throws IOException {
-		Glyph one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
+	public void test_20_3_GlyphWithSymbolOnly() throws IOException {
+		XMLElement one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
 				new Symbol("Some text", 'a', SymbolShape.DIAMOND), new Symbol("Some text", 'a', SymbolShape.HEXAGON)));
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
 	@Test
-	public void test_50_4_KeyWith1Symbol() throws IOException {
+	public void test_20_4_KeyWith1Symbol() throws IOException {
 
 		Glyph a = new Glyph("a", "", "a", null, null);
 
@@ -56,11 +53,11 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 				SymbolShape.CIRCLE)));
 
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
 	@Test
-	public void test_50_5_SingleContainerLink() throws IOException {
+	public void test_20_5_SingleContainerLink() throws IOException {
 
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Arrow a = new Arrow("a1", "a1");
@@ -74,11 +71,11 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
 		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con5, con4, con3, con2), null);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
 	@Test
-	public void test_50_6_ArrowOutsideContainer() throws IOException {
+	public void test_20_6_ArrowOutsideContainer() throws IOException {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
@@ -90,11 +87,11 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new Link(a, two);
 
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 
 	@Test
-	public void test_50_7_ArrowToMultipleElements() throws IOException {
+	public void test_20_7_ArrowToMultipleElements() throws IOException {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 		Glyph three = new Glyph("three", "", "three", null, null);
@@ -108,6 +105,6 @@ public class Test50ADLAndSVG extends AbstractFunctionalTest {
 		new TurnLink(a, three);
 
 		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
-		renderDiagramADLAndSVG(d);
+		renderDiagramPDF(d);
 	}
 }

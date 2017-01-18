@@ -1,13 +1,11 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -21,7 +19,7 @@ import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 
-public class Test42Shapes extends AbstractFunctionalTest {
+public class Test42Shapes extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_42_1_DiamondShapedGlyph() throws IOException {

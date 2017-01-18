@@ -1,15 +1,15 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test5GlyphLayout extends AbstractFunctionalTest {
+public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 
 	@Override
 	protected boolean checkDiagramSize() {
