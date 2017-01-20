@@ -146,6 +146,86 @@ public class TestingEngine extends TestingHelp {
 		URL u = d.getClass().getResource("/stylesheets/designer2012.css");
 		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
 	}
+	
+	public DiagramXMLElement renderDiagram(String xml,  Class<?> theTest, String subtest, boolean watermark, Checks c, boolean addressed) throws IOException {
+		try {
+			
+			XMLHelper helper = new XMLHelper();
+
+			writeOutput(theTest, subtest, "diagram.xml", xml);
+
+			DiagramXMLElement d = (DiagramXMLElement) helper.fromXML(xml);
+			LogicException out = null;
+			Planarization pln = null;
+			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false), 12), new SVGRenderer());
+			try {
+				String bi = pipeline.process(d);
+				// write the outputs
+				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
+				writeOutput(theTest, subtest, subtest + "-graph.svg", bi);
+			} catch (PlanarizationException pe) {
+				pln = pe.getPlanarization();
+				out = pe;
+			} catch (LogicException le) {
+				out = le;
+			}
+
+			if (pipeline.getPln() != null) {
+				pln = pipeline.getPln();
+			}
+
+			if (pln != null) {
+				AbstractPlanarizer planarizer = (AbstractPlanarizer) pipeline.getPlanarizer();
+				drawPositions(planarizer.getElementMapper().allVertices(), theTest, subtest, subtest + "-positions.png");
+				writeVertexOrder((MGTPlanarization) pln, theTest, subtest, subtest + "-vertex-order.txt");
+			}
+
+			if (out != null) {
+				throw out;
+			}
+
+			if (c.checkNoHops) {
+				testHopCount(d);
+			}
+
+			if (c.checkLayout) {
+				testLayout(d.getDiagramElement());
+			}
+			
+			if (c.checkLabelOcclusion) {
+				checkLabelOverlap(d.getDiagramElement());
+			}
+
+			// check the outputs. only going to check final diagrams now
+			boolean ok = false;
+			testConnectionPresence(d, c.everythingStraight, c.checkEdgeDirections, c.checkNoContradictions);
+
+			if (c.checkDiagramSize) {
+				ok = checkOutputs(theTest, subtest, "positions-adl.txt") || ok;
+				ok = checkOutputs(theTest, subtest, "diagram.xml") || ok;
+			}
+
+			if (c.checkImage) {
+				ok = checkIdentical(theTest, subtest, subtest + "-graph.svg") || ok;
+			}
+
+			ok = true;
+
+			if (!ok) {
+				Assert.fail("No test results found for test");
+			}
+
+			handleError(theTest, subtest, true, "png");
+
+			return d;
+		} catch (RuntimeException afe) {
+			handleError(theTest, subtest, !addressed, "png");
+			throw afe;
+		} catch (AssertionFailedError afe) {
+			handleError(theTest, subtest, !addressed, "png");
+			throw afe;
+		}
+	}
 
 	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, Checks c, boolean addressed, BufferedImageProcessingPipeline pipeline)
 					throws IOException {
@@ -421,8 +501,18 @@ public class TestingEngine extends TestingHelp {
 	public boolean checkIdentical(Class<?> theTest, String subtest, String item) throws IOException {
 		try {
 			File output = prepareFileName(theTest, subtest, item);
-			InputStream is1 = new FileInputStream(output);
 			InputStream is2 = getHandleToZipEntry(theTest, subtest + "/" + item);
+			
+			if (is2 == null) {
+				is2 = getHandleToResource(theTest, item);
+				
+				if (is2 == null) {
+					throw new NullPointerException(item);
+				}
+			}
+			
+			InputStream is1 = new FileInputStream(output);
+			
 			FileDiff.areFilesSame(item, item, new BufferedInputStream(is1), new BufferedInputStream(is2));
 		} catch (NullPointerException e) {
 			Assert.fail("Missing diagram file: " + e.getMessage());
@@ -434,14 +524,23 @@ public class TestingEngine extends TestingHelp {
 
 		return true;
 	}
+	
+	private InputStream getHandleToResource(Class<?> theTest, String item) throws IOException {
+		InputStream is = theTest.getResourceAsStream(item);
+		return is;
+	}
 
 	private InputStream getHandleToZipEntry(Class<?> theTest, String item) throws IOException {
-		File f = new File(theTest.getClass().getResource(resultsFile).getFile());
-		@SuppressWarnings("resource")
-		ZipFile zip = new ZipFile(f);
-		String nameReq = getFullFileName(theTest, item);
-		ZipEntry ze = zip.getEntry(nameReq);
-		return zip.getInputStream(ze);
+		try {
+			File f = new File(theTest.getClass().getResource(resultsFile).getFile());
+			@SuppressWarnings("resource")
+			ZipFile zip = new ZipFile(f);
+			String nameReq = getFullFileName(theTest, item);
+			ZipEntry ze = zip.getEntry(nameReq);
+			return zip.getInputStream(ze);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static void testConnectionPresence(DiagramXMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
