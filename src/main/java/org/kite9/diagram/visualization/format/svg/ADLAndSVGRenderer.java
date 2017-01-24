@@ -46,7 +46,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 		return new SVGGraphicsLayer(g2, name, document, topGroup, externalizeFonts()) {
 
 			@Override
-			public void endElement(DiagramElement de) {
+			public void endGroup(DiagramElement de) {
 				Element thisGroup= getTopLevelGroup();
 				if (worthKeeping(thisGroup)) {
 					RenderingInformation ri = de.getRenderingInformation();
@@ -59,7 +59,7 @@ public class ADLAndSVGRenderer extends SVGRenderer {
 					diagramRendering = de.getRenderingInformation();
 				}
 				
-				super.endElement(de);
+				super.endGroup(de);
 			}
 		};
 	}

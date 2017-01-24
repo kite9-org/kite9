@@ -16,7 +16,7 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -33,17 +33,17 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	float yo = 4;
 	Color shadowColour = Color.DARK_GRAY;
 	
-	public AbstractRouteDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractRouteDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
-	public AbstractRouteDisplayer(GraphicsLayer g2) {
+	public AbstractRouteDisplayer(GraphicsLayer2D g2) {
 		super(g2);
 	}
 
 	static interface EndDisplayer {
 		
-		public void draw(GraphicsLayer gp, Paint lineColour, Paint fillColour);
+		public void draw(GraphicsLayer2D gp, Paint lineColour, Paint fillColour);
 
 		/**
 		 * Call this method before draw to set the position of the EndDisplayer
@@ -64,7 +64,7 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	public final EndDisplayer NULL_END_DISPLAYER = new EndDisplayer() {
 
 		@Override
-		public void draw(GraphicsLayer gp, Paint lineColour, Paint fillColour) {
+		public void draw(GraphicsLayer2D gp, Paint lineColour, Paint fillColour) {
 		}
 
 		@Override

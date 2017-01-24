@@ -14,15 +14,15 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.BoxStyle;
 import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 public class ContextLabelDisplayer extends AbstractTextDiagramElementDisplayer {
 
-	public ContextLabelDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public ContextLabelDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
-	public ContextLabelDisplayer(GraphicsLayer g2) {
+	public ContextLabelDisplayer(GraphicsLayer2D g2) {
 		super(g2);
 	}
 

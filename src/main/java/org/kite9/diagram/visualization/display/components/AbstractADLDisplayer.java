@@ -22,6 +22,7 @@ import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 /**
  * Provides useful arranger functionality for attr general to drawing ADL
@@ -47,7 +48,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 
 	};
 
-	protected GraphicsLayer g2;
+	protected GraphicsLayer2D g2;
 
 	protected boolean shadow;
 
@@ -58,7 +59,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 
 	protected CompleteDisplayer parent;
 	
-	public AbstractADLDisplayer(GraphicsLayer g2) {
+	public AbstractADLDisplayer(GraphicsLayer2D g2) {
 		this.g2 = g2;
 	}
 	
@@ -66,7 +67,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 		return ((ADLBasicCompleteDisplayer)parent).getPathConverter();
 	}
 
-	public AbstractADLDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractADLDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		this.g2 = g2;
 		this.shadow = shadow;
 		this.parent = parent;
@@ -183,7 +184,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 		g2.setStroke(old);
 	}
 
-	protected double getBaseline(Font f, GraphicsLayer g2, String theText) {
+	protected double getBaseline(Font f, GraphicsLayer2D g2, String theText) {
 		if (f == null) {
 			return 0;
 		}
@@ -208,7 +209,7 @@ public abstract class AbstractADLDisplayer implements ComponentDisplayer {
 		return StaticStyle.getSymbolWidth();
 	}
 
-	protected CostedDimension drawSymbol(String sym, GraphicsLayer g2, double ox,
+	protected CostedDimension drawSymbol(String sym, GraphicsLayer2D g2, double ox,
 			double oy, FixedShape shape, Font symbolFont,
 			double baseline, Color c) {
 		g2.setFont(symbolFont);

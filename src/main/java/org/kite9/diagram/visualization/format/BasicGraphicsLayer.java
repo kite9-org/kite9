@@ -20,7 +20,7 @@ import org.kite9.diagram.adl.DiagramElement;
  * @author robmoffat
  *
  */
-public class BasicGraphicsLayer implements GraphicsLayer {
+public class BasicGraphicsLayer implements GraphicsLayer2D {
 	
 	protected final Graphics2D g2;
 
@@ -29,11 +29,11 @@ public class BasicGraphicsLayer implements GraphicsLayer {
 	}
 
 	@Override
-	public void startElement(DiagramElement de) {
+	public void startGroup(DiagramElement de) {
 	}
 
 	@Override
-	public void endElement(DiagramElement de) {
+	public void endGroup(DiagramElement de) {
 	}
 
 	@Override
@@ -137,6 +137,12 @@ public class BasicGraphicsLayer implements GraphicsLayer {
 		// Rectangle2D r2 = outline.getBounds2D();
 		// debugBox(r2.getMinX(), r2.getMinY(), r2.getWidth(), r2.getHeight(),
 		// Color.YELLOW, g2);
+	}
+
+	@Override
+	public Rectangle2D getStringBounds(DiagramElement de, String s) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -14,11 +14,11 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.TransformedPaint;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 public class BackgroundDisplayer extends AbstractDiagramDisplayer {
 
-	public BackgroundDisplayer(CompleteDisplayer parent, GraphicsLayer g2) {
+	public BackgroundDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2) {
 		super(parent, g2, false);
 	}
 

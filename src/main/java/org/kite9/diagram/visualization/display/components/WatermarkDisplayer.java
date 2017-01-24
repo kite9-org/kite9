@@ -21,7 +21,7 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
@@ -36,7 +36,7 @@ import org.w3c.dom.NodeList;
  */
 public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 	
-	public WatermarkDisplayer(CompleteDisplayer parent, GraphicsLayer g, boolean watermark) {
+	public WatermarkDisplayer(CompleteDisplayer parent, GraphicsLayer2D g, boolean watermark) {
 		super(parent, g, watermark);
 	}
 
@@ -84,7 +84,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 	}
 	
 	
-	public void displayCopyright(GraphicsLayer g2, Dimension2D size, DiagramElement de) {
+	public void displayCopyright(GraphicsLayer2D g2, Dimension2D size, DiagramElement de) {
 		AffineTransform at = g2.getTransform();
 		g2.setTransform(new AffineTransform());
 		
@@ -118,7 +118,7 @@ public class WatermarkDisplayer extends AbstractDiagramDisplayer {
 		
 	}
 	
-	public void displayWatermark(GraphicsLayer g2, Dimension2D size) {
+	public void displayWatermark(GraphicsLayer2D g2, Dimension2D size) {
 		try {
 			AffineTransform at = g2.getTransform();
 			g2.setTransform(new AffineTransform());

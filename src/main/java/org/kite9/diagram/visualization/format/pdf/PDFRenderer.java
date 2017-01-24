@@ -13,6 +13,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.logging.LogicException;
@@ -39,7 +40,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
     ByteArrayOutputStream baos;
     PdfContentByte cb;
     SortedMap<GraphicsLayerName, PdfTemplate> layers;
-    Map<GraphicsLayerName, GraphicsLayer> layerGraphics;
+    Map<GraphicsLayerName, GraphicsLayer2D> layerGraphics;
     Dimension2D size;
     
 	public GraphicsLayer getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
@@ -48,7 +49,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 			this.size = imageSize;
 		}
 		
-		GraphicsLayer graphicsLayer= layerGraphics.get(layer);
+		GraphicsLayer2D graphicsLayer= layerGraphics.get(layer);
 		if (graphicsLayer!=null) {
 			return graphicsLayer;
 		}
@@ -76,7 +77,7 @@ public class PDFRenderer extends AbstractScalingGraphicsSourceRenderer<byte[]> {
 			PdfWriter writer = PdfWriter.getInstance(doc, baos);
 			doc.open();
 			cb = writer.getDirectContent();
-			layerGraphics = new HashMap<GraphicsLayerName, GraphicsLayer>();
+			layerGraphics = new HashMap<GraphicsLayerName, GraphicsLayer2D>();
 			layers = new TreeMap<GraphicsLayerName, PdfTemplate>();
 		} catch (DocumentException e) {
 			throw new LogicException("Could not create PDF in memory", e);

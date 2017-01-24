@@ -11,13 +11,13 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 public class DebugLineDisplayer extends AbstractRouteDisplayer {
 
 	boolean active = false;
 	
-	public DebugLineDisplayer(CompleteDisplayer parent, GraphicsLayer g2) {
+	public DebugLineDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2) {
 		super(g2);
 		this.parent = parent;
 	}

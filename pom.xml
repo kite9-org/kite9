@@ -290,6 +290,16 @@
 			<artifactId>xmlgraphics-commons</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-rasterizer</artifactId>
+			<version>1.8</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-codec</artifactId>
+			<version>1.8</version>
+		</dependency>
 	</dependencies>
 
 

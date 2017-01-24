@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.display.components.DebugLineDisplayer;
 import org.kite9.diagram.visualization.display.components.TextDiagramElementDisplayer;
 import org.kite9.diagram.visualization.display.components.WatermarkDisplayer;
 import org.kite9.diagram.visualization.display.style.io.PathConverter;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
 
@@ -73,38 +73,38 @@ public class ADLBasicCompleteDisplayer extends AbstractOrderedDisplayer {
 	}
 	
 	private void initWatermarkLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.WATERMARK, diagramSize);
 		displayers.add(new WatermarkDisplayer(this, g2, true));		// watermark
 	}
 	
 	private void initCopyrightLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.COPYRIGHT, diagramSize);
 		displayers.add(new WatermarkDisplayer(this, g2, false));	// copyright
 	}
 
 	public void initDebugLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.DEBUG, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.DEBUG, diagramSize);
 		displayers.add(new DebugLineDisplayer(this, g2));
 	}
 
 	public void initMainLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.MAIN, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.MAIN, diagramSize);
 		orderedRender(g2, false);
 	}
 
 	public void initShadows() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.SHADOW, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.SHADOW, diagramSize);
 		orderedRender(g2, true);
 	}
 
 	public void initBackgroundLayer() {
-		GraphicsLayer g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, diagramSize);
+		GraphicsLayer2D g2 = gs.getGraphicsLayer(GraphicsLayerName.BACKGROUND, diagramSize);
 		displayers.add(new BackgroundDisplayer(this, g2));
 	}
 
 
 
-	private void orderedRender(GraphicsLayer g2, boolean shadow) {
+	private void orderedRender(GraphicsLayer2D g2, boolean shadow) {
 //		displayers.add(new AbstractDiagramDisplayer(this, ss, g2, shadow));
 		displayers.add(new ContainerDisplayer(this, g2, shadow));
 		displayers.add(new ConnectionDisplayer(this, g2, shadow) {

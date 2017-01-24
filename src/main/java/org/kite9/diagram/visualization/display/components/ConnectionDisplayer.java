@@ -25,14 +25,14 @@ import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.framework.logging.LogicException;
 
 public class ConnectionDisplayer extends AbstractRouteDisplayer implements ComponentDisplayer {
 
 	public static boolean debug = true;
 
-	public ConnectionDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public ConnectionDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 	
@@ -136,7 +136,7 @@ public class ConnectionDisplayer extends AbstractRouteDisplayer implements Compo
 			this.s = s;
 		}
 
-		public int draw(int x, int y, Direction d, GraphicsLayer g2, Paint lc, Paint fc) {
+		public int draw(int x, int y, Direction d, GraphicsLayer2D g2, Paint lc, Paint fc) {
 			if (s != null) {
 
 				if (s.getPath() != null) {
@@ -187,7 +187,7 @@ public class ConnectionDisplayer extends AbstractRouteDisplayer implements Compo
 		}
 
 		@Override
-		public void draw(GraphicsLayer gp, Paint lc, Paint fc) {
+		public void draw(GraphicsLayer2D gp, Paint lc, Paint fc) {
 			draw((int) endPosition.x(), (int) endPosition.y(), d, gp, lc, fc);
 		}  
 

@@ -8,7 +8,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 /**
  * Handles rendering and sizing of `Text` `DiagramElements`. 
@@ -17,11 +17,11 @@ import org.kite9.diagram.visualization.format.GraphicsLayer;
  */
 public abstract class AbstractTextDiagramElementDisplayer extends AbstractRectangularDiagramElementDisplayer {
 
-	public AbstractTextDiagramElementDisplayer(GraphicsLayer g2) {
+	public AbstractTextDiagramElementDisplayer(GraphicsLayer2D g2) {
 		super(g2);
 	}
 
-	public AbstractTextDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractTextDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
@@ -52,12 +52,14 @@ public abstract class AbstractTextDiagramElementDisplayer extends AbstractRectan
 	
 	@Override
 	protected Dimension2D sizeBoxContents(DiagramElement e, Dimension2D within) {		
-		TextStyle ls = getLabelStyle(e);
+//		TextStyle ls = getLabelStyle(e);
+		String text = safeGetText(getLabel(e));
+		return g2.getStringBounds(e, text);
 			
-		CostedDimension nameSize = ls != null ? arrangeString(ls.getFont(), ls.getColor(), safeGetText(getLabel(e)), 
-					CostedDimension.ZERO, CostedDimension.UNBOUNDED, false, Justification.CENTER, 0) : CostedDimension.ZERO;
-			
-		return nameSize;
+//		CostedDimension nameSize = ls != null ? arrangeString(ls.getFont(), ls.getColor(), ), 
+//					CostedDimension.ZERO, CostedDimension.UNBOUNDED, false, Justification.CENTER, 0) : CostedDimension.ZERO;
+//			
+//		return nameSize;
 	}
 
 	private String safeGetText(String st) {

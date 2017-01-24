@@ -7,11 +7,11 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.TextStyle;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 public abstract class AbstractTextDisplayer extends AbstractRectangularDiagramElementDisplayer {
 
-	public AbstractTextDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractTextDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 

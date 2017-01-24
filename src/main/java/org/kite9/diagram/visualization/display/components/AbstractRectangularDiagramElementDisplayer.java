@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.display.style.FlexibleShape;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.io.ShapeHelper;
 import org.kite9.diagram.visualization.display.style.shapes.RoundedRectFlexibleShape;
-import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 /**
  * Handles display of any element which conforms to the box-model.
@@ -35,11 +35,11 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 	
 	public static final FlexibleShape DEFAULT_SHAPE = new RoundedRectFlexibleShape(8);
 
-	public AbstractRectangularDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer g2, boolean shadow) {
+	public AbstractRectangularDiagramElementDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
 		super(parent, g2, shadow);
 	}
 
-	public AbstractRectangularDiagramElementDisplayer(GraphicsLayer g2) {
+	public AbstractRectangularDiagramElementDisplayer(GraphicsLayer2D g2) {
 		super(g2);
 	}
 
@@ -298,7 +298,7 @@ public abstract class AbstractRectangularDiagramElementDisplayer extends Abstrac
 	}
 	
 
-	public void paintBackground(BoxStyle bs, FlexibleShape fs, GraphicsLayer g2, double x1, double y1, double x2,
+	public void paintBackground(BoxStyle bs, FlexibleShape fs, GraphicsLayer2D g2, double x1, double y1, double x2,
 			double y2) {
 		final ShapeStyle borderStyle = bs; 
 		if ((borderStyle != null) && (borderStyle.isFilled())) {

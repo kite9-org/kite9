@@ -25,22 +25,22 @@ public class SVGGraphicsLayer extends BasicGraphicsLayer {
 	}
 
 	@Override
-	public void startElement(DiagramElement de) {
+	public void startGroup(DiagramElement de) {
 		Element group = document.createElement("g");
 		group.setAttribute("layer", name.name());
 		group.setAttribute("element-id",de.getID());
 		((SVGGraphics2D)g2).setTopLevelGroup(group);
-		super.startElement(de);
+		super.startGroup(de);
 	}
 
 	@Override
-	public void endElement(DiagramElement de) {
+	public void endGroup(DiagramElement de) {
 		Element topGroup = getTopLevelGroup();
 		if (worthKeeping(topGroup)) {
 			originalTopGroup.appendChild(topGroup);
 		}
 		
-		super.endElement(de);
+		super.endGroup(de);
 		((SVGGraphics2D)g2).setTopLevelGroup(topGroup);
 	}
 

@@ -11,6 +11,7 @@ import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.visualization.display.style.FixedShape;
 import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 
 public class SymbolDisplayer extends AbstractADLDisplayer {
 
@@ -30,7 +31,7 @@ public class SymbolDisplayer extends AbstractADLDisplayer {
 		return ss.getSymbolSize();
 	}
 
-	protected CostedDimension drawSymbol(String sym, GraphicsLayer g2, double ox,
+	protected CostedDimension drawSymbol(String sym, GraphicsLayer2D g2, double ox,
 			double oy, FixedShape shape, Font symbolFont,
 			double baseline) {
 		g2.setFont(symbolFont);
