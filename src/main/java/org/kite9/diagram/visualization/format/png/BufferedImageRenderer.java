@@ -35,7 +35,7 @@ public class BufferedImageRenderer extends AbstractScalingGraphicsSourceRenderer
 		return bi;
 	}
 
-	public GraphicsLayer getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
+	public GraphicsLayer2D getGraphics(GraphicsLayerName layer, float scale, Dimension2D imageSize, Dimension2D diagramSize) {
 		
 		if ((bi==null) || (bi.getWidth() != imageSize.getWidth()) ||  (bi.getHeight() != imageSize.getHeight())) {
 			bi = new BufferedImage((int) imageSize.getWidth(), (int) imageSize.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);

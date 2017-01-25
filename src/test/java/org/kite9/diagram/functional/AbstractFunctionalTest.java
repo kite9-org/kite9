@@ -16,7 +16,7 @@ import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.AbstractXMLElement;
+import org.kite9.diagram.xml.AbstractStyledKite9SVGElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.HelpMethods;
@@ -145,7 +145,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void initTestDocument() {
-		AbstractXMLElement.TESTING_DOCUMENT =  new ADLDocument();
+		AbstractStyledKite9SVGElement.TESTING_DOCUMENT =  new ADLDocument();
 	}
 
 	
@@ -226,7 +226,7 @@ public class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void resetCounter() {
-		AbstractXMLElement.resetCounter();
+		AbstractStyledKite9SVGElement.resetCounter();
 	}
 	
 	public DiagramElement getById(final String id, DiagramXMLElement d) {

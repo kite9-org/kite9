@@ -31,6 +31,7 @@ import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.junit.Test;
+import org.kite9.diagram.visualization.batik.ADLBridgeContext;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.RepositoryHelp;
@@ -183,6 +184,12 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	        this.root = gvtRoot;
 	    }
 
+		@Override
+		protected BridgeContext createBridgeContext(SVGOMDocument doc) {
+			return new ADLBridgeContext(userAgent);
+		}
+
+	    
 
 	}
 
