@@ -8,6 +8,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.visualization.format.AbstractScalingGraphicsSourceRenderer;
 import org.kite9.diagram.visualization.format.BasicGraphicsLayer;
 import org.kite9.diagram.visualization.format.GraphicsLayer;
+import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.DiagramXMLElement;
 

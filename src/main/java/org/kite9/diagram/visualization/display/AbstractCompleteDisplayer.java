@@ -22,7 +22,7 @@ import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
-public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSpacer, Logable {
+public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSizer, Logable {
 	
 	private int gridSize = 12;
 

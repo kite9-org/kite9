@@ -8,7 +8,7 @@ package org.kite9.diagram.visualization.display;
  * @author robmoffat
  *
  */
-public interface CompleteDisplayer extends Displayer, DiagramSpacer {
+public interface CompleteDisplayer extends Displayer, DiagramSizer {
 
 	/**
 	 * Called at the end to complete rendering and return a result, if any

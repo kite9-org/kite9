@@ -11,7 +11,7 @@ import org.kite9.diagram.position.Direction;
  * @author robmoffat
  *
  */
-public interface DiagramSpacer {
+public interface DiagramSizer {
 
 	/**
 	 * Returns the necessary distance between two diagram attr.

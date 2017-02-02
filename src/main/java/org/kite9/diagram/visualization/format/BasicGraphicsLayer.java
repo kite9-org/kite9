@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.Dimension2D;
 
 /**
  * Wraps around Java's Graphics2D class.
@@ -140,7 +141,7 @@ public class BasicGraphicsLayer implements GraphicsLayer2D {
 	}
 
 	@Override
-	public Rectangle2D getStringBounds(DiagramElement de, String s) {
+	public Dimension2D getStringBounds(DiagramElement de, String s) {
 		// TODO Auto-generated method stub
 		return null;
 	}

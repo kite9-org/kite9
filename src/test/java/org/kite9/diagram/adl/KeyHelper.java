@@ -1,7 +1,6 @@
 package org.kite9.diagram.adl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +9,8 @@ import java.util.Set;
 
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.AbstractXMLElement;
+import org.kite9.diagram.xml.AbstractStyleableXMLElement;
+import org.kite9.tool.AbstractKite9Runner;
 
 /**
  * Helps in the creation of keys by making sure that symbols don't reuse the
@@ -60,7 +60,7 @@ public class KeyHelper {
 	private ADLDocument doc;
 	
 	public KeyHelper() {
-		this(AbstractXMLElement.TESTING_DOCUMENT);
+		this(AbstractStyleableXMLElement.TESTING_DOCUMENT);
 	}
 
 	public KeyHelper(ADLDocument doc) {
