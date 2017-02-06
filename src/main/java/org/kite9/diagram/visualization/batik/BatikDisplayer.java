@@ -1,22 +1,34 @@
 package org.kite9.diagram.visualization.batik;
 
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.dom.svg.SVGOMTransform;
+import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.style.impl.AbstractXMLDiagramElement;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.xml.StyledKite9SVGElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
+import org.w3c.dom.svg.SVGAnimatedTransformList;
+import org.w3c.dom.svg.SVGRect;
+import org.w3c.dom.svg.SVGTransformList;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 
-	public BatikDisplayer(boolean buffer, int gridSize) {
+	private GraphicsNodeLookup lookup;
+	
+	public BatikDisplayer(boolean buffer, int gridSize, GraphicsNodeLookup lookup) {
 		super(buffer, gridSize);
+		this.lookup = lookup;
 	}
 
 	@Override
@@ -28,7 +40,9 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		if (element instanceof Text) {
-			 return CostedDimension.ZERO;
+			StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
+			SVGRect bounds = xml.getBBox();
+			return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 		} else if (element instanceof Container) {
 			Value left = element.getCSSStyleProperty(CSSConstants.PADDING_LEFT_PROPERTY);
 			Value right = element.getCSSStyleProperty(CSSConstants.PADDING_RIGHT_PROPERTY);
@@ -42,8 +56,24 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri) {
-		// TODO Auto-generated method stub
-		
+		if (element instanceof Text) {
+			StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
+			//SVGRect bounds = xml.getBBox();
+			
+			SVGAnimatedTransformList transform = xml.getTransform();
+			SVGTransformList t2 = transform.getBaseVal();
+			
+			// so, we're going to need to apply a transform here.
+			RectangleRenderingInformation rri = ((Text)element).getRenderingInformation();
+//			SVGOMTransform myTransform = new SVGOMTransform();
+//			myTransform.setTranslate((float) rri.getPosition().x(), (float) rri.getPosition().y());
+//			t2.appendItem(myTransform);
+			
+			GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
+			node.getTransform().translate((float) rri.getPosition().x(), (float) rri.getPosition().y());
+			//node.setTransform(myTransform);
+			
+		}	
 	}
 
 	@Override

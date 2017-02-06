@@ -1,30 +1,21 @@
 package org.kite9.diagram.visualization.batik;
 
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-
 import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.bridge.BridgeException;
 import org.apache.batik.bridge.SVGGElementBridge;
-import org.apache.batik.bridge.SVGRectElementBridge;
-import org.apache.batik.dom.svg.LiveAttributeException;
-import org.apache.batik.gvt.ShapeNode;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Rectangular;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
-import org.kite9.diagram.visualization.pipeline.full.ArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
-import org.kite9.diagram.visualization.pipeline.full.ProcessingPipeline;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.StyledKite9SVGElement;
+import org.apache.batik.gvt.GraphicsNode;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.xml.XMLElement;
 import org.w3c.dom.Element;
 
-public class Kite9DiagramBridge extends SVGGElementBridge {
+public class Kite9DiagramGroupBridge extends SVGGElementBridge {
+	
+	private final GraphicsNodeLookup lookup;
+
+	public Kite9DiagramGroupBridge(GraphicsNodeLookup lookup) {
+		super();
+		this.lookup = lookup;
+	}
 
 	@Override
 	public String getNamespaceURI() {
@@ -38,12 +29,20 @@ public class Kite9DiagramBridge extends SVGGElementBridge {
 
 	@Override
 	public Bridge getInstance() {
-		return new Kite9DiagramBridge();
+		return new Kite9DiagramGroupBridge(lookup);
+	}
+
+	@Override
+	protected void associateSVGContext(BridgeContext ctx, Element e, GraphicsNode node) {
+		super.associateSVGContext(ctx, e, node);
+		lookup.storeNode(getLayer(), (XMLElement) e, node);
+	}
+
+	private GraphicsLayerName getLayer() {
+		return GraphicsLayerName.MAIN;
 	}
 	
-	private ArrangementPipeline createPipeline() {
-		return new BatikArrangementPipeline();
-	}
+	
 
 //    /**
 //     * Constructs a rectangle according to the specified parameters.
