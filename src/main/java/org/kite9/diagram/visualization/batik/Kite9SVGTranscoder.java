@@ -59,10 +59,10 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
         Document doc = this.createDocument(output);
-        SVGGraphics2D svgGenerator = new SVGGraphics2D(doc);
+        ElementManagingSVGGraphics2D svgGenerator = new ElementManagingSVGGraphics2D(doc);
         
         root.paint(svgGenerator);
-
+        
         /** set precision
          ** otherwise Ellipses aren't working (for example) (because of Decimal format
          * modifications ins SVGGenerator Context

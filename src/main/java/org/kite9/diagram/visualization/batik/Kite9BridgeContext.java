@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.batik.bridge.Bridge;
+import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
+import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.script.InterpreterPool;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
@@ -16,6 +19,7 @@ import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 
 public final class Kite9BridgeContext extends SVG12BridgeContext implements GraphicsNodeLookup {
@@ -89,6 +93,29 @@ public final class Kite9BridgeContext extends SVG12BridgeContext implements Grap
 	@Override
 	public void storeNode(GraphicsLayerName gl, XMLElement element, GraphicsNode node) {
 		mainMapping.put(element, node);
+	}
+
+	@Override
+	public GVTBuilder getGVTBuilder() {
+		return new GVTBuilder() {
+
+			@Override
+			protected void buildComposite(BridgeContext ctx, Element e, CompositeGraphicsNode parentNode) {
+				CompositeGraphicsNode diagramNode = (CompositeGraphicsNode) mainMapping.get(theDiagram);
+				if (e instanceof XMLElement) {
+					// in this case, we add the elements to the diagram node, rather than the parent node.
+				   for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
+			            if (n.getNodeType() == Node.ELEMENT_NODE) {
+			                buildGraphicsNode(ctx, (Element)n, diagramNode);
+			            }
+			        }
+					
+				} else {
+					super.buildComposite(ctx, e, parentNode);
+				}
+			}
+			
+		};
 	}
 
 	

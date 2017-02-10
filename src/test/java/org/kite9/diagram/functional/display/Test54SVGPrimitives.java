@@ -40,6 +40,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		
 		transcoder.setTranscodingHints(hints);
 		transcoder.transcode(in, out);
+		
 	}
 	
 	@Test
@@ -49,11 +50,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
-	public void test_54_2_TextPrimitive() throws Exception {
-		String someXML = svgOpen() + diagramOpen() + textOpen()+svgText()+textClose()+diagramClose() + svgClose();
+	public void test_54_2_FixedGraphicsPrimitive() throws Exception {
+		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen()+svgText()+fixedSizeClose()+diagramClose() + svgClose();
 		transcode(someXML);
 	}
-	
+
 	@Test
 	public void test_54_3_TestTranscoderOnRandomSVGFile() throws Exception {
 		StringWriter out = new StringWriter();
@@ -70,15 +71,16 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 
 	@Test
-	public void test_54_6_ResizeablePrimitive() throws IOException {
-		String someXML = diagramOpen() + 
+	public void test_54_6_ResizeablePrimitive() throws Exception {
+		String someXML = svgOpen() + diagramOpen() + 
 					containerOpen()+
-				textOpen()+
-				"Internal Text" +
-				textClose() +
+					svgRect() +
+				fixedSizeOpen()+
+				svgText()+
+				fixedSizeClose() +
 				containerClose() +
-				diagramClose();
-		renderDiagram(someXML);
+				diagramClose() + svgClose();
+		transcode(someXML);
 	}
 	
 	private String svgOpen() {
@@ -98,16 +100,16 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 
-	private String textClose() {
+	private String fixedSizeClose() {
 		return "</someelement>";
 	}
 
-	private String textOpen() {
-		return "<someelement style='type: connected; sizing: text; '>";
+	private String fixedSizeOpen() {
+		return "<someelement id='someelement' style='type: connected; sizing: fixed-size; '>";
 	}
 
 	private String containerOpen() {
-		return "<container style='type: container'>";
+		return "<container id='container' style='type: connected; sizing: minimize; '>";
 	}
 
 	private String containerClose() {
@@ -116,5 +118,9 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	private String svgText() {
 		return "<svg:text style='font-size: 25px'>Some text</svg:text>";
+	}
+	
+	private String svgRect() {
+		return "<svg:rect x='10' y='5' width='20' height='30' rx='3' ry='3' stroke-width='1' stroke='black' />";
 	}
 }

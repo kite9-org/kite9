@@ -1,10 +1,13 @@
 package org.kite9.diagram.visualization.batik;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.dom.svg.SVGOMTransform;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.FixedSizeGraphics;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -39,9 +42,12 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	@Override
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
-		if (element instanceof Text) {
+		if (element instanceof FixedSizeGraphics) {
 			StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
 			SVGRect bounds = xml.getBBox();
+			if (bounds == null) {
+				return CostedDimension.ZERO;
+			}
 			return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 		} else if (element instanceof Container) {
 			Value left = element.getCSSStyleProperty(CSSConstants.PADDING_LEFT_PROPERTY);
@@ -56,24 +62,21 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri) {
-		if (element instanceof Text) {
-			StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
-			//SVGRect bounds = xml.getBBox();
-			
-			SVGAnimatedTransformList transform = xml.getTransform();
-			SVGTransformList t2 = transform.getBaseVal();
-			
-			// so, we're going to need to apply a transform here.
-			RectangleRenderingInformation rri = ((Text)element).getRenderingInformation();
-//			SVGOMTransform myTransform = new SVGOMTransform();
-//			myTransform.setTranslate((float) rri.getPosition().x(), (float) rri.getPosition().y());
-//			t2.appendItem(myTransform);
-			
+		StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
+		if (element instanceof FixedSizeGraphics) {
+			RectangleRenderingInformation rri = ((FixedSizeGraphics)element).getRenderingInformation();
 			GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
 			node.getTransform().translate((float) rri.getPosition().x(), (float) rri.getPosition().y());
-			//node.setTransform(myTransform);
-			
-		}	
+		} else if (element instanceof Container) {
+			RectangleRenderingInformation rri = ((Container)element).getRenderingInformation();
+			GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
+			Rectangle2D bounds = node.getBounds();
+			AffineTransform existing = node.getTransform();
+			existing.translate(-bounds.getX(), -bounds.getY());  // center at 0,0
+//			existing.scale(1d / bounds.getWidth(), 1d / bounds.getHeight());
+//			existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+			existing.translate(rri.getPosition().x(), rri.getPosition().y());
+		}
 	}
 
 	@Override
