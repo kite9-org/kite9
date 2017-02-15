@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.batik;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.css.engine.value.Value;
@@ -60,23 +61,42 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		throw new Kite9ProcessingException("Can't size: "+element);
 	}
 
+	/**
+	 * Handle scaling before translation, otherwise everything goes wacky.
+	 */
 	@Override
-	public void draw(DiagramElement element, RenderingInformation ri) {
+	public void draw(DiagramElement element, RenderingInformation ri){
 		StyledKite9SVGElement xml = ((AbstractXMLDiagramElement)element).getTheElement();
+		GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
+		Rectangle2D bounds = ((IdentifiableGraphicsNode) node).getSVGBounds();
+		System.out.println("Internal bounds of "+element+" : "+bounds);
+		AffineTransform existing = node.getTransform();
+		AffineTransform global = node.getGlobalTransform();
+		System.out.println("Global transform of "+element+" : "+global);
+		existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
+
 		if (element instanceof FixedSizeGraphics) {
 			RectangleRenderingInformation rri = ((FixedSizeGraphics)element).getRenderingInformation();
-			GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
-			node.getTransform().translate((float) rri.getPosition().x(), (float) rri.getPosition().y());
+			translateRelative(bounds, existing, global, rri);
 		} else if (element instanceof Container) {
 			RectangleRenderingInformation rri = ((Container)element).getRenderingInformation();
-			GraphicsNode node = lookup.getNode(GraphicsLayerName.MAIN, xml);
-			Rectangle2D bounds = node.getBounds();
-			AffineTransform existing = node.getTransform();
-			existing.translate(-bounds.getX(), -bounds.getY());  // center at 0,0
-//			existing.scale(1d / bounds.getWidth(), 1d / bounds.getHeight());
-//			existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
-			existing.translate(rri.getPosition().x(), rri.getPosition().y());
+			System.out.println("Expected Size of "+element+" : "+rri.getSize());
+			System.out.println("Expected Position of "+element+" : "+rri.getPosition());
+			
+			if (bounds != null) {
+				existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
+				existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+				translateRelative(bounds, existing, global, rri);
+			}
 		}
+
+	}
+
+	private void translateRelative(Rectangle2D bounds, AffineTransform existing, AffineTransform global, RectangleRenderingInformation rri) {
+		existing.translate(-bounds.getX(), -bounds.getY());
+		existing.translate(
+				(rri.getPosition().x() - global.getTranslateX()) / (existing.getScaleX() * global.getScaleX()),
+				(rri.getPosition().y() - global.getTranslateY())  / (existing.getScaleY() * global.getScaleY()));
 	}
 
 	@Override

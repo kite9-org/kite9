@@ -72,14 +72,26 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_54_6_ResizeablePrimitive() throws Exception {
-		String someXML = svgOpen() + diagramOpen() + 
-					containerOpen()+
-					svgRect() +
-				fixedSizeOpen()+
-				svgText()+
-				fixedSizeClose() +
-				containerClose() +
-				diagramClose() + svgClose();
+		String someXML = 
+			svgOpen() + 
+				diagramOpen() + 
+					containerOpen("container1", "red")+
+						svgRect2() +
+						containerOpen("container2", "yellow")+
+							svgRect1() +
+							fixedSizeOpen()+
+								svgText()+
+							fixedSizeClose() +
+						containerClose() +
+					containerClose() +
+					containerOpen("container3", "green")+
+						svgRect3() +
+						containerOpen("container4", "blue") + 
+							svgRect1() +
+						containerClose() + 
+					containerClose() +
+				diagramClose() + 
+			svgClose();
 		transcode(someXML);
 	}
 	
@@ -108,8 +120,8 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		return "<someelement id='someelement' style='type: connected; sizing: fixed-size; '>";
 	}
 
-	private String containerOpen() {
-		return "<container id='container' style='type: connected; sizing: minimize; '>";
+	private String containerOpen(String id, String fill) {
+		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; '>";
 	}
 
 	private String containerClose() {
@@ -117,10 +129,18 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px'>Some text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: black; '>Some text</svg:text>";
 	}
 	
-	private String svgRect() {
-		return "<svg:rect x='10' y='5' width='20' height='30' rx='3' ry='3' stroke-width='1' stroke='black' />";
+	private String svgRect2() {
+		return "<svg:rect x='0' y='50' width='2' height='1' stroke-width='0' stroke='black' />";
+	}
+	
+	private String svgRect1() {
+		return "<svg:rect x='0' y='30' width='30' height='10' rx='3' ry='3' stroke-width='1' stroke='black' />";
+	}
+	
+	private String svgRect3() {
+		return "<svg:rect x='1' y='1' width='3' height='3' stroke-width='0' stroke='black' />";
 	}
 }

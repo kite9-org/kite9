@@ -59,7 +59,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
         Document doc = this.createDocument(output);
-        ElementManagingSVGGraphics2D svgGenerator = new ElementManagingSVGGraphics2D(doc);
+        GroupManagingSVGGraphics2D svgGenerator = new GroupManagingSVGGraphics2D(doc);
         
         root.paint(svgGenerator);
         
