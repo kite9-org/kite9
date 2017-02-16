@@ -1,15 +1,12 @@
 package org.kite9.diagram.visualization.batik;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
-import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.util.HaltingThread;
 
-public class IdentifiableGraphicsNode extends CompositeGraphicsNode {
+public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
 	private String id;
 
@@ -51,8 +48,7 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode {
     private volatile Rectangle2D svgBounds;
 	
 	/**
-	 * Excludes the bounds of any {@link IdentifiableGraphicsNode} elements.
-	 * @return
+	 * Excludes the bounds of any {@link Kite9SizedGraphicsNode} elements.
 	 */
 	public Rectangle2D getSVGBounds() {
 		if (svgBounds != null) {
@@ -64,7 +60,7 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode {
 		int i = 0;
 		while (i < count) {
 			GraphicsNode childNode = children[i++];
-			if (!(childNode instanceof IdentifiableGraphicsNode)) {
+			if (!(childNode instanceof Kite9SizedGraphicsNode)) {
 				Rectangle2D ctb = childNode.getTransformedBounds(IDENTITY);
 				if (ctb != null) {
 					if (svgBounds != null) {
