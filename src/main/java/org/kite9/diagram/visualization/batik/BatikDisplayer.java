@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.batik;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.css.engine.value.Value;
@@ -16,15 +15,15 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.style.impl.AbstractXMLDiagramElement;
+import org.kite9.diagram.visualization.batik.node.GraphicsNodeLookup;
+import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
-import org.w3c.dom.svg.SVGAnimatedTransformList;
 import org.w3c.dom.svg.SVGRect;
-import org.w3c.dom.svg.SVGTransformList;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 

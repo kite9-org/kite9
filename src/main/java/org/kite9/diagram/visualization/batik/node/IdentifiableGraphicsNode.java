@@ -1,10 +1,11 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.node;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
+import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 

@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.format;
 
 public interface GroupManagement {
 

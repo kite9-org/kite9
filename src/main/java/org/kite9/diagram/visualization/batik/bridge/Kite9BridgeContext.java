@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.bridge;
 
 import java.awt.geom.Dimension2D;
 import java.util.HashMap;
@@ -8,11 +8,16 @@ import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.SVGAElementBridge;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.script.InterpreterPool;
+import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.visualization.batik.BatikArrangementPipeline;
+import org.kite9.diagram.visualization.batik.BatikDisplayer;
+import org.kite9.diagram.visualization.batik.node.GraphicsNodeLookup;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.visualization.pipeline.full.ArrangementPipeline;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -50,7 +55,11 @@ public final class Kite9BridgeContext extends SVG12BridgeContext implements Grap
 	@Override
 	public Bridge getBridge(Element element) {
 		if (element instanceof XMLElement) {
+			DiagramElement de = ((XMLElement) element).getDiagramElement();
 			storeDiagramElement(element);
+			
+			
+			
 			return new Kite9DiagramGroupBridge(this);
 		} else {
 			return super.getBridge(element);
@@ -69,7 +78,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext implements Grap
 
 	@Override
 	public Dimension2D getDocumentSize() {
-		if (sized == false) {
+		if ((sized == false) && (theDiagram != null)) {
 			createPipeline().arrange(theDiagram);
 			sized = true;
 		}
@@ -118,5 +127,12 @@ public final class Kite9BridgeContext extends SVG12BridgeContext implements Grap
 		};
 	}
 
+	@Override
+	public void registerSVGBridges() {
+		super.registerSVGBridges();
+		putBridge(new ScalablePathElementBridge());
+	}
+
+	
 	
 }

@@ -1,9 +1,10 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.format;
 
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.dom.util.DocumentFactory;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.framework.serialization.Kite9DocumentFactory2;
 import org.w3c.dom.DOMImplementation;
 

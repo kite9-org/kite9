@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.format;
 
 import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
 import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
@@ -21,6 +21,7 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.framework.serialization.Kite9DocumentFactory2;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;

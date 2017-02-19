@@ -1,15 +1,24 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.bridge;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GVTBuilder;
-import org.apache.batik.bridge.GraphicsNodeBridge;
+import org.apache.batik.bridge.SVGPathElementBridge;
+import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
+import org.kite9.diagram.visualization.batik.node.GraphicsNodeLookup;
+import org.kite9.diagram.xml.StyledKite9SVGElement;
 import org.kite9.diagram.xml.XMLElement;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.serialization.CSSConstants;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/**
+ * Handles all {@link XMLElement}s that turn into composite 'g' elements in SVG.
+ * 
+ * @author robmoffat
+ *
+ */
 public class Kite9DiagramGroupBridge extends AbstractKite9GraphicsNodeBridge {
 	
 	public Kite9DiagramGroupBridge(GraphicsNodeLookup lookup) {
@@ -42,9 +51,26 @@ public class Kite9DiagramGroupBridge extends AbstractKite9GraphicsNodeBridge {
      */
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
     	CompositeGraphicsNode out = (CompositeGraphicsNode) super.createGraphicsNode(ctx, e);
+    	
+    	// does it have a path?
+//    	if (e instanceof StyledKite9SVGElement) {
+//    		//Value v = ((StyledKite9SVGElement) e).getCSSStyleProperty(CSSConstants.PATH);
+//    		
+//    		GraphicsNode node = new SVGPathElementBridge().createGraphicsNode(ctx, e) {
+//    			
+//    			
+//    			
+//    			
+//    			
+//    		}
+//    		
+//    		
+//    	}
+    	
     	processChildren(e, out, ctx);
         return out;
     }
 	
 
+    
 }

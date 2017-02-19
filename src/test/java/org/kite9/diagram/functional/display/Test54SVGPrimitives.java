@@ -14,7 +14,7 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.junit.Test;
-import org.kite9.diagram.visualization.batik.Kite9SVGTranscoder;
+import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -65,7 +65,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_54_4_TestTranscoderOnKite9() throws Exception {
-		String someXML = diagramOpen()+ diagramClose();
+		String someXML = svgOpen()+ diagramOpen()+ diagramClose() + svgClose();
 		transcode(someXML);
 	}
 	
@@ -95,6 +95,26 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcode(someXML);
 	}
 	
+	@Test
+	public void test_54_7_ScalablePath() throws Exception {
+		String someXML = 
+			svgOpen() + 
+				diagramOpen() + 
+					containerOpen("container1", "red")+
+						scalablePath() + 
+						fixedSizeOpen()+
+							svgText()+
+						fixedSizeClose() +
+					containerClose() +
+				diagramClose()+ 
+			svgClose();
+		transcode(someXML);
+	}
+	
+	private String scalablePath() {
+		return "<svg:path d='M10 10 H 50 V 20z' />";
+	}
+
 	private String svgOpen() {
 		return "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
 	}

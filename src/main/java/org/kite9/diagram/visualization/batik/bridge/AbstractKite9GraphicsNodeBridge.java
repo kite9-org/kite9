@@ -1,14 +1,11 @@
-package org.kite9.diagram.visualization.batik;
-
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
+package org.kite9.diagram.visualization.batik.bridge;
 
 import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.bridge.CSSUtilities;
 import org.apache.batik.bridge.SVGGElementBridge;
-import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
+import org.kite9.diagram.visualization.batik.node.GraphicsNodeLookup;
+import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.XMLElement;
 import org.w3c.dom.Element;

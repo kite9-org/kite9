@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.batik;
+package org.kite9.diagram.visualization.batik.format;
 
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
