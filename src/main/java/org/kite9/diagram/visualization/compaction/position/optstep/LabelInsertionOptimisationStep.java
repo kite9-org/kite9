@@ -34,7 +34,7 @@ import org.kite9.diagram.position.HPos;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.VPos;
-import org.kite9.diagram.style.impl.LabelFrame;
+import org.kite9.diagram.visualization.batik.element.LabelFrame;
 import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;

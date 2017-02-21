@@ -7,7 +7,7 @@ import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
 
-public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
+public class IdentifiableGraphicsNode extends CompositeGraphicsNode {
 
 	private String id;
 
@@ -80,4 +80,11 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 		super.invalidateGeometryCache();
 		svgBounds = null;
 	}
+
+	@Override
+	public String toString() {
+		return "[IdentifiableGraphicsNode id="+getId()+"]";
+	}
+	
+	
 }

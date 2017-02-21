@@ -11,7 +11,7 @@ import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.impl.AbstractDiagramElement;
+import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.

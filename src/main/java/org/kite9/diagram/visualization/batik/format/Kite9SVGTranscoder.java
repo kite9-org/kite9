@@ -20,26 +20,44 @@ import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscodingHints;
+import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.style.DiagramElementFactory;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.framework.serialization.Kite9DocumentFactory2;
+import org.kite9.diagram.visualization.batik.element.DiagramElementFactoryImpl;
+import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
+import org.kite9.framework.serialization.Kite9DocumentFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
 public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
-
-
 	
+	private ADLExtensibleDOMImplementation domImpl;
+	
+	public Kite9SVGTranscoder() {
+		super();
+		TranscodingHints hints = new TranscodingHints();
+		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
+		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
+		domImpl = new ADLExtensibleDOMImplementation();
+		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
+		setTranscodingHints(hints);
+	}
+
 	@Override
 	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		return new Kite9BridgeContext(userAgent);
+		Kite9BridgeContext out = new Kite9BridgeContext(userAgent);
+		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
+		domImpl.setDiagramElementFactory(def);
+		return out;
 	}
 
 	@Override
 	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
-		return new Kite9DocumentFactory2(parserClassname);
+		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
 	}
 
 	protected Document createDocument(TranscoderOutput output) {

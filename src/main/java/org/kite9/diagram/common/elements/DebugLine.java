@@ -5,7 +5,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.style.impl.AbstractDiagramElement;
+import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
 import org.kite9.diagram.xml.LinkLineStyle;
 
 /**
