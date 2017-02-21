@@ -8,10 +8,6 @@ import java.util.Map;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.adl.sizing.AdaptiveSizedGraphics;
-import org.kite9.diagram.adl.sizing.HasLayeredGraphics;
 import org.kite9.diagram.adl.sizing.ScaledGraphics;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
@@ -25,15 +21,13 @@ import org.kite9.diagram.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class DiagramImpl extends AbstractConnectedDiagramElement implements Diagram, ScaledGraphics {
+public class DiagramImpl extends ConnectedContainerImpl implements Diagram, ScaledGraphics {
 	
 	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx) {
 		super(el, null, ctx);
 	}
 	
 	private transient Map<String, Collection<Connection>> references = new HashMap<>();
-	Label label;
-
 
 	protected void addConnectionReference(Connection c) {
 		String fromId = c.getFrom().getID();
@@ -53,40 +47,15 @@ public class DiagramImpl extends AbstractConnectedDiagramElement implements Diag
 		return c;
 	}
 	
-	/**
-	 * Is able to build a group for each layer
-	 */
-	@Override
-	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
-		IdentifiableGraphicsNode ign = createGraphicsNode(name);
-//		ign.setId(name.name());
-//		for (DiagramElement	de : getContents()) {
-//			if (de instanceof HasLayeredGraphics) {
-//				GraphicsNode graphicsForLayer = ((HasLayeredGraphics) de).getGraphicsForLayer(name);
-//				if (graphicsForLayer != null) {
-//					ign.add(graphicsForLayer);
-//				}
-//			}
-//		}
-		return ign;
-	}
-
-	@Override
-	public boolean isBordered() {
-		return false;
-	}
-
-	@Override
-	public Label getLabel() {
-		ensureInitialized();
-		return label;
-	}
-
-	@Override
-	protected void addLabelReference(Label de) {
-		this.label = de;
-	}
-	
+//	/**
+//	 * Is able to build a group for each layer, all layers being pretty much the same
+//	 */
+//	@Override
+//	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
+//		IdentifiableGraphicsNode ign = createGraphicsNode(name);
+//		return ign;
+//	}
+//	
 }
 
 

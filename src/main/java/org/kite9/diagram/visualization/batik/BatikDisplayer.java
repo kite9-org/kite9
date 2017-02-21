@@ -96,11 +96,11 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 					System.out.println("Expected Size of "+element+" : "+rri.getSize());
 					System.out.println("Expected Position of "+element+" : "+rri.getPosition());
 					AffineTransform existing = node.getTransform();
-					AffineTransform global = node.getGlobalTransform();
 					
 					if (bounds != null) {
 						existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
 						existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+						AffineTransform global = node.getGlobalTransform();
 						translateRelative(bounds, existing, global, rri);
 					}
 					return null;
@@ -112,9 +112,15 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	private void translateRelative(Rectangle2D bounds, AffineTransform existing, AffineTransform global, RectangleRenderingInformation rri) {
 		existing.translate(-bounds.getX(), -bounds.getY());
-		existing.translate(
-				(rri.getPosition().x() - global.getTranslateX()) / (existing.getScaleX() * global.getScaleX()),
-				(rri.getPosition().y() - global.getTranslateY())  / (existing.getScaleY() * global.getScaleY()));
+		double xs = global.getScaleX();
+		double ys = global.getScaleY();
+		double xt = rri.getPosition().x() - global.getTranslateX();
+		double yt = rri.getPosition().y() - global.getTranslateY();
+		double xst = xt / xs;
+		double yst = yt  / ys;
+		System.out.println("translate: "+xst+" "+yst);
+		existing.translate(xst, yst);
+		System.out.println(existing);
 	}
 
 	@Override

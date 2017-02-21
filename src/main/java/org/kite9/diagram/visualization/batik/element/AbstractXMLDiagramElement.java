@@ -121,6 +121,7 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
 		out.setId(getID()+"-"+name.name());
 		
+		// make sure the graphics node is anchored to it's parent
 		if (getParent() != null) {
 			IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasLayeredGraphics) getParent()).getGraphicsForLayer(name);
 			parentNode.add(out);

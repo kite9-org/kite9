@@ -59,7 +59,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 					containerOpen("container1", "red")+
 						svgRect2() +
 						containerOpen("container2", "yellow")+
-							svgRect1() +
+							svgRect2() +
 							fixedSizeOpen()+
 								svgText()+
 							fixedSizeClose() +
@@ -109,7 +109,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String diagramOpen() {
-		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='type: diagram; padding: 30px; fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='type: diagram; padding: 50px; fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 
@@ -134,7 +134,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgRect2() {
-		return "<svg:rect x='0' y='50' width='2' height='1' stroke-width='0' stroke='black' />";
+		return "<svg:rect x='0' y='0' width='1' height='1' stroke-width='0' stroke='black' />";
 	}
 	
 	private String svgRect1() {

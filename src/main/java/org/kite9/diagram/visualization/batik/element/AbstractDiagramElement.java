@@ -104,7 +104,9 @@ public abstract class AbstractDiagramElement implements DiagramElement, HasLayer
 	@Override
 	public Rectangle2D getSVGBounds() {
 		GraphicsNode gn = getGraphicsForLayer(GraphicsLayerName.MAIN);
-		if (gn != null) {
+		if (gn instanceof IdentifiableGraphicsNode) {
+			return ((IdentifiableGraphicsNode) gn).getSVGBounds();
+		} else if (gn instanceof GraphicsNode) {
 			return gn.getBounds();
 		} else {
 			return null;

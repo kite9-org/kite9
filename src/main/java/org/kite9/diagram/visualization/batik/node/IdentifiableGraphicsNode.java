@@ -7,7 +7,7 @@ import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
 
-public class IdentifiableGraphicsNode extends CompositeGraphicsNode {
+public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
 	private String id;
 
