@@ -8,7 +8,6 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.sizing.HasLayeredGraphics;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
@@ -94,8 +93,15 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 	}
 	
 	@Override
-	protected GraphicsNode initMainGraphicsLayer() {
+	protected IdentifiableGraphicsNode initMainGraphicsLayer() {
 		IdentifiableGraphicsNode out = createGraphicsNode(GraphicsLayerName.MAIN);
+		return out;
+	}
+
+	/**
+	 * Use this method where the DiagramElement is allowed to contain SVG contents.
+	 */
+	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		for (int i = 0; i < theElement.getChildNodes().getLength(); i++) {
 			Node child = theElement.getChildNodes().item(i);
@@ -107,8 +113,6 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 				}
 			}
 		}
-		
-		return out;
 	}
 
 	/**
@@ -120,14 +124,7 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		Element e = theElement.getOwnerDocument().createElementNS(SVG12DOMImplementation.SVG_NAMESPACE_URI, "g");
 		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
 		out.setId(getID()+"-"+name.name());
-		
-		// make sure the graphics node is anchored to it's parent
-		if (getParent() != null) {
-			IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasLayeredGraphics) getParent()).getGraphicsForLayer(name);
-			parentNode.add(out);
-		}
-		
-		
+		out.setLayer(name);		
 		return out;
 	}
 

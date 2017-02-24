@@ -6,10 +6,20 @@ import java.awt.geom.Rectangle2D;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
 	private String id;
+	private GraphicsLayerName layer;
+
+	public GraphicsLayerName getLayer() {
+		return layer;
+	}
+
+	public void setLayer(GraphicsLayerName layer) {
+		this.layer = layer;
+	}
 
 	public String getId() {
 		return id;

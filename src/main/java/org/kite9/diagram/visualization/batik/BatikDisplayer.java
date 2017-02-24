@@ -4,11 +4,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.adl.Decal;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Text;
-import org.kite9.diagram.adl.sizing.AdaptiveSizedGraphics;
 import org.kite9.diagram.adl.sizing.FixedSizeGraphics;
 import org.kite9.diagram.adl.sizing.HasLayeredGraphics;
 import org.kite9.diagram.adl.sizing.ScaledGraphics;
@@ -17,6 +16,7 @@ import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
@@ -40,6 +40,9 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		if (element instanceof FixedSizeGraphics) {
 			Rectangle2D bounds = ((FixedSizeGraphics) element).getSVGBounds();
 			return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
+		} else if ((element instanceof ScaledGraphics)) {
+			// return zero, as these elements can be resized to whatever size is needed
+			return CostedDimension.ZERO;
 		} else if ((element instanceof Container)) {
 			Value left = element.getCSSStyleProperty(CSSConstants.PADDING_LEFT_PROPERTY);
 			Value right = element.getCSSStyleProperty(CSSConstants.PADDING_RIGHT_PROPERTY);
@@ -57,13 +60,26 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
 		
+		if (element instanceof Decal) {
+			// tells the decal how big it needs to draw itself
+			Container parent = element.getContainer();
+			RectangleRenderingInformation rri = parent.getRenderingInformation();
+			
+			((Decal) element).setParentSize(new double[] {0, rri.getSize().getWidth()}, new double[] {0, rri.getSize().getHeight() });
+		}
+		
 		if (element instanceof HasLayeredGraphics) {
 			
-			if (element instanceof AdaptiveSizedGraphics) {
-				// tell the element how big it is.
-				
-				
+			DiagramElement parent = element.getParent();
+			if (parent != null) {
+				((HasLayeredGraphics) element).eachLayer(node -> {
+					// make sure the graphics node is anchored to it's parent
+					GraphicsLayerName name = ((IdentifiableGraphicsNode) node).getLayer();
+					IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasLayeredGraphics) parent).getGraphicsForLayer(name);
+					parentNode.add(node);
+				});
 			}
+
 			
 			Rectangle2D bounds = ((HasLayeredGraphics) element).getSVGBounds();
 			System.out.println("Internal bounds of "+element+" : "+bounds);
@@ -74,7 +90,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				AffineTransform global = node.getGlobalTransform();
 				System.out.println("Global transform of "+element+" : "+global);
 				existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
-				return null;
 			});
 			
 			if (element instanceof FixedSizeGraphics) {
@@ -85,7 +100,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 					AffineTransform global = node.getGlobalTransform();
 					AffineTransform existing = node.getTransform();
 					translateRelative(bounds, existing, global, rri);
-					return null;
 				});
 			}
 			
@@ -103,7 +117,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 						AffineTransform global = node.getGlobalTransform();
 						translateRelative(bounds, existing, global, rri);
 					}
-					return null;
 				});
 			}
 			

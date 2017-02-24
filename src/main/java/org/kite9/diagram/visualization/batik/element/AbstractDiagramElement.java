@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.batik.element;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Container;
@@ -92,11 +92,11 @@ public abstract class AbstractDiagramElement implements DiagramElement, HasLayer
 	public abstract IdentifiableGraphicsNode createGraphicsNode(GraphicsLayerName name);
 
 	@Override
-	public void eachLayer(Function<GraphicsNode, Void> cb) {
+	public void eachLayer(Consumer<GraphicsNode> cb) {
 		for (GraphicsLayerName name : GraphicsLayerName.values()) {
 			GraphicsNode layerNode = getGraphicsForLayer(name);
 			if (layerNode != null) {
-				cb.apply(layerNode);
+				cb.accept(layerNode);
 			}
 		}
 	}

@@ -27,6 +27,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		if (in instanceof StyledKite9SVGElement) {
 			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 			DiagramElementType lt = getElementType(in2);
+			DiagramElementSizing sizing = getElementSizing(in2);
 			switch (lt) {
 			case DIAGRAM:
 				if (parent != null) {
@@ -34,21 +35,23 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				}
 				return new DiagramImpl(in2, context);
 			case LABEL:
-				return new LabelImpl(in2, parent);
-			case CONNECTED:
-				DiagramElementSizing sizing = getElementSizing(in2);
+				return new LabelImpl(in2, parent, context);
+			case DECAL:
 				switch (sizing) {
+				case ADAPTIVE:
+					return new AdaptiveScaleSVGGraphicsImpl(in2, parent, context);
+				default:
+					return new ScaledSVGGraphicsImpl(in2, parent, context);
+				}
+			case CONNECTED:
+				switch (sizing) {
+				case TEXT:
+					return new ConnectedTextImpl(in2, parent);
 				case MAXIMIZE:
 				case MINIMIZE:
 					return new ConnectedContainerImpl(in2, parent, context);
-				case DECAL:
-					throw new UnsupportedOperationException();
-				case FIXED_SIZE:
-					return new FixedSizeSVGGraphicsImpl(in2, parent, context);
-				case TEXT:
-				case UNSPECIFIED:
 				default:
-					return new ConnectedTextImpl(in2, parent);
+					return new FixedSizeSVGGraphicsImpl(in2, parent, context);
 				}
 			case LINK:
 				return new ConnectionImpl(in2);

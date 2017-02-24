@@ -52,23 +52,31 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	@Test
-	public void test_54_6_ResizeablePrimitive() throws Exception {
+	public void test_54_4_ResizeablePrimitive() throws Exception {
 		String someXML = 
 			svgOpen() + 
 				diagramOpen() + 
 					containerOpen("container1", "red")+
-						svgRect2() +
-						containerOpen("container2", "yellow")+
+						scaledOpen() +
 							svgRect2() +
+						scaledClose() +
+						containerOpen("container2", "yellow")+
+							scaledOpen() +
+								svgRect2() +
+							scaledClose()+ 
 							fixedSizeOpen()+
 								svgText()+
 							fixedSizeClose() +
 						containerClose() +
 					containerClose() +
 					containerOpen("container3", "green")+
-						svgRect3() +
+						scaledOpen() +
+							svgRect3() +
+						scaledClose() +
 						containerOpen("container4", "blue") + 
-							svgRect1() +
+							scaledOpen() +
+								svgRect1() +
+							scaledClose() +
 						containerClose() + 
 					containerClose() +
 				diagramClose() + 
@@ -77,12 +85,14 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	@Test
-	public void test_54_7_ScalablePath() throws Exception {
+	public void test_54_5_ScalablePath() throws Exception {
 		String someXML = 
 			svgOpen() + 
 				diagramOpen() + 
 					containerOpen("container1", "red")+
-						scalablePath() + 
+						adaptiveOpen() +
+							scalablePath() +
+						adaptiveClose() +
 						fixedSizeOpen()+
 							svgText()+
 						fixedSizeClose() +
@@ -93,7 +103,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scalablePath() {
-		return "<svg:path d='M10 10 H 50 V 20z' />";
+		return "<svg:path d='M{x0} {y0} H {x1} V {y1}z' />";
 	}
 
 	private String svgOpen() {
@@ -120,6 +130,23 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	private String fixedSizeOpen() {
 		return "<someelement id='someelement' style='type: connected; sizing: fixed-size; '>";
 	}
+	
+	private String scaledOpen() {
+		return "<somescaled style='type: decal; sizing: scaled; '>"; 
+	}
+	
+	private String scaledClose() {
+		return "</somescaled>"; 
+	}
+	
+	private String adaptiveOpen() {
+		return "<someadaptive id=\"adap\" style='type: decal; sizing: adaptive; '>"; 
+	}
+	
+	private String adaptiveClose() {
+		return "</someadaptive>"; 
+	}
+
 
 	private String containerOpen(String id, String fill) {
 		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; '>";
@@ -130,7 +157,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: black; '>Some text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: black; font-face: sans-serif; '>Some Text</svg:text>";
 	}
 	
 	private String svgRect2() {

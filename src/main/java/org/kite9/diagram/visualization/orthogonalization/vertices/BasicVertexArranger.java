@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
@@ -132,9 +133,11 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		} else {
 			Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 			for (DiagramElement de : c.getContents()) {
-				DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap, Collections.emptyList(), false);
-				inner.getUnderlying().getContainedFaces().add(df.getUnderlying());
-				df.getUnderlying().setContainedBy(inner.getUnderlying());
+				if (de instanceof Connected) {
+					DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap, Collections.emptyList(), false);
+					inner.getUnderlying().getContainedFaces().add(df.getUnderlying());
+					df.getUnderlying().setContainedBy(inner.getUnderlying());
+				}
 			}
 		}
 	}

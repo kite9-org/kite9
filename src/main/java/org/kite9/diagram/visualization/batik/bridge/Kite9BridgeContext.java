@@ -32,9 +32,9 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
-		putBridge(new ScalablePathElementBridge());
 		putBridge(new Kite9DiagramGroupBridge(this));
 		putBridge(new Kite9GBridge());
+		putBridge(new TextBridge());
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
@@ -12,6 +13,8 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
+import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -79,6 +82,16 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {
 		return rri;
+	}
+
+	@Override
+	protected GraphicsNode initMainGraphicsLayer() {
+		return null;
+	}
+
+	@Override
+	public IdentifiableGraphicsNode createGraphicsNode(GraphicsLayerName name) {
+		return null;
 	}
 	
 }

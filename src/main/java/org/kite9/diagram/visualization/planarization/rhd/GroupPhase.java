@@ -208,6 +208,16 @@ public class GroupPhase {
 		
 		return !em.requiresPlanarizationCornerVertices(ord);
 	}
+	
+	private boolean hasConnectedContents(Diagram d) {
+		for (DiagramElement de : d.getContents()) {
+			if (de instanceof Connected) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);
 	

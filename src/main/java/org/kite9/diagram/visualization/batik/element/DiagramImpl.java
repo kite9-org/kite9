@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.sizing.ScaledGraphics;
+import org.kite9.diagram.adl.sizing.HasLayeredGraphics;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 
 /**
@@ -21,7 +18,7 @@ import org.kite9.diagram.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class DiagramImpl extends ConnectedContainerImpl implements Diagram, ScaledGraphics {
+public class DiagramImpl extends ConnectedContainerImpl implements Diagram, HasLayeredGraphics {
 	
 	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx) {
 		super(el, null, ctx);
