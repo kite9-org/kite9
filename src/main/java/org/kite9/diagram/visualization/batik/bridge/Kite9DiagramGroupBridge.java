@@ -31,6 +31,15 @@ public class Kite9DiagramGroupBridge extends Kite9GBridge {
 	}
 	
 	/**
+	 * We are overriding this because we are going to control our 
+	 * own compositing approach based on graphics layers.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
+	
+	/**
      * Creates the `g` for the diagram, plus layers that it contains.
      */
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {

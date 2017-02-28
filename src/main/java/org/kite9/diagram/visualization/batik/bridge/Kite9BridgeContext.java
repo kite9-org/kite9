@@ -37,4 +37,6 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		putBridge(new TextBridge());
 	}
 	
+	
+	
 }

@@ -25,21 +25,25 @@ public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupMa
 
 	@Override
 	public void createGroup(String id) {
-		Element newGroup = currentSubgroup.getOwnerDocument().createElement("g");
-		currentSubgroup.appendChild(newGroup);
-		newGroup.setAttribute("id", id);
-		this.currentSubgroup = newGroup;
-		setTopLevelGroup(newGroup);
+		if (id != null) {
+			Element newGroup = currentSubgroup.getOwnerDocument().createElement("g");
+			currentSubgroup.appendChild(newGroup);
+			newGroup.setAttribute("id", id);
+			this.currentSubgroup = newGroup;
+			setTopLevelGroup(newGroup);
+		}
 	}
 	
 	public void finishGroup(String id) {
-		if (!id.equals(currentSubgroup.getAttribute("id"))) {
-			throw new Kite9ProcessingException("Was expecting current group with id: "+id);
+		if (id != null) {
+			if (!id.equals(currentSubgroup.getAttribute("id"))) {
+				throw new Kite9ProcessingException("Was expecting current group with id: "+id);
+			}
+			
+			Element parent = (Element) currentSubgroup.getParentNode();
+			setTopLevelGroup(parent);
+			this.currentSubgroup = parent;
 		}
-		
-		Element parent = (Element) currentSubgroup.getParentNode();
-		setTopLevelGroup(parent);
-		this.currentSubgroup = parent;
 	}
 	
 }

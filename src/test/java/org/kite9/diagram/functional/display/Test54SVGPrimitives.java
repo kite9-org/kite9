@@ -18,18 +18,6 @@ import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.serialization.XMLHelper;
 
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
-
-	
-	private void transcode(String s) throws Exception {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+"-graph.svg");
-		TranscoderInput in = new TranscoderInput(new StringReader(s));
-		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
-		Transcoder transcoder = new Kite9SVGTranscoder();
-		transcoder.transcode(in, out);
-		
-	}
 	
 	@Test
 	public void test_54_1_EmptyDiagram() throws Exception {
@@ -128,7 +116,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String fixedSizeOpen() {
-		return "<someelement id='someelement' style='type: connected; sizing: fixed-size; '>";
+		return "<someelement id='someelement' style='type: connected; sizing: fixed; '>";
 	}
 	
 	private String scaledOpen() {

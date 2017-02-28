@@ -21,15 +21,6 @@ public class Kite9GBridge extends SVGGElementBridge {
 		super();
 	}
 
-	/**
-	 * We are overriding this because we are going to control our 
-	 * own compositing approach based on graphics layers.
-	 */
-	@Override
-	public boolean isComposite() {
-		return false;
-	}
-
 	@SuppressWarnings("unchecked")
 	public void processChildren(Element e, CompositeGraphicsNode into, BridgeContext ctx) {
 		GVTBuilder builder = ctx.getGVTBuilder();
