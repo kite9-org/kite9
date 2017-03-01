@@ -1,7 +1,11 @@
 package org.kite9.diagram.visualization.batik.format;
 
+import org.apache.batik.svggen.ExtensionHandler;
+import org.apache.batik.svggen.ImageHandler;
+import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.kite9.diagram.visualization.format.svg.GradientExtensionHandler;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +23,10 @@ public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupMa
 	private Element currentSubgroup;
 
 	public GroupManagingSVGGraphics2D(Document doc) {
-		super(SVGGeneratorContext.createDefault(doc), false);
+		super(doc,
+			new ImageHandlerBase64Encoder(),
+			new GradientExtensionHandler(), 
+				false);
 		this.currentSubgroup = getTopLevelGroup();
 	}
 

@@ -31,34 +31,38 @@ import org.w3c.dom.Element;
 public class GradientExtensionHandler extends DefaultExtensionHandler {
 	
 	Map<String, SVGPaintDescriptor> paintMap = new HashMap<String, SVGPaintDescriptor>();
-	
+
 	@Override
 	public SVGPaintDescriptor handlePaint(Paint paint, SVGGeneratorContext genCtx) {
 		boolean percentage = false;
 
 		if (paint instanceof TransformedPaint) {
 			String key = ((TransformedPaint) paint).getKey();
-			paint = ((TransformedPaint)paint).getUnderlyingPaint();
+			paint = ((TransformedPaint) paint).getUnderlyingPaint();
 			percentage = true;
-		
+
 			if (paintMap.containsKey(key)) {
 				return paintMap.get(key);
 			}
-			
-			SVGPaintDescriptor out;
-			
-			if (paint instanceof LinearGradientPaint) {
-				out = getLgpDescriptor((LinearGradientPaint) paint, genCtx, percentage);
-			} else if (paint instanceof RadialGradientPaint) {
-				out =  getRgpDescriptor((RadialGradientPaint) paint, genCtx, percentage);
-			} else {
-				throw new Kite9ProcessingException("Don't know how to handle paint: "+paint.getClass());
-			}
-			
+		}
+
+		SVGPaintDescriptor out = null;
+
+		if (paint instanceof LinearGradientPaint) {
+			out = getLgpDescriptor((LinearGradientPaint) paint, genCtx, percentage);
+		} else if (paint instanceof RadialGradientPaint) {
+			out = getRgpDescriptor((RadialGradientPaint) paint, genCtx, percentage);
+		} 
+
+		if (paint instanceof TransformedPaint) {
+			String key = ((TransformedPaint) paint).getKey();
 			paintMap.put(key, out);
+		}
+
+		if (out != null) {
 			return out;
 		}
-		
+
 		return super.handlePaint(paint, genCtx);
 
 	}

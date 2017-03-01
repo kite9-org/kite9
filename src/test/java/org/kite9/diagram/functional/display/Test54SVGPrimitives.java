@@ -1,34 +1,35 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.File;
+import java.awt.Color;
+import java.awt.LinearGradientPaint;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.lang.reflect.Method;
 
-import org.apache.batik.transcoder.Transcoder;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
-import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
 import org.kite9.framework.common.RepositoryHelp;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.serialization.XMLHelper;
+import org.w3c.dom.Document;
+
 
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_54_1_EmptyDiagram() throws Exception {
 		String someXML = svgOpen() + diagramOpen() + diagramClose()+  svgClose();
-		transcode(someXML);
+		transcodeSVG(someXML);
 	}
 
 	@Test
 	public void test_54_2_FixedGraphicsPrimitive() throws Exception {
 		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen()+svgText()+fixedSizeClose()+diagramClose() + svgClose();
-		transcode(someXML);
+		transcodeSVG(someXML);
 	}
 
 	@Test
@@ -36,7 +37,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("simple.svg"));
 		RepositoryHelp.streamCopy(in, out, true);
-		transcode(out.toString());
+		transcodePNG(out.toString());
 	}
 	
 	@Test
@@ -69,7 +70,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 					containerClose() +
 				diagramClose() + 
 			svgClose();
-		transcode(someXML);
+		transcodeSVG(someXML);
 	}
 	
 	@Test
@@ -87,8 +88,24 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 					containerClose() +
 				diagramClose()+ 
 			svgClose();
-		transcode(someXML);
+		transcodeSVG(someXML);
 	}
+	
+
+	@Test
+	public void test_54_6_GradientFill() throws Exception {
+		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+		SVGGraphics2D g2d = new GroupManagingSVGGraphics2D(d);
+		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
+		LinearGradientPaint lgp = new LinearGradientPaint((Point2D) new Point2D.Double(0, 5),
+				(Point2D) new Point2D.Double(0, 100), 
+				new float[] {0f, 1f}, c);
+		g2d.setPaint(lgp);
+		g2d.fill(new Rectangle(0, 0, 100, 100));
+		g2d.stream(new FileWriter(getOutputFile("-graph.svg")));
+		checkIdenticalXML();
+	}
+	
 	
 	private String scalablePath() {
 		return "<svg:path d='M{x0} {y0} H {x1} V {y1}z' />";

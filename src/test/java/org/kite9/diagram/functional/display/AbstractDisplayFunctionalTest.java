@@ -2,6 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import javax.xml.transform.Source;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.junit.Test;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.functional.NotAddressed;
@@ -40,23 +42,46 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		return true;
 	}
 
-	protected void transcode(String s) throws Exception {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+"-graph.svg");
+	protected void transcodePNG(String s) throws Exception {
+		TranscoderOutput out = getTranscoderOutputPNG();
 		TranscoderInput in = new TranscoderInput(new StringReader(s));
-		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
+		Transcoder transcoder = new PNGTranscoder();
+		transcoder.transcode(in, out);
+	}
+	
+	protected void transcodeSVG(String s) throws Exception {
+		TranscoderOutput out = getTranscoderOutputSVG();
+		TranscoderInput in = new TranscoderInput(new StringReader(s));
 		Transcoder transcoder = new Kite9SVGTranscoder();
 		transcoder.transcode(in, out);
 		
 		if (checkXML()) {
-			checkIdenticalXML(theTest, m.getName());
+			checkIdenticalXML();
 		}
 	}
+
+	private TranscoderOutput getTranscoderOutputSVG() throws IOException {
+		File f = getOutputFile("-graph.svg");
+		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
+		return out;
+	}
+
+	protected File getOutputFile(String ending) {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Class<?> theTest = m.getDeclaringClass();
+		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+ending);
+		return f;
+	}
 	
-	public boolean checkIdenticalXML(Class<?> theTest, String subtest) throws Exception {
-		File output = TestingHelp.prepareFileName(theTest, subtest, subtest+"-graph.svg");
-		InputStream is2 = theTest.getResourceAsStream(subtest+"-expected.svg");
+	private TranscoderOutput getTranscoderOutputPNG() throws IOException {
+		File f = getOutputFile("-graph.png");
+		TranscoderOutput out = new TranscoderOutput(new FileOutputStream(f));
+		return out;
+	}
+	
+	public boolean checkIdenticalXML() throws Exception {
+		File output = getOutputFile("-graph.svg");
+		InputStream is2 = getExpectedInputStream("-expected.svg");
 		try {
 			InputStream is1 = new FileInputStream(output);
 			
@@ -80,6 +105,13 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		}
 	
 		return true;
+	}
+
+	protected InputStream getExpectedInputStream(String ending) {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Class<?> theTest = m.getDeclaringClass();
+		InputStream is2 = theTest.getResourceAsStream(m.getName()+ending);
+		return is2;
 	}
 	
 	//protected void 
