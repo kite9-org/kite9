@@ -1,7 +1,6 @@
 package org.kite9.diagram.functional.display;
 
 import java.awt.Color;
-import java.awt.LinearGradientPaint;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.io.FileWriter;
@@ -10,6 +9,7 @@ import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.batik.ext.awt.LinearGradientPaint;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
 import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
@@ -37,7 +37,9 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("simple.svg"));
 		RepositoryHelp.streamCopy(in, out, true);
-		transcodePNG(out.toString());
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
 	}
 	
 	@Test

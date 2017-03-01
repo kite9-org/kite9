@@ -21,7 +21,7 @@ public class Test55GlyphConstruction extends AbstractDisplayFunctionalTest {
 					glyphClose() +
 				diagramClose()+ 
 			svgClose();
-		transcode(someXML);
+		transcodeSVG(someXML);
 	}
 
 	private String backClose() {

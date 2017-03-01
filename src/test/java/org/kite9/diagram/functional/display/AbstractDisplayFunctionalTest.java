@@ -23,6 +23,7 @@ import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.w3c.dom.Document;
@@ -33,6 +34,8 @@ import org.xmlunit.diff.ComparisonListener;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.DOMDifferenceEngine;
 import org.xmlunit.diff.DifferenceEngine;
+
+import com.sun.xml.internal.ws.util.StreamUtils;
 
 import junit.framework.Assert;
 
@@ -81,12 +84,26 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	
 	public boolean checkIdenticalXML() throws Exception {
 		File output = getOutputFile("-graph.svg");
-		InputStream is2 = getExpectedInputStream("-expected.svg");
+		Source in1;
+		Source in2;
+		try {
+			InputStream is2 = getExpectedInputStream("-expected.svg");
+			
+			// copy input file to output dir for ease of comparison
+			File expectedOut = getOutputFile("-expected.svg");
+			RepositoryHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
+			is2 = getExpectedInputStream("-expected.svg");
+			
+			in2 = streamToDom(is2);
+			
+		} catch (Exception e1) {
+			Assert.fail("Couldn't perform comparison (no expected file): "+e1.getMessage());
+			return false;
+		}
+		
 		try {
 			InputStream is1 = new FileInputStream(output);
-			
-			Source in1 = streamToDom(is1);
-			Source in2 = streamToDom(is2);
+			in1 = streamToDom(is1);
 			
 			DOMDifferenceEngine diff = new DOMDifferenceEngine();
 			
@@ -95,6 +112,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
 		            Assert.fail("found a difference: " + comparison);
+		            
 		        }
 		    });
 			
