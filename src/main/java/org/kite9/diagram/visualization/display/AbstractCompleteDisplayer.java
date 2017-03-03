@@ -8,7 +8,6 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
@@ -84,13 +83,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	
 	public static final double MINIMUM_GLYPH_SIZE = 2;
 	public static final double MINIMUM_ARROW_SIZE = 2;
-	public static final double MINIMUM_CONTEXT_SIZE = 4;
-
-	public static final double CONNECTED_DISTANCE = 2;
 	
 	public static final double EDGE_DISTANCE = 2;
-	public static final double EDGE_TO_SAME_VERTEX = 1;
-	public static final double TO_MID_POINT = 1;
 	
 
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d) {
@@ -105,6 +99,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	 * space must be between them.
 	 */
 	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse) {
+		// this part deals with internal distances
 		if (a == b) {
 			if (a instanceof Text) {
 				return MINIMUM_GLYPH_SIZE * gridSize;
@@ -124,52 +119,49 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 				}
 			} else if (a == null) {
 				return 0;
-			} /*else if (a instanceof Arrow) {
-				if (needsDistance(a)) {
-					return MINIMUM_ARROW_SIZE * gridSize;
-				} else {
-					return 0;
-				}
-			}*/
+			} 
 		}
 
 		if (!needsDistance(a, b)) {
 			return buffer;
 		}
 		
+		// distances when one element is contained within another
+		if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
+			return getPadding(a, d);
+		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
+			return getPadding(b, Direction.reverse(d));
+		}
+		
 		Direction dd = Direction.reverse(d);
-		double paddingA = (aSide == dd) ? 
-				getPadding(a, dd) 
+		double marginA = (aSide == dd) ? 
+				getMargin(a, dd) 
 				: 0;
-		double paddingB = (bSide == d) ? 
-				getPadding(b, d) 
+		double marginB = (bSide == d) ? 
+				getMargin(b, d) 
 				: 0;
+				
+		double margin = Math.max(marginA, marginB);
 		
 		if (a instanceof Connected) {
 			if (b instanceof Connection) {
 				if (((Connection) b).meets((Connected) a)) {
 					if (needsDistance(a)) {
-						return paddingA + paddingB + EDGE_TO_SAME_VERTEX * gridSize;
+						return margin;
 					} else {
 						return 0;
 					}
 				} else {
-					double cda = EDGE_DISTANCE * gridSize / 2;
-					double cdb = EDGE_DISTANCE * gridSize / 2;
-					return paddingA + paddingB + cda + cdb;
+					return margin;
 				}
 			} 
 			
-			double cda = CONNECTED_DISTANCE * gridSize / 2;
-			double cdb = CONNECTED_DISTANCE * gridSize / 2;
-			return paddingA + paddingB + cda + cdb;
+			return margin;
 		} 
 
 		if (a instanceof Connection) {
 			if ((b instanceof Connection) || (b==null)) {
-				double cda = EDGE_DISTANCE * gridSize / 2;
-				double cdb = EDGE_DISTANCE * gridSize / 2;
-				return paddingA + paddingB + cda + cdb;
+				return margin;
 			} 
 		}
 
@@ -232,6 +224,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	public double getPadding(DiagramElement element, Direction d) {
 		return getDisplayer(element).getPadding(element, d);
 	}
+	
+	public abstract double getMargin(DiagramElement element, Direction d);
 	
 	
 

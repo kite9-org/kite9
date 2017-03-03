@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.lang.reflect.Method;
 
@@ -47,20 +48,26 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
 	protected void transcodePNG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputPNG();
-		TranscoderInput in = new TranscoderInput(new StringReader(s));
+		TranscoderInput in = getTranscoderInput(s);
 		Transcoder transcoder = new PNGTranscoder();
 		transcoder.transcode(in, out);
 	}
 	
 	protected void transcodeSVG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputSVG();
-		TranscoderInput in = new TranscoderInput(new StringReader(s));
+		TranscoderInput in = getTranscoderInput(s);
 		Transcoder transcoder = new Kite9SVGTranscoder();
 		transcoder.transcode(in, out);
 		
 		if (checkXML()) {
 			checkIdenticalXML();
 		}
+	}
+
+	private TranscoderInput getTranscoderInput(String s) throws IOException {
+		File f = getOutputFile("-input.svg");
+		RepositoryHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
+		return new TranscoderInput(new StringReader(s));
 	}
 
 	private TranscoderOutput getTranscoderOutputSVG() throws IOException {

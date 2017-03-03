@@ -4,6 +4,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.util.SVG12CSSConstants;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Decal;
 import org.kite9.diagram.adl.DiagramElement;
@@ -39,6 +40,9 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		if (element instanceof FixedSizeGraphics) {
 			Rectangle2D bounds = ((FixedSizeGraphics) element).getSVGBounds();
+			if (bounds == null) {
+				return CostedDimension.ZERO;
+			}
 			return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 		} else if ((element instanceof ScaledGraphics)) {
 			// return zero, as these elements can be resized to whatever size is needed
@@ -49,9 +53,11 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			Value up = element.getCSSStyleProperty(CSSConstants.PADDING_TOP_PROPERTY);
 			Value down = element.getCSSStyleProperty(CSSConstants.PADDING_BOTTOM_PROPERTY);
 			return new CostedDimension(left.getFloatValue()+right.getFloatValue(), up.getFloatValue()+down.getFloatValue(), CostedDimension.UNBOUNDED);
+		} else {
+			return CostedDimension.ZERO;
 		}
 		
-		throw new Kite9ProcessingException("Can't size: "+element);
+		//throw new Kite9ProcessingException("Can't size: "+element);
 	}
 
 	/**
@@ -82,44 +88,46 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 			
 			Rectangle2D bounds = ((HasLayeredGraphics) element).getSVGBounds();
-			System.out.println("Internal bounds of "+element+" : "+bounds);
 			
-			// reset the scale first
-			((HasLayeredGraphics) element).eachLayer(node -> {
-				AffineTransform existing = node.getTransform();
-				AffineTransform global = node.getGlobalTransform();
-				System.out.println("Global transform of "+element+" : "+global);
-				existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
-			});
-			
-			if (element instanceof FixedSizeGraphics) {
-				// apply a translation to the Kite9-specified position
+			if (bounds != null) {
+				System.out.println("Internal bounds of "+element+" : "+bounds);
 				
+				// reset the scale first
 				((HasLayeredGraphics) element).eachLayer(node -> {
-					RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
+					AffineTransform existing = node.getTransform();
 					AffineTransform global = node.getGlobalTransform();
-					AffineTransform existing = node.getTransform();
-					translateRelative(bounds, existing, global, rri);
+					System.out.println("Global transform of "+element+" : "+global);
+					existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
 				});
-			}
-			
-			if (element instanceof ScaledGraphics) {
-				// appplies scale and translation
-				((HasLayeredGraphics) element).eachLayer(node -> {
-					RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-					System.out.println("Expected Size of "+element+" : "+rri.getSize());
-					System.out.println("Expected Position of "+element+" : "+rri.getPosition());
-					AffineTransform existing = node.getTransform();
+				
+				if (element instanceof FixedSizeGraphics) {
+					// apply a translation to the Kite9-specified position
 					
-					if (bounds != null) {
-						existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
-						existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+					((HasLayeredGraphics) element).eachLayer(node -> {
+						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
 						AffineTransform global = node.getGlobalTransform();
+						AffineTransform existing = node.getTransform();
 						translateRelative(bounds, existing, global, rri);
-					}
-				});
+					});
+				}
+				
+				if (element instanceof ScaledGraphics) {
+					// appplies scale and translation
+					((HasLayeredGraphics) element).eachLayer(node -> {
+						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
+						System.out.println("Expected Size of "+element+" : "+rri.getSize());
+						System.out.println("Expected Position of "+element+" : "+rri.getPosition());
+						AffineTransform existing = node.getTransform();
+						
+						if (bounds != null) {
+							existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
+							existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+							AffineTransform global = node.getGlobalTransform();
+							translateRelative(bounds, existing, global, rri);
+						}
+					});
+				}
 			}
-			
 		}
 	}
 
@@ -193,6 +201,29 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			break;
 		case RIGHT:
 			v = element.getCSSStyleProperty(CSSConstants.PADDING_RIGHT_PROPERTY);
+			break;
+		default:
+			throw new Kite9ProcessingException("No direction set");
+		}
+		
+		return v.getFloatValue();
+	}
+	
+	@Override
+	public double getMargin(DiagramElement element, Direction d) {
+		Value v;
+		switch (d) {
+		case UP:
+			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY);
+			break;
+		case DOWN:
+			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY);
+			break;
+		case LEFT:
+			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
+			break;
+		case RIGHT:
+			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY);
 			break;
 		default:
 			throw new Kite9ProcessingException("No direction set");
