@@ -6,14 +6,24 @@
   /><g
   ><g id="one"
     ><g id="one-MAIN"
-      ><g id="someelement-MAIN"
-        ><g font-size="25px" transform="matrix(1,0,0,1,90.4154,110.15)"
-          ><text x="0" xml:space="preserve" y="0" stroke="none"
-            ><tspan
-              >S</tspan
+      ><g id="container1-MAIN"
+        ><g id="adap-MAIN"
+          ><g fill="red" transform="matrix(0.9859,0,0,0.8698,50.2595,51.3047)" stroke="red"
+            ><path d="M0 0 L123 0 L123 22 Z" stroke="none"
+            /></g
+            ><g fill="gray" stroke-miterlimit="4" stroke-width="3" transform="matrix(0.9859,0,0,0.8698,50.2595,51.3047)" stroke-linecap="butt" stroke="gray"
+            ><path fill="none" d="M0 0 L123 0 L123 22 Z"
+            /></g
+          ></g
+          ><g id="someelement-MAIN"
+          ><g font-size="25px" stroke-linecap="butt" transform="matrix(1,0,0,1,50.4154,70.15)" fill="gray" stroke="gray" stroke-width="3" stroke-miterlimit="4"
+            ><text x="0" xml:space="preserve" y="0" stroke="none"
               ><tspan
-              >ome Text</tspan
-            ></text
+                >S</tspan
+                ><tspan
+                >ome Text</tspan
+              ></text
+            ></g
           ></g
         ></g
       ></g

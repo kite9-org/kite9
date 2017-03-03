@@ -89,12 +89,12 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		Source in1;
 		Source in2;
 		try {
-			InputStream is2 = getExpectedInputStream("-expected.svg");
+			InputStream is2 = getExpectedInputStream("-graph.svg");
 			
 			// copy input file to output dir for ease of comparison
 			File expectedOut = getOutputFile("-expected.svg");
 			RepositoryHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
-			is2 = getExpectedInputStream("-expected.svg");
+			is2 = getExpectedInputStream("-graph.svg");
 			
 			in2 = streamToDom(is2);
 			
