@@ -60,7 +60,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
 	}
 
-	protected Document createDocument(TranscoderOutput output) {
+	private Document createDocument(TranscoderOutput output) {
 		// Use SVGGraphics2D to generate SVG content
 		Document doc;
 		if (output.getDocument() == null) {

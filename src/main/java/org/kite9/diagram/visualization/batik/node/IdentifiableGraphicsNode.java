@@ -37,11 +37,23 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 
 	@Override
 	public void paint(Graphics2D g2d) {
-		System.out.println("painting " +id);
-		((GroupManagingSVGGraphics2D)g2d).createGroup(id);
+		createGroup(g2d);
 		super.paint(g2d);
-		((GroupManagingSVGGraphics2D)g2d).finishGroup(id);
-		System.out.println("finished painting " +id);
+		finishGroup(g2d);
+	}
+
+	private void finishGroup(Graphics2D g2d) {
+		if (g2d instanceof GroupManagingSVGGraphics2D) {
+			((GroupManagingSVGGraphics2D)g2d).finishGroup(id);
+			System.out.println("finished painting " +id);
+		}
+	}
+
+	private void createGroup(Graphics2D g2d) {
+		if (g2d instanceof GroupManagingSVGGraphics2D) {
+			System.out.println("painting " +id);
+			((GroupManagingSVGGraphics2D)g2d).createGroup(id);
+		}
 	}
 	
 

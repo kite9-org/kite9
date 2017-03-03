@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.lang.reflect.Method;
 
@@ -17,26 +16,22 @@ import javax.xml.transform.Source;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.junit.Test;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonListener;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.DOMDifferenceEngine;
-import org.xmlunit.diff.DifferenceEngine;
-
-import com.sun.xml.internal.ws.util.StreamUtils;
 
 import junit.framework.Assert;
 
@@ -49,7 +44,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	protected void transcodePNG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputPNG();
 		TranscoderInput in = getTranscoderInput(s);
-		Transcoder transcoder = new PNGTranscoder();
+		Transcoder transcoder = new Kite9PNGTranscoder();
 		transcoder.transcode(in, out);
 	}
 	
