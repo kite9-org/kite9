@@ -156,7 +156,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; '>";
+		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; padding: 10px; margin: 10px; '>";
 	}
 
 	private String containerClose() {

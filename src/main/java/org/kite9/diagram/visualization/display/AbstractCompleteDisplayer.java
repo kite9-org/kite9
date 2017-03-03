@@ -101,25 +101,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse) {
 		// this part deals with internal distances
 		if (a == b) {
-			if (a instanceof Text) {
-				return MINIMUM_GLYPH_SIZE * gridSize;
-			} else if (a instanceof Container) {
-				if ((aSide == null) && (bSide == null)) {
-					// two elements within a container grid
-					return 0;
-					
-				} else if (bSide == null) {
-					return getDisplayer(a).getPadding(a, aSide);
-				} else if (aSide == null) {
-					return getDisplayer(b).getPadding(b, bSide);
-				} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
-					return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getWidth();
-				} else {
-					return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getHeight();
-				}
-			} else if (a == null) {
-				return 0;
-			} 
+			return getInternalDistance(a, aSide, bSide); 
 		}
 
 		if (!needsDistance(a, b)) {
@@ -134,10 +116,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		}
 		
 		Direction dd = Direction.reverse(d);
-		double marginA = (aSide == dd) ? 
+		double marginA = (aSide == d) ? 
 				getMargin(a, dd) 
 				: 0;
-		double marginB = (bSide == d) ? 
+		double marginB = (bSide == dd) ? 
 				getMargin(b, d) 
 				: 0;
 				
@@ -170,6 +152,25 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else {
 			return 0;
 		}
+	}
+
+	private double getInternalDistance(DiagramElement a, Direction aSide, Direction bSide) {
+		if (a == null) {
+			return 0;
+		} else if ((aSide == null) && (bSide == null)) {
+			// two elements within a container grid
+			return 0;
+
+		} else if (bSide == null) {
+			return getDisplayer(a).getPadding(a, aSide);
+		} else if (aSide == null) {
+			return getDisplayer(a).getPadding(a, bSide);
+		} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
+			return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getWidth();
+		} else {
+			return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getHeight();
+		}
+
 	}
 
 	public double getLinkMargin(DiagramElement a, Direction d) {

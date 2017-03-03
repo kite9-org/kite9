@@ -229,6 +229,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			throw new Kite9ProcessingException("No direction set");
 		}
 		
+		System.out.println("margin for "+element+" in direction "+d+ " "+v.getFloatValue());
 		return v.getFloatValue();
 	}
 
