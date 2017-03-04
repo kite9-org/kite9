@@ -99,8 +99,9 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 		SVGGraphics2D g2d = new GroupManagingSVGGraphics2D(d);
 		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
-		LinearGradientPaint lgp = new LinearGradientPaint((Point2D) new Point2D.Double(0, 5),
-				(Point2D) new Point2D.Double(0, 100), 
+		LinearGradientPaint lgp = new LinearGradientPaint(
+				(Point2D) new Point2D.Double(0, 0),
+				(Point2D) new Point2D.Double(0, 1), 
 				new float[] {0f, 1f}, c);
 		g2d.setPaint(lgp);
 		g2d.fill(new Rectangle(0, 0, 100, 100));
