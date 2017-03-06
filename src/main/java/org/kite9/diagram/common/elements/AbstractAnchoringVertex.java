@@ -47,12 +47,21 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		public void setX(double x) {
 			try {
 				RectangleRenderingInformation ri = getRI();
+				double l = ri.getPosition() == null ? 0 : ri.getPosition().x();
+				double r = ri.getSize() == null ? l : l+ri.getSize().getWidth();
+				double u = ri.getPosition() == null ? 0 : ri.getPosition().y();
+				double d = ri.getSize() == null ? u : u+ri.getSize().getHeight();
 				
 				if (lr==HPos.LEFT) {
-					ri.setPosition(Dimension2D.setX(ri.getPosition(), x));
+					l = x;
 				} else if (lr==HPos.RIGHT){
-					ri.setSize(Dimension2D.setX(ri.getSize(), x - ri.getPosition().x()));
+					r = x;
 				}
+
+				ri.setPosition(new Dimension2D(l, u));
+				ri.setSize(new Dimension2D(r-l, d-u));
+				
+
 			} catch (NullPointerException e) {
 				throw new LogicException("NPE setting position of "+this, e);
 			}
@@ -61,12 +70,22 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		public void setY(double y) {
 			try {
 				RectangleRenderingInformation ri = getRI();
+				double l = ri.getPosition() == null ? 0 : ri.getPosition().x();
+				double r = ri.getSize() == null ? l : l+ri.getSize().getWidth();
+				double u = ri.getPosition() == null ? 0 : ri.getPosition().y();
+				double d = ri.getSize() == null ? u : u+ri.getSize().getHeight();
 			
 				if (ud==VPos.UP) {
-					ri.setPosition(Dimension2D.setY(ri.getPosition(), y));
+					u = y;
 				} else if (ud == VPos.DOWN){
-					ri.setSize(Dimension2D.setY(ri.getSize(),y - ri.getPosition().y()));
+					d = y;
 				}
+				
+				ri.setPosition(new Dimension2D(l, u));
+				ri.setSize(new Dimension2D(r-l, d-u));
+
+				
+				
 			} catch (NullPointerException e) {
 				throw new LogicException("NPE setting position of "+this, e);
 			}

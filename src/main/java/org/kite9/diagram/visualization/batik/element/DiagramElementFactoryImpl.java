@@ -1,15 +1,21 @@
 package org.kite9.diagram.visualization.batik.element;
 
+import org.apache.batik.css.engine.value.URIValue;
+import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.style.DiagramElementFactory;
 import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.style.DiagramElementType;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.EnumValue;
+import org.w3c.dom.svg.SVGUseElement;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
@@ -28,46 +34,44 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 			DiagramElementType lt = getElementType(in2);
 			DiagramElementSizing sizing = getElementSizing(in2);
-			switch (lt) {
-			case DIAGRAM:
-				if (parent != null) {
-					throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+in.getID());
-				}
-				return new DiagramImpl(in2, context);
-			case LABEL:
-				return new LabelImpl(in2, parent, context);
-			case DECAL:
-				switch (sizing) {
-				case ADAPTIVE:
-					return new AdaptiveScaleSVGGraphicsImpl(in2, parent, context);
-				default:
-					return new ScaledSVGGraphicsImpl(in2, parent, context);
-				}
-			case CONNECTED:
-				switch (sizing) {
-				case TEXT:
-					return new ConnectedTextImpl(in2, parent);
-				case MAXIMIZE:
-				case MINIMIZE:
-					return new ConnectedContainerImpl(in2, parent, context);
-				default:
-					return new FixedSizeSVGGraphicsImpl(in2, parent, context);
-				}
-			case LINK:
-				return new ConnectionImpl(in2);
-			case LINK_END:
-				return ((XMLElement) in.getParentNode()).getDiagramElement();
-			case TERMINATOR:
-				return new TerminatorImpl(in2, parent);
-			case UNSPECIFIED:
-			case NONE:
-				return null;
-			default:
-				throw new Kite9ProcessingException("Not implemented yet");	
-			}
-			
+			DiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
+			handleTemplateElement(out);
+			return out;
 		} else {
 			throw new Kite9ProcessingException("Don't know how to create diagram element from "+in);
+		}
+	}
+
+	private DiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, DiagramElementSizing sizing) {
+		switch (lt) {
+		case DIAGRAM:
+			if (parent != null) {
+				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
+			}
+			return new DiagramImpl(el, context);
+		case LABEL:
+			return new LabelImpl(el, parent, context);
+		case DECAL:
+			return new DecalImpl(el, parent, context);
+		case CONNECTED:
+			switch (sizing) {
+			case MAXIMIZE:
+			case MINIMIZE:
+				return new ConnectedContainerImpl(el, parent, context);
+			default:
+				return new ConnectedLeafImpl(el, parent, context);
+			}
+		case LINK:
+			return new ConnectionImpl(el);
+		case LINK_END:
+			return ((XMLElement) el.getParentNode()).getDiagramElement();
+		case TERMINATOR:
+			return new TerminatorImpl(el, parent);
+		case UNSPECIFIED:
+		case NONE:
+			return null;
+		default:
+			throw new Kite9ProcessingException("Not implemented yet");	
 		}
 	}
 
@@ -81,5 +85,16 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
 		DiagramElementSizing lt = (DiagramElementSizing) v.getTheValue();
 		return lt;
+	}
+	
+	private void handleTemplateElement(DiagramElement out) {
+		Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
+		if (template != ValueConstants.NONE_VALUE) {
+			URIValue uriValue = (URIValue) template;
+			ADLDocument d = (ADLDocument) context.getDocument();
+			SVGUseElement e = (SVGUseElement) d.createElementNS(ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI, "use");
+			e.setAttribute("href", uriValue.getStringValue());
+			((AbstractXMLDiagramElement) out).theElement.appendChild(e);
+		}
 	}
 }

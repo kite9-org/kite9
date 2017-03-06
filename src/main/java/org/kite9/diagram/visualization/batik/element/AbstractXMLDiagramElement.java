@@ -91,42 +91,6 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 	public HintMap getPositioningHints() {
 		return null;
 	}
-	
-	@Override
-	protected IdentifiableGraphicsNode initMainGraphicsLayer() {
-		IdentifiableGraphicsNode out = createGraphicsNode(GraphicsLayerName.MAIN);
-		return out;
-	}
-
-	/**
-	 * Use this method where the DiagramElement is allowed to contain SVG contents.
-	 */
-	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
-		GVTBuilder builder = ctx.getGVTBuilder();
-		for (int i = 0; i < theElement.getChildNodes().getLength(); i++) {
-			Node child = theElement.getChildNodes().item(i);
-			if (child instanceof Element) {
-				// get access to the bridge, to create a graphics node.
-				GraphicsNode node = builder.build(ctx, (Element) child);
-				if (node != null) {
-					out.add(node);
-				}
-			}
-		}
-	}
-
-	/**
-	 * This implementation simply creates a group in the usual way.
-	 */
-	@Override
-	public IdentifiableGraphicsNode createGraphicsNode(GraphicsLayerName name) {
-		GVTBuilder builder = ctx.getGVTBuilder();
-		Element e = theElement.getOwnerDocument().createElementNS(SVG12DOMImplementation.SVG_NAMESPACE_URI, "g");
-		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
-		out.setId(getID()+"-"+name.name());
-		out.setLayer(name);		
-		return out;
-	}
 
 	
 }

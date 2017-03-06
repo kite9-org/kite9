@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.sizing.HasLayeredGraphics;
+import org.kite9.diagram.adl.HasLayeredGraphics;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 
@@ -18,7 +18,7 @@ import org.kite9.diagram.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class DiagramImpl extends ConnectedContainerImpl implements Diagram, HasLayeredGraphics {
+public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 	
 	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx) {
 		super(el, null, ctx);

@@ -16,7 +16,7 @@ import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.EnumValue;
 
-public abstract class AbstractRectangularDiagramElement extends AbstractXMLDiagramElement {
+public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement {
 
 	private RectangleRenderingInformation ri;
 

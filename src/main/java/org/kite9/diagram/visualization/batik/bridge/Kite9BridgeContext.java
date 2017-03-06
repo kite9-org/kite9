@@ -4,6 +4,7 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.script.InterpreterPool;
+import org.w3c.dom.Document;
 
 
 public final class Kite9BridgeContext extends SVG12BridgeContext {
@@ -36,7 +37,4 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		putBridge(new Kite9GBridge());
 		putBridge(new TextBridge());
 	}
-	
-	
-	
 }
