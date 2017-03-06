@@ -1,21 +1,15 @@
 package org.kite9.diagram.visualization.batik.element;
 
-import org.apache.batik.css.engine.value.URIValue;
-import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.style.DiagramElementFactory;
 import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.style.DiagramElementType;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.serialization.ADLExtensibleDOMImplementation;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.EnumValue;
-import org.w3c.dom.svg.SVGUseElement;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
@@ -35,7 +29,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			DiagramElementType lt = getElementType(in2);
 			DiagramElementSizing sizing = getElementSizing(in2);
 			DiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
-			handleTemplateElement(out);
+			context.handleTemplateElement(in, out);
 			return out;
 		} else {
 			throw new Kite9ProcessingException("Don't know how to create diagram element from "+in);
@@ -86,15 +80,5 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		DiagramElementSizing lt = (DiagramElementSizing) v.getTheValue();
 		return lt;
 	}
-	
-	private void handleTemplateElement(DiagramElement out) {
-		Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
-		if (template != ValueConstants.NONE_VALUE) {
-			URIValue uriValue = (URIValue) template;
-			ADLDocument d = (ADLDocument) context.getDocument();
-			SVGUseElement e = (SVGUseElement) d.createElementNS(ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI, "use");
-			e.setAttribute("href", uriValue.getStringValue());
-			((AbstractXMLDiagramElement) out).theElement.appendChild(e);
-		}
-	}
+
 }

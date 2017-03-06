@@ -14,7 +14,6 @@ import java.net.URLConnection;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.dom.util.DocumentFactory;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -23,6 +22,7 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.SVGConstants;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.style.DiagramElementFactory;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.visualization.batik.element.DiagramElementFactoryImpl;
@@ -49,14 +49,18 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 
 	@Override
 	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent);
+		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
 		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
 		domImpl.setDiagramElementFactory(def);
 		return out;
 	}
 
+	protected Kite9DocumentFactory createDocumentFactory() {
+		return createDocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
+	}
+	
 	@Override
-	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
+	protected Kite9DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
 		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
 	}
 

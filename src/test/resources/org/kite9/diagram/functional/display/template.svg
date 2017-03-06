@@ -1,0 +1,16 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl'>
+  <svg:defs>
+    <svg:linearGradient id='gg' x1='0%' x2='0%' y1='0%' y2='100%'>
+      <svg:stop offset='0%' stop-color='#FFF' />
+      <svg:stop offset='100%' stop-color='#DDD' />
+    </svg:linearGradient>
+  </svg:defs>
+  <!-- glyph template -->
+  
+  <back id='glyph' style='type: decal; sizing: adaptive; '>
+    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#gg); stroke: black; stroke-width: 2px; ' />
+  </back>
+  
+  <!-- label template -->
+  <svg:text id="label" style='font-size: 15px; stroke: black; font-face: sans-serif; '>{@text}</svg:text>
+</svg:svg>

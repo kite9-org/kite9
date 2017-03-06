@@ -25,7 +25,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.svg.SVGElement;
+import org.w3c.dom.Text;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering.
@@ -57,20 +57,22 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 			Node n = nodeList.item(i);
 
 			if ((n instanceof Element) && (!(n instanceof XMLElement))) {
-				System.out.println("performing replace for "+this+ " "+n.getLocalName());
 				performReplace(n.getChildNodes());
 				for (int j = 0; j < n.getAttributes().getLength(); j++) {
 					Attr a = (Attr) n.getAttributes().item(j);
-					performValueReplace(a);
+					a.setValue(performValueReplace(a.getValue()));
 				}
-			} 
+			} else if (n instanceof Text) {
+				String text = ((Text) n).getData();
+				text = performValueReplace(text);
+				((Text) n).replaceData(0, ((Text) n).getLength(), text);
+			}
 		}
 	}
 
-	protected void performValueReplace(Attr a) {
+	protected String performValueReplace(String input) {
 		Pattern p = Pattern.compile("\\{([xXyY@])([a-zA-Z0-9]+)}");
 		
-		String input = a.getValue();
 		Matcher m = p.matcher(input);
 		StringBuilder out = new StringBuilder();
 		int place = 0;
@@ -89,7 +91,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		}
 		
 		out.append(input.substring(place));
-		a.setValue(out.toString());
+		return out.toString();
 	}
 	
 	/**
@@ -99,8 +101,6 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		if ("@".equals(prefix)) {
 			if (theElement.hasAttribute(attr)) {
 				return theElement.getAttribute(attr);
-			} else if (attr.equals("text")) {
-				return theElement.getTextContent();
 			} 
 		}
 		
