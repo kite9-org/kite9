@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.lang.reflect.Method;
+import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,9 +24,11 @@ import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
+import org.kite9.framework.serialization.XMLHelper;
 import org.w3c.dom.Document;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;
@@ -58,7 +61,25 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			checkIdenticalXML();
 		}
 	}
+	
+	protected void renderDiagram(DiagramXMLElement d) throws IOException {
+		String xml = new XMLHelper().toXML(d);
+		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
+		String style = getDesignerStylesheetReference();
+		String suffix = "</svg:svg>";
+		try {
+			xml = xml.replaceFirst("<\\?.*\\?>\n","");
+			transcodeSVG(prefix + style + xml + suffix);
+		} catch (Exception e) {
+			throw new IOException("Couldn't process diagram: ", e);
+		}
+	}
 
+	public String getDesignerStylesheetReference() {
+		URL u = this.getClass().getResource("/stylesheets/designer2012.css");
+		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
+	}
+	
 	private TranscoderInput getTranscoderInput(String s) throws IOException {
 		File f = getOutputFile("-input.svg");
 		RepositoryHelp.streamCopy(new StringReader(s), new FileWriter(f), true);

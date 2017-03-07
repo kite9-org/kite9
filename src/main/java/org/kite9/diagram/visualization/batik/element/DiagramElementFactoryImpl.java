@@ -29,7 +29,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			DiagramElementType lt = getElementType(in2);
 			DiagramElementSizing sizing = getElementSizing(in2);
 			DiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
-			context.handleTemplateElement(in, out);
+			if (out != null) {
+				context.handleTemplateElement(in, out);
+			}
 			return out;
 		} else {
 			throw new Kite9ProcessingException("Don't know how to create diagram element from "+in);
@@ -61,11 +63,11 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			return ((XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
 			return new TerminatorImpl(el, parent);
-		case UNSPECIFIED:
 		case NONE:
 			return null;
+		case UNSPECIFIED:
 		default:
-			throw new Kite9ProcessingException("Not implemented yet");	
+			throw new Kite9ProcessingException("Don't know how to process element: "+el);	
 		}
 	}
 

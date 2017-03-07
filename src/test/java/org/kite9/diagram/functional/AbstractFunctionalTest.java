@@ -27,59 +27,6 @@ import org.kite9.framework.serialization.XMLHelper;
 
 public class AbstractFunctionalTest extends HelpMethods {
 	
-	public String getZipName() {
-		return "/functional-test.zip";
-	}
-	
-	public DiagramXMLElement renderDiagram(DiagramXMLElement d, TestingEngine te, boolean watermark) throws IOException {
-		return te.renderDiagram(d, true, checks());
-	}
-
-	public DiagramXMLElement renderDiagramNoSerialize(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName(), false);
-		return renderDiagram(d, te, true);
-	}
-
-	public DiagramXMLElement renderDiagramNoWM(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		return renderDiagram(d, te, false);
-	}
-	
-	public DiagramXMLElement renderDiagram(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		return renderDiagram(d, te, true);
-	}
-
-	public void renderDiagramPDF(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		renderDiagram(d);
-		te.renderDiagramPDF(d);
-	}
-	
-	public void renderDiagramSVG(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		renderDiagram(d);
-		te.renderDiagramSVG(d);
-	}
-	
-	public void renderDiagramADLAndSVG(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramADLAndSVG(d);
-	}
-	
-	public TestingEngine getTestingEngine() {
-		return new TestingEngine(getZipName());
-	}
-	
-	public void renderDiagramSizes(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		te.renderDiagramSizes(d);
-	}
-	
-	public void renderMap(DiagramXMLElement d) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName());
-		te.renderMap(d);
-	}
 	
 	protected Checks checks() {
 		Checks out = new Checks();
