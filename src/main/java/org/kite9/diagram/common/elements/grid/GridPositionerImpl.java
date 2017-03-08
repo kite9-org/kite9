@@ -17,6 +17,9 @@ import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.Table;
 import org.kite9.framework.serialization.CSSConstants;
 import org.kite9.framework.serialization.IntegerRangeValue;
 
@@ -26,7 +29,9 @@ import org.kite9.framework.serialization.IntegerRangeValue;
  * @author robmoffat
  *
  */
-public class GridPositionerImpl implements GridPositioner {
+public class GridPositionerImpl implements GridPositioner, Logable {
+	
+	private Kite9Log log = new Kite9Log(this);
 
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
 	Map<DiagramElement, OPair<BigFraction>> xPositions = new HashMap<>(100);
@@ -88,17 +93,18 @@ public class GridPositionerImpl implements GridPositioner {
 		
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
-			IntegerRangeValue xpos = getXOccupies(diagramElement);
-			IntegerRangeValue ypos = getYOccupies(diagramElement);	
-			
-			if ((!IntegerRangeValue.notSet(xpos)) && (!IntegerRangeValue.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
-				ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
-				int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
-				int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
-				storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
-			} else {
-				overlaps.add(diagramElement);
+			if (diagramElement instanceof Connected) {
+				IntegerRangeValue xpos = getXOccupies(diagramElement);
+				IntegerRangeValue ypos = getYOccupies(diagramElement);	
 				
+				if ((!IntegerRangeValue.notSet(xpos)) && (!IntegerRangeValue.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
+					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
+					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
+					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
+					storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
+				} else {
+					overlaps.add(diagramElement);
+				}
 			}
 		}
 		
@@ -131,8 +137,19 @@ public class GridPositionerImpl implements GridPositioner {
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
 		
 		for (DiagramElement de : ord.getContents()) {
-			scaleCoordinates(de, size);
+			if (de instanceof Connected) {
+				scaleCoordinates(de, size);
+			}
 		}
+		
+		if (isLoggingEnabled()) {
+			Table t = new Table();
+			for (DiagramElement[] diagramElements : done) {
+				t.addObjectRow(diagramElements);
+			};
+			log.send("Grid Positions (transposed axes): \n", t);			
+		}
+		
 		
 		
 		placed.put(ord, done);
@@ -292,5 +309,17 @@ public class GridPositionerImpl implements GridPositioner {
 		}
 		
 		return out;
+	}
+
+
+	@Override
+	public String getPrefix() {
+		return "GP  ";
+	}
+
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
 	}
 }

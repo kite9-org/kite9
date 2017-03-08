@@ -62,21 +62,17 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		}
 	}
 	
-	protected void renderDiagram(DiagramXMLElement d) throws IOException {
+	protected void renderDiagram(DiagramXMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d);
 		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
 		String style = getDesignerStylesheetReference();
 		String suffix = "</svg:svg>";
-		try {
-			xml = xml.replaceFirst("<\\?.*\\?>\n","");
-			transcodeSVG(prefix + style + xml + suffix);
-		} catch (Exception e) {
-			throw new IOException("Couldn't process diagram: ", e);
-		}
+		xml = xml.replaceFirst("<\\?.*\\?>\n","");
+		transcodeSVG(prefix + style + xml + suffix);
 	}
 
 	public String getDesignerStylesheetReference() {
-		URL u = this.getClass().getResource("/stylesheets/designer2012.css");
+		URL u = this.getClass().getResource("/stylesheets/designer.css");
 		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
 	}
 	

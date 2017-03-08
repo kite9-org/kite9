@@ -67,7 +67,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			return null;
 		case UNSPECIFIED:
 		default:
-			throw new Kite9ProcessingException("Don't know how to process element: "+el);	
+			throw new Kite9ProcessingException("Don't know how to process element: "+el+" with type "+lt);	
 		}
 	}
 

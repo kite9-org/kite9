@@ -36,6 +36,7 @@ public class Symbol extends AbstractStyleableXMLElement {
 		setTextContent(text);
 		setChar(preferredChar);
 		setShape(shape);
+		setClasses(getClasses()+" "+shape.toString().toLowerCase());
 	}
 
 	public Symbol(String string, char c, SymbolShape shape) {
@@ -87,12 +88,4 @@ public class Symbol extends AbstractStyleableXMLElement {
 	public String getXMLId() {
 		return getAttribute("id");
 	}
-
-	@Override
-	public String getCSSClass() {
-		return super.getCSSClass() + " " + getShapeName().toLowerCase();
-	}
-	
-	
-	
 }

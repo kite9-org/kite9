@@ -163,34 +163,36 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 		
 		for (DiagramElement de : c.getContents()) {
-			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
-			createdVertices.addAll(cv.getVerticesAtThisLevel());
-			
-			// having created all the vertices, join them to form faces
-			MultiCornerVertex fromv, tov = null;
-			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
-			Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
-			Face f = o.getPlanarization().createFace();
-			while (iterator.hasNext()) {
-				fromv = tov;
-				tov = iterator.next();
-				if (fromv != null) {
-					Edge e = createOrReuse(de, fromv, tov,  o, cv.getGridContainer());
-					f.add(fromv, e);
+			if (de instanceof Connected) {
+				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
+				createdVertices.addAll(cv.getVerticesAtThisLevel());
+				
+				// having created all the vertices, join them to form faces
+				MultiCornerVertex fromv, tov = null;
+				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
+				Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
+				Face f = o.getPlanarization().createFace();
+				while (iterator.hasNext()) {
+					fromv = tov;
+					tov = iterator.next();
+					if (fromv != null) {
+						Edge e = createOrReuse(de, fromv, tov,  o, cv.getGridContainer());
+						f.add(fromv, e);
+					}
 				}
-			}
-			
-			// join back into a circle
-			Edge e = createOrReuse(de, 
-					tov, 
-					perimeterVertices.get(0), 
-					o, cv.getGridContainer());
-			f.add(tov, e);
 				
-			DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f, cv);
-				
-			if (de instanceof Container) {
-				convertContainerContents(o, (Container) de, done); 
+				// join back into a circle
+				Edge e = createOrReuse(de, 
+						tov, 
+						perimeterVertices.get(0), 
+						o, cv.getGridContainer());
+				f.add(tov, e);
+					
+				DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f, cv);
+					
+				if (de instanceof Container) {
+					convertContainerContents(o, (Container) de, done); 
+				}
 			}
 		}
 	}

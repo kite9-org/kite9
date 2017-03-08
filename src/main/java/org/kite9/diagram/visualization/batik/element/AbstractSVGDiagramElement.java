@@ -14,6 +14,7 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.HasLayeredGraphics;
 import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.visualization.batik.bridge.Templater;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
@@ -63,11 +64,29 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 					a.setValue(performValueReplace(a.getValue()));
 				}
 			} else if (n instanceof Text) {
-				String text = ((Text) n).getData();
-				text = performValueReplace(text);
-				((Text) n).replaceData(0, ((Text) n).getLength(), text);
+				Text text = (Text) n;
+				String data = text.getData();
+				data = performValueReplace(data);
+				if (!data.equals(text.getData())) {
+					text.replaceData(0, text.getLength(), data);
+				}
+				
+				// handle replacing in of contents
+				int found;
+				do {
+					found =  (text.getData().indexOf("{{contents}}"));
+					if (found > -1) {
+						Text text2 = text.splitText(found);
+						text2.replaceData(0, text2.getLength(), text2.getData().substring(12));
+						addContents(text2);
+					}
+				} while (found> -1);
 			}
 		}
+	}
+
+	private void addContents(Text before) {
+		Templater.insertCopyBefore(before, theElement);
 	}
 
 	protected String performValueReplace(String input) {
@@ -102,7 +121,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 			if (theElement.hasAttribute(attr)) {
 				return theElement.getAttribute(attr);
 			} 
-		}
+		} 
 		
 		return null;
 	}

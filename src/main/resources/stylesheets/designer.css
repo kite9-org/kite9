@@ -12,13 +12,15 @@ glyph {
 	type: connected;
 	sizing: minimize;
 	layout: grid;	
+	grid-size: 1 2;
+	template: url(template.svg#glyph);
 }
 
 arrow,
 arrow2,
 arrow3 {
 	type: connected;
-	sizing: text;
+	sizing: fixed;
 }
 
 link {
@@ -56,7 +58,9 @@ context {
 
 /* Symbols */
 
-.symbol {
+symbol {
+	type: connected;
+	sizing: fixed;
 	font-weight: bold;
 	font-size: 10px;
 	font-family: "opensans-bold-webfont";
@@ -70,34 +74,29 @@ context {
 	color: white;
 }
 
-.symbol.circle {
+symbol.circle {
 	fill: rgb(0, 150, 73);
-	shape: "CIRCLE";	/* Not used yet, but easy to do */
+	template: url(template.svg#circle);
+	 
 }
 
-.symbol.hexagon {
+symbol.hexagon {
 	fill: rgb(207, 36, 42);
-	shape: "HEXAGON";
+	template: url(template.svg#hexagon);
 }
 
-.symbol.diamond {
+symbol.diamond {
 	fill: rgb(237, 106, 86);
-	shape: "DIAMOND";
+	template: url(template.svg#diamond);
 }
 
 /* Glyph */
 glyph {
-	shape: "rounded-rect";
 	padding: 3px 6px 3px 6px; 
 	margin: 0;
 	stroke-width: 2px;
 	stroke: black;
 	fill: white;
-	/*box-shadow-x-offset: 4px;
-	box-shadow-y-offset: 4px;
-	box-shadow-color: teal;
-	box-shadow-opacity: .3; */
-	
 	box-shadow: 4px 4px 0px #333333; 
 }
 
@@ -119,23 +118,34 @@ key {
 
 glyph > label {
 	type: connected;
-	sizing: text;
+	sizing: fixed;
 	font-size: 15px;
 	text-align: middle;
 	font-family: "opensans-regular-webfont";
-	shape: none;
+	template: url(template.svg#label);
+	occupies: 0 1 1 1;
 }
 
-glyph stereotype {
+glyph > stereotype {
 	type: connected;
-	sizing: text;
+	sizing: fixed;
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	stroke: black;
-	shape: none;
+	template: url(template.svg#stereotype);
+	occupies: 0 0;
 }
 
-glyph .text-line {
+glyph > text-lines {
+	type: connected;
+	sizing: minimize;
+	occupies: 0 1 2 2;
+	layout: vertical;
+}
+
+glyph > text-lines > text-line {
+	type: connected;
+	sizing: fixed;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	padding-left: 0px;
@@ -145,7 +155,14 @@ glyph .text-line {
 	stroke: black;
 	fill: none;
 	text-align: start;
-	
+	template: url(template.svg#text-line);
+}
+
+glyph > symbols {
+	type: connected;
+	sizing: minimize;
+	occupies: 1 0;
+	layout: horizontal;
 }
 
 /* Arrow */

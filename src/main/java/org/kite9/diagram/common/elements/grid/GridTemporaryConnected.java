@@ -84,14 +84,4 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		return rri;
 	}
 
-	@Override
-	protected GraphicsNode initMainGraphicsLayer() {
-		return null;
-	}
-
-	@Override
-	public IdentifiableGraphicsNode createGraphicsNode(GraphicsLayerName name) {
-		return null;
-	}
-	
 }
