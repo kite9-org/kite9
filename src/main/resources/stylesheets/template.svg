@@ -10,6 +10,10 @@
     <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
   </back>
   
+  <back id='context' style='type: decal; sizing: adaptive; '>
+    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
+  </back>
+  
   <!-- label template -->
   <svg:text id="label">My {{contents}} Here</svg:text>
   
@@ -19,6 +23,8 @@
   
   <!-- symbol -->
   <svg:circle id="circle" cx="5" cy="5" r="5" />
+  
+  
   
   
 </svg:svg>

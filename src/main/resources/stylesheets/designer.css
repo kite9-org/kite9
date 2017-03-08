@@ -176,10 +176,12 @@ arrow {
 
 /* Context */
 
-.context {
+context {
 	fill: none;
 	stroke: black;
 	stroke-width: 2px;
+	template: url(template.svg#context);
+	padding: 10px;
 }
 
 /* Labels */
