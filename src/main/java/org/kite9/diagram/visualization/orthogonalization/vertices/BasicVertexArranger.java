@@ -346,7 +346,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			Direction outwardsDirection = Direction.rotateAntiClockwise(e.getDrawDirectionFrom(fromv));
 			List<Dart> leavers = dartDirections.get(outwardsDirection);
 			List<Dart> oppositeSide = dartDirections.get(Direction.reverse(outwardsDirection));
-			double size = Direction.isVertical(outwardsDirection) ? xSize : ySize;
+			//double size = Direction.isVertical(outwardsDirection) ? xSize : ySize;
+			double size = 0;	// since we don't always know whether the dart takes up the whole side of the perimeter
 			Side s = convertEdgeToDarts(fromv, tov, outwardsDirection, originalUnderlying, optionalExistingVertex, leavers, o, oppositeSide.size(), size, requiresMinSize, e);
 			allNewVertices.addAll(s.vertices);
 			allSideDarts.addAll(s.newEdgeDarts);

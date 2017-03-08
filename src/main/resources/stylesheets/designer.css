@@ -124,6 +124,7 @@ glyph > label {
 	font-family: "opensans-regular-webfont";
 	template: url(template.svg#label);
 	occupies: 0 1 1 1;
+	fill: white;
 }
 
 glyph > stereotype {
