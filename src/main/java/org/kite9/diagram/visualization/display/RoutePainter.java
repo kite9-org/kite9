@@ -1,12 +1,9 @@
-package org.kite9.diagram.visualization.display.components;
+package org.kite9.diagram.visualization.display;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +11,8 @@ import java.util.List;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
+import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.framework.logging.LogicException;
 
@@ -27,19 +24,11 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
+public class RoutePainter {
 	
 	float xo = 4;
 	float yo = 4;
 	Color shadowColour = Color.DARK_GRAY;
-	
-	public AbstractRouteDisplayer(CompleteDisplayer parent, GraphicsLayer2D g2, boolean shadow) {
-		super(parent, g2, shadow);
-	}
-
-	public AbstractRouteDisplayer(GraphicsLayer2D g2) {
-		super(g2);
-	}
 
 	static interface EndDisplayer {
 		
@@ -75,6 +64,77 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 		public Shape getTerminatorPerimeterShape() {
 			return null;
 		}
+	};
+	
+	public final LineDisplayer LINK_HOP_DISPLAYER = new AbstractCurveCornerDisplayer(5) {
+
+		@Override
+		public void drawMove(Move m1, Move next, Move prev, GeneralPath gp) {
+			if (m1.hopStart) {
+				Move c = (Move) m1.clone();
+				c.trim(hopSize, 0);
+				drawHopStart(m1.xs, m1.ys, m1.xe, m1.ye, gp);
+			}
+
+			// draws a section of the line, plus bend into next one.
+
+			if (m1.hopEnd) {
+				Move c = (Move) m1.clone();
+				c.trim(0, hopSize);
+				gp.lineTo(c.xe + xo, c.ye + yo);
+				drawHopEnd(m1.xe, m1.ye, m1.xs, m1.ys, gp);
+			} else if (next != null) {
+				Move c = (Move) m1.clone();
+				c.trim(0, radius);
+				gp.lineTo(c.xe + xo, c.ye + yo);
+				drawCorner(gp, m1, next, m1.getDirection(), next.getDirection());
+			} else {
+				gp.lineTo(m1.xe + xo, m1.ye + yo);
+			}
+		}
+
+		float hopSize = StaticStyle.getLinkHopSize();
+
+		public double drawHopStart(double x1, double y1, double x2, double y2, GeneralPath gp) {
+			if (x1 < x2) {
+				// hop left
+				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 90d, -90d,
+						Arc2D.OPEN);
+				gp.append(arc, true);
+
+			} else if (x1 > x2) {
+
+				// hop right
+				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 90d, 90d,
+						Arc2D.OPEN);
+				gp.append(arc, true);
+			} else {
+				return 0;
+			}
+
+			return hopSize;
+		}
+
+		public double drawHopEnd(double x1, double y1, double x2, double y2, GeneralPath gp) {
+			if (x1 < x2) {
+				// hop left
+				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 0d, 90d,
+						Arc2D.OPEN);
+				gp.append(arc, true);
+
+			} else if (x1 > x2) {
+
+				// hop right
+				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 180d,
+						-90d, Arc2D.OPEN);
+				gp.append(arc, true);
+			} else {
+				return 0;
+			}
+
+			return hopSize;
+		}
+
 	};
 	
 	public abstract class AbstractCurveCornerDisplayer implements LineDisplayer {
@@ -147,14 +207,11 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 	/**
 	 * Draws the routing of the edge.
 	 */
-	protected void drawRouting(RouteRenderingInformation r, Stroke stroke,
-		    Paint lineColour, Paint fillColour, EndDisplayer start, EndDisplayer end, LineDisplayer line,	boolean closed, boolean visible, double perimeterWidth) {
+	public GeneralPath drawRouting(RouteRenderingInformation r, 
+		   EndDisplayer start, EndDisplayer end, LineDisplayer line, boolean closed) {
  
-		g2.setStroke(stroke);
-		g2.setPaint(shadow ? shadowColour : lineColour);
-
 		if ((r == null) || (r.getRoutePositions().size()==0)) {
-			return;
+			return null;
 		}
 
 		List<Move> moves = createMoves(r, closed);
@@ -182,7 +239,6 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 				} 
 			}
 			
-			
 			if (closed) {
 				// middle
 				line.drawMove(a, next, prev, gp);
@@ -195,38 +251,15 @@ public abstract class AbstractRouteDisplayer extends AbstractADLDisplayer {
 			gp.closePath();
 		}
 		
-		
-		if (isOutputting() && visible) {
-			g2.draw(gp);
-			drawEnd(end, visible, lineColour, fillColour);
-			drawEnd(start, visible, lineColour, fillColour);
-		} 
-		
-		if (getPathConverter() != null) {
-			Move first = moves.get(0);
-			if (perimeterWidth > 0) {
-				Stroke flannelStroke = new BasicStroke((float) perimeterWidth);
-				Shape flannel = flannelStroke.createStrokedShape(gp);
-				Shape endShape = end.getTerminatorPerimeterShape();
-				Shape startShape = start.getTerminatorPerimeterShape();
-				Area a = new Area();
-				if (endShape != null) {
-					a.add(new Area(endShape.getBounds2D()));
-				}
-				if (startShape != null) {
-					a.add(new Area(startShape.getBounds2D()));
-				}
-				a.add(new Area(flannel));
-			}
-		}
+		return gp;
 
 	}
 
-	private void drawEnd(EndDisplayer start, boolean visible, Paint lineColour, Paint fillColour) {
-		if (isOutputting() && visible) {
-			start.draw(g2, lineColour, fillColour);
-		}
-	}
+//	private void drawEnd(EndDisplayer start, boolean visible, Paint lineColour, Paint fillColour) {
+//		if (isOutputting() && visible) {
+//			start.draw(g2, lineColour, fillColour);
+//		}
+//	}
 
 	protected void drawLength(double x1, double y1, double x2, double y2,
 			GeneralPath gp, double startCrop, double endCrop, boolean start) {

@@ -18,7 +18,6 @@ import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
-import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.serialization.CSSConstants;
@@ -94,9 +93,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			Rectangle2D bounds = layered.getSVGBounds();
 			DiagramElementSizing sizing = layered.getSizing();
 			
-			if (bounds != null) {
-				System.out.println("Internal bounds of "+element+" : "+bounds);
-				
+			if (bounds != null) {				
 				// reset the scale first
 				layered.eachLayer(node -> {
 					AffineTransform existing = node.getTransform();
@@ -163,11 +160,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public boolean canDisplay(DiagramElement element) {
 		return true;
-	}
-
-	@Override
-	public Displayer getDisplayer(DiagramElement de) {
-		return this;
 	}
 
 	@Override

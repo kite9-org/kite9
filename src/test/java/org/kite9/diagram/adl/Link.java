@@ -42,6 +42,14 @@ public class Link extends AbstractXMLConnectionElement {
 		super(from.getID()+"-"+to.getID(), "link",  from, to, null, null, fromLabel, null, toLabel, TESTING_DOCUMENT);
 	}
 
+	public Link(String id, XMLElement from, XMLElement to) {
+		this(id, from, to, TESTING_DOCUMENT);
+	}
+
+	public Link(String id, XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toStyle, XMLElement toLabel, Direction d) {
+		this(id, from, to, fromStyle, fromLabel, toStyle, toLabel, d,  TESTING_DOCUMENT);
+	}
+
 	@Override
 	public XMLElement getFromDecoration() {
 		return getProperty("fromDecoration");

@@ -19,6 +19,7 @@ import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation.Decoration;
+import org.kite9.diagram.visualization.display.RoutePainter;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.ComponentDisplayer;
 import org.kite9.diagram.visualization.display.style.FixedShape;
@@ -28,7 +29,7 @@ import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.framework.logging.LogicException;
 
-public class ConnectionDisplayer extends AbstractRouteDisplayer implements ComponentDisplayer {
+public class ConnectionDisplayer extends RoutePainter implements ComponentDisplayer {
 
 	public static boolean debug = true;
 

@@ -36,8 +36,8 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 			if (parent instanceof AbstractXMLDiagramElement) {
 				((AbstractXMLDiagramElement)parent).ensureInitialized();
 			}
-			initialize();
 			this.initialized = true;
+			initialize();
 		}
 	}
 

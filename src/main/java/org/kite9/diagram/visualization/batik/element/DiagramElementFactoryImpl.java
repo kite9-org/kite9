@@ -58,11 +58,11 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedLeafImpl(el, parent, context);
 			}
 		case LINK:
-			return new ConnectionImpl(el);
+			return new ConnectionImpl(el, parent, context);
 		case LINK_END:
 			return ((XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
-			return new TerminatorImpl(el, parent);
+			return new TerminatorImpl(el, parent, context);
 		case NONE:
 			return null;
 		case UNSPECIFIED:

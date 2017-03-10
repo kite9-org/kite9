@@ -17,14 +17,13 @@ import javax.xml.transform.Source;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.junit.Before;
 import org.junit.Test;
-import org.kite9.diagram.functional.AbstractFunctionalTest;
-import org.kite9.diagram.functional.NotAddressed;
-import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.StylesheetReference;
+import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -38,8 +37,13 @@ import org.xmlunit.diff.DOMDifferenceEngine;
 
 import junit.framework.Assert;
 
-public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
+public class AbstractDisplayFunctionalTest extends HelpMethods {
 
+	@Before
+	public void resetCounter() {
+		AbstractStyleableXMLElement.resetCounter();
+	}
+	
 	protected boolean checkXML() {
 		return true;
 	}
@@ -164,12 +168,4 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		return Input.fromNode(d).build();
 	}
 
-	public DiagramXMLElement renderDiagram(String xml) throws IOException {
-		TestingEngine te = new TestingEngine(getZipName(), false);
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
-		Class<?> theTest = m.getDeclaringClass();
-		return te.renderDiagram(xml, theTest, m.getName(), true, checks(),  addressed);
-	}
-	
 }

@@ -1,7 +1,13 @@
 package org.kite9.diagram.visualization.batik.element;
 
+import java.awt.Graphics2D;
+import java.awt.Shape;
+
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.gvt.ShapeNode;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.common.BiDirectional;
@@ -9,6 +15,12 @@ import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformationImpl;
+import org.kite9.diagram.style.DiagramElementSizing;
+import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.visualization.batik.bridge.Kite9RouteBridge;
+import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.visualization.display.RoutePainter;
+import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
@@ -16,13 +28,12 @@ import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 
-public class ConnectionImpl extends AbstractXMLDiagramElement implements Connection {
+public class ConnectionImpl extends AbstractSVGDiagramElement implements Connection {
 
-	public ConnectionImpl(StyledKite9SVGElement el) {
-		super(el, null);
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
+		super(el, parent, ctx);
 	}
-	
-	
+
 	@Override
 	protected void initialize() {
 		XMLElement fromElement = getFromElement(theElement);
@@ -223,4 +234,17 @@ public class ConnectionImpl extends AbstractXMLDiagramElement implements Connect
 		return rank;
 	}
 
+	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
+		Kite9RouteBridge bridge = new Kite9RouteBridge(this);
+		GraphicsNode gn = bridge.createGraphicsNode(ctx, this.theElement);
+		bridge.buildGraphicsNode(ctx, theElement, gn);
+		out.add(gn);
+	}
+	
+	@Override
+	public DiagramElementSizing getSizing() {
+		return DiagramElementSizing.UNSPECIFIED;
+	}
+	
+	
 }

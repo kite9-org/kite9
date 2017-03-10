@@ -8,13 +8,13 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.HasLayeredGraphics;
 import org.kite9.diagram.adl.Terminator;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.visualization.display.components.AbstractRouteDisplayer;
 import org.kite9.diagram.visualization.display.style.ShapeStyle;
 import org.kite9.diagram.visualization.display.style.TerminatorShape;
 import org.kite9.diagram.xml.LinkLineStyle;
@@ -27,7 +27,6 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	public static final CompleteDisplayer NULL = new NullDisplayer();
 
-	protected List<ComponentDisplayer> displayers = new ArrayList<ComponentDisplayer>();
 	double buffer;
 	protected Kite9Log log = new Kite9Log(this);
 
@@ -40,46 +39,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		this.gridSize = gridSize;
 	}
 
-	public Displayer getDisplayer(DiagramElement de) {
-		for (Displayer c : displayers) {
-			if (c.canDisplay(de)) {
-				return c;
-			}
-		}
-	
-		return NULL;
-	}
-
 	public boolean isVisibleElement(DiagramElement de) {
-		Displayer ded = getDisplayer(de);
-		if (ded == null) {
-			return false;
-		} else if (de.getRenderingInformation().isRendered()) {
-			return ded.isVisibleElement(de);			
-//		} else if (de instanceof CompositionalDiagramElement) {
-//			return ded.isVisibleElement(de);
-		} else {
-			return false;
-		}
+		return (de.getRenderingInformation().isRendered());
 	}
-
-	public boolean canDisplay(DiagramElement element) {
-		Displayer d = getDisplayer(element);
-		return d.canDisplay(element);
-	}
-	
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
-		for (Displayer cd : displayers) {
-			if (cd.canDisplay(element)) {
-				return cd.size(element, within);
-			}
-		}
-		
-		return NULL.size(element, within);
-	}
-	
-
-	
 	
 	public static final double MINIMUM_GLYPH_SIZE = 2;
 	public static final double MINIMUM_ARROW_SIZE = 2;
@@ -162,19 +124,15 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			return 0;
 
 		} else if (bSide == null) {
-			return getDisplayer(a).getPadding(a, aSide);
+			return getPadding(a, aSide);
 		} else if (aSide == null) {
-			return getDisplayer(a).getPadding(a, bSide);
+			return getPadding(a, bSide);
 		} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
-			return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getWidth();
+			return size(a, CostedDimension.UNBOUNDED).getWidth();
 		} else {
-			return getDisplayer(a).size(a, CostedDimension.UNBOUNDED).getHeight();
+			return size(a, CostedDimension.UNBOUNDED).getHeight();
 		}
 
-	}
-
-	public double getLinkMargin(DiagramElement a, Direction d) {
-		return getDisplayer(a).getLinkMargin(a, d);
 	}
 	
 	@Override
@@ -220,24 +178,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	public boolean isLoggingEnabled() {
 		return true;
 	}
-
-	@Override
-	public double getPadding(DiagramElement element, Direction d) {
-		return getDisplayer(element).getPadding(element, d);
-	}
 	
 	public abstract double getMargin(DiagramElement element, Direction d);
-	
-	
-
-	@Override
-	public boolean requiresDimension(DiagramElement de) {
-		if (buffer > 0) {
-			return true;
-		} else {
-			return getDisplayer(de).requiresDimension(de);
-		}
-	}
 
 	@Override
 	public double getTerminatorLength(Terminator terminator) {
@@ -251,11 +193,14 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	
 	@Override
 	public double getTerminatorReserved(Terminator terminator, Connection on) {
-		if (terminator != null) {
-			TerminatorShape fs = new TerminatorShape(terminator);
-			ShapeStyle ss = ((AbstractRouteDisplayer) getDisplayer(on)).getStyle(on);
-			double width = ss.getStrokeWidth();
-			return fs.getReservedLength(width);
+		if ((terminator != null) && (terminator instanceof HasLayeredGraphics)) {
+//			return ((HasLayeredGraphics)terminator).getSVGBounds()
+//			TerminatorShape fs = new TerminatorShape(terminator);
+//			ShapeStyle ss = getStyle(on);
+//			double width = ss.getStrokeWidth();
+			
+			return 0;
+//			return fs.getReservedLength(width);
 		} else {
 			return 0;
 		}

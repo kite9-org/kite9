@@ -7,6 +7,7 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.TestingEngine.Checks;
+import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
@@ -113,6 +114,15 @@ public class Test34EmptyArrows extends AbstractFunctionalTest  {
 		new Link(a, gc,null, null, "ARROW", null);
 		
 		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
+		renderDiagram(d);
+	}
+	
+	@Test(expected=ElementsMissingException.class)
+	public void test_34_7_1GlyphsOneEdge() throws Exception {
+		Glyph one = new Glyph("Stereo", "One", null, null);
+		new TurnLink(one, one);
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
+
 		renderDiagram(d);
 	}
 }
