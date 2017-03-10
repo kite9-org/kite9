@@ -6,6 +6,7 @@ import org.apache.batik.dom.util.DocumentFactory;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.style.DiagramElementFactory;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.visualization.batik.element.DiagramElementFactoryImpl;
@@ -27,14 +28,18 @@ public class Kite9PNGTranscoder extends PNGTranscoder {
 		setTranscodingHints(hints);
 	}
 	
+	protected Kite9DocumentFactory createDocumentFactory() {
+		return createDocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
+	}
+	
 	@Override
-	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
+	protected Kite9DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
 		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
 	}
 	
 	@Override
 	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent);
+		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
 		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
 		domImpl.setDiagramElementFactory(def);
 		return out;

@@ -16,12 +16,6 @@ glyph {
 	template: url(template.svg#glyph);
 }
 
-arrow,
-arrow2,
-arrow3 {
-	type: connected;
-	sizing: fixed;
-}
 
 link {
 	type: link;
@@ -121,10 +115,10 @@ glyph > label {
 	sizing: fixed;
 	font-size: 15px;
 	text-align: middle;
+	fill: black;
 	font-family: "opensans-regular-webfont";
 	template: url(template.svg#label);
 	occupies: 0 1 1 1;
-	fill: white;
 }
 
 glyph > stereotype {
@@ -132,7 +126,7 @@ glyph > stereotype {
 	sizing: fixed;
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
-	stroke: black;
+	fill: black;
 	template: url(template.svg#stereotype);
 	occupies: 0 0;
 }
@@ -169,9 +163,24 @@ glyph > symbols {
 /* Arrow */
 arrow {
 	padding: 2px 3px 2px 3px; 
-	margin: 0 0 0 0; 
+	margin: 10 10 10 10; 
 	fill: black;
+	stroke: black;
+	stroke-width: 2px;
+	type: connected;
+	sizing: minimize;
+	template: url(template.svg#arrow);
+}
+
+arrow > label {
+	type: connected;
+	sizing: fixed;
+	font-size: 12px;
 	stroke: white;
+	fill: white;
+	text-align: middle;
+	font-family: "opensans-regular-webfont";
+	template: url(template.svg#label);
 }
 
 /* Context */

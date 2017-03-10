@@ -165,7 +165,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: black; font-face: sans-serif; '>Some Text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: orange; font-face: sans-serif; '>Some Text</svg:text>";
 	}
 	
 	private String svgRect2() {

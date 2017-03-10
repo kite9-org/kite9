@@ -19,6 +19,7 @@
         stroke="gray" color-interpolation="linearRGB" stroke-width="3" stroke-miterlimit="4">
         <rect x="1.5" y="1.5" fill="url(#MyGradient)" width="69" rx="4" ry="4" height="69" />
       </g>
+      <text x="50" y="50" style="stroke: green; font-size: 16;">This is some text</text>
     </g>
   </g>
 </svg>
