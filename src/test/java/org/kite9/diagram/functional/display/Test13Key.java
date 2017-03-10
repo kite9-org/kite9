@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,12 +12,13 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
 
-public class Test13Key extends AbstractFunctionalTest {
+public class Test13Key extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_13_1_SimpleKey() throws IOException {

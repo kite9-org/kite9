@@ -11,13 +11,14 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.framework.common.HelpMethods;
 
-public class TestCard extends AbstractFunctionalTest {
+public class TestCard extends AbstractLayoutFunctionalTest {
 
 	public DiagramXMLElement createTestCard() {
 		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();

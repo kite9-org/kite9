@@ -11,12 +11,12 @@ import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.functional.ContradictingLink;
 import org.kite9.diagram.functional.GraphConstructionTools;
 import org.kite9.diagram.functional.Test36LayoutChoices;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RouteRenderingInformation;
@@ -30,7 +30,7 @@ import org.kite9.framework.logging.LogicException;
 
 import junit.framework.Assert;
 
-public class Test33Contradictions extends AbstractFunctionalTest {
+public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_33_1_ContradictionHoriz() throws IOException {

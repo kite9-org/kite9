@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -20,7 +21,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
-public class Test25NLinkedContainers extends AbstractFunctionalTest {
+public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 
 	
 	

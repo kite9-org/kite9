@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
@@ -22,7 +23,7 @@ import junit.framework.Assert;
 
 
 @Ignore
-public class Test45Hinting extends AbstractFunctionalTest {
+public class Test45Hinting extends AbstractLayoutFunctionalTest {
 
 
 	private void checkInVerticalLine(DiagramXMLElement d2) {

@@ -7,11 +7,12 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
 
-public class Test11MultiFaceDirectedArrows extends AbstractFunctionalTest {
+public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_11_1_SeparatedLinks() throws IOException {

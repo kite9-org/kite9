@@ -2,19 +2,12 @@ package org.kite9.diagram.visualization.batik.element;
 
 import java.io.Serializable;
 
-import org.apache.batik.anim.dom.SVG12DOMImplementation;
-import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Encapsulates an {@link StyledKite9SVGElement} as a {@link DiagramElement}.
@@ -42,7 +35,6 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 	}
 
 	
-	@Deprecated
 	public StyledKite9SVGElement getTheElement() {
 		return theElement;
 	}

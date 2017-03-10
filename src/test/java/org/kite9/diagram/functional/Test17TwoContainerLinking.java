@@ -7,12 +7,13 @@ import java.util.Map.Entry;
 import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
-public class Test17TwoContainerLinking extends AbstractFunctionalTest {
+public class Test17TwoContainerLinking extends AbstractLayoutFunctionalTest {
 
     @Test
     public void test_17_1_NoOrdering() throws IOException {

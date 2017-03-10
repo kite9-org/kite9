@@ -12,13 +12,14 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 
 
-public class Test51Grid extends AbstractFunctionalTest {
+public class Test51Grid extends AbstractLayoutFunctionalTest {
 
 	
 	@Test

@@ -6,9 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.lang.reflect.Method;
-import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,13 +15,10 @@ import javax.xml.transform.Source;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
-import org.junit.Before;
 import org.junit.Test;
-import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
+import org.kite9.diagram.functional.AbstractFunctionalTest;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
-import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -37,24 +32,12 @@ import org.xmlunit.diff.DOMDifferenceEngine;
 
 import junit.framework.Assert;
 
-public class AbstractDisplayFunctionalTest extends HelpMethods {
+public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
-	@Before
-	public void resetCounter() {
-		AbstractStyleableXMLElement.resetCounter();
-	}
-	
 	protected boolean checkXML() {
 		return true;
 	}
 
-	protected void transcodePNG(String s) throws Exception {
-		TranscoderOutput out = getTranscoderOutputPNG();
-		TranscoderInput in = getTranscoderInput(s);
-		Transcoder transcoder = new Kite9PNGTranscoder();
-		transcoder.transcode(in, out);
-	}
-	
 	protected void transcodeSVG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputSVG();
 		TranscoderInput in = getTranscoderInput(s);
@@ -75,36 +58,12 @@ public class AbstractDisplayFunctionalTest extends HelpMethods {
 		transcodeSVG(prefix + style + xml + suffix);
 	}
 
-	public String getDesignerStylesheetReference() {
-		URL u = this.getClass().getResource("/stylesheets/designer.css");
-		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
-	}
-	
-	private TranscoderInput getTranscoderInput(String s) throws IOException {
-		File f = getOutputFile("-input.svg");
-		RepositoryHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
-		return new TranscoderInput(new StringReader(s));
-	}
-
 	private TranscoderOutput getTranscoderOutputSVG() throws IOException {
 		File f = getOutputFile("-graph.svg");
 		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
 		return out;
 	}
 
-	protected File getOutputFile(String ending) {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, "", m.getName()+ending);
-		return f;
-	}
-	
-	private TranscoderOutput getTranscoderOutputPNG() throws IOException {
-		File f = getOutputFile("-graph.png");
-		TranscoderOutput out = new TranscoderOutput(new FileOutputStream(f));
-		return out;
-	}
-	
 	public boolean checkIdenticalXML() throws Exception {
 		File output = getOutputFile("-graph.svg");
 		Source in1;
@@ -155,7 +114,12 @@ public class AbstractDisplayFunctionalTest extends HelpMethods {
 		return is2;
 	}
 	
-	//protected void 
+	protected File getOutputFile(String ending) {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Class<?> theTest = m.getDeclaringClass();
+		File f = TestingHelp.prepareFileName(theTest, "", m.getName()+ending);
+		return f;
+	}
 
 	private Source streamToDom(InputStream is1) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

@@ -2,7 +2,7 @@ package org.kite9.diagram.article;
 
 import java.io.IOException;
 
-import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.framework.model.ProjectModel;
 import org.kite9.tool.model.ClassFileModelBuilder;
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -10,7 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-public class AbstractJavaExamplesTest extends AbstractFunctionalTest {
+public class AbstractJavaExamplesTest extends AbstractLayoutFunctionalTest {
 
 	public AbstractJavaExamplesTest() {
 		super(); 

@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
@@ -19,7 +20,7 @@ import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.framework.common.HelpMethods;
 
-public class Test32SizingOutput extends AbstractFunctionalTest {
+public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
 
 	@Ignore("Broken in sprint 7 - no longer needed (sizing)")
 	@Test

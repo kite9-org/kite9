@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
@@ -15,7 +16,7 @@ import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipe
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 
-public class Test34EmptyArrows extends AbstractFunctionalTest  {
+public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 
 	@Test
 	public void test_34_1_3WayPointArrow() throws IOException {

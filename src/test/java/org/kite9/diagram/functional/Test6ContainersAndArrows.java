@@ -7,10 +7,11 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test6ContainersAndArrows extends AbstractFunctionalTest {
+public class Test6ContainersAndArrows extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_6_1_ArrowOutsideContainer() throws IOException {

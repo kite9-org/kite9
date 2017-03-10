@@ -4,7 +4,10 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.xmlgraphics.java2d.Dimension2DDouble;
+import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.serialization.Kite9DocumentFactory;
 
@@ -20,6 +23,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader) {
 		super(userAgent, loader);
+		this.setDocumentSize(new Dimension2DDouble(0,0));
 	}
 	
 	static class Kite9DocumentLoader extends DocumentLoader {
@@ -50,7 +54,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
-		putBridge(new Kite9DiagramGroupBridge(this));
+		putBridge(new Kite9DiagramBridge(this));
 		putBridge(new Kite9GBridge());
 		putBridge(new TextBridge());
 	}
@@ -62,5 +66,14 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		templater.handleTemplateElement(in, out);
 	}
 
+	public void registerDiagramRenderedSize(Diagram d) {
+		RectangleRenderingInformation rri = d.getRenderingInformation();
+		double width = rri.getPosition().x()+rri.getSize().getWidth();
+		double height = rri.getPosition().y()+rri.getSize().getHeight();
+		double oldWidth = getDocumentSize().getWidth();
+		double oldHeight = getDocumentSize().getHeight();
+		setDocumentSize(new Dimension2DDouble(Math.max(width,  oldWidth), Math.max(height, oldHeight)));
+	}
+	
 
 }

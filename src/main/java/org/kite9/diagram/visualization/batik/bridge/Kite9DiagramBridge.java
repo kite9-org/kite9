@@ -6,10 +6,8 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.batik.BatikArrangementPipeline;
 import org.kite9.diagram.visualization.batik.BatikDisplayer;
-import org.kite9.diagram.visualization.batik.element.DiagramImpl;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.diagram.visualization.pipeline.full.ArrangementPipeline;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.serialization.XMLHelper;
 import org.w3c.dom.Element;
@@ -20,13 +18,13 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class Kite9DiagramGroupBridge extends Kite9GBridge {
+public class Kite9DiagramBridge extends Kite9GBridge {
 	
-	public Kite9DiagramGroupBridge(Kite9BridgeContext kite9BridgeContext) {
+	public Kite9DiagramBridge(Kite9BridgeContext kite9BridgeContext) {
 		super();
 	}
 
-	private ArrangementPipeline createPipeline() {
+	private BatikArrangementPipeline createPipeline() {
 		return new BatikArrangementPipeline(new BatikDisplayer(false, 20));
 	}
 	
@@ -44,18 +42,29 @@ public class Kite9DiagramGroupBridge extends Kite9GBridge {
      */
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
     	DiagramXMLElement d = (DiagramXMLElement) e;
-    	DiagramImpl de = (DiagramImpl) d.getDiagramElement();
+    	Diagram de = (Diagram) d.getDiagramElement();
        	IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) super.createGraphicsNode(ctx, e);
        	out.setId(de.getID());
-        createPipeline().arrange(d);
+       	BatikArrangementPipeline pipeline = createPipeline();
+		pipeline.arrange(d);
+		((Kite9BridgeContext)ctx).registerDiagramRenderedSize(de);
 
         	//for (GraphicsLayerName layer : GraphicsLayerName.values()) {
         		addLayer(out, GraphicsLayerName.MAIN, de);
     		//}
         	
        	processChildren(e, out, ctx);
-        return out;
+
+       	// used in testing nowhere else
+       	lastDiagram = d;
+        lastPipeline = pipeline;
+
+       	
+       	return out;
     }
+    
+    public static BatikArrangementPipeline lastPipeline;
+    public static DiagramXMLElement lastDiagram;
 
 	private void addLayer(CompositeGraphicsNode out, GraphicsLayerName l, Diagram de) {
 		out.add(de.getGraphicsForLayer(l));

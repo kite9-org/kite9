@@ -8,13 +8,14 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 
-public class Test28VertexOrderingMixed extends AbstractFunctionalTest {
+public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_28_1_VertexPushing() throws IOException {

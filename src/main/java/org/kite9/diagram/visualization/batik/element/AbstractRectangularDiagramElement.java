@@ -19,6 +19,8 @@ import org.kite9.framework.serialization.EnumValue;
 public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement {
 
 	private RectangleRenderingInformation ri;
+	private Layout layout;
+	private List<DiagramElement> contents = new ArrayList<>();
 
 	public AbstractRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
@@ -38,7 +40,6 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	}
 	
 
-	private List<DiagramElement> contents = new ArrayList<>();
 
 	public List<DiagramElement> getContents() {
 		ensureInitialized();
@@ -63,6 +64,8 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 				initElement(xmlElement);
 			}
 		}
+		
+		initLayout(theElement);
 	}
 
 	protected void addLabelReference(Label de) {
@@ -74,17 +77,21 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	}
 
 	public Layout getLayout() {
+		return layout;
+	}
+	
+	public void initLayout(XMLElement theElement) {
 		String attribute = theElement.getAttribute("layout");
 		if ((attribute != null) && (attribute.trim().length() != 0)) {
-			return Layout.valueOf(attribute);
+			layout = Layout.valueOf(attribute);
 		} 
 		
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY);
 		if (ev != null) {
-			return (Layout) ev.getTheValue();
+			layout = (Layout) ev.getTheValue();
 		}
 		
-		return null;
+		layout = null;
 	}
 
 }

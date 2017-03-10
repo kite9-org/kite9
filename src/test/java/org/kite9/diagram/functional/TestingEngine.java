@@ -5,31 +5,16 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import javax.xml.transform.Source;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
@@ -40,129 +25,53 @@ import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.batik.element.AbstractXMLDiagramElement;
-import org.kite9.diagram.visualization.batik.element.ConnectionImpl;
-import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.complete.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.format.pdf.PDFRenderer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker.ExpectedLayoutException;
 import org.kite9.diagram.visualization.format.pos.HopChecker;
 import org.kite9.diagram.visualization.format.pos.HopChecker.HopAction;
-import org.kite9.diagram.visualization.format.pos.PositionInfoRenderer;
-import org.kite9.diagram.visualization.format.svg.ADLAndSVGRenderer;
-import org.kite9.diagram.visualization.format.svg.SVGRenderer;
-import org.kite9.diagram.visualization.pipeline.full.BufferedImageProcessingPipeline;
-import org.kite9.diagram.visualization.pipeline.full.ImageProcessingPipeline;
-import org.kite9.diagram.visualization.pipeline.rendering.ClientSideMapRenderingPipeline;
-import org.kite9.diagram.visualization.pipeline.rendering.ImageRenderingPipeline;
+import org.kite9.diagram.visualization.pipeline.full.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.StylesheetReference;
-import org.kite9.framework.common.DiffException;
-import org.kite9.framework.common.FileDiff;
-import org.kite9.framework.common.RepositoryHelp;
-import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.serialization.XMLHelper;
-import org.xmlunit.builder.Input;
-import org.xmlunit.diff.Comparison;
-import org.xmlunit.diff.ComparisonListener;
-import org.xmlunit.diff.ComparisonResult;
-import org.xmlunit.diff.DOMDifferenceEngine;
-import org.xmlunit.diff.DifferenceEngine;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 
-@Ignore
+/**
+ * Responsible for running tests which check edges, hops, lines are straight etc.\
+ * 
+ * @author robmoffat
+ *
+ */
 public class TestingEngine extends TestingHelp {
 	
-	static class Checks {
-		boolean checkDiagramSize = true;
-		boolean checkEdgeDirections = true;
-		boolean checkNoHops = true;
-		boolean everythingStraight = true;
-		boolean checkLayout = true;
-		boolean checkNoContradictions = true;
-		boolean checkImage = true;
-		boolean checkLabelOcclusion = true;
+	public static class Checks {
+		public boolean checkEdgeDirections = true;
+		public boolean checkNoHops = true;
+		public boolean everythingStraight = true;
+		public boolean checkLayout = true;
+		public boolean checkNoContradictions = true;
+		public boolean checkLabelOcclusion = true;
 	}
 	
-
-	boolean serialize = false;
-
-	String resultsFile;
-
-	public TestingEngine(String resultsFile) {
-		this.resultsFile = resultsFile;
-	}
-
-	public TestingEngine(String resultsFile, boolean serialize) {
-		this.resultsFile = resultsFile;
-		this.serialize = serialize;
-	}
-
-	public BufferedImageProcessingPipeline getPipeline(Class<?> test, String subtest, boolean watermark) {
-		return new BufferedImageProcessingPipeline(subtest, test, watermark);
-	}
-
-	public DiagramXMLElement renderDiagram(DiagramXMLElement d, boolean watermark, Checks c) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
-		Class<?> theTest = m.getDeclaringClass();
+	public void testDiagram(DiagramXMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
 		try {
-			if (d.getStylesheetReference() == null) {
-				setDesignerStylesheetReference(d);
-			}
-			
-			BufferedImageProcessingPipeline pipeline = getPipeline(theTest, m.getName(), watermark);
-			return renderDiagram(d, theTest, m.getName(), watermark, c, addressed, pipeline);
-		} catch (RuntimeException t) {
-			if (!addressed) {
-				if (!System.getProperties().containsKey("ignoreNotAddressed")) {
-					Assert.fail("Not addressed - " + t.getMessage());
-				}
-				t.printStackTrace();
-				return null;
-			} else {
-				throw t;
-			}
-		}
-	}
-
-	public static void setDesignerStylesheetReference(DiagramXMLElement d) {
-		URL u = d.getClass().getResource("/stylesheets/designer2012.css");
-		d.setStylesheetReference(new StylesheetReference(d.getOwnerDocument(), u.toString()));
-	}
-	
-	public DiagramXMLElement renderDiagram(String xml,  Class<?> theTest, String subtest, boolean watermark, Checks c, boolean addressed) throws IOException {
-		try {
-			
-			XMLHelper helper = new XMLHelper();
-
-			writeOutput(theTest, subtest, "diagram.xml", xml);
-
-			DiagramXMLElement d = (DiagramXMLElement) helper.fromXML(xml);
 			LogicException out = null;
 			Planarization pln = null;
-			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false), 12), new SVGRenderer());
 			try {
-				String bi = pipeline.process(d);
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-				writeOutput(theTest, subtest, subtest + "-graph.svg", bi);
 			} catch (PlanarizationException pe) {
 				pln = pe.getPlanarization();
 				out = pe;
@@ -199,111 +108,15 @@ public class TestingEngine extends TestingHelp {
 			// check the outputs. only going to check final diagrams now
 			boolean ok = false;
 			testConnectionPresence(d, c.everythingStraight, c.checkEdgeDirections, c.checkNoContradictions);
-
-			if (c.checkDiagramSize) {
-				ok = checkOutputs(theTest, subtest, "positions-adl.txt") || ok;
-				ok = checkOutputs(theTest, subtest, "diagram.xml") || ok;
-			}
-
-			if (c.checkImage) {
-				ok = checkIdentical(theTest, subtest, subtest + "-graph.svg") || ok;
-			}
-
-			ok = true;
-
-			if (!ok) {
-				Assert.fail("No test results found for test");
-			}
-
-			handleError(theTest, subtest, true, "png");
-
-			return d;
-		} catch (RuntimeException afe) {
-			handleError(theTest, subtest, !addressed, "png");
-			throw afe;
-		} catch (AssertionFailedError afe) {
-			handleError(theTest, subtest, !addressed, "png");
-			throw afe;
-		}
-	}
-
-	private DiagramXMLElement renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, Checks c, boolean addressed, BufferedImageProcessingPipeline pipeline)
-					throws IOException {
-
-		try {
-			XMLHelper helper = new XMLHelper();
-			String xml = helper.toXML(d2);
-
-			writeOutput(theTest, subtest, "diagram.xml", xml);
-
-			DiagramXMLElement d = serialize ? (DiagramXMLElement) helper.fromXML(xml) : d2;
-			LogicException out = null;
-			Planarization pln = null;
-			try {
-				BufferedImage bi = pipeline.process(d);
-				// write the outputs
-				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-				renderToFile(theTest, subtest, subtest + "-graph.png", bi);
-			} catch (PlanarizationException pe) {
-				pln = pe.getPlanarization();
-				out = pe;
-			} catch (LogicException le) {
-				out = le;
-			}
-
-			if (pipeline.getPln() != null) {
-				pln = pipeline.getPln();
-			}
-
-			if (pln != null) {
-				AbstractPlanarizer planarizer = (AbstractPlanarizer) pipeline.getPlanarizer();
-				drawPositions(planarizer.getElementMapper().allVertices(), theTest, subtest, subtest + "-positions.png");
-				writeVertexOrder((MGTPlanarization) pln, theTest, subtest, subtest + "-vertex-order.txt");
-			}
-
-			if (out != null) {
-				throw out;
-			}
-
-			if (c.checkNoHops) {
-				testHopCount(d);
-			}
-
-			if (c.checkLayout) {
-				testLayout(d.getDiagramElement());
-			}
 			
-			if (c.checkLabelOcclusion) {
-				checkLabelOverlap(d.getDiagramElement());
-			}
-
-			// check the outputs. only going to check final diagrams now
-			boolean ok = false;
-			testConnectionPresence(d, c.everythingStraight, c.checkEdgeDirections, c.checkNoContradictions);
-
-			if (c.checkDiagramSize) {
-				ok = checkOutputs(theTest, subtest, "positions-adl.txt") || ok;
-				ok = checkOutputs(theTest, subtest, "diagram.xml") || ok;
-			}
-
-			if (c.checkImage) {
-				ok = checkIdentical(theTest, subtest, subtest + "-graph.png") || ok;
-			}
-
 			ok = true;
 
 			if (!ok) {
 				Assert.fail("No test results found for test");
 			}
-
-			handleError(theTest, subtest, true, "png");
-
-			return d;
 		} catch (RuntimeException afe) {
-			handleError(theTest, subtest, !addressed, "png");
 			throw afe;
 		} catch (AssertionFailedError afe) {
-			handleError(theTest, subtest, !addressed, "png");
 			throw afe;
 		}
 	}
@@ -364,56 +177,6 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	private void handleError(Class<?> theTest, String subtest, boolean emptyIt, String extension) {
-		try {
-			File f = prepareFileName(theTest, subtest, subtest + "-correct."+extension);
-			InputStream is = getHandleToZipEntry(theTest, subtest + "/" + subtest + "-graph."+extension);
-			OutputStream os = new FileOutputStream(f);
-			RepositoryHelp.streamCopy(is, os, true);
-
-			f = prepareFileName(theTest, subtest, "positions-adl-correct.txt");
-			is = getHandleToZipEntry(theTest, subtest + "/" + "positions-adl.txt");
-			os = new FileOutputStream(f);
-			RepositoryHelp.streamCopy(is, os, true);
-		} catch (Throwable e) {
-		}
-
-		moveToError(theTest, subtest, emptyIt);
-	}
-
-	public void renderDiagramADLAndSVG(DiagramXMLElement d) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
-		Class<?> theTest = m.getDeclaringClass();
-		try {
-			renderDiagramADLAndSVG(d, theTest, m.getName(), true, addressed);
-		} catch (RuntimeException t) {
-			if (!addressed) {
-				if (!System.getProperties().containsKey("ignoreNotAddressed")) {
-					Assert.fail("Not addressed - " + t.getMessage());
-				}
-				t.printStackTrace();
-			} else {
-				throw t;
-			}
-		}
-		
-		System.out.println("d");
-	}
-
-	public void renderDiagramPDF(DiagramXMLElement d) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramPDF(d, theTest, m.getName());
-	}
-
-	public void renderDiagramSVG(DiagramXMLElement d) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		boolean addressed = m.getAnnotation(NotAddressed.class) == null;
-		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramSVG(d, theTest, m.getName(), true, addressed);
-	}
-
 	public static void renderToFile(Class<?> theTest, String subtest, String item, byte[] bytes) {
 		File f = prepareFileName(theTest, subtest, item);
 		try {
@@ -422,124 +185,6 @@ public class TestingEngine extends TestingHelp {
 			fos.close();
 		} catch (IOException e) {
 			throw new LogicException("Could not save output: " + f.toString(), e);
-		}
-	}
-
-	private void renderDiagramPDF(DiagramXMLElement d, Class<?> theTest, String subtest) throws IOException {
-		XMLHelper helper = new XMLHelper();
-		String xml = helper.toXML(d);
-
-		writeOutput(theTest, subtest, "diagram.xml", xml);
-		d = (DiagramXMLElement) helper.fromXML(xml);
-
-		// no watermarks
-		ImageProcessingPipeline<byte[]> pipeline = new ImageProcessingPipeline<byte[]>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new PDFRenderer());
-		byte[] bytes = pipeline.process(d);
-
-		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-		renderToFile(theTest, subtest, subtest + "-graph.pdf", bytes);
-		testConnectionPresence(d, false, false, false);
-
-		// can't test pdfs, sadly
-	}
-
-	private void renderDiagramSVG(DiagramXMLElement d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
-		try {
-			XMLHelper helper = new XMLHelper();
-			String xml = helper.toXML(d);
-
-			writeOutput(theTest, subtest, "diagram.xml", xml);
-			d = (DiagramXMLElement) helper.fromXML(xml);
-
-			// 2-stage rendering
-			ImageProcessingPipeline<DiagramXMLElement> pipeline = new ImageProcessingPipeline<DiagramXMLElement>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)),
-					new PositionInfoRenderer());
-
-			DiagramXMLElement processed = pipeline.process(d);
-
-			ImageRenderingPipeline<String> p = new ImageRenderingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false)), new SVGRenderer());
-
-			String svg = p.render(processed);
-
-			writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-			renderToFile(theTest, subtest, subtest + "-graph.svg", svg.getBytes());
-			testConnectionPresence(d, false, false, false);
-
-			boolean ok = true;
-
-			if (checkImage) {
-				ok = checkIdentical(theTest, subtest, subtest + "-graph.svg") || ok;
-			}
-
-			if (!ok) {
-				Assert.fail("No test results found for test");
-			}
-		} catch (RuntimeException afe) {
-			handleError(theTest, subtest, !addressed, "svg");
-			throw afe;
-		} catch (AssertionFailedError afe) {
-			handleError(theTest, subtest, !addressed, "svg");
-			throw afe;
-		}
-	}
-
-	public boolean checkOutputs(Class<?> theTest, String subtest, String item) throws IOException {
-		try {
-			File output = prepareFileName(theTest, subtest, item);
-			BufferedReader check = new BufferedReader(new InputStreamReader(getHandleToZipEntry(theTest, subtest + "/" + item)));
-			FileDiff.filesContainSameLines(new BufferedReader(new FileReader(output)), output.getPath(), check, getFullFileName(theTest, subtest) + "/" + item);
-		} catch (NullPointerException e) {
-			Assert.fail("Missing size comparison file:" + e.getMessage());
-		} catch (DiffException e) {
-			// Assert.fail(e.getMessage());
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean checkIdentical(Class<?> theTest, String subtest, String item) throws IOException {
-		try {
-			File output = prepareFileName(theTest, subtest, item);
-			InputStream is2 = getHandleToZipEntry(theTest, subtest + "/" + item);
-			
-			if (is2 == null) {
-				is2 = getHandleToResource(theTest, item);
-				
-				if (is2 == null) {
-					throw new NullPointerException(item);
-				}
-			}
-			
-			InputStream is1 = new FileInputStream(output);
-			
-			FileDiff.areFilesSame(item, item, new BufferedInputStream(is1), new BufferedInputStream(is2));
-		} catch (NullPointerException e) {
-			Assert.fail("Missing diagram file: " + e.getMessage());
-			return false;
-		} catch (DiffException e) {
-			Assert.fail(e.getMessage());
-			return false;
-		}
-
-		return true;
-	}
-	
-	private InputStream getHandleToResource(Class<?> theTest, String item) throws IOException {
-		InputStream is = theTest.getResourceAsStream(item);
-		return is;
-	}
-
-	private InputStream getHandleToZipEntry(Class<?> theTest, String item) throws IOException {
-		try {
-			File f = new File(theTest.getClass().getResource(resultsFile).getFile());
-			@SuppressWarnings("resource")
-			ZipFile zip = new ZipFile(f);
-			String nameReq = getFullFileName(theTest, item);
-			ZipEntry ze = zip.getEntry(nameReq);
-			return zip.getInputStream(ze);
-		} catch (Exception e) {
-			return null;
 		}
 	}
 
@@ -696,7 +341,7 @@ public class TestingEngine extends TestingHelp {
 		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
 	}
 
-	private static void checkContentsOverlap(Container d, final Layout l) {
+	public static void checkContentsOverlap(Container d, final Layout l) {
 		List<RectangleRenderingInformation> contRI = new ArrayList<RectangleRenderingInformation>(d.getContents().size());
 		for (DiagramElement c : d.getContents()) {
 			RectangleRenderingInformation cRI = (RectangleRenderingInformation) c.getRenderingInformation();
@@ -734,7 +379,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private static void checkLayoutOrder(Container d, Layout l, DiagramElement prev) {
+	public static void checkLayoutOrder(Container d, Layout l, DiagramElement prev) {
 		for (DiagramElement cc : d.getContents()) {
 			if (prev != null) {
 				RectangleRenderingInformation prevRI = (RectangleRenderingInformation) prev.getRenderingInformation();
@@ -777,13 +422,13 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	private static void checkBefore(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
+	public static void checkBefore(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
 		if (x1 + w1 > x2) {
 			throw new ExpectedLayoutException("Was expecting " + prev + " before" + cc + " " + l);
 		}
 	}
 
-	private static void checkAligned(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
+	public static void checkAligned(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
 		if (x1 + w1 < x2) {
 			throw new ExpectedLayoutException("Was expecting alignment of " + prev + "  and " + cc + " " + l);
 		}
@@ -810,131 +455,6 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public void renderDiagramSizes(DiagramXMLElement d) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-		renderDiagramSizes(d, theTest, m.getName());
-	}
 
-	public void renderDiagramSizes(DiagramXMLElement d, Class<?> theTest, String subtest) throws IOException {
-		XMLHelper helper = new XMLHelper();
-		String xml = helper.toXML(d);
-
-		writeOutput(theTest, subtest, "diagram.xml", xml);
-
-		// no watermarks
-		ImageProcessingPipeline<DiagramXMLElement> pipeline = new ImageProcessingPipeline<DiagramXMLElement>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, true)), new PositionInfoRenderer());
-		DiagramXMLElement out = pipeline.process(d);
-
-		writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-		writeOutput(theTest, subtest, "sizes.xml", helper.toXML(out));
-
-		// check the outputs. only going to check final diagrams now
-		boolean ok = false;
-		ok = checkOutputs(theTest, subtest, "positions-adl.txt") || ok;
-		ok = checkOutputs(theTest, subtest, "sizes.xml") || ok;
-
-		ok = true;
-
-		if (!ok) {
-			Assert.fail("No test results found for test");
-		}
-
-	}
-
-	public void renderMap(DiagramXMLElement d) throws IOException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
-		Class<?> theTest = m.getDeclaringClass();
-
-		XMLHelper helper = new XMLHelper();
-		String xml = helper.toXML(d);
-
-		String subtest = m.getName();
-		writeOutput(theTest, subtest, "diagram.xml", xml);
-
-		// no watermarks
-		BufferedImageProcessingPipeline pipeline = getPipeline(theTest, subtest, true);
-		pipeline.process(d);
-
-		ClientSideMapRenderingPipeline csmr = new ClientSideMapRenderingPipeline();
-		String map = csmr.render(d);
-
-		writeOutput(theTest, subtest, "map.txt", map);
-
-		// check the outputs. only going to check final diagrams now
-		boolean ok = false;
-		ok = checkOutputs(theTest, subtest, "map.txt") || ok;
-
-		if (!ok) {
-			Assert.fail("No test results found for test");
-		}
-	}
-
-	public void renderDiagramNoCopy(DiagramXMLElement d, boolean b, boolean checkDiagram) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void renderDiagramADLAndSVG(DiagramXMLElement d, Class<?> theTest, String subtest, boolean checkImage, boolean addressed) throws IOException {
-		// no watermarks
-		try {
-			ImageProcessingPipeline<String> pipeline = new ImageProcessingPipeline<String>(new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(false, false), 12), new ADLAndSVGRenderer());
-			String out = pipeline.process(d);
-
-			writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-			renderToFile(theTest, subtest, subtest + "-graph.adlsvg.xml", out.getBytes());
-			testConnectionPresence(d, false, false, false);
-
-			// check convert back again
-			String xml = new XMLHelper().toXML(d);
-			Object o = new XMLHelper().fromXML(xml);
-			DiagramXMLElement d2 = (DiagramXMLElement) o;
-			String xml2 = new XMLHelper().toXML(d2);
-
-			Assert.assertEquals(xml, xml2);
-			boolean ok = true;
-
-			if (checkImage) {
-				ok = checkIdentical(theTest, subtest, subtest + "-graph.adlsvg.xml") || ok;
-			}
-
-			if (!ok) {
-				Assert.fail("No test results found for test");
-			}
-
-			handleError(theTest, subtest, true, "adlsvg.xml");
-
-			
-		} catch (Throwable afe) {
-			handleError(theTest, subtest, !addressed, "adlsvg.xml");
-			throw afe;
-		}
-	}
-
-	public boolean checkIdenticalXML(Class<?> theTest, String subtest, String item) throws IOException {
-		try {
-			File output = prepareFileName(theTest, subtest, item);
-			InputStream is1 = new FileInputStream(output);
-			InputStream is2 = getHandleToZipEntry(theTest, subtest + "/" + item);
-			
-			Source in1 = Input.fromStream(is1).build();
-			Source in2 = Input.fromStream(is2).build();
-			
-			DifferenceEngine diff = new DOMDifferenceEngine();
-			diff.addDifferenceListener(new ComparisonListener() {
-				
-		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
-		            Assert.fail("found a difference: " + comparison);
-		        }
-		    });
-			
-			diff.compare(in1, in2);
-		} catch (NullPointerException e) {
-			Assert.fail("Missing diagram file: " + e.getMessage());
-			return false;
-		}
-	
-		return true;
-	}
 
 }

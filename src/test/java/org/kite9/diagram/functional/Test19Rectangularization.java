@@ -8,10 +8,11 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test19Rectangularization extends AbstractFunctionalTest {
+public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 
 	Glyph a;
 	Glyph b;

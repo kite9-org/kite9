@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test3MultiArrows extends AbstractFunctionalTest {
+public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_3_1_3Glyphs1ArrowFinal() throws IOException {

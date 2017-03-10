@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
@@ -20,7 +21,7 @@ import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.logging.LogicException;
 
-public class Test9CompactionTests extends AbstractFunctionalTest {
+public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 
 
 	@Test

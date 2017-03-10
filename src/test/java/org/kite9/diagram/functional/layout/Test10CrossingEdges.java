@@ -1,33 +1,34 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.layout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.functional.GraphConstructionTools;
+import org.kite9.diagram.functional.TurnLink;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;
 
-public class Test10CrossingEdges extends AbstractFunctionalTest {
+public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 
 	@Test
-	public void test_10_1_Grid() throws IOException {
+	public void test_10_1_Grid() throws Exception {
 		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
-		
 		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
 
 		renderDiagram(d);
 	}
 	
 
+
 	/**
 	 * @see http://www.kite9.com/content/cant-perform-merges
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void test_10_2_CrossingEdges() throws IOException {
+	public void test_10_2_CrossingEdges() throws Exception {
 		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createGrid(2, 5, vertices, true);
 		
@@ -52,7 +53,7 @@ public class Test10CrossingEdges extends AbstractFunctionalTest {
 
 
 	@Test
-	public void test_10_3_SmallGrid() throws IOException {
+	public void test_10_3_SmallGrid() throws Exception {
 		List<XMLElement> vertices = new ArrayList<XMLElement>();
 		GraphConstructionTools.createGrid(2, 2, vertices, true);
 		

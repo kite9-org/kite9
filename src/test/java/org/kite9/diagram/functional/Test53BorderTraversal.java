@@ -7,11 +7,12 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test53BorderTraversal extends AbstractFunctionalTest {
+public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_53_1_MustLeaveTop() throws IOException {

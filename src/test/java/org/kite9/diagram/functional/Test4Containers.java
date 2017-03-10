@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
-public class Test4Containers extends AbstractFunctionalTest {
+public class Test4Containers extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_4_1_ContainerNestingFinal() throws IOException {
