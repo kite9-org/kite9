@@ -1,13 +1,10 @@
-package org.kite9.diagram.functional;
-
-import java.io.IOException;
+package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
@@ -15,7 +12,7 @@ import org.kite9.diagram.xml.DiagramXMLElement;
 public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest {
 
 	@Test
-	public void test_11_1_SeparatedLinks() throws IOException {
+	public void test_11_1_SeparatedLinks() throws Exception {
 		
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);
@@ -36,7 +33,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 
 	
 	@Test
-	public void test_11_2_SeparatedLinksMultipleContainers() throws IOException {
+	public void test_11_2_SeparatedLinksMultipleContainers() throws Exception {
 		
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);
@@ -61,8 +58,8 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		renderDiagram(d);
 	}
 	
-	@Test
-	public void test_11_3_DirectedLinksMultipleContainers() throws IOException {
+	@Test 
+	public void test_11_3_DirectedLinksMultipleContainers() throws Exception {
 		
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);

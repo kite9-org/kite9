@@ -143,8 +143,8 @@ public class GroupPhase {
 				for (DiagramElement c : ((Container)ord).getContents()) {
 					if (c instanceof Connected) {
 						createLeafGroup((Connected) c, prev, null, pMap);	
+						prev = (Connected) c;
 					}
-					prev = (Connected) c;
 				}
 			}
 		}
