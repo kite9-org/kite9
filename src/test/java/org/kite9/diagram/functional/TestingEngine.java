@@ -20,6 +20,7 @@ import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Label;
+import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.position.Dimension2D;
@@ -234,11 +235,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isContradictingLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof ContradictingLink;
+				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
 			}
 
 			private boolean isTurnLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof TurnLink;
+				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
 			/**
@@ -266,7 +267,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isHopLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement() instanceof HopLink;
+				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
 			}
 		});
 	}

@@ -15,6 +15,8 @@ import org.w3c.dom.Node;
  * @author robmoffat
  */
 public class Link extends AbstractXMLConnectionElement {
+	
+	public static final String LINK_TEST = "link-test";
 
 	private static final long serialVersionUID = -5950978530304852748L;
 
