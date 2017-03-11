@@ -370,12 +370,12 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {
-		List<DiagramElement> contents;
+		List<Connected> contents;
 		boolean layingOut = c.getLayout() != null;
 		if (layingOut) {
 			contents = p.getContainerOrderingMap().get(c);
 		} else {
-			contents = c.getContents();
+			contents = getConnectedContainerContents(c.getContents());
 		}
 			
 		if (contents != null) {

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
@@ -20,7 +21,7 @@ import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.objects.Bounds;
-import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
@@ -95,7 +96,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return rh;
 	}
 
-	protected abstract Planarization buildPlanarization(Diagram c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<DiagramElement>> sortedContainerContents);
+	protected abstract Planarization buildPlanarization(Diagram c, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Connected>> sortedContainerContents);
 
 	static enum PlanarizationRun { FIRST, REDO, DONE }
 	
@@ -114,7 +115,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		PlanarizationRun run = PlanarizationRun.FIRST;
 		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
 		ConnectionManager connections = null;
-		Map<Container, List<DiagramElement>> sortedContainerContents = null;
+		Map<Container, List<Connected>> sortedContainerContents = null;
 		try {
 			
 			while (run != PlanarizationRun.DONE) {
@@ -163,7 +164,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				}
 					
 				// vertex ordering
-				sortedContainerContents = new HashMap<Container, List<DiagramElement>>(gp.containerCount * 2);
+				sortedContainerContents = new HashMap<Container, List<Connected>>(gp.containerCount * 2);
 				instantiateContainerVertices(c);
 				buildVertexList(null, c, null, out, sortedContainerContents);
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
@@ -336,7 +337,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	/**
 	 * Constructs the list of vertices in no particular order.
 	 */
-	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<DiagramElement>> sortedContainerContents) {
+	private void buildVertexList(Connected before, DiagramElement c, Connected after, List<Vertex> out, Map<Container, List<Connected>> sortedContainerContents) {
 		if (em.hasOuterCornerVertices(c)) {
 			CornerVertices cvs = em.getOuterCornerVertices(c);
 			RoutingInfo bounds = rh.getPlacedPosition(c);
@@ -345,9 +346,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 			if (c instanceof Container) {
 				Container container = (Container) c;
-				if (container.getContents().size() > 0) {
-					buildVertexListForContainerContents(out, container, sortedContainerContents);
-				}
+				buildVertexListForContainerContents(out, container, sortedContainerContents);
 			}
 
 		} else {
@@ -358,17 +357,15 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 	public static final boolean CHANGE_CONTAINER_ORDER = true;
 
-	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<DiagramElement>> sortedContainerContents) {
+	private void buildVertexListForContainerContents(List<Vertex> out, Container container, Map<Container, List<Connected>> sortedContainerContents) {
 		boolean layingOut = container.getLayout() != null;
-		List<DiagramElement> contents = container.getContents();
-		
+		List<Connected> contents = getConnectedContainerContents(container.getContents());
+				
 		if (layingOut) {
 			// sort the contents so that we can connect the right elements together
-			contents = getContainerContentsHolder(container.getLayout(), contents);
-			
-			Collections.sort(contents, new Comparator<DiagramElement>() {
+			Collections.sort(contents, new Comparator<Connected>() {
 				@Override
-				public int compare(DiagramElement arg0, DiagramElement arg1) {
+				public int compare(Connected arg0, Connected arg1) {
 					return compareDiagramElements(arg0, arg1);
 				}
 			});
@@ -376,9 +373,13 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			sortedContainerContents.put(container, contents);
 		} 
 		
+		if (contents.size() == 0) {
+			return;
+		}
+		
 		Connected conBefore = null, current = null, conAfter = null;
 		boolean start =true;
-		Iterator<DiagramElement> iterator = contents.iterator();
+		Iterator<Connected> iterator = contents.iterator();
 		while (start || (current != null)) {
 			conBefore = current;
 			current = conAfter;
@@ -390,27 +391,20 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		}
 	}
 
-	private Connected getNextConnected(Iterator<DiagramElement> iterator) {
-		while (iterator.hasNext()) {
-			DiagramElement de= iterator.next();
-			if (de instanceof Connected) {
-				return (Connected) de;
-			}
+	private Connected getNextConnected(Iterator<Connected> iterator) {
+		if (iterator.hasNext()) {
+			return iterator.next();
 		}
 		
 		return null;
 	}
+	
+	protected List<Connected> getConnectedContainerContents(List<DiagramElement> contents) {
+		List<Connected> out = (List<Connected>) contents.stream()
+				.filter(c -> c instanceof Connected)
+				.map(c -> (Connected) c).collect(Collectors.toList());
 
-	private List<DiagramElement> getContainerContentsHolder(Layout ld, List<DiagramElement> contents) {
-//		if (CHANGE_CONTAINER_ORDER) {
-//			if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
-//				// we are going to modify the original diagram
-//				return contents;
-//			}
-//		} 
-		
-		// leave original intact
-		return new ArrayList<DiagramElement>(contents);
+		return out;
 	} 
 	
 	/**

@@ -11,7 +11,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.functional.TurnLink;
+import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.XMLElement;

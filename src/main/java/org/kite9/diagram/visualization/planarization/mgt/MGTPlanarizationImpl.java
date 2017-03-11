@@ -31,7 +31,7 @@ import org.kite9.framework.logging.LogicException;
 
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
 
-	public MGTPlanarizationImpl(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> uninsertedConnections, Map<Container, List<DiagramElement>> containerOrderingMap) {
+	public MGTPlanarizationImpl(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> uninsertedConnections, Map<Container, List<Connected>> containerOrderingMap) {
 		super(d, containerOrderingMap);
 		this.vertexOrder = vertexOrder;
 		this.unmodifiableVO = Collections.unmodifiableList(vertexOrder);

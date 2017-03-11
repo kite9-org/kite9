@@ -9,8 +9,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.AbstractFunctionalTest;
-import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.functional.TestingEngine.Checks;
+import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
@@ -28,7 +27,7 @@ import org.kite9.framework.serialization.XMLHelper;
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
-	protected void renderDiagram(DiagramXMLElement d) throws Exception {
+	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d);
 		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
 		String style = getDesignerStylesheetReference();
@@ -38,6 +37,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), false, lastPipeline);
+		return lastDiagram;
 	}
 	
 	

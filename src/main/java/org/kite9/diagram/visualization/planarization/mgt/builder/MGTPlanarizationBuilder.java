@@ -37,7 +37,7 @@ public abstract class MGTPlanarizationBuilder extends RHDPlanarizationBuilder im
 	
 	protected Kite9Log log = new Kite9Log(this);
 		
-	protected MGTPlanarizationImpl buildPlanarization(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<DiagramElement>> sortedContainerContents) {
+	protected MGTPlanarizationImpl buildPlanarization(Diagram d, List<Vertex> vertexOrder, Collection<BiDirectional<Connected>> initialUninsertedConnections, Map<Container, List<Connected>> sortedContainerContents) {
 		MGTPlanarizationImpl p = new MGTPlanarizationImpl(d, vertexOrder, initialUninsertedConnections, sortedContainerContents);
 		logPlanarEmbeddingDetails(p, log);
 		getRoutableReader().initRoutableOrdering(vertexOrder);

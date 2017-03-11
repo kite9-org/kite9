@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
@@ -12,7 +13,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 
 public abstract class RHDPlanarizationImpl extends AbstractPlanarization implements RHDPlanarization {
 
-	public RHDPlanarizationImpl(Diagram d, Map<Container, List<DiagramElement>> containerOrderingMap) {
+	public RHDPlanarizationImpl(Diagram d, Map<Container, List<Connected>> containerOrderingMap) {
 		super(d);
 		this.containerOrderingMap = containerOrderingMap;
 	}
@@ -24,13 +25,13 @@ public abstract class RHDPlanarizationImpl extends AbstractPlanarization impleme
 
 	RoutableReader rr;
 
-	private Map<Container, List<DiagramElement>> containerOrderingMap;
+	private Map<Container, List<Connected>> containerOrderingMap;
 	
 	protected void setRoutableReader(RoutableReader rr) {
 		this.rr = rr;
-	}
+	} 
 
-	public Map<Container, List<DiagramElement>> getContainerOrderingMap() {
+	public Map<Container, List<Connected>> getContainerOrderingMap() {
 		return containerOrderingMap;
 	}
 }

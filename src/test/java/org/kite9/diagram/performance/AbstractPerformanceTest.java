@@ -19,7 +19,7 @@ import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
