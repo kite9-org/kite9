@@ -119,7 +119,11 @@ public class TestingEngine extends TestingHelp {
 				Assert.fail("No test results found for test");
 			}
 		} catch (RuntimeException afe) {
-			throw afe;
+			if (addressed) {
+				throw afe;
+			} else {
+				Assert.fail("Not Addressed: "+afe.getMessage());
+			}
 		} catch (AssertionFailedError afe) {
 			throw afe;
 		}

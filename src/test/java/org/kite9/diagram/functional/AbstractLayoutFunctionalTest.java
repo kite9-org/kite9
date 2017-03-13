@@ -36,11 +36,18 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		transcodePNG(prefix + style + xml + suffix);
 		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
-		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), false, lastPipeline);
+		boolean addressed = isAddressed();
+		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		return lastDiagram;
 	}
 	
 	
+	private boolean isAddressed() {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		return !(m.isAnnotationPresent(NotAddressed.class));
+	}
+
+
 	private String getTestMethod() {
 		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
 	}

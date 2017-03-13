@@ -26,7 +26,7 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		Link l = new Link(g2, g6);
 
 		DiagramXMLElement d = new DiagramXMLElement("diagram", Arrays.asList(g1, c5, g2, g3), Layout.RIGHT, null);
-		renderDiagram(d);
+		d = renderDiagram(d);
 		mustTurn(d, l);
 	}
 
@@ -52,7 +52,7 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		l.setRank(-1000);
 
 		DiagramXMLElement diag = new DiagramXMLElement("dia", createList(a, b, c, d, e), null);
-		renderDiagram(diag);
+		diag = renderDiagram(diag);
 
 		mustContradict(diag, l);
 		
