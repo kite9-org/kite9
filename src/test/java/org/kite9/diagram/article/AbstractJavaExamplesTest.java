@@ -2,7 +2,7 @@ package org.kite9.diagram.article;
 
 import java.io.IOException;
 
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.framework.model.ProjectModel;
 import org.kite9.tool.model.ClassFileModelBuilder;
 import org.springframework.core.io.FileSystemResourceLoader;

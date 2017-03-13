@@ -389,9 +389,11 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			
 			if (allowConnectionsToContainerContents()) {
 				for (DiagramElement con : c.getContents()) {
-					if (!(con instanceof Container)) {
-						Vertex vcon = em.getPlanarizationVertex((Connected) con);
-						createInitialPathsFrom(pq, vcon);
+					if (con instanceof Connected) {
+						if (!(con instanceof Container)) {
+							Vertex vcon = em.getPlanarizationVertex((Connected) con);
+							createInitialPathsFrom(pq, vcon);
+						}
 					}
 				}
 			}

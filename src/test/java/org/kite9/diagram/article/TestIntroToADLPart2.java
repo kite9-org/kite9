@@ -12,7 +12,7 @@ import org.kite9.diagram.adl.KeyHelper;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;

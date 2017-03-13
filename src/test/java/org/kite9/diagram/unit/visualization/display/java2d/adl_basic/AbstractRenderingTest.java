@@ -3,7 +3,7 @@ package org.kite9.diagram.unit.visualization.display.java2d.adl_basic;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 
 public class AbstractRenderingTest extends AbstractLayoutFunctionalTest {
 

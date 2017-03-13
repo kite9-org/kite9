@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.NotAddressed;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;

@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.batik.ext.awt.LinearGradientPaint;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
+import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.visualization.batik.format.GroupManagingSVGGraphics2D;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.serialization.XMLHelper;

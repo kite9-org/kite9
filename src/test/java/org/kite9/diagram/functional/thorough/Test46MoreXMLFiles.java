@@ -9,8 +9,8 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.NotAddressed;
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.HelpMethods;
 

@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional.layout;
+package org.kite9.diagram.functional;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;

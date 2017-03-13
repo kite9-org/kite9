@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional.display;
+package org.kite9.diagram.functional;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,9 +18,10 @@ import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
-import org.kite9.diagram.functional.AbstractFunctionalTest;
+import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.xml.StylesheetReference;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -131,5 +134,24 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		Document d = db.parse(is1);
 		return Input.fromNode(d).build();
 	}
-
+	
+	public void generate(String name) throws IOException {
+		InputStream is = this.getClass().getResourceAsStream(name);
+		InputStreamReader isr = new InputStreamReader(is);
+		StringWriter sw = new StringWriter();
+		RepositoryHelp.streamCopy(isr, sw, true);
+		Object o = new XMLHelper().fromXML(sw.getBuffer().toString());
+		DiagramXMLElement d = (DiagramXMLElement) o;
+		
+		StylesheetReference sr = d.getStylesheetReference();
+		if (sr == null) {
+			TestingEngine.setDesignerStylesheetReference(d);
+		}
+		
+		final int[] i =  { 0 } ;
+		relabel(d.getDiagramElement(), i);
+		renderDiagram(d);
+		//renderDiagramSizes(d);
+		
+	}
 }

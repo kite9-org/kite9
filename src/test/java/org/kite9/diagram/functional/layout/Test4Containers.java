@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.xml.DiagramXMLElement;
 

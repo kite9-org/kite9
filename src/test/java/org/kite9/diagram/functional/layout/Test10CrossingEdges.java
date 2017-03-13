@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.GraphConstructionTools;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.XMLElement;

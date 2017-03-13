@@ -1,6 +1,7 @@
 package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
+import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
 import org.kite9.framework.serialization.XMLHelper;
 
 public class Test55GlyphConstruction extends AbstractDisplayFunctionalTest {

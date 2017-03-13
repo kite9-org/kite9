@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test16BendyArrows extends AbstractLayoutFunctionalTest {

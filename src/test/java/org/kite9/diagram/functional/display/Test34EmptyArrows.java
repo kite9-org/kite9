@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional;
+package org.kite9.diagram.functional.display;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.functional.layout.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
