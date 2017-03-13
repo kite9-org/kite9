@@ -5,21 +5,17 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Method;
 import java.net.URL;
 
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
-import org.junit.Test;
 import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.serialization.XMLHelper;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
@@ -64,4 +60,12 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
 	}
 
+	protected String addSVGFurniture(String xml) {
+		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
+		String style = getDesignerStylesheetReference();
+		String suffix = "</svg:svg>";
+		xml = xml.replaceFirst("<\\?.*\\?>\n","");
+		String full = prefix + style + xml + suffix;
+		return full;
+	}
 }

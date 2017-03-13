@@ -1,6 +1,9 @@
 package org.kite9.diagram.functional;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import org.junit.Before;
@@ -18,6 +21,7 @@ import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.visualization.pipeline.full.AbstractArrangementPipeline;
 import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.Kite9Log;
@@ -29,24 +33,23 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d);
-		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
-		String style = getDesignerStylesheetReference();
-		String suffix = "</svg:svg>";
-		xml = xml.replaceFirst("<\\?.*\\?>\n","");
-		transcodePNG(prefix + style + xml + suffix);
+		return renderDiagram(xml);
+	}
+	
+	protected DiagramXMLElement renderDiagram(String xml) throws Exception {
+		String full = addSVGFurniture(xml);
+		transcodePNG(full);
 		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		return lastDiagram;
 	}
-	
-	
+
 	private boolean isAddressed() {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		return !(m.isAnnotationPresent(NotAddressed.class));
 	}
-
 
 	private String getTestMethod() {
 		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
@@ -158,5 +161,13 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 				}
 			}
 		});
+	}
+	
+	public void generate(String name) throws Exception {
+		InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/"+name);
+		InputStreamReader isr = new InputStreamReader(is);
+		StringWriter sw = new StringWriter();
+		RepositoryHelp.streamCopy(isr, sw, true);
+		renderDiagram(sw.toString());
 	}
 }
