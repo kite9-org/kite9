@@ -17,7 +17,6 @@ import org.kite9.diagram.position.RouteRenderingInformation;
 import org.kite9.diagram.visitors.DiagramElementVisitor;
 import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.batik.bridge.Kite9DiagramBridge;
-import org.kite9.diagram.visualization.display.components.ConnectionDisplayer;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.visualization.pipeline.full.AbstractArrangementPipeline;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -39,6 +38,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected DiagramXMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
 		transcodePNG(full);
+		transcodeSVG(full);
 		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
@@ -82,7 +82,6 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	protected boolean checkEdgeDirections() {
-		ConnectionDisplayer.debug = true;
 		return true;
 	}
 	

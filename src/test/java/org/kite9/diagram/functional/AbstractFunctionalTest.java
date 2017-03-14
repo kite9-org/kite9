@@ -12,6 +12,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
 import org.kite9.diagram.visualization.batik.format.Kite9PNGTranscoder;
+import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractStyleableXMLElement;
 import org.kite9.framework.common.HelpMethods;
@@ -40,10 +41,23 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		Transcoder transcoder = new Kite9PNGTranscoder();
 		transcoder.transcode(in, out);
 	}
+	
+	protected void transcodeSVG(String s) throws Exception {
+		TranscoderOutput out = getTranscoderOutputSVG();
+		TranscoderInput in = getTranscoderInput(s);
+		Transcoder transcoder = new Kite9SVGTranscoder();
+		transcoder.transcode(in, out);
+	}
 
-	TranscoderOutput getTranscoderOutputPNG() throws IOException {
+	protected TranscoderOutput getTranscoderOutputPNG() throws IOException {
 		File f = getOutputFile("-graph.png");
 		TranscoderOutput out = new TranscoderOutput(new FileOutputStream(f));
+		return out;
+	}
+	
+	protected TranscoderOutput getTranscoderOutputSVG() throws IOException {
+		File f = getOutputFile("-graph.svg");
+		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
 		return out;
 	}
 

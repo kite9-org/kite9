@@ -7,7 +7,6 @@ import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.SVGShapeElementBridge;
 import org.apache.batik.gvt.ShapeNode;
 import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.visualization.display.RoutePainter;
 import org.w3c.dom.Element;
 
 /**

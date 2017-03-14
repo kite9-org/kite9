@@ -9,9 +9,11 @@ import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
 import org.kite9.diagram.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.style.ContainerPosition;
 import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
@@ -34,11 +36,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public String getID() {
 		return id;
-	}
-
-	@Override
-	public Value getCSSStyleProperty(String prop) {
-		return null;
 	}
 
 	@Override
@@ -82,6 +79,16 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {
 		return rri;
+	}
+
+	@Override
+	public double getMargin(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public ContainerPosition getContainerPosition() {
+		return null;
 	}
 
 }

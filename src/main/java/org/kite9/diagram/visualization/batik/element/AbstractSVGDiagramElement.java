@@ -9,12 +9,13 @@ import java.util.regex.Pattern;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HasLayeredGraphics;
+import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.style.DiagramElementSizing;
+import org.kite9.diagram.visualization.batik.HasLayeredGraphics;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.visualization.batik.bridge.Templater;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
@@ -36,17 +37,9 @@ import org.w3c.dom.Text;
  */
 public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElement implements HasLayeredGraphics {
 
-	private DiagramElementSizing sizing;
 	
 	public AbstractSVGDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
-		this.sizing = (DiagramElementSizing) ev.getTheValue();
-	}
-
-	@Override
-	public DiagramElementSizing getSizing() {
-		return sizing;
 	}
 
 	/**
@@ -220,5 +213,26 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		return out;
 	}
 
+	protected double padding[] = new double[4];
+	protected double margin[] = new double[4];
+	
+	protected void initialize() {
+		initializeDirectionalCssValues(padding, "padding");
+		initializeDirectionalCssValues(margin, "margin");
+	}
+
+	private void initializeDirectionalCssValues(double[] vals, String prefix) {
+		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+"-top");
+		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+"-bottom");
+		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+"-left");
+		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+"-right");	
+	}
+
+	private double getCssDoubleValue(String prop) {
+		Value v = getCSSStyleProperty(prop);
+		return v.getFloatValue();
+	}
+	
+	
 	
 }

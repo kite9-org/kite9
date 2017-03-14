@@ -3,12 +3,11 @@ package org.kite9.diagram.visualization.batik;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.util.SVG12CSSConstants;
+import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Decal;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HasLayeredGraphics;
+import org.kite9.diagram.adl.Rectangular;
 import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
 import org.kite9.diagram.position.Dimension2D;
@@ -19,8 +18,6 @@ import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
-import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.serialization.CSSConstants;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
@@ -37,22 +34,27 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
 		if (element instanceof HasLayeredGraphics) {
-			DiagramElementSizing sizing = ((HasLayeredGraphics) element).getSizing();
+			DiagramElementSizing sizing = getSizing((HasLayeredGraphics) element);
 
+			if (sizing == null) {
+				return CostedDimension.ZERO;
+			}
+			
 			switch (sizing) {
 			case FIXED:
 				Rectangle2D bounds = ((HasLayeredGraphics) element).getSVGBounds();
 				if (bounds == null) {
-					return CostedDimension.ZERO;
+					return new CostedDimension(1, 1, 0);
 				}
 				return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 			case MINIMIZE:
 			case MAXIMIZE:
-				Value left = element.getCSSStyleProperty(CSSConstants.PADDING_LEFT_PROPERTY);
-				Value right = element.getCSSStyleProperty(CSSConstants.PADDING_RIGHT_PROPERTY);
-				Value up = element.getCSSStyleProperty(CSSConstants.PADDING_TOP_PROPERTY);
-				Value down = element.getCSSStyleProperty(CSSConstants.PADDING_BOTTOM_PROPERTY);
-				return new CostedDimension(left.getFloatValue() + right.getFloatValue(), up.getFloatValue() + down.getFloatValue(), CostedDimension.UNBOUNDED);
+				Rectangular r = (Rectangular) element;
+				double left = r.getPadding(Direction.LEFT);
+				double right =  r.getPadding(Direction.RIGHT);
+				double up =  r.getPadding(Direction.UP);
+				double down =  r.getPadding(Direction.DOWN);
+				return new CostedDimension(left+right, up+down, CostedDimension.UNBOUNDED);
 			case ADAPTIVE:
 			case SCALED:
 			case UNSPECIFIED:
@@ -91,7 +93,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 			
 			Rectangle2D bounds = layered.getSVGBounds();
-			DiagramElementSizing sizing = layered.getSizing();
+			DiagramElementSizing sizing = getSizing(layered);
 			
 			if (bounds != null) {				
 				// reset the scale first
@@ -131,6 +133,12 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				}
 			}
 		}
+	}
+
+	private DiagramElementSizing getSizing(HasLayeredGraphics layered) {
+		DiagramElementSizing out =  (layered instanceof Rectangular) ?((Rectangular) layered).getSizing() : null;
+		System.out.println("Sizing of "+layered+" is "+out);
+		return out;
 	}
 
 	private void translateRelative(Rectangle2D bounds, AffineTransform existing, AffineTransform global, RectangleRenderingInformation rri) {
@@ -185,49 +193,24 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	@Override
 	public double getPadding(DiagramElement element, Direction d) {
-		Value v;
-		switch (d) {
-		case UP:
-			v = element.getCSSStyleProperty(CSSConstants.PADDING_TOP_PROPERTY);
-			break;
-		case DOWN:
-			v = element.getCSSStyleProperty(CSSConstants.PADDING_BOTTOM_PROPERTY);
-			break;
-		case LEFT:
-			v = element.getCSSStyleProperty(CSSConstants.PADDING_LEFT_PROPERTY);
-			break;
-		case RIGHT:
-			v = element.getCSSStyleProperty(CSSConstants.PADDING_RIGHT_PROPERTY);
-			break;
-		default:
-			throw new Kite9ProcessingException("No direction set");
+		if (element instanceof Rectangular) {
+			return ((Rectangular) element).getPadding(d);
+		} else if (element instanceof Connection) {
+			return ((Connection) element).getPadding(d);
+		} else {
+			return 0;
 		}
-		
-		return v.getFloatValue();
 	}
 	
 	@Override
 	public double getMargin(DiagramElement element, Direction d) {
-		Value v;
-		switch (d) {
-		case UP:
-			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY);
-			break;
-		case DOWN:
-			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY);
-			break;
-		case LEFT:
-			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
-			break;
-		case RIGHT:
-			v = element.getCSSStyleProperty(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY);
-			break;
-		default:
-			throw new Kite9ProcessingException("No direction set");
+		if (element instanceof Rectangular) {
+			return ((Rectangular) element).getMargin(d);
+		} else if (element instanceof Connection) {
+			return ((Connection) element).getMargin(d);
+		} else {
+			return 0;
 		}
-		
-		System.out.println("margin for "+element+" in direction "+d+ " "+v.getFloatValue());
-		return v.getFloatValue();
 	}
 
 }

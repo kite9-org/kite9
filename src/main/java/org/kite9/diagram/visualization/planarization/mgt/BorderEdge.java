@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.mgt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
@@ -150,24 +151,11 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	}
 
 	private BorderTraversal calculateTraversalRule() {
-		switch (getDrawDirection()) {
-		case LEFT:
-			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_BOTTOM_PROPERTY);
-		case RIGHT:
-			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_TOP_PROPERTY);
-		case UP:
-			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_LEFT_PROPERTY);
-		case DOWN:
-			return getTraversalRule(underlying, CSSConstants.TRAVERSAL_RIGHT_PROPERTY);
+		if (underlying instanceof Container) {
+			((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
 		}
 		
-		return BorderTraversal.ALWAYS;
+		return BorderTraversal.NONE;
 	}
-	
 
-	private static BorderTraversal getTraversalRule(DiagramElement d, String p) {
-		EnumValue v = (EnumValue) d.getCSSStyleProperty(p);
-		BorderTraversal bt = (BorderTraversal) v.getTheValue();
-		return bt;
-	}
 }

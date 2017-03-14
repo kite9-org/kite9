@@ -2,10 +2,18 @@
 	font-family: "opensans-light-webfont";
 }
 
+context, 
+diagram,
+glyph,
+arrow,
+link {
+	margin: 10px;
+}
 
 diagram {
 	type: diagram;
 	fill: none;
+	padding: 15px;
 }
 
 glyph {
@@ -30,6 +38,7 @@ context {
 	type: connected;
 	sizing: maximize;
 	traversal: always;
+	padding: 12px;
 }
 
 .background {

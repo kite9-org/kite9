@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.batik.element;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Leaf;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 
 /**
@@ -17,7 +16,5 @@ public class ConnectedLeafImpl extends AbstractConnectedDiagramElement implement
 	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
 	}
-
-	
 	
 }

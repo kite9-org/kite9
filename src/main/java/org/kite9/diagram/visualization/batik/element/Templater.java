@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.batik.bridge;
+package org.kite9.diagram.visualization.batik.element;
 
 import java.io.IOException;
 import java.net.URI;
@@ -27,27 +27,32 @@ public class Templater {
 	/**
 	 * This needs to copy the template XML source into the destination.
 	 */
-	public void handleTemplateElement(XMLElement in, DiagramElement out) {
-		Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
-		if (template != ValueConstants.NONE_VALUE) {
-			String uri = template.getStringValue();
+	public void handleTemplateElement(XMLElement in, DiagramElement o) {
+		if (o instanceof AbstractXMLDiagramElement) {
+			AbstractXMLDiagramElement out = (AbstractXMLDiagramElement) o;
+			Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
+			if (template != ValueConstants.NONE_VALUE) {
+				String uri = template.getStringValue();
 
-			try {
-				// identify the fragment referenced in the other document and
-				// load it
-				URI u = new URI(uri);
-				String fragment = u.getFragment();
-				String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
-				ADLDocument templateDoc = loadReferencedDocument(resource);
-				Element e = templateDoc.getElementById(fragment);
+				try {
+					// identify the fragment referenced in the other document
+					// and
+					// load it
+					URI u = new URI(uri);
+					String fragment = u.getFragment();
+					String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
+					ADLDocument templateDoc = loadReferencedDocument(resource);
+					Element e = templateDoc.getElementById(fragment);
 
-				Node copy = copyIntoDocument(in, e);
-				
-				// ensure xml:base is set so references work in the copied content
-				((Element)copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resource);
+					Node copy = copyIntoDocument(in, e);
 
-			} catch (Exception e) {
-				throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
+					// ensure xml:base is set so references work in the copied
+					// content
+					((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resource);
+
+				} catch (Exception e) {
+					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
+				}
 			}
 		}
 	}

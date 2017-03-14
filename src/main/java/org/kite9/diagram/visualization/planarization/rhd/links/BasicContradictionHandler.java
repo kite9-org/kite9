@@ -9,6 +9,7 @@ import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.style.IntegerRange;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
@@ -16,7 +17,6 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.serialization.IntegerRangeValue;
 
 public class BasicContradictionHandler implements Logable, ContradictionHandler {
 
@@ -207,7 +207,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 
-	private void gridPositionOverlapOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
+	private void gridPositionOverlapOrContradiction(IntegerRange a, IntegerRange b, Connection c) {
 		boolean fromInside = (a.getFrom() <= b.getFrom()) && (a.getFrom() >= b.getTo());
 		boolean toInside = (a.getTo() <= b.getFrom()) && (a.getTo() >= b.getTo());
 		if (!(fromInside || toInside)) {
@@ -215,7 +215,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		}
 	}
 
-	private void gridPositionAfterOrContradiction(IntegerRangeValue a, IntegerRangeValue b, Connection c) {
+	private void gridPositionAfterOrContradiction(IntegerRange a, IntegerRange b, Connection c) {
 		if (a.getTo() < b.getFrom()) {
 			setContradiction(c);
 		}

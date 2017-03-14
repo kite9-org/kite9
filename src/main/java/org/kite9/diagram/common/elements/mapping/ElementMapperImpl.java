@@ -23,8 +23,6 @@ import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.style.BorderTraversal;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.EnumValue;
 
 public class ElementMapperImpl implements ElementMapper {
 	
@@ -200,16 +198,18 @@ public class ElementMapperImpl implements ElementMapper {
 	}
 
 	private boolean isElementTraversible(DiagramElement c) {
-		return isElementTraversible(c, CSSConstants.TRAVERSAL_BOTTOM_PROPERTY) ||
-				isElementTraversible(c, CSSConstants.TRAVERSAL_LEFT_PROPERTY) ||
-				isElementTraversible(c, CSSConstants.TRAVERSAL_RIGHT_PROPERTY) ||
-				isElementTraversible(c, CSSConstants.TRAVERSAL_TOP_PROPERTY);
+		return isElementTraversible(c, Direction.UP) ||
+				isElementTraversible(c,  Direction.DOWN) ||
+				isElementTraversible(c,  Direction.LEFT) ||
+				isElementTraversible(c, Direction.RIGHT);
 	}
 
-	private boolean isElementTraversible(DiagramElement c, String p) {
-		EnumValue v = (EnumValue) c.getCSSStyleProperty(p);
-		BorderTraversal bt = (BorderTraversal) v.getTheValue();
-		return (bt == BorderTraversal.ALWAYS);
+	private boolean isElementTraversible(DiagramElement c, Direction d) {
+		if (c instanceof Container) {
+			return ((Container) c).getTraversalRule(d) == BorderTraversal.ALWAYS;
+		}
+		
+		return false;
 	}
 
 	Map<DiagramElement, Boolean> hasConnections = new HashMap<>();

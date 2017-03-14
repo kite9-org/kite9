@@ -1,22 +1,15 @@
 package org.kite9.diagram.visualization.display;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.HasLayeredGraphics;
 import org.kite9.diagram.adl.Terminator;
-import org.kite9.diagram.adl.Text;
 import org.kite9.diagram.position.CostedDimension;
-import org.kite9.diagram.position.Dimension2D;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.TerminatorShape;
+import org.kite9.diagram.visualization.batik.HasLayeredGraphics;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -78,10 +71,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		}
 		
 		Direction dd = Direction.reverse(d);
-		double marginA = (aSide == d) ? 
+		double marginA = ((aSide == d) || (aSide==null)) ? 
 				getMargin(a, dd) 
 				: 0;
-		double marginB = (bSide == dd) ? 
+		double marginB = ((bSide == dd) || (bSide == null)) ? 
 				getMargin(b, d) 
 				: 0;
 				
@@ -148,7 +141,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		if (d==null) {
 			return false;
 		} else if (d instanceof Container) {
-			return ((Container)d).isBordered();
+			return true;
 		} else if (d instanceof Connection){
 			Connection l = (Connection) d;
 			if (l.getStyle()==LinkLineStyle.INVISIBLE) {
@@ -183,27 +176,27 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	@Override
 	public double getTerminatorLength(Terminator terminator) {
-		if (terminator != null) {
-			TerminatorShape fs = new TerminatorShape(terminator);
-			return fs.getMinInputLinkLength();
-		} else {
+//		if (terminator != null) {
+//			TerminatorShape fs = new TerminatorShape(terminator);
+//			return fs.getMinInputLinkLength();
+//		} else {
 			return 0;
-		}
+//		}
 	}
 	
 	@Override
 	public double getTerminatorReserved(Terminator terminator, Connection on) {
-		if ((terminator != null) && (terminator instanceof HasLayeredGraphics)) {
-//			return ((HasLayeredGraphics)terminator).getSVGBounds()
-//			TerminatorShape fs = new TerminatorShape(terminator);
-//			ShapeStyle ss = getStyle(on);
-//			double width = ss.getStrokeWidth();
-			
+//		if ((terminator != null) && (terminator instanceof HasLayeredGraphics)) {
+////			return ((HasLayeredGraphics)terminator).getSVGBounds()
+////			TerminatorShape fs = new TerminatorShape(terminator);
+////			ShapeStyle ss = getStyle(on);
+////			double width = ss.getStrokeWidth();
+//			
+//			return 0;
+////			return fs.getReservedLength(width);
+//		} else {
 			return 0;
-//			return fs.getReservedLength(width);
-		} else {
-			return 0;
-		}
+//		}
 	}
 	
 	

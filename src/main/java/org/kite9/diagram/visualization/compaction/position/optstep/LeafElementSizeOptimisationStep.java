@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.adl.Rectangular;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -16,8 +17,6 @@ import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.EnumValue;
 
 /**
  * This optimisation annotates the {@link Slideable}'s in such a way as to
@@ -93,9 +92,7 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 		
 		setSizes(opt, toDo, DiagramElementSizing.MINIMIZE);
 		setSizes(opt, toDo, DiagramElementSizing.MAXIMIZE);
-		
 	}
-
 
 	private void setSizes(SegmentSlackOptimisation opt, List<OPair<Slideable>> toDo, DiagramElementSizing process) {
 		for (int i = 0; i < toDo.size(); i++) {
@@ -105,11 +102,12 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 			
 			if ((from != null) && (to != null)) {
 				DiagramElement de = ((Segment) from.getUnderlying()).getUnderlying();
-				EnumValue ev = (EnumValue) de.getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
-				DiagramElementSizing sizing = (DiagramElementSizing) ev.getTheValue();
-				if (sizing == process) {
-					log.send("Aligning: "+de+" "+process+" "+from+" "+to);
-					alignPair(opt, from, to, sizing, de);
+				if (de instanceof Rectangular) {
+					DiagramElementSizing sizing = ((Rectangular) de).getSizing();
+					if (sizing == process) {
+						log.send("Aligning: "+de+" "+process+" "+from+" "+to);
+						alignPair(opt, from, to, sizing, de);
+					}
 				}
 			}
 		}

@@ -49,11 +49,6 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 	}
 
 	@Override
-	public Value getCSSStyleProperty(String prop) {
-		return null;
-	}
-
-	@Override
 	public void setRenderingInformation(RenderingInformation ri) {
 		this.rri = (RouteRenderingInformation) ri;
 	}
@@ -75,5 +70,10 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 	@Override
 	public HintMap getPositioningHints() {
 		return null;
+	}
+
+	@Override
+	public double getMargin(Direction d) {
+		return 0;
 	}
 }

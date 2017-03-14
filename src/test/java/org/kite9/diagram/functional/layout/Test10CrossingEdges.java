@@ -19,7 +19,7 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
 		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
 
-		renderDiagram(d);
+		renderDiagram(d); 
 	}
 	
 

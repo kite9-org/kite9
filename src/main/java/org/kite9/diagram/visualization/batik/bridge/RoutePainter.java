@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.display;
+package org.kite9.diagram.visualization.batik.bridge;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -8,11 +8,8 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.visualization.display.style.ShapeStyle;
-import org.kite9.diagram.visualization.display.style.io.StaticStyle;
 import org.kite9.diagram.visualization.format.GraphicsLayer2D;
 import org.kite9.framework.logging.LogicException;
 
@@ -93,7 +90,7 @@ public class RoutePainter {
 			}
 		}
 
-		float hopSize = StaticStyle.getLinkHopSize();
+		float hopSize = 15;
 
 		public double drawHopStart(double x1, double y1, double x2, double y2, GeneralPath gp) {
 			if (x1 < x2) {
@@ -420,17 +417,9 @@ public class RoutePainter {
 		
 		if (!closed) {
 			// trim the first and last moves so that they don't get occluded by the shape they are meeting
-			
-			
-			
-			
 		}
 
 		return out;
-	}
-	
-	public ShapeStyle getStyle(DiagramElement de) {
-		return new ShapeStyle(de);
 	}
 
 }

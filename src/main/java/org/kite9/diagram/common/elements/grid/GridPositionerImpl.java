@@ -16,12 +16,12 @@ import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.style.GridContainerPosition;
+import org.kite9.diagram.style.IntegerRange;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.Table;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.IntegerRangeValue;
 
 /**
  * Tools for helping create Grid structure.  
@@ -40,15 +40,15 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	
 	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
 		// these are a minimum size, but contents can exceed them and push this out.
-		int xSize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_COLUMNS_PROPERTY).getFloatValue();
-		int ySize = (int) ord.getCSSStyleProperty(CSSConstants.GRID_ROWS_PROPERTY).getFloatValue();
+		int xSize = (int) ord.getGridColumns();
+		int ySize = (int) ord.getGridRows();
 		
 		
 		// fit as many elements as possible into the grid
 		for (DiagramElement diagramElement : ord.getContents()) {
 			if (diagramElement instanceof Connected) {
-				IntegerRangeValue xpos = getXOccupies(diagramElement);
-				IntegerRangeValue ypos = getYOccupies(diagramElement);
+				IntegerRange xpos = getXOccupies((Connected) diagramElement);
+				IntegerRange ypos = getYOccupies((Connected) diagramElement);
 				
 				if ((xpos != null) && (ypos != null)) {
 					if (allowSpanning) {
@@ -66,13 +66,13 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 
-	public static IntegerRangeValue getYOccupies(DiagramElement diagramElement) {
-		return (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+	public static IntegerRange getYOccupies(Connected diagramElement) {
+		return ((GridContainerPosition)diagramElement.getContainerPosition()).getY();
 	}
 
 
-	public static IntegerRangeValue getXOccupies(DiagramElement diagramElement) {
-		return (IntegerRangeValue) diagramElement.getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
+	public static IntegerRange getXOccupies(Connected diagramElement) {
+		return ((GridContainerPosition)diagramElement.getContainerPosition()).getX();
 	}
 	
 	
@@ -94,10 +94,10 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
 			if (diagramElement instanceof Connected) {
-				IntegerRangeValue xpos = getXOccupies(diagramElement);
-				IntegerRangeValue ypos = getYOccupies(diagramElement);	
+				IntegerRange xpos = getXOccupies((Connected) diagramElement);
+				IntegerRange ypos = getYOccupies((Connected) diagramElement);	
 				
-				if ((!IntegerRangeValue.notSet(xpos)) && (!IntegerRangeValue.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
+				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
 					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
 					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
 					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
@@ -186,7 +186,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	 * or sets their value.
 	 * @param allowSpanning 
 	 */
-	private static boolean ensureGrid(List<DiagramElement[]> out, IntegerRangeValue xpos, IntegerRangeValue ypos, DiagramElement in, boolean allowSpanning) {
+	private static boolean ensureGrid(List<DiagramElement[]> out, IntegerRange xpos, IntegerRange ypos, DiagramElement in, boolean allowSpanning) {
 		// ensure grid is large enough for the elements.
 		int xTo = allowSpanning ? xpos.getTo()+1 : xpos.getFrom()+1;
 		for (int x = xpos.getFrom(); x < xTo; x++) {

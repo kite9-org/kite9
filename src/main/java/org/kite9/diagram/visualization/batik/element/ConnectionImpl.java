@@ -1,10 +1,6 @@
 package org.kite9.diagram.visualization.batik.element;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-
 import org.apache.batik.gvt.GraphicsNode;
-import org.apache.batik.gvt.ShapeNode;
 import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.DiagramElement;
@@ -19,8 +15,6 @@ import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.visualization.batik.bridge.Kite9RouteBridge;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.visualization.display.RoutePainter;
-import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
@@ -36,6 +30,7 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 
 	@Override
 	protected void initialize() {
+		super.initialize();
 		XMLElement fromElement = getFromElement(theElement);
 		XMLElement toElement = getToElement(theElement);
 		
@@ -242,9 +237,13 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 	
 	@Override
-	public DiagramElementSizing getSizing() {
-		return DiagramElementSizing.UNSPECIFIED;
+	public double getMargin(Direction d) {
+		return margin[d.ordinal()];
 	}
-	
+
+	@Override
+	public double getPadding(Direction d) {
+		return padding[d.ordinal()];
+	}
 	
 }

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.batik.element;
 import org.kite9.diagram.adl.Decal;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
 
@@ -34,5 +35,12 @@ public class DecalImpl extends AbstractRectangularDiagramElement implements Deca
 			return super.getReplacementValue(prefix, attr);
 		}
 	}
+
+	@Override
+	public DiagramElementSizing getSizing() {
+		return DiagramElementSizing.FIXED;
+	}
+	
+	
 
 }

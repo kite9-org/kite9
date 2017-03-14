@@ -6,8 +6,13 @@ import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.style.ContainerPosition;
+import org.kite9.diagram.style.GridContainerPosition;
+import org.kite9.diagram.style.IntegerRange;
 import org.kite9.diagram.visualization.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.xml.StyledKite9SVGElement;
+import org.kite9.framework.serialization.CSSConstants;
 
 /**
  * Handles DiagramElements which are also Connnected.
@@ -30,8 +35,20 @@ public abstract class AbstractConnectedDiagramElement extends AbstractRectangula
 		super.initialize();
 		Diagram d = getDiagram();
 		links = d.getConnectionsFor(this.getID());
+		initContainerPosition();
 	}
 
+	private void initContainerPosition() {
+		if (getContainer() != null) {
+			if (getContainer().getLayout() == Layout.GRID) {
+				IntegerRange x = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
+				IntegerRange y = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+				containerPosition = new GridContainerPosition(x, y);
+			}
+		}
+	}
+
+	private ContainerPosition containerPosition = null;
 	private Collection<Connection> links;
 
 	@Override
@@ -54,4 +71,9 @@ public abstract class AbstractConnectedDiagramElement extends AbstractRectangula
 		return getConnectionTo(c) != null;
 	}
 
+	@Override
+	public ContainerPosition getContainerPosition() {
+		return containerPosition;
+	}
+	
 }

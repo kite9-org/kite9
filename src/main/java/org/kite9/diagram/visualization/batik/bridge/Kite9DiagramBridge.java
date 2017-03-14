@@ -6,6 +6,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.visualization.batik.BatikArrangementPipeline;
 import org.kite9.diagram.visualization.batik.BatikDisplayer;
+import org.kite9.diagram.visualization.batik.HasLayeredGraphics;
 import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.visualization.format.GraphicsLayerName;
 import org.kite9.diagram.xml.DiagramXMLElement;
@@ -67,7 +68,7 @@ public class Kite9DiagramBridge extends Kite9GBridge {
     public static DiagramXMLElement lastDiagram;
 
 	private void addLayer(CompositeGraphicsNode out, GraphicsLayerName l, Diagram de) {
-		out.add(de.getGraphicsForLayer(l));
+		out.add(((HasLayeredGraphics)de).getGraphicsForLayer(l));
 	}
 
 	@Override

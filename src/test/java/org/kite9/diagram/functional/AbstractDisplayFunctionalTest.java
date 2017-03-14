@@ -6,19 +6,14 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
-import org.apache.batik.transcoder.Transcoder;
-import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
-import org.kite9.diagram.visualization.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
@@ -40,10 +35,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 
 	protected void transcodeSVG(String s) throws Exception {
-		TranscoderOutput out = getTranscoderOutputSVG();
-		TranscoderInput in = getTranscoderInput(s);
-		Transcoder transcoder = new Kite9SVGTranscoder();
-		transcoder.transcode(in, out);
+		super.transcodeSVG(s);
 		
 		if (checkXML()) {
 			checkIdenticalXML();
@@ -57,12 +49,6 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	
 	protected void renderDiagram(String xml) throws Exception {
 		transcodeSVG(addSVGFurniture(xml));
-	}
-
-	private TranscoderOutput getTranscoderOutputSVG() throws IOException {
-		File f = getOutputFile("-graph.svg");
-		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
-		return out;
 	}
 
 	public boolean checkIdenticalXML() throws Exception {

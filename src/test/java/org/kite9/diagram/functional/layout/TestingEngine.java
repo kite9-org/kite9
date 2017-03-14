@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Connection;
 import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.adl.ContradictingLink;
@@ -282,7 +283,7 @@ public class TestingEngine extends TestingHelp {
 	public static void testLayout(Container d) {
 		Layout l = d.getLayout();
 
-		DiagramElement prev = null;
+		Connected prev = null;
 
 		if (d.getContents() != null) {
 			if (l != null) {
@@ -387,9 +388,10 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void checkLayoutOrder(Container d, Layout l, DiagramElement prev) {
-		for (DiagramElement cc : d.getContents()) {
-			if (prev != null) {
+	public static void checkLayoutOrder(Container d, Layout l, Connected prev) {
+		for (DiagramElement c : d.getContents()) {
+			if ((prev != null) && (c instanceof Connected)) {
+				Connected cc = (Connected) c;
 				RectangleRenderingInformation prevRI = (RectangleRenderingInformation) prev.getRenderingInformation();
 				RectangleRenderingInformation ccRI = (RectangleRenderingInformation) cc.getRenderingInformation();
 				Dimension2D prevPos = prevRI.getPosition();
@@ -423,14 +425,14 @@ public class TestingEngine extends TestingHelp {
 						break;
 
 					}
+					prev = cc;
 
 				}
 			}
-			prev = cc;
 		}
 	}
 
-	public static void checkBefore(double x1, double w1, double x2, double w2, DiagramElement prev, DiagramElement cc, Layout l) {
+	public static void checkBefore(double x1, double w1, double x2, double w2, Connected prev, Connected cc, Layout l) {
 		if (x1 + w1 > x2) {
 			throw new ExpectedLayoutException("Was expecting " + prev + " before" + cc + " " + l);
 		}

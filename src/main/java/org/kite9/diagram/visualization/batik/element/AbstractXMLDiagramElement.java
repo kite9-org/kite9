@@ -45,8 +45,7 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		this.ctx = ctx;
 	}
 
-	@Override
-	public Value getCSSStyleProperty(String prop) {
+	protected Value getCSSStyleProperty(String prop) {
 		return theElement.getCSSStyleProperty(prop);
 	}
 	

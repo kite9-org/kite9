@@ -260,13 +260,7 @@ public class AbstractSegmentModifier {
 				return false;
 			}
 		}
-		
-		if (underlying instanceof Container) {
-			if (!((Container)underlying).isBordered()) {
-				return false;
-			}
-		}
-			
+
 		return true;
 	}
 	

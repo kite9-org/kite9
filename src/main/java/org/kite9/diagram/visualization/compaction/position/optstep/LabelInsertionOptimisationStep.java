@@ -424,7 +424,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 	private void mapDartToContainer(SegmentSlackOptimisation yo, Map<Label, Set<Dart>> lowestDartsInContainer, Map<Label, Integer> lowestDartsInContainerLevel, Dart d, Object de, Vertex dFrom,
 			Vertex dTo) {
 		Label l = ((Container) de).getLabel();
-		if ((l != null) && (l.hasContent()) && ((Container)de).isBordered()) {
+		if ((l != null) && (l.hasContent())) {
 			Set<Dart> lowest = lowestDartsInContainer.get(l);
 			Integer lowestPos = lowestDartsInContainerLevel.get(l);
 			if (lowest == null) {

@@ -8,6 +8,8 @@ import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.visualization.batik.element.AbstractXMLDiagramElement;
+import org.kite9.diagram.visualization.batik.element.Templater;
 import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.serialization.Kite9DocumentFactory;
 
@@ -63,7 +65,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 	 * This needs to copy the template XML source into the destination.
 	 */
 	public void handleTemplateElement(XMLElement in, DiagramElement out) {
-		templater.handleTemplateElement(in, out);
+		templater.handleTemplateElement(in, (AbstractXMLDiagramElement) out);
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {

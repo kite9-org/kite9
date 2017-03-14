@@ -45,25 +45,14 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 	private void finishGroup(Graphics2D g2d) {
 		if (g2d instanceof GroupManagingSVGGraphics2D) {
 			((GroupManagingSVGGraphics2D)g2d).finishGroup(id);
-			System.out.println("finished painting " +id);
 		}
 	}
 
 	private void createGroup(Graphics2D g2d) {
 		if (g2d instanceof GroupManagingSVGGraphics2D) {
-			System.out.println("painting " +id);
 			((GroupManagingSVGGraphics2D)g2d).createGroup(id);
 		}
-	}
-	
-
-	@Override
-	public void primitivePaint(Graphics2D g2d) {
-		System.out.println("starting primitive paint"+id);
-		super.primitivePaint(g2d);
-		System.out.println("ending primitive paint"+id);
-	}
-	
+	}	
 	
     /**
      * Internal Cache: Sensitive bounds.
