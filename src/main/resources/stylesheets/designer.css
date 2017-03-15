@@ -97,7 +97,7 @@ symbol.diamond {
 /* Glyph */
 glyph {
 	padding: 3px 6px 3px 6px; 
-	margin: 0;
+	margin: 10px;
 	stroke-width: 2px;
 	stroke: black;
 	fill: white;
@@ -207,7 +207,8 @@ context {
 
 toLabel, 
 fromLabel,
-context > label {
+context > label,
+diagram > label {
 	type: label; 
 	fill: #CCC;
 	fill-transparency: 60%;
@@ -216,6 +217,10 @@ context > label {
 	font-size: 10px;
 	font-family: "opensans-light-webfont";
 	padding: 4px 4px 4px 4px;
+}
+
+allLinks {
+	type: none;	
 }
 
 

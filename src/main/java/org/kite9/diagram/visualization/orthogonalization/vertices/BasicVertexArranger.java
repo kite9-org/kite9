@@ -695,7 +695,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		// dist can be set for the first and last darts only if fixed length and
 		// one dart on side
 		boolean knownLength = oppDarts<=1 && sideDarts <= 1;
-		double dist = requiresMinSize ? sizer.getLinkMargin(underlying, segmentDirection) : 0;
+		double dist = requiresMinSize ? sizer.getLinkPadding(underlying, segmentDirection) : 0;
 		if (knownLength) {
 			double distDueToSize = Math.ceil(lengthOpt / (sideDarts + 1.0));
 			dist = Math.max(distDueToSize, dist); 

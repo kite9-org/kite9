@@ -136,8 +136,8 @@ public class GriddedCompleteDisplayer implements RequiresGraphicsSourceRendererC
 	}
 
 	@Override
-	public double getLinkMargin(DiagramElement element, Direction d) {
-		return snap(ded.getLinkMargin(element, d),1);
+	public double getLinkPadding(DiagramElement element, Direction d) {
+		return snap(ded.getLinkPadding(element, d),1);
 	}
 	
 	@Override

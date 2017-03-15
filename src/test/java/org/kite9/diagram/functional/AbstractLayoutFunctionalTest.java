@@ -31,10 +31,15 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
 	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
+		ensureAllLinksAccountedFor(d);
 		String xml = new XMLHelper().toXML(d);
 		return renderDiagram(xml);
 	}
 	
+	private void ensureAllLinksAccountedFor(DiagramXMLElement d) {
+		
+	}
+
 	protected DiagramXMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
 		transcodePNG(full);
@@ -167,6 +172,10 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
-		renderDiagram(sw.toString());
+		
+		// fix for old-style <allLinks> tag
+		String theXML = sw.toString().replace("<allLinks>", "").replace("</allLinks>","");
+		
+		renderDiagram(theXML);
 	}
 }

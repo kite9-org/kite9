@@ -187,7 +187,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	@Override
-	public double getLinkMargin(DiagramElement a, Direction d) {
+	public double getLinkPadding(DiagramElement a, Direction d) {
 		return 5;
 	}
 

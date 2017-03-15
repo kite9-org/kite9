@@ -90,7 +90,6 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Context yourside = new Context("yours", createList(converts, client, xstream, objects), true, new TextLine("Your Server / PC"), null);
 		Context ourside = new Context("ours", createList(diagramServer), true, new TextLine("Kite9 Servers"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(yourside, transport, ourside), null);
 
 		// converts
 
@@ -107,6 +106,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new Link(diagramServer, receives, null, null, null, null, Direction.LEFT);
 		new Link(receives, client, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(receives, response);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(yourside, transport, ourside), null);
 
 		renderDiagram(d);
 	}
@@ -116,7 +116,6 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b), null);
 
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, b, null, null, null, null, null);
@@ -125,6 +124,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new TurnLink(a, b, null, null, null, null, null);
 		new TurnLink(a, b, null, null, null, null, null);
 
+		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b), null);
 		renderDiagram(d);
 	}
 
@@ -134,7 +134,6 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Glyph b = new Glyph("b", "", "b", null, null);
 		Glyph c = new Glyph("c", "", "c", null, null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b, c), null);
 
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, c, null, null, null, null, Direction.DOWN);
@@ -142,6 +141,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new TurnLink(a, c, null, null, null, null, null);
 		new TurnLink(a, b, null, null, null, null, null);
 		new TurnLink(c, b, null, null, null, null, Direction.UP);
+		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b, c), null);
 
 		renderDiagram(d);
 	}

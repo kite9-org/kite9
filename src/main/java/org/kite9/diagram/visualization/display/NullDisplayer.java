@@ -46,7 +46,7 @@ public class NullDisplayer implements CompleteDisplayer {
 	}
 
 	@Override
-	public double getLinkMargin(DiagramElement element, Direction d) {
+	public double getLinkPadding(DiagramElement element, Direction d) {
 		return 0;
 	}
 

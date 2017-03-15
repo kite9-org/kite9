@@ -239,7 +239,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
 			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength, Edge borderEdge) {
 		
-		double endDist = requiresMinLength ? sizer.getLinkMargin(underlying, segmentDirection) : 0;
+		double endDist = requiresMinLength ? sizer.getLinkPadding(underlying, segmentDirection) : 0;
 		double interDist = sizer.getLinkGutter(underlying, segmentDirection);
 		
 		double oppSideDist = (endDist * 2) + (Math.max(0, oppSideDarts - 1) * interDist);

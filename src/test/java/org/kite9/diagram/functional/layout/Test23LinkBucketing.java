@@ -27,7 +27,6 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 	Glyph seven;
 
 	Context con1;
-	DiagramXMLElement d;
 
 	@Before
 	public void setUp() {
@@ -42,7 +41,6 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		
 		con1 = new Context("b1", listOf(one, two, three, four, five, six, seven),
 				true, new TextLine("inside"), Layout.RIGHT);
-		d = new DiagramXMLElement("The Diagram", listOf(con1), null);
 	}
 
 	@Test
@@ -53,8 +51,12 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		new Link(one, five);
 		new Link(one, six);
 		new Link(one, seven);
-		
-		renderDiagram(d);
+		renderDiagram();
+	}
+
+	private void renderDiagram() throws Exception {
+		DiagramXMLElement d = new DiagramXMLElement("The Diagram", listOf(con1), null);
+		super.renderDiagram(d);
 	}
 	
 	@Test
@@ -66,7 +68,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		new Link(one, six);
 		new Link(one, seven);
 		
-		renderDiagram(d);
+		renderDiagram();
 	}
 	
 	@Test
@@ -78,7 +80,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		new Link(one, six);
 		new Link(one, seven);
 		
-		renderDiagram(d);
+		renderDiagram();
 	}
 
 	@Override

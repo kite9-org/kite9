@@ -40,7 +40,7 @@ public interface Displayer {
 	/**
 	 * Link Margins are the distance between a link and the side of the diagram element.
 	 */
-	double getLinkMargin(DiagramElement element, Direction d);
+	double getLinkPadding(DiagramElement element, Direction d);
 
 	/**
 	 * Given an area, returns the amount of padding that will be needed around it.

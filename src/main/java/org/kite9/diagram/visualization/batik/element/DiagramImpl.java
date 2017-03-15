@@ -43,15 +43,6 @@ public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 		return c;
 	}
 	
-//	/**
-//	 * Is able to build a group for each layer, all layers being pretty much the same
-//	 */
-//	@Override
-//	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
-//		IdentifiableGraphicsNode ign = createGraphicsNode(name);
-//		return ign;
-//	}
-//	
 }
 
 
