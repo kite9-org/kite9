@@ -152,7 +152,7 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 
 	private BorderTraversal calculateTraversalRule() {
 		if (underlying instanceof Container) {
-			((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
+			return ((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
 		}
 		
 		return BorderTraversal.NONE;

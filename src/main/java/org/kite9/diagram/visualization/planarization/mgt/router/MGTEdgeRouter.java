@@ -12,6 +12,7 @@ import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.position.Direction;
@@ -318,7 +319,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			AbstractRouteFinder f = 
 				ci instanceof ContainerLayoutEdge ? new LayoutEdgeRouteFinder(p, rh, ci, em, d) : 
 				ci instanceof BorderEdge ? new ContainerEdgeRouteFinder(p, rh, ci) :
-				new ConnectionEdgeRouteFinder(p, rh, ci, em, d, it, gt);
+				new ConnectionEdgeRouteFinder(p, rh, (ConnectionEdge) ci, em, d, it, gt);
 			log.send("Routing "+ci+" from "+ci.getFrom()+" to "+ci.getTo()+"d="+ci.getDrawDirection());
 			EdgePath ep = f.createShortestPath();		
 			

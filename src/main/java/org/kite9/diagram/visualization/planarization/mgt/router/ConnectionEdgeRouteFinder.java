@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -28,8 +29,6 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.EnumValue;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
@@ -40,6 +39,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	ElementMapper em;
 	CrossingType it;
 	GeographyType gt;
+	Set<Container> mustCrossContainers;
 	
 	/**
 	 * Figure out if the edge is crossing in a perpendicular direction.
@@ -82,7 +82,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if (traversalRule == BorderTraversal.NONE) {
 			return false;
 		} else if (traversalRule == BorderTraversal.LEAVING) {
-			if (!leaving) {
+			if (!mustCrossContainers.contains(crossing.getOriginalUnderlying())) {
 				return false;
 			}
 		}
@@ -197,7 +197,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 	
-	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, Edge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
+	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ConnectionEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
 		this.startZone = getRoutingInfo(rh, ci, ci.getFrom());
 		this.completeZone = getCompleteZone(ci);
@@ -209,6 +209,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		this.em = em;
 		this.it = it;
 		this.gt = gt;
+		this.mustCrossContainers = getMustCrossContainers(ci.getOriginalUnderlying().getFrom(), ci.getOriginalUnderlying().getTo());
 				
 		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci.getFrom()), ocEnd = getRoutingInfoForOuterContainer(rh, ci.getTo());
 		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
@@ -220,6 +221,30 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		
  		log.send("Preferred Side: "+preferredSide);
 		log.send("Route Finding for: "+e);
+	}
+
+	private Set<Container> getMustCrossContainers(Connected from, Connected to) {
+		Set<Container> out = new HashSet<>();
+		while (from != to) {
+			int fromDepth = em.getContainerDepth(from);
+			int toDepth = em.getContainerDepth(to);
+			if (fromDepth > toDepth) {
+				out.add((Container) from);
+				from = (Connected) from.getParent();
+				
+			} else if (toDepth > fromDepth) {
+				out.add((Container) to);
+				to = (Connected) to.getParent();
+				
+			} else {
+				out.add((Container) from);
+				out.add((Container) to);
+				from = (Connected) from.getParent();
+				to = (Connected) to.getParent();
+			}
+		}
+		
+		return out;
 	}
 
 	private PlanarizationSide decidePreferredSide(Edge ci) {

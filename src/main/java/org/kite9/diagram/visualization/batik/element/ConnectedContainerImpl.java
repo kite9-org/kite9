@@ -42,6 +42,7 @@ public class ConnectedContainerImpl extends AbstractConnectedDiagramElement impl
 	private BorderTraversal[] traversal = new BorderTraversal[4];
 
 	public BorderTraversal getTraversalRule(Direction d) {
+		ensureInitialized();
 		return traversal[d.ordinal()];
 	}
 	

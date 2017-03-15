@@ -28,8 +28,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 			DiagramElementType lt = getElementType(in2);
 			DiagramElementSizing sizing = getElementSizing(in2);
-			DiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
+			AbstractXMLDiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
 			if (out != null) {
+			//	out.ensureInitialized();
 				context.handleTemplateElement(in, out);
 			}
 			return out;
@@ -38,7 +39,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		}
 	}
 
-	private DiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, DiagramElementSizing sizing) {
+	private AbstractXMLDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, DiagramElementSizing sizing) {
 		switch (lt) {
 		case DIAGRAM:
 			if (parent != null) {
@@ -60,7 +61,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case LINK:
 			return new ConnectionImpl(el, parent, context);
 		case LINK_END:
-			return ((XMLElement) el.getParentNode()).getDiagramElement();
+			return (AbstractXMLDiagramElement) ((XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
 			return new TerminatorImpl(el, parent, context);
 		case NONE:

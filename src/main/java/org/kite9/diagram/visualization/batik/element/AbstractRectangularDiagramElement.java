@@ -84,6 +84,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	}
 
 	public Layout getLayout() {
+		ensureInitialized();
 		return layout;
 	}
 	
@@ -101,16 +102,19 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 
 	@Override
 	public DiagramElementSizing getSizing() {
+		ensureInitialized();
 		return sizing;
 	}
 	
 	@Override
 	public double getMargin(Direction d) {
+		ensureInitialized();
 		return margin[d.ordinal()];
 	}
 
 	@Override
 	public double getPadding(Direction d) {
+		ensureInitialized();
 		return padding[d.ordinal()];
 	}
 
