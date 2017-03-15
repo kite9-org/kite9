@@ -353,8 +353,10 @@ public class TestingEngine extends TestingHelp {
 	public static void checkContentsOverlap(Container d, final Layout l) {
 		List<RectangleRenderingInformation> contRI = new ArrayList<RectangleRenderingInformation>(d.getContents().size());
 		for (DiagramElement c : d.getContents()) {
-			RectangleRenderingInformation cRI = (RectangleRenderingInformation) c.getRenderingInformation();
-			contRI.add(cRI);
+			if (c instanceof Connected) {
+				RectangleRenderingInformation cRI = (RectangleRenderingInformation) c.getRenderingInformation();
+				contRI.add(cRI);
+			}
 		}
 
 		Collections.sort(contRI, new Comparator<RectangleRenderingInformation>() {

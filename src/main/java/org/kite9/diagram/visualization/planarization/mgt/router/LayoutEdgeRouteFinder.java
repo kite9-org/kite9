@@ -6,6 +6,7 @@ import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.position.Direction;
@@ -18,9 +19,9 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
  * @author robmoffat
  *
  */
-public class LayoutEdgeRouteFinder extends ConnectionEdgeRouteFinder {
+public class LayoutEdgeRouteFinder extends AbstractTempEdgeRouteFinder2 {
 
-	public LayoutEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, Edge ci, ElementMapper em, Direction edgeDir) {
+	public LayoutEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ContainerLayoutEdge ci, ElementMapper em, Direction edgeDir) {
 		super(p, rh, ci, em, edgeDir, CrossingType.STRICT, GeographyType.STRICT);
 		this.start = identifyActualVertex(ci.getFrom(), ci.getDrawDirection());
 		this.destination = identifyActualVertex(ci.getTo(), Direction.reverse(ci.getDrawDirection()));
