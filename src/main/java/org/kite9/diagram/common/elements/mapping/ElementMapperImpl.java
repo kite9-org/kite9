@@ -193,8 +193,12 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 		
 		// is it embedded in a grid?  If yes, use corners
-		Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
-		return (l == Layout.GRID);
+		if (c instanceof Connected) {
+			Layout l = c.getParent() == null ? null : ((Container) c.getParent()).getLayout();
+			return (l == Layout.GRID);
+		}
+		
+		return false;
 	}
 
 	private boolean isElementTraversible(DiagramElement c) {

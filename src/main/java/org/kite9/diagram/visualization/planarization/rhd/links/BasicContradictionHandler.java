@@ -147,7 +147,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 							checkOrdinalContradiction(l, drawDirection, (Connected) from, (Connected) to, fromC, c);
 							break;
 						case GRID:
-							gridContradiction(c, drawDirection, from, to);
+							gridContradiction(c, drawDirection, (Connected) from, (Connected) to);
 							break;
 						}
 					}
@@ -184,7 +184,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		}
 	}
 
-	private void gridContradiction(Connection c, Direction drawDirection, DiagramElement fromC, DiagramElement toC) {
+	private void gridContradiction(Connection c, Direction drawDirection, Connected fromC, Connected toC) {
 		// do special grid checking
 		switch (drawDirection) {
 		case LEFT:

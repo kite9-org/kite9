@@ -204,19 +204,24 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		List<DiagramElement> contents = c.getContents();
 		for (int i = 0; i < contents.size(); i++) {
 			DiagramElement ci = contents.get(i);
-			for (int j = 0; j < i; j++) {
-				DiagramElement cj = contents.get(j);
-				if (overlaps(ci, cj)) {
-					log.error("Overlap in positions of: "+ci+"  "+cj);
-					return false;
+			if (ci instanceof Connected) {
+				for (int j = 0; j < i; j++) {
+					DiagramElement cj = contents.get(j);
+					if (cj instanceof Connected) {
+						if (overlaps(ci, cj)) {
+							log.error("Overlap in positions of: "+ci+"  "+cj);
+							return false;
+						}
+					}
 				}
-			}
 			
-			if (em.requiresPlanarizationCornerVertices(ci)) {
-				if (!checkLayoutIsConsistent((Container) ci)) {
-					return false;
+				
+				if (em.requiresPlanarizationCornerVertices(ci)) {
+					if (!checkLayoutIsConsistent((Container) ci)) {
+						return false;
+					}
 				}
-			}
+			}	
 		}		
 		
 		return true;
