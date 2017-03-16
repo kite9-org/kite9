@@ -1,25 +1,24 @@
 package org.kite9.diagram.functional.thorough;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.ContradictingLink;
+import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.GraphConstructionTools;
 import org.kite9.diagram.functional.layout.Test36LayoutChoices;
-import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.position.Layout;
 import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.visualization.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
 import org.kite9.diagram.xml.LinkLineStyle;
@@ -27,13 +26,14 @@ import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
+import org.w3c.dom.Element;
 
 import junit.framework.Assert;
 
 public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
-	public void test_33_1_ContradictionHoriz() throws IOException {
+	public void test_33_1_ContradictionHoriz() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -42,9 +42,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.LEFT);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
-
-
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 
 		assertContradicting(l);
 	}
@@ -53,12 +51,22 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Assert.assertTrue(isContradicting(l));
 	}
 
-	private boolean isContradicting(Link l) {
-		return ((RouteRenderingInformation) l.getDiagramElement().getRenderingInformation()).isContradicting();
+	private boolean isContradicting(XMLElement l) {
+		DiagramElement diagramElement = getOriginalElement(l);
+		return ((RouteRenderingInformation) diagramElement.getRenderingInformation()).isContradicting();
+	}
+
+	private DiagramElement getOriginalElement(XMLElement l) {
+		String id = l.getID();
+		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		Element e = lastDiagram.getOwnerDocument().getElementById(id);
+		XMLElement xe = (XMLElement) e;
+		DiagramElement diagramElement = xe.getDiagramElement();
+		return diagramElement;
 	}
 
 	@Test
-	public void test_33_2_ContradictionHoriz2() throws IOException {
+	public void test_33_2_ContradictionHoriz2() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -68,12 +76,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l);
 	}
 
 	@Test
-	public void test_33_3_ContradictionVert() throws IOException {
+	public void test_33_3_ContradictionVert() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -82,12 +90,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l);
 	}
 
 	@Test
-	public void test_33_4_ContradictionVert2() throws IOException {
+	public void test_33_4_ContradictionVert2() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -96,12 +104,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l);
 	}
 
 	@Test
-	public void test_33_5_ContradictionLoop() throws IOException {
+	public void test_33_5_ContradictionLoop() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -115,7 +123,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		int count = 0;
 		count = count + (isContradicting(l1) ? 1 : 0);
 		count = count + (isContradicting(l2) ? 1 : 0);
@@ -126,7 +134,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_6_ContradictionLoop2() throws IOException {
+	public void test_33_6_ContradictionLoop2() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -139,14 +147,14 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 
 		assertContradicting(l);
 
 	}
 
 	@Test
-	public void test_33_7_ContradictionHoriz3() throws IOException {
+	public void test_33_7_ContradictionHoriz3() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -159,7 +167,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		Assert.assertFalse(isContradicting(l1));
 		Assert.assertFalse(isContradicting(l2));
 
@@ -167,7 +175,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
 	@Ignore
-	public void test_33_8_HierarchyContradiction() throws IOException {
+	public void test_33_8_HierarchyContradiction() throws Exception {
 		try {
 			generate("hierarchy_contradiction.xml");
 		} catch (ElementsMissingException e) {
@@ -179,7 +187,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_9_HierarchyContradiction2() throws IOException {
+	public void test_33_9_HierarchyContradiction2() throws Exception {
 		try {
 			generate("hierarchy_contradiction2.xml");
 		} catch (ElementsMissingException e) {
@@ -192,18 +200,18 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_10_EdgeContradictsContainer1() throws IOException {
+	public void test_33_10_EdgeContradictsContainer1() throws Exception {
 		Glyph g1 = new Glyph("0", null, "0", null, null);
 		Glyph g2 = new Glyph("1", null, "1", null, null);
 		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1), true, null, Layout.DOWN);
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2), Layout.DOWN, null);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l1);
 	}
 
 	@Test
-	public void test_33_11_EdgeContradictsContainer2() throws IOException {
+	public void test_33_11_EdgeContradictsContainer2() throws Exception {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
@@ -212,13 +220,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link l2 = new ContradictingLink(g1, g3, null, null, null, null, Direction.UP);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		Assert.assertTrue(isContradicting(l1));
 		Assert.assertTrue(!isContradicting(l2));
 	}
 
 	@Test
-	public void test_33_12_ContradictionHoriz4() throws IOException {
+	public void test_33_12_ContradictionHoriz4() throws Exception {
 
 		Glyph g0 = new Glyph("0", null, "0", null, null);
 		Glyph g1 = new Glyph("1", null, "1", null, null);
@@ -232,14 +240,14 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link l2 = new ContradictingLink(g0, g3, null, null, null, null, Direction.DOWN);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l1);
 		assertContradicting(l2);
 		
 	}
 
 	@Test
-	public void test_33_13_ContradictingRectangularContext1() throws IOException {
+	public void test_33_13_ContradictingRectangularContext1() throws Exception {
 		Glyph o2 = new Glyph("o2", null, "o2", null, null);
 		Glyph i1 = new Glyph("i1", null, "i1", null, null);
 		Glyph i2 = new Glyph("i2", null, "i2", null, null);
@@ -254,7 +262,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, o2), null);
 
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		
 		int contCount = 0;
 		contCount = contCount + (isContradicting(l2) ? 1 :0);
@@ -266,7 +274,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_14_ContextInternalContradiction() throws IOException {
+	public void test_33_14_ContextInternalContradiction() throws Exception {
 		Glyph o1 = new Glyph("o1", null, "o1", null, null);
 		Glyph o2 = new Glyph("o2", null, "o2", null, null);
 		Glyph i1 = new Glyph("i1", null, "i1", null, null);
@@ -279,7 +287,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
 
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 
 		// Assert.assertTrue(l2.getRenderingInformation().isContradicting());
 		// Assert.assertTrue(l3.getRenderingInformation().isContradicting());
@@ -293,12 +301,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_15_TooManyContradictions() throws IOException {
+	public void test_33_15_TooManyContradictions() throws Exception {
 		generate("too_many_contradictions.xml");
 	}
 
 	@Test
-	public void test_33_16_UseCaseIssue() throws IOException {
+	public void test_33_16_UseCaseIssue() throws Exception {
 		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, null);
 
@@ -333,10 +341,10 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	/**
 	 * Groupwise planarizer doesn't allow you to bend the container, so this should throw an exception
 	 * 
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void test_33_17_ArrowBendingContainer() throws IOException {
+	public void test_33_17_ArrowBendingContainer() throws Exception {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
@@ -354,10 +362,10 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	/**
 	 * Containers can't be bent, so this will bend the directed link instead.
 	 * 
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void test_33_18_ArrowBendingContainer() throws IOException {
+	public void test_33_18_ArrowBendingContainer() throws Exception {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
@@ -373,7 +381,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_19_IllegalRoute1() throws IOException {
+	public void test_33_19_IllegalRoute1() throws Exception {
 		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 1, contents, null);
 
@@ -390,7 +398,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_20_IllegalRoute2() throws IOException {
+	public void test_33_20_IllegalRoute2() throws Exception {
 		List<XMLElement> contents = new ArrayList<XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 1, contents, Layout.VERTICAL);
 
@@ -408,47 +416,47 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_21_BadRequest() throws IOException {
+	public void test_33_21_BadRequest() throws Exception {
 		generate("badrequest.xml");
 	}
 
 	@Test
-	public void test_33_22_BretsError() throws IOException {
+	public void test_33_22_BretsError() throws Exception {
 		generate("brets_error.xml");
 	}
 
 	@Test
-	public void test_33_23_BentContainer() throws IOException {
+	public void test_33_23_BentContainer() throws Exception {
 		generate("bent_container.xml");
 	}
 
 	@Test
-	public void test_33_24_NestedDirectedHorizontalContradiction() throws IOException {
+	public void test_33_24_NestedDirectedHorizontalContradiction() throws Exception {
 		// this is an impossible merge, because g4 and g3 can't exist side-by-side
 		renderDiagram(Test36LayoutChoices.doNestedDirected(Layout.RIGHT, Layout.HORIZONTAL, Layout.VERTICAL,
 				Direction.UP));
 	}
 
 	@Test
-	public void test_33_25_NestedDirectedVertical() throws IOException {
+	public void test_33_25_NestedDirectedVertical() throws Exception {
 		renderDiagram(Test36LayoutChoices.doNestedDirected(Layout.UP, Layout.VERTICAL, Layout.HORIZONTAL,
 				Direction.RIGHT));
 	}
 
 	@Test
 	@Ignore // too many attr to work
-	public void test_33_27_30KElements() throws IOException {
+	public void test_33_27_30KElements() throws Exception {
 		generate("30k.xml");
 	}
 
 	@Test
-	public void test_33_28_ADLHierarchyStrict() throws IOException {
+	public void test_33_28_ADLHierarchyStrict() throws Exception {
 		Kite9Log.setLogging(false);
 		generate("ContradictingADLClassHierarchy.xml");
 	}
 
 	@Test
-	public void test_33_29_IllegalConnection() throws IOException {
+	public void test_33_29_IllegalConnection() throws Exception {
 		try {
 			Glyph one = new Glyph("one", "", "one", null, null);
 			Glyph two = new Glyph("two", "", "two", null, null);
@@ -472,33 +480,33 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_33_30_ADLHierarchy() throws IOException {
+	public void test_33_30_ADLHierarchy() throws Exception {
 		generate("ADLClassHierarchy.xml");
 	}
 	
 	@Test
-	public void test_33_31_ADLHierarchyNoBorder() throws IOException {
-		generatePDF("ADLClassHierarchyNoBorder.xml");
+	public void test_33_31_ADLHierarchyNoBorder() throws Exception {
+		generate("ADLClassHierarchyNoBorder.xml");
 	}
 	
 	@Test
-	public void test_33_32_ADLHierarchyStrictNoBorder() throws IOException {
+	public void test_33_32_ADLHierarchyStrictNoBorder() throws Exception {
 		generate("ContradictingADLClassHierarchyNoBorder.xml");
 	}
 	
 //	@Ignore("Broken in sprint 7")
 	@Test
-	public void test_33_33_LayoutDirection() throws IOException {
+	public void test_33_33_LayoutDirection() throws Exception {
 		generate("layout_direction.xml");
 	}
 	
 	@Test
-	public void test_33_34_CouldntEstablishDirection() throws IOException {
+	public void test_33_34_CouldntEstablishDirection() throws Exception {
 		generate("couldnt_establish_direction.xml");
 	}
 	
 	@Test
-	public void test_33_35_RankedContradictionLoop() throws IOException {
+	public void test_33_35_RankedContradictionLoop() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -515,13 +523,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l3.setRank(15);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
 		
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l1);
 
 	}
 	
 	@Test
-	public void test_33_36_ContradictingLastLink() throws IOException {
+	public void test_33_36_ContradictingLastLink() throws Exception {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
@@ -538,13 +546,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l3.setRank(15);
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g3), null);
 
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 		assertContradicting(l1);
 	}
 	
 	
 	@Test
-	public void test_33_38_AssertInvisibleContradictionsNotRendered() throws IOException {
+	public void test_33_38_AssertInvisibleContradictionsNotRendered() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
@@ -556,9 +564,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l.setShapeName(LinkLineStyle.INVISIBLE);
 
 		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 
-		Assert.assertFalse(l.getDiagramElement().getRenderingInformation().isRendered());
+		Assert.assertFalse("rendered, shouldn't be", getOriginalElement(l).getRenderingInformation().isRendered());
 
 	}
 

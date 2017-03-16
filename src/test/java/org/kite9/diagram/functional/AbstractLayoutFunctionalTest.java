@@ -19,6 +19,7 @@ import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.visualization.format.pos.DiagramChecker;
 import org.kite9.diagram.visualization.pipeline.full.AbstractArrangementPipeline;
+import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
@@ -26,13 +27,16 @@ import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.serialization.XMLHelper;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
 	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
 		ensureAllLinksAccountedFor(d);
-		String xml = new XMLHelper().toXML(d);
+		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		return renderDiagram(xml);
 	}
 	
@@ -172,10 +176,59 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
 		RepositoryHelp.streamCopy(isr, sw, true);
+		String s = sw.toString();
+		s = addSVGFurniture(s);
+		XMLHelper xmlHelper = new XMLHelper();
+		ADLDocument dxe = xmlHelper.fromXML(s);
+		convertOldStructure(dxe.getRootElement());
 		
 		// fix for old-style <allLinks> tag
-		String theXML = sw.toString().replace("<allLinks>", "").replace("</allLinks>","");
+		String theXML = xmlHelper.toXML(dxe);
+		Kite9Log.setLogging(false);
+		transcodePNG(theXML);
+		transcodeSVG(theXML);
+		boolean addressed = isAddressed();
+		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		
-		renderDiagram(theXML);
+	}
+
+	private void convertOldStructure(Element dxe) {
+		if (dxe.getTagName().equals("allLinks")) {
+			moveChildrenIntoParentAndDelete(dxe);
+		} else {
+			NodeList nl = dxe.getChildNodes();
+			for (int i = 0; i < nl.getLength(); i++) {
+				Node n = nl.item(i);
+				if (n instanceof Element) {
+					convertOldStructure((Element) n);
+				}
+			}
+			convertAttributeToTag(dxe, "label");
+			convertAttributeToTag(dxe, "stereotype");
+		}
+		
+	}
+
+	private void moveChildrenIntoParentAndDelete(Element dxe) {
+		Element parent = (Element) dxe.getParentNode();
+		NodeList nl = dxe.getChildNodes();
+		for (int i = 0; i < nl.getLength(); i++) {
+			Node n = nl.item(i);
+			if (n instanceof Element) {
+				parent.appendChild(n);
+			}
+		}
+		parent.removeChild(dxe);
+	}
+
+	private void convertAttributeToTag(Element dxe, String name) {
+		if (dxe.getAttribute(name).length() > 0) {
+			String label = dxe.getAttribute(name);
+			Element e = dxe.getOwnerDocument().createElement(name);
+			dxe.appendChild(e);
+			e.setTextContent(label);
+		}
 	}
 }

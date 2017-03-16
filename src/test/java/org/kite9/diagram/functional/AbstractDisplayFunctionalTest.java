@@ -3,8 +3,6 @@ package org.kite9.diagram.functional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
@@ -12,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
-import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.RepositoryHelp;
@@ -43,7 +40,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	protected void renderDiagram(DiagramXMLElement d) throws Exception {
-		String xml = new XMLHelper().toXML(d);
+		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		renderDiagram(xml);
 	}
 	

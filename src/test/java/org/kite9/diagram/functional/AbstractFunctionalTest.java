@@ -78,7 +78,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
 		String style = getDesignerStylesheetReference();
 		String suffix = "</svg:svg>";
-		xml = xml.replaceFirst("<\\?.*\\?>\n","");
+		xml = xml.replaceFirst("<\\?.*\\?>","");
 		String full = prefix + style + xml + suffix;
 		return full;
 	}
