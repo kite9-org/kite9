@@ -30,6 +30,7 @@ import org.kite9.framework.serialization.XMLHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
@@ -197,6 +198,12 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	private void convertOldStructure(Element dxe) {
 		if (dxe.getTagName().equals("allLinks")) {
 			moveChildrenIntoParentAndDelete(dxe);
+		} if (dxe.getTagName().equals("text")) {
+			moveChildrenIntoParentAndDelete(dxe);
+		} if (dxe.getTagName().equals("hints")) {
+			dxe.getParentNode().removeChild(dxe);
+		} if ((dxe.getTagName().equals("symbols")) && (((Element) dxe.getParentNode()).getTagName().equals("text-line"))) {
+			dxe.getParentNode().removeChild(dxe);
 		} else {
 			NodeList nl = dxe.getChildNodes();
 			for (int i = 0; i < nl.getLength(); i++) {
@@ -216,7 +223,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		NodeList nl = dxe.getChildNodes();
 		for (int i = 0; i < nl.getLength(); i++) {
 			Node n = nl.item(i);
-			if (n instanceof Element) {
+			if ((n instanceof Element) || (n instanceof Text)) {
 				parent.appendChild(n);
 			}
 		}
