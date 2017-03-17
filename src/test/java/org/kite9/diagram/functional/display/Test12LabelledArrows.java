@@ -1,6 +1,5 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,9 +12,9 @@ import org.kite9.diagram.adl.KeyHelper;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.diagram.xml.LinkEndStyle;
@@ -25,7 +24,7 @@ import org.kite9.framework.common.HelpMethods;
 public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 
 	@Test
-	public void test_12_1_LabelledLeftRight() throws IOException {
+	public void test_12_1_LabelledLeftRight() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
@@ -40,7 +39,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_12_2_LabelledUpDown() throws IOException {
+	public void test_12_2_LabelledUpDown() throws Exception {
 		
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
@@ -55,7 +54,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_12_3_SymbolLabels() throws IOException {
+	public void test_12_3_SymbolLabels() throws Exception {
 		KeyHelper kh = new KeyHelper();
 		
 		
@@ -82,7 +81,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	
 	
 	@Test
-	public void test_12_4_VeryLongLabels() throws IOException {
+	public void test_12_4_VeryLongLabels() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
@@ -99,7 +98,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_12_5_MultiLineLongLabels() throws IOException {
+	public void test_12_5_MultiLineLongLabels() throws Exception {
 		
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
@@ -116,7 +115,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_12_6_GlyphMultipleLabels() throws IOException {
+	public void test_12_6_GlyphMultipleLabels() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
@@ -134,7 +133,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_12_7_LabelsInside() throws IOException {
+	public void test_12_7_LabelsInside() throws Exception {
 		
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
@@ -154,7 +153,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_12_8_TestLabelledBothEnds() throws IOException {
+	public void test_12_8_TestLabelledBothEnds() throws Exception {
 		Glyph a = new Glyph("", "a", null, null);
 		Arrow i1 = new Arrow("i1");
 		Link l = new Link(i1, a);
@@ -170,7 +169,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test_12_9_ChainOfLabels() throws IOException {
+	public void test_12_9_ChainOfLabels() throws Exception {
 				
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
@@ -190,7 +189,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test_12_10_BlankLabels() throws IOException {
+	public void test_12_10_BlankLabels() throws Exception {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
@@ -209,7 +208,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-	public void test_12_11_PushingRect() throws IOException {
+	public void test_12_11_PushingRect() throws Exception {
 		generate("label_push_error.xml");
 	}
 

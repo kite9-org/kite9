@@ -10,7 +10,6 @@ import java.util.Set;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.xml.ADLDocument;
 import org.kite9.diagram.xml.AbstractStyleableXMLElement;
-import org.kite9.tool.AbstractKite9Runner;
 
 /**
  * Helps in the creation of keys by making sure that symbols don't reuse the
