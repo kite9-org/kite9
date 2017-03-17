@@ -10,9 +10,5 @@ package org.kite9.diagram.visualization.display;
  */
 public interface CompleteDisplayer extends Displayer, DiagramSizer {
 
-	/**
-	 * Called at the end to complete rendering and return a result, if any
-	 */
-	public void finish();
 	
 }

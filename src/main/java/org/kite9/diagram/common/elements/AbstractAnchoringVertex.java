@@ -1,10 +1,10 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.HPos;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.HPos;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.position.VPos;
 import org.kite9.framework.logging.LogicException;
 
 /**

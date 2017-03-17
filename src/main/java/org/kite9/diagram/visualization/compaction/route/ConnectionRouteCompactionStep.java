@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.RouteRenderingInformation;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Tools;

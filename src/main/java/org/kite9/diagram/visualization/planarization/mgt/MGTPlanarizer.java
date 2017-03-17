@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;

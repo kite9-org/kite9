@@ -5,18 +5,18 @@ import java.util.Collection;
 
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.batik.GraphicsLayerName;
+import org.kite9.diagram.batik.element.AbstractDiagramElement;
+import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.position.RectangleRenderingInformationImpl;
-import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.style.ContainerPosition;
-import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
-import org.kite9.diagram.visualization.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.visualization.format.GraphicsLayerName;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
+import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.style.ContainerPosition;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.

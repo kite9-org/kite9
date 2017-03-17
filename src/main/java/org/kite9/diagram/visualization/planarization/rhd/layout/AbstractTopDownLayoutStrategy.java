@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.planarization.rhd.layout;
 
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.hints.PositioningHints;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;

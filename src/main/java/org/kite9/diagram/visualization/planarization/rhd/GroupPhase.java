@@ -9,30 +9,30 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.hints.PositioningHints;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.LinkLineStyle;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.LinkLineStyle;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the

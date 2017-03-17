@@ -3,7 +3,7 @@ package org.kite9.diagram.common.elements;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.model.DiagramElement;
 
 /**
  * This is used where two edges are required to cross each other.  This vertex is added at the crossing 

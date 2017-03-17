@@ -3,9 +3,9 @@ package org.kite9.diagram.visualization.planarization.rhd.links;
 import java.util.Collection;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Connected;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 

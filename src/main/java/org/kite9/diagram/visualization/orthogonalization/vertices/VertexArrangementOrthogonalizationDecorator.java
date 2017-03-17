@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.adl.Leaf;
-import org.kite9.diagram.position.CostedDimension;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.display.Displayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;

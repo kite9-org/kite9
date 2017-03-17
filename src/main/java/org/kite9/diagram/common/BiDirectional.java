@@ -1,6 +1,6 @@
 package org.kite9.diagram.common;
 
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * This generic interface allows you to specify a bi-directional, optionally directed from-to relationships, where from and to are 

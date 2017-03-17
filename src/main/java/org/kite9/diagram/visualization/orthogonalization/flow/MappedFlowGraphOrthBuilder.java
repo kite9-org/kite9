@@ -6,14 +6,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;

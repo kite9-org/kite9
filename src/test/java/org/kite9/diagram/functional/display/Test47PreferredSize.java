@@ -6,15 +6,15 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.XMLElement;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.XMLElement;
 
 @Ignore
 public class Test47PreferredSize extends AbstractDisplayFunctionalTest {

@@ -1,15 +1,15 @@
 package org.kite9.diagram.common.elements.mapping;
 
 import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.AbstractBiDirectional;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.position.RouteRenderingInformationImpl;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 
 /**
  * This connection is used with a {@link ContainerLayoutEdge} and is used to create a layout between

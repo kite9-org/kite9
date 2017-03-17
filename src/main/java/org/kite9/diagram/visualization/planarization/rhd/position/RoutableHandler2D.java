@@ -7,7 +7,7 @@ import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.Routable;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.objects.Bounds;
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 
 /**

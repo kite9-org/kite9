@@ -3,12 +3,12 @@ package org.kite9.diagram.common.elements.grid;
 import java.util.List;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Layout;
 
 /**
  * Handles positioning of elements for {@link Layout}.GRID.  

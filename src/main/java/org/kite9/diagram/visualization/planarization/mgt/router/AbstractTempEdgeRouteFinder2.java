@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
@@ -19,17 +16,20 @@ import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.style.BorderTraversal;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
-import org.kite9.diagram.xml.DiagramXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.xml.DiagramXMLElement;
 
 public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 

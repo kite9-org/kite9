@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization.ordering;
 
 import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * Defines the ordering of edges around a vertex and provides methods for changing the order.

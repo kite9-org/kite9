@@ -1,15 +1,15 @@
 package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
-import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.LinkEndStyle;
+import org.kite9.diagram.model.position.Layout;
+import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test2Links extends AbstractDisplayFunctionalTest {
 	

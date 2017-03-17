@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.XMLElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.XMLElement;
 
 public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 

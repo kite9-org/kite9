@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.HelpMethods;
 

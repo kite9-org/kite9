@@ -14,7 +14,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  *
  */
-class SingleDirection {
+public class SingleDirection {
 	
 	private Integer position = null;
 
@@ -95,7 +95,7 @@ class SingleDirection {
 	}
 
 	
-	void addForwardConstraint(SingleDirection to, int distance) {
+	public void addForwardConstraint(SingleDirection to, int distance) {
 		Integer existing = forward.get(to);
 		if ((existing == null) || (existing < distance)) {
 			forward.put(to, distance);
@@ -106,7 +106,7 @@ class SingleDirection {
 		}
 	}
 	
-	void addBackwardConstraint(SingleDirection to, int distance) {
+	public void addBackwardConstraint(SingleDirection to, int distance) {
 		Integer existing = backward.get(to);
 		if ((existing == null) || (existing > distance)) {
 			backward.put(to, distance);

@@ -2,12 +2,12 @@ package org.kite9.diagram.common.elements.mapping;
 
 import java.util.Collection;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.DiagramElement;
 
 /**
  * Given original (user defined) diagram element, returns the planarization element(s) relating to it.

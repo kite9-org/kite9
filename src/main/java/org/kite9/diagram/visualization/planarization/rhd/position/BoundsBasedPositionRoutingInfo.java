@@ -10,6 +10,15 @@ import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.R
 public class BoundsBasedPositionRoutingInfo extends PositionRoutingInfo {
 	
 	Bounds x, y;
+	
+	public Bounds getX() {
+		return x;
+	}
+
+	public Bounds getY() {
+		return y;
+	}
+
 	Rectangle2D rect;
 	
 	public BoundsBasedPositionRoutingInfo(Bounds x, Bounds y) {

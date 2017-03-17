@@ -1,12 +1,12 @@
 package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
+import org.kite9.framework.xml.DiagramXMLElement;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.xml.DiagramXMLElement;
 
 public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 

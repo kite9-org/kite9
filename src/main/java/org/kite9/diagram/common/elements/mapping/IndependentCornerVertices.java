@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 public class IndependentCornerVertices extends AbstractCornerVertices {

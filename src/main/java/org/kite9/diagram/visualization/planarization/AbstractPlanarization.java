@@ -7,12 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 
 /**
@@ -120,7 +119,6 @@ public abstract class AbstractPlanarization implements Planarization {
 		}
 	}
 
-	@K9Exclude	// would like to include this, but it screws the diagram up
 	List<Face> faces = new ArrayList<Face>();
 
 	Map<Edge, List<Face>> edgeFaceMap = new HashMap<Edge, List<Face>>();

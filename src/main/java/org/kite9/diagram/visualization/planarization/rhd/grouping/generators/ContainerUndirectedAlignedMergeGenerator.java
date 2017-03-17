@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators;
 import java.util.Collections;
 import java.util.Set;
 
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;

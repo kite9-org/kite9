@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.xml.XMLElement;
+import org.kite9.framework.xml.XMLElement;
 
 public class HelpMethods {
 

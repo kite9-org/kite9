@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.framework.logging.LogicException;

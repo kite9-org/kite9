@@ -3,12 +3,12 @@ package org.kite9.diagram.visualization.planarization.transform;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Diagram;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;

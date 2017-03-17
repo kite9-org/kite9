@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 
 public abstract class AbstractEdge extends AbstractBiDirectional<Vertex> implements Edge {
 	

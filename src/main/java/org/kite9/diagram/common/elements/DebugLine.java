@@ -1,12 +1,12 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.adl.DiagramElement;
+import org.kite9.diagram.batik.element.AbstractDiagramElement;
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.visualization.batik.element.AbstractDiagramElement;
-import org.kite9.diagram.xml.LinkLineStyle;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.framework.xml.LinkLineStyle;
 
 /**
  * A straight line from some point to some other point.

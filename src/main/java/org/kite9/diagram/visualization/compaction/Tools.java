@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.compaction;
 
 import org.kite9.diagram.common.elements.ArtificialElement;
-import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;

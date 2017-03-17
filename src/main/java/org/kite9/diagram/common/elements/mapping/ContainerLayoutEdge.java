@@ -1,11 +1,11 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * This edge is used to enforce a particular layout within a container.

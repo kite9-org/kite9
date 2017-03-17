@@ -5,16 +5,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.kite9.framework.Kite9Item;
-
 public class StackHelp {
-
-	/**
-	 * Finds the method corresponding to the {@link Kite9Item}.
-	 */
-	public static Method getKite9Item() {
-		return getAnnotatedMethod(Kite9Item.class);
-	}
 
 	public static <X extends Annotation> Method getAnnotatedMethod(Class<X> ann) {
 		StackTraceElement[] elems = Thread.currentThread().getStackTrace();

@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic;
 
 import org.kite9.diagram.common.hints.PositioningHints;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;

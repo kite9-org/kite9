@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Rectangular;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.style.DiagramElementSizing;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;

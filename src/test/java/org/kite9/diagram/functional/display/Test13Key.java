@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
@@ -12,10 +13,9 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramXMLElement;
 
 
 public class Test13Key extends AbstractLayoutFunctionalTest {

@@ -1,8 +1,8 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.position.HPos;
-import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.HPos;
+import org.kite9.diagram.model.position.VPos;
 
 /**
  * Used to model any old corner within the diagram. e.g. bend in a connection, corner of a vertex etc.

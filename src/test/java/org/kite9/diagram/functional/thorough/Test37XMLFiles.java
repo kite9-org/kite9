@@ -1,7 +1,7 @@
 package org.kite9.diagram.functional.thorough;
 
 import org.junit.Test;
-import org.kite9.diagram.functional.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.framework.logging.Kite9Log;
 

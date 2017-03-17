@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
-import org.kite9.diagram.position.RenderingInformation;
+import org.kite9.diagram.model.position.RenderingInformation;
 
 /**
  * Edges can represent parts of container borders or connections within the planarization of 

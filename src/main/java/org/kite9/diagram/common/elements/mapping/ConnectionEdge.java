@@ -1,11 +1,11 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Label;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 
 /**

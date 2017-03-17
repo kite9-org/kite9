@@ -2,10 +2,10 @@ package org.kite9.diagram.adl;
 
 import java.util.List;
 
-import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.AbstractXMLContainerElement;
-import org.kite9.diagram.xml.XMLElement;
+import org.kite9.diagram.model.position.Layout;
+import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.AbstractXMLContainerElement;
+import org.kite9.framework.xml.XMLElement;
 import org.w3c.dom.Node;
 
 

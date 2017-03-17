@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.elements.AbstractBiDirectional;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * Used for enforcing container ordering.

@@ -16,6 +16,11 @@ public class LinePositionRoutingInfo implements LineRoutingInfo {
 	}
 
 	BoundsBasedPositionRoutingInfo position;
+	
+	public BoundsBasedPositionRoutingInfo getPositionForTesting() {
+		return position;
+	}
+
 	BoundsBasedPositionRoutingInfo obstacle;
 	Routing r;
 	

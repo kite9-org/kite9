@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.generators;
 
-import org.kite9.diagram.adl.Container;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 
 /** 

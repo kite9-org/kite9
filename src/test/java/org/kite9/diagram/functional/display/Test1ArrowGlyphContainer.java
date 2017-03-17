@@ -1,15 +1,15 @@
 package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
+import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.XMLElement;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.xml.DiagramXMLElement;
-import org.kite9.diagram.xml.XMLElement;
 
 public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	

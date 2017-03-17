@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.xml.ADLDocument;
-import org.kite9.diagram.xml.AbstractStyleableXMLElement;
+import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.AbstractStyleableXMLElement;
 
 /**
  * Helps in the creation of keys by making sure that symbols don't reuse the

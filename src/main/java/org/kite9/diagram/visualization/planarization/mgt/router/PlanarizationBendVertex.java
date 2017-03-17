@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractVertex;
+import org.kite9.diagram.model.DiagramElement;
 
 /**
  * This is used where a straight connection goes has to bend in the planarization to cross an edge in the same axis 

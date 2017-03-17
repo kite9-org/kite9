@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.model.position.Dimension2D;
 
 public interface Positioned {
 

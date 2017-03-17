@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout;
 
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;

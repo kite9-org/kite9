@@ -1,24 +1,21 @@
 package org.kite9.diagram.visualization.display;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Terminator;
-import org.kite9.diagram.position.CostedDimension;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.visualization.batik.HasLayeredGraphics;
-import org.kite9.diagram.xml.LinkLineStyle;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.xml.LinkLineStyle;
 
 public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSizer, Logable {
 	
 	private int gridSize = 12;
-
-	public static final CompleteDisplayer NULL = new NullDisplayer();
 
 	double buffer;
 	protected Kite9Log log = new Kite9Log(this);

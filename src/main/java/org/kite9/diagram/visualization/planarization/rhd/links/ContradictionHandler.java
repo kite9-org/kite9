@@ -1,11 +1,11 @@
 package org.kite9.diagram.visualization.planarization.rhd.links;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 
 /**

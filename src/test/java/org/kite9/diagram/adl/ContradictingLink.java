@@ -1,7 +1,7 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.xml.XMLElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.framework.xml.XMLElement;
 
 /** 
  * Link which allows contradiction 

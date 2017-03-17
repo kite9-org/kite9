@@ -11,18 +11,17 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.annotation.K9Exclude;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
@@ -63,13 +62,10 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	}
 
 	List<Vertex> vertexOrder;
-	@K9Exclude
 	List<Vertex> unmodifiableVO;
 
-	@K9Exclude
 	private Set<Edge> aboveSet = new LinkedHashSet<Edge>();
 
-	@K9Exclude
 	private Set<Edge> belowSet = new LinkedHashSet<Edge>();
 
 	public Set<Edge> getAboveLineEdges() {
@@ -82,13 +78,9 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 
 	public Collection<BiDirectional<Connected>> uninsertedConnections;
 
-	@K9Exclude
 	private List<List<Edge>> aboveForwardLinks;
-	@K9Exclude
 	private List<List<Edge>> aboveBackwardLinks;
-	@K9Exclude
 	private List<List<Edge>> belowForwardLinks;
-	@K9Exclude
 	private List<List<Edge>> belowBackwardLinks;
 
 	public List<Edge> getAboveForwardLinks(Vertex v) {

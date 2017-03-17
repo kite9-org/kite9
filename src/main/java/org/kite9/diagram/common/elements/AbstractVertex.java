@@ -3,8 +3,8 @@ package org.kite9.diagram.common.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.position.Dimension2D;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Dimension2D;
 
 /**
  * Helper class for implementations of Vertex.  Ids are immutable on each vertex, and 

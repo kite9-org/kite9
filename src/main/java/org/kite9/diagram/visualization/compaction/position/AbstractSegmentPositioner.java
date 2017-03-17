@@ -3,9 +3,9 @@ package org.kite9.diagram.visualization.compaction.position;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;

@@ -14,24 +14,24 @@ import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.Diagram;
-import org.kite9.diagram.adl.DiagramElement;
-import org.kite9.diagram.adl.Label;
-import org.kite9.diagram.adl.Leaf;
-import org.kite9.diagram.adl.Text;
-import org.kite9.diagram.position.Dimension2D;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.RectangleRenderingInformation;
-import org.kite9.diagram.position.RenderingInformation;
-import org.kite9.diagram.position.RouteRenderingInformation;
-import org.kite9.diagram.visitors.DiagramElementVisitor;
-import org.kite9.diagram.visitors.VisitorAction;
-import org.kite9.diagram.xml.DiagramXMLElement;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.Text;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.visitors.DiagramElementVisitor;
+import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
+import org.kite9.framework.xml.DiagramXMLElement;
 
 /**
  * Helps with comparing the results of tests

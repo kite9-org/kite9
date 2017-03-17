@@ -3,8 +3,8 @@ package org.kite9.diagram.functional.display;
 import java.net.URL;
 
 import org.junit.Test;
-import org.kite9.diagram.functional.AbstractDisplayFunctionalTest;
-import org.kite9.framework.serialization.XMLHelper;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
+import org.kite9.framework.dom.XMLHelper;
 
 public class Test56Templates extends AbstractDisplayFunctionalTest {
 	

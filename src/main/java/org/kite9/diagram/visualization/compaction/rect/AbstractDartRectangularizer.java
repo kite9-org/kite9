@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Turn;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;

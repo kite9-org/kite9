@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 
 

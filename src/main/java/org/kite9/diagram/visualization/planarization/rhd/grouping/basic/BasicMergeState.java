@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;

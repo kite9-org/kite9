@@ -2,8 +2,6 @@ package org.kite9.diagram.visualization.orthogonalization.flow.balanced;
 
 import java.util.List;
 
-import org.kite9.diagram.adl.Connection;
-import org.kite9.diagram.adl.Container;
 import org.kite9.diagram.common.VertexOnEdge;
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
 import org.kite9.diagram.common.algorithms.fg.Arc;
@@ -16,6 +14,8 @@ import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Pair;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;

@@ -3,20 +3,20 @@ package org.kite9.diagram.visualization.planarization.mgt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.kite9.diagram.adl.Connected;
-import org.kite9.diagram.adl.Container;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.position.Direction;
-import org.kite9.diagram.position.Layout;
-import org.kite9.diagram.style.BorderTraversal;
-import org.kite9.framework.serialization.CSSConstants;
-import org.kite9.framework.serialization.EnumValue;
+import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.dom.EnumValue;
 
 /**
  * This edge is used for the surrounding of a diagram element.

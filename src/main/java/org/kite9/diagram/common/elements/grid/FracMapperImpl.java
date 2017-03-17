@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.adl.DiagramElement;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.mapping.BaseGridCornerVertices;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.position.HPos;
-import org.kite9.diagram.position.VPos;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.HPos;
+import org.kite9.diagram.model.position.VPos;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.logging.LogicException;
 
