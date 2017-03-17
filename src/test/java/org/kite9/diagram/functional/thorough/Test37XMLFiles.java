@@ -231,11 +231,6 @@ public class Test37XMLFiles extends AbstractLayoutFunctionalTest {
 	protected boolean checkEverythingStraight() {
 		return false;
 	}
-	
-	@Override
-	public void setLogging() {
-		Kite9Log.setLogging(false);
-	}
-	
+
 	
 }

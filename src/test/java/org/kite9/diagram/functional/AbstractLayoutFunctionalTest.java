@@ -185,7 +185,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		
 		// fix for old-style <allLinks> tag
 		String theXML = xmlHelper.toXML(dxe);
-		Kite9Log.setLogging(false);
+		//Kite9Log.setLogging(false);
 		transcodePNG(theXML);
 		transcodeSVG(theXML);
 		boolean addressed = isAddressed();
@@ -220,12 +220,13 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	private void moveChildrenIntoParentAndDelete(Element dxe) {
 		Element parent = (Element) dxe.getParentNode();
-		NodeList nl = dxe.getChildNodes();
-		for (int i = 0; i < nl.getLength(); i++) {
-			Node n = nl.item(i);
+		Node n = dxe.getFirstChild();
+		while (n != null) {
+			Node n2 = n.getNextSibling();
 			if ((n instanceof Element) || (n instanceof Text)) {
 				parent.appendChild(n);
 			}
+			n = n2;
 		}
 		parent.removeChild(dxe);
 	}

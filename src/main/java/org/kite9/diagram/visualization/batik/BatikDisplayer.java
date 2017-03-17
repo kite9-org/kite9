@@ -100,7 +100,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				layered.eachLayer(node -> {
 					AffineTransform existing = node.getTransform();
 					AffineTransform global = node.getGlobalTransform();
-					System.out.println("Global transform of "+element+" : "+global);
 					existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
 				});
 				
@@ -119,8 +118,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 					// applies scale and translation
 					layered.eachLayer(node -> {
 						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-						System.out.println("Expected Size of "+element+" : "+rri.getSize());
-						System.out.println("Expected Position of "+element+" : "+rri.getPosition());
 						AffineTransform existing = node.getTransform();
 						
 						if (bounds != null) {
@@ -137,7 +134,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	private DiagramElementSizing getSizing(HasLayeredGraphics layered) {
 		DiagramElementSizing out =  (layered instanceof Rectangular) ?((Rectangular) layered).getSizing() : null;
-		System.out.println("Sizing of "+layered+" is "+out);
 		return out;
 	}
 
@@ -149,9 +145,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		double yt = rri.getPosition().y() - global.getTranslateY();
 		double xst = xt / xs;
 		double yst = yt  / ys;
-		System.out.println("translate: "+xst+" "+yst);
 		existing.translate(xst, yst);
-		System.out.println(existing);
 	}
 
 	@Override
