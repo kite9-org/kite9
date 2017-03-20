@@ -34,7 +34,7 @@ import org.kite9.framework.logging.LogicException;
  * The way this works is by tracing around each face looking for LRR or RRL
  * patterns of angles between the segments in the face.
  * 
- * There are four {@link VertexTurn}s in a rectangularization. These are
+ * There are 5 {@link VertexTurn}s in a rectangularization. These are
  * labelled as follows:
  * 
  * <pre>

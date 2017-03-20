@@ -14,12 +14,11 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.LinkLineStyle;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractSVGDiagramElement implements Connection {

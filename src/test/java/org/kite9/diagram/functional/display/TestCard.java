@@ -1,24 +1,22 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
-
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
-public class TestCard extends AbstractLayoutFunctionalTest {
+public class TestCard extends AbstractDisplayFunctionalTest {
 
 	public DiagramKite9XMLElement createTestCard() {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
@@ -104,26 +102,12 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void testCardBasic() throws IOException {
+	public void testCardBasic() throws Exception {
 		DiagramKite9XMLElement d = createTestCard();
-		renderDiagramSVG(d);
-		renderDiagramPDF(d);
 		renderDiagram(d);
-		renderDiagramADLAndSVG(d);
 	}
 	
 
-	@Override
-	protected boolean checkEverythingStraight() {
-		return false;
-	}
-
-	@Override
-	protected boolean checkNoHops() {
-		return false;
-	}
-	
-	
 	
 }
 

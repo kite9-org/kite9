@@ -1,11 +1,10 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
@@ -13,48 +12,48 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 
-public class Test13Key extends AbstractLayoutFunctionalTest {
+public class Test13Key extends AbstractDisplayFunctionalTest {
 
 	@Test
-	public void test_13_1_SimpleKey() throws IOException {
+	public void test_13_1_SimpleKey() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text" , null, null);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_2_TextKey() throws IOException {
+	public void test_13_2_TextKey() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text" , "some regular text that goes underneath.\nThis can sit on multiple lines.", null);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_3_With1Symbol() throws IOException {
+	public void test_13_3_With1Symbol() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text" , null, createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_4_With2Symbols() throws IOException {
+	public void test_13_4_With2Symbols() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
@@ -63,11 +62,11 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 			);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_5_WithLotsOfSymbols() throws IOException {
+	public void test_13_5_WithLotsOfSymbols() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
@@ -76,7 +75,7 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 			);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	private Symbol[] getOptions() {
@@ -115,7 +114,7 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_13_6_WithLotsOfWidth() throws IOException {
+	public void test_13_6_WithLotsOfWidth() throws Exception {
 		
 		Glyph a = new Glyph("", "fairly tediously long arrow", null, null);
 		Arrow b = new Arrow("Gordon bennett this is a very long arrow");
@@ -127,11 +126,11 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 			);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_7_WithLotsOfLabelWidth() throws IOException {
+	public void test_13_7_WithLotsOfLabelWidth() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		Arrow b = new Arrow("b");
@@ -143,22 +142,22 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 			);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	
 	@Test
-	public void test_13_8_separateGlyphsWithKey() throws IOException {
+	public void test_13_8_separateGlyphsWithKey() throws Exception {
 		Symbol s = new Symbol("Brother of Tony Scott", 'T', SymbolShape.CIRCLE);
 		Glyph hf = new Glyph("HF", "Actor","Harrison Ford", null, null);
 		Glyph rs = new Glyph("RS", "Director", "Ridley Scott", createList(new TextLine("Directed: Thelma & Louise"), new TextLine("Directed: Gladiator")),
 				createList(s));
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(hf, rs), new Key("Big Movies", "", createList(s)));
-		renderDiagramNoSerialize(d1);
+		renderDiagram(d1);
 	}
 	
 	@Test
-	public void test_13_9_WonkyContextLabel() throws IOException {
+	public void test_13_9_WonkyContextLabel() throws Exception {
 			Glyph hf = new Glyph("harrison_ford","Actor","Harrison Ford", null, null);
 			Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
 			Arrow ww = new Arrow("worked_with", "worked with");
@@ -170,12 +169,12 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 
 			
 			DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(bladerunner), null);
-			renderDiagramNoSerialize(d1);
+			renderDiagram(d1);
 		
 	}
 	
 	@Test
-	public void test_13_10_separateGlyphsWithKey2() throws IOException {
+	public void test_13_10_separateGlyphsWithKey2() throws Exception {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		Glyph c = new Glyph("c", "", "c", createList(new TextLine("some\nstuff"), new TextLine("here")), null);
@@ -186,55 +185,55 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 		
 		Context ctx = new Context("ctx", listOf(a, b, c), true, new Key("Big Movies", "some text\nhere blah blah bah", null), null);
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(ctx, d, e), null);
-		renderDiagramNoSerialize(d1);
+		renderDiagram(d1);
 	}
 	
 	@Test
-	public void test_13_11_AllTextAndWith1Symbol() throws IOException {
+	public void test_13_11_AllTextAndWith1Symbol() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text" , "some body text\nspanning two lines", createList(new Symbol("Some information", 'S', SymbolShape.CIRCLE)));
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_12_TwoColumns() throws IOException {
+	public void test_13_12_TwoColumns() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj ds" , null , createNarrowSymbolList(7));
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_13_ThreeColumns() throws IOException {
+	public void test_13_13_ThreeColumns() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_14_FourColumns() throws IOException {
+	public void test_13_14_FourColumns() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj d dcdshf kdskjfhjdsf jkhdskjf skdjhfjkds j s" , null , createNarrowSymbolList(7));
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_15_InvisibleContext() throws IOException {
+	public void test_13_15_InvisibleContext() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		Context c1 = new Context("c1", listOf(a), false, null, null);
@@ -243,11 +242,11 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 		Key k = new Key("mon cle" , null , null);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c1), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_13_16_InvisibleContext() throws IOException {
+	public void test_13_16_InvisibleContext() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
@@ -259,6 +258,6 @@ public class Test13Key extends AbstractLayoutFunctionalTest {
 		new Link(a, b, null, null, null, null, Direction.RIGHT);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c1, b), k);
-		renderDiagramNoSerialize(d);
+		renderDiagram(d);
 	}
 }

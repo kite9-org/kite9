@@ -1,7 +1,5 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
-
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
@@ -17,7 +15,7 @@ import org.kite9.framework.xml.DiagramKite9XMLElement;
 public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 
 	@Test
-	public void test_29_1_MidSetEdge() throws IOException {
+	public void test_29_1_MidSetEdge() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
 		Glyph g2 = new Glyph("g2", "", "another long label", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
@@ -36,7 +34,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_2_ContainerSizes() throws IOException {
+	public void test_29_2_ContainerSizes() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
 		Glyph g2 = new Glyph("g2", "", "another label", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
@@ -56,7 +54,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_3_LikeASequence() throws IOException {
+	public void test_29_3_LikeASequence() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
 		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
 		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
@@ -84,7 +82,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_4_CornersInContainers() throws IOException {
+	public void test_29_4_CornersInContainers() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
 		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
 		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
@@ -110,7 +108,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_5_EmptyDiagram() throws IOException {
+	public void test_29_5_EmptyDiagram() throws Exception {
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement();
 		renderDiagram(d1);
 	}
