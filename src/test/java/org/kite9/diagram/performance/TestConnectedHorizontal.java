@@ -18,7 +18,7 @@ import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramXMLElement;
 import org.kite9.framework.xml.XMLElement;
 
-public class TestConnected extends AbstractPerformanceTest {
+public class TestConnectedHorizontal extends AbstractPerformanceTest {
 
 	Random r = new Random(666);
 
@@ -83,32 +83,20 @@ public class TestConnected extends AbstractPerformanceTest {
 		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
 		Collections.addAll(cl, items);
 
-		DiagramXMLElement out = new DiagramXMLElement( cl, null);
+		DiagramXMLElement out = new DiagramXMLElement("bigd", cl, Layout.HORIZONTAL, null);
 		
 		return wrap(out);
 	}
 
 	@Test
-	public void increasingConnected130Connections() throws IOException {
-		Map<Metrics, String> suite1 = generateSuite(10, 40, 5, 130, 130, 10);
+	public void broken3() throws IOException {
+		Map<Metrics, String> suite1 = generateSuite(10, 10, 10, 30, 30, 20);
 		render(suite1);
 	}
 
 	@Test
-	public void increasingConnected50Connections() throws IOException {
-		Map<Metrics, String> suite1 = generateSuite(20, 80, 5, 50, 50, 5);
-		render(suite1);
-	}
-	
-	@Test
-	public void broken() throws IOException {
-		Map<Metrics, String> suite1 = generateSuite(19, 19, 1, 100, 100, 1);
-		render(suite1);
-	}
-	
-	@Test
-	public void broken2() throws IOException {
-		Map<Metrics, String> suite1 = generateSuite(70, 70, 1, 135, 135, 1);
+	public void increasingConnected120ConnectionsHoriz() throws IOException {
+		Map<Metrics, String> suite1 = generateSuite(10, 40, 10, 30, 120, 20);
 		render(suite1);
 	}
 }

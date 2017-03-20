@@ -36,14 +36,10 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
 	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
-		ensureAllLinksAccountedFor(d);
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		return renderDiagram(xml);
 	}
-	
-	private void ensureAllLinksAccountedFor(DiagramXMLElement d) {
-		
-	}
+
 
 	protected DiagramXMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);

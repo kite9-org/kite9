@@ -1,6 +1,5 @@
 package org.kite9.diagram;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,8 +15,8 @@ import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.functional.layout.TestingEngine;
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -28,29 +27,23 @@ import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.performance.Metrics;
-import org.kite9.diagram.performance.TimingPipeline;
-import org.kite9.diagram.visualization.display.GriddedCompleteDisplayer;
-import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.display.complete.RequiresGraphicsSourceRendererCompleteDisplayer;
-import org.kite9.diagram.visualization.format.GraphicsSourceRenderer;
-import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
-import org.kite9.diagram.visualization.pipeline.BufferedImageProcessingPipeline;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Table;
 import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
 
-public class AbstractPerformanceTest extends TestingHelp {
+public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
 	
 	public static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-	public void render(Map<Metrics, DiagramXMLElement> diagrams) throws IOException {
+	public void render(Map<Metrics, String> diagrams) throws IOException {
 		if (diagrams.size()>2) {
 			Kite9Log.setLogging(false);
 		}
@@ -60,12 +53,10 @@ public class AbstractPerformanceTest extends TestingHelp {
 		TreeSet<Metrics> metrics = new TreeSet<Metrics>();
 		Throwable fail = null;
 
-		for (Entry<Metrics, DiagramXMLElement> d1 : diagrams.entrySet()) {
+		for (Entry<Metrics, String> d1 : diagrams.entrySet()) {
 			try {
-				String xml = new XMLHelper().toXML(d1.getValue());
-				System.out.println(xml);
-				DiagramXMLElement rebuilt = new XMLHelper().fromXML(xml);
-				renderDiagram(rebuilt, theTest, m.getName(), true, d1.getKey());
+				String xml = d1.getValue();
+				renderDiagram(xml, theTest, m.getName(), true, d1.getKey());
 				metrics.add(d1.getKey());
 			} catch (Throwable e) {
 				e.printStackTrace();
@@ -111,27 +102,29 @@ public class AbstractPerformanceTest extends TestingHelp {
 			throw new Kite9ProcessingException("Could not run all tests. Last error: " ,fail);
 		}
 	}
-
-	private void writeFailedDiagram(Metrics key, DiagramXMLElement value) {
-		writeOutput(this.getClass(), "failed" , key.name+".xml", new XMLHelper().toXML(value));
+	
+	protected String wrap(DiagramXMLElement x) {
+		String xml = new XMLHelper().toXML(x.getOwnerDocument());
+		return addSVGFurniture(xml);
 	}
 
-	private void renderDiagram(DiagramXMLElement d2, Class<?> theTest, String subtest, boolean watermark, Metrics m)
+	private void writeFailedDiagram(Metrics key, String value) {
+		File f = getOutputFile("failed.xml");
+		
+//		RepositoryHelp.
+//		writeOutput(this.getClass(), "f.xm;ailed" , key.name+".xml", value);
+	}
+
+	private void renderDiagram(String xml, Class<?> theTest, String subtest, boolean watermark, Metrics m)
 			throws Exception {
 		try {
 			System.out.println("Beginning: "+m);
-			XMLHelper helper = new XMLHelper();
-			String xml = helper.toXML(d2);
-
-			writeOutput(theTest, subtest, "diagram.xml", xml);
-
-			DiagramXMLElement d = (DiagramXMLElement) helper.fromXML(xml);
-			BufferedImageProcessingPipeline pipeline = getPipeline(watermark, m);
-			BufferedImage bi = pipeline.process(d);
-
-			writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
-			renderToFile(theTest, subtest, subtest + "-" + m.name + ".png", bi);
-
+			currentMetrics = m;
+			
+			transcodeSVG(xml);
+			DiagramXMLElement d = Kite9DiagramBridge.lastDiagram;
+			AbstractArrangementPipeline pipeline = Kite9DiagramBridge.lastPipeline;
+			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
 			TestingEngine.testLayout(d.getDiagramElement());
@@ -144,12 +137,6 @@ public class AbstractPerformanceTest extends TestingHelp {
 			throw new Exception("Could not run "+m+": ",t);
 		}
 
-	}
-
-	private BufferedImageProcessingPipeline getPipeline(boolean watermark, final Metrics m) {
-		final RequiresGraphicsSourceRendererCompleteDisplayer cd = new GriddedCompleteDisplayer(new ADLBasicCompleteDisplayer(watermark, false));
-		GraphicsSourceRenderer<BufferedImage> renderer = new BufferedImageRenderer();
-		return new TimingPipeline(cd, renderer);
 	}
 
 	private void measure(DiagramXMLElement d, final Metrics m) {
@@ -240,6 +227,17 @@ public class AbstractPerformanceTest extends TestingHelp {
 		dir.mkdirs();
 		File metrics = new File(dir, "metrics.csv");
 		return metrics;
+	}
+
+	private static Metrics currentMetrics;
+	
+	@Override
+	protected File getOutputFile(String ending) {
+		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Class<?> theTest = m.getDeclaringClass();
+		File f = TestingHelp.prepareFileName(theTest, "", m.getName()+currentMetrics.name+"-"+ending);
+		return f;
+	
 	}
 	
 

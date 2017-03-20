@@ -21,12 +21,12 @@ import org.kite9.framework.xml.XMLElement;
 public class TestHierarchy extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size, Direction dir) {
-		Map<Metrics, DiagramXMLElement> out = new LinkedHashMap<Metrics, DiagramXMLElement>();
+	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int size, Direction dir) {
+		Map<Metrics, String> out = new LinkedHashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("hi" + i+" s "+size);
 			m.connecteds = i;
-			DiagramXMLElement d = generateDiagram(m, size, dir);
+			String d = generateDiagram(m, size, dir);
 			out.put(m, d);
 
 		}
@@ -34,7 +34,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private DiagramXMLElement generateDiagram(Metrics m, int size, Direction d) {
+	private String generateDiagram(Metrics m, int size, Direction d) {
 		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		List<XMLElement> allGlyphs = new ArrayList<XMLElement>();
 		Deque<XMLElement> needChildren = new ArrayDeque<XMLElement>();
@@ -49,8 +49,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 		}
 
 		DiagramXMLElement out = new DiagramXMLElement(allGlyphs, null);
-		TestingEngine.setDesignerStylesheetReference(out);
-		return out;
+		return wrap(out);
 	}
 
 	private void createNewLevel(Glyph top, List<XMLElement> allGlyphs, int connecteds, int size, Direction d, Deque<XMLElement> needChildren) {
@@ -68,31 +67,31 @@ public class TestHierarchy extends AbstractPerformanceTest {
 
 	@Test
 	public void downwardsBy3() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 3, Direction.DOWN);
+		Map<Metrics, String> suite1 = generateSuite(20, 50, 5, 3, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void downwardsBy3_broken() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(50, 50, 5, 3, Direction.DOWN);
+		Map<Metrics, String> suite1 = generateSuite(50, 50, 5, 3, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void rightBy3() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 3, Direction.RIGHT);
+		Map<Metrics, String> suite1 = generateSuite(20, 50, 5, 3, Direction.RIGHT);
 		render(suite1);
 	}
 	
 	@Test
 	public void downwardsBy6() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 6, Direction.DOWN);
+		Map<Metrics, String> suite1 = generateSuite(20, 50, 5, 6, Direction.DOWN);
 		render(suite1);
 	}
 	
 	@Test
 	public void rightBy6() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(20, 50, 5, 6, Direction.RIGHT);
+		Map<Metrics, String> suite1 = generateSuite(20, 50, 5, 6, Direction.RIGHT);
 		render(suite1);
 	}
 	

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
@@ -36,12 +34,12 @@ import org.kite9.framework.xml.XMLElement;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
-	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size) {
-		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
+	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int size) {
+		Map<Metrics, String> out = new HashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("d-r" + i+" s "+size);
 			m.connecteds = i;
-			DiagramXMLElement d = generateDiagram(m, size);
+			String d = generateDiagram(m, size);
 			out.put(m, d);
 
 		}
@@ -50,7 +48,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private DiagramXMLElement generateDiagram(Metrics m, int size) {
+	private String generateDiagram(Metrics m, int size) {
 		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
@@ -163,31 +161,30 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		@SuppressWarnings("unchecked")
 		DiagramXMLElement out = new DiagramXMLElement(new ArrayList(cl), null);
-		TestingEngine.setDesignerStylesheetReference(out);
-		return out;
+		return wrap(out);
 	}
 
 	@Test
-	public void increasingConnectedsSize12() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 45, 2, 12);
+	public void increasingConnectedsSize12() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(10, 45, 2, 12);
 		render(suite1);
 	}
 	
 	@Test
-	public void increasingConnectedsSize15() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(45, 60, 2, 15);
+	public void increasingConnectedsSize15() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(45, 60, 2, 15);
 		render(suite1);
 	}
 	
 	@Test
-	public void increasingConnectedsSize20() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(60, 90, 2, 20);
+	public void increasingConnectedsSize20() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(60, 90, 2, 20);
 		render(suite1);
 	}
 	
 	@Test
-	public void broken() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(62, 62, 2, 20);
+	public void broken() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(62, 62, 2, 20);
 		render(suite1);
 	}
 	
@@ -253,7 +250,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		
 		try {
 			ImageIO.write(bi, "PNG", f);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new LogicException("Couldn't write file",e);
 		}
 		

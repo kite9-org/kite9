@@ -1,6 +1,5 @@
 package org.kite9.diagram.performance;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.functional.layout.TestingEngine;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramXMLElement;
@@ -26,16 +23,16 @@ import org.kite9.framework.xml.XMLElement;
 public class TestContainers extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int minConnection,
+	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int minConnection,
 			int maxConnection, int step2, int containers, Layout l) {
-		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
+		Map<Metrics, String> out = new HashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			for (int j = minConnection; j <= maxConnection; j += step2) {
 				Metrics m = new Metrics("c+" + containers + "r" + i + "x" + j);
 				System.out.println("Generating Metrics: " + m);
 				m.connecteds = i;
 				m.connections = j;
-				DiagramXMLElement d = generateDiagram(m, containers, l);
+				String d = generateDiagram(m, containers, l);
 				out.put(m, d);
 			}
 		}
@@ -43,7 +40,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private DiagramXMLElement generateDiagram(Metrics m, int containers, Layout l) {
+	private String generateDiagram(Metrics m, int containers, Layout l) {
 		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.name.hashCode());
 
@@ -72,8 +69,6 @@ public class TestContainers extends AbstractPerformanceTest {
 		
 		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
 		Collections.addAll(cl, contexts);
-		DiagramXMLElement out = new DiagramXMLElement(cl, null);
-		TestingEngine.setDesignerStylesheetReference(out);
 		Set<String> connections = new HashSet<>();
 
 		while (tc < m.connections) {
@@ -91,9 +86,11 @@ public class TestContainers extends AbstractPerformanceTest {
 				}
 			}
 		}
+		
+		DiagramXMLElement out = new DiagramXMLElement(cl, null);
 
 	
-		return out;
+		return wrap(out);
 	}
 
 	private boolean checkContainment(XMLElement i, XMLElement c) {
@@ -110,35 +107,35 @@ public class TestContainers extends AbstractPerformanceTest {
 
 	/**
 	 * @see http://www.kite9.com/content/self-link
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void increasingConnections3Containers() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, null);
+	public void increasingConnections3Containers() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, null);
 		render(suite1);
 	}
 
 	@Test
-	public void increasingConnections3ContainersHorizontal() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, Layout.HORIZONTAL);
+	public void increasingConnections3ContainersHorizontal() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(10, 10, 1, 5, 20, 5, 3, Layout.HORIZONTAL);
 		render(suite1);
 	}
 
 	@Test
-	public void increasingConnections6Containers() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 6, null);
+	public void increasingConnections6Containers() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 6, null);
 		render(suite1);
 	}
 	
 	@Test
-	public void increasingConnections8Containers() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 8, null);
+	public void increasingConnections8Containers() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 8, null);
 		render(suite1);
 	}
 	
 	@Test
-	public void brokenEdgesOutAndIn() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(17, 17, 1, 5, 5, 5 , 6, null);
+	public void brokenEdgesOutAndIn() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(17, 17, 1, 5, 5, 5 , 6, null);
 		render(suite1);
 	}
 

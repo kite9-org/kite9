@@ -1,6 +1,5 @@
 package org.kite9.diagram.performance;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramXMLElement;
@@ -21,12 +19,12 @@ import org.kite9.framework.xml.XMLElement;
 public class TestDirectedMatrix extends AbstractPerformanceTest {
 
 
-	public Map<Metrics, DiagramXMLElement> generateSuite(int minConnected, int maxConnected, int step1, int size) {
-		Map<Metrics, DiagramXMLElement> out = new HashMap<Metrics, DiagramXMLElement>();
+	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int size) {
+		Map<Metrics, String> out = new HashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			Metrics m = new Metrics("d-r" + i+" s "+size);
 			m.connecteds = i;
-			DiagramXMLElement d = generateDiagram(m, size);
+			String d = generateDiagram(m, size);
 			out.put(m, d);
 
 		}
@@ -34,7 +32,7 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		return out;
 	}
 
-	private DiagramXMLElement generateDiagram(Metrics m, int size) {
+	private String generateDiagram(Metrics m, int size) {
 		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(666);
 
@@ -91,20 +89,19 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		m.connections = connections;
 		
 		DiagramXMLElement out = new DiagramXMLElement(cl, null);
-		TestingEngine.setDesignerStylesheetReference(out);
-		return out;
+		return wrap(out);
 	}
 
 	@Test
-	public void size12IncreasingConnecteds() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(30, 90, 10, 12);
+	public void size12IncreasingConnecteds() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(30, 90, 10, 12);
 		render(suite1);
 	}
 
 	
 	@Test
-	public void size6IncreasingConnecteds() throws IOException {
-		Map<Metrics, DiagramXMLElement> suite1 = generateSuite(15, 5, 5, 6);
+	public void size6IncreasingConnecteds() throws Exception {
+		Map<Metrics, String> suite1 = generateSuite(15, 5, 5, 6);
 		render(suite1);
 	}
 	
