@@ -17,8 +17,8 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestContainers extends AbstractPerformanceTest {
 
@@ -41,7 +41,7 @@ public class TestContainers extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m, int containers, Layout l) {
-		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.name.hashCode());
 
 		System.out.println("Generating diagram for " + m);
@@ -56,7 +56,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		Context[] contexts = new Context[containers];
 
 		for (int i = 0; i < contexts.length; i++) {
-			contexts[i] = new Context("c" + i, new ArrayList<XMLElement>(), true, new TextLine("Context " + i), l);
+			contexts[i] = new Context("c" + i, new ArrayList<Kite9XMLElement>(), true, new TextLine("Context " + i), l);
 		}
 
 		for (int i = 0; i < items.length; i++) {
@@ -67,7 +67,7 @@ public class TestContainers extends AbstractPerformanceTest {
 
 		int tc = 0;
 		
-		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
+		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
 		Collections.addAll(cl, contexts);
 		Set<String> connections = new HashSet<>();
 
@@ -77,8 +77,8 @@ public class TestContainers extends AbstractPerformanceTest {
 
 			if (g1 != g2) {
 				String conId = Math.min(g1, g2)+"-"+Math.max(g1, g2);
-				XMLElement g1g = (g1 < items.length) ? items[g1] : contexts[g1 - items.length];
-				XMLElement g2g = (g2 < items.length) ? items[g2] : contexts[g2 - items.length];
+				Kite9XMLElement g1g = (g1 < items.length) ? items[g1] : contexts[g1 - items.length];
+				Kite9XMLElement g2g = (g2 < items.length) ? items[g2] : contexts[g2 - items.length];
 				if (!connections.contains(conId) && checkContainment(g1g, g2g) && checkContainment(g2g, g1g)) {
 					new Link(g1g, g2g);
 					connections.add(conId);
@@ -87,15 +87,15 @@ public class TestContainers extends AbstractPerformanceTest {
 			}
 		}
 		
-		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 
 	
 		return wrap(out);
 	}
 
-	private boolean checkContainment(XMLElement i, XMLElement c) {
+	private boolean checkContainment(Kite9XMLElement i, Kite9XMLElement c) {
 		if (c instanceof Context) {
-			for (XMLElement e : c) {
+			for (Kite9XMLElement e : c) {
 				if (e == i) {
 					return false;
 				}

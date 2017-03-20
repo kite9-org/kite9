@@ -5,7 +5,7 @@ import java.util.List;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractXMLContainerElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 
@@ -29,11 +29,11 @@ public class Context extends AbstractXMLContainerElement {
 		this.tagName = "context";
 	}
 	
-	public Context(String id, List<XMLElement> contents, boolean bordered, XMLElement label, Layout layoutDirection, ADLDocument doc) {
+	public Context(String id, List<Kite9XMLElement> contents, boolean bordered, Kite9XMLElement label, Layout layoutDirection, ADLDocument doc) {
 		super(id, "context", doc);
 		
 		if (contents != null) {
-			for (XMLElement contained : contents) {
+			for (Kite9XMLElement contained : contents) {
 				if (contained != null) {
 					appendChild(contained);
 				}
@@ -45,11 +45,11 @@ public class Context extends AbstractXMLContainerElement {
 		setBordered(bordered);
 	}
 
-	public Context(String id, List<XMLElement> contents, boolean bordered, XMLElement label, Layout layoutDirection) {
+	public Context(String id, List<Kite9XMLElement> contents, boolean bordered, Kite9XMLElement label, Layout layoutDirection) {
 		this(id, contents, bordered, label, layoutDirection, TESTING_DOCUMENT);
 	}
 
-	public Context(List<XMLElement> contents, boolean b, XMLElement label, Layout l) {
+	public Context(List<Kite9XMLElement> contents, boolean b, Kite9XMLElement label, Layout l) {
 		this(createID(), contents, b, label, l);
 	}
 

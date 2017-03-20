@@ -8,14 +8,14 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test44Balancing extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_44_1_SingleGlyph() throws Exception {
 		Glyph a = new Glyph("a", "", "a", null, null);
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a), new Key("this is a very long piece of text", "", null));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(a), new Key("this is a very long piece of text", "", null));
 		renderDiagram(d);
 	}
 	
@@ -23,7 +23,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 	public void test_44_2_UnjoinedGlyphs() throws Exception {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a, b), new Key("this is a very long piece of text", "", null));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(a, b), new Key("this is a very long piece of text", "", null));
 		d.setLayoutDirection(Layout.RIGHT);
 		renderDiagram(d);
 	}
@@ -33,7 +33,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		new Link(a,b);
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a, b), new Key("this is a very long piece of text", "", null));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(a, b), new Key("this is a very long piece of text", "", null));
 		d.setLayoutDirection(Layout.RIGHT);
 		renderDiagram(d);
 	}
@@ -47,7 +47,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 		new Link(a,b, null, null, null, null, Direction.RIGHT);
 		new Link(a,c, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a, b, c), new Key("this is a very long piece of text", "", null));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(a, b, c), new Key("this is a very long piece of text", "", null));
 		renderDiagram(d);
 	}
 	
@@ -72,7 +72,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 		new Link(a,longone, null, null, null, null, Direction.RIGHT);
 		new Link(longone,c, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(a, b1, b2, c, longone), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(a, b1, b2, c, longone), null);
 		renderDiagram(d);
 	}
 	
@@ -102,7 +102,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 		new Link(a,longone, null, null, null, null, Direction.RIGHT);
 		new Link(longone,d, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement dia = new DiagramXMLElement("dia", HelpMethods.listOf(a, b1, b2, c1, c2, c3, d, longone), null);
+		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, b1, b2, c1, c2, c3, d, longone), null);
 		renderDiagram(dia);
 	}
 	

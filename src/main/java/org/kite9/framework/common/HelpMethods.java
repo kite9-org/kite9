@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class HelpMethods {
 
@@ -17,9 +17,9 @@ public class HelpMethods {
     	return out;
     }
     
-    public static List<XMLElement> listOf(XMLElement... d1) {
-    	ArrayList<XMLElement> out = new ArrayList<XMLElement>();
-    	for (XMLElement x : d1) {
+    public static List<Kite9XMLElement> listOf(Kite9XMLElement... d1) {
+    	ArrayList<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
+    	for (Kite9XMLElement x : d1) {
     		out.add(x);
     	}
     	return out;

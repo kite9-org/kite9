@@ -13,15 +13,15 @@ import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 @Ignore
 public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 
 	public interface ContainedCreator {
 		
-		XMLElement create(Double px, Double py);
+		Kite9XMLElement create(Double px, Double py);
 		
 	}
 	
@@ -30,7 +30,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public XMLElement create(Double preferredWidth, Double preferredHeight) {
+			public Kite9XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph("test"+preferredWidth+"/"+preferredHeight, "This is my Label", null, HelpMethods
 						.createList(new Symbol("g", 'x', SymbolShape.CIRCLE)));
 				return g;
@@ -45,7 +45,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public XMLElement create(Double preferredWidth, Double preferredHeight) {
+			public Kite9XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label "+preferredWidth+" "+preferredHeight, null, null);
 				return g;
 			}
@@ -58,7 +58,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public XMLElement create(Double preferredWidth, Double preferredHeight) {
+			public Kite9XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label", null, HelpMethods.createList(new Symbol("sdfds", 'x', SymbolShape.CIRCLE)));
 				return g;
 			}
@@ -71,7 +71,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 		createDiagram(new ContainedCreator() {
 			
 			@Override
-			public XMLElement create(Double preferredWidth, Double preferredHeight) {
+			public Kite9XMLElement create(Double preferredWidth, Double preferredHeight) {
 				Glyph g = new Glyph(null, "This is my Label", HelpMethods.createList(
 						new TextLine("This is one line"), 
 						new TextLine("This is another line")),
@@ -86,7 +86,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 
 	
 	private void createDiagram(ContainedCreator cc) throws IOException {
-		List<XMLElement> out = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		Double widths[] = { null, 0d, 30d, 100d, 300d }; 
 		Double heights[] = { null, 0d, 30d, 100d, 300d };
 		
@@ -94,7 +94,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 			for (int y = 0; y < heights.length; y++) {
 				Double preferredWidth = widths[x];
 				Double preferredHeight = heights[y];
-				XMLElement g = cc.create(preferredWidth, preferredHeight);
+				Kite9XMLElement g = cc.create(preferredWidth, preferredHeight);
 				RectangleRenderingInformation rri = (RectangleRenderingInformation) g.getDiagramElement().getRenderingInformation();
 //				TODO: these shouldn't even be in the rri
 				//				rri.setPreferredWidth(preferredWidth);
@@ -103,7 +103,7 @@ public class Test47PreferredSize extends AbstractDisplayFunctionalTest {
 			}
 		}
 
-		DiagramXMLElement d = new DiagramXMLElement(out, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(out, null);
 
 		renderDiagram(d);
 	}

@@ -13,9 +13,9 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkLineStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 
@@ -34,7 +34,7 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m, int size) {
-		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.hashCode());
 
 		Glyph[][] space = new Glyph[size][];
@@ -96,11 +96,11 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 			
 		}
 
-		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
+		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
 		Collections.addAll(cl, items);
 		m.connections = connections;
 
-		DiagramXMLElement out = new DiagramXMLElement(cl, null);
+		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 		return wrap(out);
 	}
 

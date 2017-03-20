@@ -11,7 +11,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,7 +27,7 @@ public class Templater {
 	/**
 	 * This needs to copy the template XML source into the destination.
 	 */
-	public void handleTemplateElement(XMLElement in, DiagramElement o) {
+	public void handleTemplateElement(Kite9XMLElement in, DiagramElement o) {
 		if (o instanceof AbstractXMLDiagramElement) {
 			AbstractXMLDiagramElement out = (AbstractXMLDiagramElement) o;
 			Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
@@ -57,7 +57,7 @@ public class Templater {
 		}
 	}
 
-	public static Node copyIntoDocument(XMLElement in, Element e) {
+	public static Node copyIntoDocument(Kite9XMLElement in, Element e) {
 		// copy this element into the new document
 		Node copy = e.cloneNode(true);
 		ADLDocument thisDoc = in.getOwnerDocument();
@@ -66,7 +66,7 @@ public class Templater {
 		if (in.getChildXMLElementCount() == 0) {
 			in.appendChild(copy);
 		} else {
-			XMLElement first = in.iterator().next();
+			Kite9XMLElement first = in.iterator().next();
 			in.insertBefore(copy, first);
 		}
 		return copy;

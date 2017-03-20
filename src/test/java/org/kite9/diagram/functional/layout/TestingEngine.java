@@ -48,7 +48,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
@@ -70,7 +70,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkLabelOcclusion = true;
 	}
 	
-	public void testDiagram(DiagramXMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
+	public void testDiagram(DiagramKite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
 			Planarization pln = null;
@@ -197,7 +197,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testConnectionPresence(DiagramXMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
+	public static void testConnectionPresence(DiagramKite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
 		final int[] notPresent = { 0 };
 
 		ConnectionAction ca = new ConnectionAction() {
@@ -264,7 +264,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testHopCount(DiagramXMLElement d) {
+	public static void testHopCount(DiagramKite9XMLElement d) {
 		HopChecker.checkHops(d, new HopAction() {
 
 			@Override

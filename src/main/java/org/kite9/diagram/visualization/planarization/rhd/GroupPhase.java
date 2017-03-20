@@ -31,7 +31,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporary
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkLineStyle;
 
 /**
@@ -541,7 +541,7 @@ public class GroupPhase {
 			
 		@Override
 		public String toString() {
-			return "["+getGroupNumber()+ o + "("+(c instanceof DiagramXMLElement ? "" :" c: "+c)+","+getAxis()+")]";
+			return "["+getGroupNumber()+ o + "("+(c instanceof DiagramKite9XMLElement ? "" :" c: "+c)+","+getAxis()+")]";
 		}
 	
 		@Override

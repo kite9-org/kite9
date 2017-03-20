@@ -9,7 +9,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test24ThreeContainerLinking extends AbstractLayoutFunctionalTest {
 
@@ -47,7 +47,7 @@ public class Test24ThreeContainerLinking extends AbstractLayoutFunctionalTest {
     
     	Context con4 = new Context("b4", createList(con1, con2, con3), true, null, c4);
     
-    	DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con4), null);
+    	DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con4), null);
     	renderDiagram(d);
     }
 

@@ -9,7 +9,7 @@ import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class BatikArrangementPipeline extends AbstractArrangementPipeline {
 	
@@ -26,8 +26,8 @@ public class BatikArrangementPipeline extends AbstractArrangementPipeline {
 	}
 
 	@Override
-	public DiagramXMLElement arrange(DiagramXMLElement d) {
-		DiagramXMLElement out = super.arrange(d);
+	public DiagramKite9XMLElement arrange(DiagramKite9XMLElement d) {
+		DiagramKite9XMLElement out = super.arrange(d);
 		drawDiagramElements(d.getDiagramElement());
 		return out;
 	}

@@ -2,7 +2,7 @@ package org.kite9.diagram.adl;
 
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 /**
@@ -24,57 +24,57 @@ public class Link extends AbstractXMLConnectionElement {
 		this.tagName = "link";
 	}
 	
-	public Link(XMLElement from, XMLElement to) {
+	public Link(Kite9XMLElement from, Kite9XMLElement to) {
 		this(from.getID()+"-"+to.getID(), from, to, TESTING_DOCUMENT);
 	}
 		
-	public Link(String id, XMLElement from, XMLElement to, ADLDocument doc) {
+	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, ADLDocument doc) {
 		this(id, from, to, null, null, null, null, null, doc);
 	}
 	
-	public Link(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle, XMLElement toLabel, Direction drawDirection) {
+	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle, Kite9XMLElement toLabel, Direction drawDirection) {
 		this(from.getID()+"-"+to.getID(), from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection, TESTING_DOCUMENT);
 	}
 	
-	public Link(String id, XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toEndStyle, XMLElement toLabel, Direction drawDirection, ADLDocument doc) {
+	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle, Kite9XMLElement toLabel, Direction drawDirection, ADLDocument doc) {
 		super(id, "link", from, to, drawDirection, fromStyle, fromLabel, toEndStyle, toLabel, doc);
 	}
 
-	public Link(XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toStyle, XMLElement toLabel) {
+	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel) {
 		super(from.getID()+"-"+to.getID(), "link",  from, to, null, null, fromLabel, null, toLabel, TESTING_DOCUMENT);
 	}
 
-	public Link(String id, XMLElement from, XMLElement to) {
+	public Link(String id, Kite9XMLElement from, Kite9XMLElement to) {
 		this(id, from, to, TESTING_DOCUMENT);
 	}
 
-	public Link(String id, XMLElement from, XMLElement to, String fromStyle, XMLElement fromLabel, String toStyle, XMLElement toLabel, Direction d) {
+	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel, Direction d) {
 		this(id, from, to, fromStyle, fromLabel, toStyle, toLabel, d,  TESTING_DOCUMENT);
 	}
 
 	@Override
-	public XMLElement getFromDecoration() {
+	public Kite9XMLElement getFromDecoration() {
 		return getProperty("fromDecoration");
 	}
 
 	@Override
-	public XMLElement getToDecoration() {
+	public Kite9XMLElement getToDecoration() {
 		return getProperty("toDecoration");
 	}
 	
 	private void setDecoration(String name, Object d) {
-		XMLElement e = (XMLElement) ownerDocument.createElement(name);
+		Kite9XMLElement e = (Kite9XMLElement) ownerDocument.createElement(name);
 		e.setTextContent((String) d);
 		replaceProperty(name, e);
 	}
 
 	@Override
-	public void setFromDecoration(XMLElement fromDecoration) {
+	public void setFromDecoration(Kite9XMLElement fromDecoration) {
 		replaceProperty("fromDecoration", fromDecoration);
 	}
 
 	@Override
-	public void setToDecoration(XMLElement toDecoration) {
+	public void setToDecoration(Kite9XMLElement toDecoration) {
 		replaceProperty("toDecoration", toDecoration);
 	}
 

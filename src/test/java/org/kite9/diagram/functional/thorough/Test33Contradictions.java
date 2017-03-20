@@ -22,10 +22,10 @@ import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 import org.kite9.framework.xml.LinkLineStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 
 import junit.framework.Assert;
@@ -38,10 +38,10 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, Layout.RIGHT);
 
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.LEFT);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 		renderDiagram(d);
 
 		assertContradicting(l);
@@ -51,16 +51,16 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Assert.assertTrue(isContradicting(l));
 	}
 
-	private boolean isContradicting(XMLElement l) {
+	private boolean isContradicting(Kite9XMLElement l) {
 		DiagramElement diagramElement = getOriginalElement(l);
 		return ((RouteRenderingInformation) diagramElement.getRenderingInformation()).isContradicting();
 	}
 
-	private DiagramElement getOriginalElement(XMLElement l) {
+	private DiagramElement getOriginalElement(Kite9XMLElement l) {
 		String id = l.getID();
-		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		Element e = lastDiagram.getOwnerDocument().getElementById(id);
-		XMLElement xe = (XMLElement) e;
+		Kite9XMLElement xe = (Kite9XMLElement) e;
 		DiagramElement diagramElement = xe.getDiagramElement();
 		return diagramElement;
 	}
@@ -71,9 +71,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, Layout.RIGHT);
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 
 		renderDiagram(d);
@@ -86,9 +86,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.HORIZONTAL);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, Layout.HORIZONTAL);
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 		assertContradicting(l);
@@ -100,9 +100,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.VERTICAL);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, Layout.VERTICAL);
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 		assertContradicting(l);
@@ -115,13 +115,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3), true, null, null);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2, g3), true, null, null);
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
 		Link l3 = new ContradictingLink(g3, g1, null, null, null, null, Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 		int count = 0;
@@ -141,11 +141,11 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 		Glyph g4 = new Glyph("4", null, "4", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
 
 		Link l = new ContradictingLink(g1, g3, null, null, null, null, Direction.DOWN);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 
@@ -161,11 +161,11 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 		Glyph g4 = new Glyph("4", null, "4", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2, g3, g4), true, null, Layout.RIGHT);
 		Link l1 = new Link(g1, g3, null, null, null, null, Direction.RIGHT);
 		Link l2 = new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 		Assert.assertFalse(isContradicting(l1));
@@ -203,9 +203,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	public void test_33_10_EdgeContradictsContainer1() throws Exception {
 		Glyph g1 = new Glyph("0", null, "0", null, null);
 		Glyph g2 = new Glyph("1", null, "1", null, null);
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1), true, null, Layout.DOWN);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1), true, null, Layout.DOWN);
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, g2), Layout.DOWN, null);
 		renderDiagram(d);
 		assertContradicting(l1);
 	}
@@ -215,10 +215,10 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1), true, null, Layout.DOWN);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1), true, null, Layout.DOWN);
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g1, g3, null, null, null, null, Direction.UP);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
 
 		renderDiagram(d);
 		Assert.assertTrue(isContradicting(l1));
@@ -233,12 +233,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g0, g1, g2, g3), true, null,
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g0, g1, g2, g3), true, null,
 				Layout.HORIZONTAL);
 
 		Link l1 = new ContradictingLink(g0, g2, null, null, null, null, Direction.DOWN);
 		Link l2 = new ContradictingLink(g0, g3, null, null, null, null, Direction.DOWN);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 
 		renderDiagram(d);
 		assertContradicting(l1);
@@ -253,13 +253,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph i2 = new Glyph("i2", null, "i2", null, null);
 		Glyph i3 = new Glyph("i3", null, "i3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) i1, i2, i3), true, null, null);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) i1, i2, i3), true, null, null);
 		Link l2 = new Link(o2, i3, null, null, null, null, Direction.DOWN);
 		Link l3 = new Link(i1, o2, null, null, null, null, Direction.RIGHT);
 		Link l4 = new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		Link l5 = new Link(i2, i3, null, null, null, null, Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, o2), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, o2), null);
 
 
 		renderDiagram(d);
@@ -281,10 +281,10 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph i2 = new Glyph("i2", null, "i2", null, null);
 		Glyph i3 = new Glyph("i3", null, "i3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) o1, o2), true, null, null);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) o1, o2), true, null, null);
 		Link l2 = new Link(o2, i2, null, null, null, null, Direction.UP);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
 
 
 		renderDiagram(d);
@@ -307,12 +307,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_33_16_UseCaseIssue() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, null);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -334,7 +334,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		new Link(out[3][0], out[3][2], null, null, null, null, Direction.RIGHT);
 		new Link(out[3][1], out[3][2], null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("bob", out2, Layout.HORIZONTAL, null));
+		renderDiagram(new DiagramKite9XMLElement("bob", out2, Layout.HORIZONTAL, null));
 
 	}
 
@@ -348,14 +348,14 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
-		XMLElement con1 = new Context("b1", createList((XMLElement) one, two), true, null, null);
+		Kite9XMLElement con1 = new Context("b1", createList((Kite9XMLElement) one, two), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
@@ -369,24 +369,24 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("one", "", "one", null, null);
 		Glyph two = new Glyph("two", "", "two", null, null);
 
-		XMLElement con1 = new Context("b1", createList((XMLElement) one, two), true, null, null);
+		Kite9XMLElement con1 = new Context("b1", createList((Kite9XMLElement) one, two), true, null, null);
 
 		Arrow a = new Arrow("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
 	@Test
 	public void test_33_19_IllegalRoute1() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		Link a = new ContradictingLink(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -394,16 +394,16 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link c = new ContradictingLink(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		Link d = new Link(out[0][3], out[0][0], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 
 	@Test
 	public void test_33_20_IllegalRoute2() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 1, contents, Layout.VERTICAL);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		Link a = new ContradictingLink(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -411,7 +411,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Link c = new ContradictingLink(out[0][2], out[0][3], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		Link d = new ContradictingLink(out[0][3], out[0][0], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 
@@ -461,14 +461,14 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 			Glyph one = new Glyph("one", "", "one", null, null);
 			Glyph two = new Glyph("two", "", "two", null, null);
 
-			XMLElement con1 = new Context("b1", createList((XMLElement) one, two), true, null, null);
+			Kite9XMLElement con1 = new Context("b1", createList((Kite9XMLElement) one, two), true, null, null);
 
 			Arrow a = new Arrow("links", "links");
 
 			new Link(one, con1);
 			new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 
-			DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+			DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 			renderDiagram(d);
 		} catch (ElementsMissingException e) {
 			Assert.assertEquals(1, e.getCountOfMissingElements());
@@ -512,7 +512,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2, g3), true, null, null);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2, g3), true, null, null);
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
@@ -521,7 +521,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l1.setRank(5);
 		l2.setRank(10);
 		l3.setRank(15);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 		
 		renderDiagram(d);
 		assertContradicting(l1);
@@ -534,7 +534,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, null);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, null);
 
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
@@ -544,7 +544,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l1.setRank(5);
 		l2.setRank(10);
 		l3.setRank(15);
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1, g3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, g3), null);
 
 		renderDiagram(d);
 		assertContradicting(l1);
@@ -557,13 +557,13 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
-		Context c1 = new Context("c1", HelpMethods.createList((XMLElement) g1, g2), true, null, Layout.RIGHT);
+		Context c1 = new Context("c1", HelpMethods.createList((Kite9XMLElement) g1, g2), true, null, Layout.RIGHT);
 
 
 		Link l = new Link(g1, g2, null, null, null, null, Direction.LEFT);
 		l.setShapeName(LinkLineStyle.INVISIBLE);
 
-		DiagramXMLElement d = new DiagramXMLElement("d1", HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 		renderDiagram(d);
 
 		Assert.assertFalse("rendered, shouldn't be", getOriginalElement(l).getRenderingInformation().isRendered());

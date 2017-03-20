@@ -13,11 +13,11 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 
-	public static DiagramXMLElement doNestedDirected(Layout cl1, Layout cl2, Layout dl, Direction going) throws Exception {
+	public static DiagramKite9XMLElement doNestedDirected(Layout cl1, Layout cl2, Layout dl, Direction going) throws Exception {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -34,11 +34,11 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		createLink(going, g2, g3);
 		createLink(going, g0, g3);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
 
-	public static DiagramXMLElement doSimpleComb(Layout cl, Layout dl, Direction going, boolean misorder) throws Exception {
+	public static DiagramKite9XMLElement doSimpleComb(Layout cl, Layout dl, Direction going, boolean misorder) throws Exception {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -74,7 +74,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		createLink(going, g4, gn4);
 		createLink(going, g5, gn4);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
 
@@ -86,7 +86,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		}
 	}
 	
-	public static DiagramXMLElement doArrowComb(Layout conl, Layout dl, Direction going) throws Exception {
+	public static DiagramKite9XMLElement doArrowComb(Layout conl, Layout dl, Direction going) throws Exception {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
@@ -127,13 +127,13 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		new Link(a5, g6, null, null, null, null, going);
 		new Link(a6, g6, null, null, null, null, going);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2, cona), dl, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2, cona), dl, null);
 		return d;
 	}
 	
 	
 
-	public static DiagramXMLElement doPyramid(Layout l, Layout dl, Direction going) throws Exception {
+	public static DiagramKite9XMLElement doPyramid(Layout l, Layout dl, Direction going) throws Exception {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
@@ -176,7 +176,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		new Link(a7, g6, null, null, null, null, going);
 		new Link(a8, g6, null, null, null, null, going);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", HelpMethods.listOf(con1, con2, con3, cona),dl, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2, con3, cona),dl, null);
 		return d;
 	}
 	
@@ -207,7 +207,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 	}
 
-	private boolean assertDirection(DiagramXMLElement d2, Direction d) {
+	private boolean assertDirection(DiagramKite9XMLElement d2, Direction d) {
 		try {
 			DiagramAssert.assertInDirection(d, 
 					getById("g5", d2), 
@@ -268,8 +268,8 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_36_14_SimpleCombSlackAllButOrdered() throws Exception {
-		DiagramXMLElement d = doSimpleComb(null, null, null, false);
-		DiagramXMLElement d2 = renderDiagram(d);
+		DiagramKite9XMLElement d = doSimpleComb(null, null, null, false);
+		DiagramKite9XMLElement d2 = renderDiagram(d);
 		if ((assertDirection(d2, Direction.UP) || assertDirection(d2, Direction.DOWN))) {
 			// ok
 		}  else {

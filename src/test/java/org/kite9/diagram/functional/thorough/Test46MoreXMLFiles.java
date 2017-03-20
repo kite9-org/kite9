@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 
@@ -67,7 +67,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_49_10_KeyTooSmall() throws Exception {
-		renderDiagram(new DiagramXMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
+		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
 				new TextLine("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(
@@ -81,8 +81,8 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 					new Symbol("sdfs", 'W', SymbolShape.HEXAGON)))));
 	}
 	
-	protected DiagramXMLElement createDiagram() {
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
+	protected DiagramKite9XMLElement createDiagram() {
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
 				new TextLine("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(

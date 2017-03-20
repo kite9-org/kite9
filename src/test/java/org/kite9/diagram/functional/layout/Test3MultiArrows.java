@@ -6,7 +6,7 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 
@@ -19,7 +19,7 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		new Link( a, one);
 		new Link(a, two);
 		new Link( a, three);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, two, three, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, two, three, a), null);
 
 		renderDiagram(d);
 	}
@@ -40,7 +40,7 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		new Link(b, two);
 		new Link( b, three);
 		new Link(b, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, three, four, a, b), null);
 
 		renderDiagram(d);
 	}
@@ -66,7 +66,7 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
 
 		renderDiagram(d);
 	}
@@ -92,7 +92,7 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, three, four, a, b, c), null);
 
 		renderDiagram(d);
 	}

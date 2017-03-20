@@ -6,7 +6,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test4Containers extends AbstractLayoutFunctionalTest {
 
@@ -17,7 +17,7 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 		Context con2 = new Context("b2", createList(con1), true, null, null);
 		Context con3 = new Context("b3", createList(con2), true, null, null);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 
@@ -29,7 +29,7 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 		Context con2 = new Context("b2", createList(two), true, null, null);
 		Context con3 = new Context("b3", createList(con1, con2), true, null, null);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 	
@@ -51,7 +51,7 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 	
 		Context con3 = new Context("b3", createList(con1, con2), true, null, Layout.UP);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con3), null);
 		renderDiagram(d);
 	}
 
@@ -60,7 +60,7 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("Stereo", "one", null, null);
 		Context con1 = new Context("b1", createList(one), true, new TextLine("Here is my label"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1), null);
 		renderDiagram(d);
 	}
 	

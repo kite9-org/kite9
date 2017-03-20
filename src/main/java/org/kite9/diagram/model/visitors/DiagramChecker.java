@@ -6,7 +6,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class DiagramChecker {
 	
@@ -16,7 +16,7 @@ public class DiagramChecker {
 		
 	}
 
-	public static void checkConnnectionElements(DiagramXMLElement d, final ConnectionAction ca) {
+	public static void checkConnnectionElements(DiagramKite9XMLElement d, final ConnectionAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
 		dev.visit(d.getDiagramElement(), new VisitorAction() {
 

@@ -6,7 +6,7 @@ import java.util.List;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 /**
@@ -48,11 +48,11 @@ public class TextLine extends AbstractStyleableXMLElement {
 		}
 	}
 
-	public XMLElement getSymbols() {
+	public Kite9XMLElement getSymbols() {
 		return getProperty("symbols");
 	}
 	
-	public void setSymbols(XMLElement syms) {
+	public void setSymbols(Kite9XMLElement syms) {
 		replaceProperty("symbols", syms);
 	}
 	

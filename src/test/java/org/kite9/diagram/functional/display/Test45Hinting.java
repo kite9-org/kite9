@@ -16,8 +16,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 import junit.framework.Assert;
 
@@ -26,7 +26,7 @@ import junit.framework.Assert;
 public class Test45Hinting extends AbstractLayoutFunctionalTest {
 
 
-	private void checkInVerticalLine(DiagramXMLElement d2) {
+	private void checkInVerticalLine(DiagramKite9XMLElement d2) {
 		DiagramElement up = getById("up", d2);
 		DiagramElement mid = getById("mid", d2);
 		DiagramElement down = getById("down", d2);
@@ -34,7 +34,7 @@ public class Test45Hinting extends AbstractLayoutFunctionalTest {
 		DiagramAssert.assertInDirection(mid, down, Direction.DOWN);
 	}
 	
-	private void checkInOrdinalHorizontalLine(DiagramXMLElement d2) {
+	private void checkInOrdinalHorizontalLine(DiagramKite9XMLElement d2) {
 		DiagramElement up = getById("up", d2);
 		DiagramElement mid = getById("mid", d2);
 		DiagramElement down = getById("down", d2);
@@ -44,9 +44,9 @@ public class Test45Hinting extends AbstractLayoutFunctionalTest {
 		DiagramAssert.assertInDirection(mid, up, Direction.RIGHT);
 	}
 	
-	private void checkInHorizontalLine(DiagramXMLElement d2) {
-		XMLElement prev = null;
-		for (XMLElement c : d2) {
+	private void checkInHorizontalLine(DiagramKite9XMLElement d2) {
+		Kite9XMLElement prev = null;
+		for (Kite9XMLElement c : d2) {
 			if (prev != null) {
 				DiagramAssert.assertInDirection(prev.getDiagramElement(), c.getDiagramElement(), Direction.RIGHT);
 			} 
@@ -54,16 +54,16 @@ public class Test45Hinting extends AbstractLayoutFunctionalTest {
 		}
 	}
 	
-	private DiagramXMLElement create8Glyphs() {
-		List<XMLElement> created = new ArrayList<XMLElement>();
+	private DiagramKite9XMLElement create8Glyphs() {
+		List<Kite9XMLElement> created = new ArrayList<Kite9XMLElement>();
 		for (int i = 0; i < 8; i++) {
 			created.add(new Glyph("glyph"+i, "", "G"+i, null, null));
 		}
 		
-		return new DiagramXMLElement("d", created, Layout.HORIZONTAL, null);
+		return new DiagramKite9XMLElement("d", created, Layout.HORIZONTAL, null);
 	}
 
-	private DiagramXMLElement create4Glyphs(boolean addLinks, boolean addHints) {
+	private DiagramKite9XMLElement create4Glyphs(boolean addLinks, boolean addHints) {
 		Glyph up = new Glyph("up", null, "UP", null, null);
 		Glyph mid = new Glyph("mid", null, "MID", null, null);
 		Glyph down = new Glyph("down", null, "DOWN", null, null);
@@ -79,7 +79,7 @@ public class Test45Hinting extends AbstractLayoutFunctionalTest {
 //		}
 		
 		Glyph next = new Glyph("next", null, "NEXT", null, null);
-		DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(next, down, mid, up), null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(next, down, mid, up), null);
 		
 		if (addLinks) {
 			new Link(up, next, null, null, null, null, Direction.RIGHT);
@@ -91,23 +91,23 @@ public class Test45Hinting extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_45_1_UpDownPlanarizationHinting() throws Exception {
-		DiagramXMLElement d = create4Glyphs(true, true);
-		DiagramXMLElement d2 = renderDiagram(d);
+		DiagramKite9XMLElement d = create4Glyphs(true, true);
+		DiagramKite9XMLElement d2 = renderDiagram(d);
 		checkInVerticalLine(d2);
 	}
 	
 	@Test
 	public void test_45_2_UpDownPlanarizationHinting2() throws Exception {
-		DiagramXMLElement d= create4Glyphs(false, true);
-		DiagramXMLElement d2 = renderDiagram(d);
+		DiagramKite9XMLElement d= create4Glyphs(false, true);
+		DiagramKite9XMLElement d2 = renderDiagram(d);
 		checkInHorizontalLine(d2);
 	}
 	
 	@Test
 	public void test_45_3_OrdinalOrder() throws Exception {
-		DiagramXMLElement d= create4Glyphs(false, false);
+		DiagramKite9XMLElement d= create4Glyphs(false, false);
 		List<DiagramElement> ordered1 = d.getDiagramElement().getContents();
-		DiagramXMLElement d2 = renderDiagram(d);
+		DiagramKite9XMLElement d2 = renderDiagram(d);
 		checkInOrdinalHorizontalLine(d2);
 		List<DiagramElement> ordered2 = getInOrder(new ArrayList<DiagramElement>(d2.getDiagramElement().getContents()));
 		Assert.assertEquals(ordered1.toString(), ordered2.toString());

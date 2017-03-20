@@ -36,7 +36,7 @@ import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Table;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
@@ -103,7 +103,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		}
 	}
 	
-	protected String wrap(DiagramXMLElement x) {
+	protected String wrap(DiagramKite9XMLElement x) {
 		String xml = new XMLHelper().toXML(x.getOwnerDocument());
 		return addSVGFurniture(xml);
 	}
@@ -122,7 +122,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			currentMetrics = m;
 			
 			transcodeSVG(xml);
-			DiagramXMLElement d = Kite9DiagramBridge.lastDiagram;
+			DiagramKite9XMLElement d = Kite9DiagramBridge.lastDiagram;
 			AbstractArrangementPipeline pipeline = Kite9DiagramBridge.lastPipeline;
 			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
@@ -139,7 +139,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	}
 
-	private void measure(DiagramXMLElement d, final Metrics m) {
+	private void measure(DiagramKite9XMLElement d, final Metrics m) {
 		new DiagramElementVisitor().visit(d.getDiagramElement(), new VisitorAction() {
 
 			public void visit(DiagramElement de) {

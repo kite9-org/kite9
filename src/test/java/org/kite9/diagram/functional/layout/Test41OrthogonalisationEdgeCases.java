@@ -9,7 +9,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 @Ignore
 public class Test41OrthogonalisationEdgeCases extends AbstractLayoutFunctionalTest {
@@ -27,7 +27,7 @@ public class Test41OrthogonalisationEdgeCases extends AbstractLayoutFunctionalTe
 		
 		Glyph bottom = new Glyph("bottom", "", "bottom", null, null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("d", HelpMethods.listOf(top, ctx, bottom), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", HelpMethods.listOf(top, ctx, bottom), Layout.DOWN, null);
 	
 		new TurnLink(top, a);
 		new Link(top, b);

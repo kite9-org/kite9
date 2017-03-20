@@ -7,7 +7,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 
 public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest {
@@ -28,7 +28,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		
 		Context c1 = new Context("if", createList(inside, i1), true, null, null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c1, outside, o1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c1, outside, o1), null);
 		renderDiagram(d);
 	}
 
@@ -55,7 +55,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c5, outside, o1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c5, outside, o1), null);
 		renderDiagram(d);
 	}
 	
@@ -81,7 +81,7 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c4, outside, o1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c4, outside, o1), null);
 		renderDiagram(d);
 	}
 	

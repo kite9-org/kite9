@@ -7,7 +7,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 /**
@@ -27,7 +27,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two);
 		new Link(a, three);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, three, a),
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -43,7 +43,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, meets,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, meets,
 				sees), null);
 
 		renderDiagram(d);
@@ -65,7 +65,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(asks, three, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(looks, four, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, meets,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, meets,
 				sees, asks, looks, three, four), null);
 
 		renderDiagram(d);
@@ -84,7 +84,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new TurnLink(sees, one);
 		new TurnLink(meets, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, meets,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, meets,
 				sees), null);
 
 		renderDiagram(d);
@@ -99,7 +99,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, three, a),
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -114,7 +114,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(one, two, three, a),
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(one, two, three, a),
 				null);
 
 		renderDiagram(d);
@@ -142,7 +142,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(tl, tr, bl, br, top,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);
@@ -170,7 +170,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(tl, tr, bl, br, top,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);

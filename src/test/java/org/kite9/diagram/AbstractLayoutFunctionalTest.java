@@ -26,7 +26,7 @@ import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,17 +35,17 @@ import org.w3c.dom.Text;
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
-	protected DiagramXMLElement renderDiagram(DiagramXMLElement d) throws Exception {
+	protected DiagramKite9XMLElement renderDiagram(DiagramKite9XMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		return renderDiagram(xml);
 	}
 
 
-	protected DiagramXMLElement renderDiagram(String xml) throws Exception {
+	protected DiagramKite9XMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
 		transcodePNG(full);
 		transcodeSVG(full);
-		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
@@ -124,7 +124,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
 	
-	protected DiagramElement getById(final String id, DiagramXMLElement d) {
+	protected DiagramElement getById(final String id, DiagramKite9XMLElement d) {
 		DiagramElementVisitor vis = new DiagramElementVisitor();
 		final DiagramElement[] found = { null };
 		vis.visit(d.getDiagramElement(), new VisitorAction() {
@@ -140,7 +140,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return found[0];
 	}
 
-	protected void mustTurn(DiagramXMLElement d, Link l) {
+	protected void mustTurn(DiagramKite9XMLElement d, Link l) {
 		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
 	
 			@Override
@@ -154,7 +154,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		});
 	}
 
-	protected void mustContradict(DiagramXMLElement diag, Link l) {
+	protected void mustContradict(DiagramKite9XMLElement diag, Link l) {
 		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
 			
 			@Override
@@ -185,7 +185,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		transcodePNG(theXML);
 		transcodeSVG(theXML);
 		boolean addressed = isAddressed();
-		DiagramXMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		

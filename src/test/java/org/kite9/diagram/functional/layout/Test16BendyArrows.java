@@ -5,7 +5,7 @@ import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test16BendyArrows extends AbstractLayoutFunctionalTest {
 
@@ -25,7 +25,7 @@ public class Test16BendyArrows extends AbstractLayoutFunctionalTest {
 		new Link(bc, b);
 		new Link(bc, c);
 		
-		DiagramXMLElement d= new DiagramXMLElement("bendy", createList(a, b, c, ab, ac, bc), null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("bendy", createList(a, b, c, ab, ac, bc), null);
 		renderDiagram(d);
 	}
 	
@@ -45,7 +45,7 @@ public class Test16BendyArrows extends AbstractLayoutFunctionalTest {
 		new Link(bc, b);
 		new Link(bc, c);
 		
-		DiagramXMLElement d= new DiagramXMLElement("bendy", createList(a, b, c, ab, ac, bc), null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("bendy", createList(a, b, c, ab, ac, bc), null);
 		renderDiagram(d);
 	}
 

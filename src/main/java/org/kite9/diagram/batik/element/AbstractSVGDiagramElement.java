@@ -22,7 +22,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -50,7 +50,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
 
-			if ((n instanceof Element) && (!(n instanceof XMLElement))) {
+			if ((n instanceof Element) && (!(n instanceof Kite9XMLElement))) {
 				performReplace(n.getChildNodes());
 				for (int j = 0; j < n.getAttributes().getLength(); j++) {
 					Attr a = (Attr) n.getAttributes().item(j);

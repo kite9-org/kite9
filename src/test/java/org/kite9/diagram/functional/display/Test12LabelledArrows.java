@@ -17,7 +17,7 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 
@@ -34,7 +34,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new Link(i1, a, null, null, null, new TextLine("from"), Direction.LEFT);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLine("to"), Direction.RIGHT);
 						
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, b, i1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);
 	}
 	
@@ -49,7 +49,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new Link(i1, a, null, null, null, new TextLine("from"), Direction.UP);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLine("to"), Direction.DOWN);
 						
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, b, i1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);
 	}
 	
@@ -75,7 +75,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		
 		Context con = new Context("c1",createList( a, b, i1), true, clabel, null);
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( con), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( con), null);
 		renderDiagram(d);
 	}
 	
@@ -93,7 +93,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		
 		Context con = new Context("c1",createList(a, b, i1), true, new TextLine("Container Label, oh the old container"), null);
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( con), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( con), null);
 		renderDiagram(d);
 	}
 	
@@ -110,7 +110,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		
 		Context con = new Context("c1",createList(a, b, i1), true, new TextLine("Container Label\n oh the old container\nhas a very long and tedious label"), null);
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con), null);
 		renderDiagram(d);
 	}
 	
@@ -128,7 +128,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new Link(i3, a, null, null, LinkEndStyle.ARROW, null /* new TextLine("to the safe side B") */, Direction.UP);
 		
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, i1, i2, i3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, i1, i2, i3), null);
 		renderDiagram(d);
 	}
 	
@@ -148,7 +148,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new TurnLink(i2, b, null, null, LinkEndStyle.ARROW, new TextLine("to the safe side B"), null);
 		
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( a, i1, i2, b), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( a, i1, i2, b), null);
 		renderDiagram(d);
 	}
 
@@ -161,7 +161,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		l.setFromLabel(new TextLine("hello"));
 		l.setToLabel(new TextLine("gopher"));
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a, i1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, i1), null);
 		renderDiagram(d);
 
 	}
@@ -183,7 +183,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c, c2), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c, c2), null);
 		renderDiagram(d);
 	}
 	
@@ -202,7 +202,7 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		
 				
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(c, c2), new Key(null,"", new ArrayList<Symbol>()));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c, c2), new Key(null,"", new ArrayList<Symbol>()));
 		renderDiagram(d);
 		
 	}

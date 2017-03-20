@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTest {
@@ -27,7 +27,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a, two), null);
 		renderDiagram(d);
 	}
 
@@ -42,7 +42,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 	}
 
@@ -60,7 +60,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
@@ -78,7 +78,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new TurnLink(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 
@@ -97,7 +97,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con2, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con2, a), null);
 		renderDiagram(d);
 	}
 	
@@ -114,7 +114,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		new Link(one, two);
 
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 
 	}
@@ -132,7 +132,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 
 		new Link(three, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(three, con4), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(three, con4), null);
 		renderDiagram(d);
 	}
 }

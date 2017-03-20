@@ -8,15 +8,15 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class GenericXMLElement extends AbstractStyleableXMLElement {
+public class GenericKite9XMLElement extends AbstractStyleableXMLElement {
 
-	public GenericXMLElement(String name, ADLDocument owner) {
+	public GenericKite9XMLElement(String name, ADLDocument owner) {
 		super(name, owner);
 	}
 
 	@Override
 	protected Node newNode() {
-		return new GenericXMLElement(getNodeName(), getOwnerDocument());
+		return new GenericKite9XMLElement(getNodeName(), getOwnerDocument());
 	}
 
 	@Override

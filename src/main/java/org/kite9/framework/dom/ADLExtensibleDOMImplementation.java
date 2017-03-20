@@ -34,8 +34,8 @@ import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.GenericXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.GenericKite9XMLElement;
 import org.kite9.framework.xml.StylesheetReference;
 import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
@@ -64,7 +64,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.DIAGRAM_ELEMENT, new ElementFactory() {
 			 
 			public Element create(String prefix, Document doc) {
-				DiagramXMLElement out = new DiagramXMLElement((ADLDocument) doc);
+				DiagramKite9XMLElement out = new DiagramKite9XMLElement((ADLDocument) doc);
 				out.setOwnerDocument(doc);
 				return out;
 			}
@@ -149,7 +149,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		if (USE_GENERIC_XML_ELEMENT) {
 			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
 				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"stylesheet".equals(qualifiedName))) {
-					return new GenericXMLElement(qualifiedName, (ADLDocument) document);
+					return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
 				}
 			} 
 		}

@@ -29,11 +29,11 @@ public abstract class AbstractXMLContainerElement extends AbstractStyleableXMLEl
 	    }
 	}
 
-	public void setLabel(XMLElement label) {
+	public void setLabel(Kite9XMLElement label) {
 	    replaceProperty("label", label);
 	}
 	
-	public XMLElement getLabel() {
+	public Kite9XMLElement getLabel() {
 		return getProperty("label");
 	}
 }

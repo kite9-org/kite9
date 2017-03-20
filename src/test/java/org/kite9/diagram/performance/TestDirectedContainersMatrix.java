@@ -29,8 +29,8 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
@@ -49,13 +49,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 	@SuppressWarnings("rawtypes")
 	private String generateDiagram(Metrics m, int size) {
-		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
 
-		XMLElement[][] space = new XMLElement[size][];
+		Kite9XMLElement[][] space = new Kite9XMLElement[size][];
 		for (int i = 0; i < space.length; i++) {
-			space[i] = new XMLElement[size];
+			space[i] = new Kite9XMLElement[size];
 		}
 		
 		List<Glyph> items = new ArrayList<Glyph>(m.connecteds);
@@ -75,7 +75,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join horiz
 		for (int y = 0; y < size; y++) {
-			XMLElement current = null;
+			Kite9XMLElement current = null;
 			for (int x = 0; x < size; x++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -89,7 +89,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join vert
 		for (int x = 0; x < size; x++) {
-			XMLElement current = null;
+			Kite9XMLElement current = null;
 			for (int y = 0; y < size; y++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -116,13 +116,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			int x3 = horiz ? Math.min(size-1, x1+x2) : x1;
 			int y3 = !horiz ? Math.min(size-1, y1+y2) : y1;
 
-			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<XMLElement>(), true, null, null);
+			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<Kite9XMLElement>(), true, null, null);
 
-			List<XMLElement> contents = new ArrayList<XMLElement>();
+			List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 			boolean fail = false;
 			for (int x = x1; x <= x3; x++) {
 				for (int y = y1; y <= y3; y++) {
-					XMLElement contained = space[x][y];
+					Kite9XMLElement contained = space[x][y];
 					if (contained != null) {
 						contents.add(contained);
 					}
@@ -139,7 +139,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			
 			if (!fail) {
 				
-				for (XMLElement connected : contents) {
+				for (Kite9XMLElement connected : contents) {
 					c.appendChild(connected);
 					items.remove(connected);
 					System.out.println("Context "+c+" contains "+contents);
@@ -154,13 +154,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		}
 		
 
-		Set<XMLElement> cl = new LinkedHashSet<XMLElement>(size*size);
+		Set<Kite9XMLElement> cl = new LinkedHashSet<Kite9XMLElement>(size*size);
 		cl.addAll(contexts);
 		cl.addAll(items);
 		m.connections = connections;
 
 		@SuppressWarnings("unchecked")
-		DiagramXMLElement out = new DiagramXMLElement(new ArrayList(cl), null);
+		DiagramKite9XMLElement out = new DiagramKite9XMLElement(new ArrayList(cl), null);
 		return wrap(out);
 	}
 

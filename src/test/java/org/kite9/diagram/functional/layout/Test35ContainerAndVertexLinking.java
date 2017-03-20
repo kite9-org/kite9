@@ -11,7 +11,7 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkLineStyle;
 
 public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTest  {
@@ -50,7 +50,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(g6, con1);
 		new Link(g0, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList( g0, con1, g4, g5, g6), Layout.RIGHT, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList( g0, con1, g4, g5, g6), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -78,7 +78,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(g6, con1);
 		new Link(g0, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(g0, con2, g6), Layout.RIGHT, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(g0, con2, g6), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 	
@@ -111,7 +111,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(g0, con1, con2, g7), Layout.HORIZONTAL, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(g0, con1, con2, g7), Layout.HORIZONTAL, null);
 		renderDiagram(d);
 	}
 	
@@ -144,7 +144,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList( g0, con1, g7, con2), Layout.RIGHT, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList( g0, con1, g7, con2), Layout.RIGHT, null);
 		renderDiagram(d);
 	}
 
@@ -177,7 +177,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		l.setStyle(LinkLineStyle.DOTTED);
 		new Link(con2, con1);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g0, g7, con2), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g0, g7, con2), Layout.DOWN, null);
 		renderDiagram(d);
 	}
 	
@@ -212,7 +212,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(con1, g10);
 		new Link(con1, g11);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", createList( con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList( con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 	
@@ -247,7 +247,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(con1, g10, null, null, null, null, Direction.UP);
 		new Link(con1, g11, null, null, null, null, Direction.UP);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g0, g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11), null);
 		renderDiagram(d);
 	}
 

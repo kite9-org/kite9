@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
@@ -55,7 +55,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 	}
 
 	private void renderDiagram() throws Exception {
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", listOf(con1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", listOf(con1), null);
 		super.renderDiagram(d);
 	}
 	

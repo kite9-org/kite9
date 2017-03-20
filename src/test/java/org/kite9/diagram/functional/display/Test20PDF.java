@@ -11,9 +11,9 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 
@@ -21,27 +21,27 @@ public class Test20PDF extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_20_1_GlyphFinal() throws IOException {
-		XMLElement one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
+		Kite9XMLElement one = new Glyph("RG", "Stereo", "Rob's Glyph", null, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 
 		renderDiagramPDF(d);
 	}
 
 	@Test
 	public void test_20_2_GlyphWithTextSymbol() throws IOException {
-		XMLElement one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
+		Kite9XMLElement one = new Glyph("one", "Stereo", "One", createList(new TextLine("Here is line 1", createList(new Symbol(
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
 				"Some text", 'A', SymbolShape.HEXAGON))), new TextLine("Here is line 2"),
 				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagramPDF(d);
 	}
 
 	@Test
 	public void test_20_3_GlyphWithSymbolOnly() throws IOException {
-		XMLElement one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
+		Kite9XMLElement one = new Glyph("one", "", "One", null, createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE),
 				new Symbol("Some text", 'a', SymbolShape.DIAMOND), new Symbol("Some text", 'a', SymbolShape.HEXAGON)));
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagramPDF(d);
 	}
 
@@ -53,7 +53,7 @@ public class Test20PDF extends AbstractDisplayFunctionalTest {
 		Key k = new Key("some bold text", null, createList(new Symbol("Some unholy information", 'S',
 				SymbolShape.CIRCLE)));
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(a), k);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
 		renderDiagramPDF(d);
 	}
 
@@ -71,7 +71,7 @@ public class Test20PDF extends AbstractDisplayFunctionalTest {
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con5, con4, con3, con2), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, con5, con4, con3, con2), null);
 		renderDiagramPDF(d);
 	}
 
@@ -87,7 +87,7 @@ public class Test20PDF extends AbstractDisplayFunctionalTest {
 		new Link(a, one);
 		new Link(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a, two), null);
 		renderDiagramPDF(d);
 	}
 
@@ -105,7 +105,7 @@ public class Test20PDF extends AbstractDisplayFunctionalTest {
 		new Link(a, two);
 		new TurnLink(a, three);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagramPDF(d);
 	}
 }

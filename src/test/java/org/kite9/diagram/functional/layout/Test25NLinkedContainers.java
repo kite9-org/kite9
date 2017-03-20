@@ -14,9 +14,9 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -27,7 +27,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 	
 	public void testGrid(int glyphs, int containers, Layout withinContainer, Layout overallL, Direction d) throws Exception {
 		Random r = new Random(101);
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", glyphs, containers, contents, withinContainer);
 		
 		for (int i = 0; i < glyphs; i++) {
@@ -36,18 +36,18 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 			}
 		}
 		
-		for (XMLElement c : contents) {
+		for (Kite9XMLElement c : contents) {
 			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, overallL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 		
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 
-	private void shuffleElements(Random r, XMLElement c) {
+	private void shuffleElements(Random r, Kite9XMLElement c) {
 		NodeList l = c.getChildNodes();
 		List<Node> items = new ArrayList<>(l.getLength());
 		for (int i = 0; i < l.getLength(); i++) {
@@ -113,7 +113,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 		Kite9Log.setLogging(false);
 		Random r = new Random(101);
 		int n = 30;
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", n, 3, contents, Layout.HORIZONTAL);
 		
 		for (int i = 0; i < n; i++) {
@@ -124,14 +124,14 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 		
 		((Context)contents.get(0)).setLayoutDirection(Layout.RIGHT);
 		
-		for (XMLElement c : contents) {
+		for (Kite9XMLElement c : contents) {
 			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, Layout.VERTICAL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 		
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 }

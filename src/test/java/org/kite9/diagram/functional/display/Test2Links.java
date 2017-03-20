@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test2Links extends AbstractDisplayFunctionalTest {
@@ -22,7 +22,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		Arrow a = new Arrow("meets", "meets");
 		new Link(a, one);
 		new Link(a, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
@@ -34,7 +34,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		Arrow a = new Arrow("meets");
 		new Link(a, one);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, null);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
@@ -49,7 +49,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		new TurnLink(a, two);
 		new TurnLink(b, one);
 		new TurnLink(b, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, a, b), Layout.HORIZONTAL, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a, b), Layout.HORIZONTAL, null);
 
 		renderDiagram(d);
 	}
@@ -65,7 +65,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		new Link(a, two);
 		new Link(b, three);
 		new Link(b, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one, two, three, a, b));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, three, a, b));
 
 		renderDiagram(d);
 	}
@@ -84,7 +84,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		new TurnLink(a, one);
 		new TurnLink(a, one);
 		new TurnLink(a, one);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, a));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, a));
 
 		renderDiagram(d);
 	}

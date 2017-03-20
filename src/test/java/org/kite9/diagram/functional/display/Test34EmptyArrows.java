@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplaye
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.BufferedImageProcessingPipeline;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 
@@ -30,7 +30,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, ga);
 		new Link(a, gc);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		renderDiagram(d);
 	}
 	
@@ -46,7 +46,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, gc);
 		new Link(a, gd);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc, gd), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc, gd), null);
 		renderDiagram(d);
 	}
 	
@@ -64,7 +64,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new TurnLink(a, gd);
 		new TurnLink(a, ge);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc, gd, ge), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc, gd, ge), null);
 		renderDiagram(d);
 	}
 	
@@ -78,7 +78,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, ga, null, null, null, null, Direction.RIGHT);
 		new Link(a, gc, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		renderDiagram(d);
 	}
 	
@@ -92,7 +92,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, ga);
 		new Link(a, gc);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		TestingEngine te = new TestingEngine(getZipName(), false) {
 
 			@Override
@@ -116,7 +116,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, ga,null, null, "ARROW", null, Direction.DOWN);
 		new Link(a, gc,null, null, "ARROW", null);
 		
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		renderDiagram(d);
 	}
 	
@@ -124,7 +124,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 	public void test_34_7_1GlyphsOneEdge() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		new TurnLink(one, one);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(one));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one));
 
 		renderDiagram(d);
 	}

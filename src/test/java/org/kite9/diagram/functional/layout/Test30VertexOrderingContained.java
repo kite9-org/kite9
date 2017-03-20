@@ -12,19 +12,19 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_30_1_BigSquareDirected() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, Layout.HORIZONTAL);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -33,18 +33,18 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 		new HopLink(out[2][2], out[3][2],null, null, null, null, Direction.RIGHT);
 		new HopLink(out[0][3], out[2][3],null, null, null, null, Direction.DOWN);
 
-		renderDiagram(new DiagramXMLElement("bob", out2, Layout.VERTICAL, null));
+		renderDiagram(new DiagramKite9XMLElement("bob", out2, Layout.VERTICAL, null));
 
 	}
 
 	@Test
 	public void test_30_2_BigL() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, null);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -55,7 +55,7 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 		new Link(out[2][1], out[3][0],null, null, null, null, Direction.LEFT);
 		new Link(out[2][0], out[3][1],null, null, null, null, Direction.LEFT);
 
-		renderDiagram(new DiagramXMLElement("bob", out2, Layout.VERTICAL, null));
+		renderDiagram(new DiagramKite9XMLElement("bob", out2, Layout.VERTICAL, null));
 
 	}
 	
@@ -63,7 +63,7 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 	
 	@Test
 	public void test_30_4_DifferentContainerDepths() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 2, contents, null);
 
 		Glyph[] out2 = GraphConstructionTools.createX("h", 12, contents);
@@ -89,7 +89,7 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 		new Link(out[1][2], out2[7],null, null, null, null, Direction.RIGHT);
 		new Link(out[1][3], out2[5],null, null, null, null, Direction.RIGHT);
 		
-		renderDiagram(new DiagramXMLElement("bob", contents, null));
+		renderDiagram(new DiagramKite9XMLElement("bob", contents, null));
 
 	}
 	
@@ -101,13 +101,13 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 	
 		Context top = new Context("top", listOf(a, b), true, null, Layout.RIGHT);
 		Context bottom = new Context("bottom", listOf(c), true, null, Layout.HORIZONTAL);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(top);
 		out2.add(bottom);
 	
 		new Link(a, b, null, null, null, null, null);
 		new Link(a,c, null, null, null, null, null);
 	
-		renderDiagram(new DiagramXMLElement("bob", out2, Layout.DOWN, null));
+		renderDiagram(new DiagramKite9XMLElement("bob", out2, Layout.DOWN, null));
 	}
 }

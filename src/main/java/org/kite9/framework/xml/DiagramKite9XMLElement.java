@@ -17,34 +17,34 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class DiagramXMLElement extends AbstractXMLContainerElement {
+public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 
 	private static final long serialVersionUID = -7727042271665853389L;
 	
-	public DiagramXMLElement() {
+	public DiagramKite9XMLElement() {
 		this(TESTING_DOCUMENT);
 	}
 	
-	public DiagramXMLElement(ADLDocument doc) {
+	public DiagramKite9XMLElement(ADLDocument doc) {
 		this(createID(), doc);
 	}
 	
-	public DiagramXMLElement(String id, ADLDocument doc) {
+	public DiagramKite9XMLElement(String id, ADLDocument doc) {
 		this(id, null, null, doc);
 	}
 
-	public DiagramXMLElement(String id, List<XMLElement> contents, XMLElement k) {
+	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Kite9XMLElement k) {
 		this(id, contents, k, TESTING_DOCUMENT);
 	}
 	
-	public DiagramXMLElement(String id, List<XMLElement> contents, XMLElement k, ADLDocument doc) {
+	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Kite9XMLElement k, ADLDocument doc) {
 		super(id, "diagram", doc);
 		if (doc.getDocumentElement() == null) {
 			doc.appendChild(this);
 		} 
 		
 		if (contents != null) {
-			for (XMLElement contained : contents) {
+			for (Kite9XMLElement contained : contents) {
 				appendChild(contained);
 			}
 		}
@@ -53,15 +53,15 @@ public class DiagramXMLElement extends AbstractXMLContainerElement {
 		}
 		
 		// home all temporary connections (due to Link)
-		for (XMLElement xmlElement : doc.getConnectionElements()) {
+		for (Kite9XMLElement xmlElement : doc.getConnectionElements()) {
 			appendChild(xmlElement);
 		}
 		
 		// set ranks for all children that don't have them
 		int rank = 0;
 		for (Node childElement : this) {
-			if (childElement instanceof XMLElement) {
-				XMLElement xmlElement = (XMLElement) childElement;
+			if (childElement instanceof Kite9XMLElement) {
+				Kite9XMLElement xmlElement = (Kite9XMLElement) childElement;
 				String rankString = xmlElement.getAttribute("rank");
 				if ("".equals(rankString)) {
 					xmlElement.setAttribute("rank", ""+(rank++));
@@ -73,24 +73,24 @@ public class DiagramXMLElement extends AbstractXMLContainerElement {
 		
 	}
 	
-	public DiagramXMLElement(String id, List<XMLElement> contents) {
+	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents) {
 		this(id, contents, null, TESTING_DOCUMENT);
 	}
 
-	public DiagramXMLElement(String id, List<XMLElement> contents, Layout l, XMLElement k) {
+	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Layout l, Kite9XMLElement k) {
 		this(id, contents, k, TESTING_DOCUMENT);
 		this.setLayoutDirection(l);
 	}
 
-	public DiagramXMLElement(List<XMLElement> contents, XMLElement k) {
+	public DiagramKite9XMLElement(List<Kite9XMLElement> contents, Kite9XMLElement k) {
 		this(createID(), contents, k);
 	}
 
-	public XMLElement getKey() {
+	public Kite9XMLElement getKey() {
 		return getProperty("key");
 	}
 
-	public void setKey(XMLElement k) {
+	public void setKey(Kite9XMLElement k) {
 	    replaceProperty("key", k);
 	}
 
@@ -112,11 +112,11 @@ public class DiagramXMLElement extends AbstractXMLContainerElement {
 
 	@Override
 	protected Node newNode() {
-		return new DiagramXMLElement();
+		return new DiagramKite9XMLElement();
 	}
 
 	@Override
-	public XMLElement getLabel() {
+	public Kite9XMLElement getLabel() {
 		return getKey();
 	}
 	

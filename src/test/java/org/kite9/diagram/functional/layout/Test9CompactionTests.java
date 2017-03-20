@@ -15,9 +15,9 @@ import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 
@@ -36,7 +36,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(c, three);
 		new Link(c, one, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList( one, b, two, c, three), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, b, two, c, three), null);
 		renderDiagram(d);
 	}
 	
@@ -62,7 +62,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link( right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(tl, tr, bl, br, top,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(tl, tr, bl, br, top,
 				left, bottom, right), null);
 
 		renderDiagram(d);
@@ -84,7 +84,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link( asks, three, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(looks, four, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		DiagramXMLElement d = new DiagramXMLElement("D", createList( one, two, meets,
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList( one, two, meets,
 				sees, asks, looks, three, four), null);
 
 		renderDiagram(d);
@@ -92,13 +92,13 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 	
 	@Test
     public void test_9_4_HierarchicalContainers() throws Exception {
-		XMLElement one = new Glyph("Stereo", "one", null, null);
-		XMLElement two = new Glyph("Stereo", "two", null, null);
-		XMLElement con1 = new Context("b1", createList(one), true, null, null);
-		XMLElement con2 = new Context("b2", createList(two), true, null, null);
-		XMLElement con3 = new Context("b3", createList(con1, con2), true, null, null);
+		Kite9XMLElement one = new Glyph("Stereo", "one", null, null);
+		Kite9XMLElement two = new Glyph("Stereo", "two", null, null);
+		Kite9XMLElement con1 = new Context("b1", createList(one), true, null, null);
+		Kite9XMLElement con2 = new Context("b2", createList(two), true, null, null);
+		Kite9XMLElement con3 = new Context("b3", createList(con1, con2), true, null, null);
 			
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram",createList(con3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram",createList(con3), null);
 		renderDiagram(d);
     }
 	
@@ -139,8 +139,8 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(one, four, null, null, null, null, d);
 		
 		
-		DiagramXMLElement d1 = new DiagramXMLElement("The Diagram",createList(one, two, three, four), null);
-		DiagramXMLElement d2 = renderDiagram(d1);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
+		DiagramKite9XMLElement d2 = renderDiagram(d1);
 		new DiagramElementVisitor().visit(d2.getDiagramElement(), new VisitorAction() {
 			
 			@Override

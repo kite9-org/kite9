@@ -15,8 +15,8 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestConnected extends AbstractPerformanceTest {
 
@@ -55,7 +55,7 @@ public class TestConnected extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m) {
-		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
@@ -80,10 +80,10 @@ public class TestConnected extends AbstractPerformanceTest {
 			}
 		}
 
-		List<XMLElement> cl = new ArrayList<XMLElement>(items.length);
+		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
 		Collections.addAll(cl, items);
 
-		DiagramXMLElement out = new DiagramXMLElement( cl, null);
+		DiagramKite9XMLElement out = new DiagramKite9XMLElement( cl, null);
 		
 		return wrap(out);
 	}

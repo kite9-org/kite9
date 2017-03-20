@@ -12,7 +12,7 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 
@@ -29,7 +29,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
 		
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1), null);
 		renderDiagram(d1);
 		
 		
@@ -49,7 +49,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
 				
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		renderDiagram(d1);
 		
 		
@@ -75,7 +75,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 		new Link(g5, g4, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 				
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		d1.setLayoutDirection(Layout.RIGHT);
 		
 		renderDiagram(d1);
@@ -102,7 +102,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 		
 		
 				
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
 		
 		renderDiagram(d1);
 		
@@ -111,7 +111,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_29_5_EmptyDiagram() throws IOException {
-		DiagramXMLElement d1 = new DiagramXMLElement();
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement();
 		renderDiagram(d1);
 	}
 	

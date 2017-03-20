@@ -8,7 +8,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 /**
@@ -25,9 +25,9 @@ public class ContainerProperty extends AbstractStyleableXMLElement {
 		super(part, d);
 	}
 	
-	public ContainerProperty(String part, ADLDocument d, Collection<? extends XMLElement> contents) {
+	public ContainerProperty(String part, ADLDocument d, Collection<? extends Kite9XMLElement> contents) {
 		this(part, d);
-		for (XMLElement e : contents) {
+		for (Kite9XMLElement e : contents) {
 			appendChild(e);
 		}
 	}
@@ -51,9 +51,9 @@ public class ContainerProperty extends AbstractStyleableXMLElement {
 		}
 	}
 	
-	public List<XMLElement> asList() {
-		ArrayList<XMLElement> out = new ArrayList<XMLElement>(size());
-		for (XMLElement e : this) {
+	public List<Kite9XMLElement> asList() {
+		ArrayList<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>(size());
+		for (Kite9XMLElement e : this) {
 			out.add(e);
 		}
 		return out;

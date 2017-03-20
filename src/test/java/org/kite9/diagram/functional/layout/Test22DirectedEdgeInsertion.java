@@ -15,9 +15,9 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.builder.DirectedEdgePlanarizationBuilder;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 /**
  * LEMMA: If the user provides a set of directed edges which don't overlap, the
@@ -31,11 +31,11 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_1_UnconnectedWindows() throws Exception {
-		List<XMLElement> glyphs = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
 		GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 
@@ -43,13 +43,13 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_2_NextToWindows() throws Exception {
-		List<XMLElement> glyphs = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 
 		new Link(a[1][1], b[0][0], null, null, null, null, Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 
@@ -57,14 +57,14 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_3_EmbeddedToWindows() throws Exception {
-		List<XMLElement> glyphs = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 
 		new Link(a[0][0], b[0][0], null, null, null, null, Direction.RIGHT);
 		new Link(b[1][1], a[1][1], null, null, null, null, Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", glyphs, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", glyphs, null);
 
 		renderDiagram(d);
 
@@ -106,7 +106,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new Link(diagramServer, receives, null, null, null, null, Direction.LEFT);
 		new Link(receives, client, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(receives, response);
-		DiagramXMLElement d = new DiagramXMLElement("Arch", createList(yourside, transport, ourside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("Arch", createList(yourside, transport, ourside), null);
 
 		renderDiagram(d);
 	}
@@ -124,7 +124,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new TurnLink(a, b, null, null, null, null, null);
 		new TurnLink(a, b, null, null, null, null, null);
 
-		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("Arch", listOf(a, b), null);
 		renderDiagram(d);
 	}
 
@@ -141,7 +141,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		new TurnLink(a, c, null, null, null, null, null);
 		new TurnLink(a, b, null, null, null, null, null);
 		new TurnLink(c, b, null, null, null, null, Direction.UP);
-		DiagramXMLElement d = new DiagramXMLElement("Arch", listOf(a, b, c), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("Arch", listOf(a, b, c), null);
 
 		renderDiagram(d);
 	}

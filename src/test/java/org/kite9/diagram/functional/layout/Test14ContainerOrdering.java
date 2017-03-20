@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 
@@ -36,7 +36,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 	public void test_14_1_OneOutsideConnection() throws Exception {
 		setUp();
 		new Link(outside, two);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -44,7 +44,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 	public void test_14_2_OneInsideConnection() throws Exception {
 		setUp();
 		new Link(one, three);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -53,7 +53,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		setUp();
 		new Link(outside, three);
 		new Link(one, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -62,7 +62,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		setUp();
 		new Link(outside, two);
 		new Link(two, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -74,7 +74,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		setUp();
 		new Link(one, three);
 		new Link(two, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -83,7 +83,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		setUp();
 		new Link(one, three);
 		new Link(three, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 	
@@ -99,7 +99,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		Context topToBottom = new Context(listOf(g[6], g[7], g[8]), true, new TextLine("Top to Bottom"), Layout.DOWN);
 		Context rightToLeft = new Context(listOf(g[9], g[10], g[11]), true, new TextLine("Right to Left"), Layout.LEFT);
 		
-		DiagramXMLElement d1 = new DiagramXMLElement("my_diagram", listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
 		
 		renderDiagram(d1);
 		
@@ -112,7 +112,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		new Link(one, four);
 		new Link(two, four);
 		new Link(three, four);
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, outside), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
 

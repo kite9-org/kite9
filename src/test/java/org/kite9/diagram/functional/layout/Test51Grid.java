@@ -16,8 +16,8 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 
 public class Test51Grid extends AbstractLayoutFunctionalTest {
@@ -38,17 +38,17 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		ctx.setStyle("layout: grid; grid-columns: 2;"); 
 		
 		
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
 	public void test_51_2_SupergridMockup() throws Exception {
 		Context ctx = createSupergrid(true, false, 4);
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	private Context createSupergrid(boolean addLinks, boolean addContentLink, int size) {
-		List<XMLElement> contents = new ArrayList<>();
+		List<Kite9XMLElement> contents = new ArrayList<>();
 		Context[][] elems = new Context[size][];
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Context[size];
@@ -57,10 +57,10 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 				elems[i][j].setStyle("occupies: "+i+" "+i+" "+j+" "+j+";");
 				if (addLinks) {
 					if (j > 0) {
-						new Link((XMLElement) elems[i][j], (XMLElement) elems[i][j - 1], "", null, "", null, Direction.RIGHT);
+						new Link((Kite9XMLElement) elems[i][j], (Kite9XMLElement) elems[i][j - 1], "", null, "", null, Direction.RIGHT);
 					}
 					if (i > 0) {
-						new Link((XMLElement) elems[i][j], (XMLElement) elems[i - 1][j], "", null, "", null, Direction.UP);
+						new Link((Kite9XMLElement) elems[i][j], (Kite9XMLElement) elems[i - 1][j], "", null, "", null, Direction.UP);
 					}
 				}
 				
@@ -104,7 +104,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		ctx.setStyle("layout: grid; grid-size: 2 2; padding: 4px; "); 
 		
 		
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), new TextLine("Bits missing")));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new TextLine("Bits missing")));
 	}
 	
 
@@ -112,21 +112,21 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	public void test_51_4_ProperSupergrid() throws Exception {
 		Context ctx = createSupergrid(false, false, 4);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
 	public void test_51_5_GridWithSpanningSquares() throws Exception {
 		Context ctx = createTwoLayerGridContext(null, null, null, null);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
 	public void test_51_6_GridWithUndirectedConnections() throws Exception {
 		Context ctx = createSupergrid(false, true, 4);
 		ctx.setStyle("layout: grid; grid-size: 4 4;"); 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	
@@ -149,7 +149,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 		new Link(g2, g4, null, null, null, null, Direction.DOWN);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	private Context createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
@@ -196,7 +196,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		return ctx;
 	}
 	
-	public static List<XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	public static List<Kite9XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
 		Context tr = new Context("tr", listOf(g2), true, new TextLine("Top Right"), null);
 		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
@@ -208,7 +208,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		bl.setStyle("occupies: 0 1");
 		br.setStyle("occupies: 1 1");
 		
-		List<XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
+		List<Kite9XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
 	}
 	
@@ -223,7 +223,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		
 		new ContradictingLink(g1, g3, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
 	@Test
@@ -237,7 +237,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		
 		new ContradictingLink(g2, g3, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	private Context setupContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
@@ -256,13 +256,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(0), g3, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -272,13 +272,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(contexts.get(0), g3, null, null, null, null, null);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -288,13 +288,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(contexts.get(3), g5, null, null, null, null, null);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -304,13 +304,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(3), g5, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -320,13 +320,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(contexts.get(0), g5, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test
@@ -336,13 +336,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(ctx, g5, null, null, null, null, null);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -352,13 +352,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(ctx, g2, null, null, null, null, null);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	@Test(expected=ElementsMissingException.class)
@@ -368,13 +368,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new ContradictingLink(ctx, g2, null, null, null, null, Direction.LEFT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 	
 	
@@ -385,13 +385,13 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setStyle("layout: grid; grid-size: 2 2;");
 		
 		new Link(ctx, g5, null, null, null, null, Direction.DOWN);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx, g5), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g5), null));
 	}
 
 	@Test
@@ -408,7 +408,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		new Link(g2, g4, null, null, null, null, Direction.RIGHT);
 		new Link(g3, g4, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	@Test
@@ -424,14 +424,14 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		new Link(g1, g3, null, null, null, null, Direction.DOWN);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	@Test
 	public void test_51_22_OddSupergrid() throws Exception {
 		Context ctx = createSupergrid(false, false, 5);
 		ctx.setStyle("layout: grid; grid-size: 5 5;"); 
-		renderDiagram(new DiagramXMLElement("diagram", Arrays.asList(ctx), null));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 }

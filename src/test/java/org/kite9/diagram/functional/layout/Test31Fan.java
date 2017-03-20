@@ -12,8 +12,8 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test31Fan extends AbstractLayoutFunctionalTest {
 
@@ -43,7 +43,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.listOf(g2, g3), true, null, null);
 
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1, g6, g5, g7), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(g1, c1, g6, g5, g7), null);
 		renderDiagram(d1);
 		
 		
@@ -67,7 +67,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.listOf(g2, g3, g4), true, null, null);
 		
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1, g5, g6), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(g1, c1, g5, g6), null);
 		renderDiagram(d1);
 		
 		
@@ -76,9 +76,9 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_31_3_LotsInABox() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<XMLElement> out = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		out.add(g1);
-		List<XMLElement> cc = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> cc = new ArrayList<Kite9XMLElement>();
 		Glyph[] l = GraphConstructionTools.createX("fan", 15, cc);
 		Context c1 = new Context("c1", cc,  true, null, null);
 		out.add(c1);
@@ -102,7 +102,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(g1, l[13], null, null, null, null, null);
 		new Link(g1, l[14], null, null, null, null, null);
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -111,7 +111,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_31_4_RightFanFixedFirst() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<XMLElement> out = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -128,7 +128,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(l[3], l[4], null, null, null, null, Direction.DOWN);
 		new Link(l[4], l[5], null, null, null, null, Direction.DOWN);
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -138,7 +138,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_31_5_LeftFanFixedFirst() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<XMLElement> out = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -155,7 +155,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(l[3], l[4], null, null, null, null, Direction.DOWN);
 		new Link(l[4], l[5], null, null, null, null, Direction.DOWN);
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -164,7 +164,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_31_6_DownFanFixedMiddles() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<XMLElement> out = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 8, out);
 		
@@ -185,7 +185,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(l[5], l[6], null, null, null, null, Direction.RIGHT);
 		new Link(l[6], l[7], null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(out, null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
 		renderDiagram(d1);
 		
 		
@@ -209,7 +209,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(g1, g5, null, null, null, null, Direction.UP);
 	
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(g1, c1), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(g1, c1), null);
 		renderDiagram(d1);
 	}
 	
@@ -233,7 +233,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(g1, g5, null, null, null, null, null);
 	
 		
-		DiagramXMLElement d1 = new DiagramXMLElement(HelpMethods.listOf(c1, g5), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, g5), null);
 		d1.setLayoutDirection(Layout.RIGHT);
 		renderDiagram(d1);
 	}

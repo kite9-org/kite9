@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrder
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
@@ -179,7 +179,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	 * otherwise there will be a contradiction in the planarization.
 	 */
 	protected boolean canCross(Edge e2, EdgePath ep, boolean goingDown) {
-		if (e2.getOriginalUnderlying() instanceof DiagramXMLElement) {
+		if (e2.getOriginalUnderlying() instanceof DiagramKite9XMLElement) {
 			// you can't leave the top container
 			return false;
 		}

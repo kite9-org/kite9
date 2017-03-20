@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
@@ -29,7 +29,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, con5, con4, con3, con2), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, con5, con4, con3, con2), null);
 		renderDiagram(d);
 	}
 
@@ -46,7 +46,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 				"meets 2"));
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine("meets 3") ) ;
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g1, g2, g3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -65,7 +65,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine(
 				"meets 3"), Direction.RIGHT);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g1, g2, g3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -83,7 +83,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 		new Link(con1, g3, null, new TextLine("arranges 3"), LinkEndStyle.ARROW, new TextLine(
 				"meets 3"), Direction.LEFT);
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con1, g1, g2, g3), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g1, g2, g3), null);
 		renderDiagram(d);
 	}
 
@@ -98,7 +98,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 		new Link(con1, g1, LinkEndStyle.ARROW, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine(
 				"meets"));
 
-		DiagramXMLElement d = new DiagramXMLElement("D", createList(con2, g1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con2, g1), null);
 		renderDiagram(d);
 	}
 	

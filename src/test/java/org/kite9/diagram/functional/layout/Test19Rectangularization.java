@@ -9,7 +9,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 
@@ -45,7 +45,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new Link(c, c1, null, null, null, null, Direction.RIGHT);
 		new Link(d, d1, null, null, null, null, Direction.DOWN);
 		
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		renderDiagram(diag);
 	}
@@ -58,7 +58,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new Link(b, b1, null, null, null, null, Direction.DOWN);
 		new Link(c, c1, null, null, null, null, Direction.UP);
 		new Link(d, d1, null, null, null, null, Direction.DOWN);
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		
 		renderDiagram(diag);
@@ -73,7 +73,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new Link(c, c1);
 		new Link( d, d1);
 		
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1, b1, c1, d1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(inner, a1, b1, c1, d1), null);
 		
 		renderDiagram(diag);
 	}
@@ -87,7 +87,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new TurnLink(c, a1);
 		new TurnLink(d, a1);
 		
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(inner, a1), null);
 		
 		renderDiagram(diag);
 	}
@@ -101,7 +101,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new TurnLink(c, a1);
 		new TurnLink(d, a1);
 		
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(inner, a1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(inner, a1), null);
 		
 		renderDiagram(diag);
 	}
@@ -114,7 +114,7 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		new Link(c, a1, null, null, null, null, Direction.RIGHT);
 		new Link(d, a1, null, null, null, null, Direction.RIGHT);
 		
-		DiagramXMLElement diag = new DiagramXMLElement("blah", createList(a,b,c,d, a1), null);
+		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("blah", createList(a,b,c,d, a1), null);
 		
 		renderDiagram(diag);
 	}

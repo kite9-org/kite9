@@ -1,7 +1,7 @@
 package org.kite9.diagram.model.style;
 
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 /**
  * Allows for the conversion from an `XMLElement` to a Kite9 `DiagramElement` (used in layout).
@@ -11,6 +11,6 @@ import org.kite9.framework.xml.XMLElement;
  */
 public interface DiagramElementFactory {
 
-	public DiagramElement createDiagramElement(XMLElement in, DiagramElement parent);
+	public DiagramElement createDiagramElement(Kite9XMLElement in, DiagramElement parent);
 	
 }

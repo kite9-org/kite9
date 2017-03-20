@@ -75,7 +75,7 @@ public class ADLDocument extends SVG12OMDocument {
 	/**
 	 * Maybe move this all into the testing package?
 	 */
-	private transient Set<XMLElement> tempConnections = new LinkedHashSet<>();
+	private transient Set<Kite9XMLElement> tempConnections = new LinkedHashSet<>();
 	private boolean diagramCreated = false;
 
 	public void setDiagramCreated(boolean diagramCreated) {
@@ -89,7 +89,7 @@ public class ADLDocument extends SVG12OMDocument {
 		tempConnections.add(xmlElement);
 	}
 
-	public Set<XMLElement> getConnectionElements() {
+	public Set<Kite9XMLElement> getConnectionElements() {
 		return tempConnections;
 	}
 

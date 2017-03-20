@@ -9,7 +9,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
@@ -23,7 +23,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 	/**
 	 * Produces the diagram element for the underlying XML.
 	 */
-	public DiagramElement createDiagramElement(XMLElement in, DiagramElement parent) {
+	public DiagramElement createDiagramElement(Kite9XMLElement in, DiagramElement parent) {
 		if (in instanceof StyledKite9SVGElement) {
 			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 			DiagramElementType lt = getElementType(in2);
@@ -61,7 +61,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case LINK:
 			return new ConnectionImpl(el, parent, context);
 		case LINK_END:
-			return (AbstractXMLDiagramElement) ((XMLElement) el.getParentNode()).getDiagramElement();
+			return (AbstractXMLDiagramElement) ((Kite9XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
 			return new TerminatorImpl(el, parent, context);
 		case NONE:

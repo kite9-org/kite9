@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 
@@ -28,7 +28,7 @@ public class Glyph extends AbstractStyleableXMLElement {
 		super(id, "glyph", doc);
 	}
 	
-	public Glyph(String id, String stereotype, String label,  List<XMLElement> text, List<XMLElement> symbols, boolean divider, ADLDocument doc) {
+	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols, boolean divider, ADLDocument doc) {
 		super(id, "glyph", doc);
 		
 		if (stereotype != null) {
@@ -48,35 +48,35 @@ public class Glyph extends AbstractStyleableXMLElement {
 		}		
 	}
 	
-	public Glyph(String stereotype, String label,  List<XMLElement> text, List<XMLElement> symbols) {
+	public Glyph(String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {
 		this(createID()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
-	public Glyph(String id, String stereotype, String label,  List<XMLElement> text, List<XMLElement> symbols) {
+	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {
 		this(id, stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
-	public XMLElement getStereotype() {
+	public Kite9XMLElement getStereotype() {
 		return getProperty("stereotype");
 	}
 
-	public void setStereotype(XMLElement sterotype) {
+	public void setStereotype(Kite9XMLElement sterotype) {
 		replaceProperty("stereotype", sterotype);
 	}
 
-	public XMLElement getText() {
+	public Kite9XMLElement getText() {
 		return getProperty("text-lines");
 	}
 
-	public void setText(XMLElement text) {
+	public void setText(Kite9XMLElement text) {
 		replaceProperty("text-lines", text);
 	}
 
-	public XMLElement getSymbols() {
+	public Kite9XMLElement getSymbols() {
 		return getProperty("symbols");
 	}
 	
-	public void setSymbols(XMLElement syms) {
+	public void setSymbols(Kite9XMLElement syms) {
 		replaceProperty("symbols", syms);
 	}
 
@@ -84,11 +84,11 @@ public class Glyph extends AbstractStyleableXMLElement {
 		return true;
 	}
 	
-	public XMLElement getLabel() {
+	public Kite9XMLElement getLabel() {
 		return getProperty("label");
 	}
 
-	public void setLabel(XMLElement name) {
+	public void setLabel(Kite9XMLElement name) {
 		replaceProperty("label", name);
 	}
 	

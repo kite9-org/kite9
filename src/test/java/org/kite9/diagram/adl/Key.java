@@ -5,32 +5,32 @@ import java.util.List;
 
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.GenericXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.GenericKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 public class Key extends AbstractStyleableXMLElement {
 
 	private static final long serialVersionUID = 7705875104684442878L;
 	
-	public XMLElement getBodyText() {
+	public Kite9XMLElement getBodyText() {
 		return getProperty("bodyText");
 	}
 
-	public void setBodyText(XMLElement bodyText) {
+	public void setBodyText(Kite9XMLElement bodyText) {
 		replaceProperty("bodyText", bodyText);
 	}
 	
-	public XMLElement getBoldText() {
+	public Kite9XMLElement getBoldText() {
 		return getProperty("boldText");
 	}
 
-	public void setBoldText(XMLElement boldText) {
+	public void setBoldText(Kite9XMLElement boldText) {
 		replaceProperty("boldText", boldText);
 	}
 	
-	public GenericXMLElement convert(List<Symbol> symbols) {
-		GenericXMLElement out = (GenericXMLElement) ownerDocument.createElement("text-lines");
+	public GenericKite9XMLElement convert(List<Symbol> symbols) {
+		GenericKite9XMLElement out = (GenericKite9XMLElement) ownerDocument.createElement("text-lines");
 		if (symbols == null) {
 			return out;
 		}
@@ -69,11 +69,11 @@ public class Key extends AbstractStyleableXMLElement {
 		}
 	}
 	
-	public XMLElement getSymbols() {
+	public Kite9XMLElement getSymbols() {
 		return getProperty("text-lines");
 	}
 
-	public void setSymbols(XMLElement symbols) {
+	public void setSymbols(Kite9XMLElement symbols) {
 		replaceProperty("text-lines", symbols);
 	}
 	

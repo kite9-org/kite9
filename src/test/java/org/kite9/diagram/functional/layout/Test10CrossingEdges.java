@@ -8,16 +8,16 @@ import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.framework.xml.DiagramXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_10_1_Grid() throws Exception {
-		List<XMLElement> vertices = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
-		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", vertices, null);
 
 		renderDiagram(d); 
 	}
@@ -30,7 +30,7 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 	 */
 	@Test
 	public void test_10_2_CrossingEdges() throws Exception {
-		List<XMLElement> vertices = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createGrid(2, 5, vertices, true);
 		
 		new TurnLink(out[0][0], out[0][2]);
@@ -38,7 +38,7 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 		new TurnLink(out[0][1], out[0][4]);
 		
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", vertices, null);
 
 		renderDiagram(d);
 		
@@ -55,10 +55,10 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_10_3_SmallGrid() throws Exception {
-		List<XMLElement> vertices = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
 		GraphConstructionTools.createGrid(2, 2, vertices, true);
 		
-		DiagramXMLElement d = new DiagramXMLElement("D", vertices, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", vertices, null);
 
 		renderDiagram(d);
 	}

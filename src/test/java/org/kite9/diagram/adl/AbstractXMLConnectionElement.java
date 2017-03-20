@@ -4,7 +4,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 
 /**
@@ -26,7 +26,7 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 	/**
 	 * Call this with modify verteConnected false to avoid adding the edge connection to the vertex
 	 */
-	public AbstractXMLConnectionElement(String id, String tag, XMLElement from, XMLElement to, Direction drawDirection, String fromDecoration, XMLElement fromLabel, String toDecoration, XMLElement tolabel, ADLDocument doc) {
+	public AbstractXMLConnectionElement(String id, String tag, Kite9XMLElement from, Kite9XMLElement to, Direction drawDirection, String fromDecoration, Kite9XMLElement fromLabel, String toDecoration, Kite9XMLElement tolabel, ADLDocument doc) {
 		super(id, tag, doc);
 		setFrom(from);
 		setTo(to);
@@ -52,15 +52,15 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		
 	}
 	
-	public abstract XMLElement getFromDecoration();
+	public abstract Kite9XMLElement getFromDecoration();
 
-	public abstract XMLElement getToDecoration();
+	public abstract Kite9XMLElement getToDecoration();
 
-	public XMLElement getFromLabel() {
+	public Kite9XMLElement getFromLabel() {
 		return getProperty("fromLabel");
 	}
 
-	public XMLElement getToLabel() {
+	public Kite9XMLElement getToLabel() {
 		return getProperty("toLabel");
 	}
 
@@ -72,15 +72,15 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		}
 	}
 
-	public abstract void setFromDecoration(XMLElement fromDecoration);
+	public abstract void setFromDecoration(Kite9XMLElement fromDecoration);
 
-	public abstract void setToDecoration(XMLElement toDecoration);
+	public abstract void setToDecoration(Kite9XMLElement toDecoration);
 
-	public void setFromLabel(XMLElement fromLabel) {
+	public void setFromLabel(Kite9XMLElement fromLabel) {
 	    replaceProperty("fromLabel", fromLabel);
 	}
 
-	public void setToLabel(XMLElement toLabel) {
+	public void setToLabel(Kite9XMLElement toLabel) {
 	    replaceProperty("toLabel", toLabel);
 	}
 	
@@ -92,29 +92,29 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		return Direction.valueOf(dd);
 	}
 	
-	public XMLElement getFrom() {
+	public Kite9XMLElement getFrom() {
 		Element fromEl = getProperty("from");
 		String reference = fromEl.getAttribute("reference");
-		XMLElement from = (XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
+		Kite9XMLElement from = (Kite9XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
 		return from;
 	}
 
-	public XMLElement getTo() {
+	public Kite9XMLElement getTo() {
 		Element toEl = getProperty("to");
 		String reference = toEl.getAttribute("reference");
-		XMLElement to = (XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
+		Kite9XMLElement to = (Kite9XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
 		return to;
 	}
 
-	public void setFrom(XMLElement v) {
-		XMLElement from = (XMLElement) ownerDocument.createElement("from");
+	public void setFrom(Kite9XMLElement v) {
+		Kite9XMLElement from = (Kite9XMLElement) ownerDocument.createElement("from");
 		from.setAttribute("reference", v.getID());
 		replaceProperty("from", from);
 		from = v;
 	}
 
-	public void setTo(XMLElement v) {
-		XMLElement to = (XMLElement) ownerDocument.createElement("to");
+	public void setTo(Kite9XMLElement v) {
+		Kite9XMLElement to = (Kite9XMLElement) ownerDocument.createElement("to");
 		to.setAttribute("reference", v.getID());
 		replaceProperty("to", to);
 		to = v;

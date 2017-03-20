@@ -2,7 +2,7 @@ package org.kite9.diagram.adl;
 
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 /**
@@ -21,11 +21,11 @@ public class Arrow extends AbstractStyleableXMLElement {
 		this.tagName = "arrow";
 	}
 		
-	public XMLElement getLabel() {
+	public Kite9XMLElement getLabel() {
 		return getProperty("label");
 	}
 
-	public void setLabel(XMLElement name) {
+	public void setLabel(Kite9XMLElement name) {
 		replaceProperty("label", name);
 	}
 

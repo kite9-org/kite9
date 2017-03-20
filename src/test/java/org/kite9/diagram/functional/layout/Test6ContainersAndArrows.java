@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test6ContainersAndArrows extends AbstractLayoutFunctionalTest {
 
@@ -24,7 +24,7 @@ public class Test6ContainersAndArrows extends AbstractLayoutFunctionalTest {
 		new Link(a, one, null, null, null, null, Direction.UP);
 		new Link(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a, two), null);
 		renderDiagram(d);
 	}
 
@@ -39,7 +39,7 @@ public class Test6ContainersAndArrows extends AbstractLayoutFunctionalTest {
 		new Link(a, one);
 		new Link(a, two);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 	}
 
@@ -57,7 +57,7 @@ public class Test6ContainersAndArrows extends AbstractLayoutFunctionalTest {
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con1, a), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, a), null);
 		renderDiagram(d);
 	}
 }

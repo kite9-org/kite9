@@ -24,7 +24,7 @@ import org.w3c.dom.Node;
  * @TODO: replace with SVGOMStyleElement
  *
  */
-public class StylesheetReference extends SVGOMStyleElement implements CSSStyleSheetNode, XMLElement {
+public class StylesheetReference extends SVGOMStyleElement implements CSSStyleSheetNode, Kite9XMLElement {
 
 	public static final String STYLESHEET_TAG = "stylesheet";
 	public static final String DEFAULT_STYLESHEET = "";
@@ -93,7 +93,7 @@ public class StylesheetReference extends SVGOMStyleElement implements CSSStyleSh
 	}
 
 	@Override
-	public Iterator<XMLElement> iterator() {
+	public Iterator<Kite9XMLElement> iterator() {
 		return Collections.emptyIterator();
 	}
 

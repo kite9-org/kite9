@@ -12,19 +12,19 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_28_1_VertexPushing() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, Layout.HORIZONTAL);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -32,18 +32,18 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 		new TurnLink(out[0][1], out[0][2]);
 
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 
 
 	@Test
 	public void test_28_2_VertexPushing() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -56,17 +56,17 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 		new Link(out[0][5], out[0][0]);
 
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 
 	@Test
 	public void test_28_3_BigERelaxed() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 5, 2, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -85,17 +85,17 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 		new TurnLink(out[1][3], out[0][1]);
 		
 		
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 	
 	@Test
 	public void test_28_4_FragmentDirected() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 6, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -104,18 +104,18 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 		new Link(out[0][4], out[0][5], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
 		new Link(out[0][1], out[0][2]);
 
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 	
 	
 	@Test
 	public void test_28_5_BuddiesAndSeparateOrderMerging() throws Exception {
-		List<XMLElement> contents = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<XMLElement> out2 = new ArrayList<XMLElement>();
+		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -132,7 +132,7 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 		new Link(out[0][5], out[0][7]);
 		
 		
-		renderDiagram(new DiagramXMLElement(out2, null));
+		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
 	

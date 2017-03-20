@@ -15,13 +15,13 @@ import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class TestCard extends AbstractLayoutFunctionalTest {
 
-	public DiagramXMLElement createTestCard() {
-		DiagramXMLElement.TESTING_DOCUMENT = new ADLDocument();
+	public DiagramKite9XMLElement createTestCard() {
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Symbol aDia = new Symbol("Some description\n taking multiple lines", 'a', SymbolShape.DIAMOND);
 		Symbol MDia = new Symbol("Some description blah blah blah", 'M', SymbolShape.DIAMOND);
 		Symbol QCir = new Symbol("Some description sdkjfsd flksdjf", 'Q', SymbolShape.CIRCLE);
@@ -99,13 +99,13 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 		
 		
 
-		DiagramXMLElement d = new DiagramXMLElement(HelpMethods.listOf(emptyContext, otherContext, a2, withSymbols, text1, other), k);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(emptyContext, otherContext, a2, withSymbols, text1, other), k);
 		return d;
 	}
 	
 	@Test
 	public void testCardBasic() throws IOException {
-		DiagramXMLElement d = createTestCard();
+		DiagramKite9XMLElement d = createTestCard();
 		renderDiagramSVG(d);
 		renderDiagramPDF(d);
 		renderDiagram(d);

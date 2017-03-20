@@ -10,7 +10,7 @@ import org.kite9.diagram.batik.HasLayeredGraphics;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Element;
 
 /**
@@ -42,7 +42,7 @@ public class Kite9DiagramBridge extends Kite9GBridge {
      * Creates the `g` for the diagram, plus layers that it contains.
      */
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-    	DiagramXMLElement d = (DiagramXMLElement) e;
+    	DiagramKite9XMLElement d = (DiagramKite9XMLElement) e;
     	Diagram de = (Diagram) d.getDiagramElement();
        	IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) super.createGraphicsNode(ctx, e);
        	out.setId(de.getID());
@@ -65,7 +65,7 @@ public class Kite9DiagramBridge extends Kite9GBridge {
     }
     
     public static BatikArrangementPipeline lastPipeline;
-    public static DiagramXMLElement lastDiagram;
+    public static DiagramKite9XMLElement lastDiagram;
 
 	private void addLayer(CompositeGraphicsNode out, GraphicsLayerName l, Diagram de) {
 		out.add(((HasLayeredGraphics)de).getGraphicsForLayer(l));

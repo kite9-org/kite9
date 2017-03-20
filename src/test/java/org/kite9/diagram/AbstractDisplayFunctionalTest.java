@@ -15,7 +15,7 @@ import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Document;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;
@@ -39,7 +39,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		}
 	}
 	
-	protected void renderDiagram(DiagramXMLElement d) throws Exception {
+	protected void renderDiagram(DiagramKite9XMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		renderDiagram(xml);
 	}

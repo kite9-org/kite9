@@ -11,7 +11,7 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -64,7 +64,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 	/**
 	 * This needs to copy the template XML source into the destination.
 	 */
-	public void handleTemplateElement(XMLElement in, DiagramElement out) {
+	public void handleTemplateElement(Kite9XMLElement in, DiagramElement out) {
 		templater.handleTemplateElement(in, (AbstractXMLDiagramElement) out);
 	}
 

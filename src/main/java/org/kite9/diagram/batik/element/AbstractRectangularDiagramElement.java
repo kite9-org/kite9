@@ -17,7 +17,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.kite9.framework.xml.XMLElement;
+import org.kite9.framework.xml.Kite9XMLElement;
 
 public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement implements Rectangular {
 	
@@ -57,8 +57,8 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		initElement(theElement);
 	}
 
-	private void initElement(XMLElement theElement) {
-		for (XMLElement xmlElement : theElement) {
+	private void initElement(Kite9XMLElement theElement) {
+		for (Kite9XMLElement xmlElement : theElement) {
 			DiagramElement de = xmlElement.getDiagramElement();			
 			if (de instanceof Label) {
 				addLabelReference((Label) de);
@@ -88,14 +88,14 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return layout;
 	}
 	
-	public void initLayout(XMLElement theElement) {
+	public void initLayout(Kite9XMLElement theElement) {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY);
 		if (ev != null) {
 			layout = (Layout) ev.getTheValue();
 		}
 	}
 	
-	public void initSizing(XMLElement theElement) {
+	public void initSizing(Kite9XMLElement theElement) {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
 		this.sizing = (DiagramElementSizing) ev.getTheValue();
 	}

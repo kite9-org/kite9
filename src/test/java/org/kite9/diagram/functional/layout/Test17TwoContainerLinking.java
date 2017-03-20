@@ -11,7 +11,7 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test17TwoContainerLinking extends AbstractLayoutFunctionalTest {
 
@@ -41,7 +41,7 @@ public class Test17TwoContainerLinking extends AbstractLayoutFunctionalTest {
     
     	Context con3 = new Context("b3", createList(con1, con2), true, null, c3);
     
-    	DiagramXMLElement d = new DiagramXMLElement("The Diagram", createList(con3), null);
+    	DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con3), null);
     	renderDiagram(d);
     }
 
@@ -104,7 +104,7 @@ public class Test17TwoContainerLinking extends AbstractLayoutFunctionalTest {
     	Context i4 = new Context("i4", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	
     	Context outer = new Context("outer", HelpMethods.listOf(i1, i2, i3, i4), true, null, Layout.RIGHT);
-    	DiagramXMLElement d= new DiagramXMLElement(HelpMethods.listOf(outer), null);
+    	DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(outer), null);
     	renderDiagram(d);
     }
     

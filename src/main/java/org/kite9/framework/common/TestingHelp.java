@@ -31,7 +31,7 @@ import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 /**
  * Helps with comparing the results of tests
@@ -128,7 +128,7 @@ public class TestingHelp {
 	/**
 	 * Produces a report containing all the elements of the diagram
 	 */
-	public String getPositionalInformationADL(DiagramXMLElement d) {
+	public String getPositionalInformationADL(DiagramKite9XMLElement d) {
 		StringBuffer details = new StringBuffer();
 		Rowify cr = getIdentifiableRowify();
 		Rowify lr = getLinkRowify();
@@ -263,7 +263,7 @@ public class TestingHelp {
 		};
 	}
 	
-	private <X extends DiagramElement> void getPositions(DiagramXMLElement d, StringBuffer details, final Class<X> class1,
+	private <X extends DiagramElement> void getPositions(DiagramKite9XMLElement d, StringBuffer details, final Class<X> class1,
 			Rowify r) {
 		final SortedSet<X> items = new TreeSet<X>();
 		new DiagramElementVisitor().visit(d.getDiagramElement(), new VisitorAction() {

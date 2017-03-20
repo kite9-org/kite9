@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplaye
 import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
 import org.kite9.diagram.visualization.pipeline.BufferedImageProcessingPipeline;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramXMLElement;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
@@ -26,7 +26,7 @@ public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
 	@Ignore("Broken in sprint 7 - no longer needed (sizing)")
 	@Test
 	public void test_32_1_TestSizesAreCreated() throws IOException {
-		DiagramXMLElement d = createADiagram();
+		DiagramKite9XMLElement d = createADiagram();
 		renderDiagramSizes(d);
 
 	}
@@ -34,27 +34,27 @@ public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
 	@Ignore("Broken in sprint 7 - no longer needed (sizing)")
 	@Test
 	public void test_32_2_TestMapIsCreated() throws IOException {
-		DiagramXMLElement d = createADiagram();
+		DiagramKite9XMLElement d = createADiagram();
 		renderMap(d);
 	}
 	
 	@Test
 	public void test_32_3_TestDiagramSizeCanBeSet() throws IOException {
-		DiagramXMLElement d = createADiagram();
+		DiagramKite9XMLElement d = createADiagram();
 		TestingEngine te = getTestingEngineSettingSize(900, 200);
 		renderDiagram(d, te, false);
  	}
 	
 	@Test
 	public void test_32_4_TestDiagramHeightScaling() throws IOException {
-		DiagramXMLElement d = createADiagram();
+		DiagramKite9XMLElement d = createADiagram();
 		TestingEngine te = getTestingEngineSettingSize(200, 400);
 		renderDiagram(d, te, false);
  	}
 	
 	@Test
 	public void test_32_5_TestDiagramHeightAndWidthScaling() throws IOException {
-		DiagramXMLElement d = new DiagramXMLElement("blo", HelpMethods.listOf(new Glyph("", "New Part", null, null)));
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("blo", HelpMethods.listOf(new Glyph("", "New Part", null, null)));
 		TestingEngine te = getTestingEngineSettingSize(200, 200);
 		renderDiagram(d, te, false);
  	}
@@ -74,7 +74,7 @@ public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
 	
 	
 
-	protected DiagramXMLElement createADiagram() {
+	protected DiagramKite9XMLElement createADiagram() {
 		Glyph one = new Glyph("Stereo", "One", createList(
 				new TextLine("Here is line 1", createList(new Symbol(
 						"Some text", 'a', SymbolShape.CIRCLE), new Symbol(
@@ -91,7 +91,7 @@ public class Test32SizingOutput extends AbstractLayoutFunctionalTest {
 
 		Context c = new Context("c1", listOf(one), true, new TextLine("This is the context"), null);
 		
-		DiagramXMLElement d = new DiagramXMLElement("The Diagram", listOf(c, two), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", listOf(c, two), null);
 		return d;
 	}
 
