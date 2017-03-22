@@ -10,15 +10,16 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 /**
  * Having identified the position of each segment, this step sets the rendering information
@@ -31,9 +32,11 @@ import org.kite9.framework.xml.DiagramKite9XMLElement;
  */
 public class EdgeRouteCompactionStep implements CompactionStep {
 
-	public void compactDiagram(Compaction c) {
-		Orthogonalization o = c.getOrthogonalization();
-		setEdgeRoutes(o);
+	public void compact(Compaction c, Rectangular r, Compactor cr) {
+		if (r instanceof Diagram) {
+			Orthogonalization o = c.getOrthogonalization();
+			setEdgeRoutes(o);
+		}
 	}
 
 	/**

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
@@ -28,9 +30,13 @@ public interface Compaction {
 	 */
 	public Segment[] getFaceSpace(DartFace df);
 	
-	public void setFaceExtremeSections(DartFace df, Segment[] border);
+	public void createFaceSpace(DartFace df, Segment[] border);
 	
 	public Vertex createCompactionVertex(Segment s1, Segment s2);
 
 	public Segment newSegment(PositionAction direction);
+	
+	public List<DartFace> getDartFacesForRectangular(Rectangular r);
+	
+	public Segment getSegmentForDart(Dart d);
 }

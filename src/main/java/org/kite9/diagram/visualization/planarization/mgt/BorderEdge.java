@@ -4,29 +4,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.framework.dom.CSSConstants;
-import org.kite9.framework.dom.EnumValue;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.style.BorderTraversal;
 
 /**
  * This edge is used for the surrounding of a diagram element.
  * 
- * Since all diagrams are containers
- * of vertices, these edges will be used around the perimeter of the diagram.
+ * Since all diagrams are containers of vertices, these edges will be used around the perimeter of the diagram.
  * 
- * A new constraint on Border edge is that "from" must be before "to" in the clockwise ordering of the edges 
- * on the face, when the edge is created.  That way, we always know whether a face is inside or outside a container 
- * (this doesn't work for grids, because edges are used for multple parts of the face - is this an issue?)
+ * The border edge keeps track of the elements it is bordering.  You can work out from their containment which side is which, I guess.
  * 
  * @author robmoffat
  *
@@ -91,6 +85,9 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		return underlying;
 	}
 	
+	/**
+	 * For a given diagram element, shows what side of that element this edge is on.
+	 */
 	public Map<DiagramElement, Direction> getDiagramElements() {
 		return forElements;
 	}

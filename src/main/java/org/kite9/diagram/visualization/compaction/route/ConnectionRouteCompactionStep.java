@@ -6,14 +6,16 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.EdgeMapping;
@@ -31,13 +33,15 @@ import org.kite9.framework.logging.LogicException;
  */
 public class ConnectionRouteCompactionStep implements CompactionStep {
 	
-	public void compactDiagram(Compaction c) {
-		Orthogonalization o = c.getOrthogonalization();
-		Set<Connection> edgeSet = createTopElementSet(o.getEdges());
-		Planarization p = c.getOrthogonalization().getPlanarization();
-		
-		for (Connection de : edgeSet) {
-			setRoute(de, p.getEdgeMappings().get(de));
+	public void compact(Compaction c, Rectangular r, Compactor cr) {
+		if (r instanceof Diagram) {
+			Orthogonalization o = c.getOrthogonalization();
+			Set<Connection> edgeSet = createTopElementSet(o.getEdges());
+			Planarization p = c.getOrthogonalization().getPlanarization();
+			
+			for (Connection de : edgeSet) {
+				setRoute(de, p.getEdgeMappings().get(de));
+			}
 		}
 	}
 

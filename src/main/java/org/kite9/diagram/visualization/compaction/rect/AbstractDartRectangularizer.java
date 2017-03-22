@@ -7,19 +7,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -65,18 +67,23 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 		this.log = new Kite9Log(this);
 	}
 
+	
 	/**
 	 * This ties off any loose ends in the diagram by extending the segments to
 	 * meet each other. This prevents overlapping of darts in the diagram.
 	 * overlapping.
-	 * 
-	 * @param o
-	 * @return a list of added darts
 	 */
-	public void compactDiagram(Compaction c) {
+	@Override
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		Map<Dart, Segment> dartSegmentMap = new HashMap<Dart, Segment>();
-		addSegmentsToMap(dartSegmentMap, c.getVerticalSegments());
-		addSegmentsToMap(dartSegmentMap, c.getHorizontalSegments());
+		List<DartFace> faces = c.getDartFacesForRectangular(r);
+		
+		
+	}
+
+
+
+	public void compactDiagram(Compaction c) {
 		List<Dart> result = new ArrayList<Dart>();
 		int face = 0;
 		List<DartFace> orderedFaces = new ArrayList<DartFace>(c.getOrthogonalization().getFaces());
@@ -89,7 +96,7 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 			List<VertexTurn> theStack = new ArrayList<VertexTurn>();
 			List<DartDirection> turns = df.dartsInFace;
 			Vertex from = df.getStartVertex();
-			buildStack(dartSegmentMap, df, theStack, turns, from, c);
+			buildStack(df, theStack, turns, from, c);
 
 			performFaceRectangularization(c, result, theStack);
 			rebuildFaceDarts(theStack, df);
@@ -117,14 +124,14 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 		}
 	}
 
-	private void buildStack(Map<Dart, Segment> dartSegmentMap, DartFace df, List<VertexTurn> theStack,
+	private void buildStack(DartFace df, List<VertexTurn> theStack,
 			List<DartDirection> turns, Vertex from, Compaction c) {
 		if (df.dartsInFace.size() > 2) {
 			try {
 				for (int i = 0; i < turns.size(); i++) {
 					Dart dart = turns.get(i).getDart();
 					VertexTurn stackTop = theStack.size() > 0 ? theStack.get(theStack.size() - 1) : null;
-					Segment segment = dartSegmentMap.get(dart);
+					Segment segment = c.getSegmentForDart(dart);
 					if (segment == null) {
 						throw new LogicException("No segment for dart: " + dart);
 					}
@@ -171,7 +178,7 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 				getSegmentInDirection(theStack, Direction.DOWN), getSegmentInDirection(theStack, Direction.LEFT),
 				getSegmentInDirection(theStack, Direction.UP) };
 
-		c.setFaceExtremeSections(df, rect);
+		c.createFaceSpace(df, rect);
 	}
 
 	private Segment getSegmentInDirection(List<VertexTurn> vt, Direction d) {

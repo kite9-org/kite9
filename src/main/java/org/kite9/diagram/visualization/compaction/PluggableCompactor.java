@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.HelpMethods;
 
@@ -38,9 +42,41 @@ public class PluggableCompactor implements Compactor {
 	public Compaction compactDiagram(Orthogonalization o) {
 		List<Segment> horizontal = buildSegmentList(o, HORIZONTAL);
 		List<Segment> vertical = buildSegmentList(o, VERTICAL);
-		CompactionImpl compaction = new CompactionImpl(o, horizontal, vertical, createVertexSegmentMap(horizontal), createVertexSegmentMap(vertical));
-		compactDiagram(compaction);
+		Map<Dart, Segment> dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical);
+		Map<Rectangular, List<DartFace>> facesForRectangular = calculateFacesForRectangular(o);
+		Map<Vertex, Segment> horizontalSegmentMap = createVertexSegmentMap(horizontal);
+		Map<Vertex, Segment> verticalSegmentMap = createVertexSegmentMap(vertical);
+		CompactionImpl compaction = new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, facesForRectangular, dartToSegmentMap);
+		compact(o.getPlanarization().getDiagram(), compaction);
 		return compaction;
+	}
+	
+	private Map<Dart, Segment> calculateDartToSegmentMap(List<Segment> h1, List<Segment> v1) {
+		Map<Dart, Segment> out = new HashMap<>();
+		h1.stream().forEach(s -> addSegmentsToMap(out, s));
+		v1.stream().forEach(s -> addSegmentsToMap(out, s));
+		return out;
+	}
+	
+	private void addSegmentsToMap(Map<Dart, Segment> dartSegmentMap, Segment segment) {
+		for (Dart d : segment.getDartsInSegment()) {
+			dartSegmentMap.put(d, segment);
+		}
+	}
+
+	private Map<Rectangular, List<DartFace>> calculateFacesForRectangular(Orthogonalization o) {
+		Map<Rectangular, List<DartFace>> out = 
+			o.getFaces().stream()
+				.filter(f -> f.getUnderlying().getPartOf() != null)
+				.collect(Collectors.groupingBy(f -> f.getUnderlying().getPartOf()));
+		return out;
+	}
+
+	@Override
+	public void compact(Rectangular r, Compaction c) {
+		for (CompactionStep step : steps) {
+			step.compact(c, r, this);
+		}
 	}
 	
 	protected Map<Vertex, Segment> createVertexSegmentMap(List<Segment> segs) {
@@ -53,16 +89,9 @@ public class PluggableCompactor implements Compactor {
 		return vertexToSegmentMap;
 	}
 
-	protected void compactDiagram(Compaction c) {
-		for (CompactionStep step : steps) {
-			step.compactDiagram(c);
-		}
-	}
-	
 	public List<Segment> buildSegmentList(Orthogonalization o, Set<Direction> direction) {
 		List<Segment> segments = sb.buildSegmentList(o, direction, direction==HORIZONTAL ? PositionAction.YAction : PositionAction.XAction);
 		return segments;
 	}
-	
 	
 }

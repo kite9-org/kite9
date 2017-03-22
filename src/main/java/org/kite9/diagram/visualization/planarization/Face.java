@@ -10,6 +10,7 @@ import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
@@ -42,6 +43,8 @@ public class Face implements Deterministic {
 	private List<Edge> boundary = new ArrayList<Edge>();
 	
 	private List<Vertex> corners = new ArrayList<Vertex>();
+	
+	private Rectangular partOf;
 	
 	private boolean outerFace = false;
 	
@@ -463,6 +466,12 @@ public class Face implements Deterministic {
 		return boundary.size();
 	}
 
-	
+	public Rectangular getPartOf() {
+		return partOf;
+	}
+
+	public void setPartOf(Rectangular partOf) {
+		this.partOf = partOf;
+	}
 	
 }

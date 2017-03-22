@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
@@ -35,13 +37,17 @@ public class CompactionImpl implements Compaction {
 
 	List<Segment> verticalSegments;
 	List<Segment> horizontalSegments;
+	Map<Rectangular, List<DartFace>> facesForRectangular;
+	Map<Dart, Segment> dartToSegmentMap;
 
-	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap) {
+	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Rectangular, List<DartFace>> facesForRectangular, Map<Dart, Segment> dartToSegmentMap) {
 		this.orthogonalization = o;
 		this.horizontalSegments = horizontal;
 		this.verticalSegments = vertical;
 		this.hMap = hmap;
 		this.vMap = vmap;
+		this.facesForRectangular = facesForRectangular;
+		this.dartToSegmentMap = dartToSegmentMap;
 	}
 	
 	Map<Vertex, Segment> hMap;
@@ -62,7 +68,7 @@ public class CompactionImpl implements Compaction {
 
 	Map<DartFace, Segment[]> faceSpaces = new HashMap<DartFace, Segment[]>();
 	
-	public void setFaceExtremeSections(DartFace df, Segment[] border) {
+	public void createFaceSpace(DartFace df, Segment[] border) {
 		faceSpaces.put(df, border);
 	}
 
@@ -98,6 +104,14 @@ public class CompactionImpl implements Compaction {
 		
 		return snew;
 	}
+
+	@Override
+	public List<DartFace> getDartFacesForRectangular(Rectangular r) {
+		return facesForRectangular.get(r);
+	}
 	
-	
+	@Override
+	public Segment getSegmentForDart(Dart r) {
+		return dartToSegmentMap.get(r);
+	}
 }

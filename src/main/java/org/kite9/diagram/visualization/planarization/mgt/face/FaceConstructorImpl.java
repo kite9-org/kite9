@@ -10,8 +10,8 @@ import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.PlanarizationEdge.RemovalType;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -26,6 +26,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
  *
  */
 public class FaceConstructorImpl implements FaceConstructor {
+	
 
 	public class TemporaryEdge extends AbstractPlanarizationEdge {
 
@@ -114,8 +115,8 @@ public class FaceConstructorImpl implements FaceConstructor {
 		}
 		
 		removeTemporaries((MGTPlanarization)pl);
-
 	}
+
 
 	protected void introduceTemporaryEdges(MGTPlanarization p) {
 		int totalLength = p.getVertexOrder().size();
@@ -240,4 +241,6 @@ public class FaceConstructorImpl implements FaceConstructor {
 			}
 		}
 	}
+	
+
 }

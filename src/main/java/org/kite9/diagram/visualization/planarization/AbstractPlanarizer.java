@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.planarization.mgt.ContainerConnectionTran
 import org.kite9.diagram.visualization.planarization.mgt.ContainerConnectionTransform2;
 import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructor;
 import org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemovalTransform;
+import org.kite9.diagram.visualization.planarization.transform.FacePartOfTransform;
 import org.kite9.diagram.visualization.planarization.transform.LayoutSimplificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.OuterFaceIdentificationTransform;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
@@ -117,6 +118,7 @@ public abstract class AbstractPlanarizer implements Logable {
 		out.add(new LayoutSimplificationTransform());
 		out.add(new ContainerConnectionTransform2(getElementMapper()));
 		out.add(new OuterFaceIdentificationTransform());
+		out.add(new FacePartOfTransform());
 		return out;
 	}
 
