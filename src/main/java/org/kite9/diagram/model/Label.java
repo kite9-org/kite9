@@ -6,7 +6,7 @@ package org.kite9.diagram.model;
  * however they don't have connections so they are excluded from the Planarization and Orthogonalization 
  * phases.
  */
-public interface Label extends DiagramElement, Rectangular {
+public interface Label extends Rectangular {
 	
 	public boolean hasContent();
 		

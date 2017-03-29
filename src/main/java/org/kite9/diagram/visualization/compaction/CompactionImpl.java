@@ -7,6 +7,8 @@ import java.util.Map;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -35,10 +37,10 @@ public class CompactionImpl implements Compaction {
 		return horizontalSegments;
 	}
 
-	List<Segment> verticalSegments;
-	List<Segment> horizontalSegments;
-	Map<Rectangular, List<DartFace>> facesForRectangular;
-	Map<Dart, Segment> dartToSegmentMap;
+	private List<Segment> verticalSegments;
+	private List<Segment> horizontalSegments;
+	private Map<Rectangular, List<DartFace>> facesForRectangular;
+	private Map<Dart, Segment> dartToSegmentMap;
 
 	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Rectangular, List<DartFace>> facesForRectangular, Map<Dart, Segment> dartToSegmentMap) {
 		this.orthogonalization = o;
@@ -47,10 +49,23 @@ public class CompactionImpl implements Compaction {
 		this.hMap = hmap;
 		this.vMap = vmap;
 		this.facesForRectangular = facesForRectangular;
-		this.dartToSegmentMap = dartToSegmentMap;
+		this.dartToSegmentMap = dartToSegmentMap;		
+		this.xSlackOptimisation = new SegmentSlackOptimisation(horizontal, Direction.RIGHT);
+		this.ySlackOptimisation = new SegmentSlackOptimisation(vertical, Direction.DOWN);
 	}
 	
-	Map<Vertex, Segment> hMap;
+	private final SegmentSlackOptimisation xSlackOptimisation; 
+	private final SegmentSlackOptimisation ySlackOptimisation;
+	
+	public SegmentSlackOptimisation getXSlackOptimisation() {
+		return xSlackOptimisation;
+	}
+
+	public SegmentSlackOptimisation getYSlackOptimisation() {
+		return ySlackOptimisation;
+	}
+
+	private Map<Vertex, Segment> hMap;
 
 	public Map<Vertex, Segment> getHorizontalVertexSegmentMap() {
 		return hMap;
@@ -60,13 +75,13 @@ public class CompactionImpl implements Compaction {
 		return faceSpaces.get(df);
 	}
 	
-	Map<Vertex, Segment> vMap;
+	private Map<Vertex, Segment> vMap;
 
 	public Map<Vertex, Segment> getVerticalVertexSegmentMap() {
 		return vMap;
 	}
 
-	Map<DartFace, Segment[]> faceSpaces = new HashMap<DartFace, Segment[]>();
+	private Map<DartFace, Segment[]> faceSpaces = new HashMap<DartFace, Segment[]>();
 	
 	public void createFaceSpace(DartFace df, Segment[] border) {
 		faceSpaces.put(df, border);

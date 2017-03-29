@@ -27,6 +27,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Direction;
@@ -172,6 +173,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 				Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
 				Face f = o.getPlanarization().createFace();
+				f.setPartOf((Rectangular) de);
 				while (iterator.hasNext()) {
 					fromv = tov;
 					tov = iterator.next();
@@ -223,7 +225,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		
 		Face outer = o.getPlanarization().createFace();
 		outer.setOuterFace(true);
-		DartFace result = o.createDartFace(outer, true);
+		DartFace result = o.createDartFace(outer);
 		result.dartsInFace = out;
 		return result;
 	}
@@ -293,6 +295,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		o.getAllVertices().addAll(cv.getVerticesAtThisLevel());
 		
 		Face f = o.getPlanarization().createFace();
+		f.setPartOf((Rectangular) originalUnderlying);
 		Vertex tl = cv.getTopLeft(), tr = cv.getTopRight(), br = cv.getBottomRight(), bl = cv.getBottomLeft();
 		
 		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, mapFor(originalUnderlying, Direction.UP)));
@@ -397,7 +400,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, Face f) {
 		f.setOuterFace(false);
-		DartFace inner = o.createDartFace(f, false);
+		DartFace inner = o.createDartFace(f);
 		dartsToDartFace(allSideDarts, start, inner, false);
 		return inner;
 	}
@@ -412,13 +415,14 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		if (v != null) {
 			for (Face f : o.getPlanarization().getFaces()) {
 				if (f.contains(v) && f.isOuterFace()) {
-					df = o.createDartFace(f, f.isOuterFace());
+					df = o.createDartFace(f);
 					break;
 				}
 			}
 		} else {
 			Face outer = o.getPlanarization().createFace();
-			df = o.createDartFace(outer, true);
+			outer.setOuterFace(true);
+			df = o.createDartFace(outer);
 		}
 		
 		if (df != null) {

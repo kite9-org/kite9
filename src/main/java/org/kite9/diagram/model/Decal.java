@@ -9,7 +9,7 @@ package org.kite9.diagram.model;
  * @author robmoffat
  *
  */
-public interface Decal extends DiagramElement {
+public interface Decal extends Rectangular {
 
 	public void setParentSize(double[] x, double[] y);
 }

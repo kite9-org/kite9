@@ -56,7 +56,7 @@ public interface Orthogonalization extends Serializable {
 	 * In the same way as a {@link Face} is a clockwise ordering of edges, a {@link DartFace} is a clockwise
 	 * ordering of darts, created in the orthogonalization process
 	 */
-	public DartFace createDartFace(Face f, boolean outer);
+	public DartFace createDartFace(Face f);
 	
 	/**
 	 * Helper vertices are added by the compaction process to ensure separation of all attr
@@ -68,4 +68,10 @@ public interface Orthogonalization extends Serializable {
 	 * Gets the underlying planarization for this orthogonalization
 	 */
 	public Planarization getPlanarization();
+
+	/**
+	 * Returns the DartFace representing this planarization face.
+	 */
+	public DartFace getDartFaceForFace(Face f);
+
 }

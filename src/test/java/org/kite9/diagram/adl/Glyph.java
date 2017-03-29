@@ -31,12 +31,12 @@ public class Glyph extends AbstractStyleableXMLElement {
 	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols, boolean divider, ADLDocument doc) {
 		super(id, "glyph", doc);
 		
-		if (stereotype != null) {
-			setStereotype(new TextLine(null, "stereotype", stereotype, null, doc));
+		if ((stereotype != null) && (stereotype.length() > 0)) {
+			setStereotype(new TextLine(id+"-stereo", "stereotype", stereotype, null, doc));
 		}
 		
-		if (label != null) {
-			setLabel(new TextLine(null, "label", label, null, doc));
+		if ((label != null) && (label.length() > 0)) {
+			setLabel(new TextLine(id+"-label", "label", label, null, doc));
 		}
 		
 		if (text!=null) {

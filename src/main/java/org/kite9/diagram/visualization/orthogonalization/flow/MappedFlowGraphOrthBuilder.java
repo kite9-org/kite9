@@ -151,8 +151,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		log.send(log.go() ? null : "Processing face: " + f.getId());
 		int index = f.indexOf(startVertex, incoming);
 
-		DartFace df = o.createDartFace(f, f.isOuterFace());
-		df.outerFace = f.isOuterFace();
+		DartFace df = o.createDartFace(f);
 		df.dartsInFace = new ArrayList<DartDirection>();
 
 		for (int i = 0; i < f.vertexCount(); i++) {

@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.position.optstep;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,16 +9,18 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
-public class SlackCenteringOptimisationStep implements OptimisationStep, Logable {
+public class SlackCenteringCompactionStep extends AbstractCompactionStep {
 
-	Kite9Log log = new Kite9Log(this);
+	public SlackCenteringCompactionStep(CompleteDisplayer cd) {
+		super(cd);
+	}
 
 	@Override
 	public String getPrefix() {
@@ -69,16 +71,16 @@ public class SlackCenteringOptimisationStep implements OptimisationStep, Logable
 	}
 
 	@Override
-	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
-		shareSlack(xo, c);
-		shareSlack(yo, c);
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
+		shareSlack(c.getXSlackOptimisation(), c);
+		shareSlack(c.getYSlackOptimisation(), c);
 	}
 
 	private void shareSlack(SegmentSlackOptimisation xo, Compaction c) {
 		
 		int capacity = xo.getAllSlideables().size()*2;
-		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, SlackCenteringOptimisationStep.SlackPool>(capacity);
-		Set<SlackPool> slackPools = new UnorderedSet<SlackCenteringOptimisationStep.SlackPool>(capacity);
+		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, SlackCenteringCompactionStep.SlackPool>(capacity);
+		Set<SlackPool> slackPools = new UnorderedSet<SlackCenteringCompactionStep.SlackPool>(capacity);
 		
 		for (Slideable s : xo.getAllSlideables()) {
 			int slack = s.getMaximumPosition() - s.getMinimumPosition();
@@ -115,7 +117,7 @@ public class SlackCenteringOptimisationStep implements OptimisationStep, Logable
 		}
 		
 		// order the pools by the amount of slack they have
-		List<SlackPool> out = new ArrayList<SlackCenteringOptimisationStep.SlackPool>(slackPools);
+		List<SlackPool> out = new ArrayList<SlackCenteringCompactionStep.SlackPool>(slackPools);
 		Collections.sort(out);
 		
 		for (SlackPool slackPool : out) {

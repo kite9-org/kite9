@@ -36,9 +36,6 @@ public class PluggableCompactor implements Compactor {
 	public static final Set<Direction> VERTICAL = HelpMethods.createSet(Direction.UP, Direction.DOWN);
 	public static final Set<Direction> HORIZONTAL = HelpMethods.createSet(Direction.LEFT, Direction.RIGHT);
 	
-	/**
-	 * One-dimensional compaction algorithm.  
-	 */
 	public Compaction compactDiagram(Orthogonalization o) {
 		List<Segment> horizontal = buildSegmentList(o, HORIZONTAL);
 		List<Segment> vertical = buildSegmentList(o, VERTICAL);
@@ -46,9 +43,14 @@ public class PluggableCompactor implements Compactor {
 		Map<Rectangular, List<DartFace>> facesForRectangular = calculateFacesForRectangular(o);
 		Map<Vertex, Segment> horizontalSegmentMap = createVertexSegmentMap(horizontal);
 		Map<Vertex, Segment> verticalSegmentMap = createVertexSegmentMap(vertical);
-		CompactionImpl compaction = new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, facesForRectangular, dartToSegmentMap);
+		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, facesForRectangular, horizontalSegmentMap, verticalSegmentMap);
 		compact(o.getPlanarization().getDiagram(), compaction);
 		return compaction;
+	}
+
+	protected Compaction instantiateCompaction(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Dart, Segment> dartToSegmentMap,
+			Map<Rectangular, List<DartFace>> facesForRectangular, Map<Vertex, Segment> horizontalSegmentMap, Map<Vertex, Segment> verticalSegmentMap) {
+		return new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, facesForRectangular, dartToSegmentMap);
 	}
 	
 	private Map<Dart, Segment> calculateDartToSegmentMap(List<Segment> h1, List<Segment> v1) {

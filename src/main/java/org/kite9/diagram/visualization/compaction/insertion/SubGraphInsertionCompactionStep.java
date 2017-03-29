@@ -13,11 +13,13 @@ import java.util.Set;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -39,36 +41,29 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier implements CompactionStep, Logable {
+public class SubGraphInsertionCompactionStep extends AbstractCompactionStep implements CompactionStep, Logable {
 
-	public SubGraphInsertionCompactionStep(CompleteDisplayer displayer) {
-		super(displayer);
+	public SubGraphInsertionCompactionStep(CompleteDisplayer cd) {
+		super(cd);
 	}
 
 	Kite9Log log = new Kite9Log(this);
 	Tools t = new Tools();
 
-	public void compactDiagram(Compaction c) {
 
-		// builds a handy map of faces to dart faces
-		Map<Face, DartFace> faceMap = new HashMap<Face, DartFace>();
-		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			Object underlying = dartFace.getUnderlying();
-			if (underlying instanceof Face) {
-				faceMap.put((Face) underlying, dartFace);
-			}
-		}
-
+	@Override
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
+		
 		List<Dart> newDarts = new ArrayList<Dart>();
 		Collection<Face> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
-		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			insertSubFaces(dartFace, faceMap, newDarts, done, c);
+		for (DartFace dartFace : c.getDartFacesForRectangular(r)) {
+			insertSubFaces(dartFace, newDarts, done, c);
 		}
 	}
 
-	private void insertSubFaces(DartFace dartFace, Map<Face, DartFace> faceMap, List<Dart> newDarts, Collection<Face> done, Compaction c) {
+	private void insertSubFaces(DartFace dartFace, List<Dart> newDarts, Collection<Face> done, Compaction c) {
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
 		}
@@ -97,7 +92,8 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
 
 		for (Face ef : underlyingFace.getContainedFaces()) {
-			Direction returned = addLowestContainmentIndex(faceMap.get(ef), faceInsertionOrder);
+			DartFace df = c.getOrthogonalization().getDartFaceForFace(ef);
+			Direction returned = addLowestContainmentIndex(df, faceInsertionOrder);
 			if (directionOfInsertion == null) {
 				directionOfInsertion = returned;
 			} else if (directionOfInsertion != returned) {
@@ -117,9 +113,7 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 			if (!done.contains(embeddedDartFace.getUnderlying())) {
 				log.send(log.go() ? null : "Inserting face: " + embeddedDartFace.getUnderlying().id + " into: " + dartFace.getUnderlying().id);
 				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
-				
-				insertSubFaces(embeddedDartFace, faceMap, newDarts, done, c);
-	
+					
 				// find the segment border of the subgraph being inserted
 				Set<Segment> lLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
 						Direction.LEFT);
@@ -156,6 +150,8 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 			}
 		}
 	}
+
+
 
 	/**
 	 * Used for populating the faceInsertionOrder map, and working out the

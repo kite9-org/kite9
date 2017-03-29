@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.route;
+package org.kite9.diagram.visualization.compaction.position;
 
 import java.util.Deque;
 import java.util.Iterator;

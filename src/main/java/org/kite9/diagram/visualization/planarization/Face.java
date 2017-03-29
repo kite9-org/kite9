@@ -53,7 +53,9 @@ public class Face implements Deterministic {
 		out.append("[FACE: "+id+(outerFace?"outer"+(containedBy == null ? "" : ", inside "+containedBy.id) :"inner")+"\n");
 		
 		if (boundary.size() == 0) {
-			out.append(" "+corners.get(0));
+			if (corners.size() > 0) {
+				out.append(" "+corners.get(0));
+			}
 		} else {
 		
 			Table t = new Table();

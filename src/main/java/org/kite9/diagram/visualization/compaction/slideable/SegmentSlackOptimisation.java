@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.position;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.ArrayList;
 import java.util.Collection;

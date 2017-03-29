@@ -2,17 +2,14 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
-import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
@@ -22,8 +19,6 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -54,19 +49,15 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public abstract class AbstractDartRectangularizer extends AbstractSegmentModifier implements Logable, CompactionStep {
+public abstract class AbstractDartRectangularizer extends AbstractCompactionStep {
+
+	public AbstractDartRectangularizer(CompleteDisplayer cd) {
+		super(cd);
+	}
 
 	boolean failfast = false;
 
-	Kite9Log log;
-
 	Tools t = new Tools();
-
-	public AbstractDartRectangularizer(CompleteDisplayer d) {
-		super(d);
-		this.log = new Kite9Log(this);
-	}
-
 	
 	/**
 	 * This ties off any loose ends in the diagram by extending the segments to
@@ -75,18 +66,10 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 	 */
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		Map<Dart, Segment> dartSegmentMap = new HashMap<Dart, Segment>();
 		List<DartFace> faces = c.getDartFacesForRectangular(r);
-		
-		
-	}
-
-
-
-	public void compactDiagram(Compaction c) {
 		List<Dart> result = new ArrayList<Dart>();
 		int face = 0;
-		List<DartFace> orderedFaces = new ArrayList<DartFace>(c.getOrthogonalization().getFaces());
+		List<DartFace> orderedFaces = new ArrayList<DartFace>(faces);
 		Collections.sort(orderedFaces);
 
 		for (DartFace df : orderedFaces) {
@@ -189,14 +172,6 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 		}
 
 		throw new LogicException("No turn in that direction");
-	}
-
-	private void addSegmentsToMap(Map<Dart, Segment> dartSegmentMap, List<Segment> verticalSegments) {
-		for (Segment segment : verticalSegments) {
-			for (Dart d : segment.getDartsInSegment()) {
-				dartSegmentMap.put(d, segment);
-			}
-		}
 	}
 
 	/**
@@ -327,16 +302,20 @@ public abstract class AbstractDartRectangularizer extends AbstractSegmentModifie
 		//boolean meetsLengthKnown = false;
 		
 		double extensionLength = ext.getUnderlying().getLength() + link.getUnderlying().getLength(); 
-		extendSegment(ext, meets, c, first, to, d1, out, d2, extensionLength, newMeetsLength,
-				newMeetsChangeCost, meetsLengthKnown);
+		extendSegment(ext, meets, c, first, to, d1, out, d2, extensionLength, newMeetsLength, newMeetsChangeCost, meetsLengthKnown);
 	}
 
 	private double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {
 		if (par.getUnderlying().isVertexLengthKnown()) {
-			return Math.max(0, meets.getUnderlying().getLength() - par.getUnderlying().getLength());
+			return Math.max(0, calculateLength(meets) - calculateLength(par));
 		} else {
 			return 0;
 		}
+	}
+
+	private int calculateLength(VertexTurn par) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

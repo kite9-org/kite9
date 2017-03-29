@@ -25,13 +25,13 @@ import org.kite9.framework.logging.LogicException;
  */
 public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 
-	public enum Match {
-		A, D
-	};
-
 	public PrioritizingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
 	}
+
+	public enum Match {
+		A, D
+	};
 
 	public class RectOption implements Comparable<RectOption> {
 

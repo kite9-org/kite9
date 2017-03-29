@@ -62,7 +62,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	protected List<DartFace> faces = new ArrayList<DartFace>();						// needed for compaction
 	
-	// protected List<Edge> removedEdges = new ArrayList<Edge>();
+	protected Map<Face, DartFace> dartFaceMap = new HashMap<>();
 	
 	public Set<Edge> getEdges() {
 		return waypointMap.keySet();
@@ -219,9 +219,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		theSet.add(d);
 	}
 
-	public DartFace createDartFace(Face f, boolean outer) {
-		DartFace df = new DartFace(f, outer);
+	public DartFace createDartFace(Face f) {
+		DartFace df = new DartFace(f, f.isOuterFace());
 		faces.add(df);
+		dartFaceMap.put(f, df);
 		return df;
 	}
 
@@ -231,5 +232,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		Vertex out = new CompactionHelperVertex("x"+helper++);
 		allVertices.add(out);
 		return out;
+	}
+
+	@Override
+	public DartFace getDartFaceForFace(Face f) {
+		return dartFaceMap.get(f);
 	}
 }

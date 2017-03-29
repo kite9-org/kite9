@@ -26,10 +26,10 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_12_1_LabelledLeftRight() throws Exception {
 		
-		Glyph a = new Glyph("", "a", null, null);
-		Glyph b = new Glyph("", "b", null, null);
+		Glyph a = new Glyph("g1", "", "a", null, null);
+		Glyph b = new Glyph("g2", "", "b", null, null);
 		
-		Arrow i1 = new Arrow("i1");
+		Arrow i1 = new Arrow("arrow1", "i1");
 		
 		new Link(i1, a, null, null, null, new TextLine("from"), Direction.LEFT);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLine("to"), Direction.RIGHT);

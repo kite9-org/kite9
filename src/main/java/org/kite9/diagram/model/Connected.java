@@ -12,7 +12,7 @@ import org.kite9.diagram.model.style.ContainerPosition;
  * @author robmoffat
  *
  */
-public interface Connected extends DiagramElement {
+public interface Connected extends Rectangular {
 
 	/**
 	 * Returns an unmodifiable collection of links

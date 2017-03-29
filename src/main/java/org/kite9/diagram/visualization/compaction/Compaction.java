@@ -6,11 +6,16 @@ import java.util.Map;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
 public interface Compaction {
+
+	public SegmentSlackOptimisation getXSlackOptimisation();
+
+	public SegmentSlackOptimisation getYSlackOptimisation();
 
 	public abstract Orthogonalization getOrthogonalization();
 
@@ -39,4 +44,5 @@ public interface Compaction {
 	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 	
 	public Segment getSegmentForDart(Dart d);
+
 }

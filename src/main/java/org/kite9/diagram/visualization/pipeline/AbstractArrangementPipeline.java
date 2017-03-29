@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.pipeline;
 
-import org.kite9.diagram.common.algorithms.so.LoggingOptimisationStep;
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
@@ -10,14 +8,14 @@ import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.PluggableCompactor;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.OptimisablePositionerCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.EdgeSeparationOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.LabelInsertionOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.LeafElementSizeOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.WidthOptimisationStep;
+import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.position.EdgeRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
-import org.kite9.diagram.visualization.compaction.route.ConnectionRouteCompactionStep;
-import org.kite9.diagram.visualization.compaction.route.EdgeRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.EdgeSeparationCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.LeafElementSizeCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
+import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
@@ -85,20 +83,20 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 
 	public Compactor createCompactor() {
 		CompactionStep[] steps = new CompactionStep[] {
+				new HierarchicalCompactionStep(),
 				new PrioritizingRectangularizer(getDisplayer()),
 				new SubGraphInsertionCompactionStep(getDisplayer()),
-				new OptimisablePositionerCompactionStep(new OptimisationStep[] { 
-						new EdgeSeparationOptimisationStep(getDisplayer()),
-						new LabelInsertionOptimisationStep(getDisplayer()), 
-						new WidthOptimisationStep(),
-						new LeafElementSizeOptimisationStep(),
-						//new LinkLengthReductionOptimisationStep(),
-//						new EdgeAlignmentOptimisationStep(),
-//						new SlackCenteringOptimisationStep(),
-						new LoggingOptimisationStep(),
-					}
-
-				), 
+				new EdgeSeparationCompactionStep(getDisplayer()),
+////						new LabelInsertionOptimisationStep(getDisplayer()), 
+				new LeafElementSizeCompactionStep(getDisplayer()),
+//						//new LinkLengthReductionOptimisationStep(),
+////						new EdgeAlignmentOptimisationStep(),
+////						new SlackCenteringOptimisationStep(),
+				new LoggingOptimisationStep(getDisplayer()),
+//					}
+//
+//				), 
+				new WidthCompactionStep(getDisplayer()), 
 				new EdgeRouteCompactionStep(), 
 				new ConnectionRouteCompactionStep(),
 				};

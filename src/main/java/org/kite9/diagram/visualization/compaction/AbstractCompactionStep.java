@@ -17,23 +17,38 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.LinkLineStyle;
 
 
 /**
- * This contains utility methods to deal with insertion of sub-graphs within the overall graph
- *
+ * This contains utility methods to deal with insertion of sub-graphs within the overall graph.
+ * You should extend this wherever you need to add vertices to a segment.  
  */
-public class AbstractSegmentModifier {
+public abstract class AbstractCompactionStep implements CompactionStep, Logable {
 
+	protected Kite9Log log = new Kite9Log(this);
+	
 	protected CompleteDisplayer displayer;
 
-	public AbstractSegmentModifier(CompleteDisplayer displayer) {
-		super();
-		this.displayer = displayer;
+	public AbstractCompactionStep(CompleteDisplayer cd) {
+		this.displayer = cd;
 	}
-		
+	
+	@Override
+	public String getPrefix() {
+		return null;
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return false;
+	}
+
+
+	
 	protected double getMinimumDistance(Compaction c, Vertex from, Vertex to, Direction d) {
 		boolean horizontalDart =  (d==Direction.LEFT) || (d==Direction.RIGHT);
 		Map<Vertex, Segment> map = horizontalDart ? c.getVerticalVertexSegmentMap() : c.getHorizontalVertexSegmentMap();
@@ -217,7 +232,7 @@ public class AbstractSegmentModifier {
 	}
 
 	
-	protected void separate(Vertex a, Segment to, Segment extend, Direction d, List<Dart> result, Compaction c) {
+	private void separate(Vertex a, Segment to, Segment extend, Direction d, List<Dart> result, Compaction c) {
 		if (to.getVerticesInSegment().contains(a)) {
 			return;
 		}
@@ -263,5 +278,6 @@ public class AbstractSegmentModifier {
 
 		return true;
 	}
+	
 	
 }

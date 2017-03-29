@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.position.optstep;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,17 +6,16 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
-import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
  * This optimisation annotates the {@link Slideable}'s in such a way as to
@@ -48,17 +47,20 @@ import org.kite9.framework.logging.Logable;
  * @author robmoffat
  * 
  */
-public class LeafElementSizeOptimisationStep implements OptimisationStep, Logable {
-
-	Kite9Log log = new Kite9Log(this);
-
+public class LeafElementSizeCompactionStep extends AbstractCompactionStep {
 	
 
-	public void optimise(Compaction c, SegmentSlackOptimisation x, SegmentSlackOptimisation y) {
-		orderDiagramElementSizes(x);
-		orderDiagramElementSizes(y);
+	public LeafElementSizeCompactionStep(CompleteDisplayer cd) {
+		super(cd);
 	}
-	
+
+
+	@Override
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
+		orderDiagramElementSizes(c.getXSlackOptimisation());
+		orderDiagramElementSizes(c.getYSlackOptimisation());
+	}
+
 	
 	/**
 	 * This labels pairs of attr in the diagram with the alignment they should have,
@@ -148,5 +150,6 @@ public class LeafElementSizeOptimisationStep implements OptimisationStep, Logabl
 	public boolean isLoggingEnabled() {
 		return true;
 	}
+
 
 }

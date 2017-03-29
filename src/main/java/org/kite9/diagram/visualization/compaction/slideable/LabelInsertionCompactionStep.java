@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.position.optstep;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,13 +12,10 @@ import java.util.Set;
 import org.kite9.diagram.batik.element.LabelFrame;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.SingleCornerVertex;
 import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Connected;
@@ -27,6 +24,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -35,17 +33,15 @@ import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
-import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -65,22 +61,21 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class LabelInsertionOptimisationStep extends AbstractSegmentModifier implements OptimisationStep, Logable {
+public class LabelInsertionCompactionStep extends AbstractCompactionStep {
+
+	public LabelInsertionCompactionStep(CompleteDisplayer cd) {
+		super(cd);
+	}
 
 	int labelNumber = 0;
 	int combNumber = 0;
 
-	private Kite9Log log = new Kite9Log(this);
-
-	public LabelInsertionOptimisationStep(CompleteDisplayer displayer) {
-		super(displayer);
-	}
-
-	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
-		xo.updatePositionalOrdering();
-		yo.updatePositionalOrdering();
-		processContainerLabels(c, xo, yo);
-		processConnectionLabels(c, xo, yo);
+	@Override
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
+		c.getXSlackOptimisation().updatePositionalOrdering();
+		c.getYSlackOptimisation().updatePositionalOrdering();
+		processContainerLabels(c, c.getXSlackOptimisation(), c.getYSlackOptimisation());
+		processConnectionLabels(c, c.getXSlackOptimisation(), c.getYSlackOptimisation());
 	}
 
 	/**
@@ -930,7 +925,7 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 			Slideable p2 = getHighEndSlideable();
 			double pos1 = Math.min(p1.getMinimumPosition(), p2.getMinimumPosition());
 			double pos2 = Math.max(p2.getMinimumPosition(), p1.getMinimumPosition());
-			LabelInsertionOptimisationStep.this.log.send("Checking range "+pos1+" to "+pos2+ " for comb \n"+this);
+			LabelInsertionCompactionStep.this.log.send("Checking range "+pos1+" to "+pos2+ " for comb \n"+this);
 			
 			checkOppositeSlideables(spine.getForwardSlideables(increasing), done, opps, increasing, pos1, pos2);
 		
@@ -970,13 +965,13 @@ public class LabelInsertionOptimisationStep extends AbstractSegmentModifier impl
 					boolean nooverlap = d2 <= fromPos || d1 >= toPos;
 
 					if (!nooverlap) {
-						LabelInsertionOptimisationStep.this.log.send("Overlaps "+slideable+" due to "+d+ " "+d1+" "+d2);
+						LabelInsertionCompactionStep.this.log.send("Overlaps "+slideable+" due to "+d+ " "+d1+" "+d2);
 						return true;
 					}
 				}
 			}
 
-			LabelInsertionOptimisationStep.this.log.send("No overlap on "+slideable);
+			LabelInsertionCompactionStep.this.log.send("No overlap on "+slideable);
 			return false;
 		}
 

@@ -1,24 +1,16 @@
-package org.kite9.diagram.visualization.compaction.position.optstep;
+package org.kite9.diagram.visualization.compaction.slideable;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
+import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Segment;
-import org.kite9.diagram.visualization.compaction.position.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
 
 
 /**
@@ -28,22 +20,18 @@ import org.kite9.framework.logging.Logable;
  * @author robmoffat
  *
  */
-public class EdgeSeparationOptimisationStep extends AbstractSegmentModifier implements OptimisationStep, Logable {
-
-	private Kite9Log log = new Kite9Log(this);
+public class EdgeSeparationCompactionStep extends AbstractCompactionStep {
 	
-	public EdgeSeparationOptimisationStep(CompleteDisplayer displayer) {
-		super(displayer);
+	public EdgeSeparationCompactionStep(CompleteDisplayer cd) {
+		super(cd);
 	}
-	
+
 	int dc;
 
 	@Override
-	public void optimise(Compaction c, SegmentSlackOptimisation xo,
-			SegmentSlackOptimisation yo) {
-		
-		checkLengths(yo, Direction.DOWN); 
-		checkLengths(xo, Direction.RIGHT); 
+	public void compact(Compaction c, Rectangular r, Compactor rc) {
+		checkLengths(c.getYSlackOptimisation(), Direction.DOWN); 
+		checkLengths(c.getXSlackOptimisation(), Direction.RIGHT); 
 	}
 
 	private void checkLengths(SegmentSlackOptimisation so, Direction d) {
