@@ -7,7 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -60,7 +61,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 			this.vt5 = vt5;
 			this.m = m;
 			this.c = c;
-			this.length = getLink().getUnderlying().getLength();
+			this.length = getLink().getMinimumLength();
 			// note - we need to store the initial values so that the sort is always correct
 			this.isPriority = isPriority();
 			this.canBoxout = canBoxout();
@@ -92,16 +93,15 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 
 		public boolean isPriority() {
 			VertexTurn x = getExtender();
-			boolean out = x.getUnderlying().isChangeEarly(m==Match.A ? x.endsWith : x.startsWith);
+			boolean out = m==Match.A ? x.isChangeEarlyEnd() : x.isChangeEarlyStart();
 			return out;
 		}
 		
 		public boolean canBoxout() {
-			return getExtender().d == getPost().d;			
+			return getExtender().getSegment() == getPost().getSegment();			
 		}
 		
 		public double calcAvailableMeets() {
-			Dart md = getMeets().getUnderlying();
 			
 			double minAdd;
 			
@@ -114,7 +114,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 				minAdd = getMinimumDistance(c, getPost().startsWith, getExtender().startsWith, d);
 			}
 	
-			return md.getLength() - minAdd;
+			return getMeets().getMinimumLength() - minAdd;
 		}
 		
 		public boolean isRectangularizationSafe() {
@@ -178,11 +178,11 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 			}
 
 			// preserve link length if precious
-			return -((Integer) getLink().getUnderlying().getChangeCost()).compareTo(o.getLink().getUnderlying().getChangeCost());
+			return -((Integer) getLink().getChangeCost()).compareTo(o.getLink().getChangeCost());
 		}
 
 		public String toString() {
-			return "[RO: extender = " + getExtender().getUnderlying() + " score = " + scoreJoin + " priority = " + isPriority + " rect_safe = "+rectSafe+" can_boxout? = "+canBoxout+" rect?= "+chooseRectangularization()+" push = "+pushOut+"/"+availableMeets + " length = "+length+"]";
+			return "[RO: extender = " + getExtender() + " score = " + scoreJoin + " priority = " + isPriority + " rect_safe = "+rectSafe+" can_boxout? = "+canBoxout+" rect?= "+chooseRectangularization()+" push = "+pushOut+"/"+availableMeets + " length = "+length+"]";
 		}
 	}
 
@@ -209,8 +209,8 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 						onStack.remove(ro.getLink());
 						onStack.remove(ro.getPar());
 					} else {
-						Vertex parFrom = ro.getPar().startsWith;
-						Vertex meetsFrom = ro.getMeets().endsWith;
+						Slideable parFrom = ro.getPar().getStartsWith();
+						Slideable meetsFrom = ro.getMeets().getEndsWith();
 						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.A);
 						onStack.remove(ro.getLink());
 						onStack.add(newLink);
@@ -223,8 +223,8 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 						onStack.remove(ro.getLink());
 						onStack.remove(ro.getPar());
 					} else { 
-						Vertex parFrom = ro.getPar().endsWith;
-						Vertex meetsFrom = ro.getMeets().startsWith;
+						Slideable parFrom = ro.getPar().getEndsWith();
+						Slideable meetsFrom = ro.getMeets().getStartsWith();
 						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.D);
 						onStack.remove(ro.getLink());
 						onStack.add(newLink);

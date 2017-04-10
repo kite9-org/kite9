@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 
 /**
  * Used where the underlying order is not based on a list, but one would nevertheless come in handy.

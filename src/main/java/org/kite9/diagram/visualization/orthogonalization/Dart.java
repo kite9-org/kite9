@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
-import org.kite9.diagram.common.elements.AbstractEdge;
 import org.kite9.diagram.common.elements.ArtificialElement;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.AbstractEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -39,22 +39,19 @@ public class Dart extends AbstractEdge {
 	/**
 	 * Constructor is in Orthogonalization
 	 */
-	Dart(Vertex from, Vertex to, Object partOf, Direction d, double minLength, String label, OrthogonalizationImpl o) {
+	Dart(Vertex from, Vertex to, Object partOf, Direction d, String label, OrthogonalizationImpl o) {
 		super(from, to, d);
 		if ((partOf!=null) && (!(partOf instanceof ArtificialElement) && (!(partOf instanceof DiagramElement)))) {
 				throw new IllegalArgumentException("Trying to create a dart with partOf not a diagram element or artificial element");
 		}
 				
 		this.partOf = partOf;
-		this.length = minLength;
 		this.o = o;
 		this.changeCost = Dart.VERTEX_DART_PRESERVE;
 		this.setID(label);
 		from.addEdge(this);
 		to.addEdge(this);
 	}
-
-	public double length;
 	
 	private Object partOf;
 	
@@ -86,10 +83,6 @@ public class Dart extends AbstractEdge {
 		}
 	}
 	
-	public boolean isVertexLengthKnown() {
-		return (changeCost & VERTEX_LENGTH_KNOWN) == VERTEX_LENGTH_KNOWN;
-	}
-	
 	public void setChangeCost(int changeCost, Vertex changeEarlyEnd) {
 		this.changeCost = changeCost;
 		if (changeEarlyEnd == from) {
@@ -99,34 +92,12 @@ public class Dart extends AbstractEdge {
 		}
 	}
 	
-	public void setVertexLengthKnown(boolean vlk) {
-		if (vlk) {
-			this.changeCost = this.changeCost | VERTEX_LENGTH_KNOWN;
-		} else {
-			if ((this.changeCost & VERTEX_LENGTH_KNOWN) == VERTEX_LENGTH_KNOWN) {
-				this.changeCost -= VERTEX_LENGTH_KNOWN;
-			}
-		}
-	}
-	
 	public void setChangeCostChangeEarlyBothEnds(int changeCost) {
 		this.changeCost = changeCost + CHANGE_EARLY_FROM + CHANGE_EARLY_TO;
 	}
 		
 	public boolean isDirected() {
 		return false;
-	}
-
-	/**
-	 * Returns the minimum length of the dart, or the fixed
-	 * length if the dart is fixed length.
-	 */
-	public double getLength() {
-		return length;
-	}
-
-	public void setLength(double length) {
-		this.length = length;
 	}
 
 	/**

@@ -9,7 +9,7 @@ import org.kite9.diagram.model.DiagramElement;
  *
  */
 public interface ArtificialElement {
-	
-	public DiagramElement getOriginalUnderlying();
+		
+	public boolean isPartOf(DiagramElement de);
 	
 }

@@ -1,15 +1,21 @@
-package org.kite9.diagram.visualization.compaction;
+package org.kite9.diagram.visualization.compaction.segment;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
-import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.HPos;
+import org.kite9.diagram.model.position.VPos;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 
 
@@ -26,26 +32,47 @@ public class Segment implements Comparable<Segment> {
 	private int i;
 	private boolean positioned = false;
 	private double position;
-	private DiagramElement underlying;
+	private Slideable slideable;
+	private Set<UnderlyingInfo> underlyings;
 	
-	public DiagramElement getUnderlying() {
-		return underlying;
-	}
-
-	public void setUnderlying(DiagramElement underlying) {
-		this.underlying = underlying;
-	}
-
-	public Direction getUnderlyingSide() {
-		return underlyingSide;
-	}
-
-	public void setUnderlyingSide(Direction underlyingSide) {
-		this.underlyingSide = underlyingSide;
-	}
-
-	private Direction underlyingSide;
 	
+	public Slideable getSlideable() {
+		return slideable;
+	}
+
+	public void setSlideable(Slideable slideable) {
+		this.slideable = slideable;
+	}
+	
+	public Set<UnderlyingInfo> getUnderlyingInfo() {
+		if (underlyings == null) {
+			boolean horizontal = dimension == PositionAction.XAction;
+			underlyings = verticesInSegment.stream().flatMap(a -> convertVertexToUnderlying(a, horizontal)).collect(Collectors.toSet());
+		}
+		
+		return underlyings;
+	}
+	
+	private Stream<UnderlyingInfo> convertVertexToUnderlying(Vertex v, boolean horizontal) {
+		if (v instanceof MultiCornerVertex) {
+			return ((MultiCornerVertex) v).getAnchors().stream().map(a -> {
+				Side s = getSideFromAnchor(horizontal, a);
+				return new UnderlyingInfo(a.getDe(), s);
+			});
+		} else {
+			return Stream.of(new UnderlyingInfo(v.getOriginalUnderlying(), Side.NEITHER));
+		}
+		
+	}
+	
+	private Side getSideFromAnchor(boolean horizontal, Anchor a) {
+		if (horizontal) {
+			return a.getLr() == HPos.LEFT ? Side.START : Side.END;
+		} else {
+			return a.getUd() == VPos.UP ? Side.START : Side.END;
+		}
+	}
+
 	public Segment(PositionAction dimension, int i) {
 		this.dimension = dimension;
 		this.i = i;
@@ -53,10 +80,11 @@ public class Segment implements Comparable<Segment> {
 	
 	public void addToSegment(Vertex v) {
 		verticesInSegment.add(v);
+		underlyings = null;
 	}
 
 	public String getIdentifier() {
-		return dimension+" ("+i+", "+underlying+", "+underlyingSide+")";
+		return dimension+" ("+i+" "+getUnderlyingInfo()+" )";
 	}
 	
 	@Override

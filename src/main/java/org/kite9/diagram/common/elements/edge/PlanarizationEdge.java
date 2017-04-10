@@ -1,6 +1,6 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.edge;
 
-
+import org.kite9.diagram.common.elements.vertex.Vertex;
 
 /**
  * Edge interface implemented by all of the Edges created by the planarization process.

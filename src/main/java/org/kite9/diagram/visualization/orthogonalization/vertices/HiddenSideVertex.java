@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization.vertices;
 
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
-import org.kite9.diagram.common.elements.SideVertex;
+import org.kite9.diagram.common.elements.vertex.SideVertex;
 import org.kite9.diagram.model.DiagramElement;
 
 /**

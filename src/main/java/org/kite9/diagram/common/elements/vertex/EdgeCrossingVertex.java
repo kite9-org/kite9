@@ -1,4 +1,4 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,29 +11,22 @@ import org.kite9.diagram.model.DiagramElement;
  * 
  * @author robmoffat
  */
-public class EdgeCrossingVertex extends AbstractVertex {
+public class EdgeCrossingVertex extends AbstractVertex implements MultiElementVertex {
 
-	Set<DiagramElement> underlyings = new HashSet<>();
-	DiagramElement originalUnderlying;
-	
+	Set<DiagramElement> underlyings = new HashSet<>();	
 
 	public EdgeCrossingVertex(String name) {
 		super(name);
 	}
 	
-	public EdgeCrossingVertex(String name, DiagramElement underlying) {
+	public EdgeCrossingVertex(String name, DiagramElement underlying1) {
 		super(name);
-		this.underlyings.add(underlying);
-		this.originalUnderlying = underlying;
+		this.underlyings.add(underlying1);
 	}
 
 	@Override
 	public boolean hasDimension() {
 		return false;
-	}
-
-	public DiagramElement getOriginalUnderlying() {
-		return originalUnderlying;
 	}
 
 	@Override
@@ -45,6 +38,11 @@ public class EdgeCrossingVertex extends AbstractVertex {
 		if (de != null) {
 			underlyings.add(de);
 		}
+	}
+
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return underlyings;
 	}
 	
 }

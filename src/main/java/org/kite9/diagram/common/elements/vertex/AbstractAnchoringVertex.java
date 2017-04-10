@@ -1,4 +1,4 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;

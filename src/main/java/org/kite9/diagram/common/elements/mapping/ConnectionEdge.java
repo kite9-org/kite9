@@ -1,9 +1,11 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Planarizer;
@@ -14,7 +16,7 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
  * @author robmoffat
  * 
  */
-public class ConnectionEdge extends AbstractPlanarizationEdge {
+public class ConnectionEdge extends AbstractPlanarizationEdge implements SingleElementPlanarizationEdge {
 
 	Connection underlying;
 
@@ -73,5 +75,10 @@ public class ConnectionEdge extends AbstractPlanarizationEdge {
 	@Override
 	public int getLengthCost() {
 		return 1;
+	}
+
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return getOriginalUnderlying() == de;
 	}
 }

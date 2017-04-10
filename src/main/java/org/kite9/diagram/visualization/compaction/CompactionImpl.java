@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -71,8 +74,15 @@ public class CompactionImpl implements Compaction {
 		return hMap;
 	}
 
-	public Segment[] getFaceSpace(DartFace df) {
-		return faceSpaces.get(df);
+	public Rectangle<Slideable> getFaceSpace(DartFace df) {
+		Rectangle<Slideable> out = faceSpaces.get(df);
+		if (out == null) {
+			// we need to create one because we didn't rectangularize
+			
+			
+		}
+		
+		return out;
 	}
 	
 	private Map<Vertex, Segment> vMap;
@@ -81,9 +91,9 @@ public class CompactionImpl implements Compaction {
 		return vMap;
 	}
 
-	private Map<DartFace, Segment[]> faceSpaces = new HashMap<DartFace, Segment[]>();
+	private Map<DartFace, Rectangle<Slideable>> faceSpaces = new HashMap<DartFace, Rectangle<Slideable>>();
 	
-	public void createFaceSpace(DartFace df, Segment[] border) {
+	public void createFaceSpace(DartFace df, Rectangle<Slideable> border) {
 		faceSpaces.put(df, border);
 	}
 
@@ -128,5 +138,14 @@ public class CompactionImpl implements Compaction {
 	@Override
 	public Segment getSegmentForDart(Dart r) {
 		return dartToSegmentMap.get(r);
+	}
+
+	@Override
+	public SegmentSlackOptimisation getSlackOptimisation(Direction d) {
+		if ((d==Direction.UP) || (d == Direction.DOWN)) {
+			return getYSlackOptimisation();
+		} else {
+			return getXSlackOptimisation();
+		}
 	}
 }

@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.CompactionHelperVertex;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -136,7 +136,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	
 	
-	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d, double minLength) {
+	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
 		
@@ -162,15 +162,13 @@ public class OrthogonalizationImpl implements Orthogonalization {
 						throw new LogicException("Trying to create new dart in different direction to: "+existing);				
 					}
 					
-					// this dart will do, make sure it is long enough
-					dart.setLength(Math.max(dart.getLength(), minLength));
 					return dart;
 				}
 			}
 		}
 		
 		// need to create the dart
-		Dart out = new Dart(from, to, partOf, d, minLength, "d"+nextDart++, this);
+		Dart out = new Dart(from, to, partOf, d, "d"+nextDart++, this);
 		existing.add(out);
 		allDarts.add(out);
 		return out;

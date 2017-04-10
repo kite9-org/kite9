@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -355,15 +355,14 @@ public class Tools implements Logable {
 		pln.getEdgeOrderings().remove(toGo);
 		pln.getEdgeFaceMap().remove(b);
 		
-		DiagramElement underlying = a.getOriginalUnderlying();
-		if (underlying!= null) {
+		a.getDiagramElements().stream().forEach(underlying -> {
 			EdgeMapping list = pln.getEdgeMappings().get(underlying);
 			//log.send("Edge Mapping before: "+list);
 			if (list != null) {
 				list.remove(b);
 				log.send("Route for "+underlying+" is now ",list.getEdges());
 			}
-		}
+		});
 		
 		// fix up vertex edge ordering - only works if vertex is a connected item
 		VertexEdgeOrdering orderingOfTo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(farB);

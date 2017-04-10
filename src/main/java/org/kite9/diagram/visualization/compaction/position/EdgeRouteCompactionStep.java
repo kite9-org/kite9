@@ -3,16 +3,14 @@ package org.kite9.diagram.visualization.compaction.position;
 import java.util.Collections;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
@@ -70,41 +68,10 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 						route.setHop(waypoints.size()-1);
 					}
 				}			
-			} else if (e.getOriginalUnderlying() instanceof Container) {
-				setBounds((Container) e.getOriginalUnderlying(), e.getFrom());
-				setBounds((Container) e.getOriginalUnderlying(), e.getTo());
-			}
+			} 
 		}
 	}
 		
-	private void setBounds(Container de, Vertex v) {
-		RectangleRenderingInformation rri = de.getRenderingInformation();
-		double x = v.getX();
-		double y = v.getY();
-		
-		if (de instanceof Diagram) {
-			increaseBounds(rri, x, y);
-		} else if ((rri.getPosition().x() == 0) && (rri.getPosition().y() == 0)) {
-			// initialize bounds
-			rri.setPosition(new Dimension2D(x, y));
-			rri.setSize(new Dimension2D(0,0));
-		} else {
-			increaseBounds(rri, x, y);
-		}
-		
-	}
-
-	private void increaseBounds(RectangleRenderingInformation rri, double x, double y) {
-		double minx = rri.getPosition().x(), maxx=rri.getSize().x() + minx, 
-			miny = rri.getPosition().y(), maxy = rri.getSize().y() + miny;
-		
-		minx = Math.min(x, minx);
-		maxx = Math.max(x, maxx);
-		miny = Math.min(y, miny);
-		maxy = Math.max(y, maxy);
-		rri.setPosition(new Dimension2D(minx, miny));
-		rri.setSize(new Dimension2D(maxx - minx, maxy - miny));
-	}
 
 	private boolean checkForHop(Vertex v) {
 		String edgeStyle = null;

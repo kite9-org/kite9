@@ -3,17 +3,21 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
-import org.kite9.diagram.visualization.compaction.Segment;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -68,12 +72,11 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		List<DartFace> faces = c.getDartFacesForRectangular(r);
 		List<Dart> result = new ArrayList<Dart>();
-		int face = 0;
 		List<DartFace> orderedFaces = new ArrayList<DartFace>(faces);
 		Collections.sort(orderedFaces);
 
 		for (DartFace df : orderedFaces) {
-			log.send(log.go() ? null : "FACE: " + face++);
+			log.send(log.go() ? null : "FACE: " + df);
 			// first, add all the segments to the stack in unrectangularized
 			// form
 			List<VertexTurn> theStack = new ArrayList<VertexTurn>();
@@ -91,28 +94,30 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 				}
 				
 				for (int i = 0; i < theStack.size(); i++) {
-					fixDartSize(c, getIthElementRotating(theStack, i).getUnderlying());
+//					fixDartSize(c, getIthElementRotating(theStack, i).getUnderlying());
 				}
-
-				setInnerFaceRectangle(c, df, theStack);
 			}
+			
+			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 		}
 
 	}
 
 	private void rebuildFaceDarts(List<VertexTurn> theStack, DartFace df) {
-		df.dartsInFace.clear();
-		for (VertexTurn vertexTurn : theStack) {
-			df.dartsInFace.add(new DartDirection(vertexTurn.getUnderlying(), vertexTurn.d));
-		}
+//		df.dartsInFace.clear();
+//		for (VertexTurn vertexTurn : theStack) {
+//			df.dartsInFace.add(new DartDirection(vertexTurn.getUnderlying(), vertexTurn.d));
+//		}
 	}
 
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
 			List<DartDirection> turns, Vertex from, Compaction c) {
+		Vertex origFrom = from;
 		if (df.dartsInFace.size() > 2) {
 			try {
 				for (int i = 0; i < turns.size(); i++) {
 					Dart dart = turns.get(i).getDart();
+					Vertex to = dart.otherEnd(from);
 					VertexTurn stackTop = theStack.size() > 0 ? theStack.get(theStack.size() - 1) : null;
 					Segment segment = c.getSegmentForDart(dart);
 					if (segment == null) {
@@ -121,20 +126,19 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 					if ((stackTop != null) && (segment == stackTop.getSegment())) {
 						// we have two darts in the same segment
 						VertexTurn vt = theStack.get(theStack.size() - 1);
-						vt.endsWith = dart.otherEnd(vt.endsWith);
-						vt.tempChangeCost = Math.max(vt.tempChangeCost, dart.getChangeCost());
-						vt.setUnderlying(null);
+						vt.resetEndsWith(c, to, dart.isChangeEarly(to), dart.getChangeCost());
 					} else {
-						VertexTurn vt = new VertexTurn(segment, c, dart.getDrawDirectionFrom(from));
-						vt.startsWith = from;
-						vt.endsWith = dart.otherEnd(from);
-						vt.setUnderlying(dart);
-						vt.number = theStack.size();
-						vt.tempChangeCost = dart.getChangeCost();
+						VertexTurn vt = new VertexTurn(
+							c, segment.getSlideable(), dart.getDrawDirectionFrom(from),
+							dart.getChangeCost(), 
+							from, 
+							dart.otherEnd(from),
+							dart.isChangeEarly(from), 
+							dart.isChangeEarly(to));
 						theStack.add(vt);
 						log.send(log.go() ? null : "adding (" + (theStack.size()-1) + "): " + dart + "      " + vt);
 					}
-					from = dart.otherEnd(from);
+					from = to;
 				}
 			} catch (RuntimeException e) {
 				log.send("DartFace Issue:"+df.dartsInFace);
@@ -145,9 +149,9 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 			while (theStack.get(0).getSegment() == theStack.get(theStack.size() - 1).getSegment()) {
 				VertexTurn keep = theStack.get(0);
 				VertexTurn lose = theStack.get(theStack.size() - 1);
-				keep.startsWith = lose.startsWith;
-				keep.tempChangeCost = Math.max(keep.tempChangeCost, lose.tempChangeCost);
-				keep.setUnderlying(null);
+//				keep.resetEndsWith(c, origFrom, changeEarly);startsWith = lose.startsWith;
+//				keep.tempChangeCost = Math.max(keep.tempChangeCost, lose.tempChangeCost);
+//				keep.setUnderlying(null);
 				theStack.remove(theStack.size() - 1);
 			}
 		}
@@ -155,21 +159,27 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 
 	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack);
 
-	private void setInnerFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack) {
-		// add the last 4 attr as a rectangle to the compaction
-		Segment[] rect = new Segment[] { getSegmentInDirection(theStack, Direction.RIGHT),
-				getSegmentInDirection(theStack, Direction.DOWN), getSegmentInDirection(theStack, Direction.LEFT),
-				getSegmentInDirection(theStack, Direction.UP) };
+	private void setSlideableFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack, boolean outer) {
+		Rectangle<Slideable> r = new Rectangle<Slideable>(
+				getSlideableInDirection(theStack, outer ? Direction.LEFT : Direction.RIGHT),
+				getSlideableInDirection(theStack, outer ? Direction.UP : Direction.DOWN),
+				getSlideableInDirection(theStack, outer ? Direction.RIGHT : Direction.LEFT), 
+				getSlideableInDirection(theStack, outer ? Direction.DOWN : Direction.UP));
+			
 
-		c.createFaceSpace(df, rect);
+		c.createFaceSpace(df, r);
 	}
 
-	private Segment getSegmentInDirection(List<VertexTurn> vt, Direction d) {
-		for (VertexTurn vertexTurn : vt) {
-			if (vertexTurn.d == d) {
-				return vertexTurn.getSegment();
+	private Slideable getSlideableInDirection(List<VertexTurn> vt, Direction d) {
+		for (int i = 0; i < vt.size(); i++) {
+			VertexTurn prev = vt.get(( i + vt.size() -1 ) % vt.size());
+			VertexTurn curr = vt.get(i);
+			VertexTurn next = vt.get(( i + 1 ) % vt.size());
+			
+			if ((curr.getDirection() == d) && (prev.getDirection() != next.getDirection())) {
+				return curr.getSlideable();
 			}
-		}
+		}		
 
 		throw new LogicException("No turn in that direction");
 	}
@@ -178,8 +188,8 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	 * Works out the direction of turn between one segment and the next
 	 */
 	public static Turn getTurn(VertexTurn t1, VertexTurn t2) {
-		Direction thisDirection = t1.d;
-		Direction nextDirection = t2.d;
+		Direction thisDirection = t1.getDirection();
+		Direction nextDirection = t2.getDirection();
 
 		Turn change = thisDirection.getDirectionChange(nextDirection);
 		return change;
@@ -199,10 +209,10 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	protected void performRectangularizationD(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn ext,
 			VertexTurn par, VertexTurn link, VertexTurn meets) {
 		logRectangularizationContext(ext, par, link, meets);
-		Vertex first = ext.endsWith;
-		Vertex to = meets.startsWith;
-		Direction d2 = Direction.reverse(meets.d);
-		Direction d1 = ext.d;
+		Slideable first = ext.getEndsWith();
+		Slideable to = meets.getStartsWith();
+		Direction d2 = Direction.reverse(meets.getDirection());
+		Direction d1 = ext.getDirection();
 
 		performRectangularization(c, out, meets, link, par, ext, first, to, d1, d2);
 		cutRectangleCorner(stack, par, link);
@@ -242,7 +252,7 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	 * @param c
 	 */
 	protected VertexTurn performPopOut(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link, VertexTurn par,
-			VertexTurn ext, Vertex parFrom, Vertex meetsFrom, List<VertexTurn> stack, Match m) {
+			VertexTurn ext, Slideable parFrom, Slideable meetsFrom, List<VertexTurn> stack, Match m) {
 
 		fixDartSize(c, link.getUnderlying());
 
@@ -306,16 +316,16 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	}
 
 	private double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {
-		if (par.getUnderlying().isVertexLengthKnown()) {
+		System.out.println("fix this");
+		if (par.isLengthKnown()) {
 			return Math.max(0, calculateLength(meets) - calculateLength(par));
 		} else {
 			return 0;
 		}
 	}
 
-	private int calculateLength(VertexTurn par) {
-		// TODO Auto-generated method stub
-		return 0;
+	private int calculateLength(VertexTurn vt) {
+		return vt.getMinimumLength();
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

@@ -1,7 +1,9 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.model.Container;
@@ -17,7 +19,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * For elements with grid-layout, these also represent points within the grid that will need to be connected up.
  * Multi-corners can be the corners of multiple different diagram elements.
  */
-public class MultiCornerVertex extends AbstractAnchoringVertex {
+public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiElementVertex {
 	
 	public static final boolean isMin(BigFraction b) {
 		return b.equals(BigFraction.ZERO);
@@ -68,15 +70,6 @@ public class MultiCornerVertex extends AbstractAnchoringVertex {
 		this.c = c;
 		this.xOrd = xOrd;
 		this.yOrd = yOrd;
-	}
-
-	/**
-	 * Not reliable with MultiCornerVertex.  Consider removing, or using isPartOf, below.
-	 * Will return the top-level container of a grid structure, but within a grid a vertex
-	 * could be involved in multiple containers.
-	 */
-	public DiagramElement getOriginalUnderlying() {
-		return c;
 	}
 	
 	public BigFraction getXOrdinal() {
@@ -153,5 +146,10 @@ public class MultiCornerVertex extends AbstractAnchoringVertex {
 		}
 		
 		return (Container) cc;
+	}
+
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return anchors.stream().map(a -> a.getDe()).collect(Collectors.toSet());
 	}
 }

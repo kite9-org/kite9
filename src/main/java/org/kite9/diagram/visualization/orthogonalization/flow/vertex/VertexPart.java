@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.flow.vertex;
 
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.vertex.ConstrainedVertexFlowOrthogonalizer.VertexDivision;
 
 /**

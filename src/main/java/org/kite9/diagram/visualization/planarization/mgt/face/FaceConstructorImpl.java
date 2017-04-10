@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.PlanarizationEdge.RemovalType;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.NoElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -28,10 +29,8 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 public class FaceConstructorImpl implements FaceConstructor {
 	
 
-	public class TemporaryEdge extends AbstractPlanarizationEdge {
-
-		private static final long serialVersionUID = -1996336724687115761L;
-
+	public class TemporaryEdge extends AbstractPlanarizationEdge implements NoElementPlanarizationEdge {
+		
 		public TemporaryEdge(Vertex from, Vertex to) {
 			super(from, to, null, null, null, null, null);
 		}
@@ -42,10 +41,6 @@ public class FaceConstructorImpl implements FaceConstructor {
 		}
 
 		public Vertex getLabelEnd() {
-			return null;
-		}
-
-		public DiagramElement getOriginalUnderlying() {
 			return null;
 		}
 
@@ -84,6 +79,11 @@ public class FaceConstructorImpl implements FaceConstructor {
 
 		@Override
 		public boolean isStraightInPlanarization() {
+			return false;
+		}
+
+		@Override
+		public boolean isPartOf(DiagramElement de) {
 			return false;
 		}
 	}

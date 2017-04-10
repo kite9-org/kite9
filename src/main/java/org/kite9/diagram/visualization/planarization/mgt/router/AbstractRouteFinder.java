@@ -5,10 +5,10 @@ import java.util.List;
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP;
 import org.kite9.diagram.common.algorithms.ssp.PathLocation;
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -384,7 +384,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			
 			if (crossing instanceof BorderEdge) {
 				Container inside = prev.insideContainer();
-				DiagramElement crossingContainer = crossing.getOriginalUnderlying();
+				DiagramElement crossingContainer = ((BorderEdge) crossing).getOtherSide(inside);
 				if (crossingContainer == inside) {
 					// we are leaving the container
 					inContainer = inside.getContainer();

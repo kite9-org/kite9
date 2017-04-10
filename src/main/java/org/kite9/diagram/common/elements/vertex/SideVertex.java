@@ -1,4 +1,4 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -10,7 +10,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
  * @author robmoffat
  *
  */
-public class SideVertex extends AbstractVertex {
+public class SideVertex extends AbstractVertex implements MultiElementVertex {
 	
 	public SideVertex(String name, DiagramElement underlying) {
 		super(name);

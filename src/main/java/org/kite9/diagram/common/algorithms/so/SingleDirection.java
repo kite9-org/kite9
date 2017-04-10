@@ -30,6 +30,9 @@ public class SingleDirection {
 	public SingleDirection(PositionChangeNotifiable owner, boolean increasing) {
 		this.owner = owner;
 		this.increasing = increasing;
+		if (increasing) {
+			position = 0;
+		}
 	}
 	
 	private void update(int newPos, Object ci, boolean changedConstraints) {

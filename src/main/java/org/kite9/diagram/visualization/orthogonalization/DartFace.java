@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization;
 import java.io.Serializable;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 
@@ -51,7 +51,7 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 
 	@Override
 	public String toString() {
-		return dartsInFace.toString();
+		return "DartFace: "+f.id+"-"+(outerFace ? "outer, inside "+f.getContainedBy().id : "inner") +": "+dartsInFace.toString();
 	}
 	
 	public DartFace(Face f, boolean outerFace) {

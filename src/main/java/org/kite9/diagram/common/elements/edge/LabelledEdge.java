@@ -1,4 +1,4 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.edge;
 
 import org.kite9.diagram.model.Label;
 

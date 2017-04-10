@@ -9,16 +9,16 @@ import java.util.Set;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
-import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.EdgeBendVertex;
+import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -249,7 +249,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 			waypoints = new ArrayList<Vertex>(wpCount);
 			waypoints.add(startVertex);
 			for (int i = 0; i < wpCount - 1; i++) {
-				EdgeBendVertex bv = new EdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), e);
+				ConnectionEdgeBendVertex bv = new ConnectionEdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), e);
 				waypoints.add(bv);
 				o.getAllVertices().add(bv);
 			}
@@ -267,8 +267,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			double minLength = 0;
-			Dart dart = o.createDart(start, end, e, nextDir, minLength);
+			Dart dart = o.createDart(start, end, e, nextDir);
 			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);

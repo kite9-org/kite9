@@ -1,4 +1,7 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
+
+import java.util.Collections;
+import java.util.Set;
 
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.HPos;
@@ -7,7 +10,7 @@ import org.kite9.diagram.model.position.VPos;
 /**
  * Used to model any old corner within the diagram. e.g. bend in a connection, corner of a vertex etc.
  */
-public class SingleCornerVertex extends AbstractAnchoringVertex {
+public class SingleCornerVertex extends AbstractAnchoringVertex implements SingleElementVertex {
 
 	private Anchor a;
 		
@@ -42,6 +45,18 @@ public class SingleCornerVertex extends AbstractAnchoringVertex {
 	public void setY(double y) {
 		super.setY(y);
 		a.setY(y);
+	}
+
+
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return a.getDe() == de;
+	}
+
+
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return Collections.singleton(a.getDe());
 	}
 	
 	

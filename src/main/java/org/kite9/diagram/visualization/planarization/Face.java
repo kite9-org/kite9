@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -43,7 +43,7 @@ public class Face implements Deterministic {
 	private List<Edge> boundary = new ArrayList<Edge>();
 	
 	private List<Vertex> corners = new ArrayList<Vertex>();
-	
+
 	private Rectangular partOf;
 	
 	private boolean outerFace = false;
@@ -59,14 +59,14 @@ public class Face implements Deterministic {
 		} else {
 		
 			Table t = new Table();
-			t.addRow("Vertex", "Direction", "Contradicting", "Underlying");
+			t.addRow("Vertex", "Direction", "Contradicting", "Underlyings");
 			for (int i = 0; i < this.vertexCount(); i++) {
 				Vertex v = corners.get(i);
 				Edge e = boundary.get(i);
 				Direction d = e.getDrawDirectionFrom(v);
-				DiagramElement underlying = e.getOriginalUnderlying();
+				Set<DiagramElement> underlyings = e.getDiagramElements().keySet();
 				boolean contradicting = Tools.isUnderlyingContradicting(e);
-				t.addRow(v.toString(),d, contradicting ? "C" : "", underlying);
+				t.addRow(v.toString(),d, contradicting ? "C" : "", underlyings);
 			}
 			t.display(out);
 		}

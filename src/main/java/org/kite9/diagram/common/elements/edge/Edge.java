@@ -1,7 +1,13 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.edge;
+
+import java.util.Map;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
+import org.kite9.diagram.common.elements.ArtificialElement;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 
 /**
@@ -33,4 +39,11 @@ public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Determin
 	 */
 	public RenderingInformation getRenderingInformation();
 	
+	/**
+	 * Gives you information about the elements surrounding this one, and (potentially) which side
+	 * they are on.
+	 */
+	public Map<DiagramElement, Direction> getDiagramElements();
+	
+
 }

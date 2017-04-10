@@ -1,5 +1,11 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
+import java.util.Set;
+
+import org.kite9.diagram.common.elements.ArtificialElement;
+import org.kite9.diagram.common.elements.Positioned;
+import org.kite9.diagram.common.elements.Routable;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
@@ -34,7 +40,7 @@ public interface Vertex extends Comparable<Vertex>, ArtificialElement, Positione
 	public void removeEdge(Edge e);
 
 	public void addEdge(Edge e);
-
-	public boolean isPartOf(DiagramElement de);
 	
+	public Set<DiagramElement> getDiagramElements();
+
 }

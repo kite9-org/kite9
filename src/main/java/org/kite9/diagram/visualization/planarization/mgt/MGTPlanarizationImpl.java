@@ -12,16 +12,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
@@ -138,7 +138,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
 			int height = getNestings(e, aboveSet, nestings) + 1;
-			boolean hl = e.getOriginalUnderlying() == highlight;
+			boolean hl = e.isPartOf(highlight);
 			tr.vLine(-1, fromi, -height, hl);
 			tr.vLine(-1, toi, -height, hl);
 			tr.hLine(-height - 1, fromi + 1, toi - 1, hl);
@@ -151,7 +151,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
 			int height = getNestings(e, belowSet, nestings) + 1;
-			boolean hl = e.getOriginalUnderlying() == highlight;
+			boolean hl = e.isPartOf(highlight);
 
 			tr.vLine(1, fromi, height, hl);
 			tr.vLine(1, toi, height, hl);

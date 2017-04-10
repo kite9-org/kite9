@@ -1,19 +1,22 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * This edge is used for the surrounding of a diagram element.
@@ -25,23 +28,34 @@ import org.kite9.diagram.model.style.BorderTraversal;
  * @author robmoffat
  *
  */
-public class BorderEdge extends AbstractPlanarizationEdge {
+public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementPlanarizationEdge {
 
-	DiagramElement underlying;
 	Map<DiagramElement, Direction> forElements;
 	String label;
+	DiagramElement sidea, sideb;
 	
-	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide, Map<DiagramElement, Direction> forELements) {
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Map<DiagramElement, Direction> forELements) {
 		super(from, to, null, null, null, null, null);
-		this.underlying = cide;
 		this.label = label;
 		this.drawDirection = d;
 		this.reversed = reversed;
 		this.forElements = forELements;
+		if (forELements.size() != 2) {
+			throw new Kite9ProcessingException("BorderEdge can only have max 2 elements");			
+		}
+		
+		Iterator<DiagramElement> els = forELements.keySet().iterator();	
+		if (els.hasNext()) {
+			sidea = els.next();
+		} 
+		if (els.hasNext()) {
+			sideb = els.next();
+		}
+
 	}
 	
 	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
-		this(from, to, label, d, false, getOuterContainer(from, to), new LinkedHashMap<>());
+		this(from, to, label, d, false,  new LinkedHashMap<>());
 	}
 	
 	private static Container getOuterContainer(MultiCornerVertex from, MultiCornerVertex to) {
@@ -81,10 +95,6 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		}
 	}
 
-	public DiagramElement getOriginalUnderlying() {
-		return underlying;
-	}
-	
 	/**
 	 * For a given diagram element, shows what side of that element this edge is on.
 	 */
@@ -118,8 +128,8 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), underlying, forElements);
-		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), underlying, forElements);
+		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), forElements);
+		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), forElements);
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in
@@ -148,11 +158,33 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	}
 
 	private BorderTraversal calculateTraversalRule() {
-		if (underlying instanceof Container) {
-			return ((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
+		BorderTraversal out = null;
+		
+		for (Map.Entry<DiagramElement, Direction> e : forElements.entrySet()) {
+			DiagramElement underlying =e.getKey();
+			if (underlying instanceof Container) {
+				BorderTraversal bt = ((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
+				out = BorderTraversal.reduce(out, bt);
+			}
 		}
 		
-		return BorderTraversal.NONE;
+		return out;
+	}
+
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return forElements.containsKey(de);
+	}
+
+	@Override
+	public DiagramElement getOtherSide(DiagramElement from) {
+		if (from == sidea) {
+			return sideb;
+		} else if (from == sideb) {
+			return sidea;
+		} else {
+			throw new Kite9ProcessingException(from+" is not mapped to a side");
+		}
 	}
 
 }

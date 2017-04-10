@@ -1,8 +1,9 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -15,14 +16,14 @@ import org.kite9.diagram.model.position.Direction;
  * @author robmoffat
  *
  */
-public class ContainerLayoutEdge extends AbstractPlanarizationEdge {
+public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements SingleElementPlanarizationEdge {
 	
 	GeneratedLayoutElement underlying;
 	
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
 		super(from, to, null, null, null, null, null);
 		this.drawDirection = d;
-		this.underlying =  new GeneratedLayoutElement((Connected) from.getOriginalUnderlying(), (Connected) to.getOriginalUnderlying(), d);
+		this.underlying =  new GeneratedLayoutElement(fromElement, toElement, d);
 	}
 	
 	private ContainerLayoutEdge(Vertex from, Vertex toIntroduce, Direction drawDirection, boolean reversed, GeneratedLayoutElement underlying) {
@@ -72,5 +73,10 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge {
 	@Override
 	public int getLengthCost() {
 		return 0;
+	}
+	
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return getOriginalUnderlying() == de;
 	}
 }

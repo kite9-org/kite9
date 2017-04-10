@@ -1,5 +1,6 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.edge;
 
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;

@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization.ordering;
 
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.model.position.Direction;
 
 /**

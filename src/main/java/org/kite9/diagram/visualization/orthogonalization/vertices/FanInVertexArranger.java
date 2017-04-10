@@ -6,10 +6,10 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -17,7 +17,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.EdgeBendVertex;
+import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.HelpMethods;
@@ -69,14 +69,14 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					// will be given a new direction
 
 
-					EdgeBendVertex ebv1 = new EdgeBendVertex(fromEnd.getID() + "/f1", underlying);
-					EdgeBendVertex ebv2 = new EdgeBendVertex(fromEnd.getID() + "/f2", underlying);
+					ConnectionEdgeBendVertex ebv1 = new ConnectionEdgeBendVertex(fromEnd.getID() + "/f1", underlying);
+					ConnectionEdgeBendVertex ebv2 = new ConnectionEdgeBendVertex(fromEnd.getID() + "/f2", underlying);
 					o.getAllVertices().add(ebv1);
 					o.getAllVertices().add(ebv2);
 					Direction fanDir = i < firstStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d);
 
-					Dart toFanPt2 = o.createDart(ebv1, ebv2, underlying, fanDir, 0);
-					Dart toFanPt3 = o.createDart(ebv2, otherEnd, underlying, d, 0);
+					Dart toFanPt2 = o.createDart(ebv1, ebv2, underlying, fanDir);
+					Dart toFanPt3 = o.createDart(ebv2, otherEnd, underlying, d);
 					
 					// fix vertices
 					otherEnd.removeEdge(toFan);
@@ -135,14 +135,14 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					
 					// some compaction settings
 					toFan.setChangeCost(Dart.CONNECTION_DART, null);
-					double len = toFan.getLength();
-					double minLen = getMinimumDartLength(toFan, underlying); 
-					toFan.setLength(Math.max(len, minLen));
+//					double len = toFan.getLength();
+//					double minLen = getMinimumDartLength(toFan, underlying); 
+//					toFan.setLength(Math.max(len, minLen));
 					toFan.setOrthogonalPositionPreference(i < firstStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d));
 					toFanPt2.setOrthogonalPositionPreference(Direction.reverse(d));
-					toFanPt2.setLength(0);
+					//toFanPt2.setLength(0);
 					toFanPt2.setChangeCost(Dart.CONNECTION_DART_FAN, ebv1);
-					toFanPt3.setLength(0);
+					//toFanPt3.setLength(0);
 					toFanPt3.setChangeCost(Dart.CONNECTION_DART, null);
 					// opposite to toFan
 					toFanPt3.setOrthogonalPositionPreference(i > lastStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d));
@@ -235,30 +235,30 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		return midPoint;
 	}
 	
-	@Override
-	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
-			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength, Edge borderEdge) {
-		
-		double endDist = requiresMinLength ? sizer.getLinkPadding(underlying, segmentDirection) : 0;
-		double interDist = sizer.getLinkGutter(underlying, segmentDirection);
-		
-		double oppSideDist = (endDist * 2) + (Math.max(0, oppSideDarts - 1) * interDist);
-		double thisSideDist = (endDist * 2) + (Math.max(0, onSideDarts - 1) * interDist);
-		double totalDistDueToFan = Math.max(oppSideDist, Math.max(thisSideDist, minDist));
-		
-		if (thisSideDist == totalDistDueToFan) {
-			// all lengths on side are known
-			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection, endDart ? endDist : interDist);
-			out.setVertexLengthKnown(true);
-			return out;
-		} else if ((oppSideDarts<=1) && (onSideDarts <= 1)) {
-			// we can use the basic vertex arranger approach
-			return super.createSideDart(underlying, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength, borderEdge);
-		} else {
-			// side lengths could go larger than the amount provided
-			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection, endDart ? endDist : interDist);
-			return out;
-		}
-	}
+//	@Override
+//	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
+//			int oppSideDarts, double minDist, boolean endDart, Vertex vsv, int onSideDarts, Edge thisEdge, Edge lastEdge, boolean requiresMinLength, Edge borderEdge) {
+//		
+//		//double endDist = requiresMinLength ? sizer.getLinkPadding(underlying, segmentDirection) : 0;
+//		//double interDist = sizer.getLinkGutter(underlying, segmentDirection);
+//		
+//		//double oppSideDist = (endDist * 2) + (Math.max(0, oppSideDarts - 1) * interDist);
+//		//double thisSideDist = (endDist * 2) + (Math.max(0, onSideDarts - 1) * interDist);
+//		//double totalDistDueToFan = Math.max(oppSideDist, Math.max(thisSideDist, minDist));
+//		
+//		if (thisSideDist == totalDistDueToFan) {
+//			// all lengths on side are known
+//			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection); //, endDart ? endDist : interDist);
+//			//out.setVertexLengthKnown(true);
+//			return out;
+//		} else if ((oppSideDarts<=1) && (onSideDarts <= 1)) {
+//			// we can use the basic vertex arranger approach
+//			return super.createSideDart(underlying, o, last, segmentDirection, oppSideDarts, minDist, endDart, vsv, onSideDarts, thisEdge, lastEdge, requiresMinLength, borderEdge);
+//		} else {
+//			// side lengths could go larger than the amount provided
+//			Dart out = o.createDart(last, vsv, borderEdge, segmentDirection, endDart ? endDist : interDist);
+//			return out;
+//		}
+//	}
 
 }

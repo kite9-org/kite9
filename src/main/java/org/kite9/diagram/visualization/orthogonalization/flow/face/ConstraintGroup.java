@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.visualization.planarization.Face;
 
 class ConstraintGroup {

@@ -3,9 +3,13 @@ package org.kite9.diagram.visualization.compaction;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -16,6 +20,8 @@ public interface Compaction {
 	public SegmentSlackOptimisation getXSlackOptimisation();
 
 	public SegmentSlackOptimisation getYSlackOptimisation();
+	
+	public SegmentSlackOptimisation getSlackOptimisation(Direction d);
 
 	public abstract Orthogonalization getOrthogonalization();
 
@@ -30,12 +36,12 @@ public interface Compaction {
 	/**
 	 * For an internal face, returns the empty rectangle in the centre of the space that can
 	 * be used to insert subface contents. 
-	 * An external face returns the segments most extreme in each direction
-	 * @return 4 item array of top, right, bottom, left segments.
+	 * 
+	 * Rectangle is in top, right, bottom, left order.
 	 */
-	public Segment[] getFaceSpace(DartFace df);
+	public Rectangle<Slideable> getFaceSpace(DartFace df);
 	
-	public void createFaceSpace(DartFace df, Segment[] border);
+	public void createFaceSpace(DartFace df, Rectangle<Slideable> r);
 	
 	public Vertex createCompactionVertex(Segment s1, Segment s2);
 
@@ -44,5 +50,6 @@ public interface Compaction {
 	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 	
 	public Segment getSegmentForDart(Dart d);
+
 
 }

@@ -10,11 +10,14 @@ import org.kite9.diagram.visualization.compaction.PluggableCompactor;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.EdgeRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
+import org.kite9.diagram.visualization.compaction.rect.PrimitiveRectangleCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.EdgeSeparationCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LeafElementSizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
+import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -70,7 +73,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 
 	public Orthogonalizer createOrthogonalizer() {
 		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
-		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic, getDisplayer(),
+		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic,
  //				new FanInVertexArranger(getDisplayer()));
 				
 				new ContainerCornerVertexArranger(getDisplayer(), getElementMapper()));
@@ -84,11 +87,14 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	public Compactor createCompactor() {
 		CompactionStep[] steps = new CompactionStep[] {
 				new HierarchicalCompactionStep(),
+				new PrimitiveRectangleCompactionStep(getDisplayer()),
 				new PrioritizingRectangularizer(getDisplayer()),
 				new SubGraphInsertionCompactionStep(getDisplayer()),
-				new EdgeSeparationCompactionStep(getDisplayer()),
+				new MinimizeCompactionStep(getDisplayer()),
+//				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
-				new LeafElementSizeCompactionStep(getDisplayer()),
+//				new LeafElementSizeCompactionStep(getDisplayer()),
+				
 //						//new LinkLengthReductionOptimisationStep(),
 ////						new EdgeAlignmentOptimisationStep(),
 ////						new SlackCenteringOptimisationStep(),
@@ -97,8 +103,10 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //
 //				), 
 				new WidthCompactionStep(getDisplayer()), 
+				new LoggingOptimisationStep(getDisplayer()),
 				new EdgeRouteCompactionStep(), 
 				new ConnectionRouteCompactionStep(),
+				new RectangularPositionCompactionStep(getDisplayer())
 				};
 
 		compactor = new PluggableCompactor(steps);

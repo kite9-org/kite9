@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -144,8 +144,8 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 			Dart leaving = leaversToMove.get(j);
 			Vertex from = toSplit.otherEnd(cv);
 			Vertex vsv = createSideVertex(splitDirection, underlying, j, thisEdge instanceof DirectionEnforcingElement);
-			double dist = sizer.getLinkPadding(underlying, splitDirection);
-			Dart sideDart = o.createDart(cv, vsv, cbe, splitDirection, dist);
+			//double dist = sizer.getLinkPadding(underlying, splitDirection);
+			Dart sideDart = o.createDart(cv, vsv, cbe, splitDirection);
 			
 			cv.removeEdge(leaving);
 			replaceEnd(cv, leaving, vsv);

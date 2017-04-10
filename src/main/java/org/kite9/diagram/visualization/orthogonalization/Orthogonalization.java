@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -50,7 +50,7 @@ public interface Orthogonalization extends Serializable {
 	 * Orthogonalization acts as a factory for darts. Always returns a dart, even if it 
 	 * is an existing one
 	 */
-	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d, double minLength);
+	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d);
 
 	/**
 	 * In the same way as a {@link Face} is a clockwise ordering of edges, a {@link DartFace} is a clockwise

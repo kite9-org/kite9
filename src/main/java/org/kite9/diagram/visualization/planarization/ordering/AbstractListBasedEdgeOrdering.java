@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.ordering;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 
 /**
  * Implements a good deal of the functionality of the EdgeOrdering using the underlying list.

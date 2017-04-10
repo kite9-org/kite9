@@ -1,8 +1,10 @@
-package org.kite9.diagram.common.elements;
+package org.kite9.diagram.common.elements.vertex;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 
@@ -104,11 +106,6 @@ public abstract class AbstractVertex implements Vertex {
 	@Override
 	public void setRoutingInfo(RoutingInfo gi) {
 		this.ri = gi;
-	}
-
-	@Override
-	public boolean isPartOf(DiagramElement de) {
-		return getOriginalUnderlying() == de;
 	}
 
 }

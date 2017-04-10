@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.visualization.planarization.Face;
 
 class NudgeItem {

@@ -9,8 +9,8 @@ import java.util.Map;
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Diagram;
@@ -18,7 +18,9 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.compaction.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Side;
+import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.logging.Logable;
 
@@ -45,12 +47,9 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 
 		for (Segment s : segments) {
 			Slideable sli = new Slideable(this, s, getSegmentAlignStyle(s));
+			s.setSlideable(sli);
 			log.send(log.go() ? null : "Created slideable: " + sli);
 			slideables.add(sli);
-			
-			if (s.getUnderlying() instanceof Diagram) {
-				theDiagram = (Diagram) s.getUnderlying();
-			}
 		}
 
 		pushCount = 0;
@@ -62,7 +61,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	
 	protected void addedSlideable(Slideable s) {
 		// look for dependencies in the direction given
-		setupMinimumDistancesDueToDarts(s);
+		// setupMinimumDistancesDueToDarts(s);
 		updateMaps(s);
 	}
 	
@@ -101,43 +100,48 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	public void updateMaps(Slideable s) {
 		Segment seg = (Segment) s.getUnderlying();
 		seg.setPositioned(false);
-		DiagramElement underlying = seg.getUnderlying();
+		
 		for (Vertex v : seg.getVerticesInSegment()) {
 			vertexToSlidableMap.put(v, s);
-
+		} 
+		
+		for (UnderlyingInfo ui : seg.getUnderlyingInfo()) {
+			DiagramElement underlying = ui.getDiagramElement();
 			if (isRectangular(underlying)) {
 				OPair<Slideable> parts = rectangularElementToSlideableMap.get(underlying);
 				if (parts == null) {
 					parts = new OPair<Slideable>(null, null);
 				}
 				
-				if ((seg.getUnderlyingSide() == Direction.LEFT) || (seg.getUnderlyingSide() == Direction.UP)) {
+				if ((ui.getSide() == Side.START)) {
 					parts = new OPair<>(s, parts.getB());
-				} else if ((seg.getUnderlyingSide() == Direction.RIGHT) || (seg.getUnderlyingSide() == Direction.DOWN)) {
+				} else if (ui.getSide() == Side.END) {
 					parts = new OPair<>(parts.getA(), s);
 				}
 				
 				rectangularElementToSlideableMap.put(underlying, parts);
+				
+				if (underlying instanceof Diagram) {
+					theDiagram = (Diagram) underlying;
+				}
 			}
 		}
 	}
 	
 	public AlignStyle getSegmentAlignStyle(Segment s) {
-		Direction us = s.getUnderlyingSide();
-		if (us == null) {
-			return AlignStyle.CENTER;
-		} else {
-			switch (us) {
-			case UP:
-			case LEFT:
-				return AlignStyle.LEFT;
-			case DOWN:
-			case RIGHT:
+		if (s.getUnderlyingInfo().size() == 1) {
+			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
+			switch (ui.getSide()) {
+			case END:
 				return AlignStyle.RIGHT;
+			case START:
+				return AlignStyle.LEFT;
+			default:
+				return AlignStyle.CENTER;
 			}
+		} else {
+			return AlignStyle.CENTER;
 		}
-		
-		return AlignStyle.LEFT;
 	}
 	
 	public Map<Vertex, Slideable> getVertexToSlidableMap() {

@@ -3,11 +3,7 @@ package org.kite9.diagram.common.elements.grid;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.element.AbstractDiagramElement;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -17,6 +13,7 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.style.ContainerPosition;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -89,6 +86,16 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public ContainerPosition getContainerPosition() {
 		return null;
+	}
+
+	@Override
+	public double getPadding(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public DiagramElementSizing getSizing() {
+		return DiagramElementSizing.UNSPECIFIED;
 	}
 
 }

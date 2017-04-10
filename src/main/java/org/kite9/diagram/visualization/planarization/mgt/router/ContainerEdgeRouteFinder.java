@@ -1,8 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.common.Kite9ProcessingException;

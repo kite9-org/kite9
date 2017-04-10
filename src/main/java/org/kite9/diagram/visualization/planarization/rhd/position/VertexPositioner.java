@@ -3,8 +3,8 @@ package org.kite9.diagram.visualization.planarization.rhd.position;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 
