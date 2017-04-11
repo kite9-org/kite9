@@ -262,13 +262,15 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 		Segment newLinkSeg = c.newSegment(link.getSegment().getDimension());
 		Vertex parV = c.createCompactionVertex(newLinkSeg, par.getSegment());
 		Vertex meetsV = c.createCompactionVertex(newLinkSeg, meets.getSegment());
-		VertexTurn newLinkTurn = new VertexTurn(newLinkSeg, c, link.d);
+		Vertex startsWith = m == Match.A ? parV : meetsV;
+		Vertex endsWith = m == Match.A ? meetsV : parV;
+		Direction d = link.getDirection();
+		VertexTurn newLinkTurn = new VertexTurn(newLinkSeg, c, link.getDirection(), );
 		Dart dLink = o.createDart(parV, meetsV, null, m == Match.A ? link.d : Direction.reverse(link.d), link.getUnderlying().getLength());
 		// dLink.setChangeCostChangeEarlyBothEnds(link.getUnderlying().getChangeCost());
 		newLinkTurn.setUnderlying(dLink);
 		newLinkTurn.d = link.d;
-		newLinkTurn.startsWith = m == Match.A ? parV : meetsV;
-		newLinkTurn.endsWith = m == Match.A ? meetsV : parV;
+
 		int ci = stack.indexOf(link);
 		stack.set(ci, newLinkTurn);
 
@@ -307,11 +309,11 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 		fixDartSize(c, link.getUnderlying());
 
 		double newMeetsLength = calculateNewMeetsLength(meets, par);
-		int newMeetsChangeCost = meets.getUnderlying().getChangeCost();
-		boolean meetsLengthKnown = meets.getUnderlying().isVertexLengthKnown() && par.getUnderlying().isVertexLengthKnown();
+		int newMeetsChangeCost = meets.getChangeCost();
+		boolean meetsLengthKnown = meets.isLengthKnown() && par.isLengthKnown();
 		//boolean meetsLengthKnown = false;
 		
-		double extensionLength = ext.getUnderlying().getLength() + link.getUnderlying().getLength(); 
+		double extensionLength = ext.getMinimumLength() + link.getMinimumLength(); 
 		extendSegment(ext, meets, c, first, to, d1, out, d2, extensionLength, newMeetsLength, newMeetsChangeCost, meetsLengthKnown);
 	}
 

@@ -4,16 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 
 public class BasicVertexEdgeOrdering extends AbstractListBasedEdgeOrdering implements VertexEdgeOrdering {
 	
-	List<Edge> underlying;
+	List<PlanarizationEdge> underlying;
 	Vertex v;
 
-	public BasicVertexEdgeOrdering(List<Edge> edges, Vertex v) {
+	public BasicVertexEdgeOrdering(List<PlanarizationEdge> edges, Vertex v) {
 		this.underlying = edges;
 		this.v = v;
 		initDirections();
@@ -21,25 +22,25 @@ public class BasicVertexEdgeOrdering extends AbstractListBasedEdgeOrdering imple
 
 	private void initDirections() {
 		directions = null;
-		for (Edge edge : underlying) {
+		for (PlanarizationEdge edge : underlying) {
 			addEdgeDirection(edge.getDrawDirectionFrom(v), Tools.isUnderlyingContradicting(edge));
 		}
 	}
 
 	public BasicVertexEdgeOrdering() {
-		underlying = new LinkedList<Edge>();
+		underlying = new LinkedList<PlanarizationEdge>();
 	}
 
 
 	@Override
-	public void remove(Edge toRemove) {
+	public void remove(PlanarizationEdge toRemove) {
 		underlying.remove(toRemove);
 		initDirections();
 	}
 
 	@Override
-	public void replace(Edge b, Edge a) {
-		List<Edge> edgesAsList = getEdgesAsList();
+	public void replace(PlanarizationEdge b, PlanarizationEdge a) {
+		List<PlanarizationEdge> edgesAsList = getEdgesAsList();
 		int bIndex = edgesAsList.indexOf(b);
 		if (bIndex!=-1) {
 			edgesAsList.set(bIndex, a);
@@ -48,7 +49,7 @@ public class BasicVertexEdgeOrdering extends AbstractListBasedEdgeOrdering imple
 	}
 
 	@Override
-	public List<Edge> getEdgesAsList() {
+	public List<PlanarizationEdge> getEdgesAsList() {
 		return underlying;
 	}
 

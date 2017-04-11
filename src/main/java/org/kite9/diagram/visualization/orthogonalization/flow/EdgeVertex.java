@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
+import java.util.Set;
+
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.AbstractVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -12,6 +14,16 @@ public class EdgeVertex {
 		@Override
 		public DiagramElement getOriginalUnderlying() {
 			return null;
+		}
+
+		@Override
+		public Set<DiagramElement> getDiagramElements() {
+			return null;
+		}
+
+		@Override
+		public boolean isPartOf(DiagramElement de) {
+			return false;
 		}
 	};
 	

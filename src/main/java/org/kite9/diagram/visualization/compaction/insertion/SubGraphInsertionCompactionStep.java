@@ -160,20 +160,20 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		Direction outDir = null;
 
 		for (DartDirection dd : ef.dartsInFace) {
-			Object de = Tools.getUltimateElement(dd.getDart().getFrom());
-			
-			if (de instanceof Connected) {
-				Container c = ((Connected)de).getContainer();
-				
-				if (c!=null) {
-					List<DiagramElement> content = c.getContents();
-					// since the collection is ordered, position is important
-					int index = content.indexOf(de);
-					if (index != -1) {
-						out = Math.min(out, index);
-						outDir = getDirectionOfInsertion(c.getLayout());
-					} else {
-						throw new LogicException("The contained object is not contained in the face or something?");
+			for (DiagramElement de : dd.getDart().getDiagramElements()) {
+				if (de instanceof Connected) {
+					Container c = ((Connected)de).getContainer();
+					
+					if (c!=null) {
+						List<DiagramElement> content = c.getContents();
+						// since the collection is ordered, position is important
+						int index = content.indexOf(de);
+						if (index != -1) {
+							out = Math.min(out, index);
+							outDir = getDirectionOfInsertion(c.getLayout());
+						} else {
+							throw new LogicException("The contained object is not contained in the face or something?");
+						}
 					}
 				}
 			}

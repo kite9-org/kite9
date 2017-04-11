@@ -1,5 +1,8 @@
 package org.kite9.diagram.common.elements.mapping;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
@@ -78,5 +81,10 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Si
 	@Override
 	public boolean isPartOf(DiagramElement de) {
 		return getOriginalUnderlying() == de;
+	}
+
+	@Override
+	public Map<DiagramElement, Direction> getDiagramElements() {
+		return Collections.singletonMap(getOriginalUnderlying(), null);
 	}
 }

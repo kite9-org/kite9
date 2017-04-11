@@ -12,16 +12,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
-import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
@@ -35,15 +36,15 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		this.vertexOrder = vertexOrder;
 		this.unmodifiableVO = Collections.unmodifiableList(vertexOrder);
 		createVertexIndexMap();
-		aboveForwardLinks = new ArrayList<List<Edge>>(vertexOrder.size());
-		aboveBackwardLinks = new ArrayList<List<Edge>>(vertexOrder.size());
-		belowForwardLinks = new ArrayList<List<Edge>>(vertexOrder.size());
-		belowBackwardLinks = new ArrayList<List<Edge>>(vertexOrder.size());
+		aboveForwardLinks = new ArrayList<List<PlanarizationEdge>>(vertexOrder.size());
+		aboveBackwardLinks = new ArrayList<List<PlanarizationEdge>>(vertexOrder.size());
+		belowForwardLinks = new ArrayList<List<PlanarizationEdge>>(vertexOrder.size());
+		belowBackwardLinks = new ArrayList<List<PlanarizationEdge>>(vertexOrder.size());
 		for (int i = 0; i < vertexOrder.size(); i++) {
-			LinkedList<Edge> abl = new LinkedList<Edge>();
-			LinkedList<Edge> bbl = new LinkedList<Edge>();
-			LinkedList<Edge> afl = new LinkedList<Edge>();
-			LinkedList<Edge> bfl = new LinkedList<Edge>();
+			LinkedList<PlanarizationEdge> abl = new LinkedList<>();
+			LinkedList<PlanarizationEdge> bbl = new LinkedList<>();
+			LinkedList<PlanarizationEdge> afl = new LinkedList<>();
+			LinkedList<PlanarizationEdge> bfl = new LinkedList<>();
 			aboveBackwardLinks.add(abl);
 			aboveForwardLinks.add(afl);
 			belowBackwardLinks.add(bbl);
@@ -64,38 +65,38 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	List<Vertex> vertexOrder;
 	List<Vertex> unmodifiableVO;
 
-	private Set<Edge> aboveSet = new LinkedHashSet<Edge>();
+	private Set<PlanarizationEdge> aboveSet = new LinkedHashSet<PlanarizationEdge>();
 
-	private Set<Edge> belowSet = new LinkedHashSet<Edge>();
+	private Set<PlanarizationEdge> belowSet = new LinkedHashSet<PlanarizationEdge>();
 
-	public Set<Edge> getAboveLineEdges() {
+	public Set<PlanarizationEdge> getAboveLineEdges() {
 		return aboveSet;
 	}
 
-	public Set<Edge> getBelowLineEdges() {
+	public Set<PlanarizationEdge> getBelowLineEdges() {
 		return belowSet;
 	}
 
 	public Collection<BiDirectional<Connected>> uninsertedConnections;
 
-	private List<List<Edge>> aboveForwardLinks;
-	private List<List<Edge>> aboveBackwardLinks;
-	private List<List<Edge>> belowForwardLinks;
-	private List<List<Edge>> belowBackwardLinks;
+	private List<List<PlanarizationEdge>> aboveForwardLinks;
+	private List<List<PlanarizationEdge>> aboveBackwardLinks;
+	private List<List<PlanarizationEdge>> belowForwardLinks;
+	private List<List<PlanarizationEdge>> belowBackwardLinks;
 
-	public List<Edge> getAboveForwardLinks(Vertex v) {
+	public List<PlanarizationEdge> getAboveForwardLinks(Vertex v) {
 		return aboveForwardLinks.get(getVertexIndex(v));
 	}
 
-	public List<Edge> getAboveBackwardLinks(Vertex v) {
+	public List<PlanarizationEdge> getAboveBackwardLinks(Vertex v) {
 		return aboveBackwardLinks.get(getVertexIndex(v));
 	}
 
-	public List<Edge> getBelowForwardLinks(Vertex v) {
+	public List<PlanarizationEdge> getBelowForwardLinks(Vertex v) {
 		return belowForwardLinks.get(getVertexIndex(v));
 	}
 
-	public List<Edge> getBelowBackwardLinks(Vertex v) {
+	public List<PlanarizationEdge> getBelowBackwardLinks(Vertex v) {
 		return belowBackwardLinks.get(getVertexIndex(v));
 	}
 
@@ -113,7 +114,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	/**
 	 * This does not output crossing edges or on line edges
 	 */
-	public TextualRepresentation getTextualRepresentation(DiagramElement highlight) {
+	public TextualRepresentation getTextualRepresentation(Set<DiagramElement> highlight) {
 		TextualRepresentation tr = new TextualRepresentation();
 
 		// set up vertex positions in the textual rep.
@@ -131,27 +132,27 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			tr.outputString(0, (int) tr.getPositions().get(v).x(), v.getID() + "[" + (voi++) + "]");
 		}
 
-		Map<Edge, Integer> nestings = new HashMap<Edge, Integer>(aboveSet.size() * 2);
-		for (Edge e : aboveSet) {
+		Map<PlanarizationEdge, Integer> nestings = new HashMap<PlanarizationEdge, Integer>(aboveSet.size() * 2);
+		for (PlanarizationEdge e : aboveSet) {
 			Vertex from = e.getFrom();
 			Vertex to = e.getTo();
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
 			int height = getNestings(e, aboveSet, nestings) + 1;
-			boolean hl = e.isPartOf(highlight);
+			boolean hl = isPartOf(highlight, e);
 			tr.vLine(-1, fromi, -height, hl);
 			tr.vLine(-1, toi, -height, hl);
 			tr.hLine(-height - 1, fromi + 1, toi - 1, hl);
 		}
 
-		nestings = new HashMap<Edge, Integer>(belowSet.size() * 2);
-		for (Edge e : belowSet) {
+		nestings = new HashMap<PlanarizationEdge, Integer>(belowSet.size() * 2);
+		for (PlanarizationEdge e : belowSet) {
 			Vertex from = e.getFrom();
 			Vertex to = e.getTo();
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
 			int height = getNestings(e, belowSet, nestings) + 1;
-			boolean hl = e.isPartOf(highlight);
+			boolean hl = isPartOf(highlight, e);
 
 			tr.vLine(1, fromi, height, hl);
 			tr.vLine(1, toi, height, hl);
@@ -161,7 +162,19 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		return tr;
 	}
 
-	public int getNestings(Edge e, Set<Edge> aboveSet, Map<Edge, Integer> nestCache) {
+	private boolean isPartOf(Set<DiagramElement> highlight, Edge e) {
+		if (highlight == null) {
+			return false;
+		}
+		for (DiagramElement de : highlight) {
+			if (e.isPartOf(de)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int getNestings(PlanarizationEdge e, Set<PlanarizationEdge> aboveSet, Map<PlanarizationEdge, Integer> nestCache) {
 		Integer out = nestCache.get(e);
 		if (out != null) {
 			return out;
@@ -171,7 +184,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		int from = vertexOrder.indexOf(e.getFrom());
 		int to = vertexOrder.indexOf(e.getTo());
 
-		for (Edge edge : aboveSet) {
+		for (PlanarizationEdge edge : aboveSet) {
 			if (e != edge) {
 				int fromi = vertexOrder.indexOf(edge.getFrom());
 				int toi = vertexOrder.indexOf(edge.getTo());
@@ -229,10 +242,10 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 
 	public void addVertexToOrder(int i, Vertex insert) {
 		vertexOrder.add(i + 1, insert);
-		aboveBackwardLinks.add(i + 1, new LinkedList<Edge>());
-		aboveForwardLinks.add(i + 1, new LinkedList<Edge>());
-		belowBackwardLinks.add(i + 1, new LinkedList<Edge>());
-		belowForwardLinks.add(i + 1, new LinkedList<Edge>());
+		aboveBackwardLinks.add(i + 1, new LinkedList<PlanarizationEdge>());
+		aboveForwardLinks.add(i + 1, new LinkedList<PlanarizationEdge>());
+		belowBackwardLinks.add(i + 1, new LinkedList<PlanarizationEdge>());
+		belowForwardLinks.add(i + 1, new LinkedList<PlanarizationEdge>());
 		createVertexIndexMap();
 	}
 
@@ -298,7 +311,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		return ((i1 > ja) && (i1 < jb));
 	}
 
-	public void addEdge(Edge edge, boolean above, Edge outsideOf) {
+	public void addEdge(PlanarizationEdge edge, boolean above, PlanarizationEdge outsideOf) {
 		int fromi = getVertexIndex(edge.getFrom());
 		int toi = getVertexIndex(edge.getTo());
 		if (fromi > toi) {
@@ -367,7 +380,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		byQuad.addAll(c1);
 		byQuad.addAll(getAboveBackwardLinks(from));
 
-		List<Edge> cmp = getEdgeOrderings().get(from).getEdgesAsList();
+		List<PlanarizationEdge> cmp = getEdgeOrderings().get(from).getEdgesAsList();
 		int i = byQuad.indexOf(cmp.get(0));
 		Collections.rotate(byQuad, -i);
 
@@ -377,11 +390,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 
 	}
 
-	public Edge getFirstEdgeAfterPlanarizationLine(Vertex from, boolean forward, boolean above) {
-		Edge outsideOf;
+	public PlanarizationEdge getFirstEdgeAfterPlanarizationLine(Vertex from, boolean forward, boolean above) {
+		PlanarizationEdge outsideOf;
 		boolean clockwise = !(above == forward);
 		Quadrant q = getQuadrantFor(above, forward);
-		List<Edge> edgeSet = getEdgeSetByQuadrant(q, from);
+		List<PlanarizationEdge> edgeSet = getEdgeSetByQuadrant(q, from);
 		while (edgeSet.size() == 0) {
 			int ord = (q.ordinal() + (clockwise ? -1 : 1) + 4) % 4;
 			q = Quadrant.values()[ord];
@@ -410,7 +423,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		}
 	}
 
-	public List<Edge> getEdgeSetByQuadrant(Quadrant quadrant, Vertex v) {
+	public List<PlanarizationEdge> getEdgeSetByQuadrant(Quadrant quadrant, Vertex v) {
 		switch (quadrant) {
 		case ABOVE_BACKWARD:
 			return getAboveBackwardLinks(v);
@@ -424,11 +437,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		}
 	}
 
-	private void orderedInsert(List<Edge> abl, Edge e, Edge outsideOf) {
+	private void orderedInsert(List<PlanarizationEdge> abl, PlanarizationEdge e, PlanarizationEdge outsideOf) {
 		int o1d = edgeSpan(e);
-		ListIterator<Edge> li = abl.listIterator();
+		ListIterator<PlanarizationEdge> li = abl.listIterator();
 		while (li.hasNext()) {
-			Edge n = li.next();
+			PlanarizationEdge n = li.next();
 			int o2d = edgeSpan(n);
 			if ((o2d > o1d) || ((o2d == o1d) && (outsideOf == null))) {
 				li.previous();

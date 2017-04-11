@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * This is used where two edges are required to cross each other.  This vertex is added at the crossing 
@@ -43,6 +44,11 @@ public class EdgeCrossingVertex extends AbstractVertex implements MultiElementVe
 	@Override
 	public Set<DiagramElement> getDiagramElements() {
 		return underlyings;
+	}
+
+	@Override
+	public DiagramElement getOriginalUnderlying() {
+		throw new Kite9ProcessingException("No underlying for this");
 	}
 	
 }

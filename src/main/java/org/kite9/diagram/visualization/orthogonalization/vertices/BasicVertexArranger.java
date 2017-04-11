@@ -16,6 +16,7 @@ import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -190,13 +191,13 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 					fromv = tov;
 					tov = iterator.next();
 					if (fromv != null) {
-						Edge e = createOrReuse(de, fromv, tov,  o, cv.getGridContainer());
+						PlanarizationEdge e = createOrReuse(de, fromv, tov,  o, cv.getGridContainer());
 						f.add(fromv, e);
 					}
 				}
 				
 				// join back into a circle
-				Edge e = createOrReuse(de, 
+				PlanarizationEdge e = createOrReuse(de, 
 						tov, 
 						perimeterVertices.get(0), 
 						o, cv.getGridContainer());
@@ -269,7 +270,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		Direction d = getDirection(from, to);
 		
 		if (be == null) {
-			be = new BorderEdge(from, to, "be"+from+"-"+to, d, false, root, new LinkedHashMap<>());
+			be = new BorderEdge(from, to, "be"+from+"-"+to, d, false, new LinkedHashMap<>());
 			log.send("Created border edge"+be);
 		}
 		Direction borderSide = Direction.rotateAntiClockwise(d);
@@ -312,10 +313,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		f.setPartOf((Rectangular) originalUnderlying);
 		Vertex tl = cv.getTopLeft(), tr = cv.getTopRight(), br = cv.getBottomRight(), bl = cv.getBottomLeft();
 		
-		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, originalUnderlying, mapFor(originalUnderlying, Direction.UP)));
-		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, originalUnderlying, mapFor(originalUnderlying, Direction.RIGHT)));
-		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false, originalUnderlying, mapFor(originalUnderlying, Direction.DOWN)));
-		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, originalUnderlying, mapFor(originalUnderlying, Direction.LEFT)));
+		f.add(tl, new BorderEdge(tl, tr, "be-"+tl+"-"+tr, Direction.RIGHT, false, mapFor(originalUnderlying, Direction.UP)));
+		f.add(tr, new BorderEdge(tr, br, "be"+tr+"-"+br, Direction.DOWN, false, mapFor(originalUnderlying, Direction.RIGHT)));
+		f.add(br, new BorderEdge(br, bl, "be"+br+"-"+bl, Direction.LEFT, false,  mapFor(originalUnderlying, Direction.DOWN)));
+		f.add(bl, new BorderEdge(bl, tl, "be"+bl+"-"+tl, Direction.UP, false, mapFor(originalUnderlying, Direction.LEFT)));
 		f.checkFaceIntegrity();
 		
 		DartFace inner = convertDiagramElementToInnerFaceWithCorners(originalUnderlying, optionalExistingVertex, o, dartDirections, dartOrdering, requiresMinSize, f, cv);

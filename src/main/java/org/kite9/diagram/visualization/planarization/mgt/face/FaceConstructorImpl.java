@@ -1,8 +1,10 @@
 package org.kite9.diagram.visualization.planarization.mgt.face;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
@@ -13,6 +15,7 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -86,6 +89,16 @@ public class FaceConstructorImpl implements FaceConstructor {
 		public boolean isPartOf(DiagramElement de) {
 			return false;
 		}
+
+		@Override
+		public Map<DiagramElement, Direction> getDiagramElements() {
+			return Collections.emptyMap();
+		}
+
+		@Override
+		public DiagramElement getOriginalUnderlying() {
+			return null;
+		}
 	}
 
 	public void createFaces(MGTPlanarization pl) {
@@ -96,7 +109,7 @@ public class FaceConstructorImpl implements FaceConstructor {
 		
 		// walk through nodes in turn
 		for (Vertex v : pl.getVertexOrder()) {
-			for (Edge e : getEdgeOrdering(v, pl)) {
+			for (PlanarizationEdge e : getEdgeOrdering(v, pl)) {
 				// edges can only contribute to two faces, at most.
 				// although they can contribute to the same face twice
 				List<Face> map = pl.getEdgeFaceMap().get(e);
@@ -133,16 +146,16 @@ public class FaceConstructorImpl implements FaceConstructor {
 		}
 	}
 
-	protected Edge createTemporaryEdge(MGTPlanarization p, Vertex from, Vertex to) {
-		Edge e = new TemporaryEdge(from, to);
+	protected PlanarizationEdge createTemporaryEdge(MGTPlanarization p, Vertex from, Vertex to) {
+		PlanarizationEdge e = new TemporaryEdge(from, to);
 		p.addEdge(e, true, null);
 		return e;
 	}
 
-	private Face tracePath(Vertex v, Edge e, Planarization pl) {
+	private Face tracePath(Vertex v, PlanarizationEdge e, Planarization pl) {
 		Face f = pl.createFace();
 		//System.out.println("Creating face "+f);
-		Edge startEdge = e;
+		PlanarizationEdge startEdge = e;
 		Vertex startVertex = v;
 		do {
 			addToFaceMap(v, e, f, pl);
@@ -180,12 +193,12 @@ public class FaceConstructorImpl implements FaceConstructor {
 		faces.add(f);
 	}
 
-	public Edge getLeftEdge(Edge incident, Vertex v, Planarization pl) {
-		List<Edge> ordering = getEdgeOrdering(v, pl);
+	public PlanarizationEdge getLeftEdge(PlanarizationEdge incident, Vertex v, Planarization pl) {
+		List<PlanarizationEdge> ordering = getEdgeOrdering(v, pl);
 
 		int startIndex = ordering.indexOf(incident);
 		int index = startIndex;
-		Edge out = null;
+		PlanarizationEdge out = null;
 		// do {
 		if (index == 0) {
 			index = ordering.size() - 1;
@@ -200,14 +213,14 @@ public class FaceConstructorImpl implements FaceConstructor {
 		return out;
 	}
 
-	private List<Edge> getEdgeOrdering(Vertex v, Planarization pl) {
-		List<Edge> ordering = pl.getEdgeOrderings().get(v).getEdgesAsList();
+	private List<PlanarizationEdge> getEdgeOrdering(Vertex v, Planarization pl) {
+		List<PlanarizationEdge> ordering = pl.getEdgeOrderings().get(v).getEdgesAsList();
 		return ordering;
 	}
 
 	public void removeTemporaries(MGTPlanarization p) {
 
-		Set<Edge> toRemove = new DetHashSet<Edge>();
+		Set<PlanarizationEdge> toRemove = new DetHashSet<PlanarizationEdge>();
 		for (Vertex v : p.getVertexOrder()) {
 			traverseAllLinks(v, toRemove);
 		}
@@ -224,15 +237,15 @@ public class FaceConstructorImpl implements FaceConstructor {
 	 * Adds extra logic to say only remove the temporaries where they are not providing direction information for orth.
 	 * If they do, they must remain.
 	 */
-	protected void removeTemporaries(Set<Edge> toRemove, Planarization p) {
-		for (Edge temporaryEdge : toRemove) {
+	protected void removeTemporaries(Set<PlanarizationEdge> toRemove, Planarization p) {
+		for (PlanarizationEdge temporaryEdge : toRemove) {
 			if (temporaryEdge.getDrawDirection() == null) {
 				t.removeEdge(temporaryEdge, p);
 			}
 		}
 	}
 
-	private void traverseAllLinks(Vertex vertex, Set<Edge> toRemove) {
+	private void traverseAllLinks(Vertex vertex, Set<PlanarizationEdge> toRemove) {
 		for (Edge edge : vertex.getEdges()) {
 			if ((edge instanceof PlanarizationEdge)
 					&& ((PlanarizationEdge) edge).removeBeforeOrthogonalization() == RemovalType.YES) {

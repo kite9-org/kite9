@@ -1,13 +1,20 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.edge.AbstractEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -147,6 +154,16 @@ public class Dart extends AbstractEdge {
 		to.removeEdge(this);
 		o.allDarts.remove(this);
 	}
+	
+	public Set<DiagramElement> getDiagramElements() {
+		if (partOf instanceof PlanarizationEdge) {
+			return ((PlanarizationEdge) partOf).getDiagramElements().keySet();
+		} else if (partOf instanceof DiagramElement) {
+			return Collections.singleton((DiagramElement) partOf);
+		} else {
+			throw new Kite9ProcessingException("Don't know underlying "+partOf);
+		}
+	}
 
 	public DiagramElement getOriginalUnderlying() {
 		if (partOf instanceof ArtificialElement) {
@@ -181,6 +198,11 @@ public class Dart extends AbstractEdge {
 
 	@Override
 	public boolean isReversed() {
+		return false;
+	}
+
+	@Override
+	public boolean isPartOf(DiagramElement de) {
 		return false;
 	}
 	

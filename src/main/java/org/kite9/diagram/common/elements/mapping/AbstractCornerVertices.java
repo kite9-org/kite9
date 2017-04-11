@@ -50,7 +50,7 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		MultiCornerVertex cv = elements.get(d);
 		
 		if (cv == null) {
-			cv = new MultiCornerVertex(getVertexIDStem(), rootContainer, x, y);
+			cv = new MultiCornerVertex(getVertexIDStem(), x, y);
 			elements.put(d, cv);
 		}
 			

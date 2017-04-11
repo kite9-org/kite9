@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -118,7 +119,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 	}
 
 	private boolean handleInsertionPhase(MGTPlanarization p, EdgePhase ep, BiDirectional<Connected> c) {
-		Edge e = getEdgeForConnection(c, p);
+		PlanarizationEdge e = getEdgeForConnection(c, p);
 		
 		boolean done = false;
 
@@ -188,5 +189,5 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		throw new LogicException("Couldn't determine direction to insert in");
 	}
 
-	protected abstract Edge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p);
+	protected abstract PlanarizationEdge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p);
 }

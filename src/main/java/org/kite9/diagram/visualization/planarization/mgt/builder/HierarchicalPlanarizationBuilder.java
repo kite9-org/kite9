@@ -2,17 +2,13 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
@@ -71,10 +67,10 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	@Override
 	protected int processCorrectDirectedConnections(MGTPlanarization p) {
 		// does the container layout edges, which will also be directed.
-		List<Edge> containerLayoutEdges = new LinkedList<Edge>();
+		List<PlanarizationEdge> containerLayoutEdges = new LinkedList<PlanarizationEdge>();
 		addContainerLayoutEdges(p.getDiagram(), p, containerLayoutEdges);
 		log.send("Layout edges:", containerLayoutEdges);
-		for (Edge edge : containerLayoutEdges) {
+		for (PlanarizationEdge edge : containerLayoutEdges) {
 			getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 
@@ -112,7 +108,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			for (Connection c : ((Connected)prevUnd).getLinks()) {
 				if (c.meets((Connected) vUnd)) {
 					Vertex prevUndVertex = getVertexFor(prevUnd);
-					Edge e = getEdgeForConnection(c, pln);
+					PlanarizationEdge e = getEdgeForConnection(c, pln);
 					if (pln.getUninsertedConnections().contains(e)) {
 						Direction d= getDirectionForLayout(inside);
 						boolean setOk = setEdgeDirection(e, d, prevUndVertex, false);
@@ -149,7 +145,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				if ((eUnd != null) && (vSet.contains(eUnd))) {
 					EdgeMapping em = pln.getEdgeMappings().get(eUnd);
 					Vertex start = em.getStartVertex();
-					List<Edge> edges = em.getEdges();
+					List<PlanarizationEdge> edges = em.getEdges();
 					Route b = getRoute(vUnd, prevUnd, start, edges, d, inside);
 					if (b!=null) {
 						log.send("Using "+eUnd+" as a back edge from "+prevUnd+" to "+vUnd+", from="+start+" going="+d);
@@ -178,7 +174,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		throw new LogicException("Unexpected layout: "+inside.getLayout());
 	}
 
-	private void paintRoute(Route b, List<Edge> edges, Direction d) {
+	private void paintRoute(Route b, List<PlanarizationEdge> edges, Direction d) {
 		Vertex start = b.sv;
 		int end = b.end == null ? edges.size()-1 : b.end;
 		for (int i = b.start; i <= end; i++) {
@@ -198,7 +194,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	private Route getRoute(DiagramElement vUnd, DiagramElement prevUnd,
-			Vertex start, List<Edge> edges, Direction d, Container inside) {
+			Vertex start, List<PlanarizationEdge> edges, Direction d, Container inside) {
 		Route b = null;
 		for (int j = 0; j < edges.size(); j++) {
 			Edge edge = edges.get(j);
@@ -273,7 +269,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			CornerVertices cv = em.getOuterCornerVertices(outer);
 			String originalLabel = outer.getID();
 					
-			LinkedList<Edge> out = new LinkedList<Edge>();
+			LinkedList<PlanarizationEdge> out = new LinkedList<PlanarizationEdge>();
 			EdgeMapping em = new EdgeMapping(outer, out);
 			p.getEdgeMappings().put(outer, em);
 	
@@ -306,7 +302,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	private void addEdgeBetween(MGTPlanarization p, DiagramElement outer, String originalLabel, EdgeMapping em, int i, MultiCornerVertex fromv, MultiCornerVertex tov) {
 		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, i, em);
 		if (newEdge != null) {
-			getEdgeRouter().addEdgeToPlanarization(p, newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+			getEdgeRouter().addEdgeToPlanarization(p, (PlanarizationEdge) newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
@@ -336,7 +332,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		
 		if (d != null) {
 			while (from != to) {
-				Edge e = getLeaverInDirection(from, d);
+				PlanarizationEdge e = getLeaverInDirection(from, d);
 				if (e==null) {
 					BorderEdge cbe = new BorderEdge((MultiCornerVertex) from, (MultiCornerVertex) to, l+d+i, d);
 					cbe.getDiagramElements().put(c, Direction.rotateAntiClockwise(d));
@@ -359,17 +355,17 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		}
 	}
 
-	private Edge getLeaverInDirection(Vertex from, Direction d) {
+	private PlanarizationEdge getLeaverInDirection(Vertex from, Direction d) {
 		for (Edge e : from.getEdges()) {
 			if (e.getDrawDirectionFrom(from) == d) {
-				return e;
+				return (PlanarizationEdge) e;
 			}
 		}
 		
 		return null;
 	}
 
-	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<Edge> toAdd) {
+	protected void addContainerLayoutEdges(Container c, MGTPlanarization p, List<PlanarizationEdge> toAdd) {
 		List<Connected> contents;
 		boolean layingOut = c.getLayout() != null;
 		if (layingOut) {
@@ -398,12 +394,12 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	
 
 
-	private void checkAddLayoutEdge(MGTPlanarization p, Container c, List<Edge> newEdges, DiagramElement prev, DiagramElement current) {
+	private void checkAddLayoutEdge(MGTPlanarization p, Container c, List<PlanarizationEdge> newEdges, DiagramElement prev, DiagramElement current) {
 		boolean needsDirectingBackEdge = checkIfNewBackEdgeNeeded(current, prev, p, c);
 		// create a directing back edge
 		if (needsDirectingBackEdge) {
 			Direction d = getDirectionForLayout(c);
-			Edge e = new ContainerLayoutEdge(getVertexFor(prev), getVertexFor(current), d, (Connected) prev, (Connected) current);
+			PlanarizationEdge e = new ContainerLayoutEdge(getVertexFor(prev), getVertexFor(current), d, (Connected) prev, (Connected) current);
 			DiagramElement und = e.getOriginalUnderlying();
 			EdgeMapping em = new EdgeMapping(und, e);
 			p.getEdgeMappings().put(und, em);
@@ -430,7 +426,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 
 	@Override
-	protected Edge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p) {
+	protected PlanarizationEdge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p) {
 		Connected from = c.getFrom();
 		Connected to = c.getTo();
 		Vertex fromv = getVertexFor(from), tov = getVertexFor(to);

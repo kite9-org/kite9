@@ -1,5 +1,6 @@
 package org.kite9.diagram.common.elements;
 
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
@@ -11,5 +12,7 @@ import org.kite9.diagram.model.DiagramElement;
 public interface ArtificialElement {
 		
 	public boolean isPartOf(DiagramElement de);
+		
+	DiagramElement getOriginalUnderlying();
 	
 }

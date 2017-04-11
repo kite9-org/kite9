@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -48,9 +49,11 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	private Set<Connection> createTopElementSet(Set<Edge> allEdges) {
 		Set<Connection> out  = new LinkedHashSet<Connection>();
 		for (Edge e : allEdges) {
-			DiagramElement underlying = e.getOriginalUnderlying();
-			if (underlying instanceof Connection) {
-				out.add((Connection) underlying);
+			if (e instanceof ConnectionEdge) {
+				DiagramElement underlying = ((ConnectionEdge) e).getOriginalUnderlying();
+				if (underlying instanceof Connection) {
+					out.add((Connection) underlying);
+				}
 			}
 		}	
 		return out;

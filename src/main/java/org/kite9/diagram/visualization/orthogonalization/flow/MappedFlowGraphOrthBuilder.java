@@ -11,6 +11,7 @@ import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
@@ -249,7 +250,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 			waypoints = new ArrayList<Vertex>(wpCount);
 			waypoints.add(startVertex);
 			for (int i = 0; i < wpCount - 1; i++) {
-				ConnectionEdgeBendVertex bv = new ConnectionEdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), e);
+				ConnectionEdgeBendVertex bv = new ConnectionEdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), (ConnectionEdge) e);
 				waypoints.add(bv);
 				o.getAllVertices().add(bv);
 			}
@@ -286,10 +287,10 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 	}
 
 	private int getChangeCostForEdge(Edge e) {
-		if (e.getOriginalUnderlying() instanceof Container) {
-			return Dart.EXTEND_IF_NEEDED;
-		} else {
+		if (e instanceof ConnectionEdge) {
 			return Dart.CONNECTION_DART;
+		} else {
+			return Dart.EXTEND_IF_NEEDED;
 		}
 	}
 

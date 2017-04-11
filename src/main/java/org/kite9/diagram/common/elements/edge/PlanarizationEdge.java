@@ -1,6 +1,10 @@
 package org.kite9.diagram.common.elements.edge;
 
+import java.util.Map;
+
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * Edge interface implemented by all of the Edges created by the planarization process.
@@ -55,5 +59,12 @@ public interface PlanarizationEdge extends Edge {
 	 * Performs a split on the current edge.  Returns 2 edge attr.  The original edge should then be discarded.
 	 */
 	public PlanarizationEdge[] split(Vertex toIntroduce);
+	
+	/**
+	 * Gives you information about the elements surrounding this one, and (potentially) which side
+	 * they are on.
+	 */
+	public Map<DiagramElement, Direction> getDiagramElements();
+	
 	
 }

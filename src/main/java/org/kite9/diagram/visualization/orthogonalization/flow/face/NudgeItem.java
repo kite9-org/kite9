@@ -5,6 +5,8 @@ import java.util.List;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Face;
 
 class NudgeItem {
@@ -63,7 +65,14 @@ class NudgeItem {
 	public String toString() {
 		Edge se = getFirstEdge();
 		Edge ee = getLastEdge();
-		return "NI"+id + " " + ((portionsClockwise!=null) ? portionsClockwise.toString() : "")+" "+r+" "+type+" from="+se+"("+se.getOriginalUnderlying()+") to="+ee+"("+ee.getOriginalUnderlying()+")";
+		return "NI"+id + " " + ((portionsClockwise!=null) ? portionsClockwise.toString() : "")+" "+r+" "+type+" from="+se+"("+getUnderlyings(se)+") to="+ee+"("+getUnderlyings(ee)+")";
+	}
+
+	private String getUnderlyings(Edge se) {
+		if (se instanceof PlanarizationEdge) {
+			return ((PlanarizationEdge) se).getDiagramElements().keySet().toString();
+		}
+		return "";
 	}
 
 	public Edge getLastEdge() {

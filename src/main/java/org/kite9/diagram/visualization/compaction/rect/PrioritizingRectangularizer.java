@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -110,18 +109,17 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 				minAdd = 0;
 			} else {
 				// need to include cost of double-back dart
-				Direction d = getMeets().d;
-				minAdd = getMinimumDistance(c, getPost().startsWith, getExtender().startsWith, d);
+				Direction d = getMeets().getDirection();
+				minAdd = getMinimumDistance(getPost().getStartsWith(), getExtender().getStartsWith(), d);
 			}
 	
 			return getMeets().getMinimumLength() - minAdd;
 		}
 		
 		public boolean isRectangularizationSafe() {
-			Dart pd = getPar().getUnderlying();
-			pushOut = Math.max(0, pd.getLength() - availableMeets);
+			pushOut = Math.max(0, getPar().getMinimumLength() - availableMeets);
 			
-			if ((pd.isVertexLengthKnown())) {
+			if ((getPar().isLengthKnown())) {
 				if (pushOut <= 0) {
 					return true;
 				}
@@ -134,7 +132,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 		 * Decide whether to rectangularize, or boxout.
 		 */
 		private boolean chooseRectangularization() {
-			return (getMeets().getUnderlying().getChangeCost()==Dart.EXTEND_IF_NEEDED) 
+			return (getMeets().getChangeCost()==Dart.EXTEND_IF_NEEDED) 
 				|| (rectSafe)
 				|| (isPriority) 
 				|| (!canBoxout);
@@ -148,7 +146,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 			if (rectSafe) {
 				return 0;
 			} else {
-				int changeCost = getMeets().getUnderlying().getChangeCost();
+				int changeCost = getMeets().getChangeCost();
 				if (willRect) {
 					return changeCost;				
 				} else {

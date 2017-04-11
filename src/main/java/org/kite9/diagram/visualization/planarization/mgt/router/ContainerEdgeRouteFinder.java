@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
@@ -98,7 +99,7 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	@Override
-	protected boolean canRouteToVertex(Vertex from, Edge outsideOf,
+	protected boolean canRouteToVertex(Vertex from, PlanarizationEdge outsideOf,
 			boolean above, Going g, boolean arriving) {
 		return true;
 	}

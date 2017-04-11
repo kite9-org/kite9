@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization.ordering;
 
-import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.model.position.Direction;
 
 /**
@@ -13,8 +13,8 @@ public interface VertexEdgeOrdering extends EdgeOrdering {
 
 	public void addEdgeDirection(Direction d, boolean isContradicting);
 
-	public void remove(Edge toRemove);
+	public void remove(PlanarizationEdge toRemove);
 
-	public void replace(Edge b, Edge a);
+	public void replace(PlanarizationEdge b, PlanarizationEdge a);
 	
 }

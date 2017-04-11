@@ -10,6 +10,7 @@ import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -28,7 +29,6 @@ import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrder
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
@@ -76,7 +76,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
 	protected boolean canCrossBorderEdge(BorderEdge crossing, EdgePath ep) {
 		Container insideContainer = ep.insideContainer();
-		boolean leaving = (crossing.getOriginalUnderlying() == insideContainer);
+		boolean leaving = crossing.isPartOf(insideContainer);
 
 		BorderTraversal traversalRule = getTraversalRule(crossing);
 		if (traversalRule == BorderTraversal.NONE) {
@@ -109,10 +109,10 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			return true;
 		}
 		
-		Edge leaverBefore = containerOrdering.getLeaverBeforeBorder(crossing);
+		PlanarizationEdge leaverBefore = containerOrdering.getLeaverBeforeBorder(crossing);
 	
 		if (leaverBefore.getDrawDirection()==null) {
-			Iterator<Edge> containerIterator = containerOrdering.getIterator(false, leaverBefore, leaverBefore, true);
+			Iterator<PlanarizationEdge> containerIterator = containerOrdering.getIterator(false, leaverBefore, leaverBefore, true);
 			containerIterator.next();
 			leaverBefore = containerIterator.next();
 		}
@@ -134,7 +134,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		//return true;
 	}
 
-	protected boolean canRouteToVertex(Vertex to, Edge edge, boolean pathAbove, Going g, boolean arriving) {
+	protected boolean canRouteToVertex(Vertex to, PlanarizationEdge edge, boolean pathAbove, Going g, boolean arriving) {
 			if ((getPosition(to) == null) || (to.getOriginalUnderlying() == null)) {
 				return false;
 			}
@@ -179,16 +179,6 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	 * otherwise there will be a contradiction in the planarization.
 	 */
 	protected boolean canCross(Edge e2, EdgePath ep, boolean goingDown) {
-		if (e2.getOriginalUnderlying() instanceof DiagramKite9XMLElement) {
-			// you can't leave the top container
-			return false;
-		}
-	
-		if ((e2.getOriginalUnderlying() instanceof Container) && (e.getOriginalUnderlying() instanceof Container)) {
-			// one container can't cross another
-			return false;
-		}
-	
 		if (e2 instanceof BorderEdge) {
 			return canCrossBorderEdge((BorderEdge) e2, ep);
 		} else {
@@ -522,18 +512,17 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		
 		if (candidate instanceof MultiCornerVertex) {
 			
-			DiagramElement und = candidate.getOriginalUnderlying();
-			if (candidate instanceof MultiCornerVertex) {
-				// return true if this is a container vertex for the container we're trying to get to
-				if ((und == originalUnderlying) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
-					return true;
-				}
+			//DiagramElement und = candidate.getOriginalUnderlying();
+			// return true if this is a container vertex for the container we're trying to get to
+			if ((candidate.isPartOf(originalUnderlying)) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
+				return true;
 			}
+			
 			
 			boolean out = false;
 			if (allowConnectionsToContainerContents()) {
 				// return false if this element is not in the correct container.
-				if ((und != null) && (und.getContainer() != originalUnderlying)) {
+				if (!candidateIsContainedIn((MultiCornerVertex) candidate, originalUnderlying)) {
 					return false;
 				}
 				
@@ -553,6 +542,16 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 	
+	private boolean candidateIsContainedIn(MultiCornerVertex candidate, DiagramElement originalUnderlying) {
+		for (DiagramElement de : candidate.getDiagramElements()) {
+			if (de.getParent() == originalUnderlying) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	/**
 	 * Ensures that we are starting/terminating on a vertex on the right side of the 
 	 * container we are leaving/arriving at.

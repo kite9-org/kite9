@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
@@ -10,6 +9,7 @@ import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
@@ -21,11 +21,9 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
@@ -78,7 +76,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		return false;
 	}
 
-	protected boolean canRouteToVertex(Vertex to, Edge edge, boolean pathAbove, Going g, boolean arriving) {
+	protected boolean canRouteToVertex(Vertex to, PlanarizationEdge edge, boolean pathAbove, Going g, boolean arriving) {
 			if ((getPosition(to) == null) || (to.getOriginalUnderlying() == null)) {
 				return false;
 			}

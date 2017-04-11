@@ -41,6 +41,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return true;
 	}
 
+	protected double getMinimumDistance(Slideable froms, Slideable tos, Direction d) {
+		return froms.minimumDistanceTo(tos);
+	}
 
 	protected double getMinimumDistance(boolean horizontalDart, Segment froms, Segment tos) {
 		// where a segment is part of a grid, we can have more than one underlying diagram element.

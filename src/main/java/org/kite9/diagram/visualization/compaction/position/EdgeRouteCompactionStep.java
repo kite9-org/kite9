@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -42,7 +43,7 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	 */
 	private void setEdgeRoutes(Orthogonalization o) {
 		for (Edge e : o.getEdges()) {
-			if (e.getOriginalUnderlying() instanceof Connection) {
+			if (e instanceof ConnectionEdge) {
 				List<Vertex> waypoints = o.getWaypointMap().get(e);
 				if (waypoints!=null) {
 					// waypoints needs to be in same order as edge

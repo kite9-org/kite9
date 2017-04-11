@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -17,10 +18,10 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 
 	Vertex v;
 	
-	List<Edge> af;
-	List<Edge> ab;
-	List<Edge> bf;
-	List<Edge> bb;
+	List<PlanarizationEdge> af;
+	List<PlanarizationEdge> ab;
+	List<PlanarizationEdge> bf;
+	List<PlanarizationEdge> bb;
 	
 	public MGTVertexEdgeOrdering(MGTPlanarization pl, Vertex v) {
 		this.pl = pl;
@@ -33,7 +34,7 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 
 	
 	@Override
-	public void remove(Edge toRemove) {
+	public void remove(PlanarizationEdge toRemove) {
 		safeRemove(toRemove, af);
 		safeRemove(toRemove, bf);
 		safeRemove(toRemove, bb);
@@ -41,7 +42,7 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 		changed();
 	}
 	
-	private void safeRemove(Edge toRemove, List<Edge> l) {
+	private void safeRemove(PlanarizationEdge toRemove, List<PlanarizationEdge> l) {
 		if (l!=null) {
 			l.remove(toRemove);
 		}
@@ -54,8 +55,8 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 	}
 	
 	@Override
-	protected List<Edge> getEdgesAsListInner() {
-		List<Edge> out = new ArrayList<Edge>(size());
+	protected List<PlanarizationEdge> getEdgesAsListInner() {
+		List<PlanarizationEdge> out = new ArrayList<PlanarizationEdge>(size());
 		addAllBackwards(out, af);
 		out.addAll(bf);
 		addAllBackwards(out, bb);
@@ -69,7 +70,7 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 		return Collections.unmodifiableList(out);
 	}
 
-	private void addAllBackwards(List<Edge> out, List<Edge> af2) {
+	private void addAllBackwards(List<PlanarizationEdge> out, List<PlanarizationEdge> af2) {
 		for (int i = af2.size()-1; i >=0; i--) {
 			out.add(af2.get(i));
 		}
@@ -82,7 +83,7 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 
 
 	@Override
-	public void replace(Edge b, Edge a) {
+	public void replace(PlanarizationEdge b, PlanarizationEdge a) {
 		replace(af, b, a);
 		replace(bf, b, a);
 		replace(bb, b, a);
@@ -90,7 +91,7 @@ public class MGTVertexEdgeOrdering extends AbstractCachingEdgeOrdering implement
 		changed();
 	}
 	
-	private boolean replace(List<Edge> in, Edge b, Edge a) {
+	private boolean replace(List<PlanarizationEdge> in, PlanarizationEdge b, PlanarizationEdge a) {
 		int bIndex = in.indexOf(b);
 		if (bIndex!=-1) {
 			in.set(bIndex, a);

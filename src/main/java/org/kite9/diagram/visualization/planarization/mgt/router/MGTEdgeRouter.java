@@ -56,16 +56,15 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 
 	Kite9Log log = new Kite9Log(this);
 
-	private boolean applyRoute(Edge ci, EdgePath best, EdgePath ep, MGTPlanarization p) {
+	private boolean applyRoute(PlanarizationEdge ci, EdgePath best, EdgePath ep, MGTPlanarization p) {
 		
-		DiagramElement de = ci.getOriginalUnderlying();
 		boolean currentAbove = true;
 		Vertex lastVertexTemp = null;
 	
 		try {
 		
 		while (ep != null) {
-			log.send(log.go() ? null : "Handling: " + ep+" with underlying "+de);
+			log.send(log.go() ? null : "Handling: " + ep);
 			
 			
 			if (ep instanceof StartPath) {
@@ -82,7 +81,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			} else if (ep instanceof EdgeCrossPath) {
 				// edge crossing
 				EdgeCrossPath ec = (EdgeCrossPath) ep;
-				Edge crossedEdge = ec.getCrossing();
+				PlanarizationEdge crossedEdge = ec.getCrossing();
 
 				Vertex crossingVertex = createCrossingVertex(crossedEdge, ci);
 				PlanarizationEdge[] brokenCross = t.splitEdge((PlanarizationEdge) crossedEdge, crossingVertex, p);
@@ -109,7 +108,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 							ep.getGoing() == Going.FORWARDS, p, crossingSideAbove);
 				}
 				
-				Edge[] parts = t.splitEdge((PlanarizationEdge) ci, crossingVertex, p);
+				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) ci, crossingVertex, p);
 				insertVertices(place, ep.prev, p, crossingVertex);
 				ci = parts[0];
 				
@@ -133,7 +132,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			} else if (ep instanceof PlanarizationCrossPath) {
 				Vertex crossing = ((PlanarizationCrossPath)ep).getCrossingPoint();
 				// side cross
-				Edge[] parts = t.splitEdge((PlanarizationEdge) ci, crossing, p);
+				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) ci, crossing, p);
 				ci = parts[0];
 				if (currentAbove) {
 					insertEdge(true, parts[1], p, null);
@@ -165,15 +164,15 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		}
 		
 		} finally {
-			log.send(log.go() ? null : "Inserted: "+de);
-			log.send(log.go() ? null : ((MGTPlanarizationImpl)p).getTextualRepresentation(de).toString());
+			log.send(log.go() ? null : "Inserted: "+ci);
+			log.send(log.go() ? null : ((MGTPlanarizationImpl)p).getTextualRepresentation(ci.getDiagramElements().keySet()).toString());
 		}
 		return true;
 	}
 	
 	
 
-	private int safeSiteInside(EdgePath best, Edge cross, int vertexTo, int startVertex, int endVertex,
+	private int safeSiteInside(EdgePath best, PlanarizationEdge cross, int vertexTo, int startVertex, int endVertex,
 			boolean forwards, MGTPlanarization p, boolean crossingSideAbove) {
 		if (forwards) {
 			return safeSiteForwards(cross,
@@ -186,7 +185,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		}
 	}
 
-	private int safeSiteOutside(EdgePath best, boolean currentAbove, Edge cross, int endVertex, int startVertex,
+	private int safeSiteOutside(EdgePath best, boolean currentAbove, PlanarizationEdge cross, int endVertex, int startVertex,
 			boolean forwards, MGTPlanarization p, boolean crossingAbove) {
 		if (forwards) {
 			return safeSiteBackwards(cross,
@@ -223,16 +222,16 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 	/**
 	 * Ensures that we can add a vertex after vertex index without crashing any existing edges.
 	 */
-	private int safeSiteForwards(Edge cross, List<Edge> list, int vertexIndex, Vertex v, boolean aboveEdges, EdgePath ep, MGTPlanarization p) {
+	private int safeSiteForwards(PlanarizationEdge cross, List<PlanarizationEdge> list, int vertexIndex, Vertex v, boolean aboveEdges, EdgePath ep, MGTPlanarization p) {
 		int index = list.indexOf(cross);
 		if (index == -1) {
 			throw new LogicException("Was expecting " + cross + " in " + list + " at index " + vertexIndex);
 		}
 		if (index > 0) {
 			for (int i = 0; i < index; i++) {
-				Edge around = list.get(i);
-				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, around.getOriginalUnderlying());
-				Edge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
+				PlanarizationEdge around = list.get(i);
+				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
+				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				insertVertices(vertexIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
 				replaceReferences(around, parts[1], parts[0], ep);
@@ -256,7 +255,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 	/**
 	 * Ensures that we can add a vertex before vertex index without crashing any existing edges.
 	 */
-	private int safeSiteBackwards(Edge cross, List<Edge> list, int vertexIndex, Vertex v, boolean aboveEdges, EdgePath ep,
+	private int safeSiteBackwards(PlanarizationEdge cross, List<PlanarizationEdge> list, int vertexIndex, Vertex v, boolean aboveEdges, EdgePath ep,
 			MGTPlanarization p) {
 		int index = list.indexOf(cross);
 		int outIndex = vertexIndex - 1;
@@ -265,8 +264,8 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		}
 		if (index > 0) {
 			for (int i = 0; i < index; i++) {
-				Edge around = list.get(i);
-				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, around.getOriginalUnderlying());
+				PlanarizationEdge around = list.get(i);
+				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
 				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				insertVertices(outIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
@@ -288,14 +287,14 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		return outIndex;
 	}
 
-	private void replaceReferences(Edge from, Edge to, Edge other, EdgePath ep) {
+	private void replaceReferences(PlanarizationEdge from, PlanarizationEdge to, PlanarizationEdge other, EdgePath ep) {
 		while (ep != null) {
 			if (ep instanceof EdgeCrossPath) {
 				if (((EdgeCrossPath) ep).crossing == from) {
 					((EdgeCrossPath) ep).crossing = to;
 				}
 			} else if (ep instanceof StartPath) {
-				Edge outsideOf = ((StartPath) ep).getOutsideEdge();
+				PlanarizationEdge outsideOf = ((StartPath) ep).getOutsideEdge();
 				Vertex start = ((StartPath) ep).l.getVertex();
 				if (outsideOf == from) {
 					if (to.meets(start)) {
@@ -313,7 +312,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 	}
 
 	@Override
-	public boolean addEdgeToPlanarization(MGTPlanarization p, Edge ci, Direction d, CrossingType it, GeographyType gt) {
+	public boolean addEdgeToPlanarization(MGTPlanarization p, PlanarizationEdge ci, Direction d, CrossingType it, GeographyType gt) {
 		try {	
 			MGTPlanarizationBuilder.logPlanarEmbeddingDetails(p, log);
 			AbstractRouteFinder f = 
@@ -331,7 +330,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 
 			log.send(log.go() ? null : "Routed " + ci + ": " + ep);
 			removeDuplicates(ep, p);
-			createPlaneCrossingVertices(ep, p, ci.getOriginalUnderlying());
+			createPlaneCrossingVertices(ep, p);
 			
 			if ((ep.costing.minimumExpensiveAxisDistance > 0) && (ci instanceof PlanarizationEdge)) {
 				((AbstractPlanarizationEdge)ci).setStraight(false);
@@ -372,7 +371,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		}
 	}
 		
-	private void createPlaneCrossingVertices(EdgePath ep, MGTPlanarization p, DiagramElement und) {
+	private void createPlaneCrossingVertices(EdgePath ep, MGTPlanarization p) {
 		// create vertices in the planarization for the edge crossings
 		if (ep instanceof PlanarizationCrossPath) {
 			PlanarizationCrossPath pcp = (PlanarizationCrossPath) ep;
@@ -380,7 +379,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			Vertex before = beforeStart;
 			int beforeI = p.getVertexIndex(before);
 			// insert the vertex after beforeI
-			Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++, und);
+			Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
 			insertVertices(beforeI, ep.prev, p, crossing);
 			((PlanarizationCrossPath)ep).setCrossingPoint(crossing);
 			log.send("Crossing Vertex created: "+crossing+" for "+ep);
@@ -388,11 +387,11 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		} 
 		
 		if (ep.prev != null) {
-			createPlaneCrossingVertices(ep.prev, p, und);
+			createPlaneCrossingVertices(ep.prev, p);
 		}
 	}
 
-	private void insertEdge(boolean above, Edge edge, MGTPlanarization p, Edge outsideOf) {
+	private void insertEdge(boolean above, PlanarizationEdge edge, MGTPlanarization p, PlanarizationEdge outsideOf) {
 		if (!p.crosses(edge, above)) {
 			p.addEdge(edge, above, outsideOf);
 			log.send("Inserted edge: " + edge+" going "+edge.getDrawDirection());

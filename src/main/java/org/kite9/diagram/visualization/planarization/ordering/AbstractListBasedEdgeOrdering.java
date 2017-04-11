@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.ordering;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 
 /**
  * Implements a good deal of the functionality of the EdgeOrdering using the underlying list.
@@ -23,15 +23,15 @@ public abstract class AbstractListBasedEdgeOrdering extends AbstractEdgeOrdering
 	}
 
 	@Override
-	public Iterator<Edge> getIterator(final boolean clockwise, final Edge startingAt, Edge finish, boolean directedOnly) {
+	public Iterator<PlanarizationEdge> getIterator(final boolean clockwise, final PlanarizationEdge startingAt, PlanarizationEdge finish, boolean directedOnly) {
 
 		return new AbstractEdgeIterator(clockwise, startingAt, finish, directedOnly) {
-			List<Edge> underlying = getEdgesAsList();
+			List<PlanarizationEdge> underlying = getEdgesAsList();
 			
 			int i = underlying.indexOf(startingAt);
 
 			@Override
-			public Edge getNext() {
+			public PlanarizationEdge getNext() {
 				i = (i + (clockwise ? 1 : -1) + underlying.size()) % underlying.size();
 				return underlying.get(i);
 			}

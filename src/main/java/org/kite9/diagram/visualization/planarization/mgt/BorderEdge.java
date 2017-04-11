@@ -32,7 +32,6 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 
 	Map<DiagramElement, Direction> forElements;
 	String label;
-	DiagramElement sidea, sideb;
 	
 	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Map<DiagramElement, Direction> forELements) {
 		super(from, to, null, null, null, null, null);
@@ -40,18 +39,6 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 		this.drawDirection = d;
 		this.reversed = reversed;
 		this.forElements = forELements;
-		if (forELements.size() != 2) {
-			throw new Kite9ProcessingException("BorderEdge can only have max 2 elements");			
-		}
-		
-		Iterator<DiagramElement> els = forELements.keySet().iterator();	
-		if (els.hasNext()) {
-			sidea = els.next();
-		} 
-		if (els.hasNext()) {
-			sideb = els.next();
-		}
-
 	}
 	
 	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
@@ -178,6 +165,21 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 
 	@Override
 	public DiagramElement getOtherSide(DiagramElement from) {
+		DiagramElement sidea = null, sideb = null;
+		
+		if (forElements.size() > 2) {
+			throw new Kite9ProcessingException("An edge can only have 2 sides");
+		}
+
+		Iterator<DiagramElement> els = forElements.keySet().iterator();	
+		if (els.hasNext()) {
+			sidea = els.next();
+		} 
+		if (els.hasNext()) {
+			sideb = els.next();
+		}
+
+		
 		if (from == sidea) {
 			return sideb;
 		} else if (from == sideb) {
@@ -185,6 +187,11 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 		} else {
 			throw new Kite9ProcessingException(from+" is not mapped to a side");
 		}
+	}
+
+	@Override
+	public DiagramElement getOriginalUnderlying() {
+		throw new Kite9ProcessingException("No single underlying for BorderEdge");
 	}
 
 }

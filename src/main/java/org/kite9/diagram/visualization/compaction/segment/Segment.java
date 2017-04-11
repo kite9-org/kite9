@@ -47,7 +47,10 @@ public class Segment implements Comparable<Segment> {
 	public Set<UnderlyingInfo> getUnderlyingInfo() {
 		if (underlyings == null) {
 			boolean horizontal = dimension == PositionAction.XAction;
-			underlyings = verticesInSegment.stream().flatMap(a -> convertVertexToUnderlying(a, horizontal)).collect(Collectors.toSet());
+			underlyings = verticesInSegment.stream()
+				.flatMap(a -> convertVertexToUnderlying(a, horizontal))
+				.filter(a -> a.de != null)
+				.collect(Collectors.toSet());
 		}
 		
 		return underlyings;

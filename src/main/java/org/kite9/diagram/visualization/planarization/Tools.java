@@ -9,6 +9,7 @@ import java.util.List;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -57,7 +58,7 @@ public class Tools implements Logable {
 
 		// split the existing edge to create two edges
 		Vertex split = new EdgeCrossingVertex(name, underlying);
-		Edge[] newEdges = splitEdge(e, split, pln);
+		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces
 		pln.getEdgeFaceMap().remove(e);
@@ -69,7 +70,7 @@ public class Tools implements Logable {
 
 		// add to the edge ordering map. since there are only 2 edges, order not
 		// important yet.
-		List<Edge> edges = new ArrayList<Edge>();
+		List<PlanarizationEdge> edges = new ArrayList<PlanarizationEdge>();
 		edges.add(newEdges[0]);
 		edges.add(newEdges[1]);
 		BasicVertexEdgeOrdering splitEdgeOrdering = new BasicVertexEdgeOrdering(edges, split);
@@ -114,8 +115,8 @@ public class Tools implements Logable {
 	 * 
 	 * @param part
 	 */
-	private void fixEdgeFaceMap(Planarization pln, Face f, Iterable<Edge> movedFace, Face f2, Edge part) {
-		for (Edge edge : movedFace) {
+	private void fixEdgeFaceMap(Planarization pln, Face f, Iterable<PlanarizationEdge> movedFace, Face f2, PlanarizationEdge part) {
+		for (PlanarizationEdge edge : movedFace) {
 			if (edge != part) {
 				List<Face> faces = pln.getEdgeFaceMap().get(edge);
 				faces.remove(f);
@@ -164,7 +165,7 @@ public class Tools implements Logable {
 	 * vertices within a face. This creates a new outer face containing those
 	 * vertices.
 	 */
-	private void splitFaces(Edge toRemove, Planarization pln) {
+	private void splitFaces(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 		Face original = faces.get(0);
 		Face newFace = original.split(toRemove);
@@ -208,7 +209,7 @@ public class Tools implements Logable {
 	 * Removes the edge from the planarization, preserving the new state of the
 	 * remaining faces, whatever that may be.
 	 */
-	public void removeEdge(Edge toRemove, Planarization pln) {
+	public void removeEdge(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 		
 		Vertex from = toRemove.getFrom();
@@ -234,11 +235,11 @@ public class Tools implements Logable {
 	/**
 	 * Merges 2 faces together by removing toRemove.
 	 */
-	private void mergeFace(Edge toRemove, Planarization pln) {
+	private void mergeFace(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 
 		List<Vertex> newCorners = new ArrayList<Vertex>();
-		List<Edge> newBoundary = new ArrayList<Edge>();
+		List<PlanarizationEdge> newBoundary = new ArrayList<PlanarizationEdge>();
 
 		int face = 0;
 		// this is the number of vertices that should be in the merged face
@@ -248,7 +249,7 @@ public class Tools implements Logable {
 		do {
 			Face currentFace = faces.get(face);
 			Vertex currentVertex = currentFace.getCorner(vertexNo);
-			Edge boundEdge = currentFace.getBoundary(vertexNo);
+			PlanarizationEdge boundEdge = currentFace.getBoundary(vertexNo);
 			if (boundEdge != toRemove) {
 				newCorners.add(currentVertex);
 				newBoundary.add(boundEdge);
@@ -345,7 +346,7 @@ public class Tools implements Logable {
 			}
 
 			// make sure we are always keeping the correct edge
-			f.replaceEdge(b, a);
+			f.replaceEdge((PlanarizationEdge) b, (PlanarizationEdge) a);
 
 			f.checkFaceIntegrity();
 		}
@@ -355,7 +356,7 @@ public class Tools implements Logable {
 		pln.getEdgeOrderings().remove(toGo);
 		pln.getEdgeFaceMap().remove(b);
 		
-		a.getDiagramElements().stream().forEach(underlying -> {
+		((PlanarizationEdge) a).getDiagramElements().keySet().stream().forEach(underlying -> {
 			EdgeMapping list = pln.getEdgeMappings().get(underlying);
 			//log.send("Edge Mapping before: "+list);
 			if (list != null) {
@@ -366,7 +367,7 @@ public class Tools implements Logable {
 		
 		// fix up vertex edge ordering - only works if vertex is a connected item
 		VertexEdgeOrdering orderingOfTo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(farB);
-		orderingOfTo.replace(b, a);
+		orderingOfTo.replace((PlanarizationEdge) b, (PlanarizationEdge) a);
 	}
 
 	/**
@@ -421,7 +422,7 @@ public class Tools implements Logable {
 	}
 	
 	public static boolean isUnderlyingContradicting(BiDirectional<?> c2) {
-		if (c2 instanceof Edge) {
+		if (c2 instanceof SingleElementPlanarizationEdge) {
 			DiagramElement underlying = ((Edge)c2).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
 				return isConnectionContradicting((Connection)underlying);
@@ -429,7 +430,7 @@ public class Tools implements Logable {
 			
 			return false;	
 		} else {
-			throw new LogicException("No underlying: "+c2);
+			return false;
 		}
 		
 	}

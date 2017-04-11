@@ -9,16 +9,20 @@ import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex;
+import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.HPos;
+import org.kite9.diagram.model.position.VPos;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -38,47 +42,46 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	protected void convertVertex(Orthogonalization o, Vertex v) {
 		if (v instanceof MultiCornerVertex) {
 			MultiCornerVertex cv = (MultiCornerVertex) v;
-			DiagramElement und = cv.getOriginalUnderlying();
 			List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
 			Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
 			
 			if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
 				if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
+					processCorner(o, cv, HPos.LEFT, VPos.UP, dartDirections, Direction.UP, Direction.RIGHT);
 				} else if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.UP, Direction.LEFT);
+					processCorner(o, cv, HPos.RIGHT, VPos.UP, dartDirections, Direction.UP, Direction.LEFT);
 				} else {
-					processSide(o, cv, und, dartDirections, Direction.UP, Direction.RIGHT);
+					processSide(o, cv, null, VPos.UP, dartDirections, Direction.UP, Direction.RIGHT);
 				}
 			}
 			
 			if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
 				if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.RIGHT);
+					processCorner(o, cv, HPos.LEFT, VPos.DOWN, dartDirections, Direction.DOWN, Direction.RIGHT);
 				} else if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
+					processCorner(o, cv, HPos.RIGHT, VPos.DOWN, dartDirections, Direction.DOWN, Direction.LEFT);
 				} else {
-					processSide(o, cv, und, dartDirections, Direction.DOWN, Direction.LEFT);
+					processSide(o, cv, null, VPos.DOWN, dartDirections, Direction.DOWN, Direction.LEFT);
 				}
 			}
  
 			if (MultiCornerVertex.isMin(cv.getXOrdinal())) {
 				if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.DOWN);
+					processCorner(o, cv, HPos.LEFT, VPos.UP, dartDirections, Direction.LEFT, Direction.DOWN);
 				} else if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
+					processCorner(o, cv, HPos.LEFT, VPos.DOWN, dartDirections, Direction.LEFT, Direction.UP);
 				} else {
-					processSide(o, cv, und, dartDirections, Direction.LEFT, Direction.UP);
+					processSide(o, cv, HPos.LEFT, null, dartDirections, Direction.LEFT, Direction.UP);
 				}
 			}
 			
 			if (MultiCornerVertex.isMax(cv.getXOrdinal())) {
 				if (MultiCornerVertex.isMin(cv.getYOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
+					processCorner(o, cv, HPos.RIGHT, VPos.UP, dartDirections, Direction.RIGHT, Direction.DOWN);
 				} else if (MultiCornerVertex.isMax(cv.getYOrdinal())) {
-					processCorner(o, cv, und, dartDirections, Direction.RIGHT, Direction.UP);
+					processCorner(o, cv, HPos.RIGHT, VPos.DOWN, dartDirections, Direction.RIGHT, Direction.UP);
 				} else {
-					processSide(o, cv, und, dartDirections, Direction.RIGHT, Direction.DOWN);
+					processSide(o, cv, HPos.RIGHT, null, dartDirections, Direction.RIGHT, Direction.DOWN);
 				}
 			}
 			
@@ -87,9 +90,9 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 
-	private void processCorner(Orthogonalization o, MultiCornerVertex cv, DiagramElement und,
-			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
-		
+	private void processCorner(Orthogonalization o, MultiCornerVertex cv,
+			HPos h, VPos v, Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
+		DiagramElement und = getCorrectUnderlying(cv, h, v);
 		boolean reverse = Direction.rotateAntiClockwise(splitInDirection) == outwards;
 		
 		List<Dart> outDarts = dartDirections.get(outwards);
@@ -103,9 +106,19 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 	
-	private void processSide(Orthogonalization o, MultiCornerVertex cv, DiagramElement und,
+	private DiagramElement getCorrectUnderlying(MultiCornerVertex cv, HPos h, VPos v) {
+		for (Anchor a : cv.getAnchors()) {
+			if ((a.getLr() == h) && (a.getUd() == v)) {
+				return a.getDe();
+			} 
+		}
+		
+		throw new Kite9ProcessingException("Couldn't find correct underlying");
+	}
+
+	private void processSide(Orthogonalization o, MultiCornerVertex cv, HPos h, VPos v,
 			Map<Direction, List<Dart>> dartDirections, Direction outwards, Direction splitInDirection) {
-				
+		DiagramElement und = getCorrectUnderlying(cv, h, v);
 		List<Dart> outDarts = dartDirections.get(outwards);
 		if (outDarts.size() > 1) {
 			if (checkDirection(outDarts, und)) {

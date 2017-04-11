@@ -143,7 +143,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return true;
 	}
 
-	protected BalanceChoice decideSide(Vertex v, Node fn, Edge before, Edge after, Node hn, List<Edge> listOfEdges) {
+	protected BalanceChoice decideSide(Vertex v, Node fn, Edge before, Edge after, Node hn, List<? extends Edge> listOfEdges) {
 		// where only 2 edges, make the arrow ends come out opposite, preferably		
 		if (((PlanarizationEdge)before).isLayoutEnforcing() || ((PlanarizationEdge)after).isLayoutEnforcing())  {
 			return BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;

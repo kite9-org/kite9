@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 
@@ -33,23 +34,23 @@ public interface MGTPlanarization extends RHDPlanarization {
     
     public List<Vertex> getVertexOrder();
     
-    public void addEdge(Edge toAdd, boolean above, Edge outsideOf);
+    public void addEdge(PlanarizationEdge toAdd, boolean above, PlanarizationEdge outsideOf);
     
     /**
      * For a given vertex, returns edges leaving vertex above the line of the planarization
      * going forwards, in inside-most to outside-most order.
      */
-    public List<Edge> getAboveForwardLinks(Vertex v);
+    public List<PlanarizationEdge> getAboveForwardLinks(Vertex v);
 	
-	public List<Edge> getAboveBackwardLinks(Vertex v);
+	public List<PlanarizationEdge> getAboveBackwardLinks(Vertex v);
 	
-	public List<Edge> getBelowForwardLinks(Vertex v);
+	public List<PlanarizationEdge> getBelowForwardLinks(Vertex v);
 	
-	public List<Edge> getBelowBackwardLinks(Vertex v);
+	public List<PlanarizationEdge> getBelowBackwardLinks(Vertex v);
 	
-	public Set<Edge> getAboveLineEdges();
+	public Set<PlanarizationEdge> getAboveLineEdges();
 	
-	public Set<Edge> getBelowLineEdges();
+	public Set<PlanarizationEdge> getBelowLineEdges();
 	
-	public Edge getFirstEdgeAfterPlanarizationLine(Vertex from, boolean forwardSet, boolean aboveSet);
+	public PlanarizationEdge getFirstEdgeAfterPlanarizationLine(Vertex from, boolean forwardSet, boolean aboveSet);
 }

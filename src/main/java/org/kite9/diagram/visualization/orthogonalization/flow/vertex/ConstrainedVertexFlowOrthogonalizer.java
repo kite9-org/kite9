@@ -266,11 +266,11 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 */
 	private List<VertexDivision> createDirectedMap(Vertex v, EdgeOrdering edgeOrdering, Planarization pln) {
 		List<VertexDivision> out = new LinkedList<VertexDivision>();
-		List<Edge> basic = createDirectedList(edgeOrdering);
+		List<PlanarizationEdge> basic = createDirectedList(edgeOrdering);
 		if (basic.size() < 2) {
 			return Collections.emptyList();
 		}
-		List<Edge> edgesAsList = edgeOrdering.getEdgesAsList();
+		List<PlanarizationEdge> edgesAsList = edgeOrdering.getEdgesAsList();
 		int offset = edgesAsList.indexOf(basic.get(0));
 		VertexDivision open = null;
 		for (int current = 0; current < edgeOrdering.size(); current++) {
@@ -301,10 +301,10 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 
 
-	private List<Edge> createDirectedList(EdgeOrdering edgeOrdering) {
-		List<Edge> out = new ArrayList<Edge>();
-		for (Iterator<Edge> iterator =  edgeOrdering.getEdgesAsList().iterator(); iterator.hasNext();) {
-			Edge edge = iterator.next();
+	private List<PlanarizationEdge> createDirectedList(EdgeOrdering edgeOrdering) {
+		List<PlanarizationEdge> out = new ArrayList<>();
+		for (Iterator<PlanarizationEdge> iterator =  edgeOrdering.getEdgesAsList().iterator(); iterator.hasNext();) {
+			PlanarizationEdge edge = iterator.next();
 			if (isConstrained(edge)) {
 				out.add(edge);
 			} 

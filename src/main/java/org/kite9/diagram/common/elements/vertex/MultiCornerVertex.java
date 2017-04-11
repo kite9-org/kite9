@@ -58,16 +58,14 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 	}
 
 	private BigFraction xOrd, yOrd;
-	private DiagramElement c;
 	private List<Anchor> anchors = new ArrayList<AbstractAnchoringVertex.Anchor>(4);
 	
 	public List<Anchor> getAnchors() {
 		return anchors;
 	}
 
-	public MultiCornerVertex(String id, DiagramElement c, BigFraction xOrd, BigFraction yOrd) {
+	public MultiCornerVertex(String id, BigFraction xOrd, BigFraction yOrd) {
 		super(id+"_"+xOrd+"_"+yOrd);
-		this.c = c;
 		this.xOrd = xOrd;
 		this.yOrd = yOrd;
 	}
@@ -151,5 +149,10 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 	@Override
 	public Set<DiagramElement> getDiagramElements() {
 		return anchors.stream().map(a -> a.getDe()).collect(Collectors.toSet());
+	}
+
+	@Override
+	public DiagramElement getOriginalUnderlying() {
+		throw new Kite9ProcessingException("this is multi-element");
 	}
 }

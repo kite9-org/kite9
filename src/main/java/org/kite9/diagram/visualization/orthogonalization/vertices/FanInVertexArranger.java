@@ -7,17 +7,17 @@ import java.util.Set;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.HelpMethods;
@@ -59,7 +59,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 				boolean reversed = toFan.getDrawDirection() == Direction.reverse(d);
 				Vertex fromEnd = reversed ? toFan.getTo() : toFan.getFrom();
 				Vertex otherEnd = reversed ? toFan.getFrom() : toFan.getTo();
-				Edge underlying = (Edge) toFan.getUnderlying();
+				ConnectionEdge underlying = (ConnectionEdge) toFan.getUnderlying();
 				Connection link = (underlying.getOriginalUnderlying() instanceof Connection) ? (Connection) underlying.getOriginalUnderlying() : null;
 				thisFan = ((i < firstStraight) || (i>lastStraight)) && (fanFor(underlying, noFan, from)) && (fanEdge(link, toFan, fromEnd, underlying.otherEnd(from), d)); 
 				if (thisFan) {

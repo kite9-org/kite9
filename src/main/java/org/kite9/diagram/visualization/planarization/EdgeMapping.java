@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.logging.LogicException;
@@ -21,33 +22,33 @@ public class EdgeMapping {
 	
 	public static final boolean TEST_AFTER_CHANGE = true;
 
-	public LinkedList<Edge> getEdges() {
+	public LinkedList<PlanarizationEdge> getEdges() {
 		return edges;
 	}
 	
 	DiagramElement underlying;
 
-	LinkedList<Edge> edges;
+	LinkedList<PlanarizationEdge> edges;
 
-	public EdgeMapping(DiagramElement und, Edge e) {
-		this.edges = new LinkedList<Edge>();
+	public EdgeMapping(DiagramElement und, PlanarizationEdge e) {
+		this.edges = new LinkedList<PlanarizationEdge>();
 		this.edges.add(e);
 		this.underlying=und;
 		checkTest();
 	}
 	
-	public EdgeMapping(DiagramElement und, LinkedList<Edge> e) {
+	public EdgeMapping(DiagramElement und, LinkedList<PlanarizationEdge> e) {
 		this.edges = e;
 		this.underlying = und;
 		checkTest();
 	}
 	
-	public void replace(Edge replace, Edge a, Edge b) {
+	public void replace(PlanarizationEdge replace, PlanarizationEdge a, PlanarizationEdge b) {
 		checkTest();
-		ListIterator<Edge> it = edges.listIterator();
-		Edge before = null;
-		Edge after = null;
-		Edge current = null;
+		ListIterator<PlanarizationEdge> it = edges.listIterator();
+		PlanarizationEdge before = null;
+		PlanarizationEdge after = null;
+		PlanarizationEdge current = null;
 		while (it.hasNext()) {
 			before = current;
 			current = it.next();
@@ -70,9 +71,9 @@ public class EdgeMapping {
 		}
 	}
 
-	private Edge peek(ListIterator<Edge> it) {
+	private PlanarizationEdge peek(ListIterator<PlanarizationEdge> it) {
 		if (it.hasNext()) {
-			Edge out = it.next();
+			PlanarizationEdge out = it.next();
 			it.previous();
 			return out;
 		} else {
@@ -80,7 +81,7 @@ public class EdgeMapping {
 		}
 	}
 
-	private boolean nullOrMeets(Edge item, Edge meeting) {
+	private boolean nullOrMeets(PlanarizationEdge item, PlanarizationEdge meeting) {
 		if (meeting == null) {
 			return true;
 		}
@@ -93,12 +94,12 @@ public class EdgeMapping {
 		checkTest();
 	}
 	
-	public void remove(Collection<Edge> edges) {
+	public void remove(Collection<PlanarizationEdge> edges) {
 		this.edges.removeAll(edges);
 		checkTest();
 	}
 
-	public void add(Edge e2) {
+	public void add(PlanarizationEdge e2) {
 		edges.add(e2);
 		checkTest();
 	}
@@ -147,17 +148,17 @@ public class EdgeMapping {
 	}
 	
 	public Vertex getStartVertex() {
-		Iterator<Edge> iterator = getEdges().iterator();
+		Iterator<PlanarizationEdge> iterator = getEdges().iterator();
 		return firstVertex(iterator);
 	}
 	
 	public Vertex getEndVertex() {
-		Iterator<Edge> iterator = getEdges().descendingIterator();
+		Iterator<PlanarizationEdge> iterator = getEdges().descendingIterator();
 		return firstVertex(iterator);
 	}
 
-	private Vertex firstVertex(Iterator<Edge> iterator) {
-		Edge first = iterator.next();
+	private Vertex firstVertex(Iterator<PlanarizationEdge> iterator) {
+		PlanarizationEdge first = iterator.next();
 		if (getEdges().size()==1) {
 			return first.getFrom();
 		}

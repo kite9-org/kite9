@@ -1,9 +1,10 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.AbstractVertex;
-import org.kite9.diagram.common.elements.vertex.SingleElementVertex;
+import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.model.DiagramElement;
 
 
@@ -13,22 +14,24 @@ import org.kite9.diagram.model.DiagramElement;
  * 
  * @author robmoffat
  */
-public class PlanarizationCrossingVertex extends AbstractVertex implements SingleElementVertex {
-
-	DiagramElement und;
+public class PlanarizationCrossingVertex extends AbstractVertex implements NoElementVertex {
 	
-	public PlanarizationCrossingVertex(String name, DiagramElement und) {
+	public PlanarizationCrossingVertex(String name) {
 		super(name);
-		this.und = und;
 	}
 
 	public DiagramElement getOriginalUnderlying() {
-		return und;
+		return null;
 	}
 
 	@Override
 	public boolean isPartOf(DiagramElement de) {
-		return und == de;
+		return false;
+	}
+
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return Collections.emptySet();
 	}
 
 	

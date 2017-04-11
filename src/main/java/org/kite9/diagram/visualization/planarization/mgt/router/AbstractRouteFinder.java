@@ -359,12 +359,12 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public abstract class EdgeCrossPath extends EdgePath {
 
-		Edge crossing;
+		PlanarizationEdge crossing;
 		int trailEndVertex;
 		LineRoutingInfo trail;
 		Container inContainer;
 
-		public EdgeCrossPath(Edge crossing, EdgePath prev, Going g) {
+		public EdgeCrossPath(PlanarizationEdge crossing, EdgePath prev, Going g) {
 			super(g, prev.getSide(), prev);
 			this.crossing = crossing;
 			costing.legalEdgeCrossCost += ((PlanarizationEdge) crossing).getCrossCost();
@@ -403,7 +403,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			return inContainer;
 		}
 
-		public Edge getCrossing() {
+		public PlanarizationEdge getCrossing() {
 			return crossing;
 		}
 
@@ -438,7 +438,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class EndCrossEdgePath extends EdgeCrossPath {
 
-		public EndCrossEdgePath(Edge e, EdgePath prev, Going g) {
+		public EndCrossEdgePath(PlanarizationEdge e, EdgePath prev, Going g) {
 			super(e, prev, g);
 		}
 
@@ -454,7 +454,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class FinishPath extends TerminalPath {
 
-		public FinishPath(int vertex, Vertex v, EdgePath prev, Going g, Edge outsideEdge) {
+		public FinishPath(int vertex, Vertex v, EdgePath prev, Going g, PlanarizationEdge outsideEdge) {
 			super(new Location(null, vertex, v), g, prev.getSide(), prev, outsideEdge);
 		}
 
@@ -613,7 +613,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class StartCrossEdgePath extends EdgeCrossPath {
 
-		public StartCrossEdgePath(Edge e, EdgePath prev, Going g) {
+		public StartCrossEdgePath(PlanarizationEdge e, EdgePath prev, Going g) {
 			super(e, prev, g);
 		}
 
@@ -628,9 +628,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	
 	public abstract class TerminalPath extends LocatedEdgePath {
 		
-		Edge outsideEdge;
+		PlanarizationEdge outsideEdge;
 
-		public TerminalPath(Location l, Going g, PlanarizationSide side, EdgePath prev, Edge outsideEdge) {
+		public TerminalPath(Location l, Going g, PlanarizationSide side, EdgePath prev, PlanarizationEdge outsideEdge) {
 			super(l, g, side, prev);
 			this.outsideEdge = outsideEdge;
 		}
@@ -638,7 +638,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		/**
 		 * Edge that this path terminates outside of
 		 */
-		public Edge getOutsideEdge() {
+		public PlanarizationEdge getOutsideEdge() {
 			return outsideEdge;
 		}
 		
@@ -646,7 +646,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class StartPath extends TerminalPath {
 
-		public StartPath(int vertex, Vertex v, Place p, PlanarizationSide side, RoutingInfo position, Going going, Edge outsideEdge) {
+		public StartPath(int vertex, Vertex v, Place p, PlanarizationSide side, RoutingInfo position, Going going, PlanarizationEdge outsideEdge) {
 			super(new Location(p, vertex, v), going, side, null, outsideEdge);
 		}
 
@@ -768,7 +768,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	/**
 	 * Takes an EdgePath, and crosses some edges to move it either outsideEdge or below a the pathVertex, which turns it into a proper LocatedEdgePath.
 	 */
-	private LocatedEdgePath escape(Edge outsideOf, EdgePath forwardIn, List<Edge> inside, List<Edge> outside, boolean pathAbove, int pathVertex, Going startingDirection, Going endingDirection) {
+	private LocatedEdgePath escape(PlanarizationEdge outsideOf, EdgePath forwardIn, List<PlanarizationEdge> inside, List<PlanarizationEdge> outside, boolean pathAbove, int pathVertex, Going startingDirection, Going endingDirection) {
 		if (forwardIn==null) {
 			return null;
 		}
@@ -783,7 +783,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		int currentlyOutside = inside.indexOf(outsideOf);
 		if (currentlyOutside > -1) {
 			for (int i = currentlyOutside; i >= 0; i--) {
-				Edge edge = inside.get(i);
+				PlanarizationEdge edge = inside.get(i);
 				Integer toi = meetsDestination(edge, startingDirection); 
 				if (toi != null) {
 					Vertex toV = p.getVertexOrder().get(toi);
@@ -815,7 +815,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		currentlyOutside = outsideOf == null ? -1 : outside.indexOf(outsideOf);
 
 		for (int i = currentlyOutside + 1; i < outside.size(); i++) {
-			Edge edge = outside.get(i);
+			PlanarizationEdge edge = outside.get(i);
 			
 			
 			if (!canCross(edge, forward, !pathAbove)) {
@@ -901,7 +901,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		}
 	}
 
-	private List<Edge> getLinkSet(Going g, Vertex from, PlanarizationSide s) {
+	private List<PlanarizationEdge> getLinkSet(Going g, Vertex from, PlanarizationSide s) {
 		if (s == PlanarizationSide.ENDING_ABOVE) {
 			return g == Going.FORWARDS ? p.getAboveForwardLinks(from) : p.getAboveBackwardLinks(from);
 		} else if (s==PlanarizationSide.ENDING_BELOW) {
@@ -916,9 +916,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 * Obviously this doesn't get used for directed edges, as they can't turn.
 	 */
 	private void generateSwitchbackPaths(State<LocatedEdgePath> pq, LocatedEdgePath r, Vertex from,  Going toStartWith) {
-		List<Edge> insideLinks;
-		List<Edge> outsideLinks;
-		Edge first = null;
+		List<PlanarizationEdge> insideLinks;
+		List<PlanarizationEdge> outsideLinks;
+		PlanarizationEdge first = null;
 		Going endingUp = toStartWith == Going.FORWARDS ? Going.BACKWARDS : Going.FORWARDS;
 		boolean endingAbove = r.l.p==Place.ABOVE;
 		if (endingAbove) {
@@ -951,7 +951,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	}
 	
 
-	private EdgePath createStartPath(EdgePath path, Vertex from, int fromi, Going g, PlanarizationSide side, Edge outsideOf) {
+	private EdgePath createStartPath(EdgePath path, Vertex from, int fromi, Going g, PlanarizationSide side, PlanarizationEdge outsideOf) {
 		if (path != null) {
 			return path;
 		}
@@ -963,13 +963,13 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		}
 	}
 
-	protected abstract boolean canRouteToVertex(Vertex from, Edge outsideOf, boolean above, Going g, boolean arriving);
+	protected abstract boolean canRouteToVertex(Vertex from, PlanarizationEdge outsideOf, boolean above, Going g, boolean arriving);
 
-	protected void generatePaths(final LocatedEdgePath r, List<Edge> list, State<LocatedEdgePath> pq,  Vertex from, Going g, PlanarizationSide side) {
+	protected void generatePaths(final LocatedEdgePath r, List<PlanarizationEdge> list, State<LocatedEdgePath> pq,  Vertex from, Going g, PlanarizationSide side) {
 		EdgePath current = r;
 		int s = p.getVertexIndex(from);
 		for (int i = list.size() - 1; i >= 0; i--) {
-			Edge edge = list.get(i);
+			PlanarizationEdge edge = list.get(i);
 			Vertex to = edge.otherEnd(from);
 			int e = p.getVertexIndex(to);
 
@@ -1045,16 +1045,16 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 */
 	protected abstract boolean isTerminationVertex(int v);
 
-	private List<Edge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev) {
+	private List<PlanarizationEdge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev) {
 		return getCorrectEdgeSet(start_pos, ev_pos, above, ev, p);
 	}
 	
 	
-	public static List<Edge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev, MGTPlanarization p) {
+	public static List<PlanarizationEdge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev, MGTPlanarization p) {
 		return getCorrectEdgeSet(start_pos < ev_pos ? Going.FORWARDS : Going.BACKWARDS, above, ev, p);
 	}
 	
-	public static List<Edge> getCorrectEdgeSet(Going g, boolean above, Vertex ev, MGTPlanarization p) {
+	public static List<PlanarizationEdge> getCorrectEdgeSet(Going g, boolean above, Vertex ev, MGTPlanarization p) {
 		if (g==Going.FORWARDS) {
 			if (above) {
 				return p.getAboveBackwardLinks(ev);

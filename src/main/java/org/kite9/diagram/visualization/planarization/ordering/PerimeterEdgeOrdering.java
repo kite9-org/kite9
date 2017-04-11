@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -30,14 +31,14 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 		this.c = c;
 	}
 
-	public Edge getLeaverBeforeBorder(Edge e) {
+	public PlanarizationEdge getLeaverBeforeBorder(PlanarizationEdge e) {
 		Vertex v = e.isReversed() ? e.getTo() : e.getFrom();
 		
 		do {
 			VertexEdgeOrdering veo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
-			Iterator<Edge> vit = veo.getIterator(false, e, e, false);
+			Iterator<PlanarizationEdge> vit = veo.getIterator(false, e, e, false);
 			vit.next();
-			Edge currentLeaver = vit.next();
+			PlanarizationEdge currentLeaver = vit.next();
 			if (currentLeaver.getOriginalUnderlying() != c) {
 				return currentLeaver;
 			} else {
@@ -49,22 +50,22 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 
 
 	@Override
-	protected List<Edge> getEdgesAsListInner() {
-		List<Edge> out = new LinkedList<Edge>();
+	protected List<PlanarizationEdge> getEdgesAsListInner() {
+		List<PlanarizationEdge> out = new LinkedList<PlanarizationEdge>();
 		EdgeMapping em = pln.getEdgeMappings().get(c);
 		
 		Vertex start = em.getStartVertex();
 		Vertex on = start;
-		Iterator<Edge> it = em.getEdges().iterator();
-		Edge current = em.getEdges().getLast();
-		Edge next = it.next();
+		Iterator<PlanarizationEdge> it = em.getEdges().iterator();
+		PlanarizationEdge current = em.getEdges().getLast();
+		PlanarizationEdge next = it.next();
 		
 		while (next!=null) {
 			// from on, look for leaving edges
 			VertexEdgeOrdering veo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(on);
-			Iterator<Edge> vit = veo.getIterator(true, current, current, false);
+			Iterator<PlanarizationEdge> vit = veo.getIterator(true, current, current, false);
 			vit.next();
-			Edge currentLeaver = vit.next();
+			PlanarizationEdge currentLeaver = vit.next();
 			//System.out.println("Container "+c+" Edges Leaving "+on);
 			while (currentLeaver.getOriginalUnderlying() != c) {
 				out.add(currentLeaver);

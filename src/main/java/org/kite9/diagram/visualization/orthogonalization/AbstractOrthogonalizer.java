@@ -44,7 +44,7 @@ public abstract class AbstractOrthogonalizer implements Orthogonalizer, Logable 
 
 				// sort according to edge order
 				final VertexEdgeOrdering edgeOrdering = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
-				final List<Edge> edgeOrder = edgeOrdering.getEdgesAsList();
+				final List<? extends Edge> edgeOrder = edgeOrdering.getEdgesAsList();
 				final Vertex vv = v;
 				Collections.sort(ld, new Comparator<Dart>() {
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -38,18 +39,21 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 			if ((f.size() == 4) && (!f.isOuterFace())) {
 				// case of two containers directed against each other
 				for (int i = 0; i < 4; i++) {
-					Edge e = f.getBoundary(i);
-					DiagramElement under = e.getOriginalUnderlying();
-					if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
-						&& isContainerEdge(f.getBoundary(i + 1)) 
-						&& isContainerEdge(f.getBoundary(i - 1)) 
-						&& isConnectionEdge(f.getBoundary(i+2))) {
-						Vertex es = f.getCorner(i);
-						Edge c = f.getBoundary(i+2);
-						Vertex cs = f.getCorner(i+2);
-						
-						removalDone = performRemoval(pln, e, es, c, cs);
-						break;
+					PlanarizationEdge e = f.getBoundary(i);
+					
+					if (e instanceof SingleElementPlanarizationEdge) {
+						DiagramElement under = ((SingleElementPlanarizationEdge)e).getOriginalUnderlying();
+						if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
+							&& isContainerEdge(f.getBoundary(i + 1)) 
+							&& isContainerEdge(f.getBoundary(i - 1)) 
+							&& isConnectionEdge(f.getBoundary(i+2))) {
+							Vertex es = f.getCorner(i);
+							Edge c = f.getBoundary(i+2);
+							Vertex cs = f.getCorner(i+2);
+							
+							removalDone = performRemoval(pln, e, es, c, cs);
+							break;
+						}
 					}
 				}
 					
@@ -57,23 +61,25 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 			} else if ((f.size() == 2) && (!f.isOuterFace())) {
 				// case of 2 vertices directed against each other
 				for (int i = 0; i < 2; i++) {
-					Edge e = f.getBoundary(i);
-					DiagramElement under = e.getOriginalUnderlying();
-					if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
-						&& isConnectionEdge(f.getBoundary(i+1))) {
-						Vertex es = f.getCorner(i);
-						Edge c = f.getBoundary(i+1);
-						Vertex cs = f.getCorner(i+1);
-						
-						removalDone = performRemoval(pln, e, es, c, cs);
-						break;
+					PlanarizationEdge e = f.getBoundary(i);
+					if (e instanceof SingleElementPlanarizationEdge) {
+						DiagramElement under = ((SingleElementPlanarizationEdge) e).getOriginalUnderlying();
+						if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
+							&& isConnectionEdge(f.getBoundary(i+1))) {
+							Vertex es = f.getCorner(i);
+							Edge c = f.getBoundary(i+1);
+							Vertex cs = f.getCorner(i+1);
+							
+							removalDone = performRemoval(pln, e, es, c, cs);
+							break;
+						}
 					}
 				}
 			} 
 			else if ((f.size() == 3) && (!f.isOuterFace())) {
 				// case of one container, one dimensioned vertex directed against each other
 				for (int i = 0; i < 3; i++) {
-					Edge e = f.getBoundary(i);
+					PlanarizationEdge e = f.getBoundary(i);
 					DiagramElement under = e.getOriginalUnderlying();
 					if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) && hasDimensionedEnd(e)) {
 						if (isContainerEdge(f.getBoundary(i + 1)) && isConnectionEdge(f.getBoundary(i - 1))) {
@@ -98,7 +104,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 		return e.getFrom().hasDimension() || e.getTo().hasDimension();
 	}
 
-	private boolean performRemoval(Planarization pln, Face f, Edge e, int ci,
+	private boolean performRemoval(Planarization pln, Face f, PlanarizationEdge e, int ci,
 			int ei) {
 		boolean removalDone;
 		Vertex es = f.getCorner(ei);
@@ -108,7 +114,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 		return removalDone;
 	}
 
-	private boolean performRemoval(Planarization pln, Edge e, Vertex es, Edge c,
+	private boolean performRemoval(Planarization pln, PlanarizationEdge e, Vertex es, Edge c,
 			Vertex cs) {
 		
 		if (Tools.isUnderlyingContradicting(c)) {
