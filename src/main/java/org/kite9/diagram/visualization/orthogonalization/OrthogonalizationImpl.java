@@ -134,8 +134,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	private Map<Vertex,Map<Vertex, Set<Dart>>> existingDarts = new HashMap<Vertex, Map<Vertex, Set<Dart>>>();
 	
-	
-	
 	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;

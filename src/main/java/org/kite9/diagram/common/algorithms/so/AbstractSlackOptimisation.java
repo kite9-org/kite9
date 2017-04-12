@@ -105,7 +105,9 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	private void debugOutput(boolean minimums) {
 		Set<Slideable> alreadyDone = new HashSet<>();
 		for (Slideable slideable : allSlideables) {
-			debugOutputSlideable(minimums, slideable, alreadyDone, 0);
+			if (!alreadyDone.contains(slideable)) {
+				debugOutputSlideable(minimums, slideable, alreadyDone, 0);
+			}
 		}
 	}
 

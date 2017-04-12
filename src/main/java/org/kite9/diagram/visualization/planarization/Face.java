@@ -302,8 +302,8 @@ public class Face implements Deterministic {
 		return out;
 	}
 	
-	public List<Edge> getEdgesCopy() {
-		return new ArrayList<Edge>(boundary);
+	public List<PlanarizationEdge> getEdgesCopy() {
+		return new ArrayList<PlanarizationEdge>(boundary);
 	}
 	
 	/**

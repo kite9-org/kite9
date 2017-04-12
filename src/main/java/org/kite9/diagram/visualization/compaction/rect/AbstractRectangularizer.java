@@ -53,9 +53,9 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public abstract class AbstractDartRectangularizer extends AbstractCompactionStep {
+public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
-	public AbstractDartRectangularizer(CompleteDisplayer cd) {
+	public AbstractRectangularizer(CompleteDisplayer cd) {
 		super(cd);
 	}
 
@@ -224,7 +224,7 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	 * 
 	 * This errs on the side of too large right now
 	 */
-	private void fixDartSize(Compaction c, VertexTurn link) {
+	private void fixSize(Compaction c, VertexTurn link, double externalMin) {
 		Slideable early = link.getStartsWith();
 		Slideable late = link.getEndsWith();
 		Segment early1 = (Segment) early.getUnderlying();
@@ -232,9 +232,9 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 		Direction d = link.getDirection();
 		
 		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1);
-		link.ensureLength(minDistance);
-	
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
+		link.ensureLength(Math.max(minDistance, externalMin));
+	
 	}
 
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn meets,
@@ -260,8 +260,11 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 	protected VertexTurn performPopOut(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link, VertexTurn par,
 			VertexTurn ext, Slideable parFrom, Slideable meetsFrom, List<VertexTurn> stack, Match m) {
 
-		fixDartSize(c, link);
-
+		fixSize(c, link, 0);
+		fixSize(c, meets, 0);
+		fixSize(c, par, 0);
+		fixSize(c, ext, 0);
+ 
 		Orthogonalization o = c.getOrthogonalization();
 
 		// create the replacement for link
@@ -312,7 +315,10 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 
 	private void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
 			VertexTurn par, VertexTurn extender, Slideable from, Slideable to, Direction d1, Direction d2) {
-		fixDartSize(c, link);
+		fixSize(c, link, 0);
+		fixSize(c, meets, 0);
+		fixSize(c, par, 0);
+		fixSize(c, extender, 0);
 
 		double newMeetsLength = calculateNewMeetsLength(meets, par);
 		int newMeetsChangeCost = meets.getChangeCost();
@@ -337,8 +343,8 @@ public abstract class AbstractDartRectangularizer extends AbstractCompactionStep
 			meets.resetEndsWith(extender.getSlideable(), false, newMeetsChangeCost);
 		}
 		
-		meets.ensureLength(newMeetsLength);
-		extender.ensureLength(extensionLength);
+		fixSize(c, meets, newMeetsLength);
+		fixSize(c, extender, extensionLength);
 	}
 
 	private double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {

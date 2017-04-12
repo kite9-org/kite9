@@ -1,13 +1,11 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.edge.AbstractEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -205,5 +203,17 @@ public class Dart extends AbstractEdge {
 	public boolean isPartOf(DiagramElement de) {
 		return false;
 	}
+	
+	private double length;
+
+	public double getLength() {
+		return length;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+	
+	
 	
 }

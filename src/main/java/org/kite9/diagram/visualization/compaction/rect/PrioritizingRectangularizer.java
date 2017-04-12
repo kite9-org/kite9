@@ -23,7 +23,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
+public class PrioritizingRectangularizer extends AbstractRectangularizer {
 
 	public PrioritizingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
@@ -193,11 +193,11 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 		}
 		
 
-
+ 
 		while (pq.size() > 0) {
 			RectOption ro = pq.remove();
 			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
-			if (ok) {
+			if (ok) { 
 				log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
 				if (ro.m == Match.A) {
