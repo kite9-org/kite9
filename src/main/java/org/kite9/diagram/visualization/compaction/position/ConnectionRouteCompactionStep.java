@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -75,8 +76,8 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	}
 
 
-	private Vertex traceRoute(Vertex start, RouteRenderingInformation out, Deque<Edge> partSet) {
-		Iterator<Edge> it = partSet.iterator();
+	private Vertex traceRoute(Vertex start, RouteRenderingInformation out, Deque<? extends Edge> partSet) {
+		Iterator<? extends Edge> it = partSet.iterator();
 		while (it.hasNext()) {
 			Edge e = it.next();
 			RouteRenderingInformation toUse = (RouteRenderingInformation) e.getRenderingInformation();

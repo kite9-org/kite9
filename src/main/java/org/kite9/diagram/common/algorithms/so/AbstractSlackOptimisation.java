@@ -7,8 +7,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -87,19 +89,52 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	}
 
 	public void ensureMinimumDistance(Slideable left, Slideable right, int minLength) {
-		log.send(log.go() ? null : "Updating min distance to " + minLength + " for " + left + " to " + right);
-		left.addMinimumForwardConstraint(right, minLength);
-		right.addMaximumForwardConstraint(left, minLength);
+		if (left.getSlackOptimisation() != right.getSlackOptimisation()) {
+			throw new Kite9ProcessingException("Mixing dimensions");
+		}
+
+		try {
+			log.send(log.go() ? null : "Updating min distance to " + minLength + " for " + left + " to " + right);
+			left.addMinimumForwardConstraint(right, minLength);
+			right.addMaximumForwardConstraint(left, minLength);
+		} catch (LogicException e) {
+			debugOutput(true);
+		}
+	}
+
+	private void debugOutput(boolean minimums) {
+		Set<Slideable> alreadyDone = new HashSet<>();
+		for (Slideable slideable : allSlideables) {
+			debugOutputSlideable(minimums, slideable, alreadyDone, 0);
+		}
+	}
+
+	private void debugOutputSlideable(boolean minimums, Slideable slideable, Set<Slideable> alreadyDone, int indent) {
+		log.send(indent, slideable.toString());
+		if (!alreadyDone.contains(slideable)) {
+			alreadyDone.add(slideable);
+			for (Slideable s2 : slideable.getForwardSlideables(minimums)) {
+				debugOutputSlideable(minimums, s2, alreadyDone, indent+2);
+			}
+		}
 	}
 
 	public void ensureMaximumDistance(Slideable left, Slideable right, int maxLength) {
+		if (left.getSlackOptimisation() != right.getSlackOptimisation()) {
+			throw new Kite9ProcessingException("Mixing dimensions");
+		}
+		
 		if (left.positionalOrder > right.positionalOrder) {
 			throw new LogicException("Left and Right wrong way round? " + left + " " + right);
 		}
 		
-		log.send(log.go() ? null : "Updating max distance to " + maxLength + " for " + left + " to " + right);
-		right.addMinimumBackwardConstraint(left, maxLength);
-		left.addMaximumBackwardConstraint(right, maxLength);
+		try {
+			log.send(log.go() ? null : "Updating max distance to " + maxLength + " for " + left + " to " + right);
+			right.addMinimumBackwardConstraint(left, maxLength);
+			left.addMaximumBackwardConstraint(right, maxLength);
+		} catch (LogicException e) {
+			debugOutput(false);
+		}
 	}
 
 	public void addSlideables(Collection<Slideable> s) {

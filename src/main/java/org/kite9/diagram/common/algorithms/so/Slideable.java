@@ -54,7 +54,7 @@ public class Slideable implements PositionChangeNotifiable {
 	 */
 	public int minimumDistanceTo(Slideable s) {
 		Integer maxSet = this.getMaximumPosition();
-		maxSet = maxSet == null ? 1000 : maxSet;		// 
+		maxSet = maxSet == null ? 10000 : maxSet;		// 
 		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
 		so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
 		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());

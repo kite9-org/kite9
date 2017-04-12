@@ -11,28 +11,24 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
  */
 class VertexTurn {
 	
-	public VertexTurn(Compaction c, Slideable s, Direction d, int changeCost, Vertex startsWith, Vertex endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
+	public VertexTurn(Compaction c, Slideable s, Direction d, int changeCost, Slideable startsWith, Slideable endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
 		this.d = d;
 		this.s = s;
 		this.changeCost = changeCost;
 		this.changeEarlyStart = changeEarlyStart;
 		this.changeEarlyEnd = changeEarlyEnd;
 		
-		this.startsWith = c.getSlackOptimisation(d).getVertexToSlidableMap().get(startsWith);
-		this.endsWith = c.getSlackOptimisation(d).getVertexToSlidableMap().get(endsWith);
-		
-		switch (d) {
-		case DOWN:
-		case RIGHT:
-			early = this.startsWith;
-			late = this.endsWith;
-			break;
-		case UP:
-		case LEFT:
-			late = this.endsWith;
-			early = this.startsWith;
-			break;
-		}
+		this.startsWith = startsWith;
+		this.endsWith = endsWith;
+	}
+	
+	public VertexTurn(Compaction c, Slideable s, Direction d, int changeCost, Vertex startsWith, Vertex endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
+		this(c, s, d, changeCost,  getSlideableForVertex(c, d, startsWith), 
+				getSlideableForVertex(c, d, endsWith), changeEarlyStart, changeEarlyEnd);
+	}
+
+	private static Slideable getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
+		return c.getSlackOptimisation(Direction.rotateClockwise(d)).getVertexToSlidableMap().get(startsWith);
 	}
 	
 	private Slideable s;
@@ -43,8 +39,6 @@ class VertexTurn {
 	private Direction d;
 	private boolean changeEarlyStart;
 	private boolean changeEarlyEnd;
-	private Slideable early;
-	private Slideable late;
 	
 	public boolean isChangeEarlyStart() {
 		return changeEarlyStart;
@@ -64,7 +58,7 @@ class VertexTurn {
 	}
 	
 	public String toString() {
-		return "["+number+"]"+startsWith+" - "+endsWith+" - "+d+" "+ " ("+getSegment()+")";
+		return "["+number+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
 	}
 	
 	public int getChangeCost() {
@@ -72,16 +66,40 @@ class VertexTurn {
 	}
 	
 	public int getMinimumLength() {
-		return early.minimumDistanceTo(late);
+		return getEarly().minimumDistanceTo(getLate());
 	}
 	
+	private Slideable getLate() {
+		switch (d) {
+		case UP:
+		case LEFT:
+			return startsWith;
+		case DOWN:
+		case RIGHT:
+		default:
+			return endsWith;
+		}
+	}
+
+	private Slideable getEarly() {
+		switch (d) {
+		case UP:
+		case LEFT:
+			return endsWith;
+		case DOWN:
+		case RIGHT:
+		default:
+			return startsWith;
+		}
+	}
+
 	public boolean isLengthKnown() {
-		if ((early.getMaximumPosition() == null) || (late.getMaximumPosition() == null)) {
+		if ((getEarly().getMaximumPosition() == null) || (getLate().getMaximumPosition() == null)) {
 			return false;
 		}
 		
-		int earlySpan = early.getMaximumPosition() - early.getMinimumPosition();
-		int lateSpan = late.getMaximumPosition() - late.getMinimumPosition();
+		int earlySpan = getEarly().getMaximumPosition() - getEarly().getMinimumPosition();
+		int lateSpan = getLate().getMaximumPosition() - getLate().getMinimumPosition();
 		
 		return (earlySpan == lateSpan);
 	}
@@ -100,9 +118,27 @@ class VertexTurn {
 	}
 
 	public void resetEndsWith(Compaction c, Vertex to, boolean changeEarly, int changeCost) {
-		this.endsWith = c.getSlackOptimisation(d).getVertexToSlidableMap().get(endsWith);
+		resetEndsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
+	}
+		
+	public void resetEndsWith(Slideable s, boolean changeEarly, int changeCost) {
+		this.endsWith = s;
 		this.changeEarlyEnd = changeEarly;
 		this.changeCost = Math.max(changeCost, this.changeCost);
+	}
+	
+	public void resetStartsWith(Compaction c, Vertex to, boolean changeEarly, int changeCost) {
+		resetStartsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
+	}
+		
+	public void resetStartsWith(Slideable s, boolean changeEarly, int changeCost) {
+		this.startsWith = s;
+		this.changeEarlyStart = changeEarly;
+		this.changeCost = Math.max(changeCost, this.changeCost);
+	}
+
+	public void ensureLength(double l) {
+		getEarly().getSlackOptimisation().ensureMinimumDistance(getEarly(), getLate(), (int) l);
 	}
 
 }

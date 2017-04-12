@@ -19,6 +19,8 @@ import java.util.Set;
  *
  */
 public class Kite9Log {
+	
+	private static String INDENT = new String(new char[100]).replace('\0', ' ');
 
 	Logable logFor;
 	
@@ -71,6 +73,13 @@ public class Kite9Log {
 	public void send(String string) {
 		if (logFor.isLoggingEnabled() && logging)
 			logFile.println(logFor.getPrefix() + " " + string);
+	}
+	
+	public void send(int indent, String string) {
+		if (logFor.isLoggingEnabled() && logging)
+			logFile.print(logFor.getPrefix());
+			logFile.write(INDENT.getBytes(), 0, 1+indent);
+			logFile.println(string);
 	}
 
 	public void send(String prefix, Collection<?> items) {
