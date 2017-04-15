@@ -16,7 +16,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -34,8 +33,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	
-	public ContainerCornerVertexArranger(CompleteDisplayer cd, ElementMapper em) {
-		super(cd, em);
+	public ContainerCornerVertexArranger(ElementMapper em) {
+		super(em);
 	}
 
 	@Override

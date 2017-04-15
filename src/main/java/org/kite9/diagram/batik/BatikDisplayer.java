@@ -9,6 +9,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.Text;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -141,41 +142,8 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		existing.translate(xst, yst);
 	}
 
-	@Override
-	public boolean isOutputting() {
-		return true;
-	}
-
-	@Override
-	public void setOutputting(boolean outputting) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean canDisplay(DiagramElement element) {
-		return true;
-	}
-
-	@Override
-	public boolean requiresDimension(DiagramElement de) {
-		if (de instanceof Text) {
-			String label = getLabel(de);
-			if ((label==null) || (label.trim().length()==0)) {
-				return false;
-			} 
-		} 
-		
-		return true;
-	}
-	
 	public String getLabel(DiagramElement de) {
 		return ((Text)de).getText();
-	}
-
-	@Override
-	public double getLinkPadding(DiagramElement a, Direction d) {
-		return 5;
 	}
 
 	@Override
@@ -198,6 +166,31 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public double getLinkGutter(DiagramElement element, Direction d) {
+		return 10;
+	}
+
+	@Override
+	public double getLinkMinimumLength(DiagramElement element) {
+		return 10;
+	}
+
+	@Override
+	public double getTerminatorLength(Terminator terminator) {
+		return 5;
+	}
+
+	@Override
+	public double getTerminatorReserved(Terminator terminator, Connection on) {
+		return 5;
+	}
+
+	@Override
+	public double getLinkInset(DiagramElement element, Direction d) {
+		return 5;
 	}
 
 }

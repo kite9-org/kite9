@@ -35,7 +35,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -60,7 +59,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	
 	protected ElementMapper em;
 	
-	public BasicVertexArranger(CompleteDisplayer cd, ElementMapper em) {
+	public BasicVertexArranger(ElementMapper em) {
 		super();
 		this.gp = em.getGridPositioner();
 		this.em = em;

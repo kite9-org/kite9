@@ -14,8 +14,6 @@ import org.kite9.diagram.visualization.compaction.position.RectangularPositionCo
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrimitiveRectangleCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
-import org.kite9.diagram.visualization.compaction.slideable.EdgeSeparationCompactionStep;
-import org.kite9.diagram.visualization.compaction.slideable.LeafElementSizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
@@ -72,11 +70,9 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public Orthogonalizer createOrthogonalizer() {
-		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
+		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder());
 		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic,
- //				new FanInVertexArranger(getDisplayer()));
-				
-				new ContainerCornerVertexArranger(getDisplayer(), getElementMapper()));
+				new ContainerCornerVertexArranger(getElementMapper()));
 		return orthogonalizer;
 	}
 

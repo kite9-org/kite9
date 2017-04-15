@@ -3,9 +3,7 @@ package org.kite9.diagram.visualization.display;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -91,16 +89,8 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 		return true;
 	}
 
-	public boolean isVisibleElement(DiagramElement element) {
-		return ded.isVisibleElement(element);
-	}
-
-	public boolean canDisplay(DiagramElement element) {
-		return ded.canDisplay(element);
-	}
-
-	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy) {
-		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy);
+	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy, DiagramElement along) {
+		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy, along);
 		if (needsSnapping(a, aSide, b, bSide)) {
 			minDist = snap(minDist, 1);		
 			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
@@ -115,43 +105,4 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 		//return (a!=b) || (a==null) || (b==null);
 	}
 
-	@Override
-	public boolean isOutputting() {
-		return ded.isOutputting();
-	}
-
-	@Override
-	public void setOutputting(boolean outputting) {
-		ded.setOutputting(outputting);
-	}
-
-	@Override
-	public double getLinkPadding(DiagramElement element, Direction d) {
-		return snap(ded.getLinkPadding(element, d),1);
-	}
-	
-	@Override
-	public double getPadding(DiagramElement element, Direction d) {
-		return ded.getPadding(element, d);
-	}
-
-	@Override
-	public double getTerminatorLength(Terminator terminator) {
-		return ded.getTerminatorLength(terminator);
-	}
-
-	@Override
-	public double getTerminatorReserved(Terminator terminator, Connection c) {
-		return ded.getTerminatorReserved(terminator, c);
-	}
-
-	@Override
-	public boolean requiresDimension(DiagramElement de) {
-		return ded.requiresDimension(de);
-	}
-
-	@Override
-	public double getLinkGutter(DiagramElement element, Direction d) {
-		return snap(ded.getLinkGutter(element, d),1);
-	}
 }

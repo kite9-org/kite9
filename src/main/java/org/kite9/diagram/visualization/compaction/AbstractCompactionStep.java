@@ -45,7 +45,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return froms.minimumDistanceTo(tos);
 	}
 
-	protected double getMinimumDistance(boolean horizontalDart, Segment froms, Segment tos) {
+	protected double getMinimumDistance(boolean horizontalDart, Segment froms, Segment tos, Segment along) {
 		// where a segment is part of a grid, we can have more than one underlying diagram element.
 		// in these cases, we have to consider pairs.
 		if ((froms.getUnderlyingInfo().size() > 1) || (tos.getUnderlyingInfo().size() > 1)) {
@@ -58,7 +58,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 				UnderlyingInfo fromUI = getUnderlyingFor(froms, diagramElement);
 				UnderlyingInfo toUI = getUnderlyingFor(tos, diagramElement);
 				if ((fromUI != null) && (toUI != null)) {
-					max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, toUI));
+					max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along));
 				}
 			}
 			
@@ -67,12 +67,12 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		} else {
 			UnderlyingInfo fromUI = froms.getUnderlyingInfo().iterator().next();
 			UnderlyingInfo toUI = tos.getUnderlyingInfo().iterator().next();
-			return getMinimumDistance(horizontalDart, fromUI, toUI);
+			return getMinimumDistance(horizontalDart, fromUI, toUI, along);
 		}
 	
 	}
 
-	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, UnderlyingInfo toUI) {
+	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, UnderlyingInfo toUI, Segment along) {
 		DiagramElement tode = toUI.getDiagramElement();
 		Direction toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.getSide());
 		DiagramElement fromde = fromUI.getDiagramElement();
@@ -95,8 +95,20 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			}
 		}
 		
+		DiagramElement alongDe = getAlongDiagramElement(along);
 		
-		return displayer.getMinimumDistanceBetween(fromde, fromUnderlyingSide, tode, toUnderlyingSide, horizontalDart ? Direction.RIGHT : Direction.DOWN);
+		
+		return displayer.getMinimumDistanceBetween(fromde, fromUnderlyingSide, tode, toUnderlyingSide, horizontalDart ? Direction.RIGHT : Direction.DOWN, alongDe);
+	}
+
+	private DiagramElement getAlongDiagramElement(Segment along) {
+		if (along == null) {
+			return null;
+		} else if ((along.getUnderlyingInfo().size() > 1) || (along.getUnderlyingInfo().size() == 0)) {
+			return null;
+		} else {
+			return along.getUnderlyingInfo().iterator().next().getDiagramElement();
+		}
 	}
 	
 	private UnderlyingInfo getUnderlyingFor(Segment froms, DiagramElement diagramElement) {
@@ -171,9 +183,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	/**
 	 * Uses the SlackOptimisation to set a minimum distance between outside and inside parts.
 	 */
-	protected void separate(Slideable s1, Slideable s2, SegmentSlackOptimisation so, Direction d, Compaction c) {
+	protected void separate(Slideable s1, Slideable s2, SegmentSlackOptimisation so, Direction d, Compaction c, Segment along) {
 		boolean horizontal = d == Direction.LEFT || d == Direction.RIGHT;
-		double minDistance = getMinimumDistance(horizontal, (Segment) s1.getUnderlying(), (Segment) s2.getUnderlying());
+		double minDistance = getMinimumDistance(horizontal, (Segment) s1.getUnderlying(), (Segment) s2.getUnderlying(), along);
 		so.ensureMinimumDistance(s1, s2, (int) minDistance);
 	}
 //

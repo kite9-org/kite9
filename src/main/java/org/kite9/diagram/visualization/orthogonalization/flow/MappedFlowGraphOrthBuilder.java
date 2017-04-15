@@ -13,13 +13,11 @@ import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -37,12 +35,7 @@ import org.kite9.framework.logging.LogicException;
 public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFlowGraph> {
 
 	private Kite9Log log = new Kite9Log(this);
-	//private CompleteDisplayer completeDisplayer;
 
-	public MappedFlowGraphOrthBuilder(CompleteDisplayer completeDisplayer) {
-	//	this.completeDisplayer = completeDisplayer;
-	}
-	
 	static enum StartPointType {
 		
 		DIRECTED, INFERRED, NONE;

@@ -35,8 +35,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public class FanInVertexArranger extends BasicVertexArranger {
 
-	public FanInVertexArranger(CompleteDisplayer cd, ElementMapper em) {
-		super(cd, em);
+	public FanInVertexArranger(ElementMapper em) {
+		super(em);
 	}
 	
 	@Override

@@ -231,7 +231,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		Segment late1 = (Segment) late.getUnderlying();
 		Direction d = link.getDirection();
 		
-		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1);
+		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1, link.getSegment());
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureLength(Math.max(minDistance, externalMin));
 	
