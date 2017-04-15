@@ -37,15 +37,15 @@ public class Segment implements Comparable<Segment> {
 	private int i;
 	private boolean positioned = false;
 	private double position;
-	private Slideable slideable;
+	private Slideable<Segment> slideable;
 	private Set<UnderlyingInfo> underlyings;
 	
 	
-	public Slideable getSlideable() {
+	public Slideable<Segment> getSlideable() {
 		return slideable;
 	}
 
-	public void setSlideable(Slideable slideable) {
+	public void setSlideable(Slideable<Segment> slideable) {
 		this.slideable = slideable;
 	}
 	
@@ -208,5 +208,13 @@ public class Segment implements Comparable<Segment> {
 
 	public int getNumber() {
 		return i;
+	}
+
+	public DiagramElement getSingleUnderlying() {
+		if ((getUnderlyingInfo().size() > 1) || (getUnderlyingInfo().size() == 0)) {
+			return null;
+		} else {
+			return getUnderlyingInfo().iterator().next().getDiagramElement();
+		}
 	}
 }

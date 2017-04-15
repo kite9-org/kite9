@@ -16,6 +16,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 
 /**
@@ -44,21 +45,21 @@ public class HierarchicalCompactionStep implements CompactionStep {
 	 * priority number receive preference on size.
 	 */
 	public void orderDiagramElementSizes(SegmentSlackOptimisation opt) {
-		opt.updatePositionalOrdering();
-		List<OPair<Slideable>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
+//		opt.updatePositionalOrdering();
+		List<OPair<Slideable<Segment>>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
 		
-		Collections.sort(toDo, new Comparator<OPair<Slideable>>() {
+		Collections.sort(toDo, new Comparator<OPair<Slideable<Segment>>>() {
 
 			@Override
-			public int compare(OPair<Slideable> o1, OPair<Slideable> o2) {
+			public int compare(OPair<Slideable<Segment>> o1, OPair<Slideable<Segment>> o2) {
 				int distO1 = getDist1(o1);
 				int distO2 = getDist1(o2);
 				return ((Integer)distO1).compareTo(distO2);
 			}
 
-			private int getDist1(OPair<Slideable> o1) {
-				Slideable a = o1.getA();
-				Slideable b = o1.getB();
+			private int getDist1(OPair<Slideable<Segment>> o1) {
+				Slideable<Segment> a = o1.getA();
+				Slideable<Segment> b = o1.getB();
 				if ((a == null) || (b == null)) {
 					return Integer.MAX_VALUE;
 				}

@@ -11,7 +11,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
  */
 class VertexTurn {
 	
-	public VertexTurn(Compaction c, Slideable s, Direction d, int changeCost, Slideable startsWith, Slideable endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
+	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, int changeCost, Slideable<Segment> startsWith, Slideable<Segment> endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
 		this.d = d;
 		this.s = s;
 		this.changeCost = changeCost;
@@ -22,20 +22,20 @@ class VertexTurn {
 		this.endsWith = endsWith;
 	}
 	
-	public VertexTurn(Compaction c, Slideable s, Direction d, int changeCost, Vertex startsWith, Vertex endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
+	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, int changeCost, Vertex startsWith, Vertex endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
 		this(c, s, d, changeCost,  getSlideableForVertex(c, d, startsWith), 
 				getSlideableForVertex(c, d, endsWith), changeEarlyStart, changeEarlyEnd);
 	}
 
-	private static Slideable getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
+	private static Slideable<Segment> getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
 		return c.getSlackOptimisation(Direction.rotateClockwise(d)).getVertexToSlidableMap().get(startsWith);
 	}
 	
-	private Slideable s;
+	private Slideable<Segment> s;
 	private int number;
 	private int changeCost;
-	private Slideable startsWith;
-	private Slideable endsWith;
+	private Slideable<Segment> startsWith;
+	private Slideable<Segment> endsWith;
 	private Direction d;
 	private boolean changeEarlyStart;
 	private boolean changeEarlyEnd;
@@ -53,7 +53,7 @@ class VertexTurn {
 		return (Segment) s.getUnderlying();
 	}
 	
-	public Slideable getSlideable() {
+	public Slideable<Segment> getSlideable() {
 		return s;
 	}
 	
@@ -69,7 +69,7 @@ class VertexTurn {
 		return getEarly().minimumDistanceTo(getLate());
 	}
 	
-	private Slideable getLate() {
+	private Slideable<Segment> getLate() {
 		switch (d) {
 		case UP:
 		case LEFT:
@@ -81,7 +81,7 @@ class VertexTurn {
 		}
 	}
 
-	private Slideable getEarly() {
+	private Slideable<Segment> getEarly() {
 		switch (d) {
 		case UP:
 		case LEFT:
@@ -105,11 +105,11 @@ class VertexTurn {
 	}
 	
 
-	public Slideable getStartsWith() {
+	public Slideable<Segment> getStartsWith() {
 		return startsWith;
 	}
 
-	public Slideable getEndsWith() {
+	public Slideable<Segment> getEndsWith() {
 		return endsWith;
 	}
 
@@ -121,7 +121,7 @@ class VertexTurn {
 		resetEndsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
 	}
 		
-	public void resetEndsWith(Slideable s, boolean changeEarly, int changeCost) {
+	public void resetEndsWith(Slideable<Segment> s, boolean changeEarly, int changeCost) {
 		this.endsWith = s;
 		this.changeEarlyEnd = changeEarly;
 		this.changeCost = Math.max(changeCost, this.changeCost);
@@ -131,15 +131,15 @@ class VertexTurn {
 		resetStartsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
 	}
 		
-	public void resetStartsWith(Slideable s, boolean changeEarly, int changeCost) {
+	public void resetStartsWith(Slideable<Segment> s, boolean changeEarly, int changeCost) {
 		this.startsWith = s;
 		this.changeEarlyStart = changeEarly;
 		this.changeCost = Math.max(changeCost, this.changeCost);
 	}
 
 	public void ensureLength(double l) {
-		Slideable early = getEarly();
-		Slideable late = getLate();
+		Slideable<Segment> early = getEarly();
+		Slideable<Segment> late = getLate();
 		System.out.println("from " +early);
 		System.out.println("to   " +late);
 

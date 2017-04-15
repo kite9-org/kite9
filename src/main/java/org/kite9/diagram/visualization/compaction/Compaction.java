@@ -39,9 +39,9 @@ public interface Compaction {
 	 * 
 	 * Rectangle is in top, right, bottom, left order.
 	 */
-	public Rectangle<Slideable> getFaceSpace(DartFace df);
+	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df);
 	
-	public void createFaceSpace(DartFace df, Rectangle<Slideable> r);
+	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
 	
 	public Vertex createCompactionVertex(Segment s1, Segment s2);
 

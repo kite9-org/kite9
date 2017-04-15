@@ -112,7 +112,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
 			List<DartDirection> turns, Vertex from, Compaction c) {
-		Vertex origFrom = from;
 		if (df.dartsInFace.size() > 2) {
 			try {
 				for (int i = 0; i < turns.size(); i++) {
@@ -160,7 +159,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack);
 
 	private void setSlideableFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack, boolean outer) {
-		Rectangle<Slideable> r = new Rectangle<Slideable>(
+		Rectangle<Slideable<Segment>> r = new Rectangle<>(
 				getSlideableInDirection(theStack, outer ? Direction.LEFT : Direction.RIGHT),
 				getSlideableInDirection(theStack, outer ? Direction.UP : Direction.DOWN),
 				getSlideableInDirection(theStack, outer ? Direction.RIGHT : Direction.LEFT), 
@@ -170,7 +169,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		c.createFaceSpace(df, r);
 	}
 
-	private Slideable getSlideableInDirection(List<VertexTurn> vt, Direction d) {
+	private Slideable<Segment> getSlideableInDirection(List<VertexTurn> vt, Direction d) {
 		for (int i = 0; i < vt.size(); i++) {
 			VertexTurn prev = vt.get(( i + vt.size() -1 ) % vt.size());
 			VertexTurn curr = vt.get(i);
@@ -209,8 +208,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected void performRectangularizationD(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn ext,
 			VertexTurn par, VertexTurn link, VertexTurn meets) {
 		logRectangularizationContext(ext, par, link, meets);
-		Slideable first = ext.getEndsWith();
-		Slideable to = meets.getSlideable();
+		Slideable<Segment> first = ext.getEndsWith();
+		Slideable<Segment> to = meets.getSlideable();
 		Direction d2 = Direction.reverse(meets.getDirection());
 		Direction d1 = ext.getDirection();
 
@@ -225,8 +224,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * This errs on the side of too large right now
 	 */
 	private void fixSize(Compaction c, VertexTurn link, double externalMin) {
-		Slideable early = link.getStartsWith();
-		Slideable late = link.getEndsWith();
+		Slideable<Segment> early = link.getStartsWith();
+		Slideable<Segment> late = link.getEndsWith();
 		Segment early1 = (Segment) early.getUnderlying();
 		Segment late1 = (Segment) late.getUnderlying();
 		Direction d = link.getDirection();
@@ -240,8 +239,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn meets,
 			VertexTurn link, VertexTurn par, VertexTurn ext) {
 		logRectangularizationContext(meets, link, par, ext);
-		Slideable first = ext.getStartsWith();
-		Slideable to = meets.getSlideable();
+		Slideable<Segment> first = ext.getStartsWith();
+		Slideable<Segment> to = meets.getSlideable();
 		Direction d1 = Direction.reverse(ext.getDirection());
 		Direction d2 = meets.getDirection();
 
@@ -258,7 +257,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * @param c
 	 */
 	protected VertexTurn performPopOut(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link, VertexTurn par,
-			VertexTurn ext, Slideable parFrom, Slideable meetsFrom, List<VertexTurn> stack, Match m) {
+			VertexTurn ext, Slideable<Segment> parFrom, Slideable<Segment> meetsFrom, List<VertexTurn> stack, Match m) {
 
 		fixSize(c, link, 0);
 		fixSize(c, meets, 0);
@@ -314,7 +313,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	private void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
-			VertexTurn par, VertexTurn extender, Slideable from, Slideable to, Direction d1, Direction d2) {
+			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, Direction d1, Direction d2) {
 		fixSize(c, link, 0);
 		fixSize(c, meets, 0);
 		fixSize(c, par, 0);

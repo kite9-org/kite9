@@ -46,6 +46,9 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 	
 		public void setX(double x) {
 			try {
+				if (de == null) {
+					return;
+				}
 				RectangleRenderingInformation ri = getRI();
 				double l = ri.getPosition() == null ? 0 : ri.getPosition().x();
 				double r = ri.getSize() == null ? l : l+ri.getSize().getWidth();
@@ -69,6 +72,9 @@ public abstract class AbstractAnchoringVertex extends AbstractVertex {
 		
 		public void setY(double y) {
 			try {
+				if (de == null) {
+					return;
+				}
 				RectangleRenderingInformation ri = getRI();
 				double l = ri.getPosition() == null ? 0 : ri.getPosition().x();
 				double r = ri.getSize() == null ? l : l+ri.getSize().getWidth();

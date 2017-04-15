@@ -13,6 +13,7 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 public class RectangularPositionCompactionStep extends AbstractCompactionStep {
@@ -29,8 +30,8 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 	}
 
 	private void compactInternal(Compaction c, Rectangular r) {
-		OPair<Slideable> x = c.getXSlackOptimisation().getSlideablesFor(r);
-		OPair<Slideable> y = c.getYSlackOptimisation().getSlideablesFor(r);
+		OPair<Slideable<Segment>> x = c.getXSlackOptimisation().getSlideablesFor(r);
+		OPair<Slideable<Segment>> y = c.getYSlackOptimisation().getSlideablesFor(r);
 		double xMin = x.getA().getMinimumPosition();
 		double xMax = x.getB().getMinimumPosition();
 		double yMin = y.getA().getMinimumPosition();

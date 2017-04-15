@@ -77,15 +77,15 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 			return;
 		}
 		
-		Rectangle<Slideable> border = c.getFaceSpace(dartFace);
+		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);
 
 		// get space for the darts to be inserted - this must be an empty
 		// rectangle in the
 		// rectangularization
-		Slideable top =border.getA();;
-		Slideable right = border.getB();
-		Slideable bottom = border.getC();
-		Slideable left = border.getD();
+		Slideable<Segment> top =border.getA();;
+		Slideable<Segment> right = border.getB();
+		Slideable<Segment> bottom = border.getC();
+		Slideable<Segment> left = border.getD();
 
 		Direction directionOfInsertion = null;
 		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
@@ -115,12 +115,12 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 					
 				// find the segment border of the subgraph being inserted
 				Rectangular r = embeddedDartFace.getUnderlying().getPartOf();
-				Rectangle<Slideable> limits = c.getFaceSpace(embeddedDartFace);
+				Rectangle<Slideable<Segment>> limits = c.getFaceSpace(embeddedDartFace);
 				
-				Slideable uLimit = limits.getA();
-				Slideable rLimit = limits.getB();
-				Slideable dLimit = limits.getC();
-				Slideable lLimit = limits.getD();
+				Slideable<Segment> uLimit = limits.getA();
+				Slideable<Segment> rLimit = limits.getB();
+				Slideable<Segment> dLimit = limits.getC();
+				Slideable<Segment> lLimit = limits.getD();
 				
 				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
 						|| (directionOfInsertion == Direction.LEFT)) {
@@ -187,18 +187,18 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	/**
 	 * Returns all segments at the extreme <direction> edge within the face.
 	 */
-	protected Set<Slideable> getLimits(DartFace df, Map<Vertex, Slideable> map, Direction direction) {
-		Set<Slideable> out = new LinkedHashSet<Slideable>(4);
+	protected Set<Slideable<Segment>> getLimits(DartFace df, Map<Vertex, Slideable<Segment>> map, Direction direction) {
+		Set<Slideable<Segment>> out = new LinkedHashSet<>(4);
 		for (DartDirection dd : df.dartsInFace) {
 			Dart d = dd.getDart();
 			Vertex from = d.getFrom();
 			Vertex to = d.getTo();
-			Slideable fs = map.get(from);
-			Slideable ts = map.get(to);
-			if ((!out.contains(fs)) && (testSegment(direction, (Segment) fs.getUnderlying()))) {
+			Slideable<Segment> fs = map.get(from);
+			Slideable<Segment> ts = map.get(to);
+			if ((!out.contains(fs)) && (testSegment(direction, fs.getUnderlying()))) {
 				out.add(fs);
 			}
-			if ((!out.contains(ts)) && (testSegment(direction, (Segment) ts.getUnderlying()))) {
+			if ((!out.contains(ts)) && (testSegment(direction, ts.getUnderlying()))) {
 				out.add(ts);
 			}
 		}

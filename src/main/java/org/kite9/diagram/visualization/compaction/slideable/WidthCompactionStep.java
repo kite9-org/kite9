@@ -7,6 +7,7 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.framework.logging.Kite9Log;
 
@@ -31,8 +32,8 @@ public class WidthCompactionStep extends AbstractCompactionStep {
 	}
 	
 	private void setFor(SegmentSlackOptimisation o) {
-		OPair<Slideable> diagramSlideables = o.getSlideablesFor(o.getTheDiagram());
-		Slideable highSide = diagramSlideables.getB();
+		OPair<Slideable<Segment>> diagramSlideables = o.getSlideablesFor(o.getTheDiagram());
+		Slideable<Segment> highSide = diagramSlideables.getB();
 		int min = highSide.getMinimumPosition();
 		highSide.setMaximumPosition(min);
 	}

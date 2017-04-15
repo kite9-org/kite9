@@ -11,6 +11,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -32,8 +33,8 @@ public class PrimitiveRectangleCompactionStep extends AbstractCompactionStep {
 			}
 			
 			
-			OPair<Slideable> lr = c.getXSlackOptimisation().getSlideablesFor(r);
-			OPair<Slideable> ud = c.getYSlackOptimisation().getSlideablesFor(r);
+			OPair<Slideable<Segment>> lr = c.getXSlackOptimisation().getSlideablesFor(r);
+			OPair<Slideable<Segment>> ud = c.getYSlackOptimisation().getSlideablesFor(r);
 			if ((lr != null) && (ud != null)) {
 				// sometimes, we might not display everything (e.g. labels)
 				CostedDimension cd = displayer.size(r, CostedDimension.UNBOUNDED);

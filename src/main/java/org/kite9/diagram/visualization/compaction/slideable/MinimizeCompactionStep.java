@@ -7,6 +7,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
@@ -52,8 +53,8 @@ public class MinimizeCompactionStep extends AbstractCompactionStep {
 		DiagramElementSizing sizing = r.getSizing();
 		
 		if (sizing == DiagramElementSizing.MINIMIZE) {
-			OPair<Slideable> lr = c.getXSlackOptimisation().getSlideablesFor(r);
-			OPair<Slideable> ud = c.getYSlackOptimisation().getSlideablesFor(r);
+			OPair<Slideable<Segment>> lr = c.getXSlackOptimisation().getSlideablesFor(r);
+			OPair<Slideable<Segment>> ud = c.getYSlackOptimisation().getSlideablesFor(r);
 			if ((lr != null) && (ud != null)) {
 				// sometimes, we might not display everything (e.g. labels)
 				log.send("Minimizing Distance "+r);
@@ -63,7 +64,7 @@ public class MinimizeCompactionStep extends AbstractCompactionStep {
 		}
 	}
 
-	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable from, Slideable to) {
+	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to) {
 		Integer minDist = from.minimumDistanceTo(to);
 		opt.ensureMaximumDistance(from, to, minDist);
 	}

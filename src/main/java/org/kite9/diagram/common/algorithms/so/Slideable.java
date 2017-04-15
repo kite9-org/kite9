@@ -9,18 +9,18 @@ import java.util.function.Consumer;
 
 import org.kite9.framework.logging.LogicException;
 
-public class Slideable implements PositionChangeNotifiable {
+public class Slideable<X> implements PositionChangeNotifiable {
 	
 	int canonicalOrder;
 	int positionalOrder;
 	private AlignStyle alignStyle;
-	private Slideable alignTo;
-	private AbstractSlackOptimisation<?> so;
+	private Slideable<X> alignTo;
+	private AbstractSlackOptimisation<X> so;
 	
 	private SingleDirection minimum = new SingleDirection(this, true);
 	private SingleDirection maximum = new SingleDirection(this, false); 
 
-	public Slideable(AbstractSlackOptimisation<?> so, Object u, AlignStyle alignStyle) {
+	public Slideable(AbstractSlackOptimisation<X> so, X u, AlignStyle alignStyle) {
 		this.underneath = u;
 		this.alignStyle = alignStyle;
 		this.so = so;
@@ -30,7 +30,7 @@ public class Slideable implements PositionChangeNotifiable {
 		return positionalOrder;
 	}
 
-	public Slideable getAlignTo() {
+	public Slideable<X> getAlignTo() {
 		return alignTo;
 	}
 
@@ -42,7 +42,7 @@ public class Slideable implements PositionChangeNotifiable {
 		this.alignStyle = alignStyle;
 	}
 
-	private Object underneath;
+	private X underneath;
 
 	/**
 	 * Works out how much closer the current slideable can get to s.
@@ -52,7 +52,7 @@ public class Slideable implements PositionChangeNotifiable {
 	 * We can't move the element any further than the max position without breaking other 
 	 * constraints.
 	 */
-	public int minimumDistanceTo(Slideable s) {
+	public int minimumDistanceTo(Slideable<X> s) {
 		Integer maxSet = this.getMaximumPosition();
 		maxSet = maxSet == null ? 10000 : maxSet;		// 
 		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
@@ -71,7 +71,7 @@ public class Slideable implements PositionChangeNotifiable {
 		//return slack1;
 	}
 	
-	public boolean hasTransitiveForwardConstraintTo(Slideable s2) {
+	public boolean hasTransitiveForwardConstraintTo(Slideable<X> s2) {
 		return minimum.hasTransitiveForwardConstraintTo(s2.minimum, s2.getMinimumPosition());
 	}
 
@@ -80,11 +80,11 @@ public class Slideable implements PositionChangeNotifiable {
 		return "<" + so.getIdentifier(underneath) + " " + minimum.getPosition() + "," + maximum.getPosition() + ">";
 	}
 
-	public Object getUnderlying() {
+	public X getUnderlying() {
 		return underneath;
 	}
 
-	public void setAlignTo(Slideable rs) {
+	public void setAlignTo(Slideable<X> rs) {
 		this.alignTo = rs;
 	}
 
@@ -96,7 +96,7 @@ public class Slideable implements PositionChangeNotifiable {
 		return maximum.getPosition();
 	}
 
-	public AbstractSlackOptimisation<?> getSlackOptimisation() {
+	public AbstractSlackOptimisation<X> getSlackOptimisation() {
 		return so.getSelf();
 	}
 
@@ -113,31 +113,31 @@ public class Slideable implements PositionChangeNotifiable {
 		}
 	}
 	
-	public void withMinimumForwardConstraints(Consumer<Slideable> action) {
+	public void withMinimumForwardConstraints(Consumer<Slideable<X>> action) {
 		for (SingleDirection sd : minimum.forward.keySet()) {
-			action.accept((Slideable) sd.getOwner());
+			action.accept((Slideable<X>) sd.getOwner());
 		}
 	}
 	
-	public void withMaximumForwardConstraints(Consumer<Slideable> action) {
+	public void withMaximumForwardConstraints(Consumer<Slideable<X>> action) {
 		for (SingleDirection sd : maximum.forward.keySet()) {
-			action.accept((Slideable) sd.getOwner());
+			action.accept((Slideable<X>) sd.getOwner());
 		}
 	}
 
-	void addMinimumForwardConstraint(Slideable to, int dist) {
+	void addMinimumForwardConstraint(Slideable<X> to, int dist) {
 		minimum.addForwardConstraint(to.minimum, dist);
 	}
 	
-	void addMinimumBackwardConstraint(Slideable to, int dist) {
+	void addMinimumBackwardConstraint(Slideable<X> to, int dist) {
 		minimum.addBackwardConstraint(to.minimum, dist);
 	}
 	
-	void addMaximumForwardConstraint(Slideable to, int dist) {
+	void addMaximumForwardConstraint(Slideable<X> to, int dist) {
 		maximum.addForwardConstraint(to.maximum, dist);
 	}
 	
-	void addMaximumBackwardConstraint(Slideable to, int dist) {
+	void addMaximumBackwardConstraint(Slideable<X> to, int dist) {
 		maximum.addBackwardConstraint(to.maximum, dist);
 	}
 
@@ -149,15 +149,15 @@ public class Slideable implements PositionChangeNotifiable {
 		maximum.increasePosition(i);
 	}
 
-	public Set<Slideable> getForwardSlideables(boolean increasing) {
-		Set<Slideable> out = new HashSet<>();
+	public Set<Slideable<X>> getForwardSlideables(boolean increasing) {
+		Set<Slideable<X>> out = new HashSet<>();
 		if (increasing) {
 			for (SingleDirection sd : minimum.forward.keySet()) {
-				out.add((Slideable) sd.getOwner());
+				out.add((Slideable<X>) sd.getOwner());
 			}
 		} else {
 			for (SingleDirection sd : maximum.forward.keySet()) {
-				out.add((Slideable) sd.getOwner());
+				out.add((Slideable<X>) sd.getOwner());
 			}
 		}
 		

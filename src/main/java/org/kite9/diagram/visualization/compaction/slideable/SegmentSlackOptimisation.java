@@ -33,8 +33,8 @@ import org.kite9.framework.logging.Logable;
  */
 public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment> implements Logable {
 	
-	private Map<Vertex, Slideable> vertexToSlidableMap = new HashMap<>();
-	private Map<DiagramElement, OPair<Slideable>> rectangularElementToSlideableMap = new HashMap<>();
+	private Map<Vertex, Slideable<Segment>> vertexToSlidableMap = new HashMap<>();
+	private Map<DiagramElement, OPair<Slideable<Segment>>> rectangularElementToSlideableMap = new HashMap<>();
 	private Diagram theDiagram;
 	
 	private boolean isRectangular(DiagramElement underlying) {
@@ -43,10 +43,10 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 
 	public SegmentSlackOptimisation(List<Segment> segments, Direction d) {
 		this.d = d;
-		List<Slideable> slideables = new ArrayList<Slideable>(segments.size());
+		List<Slideable<Segment>> slideables = new ArrayList<>(segments.size());
 
 		for (Segment s : segments) {
-			Slideable sli = new Slideable(this, s, getSegmentAlignStyle(s));
+			Slideable<Segment> sli = new Slideable<Segment>(this, s, getSegmentAlignStyle(s));
 			s.setSlideable(sli);
 			log.send(log.go() ? null : "Created slideable: " + sli);
 			slideables.add(sli);
@@ -59,7 +59,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 
 	}
 	
-	protected void addedSlideable(Slideable s) {
+	protected void addedSlideable(Slideable<Segment> s) {
 		// look for dependencies in the direction given
 		// setupMinimumDistancesDueToDarts(s);
 		updateMaps(s);
@@ -67,13 +67,13 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	
 	
 
-	private void setupMinimumDistancesDueToDarts(Slideable s) {
+	private void setupMinimumDistancesDueToDarts(Slideable<Segment> s) {
 		for (Vertex v : ((Segment)s.getUnderlying()).getVerticesInSegment()) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) {
 					if (e.getDrawDirectionFrom(v) == d) {
 						// need to create a dependency for this dart
-						Slideable other = vertexToSlidableMap.get(e.otherEnd(v));
+						Slideable<Segment> other = vertexToSlidableMap.get(e.otherEnd(v));
 						ensureMinimumDistance(s, other, (int) ((Dart) e).getLength());
 					}
 				}
@@ -81,23 +81,23 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		}
 	}
 	
-	public void addSlideables(Slideable... s) {
-		for (Slideable slideable : s) {
+	public void addSlideables(Slideable<Segment>... s) {
+		for (Slideable<Segment> slideable : s) {
 			updateMaps(slideable);
 		}
 	
 		super.addSlideables(s);
 	}
 	
-	public void addSlideables(Collection<Slideable> s) {
-		for (Slideable slideable : s) {
+	public void addSlideables(Collection<Slideable<Segment>> s) {
+		for (Slideable<Segment> slideable : s) {
 			updateMaps(slideable);
 		}
 	
 		super.addSlideables(s);
 	}
 
-	public void updateMaps(Slideable s) {
+	public void updateMaps(Slideable<Segment> s) {
 		Segment seg = (Segment) s.getUnderlying();
 		seg.setPositioned(false);
 		
@@ -108,9 +108,9 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		for (UnderlyingInfo ui : seg.getUnderlyingInfo()) {
 			DiagramElement underlying = ui.getDiagramElement();
 			if (isRectangular(underlying)) {
-				OPair<Slideable> parts = rectangularElementToSlideableMap.get(underlying);
+				OPair<Slideable<Segment>> parts = rectangularElementToSlideableMap.get(underlying);
 				if (parts == null) {
-					parts = new OPair<Slideable>(null, null);
+					parts = new OPair<Slideable<Segment>>(null, null);
 				}
 				
 				if ((ui.getSide() == Side.START)) {
@@ -144,7 +144,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		}
 	}
 	
-	public Map<Vertex, Slideable> getVertexToSlidableMap() {
+	public Map<Vertex, Slideable<Segment>> getVertexToSlidableMap() {
 		return vertexToSlidableMap;
 	}
 
@@ -155,7 +155,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	
 
 	public void initialiseSlackOptimisation() {
-		OPair<Slideable> diagramSlideables = rectangularElementToSlideableMap.get(theDiagram);
+		OPair<Slideable<Segment>> diagramSlideables = rectangularElementToSlideableMap.get(theDiagram);
 		diagramSlideables.getA().setMinimumPosition(0);
 	}
 
@@ -163,11 +163,11 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		return theDiagram;
 	}
 	
-	public OPair<Slideable> getSlideablesFor(DiagramElement de) {
+	public OPair<Slideable<Segment>> getSlideablesFor(DiagramElement de) {
 		return rectangularElementToSlideableMap.get(de);
 	}
 
-	public Collection<OPair<Slideable>> getRectangularSlideablePairs() {
+	public Collection<OPair<Slideable<Segment>>> getRectangularSlideablePairs() {
 		return rectangularElementToSlideableMap.values();
 	}
 }

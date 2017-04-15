@@ -102,13 +102,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	private DiagramElement getAlongDiagramElement(Segment along) {
-		if (along == null) {
-			return null;
-		} else if ((along.getUnderlyingInfo().size() > 1) || (along.getUnderlyingInfo().size() == 0)) {
-			return null;
-		} else {
-			return along.getUnderlyingInfo().iterator().next().getDiagramElement();
-		}
+		return along == null ? null : along.getSingleUnderlying();
 	}
 	
 	private UnderlyingInfo getUnderlyingFor(Segment froms, DiagramElement diagramElement) {
@@ -183,9 +177,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	/**
 	 * Uses the SlackOptimisation to set a minimum distance between outside and inside parts.
 	 */
-	protected void separate(Slideable s1, Slideable s2, SegmentSlackOptimisation so, Direction d, Compaction c, Segment along) {
+	protected void separate(Slideable<Segment> s1, Slideable<Segment> s2, SegmentSlackOptimisation so, Direction d, Compaction c, Segment along) {
 		boolean horizontal = d == Direction.LEFT || d == Direction.RIGHT;
-		double minDistance = getMinimumDistance(horizontal, (Segment) s1.getUnderlying(), (Segment) s2.getUnderlying(), along);
+		double minDistance = getMinimumDistance(horizontal, s1.getUnderlying(), s2.getUnderlying(), along);
 		so.ensureMinimumDistance(s1, s2, (int) minDistance);
 	}
 //

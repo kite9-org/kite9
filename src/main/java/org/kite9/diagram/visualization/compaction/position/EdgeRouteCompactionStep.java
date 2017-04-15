@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction.position;
 import java.util.Collections;
 import java.util.List;
 
+import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
@@ -17,6 +18,8 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
@@ -34,7 +37,17 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	public void compact(Compaction c, Rectangular r, Compactor cr) {
 		if (r instanceof Diagram) {
 			Orthogonalization o = c.getOrthogonalization();
+			setVertexPositions(c.getXSlackOptimisation());
+			setVertexPositions(c.getYSlackOptimisation());
 			setEdgeRoutes(o);
+		}
+	}
+
+	private void setVertexPositions(SegmentSlackOptimisation so) {
+		for (Slideable<Segment> s : so.getAllSlideables()) {
+			Segment und = s.getUnderlying();
+			double pos = s.getMinimumPosition();
+			und.setPosition(pos);
 		}
 	}
 

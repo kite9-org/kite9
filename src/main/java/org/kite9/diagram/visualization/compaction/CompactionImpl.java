@@ -74,14 +74,8 @@ public class CompactionImpl implements Compaction {
 		return hMap;
 	}
 
-	public Rectangle<Slideable> getFaceSpace(DartFace df) {
-		Rectangle<Slideable> out = faceSpaces.get(df);
-		if (out == null) {
-			// we need to create one because we didn't rectangularize
-			
-			
-		}
-		
+	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df) {
+		Rectangle<Slideable<Segment>> out = faceSpaces.get(df);
 		return out;
 	}
 	
@@ -91,9 +85,9 @@ public class CompactionImpl implements Compaction {
 		return vMap;
 	}
 
-	private Map<DartFace, Rectangle<Slideable>> faceSpaces = new HashMap<DartFace, Rectangle<Slideable>>();
+	private Map<DartFace, Rectangle<Slideable<Segment>>> faceSpaces = new HashMap<>();
 	
-	public void createFaceSpace(DartFace df, Rectangle<Slideable> border) {
+	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> border) {
 		faceSpaces.put(df, border);
 	}
 
