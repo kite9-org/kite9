@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -26,41 +25,6 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	public int maxCount = 0;
 	protected Collection<Slideable<X>> allSlideables = new LinkedHashSet<>();
 
-//	public void updatePositionalOrdering() {
-//		positionalOrder = new ArrayList<Slideable>(allSlideables);
-//		Collections.sort(positionalOrder, new Comparator<Slideable>() {
-//	
-//			public int compare(Slideable o1, Slideable o2) {
-//				Integer p1 = o1.getMinimumPosition();
-//				Integer p2 = o2.getMinimumPosition();
-//				if (p1 == null) {
-//					return -1;
-//				} else if (p2 == null) {
-//					return 1;
-//				} else {
-//					int out = ((Integer) p1).compareTo(p2);
-//					if (out == 0) {
-//						// in the event of a tie, work it out from dependency
-////						if (o1.hasTransitiveForwardConstraintTo(o2)) {
-////							return -1;
-////						} else if (o1.hasTransitiveForwardConstraintTo(o1)){
-////							return 1;
-////						} else {
-//							return 0;
-////						}
-//					}
-//					
-//		
-//					return out;
-//				}
-//			}
-//		});
-//	
-//		for (int i = 0; i < positionalOrder.size(); i++) {
-//			Slideable slideable = positionalOrder.get(i);
-//			slideable.positionalOrder = i;
-//		}
-//	}
 
 	public abstract String getIdentifier(Object underneath);
 
@@ -69,8 +33,6 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	public Collection<Slideable<X>> getAllSlideables() {
 		return allSlideables;
 	}
-
-	protected Direction d;
 //
 //	public List<Slideable> getPositionalOrder() {
 //		return positionalOrder;
@@ -78,10 +40,6 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	public AbstractSlackOptimisation() {
 		super();
-	}
-
-	public Direction getDirection() {
-		return d;
 	}
 
 	public void ensureMinimumDistance(Slideable<X> left, Slideable<X> right, int minLength) {
@@ -173,10 +131,6 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	protected AbstractSlackOptimisation<X> getSelf() {
 		return this;
-	}
-
-	public String toString() {
-		return "SlackOptimisation:" + getDirection();
 	}
 
 	public abstract void initialiseSlackOptimisation();

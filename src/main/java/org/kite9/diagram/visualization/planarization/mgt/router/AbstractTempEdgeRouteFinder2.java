@@ -121,16 +121,6 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 	 * otherwise there will be a contradiction in the planarization.
 	 */
 	protected boolean canCross(Edge e2, EdgePath ep, boolean goingDown) {
-		if (e2.getOriginalUnderlying() instanceof DiagramKite9XMLElement) {
-			// you can't leave the top container
-			return false;
-		}
-	
-		if ((e2.getOriginalUnderlying() instanceof Container) && (e.getOriginalUnderlying() instanceof Container)) {
-			// one container can't cross another
-			return false;
-		}
-	
 		if (e2 instanceof BorderEdge) {
 			return canCrossBorderEdge((BorderEdge) e2, ep);
 		} else {

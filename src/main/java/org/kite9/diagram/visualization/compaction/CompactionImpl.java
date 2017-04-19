@@ -53,8 +53,8 @@ public class CompactionImpl implements Compaction {
 		this.vMap = vmap;
 		this.facesForRectangular = facesForRectangular;
 		this.dartToSegmentMap = dartToSegmentMap;		
-		this.xSlackOptimisation = new SegmentSlackOptimisation(horizontal, Direction.RIGHT);
-		this.ySlackOptimisation = new SegmentSlackOptimisation(vertical, Direction.DOWN);
+		this.xSlackOptimisation = new SegmentSlackOptimisation(horizontal);
+		this.ySlackOptimisation = new SegmentSlackOptimisation(vertical);
 	}
 	
 	private final SegmentSlackOptimisation xSlackOptimisation; 

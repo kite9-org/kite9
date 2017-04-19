@@ -9,6 +9,7 @@ import java.util.Map;
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
@@ -41,8 +42,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		return (underlying instanceof Leaf) || (underlying instanceof Connected) || (underlying instanceof Label);
 	}
 
-	public SegmentSlackOptimisation(List<Segment> segments, Direction d) {
-		this.d = d;
+	public SegmentSlackOptimisation(List<Segment> segments) {
 		List<Slideable<Segment>> slideables = new ArrayList<>(segments.size());
 
 		for (Segment s : segments) {
@@ -68,6 +68,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	
 
 	private void setupMinimumDistancesDueToDarts(Slideable<Segment> s) {
+		Direction d = s.getUnderlying().getDimension() == PositionAction.XAction ? Direction.DOWN : Direction.RIGHT;
 		for (Vertex v : ((Segment)s.getUnderlying()).getVerticesInSegment()) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) {

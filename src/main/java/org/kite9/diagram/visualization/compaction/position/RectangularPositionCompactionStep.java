@@ -30,8 +30,8 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 	}
 
 	private void compactInternal(Compaction c, Rectangular r) {
-		OPair<Slideable<Segment>> x = c.getXSlackOptimisation().getSlideablesFor(r);
-		OPair<Slideable<Segment>> y = c.getYSlackOptimisation().getSlideablesFor(r);
+		OPair<Slideable<Segment>> y = c.getXSlackOptimisation().getSlideablesFor(r);
+		OPair<Slideable<Segment>> x = c.getYSlackOptimisation().getSlideablesFor(r);
 		double xMin = x.getA().getMinimumPosition();
 		double xMax = x.getB().getMinimumPosition();
 		double yMin = y.getA().getMinimumPosition();

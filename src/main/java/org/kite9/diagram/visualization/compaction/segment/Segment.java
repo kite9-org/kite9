@@ -137,6 +137,7 @@ public class Segment implements Comparable<Segment> {
 	public void setPosition(double d) {
 		for (Vertex v : getVerticesInSegment()) {
 			dimension.set(v, d);
+			System.out.println("setting: "+v+" "+dimension+" "+d);
 		}
 	
 		position = d;

@@ -94,6 +94,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				}
 				
 				for (int i = 0; i < theStack.size(); i++) {
+					fixSize(c, getIthElementRotating(theStack, i), 0);
 //					fixDartSize(c, getIthElementRotating(theStack, i).getUnderlying());
 				}
 			}
@@ -315,9 +316,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	private void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
 			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, Direction d1, Direction d2) {
 		fixSize(c, link, 0);
-		fixSize(c, meets, 0);
 		fixSize(c, par, 0);
-		fixSize(c, extender, 0);
 
 		double newMeetsLength = calculateNewMeetsLength(meets, par);
 		int newMeetsChangeCost = meets.getChangeCost();
