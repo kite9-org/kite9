@@ -167,7 +167,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		while (true) {
 			boolean found = false;
 			for (Edge e : from.getEdges()) {
-				if ((e instanceof Dart) && (e.getOriginalUnderlying() == link)) {
+				if ((e instanceof Dart) && (e.isPartOf(link))) {
 					if (e.getDrawDirectionFrom(from) == d) {
 						// edge continues, persevere with it
 						from = e.otherEnd(from);

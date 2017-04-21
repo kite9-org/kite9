@@ -201,7 +201,11 @@ public class Dart extends AbstractEdge {
 
 	@Override
 	public boolean isPartOf(DiagramElement de) {
-		return false;
+		if (partOf instanceof ArtificialElement) {
+			return ((ArtificialElement) partOf).isPartOf(de);
+		} else {
+			return false;
+		}
 	}
 	
 	private double length;

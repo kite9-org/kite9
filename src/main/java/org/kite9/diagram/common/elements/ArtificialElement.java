@@ -1,6 +1,5 @@
 package org.kite9.diagram.common.elements;
 
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
