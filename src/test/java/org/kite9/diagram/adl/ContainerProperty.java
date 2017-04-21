@@ -21,12 +21,12 @@ import org.w3c.dom.Node;
  */
 public class ContainerProperty extends AbstractStyleableXMLElement {
 
-	public ContainerProperty(String part, ADLDocument d) {
-		super(part, d);
+	public ContainerProperty(String id, String part, ADLDocument d) {
+		super(id, part, d);
 	}
 	
-	public ContainerProperty(String part, ADLDocument d, Collection<? extends Kite9XMLElement> contents) {
-		this(part, d);
+	public ContainerProperty(String id, String part, ADLDocument d, Collection<? extends Kite9XMLElement> contents) {
+		this(id, part, d);
 		for (Kite9XMLElement e : contents) {
 			appendChild(e);
 		}
@@ -34,7 +34,7 @@ public class ContainerProperty extends AbstractStyleableXMLElement {
 
 	@Override
 	protected Node newNode() {
-		return new ContainerProperty(tagName, (ADLDocument) ownerDocument);
+		return new ContainerProperty(createID(), tagName, (ADLDocument) ownerDocument);
 	}
 
 	public int size() {

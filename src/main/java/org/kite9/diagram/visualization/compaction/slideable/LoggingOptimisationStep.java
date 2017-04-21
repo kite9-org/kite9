@@ -27,10 +27,10 @@ public class LoggingOptimisationStep extends AbstractCompactionStep {
 		optimise(c, c.getHorizontalSegmentSlackOptimisation(), c.getVerticalSegmentSlackOptimisation());
 	}
 
-	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
-		log.send(log.go() ? null : "Minimisation Steps: X: "+xo.maxCount+" Y: "+yo.maxCount+" T: "+ (xo.maxCount + yo.maxCount));
-		log.send(log.go() ? null : "Push Steps: X: "+xo.pushCount+ " Y: "+yo.pushCount+ "T: "+(xo.pushCount + yo.pushCount));
-		log.send("Xo:", xo.getAllSlideables());
-		log.send("Yo:", yo.getAllSlideables());
+	public void optimise(Compaction c, SegmentSlackOptimisation horizontalSegments, SegmentSlackOptimisation verticalSegments) {
+		log.send(log.go() ? null : "Minimisation Steps: \n  HorizontalSegments: "+horizontalSegments.maxCount+" \n  Vertical Segments: "+verticalSegments.maxCount+" T: "+ (horizontalSegments.maxCount + verticalSegments.maxCount));
+		log.send(log.go() ? null : "Push Steps: \n  Horizontal Segments: "+horizontalSegments.pushCount+ " \n  Vertical Segments: "+verticalSegments.pushCount+ "T: "+(horizontalSegments.pushCount + verticalSegments.pushCount));
+		log.send("Horizontal Segments:", horizontalSegments.getAllSlideables());
+		log.send("Vertical Segments:", verticalSegments.getAllSlideables());
 	}
 }

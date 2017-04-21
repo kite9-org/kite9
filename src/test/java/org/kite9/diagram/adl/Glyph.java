@@ -40,11 +40,11 @@ public class Glyph extends AbstractStyleableXMLElement {
 		}
 		
 		if (text!=null) {
-			setText(new ContainerProperty("text-lines", doc, text));
+			setText(new ContainerProperty(id+"-text-lines", "text-lines", doc, text));
 		}
 		
 		if (symbols!=null) {
-			setSymbols(new ContainerProperty("symbols", doc, symbols));
+			setSymbols(new ContainerProperty(id+"-symbols", "symbols", doc, symbols));
 		}		
 	}
 	

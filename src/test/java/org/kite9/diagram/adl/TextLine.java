@@ -44,7 +44,7 @@ public class TextLine extends AbstractStyleableXMLElement {
 		super(id, tag, doc);
 		setText(text);
 		if (symbols != null) {
-			setSymbols(new ContainerProperty("symbols", doc, symbols));
+			setSymbols(new ContainerProperty(id+"-symbols", "symbols", doc, symbols));
 		}
 	}
 

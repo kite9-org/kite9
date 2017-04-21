@@ -83,16 +83,11 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	private double getMinimumDistanceRectangularToRectangular(Rectangular a, Direction aSide, Rectangular b, Direction bSide, Direction d, DiagramElement along) {
-		if (a == b) {
-			if ((along != null) && (along != a)) {
-				throw new Kite9ProcessingException("Was not expecting along here");
-			}
-			return getInternalDistance(a, aSide, bSide); 
-		}
-
 		// distances when one element is contained within another
 		double length;
-		if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
+		if (a == b) {
+			length =  getInternalDistance(a, aSide, bSide); 
+		} else if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
 			length = getPadding(a, d);
 		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
 			length = getPadding(b, Direction.reverse(d));

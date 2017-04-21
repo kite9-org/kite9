@@ -158,7 +158,8 @@ glyph > text-lines > text-line {
 	margin: 0 0 0 0; 
 	font-size: 12px;
 	stroke: black;
-	fill: none;
+	fill: black;
+	font-family: "opensans-regular-webfont";
 	text-align: start;
 	template: url(template.svg#text-line);
 }
@@ -172,7 +173,7 @@ glyph > symbols {
 
 /* Arrow */
 arrow {
-	padding: 2px 3px 2px 3px; 
+	padding: 3px 5px 3px 5px; 
 	margin: 10 10 10 10; 
 	fill: black;
 	stroke: black;
