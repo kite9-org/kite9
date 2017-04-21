@@ -124,14 +124,14 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				
 				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
 						|| (directionOfInsertion == Direction.LEFT)) {
-					separate(top, uLimit, c.getYSlackOptimisation(), Direction.DOWN, c, null);
-					separate(dLimit, bottom, c.getYSlackOptimisation(), Direction.DOWN, c, null);
-					separate(left, lLimit, c.getXSlackOptimisation(), Direction.RIGHT, c, null);
+					separate(top, uLimit, Direction.DOWN, c, null);
+					separate(dLimit, bottom, Direction.DOWN, c, null);
+					separate(left, lLimit, Direction.RIGHT, c, null);
 					left = rLimit;
 				} else {
-					separate(top, uLimit, c.getYSlackOptimisation(), Direction.DOWN, c, null);
-					separate(left, lLimit, c.getXSlackOptimisation(), Direction.RIGHT, c, null);
-					separate(rLimit, right, c.getXSlackOptimisation(), Direction.RIGHT, c, null);
+					separate(top, uLimit,  Direction.DOWN, c, null);
+					separate(left, lLimit, Direction.RIGHT, c, null);
+					separate(rLimit, right, Direction.RIGHT, c, null);
 					top = dLimit;
 				}
 				
@@ -142,9 +142,9 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 		if (addedSomething) {
 			if ((directionOfInsertion == Direction.DOWN) || (directionOfInsertion == Direction.UP)) {
-				separate(top, bottom, c.getYSlackOptimisation(), Direction.DOWN, c, null);
+				separate(top, bottom, Direction.DOWN, c, null);
 			} else {
-				separate(left, right, c.getXSlackOptimisation(), Direction.RIGHT, c, null);
+				separate(left, right, Direction.RIGHT, c, null);
 			}
 		}
 	}

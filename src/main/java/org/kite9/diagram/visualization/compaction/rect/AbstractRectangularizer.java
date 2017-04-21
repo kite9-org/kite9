@@ -92,11 +92,10 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				if (theStack.size() != 4) {
 					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df.getUnderlying());
 				}
-				
-				for (int i = 0; i < theStack.size(); i++) {
-					fixSize(c, getIthElementRotating(theStack, i), 0);
-//					fixDartSize(c, getIthElementRotating(theStack, i).getUnderlying());
-				}
+			}
+
+			for (int i = 0; i < theStack.size(); i++) {
+				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace);
 			}
 			
 			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
@@ -224,14 +223,14 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * 
 	 * This errs on the side of too large right now
 	 */
-	private void fixSize(Compaction c, VertexTurn link, double externalMin) {
+	private void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave) {
 		Slideable<Segment> early = link.getStartsWith();
 		Slideable<Segment> late = link.getEndsWith();
 		Segment early1 = (Segment) early.getUnderlying();
 		Segment late1 = (Segment) late.getUnderlying();
 		Direction d = link.getDirection();
 		
-		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1, link.getSegment());
+		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1, link.getSegment(), concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureLength(Math.max(minDistance, externalMin));
 	
@@ -315,8 +314,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	private void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
 			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, Direction d1, Direction d2) {
-		fixSize(c, link, 0);
-		fixSize(c, par, 0);
+		fixSize(c, link, 0, true);
+		fixSize(c, par, 0, true);
 
 		double newMeetsLength = calculateNewMeetsLength(meets, par);
 		int newMeetsChangeCost = meets.getChangeCost();
@@ -341,8 +340,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			meets.resetEndsWith(extender.getSlideable(), false, newMeetsChangeCost);
 		}
 		
-		fixSize(c, meets, newMeetsLength);
-		fixSize(c, extender, extensionLength);
+		fixSize(c, meets, newMeetsLength, true);
+		fixSize(c, extender, extensionLength, true);
 	}
 
 	private double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {

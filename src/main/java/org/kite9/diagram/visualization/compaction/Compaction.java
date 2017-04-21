@@ -17,11 +17,11 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
 public interface Compaction {
 
-	public SegmentSlackOptimisation getXSlackOptimisation();
+	public SegmentSlackOptimisation getHorizontalSegmentSlackOptimisation();
 
-	public SegmentSlackOptimisation getYSlackOptimisation();
+	public SegmentSlackOptimisation getVerticalSegmentSlackOptimisation();
 	
-	public SegmentSlackOptimisation getSlackOptimisation(Direction d);
+	public SegmentSlackOptimisation getSlackOptimisation(boolean horizontal);
 
 	public abstract Orthogonalization getOrthogonalization();
 

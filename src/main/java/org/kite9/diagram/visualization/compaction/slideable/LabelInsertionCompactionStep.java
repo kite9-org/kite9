@@ -72,10 +72,10 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		c.getXSlackOptimisation().updatePositionalOrdering();
-		c.getYSlackOptimisation().updatePositionalOrdering();
-		processContainerLabels(c, c.getXSlackOptimisation(), c.getYSlackOptimisation());
-		processConnectionLabels(c, c.getXSlackOptimisation(), c.getYSlackOptimisation());
+		c.getHorizontalSegmentSlackOptimisation().updatePositionalOrdering();
+		c.getVerticalSegmentSlackOptimisation().updatePositionalOrdering();
+		processContainerLabels(c, c.getHorizontalSegmentSlackOptimisation(), c.getVerticalSegmentSlackOptimisation());
+		processConnectionLabels(c, c.getHorizontalSegmentSlackOptimisation(), c.getVerticalSegmentSlackOptimisation());
 	}
 
 	/**

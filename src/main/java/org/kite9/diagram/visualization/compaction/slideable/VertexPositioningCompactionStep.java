@@ -21,8 +21,8 @@ public class VertexPositioningCompactionStep extends AbstractCompactionStep {
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		if (r instanceof Diagram) {
-			setSegmentPostions(c.getXSlackOptimisation());
-			setSegmentPostions(c.getXSlackOptimisation());
+			setSegmentPostions(c.getHorizontalSegmentSlackOptimisation());
+			setSegmentPostions(c.getHorizontalSegmentSlackOptimisation());
 		}
 	}
 

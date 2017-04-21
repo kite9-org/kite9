@@ -25,8 +25,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		super(buffer, gridSize);
 	}
 
-	@Override
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	protected CostedDimension size(DiagramElement element, Dimension2D within) {
 		if (element instanceof HasLayeredGraphics) {
 			DiagramElementSizing sizing = getSizing((HasLayeredGraphics) element);
 

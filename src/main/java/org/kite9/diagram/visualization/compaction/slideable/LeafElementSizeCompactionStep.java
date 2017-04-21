@@ -57,8 +57,8 @@ public class LeafElementSizeCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		orderDiagramElementSizes(c.getXSlackOptimisation());
-		orderDiagramElementSizes(c.getYSlackOptimisation());
+		orderDiagramElementSizes(c.getHorizontalSegmentSlackOptimisation());
+		orderDiagramElementSizes(c.getVerticalSegmentSlackOptimisation());
 	}
 
 	

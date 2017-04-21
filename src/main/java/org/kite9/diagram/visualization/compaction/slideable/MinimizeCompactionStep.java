@@ -53,13 +53,13 @@ public class MinimizeCompactionStep extends AbstractCompactionStep {
 		DiagramElementSizing sizing = r.getSizing();
 		
 		if (sizing == DiagramElementSizing.MINIMIZE) {
-			OPair<Slideable<Segment>> lr = c.getXSlackOptimisation().getSlideablesFor(r);
-			OPair<Slideable<Segment>> ud = c.getYSlackOptimisation().getSlideablesFor(r);
-			if ((lr != null) && (ud != null)) {
+			OPair<Slideable<Segment>> hs = c.getHorizontalSegmentSlackOptimisation().getSlideablesFor(r);
+			OPair<Slideable<Segment>> vs = c.getVerticalSegmentSlackOptimisation().getSlideablesFor(r);
+			if ((hs != null) && (vs != null)) {
 				// sometimes, we might not display everything (e.g. labels)
 				log.send("Minimizing Distance "+r);
-				minimizeDistance(c.getXSlackOptimisation(), lr.getA(), lr.getB());
-				minimizeDistance(c.getYSlackOptimisation(), ud.getA(), ud.getB());
+				minimizeDistance(c.getHorizontalSegmentSlackOptimisation(), hs.getA(), hs.getB());
+				minimizeDistance(c.getVerticalSegmentSlackOptimisation(), vs.getA(), vs.getB());
 			}			
 		}
 	}

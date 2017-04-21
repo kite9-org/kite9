@@ -6,6 +6,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
@@ -37,8 +38,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	public static final double EDGE_DISTANCE = 2;
 	
 
-	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, DiagramElement along) {
-		double distance = getMinimumDistanceInner(a,aSide,  b, bSide, d, true, along);
+	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
+		double distance = getMinimumDistanceInner(a,aSide,  b, bSide, d, true, along, concave);
 		log.send(log.go() ? null : "Minimum distances between  " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + d + " is " + distance);
 		return distance;
 
@@ -47,9 +48,14 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	/**
 	 * Given two diagram attr, separated with a gutter, figure out how much
 	 * space must be between them.
+	 * @param concave 
 	 */
-	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse, DiagramElement along) {
+	private double getMinimumDistanceInner(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, boolean reverse, DiagramElement along, boolean concave) {
 		double length;
+		
+		if (!concave) {
+			return incorporateAlongLength(along, d, 0);
+		}
 		
 		if ((a instanceof Connection) && (b instanceof Connection)) {
 			length = getMinimumDistanceConnectionToConnection((Connection) a, aSide, (Connection) b, bSide, d, along);
@@ -135,6 +141,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	}
 	
+	protected abstract CostedDimension size(DiagramElement a, Dimension2D s);
+
 	public abstract double getLinkGutter(DiagramElement element, Direction d);
 	
 	public abstract double getLinkInset(DiagramElement element, Direction d);

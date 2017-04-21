@@ -37,8 +37,8 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	public void compact(Compaction c, Rectangular r, Compactor cr) {
 		if (r instanceof Diagram) {
 			Orthogonalization o = c.getOrthogonalization();
-			setVertexPositions(c.getXSlackOptimisation());
-			setVertexPositions(c.getYSlackOptimisation());
+			setVertexPositions(c.getHorizontalSegmentSlackOptimisation());
+			setVertexPositions(c.getVerticalSegmentSlackOptimisation());
 			setEdgeRoutes(o);
 		}
 	}

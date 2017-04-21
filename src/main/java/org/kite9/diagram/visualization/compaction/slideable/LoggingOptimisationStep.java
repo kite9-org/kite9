@@ -24,7 +24,7 @@ public class LoggingOptimisationStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		optimise(c, c.getXSlackOptimisation(), c.getYSlackOptimisation());
+		optimise(c, c.getHorizontalSegmentSlackOptimisation(), c.getVerticalSegmentSlackOptimisation());
 	}
 
 	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {

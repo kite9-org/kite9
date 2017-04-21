@@ -53,19 +53,19 @@ public class CompactionImpl implements Compaction {
 		this.vMap = vmap;
 		this.facesForRectangular = facesForRectangular;
 		this.dartToSegmentMap = dartToSegmentMap;		
-		this.xSlackOptimisation = new SegmentSlackOptimisation(horizontal);
-		this.ySlackOptimisation = new SegmentSlackOptimisation(vertical);
+		this.horizontalSegmentSlackOptimisation = new SegmentSlackOptimisation(horizontal);
+		this.verticalSegmentSlackOptimisation = new SegmentSlackOptimisation(vertical);
 	}
 	
-	private final SegmentSlackOptimisation xSlackOptimisation; 
-	private final SegmentSlackOptimisation ySlackOptimisation;
+	private final SegmentSlackOptimisation horizontalSegmentSlackOptimisation; 
+	private final SegmentSlackOptimisation verticalSegmentSlackOptimisation;
 	
-	public SegmentSlackOptimisation getXSlackOptimisation() {
-		return xSlackOptimisation;
+	public SegmentSlackOptimisation getHorizontalSegmentSlackOptimisation() {
+		return horizontalSegmentSlackOptimisation;
 	}
 
-	public SegmentSlackOptimisation getYSlackOptimisation() {
-		return ySlackOptimisation;
+	public SegmentSlackOptimisation getVerticalSegmentSlackOptimisation() {
+		return verticalSegmentSlackOptimisation;
 	}
 
 	private Map<Vertex, Segment> hMap;
@@ -135,11 +135,11 @@ public class CompactionImpl implements Compaction {
 	}
 
 	@Override
-	public SegmentSlackOptimisation getSlackOptimisation(Direction d) {
-		if ((d==Direction.UP) || (d == Direction.DOWN)) {
-			return getYSlackOptimisation();
+	public SegmentSlackOptimisation getSlackOptimisation(boolean horizontal) {
+		if (horizontal) {
+			return getHorizontalSegmentSlackOptimisation();
 		} else {
-			return getXSlackOptimisation();
-		}
+			return getVerticalSegmentSlackOptimisation();
+		} 
 	}
 }

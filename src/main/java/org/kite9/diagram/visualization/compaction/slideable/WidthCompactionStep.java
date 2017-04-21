@@ -26,8 +26,8 @@ public class WidthCompactionStep extends AbstractCompactionStep {
 	
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		if (r instanceof Diagram) {
-			setFor(c.getXSlackOptimisation());
-			setFor(c.getYSlackOptimisation());
+			setFor(c.getHorizontalSegmentSlackOptimisation());
+			setFor(c.getVerticalSegmentSlackOptimisation());
 		}
 	}
 	

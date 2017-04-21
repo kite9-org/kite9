@@ -30,8 +30,8 @@ public class EdgeSeparationCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		checkLengths(c.getYSlackOptimisation(), Direction.DOWN); 
-		checkLengths(c.getXSlackOptimisation(), Direction.RIGHT); 
+		checkLengths(c.getVerticalSegmentSlackOptimisation(), Direction.DOWN); 
+		checkLengths(c.getHorizontalSegmentSlackOptimisation(), Direction.RIGHT); 
 	}
 
 	private void checkLengths(SegmentSlackOptimisation so, Direction d) {

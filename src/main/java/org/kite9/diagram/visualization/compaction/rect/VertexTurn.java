@@ -28,7 +28,7 @@ class VertexTurn {
 	}
 
 	private static Slideable<Segment> getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
-		return c.getSlackOptimisation(Direction.rotateClockwise(d)).getVertexToSlidableMap().get(startsWith);
+		return c.getSlackOptimisation(!Direction.isHorizontal(d)).getVertexToSlidableMap().get(startsWith);
 	}
 	
 	private Slideable<Segment> s;

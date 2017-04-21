@@ -19,6 +19,6 @@ public interface Displayer {
 	 * 
 	 * Note that size will *not* consider nested elements.  
 	 */
-	CostedDimension size(DiagramElement element, Dimension2D within);
+	//CostedDimension size(DiagramElement element, Dimension2D within);
 
 }

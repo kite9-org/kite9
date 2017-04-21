@@ -72,8 +72,8 @@ public class SlackCenteringCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		shareSlack(c.getXSlackOptimisation(), c);
-		shareSlack(c.getYSlackOptimisation(), c);
+		shareSlack(c.getHorizontalSegmentSlackOptimisation(), c);
+		shareSlack(c.getVerticalSegmentSlackOptimisation(), c);
 	}
 
 	private void shareSlack(SegmentSlackOptimisation xo, Compaction c) {
