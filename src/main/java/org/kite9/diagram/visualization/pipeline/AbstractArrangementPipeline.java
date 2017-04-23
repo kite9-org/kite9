@@ -99,7 +99,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //				), 
 				new WidthCompactionStep(getDisplayer()), 
 				new LoggingOptimisationStep(getDisplayer()),
-				new EdgeRouteCompactionStep(), 
+				new EdgeRouteCompactionStep(getDisplayer()), 
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(getDisplayer())
 				};

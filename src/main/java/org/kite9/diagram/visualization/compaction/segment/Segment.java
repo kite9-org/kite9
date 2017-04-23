@@ -12,13 +12,9 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.HPos;
-import org.kite9.diagram.model.position.VPos;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -81,18 +77,6 @@ public class Segment implements Comparable<Segment> {
 		
 		throw new Kite9ProcessingException("Don't know what this is: "+o);
 	}
-
-	private Stream<UnderlyingInfo> convertVertexToUnderlying(Vertex v, boolean horizontal) {
-		if (v instanceof MultiCornerVertex) {
-			return ((MultiCornerVertex) v).getAnchors().stream().map(a -> {
-				Side s = getSideFromAnchor(horizontal, a);
-				return new UnderlyingInfo(a.getDe(), s);
-			});
-		} else {
-			return Stream.of(new UnderlyingInfo(v.getOriginalUnderlying(), Side.NEITHER));
-		}
-		
-	}
 	
 	private Side getSideFromDirection(Direction d) {
 		switch (d) {
@@ -104,14 +88,6 @@ public class Segment implements Comparable<Segment> {
 			return Side.START;
 		default:
 			return Side.NEITHER;
-		}
-	}
-	
-	private Side getSideFromAnchor(boolean horizontal, Anchor a) {
-		if (horizontal) {
-			return a.getLr() == HPos.LEFT ? Side.START : Side.END;
-		} else {
-			return a.getUd() == VPos.UP ? Side.START : Side.END;
 		}
 	}
 

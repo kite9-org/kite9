@@ -18,6 +18,7 @@ import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
@@ -551,10 +552,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			b.to = d2;
 			
 			// incoming direction
-			b.fromDir = d1.getTo().getOriginalUnderlying() == forItem ? d1.getDrawDirection() : Direction.reverse(d1.getDrawDirection());
+			b.fromDir = d1.getTo().isPartOf(forItem) ? d1.getDrawDirection() : Direction.reverse(d1.getDrawDirection());
 			
 			// outgoing direction
-			b.toDir = d2.getFrom().getOriginalUnderlying() == forItem ? d2.getDrawDirection() : Direction.reverse(d2.getDrawDirection());
+			b.toDir = d2.getFrom().isPartOf(forItem) ? d2.getDrawDirection() : Direction.reverse(d2.getDrawDirection());
 			out.add(b);
 
 			boolean fromIncident = allNewVertices.contains(d1.getFrom());
@@ -654,7 +655,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			boolean invisible = thisEdge instanceof DirectionEnforcingElement;
 			if (lastEdge != thisEdge) {
 				// need to add a dart for this segment
-				vsv = createSideVertex(d, underlying, i, invisible);
+				vsv = createSideVertex(d, ((ConnectionEdge) thisEdge).getOriginalUnderlying(), (Connected) underlying, i, invisible);
 				i++;
 
 				Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize, borderEdge);
@@ -698,12 +699,12 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 	}
 
-	protected Vertex createSideVertex(Direction d, DiagramElement underlying, int i, boolean invisible) {
+	protected Vertex createSideVertex(Direction d, Connection cn, Connected cd, int i, boolean invisible) {
 		Vertex vsv;
 		if (invisible) {
-			vsv = new HiddenSideVertex(underlying.getID() + "/" + d.toString() + i, underlying);
+			vsv = new HiddenSideVertex(cd.getID() + "/" + d.toString() + i, cd, cn);
 		} else {
-			vsv = new SideVertex(underlying.getID() + "/" + d.toString() + i, underlying);
+			vsv = new SideVertex(cd.getID() + "/" + d.toString() + i, cd, cn);
 		}
 		return vsv;
 	}

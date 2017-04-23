@@ -346,7 +346,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 * Decide side for container edges and edge crossing vertexes
 	 */
 	private boolean canCorner(Vertex v, Edge before, Edge after) {
-		if (before.getOriginalUnderlying()==after.getOriginalUnderlying()) {
+		if (hasSameUnderlying(before, after)) {
 			if (before.getDrawDirectionFrom(v) != Direction.reverse(after.getDrawDirectionFrom(v))) {
 				return true;
 			}
@@ -354,6 +354,12 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		}
 		
 		return true;
+	}
+
+
+	private boolean hasSameUnderlying(Edge before, Edge after) {
+		return ((PlanarizationEdge) before).getDiagramElements().keySet()
+				.equals(((PlanarizationEdge)after).getDiagramElements().keySet());
 	} 
 
 }

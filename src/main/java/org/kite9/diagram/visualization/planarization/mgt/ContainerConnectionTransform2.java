@@ -148,7 +148,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 				}
 
 				receivingEdge = splitEdgeFromVertex(v.getOriginalUnderlying().getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
-					v.getOriginalUnderlying(), v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
+					v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
 				
 			}
 			
@@ -177,9 +177,9 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	/**
 	 * Splits the receivingEdge with a new vertex, and moves "mover" onto it.  "after" is the edge following mover in the current ordering
 	 */
-	private PlanarizationEdge splitEdgeFromVertex(String vertexName, DiagramElement c, Vertex v, Planarization pln, PlanarizationEdge receivingEdge, PlanarizationEdge mover, PlanarizationEdge after, boolean clockwise) {
+	private PlanarizationEdge splitEdgeFromVertex(String vertexName, Vertex v, Planarization pln, PlanarizationEdge receivingEdge, PlanarizationEdge mover, PlanarizationEdge after, boolean clockwise) {
 		// ok, splitting time - create a new vertex for the 'next' edge
-		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName, c);
+		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName);
 
 		// need to move next to the new vertex
 		if (mover.getFrom() == v) {

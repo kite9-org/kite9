@@ -1,6 +1,8 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
@@ -11,9 +13,7 @@ import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -28,7 +28,6 @@ import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFin
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.PlanarizationCrossPath;
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.PlanarizationSide;
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.StartPath;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -205,18 +204,10 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 		}
 	}
 
-	private Vertex createCrossingVertex(Edge e2, Edge e1) {
-		// crossing vertices for container edges should belong to their container
-		DiagramElement underlying = null;
-		DiagramElement e1Under = e1.getOriginalUnderlying();
-		DiagramElement e2Under = e2.getOriginalUnderlying();
-		if (e1Under instanceof Container) {
-			underlying = e1Under;
-		} else if (e2Under instanceof Container) {
-			underlying = e2Under;
-		}
-		
-		return new EdgeCrossingVertex("ecv" + vertexIntro++, underlying);
+	private Vertex createCrossingVertex(PlanarizationEdge e2, PlanarizationEdge e1) {
+		Set<DiagramElement> underlyings = new HashSet<>(e1.getDiagramElements().keySet());
+		underlyings.addAll(e2.getDiagramElements().keySet());
+		return new EdgeCrossingVertex("ecv" + vertexIntro++, underlyings);
 	}
 
 	/**

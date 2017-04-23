@@ -42,8 +42,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 					PlanarizationEdge e = f.getBoundary(i);
 					
 					if (e instanceof SingleElementPlanarizationEdge) {
-						DiagramElement under = ((SingleElementPlanarizationEdge)e).getOriginalUnderlying();
-						if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
+						if (isGeneratedLayoutElement(e) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
 							&& isContainerEdge(f.getBoundary(i + 1)) 
 							&& isContainerEdge(f.getBoundary(i - 1)) 
 							&& isConnectionEdge(f.getBoundary(i+2))) {
@@ -63,8 +62,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 				for (int i = 0; i < 2; i++) {
 					PlanarizationEdge e = f.getBoundary(i);
 					if (e instanceof SingleElementPlanarizationEdge) {
-						DiagramElement under = ((SingleElementPlanarizationEdge) e).getOriginalUnderlying();
-						if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
+						if (isGeneratedLayoutElement(e) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
 							&& isConnectionEdge(f.getBoundary(i+1))) {
 							Vertex es = f.getCorner(i);
 							Edge c = f.getBoundary(i+1);
@@ -80,8 +78,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 				// case of one container, one dimensioned vertex directed against each other
 				for (int i = 0; i < 3; i++) {
 					PlanarizationEdge e = f.getBoundary(i);
-					DiagramElement under = e.getOriginalUnderlying();
-					if ((under instanceof GeneratedLayoutElement) && (((PlanarizationEdge)e).isLayoutEnforcing()) && hasDimensionedEnd(e)) {
+					if (isGeneratedLayoutElement(e) && (((PlanarizationEdge)e).isLayoutEnforcing()) && hasDimensionedEnd(e)) {
 						if (isContainerEdge(f.getBoundary(i + 1)) && isConnectionEdge(f.getBoundary(i - 1))) {
 							removalDone = performRemoval(pln, f, e, i-1, i);
 						} else if (isContainerEdge(f.getBoundary(i - 1)) && isConnectionEdge(f.getBoundary(i + 1))) {
@@ -98,6 +95,17 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 				currentFace ++;
 			}
 		}
+	}
+
+	private boolean isGeneratedLayoutElement(PlanarizationEdge e) {
+		if (e.getDiagramElements().keySet().size() == 1) {
+			for (DiagramElement de : e.getDiagramElements().keySet()) {
+				if (de instanceof GeneratedLayoutElement) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean hasDimensionedEnd(Edge e) {

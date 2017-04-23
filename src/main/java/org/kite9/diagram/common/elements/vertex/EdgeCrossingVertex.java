@@ -20,9 +20,9 @@ public class EdgeCrossingVertex extends AbstractVertex implements MultiElementVe
 		super(name);
 	}
 	
-	public EdgeCrossingVertex(String name, DiagramElement underlying1) {
+	public EdgeCrossingVertex(String name, Set<DiagramElement> underlyings) {
 		super(name);
-		this.underlyings.add(underlying1);
+		this.underlyings = underlyings;
 	}
 
 	@Override

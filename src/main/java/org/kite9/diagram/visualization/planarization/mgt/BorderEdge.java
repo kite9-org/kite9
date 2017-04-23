@@ -184,7 +184,9 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 			return sideb;
 		} else if (from == sideb) {
 			return sidea;
-		} else {
+		} else if ((sidea != null) && (sidea.getParent() == from)) {
+			return sidea;
+		} else { 
 			throw new Kite9ProcessingException(from+" is not mapped to a side");
 		}
 	}

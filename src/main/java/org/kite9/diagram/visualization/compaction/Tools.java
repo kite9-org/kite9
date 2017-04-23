@@ -1,6 +1,8 @@
 package org.kite9.diagram.visualization.compaction;
 
 import org.kite9.diagram.common.elements.ArtificialElement;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -22,7 +24,12 @@ public class Tools implements Logable {
 	 * Returns the user element represented by this construction element.
 	 */
 	public static Object getUltimateElement(ArtificialElement e) {
-		Object out = e.getOriginalUnderlying();
+		Object out = null;
+		if (e instanceof Edge) {
+			out = ((Edge) e).getOriginalUnderlying();
+		} else if (e instanceof Vertex) {
+			out = ((Vertex) e).getOriginalUnderlying();
+		}
 		
 		if (out==null) {
 			return e;

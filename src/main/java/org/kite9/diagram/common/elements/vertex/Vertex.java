@@ -43,4 +43,6 @@ public interface Vertex extends Comparable<Vertex>, ArtificialElement, Positione
 	
 	public Set<DiagramElement> getDiagramElements();
 
+	@Deprecated
+	DiagramElement getOriginalUnderlying();
 }

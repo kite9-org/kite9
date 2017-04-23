@@ -11,7 +11,5 @@ import org.kite9.diagram.model.DiagramElement;
 public interface ArtificialElement {
 		
 	public boolean isPartOf(DiagramElement de);
-		
-	DiagramElement getOriginalUnderlying();
 	
 }

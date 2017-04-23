@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.edge.AbstractEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
@@ -164,8 +165,10 @@ public class Dart extends AbstractEdge {
 	}
 
 	public DiagramElement getOriginalUnderlying() {
-		if (partOf instanceof ArtificialElement) {
-			return ((ArtificialElement) partOf).getOriginalUnderlying();
+		if (partOf instanceof Edge) {
+			return ((Edge) partOf).getOriginalUnderlying();
+		} else if (partOf instanceof Vertex) {
+			return ((Vertex) partOf).getOriginalUnderlying();
 		}
 		
 		return (DiagramElement) partOf;

@@ -45,7 +45,7 @@ public class SingleDirection {
 			boolean moved = (cachePosition == null) || (increasing ? cachePosition < newPos : cachePosition > newPos);
 			
 			if ((moved) || (changedConstraints)) {
-				System.out.println("moving: "+this+" to "+newPos);
+//				System.out.println("moving: "+this+" to "+newPos);
 				cachePosition = newPos;
 //				System.out.println("(fwd)");
 				for (SingleDirection fwd : forward.keySet()) {

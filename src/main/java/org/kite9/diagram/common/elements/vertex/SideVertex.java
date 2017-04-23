@@ -1,10 +1,17 @@
 package org.kite9.diagram.common.elements.vertex;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
- * A vertex modelling the join between a {@link Dart} and a Glyph or Arrow, created in the 
+ * A vertex modelling the join between a Connection and a Connected diagram element, created in the 
  * process of giving a vertex a dimensioned shape in orthogonalization.
  * 
  * @author robmoffat
@@ -12,14 +19,26 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
  */
 public class SideVertex extends AbstractVertex implements MultiElementVertex {
 	
-	public SideVertex(String name, DiagramElement underlying) {
+	private Set<DiagramElement> underlyings = new HashSet<>();
+	
+	public SideVertex(String name, Connected cd, Connection cn) {
 		super(name);
-		this.originalUnderlying = underlying;
+		this.underlyings.add(cd);
+		this.underlyings.add(cn);
 	}
 
-	DiagramElement originalUnderlying;
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return underlyings;
+	}
 
+	@Override
+	public boolean isPartOf(DiagramElement c) {
+		return underlyings.contains(c);
+	}
+
+	@Override
 	public DiagramElement getOriginalUnderlying() {
-		return originalUnderlying;
+		throw new Kite9ProcessingException();
 	}
 }

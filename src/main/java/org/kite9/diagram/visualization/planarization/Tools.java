@@ -46,7 +46,7 @@ public class Tools implements Logable {
 	 * This inserts the new EdgeCrossingVertex into an edge to break it in two
 	 * @param underlying if provided, it is assumed we are breaking the container boundary.
 	 */
-	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name, DiagramElement underlying) {
+	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
 		Vertex from = e.getFrom();
 		Vertex to = e.getTo();
@@ -57,7 +57,7 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Original edge order around " + to + " = " + toEdgeOrdering);
 
 		// split the existing edge to create two edges
-		Vertex split = new EdgeCrossingVertex(name, underlying);
+		Vertex split = new EdgeCrossingVertex(name, e.getDiagramElements().keySet());
 		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces
@@ -378,11 +378,13 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Splitting: "+parent);
 		PlanarizationEdge[] out = parent.split(toIntroduce);
 		
-		EdgeMapping list = pln.getEdgeMappings().get(parent.getOriginalUnderlying());
-		if (list != null) {
-			list.replace(parent, out[0], out[1]);
-			//log.send("Route for "+parent.getOriginalUnderlying()+" is now ", list.getEdges());
+		for (DiagramElement de : parent.getDiagramElements().keySet()) {
+			EdgeMapping list = pln.getEdgeMappings().get(de);
+			if (list != null) {
+				list.replace(parent, out[0], out[1]);
+			}
 		}
+		
 		
 		parent.getFrom().removeEdge(parent);
 		parent.getTo().removeEdge(parent);

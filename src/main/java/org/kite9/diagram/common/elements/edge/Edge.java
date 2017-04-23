@@ -4,6 +4,7 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RenderingInformation;
 
 /**
@@ -35,5 +36,8 @@ public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Determin
 	 */
 	@Deprecated
 	public RenderingInformation getRenderingInformation();
+	
+	@Deprecated
+	DiagramElement getOriginalUnderlying();
 
 }

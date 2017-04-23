@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.position;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -8,6 +9,7 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -20,8 +22,10 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Having identified the position of each segment, this step sets the rendering information
@@ -33,6 +37,12 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
  *
  */
 public class EdgeRouteCompactionStep implements CompactionStep {
+
+	private CompleteDisplayer displayer;
+	
+	public EdgeRouteCompactionStep(CompleteDisplayer displayer) {
+		this.displayer = displayer;
+	}
 
 	public void compact(Compaction c, Rectangular r, Compactor cr) {
 		if (r instanceof Diagram) {
@@ -59,9 +69,21 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 			if (e instanceof ConnectionEdge) {
 				List<Vertex> waypoints = o.getWaypointMap().get(e);
 				if (waypoints!=null) {
+					Connected from = getUnderlyingConnected(e.getFrom());
+					Connected to = getUnderlyingConnected(e.getTo());;
+					
+					
 					// waypoints needs to be in same order as edge
-					if ((Tools.getUltimateElement(e.getFrom())!=Tools.getUltimateElement(waypoints.get(0))) || (Tools.getUltimateElement(e.getTo())!=Tools.getUltimateElement(waypoints.get(waypoints.size()-1)))) {
+//					if ((Tools.getUltimateElement(e.getFrom())!=Tools.getUltimateElement(waypoints.get(0))) || (Tools.getUltimateElement(e.getTo())!=Tools.getUltimateElement(waypoints.get(waypoints.size()-1)))) {
+//						Collections.reverse(waypoints);
+//					}
+					
+					if ((waypoints.get(0).isPartOf(from)) || (waypoints.get(waypoints.size()-1).isPartOf(to))) {
+						// do nothing
+					} else if ((waypoints.get(0).isPartOf(to)) || (waypoints.get(waypoints.size()-1).isPartOf(from))) {
 						Collections.reverse(waypoints);
+					} else {
+						throw new Kite9ProcessingException("Waypoint issue");
 					}
 					
 					RouteRenderingInformation route = (RouteRenderingInformation) e.getRenderingInformation();
@@ -87,32 +109,49 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	}
 		
 
-	private boolean checkForHop(Vertex v) {
-		String edgeStyle = null;
-		if (v instanceof EdgeCrossingVertex) {
-			// this next part checks to see we are crossing another edge, and not a container border
-			for (Edge e : v.getEdges()) {
-				if (!(e instanceof Dart)) {
-					DiagramElement originalUnderlying = e.getOriginalUnderlying();
-					if (!(originalUnderlying instanceof Connection)) {
-						return false;
-					}
-					
-					if (originalUnderlying instanceof Connection) {
-						// TODO: remove link ref here
-						if (edgeStyle==null) {
-							edgeStyle = ((Connection)originalUnderlying).getStyle();
-						} else if (edgeStyle != ((Connection)originalUnderlying).getStyle()) {
-							// means incident edges are diferent styles, no hop needed
-							return false;
-						}
-					}
+	private Connected getUnderlyingConnected(Vertex from) {
+		Connected out = null;
+		for (DiagramElement de : from.getDiagramElements()) {
+			if (de instanceof Connected) {
+				if (out == null) {
+					out = (Connected) de;
+				} else {
+					throw new Kite9ProcessingException();
 				}
 			}
+		}
+		
+		return out;
+	}
+
+	private boolean checkForHop(Vertex v) {
+		if (v instanceof EdgeCrossingVertex) {
+			if (!consistsOfTwoConnections(v)) {
+				return false;
+			}
 			
-			return true;
+			Iterator<DiagramElement> it = v.getDiagramElements().iterator();
+			
+			Connection a = (Connection) it.next();
+			Connection b = (Connection) it.next();
+			
+			return displayer.addHop(a, b);
 		}
 		
 		return false;
+	}
+
+	private boolean consistsOfTwoConnections(Vertex v) {
+		for (DiagramElement de : v.getDiagramElements()) {
+			if (!(de instanceof Connection)) {
+				return false;
+			}
+		}
+		
+		if (v.getDiagramElements().size() != 2) {
+			throw new Kite9ProcessingException("Should be two connections!");
+		}
+		
+		return true;
 	}
 }

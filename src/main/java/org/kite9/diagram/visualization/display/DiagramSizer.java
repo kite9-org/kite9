@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.display;
 
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 
@@ -18,4 +19,8 @@ public interface DiagramSizer {
 	 */
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction direction, DiagramElement along, boolean concave);
 
+	/**
+	 * Determines whether you should draw a hop at the point connection a meets connection b
+	 */
+	public boolean addHop(Connection a, Connection b);
 }
