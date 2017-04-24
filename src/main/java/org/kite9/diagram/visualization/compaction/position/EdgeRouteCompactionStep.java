@@ -69,8 +69,8 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 			if (e instanceof ConnectionEdge) {
 				List<Vertex> waypoints = o.getWaypointMap().get(e);
 				if (waypoints!=null) {
-					Connected from = getUnderlyingConnected(e.getFrom());
-					Connected to = getUnderlyingConnected(e.getTo());;
+					Connected from = getUnderlyingConnected((ConnectionEdge) e, e.getFrom());
+					Connected to = getUnderlyingConnected((ConnectionEdge) e, e.getTo());;
 					
 					
 					// waypoints needs to be in same order as edge
@@ -109,14 +109,17 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	}
 		
 
-	private Connected getUnderlyingConnected(Vertex from) {
+	private Connected getUnderlyingConnected(ConnectionEdge e, Vertex from) {
+		Connection und = e.getOriginalUnderlying();
 		Connected out = null;
 		for (DiagramElement de : from.getDiagramElements()) {
 			if (de instanceof Connected) {
-				if (out == null) {
-					out = (Connected) de;
-				} else {
-					throw new Kite9ProcessingException();
+				if (und.meets((Connected) de)) {
+					if (out == null) {
+						out = (Connected) de;
+					} else {
+						throw new Kite9ProcessingException();
+					}
 				}
 			}
 		}

@@ -3,9 +3,11 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
@@ -334,8 +336,10 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 			while (from != to) {
 				PlanarizationEdge e = getLeaverInDirection(from, d);
 				if (e==null) {
-					BorderEdge cbe = new BorderEdge((MultiCornerVertex) from, (MultiCornerVertex) to, l+d+i, d);
-					cbe.getDiagramElements().put(c, Direction.rotateAntiClockwise(d));
+					Map<DiagramElement, Direction> elementMap = new HashMap<>();
+					elementMap.put(c, Direction.rotateAntiClockwise(d));
+					elementMap.put(c.getParent(), Direction.rotateClockwise(d));
+					BorderEdge cbe = new BorderEdge((MultiCornerVertex) from, (MultiCornerVertex) to, l+d+i, d, elementMap);
 					em.add(cbe);			
 					return cbe;
 				}

@@ -75,7 +75,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	protected boolean canCrossBorderEdge(BorderEdge crossing, EdgePath ep) {
-		Container insideContainer = ep.insideContainer();
+		Container insideContainer = ep.insideContainer(); 
 		boolean leaving = crossing.isPartOf(insideContainer);
 
 		BorderTraversal traversalRule = getTraversalRule(crossing);
@@ -91,7 +91,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 			return true;
 		}
 		
-		DiagramElement c = crossing.getOriginalUnderlying();
+		DiagramElement c = crossing.getOtherSide(insideContainer);  //crossing.getOriginalUnderlying();
 
 		// check that the container is positioned somewhere that intersects with the edge direction
 		if (!checkContainerPathIntersection(ep, c, entryDirection)) {

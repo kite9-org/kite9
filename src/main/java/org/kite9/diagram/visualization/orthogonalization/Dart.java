@@ -211,16 +211,4 @@ public class Dart extends AbstractEdge {
 		}
 	}
 	
-	private double length;
-
-	public double getLength() {
-		return length;
-	}
-
-	public void setLength(double length) {
-		this.length = length;
-	}
-	
-	
-	
 }

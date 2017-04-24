@@ -1,20 +1,17 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
-import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -23,65 +20,28 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * 
  * Since all diagrams are containers of vertices, these edges will be used around the perimeter of the diagram.
  * 
- * The border edge keeps track of the elements it is bordering.  You can work out from their containment which side is which, I guess.
+ * The border edge keeps track of the rectangular border.  You can work out from their containment which side is which, I guess.
  * 
  * @author robmoffat
  *
  */
 public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementPlanarizationEdge {
 
-	Map<DiagramElement, Direction> forElements;
+	private final Map<DiagramElement, Direction> forElements;
 	String label;
 	
-	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Map<DiagramElement, Direction> forELements) {
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Map<DiagramElement, Direction> forElements) {
 		super(from, to, null, null, null, null, null);
 		this.label = label;
 		this.drawDirection = d;
 		this.reversed = reversed;
-		this.forElements = forELements;
+		this.forElements = forElements;
 	}
 	
-	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
-		this(from, to, label, d, false,  new LinkedHashMap<>());
+	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d, Map<DiagramElement, Direction> forELements) {
+		this(from, to, label, d, false, forELements);
 	}
 	
-	private static Container getOuterContainer(MultiCornerVertex from, MultiCornerVertex to) {
-		int depth = Integer.MAX_VALUE;
-		DiagramElement out = null;
-		for (Anchor f : from.getAnchors()) {
-			int currentDepth = getDepth(f.getDe());
-			if (currentDepth < depth ) {
-				out = f.getDe();
-				depth = currentDepth;
-			}
-		}
-		
-		for (Anchor f : to.getAnchors()) {
-			int currentDepth = getDepth(f.getDe());
-			if (currentDepth < depth ) {
-				out = f.getDe();
-				depth = currentDepth;
-			}
-		}
-		
-		DiagramElement parent = out.getParent();
-		while ((parent != null) && (((Container)parent).getLayout() == Layout.GRID)) {
-			out = parent;
-			parent = out.getParent();
-		}
-		
-		return (Container) out;
-	}
-
-	private static int getDepth(DiagramElement f) {
-		DiagramElement parent = f.getParent();
-		if (parent==null) {
-			return 0;
-		} else {
-			return 1 + getDepth(parent);
-		}
-	}
-
 	/**
 	 * For a given diagram element, shows what side of that element this edge is on.
 	 */
@@ -167,24 +127,17 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 	public DiagramElement getOtherSide(DiagramElement from) {
 		DiagramElement sidea = null, sideb = null;
 		
-		if (forElements.size() > 2) {
-			throw new Kite9ProcessingException("An edge can only have 2 sides");
+		if ((forElements.size() != 2) && (forElements.size() != 1)){
+			throw new Kite9ProcessingException("An BorderEdge must be for 1 or 2 diagram elements");
 		}
 
 		Iterator<DiagramElement> els = forElements.keySet().iterator();	
-		if (els.hasNext()) {
-			sidea = els.next();
-		} 
-		if (els.hasNext()) {
-			sideb = els.next();
-		}
-
+		sidea = els.next();
+		sideb = els.hasNext() ? els.next() : sidea.getParent();
 		
 		if (from == sidea) {
 			return sideb;
 		} else if (from == sideb) {
-			return sidea;
-		} else if ((sidea != null) && (sidea.getParent() == from)) {
 			return sidea;
 		} else { 
 			throw new Kite9ProcessingException(from+" is not mapped to a side");

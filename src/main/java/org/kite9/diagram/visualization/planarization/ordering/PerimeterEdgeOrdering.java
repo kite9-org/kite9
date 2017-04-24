@@ -51,7 +51,7 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 
 	@Override
 	protected List<PlanarizationEdge> getEdgesAsListInner() {
-		List<PlanarizationEdge> out = new LinkedList<PlanarizationEdge>();
+		List<PlanarizationEdge> out = new LinkedList<PlanarizationEdge>(); 
 		EdgeMapping em = pln.getEdgeMappings().get(c);
 		
 		Vertex start = em.getStartVertex();
@@ -67,7 +67,7 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 			vit.next();
 			PlanarizationEdge currentLeaver = vit.next();
 			//System.out.println("Container "+c+" Edges Leaving "+on);
-			while (currentLeaver.getOriginalUnderlying() != c) {
+			while (!currentLeaver.isPartOf(c)) {
 				out.add(currentLeaver);
 				//System.out.println("   adding "+currentLeaver);
 				currentLeaver = vit.next();
@@ -99,12 +99,12 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 			return null;
 		}
 		
-		if (from.getOriginalUnderlying()==c) {
+		if (from.isPartOf(c)) {
 			return e.getDrawDirectionFrom(from);
 		}
 		
 		Vertex to = e.getTo();
-		if (to.getOriginalUnderlying()==c) {
+		if (to.isPartOf(c)) {
 			return e.getDrawDirectionFrom(to);
 		}
 		
