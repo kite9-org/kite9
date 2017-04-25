@@ -132,19 +132,6 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 	public boolean isPartOf(DiagramElement c) {
 		return hasAnchorFor(c);
 	}
-	
-	public static Container getRootGridContainer(DiagramElement cc) {
-		Container parent = cc.getContainer();
-		if (parent == null) {
-			return (Container) cc;
-		}
-		
-		if (parent.getLayout() == Layout.GRID) {
-			return getRootGridContainer(parent);
-		}
-		
-		return (Container) cc;
-	}
 
 	@Override
 	public Set<DiagramElement> getDiagramElements() {

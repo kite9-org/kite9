@@ -47,11 +47,14 @@ public class FacePartOfTransform implements PlanarizationTransform, Logable {
 
 
 	private Rectangular assignRectangular(Face face, Planarization pl, Set<Face> visited) {
-		visited.add(face);
 		if (face.getPartOf() != null) {
 			return face.getPartOf();
 		}
 
+		log.send("Entering Face: "+face);
+		visited.add(face);
+	
+		
 		if (face.isOuterFace()) {
 			Face container = face.getContainedBy();
 			if (container != null) {
@@ -64,14 +67,20 @@ public class FacePartOfTransform implements PlanarizationTransform, Logable {
 			}
 			
 		} else {
-			// we are going clockwise
+			// we are going clockwise - look for a border edge that gives it away
 			int size = face.vertexCount();
 			for (int i = 0; i < size; i++) {
 				Vertex from = face.getCorner(i);
 				Edge leave = face.getBoundary(i);
 				if (leave instanceof BorderEdge) {
 					return determineInsideElementFromBorderEdge(face, from, leave);
-				} else {
+				}
+			}
+			
+			// ok, find an edge to hop over inside the same rectangular
+			for (int i = 0; i < size; i++) {
+				Edge leave = face.getBoundary(i);
+				if (!(leave instanceof BorderEdge)) {
 					// we can cross this edge into the other face
 					List<Face> faces = pl.getEdgeFaceMap().get(leave);
 					if (faces.size() != 2) {
@@ -94,8 +103,10 @@ public class FacePartOfTransform implements PlanarizationTransform, Logable {
 
 			}
 
-			throw new Kite9ProcessingException("Couldn't determine rectangular for "+face);
+			visited.remove(face);
 		}
+		
+		return face.getPartOf();
 	}
 
 	private Rectangular determineInsideElementFromBorderEdge(Face face, Vertex from, Edge leave) {

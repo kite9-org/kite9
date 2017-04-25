@@ -5,15 +5,15 @@ import java.util.List;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 
 /**
  * Simplifies the layout of the planarization by looking for layout edges, and, if they are part of a small
@@ -143,11 +143,11 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 	}
 
 	private boolean isConnectionEdge(Edge boundary) {
-		return boundary.getOriginalUnderlying() instanceof Connection;
+		return boundary instanceof ConnectionEdge;
 	}
 
 	private boolean isContainerEdge(Edge boundary) {
-		return boundary.getOriginalUnderlying() instanceof Container;
+		return boundary instanceof BorderEdge;
 	}
 
 }

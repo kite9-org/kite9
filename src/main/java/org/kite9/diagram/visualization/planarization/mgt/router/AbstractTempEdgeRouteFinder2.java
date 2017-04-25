@@ -10,11 +10,13 @@ import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
@@ -77,7 +79,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 	}
 
 	protected boolean canRouteToVertex(Vertex to, PlanarizationEdge edge, boolean pathAbove, Going g, boolean arriving) {
-			if ((getPosition(to) == null) || (to.getOriginalUnderlying() == null)) {
+			if ((getPosition(to) == null) || (to instanceof NoElementVertex)) {
 				return false;
 			}
 			
@@ -143,7 +145,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		this.gt = gt;
 	
 				
-		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci.getFrom()), ocEnd = getRoutingInfoForOuterContainer(rh, ci.getTo());
+		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci, true), ocEnd = getRoutingInfoForOuterContainer(rh, ci, false);
 		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
@@ -213,13 +215,22 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		}				
 	}
 	
-	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, Vertex v) {
+	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, PlanarizationEdge e, boolean from) {
+		Vertex v = from ? e.getFrom() : e.getTo();
 		if (v instanceof MultiCornerVertex) {
-			DiagramElement und = v.getOriginalUnderlying();
+			Connected und = getUnderlyingConnected(e, from);
 			return rh.getPlacedPosition(und);					
-		} 
-		
-		return v.getRoutingInfo();
+		} else {
+			return v.getRoutingInfo();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	protected static Connected getUnderlyingConnected(PlanarizationEdge e, boolean from) {
+		from = e.isReversed() ? !from : from;
+		BiDirectional<DiagramElement> undEdge = (BiDirectional<DiagramElement>) ((SingleElementPlanarizationEdge) e).getOriginalUnderlying();
+		Connected und = (Connected) (from ? undEdge.getFrom() : undEdge.getTo());
+		return und;
 	}
  	
 	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {

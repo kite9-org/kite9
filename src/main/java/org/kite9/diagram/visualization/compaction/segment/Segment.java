@@ -11,6 +11,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
@@ -64,15 +65,15 @@ public class Segment implements Comparable<Segment> {
 	private Stream<UnderlyingInfo> convertUnderlyingToUnderlyingInfo(Dart d) {
 		Object o = d.getUnderlying();
 		if (o instanceof Edge) {
-			if (o instanceof ConnectionEdge) {
-				return Stream.of(new UnderlyingInfo(((ConnectionEdge)o).getOriginalUnderlying(), Side.NEITHER));
+			if (o instanceof SingleElementPlanarizationEdge) {
+				return Stream.of(new UnderlyingInfo(((SingleElementPlanarizationEdge)o).getOriginalUnderlying(), Side.NEITHER));
 			} else if (o instanceof BorderEdge) {
 				BorderEdge borderEdge = (BorderEdge) o;
 				Map<DiagramElement, Direction> diagramElements = borderEdge.getDiagramElements();
 				return diagramElements.keySet().stream().map(
 						de -> new UnderlyingInfo(de, 
 								getSideFromDirection(diagramElements.get(de))));
-			}
+			} 
 		} 
 		
 		throw new Kite9ProcessingException("Don't know what this is: "+o);

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.orthogonalization.vertices;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.vertex.SideVertex;
 import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
@@ -15,7 +14,7 @@ import org.kite9.diagram.model.DiagramElement;
 @Deprecated
 class HiddenSideVertex extends SideVertex implements DirectionEnforcingElement {
 
-	public HiddenSideVertex(String name, Connected cd, Connection cn) {
+	public HiddenSideVertex(String name, Connected cd, DiagramElement cn) {
 		super(name, cd, cn);
 	}
 

@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.display;
 
+import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -57,7 +58,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			return incorporateAlongLength(along, d, 0);
 		}
 		
-		if ((a instanceof Connection) && (b instanceof Connection)) {
+		if ((a instanceof GeneratedLayoutElement) || (b instanceof GeneratedLayoutElement)) {
+			return 0;
+		} else if ((a instanceof Connection) && (b instanceof Connection)) {
 			length = getMinimumDistanceConnectionToConnection((Connection) a, aSide, (Connection) b, bSide, d, along);
 		} else if ((a instanceof Rectangular) && (b instanceof Rectangular)) {
 			length = getMinimumDistanceRectangularToRectangular((Rectangular) a, aSide, (Rectangular) b, bSide, d, along);

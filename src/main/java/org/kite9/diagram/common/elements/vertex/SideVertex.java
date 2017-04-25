@@ -3,11 +3,9 @@ package org.kite9.diagram.common.elements.vertex;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
@@ -21,7 +19,7 @@ public class SideVertex extends AbstractVertex implements MultiElementVertex {
 	
 	private Set<DiagramElement> underlyings = new HashSet<>();
 	
-	public SideVertex(String name, Connected cd, Connection cn) {
+	public SideVertex(String name, Connected cd, DiagramElement cn) {
 		super(name);
 		this.underlyings.add(cd);
 		this.underlyings.add(cn);
