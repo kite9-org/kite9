@@ -67,25 +67,8 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 	private void setEdgeRoutes(Orthogonalization o) {
 		for (Edge e : o.getEdges()) {
 			if (e instanceof ConnectionEdge) {
-				List<Vertex> waypoints = o.getWaypointMap().get(e);
+				List<Vertex> waypoints = o.getWaypointsForEdge((ConnectionEdge) e);
 				if (waypoints!=null) {
-					Connected from = getUnderlyingConnected((ConnectionEdge) e, e.getFrom());
-					Connected to = getUnderlyingConnected((ConnectionEdge) e, e.getTo());;
-					
-					
-					// waypoints needs to be in same order as edge
-//					if ((Tools.getUltimateElement(e.getFrom())!=Tools.getUltimateElement(waypoints.get(0))) || (Tools.getUltimateElement(e.getTo())!=Tools.getUltimateElement(waypoints.get(waypoints.size()-1)))) {
-//						Collections.reverse(waypoints);
-//					}
-					
-					if ((waypoints.get(0).isPartOf(from)) || (waypoints.get(waypoints.size()-1).isPartOf(to))) {
-						// do nothing
-					} else if ((waypoints.get(0).isPartOf(to)) || (waypoints.get(waypoints.size()-1).isPartOf(from))) {
-						Collections.reverse(waypoints);
-					} else {
-						throw new Kite9ProcessingException("Waypoint issue");
-					}
-					
 					RouteRenderingInformation route = (RouteRenderingInformation) e.getRenderingInformation();
 					
 					Dimension2D last = null;
@@ -135,10 +118,10 @@ public class EdgeRouteCompactionStep implements CompactionStep {
 			
 			Iterator<DiagramElement> it = v.getDiagramElements().iterator();
 			
-			Connection a = (Connection) it.next();
+			Connection a = (Connection) it.next(); 
 			Connection b = (Connection) it.next();
 			
-			return displayer.addHop(a, b);
+			return displayer.requiresHopForVisibility(a, b);
 		}
 		
 		return false;

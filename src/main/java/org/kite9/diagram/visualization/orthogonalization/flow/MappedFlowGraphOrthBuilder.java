@@ -11,6 +11,7 @@ import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
@@ -236,7 +237,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		Face outerFace = getOuterFace(e, f, pln);
 		int arcCost = calculateEdgeBends(f, fg, e, startVertex);
 
-		List<Vertex> waypoints = o.getWaypointsForEdge(e);
+		List<Vertex> waypoints = o.getWaypointsForEdge((PlanarizationEdge) e);
 		int wpCount = Math.abs(arcCost) + 1;
 
 		if (waypoints == null) {
@@ -248,7 +249,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 				o.getAllVertices().add(bv);
 			}
 			waypoints.add(endVertex);
-			o.setWaypointsForEdge(e, waypoints);
 		} else if (waypoints.get(0) == endVertex) {
 			waypoints = new ArrayList<Vertex>(waypoints);
 			Collections.reverse(waypoints);
@@ -261,7 +261,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			Dart dart = o.createDart(start, end, e, nextDir);
+			Dart dart = o.createDart(start, end, (PlanarizationEdge) e, nextDir);
 			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);

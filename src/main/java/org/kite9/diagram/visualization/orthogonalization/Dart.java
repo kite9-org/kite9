@@ -45,10 +45,10 @@ public class Dart extends AbstractEdge {
 	/**
 	 * Constructor is in Orthogonalization
 	 */
-	Dart(Vertex from, Vertex to, Object partOf, Direction d, String label, OrthogonalizationImpl o) {
+	Dart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d, String label, OrthogonalizationImpl o) {
 		super(from, to, d);
-		if ((partOf!=null) && (!(partOf instanceof ArtificialElement) && (!(partOf instanceof DiagramElement)))) {
-				throw new IllegalArgumentException("Trying to create a dart with partOf not a diagram element or artificial element");
+		if (partOf==null) {
+			throw new IllegalArgumentException("Trying to create a dart with partOf not a diagram element or artificial element");
 		}
 				
 		this.partOf = partOf;
@@ -59,7 +59,7 @@ public class Dart extends AbstractEdge {
 		to.addEdge(this);
 	}
 	
-	private Object partOf;
+	private PlanarizationEdge partOf;
 	
 	public static final int EXTEND_IF_NEEDED = 0;
 	public static final int CONNECTION_DART_FAN = 2;	
@@ -109,7 +109,7 @@ public class Dart extends AbstractEdge {
 	/**
 	 * This is when the dart represents part of an edge or vertex.
 	 */
-	public Object getUnderlying() {
+	public PlanarizationEdge getUnderlying() {
 		return partOf;
 	}
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -19,11 +19,6 @@ public interface Orthogonalization extends Serializable {
 	 * Order of darts around a dimensioned vertex, from top-left corner clockwise.
 	 */
 	public Map<Vertex, List<Dart>> getDartOrdering();
-
-	/**
-	 * Intermediate turning-point vertices in from-to edge order for each edge.
-	 */
-	public Map<Edge, List<Vertex>> getWaypointMap();
 
 	/**
 	 * List of all darts constructing the Orthogonalization.
@@ -42,15 +37,15 @@ public interface Orthogonalization extends Serializable {
 	public List<DartFace> getFaces();
 	
 	/**
-	 * All edges (i.e. not darts) taken from the planarization.
+	 * All planarization edges (i.e. not darts)
 	 */
-	public Set<Edge> getEdges();
+	public Set<PlanarizationEdge> getEdges();
 	
 	/**
 	 * Orthogonalization acts as a factory for darts. Always returns a dart, even if it 
 	 * is an existing one
 	 */
-	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d);
+	public Dart createDart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d);
 
 	/**
 	 * In the same way as a {@link Face} is a clockwise ordering of edges, a {@link DartFace} is a clockwise
@@ -73,5 +68,12 @@ public interface Orthogonalization extends Serializable {
 	 * Returns the DartFace representing this planarization face.
 	 */
 	public DartFace getDartFaceForFace(Face f);
+	
+	/**
+	 * Gives you back the darts for that edge.
+	 */
+	public Set<Dart> getDartsForEdge(PlanarizationEdge e);
+	
+	public List<Vertex> getWaypointsForEdge(PlanarizationEdge e);
 
 }

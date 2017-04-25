@@ -13,14 +13,12 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -41,8 +39,8 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	
 	@Override
 	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
-			Orthogonalization o, int oppositeDarts, double minLength, boolean requiresSize, BorderEdge borderEdge) {
-		Side out = super.convertEdgeToDarts(tl, tr, d, underDe, from, onSide, o, oppositeDarts, minLength, requiresSize, borderEdge);
+			Orthogonalization o, BorderEdge borderEdge) {
+		Side out = super.convertEdgeToDarts(tl, tr, d, underDe, from, onSide, o, borderEdge);
 
 		
 		if (onSide.size() > 1) {
@@ -61,7 +59,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 				Vertex otherEnd = reversed ? toFan.getFrom() : toFan.getTo();
 				ConnectionEdge underlying = (ConnectionEdge) toFan.getUnderlying();
 				Connection link = (underlying.getOriginalUnderlying() instanceof Connection) ? (Connection) underlying.getOriginalUnderlying() : null;
-				thisFan = ((i < firstStraight) || (i>lastStraight)) && (fanFor(underlying, noFan, from)) && (fanEdge(link, toFan, fromEnd, underlying.otherEnd(from), d)); 
+				thisFan = ((i < firstStraight) || (i>lastStraight)) && (fanFor(underlying, noFan, from)) && (fanEdge(link, toFan, fromEnd, otherEnd, d)); 
 				if (thisFan) {
 
 					// need to split the current dart into 3 sections, the
@@ -93,22 +91,6 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					if (dartOrder != null) {
 						int idx = dartOrder.indexOf(toFan);
 						dartOrder.set(idx, toFanPt3);
-					}
-					
-					// fix waypoint map
-					List<Vertex> waypoints = o.getWaypointMap().get(underlying);
-					int wp1 = waypoints.indexOf(fromEnd);
-					int wp2 = waypoints.indexOf(otherEnd);
-					
-					if (Math.abs(wp1-wp2) != 1) {
-						throw new LogicException("Waypoints should be next to one another");
-					}
-					if (wp1 < wp2) {
-						List<Vertex> toInsert = HelpMethods.createList((Vertex) ebv1, ebv2);
-						Tools.insertIntoList(waypoints, wp1, toInsert);
-					} else {
-						List<Vertex> toInsert = HelpMethods.createList((Vertex) ebv2, ebv1);
-						Tools.insertIntoList(waypoints, wp2, toInsert);						
 					}
 					
 					// fix faces

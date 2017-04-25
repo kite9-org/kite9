@@ -22,5 +22,5 @@ public interface DiagramSizer {
 	/**
 	 * Determines whether you should draw a hop at the point connection a meets connection b
 	 */
-	public boolean addHop(Connection a, Connection b);
+	public boolean requiresHopForVisibility(Connection a, Connection b);
 }

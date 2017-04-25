@@ -47,7 +47,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		}
 	}
 
-	private Set<Connection> createTopElementSet(Set<Edge> allEdges) {
+	private Set<Connection> createTopElementSet(Set<PlanarizationEdge> allEdges) {
 		Set<Connection> out  = new LinkedHashSet<Connection>();
 		for (Edge e : allEdges) {
 			if (e instanceof ConnectionEdge) {

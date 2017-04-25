@@ -338,20 +338,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering,
 			boolean requiresMinSize, Face elementFace, CornerVertices cv) {
-								
-//		// create darts for the minimum size of the vertex
-//		double xSize = 0;
-//		double ySize = 0;
-//		CostedDimension minimumSize = sizer.size(originalUnderlying, CostedDimension.UNBOUNDED);
-//		if (minimumSize != CostedDimension.NOT_DISPLAYABLE) {
-//			xSize = minimumSize.x();
-//			ySize = minimumSize.y();
-//			Dart dx = o.createDart(cv.getTopLeft(), cv.getTopRight(), null, Direction.RIGHT,  xSize);
-//			Dart dy = o.createDart(cv.getTopLeft(), cv.getBottomLeft(), null, Direction.DOWN, ySize);
-//			o.getAllDarts().add(dx);
-//			o.getAllDarts().add(dy);
-//		}
-		
+
 		Set<Vertex> allNewVertices = new UnorderedSet<Vertex>();
 		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
 
@@ -364,10 +351,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			BorderEdge e = (BorderEdge) getEdgeFor(fromv, tov);
 			Direction outwardsDirection = Direction.rotateAntiClockwise(e.getDrawDirectionFrom(fromv));
 			List<Dart> leavers = dartDirections.get(outwardsDirection);
-			List<Dart> oppositeSide = dartDirections.get(Direction.reverse(outwardsDirection));
-			//double size = Direction.isVertical(outwardsDirection) ? xSize : ySize;
-			double size = 0;	// since we don't always know whether the dart takes up the whole side of the perimeter
-			Side s = convertEdgeToDarts(fromv, tov, outwardsDirection, originalUnderlying, optionalExistingVertex, leavers, o, oppositeSide.size(), size, requiresMinSize, e);
+			Side s = convertEdgeToDarts(fromv, tov, outwardsDirection, originalUnderlying, optionalExistingVertex, leavers, o, e);
 			allNewVertices.addAll(s.vertices);
 			allSideDarts.addAll(s.newEdgeDarts);
 			done ++;
@@ -640,7 +624,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 
 	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
-			Orthogonalization o,int oppDarts, double lengthOpt, boolean requiresMinSize, BorderEdge borderEdge) {
+			Orthogonalization o, BorderEdge borderEdge) {
 		int i = 0;
 		Side out = new Side();
 		Vertex last = tl;
@@ -650,7 +634,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		
 		for (int j = 0; j < onSide.size(); j++) {
 			dart = onSide.get(j);
-			Edge thisEdge = (Edge) dart.getUnderlying();
+			PlanarizationEdge thisEdge = dart.getUnderlying();
 			Vertex vsv;
 			boolean invisible = thisEdge instanceof DirectionEnforcingElement;
 			if (lastEdge != thisEdge) {
@@ -658,7 +642,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				vsv = createSideVertex(d, ((SingleElementPlanarizationEdge) thisEdge).getOriginalUnderlying(), (Connected) underlying, i, invisible);
 				i++;
 
-				Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, j==0, vsv, onSide.size(), thisEdge, lastEdge, requiresMinSize, borderEdge);
+				Dart sideDart = o.createDart(last, vsv, borderEdge, segmentDirection); 
 				sideDart.setOrthogonalPositionPreference(d);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);
@@ -671,29 +655,29 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				replaceOriginal(o, dart, thisEdge, vsv, optionalOriginal);
 			}
 			
-//			double len = dart.getLength();
-//			double minLen = getMinimumDartLength(dart, thisEdge); 
-//			dart.setLength(Math.max(len, minLen));
-			
 			last = vsv;
 			lastEdge = thisEdge;
 		}
 
 		// finally, join to corner
-		Dart sideDart = createSideDart(underlying, o, last, segmentDirection, oppDarts, lengthOpt, true, tr, onSide.size(), null, lastEdge, requiresMinSize, borderEdge);
+		Dart sideDart = o.createDart(last, tr, borderEdge, segmentDirection); 
 		sideDart.setOrthogonalPositionPreference(d);
 		out.newEdgeDarts.add(sideDart);
 		return out;
 	}
 
-	private void replaceOriginal(Orthogonalization o, Dart dart, Edge thisEdge, Vertex vsv, Vertex from) {
-		updateWaypointMap(thisEdge, from, vsv, o);
+	private void replaceOriginal(Orthogonalization o, Dart dart, PlanarizationEdge thisEdge, Vertex to, Vertex from) {
 		from.removeEdge(dart);
-		vsv.addEdge(dart);
-		if (dart.getFrom().equals(from)) {
-			dart.setFrom(vsv);
-		} else if (dart.getTo().equals(from)) {
-			dart.setTo(vsv);
+		to.addEdge(dart);
+		replaceEdgeEnd(dart, to, from);
+		replaceEdgeEnd(thisEdge, to, from);
+	}
+
+	private void replaceEdgeEnd(Edge e, Vertex to, Vertex from) {
+		if (e.getFrom().equals(from)) {
+			e.setFrom(to);
+		} else if (e.getTo().equals(from)) {
+			e.setTo(to);
 		} else {
 			throw new LogicException("logic error");
 		}
@@ -709,43 +693,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		return vsv;
 	}
 
-	protected Dart createSideDart(DiagramElement underlying, Orthogonalization o, Vertex last, Direction segmentDirection,
-			int oppDarts, double lengthOpt, boolean endDart, Vertex vsv, int sideDarts, Edge currentEdge, Edge lastEdge, boolean requiresMinSize, Edge borderEdge) {
-	
-		// dist can be set for the first and last darts only if fixed length and
-		// one dart on side
-//		boolean knownLength = oppDarts<=1 && sideDarts <= 1;
-//		double dist = requiresMinSize ? sizer.getLinkPadding(underlying, segmentDirection) : 0;
-//		if (knownLength) {
-//			double distDueToSize = Math.ceil(lengthOpt / (sideDarts + 1.0));
-//			dist = Math.max(distDueToSize, dist); 
-//		}
 
-		Dart out =  o.createDart(last, vsv, borderEdge, segmentDirection);
-//		out.setVertexLengthKnown(knownLength);
-		return out;
-	}
-
-	protected void updateWaypointMap(Edge partOf, Vertex from, Vertex to, Orthogonalization o) {
-		List<Vertex> waypoints = o.getWaypointMap().get(partOf);
-		int index = waypoints.indexOf(from);
-		if (index > -1) {
-			waypoints.set(index, to);
-		}
-	}
-	
-//	/**
-//	 * Ensures that there is enough length on the dart to include the terminator shape
-//	 */
-//	protected double getMinimumDartLength(Dart d, Edge underlyingEdge) {
-//		Terminator terminatorFrom = getTerminator(underlyingEdge, d.getFrom());
-//		Terminator terminatorTo = getTerminator(underlyingEdge, d.getTo());
-//		
-//		double fromSize = sizer.getTerminatorLength(terminatorFrom);
-//		double toSize = sizer.getTerminatorLength(terminatorTo);
-//		
-//		return fromSize + toSize;
-//	}
 
 	protected Terminator getTerminator(Edge underlyingEdge, Vertex v) {
 		DiagramElement underlyingDestination = v.getOriginalUnderlying();

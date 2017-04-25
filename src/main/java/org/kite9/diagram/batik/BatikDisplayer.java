@@ -192,4 +192,9 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		return 5;
 	}
 
+	@Override
+	public boolean requiresHopForVisibility(Connection a, Connection b) {
+		return true;
+	}
+
 }

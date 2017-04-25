@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -39,7 +40,7 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 			Iterator<PlanarizationEdge> vit = veo.getIterator(false, e, e, false);
 			vit.next();
 			PlanarizationEdge currentLeaver = vit.next();
-			if (currentLeaver.getOriginalUnderlying() != c) {
+			if ((currentLeaver instanceof SingleElementPlanarizationEdge) && (((SingleElementPlanarizationEdge)currentLeaver).getOriginalUnderlying() != c)) {
 				return currentLeaver;
 			} else {
 				e = currentLeaver;

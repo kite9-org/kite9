@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.orthogonalization;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
@@ -18,7 +18,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.logging.LogicException;
-
 
 /**
  * This class manages the relationships of the {@link Dart}s to the {@link Edge}s, and keeps track of
@@ -54,7 +53,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	/**
 	 * Stores the list of vertices an edge passes through (i.e. all the bends)
 	 */
-	protected Map<Edge, List<Vertex>> waypointMap = new HashMap<Edge, List<Vertex>>();
+	protected Map<PlanarizationEdge, Set<Dart>> waypointMap = new HashMap<PlanarizationEdge, Set<Dart>>();
 	
 	protected Set<Dart> allDarts = new LinkedHashSet<Dart>();							// needed for compaction
 	
@@ -64,21 +63,12 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	protected Map<Face, DartFace> dartFaceMap = new HashMap<>();
 	
-	public Set<Edge> getEdges() {
+	public Set<PlanarizationEdge> getEdges() {
 		return waypointMap.keySet();
 	}
 	
-	public List<Vertex> getWaypointsForEdge(Edge e) {
+	public Set<Dart> getDartsForEdge(PlanarizationEdge e) {
 		return waypointMap.get(e);
-	}
-	
-	public void setWaypointsForEdge(Edge e, List<Vertex> wp) {
-		if (e.getFrom()!=wp.get(0)) {
-			// must reverse what is stored
-			wp = new ArrayList<Vertex>(wp);
-			Collections.reverse(wp);
-		}		
-		waypointMap.put(e, wp);
 	}
 	
 	public String toString() {
@@ -111,10 +101,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		return dartOrdering;
 	}
 
-	public Map<Edge, List<Vertex>> getWaypointMap() {
-		return waypointMap;
-	}
-
 	public Set<Dart> getAllDarts() {
 		return allDarts;
 	}
@@ -134,7 +120,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	private Map<Vertex,Map<Vertex, Set<Dart>>> existingDarts = new HashMap<Vertex, Map<Vertex, Set<Dart>>>();
 	
-	public Dart createDart(Vertex from, Vertex to, Object partOf, Direction d) {
+	public Dart createDart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
 		
@@ -167,12 +153,23 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		
 		// need to create the dart
 		Dart out = new Dart(from, to, partOf, d, "d"+nextDart++, this);
+		addToWaypointMap(out, partOf);
 		existing.add(out);
 		allDarts.add(out);
 		return out;
 		
 	}
 	
+	private void addToWaypointMap(Dart out, PlanarizationEdge partOf) {
+		Set<Dart> wpDarts = waypointMap.get(partOf);
+		if (wpDarts == null) {
+			wpDarts = new LinkedHashSet<>();
+			waypointMap.put(partOf, wpDarts);
+		}
+		
+		wpDarts.add(out);
+	}
+
 	void unlinkDartFromMap(Dart d) {
 		Vertex from = d.getFrom();
 		Vertex to = d.getTo();
@@ -233,5 +230,37 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	@Override
 	public DartFace getDartFaceForFace(Face f) {
 		return dartFaceMap.get(f);
+	}
+
+	@Override
+	public List<Vertex> getWaypointsForEdge(PlanarizationEdge e) {
+		Set<Dart> darts = getDartsForEdge(e);
+		if (darts == null) {
+			return null;
+		} else {
+			List<Vertex> out = new ArrayList<>(darts.size()+1);
+			Vertex start = e.getFrom();
+			Dart next = null;
+			do {
+				out.add(start);
+				
+				if (start == e.getTo()) {
+					return out;
+				}
+				
+				next = findNextDart(darts, start, next);
+				start = next.otherEnd(start);
+			} while (true);
+		}
+	}
+
+	private Dart findNextDart(Set<Dart> darts, Vertex start, Dart lastDart) {
+		for (Edge e : start.getEdges()) {
+			if ((darts.contains(e)) && (e!=lastDart)) {
+				return (Dart) e;
+			}
+		}
+		
+		throw new LogicException("Couldn't find next dart from "+start);
 	}
 }
