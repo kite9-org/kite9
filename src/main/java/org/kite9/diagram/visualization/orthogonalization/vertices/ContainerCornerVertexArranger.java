@@ -7,11 +7,14 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
@@ -154,10 +157,13 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		
 		for (int j = 0; j < leaversToMove.size(); j++) {
 			Dart leaving = leaversToMove.get(j);
-			Vertex from = toSplit.otherEnd(cv);
-			Vertex vsv = createSideVertex(splitDirection, underlying, j, thisEdge instanceof DirectionEnforcingElement);
+			ConnectionEdge leavingEdge = (ConnectionEdge) leaving.getUnderlying();
+			Vertex vsv = createSideVertex(splitDirection, leavingEdge.getOriginalUnderlying(), (Connected) underlying, j, thisEdge instanceof DirectionEnforcingElement);
 			//double dist = sizer.getLinkPadding(underlying, splitDirection);
 			Dart sideDart = o.createDart(cv, vsv, cbe, splitDirection);
+			
+			cv.removeEdge(leavingEdge);
+			replaceEnd(cv, leavingEdge, vsv);
 			
 			cv.removeEdge(leaving);
 			replaceEnd(cv, leaving, vsv);
@@ -167,9 +173,6 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 			
 			vsv.addEdge(leaving);
 			vsv.addEdge(toSplit);
-
-			insertInWaypointMap(thisEdge, cv, from, vsv, o);
-			updateWaypointMap((Edge) leaving.getUnderlying(), cv, vsv, o);
 
 			toSplit = sideDart;
 			
@@ -200,22 +203,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 		}
 	}
 
-	private void insertInWaypointMap(Edge thisEdge, AbstractAnchoringVertex before, Vertex after, Vertex insert, Orthogonalization o) {
-		List<Vertex> waypoints = o.getWaypointMap().get(thisEdge);
-		for (int i = 0; i < waypoints.size()-1; i++) {
-			Vertex b = waypoints.get(i);
-			Vertex a = waypoints.get((i+1+waypoints.size()) % waypoints.size());
-			
-			if (((before == a) && (after==b)) || ((before == b) && (after == a))) {
-				waypoints.add(i+1, insert);
-				return;
-			}
-		}
-
-		throw new LogicException("Waypoint map can't add between "+before+" and "+after+ " "+waypoints);
-	}
-
-	private void replaceEnd(AbstractAnchoringVertex old, Dart leaving, Vertex to) {
+	private void replaceEnd(AbstractAnchoringVertex old, Edge leaving, Vertex to) {
 		if (leaving.getFrom().equals(old)) {
 			leaving.setFrom(to);
 		} else if (leaving.getTo().equals(old)) {

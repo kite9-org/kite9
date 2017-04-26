@@ -11,10 +11,12 @@ import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
@@ -135,7 +137,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	protected boolean canRouteToVertex(Vertex to, PlanarizationEdge edge, boolean pathAbove, Going g, boolean arriving) {
-			if ((getPosition(to) == null) || (to.getOriginalUnderlying() == null)) {
+			if ((getPosition(to) == null) || (to instanceof NoElementVertex)) {
 				return false;
 			}
 			
@@ -201,7 +203,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		this.gt = gt;
 		this.mustCrossContainers = getMustCrossContainers(ci.getOriginalUnderlying().getFrom(), ci.getOriginalUnderlying().getTo());
 				
-		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci.getFrom()), ocEnd = getRoutingInfoForOuterContainer(rh, ci.getTo());
+		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci, true), ocEnd = getRoutingInfoForOuterContainer(rh, ci, false);
 		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
@@ -211,6 +213,16 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		
  		log.send("Preferred Side: "+preferredSide);
 		log.send("Route Finding for: "+e);
+	}
+
+	private RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, ConnectionEdge ci, boolean from) {
+		Vertex v = from ? ci.getFrom() : ci.getTo();
+		if (v instanceof MultiCornerVertex) {
+			Connected und = from ? ci.getOriginalUnderlying().getFrom() : ci.getOriginalUnderlying().getTo();
+			return rh.getPlacedPosition(und);					
+		} 
+			
+		return v.getRoutingInfo();
 	}
 
 	private Set<Container> getMustCrossContainers(Connected from, Connected to) {
@@ -269,15 +281,6 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		if ((parent != null) && (parent.getLayout() == Layout.GRID)) {
 			throw new EdgeRoutingException("Edge can't be routed as it can't come from a container embedded in a grid: "+c);
 		}				
-	}
-	
-	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, Vertex v) {
-		if (v instanceof MultiCornerVertex) {
-			DiagramElement und = v.getOriginalUnderlying();
-			return rh.getPlacedPosition(und);					
-		} 
-		
-		return v.getRoutingInfo();
 	}
  	
 	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {
@@ -507,7 +510,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 
 	@Override
 	protected boolean isTerminationVertex(int v) {
-		DiagramElement originalUnderlying = e.getTo().getOriginalUnderlying();
+		DiagramElement originalUnderlying = ((ConnectionEdge)e).getOriginalUnderlying().getTo();
 		Vertex candidate = p.getVertexOrder().get(v);
 		
 		if (candidate instanceof MultiCornerVertex) {

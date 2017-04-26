@@ -15,6 +15,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -667,8 +668,17 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		@Override
 		public Container insideContainer() {
 			Vertex v = l.v;
-			DiagramElement de = v.getOriginalUnderlying();
-			return de.getContainer();
+			Container c = null;
+			for (DiagramElement de : v.getDiagramElements()) {
+				Container parent = (Container) de.getParent();
+				if ((c == null) || (c == parent)) {
+					c = parent;
+				} else {
+					throw new Kite9ProcessingException();
+				}
+			}
+			
+			return c;
 		}
 
 	}

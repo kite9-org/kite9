@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.segment;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -51,12 +53,6 @@ public class Segment implements Comparable<Segment> {
 			underlyings = getDartsInSegment().stream().flatMap(o -> convertUnderlyingToUnderlyingInfo(o))
 			.filter(a -> a.de != null)
 			.collect(Collectors.toSet());
-		
-//			boolean horizontal = dimension == PositionAction.XAction;
-//			underlyings = verticesInSegment.stream()
-//				.flatMap(a -> convertVertexToUnderlying(a, horizontal))
-//				.filter(a -> a.de != null)
-//				.collect(Collectors.toSet());
 		}
 		
 		return underlyings;
@@ -70,13 +66,39 @@ public class Segment implements Comparable<Segment> {
 			} else if (o instanceof BorderEdge) {
 				BorderEdge borderEdge = (BorderEdge) o;
 				Map<DiagramElement, Direction> diagramElements = borderEdge.getDiagramElements();
-				return diagramElements.keySet().stream().map(
-						de -> new UnderlyingInfo(de, 
-								getSideFromDirection(diagramElements.get(de))));
+				Iterator<DiagramElement> it = diagramElements.keySet().iterator();
+				
+				if (diagramElements.size() == 2) {
+					DiagramElement first = it.next();
+					DiagramElement second = it.next();
+					
+					if (first == null) {
+						return Stream.of(toUnderlyingInfo(diagramElements, second));
+					} else if (second == null) {
+						return Stream.of(toUnderlyingInfo(diagramElements, first));
+					} else if (first.getParent() == second) {
+						return Stream.of(toUnderlyingInfo(diagramElements, first));
+					} else if (second.getParent() == first) {
+						return Stream.of(toUnderlyingInfo(diagramElements, second));
+					} else {
+						return Stream.of(toUnderlyingInfo(diagramElements, first), toUnderlyingInfo(diagramElements, second));
+					}
+					
+				} else if (diagramElements.size() == 1) {
+					DiagramElement de = it.next();
+					return Stream.of(toUnderlyingInfo(diagramElements, de));
+				} else {
+					throw new LogicException("Border Edge with wrong number of diagram elements: "+o);
+				}
 			} 
 		} 
 		
 		throw new Kite9ProcessingException("Don't know what this is: "+o);
+	}
+
+	private UnderlyingInfo toUnderlyingInfo(Map<DiagramElement, Direction> diagramElements, DiagramElement de) {
+		return new UnderlyingInfo(de, 
+				getSideFromDirection(diagramElements.get(de)));
 	}
 	
 	private Side getSideFromDirection(Direction d) {
