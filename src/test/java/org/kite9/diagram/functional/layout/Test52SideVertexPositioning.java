@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.layout;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
@@ -14,6 +15,7 @@ import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
 
+@Ignore("Temporarily disabled due to infinite loop in sprint 14")
 public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 
 

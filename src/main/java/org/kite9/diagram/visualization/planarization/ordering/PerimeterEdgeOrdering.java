@@ -34,11 +34,11 @@ public class PerimeterEdgeOrdering extends AbstractCachingEdgeOrdering {
 
 	public PlanarizationEdge getLeaverBeforeBorder(PlanarizationEdge e) {
 		Vertex v = e.isReversed() ? e.getTo() : e.getFrom();
-		
+		VertexEdgeOrdering veo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
+		Iterator<PlanarizationEdge> vit = veo.getIterator(false, e, e, false);
+		vit.next();
+
 		do {
-			VertexEdgeOrdering veo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
-			Iterator<PlanarizationEdge> vit = veo.getIterator(false, e, e, false);
-			vit.next();
 			PlanarizationEdge currentLeaver = vit.next();
 			if ((currentLeaver instanceof SingleElementPlanarizationEdge) && (((SingleElementPlanarizationEdge)currentLeaver).getOriginalUnderlying() != c)) {
 				return currentLeaver;
