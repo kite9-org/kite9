@@ -91,38 +91,24 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		
 		if (entryDirection==null) {
 			return true;
-		}
+		} else {
+			DiagramElement entering = crossing.getOtherSide(insideContainer); 
+			Direction incidentDirection = leaving ? entryDirection : Direction.reverse(entryDirection);
+			Direction expectedDirection = Direction.reverse(crossing.getDiagramElements().get(entering));
 		
-		DiagramElement c = crossing.getOtherSide(insideContainer);  //crossing.getOriginalUnderlying();
+			// check that the container is positioned somewhere that intersects with the edge direction 
+			if (!checkContainerPathIntersection(ep, entering, entryDirection)) {
+				log.send(e+" can't cross into "+entering);
+				return false;
+			}
 
-		// check that the container is positioned somewhere that intersects with the edge direction
-		if (!checkContainerPathIntersection(ep, c, entryDirection)) {
-			log.send(e+" can't cross into "+c);
-			return false;
-		}
-	
-		PerimeterEdgeOrdering containerOrdering = (PerimeterEdgeOrdering) p.getEdgeOrderings().get(c);
-		
-		if (containerOrdering == null) {
+			if (incidentDirection != expectedDirection) {
+				log.send(e+" can't cross over "+crossing+" in direction: "+incidentDirection+", expected: "+expectedDirection);
+				return false;
+			}
+			
 			return true;
-		}
-		
-		if (containerOrdering.getEdgeDirections() != VertexEdgeOrdering.MUTLIPLE_DIRECTIONS) {
-			return true;
-		}
-		
-		PlanarizationEdge leaverBefore = containerOrdering.getLeaverBeforeBorder(crossing);
-	
-		if (leaverBefore.getDrawDirection()==null) {
-			Iterator<PlanarizationEdge> containerIterator = containerOrdering.getIterator(false, leaverBefore, leaverBefore, true);
-			containerIterator.next();
-			leaverBefore = containerIterator.next();
-		}
-		
-		Direction incidentDirection = leaving ? entryDirection : Direction.reverse(entryDirection);
-		boolean out = containerOrdering.canInsert(leaverBefore, incidentDirection, true, log);
-		//System.out.println("Can cross: "+crossing+" between "+crossing.getFrom()+" "+crossing.getTo()+" leaving="+leaving+" result="+out+" direction="+incidentDirection+" currentlyInside="+insideContainer);
-		return out;
+ 		}		
 	}
 
 	private BorderTraversal getTraversalRule(BorderEdge crossing) {
