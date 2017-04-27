@@ -82,7 +82,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 
 	public Compactor createCompactor() {
 		CompactionStep[] steps = new CompactionStep[] {
-				new HierarchicalCompactionStep(),
+				new HierarchicalCompactionStep(getDisplayer()),
 				new PrioritizingRectangularizer(getDisplayer()),
 				new SubGraphInsertionCompactionStep(getDisplayer()),
 //				new MinimizeCompactionStep(getDisplayer()),
