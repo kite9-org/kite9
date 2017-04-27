@@ -16,6 +16,10 @@ import org.kite9.diagram.model.position.RenderingInformation;
  */
 public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Deterministic {
 	
+	public void setFrom(Vertex v);
+
+	public void setTo(Vertex v);
+	
 	/**
 	 * Done before inserting into planarization when to is lower vertex index than from.
 	 */

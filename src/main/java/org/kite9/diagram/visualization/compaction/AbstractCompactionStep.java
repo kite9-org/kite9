@@ -133,16 +133,6 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			return null;
 		}
 	}
-
-	private int getDepth(DiagramElement de) {
-		DiagramElement c = de.getParent();
-		if (c == null) {
-			return 0;
-		} else {
-			return getDepth(c) + 1;
-		}
-
-	}
 	
 	private DiagramElement moveUp(DiagramElement move, int toDepth, int cDepth) {
 		while (cDepth > toDepth) {
@@ -154,8 +144,8 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
  
 	private boolean contains(DiagramElement a, DiagramElement b) {
-		int ad = getDepth(a);
-		int bd = getDepth(b);
+		int ad = a.getDepth();
+		int bd = b.getDepth();
 		
 		if ((ad < bd) && (a instanceof Container)) {
 			// b might be in a

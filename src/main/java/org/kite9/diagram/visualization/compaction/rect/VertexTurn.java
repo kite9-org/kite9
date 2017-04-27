@@ -140,9 +140,6 @@ class VertexTurn {
 	public void ensureLength(double l) {
 		Slideable<Segment> early = getEarly();
 		Slideable<Segment> late = getLate();
-		System.out.println("from " +early);
-		System.out.println("to   " +late);
-
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
 	}
 

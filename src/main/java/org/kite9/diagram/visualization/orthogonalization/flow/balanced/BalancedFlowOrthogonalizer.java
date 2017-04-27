@@ -10,12 +10,14 @@ import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.LabelledEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
@@ -196,7 +198,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 
 	@Override
 	protected int weightCost(Edge e) {
-		if (e.getOriginalUnderlying() instanceof Connection) {
+		if (e instanceof ConnectionEdge) {
 			// this tries to keep corners inside containers
 			return getDepthBasedWeight(e);
 		}
@@ -205,30 +207,15 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private int getDepthBasedWeight(Edge e) {
-		int depth = Math.max(getContainerDepth(getContainerFor(e.getFrom())), 
-				getContainerDepth(getContainerFor(e.getTo())));
+		int depthFrom = getVertexMaxDepth(e.getFrom());
+		int depthTo = getVertexMaxDepth(e.getTo());
+		int depth = Math.max(depthFrom, depthTo);
 		int orig = super.weightCost(e);
 		return orig -  (depth * 10) ;
 	}
 
-	private Container getContainerFor(Vertex from) {
-		if (from instanceof MultiCornerVertex) {
-			return (Container) ((MultiCornerVertex)from).getOriginalUnderlying();
-		} else if (from instanceof PlanarizationCrossingVertex) {
-			throw new Kite9ProcessingException("These should've all been removed");
-		} else if (from instanceof ConnectedVertex) {
-			return (Container) ((ConnectedVertex)from).getOriginalUnderlying().getParent();
-		}
-		
-		return null;
+	private int getVertexMaxDepth(Vertex v) {
+		return v.getDiagramElements().stream().map(de -> de.getDepth()).reduce(0, (a,b) -> Math.max(a, b)).intValue();
 	}
-	
-	private int getContainerDepth(Container c) {
-		if (c == null) {
-			return 0;
-		} else {
-			return getContainerDepth((Container) c.getParent())+1;
-		}
-	}
-	
+
 }

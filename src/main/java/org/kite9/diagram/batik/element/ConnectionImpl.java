@@ -123,18 +123,6 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 
 	@Override
-	public void setFrom(Connected v) {
-		System.out.println("Setting value in something that should be immutable");
-		this.from = v;
-	}
-
-	@Override
-	public void setTo(Connected v) {
-		System.out.println("Setting value in something that should be immutable");
-		this.to = v;
-	}
-
-	@Override
 	public Connected otherEnd(Connected end) {
 		if (end == getFrom()) {
 			return getTo();

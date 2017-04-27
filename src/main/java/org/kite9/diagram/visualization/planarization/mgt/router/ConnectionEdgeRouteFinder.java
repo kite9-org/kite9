@@ -214,8 +214,8 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 	private Set<Container> getMustCrossContainers(Connected from, Connected to) {
 		Set<Container> out = new HashSet<>();
 		while (from != to) {
-			int fromDepth = em.getContainerDepth(from);
-			int toDepth = em.getContainerDepth(to);
+			int fromDepth = from.getDepth();
+			int toDepth = to.getDepth();
 			if (fromDepth > toDepth) {
 				out.add((Container) from);
 				from = (Connected) from.getParent();

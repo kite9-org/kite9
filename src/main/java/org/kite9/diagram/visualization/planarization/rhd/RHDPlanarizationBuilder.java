@@ -607,8 +607,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	
 	protected Container getCommonContainer(DiagramElement from, DiagramElement to) {
 		while (from != to) {
-			int depthFrom = em.getContainerDepth(from);
-			int depthTo = em.getContainerDepth(to);
+			int depthFrom = from.getDepth();
+			int depthTo = to.getDepth();
 			if (depthFrom < depthTo) {
 				to = to.getParent();
 			} else if (depthFrom > depthTo) {

@@ -49,7 +49,7 @@ public class ElementMapperImpl implements ElementMapper {
 				BaseGridCornerVertices parentCV = getBaseGridCornerVertices((Container)c.getParent());
 				v = createSubGridCornerVertices(c, parentCV);
 			} else {
-				v = new IndependentCornerVertices(c, getContainerDepth(c));
+				v = new IndependentCornerVertices(c, c.getDepth());
 				cornerVertices.put(c, v);
 			}
 		}
@@ -60,7 +60,7 @@ public class ElementMapperImpl implements ElementMapper {
 	private SubGridCornerVertices createSubGridCornerVertices(final DiagramElement c, BaseGridCornerVertices parentCV) {
 		OPair<BigFraction> xspan = gp.getGridXPosition(c);
 		OPair<BigFraction> yspan = gp.getGridYPosition(c);
-		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, getContainerDepth(c));
+		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, c.getDepth());
 		cornerVertices.put(c, v);
 		return v;
 	}
@@ -68,7 +68,7 @@ public class ElementMapperImpl implements ElementMapper {
 	private BaseGridCornerVertices getBaseGridCornerVertices(Container c) {
 		BaseGridCornerVertices bgcv = baseGrids.get(c);
 		if (bgcv == null) {
-			bgcv = new BaseGridCornerVertices(c, getContainerDepth(c)+1);
+			bgcv = new BaseGridCornerVertices(c, c.getDepth()+1);
 			baseGrids.put(c, bgcv);
 		}
 		return bgcv;
@@ -152,25 +152,6 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 		
 		return out;
-	}
-
-	private Map<DiagramElement, Integer> containerDepths = new HashMap<DiagramElement, Integer>(100);
-
-	@Override
-	public int getContainerDepth(DiagramElement c) {
-		DiagramElement parent = c.getParent();
-		if (parent==null) {
-			return 0;
-		} else {
-			Integer depth = containerDepths.get(c);
-			if (depth != null) {
-				return depth;
-			} else {
-				depth = getContainerDepth(parent) + 1;
-				containerDepths.put(c, depth);
-			}
-			return depth;
-		}
 	}
 	
 	public boolean requiresPlanarizationCornerVertices(DiagramElement c) {

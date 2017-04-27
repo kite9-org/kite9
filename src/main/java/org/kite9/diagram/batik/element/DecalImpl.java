@@ -29,7 +29,7 @@ public class DecalImpl extends AbstractRectangularDiagramElement implements Deca
 		if ("x".equals(prefix) || "y".equals(prefix)) {
 			int index = Integer.parseInt(attr);
 			double v = "x".equals(prefix) ? parentX[index] : parentY[index];
-			System.out.println("in "+this+" replacing "+prefix+attr);
+			//System.out.println("in "+this+" replacing "+prefix+attr);
 			return ""+v;
 		} else {
 			return super.getReplacementValue(prefix, attr);

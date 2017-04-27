@@ -30,10 +30,5 @@ public interface ElementMapper {
      * Used for debugging purposes
      */
     public Collection<Vertex> allVertices();
-
-    /**
-     * Useful function for returning the depth of a given element.
-     */
-    public int getContainerDepth(DiagramElement c);
     
 }

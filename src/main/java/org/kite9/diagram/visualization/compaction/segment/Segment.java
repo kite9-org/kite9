@@ -13,7 +13,6 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
-import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -136,7 +135,6 @@ public class Segment implements Comparable<Segment> {
 	public void setPosition(double d) {
 		for (Vertex v : getVerticesInSegment()) {
 			dimension.set(v, d);
-			System.out.println("setting: "+v+" "+dimension+" "+d);
 		}
 	
 		position = d;

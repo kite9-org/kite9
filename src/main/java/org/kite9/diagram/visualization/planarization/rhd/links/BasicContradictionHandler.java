@@ -171,8 +171,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				return;
 			}
 
-			int depthFrom = em.getContainerDepth(fromC);
-			int depthTo = em.getContainerDepth(toC);
+			int depthFrom = fromC.getDepth();
+			int depthTo = toC.getDepth();
 			if (depthFrom < depthTo) {
 				to = toC;
 			} else if (depthFrom > depthTo) {

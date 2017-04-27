@@ -147,7 +147,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		case FORWARDS_DIRECTIONS:
 			if ((!contradicting) && (!directed)) {
 				// stops edges wrapping round containers with layout - go in a straight line
-				Container comm = getCommonContainer(e.getFrom().getOriginalUnderlying(), e.getTo().getOriginalUnderlying());
+				Container comm = getCommonContainer(c.getFrom(), c.getTo());
 				Direction d = null;
 				if ((comm.getLayout()!=null) && (comm.getLayout() != Layout.GRID)) {
 					d = getInsertionDirection(comm.getLayout(), e.getFrom(), e.getTo());

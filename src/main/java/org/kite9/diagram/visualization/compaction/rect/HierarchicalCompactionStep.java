@@ -13,11 +13,12 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
+import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
  * This makes sure that compaction proceeds bottom-up through the diagram.
@@ -25,20 +26,31 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
  * @author robmoffat
  *
  */
-public class HierarchicalCompactionStep implements CompactionStep {
+public class HierarchicalCompactionStep extends AbstractCompactionStep {
+
+	public HierarchicalCompactionStep(CompleteDisplayer cd) {
+		super(cd);
+	}
 
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		if (r instanceof Container) {
 			for (DiagramElement de : ((Container) r).getContents()) {
 				if ((de instanceof Connected) || (de instanceof Label)) {
-					System.out.println("Compacting: "+de);
+					log.send("Compacting: "+de);
 					rc.compact((Rectangular) de, c);
 				}
 			}
 		}
 	}
 	
+	
+	
+	@Override
+	public String getPrefix() {
+		return "HCS ";
+	}
+
 	/**
 	 * This labels pairs of attr in the diagram with the alignment they should have,
 	 * and assigns a unique priority to the attr in the diagram, so that those with lowest
@@ -73,7 +85,7 @@ public class HierarchicalCompactionStep implements CompactionStep {
 		setSizes(opt, toDo, DiagramElementSizing.MAXIMIZE);
 	}
 
-	private void setSizes(SegmentSlackOptimisation opt, List<OPair<Slideable>> toDo, DiagramElementSizing minimize) {
+	private void setSizes(SegmentSlackOptimisation opt, List<OPair<Slideable<Segment>>> toDo, DiagramElementSizing minimize) {
 		// TODO Auto-generated method stub
 		
 	}
