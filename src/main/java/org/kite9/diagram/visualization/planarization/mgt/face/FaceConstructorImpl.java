@@ -35,7 +35,7 @@ public class FaceConstructorImpl implements FaceConstructor {
 	public class TemporaryEdge extends AbstractPlanarizationEdge implements NoElementPlanarizationEdge {
 		
 		public TemporaryEdge(Vertex from, Vertex to) {
-			super(from, to, null, null, null, null, null);
+			super(from, to, null);
 		}
 
 		public void remove() {
@@ -93,11 +93,6 @@ public class FaceConstructorImpl implements FaceConstructor {
 		@Override
 		public Map<DiagramElement, Direction> getDiagramElements() {
 			return Collections.emptyMap();
-		}
-
-		@Override
-		public DiagramElement getOriginalUnderlying() {
-			return null;
 		}
 	}
 

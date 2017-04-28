@@ -123,7 +123,7 @@ public abstract class AbstractPlanarization implements Planarization {
 
 	Map<Edge, List<Face>> edgeFaceMap = new HashMap<Edge, List<Face>>();
 
-	Map<Object, EdgeOrdering> edgeOrderingMap = new HashMap<Object, EdgeOrdering>();
+	Map<Vertex, EdgeOrdering> edgeOrderingMap = new HashMap<Vertex, EdgeOrdering>();
 	
 	Map<Vertex, List<Face>> vertexFaceMap = new HashMap<Vertex, List<Face>>();
 
@@ -139,7 +139,7 @@ public abstract class AbstractPlanarization implements Planarization {
 		return faces;
 	}
 
-	public Map<Object, EdgeOrdering> getEdgeOrderings() {
+	public Map<Vertex, EdgeOrdering> getEdgeOrderings() {
 		return edgeOrderingMap;
 	}
 

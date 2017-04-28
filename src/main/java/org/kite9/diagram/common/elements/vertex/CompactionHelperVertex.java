@@ -27,9 +27,4 @@ public class CompactionHelperVertex extends AbstractVertex implements NoElementV
 		return Collections.emptySet();
 	}
 
-	@Override
-	public DiagramElement getOriginalUnderlying() {
-		return null;
-	}
-
 }

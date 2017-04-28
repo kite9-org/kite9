@@ -185,7 +185,7 @@ public class ConnectionEdgeRouteFinder extends AbstractRouteFinder {
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(edgeDir, it);
 		this.entryDirection = getEntryDirection(edgeDir, it);
 		this.em = em;
-		this.it = it;
+		this.it = it; 
 		this.gt = gt;
 		this.mustCrossContainers = getMustCrossContainers(ci.getOriginalUnderlying().getFrom(), ci.getOriginalUnderlying().getTo());
 				

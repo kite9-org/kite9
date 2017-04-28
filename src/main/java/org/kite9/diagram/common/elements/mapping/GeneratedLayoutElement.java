@@ -49,11 +49,6 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 	}
 
 	@Override
-	public void setRenderingInformation(RenderingInformation ri) {
-		this.rri = (RouteRenderingInformation) ri;
-	}
-
-	@Override
 	public String getShapeName() {
 		return null;
 	}

@@ -8,15 +8,11 @@ import org.kite9.diagram.model.position.Direction;
 
 /**
  * Edge interface implemented by all of the Edges created by the planarization process.
+ * 
  * @author robmoffat
  *
  */
 public interface PlanarizationEdge extends Edge {
-
-	/**
-	 * Unlinks the edge from the planarization.  
-	 */
-	public void remove();
 
 	enum RemovalType { YES, NO, TRY }
 	

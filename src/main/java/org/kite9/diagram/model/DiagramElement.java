@@ -25,9 +25,6 @@ public interface DiagramElement extends Comparable<DiagramElement> {
 
 	public RenderingInformation getRenderingInformation();
 	
-	@Deprecated
-	public void setRenderingInformation(RenderingInformation ri);
-	
 	public HintMap getPositioningHints();
 		
 	@Deprecated
@@ -47,5 +44,5 @@ public interface DiagramElement extends Comparable<DiagramElement> {
 	 * Returns the number of levels deep which this element is embedded in the diagram hierarchy, with zero the top level.
 	 */
 	public int getDepth();
-		
+
 }

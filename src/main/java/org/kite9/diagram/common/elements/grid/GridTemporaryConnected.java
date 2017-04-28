@@ -36,11 +36,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public void setRenderingInformation(RenderingInformation ri) {
-		this.rri = (RectangleRenderingInformation) ri;
-	}
-
-	@Override
 	public HintMap getPositioningHints() {
 		return null;
 	}

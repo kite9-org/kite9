@@ -46,7 +46,7 @@ public interface Planarization {
 	/**
 	 * Needs to return the clockwise ordering of edges meeting a vertex or a container.  
 	 */
-	public Map<Object, EdgeOrdering> getEdgeOrderings();
+	public Map<Vertex, EdgeOrdering> getEdgeOrderings();
 	
 	/**
 	 * Returns all edges in the planarization.

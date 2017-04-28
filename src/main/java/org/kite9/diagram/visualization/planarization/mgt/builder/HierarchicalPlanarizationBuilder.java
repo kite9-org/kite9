@@ -73,7 +73,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		addContainerLayoutEdges(p.getDiagram(), p, containerLayoutEdges);
 		log.send("Layout edges:", containerLayoutEdges);
 		for (PlanarizationEdge edge : containerLayoutEdges) {
-			getEdgeRouter().addEdgeToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+			getEdgeRouter().addConnectionToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 
 		int out = super.processCorrectDirectedConnections(p);
@@ -117,7 +117,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 						
 						if (setOk) {
 							pln.getUninsertedConnections().remove(e);
-							getEdgeRouter().addEdgeToPlanarization(pln, e, c.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+							getEdgeRouter().addConnectionToPlanarization(pln, e, c.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 							return false;
 						} 
 					}
@@ -304,7 +304,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	private void addEdgeBetween(MGTPlanarization p, DiagramElement outer, String originalLabel, EdgeMapping em, int i, MultiCornerVertex fromv, MultiCornerVertex tov) {
 		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, i, em);
 		if (newEdge != null) {
-			getEdgeRouter().addEdgeToPlanarization(p, (PlanarizationEdge) newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+			getEdgeRouter().addConnectionToPlanarization(p, (PlanarizationEdge) newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 

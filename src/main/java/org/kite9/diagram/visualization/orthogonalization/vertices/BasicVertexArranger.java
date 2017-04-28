@@ -115,10 +115,6 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			(dartDirections.get(Direction.DOWN).size() > 1);
 		
 		convertDiagramElementToInnerFace(v.getOriginalUnderlying(), v, o, dartDirections, dartOrdering, sized || mulitpleHorizDarts || multipleVertDarts);
-		RectangleRenderingInformation rri = (RectangleRenderingInformation) (v.getOriginalUnderlying()).getRenderingInformation();
-		// temporarily set
-		rri.setMultipleHorizontalLinks(mulitpleHorizDarts);
-		rri.setMultipleVerticalLinks(multipleVertDarts);
 	}
 	
 	protected void convertContainerContents(Orthogonalization o, Container c, DartFace inner) {

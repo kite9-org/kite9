@@ -44,7 +44,7 @@ public class Dart extends AbstractEdge {
 	/**
 	 * Constructor is in Orthogonalization
 	 */
-	Dart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d, String label, OrthogonalizationImpl o) {
+	Dart(Vertex from, Vertex to, DiagramElement partOf, Direction d, String label, OrthogonalizationImpl o) {
 		super(from, to, d);
 		if (partOf==null) {
 			throw new IllegalArgumentException("Trying to create a dart with partOf not a diagram element or artificial element");
@@ -162,10 +162,10 @@ public class Dart extends AbstractEdge {
 			throw new Kite9ProcessingException("Don't know underlying "+partOf);
 		}
 	}
-
-	public DiagramElement getOriginalUnderlying() {
-		return partOf.getOriginalUnderlying();
-	}
+//
+//	public DiagramElement getOriginalUnderlying() {
+//		return partOf.getOriginalUnderlying();
+//	}
 
 	public void reverseDirection() {
 		Vertex temp = from;

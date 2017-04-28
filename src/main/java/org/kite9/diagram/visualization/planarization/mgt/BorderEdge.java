@@ -7,7 +7,6 @@ import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -30,16 +29,10 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 	private final Map<DiagramElement, Direction> forElements;
 	String label;
 	
-	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, Map<DiagramElement, Direction> forElements) {
-		super(from, to, null, null, null, null, null);
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, Map<DiagramElement, Direction> forElements) {
+		super(from, to, d);
 		this.label = label;
-		this.drawDirection = d;
-		this.reversed = reversed;
 		this.forElements = forElements;
-	}
-	
-	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d, Map<DiagramElement, Direction> forELements) {
-		this(from, to, label, d, false, forELements);
 	}
 	
 	/**
@@ -75,8 +68,8 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), forElements);
-		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), forElements);
+		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, forElements);
+		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, forElements);
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in
@@ -143,10 +136,4 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 			throw new Kite9ProcessingException(from+" is not mapped to a side");
 		}
 	}
-
-	@Override
-	public DiagramElement getOriginalUnderlying() {
-		throw new Kite9ProcessingException("No single underlying for BorderEdge");
-	}
-
 }

@@ -303,7 +303,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 	}
 
 	@Override
-	public boolean addEdgeToPlanarization(MGTPlanarization p, PlanarizationEdge ci, Direction d, CrossingType it, GeographyType gt) {
+	public boolean addConnectionToPlanarization(MGTPlanarization p, PlanarizationEdge ci, Direction d, CrossingType it, GeographyType gt) {
 		try {	
 			MGTPlanarizationBuilder.logPlanarEmbeddingDetails(p, log);
 			AbstractRouteFinder f = 

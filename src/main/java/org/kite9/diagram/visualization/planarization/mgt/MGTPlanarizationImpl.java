@@ -14,8 +14,6 @@ import java.util.Set;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
@@ -24,7 +22,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.ordering.PerimeterEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
 import org.kite9.framework.logging.LogicException;
@@ -353,20 +350,6 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			eo.addEdgeDirection(direction, contradicting);
 			eo.changed();
 		}
-		
-		if (from instanceof MultiCornerVertex) {
-			for (Anchor a : ((MultiCornerVertex) from).getAnchors()) {
-				DiagramElement underlying = a.getDe();
-				// fix the ordering around the container
-				PerimeterEdgeOrdering ceo = (PerimeterEdgeOrdering) getEdgeOrderings().get(underlying);
-				if (ceo == null) {
-					ceo = new PerimeterEdgeOrdering(this,  underlying);
-					getEdgeOrderings().put(underlying, ceo);
-				}
-				ceo.changed();
-			}
-		}
-
 	}
 
 	private void checkOrderingAround(Vertex from) {

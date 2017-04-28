@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
@@ -198,14 +200,14 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	public static void testConnectionPresence(DiagramKite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
-		final int[] notPresent = { 0 };
+		final Set<Connection> notPresent = new HashSet<>();
 
 		ConnectionAction ca = new ConnectionAction() {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if ((rri == null) || (rri.size() == 0)) {
 					if (!isInvisible(c)) {
-						notPresent[0]++;
+						notPresent.add(c);
 					}
 				}
 				
@@ -259,8 +261,8 @@ public class TestingEngine extends TestingHelp {
 		};
 
 		DiagramChecker.checkConnnectionElements(d, ca);
-		if (notPresent[0] > 0) {
-			throw new ElementsMissingException("Diagram Elements not included " + notPresent[0] + " missing", notPresent[0]);
+		if (notPresent.size() > 0) {
+			throw new ElementsMissingException("Diagram Elements not included " + notPresent + " missing", notPresent.size());
 		}
 	}
 

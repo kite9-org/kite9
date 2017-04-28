@@ -24,16 +24,13 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Si
 	GeneratedLayoutElement underlying;
 	
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
-		super(from, to, null, null, null, null, null);
-		this.drawDirection = d;
-		this.underlying =  new GeneratedLayoutElement(fromElement, toElement, d);
+		this(from, to, d, true, new GeneratedLayoutElement(fromElement, toElement, d));
 	}
 	
-	private ContainerLayoutEdge(Vertex from, Vertex toIntroduce, Direction drawDirection, boolean reversed, GeneratedLayoutElement underlying) {
-		super(from, toIntroduce, null, null, null, null, null);
-		this.reversed =true;
+	private ContainerLayoutEdge(Vertex from, Vertex to, Direction drawDirection, boolean straight, GeneratedLayoutElement underlying) {
+		super(from, to, drawDirection);
+		this.straight = straight;
 		this.underlying = underlying;
-		this.drawDirection = drawDirection;
 	}
 
 	public DiagramElement getOriginalUnderlying() {
@@ -62,15 +59,10 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Si
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new ContainerLayoutEdge(getFrom(), toIntroduce, getDrawDirection(), isReversed(), underlying);
-		out[1] = new ContainerLayoutEdge(toIntroduce, getTo(),  getDrawDirection(), isReversed(), underlying);
+		out[0] = new ContainerLayoutEdge(getFrom(), toIntroduce, getDrawDirection(), straight, underlying);
+		out[1] = new ContainerLayoutEdge(toIntroduce, getTo(),  getDrawDirection(), straight, underlying);
 
 		return out;
-	}
-
-	@Override
-	public boolean isReversed() {
-		return false;
 	}
 
 	@Override

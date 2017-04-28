@@ -17,7 +17,9 @@ public interface Orthogonalization extends Serializable {
 
 	/**
 	 * Order of darts around a dimensioned vertex, from top-left corner clockwise.
+	 * This shouldn't be necessary:  we are not going to have dimensioned vertices in the orth anymore.
 	 */
+	@Deprecated
 	public Map<Vertex, List<Dart>> getDartOrdering();
 
 	/**
@@ -35,11 +37,6 @@ public interface Orthogonalization extends Serializable {
 	 * Dart-perimeter faces of the Orthogonalization
 	 */		
 	public List<DartFace> getFaces();
-	
-	/**
-	 * All planarization edges (i.e. not darts)
-	 */
-	public Set<PlanarizationEdge> getEdges();
 	
 	/**
 	 * Orthogonalization acts as a factory for darts. Always returns a dart, even if it 

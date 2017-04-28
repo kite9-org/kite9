@@ -70,11 +70,6 @@ public class DebugLine extends AbstractDiagramElement implements DiagramElement 
 	}
 
 	@Override
-	public void setRenderingInformation(RenderingInformation ri) {
-		this.rri = (RouteRenderingInformation) ri;
-	}
-
-	@Override
 	public double getMargin(Direction d) {
 		return 0;
 	}

@@ -6,11 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.VPos;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -136,10 +134,5 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 	@Override
 	public Set<DiagramElement> getDiagramElements() {
 		return anchors.stream().map(a -> a.getDe()).collect(Collectors.toSet());
-	}
-
-	@Override
-	public DiagramElement getOriginalUnderlying() {
-		throw new Kite9ProcessingException("this is multi-element");
 	}
 }
