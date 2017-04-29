@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -41,7 +41,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 				for (int i = 0; i < 4; i++) {
 					PlanarizationEdge e = f.getBoundary(i);
 					
-					if (e instanceof SingleElementPlanarizationEdge) {
+					if (e instanceof BiDirectionalPlanarizationEdge) {
 						if (isGeneratedLayoutElement(e) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
 							&& isContainerEdge(f.getBoundary(i + 1)) 
 							&& isContainerEdge(f.getBoundary(i - 1)) 
@@ -61,7 +61,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 				// case of 2 vertices directed against each other
 				for (int i = 0; i < 2; i++) {
 					PlanarizationEdge e = f.getBoundary(i);
-					if (e instanceof SingleElementPlanarizationEdge) {
+					if (e instanceof BiDirectionalPlanarizationEdge) {
 						if (isGeneratedLayoutElement(e) && (((PlanarizationEdge)e).isLayoutEnforcing()) 
 							&& isConnectionEdge(f.getBoundary(i+1))) {
 							Vertex es = f.getCorner(i);

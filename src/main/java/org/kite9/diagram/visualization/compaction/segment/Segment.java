@@ -12,7 +12,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -60,8 +60,8 @@ public class Segment implements Comparable<Segment> {
 	private Stream<UnderlyingInfo> convertUnderlyingToUnderlyingInfo(Dart d) {
 		Object o = d.getUnderlying();
 		if (o instanceof Edge) {
-			if (o instanceof SingleElementPlanarizationEdge) {
-				return Stream.of(new UnderlyingInfo(((SingleElementPlanarizationEdge)o).getOriginalUnderlying(), Side.NEITHER));
+			if (o instanceof BiDirectionalPlanarizationEdge) {
+				return Stream.of(new UnderlyingInfo(((BiDirectionalPlanarizationEdge)o).getOriginalUnderlying(), Side.NEITHER));
 			} else if (o instanceof BorderEdge) {
 				BorderEdge borderEdge = (BorderEdge) o;
 				Map<DiagramElement, Direction> diagramElements = borderEdge.getDiagramElements();

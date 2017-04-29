@@ -135,6 +135,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			Vertex to = e.getTo();
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
+			if (fromi > toi) {
+				int temp = toi;
+				toi=fromi;
+				fromi=temp;
+			}
 			int height = getNestings(e, aboveSet, nestings) + 1;
 			boolean hl = isPartOf(highlight, e);
 			tr.vLine(-1, fromi, -height, hl);
@@ -148,6 +153,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 			Vertex to = e.getTo();
 			int fromi = (int) tr.getPositions().get(from).x();
 			int toi = (int) tr.getPositions().get(to).x();
+			if (fromi > toi) {
+				int temp = toi;
+				toi=fromi;
+				fromi=temp;
+			}
 			int height = getNestings(e, belowSet, nestings) + 1;
 			boolean hl = isPartOf(highlight, e);
 
@@ -180,11 +190,21 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		int nestings = 0;
 		int from = vertexOrder.indexOf(e.getFrom());
 		int to = vertexOrder.indexOf(e.getTo());
+		if (from > to) {
+			int temp = to;
+			to=from;
+			from=temp;
+		}
 
 		for (PlanarizationEdge edge : aboveSet) {
 			if (e != edge) {
 				int fromi = vertexOrder.indexOf(edge.getFrom());
 				int toi = vertexOrder.indexOf(edge.getTo());
+				if (fromi > toi) {
+					int temp = toi;
+					toi=fromi;
+					fromi=temp;
+				}
 
 				if (((fromi >= from) && (toi <= to)) && (!((fromi == from) && (toi == to)))) {
 					nestings = Math.max(nestings, getNestings(edge, aboveSet, nestCache) + 1);
@@ -261,16 +281,8 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	}
 
 	public boolean isAdjacency(Edge edge) {
-		Integer val1 = getVertexIndex(edge.getFrom());
-		Integer val2 = getVertexIndex(edge.getTo());
-		if (val1 == null) {
-			throw new LogicException(edge.getFrom() + " not present in diagram");
-		}
-		if (val2 == null) {
-			throw new LogicException(edge.getTo() + " not present in diagram");
-		}
-		int v1 = val1;
-		int v2 = val2;
+		int v1 = getVertexIndex(edge.getFrom());
+		int v2 = getVertexIndex(edge.getTo());
 		return (Math.abs(v1 - v2) <= 1);
 	}
 
@@ -311,12 +323,6 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	public void addEdge(PlanarizationEdge edge, boolean above, PlanarizationEdge outsideOf) {
 		int fromi = getVertexIndex(edge.getFrom());
 		int toi = getVertexIndex(edge.getTo());
-		if (fromi > toi) {
-			edge.reverseDirection();
-			int temp = fromi;
-			fromi = toi;
-			toi = temp;
-		}
 
 		if ((outsideOf != null) && (!outsideOf.meets(edge.getFrom()) || !outsideOf.meets(edge.getTo()))) {
 			outsideOf = null;

@@ -73,7 +73,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		addContainerLayoutEdges(p.getDiagram(), p, containerLayoutEdges);
 		log.send("Layout edges:", containerLayoutEdges);
 		for (PlanarizationEdge edge : containerLayoutEdges) {
-			getEdgeRouter().addConnectionToPlanarization(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+			getEdgeRouter().addPlanarizationEdge(p, edge, edge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 
 		int out = super.processCorrectDirectedConnections(p);
@@ -117,7 +117,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 						
 						if (setOk) {
 							pln.getUninsertedConnections().remove(e);
-							getEdgeRouter().addConnectionToPlanarization(pln, e, c.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+							getEdgeRouter().addPlanarizationEdge(pln, e, c.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 							return false;
 						} 
 					}
@@ -304,7 +304,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	private void addEdgeBetween(MGTPlanarization p, DiagramElement outer, String originalLabel, EdgeMapping em, int i, MultiCornerVertex fromv, MultiCornerVertex tov) {
 		Edge newEdge = updateEdges(originalLabel, outer, fromv, tov, i, em);
 		if (newEdge != null) {
-			getEdgeRouter().addConnectionToPlanarization(p, (PlanarizationEdge) newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+			getEdgeRouter().addPlanarizationEdge(p, (PlanarizationEdge) newEdge, newEdge.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 		}
 	}
 
@@ -435,15 +435,8 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		Connected to = c.getTo();
 		Vertex fromv = getVertexFor(from), tov = getVertexFor(to);
 		
-		// get nearest vertices
-		int fromi = p.getVertexIndex(fromv);
-		int toi = p.getVertexIndex(tov);
-		
 		// make sure we keep the edge/connection mapping list up to date.
 		PlanarizationEdge out = em.getEdge(from, fromv, to, tov, c);
-		if (fromi > toi) {
-			out.reverseDirection();
-		}
 		
 		if (c instanceof DiagramElement) {
 			EdgeMapping em = new EdgeMapping((DiagramElement) c, out);

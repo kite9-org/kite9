@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -19,7 +19,7 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
  * @author robmoffat
  * 
  */
-public class ConnectionEdge extends AbstractPlanarizationEdge implements SingleElementPlanarizationEdge {
+public class ConnectionEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
 
 	final Connection underlying;
 	final Connected fromUnderlying;

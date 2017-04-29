@@ -17,7 +17,7 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -635,7 +635,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			boolean invisible = thisEdge instanceof DirectionEnforcingElement;
 			if (lastEdge != thisEdge) {
 				// need to add a dart for this segment
-				vsv = createSideVertex(d, ((SingleElementPlanarizationEdge) thisEdge).getOriginalUnderlying(), (Connected) underlying, i, invisible);
+				vsv = createSideVertex(d, ((BiDirectionalPlanarizationEdge) thisEdge).getOriginalUnderlying(), (Connected) underlying, i, invisible);
 				i++;
 
 				Dart sideDart = o.createDart(last, vsv, borderEdge, segmentDirection); 

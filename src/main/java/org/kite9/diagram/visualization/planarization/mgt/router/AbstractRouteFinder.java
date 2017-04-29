@@ -42,7 +42,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	@Override
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 
 	@Deprecated
@@ -738,7 +738,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	
 	enum Axis { HORIZONTAL, VERTICAL }
 
-	public AbstractRouteFinder(MGTPlanarization p, RoutableReader rh, RoutingInfo endZone, Axis expensive, Axis bounded, Edge e) {
+	public AbstractRouteFinder(MGTPlanarization p, RoutableReader rh, RoutingInfo endZone, Axis expensive, Axis bounded, PlanarizationEdge e) {
 		super();
 		this.p = p;
 		this.rh = rh;
@@ -752,7 +752,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	protected RoutableReader rh;
 	protected RoutingInfo endZone;
 	protected Axis expensive, bounded, illegalEdgeCross;
-	protected Edge e;
+	protected PlanarizationEdge e;
 	protected Direction entryDirection;
 
 
@@ -851,6 +851,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 * Prevents the path wending through vertices that are on top of each other
 	 */
 	protected boolean canSwitchSides(int after) {
+		if (after+1 == p.getVertexOrder().size()) {
+			return false;
+		}
 		Vertex beforeV = p.getVertexOrder().get(after);
 		Vertex afterV = p.getVertexOrder().get(after+1);
 		RoutingInfo bri = beforeV.getRoutingInfo();
@@ -874,10 +877,10 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	protected RoutingInfo getPosition(Vertex v) {
 		RoutingInfo out = v.getRoutingInfo();
-		if (out == null) {
-			DiagramElement und = v.getOriginalUnderlying();
-			out = rh.getPlacedPosition(und);
-		}
+//		if (out == null) {
+//			DiagramElement und = v.getOriginalUnderlying();
+//			out = rh.getPlacedPosition(und);
+//		}
 		
 		return out;
 	}

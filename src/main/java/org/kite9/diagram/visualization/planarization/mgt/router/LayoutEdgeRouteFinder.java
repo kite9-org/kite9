@@ -1,10 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
-import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -12,7 +9,6 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 
@@ -23,7 +19,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
  * @author robmoffat
  *
  */
-public class LayoutEdgeRouteFinder extends AbstractTempEdgeRouteFinder2 {
+public class LayoutEdgeRouteFinder extends AbstractCrossingEdgeRouteFinder {
 
 	public LayoutEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ContainerLayoutEdge ci, ElementMapper em, Direction edgeDir) {
 		super(p, rh, ci, em, edgeDir, CrossingType.STRICT, GeographyType.STRICT);

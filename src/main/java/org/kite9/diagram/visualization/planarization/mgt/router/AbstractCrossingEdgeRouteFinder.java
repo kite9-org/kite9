@@ -1,18 +1,16 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
-import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
@@ -29,9 +27,8 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
-public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
+public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 
 	Double maximumBoundedAxisDistance;
 	Set<Direction> allowedCrossingDirections;
@@ -44,7 +41,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 	/**
 	 * Figure out if the edge is crossing in a perpendicular direction.
 	 */
-	protected boolean canCrossConnectionEdge(Edge a, boolean goingDown) {
+	protected boolean canCrossBidiEdge(BiDirectionalPlanarizationEdge a, boolean goingDown) {
 		if (a.getDrawDirection()==null) {
 			return true;
 		}
@@ -125,15 +122,18 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 	protected boolean canCross(Edge e2, EdgePath ep, boolean goingDown) {
 		if (e2 instanceof BorderEdge) {
 			return canCrossBorderEdge((BorderEdge) e2, ep);
-		} else {
+		} else if (e2 instanceof BiDirectionalPlanarizationEdge) {
 			// regular connection edge
-			return canCrossConnectionEdge(e2, goingDown);
+			return canCrossBidiEdge((BiDirectionalPlanarizationEdge) e2, goingDown);
+		} else {
+			throw new Kite9ProcessingException("Don't know edge type: "+e2.getClass());
 		}
 	}
 	
-	public AbstractTempEdgeRouteFinder2(MGTPlanarization p, RoutableReader rh, ContainerLayoutEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
+	public AbstractCrossingEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
-		this.startZone = getRoutingInfo(rh, ci, ci.getFrom());
+		this.startZone = getRoutingInfo(rh, ci, true);
+		RoutingInfo endZone = getRoutingInfo(rh, ci, false);
 		this.completeZone = getCompleteZone(ci);
 		
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
@@ -145,8 +145,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		this.gt = gt;
 	
 				
-		RoutingInfo ocStart = getRoutingInfoForOuterContainer(rh, ci, true), ocEnd = getRoutingInfoForOuterContainer(rh, ci, false);
-		if (rh.isWithin(ocStart, ocEnd) || rh.isWithin(ocEnd, ocStart)) {
+		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
 		
@@ -155,30 +154,6 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		
  		log.send("Preferred Side: "+preferredSide);
 		log.send("Route Finding for: "+e);
-	}
-
-	private Set<Container> getMustCrossContainers(Connected from, Connected to) {
-		Set<Container> out = new HashSet<>();
-		while (from != to) {
-			int fromDepth = em.getContainerDepth(from);
-			int toDepth = em.getContainerDepth(to);
-			if (fromDepth > toDepth) {
-				out.add((Container) from);
-				from = (Connected) from.getParent();
-				
-			} else if (toDepth > fromDepth) {
-				out.add((Container) to);
-				to = (Connected) to.getParent();
-				
-			} else {
-				out.add((Container) from);
-				out.add((Container) to);
-				from = (Connected) from.getParent();
-				to = (Connected) to.getParent();
-			}
-		}
-		
-		return out;
 	}
 
 	private PlanarizationSide decidePreferredSide(Edge ci) {
@@ -191,60 +166,24 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		}
 	}
 
-	private static RoutingInfo getEndZone(RoutableReader rh, Edge ci) {
-		return getRoutingInfo(rh, ci, ci.getTo());
+	private static RoutingInfo getEndZone(RoutableReader rh, BiDirectionalPlanarizationEdge ci) {
+		return getRoutingInfo(rh, ci, false);
 	}
 	
-	private static DiagramElement getCorrectUnderlying(Edge ci, Vertex v) {
-		DiagramElement und = ci.getOriginalUnderlying();
-		DiagramElement fromUnd = (DiagramElement) ((BiDirectional<?>) und).getFrom();
-		DiagramElement toUnd = (DiagramElement) ((BiDirectional<?>) und).getTo();
-		if (v.isPartOf(fromUnd)) {
-			return fromUnd;					
-		} else if (v.isPartOf(toUnd)) {
-			return toUnd;					
-		}
-
-		throw new Kite9ProcessingException("Couldn't get underlying for "+v);
-	}
-	
-	private static void checkContainerNotWithinGrid(Container c) {
+	protected static void checkContainerNotWithinGrid(Container c) {
 		Container parent = c.getContainer();
 		if ((parent != null) && (parent.getLayout() == Layout.GRID)) {
 			throw new EdgeRoutingException("Edge can't be routed as it can't come from a container embedded in a grid: "+c);
 		}				
 	}
-	
-	private static RoutingInfo getRoutingInfoForOuterContainer(RoutableReader rh, PlanarizationEdge e, boolean from) {
-		Vertex v = from ? e.getFrom() : e.getTo();
-		if (v instanceof MultiCornerVertex) {
-			Connected und = getUnderlyingConnected(e, from);
-			return rh.getPlacedPosition(und);					
-		} else {
-			return v.getRoutingInfo();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	protected static Connected getUnderlyingConnected(PlanarizationEdge e, boolean from) {
-		from = e.isReversed() ? !from : from;
-		BiDirectional<DiagramElement> undEdge = (BiDirectional<DiagramElement>) ((SingleElementPlanarizationEdge) e).getOriginalUnderlying();
-		Connected und = (Connected) (from ? undEdge.getFrom() : undEdge.getTo());
-		return und;
-	}
  	
-	private static RoutingInfo getRoutingInfo(RoutableReader rh, Edge ci, Vertex v) {
-		if (v instanceof MultiCornerVertex) {
-			DiagramElement und = getCorrectUnderlying(ci, v);
-			return rh.getPlacedPosition(und);					
-		} 
-		
-		return v.getRoutingInfo();
+	private static RoutingInfo getRoutingInfo(RoutableReader rh, BiDirectionalPlanarizationEdge ci, boolean from) {
+		return rh.getPlacedPosition(from ? ci.getFromConnected() : ci.getToConnected());
 	}
 
-	private RoutingInfo getCompleteZone(Edge ci) {
-		RoutingInfo from = getRoutingInfo(rh, ci, ci.getFrom());
-		RoutingInfo to = getRoutingInfo(rh, ci, ci.getTo());
+	private RoutingInfo getCompleteZone(BiDirectionalPlanarizationEdge ci) {
+		RoutingInfo from = getRoutingInfo(rh, ci, true);
+		RoutingInfo to = getRoutingInfo(rh, ci, false);
 		return rh.increaseBounds(from, to);
 	}
 
@@ -341,7 +280,7 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 		Vertex from = e.getFrom();
 		
 		if (from instanceof MultiCornerVertex) {
-			Container c = (Container) getCorrectUnderlying(e, from);
+			Container c = (Container) ((BiDirectionalPlanarizationEdge)e).getFromConnected();
 			checkContainerNotWithinGrid(c);
 			CornerVertices cvs = em.getOuterCornerVertices(c);
 			for (MultiCornerVertex v : cvs.getPerimeterVertices()) {
@@ -460,47 +399,46 @@ public class AbstractTempEdgeRouteFinder2 extends AbstractRouteFinder {
 
 	@Override
 	protected boolean isTerminationVertex(int v) {
-		DiagramElement originalUnderlying = e.getTo().getOriginalUnderlying();
 		Vertex candidate = p.getVertexOrder().get(v);
+		Connected toDe = ((BiDirectionalPlanarizationEdge)e).getToConnected();
+		
+		if (candidate == e.getTo()) {
+			return true;
+		}
 		
 		if (candidate instanceof MultiCornerVertex) {
-			
-			DiagramElement und = candidate.getOriginalUnderlying();
-			if (candidate instanceof MultiCornerVertex) {
-				// return true if this is a container vertex for the container we're trying to get to
-				if ((und == originalUnderlying) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
-					return true;
-				}
+			// return true if this is a container vertex for the container we're trying to get to
+			if ((candidate.isPartOf(toDe)) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
+				return true;
 			}
-			
-			boolean out = false;
-			if (allowConnectionsToContainerContents()) {
-				// return false if this element is not in the correct container.
-				if ((und != null) && (und.getContainer() != originalUnderlying)) {
-					return false;
-				}
-				
-				RoutingInfo ri = candidate.getRoutingInfo();
-				if (ri == null) {
-					return false;
-				}
-				
-				// return true if the vertex is within the container.
-				out = rh.isWithin(endZone, ri);
-			}
-			
-			return out;
-			
-		} else {
-			return candidate == e.getTo();
 		}
+		
+		RoutingInfo ri = candidate.getRoutingInfo();
+		if (ri == null) {
+			return false;
+		}
+			
+		if (allowConnectionsToContainerContents()) {
+			if (rh.isWithin(endZone, ri)) {
+				
+				for (DiagramElement de : candidate.getDiagramElements()) {
+					if (de.getParent() == ((BiDirectionalPlanarizationEdge)e).getToConnected()) {
+						return true;
+					}
+				}
+				
+			}
+		}
+		
+		return false;
+		
 	}
 	
 	/**
 	 * Ensures that we are starting/terminating on a vertex on the right side of the 
 	 * container we are leaving/arriving at.
 	 */
-	private boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
+	protected boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
 		if (entryDirection == null) {
 			return true;
 		}

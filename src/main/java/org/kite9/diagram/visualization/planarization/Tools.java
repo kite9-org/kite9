@@ -9,7 +9,7 @@ import java.util.List;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.SingleElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -424,8 +424,8 @@ public class Tools implements Logable {
 	}
 	
 	public static boolean isUnderlyingContradicting(BiDirectional<?> c2) {
-		if (c2 instanceof SingleElementPlanarizationEdge) {
-			DiagramElement underlying = ((Edge)c2).getOriginalUnderlying();
+		if (c2 instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge)c2).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
 				return isConnectionContradicting((Connection)underlying);
 			}
