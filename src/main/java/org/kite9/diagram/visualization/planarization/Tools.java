@@ -215,11 +215,13 @@ public class Tools implements Logable {
 		Vertex from = toRemove.getFrom();
 		Vertex to = toRemove.getTo();
 		
-		DiagramElement underlying = toRemove.getOriginalUnderlying();
-		if (underlying != null) {
-			EdgeMapping el = pln.getEdgeMappings().get(underlying);
-			el.remove(toRemove);
-			log.send("Route for "+underlying+" is now ",el.getEdges());
+		if (toRemove instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge) toRemove).getOriginalUnderlying();
+			if (underlying != null) {
+				EdgeMapping el = pln.getEdgeMappings().get(underlying);
+				el.remove(toRemove);
+				log.send("Route for "+underlying+" is now ",el.getEdges());
+			}
 		}
 		
 		if (faces.get(0) == faces.get(1)) {
@@ -290,7 +292,7 @@ public class Tools implements Logable {
 
 		// just tidying up, shouldn't be needed
 		pln.removeEdge(toRemove);
-		log.send(log.go() ? null : "Removed" + toRemove + " merging " + a.getId() + " and " + b.getId() + " gives " + a.getId()
+		log.send(log.go() ? null : "Removed " + toRemove + " merging " + a.getId() + " and " + b.getId() + " gives " + a.getId()
 				+ " with " + a.cornerIterator() + " \n " + a.edgeIterator());
 		
 		// tidy up face hierarchy

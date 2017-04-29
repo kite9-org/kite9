@@ -2,29 +2,24 @@ package org.kite9.diagram.visualization.orthogonalization.flow.balanced;
 
 import java.util.List;
 
-import org.kite9.diagram.common.VertexOnEdge;
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.LabelledEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mgt.router.PlanarizationCrossingVertex;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Implements several balancing improvements to multi-edge. These are as
@@ -161,7 +156,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		}
 		
 		// this is used for arrows - try and make heads and tails appear opposite sides
-		if (v.getOriginalUnderlying() instanceof VertexOnEdge) {
+		if ((v instanceof ConnectedVertex) && (((ConnectedVertex)v).isSeparatingConnections())) {
 			if (listOfEdges.size() <= 2) {
 				// place edges on opposite sides
 				return BalanceChoice.OPPOSITE_SIDE_PREFERRED;
@@ -187,13 +182,14 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private Pair<Object> getEdgeStyle(Edge en) {
-		Pair<Object> nextStyle;
-		if (en instanceof LabelledEdge) {
-			nextStyle = new Pair<Object>(((LabelledEdge) en).getFromDecoration(), ((LabelledEdge) en).getToDecoration());
-		} else {
-			nextStyle = new Pair<Object>(null, null);
-		}
-		return nextStyle;
+		if (en instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement und = ((BiDirectionalPlanarizationEdge) en).getOriginalUnderlying();
+			if (und instanceof Connection) {
+				return new Pair<Object>(((Connection)und).getFromDecoration(), ((Connection)und).getToDecoration());
+			}
+		} 
+		
+		return new Pair<Object>(null, null);
 	}
 
 	@Override

@@ -970,7 +970,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		}
 		
 		if (canRouteToVertex(from, outsideOf, side==PlanarizationSide.ENDING_ABOVE, g, false)) {
-			return new StartPath(fromi, from, null, side, getPosition(from), g, outsideOf);
+			return new StartPath(fromi, from, null, side, from.getRoutingInfo(), g, outsideOf);
 		} else {
 			return null;
 		}

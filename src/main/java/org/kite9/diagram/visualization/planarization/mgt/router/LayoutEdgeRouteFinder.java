@@ -19,7 +19,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
  * @author robmoffat
  *
  */
-public class LayoutEdgeRouteFinder extends AbstractCrossingEdgeRouteFinder {
+public class LayoutEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 
 	public LayoutEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ContainerLayoutEdge ci, ElementMapper em, Direction edgeDir) {
 		super(p, rh, ci, em, edgeDir, CrossingType.STRICT, GeographyType.STRICT);

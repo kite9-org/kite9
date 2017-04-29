@@ -13,6 +13,7 @@ import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.EdgeVertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
@@ -177,7 +178,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		int weightCost = weightCost(e);
 		Arc aa;
 		aa = new AbsoluteArc(weightCost, Integer.MAX_VALUE, fn, en, fn.getId() + "-" + e.toString());
-		log.send(log.go() ? null : "Edge Arc: "+e+" cost: "+weightCost+" (part of "+e.getOriginalUnderlying()+")");
+		log.send(log.go() ? null : "Edge Arc: "+e+" cost: "+weightCost+" (part of "+((PlanarizationEdge)e).getDiagramElements().keySet()+")");
 		l.add(aa);
 		return l;
 	}

@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -35,28 +36,27 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 	
 	private Face getDiagramOuterFace(EdgeMapping em, Planarization pln) {
 		Vertex v = ((MGTPlanarization)pln).getVertexOrder().get(0);
-		
-		for (Edge e : v.getEdges()) {
-			List<Face> faces = pln.getEdgeFaceMap().get(e);
-			for (Face face : faces) {
-				if ((face.getContainedFaces().size()==0) && isAntiClockwise(v, e)){
-					return face;
-				}
+		List<Face> faces = pln.getVertexFaceMap().get(v);
+		for (Face face : faces) {
+			if ((face.getContainedFaces().size()==0) && isAntiClockwise(face)){
+				return face;
 			}
 		}
 		
 		throw new LogicException("Couldn't find the outer face");
 	}
 	
-	private boolean isAntiClockwise(Vertex v, Edge e) {
-		if (v instanceof MultiCornerVertex) {
+	private boolean isAntiClockwise(Face f) {
+		for (int i = 0; i < f.size(); i++) {
+			Vertex v = f.getCorner(i);
+			Edge e = f.getBoundary(i);
 			MultiCornerVertex cv = (MultiCornerVertex) v;
 			if ((MultiCornerVertex.isMin(cv.getXOrdinal())) && (MultiCornerVertex.isMin(cv.getYOrdinal()))) {
 				return e.getDrawDirectionFrom(v) == Direction.DOWN;
 			}
-		}
+		} 
 		
-		throw new LogicException("Unexpected Vertex");
+		throw new Kite9ProcessingException();
 	}
 
 	private void handleOuterFace(Face outerFace, Face inside, Planarization pln, int level, Set<Face> done) {

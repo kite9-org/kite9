@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
-public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
+public class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 
 	Double maximumBoundedAxisDistance;
 	Set<Direction> allowedCrossingDirections;
@@ -76,7 +76,7 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	protected boolean canRouteToVertex(Vertex to, PlanarizationEdge edge, boolean pathAbove, Going g, boolean arriving) {
-			if ((getPosition(to) == null) || (to instanceof NoElementVertex)) {
+			if ((to.getPosition() == null) || (to instanceof NoElementVertex)) {
 				return false;
 			}
 			
@@ -130,19 +130,19 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 	
-	public AbstractCrossingEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
+	public AbstractBiDiEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
-		this.startZone = getRoutingInfo(rh, ci, true);
-		RoutingInfo endZone = getRoutingInfo(rh, ci, false);
+		this.startZone = getRoutingZone(rh, ci, true);
+		RoutingInfo endZone = getRoutingZone(rh, ci, false);
 		this.completeZone = getCompleteZone(ci);
+		this.em = em;
+		this.it = it;
+		this.gt = gt;
 		
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
 		this.allowedCrossingDirections = getCrossingDirections(edgeDir, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(edgeDir, it);
 		this.entryDirection = getEntryDirection(edgeDir, it);
-		this.em = em;
-		this.it = it;
-		this.gt = gt;
 	
 				
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
@@ -167,7 +167,7 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	private static RoutingInfo getEndZone(RoutableReader rh, BiDirectionalPlanarizationEdge ci) {
-		return getRoutingInfo(rh, ci, false);
+		return getRoutingZone(rh, ci, false);
 	}
 	
 	protected static void checkContainerNotWithinGrid(Container c) {
@@ -177,13 +177,16 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 		}				
 	}
  	
-	private static RoutingInfo getRoutingInfo(RoutableReader rh, BiDirectionalPlanarizationEdge ci, boolean from) {
+	/**
+	 * The routing zone is the area of the DiagramElement, as opposed to the vertices representing it.
+	 */
+	private static RoutingInfo getRoutingZone(RoutableReader rh, BiDirectionalPlanarizationEdge ci, boolean from) {
 		return rh.getPlacedPosition(from ? ci.getFromConnected() : ci.getToConnected());
 	}
 
 	private RoutingInfo getCompleteZone(BiDirectionalPlanarizationEdge ci) {
-		RoutingInfo from = getRoutingInfo(rh, ci, true);
-		RoutingInfo to = getRoutingInfo(rh, ci, false);
+		RoutingInfo from = getRoutingZone(rh, ci, true);
+		RoutingInfo to = getRoutingZone(rh, ci, false);
 		return rh.increaseBounds(from, to);
 	}
 
@@ -371,15 +374,19 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 	}
 	
 	private Double getMaximumBoundedAxisDistance(Axis ax) {
-		if ((e.getFrom() instanceof MultiCornerVertex) || (e.getTo() instanceof MultiCornerVertex)) {
-			// this method is unsafe for containers because they have gutters around the positions of the things inside them.
+		BiDirectionalPlanarizationEdge bpe = (BiDirectionalPlanarizationEdge) e;
+		if (bpe.getDrawDirection() == null) {
 			return null;
 		}
 		
+		// work out furthest possible vertices apart
+		Vertex from = getFarthestVertex(bpe.getFromConnected(), bpe.getDrawDirection());
+		Vertex to = getFarthestVertex(bpe.getToConnected(), Direction.reverse(bpe.getDrawDirection()));
+		
 		
 		if (ax != null) {
-			LineRoutingInfo minPath = rh.move(null, startZone, null);
-			minPath = rh.move(minPath, endZone, null);
+			LineRoutingInfo minPath = rh.move(null, from.getRoutingInfo(), null);
+			minPath = rh.move(minPath, to.getRoutingInfo(), null);
 			if (ax==Axis.HORIZONTAL) {
 				return minPath.getHorizontalRunningCost();
 			} else if (ax==Axis.VERTICAL) {
@@ -389,6 +396,23 @@ public class AbstractCrossingEdgeRouteFinder extends AbstractRouteFinder {
 			}
 		} else {
 			return null;
+		}
+	}
+
+	private Vertex getFarthestVertex(Connected c, Direction d) {
+		if (em.hasOuterCornerVertices(c)) {
+			CornerVertices cv = em.getOuterCornerVertices(c);
+			switch (d) {
+			case UP:
+			case LEFT:
+				return cv.getBottomRight();
+			case DOWN:
+			case RIGHT:
+			default:
+				return cv.getTopLeft();
+			}
+		} else {
+			return em.getPlanarizationVertex(c);
 		}
 	}
 

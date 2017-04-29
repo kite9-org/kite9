@@ -323,6 +323,11 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	public void addEdge(PlanarizationEdge edge, boolean above, PlanarizationEdge outsideOf) {
 		int fromi = getVertexIndex(edge.getFrom());
 		int toi = getVertexIndex(edge.getTo());
+		if (fromi > toi) {
+			int temp = toi;
+			toi=fromi;
+			fromi=temp;
+		}
 
 		if ((outsideOf != null) && (!outsideOf.meets(edge.getFrom()) || !outsideOf.meets(edge.getTo()))) {
 			outsideOf = null;
@@ -358,16 +363,20 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		}
 	}
 
-	private void checkOrderingAround(Vertex from) {
-		List<Edge> byQuad = new ArrayList<Edge>();
-		List<Edge> c1 = new ArrayList<Edge>(getAboveForwardLinks(from));
+	private void checkOrderingAround(Vertex from) { 
+		List<Edge> byQuad = new ArrayList<Edge>(); 
+		List<PlanarizationEdge> af = getAboveForwardLinks(from);
+		List<PlanarizationEdge> bf = getBelowForwardLinks(from);
+		List<PlanarizationEdge> bb = getBelowBackwardLinks(from);
+		List<PlanarizationEdge> ab = getAboveBackwardLinks(from);
+		List<Edge> c1 = new ArrayList<Edge>(af);
 		Collections.reverse(c1);
 		byQuad.addAll(c1);
-		byQuad.addAll(getBelowForwardLinks(from));
-		c1 = new ArrayList<Edge>(getBelowBackwardLinks(from));
+		byQuad.addAll(bf);
+		c1 = new ArrayList<Edge>(bb);
 		Collections.reverse(c1);
 		byQuad.addAll(c1);
-		byQuad.addAll(getAboveBackwardLinks(from));
+		byQuad.addAll(ab);
 
 		List<PlanarizationEdge> cmp = getEdgeOrderings().get(from).getEdgesAsList();
 		int i = byQuad.indexOf(cmp.get(0));

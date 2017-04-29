@@ -30,7 +30,7 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
-public class ConnectionEdgeRouteFinder extends AbstractCrossingEdgeRouteFinder {
+public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 
 	Set<Container> mustCrossContainers;
 	

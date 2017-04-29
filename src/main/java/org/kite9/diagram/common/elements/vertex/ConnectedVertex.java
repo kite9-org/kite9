@@ -39,5 +39,13 @@ public class ConnectedVertex extends AbstractVertex implements SingleElementVert
 	public Set<DiagramElement> getDiagramElements() {
 		return Collections.singleton(underlying);
 	}
+
+	/**
+	 * Means that when we try to lay out, we arrange so that different incoming connections
+	 * are on opposite sides.
+	 */
+	public boolean isSeparatingConnections() {
+		return true;
+	}
 	
 }

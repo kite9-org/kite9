@@ -193,18 +193,14 @@ public class FaceConstructorImpl implements FaceConstructor {
 
 		int startIndex = ordering.indexOf(incident);
 		int index = startIndex;
-		PlanarizationEdge out = null;
-		// do {
 		if (index == 0) {
 			index = ordering.size() - 1;
 		} else {
 			index = index - 1;
 		}
-		// if (index==startIndex)
-		// throw new RuntimeException("Can't process this - no edges out!");
+	
+		PlanarizationEdge out = null;
 		out = ordering.get(index);
-		// } while ((pl.edgeFaceMap.get(out)!=null) && (pl.edgeFaceMap.get(out).size()==2));
-
 		return out;
 	}
 
