@@ -27,6 +27,7 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.DartImpl;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -190,7 +191,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	protected Set<Slideable<Segment>> getLimits(DartFace df, Map<Vertex, Slideable<Segment>> map, Direction direction) {
 		Set<Slideable<Segment>> out = new LinkedHashSet<>(4);
 		for (DartDirection dd : df.dartsInFace) {
-			Dart d = dd.getDart();
+			DartImpl d = dd.getDart();
 			Vertex from = d.getFrom();
 			Vertex to = d.getTo();
 			Slideable<Segment> fs = map.get(from);
@@ -217,7 +218,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		for (Vertex v : possible.getVerticesInSegment()) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) {
-					Dart d = (Dart) e;
+					DartImpl d = (DartImpl) e;
 					if (d.getDrawDirectionFrom(v)==dir) {
 						return false;
 					}

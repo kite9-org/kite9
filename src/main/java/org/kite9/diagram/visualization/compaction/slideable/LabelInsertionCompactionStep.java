@@ -40,6 +40,7 @@ import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartImpl;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
@@ -366,10 +367,10 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 	private void processContainerLabels(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
 
-		Map<Label, Set<Dart>> lowestDartsInContainer = new HashMap<Label, Set<Dart>>();
+		Map<Label, Set<DartImpl>> lowestDartsInContainer = new HashMap<Label, Set<DartImpl>>();
 		Map<Label, Integer> lowestDartsInContainerLevel = new HashMap<Label, Integer>();
 
-		for (Dart d : c.getOrthogonalization().getAllDarts()) {
+		for (DartImpl d : c.getOrthogonalization().getAllDarts()) {
 			Object underlying = d.getUnderlying();
 			Vertex dFrom = d.getFrom();
 			Vertex dTo = d.getTo();
@@ -385,9 +386,9 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 		// having established above the darts making the bottom edge of the
 		// container, map
-		for (Entry<Label, Set<Dart>> entry : lowestDartsInContainer.entrySet()) {
+		for (Entry<Label, Set<DartImpl>> entry : lowestDartsInContainer.entrySet()) {
 			List<Comb> possibles = new ArrayList<Comb>();
-			for (Dart d : entry.getValue()) {
+			for (DartImpl d : entry.getValue()) {
 				Vertex dFrom = d.getFrom();
 				Vertex dTo = d.getTo();
 				if (d.getDrawDirection() == Direction.RIGHT) {
@@ -416,14 +417,14 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		return false;
 	}
 
-	private void mapDartToContainer(SegmentSlackOptimisation yo, Map<Label, Set<Dart>> lowestDartsInContainer, Map<Label, Integer> lowestDartsInContainerLevel, Dart d, Object de, Vertex dFrom,
+	private void mapDartToContainer(SegmentSlackOptimisation yo, Map<Label, Set<DartImpl>> lowestDartsInContainer, Map<Label, Integer> lowestDartsInContainerLevel, DartImpl d, Object de, Vertex dFrom,
 			Vertex dTo) {
 		Label l = ((Container) de).getLabel();
 		if ((l != null) && (l.hasContent())) {
-			Set<Dart> lowest = lowestDartsInContainer.get(l);
+			Set<DartImpl> lowest = lowestDartsInContainer.get(l);
 			Integer lowestPos = lowestDartsInContainerLevel.get(l);
 			if (lowest == null) {
-				lowest = new DetHashSet<Dart>();
+				lowest = new DetHashSet<DartImpl>();
 				lowestDartsInContainer.put(l, lowest);
 				lowestPos = Integer.MIN_VALUE;
 			}
@@ -459,9 +460,9 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 	private void processConnectionLabels(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
 
 		// created to avoid concurrent mod problem
-		List<Dart> existingDarts = new ArrayList<Dart>(c.getOrthogonalization().getAllDarts());
+		List<DartImpl> existingDarts = new ArrayList<DartImpl>(c.getOrthogonalization().getAllDarts());
 
-		for (Dart d : existingDarts) {
+		for (DartImpl d : existingDarts) {
 			Object de = Tools.getUltimateElement(d);
 			Vertex dFrom = d.getFrom();
 			Vertex dTo = d.getTo();
@@ -498,10 +499,10 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		Slideable sx = xo.getVertexToSlidableMap().get(v);
 		Slideable sy = yo.getVertexToSlidableMap().get(v);
 
-		Dart dUp = getIncidentDart(sx, sy, yo, false, null);
-		Dart dDown = getIncidentDart(sx, sy, yo, true, null);
-		Dart dLeft = getIncidentDart(sy, sx, xo, false, null);
-		Dart dRight = getIncidentDart(sy, sx, xo, true, null);
+		DartImpl dUp = getIncidentDart(sx, sy, yo, false, null);
+		DartImpl dDown = getIncidentDart(sx, sy, yo, true, null);
+		DartImpl dLeft = getIncidentDart(sy, sx, xo, false, null);
+		DartImpl dRight = getIncidentDart(sy, sx, xo, true, null);
 
 		boolean includeTopRight = okUnderlying(sx, dUp, Direction.RIGHT) && okUnderlying(sy, dRight, Direction.UP);
 		boolean includeTopLeft = okUnderlying(sx, dUp, Direction.LEFT) && okUnderlying(sy, dLeft, Direction.UP);
@@ -515,14 +516,14 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		// there are four possible positions for the label around the vertex.
 		if (includeTopLeft) {
 			if (horizontal) {
-				List<Dart> leftU = getAbove(v, xo, yo, false);
+				List<DartImpl> leftU = getAbove(v, xo, yo, false);
 				log.send(log.go() ? null : "From " + v + "going leftU: " + leftU);
 				leftU.add(0, dUp);
 				createCombs(possibles, sy, leftU, Direction.UP, Direction.LEFT, yo, xo, l, terminatorReserve);
 			}
 
 			if (vertical) {
-				List<Dart> aboveL = getAbove(v, yo, xo, false);
+				List<DartImpl> aboveL = getAbove(v, yo, xo, false);
 				log.send(log.go() ? null : "From " + v + "going aboveL: " + aboveL);
 				aboveL.add(0, dLeft);
 				createCombs(possibles, sx, aboveL, Direction.LEFT, Direction.UP, xo, yo, l, terminatorReserve);
@@ -531,14 +532,14 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 		if (includeTopRight) {
 			if (horizontal) {
-				List<Dart> rightU = getBelow(v, xo, yo, false);
+				List<DartImpl> rightU = getBelow(v, xo, yo, false);
 				log.send(log.go() ? null : "From " + v + "going rightU: ", rightU);
 				rightU.add(0, dUp);
 				createCombs(possibles, sy, rightU, Direction.UP, Direction.RIGHT, yo, xo, l, terminatorReserve);
 			}
 
 			if (vertical) {
-				List<Dart> aboveR = getAbove(v, yo, xo, true);
+				List<DartImpl> aboveR = getAbove(v, yo, xo, true);
 				log.send(log.go() ? null : "From " + v + "going aboveR: ", aboveR);
 				aboveR.add(0, dRight);
 				createCombs(possibles, sx, aboveR, Direction.RIGHT, Direction.UP, xo, yo, l, terminatorReserve);
@@ -547,13 +548,13 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 		if (includeBottomRight) {
 			if (horizontal) {
-				List<Dart> rightD = getBelow(v, xo, yo, true);
+				List<DartImpl> rightD = getBelow(v, xo, yo, true);
 				log.send(log.go() ? null : "From " + v + "going rightD: " + rightD);
 				rightD.add(0, dDown);
 				createCombs(possibles, sy, rightD, Direction.DOWN, Direction.RIGHT, yo, xo, l, terminatorReserve);
 			}
 			if (vertical) {
-				List<Dart> belowR = getBelow(v, yo, xo, true);
+				List<DartImpl> belowR = getBelow(v, yo, xo, true);
 				log.send(log.go() ? null : "From " + v + "going belowR: " + belowR);
 				belowR.add(0, dRight);
 				createCombs(possibles, sx, belowR, Direction.RIGHT, Direction.DOWN, xo, yo, l, terminatorReserve);
@@ -562,13 +563,13 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 		if (includeBottomLeft) {
 			if (horizontal) {
-				List<Dart> leftD = getAbove(v, xo, yo, true);
+				List<DartImpl> leftD = getAbove(v, xo, yo, true);
 				log.send(log.go() ? null : "From " + v + "going leftD: " + leftD);
 				leftD.add(0, dDown);
 				createCombs(possibles, sy, leftD, Direction.DOWN, Direction.LEFT, yo, xo, l, terminatorReserve);
 			}
 			if (vertical) {
-				List<Dart> belowL = getBelow(v, yo, xo, false);
+				List<DartImpl> belowL = getBelow(v, yo, xo, false);
 				log.send(log.go() ? null : "From " + v + "going belowL: " + belowL);
 				belowL.add(0, dLeft);
 				createCombs(possibles, sx, belowL, Direction.LEFT, Direction.DOWN, xo, yo, l, terminatorReserve);
@@ -576,7 +577,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		}
 	}
 
-	private void createCombs(List<Comb> possibles, Slideable spine, List<Dart> tynes, Direction tyneDirection,
+	private void createCombs(List<Comb> possibles, Slideable spine, List<DartImpl> tynes, Direction tyneDirection,
 			Direction spineDirection, SegmentSlackOptimisation par, SegmentSlackOptimisation perp, Label l, double zeroEndReserved) {
 		for (int i = 2; i <= tynes.size(); i++) {
 			Comb c = new Comb(spine, tynes, i, tyneDirection, spineDirection, true, par, perp);
@@ -593,11 +594,11 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 		log.send(log.go() ? null : "Trying to place label: " + l+" "+l.getText());
 
-		Dart startDart = getIncidentDart(sx, sy, yo, false, l.getParent());
+		DartImpl startDart = getIncidentDart(sx, sy, yo, false, l.getParent());
 
 		if (startDart != null) {
 
-			List<Dart> rightU = getBelow(v, xo, yo, false);
+			List<DartImpl> rightU = getBelow(v, xo, yo, false);
 			log.send(log.go() ? null : "From " + v + "going rightU: ", rightU);
 
 			rightU.add(0, startDart);
@@ -713,9 +714,9 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 	 * Returns darts intersecting with the position of line in the s direction,
 	 * starting at the startSlideable
 	 */
-	private static List<Dart> getInDirection(Slideable startSlideable, Slideable line, SegmentSlackOptimisation s,
+	private static List<DartImpl> getInDirection(Slideable startSlideable, Slideable line, SegmentSlackOptimisation s,
 			SegmentSlackOptimisation perpDir, int increment, Boolean stopDir) {
-		List<Dart> out = new ArrayList<Dart>();
+		List<DartImpl> out = new ArrayList<DartImpl>();
 		List<Slideable> canon = s.getPositionalOrder();
 		int startIndex = canon.indexOf(startSlideable);
 		int index = startIndex;
@@ -732,7 +733,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 			}
 
 			Slideable possible = canon.get(index);
-			Dart result = getIncidentDart(possible, line, perpDir, stopDir, null);
+			DartImpl result = getIncidentDart(possible, line, perpDir, stopDir, null);
 			if (result != null) {
 				if (result.getUnderlying() == null) {
 					out.add(result);
@@ -755,11 +756,11 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 	 * @param optionalDiagramElement 
 	 * @return if a dart covers in such a way that progress is barred, stop.
 	 */
-	private static Dart getIncidentDart(Slideable s, Slideable c, SegmentSlackOptimisation perp, Boolean stopPos, DiagramElement optionalDiagramElement) {
+	private static DartImpl getIncidentDart(Slideable s, Slideable c, SegmentSlackOptimisation perp, Boolean stopPos, DiagramElement optionalDiagramElement) {
 		int cpos = c.getMinimumPosition();
-		Dart result = null;
+		DartImpl result = null;
 
-		for (Dart dart : ((Segment) s.getUnderlying()).getDartsInSegment()) {
+		for (DartImpl dart : ((Segment) s.getUnderlying()).getDartsInSegment()) {
 			double spos = getPerpPosition(dart.getFrom(), perp);
 			double epos = getPerpPosition(dart.getTo(), perp);
 			double maxPos = Math.max(spos, epos);
@@ -791,7 +792,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		return result;
 	}
 
-	private static Dart checkIncidentDartUnderlying(Dart dart, DiagramElement optionalDiagramElement, Dart existingResult) {
+	private static DartImpl checkIncidentDartUnderlying(DartImpl dart, DiagramElement optionalDiagramElement, DartImpl existingResult) {
 		Object ultimateElement = Tools.getUltimateElement(dart);
 		Object underlying = dart.getUnderlying();
 		if (optionalDiagramElement == null) {
@@ -811,7 +812,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		return existingResult;
 	}
 
-	private static boolean hits(Dart dart, Slideable c) {
+	private static boolean hits(DartImpl dart, Slideable c) {
 		Set<Vertex> verticesInSegment = ((Segment) c.getUnderlying()).getVerticesInSegment();
 		return verticesInSegment.contains(dart.getFrom()) || verticesInSegment.contains(dart.getTo());
 	}
@@ -823,7 +824,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		return (minPos < cpos) && (maxPos > cpos);
 	}
 
-	private static int dartDirectionFrom(Dart dart, Slideable c) {
+	private static int dartDirectionFrom(DartImpl dart, Slideable c) {
 		boolean fromInC = ((Segment)c.getUnderlying()).getVerticesInSegment().contains(dart.getFrom());
 		boolean toInC = ((Segment) c.getUnderlying()).getVerticesInSegment().contains(dart.getTo());
 		Direction d = null;
@@ -851,12 +852,12 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 
 	}
 
-	private List<Dart> getBelow(Vertex v, SegmentSlackOptimisation s, SegmentSlackOptimisation perpDir, boolean stopPos) {
+	private List<DartImpl> getBelow(Vertex v, SegmentSlackOptimisation s, SegmentSlackOptimisation perpDir, boolean stopPos) {
 		return getInDirection(s.getVertexToSlidableMap().get(v), perpDir.getVertexToSlidableMap().get(v), s, perpDir,
 				1, stopPos);
 	}
 
-	private List<Dart> getAbove(Vertex v, SegmentSlackOptimisation s, SegmentSlackOptimisation perpDir, boolean stopPos) {
+	private List<DartImpl> getAbove(Vertex v, SegmentSlackOptimisation s, SegmentSlackOptimisation perpDir, boolean stopPos) {
 		return getInDirection(s.getVertexToSlidableMap().get(v), perpDir.getVertexToSlidableMap().get(v), s, perpDir,
 				-1, stopPos);
 	}
@@ -872,7 +873,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 			return spine;
 		}
 
-		List<Dart> tynes;
+		List<DartImpl> tynes;
 
 		int tyneCount = 0;
 
@@ -897,7 +898,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 			return spineDirection;
 		}
 
-		public List<Dart> getTynes() {
+		public List<DartImpl> getTynes() {
 			return tynes;
 		}
 
@@ -951,7 +952,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 			// minimally.  But, maybe there should be some kind of minimal distance eh?
 			
 
-			for (Dart d : ((Segment) slideable.getUnderlying()).getDartsInSegment()) {
+			for (DartImpl d : ((Segment) slideable.getUnderlying()).getDartsInSegment()) {
 				if (d.getUnderlying() != null) {
 					Vertex from = d.getFrom();
 					Vertex to = d.getTo();
@@ -1007,7 +1008,7 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 			return tynes.get(tyneCount - 1).getFrom();
 		}
 
-		private Comb(Slideable spine, List<Dart> tynes, int count, Direction spineDirection,
+		private Comb(Slideable spine, List<DartImpl> tynes, int count, Direction spineDirection,
 				Direction tyneIncDirection, boolean align, SegmentSlackOptimisation parallel, SegmentSlackOptimisation perp) {
 			super();
 			this.spine = spine;

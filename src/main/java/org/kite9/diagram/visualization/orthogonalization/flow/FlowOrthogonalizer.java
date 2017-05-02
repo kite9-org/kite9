@@ -30,11 +30,10 @@ public abstract class FlowOrthogonalizer<X extends FlowGraph> extends AbstractOr
 		try {
 			X fg = createOptimisedFlowGraph(pln);
 			OrthogonalizationImpl orth = fb.build(pln, fg);
-			createDartOrdering(pln, orth);
-			if (orth.cornerDarts.size()>0) {
-				// this is not necessary for the Tamassia algorithm, so ignore.
-				orderDartsFromCorner(orth.cornerDarts, orth);
-			}
+//			if (orth.cornerDarts.size()>0) {
+//				// this is not necessary for the Tamassia algorithm, so ignore.
+//				orderDartsFromCorner(orth.cornerDarts, orth);
+//			}
 			
 			return orth;
 		} catch (LogicException le) {

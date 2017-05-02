@@ -10,11 +10,6 @@ import org.kite9.diagram.model.DiagramElement;
 public class EdgeVertex {
 
 	private static Vertex NULL_VERTEX =  new AbstractVertex("NULL") {
-		
-		@Override
-		public DiagramElement getOriginalUnderlying() {
-			return null;
-		}
 
 		@Override
 		public Set<DiagramElement> getDiagramElements() {

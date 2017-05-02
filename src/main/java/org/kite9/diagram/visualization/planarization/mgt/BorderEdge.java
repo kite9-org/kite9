@@ -80,11 +80,6 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 		
 		return out;
 	}
-
-	@Override
-	public int getLengthCost() {
-		return 0;
-	}
 	
 	private transient BorderTraversal bt = null;
 
@@ -136,4 +131,17 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 			throw new Kite9ProcessingException(from+" is not mapped to a side");
 		}
 	}
+
+	@Override
+	public DiagramElement getElementForSide(Direction d) {
+		for (DiagramElement de : forElements.keySet()) {
+			if (forElements.get(de) == d) {
+				return de;
+			}
+		}
+		
+		throw new Kite9ProcessingException("No diagram element in direction: "+d+" for "+this);
+	}
+	
+	
 }

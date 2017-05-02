@@ -136,11 +136,9 @@ public class EdgeMapping {
 			sb.append("  ");
 			sb.append(e);
 			sb.append("\t");
-			sb.append(e.isReversed());
+			sb.append(e.getFrom());
 			sb.append("\t");
-			sb.append(e.isReversed() ? e.getTo() : e.getFrom());
-			sb.append("\t");
-			sb.append(e.isReversed() ? e.getFrom() : e.getTo());
+			sb.append(e.getTo());
 			sb.append("\n");
 		}
 		sb.append("]");

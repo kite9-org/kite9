@@ -74,11 +74,6 @@ public class ConnectionEdge extends AbstractPlanarizationEdge implements BiDirec
 	}
 
 	@Override
-	public int getLengthCost() {
-		return 1;
-	}
-
-	@Override
 	public boolean isPartOf(DiagramElement de) {
 		return getOriginalUnderlying() == de;
 	}

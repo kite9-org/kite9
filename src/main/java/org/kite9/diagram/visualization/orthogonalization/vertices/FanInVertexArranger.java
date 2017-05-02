@@ -38,7 +38,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 	}
 	
 	@Override
-	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<Dart> onSide,
+	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underDe, Vertex from, List<DartImpl> onSide,
 			Orthogonalization o, BorderEdge borderEdge) {
 		Side out = super.convertEdgeToDarts(tl, tr, d, underDe, from, onSide, o, borderEdge);
 
@@ -53,7 +53,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 			boolean lastFan = true, thisFan = false;
 			
 			for (int i = 0; i < onSide.size(); i++) {
-				Dart toFan = onSide.get(i);
+				DartImpl toFan = onSide.get(i);
 				boolean reversed = toFan.getDrawDirection() == Direction.reverse(d);
 				Vertex fromEnd = reversed ? toFan.getTo() : toFan.getFrom();
 				Vertex otherEnd = reversed ? toFan.getFrom() : toFan.getTo();
@@ -73,8 +73,8 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					o.getAllVertices().add(ebv2);
 					Direction fanDir = i < firstStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d);
 
-					Dart toFanPt2 = o.createDart(ebv1, ebv2, underlying, fanDir);
-					Dart toFanPt3 = o.createDart(ebv2, otherEnd, underlying, d);
+					DartImpl toFanPt2 = o.createDart(ebv1, ebv2, underlying, fanDir);
+					DartImpl toFanPt3 = o.createDart(ebv2, otherEnd, underlying, d);
 					
 					// fix vertices
 					otherEnd.removeEdge(toFan);
@@ -87,7 +87,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					}
 					
 					// fix dart ordering
-					List<Dart> dartOrder = o.getDartOrdering().get(otherEnd);
+					List<DartImpl> dartOrder = o.getDartOrdering().get(otherEnd);
 					if (dartOrder != null) {
 						int idx = dartOrder.indexOf(toFan);
 						dartOrder.set(idx, toFanPt3);
@@ -116,22 +116,22 @@ public class FanInVertexArranger extends BasicVertexArranger {
 					}
 					
 					// some compaction settings
-					toFan.setChangeCost(Dart.CONNECTION_DART, null);
+					toFan.setChangeCost(DartImpl.CONNECTION_DART, null);
 //					double len = toFan.getLength();
 //					double minLen = getMinimumDartLength(toFan, underlying); 
 //					toFan.setLength(Math.max(len, minLen));
 					toFan.setOrthogonalPositionPreference(i < firstStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d));
 					toFanPt2.setOrthogonalPositionPreference(Direction.reverse(d));
 					//toFanPt2.setLength(0);
-					toFanPt2.setChangeCost(Dart.CONNECTION_DART_FAN, ebv1);
+					toFanPt2.setChangeCost(DartImpl.CONNECTION_DART_FAN, ebv1);
 					//toFanPt3.setLength(0);
-					toFanPt3.setChangeCost(Dart.CONNECTION_DART, null);
+					toFanPt3.setChangeCost(DartImpl.CONNECTION_DART, null);
 					// opposite to toFan
 					toFanPt3.setOrthogonalPositionPreference(i > lastStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d));
 				} else if (!lastFan && !thisFan) {
 					// if we have no fanning, we have to allow the vertex to increase in size
 					Dart sideDart = out.newEdgeDarts.get(i);
-					sideDart.setChangeCost(Dart.VERTEX_DART_GROW, null);
+					sideDart.setChangeCost(DartImpl.VERTEX_DART_GROW, null);
 				}
 				
 				lastFan = thisFan;
@@ -185,7 +185,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		}
 	}
 	
-	protected Set<DiagramElement> buildNoFanList(List<Dart> onSide,
+	protected Set<DiagramElement> buildNoFanList(List<DartImpl> onSide,
 			float firstStraight, float lastStraight, Vertex from) {
 		Set<DiagramElement> out = new UnorderedSet<DiagramElement>((int) (lastStraight - firstStraight) * 2);
 		
@@ -203,7 +203,7 @@ public class FanInVertexArranger extends BasicVertexArranger {
 		return !noFan.contains(getOpposingElement(underlying.getOriginalUnderlying(), from));
 	}
 
-	private int getNextStraight(List<Dart> onSide, int step, int from, int midPoint) {
+	private int getNextStraight(List<DartImpl> onSide, int step, int from, int midPoint) {
 		int current = from;
 		while ((current > -1) && (current < onSide.size())) {
 			Dart d = onSide.get(current);

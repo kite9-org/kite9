@@ -68,11 +68,6 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Bi
 
 		return out;
 	}
-
-	@Override
-	public int getLengthCost() {
-		return 0;
-	}
 	
 	@Override
 	public boolean isPartOf(DiagramElement de) {

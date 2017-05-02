@@ -15,9 +15,9 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.algorithms.Tools;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -34,7 +34,6 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -77,7 +76,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 		List<Vertex> vertices = new ArrayList<Vertex>();
 
-		List<Dart> newEdgeDarts = new ArrayList<Dart>();
+		List<DartImpl> newEdgeDarts = new ArrayList<DartImpl>();
 
 	}
 
@@ -104,8 +103,8 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		if (!v.hasDimension()) 
 			return;
 		
-		List<Dart> dartOrdering = new ArrayList<Dart>(o.getDartOrdering().get(v));
-		Map<Direction, List<Dart>> dartDirections = getDartsInDirection(dartOrdering, v);
+		List<DartImpl> dartOrdering = new ArrayList<DartImpl>(o.getDartOrdering().get(v));
+		Map<Direction, List<DartImpl>> dartDirections = getDartsInDirection(dartOrdering, v);
 		boolean sized = true; //sizer.requiresDimension(v.getOriginalUnderlying());
 		
 		boolean mulitpleHorizDarts = (dartDirections.get(Direction.LEFT).size() > 1) || 
@@ -126,7 +125,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				log.send("Created container contents outer face: "+outer.getUnderlying().id+" "+outer);
 			}
 		} else {
-			Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+			Map<Direction, List<DartImpl>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 			for (DiagramElement de : c.getContents()) {
 				if (de instanceof Connected) {
 					DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap, Collections.emptyList(), false);
@@ -159,7 +158,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * @return the outerface to embed in the container.
 	 */
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
-		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+		Map<Direction, List<DartImpl>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 		Set<MultiCornerVertex> createdVertices = new LinkedHashSet<>();
 		placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
 		o.getAllVertices().addAll(createdVertices);
@@ -167,7 +166,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	}
 	
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
-			Map<Direction, List<Dart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
+			Map<Direction, List<DartImpl>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
 		gp.placeOnGrid(c, true);
 
@@ -216,7 +215,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		Direction d = Direction.DOWN;
 		List<DartDirection> out = new ArrayList<>(); 
 		do {
-			Dart dart = getDartInDirection(current, d);
+			DartImpl dart = getDartInDirection(current, d);
 			if (dart == null) {
 				// turn the corner when we reach the end of the side
 				d = Direction.rotateAntiClockwise(d);
@@ -288,17 +287,17 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 	}
 
-	private Dart getDartInDirection(Vertex current, Direction d) {
+	private DartImpl getDartInDirection(Vertex current, Direction d) {
 		for (Edge e : current.getEdges()) {
 			if ((e instanceof Dart) && (e.getDrawDirectionFrom(current) == d)) {
-				return (Dart) e;
+				return (DartImpl) e;
 			}
 		}
 		
 		return null;
 	}
 
-	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering, boolean requiresMinSize) {
+	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<DartImpl>> dartDirections, List<DartImpl> dartOrdering, boolean requiresMinSize) {
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartOrdering);
 		
 		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
@@ -332,11 +331,11 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		 return out;
 	}
 
-	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<Dart>> dartDirections, List<Dart> dartOrdering,
+	private DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<DartImpl>> dartDirections, List<DartImpl> dartOrdering,
 			boolean requiresMinSize, Face elementFace, CornerVertices cv) {
 
 		Set<Vertex> allNewVertices = new UnorderedSet<Vertex>();
-		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
+		LinkedHashSet<DartImpl> allSideDarts = new LinkedHashSet<DartImpl>();
 
 		List<MultiCornerVertex> perimeter = gp.getClockwiseOrderedContainerVertices(cv);
 		MultiCornerVertex start = perimeter.get(0);
@@ -346,7 +345,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			MultiCornerVertex tov = perimeter.get((done+1) % perimeter.size());
 			BorderEdge e = (BorderEdge) getEdgeFor(fromv, tov);
 			Direction outwardsDirection = Direction.rotateAntiClockwise(e.getDrawDirectionFrom(fromv));
-			List<Dart> leavers = dartDirections.get(outwardsDirection);
+			List<DartImpl> leavers = dartDirections.get(outwardsDirection);
 			Side s = convertEdgeToDarts(fromv, tov, outwardsDirection, originalUnderlying, optionalExistingVertex, leavers, o, e);
 			allNewVertices.addAll(s.vertices);
 			allSideDarts.addAll(s.newEdgeDarts);
@@ -394,7 +393,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		throw new LogicException("Couldn't find matching edge");
 	}
 
-	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, Face f) {
+	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<DartImpl> allSideDarts, Vertex start, Face f) {
 		f.setOuterFace(false);
 		DartFace inner = o.createDartFace(f);
 		dartsToDartFace(allSideDarts, start, inner, false);
@@ -406,7 +405,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * The face exists, but the dart face currently does not.  By adding this, we ensure the vertex 
 	 * will be added to the diagram by the {@link SubGraphInsertionCompactionStep}. 
 	 */
-	private DartFace createOuterFace(Orthogonalization o, Vertex v, LinkedHashSet<Dart> allDarts, Vertex vs) {
+	private DartFace createOuterFace(Orthogonalization o, Vertex v, LinkedHashSet<DartImpl> allDarts, Vertex vs) {
 		DartFace df = null;
 		if (v != null) {
 			for (Face f : o.getPlanarization().getFaces()) {
@@ -430,10 +429,10 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 	}
 
-	private void dartsToDartFace(LinkedHashSet<Dart> allDarts, Vertex vs, DartFace df, boolean reverse) {
+	private void dartsToDartFace(LinkedHashSet<DartImpl> allDarts, Vertex vs, DartFace df, boolean reverse) {
 		df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
 		
-		for (Dart dart : allDarts) {
+		for (DartImpl dart : allDarts) {
 			Direction d = dart.getDrawDirectionFrom(vs);
 			d = reverse ? Direction.reverse(d) : d;
 			df.dartsInFace.add(new DartDirection(dart, d));
@@ -449,7 +448,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * Works around the face and looks for places where darts don't meet.
 	 * Inserts missing darts from the new vertex face to fill the gaps.
 	 */
-	private void repairFace(DartFace f, List<Dart> rotDarts, List<Boundary> interveningDarts, DiagramElement fixingFor) {
+	private void repairFace(DartFace f, List<DartImpl> rotDarts, List<Boundary> interveningDarts, DiagramElement fixingFor) {
 		boolean faceChanged = false;
 		List<DartDirection> face = f.dartsInFace;
 
@@ -521,13 +520,13 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 	 * vertex.
 	 * @param originalUnderlying 
 	 */
-	protected List<Boundary> getInterveningDarts(Set<Vertex> allNewVertices, Set<Dart> sideDarts, List<Dart> rotDartsIn, DiagramElement forItem) {
+	protected List<Boundary> getInterveningDarts(Set<Vertex> allNewVertices, Set<DartImpl> sideDarts, List<DartImpl> rotDartsIn, DiagramElement forItem) {
 		List<Boundary> out = new ArrayList<Boundary>();
 
 		for (int i = 0; i < rotDartsIn.size(); i++) {
 			Boundary b = new Boundary();
-			Dart d1 = rotDartsIn.get(i);
-			Dart d2 = rotDartsIn.get((i + 1) % rotDartsIn.size());
+			DartImpl d1 = rotDartsIn.get(i);
+			DartImpl d2 = rotDartsIn.get((i + 1) % rotDartsIn.size());
 			b.from = d1;
 			b.to = d2;
 			
@@ -546,7 +545,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 			Vertex incidentVertex = fromIncident ? d1.getFrom() : d1.getTo();
 			Direction incidentDirection = Direction.reverse(d1.getDrawDirectionFrom(incidentVertex));
 			Direction aroundDirection = Direction.rotateAntiClockwise(incidentDirection);
-			Dart nextDart = getNextDart(incidentVertex, aroundDirection);
+			DartImpl nextDart = getNextDart(incidentVertex, aroundDirection);
 			do {
 				b.toInsert.add(new DartDirection(nextDart, aroundDirection));
 				incidentVertex = nextDart.otherEnd(incidentVertex);
@@ -559,39 +558,39 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		return out;
 	}
 
-	private Dart getNextDart(Vertex incidentVertex, Direction aroundDirection) {
+	private DartImpl getNextDart(Vertex incidentVertex, Direction aroundDirection) {
 		for (Edge e : incidentVertex.getEdges()) {
 			if ((e instanceof Dart) && (e.getDrawDirectionFrom(incidentVertex) == aroundDirection)) {
-				return (Dart) e;
+				return (DartImpl) e;
 			}
 		}
 
 		throw new LogicException("Couldn't find dart leaving " + incidentVertex + " going " + aroundDirection);
 	}
 
-	private Dart getOtherDart(Vertex incidentVertex, Dart d, Set<Dart> sideDarts) {
+	private DartImpl getOtherDart(Vertex incidentVertex, Dart d, Set<DartImpl> sideDarts) {
 		for (Edge e : incidentVertex.getEdges()) {
 			if ((e instanceof Dart) && (e != d) && (sideDarts.contains(e))) {
-				return (Dart) e;
+				return (DartImpl) e;
 			}
 		}
 
 		throw new LogicException("Couldn't find dart leaving " + incidentVertex + " other than " + d);
 	}
 
-	protected Map<Direction, List<Dart>> getDartsInDirection(List<Dart> processOrder, Vertex from) {
-		Map<Direction, List<Dart>> out = new HashMap<Direction, List<Dart>>();
-		out.put(Direction.DOWN, new ArrayList<Dart>());
-		out.put(Direction.UP, new ArrayList<Dart>());
-		out.put(Direction.LEFT, new ArrayList<Dart>());
-		out.put(Direction.RIGHT, new ArrayList<Dart>());
+	protected Map<Direction, List<DartImpl>> getDartsInDirection(List<DartImpl> processOrder, Vertex from) {
+		Map<Direction, List<DartImpl>> out = new HashMap<Direction, List<DartImpl>>();
+		out.put(Direction.DOWN, new ArrayList<DartImpl>());
+		out.put(Direction.UP, new ArrayList<DartImpl>());
+		out.put(Direction.LEFT, new ArrayList<DartImpl>());
+		out.put(Direction.RIGHT, new ArrayList<DartImpl>());
 		
-		List<Dart> remainders = new ArrayList<Dart>();
+		List<DartImpl> remainders = new ArrayList<DartImpl>();
 		
 		Direction firstDirection = null;
 		boolean finishedFirst = false;
 		
-		for (Dart dart : processOrder) {
+		for (DartImpl dart : processOrder) {
 			if (dart.meets(from)) {
 				Direction d = dart.getDrawDirectionFrom(from);
 				if (firstDirection == null) {
@@ -619,14 +618,14 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 
 	}
 
-	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<Dart> onSide,
+	protected Side convertEdgeToDarts(Vertex tl, Vertex tr, Direction d, DiagramElement underlying, Vertex optionalOriginal, List<DartImpl> onSide,
 			Orthogonalization o, BorderEdge borderEdge) {
 		int i = 0;
 		Side out = new Side();
 		Vertex last = tl;
 		Direction segmentDirection = Direction.rotateClockwise(d);
 		Edge lastEdge = null;
-		Dart dart = null;
+		DartImpl dart = null;
 		
 		for (int j = 0; j < onSide.size(); j++) {
 			dart = onSide.get(j);
@@ -638,7 +637,7 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 				vsv = createSideVertex(d, ((BiDirectionalPlanarizationEdge) thisEdge).getOriginalUnderlying(), (Connected) underlying, i, invisible);
 				i++;
 
-				Dart sideDart = o.createDart(last, vsv, borderEdge, segmentDirection); 
+				DartImpl sideDart = o.createDart(last, vsv, borderEdge, segmentDirection); 
 				sideDart.setOrthogonalPositionPreference(d);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);
@@ -656,13 +655,13 @@ public class BasicVertexArranger implements Logable, VertexArranger {
 		}
 
 		// finally, join to corner
-		Dart sideDart = o.createDart(last, tr, borderEdge, segmentDirection); 
+		DartImpl sideDart = o.createDart(last, tr, borderEdge, segmentDirection); 
 		sideDart.setOrthogonalPositionPreference(d);
 		out.newEdgeDarts.add(sideDart);
 		return out;
 	}
 
-	private void replaceOriginal(Orthogonalization o, Dart dart, PlanarizationEdge thisEdge, Vertex to, Vertex from) {
+	private void replaceOriginal(Orthogonalization o, DartImpl dart, PlanarizationEdge thisEdge, Vertex to, Vertex from) {
 		from.removeEdge(dart);
 		to.addEdge(dart);
 		replaceEdgeEnd(dart, to, from);

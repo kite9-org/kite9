@@ -17,6 +17,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartImpl;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
@@ -183,18 +184,18 @@ public class Segment implements Comparable<Segment> {
 	/**
 	 * This is a utility method, used to set the positions of the darts for the diagram
 	 */
-	public Collection<Dart> getDartsInSegment() {
-		Collection<Dart> darts = new DetHashSet<Dart>();
+	public Collection<DartImpl> getDartsInSegment() {
+		Collection<DartImpl> darts = new DetHashSet<DartImpl>();
 		for (Vertex v : verticesInSegment) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) { 
 					if (dimension==PositionAction.YAction) {
 						if ((e.getDrawDirection()==Direction.LEFT) || (e.getDrawDirection()==Direction.RIGHT)) {
-							darts.add((Dart)e);
+							darts.add((DartImpl)e);
 						}
 					} else if (dimension==PositionAction.XAction) {
 						if ((e.getDrawDirection()==Direction.UP) || (e.getDrawDirection()==Direction.DOWN)) {
-							darts.add((Dart)e);
+							darts.add((DartImpl)e);
 						}
 					}
 				}

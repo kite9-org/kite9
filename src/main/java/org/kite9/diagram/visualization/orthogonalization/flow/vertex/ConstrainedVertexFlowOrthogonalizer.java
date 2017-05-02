@@ -142,6 +142,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 			return null;
 		}
 		
+		
+		
 		Connected vUnd = (Connected) v.getOriginalUnderlying();
 		@SuppressWarnings("unchecked")
 		BiDirectional<Connected> beforeUnd = (BiDirectional<Connected>) before.getOriginalUnderlying();

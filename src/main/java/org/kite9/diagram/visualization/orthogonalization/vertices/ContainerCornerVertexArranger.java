@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex;
@@ -188,7 +187,7 @@ public class ContainerCornerVertexArranger extends FanInVertexArranger {
 	private void repairFace(Vertex in, Vertex out, DartFace df, Dart newDart) {
 		int size = df.dartsInFace.size();
 		for (int i = 0; i < size; i++) {
-			DartDirection before = df.dartsInFace.get(i);
+			DartDirection before = df.dartsInFace.get(i); 
 			int ai = (i+1+size) % size;
 			DartDirection after = df.dartsInFace.get(ai);
 			if (before.getDart().meets(in) && after.getDart().meets(out)) {

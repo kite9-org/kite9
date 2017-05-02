@@ -33,11 +33,6 @@ public interface PlanarizationEdge extends Edge {
 	 */
 	public int getBendCost();
 	
-	/** 
-	 * Weighting of the cost of adding length to this edge.
-	 */
-	public int getLengthCost();
-	
 	/**
 	 * Returns true if this edge heads through the planarization in a straight line
 	 */
@@ -62,5 +57,13 @@ public interface PlanarizationEdge extends Edge {
 	 */
 	public Map<DiagramElement, Direction> getDiagramElements();
 	
-	
+
+	public void setFrom(Vertex v);
+
+	public void setTo(Vertex v);
+		
+	/**
+	 * Unlinks the edge from the from, to vertices it is connected to.
+	 */
+	public void remove();
 }

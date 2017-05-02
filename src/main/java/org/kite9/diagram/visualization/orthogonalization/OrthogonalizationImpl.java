@@ -13,10 +13,13 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -51,9 +54,9 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	protected Map<Vertex, List<Dart>> dartOrdering = new HashMap<Vertex, List<Dart>>();
 
 	/**
-	 * Stores the list of vertices an edge passes through (i.e. all the bends)
+	 * Stores the list of darts for a diagram element
 	 */
-	protected Map<PlanarizationEdge, Set<Dart>> waypointMap = new HashMap<PlanarizationEdge, Set<Dart>>();
+	protected Map<DiagramElement, Set<Dart>> waypointMap = new HashMap<>();
 	
 	protected Set<Dart> allDarts = new LinkedHashSet<Dart>();							// needed for compaction
 	
@@ -63,11 +66,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	protected Map<Face, DartFace> dartFaceMap = new HashMap<>();
 	
-	public Set<PlanarizationEdge> getEdges() {
-		return waypointMap.keySet();
-	}
-	
-	public Set<Dart> getDartsForEdge(PlanarizationEdge e) {
+	public Set<Dart> getDartsForEdge(DiagramElement e) {
 		return waypointMap.get(e);
 	}
 	
@@ -120,7 +119,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	private Map<Vertex,Map<Vertex, Set<Dart>>> existingDarts = new HashMap<Vertex, Map<Vertex, Set<Dart>>>();
 	
-	public Dart createDart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d) {
+	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
 		
@@ -133,6 +132,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			existingDarts.put(first, secMap);
 		} 
 		
+		
 		existing = secMap.get(second);
 		if (existing==null) {
 			existing = new LinkedHashSet<Dart>();
@@ -140,19 +140,21 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		} else {
 			// we potentially have some darts that could be used instead
 			for (Dart dart : existing) {
-				if (dart.getUnderlying()==partOf) {
-
-					if (dart.getDrawDirectionFrom(from)!=d) {
-						throw new LogicException("Trying to create new dart in different direction to: "+existing);				
-					}
-					
-					return dart;
+				if (dart.getDrawDirectionFrom(from)!=d) {
+					throw new LogicException("Trying to create new dart in different direction to: "+existing);				
 				}
+				
+				// add some new underlyings
+				((DartImpl)dart).underlyings.add(partOf);
+				addToWaypointMap(dart, partOf);
+				return dart;
 			}
 		}
 		
 		// need to create the dart
-		Dart out = new Dart(from, to, partOf, d, "d"+nextDart++, this);
+		ensureNoDartInDirection(from, d);
+		ensureNoDartInDirection(to, d);
+		Dart out = new DartImpl(from, to, partOf, d, "d"+nextDart++, this);
 		addToWaypointMap(out, partOf);
 		existing.add(out);
 		allDarts.add(out);
@@ -160,7 +162,25 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		
 	}
 	
-	private void addToWaypointMap(Dart out, PlanarizationEdge partOf) {
+	private void ensureNoDartInDirection(Vertex from, Direction d) {
+		if (getDartInDirection(from, d) != null) {
+			throw new Kite9ProcessingException("Already have a dart going "+d+" from "+from);
+		}
+	}
+	
+	private Dart getDartInDirection(Vertex around, Direction d) {
+		for (Edge e : around.getEdges()) {
+			if (e instanceof Dart) {
+				if (e.getDrawDirectionFrom(around) == d) {
+					return (Dart) e;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	private void addToWaypointMap(Dart out, DiagramElement partOf) {
 		Set<Dart> wpDarts = waypointMap.get(partOf);
 		if (wpDarts == null) {
 			wpDarts = new LinkedHashSet<>();
@@ -233,7 +253,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	}
 
 	@Override
-	public List<Vertex> getWaypointsForEdge(PlanarizationEdge e) {
+	public List<Vertex> getWaypointsForBiDirectional(DiagramElement e) {
 		Set<Dart> darts = getDartsForEdge(e);
 		if (darts == null) {
 			return null;
@@ -262,5 +282,30 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		}
 		
 		throw new LogicException("Couldn't find next dart from "+start);
+	}
+
+	@Override
+	public Set<Dart> getDartsForDiagramElement(DiagramElement e) {
+		return waypointMap.get(e);
+	}
+
+	@Override
+	public List<Dart> getDartOrdering(Vertex around) {
+		Dart up = getDartInDirection(around, Direction.UP);
+		Dart right = getDartInDirection(around, Direction.RIGHT);
+		Dart down = getDartInDirection(around, Direction.DOWN);
+		Dart left = getDartInDirection(around, Direction.LEFT);
+		List<Dart> out = new ArrayList<>(4);
+		addIfNotNull(out, up);
+		addIfNotNull(out, right);
+		addIfNotNull(out, down);
+		addIfNotNull(out, left);
+		return out;
+	}
+
+	private void addIfNotNull(List<Dart> out, Dart up) {
+		if (up != null) {
+			out.add(up);
+		}
 	}
 }

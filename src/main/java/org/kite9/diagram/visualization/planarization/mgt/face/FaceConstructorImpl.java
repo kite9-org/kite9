@@ -10,7 +10,6 @@ import java.util.Set;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.NoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -32,7 +31,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 public class FaceConstructorImpl implements FaceConstructor {
 	
 
-	public class TemporaryEdge extends AbstractPlanarizationEdge implements NoElementPlanarizationEdge {
+	public class TemporaryEdge extends AbstractPlanarizationEdge {
 		
 		public TemporaryEdge(Vertex from, Vertex to) {
 			super(from, to, null);
@@ -73,11 +72,6 @@ public class FaceConstructorImpl implements FaceConstructor {
 			out[0] = new TemporaryEdge(getFrom(), toIntroduce);
 			out[1] = new TemporaryEdge(toIntroduce, getTo());
 			return out;
-		}
-
-		@Override
-		public int getLengthCost() {
-			return 0;
 		}
 
 		@Override

@@ -415,8 +415,8 @@ public class Tools implements Logable {
 	}
 	
 	public static void setUnderlyingContradiction(BiDirectional<?> c, boolean state) {
-		if (c instanceof Edge) {
-			DiagramElement underlying = ((Edge) c).getOriginalUnderlying();
+		if (c instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge) c).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
 				setConnectionContradiction((Connection)underlying, state);
 			} else {

@@ -3,17 +3,22 @@ package org.kite9.diagram.visualization.orthogonalization.flow;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -22,6 +27,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -73,12 +79,13 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		OrthogonalizationImpl o = new OrthogonalizationImpl(pln);
 
 		Set<Face> doneFaces = new UnorderedSet<Face>();
+		Map<Edge, List<Vertex>> doneEdges = new HashMap<>();
 		List<StartPoint> startPoints = selectBestStartPoints(pln);
 		
 		for (StartPoint startPoint : startPoints) {
 			if (!doneFaces.contains(startPoint.f)) {
 				log.send("Processing face: "+startPoint);
-				processFace(startPoint.f, pln, o, fg, startPoint.d, doneFaces, startPoint.v, startPoint.e);	
+				processFace(startPoint.f, pln, o, fg, startPoint.d, doneFaces, startPoint.v, startPoint.e, doneEdges);	
 			}
 		}
 		
@@ -136,7 +143,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 
 
 	private void processFace(Face f, Planarization pln, OrthogonalizationImpl o, MappedFlowGraph fg, Direction d,
-			Set<Face> doneFaces, Vertex startVertex, Edge incoming) {
+			Set<Face> doneFaces, Vertex startVertex, Edge incoming, Map<Edge, List<Vertex>> doneEdges) {
 		if (doneFaces.contains(f)) {
 			return;
 		}
@@ -154,7 +161,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 			Edge e = f.getBoundary(ei);
 			Vertex sv = f.getCorner(ei);
 			Vertex ev = f.getCorner(ei + 1);
-			List<DartDirection> created = processEdge(f, pln, o, fg, d, sv, ev, e, doneFaces);
+			List<DartDirection> created = processEdge(f, pln, o, fg, d, sv, ev, e, doneFaces, doneEdges);
 			Edge next = f.getBoundary(ei + 1);
 			d = getDirectionForNextDart(f, fg, ev, created, e, next, o);
 			df.dartsInFace.addAll(created);
@@ -227,7 +234,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 	 * @return
 	 */
 	private List<DartDirection> processEdge(Face f, Planarization pln, OrthogonalizationImpl o, MappedFlowGraph fg,
-			Direction nextDir, Vertex startVertex, Vertex endVertex, Edge e, Set<Face> doneFaces) {
+			Direction nextDir, Vertex startVertex, Vertex endVertex, Edge e, Set<Face> doneFaces, Map<Edge, List<Vertex>> doneEdges) {
 		log.send(log.go() ? null : "Processing edge "+e.toString()+" from: " + startVertex + " to " + endVertex + " in direction " + nextDir);
 
 		if (e.otherEnd(startVertex) != endVertex) {
@@ -237,11 +244,12 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		Face outerFace = getOuterFace(e, f, pln);
 		int arcCost = calculateEdgeBends(f, fg, e, startVertex);
 
-		List<Vertex> waypoints = o.getWaypointsForEdge((PlanarizationEdge) e);
+		List<Vertex> waypoints = doneEdges.get(e);
 		int wpCount = Math.abs(arcCost) + 1;
 
 		if (waypoints == null) {
 			waypoints = new ArrayList<Vertex>(wpCount);
+			doneEdges.put(e, waypoints);
 			waypoints.add(startVertex);
 			for (int i = 0; i < wpCount - 1; i++) {
 				ConnectionEdgeBendVertex bv = new ConnectionEdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), (ConnectionEdge) e);
@@ -258,10 +266,12 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 
 		List<DartDirection> out = new ArrayList<DartDirection>();
 
+		DiagramElement thisSideDiagramElement = getThisSideDiagramElement((PlanarizationEdge) e, nextDir);
+		
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			Dart dart = o.createDart(start, end, (PlanarizationEdge) e, nextDir);
+			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir);
 			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);
@@ -274,9 +284,20 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 
 		Direction opposite = Direction.reverse(nextDir);
 
-		processFace(outerFace, pln, o, fg, opposite, doneFaces, endVertex, e);
+		processFace(outerFace, pln, o, fg, opposite, doneFaces, endVertex, e, doneEdges);
 
 		return out;
+	}
+
+	private DiagramElement getThisSideDiagramElement(PlanarizationEdge e, Direction nextDir) {
+		if (e instanceof BiDirectionalPlanarizationEdge) {
+			return ((ConnectionEdge) e).getOriginalUnderlying();
+		} else if (e instanceof TwoElementPlanarizationEdge) {
+			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateClockwise(nextDir));
+			return out;
+		} else {
+			throw new Kite9ProcessingException();
+		}
 	}
 
 	private int getChangeCostForEdge(Edge e) {

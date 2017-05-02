@@ -3,24 +3,17 @@ package org.kite9.diagram.visualization.orthogonalization;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 
 
 public interface Orthogonalization extends Serializable {
-
-	/**
-	 * Order of darts around a dimensioned vertex, from top-left corner clockwise.
-	 * This shouldn't be necessary:  we are not going to have dimensioned vertices in the orth anymore.
-	 */
-	@Deprecated
-	public Map<Vertex, List<Dart>> getDartOrdering();
 
 	/**
 	 * List of all darts constructing the Orthogonalization.
@@ -42,7 +35,7 @@ public interface Orthogonalization extends Serializable {
 	 * Orthogonalization acts as a factory for darts. Always returns a dart, even if it 
 	 * is an existing one
 	 */
-	public Dart createDart(Vertex from, Vertex to, PlanarizationEdge partOf, Direction d);
+	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d);
 
 	/**
 	 * In the same way as a {@link Face} is a clockwise ordering of edges, a {@link DartFace} is a clockwise
@@ -52,7 +45,6 @@ public interface Orthogonalization extends Serializable {
 	
 	/**
 	 * Helper vertices are added by the compaction process to ensure separation of all attr
-	 * @return
 	 */
 	public Vertex createHelperVertex();
 	
@@ -66,11 +58,10 @@ public interface Orthogonalization extends Serializable {
 	 */
 	public DartFace getDartFaceForFace(Face f);
 	
-	/**
-	 * Gives you back the darts for that edge.
-	 */
-	public Set<Dart> getDartsForEdge(PlanarizationEdge e);
+	public Set<Dart> getDartsForDiagramElement(DiagramElement e);
 	
-	public List<Vertex> getWaypointsForEdge(PlanarizationEdge e);
+	public List<Vertex> getWaypointsForBiDirectional(DiagramElement e);
+	
+	public List<Dart> getDartOrdering(Vertex around);
 
 }

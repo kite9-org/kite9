@@ -6,21 +6,12 @@ import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 
 /**
- * Edges can represent parts of container borders or connections within the planarization of 
+ * Edges can represent parts of container borders or connections within the planarization and orthogonalization of 
  * the diagram.  They connect from Vertex objects at each end.  
  * 
  * @author robmoffat
  *
  */
 public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Deterministic {
-	
-	public void setFrom(Vertex v);
-
-	public void setTo(Vertex v);
-		
-	/**
-	 * Unlinks the edge from the from, to vertices it is connected to.
-	 */
-	public void remove();
 	
 }

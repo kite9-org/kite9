@@ -71,7 +71,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 				EdgeMapping redundant = p.getEdgeMappings().get(e);
 				if (redundant != null) {
 					for (Edge edge : redundant.getEdges()) {
-						edge.remove();
+						((PlanarizationEdge) edge).remove();
 					}
 				}
 			}
