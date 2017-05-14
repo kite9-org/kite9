@@ -10,8 +10,8 @@ import org.kite9.diagram.visualization.planarization.Planarization;
  * @author robmoffat
  *
  */
-public interface OrthBuilder<X extends FlowGraph> {
+public interface OrthBuilder {
 
-	public abstract OrthogonalizationImpl build(Planarization pln, X fg);
+	public abstract OrthogonalizationImpl build(Planarization pln);
 
 }

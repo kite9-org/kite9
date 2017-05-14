@@ -140,7 +140,7 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 			}
 		}
 		
-		throw new Kite9ProcessingException("No diagram element in direction: "+d+" for "+this);
+		return null;
 	}
 	
 	

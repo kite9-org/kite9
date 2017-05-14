@@ -36,11 +36,11 @@ class DartImpl extends AbstractEdge implements Dart {
 	/**
 	 * Constructor is in Orthogonalization
 	 */
-	DartImpl(Vertex from, Vertex to, DiagramElement partOf, Direction d, String label, OrthogonalizationImpl o) {
+	DartImpl(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d, String label, OrthogonalizationImpl o) {
 		super(from, to, d);
 				
 		if (partOf != null) {
-			this.underlyings.add(partOf);
+			this.underlyings.addAll(partOf);
 		}
 		this.o = o;
 		this.changeCost = DartImpl.VERTEX_DART_PRESERVE;
@@ -138,6 +138,14 @@ class DartImpl extends AbstractEdge implements Dart {
 	@Override
 	public boolean isPartOf(DiagramElement de) {
 		return underlyings.contains(de);
+	}
+	
+	Direction orthPreference;
+
+	@Override
+	@Deprecated  // figure out what to do with this.
+	public void setOrthogonalPositionPreference(Direction d) {
+		this.orthPreference = d;
 	}
 	
 }

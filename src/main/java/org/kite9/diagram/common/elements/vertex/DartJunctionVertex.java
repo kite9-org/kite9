@@ -3,7 +3,6 @@ package org.kite9.diagram.common.elements.vertex;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
@@ -13,14 +12,13 @@ import org.kite9.diagram.model.DiagramElement;
  * @author robmoffat
  *
  */
-public class SideVertex extends AbstractVertex implements MultiElementVertex {
+public class DartJunctionVertex extends AbstractVertex implements MultiElementVertex {
 	
-	private Set<DiagramElement> underlyings = new HashSet<>();
+	private Set<DiagramElement> underlyings;
 	
-	public SideVertex(String name, Connected cd, DiagramElement cn) {
+	public DartJunctionVertex(String name, Set<DiagramElement> a) {
 		super(name);
-		this.underlyings.add(cd);
-		this.underlyings.add(cn);
+		this.underlyings = a;
 	}
 
 	@Override

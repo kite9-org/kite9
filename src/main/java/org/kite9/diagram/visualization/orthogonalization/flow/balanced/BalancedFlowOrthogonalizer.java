@@ -18,6 +18,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 
@@ -42,11 +43,11 @@ import org.kite9.diagram.visualization.planarization.Tools;
  * 
  */
 public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalizer {
-
-	public BalancedFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
-	}
 	
+	public BalancedFlowOrthogonalizer(VertexArranger va) {
+		super(va);
+	}
+
 	public static final int UNBALANCED_VERTEX_COST = 4 * CORNER;
 
 	public static enum BalanceChoice {

@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.orthogonalization.vertices;
+package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class FanInVertexArranger extends BasicVertexArranger {
+public class FanInVertexArranger extends ConnectedVertexArranger {
 
 	public FanInVertexArranger(ElementMapper em) {
 		super(em);
@@ -69,8 +69,6 @@ public class FanInVertexArranger extends BasicVertexArranger {
 
 					ConnectionEdgeBendVertex ebv1 = new ConnectionEdgeBendVertex(fromEnd.getID() + "/f1", underlying);
 					ConnectionEdgeBendVertex ebv2 = new ConnectionEdgeBendVertex(fromEnd.getID() + "/f2", underlying);
-					o.getAllVertices().add(ebv1);
-					o.getAllVertices().add(ebv2);
 					Direction fanDir = i < firstStraight ? Direction.rotateAntiClockwise(d) : Direction.rotateClockwise(d);
 
 					DartImpl toFanPt2 = o.createDart(ebv1, ebv2, underlying, fanDir);

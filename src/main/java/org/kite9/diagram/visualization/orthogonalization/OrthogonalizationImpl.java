@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.orthogonalization;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -37,7 +39,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	}
 	
 	public OrthogonalizationImpl(Planarization pln) {
-		this.allVertices = new ArrayList<Vertex>(pln.getAllVertices());
+		this.allVertices = new LinkedHashSet<Vertex>(pln.getAllVertices());
 		this.pln = pln;
 	}
  
@@ -120,6 +122,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	private Map<Vertex,Map<Vertex, Set<Dart>>> existingDarts = new HashMap<Vertex, Map<Vertex, Set<Dart>>>();
 	
 	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d) {
+		return createDart(from, to, Collections.singleton(partOf), d);
+	}
+
+	public Dart createDart(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
 		
@@ -145,7 +151,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				}
 				
 				// add some new underlyings
-				((DartImpl)dart).underlyings.add(partOf);
+				((DartImpl)dart).underlyings.addAll(partOf);
 				addToWaypointMap(dart, partOf);
 				return dart;
 			}
@@ -153,11 +159,13 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		
 		// need to create the dart
 		ensureNoDartInDirection(from, d);
-		ensureNoDartInDirection(to, d);
+		ensureNoDartInDirection(to, Direction.reverse(d));
 		Dart out = new DartImpl(from, to, partOf, d, "d"+nextDart++, this);
 		addToWaypointMap(out, partOf);
 		existing.add(out);
 		allDarts.add(out);
+		allVertices.add(from);
+		allVertices.add(to);
 		return out;
 		
 	}
@@ -180,14 +188,16 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		return null;
 	}
 
-	private void addToWaypointMap(Dart out, DiagramElement partOf) {
-		Set<Dart> wpDarts = waypointMap.get(partOf);
-		if (wpDarts == null) {
-			wpDarts = new LinkedHashSet<>();
-			waypointMap.put(partOf, wpDarts);
+	private void addToWaypointMap(Dart out, Set<DiagramElement> partsOf) {
+		for (DiagramElement partOf : partsOf) {
+			Set<Dart> wpDarts = waypointMap.get(partOf);
+			if (wpDarts == null) {
+				wpDarts = new LinkedHashSet<>();
+				waypointMap.put(partOf, wpDarts);
+			}
+			
+			wpDarts.add(out);
 		}
-		
-		wpDarts.add(out);
 	}
 
 	void unlinkDartFromMap(Dart d) {
@@ -232,10 +242,12 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		theSet.add(d);
 	}
 
-	public DartFace createDartFace(Face f) {
-		DartFace df = new DartFace(f, f.isOuterFace());
+	private int faceNo = 0;
+	
+	public DartFace createDartFace(Rectangular partOf, boolean outerFace) {
+		DartFace df = new DartFace(faceNo++, partOf, outerFace);
 		faces.add(df);
-		dartFaceMap.put(f, df);
+//		dartFaceMap.put(f, df);
 		return df;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.model.DiagramElement;
@@ -138,7 +139,7 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 		public PlanarizationEdge next() {
 			PlanarizationEdge out = next;
 			next = getNext();
-			checkEdge(true);
+			checkEdge(false);
 			return out;
 		}
 
@@ -163,6 +164,7 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 			List<PlanarizationEdge> edges = getEdgesAsList();
 			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
 			for (Edge e : edges) {
+				if (e instanceof BiDirectionalPlanarizationEdge)
 				DiagramElement und = e.getOriginalUnderlying();
 				if (und != null) {
 					underlyingCache.add(und);

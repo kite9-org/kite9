@@ -1,0 +1,221 @@
+package org.kite9.diagram.visualization.orthogonalization.vertex;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.AbstractVertex;
+import org.kite9.diagram.common.elements.vertex.NoElementVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
+
+/**
+ * This mainly handles returning DartDirection objects which form the Boundary of a vertex in the diagram.
+ * Actual conversion from Planarization vertices to darts is handled by subclasses.
+ * 
+ * @author robmoffat
+ *
+ */
+public abstract class AbstractVertexArranger implements VertexArranger, Logable {
+	
+
+	protected Kite9Log log = new Kite9Log(this);
+
+	
+	/**
+	 * Special marker vertex that allows us to represent the join points for
+	 * darts/vertices constructed by the VertexArranger.
+	 * 
+	 * This keeps track of the underlying PLanarizationEdge that needs to meet from
+	 * the OrthBuilder process.
+	 * 
+	 * @author robmoffat
+	 *
+	 */
+	private static class ExternalVertex extends AbstractVertex implements NoElementVertex {
+
+		private PlanarizationEdge joins;
+		
+		public ExternalVertex(String id, PlanarizationEdge joins) {
+			super(id);
+			this.joins = joins;
+		}
+
+		@Override
+		public Set<DiagramElement> getDiagramElements() {
+			return null;
+		}
+
+		@Override
+		public boolean isPartOf(DiagramElement de) {
+			return false;
+		}
+		
+		public boolean joins(PlanarizationEdge e) {
+			return e==joins;
+		}
+		
+	}
+	
+	public Vertex createExternalVertex(String id, PlanarizationEdge pe) {
+		return new ExternalVertex(id, pe);
+	}
+	
+	/**
+	 * Contains part of the overall vertex construction, between one incoming vertex and the next.
+	 * @author robmoffat
+	 *
+	 */
+	private static class Boundary {
+		
+		public Boundary(ExternalVertex from, ExternalVertex to, List<DartDirection> toInsert) {
+			super();
+			this.from = from;
+			this.to = to;
+			this.toInsert = toInsert;
+		}
+
+		final ExternalVertex from, to;
+		final List<DartDirection> toInsert;
+		
+		public Direction getStartDirection() {
+			return toInsert.get(0).getDirection();
+		}
+		
+		public Direction getEndDirection() {
+			return toInsert.get(toInsert.size()-1).getDirection();
+		}
+		
+		public String toString() {
+			return "Boundary [from=" + from + ", to=" + to + "]";
+		}
+	}
+	
+	private Map<Vertex, List<Boundary>> boundaries = new HashMap<>();
+
+	@Override
+	public List<DartDirection> returnDartsBetween(PlanarizationEdge in, Direction outDirection, Vertex v, PlanarizationEdge out, Orthogonalization o, TurnInformation ti) {
+		List<Boundary> relevantBoundaries = boundaries.get(v);
+		if (relevantBoundaries == null) {
+			convertVertex(o, v, ti);
+			relevantBoundaries = boundaries.get(v); 
+		}
+		
+		return findDartsToInsert(relevantBoundaries, in, outDirection, out);
+	}
+
+	protected abstract void convertVertex(Orthogonalization o, Vertex v, TurnInformation ti);
+
+	/**
+	 * Works out which darts are needed from the vertex to fill a gap between in
+	 * and out in the face. Always proceeds in an anti-clockwise direction.
+	 * 
+	 * @param outerFace
+	 */
+	private List<DartDirection> findDartsToInsert(List<Boundary> relevantBoundaries, PlanarizationEdge in, Direction outDirection, PlanarizationEdge out) {
+		for (Boundary b : relevantBoundaries) {
+			if ((b.from.joins(in)) && (b.to.joins(out))) {
+//				if ((b.getEndDirection() == outDirection)) {
+					return b.toInsert;
+//				}
+			}
+
+		}
+
+		throw new Kite9ProcessingException();
+	}
+	
+	private int clockwiseTurns(Direction from, Direction to) {
+		int c = 0;
+		while (from != to) {
+			from = Direction.rotateClockwise(from);
+			c++;
+		}
+		
+		return c;
+	}
+	
+	private Dart getNextDartClockwise(Vertex incidentVertex, Dart in) {
+		Direction directionToVertex = Direction.reverse(in.getDrawDirectionFrom(incidentVertex));
+		Dart out = null;
+		int bestScore = 100;
+		
+		for (Edge e : incidentVertex.getEdges()) {
+			if (e instanceof Dart) {
+				Direction thisDirection = Direction.reverse(e.getDrawDirectionFrom(incidentVertex));
+				int turns = clockwiseTurns(directionToVertex, thisDirection);
+				if ((turns > 0) && (turns<bestScore)) {
+					out = (Dart) e;
+					bestScore = turns;
+				}
+			}
+		}
+		
+		if (out == null) {
+			return in;
+		}
+		
+		return out;
+	}
+	
+	/**
+	 * Returns the dart for an external vertex.  There should only be one.
+	 */
+	private Dart getSingleExternalVertexDart(Vertex from) {
+		if (from.getEdgeCount() != 1) {
+			throw new Kite9ProcessingException();
+		} 
+		
+		return (Dart) from.getEdges().iterator().next();
+	}
+
+	
+	
+	/**
+	 * Divides up the darts around the vertex between the darts entering the vertex.
+	 * The arrangement of darts at this point should look something like a spider, with the ends of the legs
+	 * being the external vertices.
+	 */
+	protected void setupBoundaries(Set<Vertex> externalVertices, Vertex forVertex) {
+		List<Boundary> made = new ArrayList<Boundary>();
+		Set<Vertex> toProcess = new HashSet<>(externalVertices);
+
+		for (Vertex from : toProcess) {
+			Dart dart = null;
+			dart = getSingleExternalVertexDart(from);
+			List<DartDirection> dds = new ArrayList<>();
+			Vertex to = dart.otherEnd(from);
+			Direction d = dart.getDrawDirectionFrom(from);
+			
+			do {
+				dds.add(new DartDirection(dart, d));
+				dart = getNextDartClockwise(to, dart);
+				d = dart.getDrawDirectionFrom(to);
+				to = dart.otherEnd(to);
+			} while (!externalVertices.contains(to));
+			
+			dds.add(new DartDirection(dart, d));
+			Boundary b = new Boundary((ExternalVertex) from, (ExternalVertex) to, dds);
+			made.add(b);
+			from = to;
+			
+			log.send("Vertex: "+forVertex+" has boundary: "+b+" with darts: "+b.toInsert);
+		}
+		
+		boundaries.put(forVertex, made);
+	}
+
+
+}

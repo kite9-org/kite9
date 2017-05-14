@@ -12,18 +12,15 @@ import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompac
 import org.kite9.diagram.visualization.compaction.position.EdgeRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
-import org.kite9.diagram.visualization.compaction.rect.PrimitiveRectangleCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
-import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraphOrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.vertices.ContainerCornerVertexArranger;
-import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangementOrthogonalizationDecorator;
+import org.kite9.diagram.visualization.orthogonalization.vertex.MultiCornerVertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
@@ -70,9 +67,8 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public Orthogonalizer createOrthogonalizer() {
-		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder());
-		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic,
-				new ContainerCornerVertexArranger(getElementMapper()));
+		orthogonalizer = new ContainerCornerFlowOrthogonalizer(
+						new MultiCornerVertexArranger(getElementMapper()));
 		return orthogonalizer;
 	}
 

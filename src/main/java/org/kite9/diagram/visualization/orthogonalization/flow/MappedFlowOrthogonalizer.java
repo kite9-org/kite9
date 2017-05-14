@@ -1,10 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
-import org.kite9.diagram.common.algorithms.fg.FlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.AbstractOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.logging.LogicException;
 
@@ -15,26 +15,22 @@ import org.kite9.framework.logging.LogicException;
  *
  * @param <X>
  */
-public abstract class FlowOrthogonalizer<X extends FlowGraph> extends AbstractOrthogonalizer implements Orthogonalizer {
-
-	OrthBuilder<X> fb;
+public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer implements Orthogonalizer {
 	
-	public FlowOrthogonalizer(OrthBuilder<X> fb) {
+	VertexArranger va;
+	
+	public MappedFlowOrthogonalizer(VertexArranger va) {
 		super();
-		this.fb = fb;
+		this.va = va;
 	}
 	
-	public abstract X createOptimisedFlowGraph(Planarization pln) ;
+	public abstract MappedFlowGraph createOptimisedFlowGraph(Planarization pln) ;
 	
 	public Orthogonalization createOrthogonalization(Planarization pln) {
 		try {
-			X fg = createOptimisedFlowGraph(pln);
-			OrthogonalizationImpl orth = fb.build(pln, fg);
-//			if (orth.cornerDarts.size()>0) {
-//				// this is not necessary for the Tamassia algorithm, so ignore.
-//				orderDartsFromCorner(orth.cornerDarts, orth);
-//			}
-			
+			MappedFlowGraph fg = createOptimisedFlowGraph(pln);
+			OrthBuilder fb = new MappedFlowGraphOrthBuilder(va, fg);
+			OrthogonalizationImpl orth = fb.build(pln);			
 			return orth;
 		} catch (LogicException le) {
 			log.send("Plan: "+pln);
@@ -43,7 +39,7 @@ public abstract class FlowOrthogonalizer<X extends FlowGraph> extends AbstractOr
 	}
 
 
-	protected void checkFlows(X fg) {
+	protected void checkFlows(MappedFlowGraph fg) {
 	}
 
 	

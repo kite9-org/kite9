@@ -352,10 +352,6 @@ public class LabelInsertionCompactionStep extends AbstractCompactionStep {
 		AbstractAnchoringVertex tr = new SingleCornerVertex("label_" + ln + "_tr", HPos.RIGHT, VPos.UP, lf);
 		AbstractAnchoringVertex br = new SingleCornerVertex("label_" + ln + "_br", HPos.RIGHT, VPos.DOWN, lf);
 		AbstractAnchoringVertex bl = new SingleCornerVertex("label_" + ln + "_bl", HPos.LEFT, VPos.DOWN, lf);
-		o.getAllVertices().add(tl);
-		o.getAllVertices().add(tr);
-		o.getAllVertices().add(bl);
-		o.getAllVertices().add(br);
 
 		o.createDart(tl, tr, l, Direction.RIGHT, 0);
 		o.createDart(bl, br, l, Direction.RIGHT, 0);

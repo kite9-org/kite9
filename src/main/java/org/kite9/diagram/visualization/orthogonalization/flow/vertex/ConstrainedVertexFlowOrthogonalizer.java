@@ -21,6 +21,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -37,10 +38,10 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOrthogonalizer {
 
-	public ConstrainedVertexFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
+	public ConstrainedVertexFlowOrthogonalizer(VertexArranger va) {
+		super(va);
 	}
-	
+
 	int nextId = 0;
 	
 	class VertexDivision {

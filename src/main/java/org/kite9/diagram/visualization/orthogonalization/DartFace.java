@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.Face;
 
 
 /**
@@ -17,7 +17,8 @@ import org.kite9.diagram.visualization.planarization.Face;
  *
  */
 public class DartFace implements Serializable, Comparable<DartFace> {
-    private static final long serialVersionUID = -4395910839686963521L;
+
+	private static final long serialVersionUID = -4395910839686963521L;
     
     public static class DartDirection {
     	
@@ -51,34 +52,38 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 
 	@Override
 	public String toString() {
-		return "DartFace: "+f.id+"-"+(outerFace ? "outer, inside "+f.getContainedBy().id : "inner") +": "+dartsInFace.toString();
+		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedBy.id : "inner") +": "+dartsInFace.toString();
 	}
 	
-	public DartFace(Face f, boolean outerFace) {
-		this.f = f;
+	public DartFace(int i, Rectangular partOf, boolean outerFace) {
+		this.partOf = partOf;
+		this.id = i;
 		this.outerFace = outerFace;
-		this.faceDepth = f instanceof Face ? getFaceDepth((Face) f) : Integer.MAX_VALUE;
+		this.faceDepth = partOf != null ? partOf.getDepth() : -1;
 	}
-
-	private int getFaceDepth(Face f2) {
-		if (f2.getContainedBy() == null) {
-			return 0;
-		} else {
-			return 1 + getFaceDepth(f2.getContainedBy());
-		}
-	}
-
-	private Face f;
+	
+	private final int id;
+	
+	private final Rectangular partOf;
 	
 	public List<DartDirection> dartsInFace;
 	
-	public boolean outerFace;
+	public final boolean outerFace;
 	
-	private int faceDepth;
+	private final int faceDepth;
 
+	private DartFace containedBy;
 	
-	public Face getUnderlying() {
-		return f;
+	public DartFace getContainedBy() {
+		return containedBy;
+	}
+
+	public void setContainedBy(DartFace containedBy) {
+		this.containedBy = containedBy;
+	}
+
+	public Rectangular getPartOf() {
+		return partOf;
 	}
 
 	public Vertex getStartVertex() {

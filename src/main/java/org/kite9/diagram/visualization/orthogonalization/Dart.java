@@ -5,6 +5,7 @@ import java.util.Set;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Direction;
 
 /**
  * Darts are created by the orthogonalization process.  They are directed edges within the diagram which 
@@ -41,5 +42,7 @@ public interface Dart extends Edge {
 	public void setChangeCost(int changeCost, Vertex changeEarlyEnd);
 	
 	public void setChangeCostChangeEarlyBothEnds(int changeCost);
+
+	void setOrthogonalPositionPreference(Direction d);
 
 }

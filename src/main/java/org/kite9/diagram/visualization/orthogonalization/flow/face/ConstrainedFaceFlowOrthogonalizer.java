@@ -17,8 +17,8 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.EdgeVertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.vertex.ConstrainedVertexFlowOrthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.logging.LogicException;
@@ -31,11 +31,11 @@ import org.kite9.framework.logging.LogicException;
  */
 public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrthogonalizer{
 
-	public static final String FACE_SUBDIVISION_NODE = "fn";
-	
-	public ConstrainedFaceFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
+	public ConstrainedFaceFlowOrthogonalizer(VertexArranger va) {
+		super(va);
 	}
+
+	public static final String FACE_SUBDIVISION_NODE = "fn";
 	
 	ConstraintGroup constraints;
 	Map<Face, List<PortionNode>> facePortionMap = new HashMap<Face, List<PortionNode>>();
