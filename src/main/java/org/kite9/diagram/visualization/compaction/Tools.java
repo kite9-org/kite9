@@ -19,25 +19,6 @@ public class Tools implements Logable {
 			}
 		}
 	}
-	
-	/**
-	 * Returns the user element represented by this construction element.
-	 */
-	public static Object getUltimateElement(ArtificialElement e) {
-		Object out = null;
-		if (e instanceof Edge) {
-			out = ((Edge) e).getOriginalUnderlying();
-		} else if (e instanceof Vertex) {
-			out = ((Vertex) e).getOriginalUnderlying();
-		}
-		
-		if (out==null) {
-			return e;
-		}
-		
-		return out;
-	}
-
 
 	public String getPrefix() {
 		return "C_TL";

@@ -144,7 +144,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		
 		Vertex sideVertex = new DartJunctionVertex(und.getID()+"-dv-"+newVertexId++, underlyings);
 		Vertex externalVertex = createExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
-		Dart d = o.createDart(sideVertex, externalVertex, cn, side);
+		Dart d = o.createDart(sideVertex, externalVertex, cn, side, null);
 		return new IncidentDart(d, externalVertex, sideVertex, side, e);
 	}
 
@@ -164,7 +164,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			MultiCornerVertex tov = perimeter.get((done+1) % perimeter.size());
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
-			Side s = createSide(fromv, tov, Collections.singleton(originalUnderlying), leavers, o, sideDirection);
+			Side s = createSide(fromv, tov, Collections.singleton(originalUnderlying), leavers, o, sideDirection, outwardsDirection);
 			allSideDarts.addAll(s.newEdgeDarts);
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
@@ -221,7 +221,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * Links corner elements with the incident darts into the whole side of the underlying.
 	 */
-	protected Side createSide(Vertex from, Vertex to, Set<DiagramElement> underlying, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn) {
+	protected Side createSide(Vertex from, Vertex to, Set<DiagramElement> underlying, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn, Direction side) {
 		Side out = new Side();
 		Vertex last = from;
 		IncidentDart incidentDart = null;
@@ -230,7 +230,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.internal;
-				Dart sideDart = o.createDart(last, vsv, underlying, goingIn); 
+				Dart sideDart = o.createDart(last, vsv, underlying, goingIn, side); 
 				sideDart.setOrthogonalPositionPreference(goingIn);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);			
@@ -239,7 +239,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		}
 
 		// finally, join to corner
-		Dart sideDart = o.createDart(last, to, underlying, goingIn); 
+		Dart sideDart = o.createDart(last, to, underlying, goingIn, side); 
 		sideDart.setOrthogonalPositionPreference(goingIn);
 		out.newEdgeDarts.add(sideDart);
 		return out;

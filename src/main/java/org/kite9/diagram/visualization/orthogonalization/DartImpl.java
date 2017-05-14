@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.AbstractEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -36,11 +36,11 @@ class DartImpl extends AbstractEdge implements Dart {
 	/**
 	 * Constructor is in Orthogonalization
 	 */
-	DartImpl(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d, String label, OrthogonalizationImpl o) {
+	DartImpl(Vertex from, Vertex to, Map<DiagramElement, Direction> partOf, Direction d, String label, OrthogonalizationImpl o) {
 		super(from, to, d);
 				
 		if (partOf != null) {
-			this.underlyings.addAll(partOf);
+			this.underlyings.putAll(partOf);
 		}
 		this.o = o;
 		this.changeCost = DartImpl.VERTEX_DART_PRESERVE;
@@ -49,7 +49,7 @@ class DartImpl extends AbstractEdge implements Dart {
 		to.addEdge(this);
 	}
 	
-	Set<DiagramElement> underlyings = new HashSet<>();
+	Map<DiagramElement, Direction> underlyings = new HashMap<>();
 
 	public static final int CHANGE_EARLY_FROM = 64;
 	public static final int CHANGE_EARLY_TO = 128;
@@ -131,13 +131,13 @@ class DartImpl extends AbstractEdge implements Dart {
 	}
 	
 	@Override
-	public Set<DiagramElement> getDiagramElements() {
+	public Map<DiagramElement, Direction> getDiagramElements() {
 		return underlyings;
 	}
 
 	@Override
 	public boolean isPartOf(DiagramElement de) {
-		return underlyings.contains(de);
+		return underlyings.containsKey(de);
 	}
 	
 	Direction orthPreference;

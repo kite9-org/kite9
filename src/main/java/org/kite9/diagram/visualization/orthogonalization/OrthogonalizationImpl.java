@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -68,6 +69,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	protected Map<Face, DartFace> dartFaceMap = new HashMap<>();
 	
+	protected Map<Rectangular, List<DartFace>> facesRectangularMap = new HashMap<>();
+	
 	public Set<Dart> getDartsForEdge(DiagramElement e) {
 		return waypointMap.get(e);
 	}
@@ -121,11 +124,18 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	
 	private Map<Vertex,Map<Vertex, Set<Dart>>> existingDarts = new HashMap<Vertex, Map<Vertex, Set<Dart>>>();
 	
-	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d) {
-		return createDart(from, to, Collections.singleton(partOf), d);
+	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d, Direction partOfSide) {
+		return createDart(from, to, Collections.singleton(partOf), d, partOfSide);
 	}
+	
+	public Dart createDart(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d, Direction partOfSide) {
+		Map<DiagramElement, Direction> next = new HashMap<>();
+		partOf.forEach(a -> next.put(a, partOfSide));
+		return createDart(from, to, next, d);
+	}
+	
 
-	public Dart createDart(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d) {
+	public Dart createDart(Vertex from, Vertex to, Map<DiagramElement, Direction> partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
 		
@@ -151,8 +161,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				}
 				
 				// add some new underlyings
-				((DartImpl)dart).underlyings.addAll(partOf);
-				addToWaypointMap(dart, partOf);
+				((DartImpl)dart).underlyings.putAll(partOf);
+				addToWaypointMap(dart, partOf.keySet());
 				return dart;
 			}
 		}
@@ -161,7 +171,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		ensureNoDartInDirection(from, d);
 		ensureNoDartInDirection(to, Direction.reverse(d));
 		Dart out = new DartImpl(from, to, partOf, d, "d"+nextDart++, this);
-		addToWaypointMap(out, partOf);
+		addToWaypointMap(out, partOf.keySet());
 		existing.add(out);
 		allDarts.add(out);
 		allVertices.add(from);
@@ -247,7 +257,12 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	public DartFace createDartFace(Rectangular partOf, boolean outerFace) {
 		DartFace df = new DartFace(faceNo++, partOf, outerFace);
 		faces.add(df);
-//		dartFaceMap.put(f, df);
+		List<DartFace> frl = facesRectangularMap.get(partOf);
+		if (frl == null) {
+			frl = new ArrayList<>();
+			facesRectangularMap.put(partOf, frl);
+		}
+		frl.add(df);
 		return df;
 	}
 
@@ -257,11 +272,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		Vertex out = new CompactionHelperVertex("x"+helper++);
 		allVertices.add(out);
 		return out;
-	}
-
-	@Override
-	public DartFace getDartFaceForFace(Face f) {
-		return dartFaceMap.get(f);
 	}
 
 	@Override
@@ -319,5 +329,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		if (up != null) {
 			out.add(up);
 		}
+	}
+
+	@Override
+	public List<DartFace> getDartFacesForRectangular(Rectangular r) {
+		return facesRectangularMap.getOrDefault(r, Collections.emptyList());
 	}
 }

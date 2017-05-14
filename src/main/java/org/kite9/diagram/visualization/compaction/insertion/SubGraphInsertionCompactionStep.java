@@ -51,7 +51,6 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	}
 
 	Kite9Log log = new Kite9Log(this);
-	Tools t = new Tools();
 
 
 	@Override
@@ -60,7 +59,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		Collection<DartFace> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
-		for (DartFace dartFace : c.getDartFacesForRectangular(r)) {
+		for (DartFace dartFace : c.getOrthogonalization().getDartFacesForRectangular(r)) {
 			insertSubFaces(dartFace, done, c);
 		}
 	}
@@ -151,7 +150,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		Direction outDir = null;
 
 		for (DartDirection dd : ef.dartsInFace) {
-			for (DiagramElement de : dd.getDart().getDiagramElements()) {
+			for (DiagramElement de : dd.getDart().getDiagramElements().keySet()) {
 				if (de instanceof Connected) {
 					Container c = ((Connected)de).getContainer();
 					

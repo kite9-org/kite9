@@ -12,7 +12,7 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.SegmentBuilder;
-import org.kite9.diagram.visualization.orthogonalization.DartImpl;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.HelpMethods;
@@ -41,39 +41,30 @@ public class PluggableCompactor implements Compactor {
 	public Compaction compactDiagram(Orthogonalization o) {
 		List<Segment> horizontal = buildSegmentList(o, HORIZONTAL);
 		List<Segment> vertical = buildSegmentList(o, VERTICAL);
-		Map<DartImpl, Segment> dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical);
-		Map<Rectangular, List<DartFace>> facesForRectangular = calculateFacesForRectangular(o);
+		Map<Dart, Segment> dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical);
 		Map<Vertex, Segment> horizontalSegmentMap = createVertexSegmentMap(horizontal);
 		Map<Vertex, Segment> verticalSegmentMap = createVertexSegmentMap(vertical);
-		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, facesForRectangular, horizontalSegmentMap, verticalSegmentMap);
+		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, horizontalSegmentMap, verticalSegmentMap);
 		compact(o.getPlanarization().getDiagram(), compaction);
 		return compaction;
 	}
 
-	protected Compaction instantiateCompaction(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<DartImpl, Segment> dartToSegmentMap,
-			Map<Rectangular, List<DartFace>> facesForRectangular, Map<Vertex, Segment> horizontalSegmentMap, Map<Vertex, Segment> verticalSegmentMap) {
-		return new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, facesForRectangular, dartToSegmentMap);
+	protected Compaction instantiateCompaction(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Dart, Segment> dartToSegmentMap,
+			Map<Vertex, Segment> horizontalSegmentMap, Map<Vertex, Segment> verticalSegmentMap) {
+		return new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, dartToSegmentMap);
 	}
 	
-	private Map<DartImpl, Segment> calculateDartToSegmentMap(List<Segment> h1, List<Segment> v1) {
-		Map<DartImpl, Segment> out = new HashMap<>();
+	private Map<Dart, Segment> calculateDartToSegmentMap(List<Segment> h1, List<Segment> v1) {
+		Map<Dart, Segment> out = new HashMap<>();
 		h1.stream().forEach(s -> addSegmentsToMap(out, s));
 		v1.stream().forEach(s -> addSegmentsToMap(out, s));
 		return out;
 	}
 	
-	private void addSegmentsToMap(Map<DartImpl, Segment> dartSegmentMap, Segment segment) {
-		for (DartImpl d : segment.getDartsInSegment()) {
+	private void addSegmentsToMap(Map<Dart, Segment> dartSegmentMap, Segment segment) {
+		for (Dart d : segment.getDartsInSegment()) {
 			dartSegmentMap.put(d, segment);
 		}
-	}
-
-	private Map<Rectangular, List<DartFace>> calculateFacesForRectangular(Orthogonalization o) {
-		Map<Rectangular, List<DartFace>> out = 
-			o.getFaces().stream()
-				.filter(f -> f.getUnderlying().getPartOf() != null)
-				.collect(Collectors.groupingBy(f -> f.getUnderlying().getPartOf()));
-		return out;
 	}
 
 	@Override

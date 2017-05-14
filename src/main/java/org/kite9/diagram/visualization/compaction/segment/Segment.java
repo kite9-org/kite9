@@ -12,14 +12,10 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.diagram.visualization.orthogonalization.DartImpl;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 
@@ -59,41 +55,31 @@ public class Segment implements Comparable<Segment> {
 	}
 	
 	private Stream<UnderlyingInfo> convertUnderlyingToUnderlyingInfo(Dart d) {
-		Object o = d.getUnderlying();
-		if (o instanceof Edge) {
-			if (o instanceof BiDirectionalPlanarizationEdge) {
-				return Stream.of(new UnderlyingInfo(((BiDirectionalPlanarizationEdge)o).getOriginalUnderlying(), Side.NEITHER));
-			} else if (o instanceof BorderEdge) {
-				BorderEdge borderEdge = (BorderEdge) o;
-				Map<DiagramElement, Direction> diagramElements = borderEdge.getDiagramElements();
-				Iterator<DiagramElement> it = diagramElements.keySet().iterator();
-				
-				if (diagramElements.size() == 2) {
-					DiagramElement first = it.next();
-					DiagramElement second = it.next();
-					
-					if (first == null) {
-						return Stream.of(toUnderlyingInfo(diagramElements, second));
-					} else if (second == null) {
-						return Stream.of(toUnderlyingInfo(diagramElements, first));
-					} else if (first.getParent() == second) {
-						return Stream.of(toUnderlyingInfo(diagramElements, first));
-					} else if (second.getParent() == first) {
-						return Stream.of(toUnderlyingInfo(diagramElements, second));
-					} else {
-						return Stream.of(toUnderlyingInfo(diagramElements, first), toUnderlyingInfo(diagramElements, second));
-					}
-					
-				} else if (diagramElements.size() == 1) {
-					DiagramElement de = it.next();
-					return Stream.of(toUnderlyingInfo(diagramElements, de));
-				} else {
-					throw new LogicException("Border Edge with wrong number of diagram elements: "+o);
-				}
-			} 
-		} 
+		Map<DiagramElement, Direction> diagramElements = d.getDiagramElements();
+		Iterator<DiagramElement> it = diagramElements.keySet().iterator();
 		
-		throw new Kite9ProcessingException("Don't know what this is: "+o);
+		if (diagramElements.size() == 2) {
+			DiagramElement first = it.next();
+			DiagramElement second = it.next();
+			
+			if (first == null) {
+				return Stream.of(toUnderlyingInfo(diagramElements, second));
+			} else if (second == null) {
+				return Stream.of(toUnderlyingInfo(diagramElements, first));
+			} else if (first.getParent() == second) {
+				return Stream.of(toUnderlyingInfo(diagramElements, first));
+			} else if (second.getParent() == first) {
+				return Stream.of(toUnderlyingInfo(diagramElements, second));
+			} else {
+				return Stream.of(toUnderlyingInfo(diagramElements, first), toUnderlyingInfo(diagramElements, second));
+			}
+			
+		} else if (diagramElements.size() == 1) {
+			DiagramElement de = it.next();
+			return Stream.of(toUnderlyingInfo(diagramElements, de));
+		} else {
+			throw new LogicException("Dart with wrong number of diagram elements: "+d);
+		}
 	}
 
 	private UnderlyingInfo toUnderlyingInfo(Map<DiagramElement, Direction> diagramElements, DiagramElement de) {
@@ -102,6 +88,9 @@ public class Segment implements Comparable<Segment> {
 	}
 	
 	private Side getSideFromDirection(Direction d) {
+		if (d == null) {
+			return Side.NEITHER;
+		}
 		switch (d) {
 		case DOWN:
 		case RIGHT:
@@ -184,18 +173,18 @@ public class Segment implements Comparable<Segment> {
 	/**
 	 * This is a utility method, used to set the positions of the darts for the diagram
 	 */
-	public Collection<DartImpl> getDartsInSegment() {
-		Collection<DartImpl> darts = new DetHashSet<DartImpl>();
+	public Collection<Dart> getDartsInSegment() {
+		Collection<Dart> darts = new DetHashSet<Dart>();
 		for (Vertex v : verticesInSegment) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) { 
 					if (dimension==PositionAction.YAction) {
 						if ((e.getDrawDirection()==Direction.LEFT) || (e.getDrawDirection()==Direction.RIGHT)) {
-							darts.add((DartImpl)e);
+							darts.add((Dart)e);
 						}
 					} else if (dimension==PositionAction.XAction) {
 						if ((e.getDrawDirection()==Direction.UP) || (e.getDrawDirection()==Direction.DOWN)) {
-							darts.add((DartImpl)e);
+							darts.add((Dart)e);
 						}
 					}
 				}

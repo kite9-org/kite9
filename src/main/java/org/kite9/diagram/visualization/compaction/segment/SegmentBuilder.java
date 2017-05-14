@@ -11,7 +11,6 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.diagram.visualization.orthogonalization.DartImpl;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -59,7 +58,7 @@ public class SegmentBuilder implements Logable {
 		samePlane.addToSegment(v);
 		done.add(v);
 		for (Edge e : v.getEdges()) {
-			if ((e instanceof Dart) && (planeDirection.contains(((DartImpl)e).getDrawDirection()))) {
+			if ((e instanceof Dart) && (planeDirection.contains(((Dart)e).getDrawDirection()))) {
 				Vertex other = e.otherEnd(v);
 				extendSegmentFromVertex(other, planeDirection, samePlane, done);
 			}

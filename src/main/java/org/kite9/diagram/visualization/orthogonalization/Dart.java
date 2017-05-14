@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -33,7 +34,7 @@ public interface Dart extends Edge {
 
 	int getCrossCost();
 
-	Set<DiagramElement> getDiagramElements();
+	Map<DiagramElement, Direction> getDiagramElements();
 
 	boolean isPartOf(DiagramElement de);
 	

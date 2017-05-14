@@ -41,16 +41,14 @@ public class CompactionImpl implements Compaction {
 
 	private List<Segment> verticalSegments;
 	private List<Segment> horizontalSegments;
-	private Map<Rectangular, List<DartFace>> facesForRectangular;
 	private Map<Dart, Segment> dartToSegmentMap;
 
-	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Rectangular, List<DartFace>> facesForRectangular, Map<Dart, Segment> dartToSegmentMap) {
+	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Dart, Segment> dartToSegmentMap) {
 		this.orthogonalization = o;
 		this.horizontalSegments = horizontal;
 		this.verticalSegments = vertical;
 		this.hMap = hmap;
 		this.vMap = vmap;
-		this.facesForRectangular = facesForRectangular;
 		this.dartToSegmentMap = dartToSegmentMap;		
 		this.horizontalSegmentSlackOptimisation = new SegmentSlackOptimisation(horizontal);
 		this.verticalSegmentSlackOptimisation = new SegmentSlackOptimisation(vertical);
@@ -90,25 +88,6 @@ public class CompactionImpl implements Compaction {
 		faceSpaces.put(df, border);
 	}
 
-	public Vertex createCompactionVertex(Segment s1, Segment s2) {
-		Vertex v = orthogonalization.createHelperVertex();
-		s1.addToSegment(v);
-		s2.addToSegment(v);
-		//System.out.println("Added vertex "+v+" to "+s1+" and "+s2);
-		setupVertex(v, s1);
-		setupVertex(v, s2);
-		
-		return v;
-	}
-	
-	private void setupVertex(Vertex v, Segment s) {
-		if (s.getDimension()==PositionAction.XAction) {
-			vMap.put(v, s);
-		} else {
-			hMap.put(v, s);
-		}
-		
-	}
 
 	public Segment newSegment(PositionAction direction) {
 		Segment snew = null;
@@ -123,11 +102,6 @@ public class CompactionImpl implements Compaction {
 		return snew;
 	}
 
-	@Override
-	public List<DartFace> getDartFacesForRectangular(Rectangular r) {
-		return facesForRectangular.get(r);
-	}
-	
 	@Override
 	public Segment getSegmentForDart(Dart r) {
 		return dartToSegmentMap.get(r);

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -35,8 +36,9 @@ public interface Orthogonalization extends Serializable {
 	 * Orthogonalization acts as a factory for darts. Always returns a dart, even if it 
 	 * is an existing one
 	 */
-	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d);
-	public Dart createDart(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d);
+	public Dart createDart(Vertex from, Vertex to, DiagramElement partOf, Direction d, Direction partOfSide);
+	public Dart createDart(Vertex from, Vertex to, Set<DiagramElement> partOf, Direction d, Direction partOfSide);
+	public Dart createDart(Vertex from, Vertex to, Map<DiagramElement, Direction> partOf, Direction d);
 
 	/**
 	 * In the same way as a {@link Face} is a clockwise ordering of edges, a {@link DartFace} is a clockwise
@@ -51,14 +53,11 @@ public interface Orthogonalization extends Serializable {
 	 * Gets the underlying planarization for this orthogonalization
 	 */
 	public Planarization getPlanarization();
-
-	/**
-	 * Returns the DartFace representing this planarization face.
-	 */
-	//public DartFace getDartFaceForFace(Face f);
 	
 	public Set<Dart> getDartsForDiagramElement(DiagramElement e);
 	
 	public List<Vertex> getWaypointsForBiDirectional(DiagramElement e);
+
+	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 
 }

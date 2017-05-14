@@ -72,10 +72,11 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			Direction sideDirection = Direction.rotateClockwise(inDirection);
 			List<IncidentDart> dartsToUse = map.get(sideDirection);
 			if (dartsToUse == null) {
+				sideDirection = Direction.reverse(sideDirection);
 				dartsToUse = map.get(Direction.reverse(sideDirection));
 			}
 			
-			createSide(borders.getA().internal, borders.getB().internal, aUnderlyings, dartsToUse, o, inDirection);
+			createSide(borders.getA().internal, borders.getB().internal, aUnderlyings, dartsToUse, o, inDirection, sideDirection);
 		} else {
 			// two sides
 			Map<Direction, List<IncidentDart>> map =getDartsInDirection(dartDirections, v);
@@ -88,8 +89,8 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			List<IncidentDart> side2Darts = map.get(inDirection);
 			
 			
-			createSide(borders.getA().internal, midPoint, side1Underlyings, side1Darts, o, inDirection);
-			createSide(midPoint, borders.getB().internal, side2Underlyings, side2Darts, o, outDirection);
+			createSide(borders.getA().internal, midPoint, side1Underlyings, side1Darts, o, inDirection, Direction.reverse(outDirection));
+			createSide(midPoint, borders.getB().internal, side2Underlyings, side2Darts, o, outDirection, inDirection);
 		}
 	}
 
@@ -139,9 +140,9 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	@Override
 	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction leavingDirection, int i, Vertex und1) {
 		if (e instanceof BorderEdge) {
-			Set<DiagramElement> cn = ((BorderEdge)e).getDiagramElements().keySet();
+			Map<DiagramElement, Direction> cn = ((BorderEdge)e).getDiagramElements();
 			Set<DiagramElement> und = new HashSet<>();
-			und.addAll(cn);
+			und.addAll(cn.keySet());
 			und.addAll(cd);
 			Vertex sideVertex = new DartJunctionVertex(und1.getID()+"-va-"+newVertexId++, und);
 			Vertex externalVertex = createExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);

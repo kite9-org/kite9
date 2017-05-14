@@ -413,7 +413,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir);
+			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir, null);
 			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);

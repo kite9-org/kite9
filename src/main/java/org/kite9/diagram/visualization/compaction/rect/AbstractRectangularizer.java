@@ -60,8 +60,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	boolean failfast = false;
-
-	Tools t = new Tools();
 	
 	/**
 	 * This ties off any loose ends in the diagram by extending the segments to
@@ -70,7 +68,12 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 */
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		List<DartFace> faces = c.getDartFacesForRectangular(r);
+		List<DartFace> faces = c.getOrthogonalization().getDartFacesForRectangular(r);
+		
+		if (faces == null) {
+			return;
+		}
+		
 		List<Dart> result = new ArrayList<Dart>();
 		List<DartFace> orderedFaces = new ArrayList<DartFace>(faces);
 		Collections.sort(orderedFaces);
@@ -90,7 +93,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			if (!df.outerFace) {
 
 				if (theStack.size() != 4) {
-					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df.getUnderlying());
+					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df);
 				}
 			}
 

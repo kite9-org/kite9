@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Rectangular;
@@ -42,11 +41,11 @@ public interface Compaction {
 	
 	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
 	
-	public Vertex createCompactionVertex(Segment s1, Segment s2);
+	//public Vertex createCompactionVertex(Segment s1, Segment s2);
 
-	public Segment newSegment(PositionAction direction);
+	//public Segment newSegment(PositionAction direction);
 	
-	public List<DartFace> getDartFacesForRectangular(Rectangular r);
+	//public List<DartFace> getDartFacesForRectangular(Rectangular r);
 	
 	public Segment getSegmentForDart(Dart d);
 
