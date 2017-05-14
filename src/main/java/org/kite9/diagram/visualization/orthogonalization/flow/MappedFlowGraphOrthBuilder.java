@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
@@ -92,14 +93,23 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	public OrthogonalizationImpl build(Planarization pln) {
 		OrthogonalizationImpl o = new OrthogonalizationImpl(pln);
 
-		Set<Face> doneFaces = new UnorderedSet<Face>();
+		Map<Face, DartFace> doneFaces = new HashMap<Face, DartFace>();
 		Map<Edge, List<Vertex>> doneEdges = new HashMap<>();
 		List<StartPoint> startPoints = selectBestStartPoints(pln);
 		
 		for (StartPoint startPoint : startPoints) {
-			if (!doneFaces.contains(startPoint.f)) {
+			if (!doneFaces.containsKey(startPoint.f)) {
 				log.send("Processing face: "+startPoint);
 				processFace(startPoint.f, pln, o, startPoint.d, doneFaces, startPoint.v, (PlanarizationEdge) startPoint.e, doneEdges);	
+			}
+		}
+		
+		// preserve containment information
+		for (Entry<Face, DartFace> fe : doneFaces.entrySet()) {
+			if (fe.getKey().isOuterFace()) {
+				Face container = fe.getKey().getContainedBy();
+				DartFace dfContainer = doneFaces.get(container);
+				fe.getValue().setContainedBy(dfContainer);
 			}
 		}
 		
@@ -227,17 +237,17 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	}
 	
 	private void processFace(Face f, Planarization pln, OrthogonalizationImpl o, Direction processingEdgeStartDirection,
-			Set<Face> doneFaces, Vertex start, PlanarizationEdge leaving, Map<Edge, List<Vertex>> doneEdges) {
+			Map<Face, DartFace> doneFaces, Vertex start, PlanarizationEdge leaving, Map<Edge, List<Vertex>> doneEdges) {
 		
-		if (doneFaces.contains(f)) {
+		if (doneFaces.containsKey(f)) {
 			return;
 		}
 
-		doneFaces.add(f);
 
 		log.send(log.go() ? null : "Processing face: " + f.getId());
 
 		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace());
+		doneFaces.put(f, df);
 		df.dartsInFace = new ArrayList<DartDirection>();
 		
 		int startIndex = f.indexOf(start, leaving);
@@ -369,7 +379,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	}
 
 	private List<DartDirection> processEdge(Face f, Planarization pln, OrthogonalizationImpl o, MappedFlowGraph fg,
-			Direction nextDir, Vertex startVertex, Vertex endVertex, PlanarizationEdge e, Set<Face> doneFaces, Map<Edge, List<Vertex>> doneEdges, Vertex startPlanVertex, Vertex endPlanVertex, int arcCost) {
+			Direction nextDir, Vertex startVertex, Vertex endVertex, PlanarizationEdge e, Map<Face, DartFace> doneFaces, Map<Edge, List<Vertex>> doneEdges, Vertex startPlanVertex, Vertex endPlanVertex, int arcCost) {
 		log.send(log.go() ? null : "Processing edge "+e.toString()+" from: " + startVertex + " to " + endVertex + " in direction " + nextDir);
 
 		if (e.otherEnd(startPlanVertex) != endPlanVertex) {

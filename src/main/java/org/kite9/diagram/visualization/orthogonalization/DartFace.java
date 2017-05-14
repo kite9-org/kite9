@@ -1,11 +1,14 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 
 /**
@@ -73,13 +76,25 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 	private final int faceDepth;
 
 	private DartFace containedBy;
+	private Set<DartFace> containing = new HashSet<>();
 	
 	public DartFace getContainedBy() {
 		return containedBy;
 	}
 
 	public void setContainedBy(DartFace containedBy) {
-		this.containedBy = containedBy;
+		if (!outerFace) {
+			throw new Kite9ProcessingException();
+		}
+		
+		if (this.containedBy != null) {
+			throw new Kite9ProcessingException();
+		}
+		
+		if (containedBy != null) {
+			this.containedBy = containedBy;
+			this.containedBy.containing.add(this);
+		}
 	}
 
 	public Rectangular getPartOf() {
@@ -98,6 +113,10 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 	@Override
 	public int compareTo(DartFace o) {
 		return ((Integer)faceDepth).compareTo(o.faceDepth);
+	}
+
+	public Set<DartFace> getContainedFaces() {
+		return containing;
 	}
 	
 }

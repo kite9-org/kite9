@@ -27,11 +27,9 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.orthogonalization.DartImpl;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -59,7 +57,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
 		
-		Collection<Face> done = new HashSet<>();
+		Collection<DartFace> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
 		for (DartFace dartFace : c.getDartFacesForRectangular(r)) {
@@ -67,15 +65,9 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		}
 	}
 
-	private void insertSubFaces(DartFace dartFace, Collection<Face> done, Compaction c) {
+	private void insertSubFaces(DartFace dartFace, Collection<DartFace> done, Compaction c) {
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
-		}
-		
-		Face underlyingFace = dartFace.getUnderlying();
-
-		if (underlyingFace.getContainedFaces().size() == 0) {
-			return;
 		}
 		
 		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);
@@ -91,13 +83,12 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		Direction directionOfInsertion = null;
 		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
 
-		for (Face ef : underlyingFace.getContainedFaces()) {
-			DartFace df = c.getOrthogonalization().getDartFaceForFace(ef);
+		for (DartFace df : dartFace.getContainedFaces()) {
 			Direction returned = addLowestContainmentIndex(df, faceInsertionOrder);
 			if (directionOfInsertion == null) {
 				directionOfInsertion = returned;
 			} else if (directionOfInsertion != returned) {
-				throw new LogicException("Containment problem for " + ef);
+				throw new LogicException("Containment problem for " + df);
 			}
 		}
 
@@ -110,12 +101,11 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 		for (Integer i : order) {
 			DartFace embeddedDartFace = faceInsertionOrder.get(i);
-			if (!done.contains(embeddedDartFace.getUnderlying())) {
-				log.send(log.go() ? null : "Inserting face: " + embeddedDartFace.getUnderlying().id + " into: " + dartFace.getUnderlying().id);
+			if (!done.contains(embeddedDartFace)) {
 				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
 					
 				// find the segment border of the subgraph being inserted
-				Rectangular r = embeddedDartFace.getUnderlying().getPartOf();
+				Rectangular r = embeddedDartFace.getPartOf();
 				Rectangle<Slideable<Segment>> limits = c.getFaceSpace(embeddedDartFace);
 				
 				Slideable<Segment> uLimit = limits.getA();
@@ -137,7 +127,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				}
 				
 				addedSomething = true;
-				done.add(embeddedDartFace.getUnderlying());
+				done.add(embeddedDartFace);
 			}
 		}
 
@@ -191,7 +181,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	protected Set<Slideable<Segment>> getLimits(DartFace df, Map<Vertex, Slideable<Segment>> map, Direction direction) {
 		Set<Slideable<Segment>> out = new LinkedHashSet<>(4);
 		for (DartDirection dd : df.dartsInFace) {
-			DartImpl d = dd.getDart();
+			Dart d = dd.getDart();
 			Vertex from = d.getFrom();
 			Vertex to = d.getTo();
 			Slideable<Segment> fs = map.get(from);
@@ -218,7 +208,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		for (Vertex v : possible.getVerticesInSegment()) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) {
-					DartImpl d = (DartImpl) e;
+					Dart d = (Dart) e;
 					if (d.getDrawDirectionFrom(v)==dir) {
 						return false;
 					}

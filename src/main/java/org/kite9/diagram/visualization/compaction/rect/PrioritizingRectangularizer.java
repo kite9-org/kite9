@@ -12,7 +12,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.orthogonalization.DartImpl;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -132,7 +132,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		 * Decide whether to rectangularize, or boxout.
 		 */
 		private boolean chooseRectangularization() {
-			return (getMeets().getChangeCost()==DartImpl.EXTEND_IF_NEEDED) 
+			return (getMeets().getChangeCost()==Dart.EXTEND_IF_NEEDED) 
 				|| (rectSafe)
 				|| (isPriority) 
 				|| (!canBoxout);
@@ -185,7 +185,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	}
 
 	@Override
-	protected void performFaceRectangularization(Compaction c, List<DartImpl> result, List<VertexTurn> theStack) {
+	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack) {
 		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
 		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
 		for (int i = 0; i < theStack.size(); i++) {
@@ -240,7 +240,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		}
 	}
 
-	private void addNewRectOptions(Compaction c, List<DartImpl> result, List<VertexTurn> theStack,
+	private void addNewRectOptions(Compaction c, List<Dart> result, List<VertexTurn> theStack,
 			PriorityQueue<RectOption> pq, int i) {
 		EnumSet<Match> m = findPattern(theStack, c, result, i);
 		if (m != null) {
@@ -299,7 +299,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	 * Examines a particular rotation pattern on the stack and returns a
 	 * RectOption for it if it can be rectangularized.
 	 */
-	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, List<DartImpl> out, int index) {
+	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, List<Dart> out, int index) {
 		if (stack.size() < 4)
 			return null;
 

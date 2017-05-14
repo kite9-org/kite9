@@ -22,6 +22,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -187,7 +188,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 
 	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {
-		DartFace inner = o.createDartFace(de, false);
+		DartFace inner = o.createDartFace((Rectangular) de, false);
 		dartsToDartFace(allSideDarts, start, inner, false);
 		return inner;
 	}

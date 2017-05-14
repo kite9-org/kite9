@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -44,7 +45,7 @@ public interface Orthogonalization extends Serializable {
 	 * Outer faces also still exist, in order to be embedded within other faces.  These are anti-clockwise 
 	 * ordered (though it's irrelevant).
 	 */
-	public DartFace createDartFace(DiagramElement partOf, boolean outerFace);
+	public DartFace createDartFace(Rectangular partOf, boolean outerFace);
 
 	/**
 	 * Gets the underlying planarization for this orthogonalization
