@@ -126,7 +126,7 @@ class VertexTurn {
 		this.changeEarlyEnd = changeEarly;
 		this.changeCost = Math.max(changeCost, this.changeCost);
 	}
-	
+
 	public void resetStartsWith(Compaction c, Vertex to, boolean changeEarly, int changeCost) {
 		resetStartsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
 	}

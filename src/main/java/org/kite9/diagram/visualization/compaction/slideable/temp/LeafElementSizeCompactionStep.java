@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.slideable.temp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
@@ -68,8 +69,7 @@ public class LeafElementSizeCompactionStep extends AbstractCompactionStep {
 	 * priority number receive preference on size.
 	 */
 	public void orderDiagramElementSizes(SegmentSlackOptimisation opt) {
-		opt.updatePositionalOrdering();
-		List<OPair<Slideable>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
+		List<OPair<Slideable<Segment>>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
 		
 		Collections.sort(toDo, new Comparator<OPair<Slideable>>() {
 

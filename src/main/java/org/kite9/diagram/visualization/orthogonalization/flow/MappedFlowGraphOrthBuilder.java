@@ -413,7 +413,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir, null);
+			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir, Direction.rotateAntiClockwise(nextDir));
 			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);
@@ -435,7 +435,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		if (e instanceof BiDirectionalPlanarizationEdge) {
 			return ((ConnectionEdge) e).getOriginalUnderlying();
 		} else if (e instanceof TwoElementPlanarizationEdge) {
-			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateClockwise(nextDir));
+			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateAntiClockwise(nextDir));
 			return out;
 		} else {
 			throw new Kite9ProcessingException();

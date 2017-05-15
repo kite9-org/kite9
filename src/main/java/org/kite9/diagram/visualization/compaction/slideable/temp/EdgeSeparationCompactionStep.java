@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.slideable.temp;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -10,6 +10,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 

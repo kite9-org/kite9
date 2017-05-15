@@ -97,7 +97,9 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		}
 		
 		public boolean canBoxout() {
-			return getExtender().getSegment() == getPost().getSegment();			
+			return false;
+			
+//			return getExtender().getSegment() == getPost().getSegment();			
 		}
 		
 		public double calcAvailableMeets() {
@@ -207,12 +209,13 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 						onStack.remove(ro.getLink());
 						onStack.remove(ro.getPar());
 					} else {
-						Slideable parFrom = ro.getPar().getStartsWith();
-						Slideable meetsFrom = ro.getMeets().getEndsWith();
-						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.A);
-						onStack.remove(ro.getLink());
-						onStack.add(newLink);
-						
+						throw new UnsupportedOperationException();
+//						Slideable parFrom = ro.getPar().getStartsWith();
+//						Slideable meetsFrom = ro.getMeets().getEndsWith();
+//						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.A);
+//						onStack.remove(ro.getLink());
+//						onStack.add(newLink);
+//						
 					} 
 					
 				} else {
@@ -221,11 +224,12 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 						onStack.remove(ro.getLink());
 						onStack.remove(ro.getPar());
 					} else { 
-						Slideable parFrom = ro.getPar().getEndsWith();
-						Slideable meetsFrom = ro.getMeets().getStartsWith();
-						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.D);
-						onStack.remove(ro.getLink());
-						onStack.add(newLink);
+						throw new UnsupportedOperationException();
+//						Slideable parFrom = ro.getPar().getEndsWith();
+//						Slideable meetsFrom = ro.getMeets().getStartsWith();
+//						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.D);
+//						onStack.remove(ro.getLink());
+//						onStack.add(newLink);
 					}
 				}
 

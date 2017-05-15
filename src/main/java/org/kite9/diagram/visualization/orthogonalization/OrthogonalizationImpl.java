@@ -40,7 +40,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	}
 	
 	public OrthogonalizationImpl(Planarization pln) {
-		this.allVertices = new LinkedHashSet<Vertex>(pln.getAllVertices());
+		this.allVertices = new LinkedHashSet<Vertex>();
 		this.pln = pln;
 	}
  
@@ -138,6 +138,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	public Dart createDart(Vertex from, Vertex to, Map<DiagramElement, Direction> partOf, Direction d) {
 		Vertex first = from.compareTo(to)>0 ? from : to;
 		Vertex second = first == from ? to : from;
+		
+		partOf.remove(null);
 		
 		// first, check if dart already exists, or one has been created for this purpose already.
 		Set<Dart> existing = null;

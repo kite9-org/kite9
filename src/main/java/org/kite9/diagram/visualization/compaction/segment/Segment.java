@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction.segment;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,10 +12,12 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 
 /**
@@ -56,50 +57,30 @@ public class Segment implements Comparable<Segment> {
 	
 	private Stream<UnderlyingInfo> convertUnderlyingToUnderlyingInfo(Dart d) {
 		Map<DiagramElement, Direction> diagramElements = d.getDiagramElements();
-		Iterator<DiagramElement> it = diagramElements.keySet().iterator();
-		
-		if (diagramElements.size() == 2) {
-			DiagramElement first = it.next();
-			DiagramElement second = it.next();
-			
-			if (first == null) {
-				return Stream.of(toUnderlyingInfo(diagramElements, second));
-			} else if (second == null) {
-				return Stream.of(toUnderlyingInfo(diagramElements, first));
-			} else if (first.getParent() == second) {
-				return Stream.of(toUnderlyingInfo(diagramElements, first));
-			} else if (second.getParent() == first) {
-				return Stream.of(toUnderlyingInfo(diagramElements, second));
-			} else {
-				return Stream.of(toUnderlyingInfo(diagramElements, first), toUnderlyingInfo(diagramElements, second));
-			}
-			
-		} else if (diagramElements.size() == 1) {
-			DiagramElement de = it.next();
-			return Stream.of(toUnderlyingInfo(diagramElements, de));
-		} else {
-			throw new LogicException("Dart with wrong number of diagram elements: "+d);
-		}
+		return diagramElements.keySet().stream().map(de -> toUnderlyingInfo(de, diagramElements.get(de)));
 	}
 
-	private UnderlyingInfo toUnderlyingInfo(Map<DiagramElement, Direction> diagramElements, DiagramElement de) {
+	private UnderlyingInfo toUnderlyingInfo(DiagramElement de, Direction d) {
 		return new UnderlyingInfo(de, 
-				getSideFromDirection(diagramElements.get(de)));
+				getSideFromDirection(de, d));
 	}
 	
-	private Side getSideFromDirection(Direction d) {
-		if (d == null) {
+	private Side getSideFromDirection(DiagramElement de, Direction d) {
+		if (de instanceof Connection) {
 			return Side.NEITHER;
-		}
-		switch (d) {
-		case DOWN:
-		case RIGHT:
-			return Side.END;
-		case UP:
-		case LEFT: 
-			return Side.START;
-		default:
-			return Side.NEITHER;
+		} else if (de instanceof Rectangular) {
+			switch (d) {
+			case DOWN:
+			case RIGHT:
+				return Side.END;
+			case UP:
+			case LEFT: 
+				return Side.START;
+			default:
+				return Side.NEITHER;
+			}
+		} else {
+			throw new Kite9ProcessingException();
 		}
 	}
 

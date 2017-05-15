@@ -9,8 +9,6 @@ import java.util.Map;
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.PositionAction;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
@@ -18,11 +16,9 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.logging.Logable;
 
 /**
@@ -63,23 +59,6 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		// look for dependencies in the direction given
 		// setupMinimumDistancesDueToDarts(s);
 		updateMaps(s);
-	}
-	
-	
-
-	private void setupMinimumDistancesDueToDarts(Slideable<Segment> s) {
-		Direction d = s.getUnderlying().getDimension() == PositionAction.XAction ? Direction.DOWN : Direction.RIGHT;
-		for (Vertex v : ((Segment)s.getUnderlying()).getVerticesInSegment()) {
-			for (Edge e : v.getEdges()) {
-				if (e instanceof Dart) {
-					if (e.getDrawDirectionFrom(v) == d) {
-						// need to create a dependency for this dart
-						Slideable<Segment> other = vertexToSlidableMap.get(e.otherEnd(v));
-						ensureMinimumDistance(s, other, (int) ((Dart) e).getLength());
-					}
-				}
-			}
-		}
 	}
 	
 	public void addSlideables(Slideable<Segment>... s) {

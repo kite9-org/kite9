@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.slideable.temp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 public class SlackCenteringCompactionStep extends AbstractCompactionStep {

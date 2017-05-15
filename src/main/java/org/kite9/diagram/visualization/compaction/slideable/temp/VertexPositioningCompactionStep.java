@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.slideable.temp;
 
 import java.util.Collection;
 
@@ -9,6 +9,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 public class VertexPositioningCompactionStep extends AbstractCompactionStep {
@@ -28,7 +29,6 @@ public class VertexPositioningCompactionStep extends AbstractCompactionStep {
 
 
 	private void setSegmentPostions(SegmentSlackOptimisation opt) {
-		opt.updatePositionalOrdering();
 		Collection<Slideable> slideables = opt.getPositionalOrder();
 		for (Slideable s : slideables) {
 			double pos = s.getMinimumPosition();

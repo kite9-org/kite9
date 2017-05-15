@@ -37,12 +37,15 @@ public class SegmentBuilder implements Logable {
 		Set<Vertex> done = new UnorderedSet<Vertex>();
 		int segNo = 1;
 	
-		for (Vertex v : o.getAllVertices()) {
-			if (!done.contains(v)) {
-				Segment s = new Segment(direction, segNo++);
-				extendSegmentFromVertex(v, planeDirection, s, done);
-				done.addAll(s.getVerticesInSegment());
-				result.add(s);
+		for (Dart d : o.getAllDarts()) {
+			if (planeDirection.contains(d.getDrawDirection())) {
+				Vertex v = d.getFrom();
+				if (!done.contains(v)) {
+					Segment s = new Segment(direction, segNo++);
+					extendSegmentFromVertex(v, planeDirection, s, done);
+					done.addAll(s.getVerticesInSegment());
+					result.add(s);
+				}
 			}
 		}
 		

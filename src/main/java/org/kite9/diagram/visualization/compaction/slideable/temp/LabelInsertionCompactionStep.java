@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.slideable.temp;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +38,7 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartImpl;
