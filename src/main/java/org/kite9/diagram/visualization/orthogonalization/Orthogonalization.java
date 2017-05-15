@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -56,7 +57,7 @@ public interface Orthogonalization extends Serializable {
 	
 	public Set<Dart> getDartsForDiagramElement(DiagramElement e);
 	
-	public List<Vertex> getWaypointsForBiDirectional(DiagramElement e);
+	public List<Vertex> getWaypointsForBiDirectional(Connection c);
 
 	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 

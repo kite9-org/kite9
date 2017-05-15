@@ -55,21 +55,25 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	public void setRoute(Connection tle, List<Vertex> vertices, Compaction c) { 
 		RouteRenderingInformation out = (RouteRenderingInformation) tle.getRenderingInformation();
 		out.clear();
+		Dimension2D last = null;
 		
 		for (Vertex v : vertices) {
-			addToRoute(out, v, c);
+			last = addToRoute(out, v, c, last);
 		}
 	}
 
-	private void addToRoute(RouteRenderingInformation out, Vertex v, Compaction c) {
-		
+	private Dimension2D addToRoute(RouteRenderingInformation out, Vertex v, Compaction c, Dimension2D prev) {
 		Slideable<Segment> horizSeg = c.getHorizontalSegmentSlackOptimisation().getVertexToSlidableMap().get(v);
 		Slideable<Segment> vertSeg = c.getVerticalSegmentSlackOptimisation().getVertexToSlidableMap().get(v);
 		
-		Dimension2D p1 = new Dimension2D(vertSeg.getMinimumPosition(), horizSeg.getMinimumPosition());
+		double x2 = vertSeg == null ? prev.x() : vertSeg.getMinimumPosition();
+		double y2 = horizSeg == null ? prev.y() : horizSeg.getMinimumPosition();
+		
+		Dimension2D p1 = new Dimension2D(x2,y2);
 		//boolean hop = false;  // should be based on v.
 		
 		out.add(p1);
+		return p1;
 	}
 		
 	

@@ -32,14 +32,16 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 	private void compactInternal(Compaction c, Rectangular r) {
 		OPair<Slideable<Segment>> y = c.getHorizontalSegmentSlackOptimisation().getSlideablesFor(r);
 		OPair<Slideable<Segment>> x = c.getVerticalSegmentSlackOptimisation().getSlideablesFor(r);
-		double xMin = x.getA().getMinimumPosition();
-		double xMax = x.getB().getMinimumPosition();
-		double yMin = y.getA().getMinimumPosition();
-		double yMax = y.getB().getMinimumPosition();
-		
-		RectangleRenderingInformation rri = r.getRenderingInformation();
-		rri.setPosition(new Dimension2D(xMin, yMin));
-		rri.setSize(new Dimension2D(xMax - xMin, yMax - yMin));
+		if ((x != null) && (y != null)) {
+			double xMin = x.getA().getMinimumPosition();
+			double xMax = x.getB().getMinimumPosition();
+			double yMin = y.getA().getMinimumPosition();
+			double yMax = y.getB().getMinimumPosition();
+			
+			RectangleRenderingInformation rri = r.getRenderingInformation();
+			rri.setPosition(new Dimension2D(xMin, yMin));
+			rri.setSize(new Dimension2D(xMax - xMin, yMax - yMin));
+		}
 		
 		if (r instanceof Container) {
 			for (DiagramElement de : ((Container) r).getContents()) {
@@ -48,6 +50,7 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 				}
 			}
 		}
+		
 	}
 
 	@Override

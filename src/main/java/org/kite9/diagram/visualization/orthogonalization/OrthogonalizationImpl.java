@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -276,19 +279,47 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		return out;
 	}
 
+	/**
+	 * The list of vertices must be returned in the same order as the connection represented.
+	 */
 	@Override
-	public List<Vertex> getWaypointsForBiDirectional(DiagramElement e) {
+	public List<Vertex> getWaypointsForBiDirectional(Connection e) {
 		Set<Dart> darts = getDartsForEdge(e);
 		if (darts == null) {
 			return null;
 		} else {
+			Map<Vertex, Long> vertexCounts = darts.stream()
+					.flatMap(d -> Stream.of(d.getFrom(), d.getTo()))
+					.collect(Collectors.groupingBy(a -> a, Collectors.counting()));
+					
+			Set<Vertex> ends = vertexCounts.keySet().stream().filter(a -> vertexCounts.get(a) == 1).collect(Collectors.toSet());		
+					
+			if (ends.size() != 2) {
+				throw new Kite9ProcessingException();
+			}
+			
+			
+			Iterator<Vertex> it = ends.iterator();
+			Vertex one = it.next();
+			Vertex two = it.next();
+			Vertex start, end;
+			
+			if ((one.getDiagramElements().contains(e.getFrom())) && (two.getDiagramElements().contains(e.getTo()))) {
+				start = one;
+				end = two;
+			} else if  ((one.getDiagramElements().contains(e.getTo())) && (two.getDiagramElements().contains(e.getFrom()))) {
+				start = two;
+				end = one;
+			} else {
+				throw new Kite9ProcessingException();
+			}
+		
 			List<Vertex> out = new ArrayList<>(darts.size()+1);
-			Vertex start = e.getFrom();
 			Dart next = null;
 			do {
 				out.add(start);
 				
-				if (start == e.getTo()) {
+				if (start == end) {
 					return out;
 				}
 				

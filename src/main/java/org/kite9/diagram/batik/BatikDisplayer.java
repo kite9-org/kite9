@@ -64,6 +64,10 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
 		
+		if ((ri.getPosition() == null) || (ri.getSize() == null)) {
+			return;
+		}
+		
 		if (element instanceof Decal) {
 			// tells the decal how big it needs to draw itself
 			Container parent = element.getContainer();
