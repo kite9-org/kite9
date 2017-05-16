@@ -9,7 +9,6 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.PluggableCompactor;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.EdgeRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
@@ -18,9 +17,8 @@ import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraphOrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.vertex.MultiCornerVertexArranger;
+import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContentsArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
@@ -68,7 +66,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 
 	public Orthogonalizer createOrthogonalizer() {
 		orthogonalizer = new ContainerCornerFlowOrthogonalizer(
-						new MultiCornerVertexArranger(getElementMapper()));
+						new ContainerContentsArranger(getElementMapper()));
 		return orthogonalizer;
 	}
 

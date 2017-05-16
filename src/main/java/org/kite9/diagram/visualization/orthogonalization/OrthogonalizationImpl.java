@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -186,7 +184,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	}
 	
 	private void ensureNoDartInDirection(Vertex from, Direction d) {
-		if (getDartInDirection(from, d) != null) {
+		if (getDartInDirection(from, d ) != null) {
 			throw new Kite9ProcessingException("Already have a dart going "+d+" from "+from);
 		}
 	}
@@ -342,26 +340,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	@Override
 	public Set<Dart> getDartsForDiagramElement(DiagramElement e) {
 		return waypointMap.get(e);
-	}
-
-	@Override
-	public List<Dart> getDartOrdering(Vertex around) {
-		Dart up = getDartInDirection(around, Direction.UP);
-		Dart right = getDartInDirection(around, Direction.RIGHT);
-		Dart down = getDartInDirection(around, Direction.DOWN);
-		Dart left = getDartInDirection(around, Direction.LEFT);
-		List<Dart> out = new ArrayList<>(4);
-		addIfNotNull(out, up);
-		addIfNotNull(out, right);
-		addIfNotNull(out, down);
-		addIfNotNull(out, left);
-		return out;
-	}
-
-	private void addIfNotNull(List<Dart> out, Dart up) {
-		if (up != null) {
-			out.add(up);
-		}
 	}
 
 	@Override

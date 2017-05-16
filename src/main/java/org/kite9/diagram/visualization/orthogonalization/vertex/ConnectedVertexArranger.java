@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
@@ -31,7 +30,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
 
 /**
  * This converts a ConnectedVertex to a face, and darts, which can then be added to the Orthogonalization.
@@ -156,6 +154,11 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
 
 		List<MultiCornerVertex> perimeter = gp.getClockwiseOrderedContainerVertices(cv);
+		return convertDiagramElementToInnerFaceWithCorners(originalUnderlying, o, dartDirections, allSideDarts, perimeter);
+	}
+
+	protected DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections, LinkedHashSet<Dart> allSideDarts,
+			List<MultiCornerVertex> perimeter) {
 		Direction sideDirection = Direction.RIGHT;  // initial direction of perimeter
 		MultiCornerVertex start = perimeter.get(0);
 		int done = 0;
@@ -187,7 +190,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		// does nothing in this implementation - see ContainerContentsArranger
 	}
 
-	private DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {
+	protected DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {
 		DartFace inner = o.createDartFace((Rectangular) de, false);
 		dartsToDartFace(allSideDarts, start, inner, false);
 		return inner;
@@ -195,7 +198,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 
 	
-	private void dartsToDartFace(LinkedHashSet<Dart> allDarts, Vertex vs, DartFace df, boolean reverse) {
+	private void dartsToDartFace(Set<Dart> allDarts, Vertex vs, DartFace df, boolean reverse) {
 		df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
 		
 		for (Dart dart : allDarts) {

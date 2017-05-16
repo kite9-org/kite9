@@ -19,7 +19,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.logging.LogicException;
 
 /**
  * Creates darts for edges arriving at corners or sides of a planarization.

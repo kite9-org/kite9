@@ -52,18 +52,16 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 		if (c.getLayout() == Layout.GRID) {
 			if (c.getContents().size() > 0) {
 				DartFace outer = createGridFaceForContainerContents(o, c);
-				inner.getUnderlying().getContainedFaces().add(outer.getUnderlying());
-				outer.getUnderlying().setContainedBy(inner.getUnderlying());
-				log.send("Created container contents outer face: "+outer.getUnderlying().id+" "+outer);
+				outer.setContainedBy(inner);
+				log.send("Created container contents outer face: "+outer);
 			}
 		} else {
-			Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+			Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 			for (DiagramElement de : c.getContents()) {
 				if (de instanceof Connected) {
-					DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap, Collections.emptyList());
-					DartFace outerFace = convertGridToOuterFace(o, getMultiCornerVertices(df), (Rectangular) de);
-					inner.getUnderlying().getContainedFaces().add(outerFace.getUnderlying());
-					outerFace.getUnderlying().setContainedBy(inner.getUnderlying());
+					DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap);
+					DartFace outerFace = convertGridToOuterFace(o, df.getStartVertex(), (Rectangular) de);
+					outerFace.setContainedBy(inner);
 					log.send("Created face: "+df);
 					log.send("Created face: "+outerFace);
 				}
@@ -71,20 +69,8 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 		}
 	}
 	
-	private Set<MultiCornerVertex> getMultiCornerVertices(DartFace df) {
-		Set<MultiCornerVertex> out = new HashSet<MultiCornerVertex>();
-		for (Vertex v : df.getUnderlying().cornerIterator()) {
-			if (v instanceof MultiCornerVertex) {
-				out.add((MultiCornerVertex) v);
-			}
-		}
-		
-		return out;
-	}
-
-	
-	private DartFace convertGridToOuterFace(Orthogonalization o, Set<MultiCornerVertex> createdVertices, Rectangular partOf) {
-		Vertex current = getTopLeftVertex(createdVertices), orig = current;
+	private DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
+		Vertex current = startVertex, orig = current;
 		Direction d = Direction.DOWN;
 		List<DartDirection> out = new ArrayList<>(); 
 		do {
@@ -105,15 +91,24 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 			
 		} while (current != orig);
 		
-		Face outer = o.getPlanarization().createFace();
-		outer.setOuterFace(true);
-		outer.setPartOf(partOf);
-		DartFace result = o.createDartFace(outer);
+
+		DartFace result = o.createDartFace(partOf, true);
 		result.dartsInFace = out;
 		return result;
 	}
 
 	
+	private Vertex getTopLeftVertex(Set<MultiCornerVertex> createdVertices) {
+		for (MultiCornerVertex multiCornerVertex : createdVertices) {
+			if ((MultiCornerVertex.isMin(multiCornerVertex.getXOrdinal())) &&
+					(MultiCornerVertex.isMin(multiCornerVertex.getYOrdinal()))) {
+				return multiCornerVertex;
+			}
+		}
+		
+		throw new Kite9ProcessingException();
+	}
+
 	/**
 	 * This is a bit like duplication of the code in {@link RHDPlanarizationBuilder},
 	 * but I think I'll live with it for now.
@@ -121,15 +116,16 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	 * @return the outerface to embed in the container.
 	 */
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
-		Map<Direction, List<Dart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+		Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 		Set<MultiCornerVertex> createdVertices = new LinkedHashSet<>();
 		placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
-		return convertGridToOuterFace(o, createdVertices, c);
+		Vertex startVertex = getTopLeftVertex(createdVertices);
+		return convertGridToOuterFace(o, startVertex, c);
 	}
 	
 
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
-			Map<Direction, List<Dart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
+			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
 		gp.placeOnGrid(c, true);
 
@@ -140,53 +136,30 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				createdVertices.addAll(cv.getVerticesAtThisLevel());
 				
 				// having created all the vertices, join them to form faces
-				MultiCornerVertex fromv, tov = null;
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
-				Iterator<MultiCornerVertex> iterator = perimeterVertices.iterator();
-				Face f = o.getPlanarization().createFace();
-				f.setPartOf((Rectangular) de);
-				while (iterator.hasNext()) {
-					fromv = tov;
-					tov = iterator.next();
-					if (fromv != null) {
-						PlanarizationEdge e = createOrReuse(de, fromv, tov,  o, cv.getGridContainer());
-						f.add(fromv, e);
+
+				MultiCornerVertex prev = null, start = null;
+				LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<>();
+				for (MultiCornerVertex current : perimeterVertices) {
+					if (prev != null) {
+						// create a dart between prev and current
+						Direction d = getDirection(prev, current);
+						allSideDarts.add(o.createDart(prev, current, de, d, Direction.rotateAntiClockwise(d)));
+					} else {
+						start = current;
 					}
+					
+					prev = current;
 				}
 				
-				// join back into a circle
-				PlanarizationEdge e = createOrReuse(de, 
-						tov, 
-						perimeterVertices.get(0), 
-						o, cv.getGridContainer());
-				f.add(tov, e);
-					
-				DartFace done = convertDiagramElementToInnerFaceWithCorners(de, null, o, emptyMap, Collections.emptyList(), de instanceof Leaf, f, cv);
-				log.send("Created (grid) face: "+done); 
-					
-				if (de instanceof Container) {
-					convertContainerContents(o, (Container) de, done); 
-				}
+				Direction d = getDirection(prev, start);
+				allSideDarts.add(o.createDart(prev, start, de, d, Direction.rotateAntiClockwise(d)));
+				createInnerFace(o, allSideDarts, start, de);
 			}
 		}
 	}
 
 
-	private BorderEdge createOrReuse(DiagramElement de, MultiCornerVertex from, MultiCornerVertex to, Orthogonalization o, DiagramElement root) {
-		BorderEdge be = (BorderEdge) getEdgeTo(from, to);
-		Direction d = getDirection(from, to);
-		
-		if (be == null) {
-			be = new BorderEdge(from, to, "be"+from+"-"+to, d, false, new LinkedHashMap<>());
-			log.send("Created border edge"+be);
-		}
-		Direction borderSide = Direction.rotateAntiClockwise(d);
-		be.getDiagramElements().put(de, borderSide);
-		return be;
-	}
-	
-
-	
 	
 	private Edge getEdgeTo(MultiCornerVertex from, MultiCornerVertex to) {
 		for (Edge e : from.getEdges()) {
