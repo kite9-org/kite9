@@ -90,14 +90,6 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 		final ExternalVertex from, to;
 		final List<DartDirection> toInsert;
 		
-		public Direction getStartDirection() {
-			return toInsert.get(0).getDirection();
-		}
-		
-		public Direction getEndDirection() {
-			return toInsert.get(toInsert.size()-1).getDirection();
-		}
-		
 		public String toString() {
 			return "Boundary [from=" + from + ", to=" + to + "]";
 		}

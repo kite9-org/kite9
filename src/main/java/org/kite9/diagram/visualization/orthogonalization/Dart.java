@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;

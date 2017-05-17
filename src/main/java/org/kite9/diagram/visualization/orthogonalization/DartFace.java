@@ -31,19 +31,15 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 			this.dir = dir;
 		}
 
-		Dart dart;
-    	public Dart getDart() {
+		final Dart dart;
+		final Direction dir;
+    	
+		public Dart getDart() {
 			return dart;
 		}
 
 		public Direction getDirection() {
 			return dir;
-		}
-
-		Direction dir;
-    	
-		public void setDirection(Direction dir) {
-			this.dir = dir;
 		}
 
 		@Override
