@@ -137,25 +137,25 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 		throw new Kite9ProcessingException();
 	}
 	
-	private int clockwiseTurns(Direction from, Direction to) {
+	private int antiClockwiseTurns(Direction from, Direction to) {
 		int c = 0;
 		while (from != to) {
-			from = Direction.rotateClockwise(from);
+			from = Direction.rotateAntiClockwise(from);
 			c++;
 		}
 		
 		return c;
 	}
 	
-	private Dart getNextDartClockwise(Vertex incidentVertex, Dart in) {
+	private Dart getNextDartAntiClockwise(Vertex incidentVertex, Dart in) {
 		Direction directionToVertex = Direction.reverse(in.getDrawDirectionFrom(incidentVertex));
 		Dart out = null;
-		int bestScore = 100;
+		int bestScore = 100; 
 		
 		for (Edge e : incidentVertex.getEdges()) {
 			if (e instanceof Dart) {
 				Direction thisDirection = Direction.reverse(e.getDrawDirectionFrom(incidentVertex));
-				int turns = clockwiseTurns(directionToVertex, thisDirection);
+				int turns = antiClockwiseTurns(directionToVertex, thisDirection);
 				if ((turns > 0) && (turns<bestScore)) {
 					out = (Dart) e;
 					bestScore = turns;
@@ -187,6 +187,10 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 	 * Divides up the darts around the vertex between the darts entering the vertex.
 	 * The arrangement of darts at this point should look something like a spider, with the ends of the legs
 	 * being the external vertices.
+	 * 
+	 * Note:  because we are returning the vertex boundaries to include in other faces, we trace in an 
+	 * anti-clockwise direction, as a face touching this boundary will proceed around it in an anti-clockwise
+	 * direction.
 	 */
 	protected void setupBoundaries(Set<Vertex> externalVertices, Vertex forVertex) {
 		List<Boundary> made = new ArrayList<Boundary>();
@@ -201,7 +205,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 			
 			do {
 				dds.add(new DartDirection(dart, d));
-				dart = getNextDartClockwise(to, dart);
+				dart = getNextDartAntiClockwise(to, dart);
 				d = dart.getDrawDirectionFrom(to);
 				to = dart.otherEnd(to);
 			} while (!externalVertices.contains(to));

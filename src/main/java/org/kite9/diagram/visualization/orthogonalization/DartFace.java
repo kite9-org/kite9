@@ -55,7 +55,8 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 
 	@Override
 	public String toString() {
-		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedBy.id : "inner") +": "+dartsInFace.toString();
+		String containedByStr = containedBy == null ? "-" : ""+containedBy.id;
+		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedByStr : "inner") +": "+dartsInFace.toString();
 	}
 	
 	public DartFace(int i, Rectangular partOf, boolean outerFace) {
