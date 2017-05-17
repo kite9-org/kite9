@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.compaction;
 
-import org.kite9.diagram.common.elements.ArtificialElement;
-import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;

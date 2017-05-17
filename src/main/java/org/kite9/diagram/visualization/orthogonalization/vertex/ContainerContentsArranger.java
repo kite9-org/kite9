@@ -92,8 +92,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 		} while (current != orig);
 		
 
-		DartFace result = o.createDartFace(partOf, true);
-		result.dartsInFace = out;
+		DartFace result = o.createDartFace(partOf, true, out);
 		return result;
 	}
 

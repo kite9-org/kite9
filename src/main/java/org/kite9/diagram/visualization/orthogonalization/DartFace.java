@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -19,7 +18,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * @author robmoffat
  *
  */
-public class DartFace implements Serializable, Comparable<DartFace> {
+public class DartFace implements Serializable {
 
 	private static final long serialVersionUID = -4395910839686963521L;
     
@@ -55,23 +54,18 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedByStr : "inner") +": "+dartsInFace.toString();
 	}
 	
-	public DartFace(int i, Rectangular partOf, boolean outerFace) {
-		this.partOf = partOf;
+	public DartFace(int i, boolean outerFace, List<DartDirection> dartsInFace) {
 		this.id = i;
 		this.outerFace = outerFace;
-		this.faceDepth = partOf != null ? partOf.getDepth() : -1;
+		this.dartsInFace = dartsInFace;
 	}
 	
 	private final int id;
 	
-	private final Rectangular partOf;
-	
-	public List<DartDirection> dartsInFace;
+	private final List<DartDirection> dartsInFace;
 	
 	public final boolean outerFace;
 	
-	private final int faceDepth;
-
 	private DartFace containedBy;
 	private Set<DartFace> containing = new HashSet<>();
 	
@@ -94,10 +88,6 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 		}
 	}
 
-	public Rectangular getPartOf() {
-		return partOf;
-	}
-
 	public Vertex getStartVertex() {
 		DartDirection d1 = dartsInFace.get(0);
 		if (d1.dir == d1.dart.getDrawDirection()) {
@@ -107,13 +97,12 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 		}
 	}
 
-	@Override
-	public int compareTo(DartFace o) {
-		return ((Integer)faceDepth).compareTo(o.faceDepth);
-	}
-
 	public Set<DartFace> getContainedFaces() {
 		return containing;
+	}
+
+	public List<DartDirection> getDartsInFace() {
+		return dartsInFace;
 	}
 	
 }

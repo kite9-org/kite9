@@ -87,7 +87,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		StringBuilder sb = new StringBuilder();
 		for (DartFace x : faces2) {
 			sb.append(facesep);
-			sb.append(renderFaceDarts(x.dartsInFace, linesep));
+			sb.append(renderFaceDarts(x.getDartsInFace(), linesep));
 		}
 		return sb.toString();
 	}
@@ -257,8 +257,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 
 	private int faceNo = 0;
 	
-	public DartFace createDartFace(Rectangular partOf, boolean outerFace) {
-		DartFace df = new DartFace(faceNo++, partOf, outerFace);
+	public DartFace createDartFace(Rectangular partOf, boolean outerFace, List<DartDirection> darts) {
+		DartFace df = new DartFace(faceNo++, outerFace, darts);
 		faces.add(df);
 		List<DartFace> frl = facesRectangularMap.get(partOf);
 		if (frl == null) {

@@ -15,7 +15,9 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
@@ -108,7 +110,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 		return findDartsToInsert(relevantBoundaries, in, outDirection, out);
 	}
 
-	protected abstract void convertVertex(Orthogonalization o, Vertex v, TurnInformation ti);
+	protected abstract DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti);
 
 	/**
 	 * Works out which darts are needed from the vertex to fill a gap between in

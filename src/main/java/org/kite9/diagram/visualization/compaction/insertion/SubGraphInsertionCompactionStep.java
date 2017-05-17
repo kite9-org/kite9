@@ -24,7 +24,6 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
-import org.kite9.diagram.visualization.compaction.Tools;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -104,7 +103,6 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
 					
 				// find the segment border of the subgraph being inserted
-				Rectangular r = embeddedDartFace.getPartOf();
 				Rectangle<Slideable<Segment>> limits = c.getFaceSpace(embeddedDartFace);
 				
 				Slideable<Segment> uLimit = limits.getA();
@@ -149,7 +147,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		int out = Integer.MAX_VALUE;
 		Direction outDir = null;
 
-		for (DartDirection dd : ef.dartsInFace) {
+		for (DartDirection dd : ef.getDartsInFace()) {
 			for (DiagramElement de : dd.getDart().getDiagramElements().keySet()) {
 				if (de instanceof Connected) {
 					Container c = ((Connected)de).getContainer();
@@ -179,7 +177,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	 */
 	protected Set<Slideable<Segment>> getLimits(DartFace df, Map<Vertex, Slideable<Segment>> map, Direction direction) {
 		Set<Slideable<Segment>> out = new LinkedHashSet<>(4);
-		for (DartDirection dd : df.dartsInFace) {
+		for (DartDirection dd : df.getDartsInFace()) {
 			Dart d = dd.getDart();
 			Vertex from = d.getFrom();
 			Vertex to = d.getTo();

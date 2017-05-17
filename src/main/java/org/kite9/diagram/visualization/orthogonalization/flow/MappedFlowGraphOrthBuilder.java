@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -104,12 +100,21 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			}
 		}
 		
-		// preserve containment information
-		for (Entry<Face, DartFace> fe : doneFaces.entrySet()) {
-			if (fe.getKey().isOuterFace()) {
-				Face container = fe.getKey().getContainedBy();
-				DartFace dfContainer = doneFaces.get(container);
-				fe.getValue().setContainedBy(dfContainer);
+		// handle single-vertex faces
+		for (Face f : pln.getFaces()) {
+			Face container = f.getContainedBy();
+			DartFace dfContainer = container != null ? doneFaces.get(container) : null;
+			
+			if (!doneFaces.containsKey(f)) {
+				// single-vertex face
+				
+				List<DartDirection> darts = va.returnAllDarts(f.getCorner(0), o);
+				DartFace df = o.createDartFace(f.getPartOf(), true, darts);
+				df.setContainedBy(dfContainer);
+				
+			} else if (f.isOuterFace()) {
+				DartFace df = doneFaces.get(f);
+				df.setContainedBy(dfContainer);
 			}
 		}
 		
@@ -246,9 +251,8 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 		log.send(log.go() ? null : "Processing face: " + f.getId());
 
-		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace());
-		doneFaces.put(f, df);
-		df.dartsInFace = new ArrayList<DartDirection>();
+		doneFaces.put(f, null);
+		List<DartDirection> dartsInFace = new ArrayList<>();
 		
 		int startIndex = f.indexOf(start, leaving);
 	
@@ -274,24 +278,27 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				// process the edge - we need to do this after processing the first vertex 
 				List<DartDirection> created = processEdge(f, pln, o, fg, processingEdgeStartDirection, 
 						processingEdgeDartFromVertex, processingEdgeDartToVertex, processingEdge, doneFaces, doneEdges, lastVertex, processingVertex, edgeBends);
-				df.dartsInFace.addAll(created);getClass();
+				dartsInFace.addAll(created);getClass();
 				processingEdgeStartDirection = created.get(created.size()-1).getDirection();
 			}
 			
 			if (i < f.size()) {
 				processingEdgeDartFromVertex = lastVertex(vertexDarts);
 				// prevents the vertex from being processed twice
-				df.dartsInFace.addAll(vertexDarts);
+				dartsInFace.addAll(vertexDarts);
 			}
 
 			
 			// set for next round
 			processingEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
 			
-			log.send("Face  "+f+" darts so far: "+df.dartsInFace);
+			log.send("Face  "+f+" darts so far: "+dartsInFace);
 		} 
 
-		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.dartsInFace);
+		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace(), dartsInFace);
+		doneFaces.put(f, df);
+
+		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.getDartsInFace());
 	}
 
 	private Direction turn(Direction d, int edgeBends) {

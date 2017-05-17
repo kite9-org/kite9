@@ -1,10 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -15,14 +12,11 @@ import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
-import org.kite9.diagram.visualization.compaction.Tools;
-import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -76,14 +70,13 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		
 		List<Dart> result = new ArrayList<Dart>();
 		List<DartFace> orderedFaces = new ArrayList<DartFace>(faces);
-		Collections.sort(orderedFaces);
 
 		for (DartFace df : orderedFaces) {
 			log.send(log.go() ? null : "FACE: " + df);
 			// first, add all the segments to the stack in unrectangularized
 			// form
 			List<VertexTurn> theStack = new ArrayList<VertexTurn>();
-			List<DartDirection> turns = df.dartsInFace;
+			List<DartDirection> turns = df.getDartsInFace();
 			Vertex from = df.getStartVertex();
 			buildStack(df, theStack, turns, from, c);
 
@@ -115,7 +108,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
 			List<DartDirection> turns, Vertex from, Compaction c) {
-		if (df.dartsInFace.size() > 2) {
+		if (df.getDartsInFace().size() > 2) {
 			try {
 				for (int i = 0; i < turns.size(); i++) {
 					Dart dart = turns.get(i).getDart();
@@ -143,7 +136,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 					from = to;
 				}
 			} catch (RuntimeException e) {
-				log.send("DartFace Issue:"+df.dartsInFace);
+				log.send("DartFace Issue:"+df.getDartsInFace());
 				throw e;
 			}
 

@@ -32,5 +32,9 @@ public interface VertexArranger {
 	 * connection edge to the start of the outgoing connection edge.
 	 */
 	public List<DartDirection> returnDartsBetween(PlanarizationEdge in, Direction outDirection, Vertex v, PlanarizationEdge out, Orthogonalization o, TurnInformation ti);
-		
+	
+	/**
+	 * This is used for any vertex which is unconnected in the planarization
+	 */
+	public List<DartDirection> returnAllDarts(Vertex v, Orthogonalization o);
 }

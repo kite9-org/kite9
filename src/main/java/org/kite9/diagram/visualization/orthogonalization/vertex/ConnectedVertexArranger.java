@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
@@ -88,17 +89,45 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * This implementation handles ConnectedVertex implementations embedded in the planarization.
 	 */
-	protected void convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
+	protected DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
 		if (!(v instanceof ConnectedVertex)) 
-			return;
+			throw new Kite9ProcessingException();
 	
 		List<IncidentDart> dartOrdering = createIncidentDartOrdering((ConnectedVertex) v, o, ti);
 		Map<Direction, List<IncidentDart>> dartDirections = getDartsInDirection(dartOrdering, v);
 		Connected originalUnderlying = ((ConnectedVertex) v).getOriginalUnderlying();
-		convertDiagramElementToInnerFace(originalUnderlying, v, o, dartDirections);
+		DartFace out = convertDiagramElementToInnerFace(originalUnderlying, v, o, dartDirections);
 		setupBoundariesFromIncidentDarts(dartOrdering, v);
+		return out;
 	}
+	
 
+	@Override
+	public List<DartDirection> returnAllDarts(Vertex v, Orthogonalization o) {
+		if (!(v instanceof ConnectedVertex)) 
+			throw new Kite9ProcessingException();
+		
+		Connected c = ((ConnectedVertex) v).getOriginalUnderlying();
+		List<DartFace> faces = o.getDartFacesForRectangular((Rectangular) c);
+		
+		if (faces.size() == 1) {
+			return faces.get(0).getDartsInFace();
+		} else if (faces.size() > 1) {
+			throw new Kite9ProcessingException();
+		} else {
+			DartFace out = convertVertex(o, v, new TurnInformation() {
+				
+				@Override
+				public Direction getIncidentDartDirection(Edge e) {
+					return null;
+				}
+			});
+			
+			return out.getDartsInFace();
+		}
+	}
+	
+	
 	protected void setupBoundariesFromIncidentDarts(List<IncidentDart> dartOrdering, Vertex v) {
 		Set<Vertex> externalVertices = dartOrdering.stream().map(id -> id.external).collect(Collectors.toSet());
 		setupBoundaries(externalVertices, v);
@@ -191,26 +220,28 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 
 	protected DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {
-		DartFace inner = o.createDartFace((Rectangular) de, false);
-		dartsToDartFace(allSideDarts, start, inner, false);
+		List<DartDirection>  dd = dartsToDartFace(allSideDarts, start, false);
+		DartFace inner = o.createDartFace((Rectangular) de, false, dd);
 		return inner;
 	}
 	
 
 	
-	private void dartsToDartFace(Set<Dart> allDarts, Vertex vs, DartFace df, boolean reverse) {
-		df.dartsInFace = new ArrayList<DartDirection>(allDarts.size());
+	private List<DartDirection> dartsToDartFace(Set<Dart> allDarts, Vertex vs, boolean reverse) {
+		List<DartDirection> dartsInFace = new ArrayList<DartDirection>(allDarts.size());
 		
 		for (Dart dart : allDarts) {
 			Direction d = dart.getDrawDirectionFrom(vs);
 			d = reverse ? Direction.reverse(d) : d;
-			df.dartsInFace.add(new DartDirection(dart, d));
+			dartsInFace.add(new DartDirection(dart, d));
 			vs = dart.otherEnd(vs);
 		}
 		
 		if (reverse) {
-			Collections.reverse(df.dartsInFace);
+			Collections.reverse(dartsInFace);
 		}
+		
+		return dartsInFace;
 	}
 
 	

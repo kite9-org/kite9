@@ -174,7 +174,9 @@ public class Face implements Deterministic {
 	}
 	
 	private int normalize(int i) {
-		if (i>=boundary.size()) {
+		if (boundary.size() == 0) {
+			return 0;
+		} else if (i>=boundary.size()) {
 			return i % boundary.size();
 		} else if (i<0) {
 			return (i+boundary.size()) % boundary.size();

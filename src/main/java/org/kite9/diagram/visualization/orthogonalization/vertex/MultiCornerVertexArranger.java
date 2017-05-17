@@ -15,6 +15,7 @@ import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -36,13 +37,14 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	}
 
 	@Override
-	protected void convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
+	protected DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
 		if (v instanceof MultiCornerVertex) {
 			List<IncidentDart> dartOrdering = createIncidentDartOrdering((MultiCornerVertex) v, o, ti);
 			createBorderEdges(dartOrdering, o, (MultiCornerVertex) v);
 			setupBoundariesFromIncidentDarts(dartOrdering, v);
+			return null;
 		} else {
-			super.convertVertex(o, v, ti);
+			return super.convertVertex(o, v, ti);
 		}
 	}
 	
