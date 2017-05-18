@@ -292,7 +292,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			// set for next round
 			processingEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
 			
-			log.send("Face  "+f+" darts so far: "+dartsInFace);
+			log.send("Face  "+f.getId()+" darts so far: "+dartsInFace);
 		} 
 
 		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace(), dartsInFace);

@@ -62,6 +62,10 @@ public class DartFace implements Serializable {
 	
 	private final int id;
 	
+	public int getId() {
+		return id;
+	}
+
 	private final List<DartDirection> dartsInFace;
 	
 	public final boolean outerFace;

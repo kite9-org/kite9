@@ -128,12 +128,18 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 
 		gp.placeOnGrid(c, true);
 
-		
+		// set up vertices for each grid element
 		for (DiagramElement de : c.getContents()) {
 			if (de instanceof Connected) {
 				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 				createdVertices.addAll(cv.getVerticesAtThisLevel());
+			}
+		}
 				
+		// link them together
+		for (DiagramElement de : c.getContents()) {
+			if (de instanceof Connected) {
+				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 				// having created all the vertices, join them to form faces
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 

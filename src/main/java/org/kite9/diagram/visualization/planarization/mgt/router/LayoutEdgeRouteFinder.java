@@ -35,7 +35,8 @@ public class LayoutEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 	}
 
 	private Vertex identifyActualVertex(PlanarizationEdge pe, Direction d, boolean from) {
-		Connected und = getUnderlyingConnected(pe, from);
+		ContainerLayoutEdge cle = (ContainerLayoutEdge) pe;
+		Connected und = from ? cle.getFromConnected() : cle.getToConnected();
 		if (em.hasOuterCornerVertices(und)) {
 			Container c = (Container) und;
 			CornerVertices cvs = em.getOuterCornerVertices(c);

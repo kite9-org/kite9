@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
@@ -143,16 +144,18 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 			Set<DiagramElement> vSet = vOrd.getUnderlyingLeavers(); 
 			for (Edge e : prevOrd.getEdgesAsList()) {
-				DiagramElement eUnd = e.getOriginalUnderlying();
-				if ((eUnd != null) && (vSet.contains(eUnd))) {
-					EdgeMapping em = pln.getEdgeMappings().get(eUnd);
-					Vertex start = em.getStartVertex();
-					List<PlanarizationEdge> edges = em.getEdges();
-					Route b = getRoute(vUnd, prevUnd, start, edges, d, inside);
-					if (b!=null) {
-						log.send("Using "+eUnd+" as a back edge from "+prevUnd+" to "+vUnd+", from="+start+" going="+d);
-						paintRoute(b, edges, d);
-						return false;
+				if (e instanceof BiDirectionalPlanarizationEdge) {
+					DiagramElement eUnd = ((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying();
+					if ((eUnd != null) && (vSet.contains(eUnd))) {
+						EdgeMapping em = pln.getEdgeMappings().get(eUnd);
+						Vertex start = em.getStartVertex();
+						List<PlanarizationEdge> edges = em.getEdges();
+						Route b = getRoute(vUnd, prevUnd, start, edges, d, inside);
+						if (b!=null) {
+							log.send("Using "+eUnd+" as a back edge from "+prevUnd+" to "+vUnd+", from="+start+" going="+d);
+							paintRoute(b, edges, d);
+							return false;
+						}
 					}
 				}
 			}
@@ -403,7 +406,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		// create a directing back edge
 		if (needsDirectingBackEdge) {
 			Direction d = getDirectionForLayout(c);
-			PlanarizationEdge e = new ContainerLayoutEdge(getVertexFor(prev), getVertexFor(current), d, (Connected) prev, (Connected) current);
+			ContainerLayoutEdge e = new ContainerLayoutEdge(getVertexFor(prev), getVertexFor(current), d, (Connected) prev, (Connected) current);
 			DiagramElement und = e.getOriginalUnderlying();
 			EdgeMapping em = new EdgeMapping(und, e);
 			p.getEdgeMappings().put(und, em);
