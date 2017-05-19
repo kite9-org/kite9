@@ -13,8 +13,10 @@ import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
@@ -145,11 +147,11 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		
 		
 		
-		Connected vUnd = (Connected) v.getOriginalUnderlying();
+		Connected vUnd = (Connected) ((ConnectedVertex) v).getOriginalUnderlying();
 		@SuppressWarnings("unchecked")
-		BiDirectional<Connected> beforeUnd = (BiDirectional<Connected>) before.getOriginalUnderlying();
+		BiDirectional<Connected> beforeUnd = (BiDirectional<Connected>) ((BiDirectionalPlanarizationEdge) before).getOriginalUnderlying();
 		@SuppressWarnings("unchecked")
-		BiDirectional<Connected> afterUnd = (BiDirectional<Connected>) after.getOriginalUnderlying();
+		BiDirectional<Connected> afterUnd = (BiDirectional<Connected>) ((BiDirectionalPlanarizationEdge) after).getOriginalUnderlying();
 		
 		Connected beforeConnected = beforeUnd.otherEnd(vUnd);
 		Connected afterConnected = afterUnd.otherEnd(vUnd);
