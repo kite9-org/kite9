@@ -69,6 +69,8 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			Container parent = element.getContainer();
 			RectangleRenderingInformation rri = parent.getRenderingInformation();
 			((Decal) element).setParentSize(new double[] {0, rri.getSize().getWidth()}, new double[] {0, rri.getSize().getHeight() });
+		} else if (ri.getPosition() == null) {
+			return;
 		}
 		
 		if (element instanceof HasLayeredGraphics) {

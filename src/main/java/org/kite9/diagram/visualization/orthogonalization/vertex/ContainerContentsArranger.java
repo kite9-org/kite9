@@ -159,7 +159,12 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				
 				Direction d = getDirection(prev, start);
 				allSideDarts.add(o.createDart(prev, start, de, d, Direction.rotateAntiClockwise(d)));
-				createInnerFace(o, allSideDarts, start, de);
+				DartFace inner = createInnerFace(o, allSideDarts, start, de);
+				
+				if (de instanceof Container) {
+					convertContainerContents(o, (Container) de, inner);
+				}
+				
 			}
 		}
 	}
