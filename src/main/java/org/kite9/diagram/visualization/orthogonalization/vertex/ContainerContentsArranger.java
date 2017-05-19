@@ -2,16 +2,12 @@ package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
@@ -19,17 +15,13 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.planarization.Face;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
@@ -170,18 +162,6 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	}
 
 
-	
-	private Edge getEdgeTo(MultiCornerVertex from, MultiCornerVertex to) {
-		for (Edge e : from.getEdges()) {
-			if (e.otherEnd(from) == to) {
-				return e;
-			}
-		}
-		
-		return null;
-	}
-	
-
 	private Direction getDirection(MultiCornerVertex from, MultiCornerVertex to) {
 		int horiz = from.getXOrdinal().compareTo(to.getXOrdinal());
 		int vert = from.getYOrdinal().compareTo(to.getYOrdinal());
@@ -207,50 +187,5 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	}
 	
 
-	private Edge getEdgeFor(MultiCornerVertex fromv, MultiCornerVertex tov) {
-		for (Edge e : fromv.getEdges()) {
-			if (e.meets(tov)) {
-				return e;
-			}
-		}
-		
-		throw new LogicException("Couldn't find matching edge");
-	}
-
-	/**
-	 * An unconnected vertex should also be an outer dart face in the diagram.
-	 * The face exists, but the dart face currently does not.  By adding this, we ensure the vertex 
-	 * will be added to the diagram by the {@link SubGraphInsertionCompactionStep}. 
-	 */
-	private DartFace createOuterFace(Orthogonalization o, Vertex v, LinkedHashSet<Dart> allDarts, Vertex vs) {
-		DartFace df = null;
-		if (v != null) {
-			for (Face f : o.getPlanarization().getFaces()) {
-				if (f.contains(v) && f.isOuterFace()) {
-					df = o.createDartFace(f);
-					break;
-				}
-			}
-		} else {
-			Face outer = o.getPlanarization().createFace();
-			outer.setOuterFace(true);
-			df = o.createDartFace(outer);
-		}
-		
-		if (df != null) {
-			dartsToDartFace(allDarts, vs, df, true); 
-			
-			return df;
-		} else {
-			throw new Kite9ProcessingException("Couldn't find dart face for "+v);
-		}
-	}
-
-
-	private Map<DiagramElement, Direction> mapFor(DiagramElement de, Direction d) {
-		 Map<DiagramElement, Direction> out = new LinkedHashMap<>();
-		 out.put(de, d);
-		 return out;
-	}
 	
 }

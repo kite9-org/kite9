@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -248,12 +249,34 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		return dartsInFace;
 	}
 
-	
-
-	
-
+	/**
+	 * Note - we can't just group otherwise order gets broken.  We must ensure the sides are still in order
+	 */
 	protected Map<Direction, List<IncidentDart>> getDartsInDirection(List<IncidentDart> processOrder, Vertex from) {
-		return processOrder.stream().collect(Collectors.groupingBy(id -> id.arrivalSide));
+		int startPoint = 0;
+		for (int i = 0; i < processOrder.size(); i++) {
+			IncidentDart current = processOrder.get(i);
+			IncidentDart prev = processOrder.get((i - 1 + processOrder.size()) % processOrder.size());
+			
+			if (current.arrivalSide != prev.arrivalSide) {
+				startPoint = i;
+				break;
+			}
+		}
+		
+		Map<Direction, List<IncidentDart>> out = new HashMap<>();
+		out.put(Direction.UP, new ArrayList<>());
+		out.put(Direction.DOWN, new ArrayList<>());
+		out.put(Direction.LEFT, new ArrayList<>());
+		out.put(Direction.RIGHT, new ArrayList<>());
+		
+		
+		for (int i = 0; i < processOrder.size(); i++) {
+			IncidentDart d = processOrder.get((i + startPoint ) % processOrder.size());
+			out.get(d.arrivalSide).add(d);
+		}
+		
+		return out;
 	}
 
 	/**
