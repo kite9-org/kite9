@@ -324,9 +324,9 @@ public class Tools implements Logable {
 		}
 
 		if (a.getFrom() == toGo) {
-			a.setFrom(farB);
+			((PlanarizationEdge) a).setFrom(farB);
 		} else {
-			a.setTo(farB);
+			((PlanarizationEdge) a).setTo(farB);
 		}
 
 		toGo.removeEdge(a);

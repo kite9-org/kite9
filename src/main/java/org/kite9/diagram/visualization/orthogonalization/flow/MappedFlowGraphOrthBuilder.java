@@ -218,8 +218,9 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				Face f = getCorrectFace(faces, sv, e2);
 				int outCap = calculateTurns(f, fg, sv, e1, e2);
 				for (int i = 0; i < Math.abs(outCap); i++) {
-					d = rotate90(d, outCap);
+					d = rotate90(d, -outCap);
 				}
+				d = Direction.reverse(d);
 				map.put(e2, d);
 			}
 			
@@ -228,6 +229,8 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		
 		out = new SingleVertexTurnInformation(map);
 		turnInfoMap.put(sv, out);
+		System.out.println("TI:  "+sv+" "+map);
+
 		return out;
 	}
 
