@@ -215,10 +215,10 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			if (e2 == e1) {
 				map.put(e1, d);
 			} else {
-				Face f = getCorrectFace(faces, sv, e2);
-				int outCap = calculateTurns(f, fg, sv, e1, e2);
+				Face f = getCorrectFace(faces, sv, e1, e2);
+				int outCap = calculateTurns(f, fg, sv, e2, e1);
 				for (int i = 0; i < Math.abs(outCap); i++) {
-					d = rotate90(d, -outCap);
+					d = rotate90(d, outCap);
 				}
 				d = Direction.reverse(d);
 				map.put(e2, d);
@@ -234,9 +234,10 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		return out;
 	}
 
-	private Face getCorrectFace(List<Face> faces, Vertex v, Edge following) {
+	private Face getCorrectFace(List<Face> faces, Vertex v, Edge following, Edge before) {
 		for (Face face : faces) {
-			if (face.indexOf(v, following) > -1) {
+			if ((face.indexOf(v, following) > -1) 
+					&& (face.contains(before))) {
 				return face;
 			}
 		}
@@ -360,7 +361,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	 * The output number can vary between -2 and 2 inclusive.
 	 */
 	private int calculateTurns(Face f, MappedFlowGraph fg, Vertex ev, Edge last, Edge next) {
-		Node helperNode = getFaceToVertexNode(fg, f, ev, last, next);
+		Node helperNode  = getFaceToVertexNode(fg, f, ev, last, next);
 
 		int cap = 0;
 		int outCap = 0;
