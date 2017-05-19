@@ -274,8 +274,15 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			Direction processingEdgeEndDirection = turn(processingEdgeStartDirection, edgeBends);
 			TurnInformation ti = getTurnInformationFor(processingEdge, processingVertex, processingEdgeEndDirection, pln);
 			Direction nextEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
-			List<DartDirection> vertexDarts = va.returnDartsBetween(processingEdge, nextEdgeStartDirection, processingVertex, nextEdge, o, ti);
-			processingEdgeDartToVertex = firstVertex(vertexDarts);
+			
+			List<DartDirection> vertexDarts;
+			if (va.needsConversion(processingVertex)) {
+				vertexDarts = va.returnDartsBetween(processingEdge, nextEdgeStartDirection, processingVertex, nextEdge, o, ti);
+				processingEdgeDartToVertex = firstVertex(vertexDarts);
+			} else {
+				vertexDarts = Collections.emptyList();
+				processingEdgeDartToVertex = processingVertex;
+			}
 
 			
 			if (i > 0) {
@@ -287,7 +294,11 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			}
 			
 			if (i < f.size()) {
-				processingEdgeDartFromVertex = lastVertex(vertexDarts);
+				if (va.needsConversion(processingVertex)) {
+					processingEdgeDartFromVertex = lastVertex(vertexDarts);
+				} else {
+					processingEdgeDartFromVertex = processingVertex;
+				}
 				// prevents the vertex from being processed twice
 				dartsInFace.addAll(vertexDarts);
 			}

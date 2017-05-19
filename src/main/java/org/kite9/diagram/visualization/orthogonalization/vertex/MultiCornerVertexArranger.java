@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -36,6 +37,15 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 		super(em);
 	}
 
+	@Override
+	public boolean needsConversion(Vertex v) {
+		if (v instanceof MultiCornerVertex) {
+			return true;
+		} else {
+			return super.needsConversion(v);
+		}
+	}
+	
 	@Override
 	protected DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
 		if (v instanceof MultiCornerVertex) {

@@ -37,4 +37,9 @@ public interface VertexArranger {
 	 * This is used for any vertex which is unconnected in the planarization
 	 */
 	public List<DartDirection> returnAllDarts(Vertex v, Orthogonalization o);
+	
+	/**
+	 * In the case of edge-crossing vertices etc.  we don't need to convert the vertex, so return false.
+	 */
+	public boolean needsConversion(Vertex v);
 }

@@ -101,6 +101,10 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		return out;
 	}
 	
+	@Override
+	public boolean needsConversion(Vertex v) {
+		return (v instanceof ConnectedVertex);
+	}
 
 	@Override
 	public List<DartDirection> returnAllDarts(Vertex v, Orthogonalization o) {
