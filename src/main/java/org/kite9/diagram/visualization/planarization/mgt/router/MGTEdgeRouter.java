@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,6 +88,13 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 				int vertexTo = p.getVertexIndex(lastVertexTemp);
 				int crossToPosition= p.getVertexIndex(crossedEdge.getTo());
 				int crossFromPosition = p.getVertexIndex(crossedEdge.getFrom());
+				
+				if (crossToPosition < crossFromPosition) {
+					int temp = crossToPosition;
+					crossToPosition = crossFromPosition;
+					crossFromPosition = temp;
+				}
+				
 
 				boolean currentlyOutsideEdge = (vertexTo > crossToPosition) || (vertexTo < crossFromPosition);
 				boolean crossingSideAbove = p.getAboveLineEdges().contains(crossedEdge);
@@ -173,26 +181,33 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 
 	private int safeSiteInside(EdgePath best, PlanarizationEdge cross, int vertexTo, int startVertex, int endVertex,
 			boolean forwards, MGTPlanarization p, boolean crossingSideAbove) {
+		
+		Vertex end = p.getVertexOrder().get(endVertex);
+		Vertex start = p.getVertexOrder().get(startVertex);
+		
 		if (forwards) {
 			return safeSiteForwards(cross,
-					AbstractRouteFinder.getCorrectEdgeSet(vertexTo, startVertex, crossingSideAbove, cross.getFrom(), p),
+					AbstractRouteFinder.getCorrectEdgeSet(vertexTo, startVertex, crossingSideAbove, start, p),
 					startVertex, p.getVertexOrder().get(startVertex), crossingSideAbove, best, p);
 		} else {
 			return safeSiteBackwards(cross,
-					AbstractRouteFinder.getCorrectEdgeSet(vertexTo, endVertex, crossingSideAbove, cross.getTo(), p),
+					AbstractRouteFinder.getCorrectEdgeSet(vertexTo, endVertex, crossingSideAbove, end, p),
 					endVertex, p.getVertexOrder().get(endVertex), crossingSideAbove, best, p);
 		}
 	}
 
 	private int safeSiteOutside(EdgePath best, boolean currentAbove, PlanarizationEdge cross, int endVertex, int startVertex,
 			boolean forwards, MGTPlanarization p, boolean crossingAbove) {
+		
+		Vertex end = p.getVertexOrder().get(endVertex);
+		Vertex start = p.getVertexOrder().get(startVertex);
 		if (forwards) {
 			return safeSiteBackwards(cross,
-					crossingAbove ? p.getAboveBackwardLinks(cross.getTo()) : p.getBelowBackwardLinks(cross.getTo()),
+					crossingAbove ? p.getAboveBackwardLinks(end) : p.getBelowBackwardLinks(end),
 					endVertex,  p.getVertexOrder().get(endVertex), currentAbove, best, p);
 		} else {
 			return safeSiteForwards(cross,
-					crossingAbove ? p.getAboveForwardLinks(cross.getFrom()) : p.getBelowForwardLinks(cross.getFrom()),
+					crossingAbove ? p.getAboveForwardLinks(start) : p.getBelowForwardLinks(start),
 					startVertex,  p.getVertexOrder().get(startVertex), currentAbove, best, p);
 		}
 	}
@@ -225,6 +240,14 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				insertVertices(vertexIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
+				
+				// make sure parts is ordered in same direction as planarization
+				if (p.getVertexIndex(around.getFrom()) > p.getVertexIndex(around.getTo())) {
+					PlanarizationEdge p1 = parts[0];
+					parts[0] = parts[1];
+					parts[1] = p1;
+				}
+				
 				replaceReferences(around, parts[1], parts[0], ep);
 
 				if (aboveEdges) {
@@ -258,6 +281,15 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 				PlanarizationEdge around = list.get(i);
 				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
 				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
+				
+				// make sure parts is ordered in same direction as planarization
+				if (p.getVertexIndex(around.getFrom()) > p.getVertexIndex(around.getTo())) {
+					PlanarizationEdge p1 = parts[0];
+					parts[0] = parts[1];
+					parts[1] = p1;
+				}
+				
+				
 				insertVertices(outIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
 				replaceReferences(around, parts[0], parts[1], ep);

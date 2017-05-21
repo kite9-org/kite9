@@ -886,15 +886,22 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	}
 
 	private Integer meetsDestination(Edge edge, Going g) {
+		Vertex to = edge.getTo();
+		int toi = p.getVertexIndex(to);
+		Vertex from = edge.getFrom();
+		int fromi = p.getVertexIndex(from);
+		
+		if (fromi > toi) {
+			int temp = fromi;
+			fromi = toi;
+			toi = temp;
+		}
+		
 		if (g==Going.FORWARDS) {
-			Vertex to = edge.getTo();
-			int toi = p.getVertexIndex(to);
 			if (isTerminationVertex(toi)) {
 				return toi;
 			} 
 		} else if (g==Going.BACKWARDS){
-			Vertex from = edge.getFrom();
-			int fromi = p.getVertexIndex(from);
 			if (isTerminationVertex(fromi)) {
 				return fromi;
 			}

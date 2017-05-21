@@ -271,7 +271,7 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 
 	@Override
 	protected boolean isTerminationVertex(int v) {
-		DiagramElement originalUnderlying = ((ConnectionEdge)e).getOriginalUnderlying().getTo();
+		DiagramElement originalUnderlying = ((ConnectionEdge)e).getToConnected();
 		Vertex candidate = p.getVertexOrder().get(v);
 		
 		if (candidate instanceof MultiCornerVertex) {

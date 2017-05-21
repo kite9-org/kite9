@@ -24,6 +24,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
@@ -223,26 +224,29 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 	}
 
 	public void removeEdge(Edge cross) {
-		boolean found = aboveSet.remove(cross);
+		boolean found = aboveSet.remove(cross) || belowSet.remove(cross);
 		int fromvi = getVertexIndex(cross.getFrom());
 		int tovi = getVertexIndex(cross.getTo());
-		if (found) {
-			if (fromvi > -1) {
-				aboveForwardLinks.get(fromvi).remove(cross);
-			}
-			if (tovi > -1) {
-				aboveBackwardLinks.get(tovi).remove(cross);
-			}
-		} else {
-			found = belowSet.remove(cross);
-			if (found) {
-				if (fromvi > -1) {
-					belowForwardLinks.get(fromvi).remove(cross);
-				}
-				if (tovi > -1) {
-					belowBackwardLinks.get(tovi).remove(cross);
-				}
-			}
+		
+		if ((fromvi == -1) || (tovi == -1)) {
+			throw new Kite9ProcessingException();
+		}
+		
+		// remove one end
+		boolean found1 = 
+		aboveForwardLinks.get(fromvi).remove(cross) ||
+		belowForwardLinks.get(fromvi).remove(cross) ||
+		aboveBackwardLinks.get(fromvi).remove(cross) ||
+		belowBackwardLinks.get(fromvi).remove(cross);
+		
+		boolean found2 = 
+				aboveForwardLinks.get(tovi).remove(cross) ||
+				belowForwardLinks.get(tovi).remove(cross) ||
+				aboveBackwardLinks.get(tovi).remove(cross) ||
+				belowBackwardLinks.get(tovi).remove(cross);
+		
+		if (!found) { 
+			throw new Kite9ProcessingException();
 		}
 	}
 
