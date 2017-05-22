@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
@@ -66,7 +67,7 @@ public class Segment implements Comparable<Segment> {
 	}
 	
 	private Side getSideFromDirection(DiagramElement de, Direction d) {
-		if (de instanceof Connection) {
+		if (de instanceof BiDirectional) {
 			return Side.NEITHER;
 		} else if (de instanceof Rectangular) {
 			switch (d) {

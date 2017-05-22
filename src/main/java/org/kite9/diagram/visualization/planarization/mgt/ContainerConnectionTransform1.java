@@ -1,18 +1,13 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;

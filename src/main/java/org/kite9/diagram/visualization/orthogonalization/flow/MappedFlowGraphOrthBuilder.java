@@ -455,7 +455,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 	private DiagramElement getThisSideDiagramElement(PlanarizationEdge e, Direction nextDir) {
 		if (e instanceof BiDirectionalPlanarizationEdge) {
-			return ((ConnectionEdge) e).getOriginalUnderlying();
+			return ((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying();
 		} else if (e instanceof TwoElementPlanarizationEdge) {
 			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateAntiClockwise(nextDir));
 			return out;

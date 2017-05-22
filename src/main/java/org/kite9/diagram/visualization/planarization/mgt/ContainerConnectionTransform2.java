@@ -61,29 +61,29 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (MultiCornerVertex) v, pln, number);
 				}
 				
-			} else if ((v instanceof MultiCornerVertex) && (v.getEdgeCount() > 3)) {
+			} else if ((v instanceof MultiCornerVertex) && (v.getEdgeCount() >= 3)) {
 				MultiCornerVertex cv = (MultiCornerVertex) v;
 				boolean ymin = MultiCornerVertex.isMin(cv.getYOrdinal());
 				boolean xmin = MultiCornerVertex.isMin(cv.getXOrdinal());
 				boolean ymax = MultiCornerVertex.isMax(cv.getYOrdinal());
 				boolean xmax = MultiCornerVertex.isMax(cv.getXOrdinal());
 								
-				if (MultiCornerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
+				if (xmin && (cornerOrd(cv.getYOrdinal()))) {
 					number = splitEdgesGoing(Direction.LEFT, ymin ? Direction.DOWN : Direction.UP, 
 							ymin, cv, pln, number);
 				}
 				
-				if ((cv.getXOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getYOrdinal()))) {
+				if (xmax && (cornerOrd(cv.getYOrdinal()))) {
 					number = splitEdgesGoing(Direction.RIGHT, ymin ? Direction.DOWN : Direction.UP, 
 							ymax, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getXOrdinal()))) {
+				if (ymin && (cornerOrd(cv.getXOrdinal()))) {
 					number = splitEdgesGoing(Direction.UP, xmin ? Direction.RIGHT : Direction.LEFT, 
 							xmax, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getXOrdinal()))) {
+				if (ymax && (cornerOrd(cv.getXOrdinal()))) {
 					number = splitEdgesGoing(Direction.DOWN, xmin ? Direction.RIGHT : Direction.LEFT, 
 							xmin, cv, pln, number);
 				}
@@ -130,7 +130,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		for (int i = 0; done < originalOrder.size(); i=i+(turnClockwise ? 1 : -1)) {
 			done++;
 			PlanarizationEdge edge = getRot(originalOrder, i);
-			if ((edge.getOriginalUnderlying() == v.getOriginalUnderlying()) && (getUsedEdgeDirection(v, edge) == startContainerEdgeDirection)) {
+			if ((edge instanceof BorderEdge) && (getUsedEdgeDirection(v, edge) == startContainerEdgeDirection)) {
 				startPoint = i;
 			} else if (getUsedEdgeDirection(v, edge) == edgeDirectionToSplit) {
 				edgesRequiringSplit++;
@@ -147,7 +147,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 					edgesDoneSplit ++;
 				}
 
-				receivingEdge = splitEdgeFromVertex(v.getOriginalUnderlying().getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
+				receivingEdge = splitEdgeFromVertex(v.getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
 					v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
 				
 			}

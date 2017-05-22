@@ -2,9 +2,11 @@ package org.kite9.diagram.visualization.planarization;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -56,8 +58,9 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Original edge order around " + from + " = " + fromEdgeOrdering);
 		log.send(log.go() ? null : "Original edge order around " + to + " = " + toEdgeOrdering);
 
-		// split the existing edge to create two edges
-		Vertex split = new EdgeCrossingVertex(name, e.getDiagramElements().keySet());
+		// split the existing edge to create two edges		
+		Set<DiagramElement> underlyings = new HashSet<>(e.getDiagramElements().keySet());
+		Vertex split = new EdgeCrossingVertex(name, underlyings);
 		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces
