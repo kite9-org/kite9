@@ -77,14 +77,12 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 
 			// work out which IncidentDarts to join up to the borders.
 			Map<Direction, List<IncidentDart>> map =getDartsInDirection(dartDirections, v);
-			if (map.size()==4) {
-				throw new Kite9ProcessingException("Should only have darts leaving side");
-			}
+
 			Direction sideDirection = Direction.rotateClockwise(inDirection);
 			List<IncidentDart> dartsToUse = map.get(sideDirection);
-			if (dartsToUse == null) {
+			if (dartsToUse.size() == 0) {
 				sideDirection = Direction.reverse(sideDirection);
-				dartsToUse = map.get(Direction.reverse(sideDirection));
+				dartsToUse = map.get(sideDirection);
 			}
 			
 			createSide(borders.getA().internal, borders.getB().internal, aUnderlyings, dartsToUse, o, inDirection, sideDirection);
@@ -137,7 +135,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			int[] number = { 0 };
 			
 			List<IncidentDart> out = eo.getEdgesAsList().stream().map(
-				e -> convertEdgeToIncidentDart(e, unds, o, Direction.reverse(ti.getIncidentDartDirection(e)), number[0]++, around)
+				e -> convertEdgeToIncidentDart(e, unds, o, ti.getIncidentDartDirection(e), number[0]++, around)
 				).collect(Collectors.toList());
 		
 			return out;
@@ -149,7 +147,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	}
 
 	@Override
-	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction leavingDirection, int i, Vertex und1) {
+	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incidentDirection, int i, Vertex und1) {
 		if (e instanceof BorderEdge) {
 			Map<DiagramElement, Direction> cn = ((BorderEdge)e).getDiagramElements();
 			Set<DiagramElement> und = new HashSet<>();
@@ -157,11 +155,12 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			und.addAll(cd);
 			Vertex sideVertex = new DartJunctionVertex(und1.getID()+"-va-"+newVertexId++, und);
 			Vertex externalVertex = createExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
+			Direction leavingDirection = Direction.reverse(incidentDirection);
 			Dart d = o.createDart(sideVertex, externalVertex, cn, leavingDirection);
 			return new IncidentDart(d, externalVertex, sideVertex, leavingDirection, e);
 			
 		} else {
-			return super.convertEdgeToIncidentDart(e, cd, o, leavingDirection, i, und1);
+			return super.convertEdgeToIncidentDart(e, cd, o, incidentDirection, i, und1);
 		}
 	}
 	

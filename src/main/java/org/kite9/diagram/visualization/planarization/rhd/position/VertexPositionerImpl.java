@@ -81,6 +81,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				Bounds xBounds = getSideBounds(cx, tox, toHasCornerVertices, borderTrimAreaX, cVertexBounds, gap);
 				
 				setSideVertexRoutingInfo(c, d, out, xBounds, yBounds, cvNew);
+				log.send("Added side vertex: "+cvNew);
 				break;
 			case LEFT:
 			case RIGHT:
@@ -101,6 +102,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				Bounds yBounds2 = getSideBounds(cy, toy, toHasCornerVertices, borderTrimAreaY, cVertexBounds2, gap2);
 				
 				setSideVertexRoutingInfo(c, d, out, xBounds2, yBounds2, cvNew);
+				log.send("Added side vertex: "+cvNew);
 			}
 		}
 	}
@@ -127,6 +129,12 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
 			cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c);
 			out.add(cvNew);
+		} else {
+			// extend the existing vertex
+			RoutingInfo existing = cvNew.getRoutingInfo();
+			RoutingInfo ri = rh.createRouting(xNew, yNew);
+			RoutingInfo merged= rh.increaseBounds(existing, ri);
+			cvNew.setRoutingInfo(merged);
 		}
 	}
 
