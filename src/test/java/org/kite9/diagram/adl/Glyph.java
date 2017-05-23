@@ -32,11 +32,11 @@ public class Glyph extends AbstractStyleableXMLElement {
 		super(id, "glyph", doc);
 		
 		if ((stereotype != null) && (stereotype.length() > 0)) {
-			setStereotype(new TextLine(id+"-stereo", "stereotype", stereotype, null, doc));
+			setStereotype(new TextLine(id+"-stereo", "stereotype", stereotype, doc));
 		}
 		
 		if ((label != null) && (label.length() > 0)) {
-			setLabel(new TextLine(id+"-label", "label", label, null, doc));
+			setLabel(new TextLine(id+"-label", "label", label, doc));
 		}
 		
 		if (text!=null) {

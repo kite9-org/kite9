@@ -16,28 +16,36 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class TextLine extends AbstractStyleableXMLElement {
+public class TextLineWithSymbols extends AbstractStyleableXMLElement {
 
 	private static final long serialVersionUID = -1917135065467101779L;
 	
 
 	List<Symbol> symbols = new ArrayList<Symbol>();
 
-	public TextLine() {
+	public TextLineWithSymbols() {
 		this.tagName = "text-line";
 	}
 	
-	public TextLine(String text, ADLDocument doc) {
-		this(null, "text-line", text, doc);
+	public TextLineWithSymbols(String text, ADLDocument doc) {
+		this(null, "symbol-text-line", text, null, doc);
 	}
 	
-	public TextLine(String text) {
+	public TextLineWithSymbols(String text) {
 		this(text, TESTING_DOCUMENT);
 	}
 	
-	public TextLine(String id, String tag, String text, ADLDocument doc) {
+	public TextLineWithSymbols(String text, List<Symbol> symbols) {
+		this(null, "symbol-text-line", text, symbols, TESTING_DOCUMENT);
+	}
+
+	
+	public TextLineWithSymbols(String id, String tag, String text, List<Symbol> symbols, ADLDocument doc) {
 		super(id, tag, doc);
-		setText(text);
+		replaceProperty("text", new TextLine(id+"-txt", "text", text, doc));
+		if (symbols != null) {
+			setSymbols(new ContainerProperty(id+"-symbols", "symbols", doc, symbols));
+		}
 	}
 
 	public Kite9XMLElement getSymbols() {
@@ -54,7 +62,7 @@ public class TextLine extends AbstractStyleableXMLElement {
 
 	@Override
 	protected Node newNode() {
-		return new TextLine();
+		return new TextLineWithSymbols();
 	}
 
 	public void setText(String text) {

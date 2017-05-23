@@ -148,7 +148,22 @@ glyph > text-lines {
 	layout: vertical;
 }
 
-glyph > text-lines > text-line {
+symbols {
+	type: connected;
+	sizing: minimize;
+	layout: horizontal;
+	occupies: 1 0;
+}
+
+symbol-text-line {
+	type: connected;
+	sizing: minimize;
+	layout: grid;
+	grid-size: 2 1;
+} 
+
+text-line, text {
+	occupies: 0 0;
 	type: connected;
 	sizing: fixed;
 	padding-top: 2px;
