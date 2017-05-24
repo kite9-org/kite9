@@ -9,13 +9,9 @@ import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -253,11 +249,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		
 		public abstract boolean sameCrossing(EdgePath other);
 		
-		/**
-		 * Returns the container we are currently inside
-		 */
-		public abstract Container insideContainer();
-	
 	}
 		
 	/**
@@ -363,7 +354,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		PlanarizationEdge crossing;
 		int trailEndVertex;
 		LineRoutingInfo trail;
-		Container inContainer;
 
 		public EdgeCrossPath(PlanarizationEdge crossing, EdgePath prev, Going g) {
 			super(g, prev.getSide(), prev);
@@ -383,25 +373,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			
 			initTrail(prev);
 			
-			if (crossing instanceof BorderEdge) {
-				Container inside = prev.insideContainer();
-				DiagramElement crossingContainer = ((BorderEdge) crossing).getOtherSide(inside);
-				if (crossingContainer == inside) {
-					// we are leaving the container
-					inContainer = inside.getContainer();
-				} else {
-					// we are entering a new container
-					inContainer = (Container) crossingContainer;
-				}
-			} else {
-				inContainer = prev.insideContainer();
-			}
 			
-		}
-
-		@Override
-		public Container insideContainer() {
-			return inContainer;
 		}
 
 		public PlanarizationEdge getCrossing() {
@@ -482,11 +454,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			this.trail = move(prev.getTrail(), prev.getTrailEndVertex(), l.vertex, getGoing(), null, true);
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
-		
 	}
 
 	public class PlanarizationCrossPath extends EdgePath {
@@ -574,12 +541,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			}
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
-
-
 	}
 
 	public class SimpleEdgePath extends LocatedEdgePath {
@@ -606,10 +567,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			this.trail = move(prev.getTrail(), prev.getTrailEndVertex(), l.vertex, getGoing(), l.p, true);
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
 	}
 
 	public class StartCrossEdgePath extends EdgeCrossPath {
@@ -664,23 +621,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		public void initTrail(EdgePath unused) {
 			this.trail = getRouteHandler().move(null, l.v.getRoutingInfo(), null);
 		}
-
-		@Override
-		public Container insideContainer() {
-			Vertex v = l.v;
-			Container c = null;
-			for (DiagramElement de : v.getDiagramElements()) {
-				Container parent = (Container) de.getParent();
-				if ((c == null) || (c == parent)) {
-					c = parent;
-				} else {
-					throw new Kite9ProcessingException();
-				}
-			}
-			
-			return c;
-		}
-
 	}
 
 	static enum Place { ABOVE, BELOW };

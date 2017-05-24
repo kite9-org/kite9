@@ -35,15 +35,13 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 	Set<Container> mustCrossContainers;
 	
 	protected boolean canCrossBorderEdge(BorderEdge crossing, EdgePath ep) {
-		Container insideContainer = ep.insideContainer(); 
-		boolean leaving = crossing.isPartOf(insideContainer);
-
 		BorderTraversal traversalRule = getTraversalRule(crossing);
 		if (traversalRule == BorderTraversal.NONE) {
 			return false;
 		} else if (traversalRule == BorderTraversal.LEAVING) {
-			DiagramElement outside = crossing.getOtherSide(insideContainer);
-			if (!mustCrossContainers.contains(outside)) {
+			boolean allPresent = mustCrossContainers.containsAll(crossing.getDiagramElements().keySet());
+
+			if (!allPresent) {
 				return false;
 			}
 		}
@@ -51,9 +49,17 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 		if (entryDirection==null) {
 			return true;
 		} else {
-			DiagramElement entering = crossing.getOtherSide(insideContainer); 
-			Direction incidentDirection = leaving ? entryDirection : Direction.reverse(entryDirection);
-			Direction expectedDirection = Direction.reverse(crossing.getDiagramElements().get(entering));
+			if (Direction.isHorizontal(entryDirection) == Direction.isHorizontal(crossing.getDrawDirection())) {
+				// edges must be perpendicular
+				return false;
+			}
+			
+			DiagramElement entering = crossing.getElementForSide(entryDirection);
+			
+			if (entering == null) {
+				// we are actually leaving a container
+				entering = crossing.getElementForSide(Direction.reverse(entryDirection)).getParent();
+			}
 		
 			// check that the container is positioned somewhere that intersects with the edge direction 
 			if (!checkContainerPathIntersection(ep, entering, entryDirection)) {
@@ -61,10 +67,10 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 				return false;
 			}
 
-			if (incidentDirection != expectedDirection) {
-				log.send(e+" can't cross over "+crossing+" in direction: "+incidentDirection+", expected: "+expectedDirection);
-				return false;
-			}
+//			if (incidentDirection != expectedDirection) {
+//				log.send(e+" can't cross over "+crossing+" in direction: "+incidentDirection+", expected: "+expectedDirection);
+//				return false;
+//			}
 			
 			return true;
  		}		
@@ -78,7 +84,6 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 			Direction ed) {
 		RoutingInfo cri = rh.getPlacedPosition(c);
 		return rh.isInPlane(cri, startZone, (entryDirection == Direction.RIGHT) || (entryDirection == Direction.LEFT));
-		//return true;
 	}
 
 	
