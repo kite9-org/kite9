@@ -38,7 +38,7 @@ public class Key extends AbstractStyleableXMLElement {
 		for (Symbol s : symbols) {
 			List<Symbol> sl = new ArrayList<Symbol>(1);
 			sl.add(s);
-			out.appendChild(new TextLine(null, "text-line", s.getText(), sl, (ADLDocument) ownerDocument));
+			out.appendChild(new TextLineWithSymbols(null, "text-line", s.getText(), sl, (ADLDocument) ownerDocument));
 		}
 		return out;
 	}
@@ -57,11 +57,11 @@ public class Key extends AbstractStyleableXMLElement {
 		super(id, "key", doc);
 		
 		if (boldText != null) {
-			setBoldText(new TextLine(null, "boldText", boldText, null, doc));
+			setBoldText(new TextLineWithSymbols(null, "boldText", boldText, null, doc));
 		}
 
 		if (bodyText != null) {
-			setBodyText(new TextLine(null, "bodyText", bodyText, null, doc));
+			setBodyText(new TextLineWithSymbols(null, "bodyText", bodyText, null, doc));
 		}
 
 		if (symbols != null) {
