@@ -157,16 +157,19 @@ public class TestingEngine extends TestingHelp {
 				RouteRenderingInformation rri = c.getRenderingInformation();
 				RectangleRenderingInformation rect = v.getRenderingInformation();
 				
-				Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
-				Point2D p2d = new Point2D.Double(d2.x(), d2.y());
-				Rectangle2D r2d = createRect(rect);
-				Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
-				if (largerRect.contains(p2d)) {
-					// it's on the border
+				if (rri.getRoutePositions().size() == 0) {
+					// missing element - will be picked up later though
 				} else {
-					Assert.fail(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+					Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
+					Point2D p2d = new Point2D.Double(d2.x(), d2.y());
+					Rectangle2D r2d = createRect(rect);
+					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
+					if (largerRect.contains(p2d)) {
+						// it's on the border
+					} else {
+						Assert.fail(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+					}
 				}
-				
 			}
 		});
 	}
