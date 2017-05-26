@@ -57,10 +57,6 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return !(m.isAnnotationPresent(NotAddressed.class));
 	}
 
-	private String getTestMethod() {
-		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
-	}
-
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();

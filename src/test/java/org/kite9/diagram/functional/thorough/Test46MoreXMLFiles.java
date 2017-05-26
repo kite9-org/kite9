@@ -66,6 +66,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
+	public void test_46_10_PushingRect() throws Exception {
+		generate("label_push_error.xml");
+	}
+	
+	@Test
 	public void test_49_10_KeyTooSmall() throws Exception {
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(

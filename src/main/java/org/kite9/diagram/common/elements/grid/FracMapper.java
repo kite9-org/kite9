@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.mapping.BaseGridCornerVertices;
-import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;

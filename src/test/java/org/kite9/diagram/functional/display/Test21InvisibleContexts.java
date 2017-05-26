@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -17,7 +18,7 @@ import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
-public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
+public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 
 	int id = 0;
 	

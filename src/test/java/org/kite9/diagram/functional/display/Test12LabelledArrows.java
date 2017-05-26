@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.Test;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
@@ -22,7 +23,7 @@ import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
 
-public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
+public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_12_1_LabelledLeftRight() throws Exception {
@@ -207,17 +208,5 @@ public class Test12LabelledArrows extends AbstractLayoutFunctionalTest {
 		renderDiagram(d);
 		
 	}
-
-	@Test
-	public void test_12_11_PushingRect() throws Exception {
-		generate("label_push_error.xml");
-	}
-
-	@Override
-	protected boolean checkEverythingStraight() {
-		return false;
-	}
-
-
 	
 }

@@ -11,6 +11,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
 import org.junit.Test;
+import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
+import org.kite9.diagram.functional.layout.TestingEngine;
+import org.kite9.diagram.functional.layout.TestingEngine.Checks;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -34,9 +38,20 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	protected void transcodeSVG(String s) throws Exception {
 		super.transcodeSVG(s);
 		
+		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
+		
 		if (checkXML()) {
 			checkIdenticalXML();
 		}
+	}
+
+	private Checks checks() {
+		Checks out = new Checks();
+		out.everythingStraight = false;
+		out.checkNoHops = false;
+		return out;
 	}
 	
 	protected void renderDiagram(DiagramKite9XMLElement d) throws Exception {

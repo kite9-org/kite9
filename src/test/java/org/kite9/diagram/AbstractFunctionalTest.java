@@ -15,6 +15,7 @@ import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
@@ -81,5 +82,9 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		xml = xml.replaceFirst("<\\?.*\\?>","");
 		String full = prefix + style + xml + suffix;
 		return full;
+	}
+	
+	protected String getTestMethod() {
+		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
 	}
 }

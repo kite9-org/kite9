@@ -1,7 +1,7 @@
 package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -12,7 +12,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
-public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
+public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_29_1_MidSetEdge() throws Exception {

@@ -395,7 +395,12 @@ public class TestingEngine extends TestingHelp {
 	
 	private void checkLabelOverlap(Label l, Diagram d) {
 		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
-		final Rectangle2D labelRect = createRect(ri);
+		Rectangle2D labelRect;
+		try {
+			labelRect = createRect(ri);
+		} catch (NullPointerException e) {
+			throw new ElementsMissingException(l.getID(), 1);
+		}
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
