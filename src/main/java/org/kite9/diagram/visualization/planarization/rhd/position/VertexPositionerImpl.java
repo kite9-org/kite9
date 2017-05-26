@@ -166,7 +166,8 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			bounds = rh.getPlacedPosition(container);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);		
-			final OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, ((SubGridCornerVertices) cvs).getBaseGrid(), bounds);
+			final OPair<Map<BigFraction, Double>> fracMaps = fracMapper.
+					getFracMapForGrid(c, rh, ((SubGridCornerVertices) cvs).getBaseGrid(), bounds);
 			fracMapX = fracMaps.getA();
 			fracMapY = fracMaps.getB();
 		} else {

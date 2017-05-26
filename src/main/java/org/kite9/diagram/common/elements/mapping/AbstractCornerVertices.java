@@ -36,10 +36,12 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		br = createVertex(BigFraction.ONE, BigFraction.ONE);
 		bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
 		
-		tl.addAnchor(HPos.LEFT, VPos.UP, c);
-		tr.addAnchor(HPos.RIGHT, VPos.UP, c);
-		bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
-		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
+		if (c != null) {
+			tl.addAnchor(HPos.LEFT, VPos.UP, c);
+			tr.addAnchor(HPos.RIGHT, VPos.UP, c);
+			bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
+			br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
+		}
 	}
 
 	public abstract MultiCornerVertex createVertex(BigFraction x, BigFraction y);

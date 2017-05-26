@@ -20,6 +20,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.planarization.ordering.BasicVertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -197,6 +198,8 @@ public class Tools implements Logable {
 		pln.getVertexFaceMap().get(from).add(newFace);
 		pln.getVertexFaceMap().get(to).add(newFace);
 		
+		newFace.setPartOf(original.getPartOf());
+		
 		log.send(log.go() ? null : "Removed" + toRemove + " splitting into " + original.getId() + " and " + newFace.getId());
 		log.send(log.go() ? null : "Original:" + original);
 		log.send(log.go() ? null : "NewFace:" + newFace);
@@ -205,6 +208,7 @@ public class Tools implements Logable {
 		fixVertexFaceMap(pln, original, newFace.cornerIterator(), false);
 		fixVertexFaceMap(pln, newFace, original.cornerIterator(), false);
 		fixVertexFaceMap(pln, newFace, newFace.cornerIterator(), false);
+		
 
 	}
 
@@ -268,10 +272,19 @@ public class Tools implements Logable {
 		} while (newCorners.size() < vertexCount);
 
 		Face a = faces.get(0);
-		Face b = faces.get(1);
-
+		Face b = faces.get(1);	// removing this one
+		
 		a.reset(newBoundary, newCorners);
 		pln.getFaces().remove(b);
+		
+		if (a.getPartOf() == null) {
+			a.setPartOf(b.getPartOf());
+		} else {
+			if ((b.getPartOf() != null) && ((b.getPartOf() != a.getPartOf()))) { 
+				throw new Kite9ProcessingException("PartOf set wrongly");
+			}
+		} 
+
 
 		// move all references from b to a
 		fixEdgeFaceMap(pln, b, b.edgeIterator(), a, null);

@@ -39,7 +39,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 
 	@Override
 	public boolean needsConversion(Vertex v) {
-		if (v instanceof MultiCornerVertex) {
+		if ((v instanceof MultiCornerVertex) && (v.getDiagramElements().size()==1)) {
 			return true;
 		} else {
 			return super.needsConversion(v);

@@ -53,6 +53,12 @@ public class Face implements Deterministic {
 		StringBuffer out = new StringBuffer(300);
 		out.append("[FACE: "+id+(outerFace?"outer"+(containedBy == null ? "" : ", inside "+containedBy.id) :"inner")+"\n");
 		
+		if (partOf != null) {
+			out.append("  Part of: ");
+			out.append(partOf);
+			out.append("\n");
+		}
+		
 		if (boundary.size() == 0) {
 			if (corners.size() > 0) {
 				out.append(" "+corners.get(0));

@@ -19,7 +19,10 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * 
  * Since all diagrams are containers of vertices, these edges will be used around the perimeter of the diagram.
  * 
- * The border edge keeps track of the rectangular border.  You can work out from their containment which side is which, I guess.
+ * The border edge keeps track of the rectangular border.  You can work out from their containment which side is which.
+ * 
+ * Borders only keep track of outer edges of containers.  So forElements will only return an element if the border is 
+ * one of the four outer sides of the container.
  * 
  * @author robmoffat
  *

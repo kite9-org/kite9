@@ -16,6 +16,7 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -108,8 +109,9 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			if (!doneFaces.containsKey(f)) {
 				// single-vertex face
 				
-				List<DartDirection> darts = va.returnAllDarts(f.getCorner(0), o);
-				DartFace df = o.createDartFace(f.getPartOf(), true, darts);
+				ConnectedVertex corner = (ConnectedVertex) f.getCorner(0);
+				List<DartDirection> darts = va.returnAllDarts(corner, o);
+				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, darts);
 				df.setContainedBy(dfContainer);
 				
 			} else if (f.isOuterFace()) {
