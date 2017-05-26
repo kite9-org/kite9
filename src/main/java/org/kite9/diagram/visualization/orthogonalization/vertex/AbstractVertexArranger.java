@@ -9,14 +9,12 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.vertex.AbstractVertex;
-import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.edge.ExternalVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
@@ -34,45 +32,6 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable 
 
 	protected Kite9Log log = new Kite9Log(this);
 
-	
-	/**
-	 * Special marker vertex that allows us to represent the join points for
-	 * darts/vertices constructed by the VertexArranger.
-	 * 
-	 * This keeps track of the underlying PLanarizationEdge that needs to meet from
-	 * the OrthBuilder process.
-	 * 
-	 * @author robmoffat
-	 *
-	 */
-	private static class ExternalVertex extends AbstractVertex implements NoElementVertex {
-
-		private PlanarizationEdge joins;
-		
-		public ExternalVertex(String id, PlanarizationEdge joins) {
-			super(id);
-			this.joins = joins;
-		}
-
-		@Override
-		public Set<DiagramElement> getDiagramElements() {
-			return null;
-		}
-
-		@Override
-		public boolean isPartOf(DiagramElement de) {
-			return false;
-		}
-		
-		public boolean joins(PlanarizationEdge e) {
-			return e==joins;
-		}
-		
-	}
-	
-	public Vertex createExternalVertex(String id, PlanarizationEdge pe) {
-		return new ExternalVertex(id, pe);
-	}
 	
 	/**
 	 * Contains part of the overall vertex construction, between one incoming vertex and the next.

@@ -17,6 +17,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.edge.ExternalVertex;
+import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -62,14 +64,14 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	private void createBorderEdges(List<IncidentDart> dartDirections, Orthogonalization o, MultiCornerVertex v) {
 		// create sides for any sides that have > 1 incident darts
 		OPair<IncidentDart> borders = identifyBorders(dartDirections);
-		Direction inDirection = borders.getA().d.getDrawDirectionFrom(borders.getA().external);
-		Direction outDirection = Direction.reverse(borders.getB().d.getDrawDirectionFrom(borders.getB().external));
+		Direction inDirection = borders.getA().getDart().getDrawDirectionFrom(borders.getA().getExternal());
+		Direction outDirection = Direction.reverse(borders.getB().getDart().getDrawDirectionFrom(borders.getB().getExternal()));
 		
 		if (inDirection == outDirection) {
 			// single side
 			
-			Set<DiagramElement> aUnderlyings = borders.getA().dueTo.getDiagramElements().keySet();
-			Set<DiagramElement> bUnderlyings = borders.getB().dueTo.getDiagramElements().keySet();
+			Set<DiagramElement> aUnderlyings = borders.getA().getDueTo().getDiagramElements().keySet();
+			Set<DiagramElement> bUnderlyings = borders.getB().getDueTo().getDiagramElements().keySet();
 			if (!aUnderlyings.equals(bUnderlyings)) {
 				throw new Kite9ProcessingException();
 			}
@@ -84,27 +86,27 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 				dartsToUse = map.get(sideDirection);
 			}
 			
-			createSide(borders.getA().internal, borders.getB().internal, aUnderlyings, dartsToUse, o, inDirection, sideDirection);
+			createSide(borders.getA().getInternal(), borders.getB().getInternal(), aUnderlyings, dartsToUse, o, inDirection, sideDirection);
 		} else {
 			// two sides
 			Map<Direction, List<IncidentDart>> map =getDartsInDirection(dartDirections, v);
 			Vertex midPoint = new DartJunctionVertex("mcv-"+newVertexId++, v.getDiagramElements());
 			
-			Set<DiagramElement> side1Underlyings = borders.getA().dueTo.getDiagramElements().keySet();
-			Set<DiagramElement> side2Underlyings = borders.getB().dueTo.getDiagramElements().keySet();
+			Set<DiagramElement> side1Underlyings = borders.getA().getDueTo().getDiagramElements().keySet();
+			Set<DiagramElement> side2Underlyings = borders.getB().getDueTo().getDiagramElements().keySet();
 
 			List<IncidentDart> side1Darts = map.get(Direction.reverse(outDirection));
 			List<IncidentDart> side2Darts = map.get(inDirection);
 			
 			
-			createSide(borders.getA().internal, midPoint, side1Underlyings, side1Darts, o, inDirection, Direction.reverse(outDirection));
-			createSide(midPoint, borders.getB().internal, side2Underlyings, side2Darts, o, outDirection, inDirection);
+			createSide(borders.getA().getInternal(), midPoint, side1Underlyings, side1Darts, o, inDirection, Direction.reverse(outDirection));
+			createSide(midPoint, borders.getB().getInternal(), side2Underlyings, side2Darts, o, outDirection, inDirection);
 		}
 	}
 
 	private OPair<IncidentDart> identifyBorders(List<IncidentDart> dartDirections) {
 		// there should be two IncidentDarts next to each other that represent the edge of the container
-		List<IncidentDart> borders = dartDirections.stream().filter(d -> d.dueTo instanceof BorderEdge).collect(Collectors.toList());
+		List<IncidentDart> borders = dartDirections.stream().filter(d -> d.getDueTo() instanceof BorderEdge).collect(Collectors.toList());
 		
 		if (borders.size() != 2) {
 			throw new Kite9ProcessingException();
@@ -153,7 +155,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			und.addAll(cn.keySet());
 			und.addAll(cd);
 			Vertex sideVertex = new DartJunctionVertex(und1.getID()+"-va-"+newVertexId++, und);
-			Vertex externalVertex = createExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
+			Vertex externalVertex = new ExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
 			Direction leavingDirection = Direction.reverse(incidentDirection);
 			Dart d = o.createDart(sideVertex, externalVertex, cn, leavingDirection);
 			return new IncidentDart(d, externalVertex, sideVertex, leavingDirection, e);

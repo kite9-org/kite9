@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.orthogonalization.vertex;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,6 @@ import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
-import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
@@ -29,6 +27,9 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
+import org.kite9.diagram.visualization.orthogonalization.edge.SimpleEdgeConverter;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
@@ -43,6 +44,9 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	protected GridPositioner gp;
 	
 	protected ElementMapper em;
+	
+	protected EdgeConverter ec = new SimpleEdgeConverter();
+	
 	
 	public ConnectedVertexArranger(ElementMapper em) {
 		super();
@@ -61,28 +65,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 
 		List<Dart> newEdgeDarts = new ArrayList<Dart>();
 
-	}
-	
-	/**
-	 * Holds info about the darts due to an incoming edge.
-	 */
-	static class IncidentDart {
-		
-		final Dart d;
-		final Vertex external;
-		final Vertex internal;
-		final Direction arrivalSide;
-		final PlanarizationEdge dueTo;
-		
-		public IncidentDart(Dart d, Vertex external, Vertex internal, Direction arrivalSide, PlanarizationEdge e) {
-			super();
-			this.d = d;
-			this.external = external;
-			this.internal = internal;
-			this.arrivalSide = arrivalSide;
-			this.dueTo = e;
-		}
-		
 	}
 	
 	protected int newVertexId;
@@ -134,7 +116,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 	
 	protected void setupBoundariesFromIncidentDarts(List<IncidentDart> dartOrdering, Vertex v) {
-		Set<Vertex> externalVertices = dartOrdering.stream().map(id -> id.external).collect(Collectors.toSet());
+		Set<Vertex> externalVertices = dartOrdering.stream().map(id -> id.getExternal()).collect(Collectors.toSet());
 		setupBoundaries(externalVertices, v);
 	}
 	
@@ -168,16 +150,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			throw new Kite9ProcessingException();
 		}
 		
-		Direction side = Direction.reverse(incident);
-		
-		Set<DiagramElement> underlyings = new HashSet<>();
-		underlyings.addAll(cd);
-		underlyings.add(cn);
-		
-		Vertex sideVertex = new DartJunctionVertex(und.getID()+"-dv-"+newVertexId++, underlyings);
-		Vertex externalVertex = createExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
-		Dart d = o.createDart(sideVertex, externalVertex, cn, side, null);
-		return new IncidentDart(d, externalVertex, sideVertex, side, e);
+		return ec.convertBiDirectionalEdge((BiDirectionalPlanarizationEdge) e, cd, o, incident, und, cn);
 	}
 
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections) {
@@ -258,7 +231,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			IncidentDart current = processOrder.get(i);
 			IncidentDart prev = processOrder.get((i - 1 + processOrder.size()) % processOrder.size());
 			
-			if (current.arrivalSide != prev.arrivalSide) {
+			if (current.getArrivalSide() != prev.getArrivalSide()) {
 				startPoint = i;
 				break;
 			}
@@ -273,7 +246,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		
 		for (int i = 0; i < processOrder.size(); i++) {
 			IncidentDart d = processOrder.get((i + startPoint ) % processOrder.size());
-			out.get(d.arrivalSide).add(d);
+			out.get(d.getArrivalSide()).add(d);
 		}
 		
 		return out;
@@ -290,7 +263,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		if (onSide != null) {
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
-				Vertex vsv = incidentDart.internal;
+				Vertex vsv = incidentDart.getInternal();
 				Dart sideDart = o.createDart(last, vsv, underlying, goingIn, side); 
 				sideDart.setOrthogonalPositionPreference(goingIn);
 				out.newEdgeDarts.add(sideDart);

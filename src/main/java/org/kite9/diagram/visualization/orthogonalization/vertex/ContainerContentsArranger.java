@@ -21,6 +21,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
