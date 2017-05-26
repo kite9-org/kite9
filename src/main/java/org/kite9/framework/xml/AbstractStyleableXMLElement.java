@@ -9,7 +9,6 @@ import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;

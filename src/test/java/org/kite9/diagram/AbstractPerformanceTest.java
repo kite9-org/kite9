@@ -30,7 +30,6 @@ import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;

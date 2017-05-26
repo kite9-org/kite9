@@ -16,7 +16,6 @@ import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;

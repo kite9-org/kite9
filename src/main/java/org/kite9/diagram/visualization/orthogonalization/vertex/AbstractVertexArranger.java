@@ -17,7 +17,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;

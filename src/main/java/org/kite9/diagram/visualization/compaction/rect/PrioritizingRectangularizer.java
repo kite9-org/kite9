@@ -7,7 +7,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;

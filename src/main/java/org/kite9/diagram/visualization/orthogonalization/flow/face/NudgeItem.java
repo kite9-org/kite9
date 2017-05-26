@@ -6,7 +6,6 @@ import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.Face;
 
 class NudgeItem {

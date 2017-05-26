@@ -7,7 +7,6 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.balanced.BalancedFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;

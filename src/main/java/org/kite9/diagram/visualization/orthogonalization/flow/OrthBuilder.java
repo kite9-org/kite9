@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
-import org.kite9.diagram.common.algorithms.fg.FlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.planarization.Planarization;
 

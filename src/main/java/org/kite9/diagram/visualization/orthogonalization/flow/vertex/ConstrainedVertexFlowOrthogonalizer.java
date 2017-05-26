@@ -22,7 +22,6 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;

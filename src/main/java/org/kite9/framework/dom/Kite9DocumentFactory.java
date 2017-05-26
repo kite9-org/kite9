@@ -15,12 +15,11 @@ import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.apache.batik.util.MimeTypeConstants;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.framework.xml.ADLDocument;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * This class contains methods for creating SVGDocument instances

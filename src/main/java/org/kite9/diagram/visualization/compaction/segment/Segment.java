@@ -13,7 +13,6 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;

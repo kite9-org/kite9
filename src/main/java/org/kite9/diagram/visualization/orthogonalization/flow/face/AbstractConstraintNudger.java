@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;

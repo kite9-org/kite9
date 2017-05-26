@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;

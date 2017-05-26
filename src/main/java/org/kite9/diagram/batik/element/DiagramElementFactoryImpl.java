@@ -8,8 +8,8 @@ import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
-import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 

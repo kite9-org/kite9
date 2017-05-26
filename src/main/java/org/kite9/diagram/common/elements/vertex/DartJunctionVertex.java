@@ -1,6 +1,5 @@
 package org.kite9.diagram.common.elements.vertex;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.kite9.diagram.model.DiagramElement;

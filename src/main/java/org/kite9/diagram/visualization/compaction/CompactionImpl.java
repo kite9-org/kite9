@@ -8,7 +8,6 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.orthogonalization.Dart;

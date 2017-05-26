@@ -7,7 +7,6 @@ import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;

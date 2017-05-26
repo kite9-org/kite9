@@ -4,30 +4,23 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
-import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {

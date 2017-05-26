@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;

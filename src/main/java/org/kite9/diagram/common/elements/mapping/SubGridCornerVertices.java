@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;

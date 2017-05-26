@@ -2,9 +2,9 @@ package org.kite9.diagram.visualization.planarization.transform;
 
 import java.util.List;
 
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;

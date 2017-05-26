@@ -11,7 +11,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
