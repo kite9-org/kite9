@@ -64,8 +64,8 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	private void createBorderEdges(List<IncidentDart> dartDirections, Orthogonalization o, MultiCornerVertex v) {
 		// create sides for any sides that have > 1 incident darts
 		OPair<IncidentDart> borders = identifyBorders(dartDirections);
-		Direction inDirection = borders.getA().getDart().getDrawDirectionFrom(borders.getA().getExternal());
-		Direction outDirection = Direction.reverse(borders.getB().getDart().getDrawDirectionFrom(borders.getB().getExternal()));
+		Direction inDirection = Direction.reverse(borders.getA().getArrivalSide());
+		Direction outDirection = borders.getB().getArrivalSide();
 		
 		if (inDirection == outDirection) {
 			// single side

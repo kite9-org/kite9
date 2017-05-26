@@ -26,9 +26,9 @@ public class IncidentDart {
 	}
 	
 
-	public Dart getDart() {
-		return d;
-	}
+//	public Dart getDart() {
+//		return d;
+//	}
 
 	public Vertex getExternal() {
 		return external;

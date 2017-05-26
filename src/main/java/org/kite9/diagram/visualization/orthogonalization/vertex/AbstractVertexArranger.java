@@ -16,6 +16,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.edge.ExternalVertex;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -27,7 +28,7 @@ import org.kite9.framework.logging.Logable;
  * @author robmoffat
  *
  */
-public abstract class AbstractVertexArranger implements VertexArranger, Logable {
+public abstract class AbstractVertexArranger implements VertexArranger, Logable, ContentsConverter {
 	
 
 	protected Kite9Log log = new Kite9Log(this);

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization.vertex;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
+import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
@@ -126,7 +128,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			Set<DiagramElement> cd = around.getDiagramElements();
 			
 			int[] number = { 0 };
-			
+						
 			List<IncidentDart> out = eo.getEdgesAsList().stream().map(
 				e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, around)
 				).collect(Collectors.toList());
@@ -143,14 +145,18 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	 * @param und 
 	 */
 	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int i, Vertex und) {
-		DiagramElement cn = null;
-		if (e instanceof BiDirectionalPlanarizationEdge) {
-			cn = ((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying();
-		} else {
+		if (!(e instanceof BiDirectionalPlanarizationEdge)) {
 			throw new Kite9ProcessingException();
 		}
+
+		Set<DiagramElement> underlyings = new HashSet<>();
+		underlyings.addAll(cd);
+		underlyings.add(((ConnectedVertex) und).getOriginalUnderlying());
 		
-		return ec.convertBiDirectionalEdge((BiDirectionalPlanarizationEdge) e, cd, o, incident, und, cn);
+		Vertex sideVertex = new DartJunctionVertex(und.getID()+"-dv-"+newVertexId++, underlyings);
+
+		
+		return ec.convertBiDirectionalEdge((BiDirectionalPlanarizationEdge) e, o, incident, und, sideVertex);
 	}
 
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections) {
