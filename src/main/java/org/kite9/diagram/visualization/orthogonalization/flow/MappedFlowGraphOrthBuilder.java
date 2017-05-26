@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
@@ -110,8 +111,9 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				// single-vertex face
 				
 				ConnectedVertex corner = (ConnectedVertex) f.getCorner(0);
-				List<DartDirection> darts = va.returnAllDarts(corner, o);
-				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, darts);
+				List<DartDirection> innerFaceDarts = va.returnAllDarts(corner, o);
+				List<DartDirection> outerFaceDarts = reverseDartDirections(innerFaceDarts);
+				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, outerFaceDarts);
 				df.setContainedBy(dfContainer);
 				
 			} else if (f.isOuterFace()) {
@@ -121,6 +123,12 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		}
 		
 		return o;
+	}
+
+	private List<DartDirection> reverseDartDirections(List<DartDirection> innerFaceDarts) {
+		List<DartDirection> out = innerFaceDarts.stream().map(a -> new DartDirection(a.getDart(), Direction.reverse(a.getDirection()))).collect(Collectors.toList());
+		Collections.reverse(out);
+		return out;
 	}
 
 	private List<StartPoint> selectBestStartPoints(Planarization pln) {
@@ -231,7 +239,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		
 		out = new SingleVertexTurnInformation(map);
 		turnInfoMap.put(sv, out);
-		System.out.println("TI:  "+sv+" "+map);
 
 		return out;
 	}

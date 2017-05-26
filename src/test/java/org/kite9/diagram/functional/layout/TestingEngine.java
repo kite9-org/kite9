@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.layout;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,6 +23,7 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
+import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
@@ -30,6 +32,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -51,6 +54,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutin
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.w3c.dom.css.Rect;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
@@ -70,6 +74,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkLayout = true;
 		public boolean checkNoContradictions = true;
 		public boolean checkLabelOcclusion = true;
+		public boolean checkConnectionsMeetConnecteds = true;
 	}
 	
 	public void testDiagram(DiagramKite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
@@ -103,6 +108,10 @@ public class TestingEngine extends TestingHelp {
 			if (c.checkNoHops) {
 				testHopCount(d);
 			}
+			
+			if (c.checkConnectionsMeetConnecteds) {
+				testConnectionsMeetConnecteds(d);
+			}
 
 			if (c.checkLayout) {
 				testLayout(d.getDiagramElement());
@@ -130,6 +139,36 @@ public class TestingEngine extends TestingHelp {
 		} catch (AssertionFailedError afe) {
 			throw afe;
 		}
+	}
+
+	public static void testConnectionsMeetConnecteds(DiagramKite9XMLElement d) {
+		Diagram d2 = d.getDiagramElement();
+		new DiagramElementVisitor().visit(d2, new VisitorAction() {
+			
+			@Override
+			public void visit(DiagramElement de) {
+				if (de instanceof Connection) {
+					meets((Connection)de, ((Connection) de).getFrom(), true);
+					meets((Connection)de, ((Connection) de).getTo(), false);
+				}
+			}
+
+			private void meets(Connection c, Connected v, boolean start) {
+				RouteRenderingInformation rri = c.getRenderingInformation();
+				RectangleRenderingInformation rect = v.getRenderingInformation();
+				
+				Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
+				Point2D p2d = new Point2D.Double(d2.x(), d2.y());
+				Rectangle2D r2d = createRect(rect);
+				Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
+				if (largerRect.contains(p2d)) {
+					// it's on the border
+				} else {
+					Assert.fail(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+				}
+				
+			}
+		});
 	}
 
 	private void writeVertexOrder(MGTPlanarization pln, Class<?> theTest, String subtest, String item) {
@@ -303,6 +342,9 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
+				if ((cc instanceof Label) || (cc instanceof Connected)) {
+					checkContentContainment((Rectangular) cc, d);
+				}
 				if (cc instanceof Container) {
 					testLayout((Container) cc);
 				}
@@ -310,6 +352,31 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 	
+	private static void checkContentContainment(Rectangular cc, Container d) {
+		
+		if (checkTemporary(cc)) {
+			return;
+		}
+		
+		RectangleRenderingInformation inside =  cc.getRenderingInformation();
+		RectangleRenderingInformation outside = d.getRenderingInformation();
+		
+		Rectangle2D inR = createRect(inside);
+		Rectangle2D outR = createRect(outside);
+		
+		Assert.assertTrue(cc+" not entirely within "+d, outR.contains(inR));
+	}
+
+	/**
+	 * Eventually, we shouldn't be modifying the container structure, it should be immutable.
+	 * @param cc
+	 * @return
+	 */
+	@Deprecated()
+	private static boolean checkTemporary(Rectangular cc) {
+		return cc instanceof GridTemporaryConnected;
+	}
+
 	private void checkLabelOverlap(final Diagram d) {
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
@@ -348,7 +415,7 @@ public class TestingEngine extends TestingHelp {
 		
 	}
 
-	private Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
+	private static Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
 		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
 	}
 
