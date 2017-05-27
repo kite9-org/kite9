@@ -33,14 +33,6 @@ public abstract class AbstractDiagramElement implements DiagramElement {
 	public DiagramElement getParent() {
 		return parent;
 	}
-
-	/**
-	 * Remove later.
-	 */
-	@Override
-	public Container getContainer() {
-		return (Container) getParent();
-	}
 	
 	private int depth = -1;
 

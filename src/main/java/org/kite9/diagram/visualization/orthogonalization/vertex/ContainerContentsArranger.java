@@ -15,6 +15,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -49,10 +50,9 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				log.send("Created container contents outer face: "+outer);
 			}
 		} else {
-			Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
 			for (DiagramElement de : c.getContents()) {
-				if (de instanceof Connected) {
-					DartFace df = convertDiagramElementToInnerFace(de, null, o, emptyMap);
+				if ((de instanceof Connected) || (de instanceof Label)) {
+					DartFace df = convertDiagramElementToInnerFace(de, o);
 					DartFace outerFace = convertGridToOuterFace(o, df.getStartVertex(), (Rectangular) de);
 					outerFace.setContainedBy(inner);
 					log.send("Created face: "+df);
@@ -119,11 +119,11 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
 			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
-		gp.placeOnGrid(c, true);
+		gp.placeOnGrid(c, true, true);
 
 		// set up vertices for each grid element
 		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Connected) {
+			if ((de instanceof Connected) || (de instanceof Label)) {
 				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 				createdVertices.addAll(cv.getVerticesAtThisLevel());
 			}
@@ -131,7 +131,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				
 		// link them together
 		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Connected) {
+			if ((de instanceof Connected) || (de instanceof Label)) {
 				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 				// having created all the vertices, join them to form faces
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);

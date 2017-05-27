@@ -3,11 +3,12 @@ package org.kite9.diagram.model;
 import java.util.Collection;
 
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.style.ContainerPosition;
 
 /**
  * A diagram element which is consumes a rectangular area of space, and 
  * potentially has {@link Connection}s that link to other {@link Connected} items within the diagram.
+ * 
+ * Unlike the label, it is therefore involved in the Planarization phase.
  * 
  * @author robmoffat
  *
@@ -34,15 +35,5 @@ public interface Connected extends Rectangular {
 	 * Overrides the main one, since all Connecteds are areas on the diagram rather than links.
 	 */
 	RectangleRenderingInformation getRenderingInformation();
-	
-	/**
-	 * Returns the container that this Connected is in.
-	 */
-	Container getContainer();
-	
-	/**
-	 * Any other details about how this Connected is to be positioned in the container.
-	 */
-	ContainerPosition getContainerPosition();
 }
 

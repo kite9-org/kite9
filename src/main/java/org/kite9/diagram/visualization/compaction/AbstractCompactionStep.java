@@ -40,7 +40,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return true;
 	}
 
-	protected double getMinimumDistance(Slideable froms, Slideable tos, Direction d) {
+	protected double getMinimumDistance(Slideable<Segment> froms, Slideable<Segment> tos, Direction d) {
 		return froms.minimumDistanceTo(tos);
 	}
 

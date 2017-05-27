@@ -66,7 +66,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		
 		if (element instanceof Decal) {
 			// tells the decal how big it needs to draw itself
-			Container parent = element.getContainer();
+			Container parent = ((Decal) element).getContainer();
 			RectangleRenderingInformation rri = parent.getRenderingInformation();
 			((Decal) element).setParentSize(new double[] {0, rri.getSize().getWidth()}, new double[] {0, rri.getSize().getHeight() });
 		} else if (ri.getPosition() == null) {

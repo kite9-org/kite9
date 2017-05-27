@@ -55,82 +55,40 @@ public class LeafElementSizeCompactionStep extends AbstractCompactionStep {
 		super(cd);
 	}
 
-
 	@Override
 	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		orderDiagramElementSizes(c.getHorizontalSegmentSlackOptimisation());
-		orderDiagramElementSizes(c.getVerticalSegmentSlackOptimisation());
+		DiagramElementSizing sizing = r.getSizing();
+		log.send("Aligning: "+r+" "+sizing);
+		SegmentSlackOptimisation soH = c.getHorizontalSegmentSlackOptimisation();
+		SegmentSlackOptimisation soV = c.getVerticalSegmentSlackOptimisation();
+
+		size1d(r, sizing, soH);
+		size1d(r, sizing, soV);	
+	}
+
+	private void size1d(Rectangular r, DiagramElementSizing sizing, SegmentSlackOptimisation so) {
+		OPair<Slideable<Segment>> slideables = so.getSlideablesFor(r);
+		alignPair(so, slideables.getA(), slideables.getB(), sizing, r);
 	}
 
 	
-	/**
-	 * This labels pairs of attr in the diagram with the alignment they should have,
-	 * and assigns a unique priority to the attr in the diagram, so that those with lowest
-	 * priority number receive preference on size.
-	 */
-	public void orderDiagramElementSizes(SegmentSlackOptimisation opt) {
-		List<OPair<Slideable<Segment>>> toDo = new ArrayList<>(opt.getRectangularSlideablePairs());
-		
-		Collections.sort(toDo, new Comparator<OPair<Slideable>>() {
 
-			@Override
-			public int compare(OPair<Slideable> o1, OPair<Slideable> o2) {
-				int distO1 = getDist1(o1);
-				int distO2 = getDist1(o2);
-				return ((Integer)distO1).compareTo(distO2);
-			}
-
-			private int getDist1(OPair<Slideable> o1) {
-				Slideable a = o1.getA();
-				Slideable b = o1.getB();
-				if ((a == null) || (b == null)) {
-					return Integer.MAX_VALUE;
-				}
-				
-				return Math.abs(a.getPositionalOrder() - b.getPositionalOrder());
-			}
-			
-		});
-		
-		setSizes(opt, toDo, DiagramElementSizing.MINIMIZE);
-		setSizes(opt, toDo, DiagramElementSizing.MAXIMIZE);
-	}
-
-	private void setSizes(SegmentSlackOptimisation opt, List<OPair<Slideable>> toDo, DiagramElementSizing process) {
-		for (int i = 0; i < toDo.size(); i++) {
-			OPair<Slideable> es = toDo.get(i);
-			Slideable from = es.getA();
-			Slideable to = es.getB();
-			
-			if ((from != null) && (to != null)) {
-				DiagramElement de = ((Segment) from.getUnderlying()).getUnderlying();
-				if (de instanceof Rectangular) {
-					DiagramElementSizing sizing = ((Rectangular) de).getSizing();
-					if (sizing == process) {
-						log.send("Aligning: "+de+" "+process+" "+from+" "+to);
-						alignPair(opt, from, to, sizing, de);
-					}
-				}
-			}
-		}
-	}
-
-
-	private void maximizeDistance(SegmentSlackOptimisation xo, Slideable from, Slideable to) {
+	private void maximizeDistance(SegmentSlackOptimisation xo, Slideable<Segment> from, Slideable<Segment> to) {
 		int slackAvailable = to.getMaximumPosition() - from.getMinimumPosition();
 		from.setMaximumPosition(from.getMinimumPosition());
 		xo.ensureMinimumDistance(from, to, slackAvailable);
 	}
 	
 
-	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable from, Slideable to) {
+	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to) {
 		Integer minDist = from.minimumDistanceTo(to);
 		
 		int slackAvailable = to.getMaximumPosition() - from.getMinimumPosition();
 		opt.ensureMaximumDistance(from, to, minDist);
 	}
 
-	private void alignPair(SegmentSlackOptimisation opt, Slideable from, Slideable to, DiagramElementSizing sizing, DiagramElement underlying) {
+	private void alignPair(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to, DiagramElementSizing sizing, DiagramElement underlying) {
+		log.send("Aligning: "+de+" "+process+" "+from+" "+to);
 		from.setAlignTo(to);
 		to.setAlignTo(from);
 		to.setAlignStyle(AlignStyle.RIGHT);

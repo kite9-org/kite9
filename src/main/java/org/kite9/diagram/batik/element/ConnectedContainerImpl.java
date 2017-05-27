@@ -3,7 +3,6 @@ package org.kite9.diagram.batik.element;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
@@ -13,23 +12,11 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
 
 public class ConnectedContainerImpl extends AbstractConnectedDiagramElement implements Container {
 	
-	Label label;
 	
 	public ConnectedContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
 	}
-
-	@Override
-	public Label getLabel() {
-		ensureInitialized();
-		return label;
-	}
-
-	@Override
-	protected void addLabelReference(Label de) {
-		this.label = de;
-	}
-	
+		
 	protected void initialize() {
 		super.initialize();
 		traversal[Direction.UP.ordinal()] = getTraversalRule(CSSConstants.TRAVERSAL_TOP_PROPERTY);

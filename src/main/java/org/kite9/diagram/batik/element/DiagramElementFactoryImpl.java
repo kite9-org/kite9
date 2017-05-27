@@ -47,7 +47,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			}
 			return new DiagramImpl(el, context);
 		case LABEL:
-			return new LabelImpl(el, parent, context);
+			switch (sizing) {
+			case MAXIMIZE:
+			case MINIMIZE:
+				return new LabelContainerImpl(el, parent, context);
+			default:
+				return new LabelLeafImpl(el, parent, context);
+			}
 		case DECAL:
 			return new DecalImpl(el, parent, context);
 		case CONNECTED:

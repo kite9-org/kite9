@@ -157,9 +157,8 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			Vertex sideVertex = new DartJunctionVertex(und1.getID()+"-va-"+newVertexId++, und);
 			Vertex externalVertex = new ExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
 			Direction leavingDirection = Direction.reverse(incidentDirection);
-			Dart d = o.createDart(sideVertex, externalVertex, cn, leavingDirection);
-			return new IncidentDart(d, externalVertex, sideVertex, leavingDirection, e);
-			
+			o.createDart(sideVertex, externalVertex, cn, leavingDirection);
+			return new IncidentDart(externalVertex, sideVertex, leavingDirection, e);		
 		} else {
 			return super.convertEdgeToIncidentDart(e, cd, o, incidentDirection, i, und1);
 		}

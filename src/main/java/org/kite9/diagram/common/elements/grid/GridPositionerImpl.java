@@ -16,6 +16,8 @@ import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -38,7 +40,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
 	
 	
-	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
+	private Dimension calculateGridSize(Container ord, boolean allowSpanning, boolean includeLabels) {
 		// these are a minimum size, but contents can exceed them and push this out.
 		int xSize = (int) ord.getGridColumns();
 		int ySize = (int) ord.getGridRows();
@@ -46,9 +48,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		// fit as many elements as possible into the grid
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (diagramElement instanceof Connected) {
-				IntegerRange xpos = getXOccupies((Connected) diagramElement);
-				IntegerRange ypos = getYOccupies((Connected) diagramElement);
+			if (shoudAddToGrid(diagramElement, includeLabels)) {
+				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
+				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);
 				
 				if ((xpos != null) && (ypos != null)) {
 					if (allowSpanning) {
@@ -66,22 +68,22 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 
-	public static IntegerRange getYOccupies(Connected diagramElement) {
+	public static IntegerRange getYOccupies(Rectangular diagramElement) {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getY();
 	}
 
 
-	public static IntegerRange getXOccupies(Connected diagramElement) {
+	public static IntegerRange getXOccupies(Rectangular diagramElement) {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getX();
 	}
 	
 	
-	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning) {
+	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning, boolean includeLabels) {
 		if (placed.containsKey(ord)) {
 			return placed.get(ord);
 		}
 		
-		Dimension size = calculateGridSize(ord, allowSpanning);
+		Dimension size = calculateGridSize(ord, allowSpanning, includeLabels);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
 		List<DiagramElement[]> out = new ArrayList<>();
@@ -93,9 +95,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (diagramElement instanceof Connected) {
-				IntegerRange xpos = getXOccupies((Connected) diagramElement);
-				IntegerRange ypos = getYOccupies((Connected) diagramElement);	
+			if (shoudAddToGrid(diagramElement, includeLabels)) {
+				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
+				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);	
 				
 				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
 					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
@@ -137,7 +139,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
 		
 		for (DiagramElement de : ord.getContents()) {
-			if (de instanceof Connected) {
+			if (shoudAddToGrid(de, includeLabels)) {
 				scaleCoordinates(de, size);
 			}
 		}
@@ -154,6 +156,16 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		placed.put(ord, done);
 		return done;
+	}
+
+
+	private boolean shoudAddToGrid(DiagramElement diagramElement, boolean includeLabels) {
+		if (includeLabels) {
+			if (diagramElement instanceof Label) {
+				return true;
+			}
+		}
+		return diagramElement instanceof Connected;
 	}
 
 

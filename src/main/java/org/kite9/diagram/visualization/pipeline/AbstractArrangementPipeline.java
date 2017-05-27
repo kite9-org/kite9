@@ -14,6 +14,7 @@ import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionSte
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.temp.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
@@ -79,7 +80,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new HierarchicalCompactionStep(getDisplayer()),
 				new PrioritizingRectangularizer(getDisplayer()),
 				new SubGraphInsertionCompactionStep(getDisplayer()),
-//				new MinimizeCompactionStep(getDisplayer()),
+				new MinimizeCompactionStep(getDisplayer()),
 //				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
 //				new LeafElementSizeCompactionStep(getDisplayer()),

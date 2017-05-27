@@ -4,6 +4,7 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
@@ -40,7 +41,5 @@ public class DecalImpl extends AbstractRectangularDiagramElement implements Deca
 	public DiagramElementSizing getSizing() {
 		return DiagramElementSizing.FIXED;
 	}
-	
-	
 
 }

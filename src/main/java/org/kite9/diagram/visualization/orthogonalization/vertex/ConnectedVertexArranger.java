@@ -31,6 +31,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
+import org.kite9.diagram.visualization.orthogonalization.edge.LabellingEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.SimpleEdgeConverter;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -47,8 +48,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 	protected ElementMapper em;
 	
-	protected EdgeConverter ec = new SimpleEdgeConverter();
-	
+	protected EdgeConverter ec = new LabellingEdgeConverter(this);
 	
 	public ConnectedVertexArranger(ElementMapper em) {
 		super();
@@ -158,16 +158,25 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		
 		return ec.convertBiDirectionalEdge((BiDirectionalPlanarizationEdge) e, o, incident, und, sideVertex);
 	}
+	
+	public DartFace convertDiagramElementToInnerFace(DiagramElement original, Orthogonalization o) {
+		Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+		return convertDiagramElementToInnerFace(original, null, o, emptyMap);
+	}
 
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections) {
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartDirections);
 		
-		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
-
+		CornerVertices cv = getCornerVertices(originalUnderlying);
 		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
 
 		List<MultiCornerVertex> perimeter = gp.getClockwiseOrderedContainerVertices(cv);
 		return convertDiagramElementToInnerFaceWithCorners(originalUnderlying, o, dartDirections, allSideDarts, perimeter);
+	}
+
+	public CornerVertices getCornerVertices(DiagramElement originalUnderlying) {
+		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
+		return cv;
 	}
 
 	protected DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections, LinkedHashSet<Dart> allSideDarts,

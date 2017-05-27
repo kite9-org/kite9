@@ -50,10 +50,6 @@ public class DiagramElementVisitor {
 			push(d, visited, va);
 		}
 		
-		if (c.getLabel()!=null) {
-			push(c.getLabel(), visited, va);
-		}
-		
 		if (c instanceof Connected) {
 		    for (Connection con : ((Connected)c).getLinks()) {
 		    	push(con, visited, va);

@@ -7,6 +7,7 @@ import org.kite9.diagram.batik.element.AbstractDiagramElement;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -90,6 +91,11 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public DiagramElementSizing getSizing() {
 		return DiagramElementSizing.UNSPECIFIED;
+	}
+
+	@Override
+	public Container getContainer() {
+		return (Container) getParent();
 	}
 
 }

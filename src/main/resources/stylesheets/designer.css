@@ -121,7 +121,7 @@ key {
 }
 
 glyph > label {
-	type: connected;
+	type: label;
 	sizing: fixed;
 	font-size: 15px;
 	text-align: middle;
@@ -233,6 +233,8 @@ diagram > label {
 	font-size: 10px;
 	font-family: "opensans-light-webfont";
 	padding: 4px 4px 4px 4px;
+	sizing: fixed;
+	template: url(template.svg#label)
 }
 
 allLinks {
