@@ -121,7 +121,7 @@ key {
 }
 
 glyph > label {
-	type: label;
+	type: connected;
 	sizing: fixed;
 	font-size: 15px;
 	text-align: middle;

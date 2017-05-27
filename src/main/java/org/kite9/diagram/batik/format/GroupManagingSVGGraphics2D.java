@@ -1,8 +1,12 @@
 package org.kite9.diagram.batik.format;
 
+import java.util.Map;
+
 import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -14,9 +18,10 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupManagement {
+public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupManagement, Logable {
 
 	private Element currentSubgroup;
+	private Kite9Log log = new Kite9Log(this);
 
 	public GroupManagingSVGGraphics2D(Document doc) {
 		super(doc,
@@ -34,6 +39,7 @@ public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupMa
 			newGroup.setAttribute("id", id);
 			this.currentSubgroup = newGroup;
 			setTopLevelGroup(newGroup);
+			log.send("Started. Current group: "+this.currentSubgroup.getAttribute("id"));
 		}
 	}
 	
@@ -46,7 +52,18 @@ public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupMa
 			Element parent = (Element) currentSubgroup.getParentNode();
 			setTopLevelGroup(parent);
 			this.currentSubgroup = parent;
+			log.send("Finished.  Current group: "+this.currentSubgroup.getAttribute("id"));
 		}
+	}
+
+	@Override
+	public String getPrefix() {
+		return "GRUP";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
 	}
 	
 }

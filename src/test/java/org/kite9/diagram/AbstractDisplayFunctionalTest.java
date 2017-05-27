@@ -116,7 +116,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, "", m.getName()+ending);
+		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+ending);
 		return f;
 	}
 

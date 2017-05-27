@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.element;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 
