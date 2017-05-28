@@ -5,32 +5,52 @@
       <svg:stop offset='100%' stop-color='#DDD' />
     </svg:linearGradient>
   </svg:defs>
-  
-  <back id='glyph' style='type: decal; sizing: adaptive; '>
-    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
-  </back>
-  
-  <back id='arrow' style='type: decal; sizing: adaptive; '>
-    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />
-  </back>
-  
-  
-  <back id='context' style='type: decal; sizing: adaptive; '>
-    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
-  </back>
-  
-  <!-- label template -->
-  <svg:text id="label">{{contents}}</svg:text>
-  
-  <svg:text id="stereotype">{{contents}}</svg:text>
-  
-  <svg:text id="text-line">{{contents}}</svg:text>
-  
-  <!-- symbol -->
-  <svg:circle id="circle" cx="5" cy="5" r="5" />
-  
-  <svg:polygon id="hexagon" points="0,4 6,0 12,4 12,8 6,12 0,8" />
 
-  <svg:polygon id="diamond" points="6,0 12,6 6,12 0,6"/>
-  
+  <template id='glyph'>
+    <back style='type: decal; sizing: adaptive; '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
+    </back>
+  </template>
+
+
+  <template id='arrow'>
+    <back style='type: decal; sizing: adaptive; '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />
+    </back>
+  </template>
+
+  <template id='connection-label'>
+    <back style='type: decal; sizing: adaptive; '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: ccc; ' />
+    </back>
+    <text style="type: label; sizing: fixed">
+      <svg:text>{{contents}}</svg:text>
+    </text>
+  </template>
+
+  <template id='context'>
+    <back style='type: decal; sizing: adaptive; '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
+    </back>
+  </template>
+
+  <!-- label template -->
+  <template id="text-label">
+    <svg:text>{{contents}}</svg:text>
+  </template>
+
+
+  <!-- symbol -->
+  <template id="circle">
+    <svg:circle cx="5" cy="5" r="5" />
+  </template>
+
+  <template id="hexagon">
+    <svg:polygon points="0,4 6,0 12,4 12,8 6,12 0,8" />
+  </template>
+
+  <template id="diamond">
+    <svg:polygon points="6,0 12,6 6,12 0,6" />
+  </template>
+
 </svg:svg>

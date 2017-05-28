@@ -1,5 +1,10 @@
 package org.kite9.framework.dom;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.kite9.diagram.model.position.Direction;
+
 public interface CSSConstants {
 
 	public static final String ELEMENT_TYPE_PROPERTY = "type";
@@ -25,7 +30,7 @@ public interface CSSConstants {
 	public static final String TRAVERSAL_BOTTOM_PROPERTY = "traversal-bottom";
 	public static final String TRAVERSAL_TOP_PROPERTY = "traversal-top";
 	public static final String TRAVERSAL_RIGHT_PROPERTY = "traversal-right";
-	public static final String TRAVERSAL_LEFT_PROPERTY = "traversal-left";
+	public static final String TRAVERSAL_LEFT_PROPERTY = "traversal-left";	
 	
 	// for importing SVG content into an element
 	public static final String TEMPLATE = "template";

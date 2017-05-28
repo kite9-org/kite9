@@ -16,6 +16,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Handles copying of XML from one document to another, and the CSS template directive.
+ * 
+ * @author robmoffat
+ *
+ */
 public class Templater {
 	
 	private DocumentLoader loader;
@@ -44,12 +50,7 @@ public class Templater {
 					ADLDocument templateDoc = loadReferencedDocument(resource);
 					Element e = templateDoc.getElementById(fragment);
 
-					Node copy = copyIntoDocument(in, e);
-
-					// ensure xml:base is set so references work in the copied
-					// content
-					((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resource);
-
+					copyIntoDocument(in, e, resource);
 				} catch (Exception e) {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 				}
@@ -57,19 +58,29 @@ public class Templater {
 		}
 	}
 
-	public static Node copyIntoDocument(Kite9XMLElement in, Element e) {
-		// copy this element into the new document
-		Node copy = e.cloneNode(true);
-		ADLDocument thisDoc = in.getOwnerDocument();
-		thisDoc.adoptNode(copy);
-		
-		if (in.getChildXMLElementCount() == 0) {
-			in.appendChild(copy);
-		} else {
-			Kite9XMLElement first = in.iterator().next();
-			in.insertBefore(copy, first);
+	public static void copyIntoDocument(Kite9XMLElement in, Element template, String resource) {
+		// copy all children of e into the new document
+		NodeList children = template.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node n = children.item(i);
+
+			if (n instanceof Element) {
+				Node copy = ((Element) n).cloneNode(true);
+				ADLDocument thisDoc = in.getOwnerDocument();
+				thisDoc.adoptNode(copy);
+
+				if (in.getChildXMLElementCount() == 0) {
+					in.appendChild(copy);
+				} else {
+					Kite9XMLElement first = in.iterator().next();
+					in.insertBefore(copy, first);
+				}
+
+				// ensure xml:base is set so references work in the copied
+				// content
+				((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resource);
+			}
 		}
-		return copy;
 	}
 	
 	public static void insertCopyBefore(Node before, Element contentsOf) {

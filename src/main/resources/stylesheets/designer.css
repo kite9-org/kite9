@@ -127,7 +127,7 @@ glyph > label {
 	text-align: middle;
 	fill: black;
 	font-family: "opensans-regular-webfont";
-	template: url(template.svg#label);
+	template: url(template.svg#text-label);
 	occupies: 0 1 1 1;
 }
 
@@ -137,7 +137,7 @@ glyph > stereotype {
 	font-family: "opensans-bold-webfont";
 	font-size: 14px;
 	fill: black;
-	template: url(template.svg#stereotype);
+	template: url(template.svg#text-label);
 	occupies: 0 0;
 }
 
@@ -176,7 +176,7 @@ text-line, text {
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	text-align: start;
-	template: url(template.svg#text-line);
+	template: url(template.svg#text-label);
 }
 
 glyph > symbols {
@@ -206,7 +206,7 @@ arrow > label {
 	fill: white;
 	text-align: middle;
 	font-family: "opensans-regular-webfont";
-	template: url(template.svg#label);
+	template: url(template.svg#text-label);
 }
 
 /* Context */
@@ -233,8 +233,8 @@ diagram > label {
 	font-size: 10px;
 	font-family: "opensans-light-webfont";
 	padding: 4px 4px 4px 4px;
-	sizing: fixed;
-	template: url(template.svg#label)
+	sizing: minimize;
+	template: url(template.svg#connection-label)
 }
 
 allLinks {
