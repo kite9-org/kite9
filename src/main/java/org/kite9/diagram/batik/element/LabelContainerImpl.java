@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.element;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
@@ -18,17 +17,11 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  * 
  */
-public class LabelContainerImpl extends AbstractRectangularDiagramElement implements Label, Container {
+public class LabelContainerImpl extends AbstractLabelImpl implements Label, Container {
 	
 	
 	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
-	}
-	
-	@Override
-	public boolean isConnectionLabel() {
-		ensureInitialized();
-		return getParent() instanceof Connection;
 	}
 	
 	public BorderTraversal getTraversalRule(Direction d) {
