@@ -39,84 +39,6 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		super(el, parent, ctx);
 	}
 
-	/**
-	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
-	 * turned into `GraphicsNode`s .  
-	 */
-	protected void performReplace(NodeList nodeList) {
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node n = nodeList.item(i);
-
-			if ((n instanceof Element) && (!(n instanceof Kite9XMLElement))) {
-				performReplace(n.getChildNodes());
-				for (int j = 0; j < n.getAttributes().getLength(); j++) {
-					Attr a = (Attr) n.getAttributes().item(j);
-					a.setValue(performValueReplace(a.getValue()));
-				}
-			} else if (n instanceof Text) {
-				Text text = (Text) n;
-				String data = text.getData();
-				data = performValueReplace(data);
-				if (!data.equals(text.getData())) {
-					text.replaceData(0, text.getLength(), data);
-				}
-				
-				// handle replacing in of contents
-				int found;
-				do {
-					found =  (text.getData().indexOf("{{contents}}"));
-					if (found > -1) {
-						Text text2 = text.splitText(found);
-						text2.replaceData(0, text2.getLength(), text2.getData().substring(12));
-						addContents(text2);
-					}
-				} while (found> -1);
-			}
-		}
-	}
-
-	private void addContents(Text before) {
-		Templater.insertCopyBefore(before, theElement);
-	}
-
-	protected String performValueReplace(String input) {
-		Pattern p = Pattern.compile("\\{([xXyY@])([a-zA-Z0-9]+)}");
-		
-		Matcher m = p.matcher(input);
-		StringBuilder out = new StringBuilder();
-		int place = 0;
-		while (m.find()) {
-			out.append(input.substring(place, m.start()));
-			
-			String prefix = m.group(1).toLowerCase();
-			String indexStr = m.group(2);
-			String replacement = getReplacementValue(prefix, indexStr);
-			
-			if (replacement != null) {
-				out.append(replacement);
-			}
-			
-			place = m.end();
-		}
-		
-		out.append(input.substring(place));
-		return out.toString();
-	}
-	
-	/**
-	 * Handles replacement of {@someattribute} within the SVG.
-	 */
-	protected String getReplacementValue(String prefix, String attr) {
-		if ("@".equals(prefix)) {
-			if (theElement.hasAttribute(attr)) {
-				return theElement.getAttribute(attr);
-			} 
-		} 
-		
-		return null;
-	}
-
-	
 
 	/**
 	 * Handles Batik bits
@@ -185,7 +107,6 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		NodeList childNodes = theElement.getChildNodes();
-		performReplace(childNodes);
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node child = childNodes.item(i);
 			if (child instanceof Element) {

@@ -11,8 +11,6 @@ import org.kite9.framework.logging.LogicException;
 
 public class Slideable<X> implements PositionChangeNotifiable {
 	
-	int canonicalOrder;
-	int positionalOrder;
 	private AlignStyle alignStyle;
 	private Slideable<X> alignTo;
 	private AbstractSlackOptimisation<X> so;
@@ -24,10 +22,6 @@ public class Slideable<X> implements PositionChangeNotifiable {
 		this.underneath = u;
 		this.alignStyle = alignStyle;
 		this.so = so;
-	}
-
-	public int getPositionalOrder() {
-		return positionalOrder;
 	}
 
 	public Slideable<X> getAlignTo() {

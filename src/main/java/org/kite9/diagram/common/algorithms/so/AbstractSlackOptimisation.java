@@ -28,15 +28,9 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	public abstract String getIdentifier(Object underneath);
 
-//	private List<Slideable<X>> positionalOrder;
-
 	public Collection<Slideable<X>> getAllSlideables() {
 		return allSlideables;
 	}
-//
-//	public List<Slideable> getPositionalOrder() {
-//		return positionalOrder;
-//	}
 
 	public AbstractSlackOptimisation() {
 		super();
@@ -78,10 +72,6 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	public void ensureMaximumDistance(Slideable<X> left, Slideable<X> right, int maxLength) {
 		if (left.getSlackOptimisation() != right.getSlackOptimisation()) {
 			throw new Kite9ProcessingException("Mixing dimensions");
-		}
-		
-		if (left.positionalOrder > right.positionalOrder) {
-			throw new LogicException("Left and Right wrong way round? " + left + " " + right);
 		}
 		
 		try {

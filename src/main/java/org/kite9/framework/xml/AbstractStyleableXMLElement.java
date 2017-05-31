@@ -39,7 +39,7 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public AbstractStyleableXMLElement(String id, String tag, ADLDocument doc) {
 		this(tag, doc);
 		
-		if (id == null) {
+		if ((id == null) || (id.length()==0)) {
 			id = createID();
 		}
 		

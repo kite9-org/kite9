@@ -12,7 +12,6 @@
     </back>
   </template>
 
-
   <template id='arrow'>
     <back style='type: decal; sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />

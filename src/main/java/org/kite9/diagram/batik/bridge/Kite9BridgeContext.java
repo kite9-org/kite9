@@ -39,6 +39,10 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 
 	private Templater templater;
 	
+	public Templater getTemplater() {
+		return templater;
+	}
+
 	public Kite9BridgeContext(UserAgent userAgent, Kite9DocumentFactory dbf) {
 		this(userAgent, new Kite9DocumentLoader(userAgent, dbf));
 		templater = new Templater(getDocumentLoader());
