@@ -1,12 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
@@ -15,10 +13,8 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.orthogonalization.edge.ExternalVertex;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -70,38 +66,45 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 		
 		if (inDirection == outDirection) {
 			// single side
+			Direction sideDirection = Direction.rotateClockwise(inDirection);
 			
-			Set<DiagramElement> aUnderlyings = borders.getA().getDueTo().getDiagramElements().keySet();
-			Set<DiagramElement> bUnderlyings = borders.getB().getDueTo().getDiagramElements().keySet();
-			if (!aUnderlyings.equals(bUnderlyings)) {
+			DiagramElement aUnderlying = ((BorderEdge) borders.getA().getDueTo()).getElementForSide(sideDirection);
+			DiagramElement bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getElementForSide(sideDirection);
+			
+			if (aUnderlying != bUnderlying) {
 				throw new Kite9ProcessingException();
 			}
 
 			// work out which IncidentDarts to join up to the borders.
 			Map<Direction, List<IncidentDart>> map =getDartsInDirection(dartDirections, v);
 
-			Direction sideDirection = Direction.rotateClockwise(inDirection);
 			List<IncidentDart> dartsToUse = map.get(sideDirection);
 			if (dartsToUse.size() == 0) {
 				sideDirection = Direction.reverse(sideDirection);
 				dartsToUse = map.get(sideDirection);
 			}
 			
-			createSide(borders.getA().getInternal(), borders.getB().getInternal(), aUnderlyings, dartsToUse, o, inDirection, sideDirection);
+			createSide(borders.getA().getInternal(), borders.getB().getInternal(), aUnderlying, dartsToUse, o, inDirection, sideDirection);
 		} else {
 			// two sides
 			Map<Direction, List<IncidentDart>> map =getDartsInDirection(dartDirections, v);
 			Vertex midPoint = new DartJunctionVertex("mcv-"+newVertexId++, v.getDiagramElements());
 			
-			Set<DiagramElement> side1Underlyings = borders.getA().getDueTo().getDiagramElements().keySet();
-			Set<DiagramElement> side2Underlyings = borders.getB().getDueTo().getDiagramElements().keySet();
+			Direction aSide = Direction.reverse(outDirection);
+			Direction bSide = inDirection;
+			DiagramElement aUnderlying = ((BorderEdge) borders.getA().getDueTo()).getElementForSide(aSide);
+			DiagramElement bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getElementForSide(bSide);
 
-			List<IncidentDart> side1Darts = map.get(Direction.reverse(outDirection));
+			if (aUnderlying != bUnderlying) {
+				throw new Kite9ProcessingException();
+			}
+
+			List<IncidentDart> side1Darts = map.get(aSide);
 			List<IncidentDart> side2Darts = map.get(inDirection);
 			
 			
-			createSide(borders.getA().getInternal(), midPoint, side1Underlyings, side1Darts, o, inDirection, Direction.reverse(outDirection));
-			createSide(midPoint, borders.getB().getInternal(), side2Underlyings, side2Darts, o, outDirection, inDirection);
+			createSide(borders.getA().getInternal(), midPoint, aUnderlying, side1Darts, o, inDirection, aSide);
+			createSide(midPoint, borders.getB().getInternal(), aUnderlying, side2Darts, o, outDirection, bSide);
 		}
 	}
 

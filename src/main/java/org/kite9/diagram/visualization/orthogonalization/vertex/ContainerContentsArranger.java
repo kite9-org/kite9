@@ -131,8 +131,9 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				
 		// link them together
 		for (DiagramElement de : c.getContents()) {
-			if ((de instanceof Connected) || (de instanceof Label)) {
+			if (de instanceof Connected) {
 				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
+				
 				// having created all the vertices, join them to form faces
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 
@@ -142,7 +143,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 					if (prev != null) {
 						// create a dart between prev and current
 						Direction d = getDirection(prev, current);
-						allSideDarts.add(o.createDart(prev, current, de, d, Direction.rotateAntiClockwise(d)));
+						allSideDarts.addAll(ec.convertContainerEdge(de, o, prev, current, Direction.rotateAntiClockwise(d), d));
 					} else {
 						start = current;
 					}
@@ -151,7 +152,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				}
 				
 				Direction d = getDirection(prev, start);
-				allSideDarts.add(o.createDart(prev, start, de, d, Direction.rotateAntiClockwise(d)));
+				allSideDarts.addAll(ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d));
 				DartFace inner = createInnerFace(o, allSideDarts, start, de);
 				
 				if (de instanceof Container) {

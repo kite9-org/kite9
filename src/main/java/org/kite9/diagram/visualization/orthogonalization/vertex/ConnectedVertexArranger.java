@@ -187,11 +187,10 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			MultiCornerVertex tov = perimeter.get((done+1) % perimeter.size());
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
-			Side s = createSide(fromv, tov, Collections.singleton(originalUnderlying), leavers, o, sideDirection, outwardsDirection);
+			Side s = createSide(fromv, tov, originalUnderlying, leavers, o, sideDirection, outwardsDirection);
 			allSideDarts.addAll(s.newEdgeDarts);
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
-			
 		}
 
 		DartFace inner = createInnerFace(o, allSideDarts, start, originalUnderlying);
@@ -268,7 +267,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * Links corner elements with the incident darts into the whole side of the underlying.
 	 */
-	protected Side createSide(Vertex from, Vertex to, Set<DiagramElement> underlying, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn, Direction side) {
+	protected Side createSide(Vertex from, Vertex to, DiagramElement underlying, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn, Direction side) {
 		Side out = new Side();
 		Vertex last = from;
 		IncidentDart incidentDart = null;
@@ -277,16 +276,14 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
-				Dart sideDart = o.createDart(last, vsv, underlying, goingIn, side); 
-				out.newEdgeDarts.add(sideDart);
+				out.newEdgeDarts.addAll(ec.convertContainerEdge(underlying, o, last, vsv, side, goingIn));
 				out.vertices.add(vsv);			
 				last = vsv;
 			}
 		}
 
 		// finally, join to corner
-		Dart sideDart = o.createDart(last, to, underlying, goingIn, side); 
-		out.newEdgeDarts.add(sideDart);
+		out.newEdgeDarts.addAll(ec.convertContainerEdge(underlying, o, last, to, side, goingIn));
 		return out;
 	}
 

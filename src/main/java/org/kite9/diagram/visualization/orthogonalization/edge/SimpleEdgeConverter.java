@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
@@ -8,6 +9,7 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
@@ -29,6 +31,12 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		o.createDart(sideVertex, externalVertex, createMap(e), side);
 		return new IncidentDart(externalVertex, sideVertex, side, e);
 	} 
+	
+	@Override
+	public List<Dart> convertContainerEdge(DiagramElement e, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d) {
+		Dart dart = o.createDart(end1, end2, e, d, edgeSide);
+		return Collections.singletonList(dart);
+	}
 
 	protected Map<DiagramElement, Direction> createMap(PlanarizationEdge e) {
 		if (e instanceof BorderEdge) {
@@ -44,5 +52,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		ExternalVertex externalVertex = new ExternalVertex(end.getID()+"-ve"+newVertexId++, e);
 		return externalVertex;
 	}
+
+	
 
 }
