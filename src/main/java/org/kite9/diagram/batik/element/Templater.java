@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.element;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -114,8 +115,17 @@ public class Templater {
 		// copy all children of e into the new document
 		ValueReplacer vr = new ParentElementValueReplacer(in);
 		
+		// remove any text nodes, as this will be expanded out where needed by the ValueReplacer
+		NodeList existing = in.getChildNodes();
+		for (int i = 0; i < existing.getLength(); i++) {
+			Node n = existing.item(i);
+			if (n instanceof Text) {
+				in.removeChild(n);
+			}
+		}
+		
 		NodeList children = template.getChildNodes();
-		for (int i = 0; i < children.getLength(); i++) {
+		for (int i = children.getLength()-1; i >=0; i--) {
 			Node n = children.item(i);
 
 			if (n instanceof Element) {

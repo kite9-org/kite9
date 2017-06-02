@@ -47,38 +47,17 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 			if (ok) { 
 				log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
-				if (ro.m == Match.A) {
-					
-					if (ro.willRect) {
-						performRectangularizationA(theStack, c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					} else {
-						throw new UnsupportedOperationException();
-//						Slideable parFrom = ro.getPar().getStartsWith();
-//						Slideable meetsFrom = ro.getMeets().getEndsWith();
-//						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.A);
-//						onStack.remove(ro.getLink());
-//						onStack.add(newLink);
-//						
-					} 
-					
+				if (ro.getMatch() == Match.A) {
+					performRectangularizationA(theStack, c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
+					onStack.remove(ro.getLink());
+					onStack.remove(ro.getPar());
 				} else {
-					if (ro.willRect) {
-						performRectangularizationD(theStack, c, result, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					} else { 
-						throw new UnsupportedOperationException();
-//						Slideable parFrom = ro.getPar().getEndsWith();
-//						Slideable meetsFrom = ro.getMeets().getStartsWith();
-//						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.D);
-//						onStack.remove(ro.getLink());
-//						onStack.add(newLink);
-					}
+					performRectangularizationD(theStack, c, result, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
+					onStack.remove(ro.getLink());
+					onStack.remove(ro.getPar());
 				}
 
-				int fromIndex = theStack.indexOf(ro.vt1)-4;
+				int fromIndex = theStack.indexOf(ro.getVt1())-4;
 
 				// find more matches
 				for (int i = fromIndex; i <= fromIndex + 8; i++) {
@@ -109,10 +88,10 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 			return false;
 		}
 		
-		if ((ro.scoreJoin != ro.scoreJoin()) || (ro.isPriority != ro.isPriority)) {
+		if ((ro.getScore() != ro.getInitialScore())) {
 			// change it and throw it back in
 			log.send(log.go() ? null : "Putting back: " + ro);
-			ro.scoreJoin = ro.scoreJoin();
+			ro.rescore();
 			pq.add(ro);
 			return false;
 		}
@@ -120,24 +99,17 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		if (pq.size()>0) {
 			RectOption top = pq.peek();
 			if (ro.compareTo(top) == 1) {
-				ro.scoreJoin = ro.scoreJoin();
+				ro.rescore();
 				log.send(log.go() ? null : "Putting back: " + ro);
 				pq.add(ro);
 				return false;
 			}
 		}
 		
-		EnumSet<Match> m =matchTurns(ro.vt1, ro.vt2, ro.vt3, ro.vt4, ro.vt5);
-		if (!m.contains(ro.m)) {
+		EnumSet<Match> m =matchTurns(ro.getVt1(), ro.getVt2(), ro.getVt3(), ro.getVt4(), ro.getVt5());
+		if (!m.contains(ro.getMatch())) {
 			log.send(log.go() ? null : "Discarding: " + ro);
 			return false;
-		}
-		
-		if (!ro.willRect) {
-			// we're supposed to be doing a box-out
-			if (!ro.canBoxout()) {
-				return false;
-			}
 		}
 		
 		return true;

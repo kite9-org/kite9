@@ -32,7 +32,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.LabellingEdgeConverter;
-import org.kite9.diagram.visualization.orthogonalization.edge.SimpleEdgeConverter;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
@@ -280,7 +279,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
 				Dart sideDart = o.createDart(last, vsv, underlying, goingIn, side); 
-				sideDart.setOrthogonalPositionPreference(goingIn);
 				out.newEdgeDarts.add(sideDart);
 				out.vertices.add(vsv);			
 				last = vsv;
@@ -289,7 +287,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 
 		// finally, join to corner
 		Dart sideDart = o.createDart(last, to, underlying, goingIn, side); 
-		sideDart.setOrthogonalPositionPreference(goingIn);
 		out.newEdgeDarts.add(sideDart);
 		return out;
 	}

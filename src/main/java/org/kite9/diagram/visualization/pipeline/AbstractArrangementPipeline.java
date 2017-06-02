@@ -80,7 +80,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new HierarchicalCompactionStep(getDisplayer()),
 				new PrioritizingRectangularizer(getDisplayer()),
 				new SubGraphInsertionCompactionStep(getDisplayer()),
-				new MinimizeCompactionStep(getDisplayer()),
+//				new MinimizeCompactionStep(getDisplayer()),
 //				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
 //				new LeafElementSizeCompactionStep(getDisplayer()),

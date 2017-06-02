@@ -11,20 +11,16 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
  */
 class VertexTurn {
 	
-	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, int changeCost, Slideable<Segment> startsWith, Slideable<Segment> endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
+	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
 		this.d = d;
 		this.s = s;
-		this.changeCost = changeCost;
-		this.changeEarlyStart = changeEarlyStart;
-		this.changeEarlyEnd = changeEarlyEnd;
-		
 		this.startsWith = startsWith;
 		this.endsWith = endsWith;
 	}
 	
-	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, int changeCost, Vertex startsWith, Vertex endsWith, boolean changeEarlyStart, boolean changeEarlyEnd) {
-		this(c, s, d, changeCost,  getSlideableForVertex(c, d, startsWith), 
-				getSlideableForVertex(c, d, endsWith), changeEarlyStart, changeEarlyEnd);
+	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, Vertex startsWith, Vertex endsWith) {
+		this(c, s, d, getSlideableForVertex(c, d, startsWith), 
+				getSlideableForVertex(c, d, endsWith));
 	}
 
 	private static Slideable<Segment> getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
@@ -33,22 +29,10 @@ class VertexTurn {
 	
 	private Slideable<Segment> s;
 	private int number;
-	private int changeCost;
 	private Slideable<Segment> startsWith;
 	private Slideable<Segment> endsWith;
 	private Direction d;
-	private boolean changeEarlyStart;
-	private boolean changeEarlyEnd;
-	
-	public boolean isChangeEarlyStart() {
-		return changeEarlyStart;
-	}
-
-	public boolean isChangeEarlyEnd() {
-		return changeEarlyEnd;
-	}
-
-	
+		
 	public Segment getSegment() {
 		return (Segment) s.getUnderlying();
 	}
@@ -59,10 +43,6 @@ class VertexTurn {
 	
 	public String toString() {
 		return "["+number+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
-	}
-	
-	public int getChangeCost() {
-		return changeCost;
 	}
 	
 	public int getMinimumLength() {
@@ -117,30 +97,30 @@ class VertexTurn {
 		return d;
 	}
 
-	public void resetEndsWith(Compaction c, Vertex to, boolean changeEarly, int changeCost) {
-		resetEndsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
+	public void resetEndsWith(Compaction c, Vertex to) {
+		resetEndsWith(getSlideableForVertex(c, d, to));
 	}
 		
-	public void resetEndsWith(Slideable<Segment> s, boolean changeEarly, int changeCost) {
+	public void resetEndsWith(Slideable<Segment> s) {
 		this.endsWith = s;
-		this.changeEarlyEnd = changeEarly;
-		this.changeCost = Math.max(changeCost, this.changeCost);
 	}
 
-	public void resetStartsWith(Compaction c, Vertex to, boolean changeEarly, int changeCost) {
-		resetStartsWith(getSlideableForVertex(c, d, to), changeEarly, changeCost);
+	public void resetStartsWith(Compaction c, Vertex to) {
+		resetStartsWith(getSlideableForVertex(c, d, to));
 	}
 		
-	public void resetStartsWith(Slideable<Segment> s, boolean changeEarly, int changeCost) {
+	public void resetStartsWith(Slideable<Segment> s) {
 		this.startsWith = s;
-		this.changeEarlyStart = changeEarly;
-		this.changeCost = Math.max(changeCost, this.changeCost);
 	}
 
 	public void ensureLength(double l) {
 		Slideable<Segment> early = getEarly();
 		Slideable<Segment> late = getLate();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
+	}
+	
+	public int getChangeCost() {
+		return 1;
 	}
 
 }

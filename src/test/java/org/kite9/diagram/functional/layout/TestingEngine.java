@@ -424,7 +424,11 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private static Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
-		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+		try {
+			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+		} catch (NullPointerException e) {
+			throw new ElementsMissingException("", 1);
+		}
 	}
 
 	public static void checkContentsOverlap(Container d, final Layout l) {

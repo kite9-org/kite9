@@ -3,6 +3,8 @@ package org.kite9.diagram;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
@@ -10,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
+import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.functional.layout.TestingEngine;
@@ -19,6 +22,7 @@ import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Document;
 import org.xmlunit.builder.Input;
@@ -40,11 +44,20 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		
 		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
-		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
-		
+		writeTemplateExpandedSVG(lastDiagram);
+		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
 		if (checkXML()) {
 			checkIdenticalXML();
 		}
+	}
+
+	private void writeTemplateExpandedSVG(DiagramKite9XMLElement lastDiagram) throws IOException {
+		ADLDocument d = lastDiagram.getOwnerDocument();
+		File f = getOutputFile("-expanded.svg");
+		String input2 = new XMLHelper().toXML(d);
+		FileWriter fw = new FileWriter(f);
+		fw.write(input2);
+		fw.close();
 	}
 
 	private Checks checks() {

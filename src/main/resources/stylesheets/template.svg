@@ -22,9 +22,9 @@
     <back style='type: decal; sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: ccc; ' />
     </back>
-    <text style="type: label; sizing: fixed">
+    <front style="type: label; sizing: fixed">
       <svg:text>{{contents}}</svg:text>
-    </text>
+    </front>
   </template>
 
   <template id='context'>

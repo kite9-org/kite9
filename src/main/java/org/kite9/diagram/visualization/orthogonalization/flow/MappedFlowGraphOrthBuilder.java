@@ -356,24 +356,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		return fg.getNodeFor(AbstractFlowOrthogonalizer.createFaceVertex(from, to, before, after));
 	}
 
-
-	private Direction getDirectionForNextDart(Face f, MappedFlowGraph fg, Vertex ev, List<DartDirection> created,
-			Edge last, Edge next, OrthogonalizationImpl orth) {
-		Direction d;
-		int outCap = calculateTurns(f, fg, ev, last, next);
-
-		Dart lastDart = created.get(created.size() - 1).getDart();
-		d = lastDart.getDrawDirectionFrom(ev);
-		d = Direction.reverse(d);
-		
-		for (int i = 0; i < Math.abs(outCap); i++) {
-			d = rotate90(d, -outCap);
-		}
-
-		log.send("Turned to " + d);
-		return d;
-	}
-
 	/**
 	 * Returns the number of turns in this face for incoming last, outgoing next at vertex ev.
 	 * Positive numbers mean clockwise turns, negative mean anti-clockwise.
@@ -445,7 +427,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
 			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir, Direction.rotateAntiClockwise(nextDir));
-			dart.setChangeCost(getChangeCostForEdge(e), null);
 			DartDirection dd = new DartDirection(dart, nextDir);
 			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);
 			if (i < (wpCount - 1)) {
@@ -472,15 +453,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			throw new Kite9ProcessingException();
 		}
 	}
-
-	private int getChangeCostForEdge(Edge e) {
-		if (e instanceof ConnectionEdge) {
-			return Dart.CONNECTION_DART;
-		} else {
-			return Dart.EXTEND_IF_NEEDED;
-		}
-	}
-
 
 	public Node getEdgeVertexNode(MappedFlowGraph fg, Edge e, Vertex v) {
 		return fg.getNodeFor(AbstractFlowOrthogonalizer.createEdgeVertex(e, v));

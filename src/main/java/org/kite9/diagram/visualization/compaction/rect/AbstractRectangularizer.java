@@ -81,7 +81,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			buildStack(df, theStack, turns, from, c);
 
 			performFaceRectangularization(c, result, theStack);
-			rebuildFaceDarts(theStack, df);
 
 			if (!df.outerFace) {
 
@@ -97,13 +96,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 		}
 
-	}
-
-	private void rebuildFaceDarts(List<VertexTurn> theStack, DartFace df) {
-//		df.dartsInFace.clear();
-//		for (VertexTurn vertexTurn : theStack) {
-//			df.dartsInFace.add(new DartDirection(vertexTurn.getUnderlying(), vertexTurn.d));
-//		}
 	}
 
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
@@ -122,15 +114,12 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 					if ((stackTop != null) && (segment == stackTop.getSegment())) {
 						// we have two darts in the same segment
 						VertexTurn vt = theStack.get(theStack.size() - 1);
-						vt.resetEndsWith(c, to, dart.isChangeEarly(to), dart.getChangeCost());
+						vt.resetEndsWith(c, to);
 					} else {
 						VertexTurn vt = new VertexTurn(
 							c, segment.getSlideable(), going,
-							dart.getChangeCost(), 
 							from, 
-							dart.otherEnd(from),
-							dart.isChangeEarly(from), 
-							dart.isChangeEarly(to));
+							dart.otherEnd(from));
 						theStack.add(vt);
 					}
 					from = to;
@@ -144,7 +133,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			while (theStack.get(0).getSegment() == theStack.get(theStack.size() - 1).getSegment()) {
 				VertexTurn lose = theStack.get(0);
 				VertexTurn keep = theStack.get(theStack.size() - 1);
-				keep.resetEndsWith(lose.getEndsWith(), lose.isChangeEarlyEnd(), lose.getChangeCost());
+				keep.resetEndsWith(lose.getEndsWith());
 				theStack.remove(lose);
 			}
 			
@@ -219,7 +208,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * 
 	 * This errs on the side of too large right now
 	 */
-	private void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave) {
+	protected void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave) {
 		Slideable<Segment> early = link.getStartsWith();
 		Slideable<Segment> late = link.getEndsWith();
 		Segment early1 = (Segment) early.getUnderlying();
@@ -245,39 +234,32 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 	
 
-	private void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
+	protected void performRectangularization(Compaction c, List<Dart> out, VertexTurn meets, VertexTurn link,
 			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, Direction d1, Direction d2) {
 		fixSize(c, link, 0, true);
 		fixSize(c, par, 0, true);
 
 		double newMeetsLength = calculateNewMeetsLength(meets, par);
-		int newMeetsChangeCost = meets.getChangeCost();
-		int newExtChangeCost = extender.getChangeCost();
-		boolean meetsLengthKnown = meets.isLengthKnown() && par.isLengthKnown();
-		
 		double extensionLength = extender.getMinimumLength() + link.getMinimumLength(); 
-//		ensureLength(c, )
-		//extendSegment(ext, meets, c, first, to, d1, out, d2, extensionLength, newMeetsLength, newMeetsChangeCost, meetsLengthKnown);
 
 		if (extender.getStartsWith() == from) {
-			extender.resetEndsWith(to, false, newExtChangeCost);
+			extender.resetEndsWith(to);
 		} else {
-			extender.resetStartsWith(to, false, newExtChangeCost);
+			extender.resetStartsWith(to);
 		}
 		
-
 		// update meets
 		if (meets.getStartsWith() == link.getSlideable()) {
-			meets.resetStartsWith(extender.getSlideable(), false, newMeetsChangeCost);
+			meets.resetStartsWith(extender.getSlideable());
 		} else {
-			meets.resetEndsWith(extender.getSlideable(), false, newMeetsChangeCost);
+			meets.resetEndsWith(extender.getSlideable());
 		}
 		
 		fixSize(c, meets, newMeetsLength, true);
 		fixSize(c, extender, extensionLength, true);
 	}
 
-	private double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {
+	protected double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {
 		System.out.println("fix this");
 		if (par.isLengthKnown()) {
 			return Math.max(0, calculateLength(meets) - calculateLength(par));
@@ -307,64 +289,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		stack.remove(remove2);
 		log.send(log.go() ? null : "Removed: " + remove1);
 		log.send(log.go() ? null : "Removed: " + remove2);
-	}
-
-	/**
-	 * Extends the end of one segment so that it meets up with the end of the
-	 * other. Returns the vertex that was added, which will be met by 3 darts
-	 * 
-	 * @param out
-	 */
-//	private Vertex extendSegment(VertexTurn extender, VertexTurn meets, Compaction c, Slideable extendFrom,
-//			Slideable meets, Direction d, Direction segmentDirection, double extenderLength,
-//			double meetsDartLength, int meetsChangeCost, boolean meetsLengthKnwon) {
-//		// check that these two segments don't already meet
-//		checkSeparated(extender.getSegment(), meets.getSegment());
-//		
-//		meetsFrom.getSlackOptimisation().ensureMinimumDistance(meetsFrom, extendFrom, (int) extenderLength); 
-//
-//		//Vertex newVertex = c.createCompactionVertex(extender.getSegment(), meets.getSegment());
-//		//Orthogonalization o = c.getOrthogonalization();
-//
-//		//Dart dx = o.createDart(newVertex, extendFrom, null, d, extenderLength);
-//		Vertex changeEarlyEnd = extender.getUnderlying().isChangeEarly(extendFrom) ? extendFrom : null;
-//		dx.setChangeCost(extender.getUnderlying().getChangeCost(), changeEarlyEnd);
-//		log.send(log.go() ? null : "New Dart (extender) : " + dx + " extended : " + extender + " into " + meets + " with length "
-//				+ dx.getLength());
-//		extender.setUnderlying(dx);
-//		out.add(dx);
-//
-//		Dart dm = o.createDart(newVertex, meetsFrom, null, segmentDirection, meetsDartLength);
-//		dm.setChangeCost(meetsChangeCost, null);
-//		dm.setVertexLengthKnown(meetsLengthKnwon);
-//		meets.setUnderlying(dm);
-//		log.send(log.go() ? null : "New Dart (meets) : " + dm + " with length " + dm.getLength());
-//
-//		if (extender.getStartsWith() == extendFrom) {
-//			extender.endsWith = newVertex;
-//		} else {
-//			extender.startsWith = newVertex;
-//		}
-//
-//		// update meets
-//		if (meets.getStartsWith() != meetsFrom) {
-//			meets.setStartsWith(extender.getSlideable());
-//		} else {
-//			meets.setEndsWith(extender.getSlideable());
-//		}
-//
-//		return newVertex;
-//	}
-
-	private boolean checkSeparated(Segment extender, Segment meets) {
-		for (Vertex v : extender.getVerticesInSegment()) {
-			if (meets.getVerticesInSegment().contains(v)) {
-				log.send(log.go() ? null : "These already meet " + extender + " /// " + meets);
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public static List<Turn> patternA = createList(Turn.LEFT, Turn.RIGHT, Turn.RIGHT);
