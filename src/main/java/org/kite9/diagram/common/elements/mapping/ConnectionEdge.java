@@ -22,8 +22,8 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
 public class ConnectionEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
 
 	final Connection underlying;
-	final Connected fromUnderlying;
-	final Connected toUnderlying;
+	Connected fromUnderlying;
+	Connected toUnderlying;
 
 	public ConnectionEdge(Vertex from, Vertex to, Connection underlying, Direction d) {
 		this(from, to,  d, true, underlying, underlying.getFrom(), underlying.getTo());
@@ -89,5 +89,13 @@ public class ConnectionEdge extends AbstractPlanarizationEdge implements BiDirec
 	
 	public Connected getToConnected() {
 		return toUnderlying;
+	}
+	
+	public void setFromConnected(Connected c) {
+		this.fromUnderlying = c;
+	}
+	
+	public void setToConnected(Connected c) {
+		this.toUnderlying = c;
 	}
 }

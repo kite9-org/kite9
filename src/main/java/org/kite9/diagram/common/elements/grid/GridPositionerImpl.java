@@ -16,7 +16,6 @@ import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
@@ -40,7 +39,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
 	
 	
-	private Dimension calculateGridSize(Container ord, boolean allowSpanning, boolean includeLabels) {
+	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
 		// these are a minimum size, but contents can exceed them and push this out.
 		int xSize = (int) ord.getGridColumns();
 		int ySize = (int) ord.getGridRows();
@@ -48,7 +47,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		// fit as many elements as possible into the grid
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (shoudAddToGrid(diagramElement, includeLabels)) {
+			if (shoudAddToGrid(diagramElement)) {
 				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
 				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);
 				
@@ -78,12 +77,12 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 	
 	
-	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning, boolean includeLabels) {
+	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning) {
 		if (placed.containsKey(ord)) {
 			return placed.get(ord);
 		}
 		
-		Dimension size = calculateGridSize(ord, allowSpanning, includeLabels);
+		Dimension size = calculateGridSize(ord, allowSpanning);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
 		List<DiagramElement[]> out = new ArrayList<>();
@@ -95,7 +94,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (shoudAddToGrid(diagramElement, includeLabels)) {
+			if (shoudAddToGrid(diagramElement)) {
 				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
 				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);	
 				
@@ -139,7 +138,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
 		
 		for (DiagramElement de : ord.getContents()) {
-			if (shoudAddToGrid(de, includeLabels)) {
+			if (shoudAddToGrid(de)) {
 				scaleCoordinates(de, size);
 			}
 		}
@@ -159,12 +158,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 
-	private boolean shoudAddToGrid(DiagramElement diagramElement, boolean includeLabels) {
-		if (includeLabels) {
-			if (diagramElement instanceof Label) {
-				return true;
-			}
-		}
+	private boolean shoudAddToGrid(DiagramElement diagramElement) {
 		return diagramElement instanceof Connected;
 	}
 

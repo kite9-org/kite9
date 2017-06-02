@@ -25,7 +25,7 @@ public interface GridPositioner {
 	 * 
 	 * @param allowSpanning Set to true if we should consider the full span of the "occupies-x" and "occupies-y" directive, or just the lower bound.
 	 */
-	public DiagramElement[][] placeOnGrid(Container gridContainer, boolean allowSpanning, boolean includeLabels);
+	public DiagramElement[][] placeOnGrid(Container gridContainer, boolean allowSpanning);
 	
 	/**
 	 * Returns the XPosition as a pair of fractions, showing where a given element has been 

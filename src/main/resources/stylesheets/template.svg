@@ -26,9 +26,9 @@
 
   <template id='connection-label'>
     <back style='type: decal; sizing: adaptive; '>
-      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: ccc; ' />
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #ccc; ' />
     </back>
-    <front style="type: label; sizing: fixed">
+    <front style="type: connected; sizing: fixed">
       <svg:text>{{contents}}</svg:text>
     </front>
   </template>

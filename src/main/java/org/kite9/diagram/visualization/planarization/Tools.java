@@ -12,8 +12,10 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -330,6 +332,7 @@ public class Tools implements Logable {
 		Edge a = it.next();
 		Edge b = it.next();
 		Vertex farB = b.otherEnd(toGo);
+		
 
 		log.send(log.go() ? null : "Removing: " + toGo + "involving " + a + " and " + b);
 
@@ -337,6 +340,18 @@ public class Tools implements Logable {
 		if (loopback) {
 			log.send(log.go() ? null : "Cannot introduce loopback, finishing");
 			return;
+		}
+		
+		if (a instanceof ConnectionEdge) {
+			Connected otherEnd = b.getFrom() == toGo ? ((ConnectionEdge) b).getToConnected() : ((ConnectionEdge) b).getFromConnected();
+			
+			if (a.getFrom() == toGo) {
+				((ConnectionEdge) a).setFromConnected(otherEnd);
+			} else if (a.getTo() == toGo) {
+				((ConnectionEdge) a).setToConnected(otherEnd);
+			} else {
+				throw new Kite9ProcessingException();
+			}
 		}
 
 		if (a.getFrom() == toGo) {

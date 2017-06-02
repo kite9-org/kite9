@@ -155,12 +155,12 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_12_8_TestLabelledBothEnds() throws Exception {
-		Glyph a = new Glyph("", "a", null, null);
-		Arrow i1 = new Arrow("i1");
+		Glyph a = new Glyph("glyph","", "a", null, null);
+		Arrow i1 = new Arrow("arrow", "i1");
 		Link l = new Link(i1, a);
 		l.setDrawDirection(Direction.RIGHT);
-		l.setFromLabel(new LabelTextLine("hello"));
-		l.setToLabel(new LabelTextLine("gopher"));
+		l.setFromLabel(new LabelTextLine("arrow-hello"));
+		l.setToLabel(new LabelTextLine("glyph-gopher"));
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, i1), null);
 		renderDiagram(d);

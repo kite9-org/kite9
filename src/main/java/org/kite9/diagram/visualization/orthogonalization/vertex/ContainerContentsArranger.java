@@ -119,7 +119,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
 			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
-		gp.placeOnGrid(c, true, true);
+		gp.placeOnGrid(c, true);
 
 		// set up vertices for each grid element
 		for (DiagramElement de : c.getContents()) {

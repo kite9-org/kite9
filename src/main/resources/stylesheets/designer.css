@@ -258,19 +258,19 @@ key > bodyText {
 
 key > boldText {
 	occupies: 0 0;
-	type: label;
+	type: connected;
 	sizing: fixed;
 	template: url(template.svg#text-label);
 }
 
 key > bodyText {
 	occupies: 0 1;
-	type: label;
+	type: connected;
 	sizing: fixed;
 }
 
 key > text-lines {
-	type: label;
+	type: connected;
 	sizing: maximize;
 	occupies: 0 2;
 	layout: vertical;
