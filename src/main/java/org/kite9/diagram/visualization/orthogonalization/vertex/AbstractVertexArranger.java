@@ -90,7 +90,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 		throw new Kite9ProcessingException();
 	}
 	
-	private int antiClockwiseTurns(Direction from, Direction to) {
+	private static int antiClockwiseTurns(Direction from, Direction to) {
 		int c = 0;
 		while (from != to) {
 			from = Direction.rotateAntiClockwise(from);
@@ -100,7 +100,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 		return c;
 	}
 	
-	private Dart getNextDartAntiClockwise(Vertex incidentVertex, Dart in) {
+	public static Dart getNextDartAntiClockwise(Vertex incidentVertex, Dart in) {
 		Direction directionToVertex = Direction.reverse(in.getDrawDirectionFrom(incidentVertex));
 		Dart out = null;
 		int bestScore = 100; 

@@ -1,5 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
@@ -12,8 +15,11 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
+import org.kite9.diagram.visualization.orthogonalization.vertex.AbstractVertexArranger;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -83,6 +89,54 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		
 		return null;
 	}
+	
+	
+
+	@Override
+	public List<Dart> convertContainerEdge(DiagramElement de, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d) {
+		Label l = null;
+		if ((de instanceof Container) && (edgeSide == Direction.DOWN)) {
+			l = findUnprocessedLabel((Container) de);
+		}
+		
+		if (l == null) {
+			return super.convertContainerEdge(de, o, end1, end2, edgeSide, d);
+		} else {
+			return convertContainerEdgeWithLabel(de, o, end1, end2, edgeSide, d, l);
+		}
+	}
+
+	private List<Dart> convertContainerEdgeWithLabel(DiagramElement de, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Label l) {
+		cc.convertDiagramElementToInnerFace(l, o);
+		CornerVertices cv = em.getOuterCornerVertices(l);
+		
+		Vertex leftLabel = cv.getBottomLeft();
+		Vertex rightLabel = cv.getBottomRight();
+		
+		if (d != Direction.LEFT) {
+			throw new Kite9ProcessingException();
+		}
+		
+		Dart d1 = o.createDart(end1, rightLabel, de, Direction.LEFT, Direction.DOWN);
+		o.createDart(rightLabel, leftLabel, de, Direction.LEFT, Direction.DOWN);
+		o.createDart(leftLabel, end2,de, Direction.LEFT, Direction.DOWN);
+		
+		List<Dart> out = new ArrayList<>();
+		out.add(d1);
+		Dart dart  = d1;
+		Vertex to = dart.otherEnd(end1);
+		
+		do {
+			dart = AbstractVertexArranger.getNextDartAntiClockwise(to, dart);
+			d = dart.getDrawDirectionFrom(to);
+			to = dart.otherEnd(to);
+			out.add(dart);
+		} while (to != end2);
+		
+		return out;
+	}
+	
+	
 
 	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex end, Vertex sideVertex, Label l) {
 		Direction side = Direction.reverse(incident);
@@ -145,4 +199,5 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		}
 	}
 
+	
 }

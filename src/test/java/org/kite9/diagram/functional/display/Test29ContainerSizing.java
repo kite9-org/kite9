@@ -39,10 +39,10 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		Glyph g2 = new Glyph("g2", "", "another label", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
 		Glyph g4 = new Glyph("g4", "", "andon", null, null);
-		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
-		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
-		Context c3 = new Context("c3", HelpMethods.listOf(g3), true, new TextLine("c3"), null);
-		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4"), null);
+		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1l", "c1"), null);
+		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2l", "c2"), null);
+		Context c3 = new Context("c3", HelpMethods.listOf(g3), true, new TextLine("c3l", "c3"), null);
+		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4l", "c4"), null);
 		
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);

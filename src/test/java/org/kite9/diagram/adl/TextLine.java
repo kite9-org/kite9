@@ -30,6 +30,10 @@ public class TextLine extends AbstractStyleableXMLElement {
 	public TextLine(String text, ADLDocument doc) {
 		this(null, "text-line", text, doc);
 	}
+
+	public TextLine(String id, String text) {
+		this(id, "text-line", text, TESTING_DOCUMENT);
+	}
 	
 	public TextLine(String text) {
 		this(text, TESTING_DOCUMENT);
