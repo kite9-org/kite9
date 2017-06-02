@@ -21,6 +21,7 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Element;
 
 public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement implements Rectangular {
 	
@@ -149,4 +150,12 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return (Container) getParent();
 	}
 
+	@Override
+	protected void initializeChildXMLElement(Element child) {
+		if (getSizing() != DiagramElementSizing.FIXED) {
+			processSizesUsingTemplater(child, getRenderingInformation());
+		}
+	}
+
+	
 }

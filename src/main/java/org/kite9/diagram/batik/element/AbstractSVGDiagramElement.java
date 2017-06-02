@@ -4,8 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
@@ -14,17 +12,17 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.HasLayeredGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.element.Templater.ValueReplacer;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering.
@@ -100,6 +98,8 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		initSVGGraphicsContents(out);
 		return out;
 	}
+	
+	private boolean childrenInitialized = false;
 
 	/**
 	 * Use this method where the DiagramElement is allowed to contain SVG contents.
@@ -109,15 +109,48 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		NodeList childNodes = theElement.getChildNodes();
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node child = childNodes.item(i);
-			if (child instanceof Element) {
+			if ((child instanceof Element) && (!(child instanceof Kite9XMLElement))) {
 				// get access to the bridge, to create a graphics node.
+				if (!childrenInitialized) {
+					initializeChildXMLElement((Element) child);
+				}
 				GraphicsNode node = builder.build(ctx, (Element) child);
 				if (node != null) {
 					out.add(node);
 				}
 			}
 		}
+		
+		childrenInitialized = true;
 	}
+
+	protected abstract void initializeChildXMLElement(Element child);
+	
+	protected void processSizesUsingTemplater(Element child, RectangleRenderingInformation rri) {
+		// tells the decal how big it needs to draw itself
+		double [] x = new double[] {0, rri.getSize().getWidth()};
+		double [] y = new double[] {0, rri.getSize().getHeight()};
+		
+		ctx.getTemplater().performReplace(child, new ValueReplacer() {
+			
+			@Override
+			public String getText() {
+				return null;
+			}
+			
+			@Override
+			public String getReplacementValue(String prefix, String attr) {
+				if ("x".equals(prefix) || "y".equals(prefix)) {
+					int index = Integer.parseInt(attr);
+					double v = "x".equals(prefix) ? x[index] : y[index];
+					return ""+v;
+				} else {
+					return prefix+attr;
+				}
+			}
+		});
+	}
+
 
 	/**
 	 * This implementation simply creates a group in the usual way.

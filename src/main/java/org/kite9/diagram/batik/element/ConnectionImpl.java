@@ -232,5 +232,10 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	public double getPadding(Direction d) {
 		return padding[d.ordinal()];
 	}
+
+	@Override
+	protected void initializeChildXMLElement(Element child) {
+		// currently does nothing - templating not supported yet for connections.
+	}
 	
 }

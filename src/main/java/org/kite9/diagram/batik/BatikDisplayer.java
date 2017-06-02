@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -64,18 +63,10 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
 		
-		if (element instanceof Decal) {
-			// tells the decal how big it needs to draw itself
-			Container parent = ((Decal) element).getContainer();
-			RectangleRenderingInformation rri = parent.getRenderingInformation();
-			
-			if (rri.getSize() != null) {
-				((Decal) element).setParentSize(new double[] {0, rri.getSize().getWidth()}, new double[] {0, rri.getSize().getHeight() });
-			} else {
-				return;
-			}
-		} else if (ri.getPosition() == null) {
-			return;
+		if ((!(element instanceof Decal)) && (ri.getPosition() == null)) {
+			return;	// labels and connected should all have positions by now.
+		} else if ((element instanceof Decal) && ((element.getParent().getRenderingInformation().getSize() == null))) {
+			return; // parents of decals should also be positioned.
 		}
 		
 		if (element instanceof HasLayeredGraphics) {

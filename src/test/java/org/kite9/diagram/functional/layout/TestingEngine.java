@@ -29,6 +29,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
@@ -409,7 +410,7 @@ public class TestingEngine extends TestingHelp {
 					RenderingInformation ri = de.getRenderingInformation();
 					if (ri instanceof RectangleRenderingInformation) {
 						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-						if ((rect2.contains(labelRect)) && (de instanceof Container)) {
+						if ((rect2.contains(labelRect)) && ((de instanceof Container) || (de instanceof Decal))) {
 							// probably ok
 							return;
 						}
