@@ -14,6 +14,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 
@@ -24,7 +25,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
-		Key k = new Key("some bold text" , null, null);
+		Key k = new Key("key", "some bold text" ,"blah",  null, Key.TESTING_DOCUMENT);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
 		renderDiagram(d);

@@ -104,21 +104,6 @@ glyph {
 	box-shadow: 4px 4px 0px #333333; 
 }
 
-key {
-	type: label;
-	shape: "rounded-rect";
-	padding: 3px 6px 3px 6px; 
-	margin: 12px 12px 12px 12px;
-	stroke-width: 2px;
-	stroke: black;
-	fill: white;
-	/*box-shadow-x-offset: 4px;
-	box-shadow-y-offset: 4px;
-	box-shadow-color: teal;
-	box-shadow-opacity: .3; */
-	
-	box-shadow: 4px 4px 0px #333333; 
-}
 
 glyph > label {
 	type: connected;
@@ -162,7 +147,7 @@ symbol-text-line {
 	grid-size: 2 1;
 } 
 
-text-line, text {
+text-line, text, boldText, bodyText {
 	occupies: 0 0;
 	type: connected;
 	sizing: fixed;
@@ -243,6 +228,53 @@ allLinks {
 
 
 /* Key */
+
+
+key {
+	type: label;
+	layout: grid;
+	sizing: maximize;
+	grid-size: 1 3;
+	padding: 3px 6px 3px 6px; 
+	margin: 12px 12px 12px 12px;
+	template: url(template.svg#key)
+}
+
+key > boldText,
+key > bodyText {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: 0 0 0 0; 
+	font-size: 13px;
+	stroke: black;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;
+	template: url(template.svg#text-label);
+}
+
+
+key > boldText {
+	occupies: 0 0;
+	type: label;
+	sizing: fixed;
+	template: url(template.svg#text-label);
+}
+
+key > bodyText {
+	occupies: 0 1;
+	type: label;
+	sizing: fixed;
+}
+
+key > text-lines {
+	type: label;
+	sizing: maximize;
+	occupies: 0 2;
+	layout: vertical;
+}
 
 /* Link */
 

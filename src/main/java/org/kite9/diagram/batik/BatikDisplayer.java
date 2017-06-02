@@ -62,7 +62,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	 */
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
-		
 		if ((!(element instanceof Decal)) && (ri.getPosition() == null)) {
 			return;	// labels and connected should all have positions by now.
 		} else if ((element instanceof Decal) && ((element.getParent().getRenderingInformation().getSize() == null))) {

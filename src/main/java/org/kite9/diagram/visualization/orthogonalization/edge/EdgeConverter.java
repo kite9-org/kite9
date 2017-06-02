@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
  */
 public interface EdgeConverter {
 
-	IncidentDart convertBiDirectionalEdge(BiDirectionalPlanarizationEdge e, 
+	IncidentDart convertPlanarizationEdge(PlanarizationEdge e, 
 			Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex);
 
 }

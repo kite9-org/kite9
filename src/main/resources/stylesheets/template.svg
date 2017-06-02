@@ -11,6 +11,12 @@
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
   </template>
+  
+  <template id='key'>
+    <back style='type: decal; sizing: adaptive; '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' style='fill: blue; ' />
+    </back>
+  </template>
 
   <template id='arrow'>
     <back style='type: decal; sizing: adaptive; '>

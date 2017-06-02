@@ -362,6 +362,10 @@ public class TestingEngine extends TestingHelp {
 			return;
 		}
 		
+		if ((cc instanceof Label) && (cc.getParent() instanceof Container)) {
+			return; // not processing container labels just yet
+		}
+		
 		RectangleRenderingInformation inside =  cc.getRenderingInformation();
 		RectangleRenderingInformation outside = d.getRenderingInformation();
 		
@@ -393,7 +397,7 @@ public class TestingEngine extends TestingHelp {
 		});
 		
 	}
-	
+		
 	private void checkLabelOverlap(Label l, Diagram d) {
 		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
 		Rectangle2D labelRect;
@@ -406,7 +410,7 @@ public class TestingEngine extends TestingHelp {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if (de != l) {
+				if ((de != l) && (!isChildOf(de, l))) {
 					RenderingInformation ri = de.getRenderingInformation();
 					if (ri instanceof RectangleRenderingInformation) {
 						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
@@ -420,16 +424,22 @@ public class TestingEngine extends TestingHelp {
 					}
 				}
 			}
+
+			private boolean isChildOf(DiagramElement de, DiagramElement p) {
+				if (de.getParent() == p) {
+					return true;
+				} else if (de.getParent() == null) {
+					return false;
+				} else {
+					return isChildOf(de.getParent(), p);
+				}
+			}
 		});
 		
 	}
 
 	private static Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
-		try {
-			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
-		} catch (NullPointerException e) {
-			throw new ElementsMissingException("", 1);
-		}
+		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
 	}
 
 	public static void checkContentsOverlap(Container d, final Layout l) {

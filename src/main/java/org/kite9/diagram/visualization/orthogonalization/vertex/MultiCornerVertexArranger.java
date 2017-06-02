@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
@@ -150,15 +151,8 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	@Override
 	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incidentDirection, int i, Vertex und1) {
 		if (e instanceof BorderEdge) {
-			Map<DiagramElement, Direction> cn = ((BorderEdge)e).getDiagramElements();
-			Set<DiagramElement> und = new HashSet<>();
-			und.addAll(cn.keySet());
-			und.addAll(cd);
-			Vertex sideVertex = new DartJunctionVertex(und1.getID()+"-va-"+newVertexId++, und);
-			Vertex externalVertex = new ExternalVertex(sideVertex.getID()+"-e", (PlanarizationEdge) e);
-			Direction leavingDirection = Direction.reverse(incidentDirection);
-			o.createDart(sideVertex, externalVertex, cn, leavingDirection);
-			return new IncidentDart(externalVertex, sideVertex, leavingDirection, e);		
+			Vertex sideVertex = createSideVertex(cd, und1);
+			return ec.convertPlanarizationEdge((BorderEdge) e, o, incidentDirection, und1, sideVertex);
 		} else {
 			return super.convertEdgeToIncidentDart(e, cd, o, incidentDirection, i, und1);
 		}

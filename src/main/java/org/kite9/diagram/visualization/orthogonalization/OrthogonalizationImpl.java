@@ -87,6 +87,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		StringBuilder sb = new StringBuilder();
 		for (DartFace x : faces2) {
 			sb.append(facesep);
+			sb.append(x.getId());
+			sb.append(":");
 			sb.append(renderFaceDarts(x.getDartsInFace(), linesep));
 		}
 		return sb.toString();

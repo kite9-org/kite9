@@ -1,25 +1,33 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import java.util.Map;
+
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 public class LabellingEdgeConverter extends SimpleEdgeConverter {
 
-	public LabellingEdgeConverter(ContentsConverter cc) {
+	private ElementMapper em;
+	
+	public LabellingEdgeConverter(ContentsConverter cc, ElementMapper em) {
 		super(cc);
+		this.em = em;
 	}
 
 	@Override
-	public IncidentDart convertBiDirectionalEdge(BiDirectionalPlanarizationEdge e, Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex) {
+	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex) {
 		Direction labelSide = (incident == Direction.UP) || (incident == Direction.DOWN) ? Direction.LEFT : Direction.UP;
 		Label l = null;
 
@@ -43,20 +51,43 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 			} else {
 				throw new Kite9ProcessingException();
 			}
-		} 
+		} else if (e instanceof BorderEdge) {
+			Direction d = e.getDrawDirectionFrom(end);
+			
+			if (d == Direction.RIGHT) {
+				// we are on a left side vertex, with either top or bottom edge.
+				DiagramElement de = (((BorderEdge) e).getElementForSide(Direction.DOWN));
+				if (de instanceof Container) {
+					l = findUnprocessedLabel((Container) de);
+					labelSide = Direction.DOWN;
+				}
+			}
+		}
 		
 		if (l != null) {
-			return convertWithLabel((ConnectionEdge) e, o, incident, labelSide, end, sideVertex, l);
+			return convertWithLabel(e, o, incident, labelSide, end, sideVertex, l);
 		} else {
-			return super.convertBiDirectionalEdge(e, o, incident, end, sideVertex);
+			return super.convertPlanarizationEdge(e, o, incident, end, sideVertex);
 		}
 				
 	}
 
-	private IncidentDart convertWithLabel(ConnectionEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex end, Vertex sideVertex, Label l) {
+	private Label findUnprocessedLabel(Container c) {
+		for (DiagramElement de : c.getContents()) {
+			if (de instanceof Label) {
+				if (!em.hasOuterCornerVertices(de)) {
+					return (Label) de;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex end, Vertex sideVertex, Label l) {
 		Direction side = Direction.reverse(incident);
 		cc.convertDiagramElementToInnerFace(l, o);
-		CornerVertices cv = cc.getCornerVertices(l);
+		CornerVertices cv = em.getOuterCornerVertices(l);
 		
 		Vertex sideToLabel;
 		Vertex labelToExternal;
@@ -83,13 +114,16 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 			throw new Kite9ProcessingException();
 		}
 		
+		Map<DiagramElement, Direction> map = createMap(e);
+		
 		ExternalVertex externalVertex = createExternalvertex(e, end);
-		o.createDart(sideVertex, sideToLabel, e.getOriginalUnderlying(), side, null);
-		o.createDart(sideToLabel, labelToExternal, e.getOriginalUnderlying(), side, null);
-		o.createDart(labelToExternal, externalVertex, e.getOriginalUnderlying(), side, null);
+		o.createDart(sideVertex, sideToLabel, map, side);
+		o.createDart(sideToLabel, labelToExternal, map, side);
+		o.createDart(labelToExternal, externalVertex, map, side);
 		
-		handleLabelContainment(e.getOriginalUnderlying(), l);
-		
+		if (e instanceof ConnectionEdge) {
+			handleLabelContainment(((ConnectionEdge) e).getOriginalUnderlying(), l);
+		}
 		
 		return new IncidentDart(externalVertex, sideVertex, side, e);
 	}

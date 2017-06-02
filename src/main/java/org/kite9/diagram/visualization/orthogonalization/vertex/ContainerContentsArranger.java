@@ -51,7 +51,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 			}
 		} else {
 			for (DiagramElement de : c.getContents()) {
-				if ((de instanceof Connected) || (de instanceof Label)) {
+				if (de instanceof Connected) {
 					DartFace df = convertDiagramElementToInnerFace(de, o);
 					DartFace outerFace = convertGridToOuterFace(o, df.getStartVertex(), (Rectangular) de);
 					outerFace.setContainedBy(inner);
