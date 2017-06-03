@@ -32,6 +32,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.LabellingEdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
@@ -58,17 +59,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 
 	public static final int INTER_EDGE_SEPARATION = 0;
 
-	/**
-	 * Holds vertices and darts for one side of the vertex being converted
-	 */
-	static class Side {
-
-		List<Vertex> vertices = new ArrayList<Vertex>();
-
-		List<Dart> newEdgeDarts = new ArrayList<Dart>();
-
-	}
-	
 	protected int newVertexId;
 
 	/**
@@ -188,7 +178,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
 			Side s = createSide(fromv, tov, originalUnderlying, leavers, o, sideDirection, outwardsDirection);
-			allSideDarts.addAll(s.newEdgeDarts);
+			allSideDarts.addAll(s.getDarts());
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
 		}
@@ -276,14 +266,14 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
-				out.newEdgeDarts.addAll(ec.convertContainerEdge(underlying, o, last, vsv, side, goingIn));
-				out.vertices.add(vsv);			
+				ec.convertContainerEdge(underlying, o, last, vsv, side, goingIn, out);
+				out.addVertex(vsv);			
 				last = vsv;
 			}
 		}
 
 		// finally, join to corner
-		out.newEdgeDarts.addAll(ec.convertContainerEdge(underlying, o, last, to, side, goingIn));
+		ec.convertContainerEdge(underlying, o, last, to, side, goingIn, out);
 		return out;
 	}
 

@@ -23,6 +23,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
+import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -138,12 +139,12 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 
 				MultiCornerVertex prev = null, start = null;
-				LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<>();
+				Side s = new Side();
 				for (MultiCornerVertex current : perimeterVertices) {
 					if (prev != null) {
 						// create a dart between prev and current
 						Direction d = getDirection(prev, current);
-						allSideDarts.addAll(ec.convertContainerEdge(de, o, prev, current, Direction.rotateAntiClockwise(d), d));
+						ec.convertContainerEdge(de, o, prev, current, Direction.rotateAntiClockwise(d), d, s);
 					} else {
 						start = current;
 					}
@@ -152,8 +153,8 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				}
 				
 				Direction d = getDirection(prev, start);
-				allSideDarts.addAll(ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d));
-				DartFace inner = createInnerFace(o, allSideDarts, start, de);
+				ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d, s);
+				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
 				
 				if (de instanceof Container) {
 					convertContainerContents(o, (Container) de, inner);

@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
@@ -33,9 +32,9 @@ public class SimpleEdgeConverter implements EdgeConverter {
 	} 
 	
 	@Override
-	public List<Dart> convertContainerEdge(DiagramElement e, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d) {
+	public void convertContainerEdge(DiagramElement e, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Side s) {
 		Dart dart = o.createDart(end1, end2, e, d, edgeSide);
-		return Collections.singletonList(dart);
+		s.newEdgeDarts.add(dart);
 	}
 
 	protected Map<DiagramElement, Direction> createMap(PlanarizationEdge e) {
