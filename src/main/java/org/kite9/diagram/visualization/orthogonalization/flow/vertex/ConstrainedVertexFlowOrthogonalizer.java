@@ -20,6 +20,7 @@ import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
@@ -39,10 +40,10 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOrthogonalizer {
 
-	public ConstrainedVertexFlowOrthogonalizer(VertexArranger va) {
-		super(va);
+	public ConstrainedVertexFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+		super(va, clc);
 	}
-
+	
 	int nextId = 0;
 	
 	class VertexDivision {

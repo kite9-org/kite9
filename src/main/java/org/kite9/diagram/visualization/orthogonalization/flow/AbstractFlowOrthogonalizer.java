@@ -11,6 +11,7 @@ import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -34,9 +35,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalizer implements Logable {
 
-
-	public AbstractFlowOrthogonalizer(VertexArranger va) {
-		super(va);
+	public AbstractFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+		super(va, clc);
 	}
 
 	public static final String VERTEX_NODE = "vn";

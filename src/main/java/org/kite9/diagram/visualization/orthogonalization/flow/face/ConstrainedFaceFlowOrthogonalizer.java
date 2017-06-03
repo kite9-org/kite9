@@ -15,6 +15,7 @@ import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.EdgeVertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.vertex.ConstrainedVertexFlowOrthogonalizer;
@@ -31,8 +32,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrthogonalizer{
 
-	public ConstrainedFaceFlowOrthogonalizer(VertexArranger va) {
-		super(va);
+	public ConstrainedFaceFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+		super(va, clc);
 	}
 
 	public static final String FACE_SUBDIVISION_NODE = "fn";

@@ -13,12 +13,12 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
 
-public class LabellingEdgeConverter extends SimpleEdgeConverter {
+public class LabellingEdgeConverter extends SimpleEdgeConverter implements ContainerLabelConverter {
 
 	private ElementMapper em;
 	
@@ -52,18 +52,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 			} else {
 				throw new Kite9ProcessingException();
 			}
-		} else if (e instanceof BorderEdge) {
-			Direction d = e.getDrawDirectionFrom(end);
-			
-			if (d == Direction.RIGHT) {
-				// we are on a left side vertex, with either top or bottom edge.
-				DiagramElement de = (((BorderEdge) e).getElementForSide(Direction.DOWN));
-				if (de instanceof Container) {
-					l = findUnprocessedLabel((Container) de);
-					labelSide = Direction.DOWN;
-				}
-			}
-		}
+		} 
 		
 		if (l != null) {
 			return convertWithLabel(e, o, incident, labelSide, end, sideVertex, l);
@@ -84,29 +73,13 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		
 		return null;
 	}
-	
-	
 
-	@Override
-	public void convertContainerEdge(DiagramElement de, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Side s) {
-		Label l = null;
-		if ((de instanceof Container) && (edgeSide == Direction.DOWN)) {
-			l = findUnprocessedLabel((Container) de);
-		}
-		
-		if (l != null) {
-			convertContainerLabel(de, o, l, s);
-		}
-			
-		super.convertContainerEdge(de, o, end1, end2, edgeSide, d, s);
-	}
-
-	private void convertContainerLabel(DiagramElement de, Orthogonalization o, Label l, Side s) {
+	private DartFace convertContainerLabel(DiagramElement de, Orthogonalization o, Label l) {
 		cc.convertDiagramElementToInnerFace(l, o);
 		CornerVertices cv = em.getOuterCornerVertices(l);
 		Vertex topLeft = cv.getTopLeft();
 		DartFace outer = cc.convertGridToOuterFace(o, topLeft, l);
-		s.embedded.add(outer);
+		return outer;
 	}
 	
 	
@@ -172,5 +145,22 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		}
 	}
 
+	@Override
+	public void handleContainerLabels(DartFace innerFace, DiagramElement partOf, Orthogonalization o) {
+		if (!(partOf instanceof Container)) {
+			return;
+		}
+		for (DartDirection dd : innerFace.getDartsInFace()) {
+			if (dd.getDart().getDiagramElements().get(partOf) == Direction.DOWN) {
+				// found bottom edge of container
+				Label l2 = findUnprocessedLabel((Container) partOf);
+				if (l2 != null) {
+					DartFace df = convertContainerLabel(partOf, o, l2);
+					df.setContainedBy(innerFace);
+				}
+				return;
+			}
+		}
+	}
 	
 }

@@ -153,10 +153,10 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	}
 
 	private Context createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
-		Context tl = new Context("tl", Arrays.asList(g1), true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context("tr", Arrays.asList(g2), true,  new TextLine("Top Right"), null);
-		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", Arrays.asList(g4), true,  new TextLine("Bottom Right"), null);
+		Context tl = new Context("tl", Arrays.asList(g1), true,  new TextLine("tll", "Top \n Left"), null);
+		Context tr = new Context("tr", Arrays.asList(g2), true,  new TextLine("trl", "Top Right"), null);
+		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("bll", "Bottom Left"), null);
+		Context br = new Context("br", Arrays.asList(g4), true,  new TextLine("brl", "Bottom Right"), null);
 		
 		tl.setStyle("occupies: 0 0;");
 		bl.setStyle("occupies: 0 1;");

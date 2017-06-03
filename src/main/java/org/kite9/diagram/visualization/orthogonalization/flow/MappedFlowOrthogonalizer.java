@@ -4,6 +4,7 @@ import org.kite9.diagram.visualization.orthogonalization.AbstractOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.logging.LogicException;
@@ -18,10 +19,12 @@ import org.kite9.framework.logging.LogicException;
 public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer implements Orthogonalizer {
 	
 	VertexArranger va;
+	ContainerLabelConverter clc;
 	
-	public MappedFlowOrthogonalizer(VertexArranger va) {
+	public MappedFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
 		super();
 		this.va = va;
+		this.clc = clc;
 	}
 	
 	public abstract MappedFlowGraph createOptimisedFlowGraph(Planarization pln) ;
@@ -29,7 +32,7 @@ public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer im
 	public Orthogonalization createOrthogonalization(Planarization pln) {
 		try {
 			MappedFlowGraph fg = createOptimisedFlowGraph(pln);
-			OrthBuilder fb = new MappedFlowGraphOrthBuilder(va, fg);
+			OrthBuilder fb = new MappedFlowGraphOrthBuilder(va, fg, clc);
 			OrthogonalizationImpl orth = fb.build(pln);			
 			return orth;
 		} catch (LogicException le) {

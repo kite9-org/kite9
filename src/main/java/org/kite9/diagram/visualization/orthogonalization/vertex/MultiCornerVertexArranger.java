@@ -15,6 +15,8 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -34,7 +36,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	public MultiCornerVertexArranger(ElementMapper em) {
 		super(em);
 	}
-
+	
 	@Override
 	public boolean needsConversion(Vertex v) {
 		if ((v instanceof MultiCornerVertex) && (v.getDiagramElements().size()==1)) {

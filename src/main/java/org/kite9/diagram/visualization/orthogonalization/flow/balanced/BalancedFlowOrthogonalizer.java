@@ -15,6 +15,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
@@ -43,8 +44,9 @@ import org.kite9.diagram.visualization.planarization.Tools;
  */
 public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalizer {
 	
-	public BalancedFlowOrthogonalizer(VertexArranger va) {
-		super(va);
+
+	public BalancedFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+		super(va, clc);
 	}
 
 	public static final int UNBALANCED_VERTEX_COST = 4 * CORNER;

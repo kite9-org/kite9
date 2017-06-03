@@ -22,6 +22,8 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -154,7 +156,9 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				
 				Direction d = getDirection(prev, start);
 				ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d, s);
-				DartFace inner = createInnerFace(o, s.getDarts(), start, de, s.getEmbeddedOuterFaces());
+				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
+				clc.handleContainerLabels(inner, de, o);
+
 				
 				if (de instanceof Container) {
 					convertContainerContents(o, (Container) de, inner);
