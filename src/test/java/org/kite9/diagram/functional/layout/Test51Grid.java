@@ -93,9 +93,9 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_51_3_GridWithMissingBits() throws Exception {
-		Context tl = new Context("tl", null, true,  new TextLine("Top \n Left"), null);
-		Context tr = new Context("tr", null, true,  new TextLine("Top Right"), null);
-		Context br = new Context("br", null, true,  new TextLine("Bottom Right"), null);
+		Context tl = new Context("tl", null, true,  new TextLine("tll", "Top \n Left"), null);
+		Context tr = new Context("tr", null, true,  new TextLine("trl","Top Right"), null);
+		Context br = new Context("br", null, true,  new TextLine("brl","Bottom Right"), null);
 		tl.setStyle("occupies-x: 0; occupies-y: 0;");
 		tr.setStyle("occupies-x: 1; occupies-y: 0;");
 		br.setStyle("occupies-x: 1; occupies-y: 1;");

@@ -186,8 +186,9 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	}
 	
 	private void ensureNoDartInDirection(Vertex from, Direction d) {
-		if (getDartInDirection(from, d ) != null) {
-			throw new Kite9ProcessingException("Already have a dart going "+d+" from "+from);
+		Dart existing = getDartInDirection(from, d );
+		if (existing != null) {
+			throw new Kite9ProcessingException("Already have a dart going "+d+" from "+from+": "+existing);
 		}
 	}
 	
