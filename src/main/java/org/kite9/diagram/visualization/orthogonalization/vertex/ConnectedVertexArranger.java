@@ -122,20 +122,16 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 	
 	protected List<IncidentDart> createIncidentDartOrdering(Vertex around, Orthogonalization o, TurnInformation ti) {
-		if (around instanceof ConnectedVertex) {
-			EdgeOrdering eo = o.getPlanarization().getEdgeOrderings().get(around);
-			Set<DiagramElement> cd = around.getDiagramElements();
-			
-			int[] number = { 0 };
-						
-			List<IncidentDart> out = eo.getEdgesAsList().stream().map(
-				e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, around)
-				).collect(Collectors.toList());
+		EdgeOrdering eo = o.getPlanarization().getEdgeOrderings().get(around);
+		Set<DiagramElement> cd = around.getDiagramElements();
 		
-			return out;
-		} else {
-			throw new Kite9ProcessingException();
-		}
+		int[] number = { 0 };
+					
+		List<IncidentDart> out = eo.getEdgesAsList().stream().map(
+			e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, around)
+			).collect(Collectors.toList());
+	
+		return out;
 	}
 	
 	/**
@@ -144,12 +140,8 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	 * @param und 
 	 */
 	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int i, Vertex und) {
-		if (!(e instanceof BiDirectionalPlanarizationEdge)) {
-			throw new Kite9ProcessingException();
-		}
-
 		Vertex sideVertex = createSideVertex(cd, und);
-		return ec.convertPlanarizationEdge((BiDirectionalPlanarizationEdge) e, o, incident, und, sideVertex);
+		return ec.convertPlanarizationEdge(e, o, incident, und, sideVertex);
 	}
 
 	protected Vertex createSideVertex(Set<DiagramElement> cd, Vertex und) {

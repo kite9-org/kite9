@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
@@ -15,8 +14,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
-import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -132,36 +129,5 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			throw new Kite9ProcessingException();
 		}
 	}
-
-	@Override
-	protected List<IncidentDart> createIncidentDartOrdering(Vertex around, Orthogonalization o, TurnInformation ti) {
-		if (around instanceof MultiCornerVertex) {
-			EdgeOrdering eo = o.getPlanarization().getEdgeOrderings().get(around);
-			Set<DiagramElement> unds = ((MultiCornerVertex) around).getDiagramElements();
-			
-			int[] number = { 0 };
-			
-			List<IncidentDart> out = eo.getEdgesAsList().stream().map(
-				e -> convertEdgeToIncidentDart(e, unds, o, ti.getIncidentDartDirection(e), number[0]++, around)
-				).collect(Collectors.toList());
-		
-			return out;
-			
-			
-		} else {
-			return super.createIncidentDartOrdering(around, o, ti);
-		}
-	}
-
-	@Override
-	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incidentDirection, int i, Vertex und1) {
-		if (e instanceof BorderEdge) {
-			Vertex sideVertex = createSideVertex(cd, und1);
-			return ec.convertPlanarizationEdge((BorderEdge) e, o, incidentDirection, und1, sideVertex);
-		} else {
-			return super.convertEdgeToIncidentDart(e, cd, o, incidentDirection, i, und1);
-		}
-	}
-	
 	
 }

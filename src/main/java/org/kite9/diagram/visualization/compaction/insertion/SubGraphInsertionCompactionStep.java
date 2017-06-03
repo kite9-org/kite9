@@ -149,8 +149,8 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 		for (DartDirection dd : ef.getDartsInFace()) {
 			for (DiagramElement de : dd.getDart().getDiagramElements().keySet()) {
-				if (de instanceof Connected) {
-					Container c = ((Connected)de).getContainer();
+				if (de instanceof Rectangular) {
+					Container c = ((Rectangular)de).getContainer();
 					
 					if (c!=null) {
 						List<DiagramElement> content = c.getContents();
