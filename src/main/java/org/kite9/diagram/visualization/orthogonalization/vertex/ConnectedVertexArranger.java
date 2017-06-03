@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -161,14 +162,14 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartDirections);
 		
 		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
-		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
 
 		List<MultiCornerVertex> perimeter = gp.getClockwiseOrderedContainerVertices(cv);
-		return convertDiagramElementToInnerFaceWithCorners(originalUnderlying, o, dartDirections, allSideDarts, perimeter);
+		return convertDiagramElementToInnerFaceWithCorners(originalUnderlying, o, dartDirections, perimeter);
 	}
 
-	protected DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections, LinkedHashSet<Dart> allSideDarts,
-			List<MultiCornerVertex> perimeter) {
+	protected DartFace convertDiagramElementToInnerFaceWithCorners(DiagramElement originalUnderlying, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections, List<MultiCornerVertex> perimeter) {
+		LinkedHashSet<Dart> allSideDarts = new LinkedHashSet<Dart>();
+		List<DartFace> allEmbeddedFaces = new ArrayList<>();
 		Direction sideDirection = Direction.RIGHT;  // initial direction of perimeter
 		MultiCornerVertex start = perimeter.get(0);
 		int done = 0;
@@ -179,11 +180,12 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
 			Side s = createSide(fromv, tov, originalUnderlying, leavers, o, sideDirection, outwardsDirection);
 			allSideDarts.addAll(s.getDarts());
+			allEmbeddedFaces.addAll(s.getEmbeddedOuterFaces());
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
 		}
 
-		DartFace inner = createInnerFace(o, allSideDarts, start, originalUnderlying);
+		DartFace inner = createInnerFace(o, allSideDarts, start, originalUnderlying, allEmbeddedFaces);
 		
 		log.send("Created face: "+inner);
 		
@@ -198,10 +200,21 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	protected void convertContainerContents(Orthogonalization o, Container originalUnderlying, DartFace inner) {
 		// does nothing in this implementation - see ContainerContentsArranger
 	}
+	
+	@Override
+	public DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
+		throw new Kite9ProcessingException("Not implemented");
+	}
 
-	protected DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {
+
+	protected DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de, Collection<DartFace> embedded) {
 		List<DartDirection>  dd = dartsToDartFace(allSideDarts, start, false);
 		DartFace inner = o.createDartFace((Rectangular) de, false, dd);
+		
+		for (DartFace e : embedded) {
+			e.setContainedBy(inner);
+		}
+		
 		return inner;
 	}
 	
@@ -285,4 +298,5 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		return true;
 	}
 
+	
 }

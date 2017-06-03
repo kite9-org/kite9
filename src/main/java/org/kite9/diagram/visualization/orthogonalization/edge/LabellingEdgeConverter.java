@@ -12,10 +12,9 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
-import org.kite9.diagram.visualization.orthogonalization.vertex.AbstractVertexArranger;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -95,39 +94,19 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 			l = findUnprocessedLabel((Container) de);
 		}
 		
-		if (l == null) {
-			super.convertContainerEdge(de, o, end1, end2, edgeSide, d, s);
-		} else {
-			convertContainerEdgeWithLabel(de, o, end1, end2, edgeSide, d, l, s);
+		if (l != null) {
+			convertContainerLabel(de, o, l, s);
 		}
+			
+		super.convertContainerEdge(de, o, end1, end2, edgeSide, d, s);
 	}
 
-	private void convertContainerEdgeWithLabel(DiagramElement de, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Label l, Side s) {
+	private void convertContainerLabel(DiagramElement de, Orthogonalization o, Label l, Side s) {
 		cc.convertDiagramElementToInnerFace(l, o);
 		CornerVertices cv = em.getOuterCornerVertices(l);
-		
-		Vertex leftLabel = cv.getBottomLeft();
-		Vertex rightLabel = cv.getBottomRight();
-		
-		if (d != Direction.LEFT) {
-			throw new Kite9ProcessingException();
-		}
-		
-		Dart d1 = o.createDart(end1, rightLabel, de, Direction.LEFT, Direction.DOWN);
-		o.createDart(rightLabel, leftLabel, de, Direction.LEFT, Direction.DOWN);
-		o.createDart(leftLabel, end2,de, Direction.LEFT, Direction.DOWN);
-		
-		
-		s.newEdgeDarts.add(d1);
-		Dart dart  = d1;
-		Vertex to = dart.otherEnd(end1);
-		
-		do {
-			dart = AbstractVertexArranger.getNextDartAntiClockwise(to, dart);
-			d = dart.getDrawDirectionFrom(to);
-			to = dart.otherEnd(to);
-			s.newEdgeDarts.add(dart);
-		} while (to != end2);
+		Vertex topLeft = cv.getTopLeft();
+		DartFace outer = cc.convertGridToOuterFace(o, topLeft, l);
+		s.embedded.add(outer);
 	}
 	
 	

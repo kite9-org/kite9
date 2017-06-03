@@ -63,7 +63,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 		}
 	}
 	
-	private DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
+	public DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
 		Vertex current = startVertex, orig = current;
 		Direction d = Direction.DOWN;
 		List<DartDirection> out = new ArrayList<>(); 
@@ -154,7 +154,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				
 				Direction d = getDirection(prev, start);
 				ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d, s);
-				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
+				DartFace inner = createInnerFace(o, s.getDarts(), start, de, s.getEmbeddedOuterFaces());
 				
 				if (de instanceof Container) {
 					convertContainerContents(o, (Container) de, inner);
