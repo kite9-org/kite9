@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 	 * @return the outerface to embed in the container.
 	 */
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
-		Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
+		Map<Direction, List<IncidentDart>> emptyMap = new HashMap<>();
 		Set<MultiCornerVertex> createdVertices = new LinkedHashSet<>();
 		placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
 		Vertex startVertex = getTopLeftVertex(createdVertices);

@@ -77,11 +77,20 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		if (!(v instanceof ConnectedVertex)) 
 			throw new Kite9ProcessingException();
 	
-		List<IncidentDart> dartOrdering = createIncidentDartOrdering((ConnectedVertex) v, o, ti);
-		Map<Direction, List<IncidentDart>> dartDirections = getDartsInDirection(dartOrdering, v);
+		Map<Direction, List<IncidentDart>> dartDirections = getDartsInDirection(v, o, ti);
 		Connected originalUnderlying = ((ConnectedVertex) v).getOriginalUnderlying();
 		DartFace out = convertDiagramElementToInnerFace(originalUnderlying, v, o, dartDirections);
-		setupBoundariesFromIncidentDarts(dartOrdering, v);
+		List<IncidentDart> allIncidentDarts = convertToDartList(dartDirections);
+		setupBoundariesFromIncidentDarts(allIncidentDarts, v);
+		return out;
+	}
+	
+	protected List<IncidentDart> convertToDartList(Map<Direction, List<IncidentDart>> dartDirections) {
+		List<IncidentDart> out = new ArrayList<>();
+		out.addAll(dartDirections.get(Direction.UP));
+		out.addAll(dartDirections.get(Direction.RIGHT));
+		out.addAll(dartDirections.get(Direction.DOWN));
+		out.addAll(dartDirections.get(Direction.LEFT));
 		return out;
 	}
 	
@@ -121,25 +130,13 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		setupBoundaries(externalVertices, v);
 	}
 	
-	protected List<IncidentDart> createIncidentDartOrdering(Vertex around, Orthogonalization o, TurnInformation ti) {
-		EdgeOrdering eo = o.getPlanarization().getEdgeOrderings().get(around);
-		Set<DiagramElement> cd = around.getDiagramElements();
-		
-		int[] number = { 0 };
-					
-		List<IncidentDart> out = eo.getEdgesAsList().stream().map(
-			e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, around)
-			).collect(Collectors.toList());
-	
-		return out;
-	}
-	
 	/**
 	 * Creates a dart or darts that arrives at the vertex.  Where more than one dart is created, return just the dart hitting
 	 * the vertex.
 	 * @param und 
+	 * @param count 
 	 */
-	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int i, Vertex und) {
+	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int idx, Vertex und, int count) {
 		Vertex sideVertex = createSideVertex(cd, und);
 		return ec.convertPlanarizationEdge(e, o, incident, und, sideVertex);
 	}
@@ -154,8 +151,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 	
 	public DartFace convertDiagramElementToInnerFace(DiagramElement original, Orthogonalization o) {
-		Map<Direction, List<IncidentDart>> emptyMap = getDartsInDirection(Collections.emptyList(), null);
-		return convertDiagramElementToInnerFace(original, null, o, emptyMap);
+		return convertDiagramElementToInnerFace(original, null, o, new HashMap<>());
 	}
 
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections) {
@@ -177,6 +173,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			MultiCornerVertex tov = perimeter.get((done+1) % perimeter.size());
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
+			leavers = leavers == null ? Collections.emptyList() : leavers;
 			Side s = createSide(fromv, tov, originalUnderlying, leavers, o, sideDirection, outwardsDirection);
 			allSideDarts.addAll(s.getDarts());
 			done ++;
@@ -230,28 +227,43 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * Note - we can't just group otherwise order gets broken.  We must ensure the sides are still in order
 	 */
-	protected Map<Direction, List<IncidentDart>> getDartsInDirection(List<IncidentDart> processOrder, Vertex from) {
+	protected Map<Direction, List<IncidentDart>> getDartsInDirection(Vertex from, Orthogonalization o, TurnInformation ti) {
+		EdgeOrdering eo = o.getPlanarization().getEdgeOrderings().get(from);
+		Set<DiagramElement> cd = from.getDiagramElements();
+		
+		List<PlanarizationEdge> processOrder = eo.getEdgesAsList();
+		// find the first edge
 		int startPoint = 0;
-		for (int i = 0; i < processOrder.size(); i++) {
-			IncidentDart current = processOrder.get(i);
-			IncidentDart prev = processOrder.get((i - 1 + processOrder.size()) % processOrder.size());
+		for (int i = 0; i < eo.size(); i++) {
+			PlanarizationEdge current = processOrder.get(i);
+			PlanarizationEdge prev = processOrder.get((i - 1 + processOrder.size()) % processOrder.size());
 			
-			if (current.getArrivalSide() != prev.getArrivalSide()) {
+			if (ti.getIncidentDartDirection(prev) != ti.getIncidentDartDirection(current)) {
 				startPoint = i;
 				break;
 			}
 		}
 		
-		Map<Direction, List<IncidentDart>> out = new HashMap<>();
-		out.put(Direction.UP, new ArrayList<>());
-		out.put(Direction.DOWN, new ArrayList<>());
-		out.put(Direction.LEFT, new ArrayList<>());
-		out.put(Direction.RIGHT, new ArrayList<>());
-		
+		Map<Direction, List<PlanarizationEdge>> in = new HashMap<>();
+		in.put(Direction.UP, new ArrayList<>());
+		in.put(Direction.DOWN, new ArrayList<>());
+		in.put(Direction.LEFT, new ArrayList<>());
+		in.put(Direction.RIGHT, new ArrayList<>());
 		
 		for (int i = 0; i < processOrder.size(); i++) {
-			IncidentDart d = processOrder.get((i + startPoint ) % processOrder.size());
-			out.get(d.getArrivalSide()).add(d);
+			PlanarizationEdge planarizationEdge = processOrder.get((i + startPoint ) % processOrder.size());
+			in.get(Direction.reverse(ti.getIncidentDartDirection(planarizationEdge))).add(planarizationEdge);
+		}
+		
+		Map<Direction, List<IncidentDart>> out = new HashMap<>();
+		
+		for (Direction dir : in.keySet()) {
+			List<PlanarizationEdge> list = in.get(dir);
+			int count = list.size();
+			int[] number = { 0 };
+			out.put(dir, list.stream().map(
+				e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, from, count)).collect(Collectors.toList()));
+		
 		}
 		
 		return out;
