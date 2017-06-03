@@ -369,8 +369,14 @@ public class TestingEngine extends TestingHelp {
 		RectangleRenderingInformation inside =  cc.getRenderingInformation();
 		RectangleRenderingInformation outside = d.getRenderingInformation();
 		
-		Rectangle2D inR = createRect(inside);
-		Rectangle2D outR = createRect(outside);
+		Rectangle2D inR;
+		Rectangle2D outR;
+		try {
+			inR = createRect(inside);
+			outR = createRect(outside);
+		} catch (Exception e) {
+			throw new ElementsMissingException(cc.getID(), 1);
+		}
 		
 		Assert.assertTrue(cc+" not entirely within "+d, outR.contains(inR));
 	}
