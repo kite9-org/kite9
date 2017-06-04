@@ -30,6 +30,7 @@ import org.apache.batik.dom.util.HashTable;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
@@ -136,6 +137,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		
 		// TEMPLATES
 		registerCustomCSSValueManager(new TemplateManager());
+		
+		// CONNECTION SIDES
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTIONS_PROPERTY, ConnectionsSeparation.class, ConnectionsSeparation.SAME_SIDE));
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

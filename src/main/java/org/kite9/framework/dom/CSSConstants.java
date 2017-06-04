@@ -1,10 +1,5 @@
 package org.kite9.framework.dom;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.kite9.diagram.model.position.Direction;
-
 public interface CSSConstants {
 
 	public static final String ELEMENT_TYPE_PROPERTY = "type";
@@ -34,4 +29,7 @@ public interface CSSConstants {
 	
 	// for importing SVG content into an element
 	public static final String TEMPLATE = "template";
+	
+	// controls which side connections will go into a connected
+	public static final String CONNECTIONS_PROPERTY = "connections";
 }

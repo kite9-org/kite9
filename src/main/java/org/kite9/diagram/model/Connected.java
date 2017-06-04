@@ -3,6 +3,7 @@ package org.kite9.diagram.model;
 import java.util.Collection;
 
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
  * A diagram element which is consumes a rectangular area of space, and 
@@ -35,5 +36,7 @@ public interface Connected extends Rectangular {
 	 * Overrides the main one, since all Connecteds are areas on the diagram rather than links.
 	 */
 	RectangleRenderingInformation getRenderingInformation();
+	
+	ConnectionsSeparation getConnectionsSeparationApproach();
 }
 

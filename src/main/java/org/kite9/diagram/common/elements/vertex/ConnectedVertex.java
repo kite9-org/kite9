@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
  * Vertex to represent a single {@link Connected} element during planarization.
@@ -45,7 +46,7 @@ public class ConnectedVertex extends AbstractVertex implements SingleElementVert
 	 * are on opposite sides.
 	 */
 	public boolean isSeparatingConnections() {
-		return true;
+		return underlying.getConnectionsSeparationApproach() == ConnectionsSeparation.SEPARATE;
 	}
 	
 }

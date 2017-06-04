@@ -7,6 +7,9 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
+import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
 /**
@@ -54,5 +57,13 @@ public abstract class AbstractConnectedDiagramElement extends AbstractRectangula
 	public boolean isConnectedDirectlyTo(Connected c) {
 		return getConnectionTo(c) != null;
 	}
+
+	@Override
+	public ConnectionsSeparation getConnectionsSeparationApproach() {
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONNECTIONS_PROPERTY);
+		return (ConnectionsSeparation) ev.getTheValue();
+	}
+	
+	
 
 }

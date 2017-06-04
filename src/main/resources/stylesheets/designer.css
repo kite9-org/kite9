@@ -181,6 +181,7 @@ arrow {
 	type: connected;
 	sizing: minimize;
 	template: url(template.svg#arrow);
+	connections: separate;
 }
 
 arrow > label {
