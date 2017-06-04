@@ -28,24 +28,24 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 	}
 
 	@Override
-	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex) {
+	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fan) {
 		Direction labelSide = (incident == Direction.UP) || (incident == Direction.DOWN) ? Direction.LEFT : Direction.UP;
 		Label l = null;
 
 		if (e instanceof ConnectionEdge) {
 			
 			ConnectionEdge ce = (ConnectionEdge) e;
-			boolean fromEnd = ce.getFrom() == end;
-			boolean toEnd = ce.getTo() == end;
+			boolean fromEnd = ce.getFrom() == planVertex;
+			boolean toEnd = ce.getTo() == planVertex;
 			
 			
 			if (fromEnd) {
-				if (end.getDiagramElements().contains(ce.getFromConnected())) {
+				if (planVertex.getDiagramElements().contains(ce.getFromConnected())) {
 					// we have the actual end then
 					l = ce.getOriginalUnderlying().getFromLabel();
 				} 
 			} else if (toEnd) {
-				if (end.getDiagramElements().contains(ce.getToConnected())) {
+				if (planVertex.getDiagramElements().contains(ce.getToConnected())) {
 					// we have the actual end then
 					l = ce.getOriginalUnderlying().getToLabel();
 				} 
@@ -55,9 +55,9 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 		} 
 		
 		if (l != null) {
-			return convertWithLabel(e, o, incident, labelSide, end, sideVertex, l);
+			return convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l);
 		} else {
-			return super.convertPlanarizationEdge(e, o, incident, end, sideVertex);
+			return super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan);
 		}
 				
 	}
@@ -84,7 +84,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 	
 	
 
-	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex end, Vertex sideVertex, Label l) {
+	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex externalVertex, Vertex sideVertex, Label l) {
 		Direction side = Direction.reverse(incident);
 		cc.convertDiagramElementToInnerFace(l, o);
 		CornerVertices cv = em.getOuterCornerVertices(l);
@@ -116,7 +116,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 		
 		Map<DiagramElement, Direction> map = createMap(e);
 		
-		ExternalVertex externalVertex = createExternalvertex(e, end);
 		o.createDart(sideVertex, sideToLabel, map, side);
 		o.createDart(sideToLabel, labelToExternal, map, side);
 		o.createDart(labelToExternal, externalVertex, map, side);

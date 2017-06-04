@@ -14,7 +14,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
  */
 public interface EdgeConverter {
 
-	IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex);
+	IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fanStep);
 
 	void convertContainerEdge(DiagramElement e, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Side s);
 

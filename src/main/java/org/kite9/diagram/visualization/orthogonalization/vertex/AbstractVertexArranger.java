@@ -174,5 +174,13 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 		boundaries.put(forVertex, made);
 	}
 
+	private int newVertexId =0;
+	
+	public ExternalVertex createExternalVertex(PlanarizationEdge e, Vertex end) {
+		ExternalVertex externalVertex = new ExternalVertex(end.getID()+"-ve"+newVertexId++, e);
+		return externalVertex;
+	}
+
+	
 
 }

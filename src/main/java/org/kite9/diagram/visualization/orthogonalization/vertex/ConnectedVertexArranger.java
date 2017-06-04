@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
@@ -31,8 +30,8 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.FanningEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
-import org.kite9.diagram.visualization.orthogonalization.edge.LabellingEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -61,9 +60,9 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		super();
 		this.gp = em.getGridPositioner();
 		this.em = em;
-		LabellingEdgeConverter labellingEdgeConverter = new LabellingEdgeConverter(this, em);
-		this.ec = labellingEdgeConverter;
-		this.clc = labellingEdgeConverter;
+		FanningEdgeConverter ec = new FanningEdgeConverter(this, em);
+		this.ec = ec;
+		this.clc = ec;
 	}
 
 	public static final int INTER_EDGE_SEPARATION = 0;
@@ -133,12 +132,22 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * Creates a dart or darts that arrives at the vertex.  Where more than one dart is created, return just the dart hitting
 	 * the vertex.
-	 * @param und 
-	 * @param count 
 	 */
 	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int idx, Vertex und, int count) {
 		Vertex sideVertex = createSideVertex(cd, und);
-		return ec.convertPlanarizationEdge(e, o, incident, und, sideVertex);
+		Vertex externalVertex = createExternalVertex(e, und);
+		Direction fan = null;
+		if (count > 1) {
+			Direction lowerOrders = Direction.rotateClockwise(incident);
+			Direction higherOrders = Direction.rotateAntiClockwise(incident);
+
+			int lower = (int) Math.floor(((double) count / 2d) - 1d);
+			int higher = (int) Math.ceil((double) count / 2d);
+
+			fan = idx <= lower ? lowerOrders : ((idx >= higher) ? higherOrders : null);
+		}
+
+		return ec.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, und, fan);
 	}
 
 	protected Vertex createSideVertex(Set<DiagramElement> cd, Vertex und) {

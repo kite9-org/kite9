@@ -102,24 +102,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected boolean checkNoContradictions() {
 		return true;
 	}
-	
-	static boolean firstRun = true;
-	
-	
-	@Before
-	public void setLogging() {
-		Kite9Log.setLogging(true);
 		
-		// if we are running more than one test, then there's no point in logging.
-		if (firstRun) {
-			firstRun = false;
-		} else {
-			Kite9Log.setLogging(false);
-		}
-	}
-	
-
-	
 	protected DiagramElement getById(final String id, DiagramKite9XMLElement d) {
 		DiagramElementVisitor vis = new DiagramElementVisitor();
 		final DiagramElement[] found = { null };

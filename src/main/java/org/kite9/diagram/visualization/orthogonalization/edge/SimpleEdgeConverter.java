@@ -22,11 +22,8 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		this.cc = cc;
 	}
 
-	private int newVertexId =0;
-
-	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex end, Vertex sideVertex) {
+	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fanStep) {
 		Direction side = Direction.reverse(incident);
-		ExternalVertex externalVertex = createExternalvertex(e, end);
 		o.createDart(sideVertex, externalVertex, createMap(e), side);
 		return new IncidentDart(externalVertex, sideVertex, side, e);
 	} 
@@ -47,11 +44,5 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		}
 	}
 
-	public ExternalVertex createExternalvertex(PlanarizationEdge e, Vertex end) {
-		ExternalVertex externalVertex = new ExternalVertex(end.getID()+"-ve"+newVertexId++, e);
-		return externalVertex;
-	}
-
-	
 
 }
