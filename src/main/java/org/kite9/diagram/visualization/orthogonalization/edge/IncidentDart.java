@@ -9,7 +9,7 @@ import org.kite9.diagram.model.position.Direction;
  */
 public class IncidentDart {
 	
-	final Vertex external;
+	Vertex external;
 	final Vertex internal;
 	final Direction arrivalSide;
 	final PlanarizationEdge dueTo;

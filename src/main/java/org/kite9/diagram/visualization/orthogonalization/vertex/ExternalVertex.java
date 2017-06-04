@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.orthogonalization.edge;
+package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public class ExternalVertex extends AbstractVertex implements NoElementVertex {
 		return false;
 	}
 	
-	public boolean joins(PlanarizationEdge e) {
+	protected boolean joins(PlanarizationEdge e) {
 		return e==joins;
 	}
 	

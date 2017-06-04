@@ -83,14 +83,14 @@ public class Test26VertexOrderingUndirected extends AbstractLayoutFunctionalTest
 		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
 		out2.add(overall);
 
-		new Link(out[0][1], out[0][4]);
-		new Link(out[0][1], out[0][5]);
-		new Link(out[0][2], out[0][6]);
-		new Link(out[0][3], out[0][6]);
-		new Link(out[0][5], out[0][8]);
-		new Link(out[0][6], out[0][8]);
-		new Link(out[0][4], out[0][9]);
-		new Link(out[0][4], out[0][7]);
+		new TurnLink(out[0][1], out[0][4]);
+		new TurnLink(out[0][1], out[0][5]);
+		new TurnLink(out[0][2], out[0][6]);
+		new TurnLink(out[0][3], out[0][6]);
+		new TurnLink(out[0][5], out[0][8]);
+		new TurnLink(out[0][6], out[0][8]);
+		new TurnLink(out[0][4], out[0][9]);
+		new TurnLink(out[0][4], out[0][7]);
 
 		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
