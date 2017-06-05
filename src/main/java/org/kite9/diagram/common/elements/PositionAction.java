@@ -22,7 +22,7 @@ public interface PositionAction {
 		}
 		
 		public String toString() {
-			return "X";
+			return "V";
 		}
 		
 	};
@@ -41,7 +41,7 @@ public interface PositionAction {
 		}
 		
 		public String toString() {
-			return "Y";
+			return "H";
 		}
 	};
 

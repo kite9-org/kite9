@@ -168,7 +168,7 @@ public class TestingEngine extends TestingHelp {
 					if (largerRect.contains(p2d)) {
 						// it's on the border
 					} else {
-						Assert.fail(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
 					}
 				}
 			}
@@ -378,7 +378,9 @@ public class TestingEngine extends TestingHelp {
 			throw new ElementsMissingException(cc.getID(), 1);
 		}
 		
-		Assert.assertTrue(cc+" not entirely within "+d, outR.contains(inR));
+		if (!outR.contains(inR)) {
+			throw new LayoutErrorException(cc+" not entirely within "+d);
+		}
 	}
 
 	/**
@@ -561,6 +563,16 @@ public class TestingEngine extends TestingHelp {
 		public ElementsMissingException(String arg0, int count) {
 			super(arg0);
 			this.count = count;
+		}
+
+	}
+	
+	public static class LayoutErrorException extends LogicException {
+
+		private static final long serialVersionUID = 1L;
+
+		public LayoutErrorException(String arg0) {
+			super(arg0);
 		}
 
 	}

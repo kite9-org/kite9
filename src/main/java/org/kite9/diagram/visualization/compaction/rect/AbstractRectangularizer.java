@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -79,6 +81,11 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			List<DartDirection> turns = df.getDartsInFace();
 			Vertex from = df.getStartVertex();
 			buildStack(df, theStack, turns, from, c);
+			
+			// ensures basic dart separation
+			for (int i = 0; i < theStack.size(); i++) {
+				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace);
+			}
 
 			performFaceRectangularization(c, result, theStack);
 
@@ -101,42 +108,47 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
 			List<DartDirection> turns, Vertex from, Compaction c) {
 		if (df.getDartsInFace().size() > 2) {
-			try {
-				for (int i = 0; i < turns.size(); i++) {
-					Dart dart = turns.get(i).getDart();
-					Vertex to = dart.otherEnd(from);
-					VertexTurn stackTop = theStack.size() > 0 ? theStack.get(theStack.size() - 1) : null;
-					Segment segment = c.getSegmentForDart(dart);
-					Direction going = dart.getDrawDirectionFrom(from);
-					if (segment == null) {
-						throw new LogicException("No segment for dart: " + dart);
-					}
-					if ((stackTop != null) && (segment == stackTop.getSegment())) {
-						// we have two darts in the same segment
-						VertexTurn vt = theStack.get(theStack.size() - 1);
-						vt.resetEndsWith(c, to);
-					} else {
-						VertexTurn vt = new VertexTurn(
-							c, segment.getSlideable(), going,
-							from, 
-							dart.otherEnd(from));
-						theStack.add(vt);
-					}
-					from = to;
+			
+			int startPoint = 0;
+			for (int i = 0; i <  turns.size(); i++) {
+				DartDirection last = turns.get((turns.size() -1 + i ) % turns.size());
+				DartDirection current = turns.get(i);
+				if (last.getDirection() != current.getDirection()) {
+					startPoint = i;
+					break;
 				}
-			} catch (RuntimeException e) {
-				log.send("DartFace Issue:"+df.getDartsInFace());
-				throw e;
-			}
-
-			// check first and last segments are not same
-			while (theStack.get(0).getSegment() == theStack.get(theStack.size() - 1).getSegment()) {
-				VertexTurn lose = theStack.get(0);
-				VertexTurn keep = theStack.get(theStack.size() - 1);
-				keep.resetEndsWith(lose.getEndsWith());
-				theStack.remove(lose);
 			}
 			
+			List<DartDirection> turnCopy = new ArrayList<>(turns);
+			Collections.rotate(turnCopy, -startPoint);
+			
+			List<Segment> segments = turnCopy.stream().map(dd -> c.getSegmentForDart(dd.getDart())).collect(Collectors.toList());
+			List<Direction> directions = turnCopy.stream().map(dd -> dd.getDirection()).collect(Collectors.toList());
+					
+			List<Segment> uniqueSegments = new ArrayList<>();
+			List<Direction> uniqueDirections = new ArrayList<>();
+			for (int i = 0; i < segments.size(); i++) {
+				Segment segment = segments.get(i);
+				Direction d = directions.get(i);
+				if ((i == 0) ||  (segment != uniqueSegments.get(uniqueSegments.size()-1))) {
+					uniqueSegments.add(segment);
+					uniqueDirections.add(d);
+				}
+			}
+			
+			// convert to VertexTurns
+			int us = uniqueSegments.size();
+			for (int i = 0; i < us; i++) {
+				
+				Segment last = uniqueSegments.get((i-1+us) % us);
+				Segment current = uniqueSegments.get(i);
+				Segment next = uniqueSegments.get((i+1) % us);
+				Direction d = uniqueDirections.get(i);
+				
+				VertexTurn t = new VertexTurn(c, current.getSlideable(), d, last.getSlideable(), next.getSlideable());
+				theStack.add(t);
+			}
+		
 			log.send("Stack for face "+df, theStack);
 		}
 	}
@@ -215,7 +227,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		Segment late1 = (Segment) late.getUnderlying();
 		Direction d = link.getDirection();
 		
-		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1, link.getSegment(), concave);
+		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1,  link.getSegment(), concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureLength(Math.max(minDistance, externalMin));
 	

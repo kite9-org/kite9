@@ -45,7 +45,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 			RectOption ro = pq.remove();
 			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
 			if (ok) { 
-				log.send(log.go() ? null : "Queue Currently: ",pq);
+				//log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
 				if (ro.getMatch() == Match.A) {
 					performRectangularizationA(theStack, c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
