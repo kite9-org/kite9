@@ -37,6 +37,10 @@ public class IncidentDart {
 	public PlanarizationEdge getDueTo() {
 		return dueTo;
 	}
+	
+	public String toString() {
+		return "IncidentDart[edge="+dueTo+", arrivalSide="+arrivalSide+", internal="+internal+", external="+external+"]";
+	}
 
 	
 }

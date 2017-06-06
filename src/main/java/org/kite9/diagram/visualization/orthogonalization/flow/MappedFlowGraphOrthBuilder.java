@@ -188,10 +188,12 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	static class SingleVertexTurnInformation implements TurnInformation {
 
 		final Map<Edge, Direction> map;
+		final Edge start;
 		
-		public SingleVertexTurnInformation(Map<Edge, Direction> map) {
+		public SingleVertexTurnInformation(Map<Edge, Direction> map, Edge start) {
 			super();
 			this.map = map;
+			this.start = start;
 		}
 
 		@Override
@@ -202,6 +204,11 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		@Override
 		public String toString() {
 			return "SingleVertexTurnInformation [map=" + map + "]";
+		}
+
+		@Override
+		public Edge getFirstEdgeClockwiseEdgeOnASide() {
+			return start;
 		}
 		
 		
@@ -221,7 +228,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		List<Face> faces = pln.getVertexFaceMap().get(sv);
 		EdgeOrdering eo = pln.getEdgeOrderings().get(sv);
 		Iterator<PlanarizationEdge> it = eo.getIterator(true, (PlanarizationEdge) e1, (PlanarizationEdge) e1, false);
-		
+		Edge startEdge = null;
 		while (it.hasNext()) {
 			PlanarizationEdge e2 = it.next();
 			
@@ -233,6 +240,9 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				for (int i = 0; i < Math.abs(outCap); i++) {
 					d = rotate90(d, outCap);
 				}
+				if (outCap != -2) {
+					startEdge = e2;
+				}
 				d = Direction.reverse(d);
 				map.put(e2, d);
 			}
@@ -240,7 +250,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			e1 = e2;
 		}
 		
-		out = new SingleVertexTurnInformation(map);
+		out = new SingleVertexTurnInformation(map, startEdge);
 		turnInfoMap.put(sv, out);
 
 		return out;

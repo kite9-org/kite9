@@ -35,6 +35,7 @@ import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
 /**
@@ -52,6 +53,8 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 	protected ContainerLabelConverter clc;
 	
+	protected Kite9Log log = new Kite9Log(this);
+	
 	public ContainerLabelConverter getContainerLabelConverter() {
 		return clc;
 	}
@@ -61,6 +64,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		this.gp = em.getGridPositioner();
 		this.em = em;
 		FanningEdgeConverter ec = new FanningEdgeConverter(this, em);
+//		LabellingEdgeConverter ec = new LabellingEdgeConverter(this, em);  
 		this.ec = ec;
 		this.clc = ec;
 	}
@@ -80,6 +84,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		Connected originalUnderlying = ((ConnectedVertex) v).getOriginalUnderlying();
 		DartFace out = convertDiagramElementToInnerFace(originalUnderlying, v, o, dartDirections);
 		List<IncidentDart> allIncidentDarts = convertToDartList(dartDirections);
+		log.send("Converting vertex: "+v, allIncidentDarts);
 		setupBoundariesFromIncidentDarts(allIncidentDarts, v);
 		return out;
 	}
@@ -115,6 +120,11 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 				
 				@Override
 				public Direction getIncidentDartDirection(Edge e) {
+					return null;
+				}
+
+				@Override
+				public Edge getFirstEdgeClockwiseEdgeOnASide() {
 					return null;
 				}
 			});
@@ -242,17 +252,8 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		Set<DiagramElement> cd = from.getDiagramElements();
 		
 		List<PlanarizationEdge> processOrder = eo.getEdgesAsList();
-		// find the first edge
-		int startPoint = 0;
-		for (int i = 0; i < eo.size(); i++) {
-			PlanarizationEdge current = processOrder.get(i);
-			PlanarizationEdge prev = processOrder.get((i - 1 + processOrder.size()) % processOrder.size());
-			
-			if (ti.getIncidentDartDirection(prev) != ti.getIncidentDartDirection(current)) {
-				startPoint = i;
-				break;
-			}
-		}
+		Edge startEdge = ti.getFirstEdgeClockwiseEdgeOnASide();
+		int startPoint = startEdge != null ? processOrder.indexOf(startEdge) : 0;
 		
 		Map<Direction, List<PlanarizationEdge>> in = new HashMap<>();
 		in.put(Direction.UP, new ArrayList<>());

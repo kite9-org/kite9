@@ -120,19 +120,35 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	}
 
 	void addMinimumForwardConstraint(Slideable<X> to, int dist) {
-		minimum.addForwardConstraint(to.minimum, dist);
+		try {
+			minimum.addForwardConstraint(to.minimum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMinimumForwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
 	}
 	
 	void addMinimumBackwardConstraint(Slideable<X> to, int dist) {
-		minimum.addBackwardConstraint(to.minimum, dist);
+		try {
+			minimum.addBackwardConstraint(to.minimum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMinimumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
 	}
 	
 	void addMaximumForwardConstraint(Slideable<X> to, int dist) {
-		maximum.addForwardConstraint(to.maximum, dist);
+		try {
+			maximum.addForwardConstraint(to.maximum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMaximumForwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
 	}
-	
+
 	void addMaximumBackwardConstraint(Slideable<X> to, int dist) {
-		maximum.addBackwardConstraint(to.maximum, dist);
+		try {
+			maximum.addBackwardConstraint(to.maximum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMaximumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
 	}
 
 	public void setMinimumPosition(int i) {

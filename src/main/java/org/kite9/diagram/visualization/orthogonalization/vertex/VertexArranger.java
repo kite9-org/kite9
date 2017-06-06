@@ -20,6 +20,8 @@ public interface VertexArranger {
 	
 	public interface TurnInformation {
 		
+		public Edge getFirstEdgeClockwiseEdgeOnASide();
+		
 		/**
 		 * Direction of dart arriving at this vertex, after orthogonalization.
 		 */
