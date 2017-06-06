@@ -12,7 +12,7 @@
 			<symbols />
 		</glyph>
 		<label xsi:type="text-line">
-			<text>Horizontal</text>
+			<text>Vertical</text>
 			<symbols />
 		</label>
 	</context>
@@ -63,10 +63,10 @@
 		<link id="id_14" style="NORMAL">
 			<from xsi:type="arrow" reference="likes" />
 			<to xsi:type="glyph" reference="carrots" />
-			<fromLabel xsi:type="text-line">
+			<fromLabel xsi:type="text-line" id="tl6">
 				<symbols />
 			</fromLabel>
-			<toLabel xsi:type="text-line">
+			<toLabel xsi:type="text-line" id="tl5">
 				<symbols />
 			</toLabel>
 			<fromDecoration>NONE</fromDecoration>
@@ -75,10 +75,10 @@
 		<link id="id_15" style="NORMAL">
 			<from xsi:type="arrow" reference="likes" />
 			<to xsi:type="glyph" reference="las" />
-			<fromLabel xsi:type="text-line">
+			<fromLabel xsi:type="text-line" id="tl4">
 				<symbols />
 			</fromLabel>
-			<toLabel xsi:type="text-line">
+			<toLabel xsi:type="text-line" id="tl3">
 				<symbols />
 			</toLabel>
 			<fromDecoration>NONE</fromDecoration>
@@ -87,10 +87,10 @@
 		<link id="id_9" style="NORMAL">
 			<from xsi:type="arrow" reference="eats" />
 			<to xsi:type="context" reference="food" />
-			<fromLabel xsi:type="text-line">
+			<fromLabel xsi:type="text-line" id="tl1">
 				<symbols />
 			</fromLabel>
-			<toLabel xsi:type="text-line">
+			<toLabel xsi:type="text-line" id="tl2">
 				<symbols />
 			</toLabel>
 			<fromDecoration>NONE</fromDecoration>

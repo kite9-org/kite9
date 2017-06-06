@@ -378,7 +378,7 @@ public class TestingEngine extends TestingHelp {
 			throw new ElementsMissingException(cc.getID(), 1);
 		}
 		
-		if (!outR.contains(inR)) {
+		if ((!outR.contains(inR)) && (inR.getWidth()>0) && (inR.getHeight()>0)) {
 			throw new LayoutErrorException(cc+" not entirely within "+d);
 		}
 	}
