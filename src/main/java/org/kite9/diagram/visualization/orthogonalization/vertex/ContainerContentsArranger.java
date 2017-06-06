@@ -147,7 +147,8 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 					if (prev != null) {
 						// create a dart between prev and current
 						Direction d = getDirection(prev, current);
-						ec.convertContainerEdge(de, o, prev, current, Direction.rotateAntiClockwise(d), d, s);
+						Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
+						ec.convertContainerEdge(underlyings, o, prev, current, d, s);
 					} else {
 						start = current;
 					}
@@ -156,7 +157,8 @@ public class ContainerContentsArranger extends MultiCornerVertexArranger {
 				}
 				
 				Direction d = getDirection(prev, start);
-				ec.convertContainerEdge(de, o, prev, start, Direction.rotateAntiClockwise(d), d, s);
+				Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
+				ec.convertContainerEdge(underlyings, o, prev, start, d, s);
 				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
 				clc.handleContainerLabels(inner, de, o);
 

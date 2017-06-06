@@ -29,8 +29,8 @@ public class SimpleEdgeConverter implements EdgeConverter {
 	} 
 	
 	@Override
-	public void convertContainerEdge(DiagramElement e, Orthogonalization o, Vertex end1, Vertex end2, Direction edgeSide, Direction d, Side s) {
-		Dart dart = o.createDart(end1, end2, e, d, edgeSide);
+	public void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, Side s) {
+		Dart dart = o.createDart(end1, end2, underlyings, d);
 		s.newEdgeDarts.add(dart);
 	}
 
@@ -43,6 +43,5 @@ public class SimpleEdgeConverter implements EdgeConverter {
 			throw new Kite9ProcessingException();
 		}
 	}
-
 
 }

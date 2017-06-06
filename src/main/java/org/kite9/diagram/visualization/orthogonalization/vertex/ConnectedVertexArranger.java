@@ -183,7 +183,8 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
 			leavers = leavers == null ? Collections.emptyList() : leavers;
-			Side s = createSide(fromv, tov, originalUnderlying, leavers, o, sideDirection, outwardsDirection);
+			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(originalUnderlying, outwardsDirection);
+			Side s = createSide(fromv, tov, leavers, o, sideDirection, underlyings);
 			allSideDarts.addAll(s.getDarts());
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
@@ -281,7 +282,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	/**
 	 * Links corner elements with the incident darts into the whole side of the underlying.
 	 */
-	protected Side createSide(Vertex from, Vertex to, DiagramElement underlying, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn, Direction side) {
+	protected Side createSide(Vertex from, Vertex to, List<IncidentDart> onSide, Orthogonalization o, Direction goingIn, Map<DiagramElement, Direction> underlyings) {
 		Side out = new Side();
 		Vertex last = from;
 		IncidentDart incidentDart = null;
@@ -290,14 +291,14 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
-				ec.convertContainerEdge(underlying, o, last, vsv, side, goingIn, out);
+				ec.convertContainerEdge(underlyings, o, last, vsv, goingIn, out);
 				out.addVertex(vsv);			
 				last = vsv;
 			}
 		}
 
 		// finally, join to corner
-		ec.convertContainerEdge(underlying, o, last, to, side, goingIn, out);
+		ec.convertContainerEdge(underlyings, o, last, to, goingIn, out);
 		return out;
 	}
 

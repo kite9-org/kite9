@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,10 +64,10 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 			// single side
 			Direction sideDirection = Direction.rotateClockwise(inDirection);
 			
-			DiagramElement aUnderlying = ((BorderEdge) borders.getA().getDueTo()).getElementForSide(sideDirection);
-			DiagramElement bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getElementForSide(sideDirection);
+			Map<DiagramElement, Direction> aUnderlying = ((BorderEdge) borders.getA().getDueTo()).getDiagramElements();
+			Map<DiagramElement, Direction> bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getDiagramElements();
 			
-			if (aUnderlying != bUnderlying) {
+			if ((!aUnderlying.equals(bUnderlying)) || (aUnderlying == null)) {
 				throw new Kite9ProcessingException();
 			}
 
@@ -78,7 +77,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 				dartsToUse = map.get(sideDirection);
 			}
 			
-			createSide(borders.getA().getInternal(), borders.getB().getInternal(), aUnderlying, dartsToUse, o, inDirection, sideDirection);
+			createSide(borders.getA().getInternal(), borders.getB().getInternal(), dartsToUse, o, inDirection, aUnderlying);
 		} else {
 			Vertex midPoint = new DartJunctionVertex("mcv-"+newVertexId++, v.getDiagramElements());
 			
@@ -91,12 +90,15 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 				throw new Kite9ProcessingException();
 			}
 
+			Map<DiagramElement, Direction> aUnderlyings = ((BorderEdge) borders.getA().getDueTo()).getDiagramElements();
+			Map<DiagramElement, Direction> bUnderlyings = ((BorderEdge) borders.getB().getDueTo()).getDiagramElements();
+			
 			List<IncidentDart> side1Darts = map.get(aSide);
 			List<IncidentDart> side2Darts = map.get(inDirection);
 			
 			
-			createSide(borders.getA().getInternal(), midPoint, aUnderlying, side1Darts, o, inDirection, aSide);
-			createSide(midPoint, borders.getB().getInternal(), aUnderlying, side2Darts, o, outDirection, bSide);
+			createSide(borders.getA().getInternal(), midPoint, side1Darts, o, inDirection, aUnderlyings);
+			createSide(midPoint, borders.getB().getInternal(), side2Darts, o, outDirection, bUnderlyings);
 		}
 	}
 

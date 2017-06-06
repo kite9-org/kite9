@@ -34,7 +34,7 @@
   </template>
 
   <template id='context'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='type: decal; sizing: adaptive; ' id="cback">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
     </back>
   </template>
