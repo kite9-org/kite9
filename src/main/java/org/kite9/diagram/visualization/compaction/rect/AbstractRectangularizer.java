@@ -87,7 +87,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace);
 			}
 
-			performFaceRectangularization(c, result, theStack);
+			performFaceRectangularization(c, result, theStack, r);
 
 			if (!df.outerFace) {
 
@@ -153,7 +153,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		}
 	}
 
-	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack);
+	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack, Rectangular partOf);
 
 	private void setSlideableFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack, boolean outer) {
 		Rectangle<Slideable<Segment>> r = new Rectangle<>(
@@ -204,7 +204,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	protected void performRectangularizationD(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn ext,
 			VertexTurn par, VertexTurn link, VertexTurn meets) {
-		logRectangularizationContext(ext, par, link, meets);
+		// logRectangularizationContext(ext, par, link, meets);
 		Slideable<Segment> first = ext.getEndsWith();
 		Slideable<Segment> to = meets.getSlideable();
 		Direction d2 = Direction.reverse(meets.getDirection());
@@ -235,7 +235,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, List<Dart> out, VertexTurn meets,
 			VertexTurn link, VertexTurn par, VertexTurn ext) {
-		logRectangularizationContext(meets, link, par, ext);
+		// logRectangularizationContext(meets, link, par, ext);
 		Slideable<Segment> first = ext.getStartsWith();
 		Slideable<Segment> to = meets.getSlideable();
 		Direction d1 = Direction.reverse(ext.getDirection());
@@ -267,8 +267,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			meets.resetEndsWith(extender.getSlideable());
 		}
 		
-		fixSize(c, meets, newMeetsLength, true);
-		fixSize(c, extender, extensionLength, true);
+//		fixSize(c, meets, newMeetsLength, true);
+//		fixSize(c, extender, extensionLength, true);
 	}
 
 	protected double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {

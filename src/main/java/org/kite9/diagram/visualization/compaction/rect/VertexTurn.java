@@ -1,10 +1,20 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Stores the segments on the stack 
@@ -16,21 +26,25 @@ class VertexTurn {
 		this.s = s;
 		this.startsWith = startsWith;
 		this.endsWith = endsWith;
+		this.start = commonVertex(s.getUnderlying(), startsWith.getUnderlying());
+		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
 	}
 	
-	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, Vertex startsWith, Vertex endsWith) {
-		this(c, s, d, getSlideableForVertex(c, d, startsWith), 
-				getSlideableForVertex(c, d, endsWith));
+	private Vertex commonVertex(Segment a, Segment b) {
+		Optional<Vertex> out = a.getVerticesInSegment().stream().filter(v -> b.getVerticesInSegment().contains(v)).findFirst();
+		if (out.isPresent()) {
+			return out.get();
+		} else {
+			return null;
+		}
 	}
 
-	private static Slideable<Segment> getSlideableForVertex(Compaction c, Direction d, Vertex startsWith) {
-		return c.getSlackOptimisation(!Direction.isHorizontal(d)).getVertexToSlidableMap().get(startsWith);
-	}
-	
 	private Slideable<Segment> s;
 	private int number;
 	private Slideable<Segment> startsWith;
+	private Vertex start;
 	private Slideable<Segment> endsWith;
+	private Vertex end;
 	private Direction d;
 		
 	public Segment getSegment() {
@@ -97,20 +111,14 @@ class VertexTurn {
 		return d;
 	}
 
-	public void resetEndsWith(Compaction c, Vertex to) {
-		resetEndsWith(getSlideableForVertex(c, d, to));
-	}
-		
 	public void resetEndsWith(Slideable<Segment> s) {
 		this.endsWith = s;
+		this.end = null;
 	}
 
-	public void resetStartsWith(Compaction c, Vertex to) {
-		resetStartsWith(getSlideableForVertex(c, d, to));
-	}
-		
 	public void resetStartsWith(Slideable<Segment> s) {
 		this.startsWith = s;
+		this.start = null;
 	}
 
 	public void ensureLength(double l) {
@@ -119,8 +127,74 @@ class VertexTurn {
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
 	}
 	
-	public int getChangeCost() {
-		return 1;
+	public boolean isFanTurn(VertexTurn atEnd) {
+		if (atEnd == null) {
+			return isStartInnerFan() || isEndInnerFan();
+		} else if (atEnd.s == startsWith) {
+			return isStartInnerFan();
+		} else if (atEnd.s == endsWith) {
+			return isEndInnerFan();
+		} else {
+			throw new Kite9ProcessingException();
+		}
 	}
 
+	private boolean isEndInnerFan() {
+		return (end instanceof FanVertex); // && ((FanVertex)end).isInner();
+	}
+
+	private boolean isStartInnerFan() {
+		return (start instanceof FanVertex); // && ((FanVertex)start).isInner();
+	}
+	
+	public Rectangular getUnderlyingRectangle() {
+		DiagramElement de = s.getUnderlying().getSingleUnderlying();
+		if (de instanceof Rectangular) {
+			return (Rectangular) de;
+		} else {
+			return null;
+		}
+	}
+	
+	public boolean isMinimizeRectangleBounded(Rectangular exclude) {
+		long rectsAtBothEnds = getUnderlyingsOfType(startsWith, Rectangular.class)
+				.filter(de -> endsWith.getUnderlying().hasUnderlying(de))
+				.filter(minimizeAndNotExclude(exclude)).count();
+		return rectsAtBothEnds > 0;
+	}
+	
+	public boolean isConnectionBounded() {
+		long startsWithConnections = getUnderlyingsOfType(startsWith, Connection.class).count();
+		long endsWithConnections = getUnderlyingsOfType(endsWith, Connection.class).count();
+		
+		return (startsWithConnections > 0) && (endsWithConnections > 0);
+	}
+	
+	public boolean isMinimizeRectangleCorner(Rectangular exclude) {
+		long rects = getUnderlyingsOfType(s, Rectangular.class)
+			.filter(de -> endsWith.getUnderlying().hasUnderlying(de) || startsWith.getUnderlying().hasUnderlying(de))
+			.filter(minimizeAndNotExclude(exclude)).count();
+		
+	
+		return rects > 0;
+	}
+
+	private Predicate<? super Rectangular> minimizeAndNotExclude(Rectangular exclude) {
+		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE) && (r != exclude);
+	}
+
+	public boolean isConnection() {
+		long connections = getUnderlyingsOfType(s, Connection.class).count();
+		return connections > 0;
+	}
+	
+	public boolean isMinimizeRectangular(Rectangular exclude) {
+		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimizeAndNotExclude(exclude)).count();
+		return rects > 0;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <X extends DiagramElement> Stream<X> getUnderlyingsOfType(Slideable<Segment> s, Class<X> c) {
+		return s.getUnderlying().getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).filter(de -> c.isAssignableFrom(de.getClass())).map(de -> (X) de);
+	}
 }

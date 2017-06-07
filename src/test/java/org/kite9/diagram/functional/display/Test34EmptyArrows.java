@@ -16,12 +16,12 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	@Test
 	public void test_34_1_3WayPointArrow() throws Exception {
 		Arrow a = new Arrow("a", null);
-		Glyph ga = new Glyph("ga","The a", null, null);
-		Glyph gb = new Glyph("gb","The b", null, null);
-		Glyph gc = new Glyph("gc","The c", null, null);
-		new Link(a, gb);
-		new Link(a, ga);
-		new Link(a, gc);
+		Glyph ga = new Glyph("g1","The 1", null, null);
+		Glyph gb = new Glyph("g2","The 2", null, null);
+		Glyph gc = new Glyph("g3","The 3", null, null);
+		new Link("a-2", a, gb);
+		new Link("a-1", a, ga);
+		new Link("a-3", a, gc);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		renderDiagram(d);

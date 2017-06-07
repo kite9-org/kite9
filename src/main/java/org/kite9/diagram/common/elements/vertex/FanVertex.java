@@ -1,10 +1,7 @@
-package org.kite9.diagram.visualization.orthogonalization.edge;
+package org.kite9.diagram.common.elements.vertex;
 
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.vertex.AbstractVertex;
-import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.model.DiagramElement;
 
 /**
@@ -15,8 +12,15 @@ import org.kite9.diagram.model.DiagramElement;
  */
 public class FanVertex extends AbstractVertex implements NoElementVertex {
 	
-	public FanVertex(String id) {
+	private final boolean inner;
+	
+	public boolean isInner() {
+		return inner;
+	}
+
+	public FanVertex(String id, boolean inner) {
 		super(id);
+		this.inner = inner;
 	}
 
 	@Override

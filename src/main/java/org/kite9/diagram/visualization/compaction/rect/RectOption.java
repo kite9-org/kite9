@@ -1,34 +1,29 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
-import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
 public class RectOption implements Comparable<RectOption> {
 
-	private final PrioritizingRectangularizer rectangularizer;
 	private final VertexTurn vt1;
 	private final VertexTurn vt2;
 	private final VertexTurn vt3;
 	private final VertexTurn vt4;
 	private final VertexTurn vt5;
 	private final Match m;
-	private final Compaction c;
 	private int initialScore;
 
 	public Match getMatch() {
 		return m;
 	}
 
-	public RectOption(PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c) {
+	public RectOption(VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m) {
 		super();
-		this.rectangularizer = prioritizingRectangularizer;
 		this.vt1 = vt1;
 		this.vt2 = vt2;
 		this.vt3 = vt3;
 		this.vt4 = vt4;
 		this.vt5 = vt5;
 		this.m = m;
-		this.c = c;
 		this.initialScore = getScore();
 	}
 
@@ -70,45 +65,11 @@ public class RectOption implements Comparable<RectOption> {
 
 	@Override
 	public int compareTo(RectOption o) {
-		return 0;
-		// // check for priority change
-		// if (isPriority != o.isPriority) {
-		// return -((Boolean)isPriority).compareTo(o.isPriority);
-		// }
-		//
-		// // pick lowest cost arrangements first
-		// if (scoreJoin != o.scoreJoin) {
-		// return ((Integer) scoreJoin).compareTo(o.scoreJoin);
-		// }
-		//
-		// if (scoreJoin > 0) {
-		// if (o.pushOut != pushOut) {
-		// // use the one that wrecks length the least
-		// return ((Double)pushOut).compareTo(o.pushOut);
-		// }
-		//
-		// }
-		//
-		// // preserve link length if precious
-		// return -((Integer)
-		// getLink().getChangeCost()).compareTo(o.getLink().getChangeCost());
+		return Integer.compare(this.initialScore, o.initialScore);
 	}
 
 	public String toString() {
-		return "[RO: extender = " + getExtender() + "]"; // + " score = " +
-															// scoreJoin + "
-															// priority = " +
-															// isPriority + "
-															// rect_safe =
-															// "+rectSafe+"
-															// can_boxout? =
-															// "+canBoxout+"
-															// rect?=
-															// "+chooseRectangularization()+"
-															// push =
-															// "+pushOut+"/"+availableMeets
-															// + " length =
-															// "+length+"]";
+		return "[RO: ("+initialScore+") extender = " + getExtender().getSegment() + "]"; 
 	}
 
 	public VertexTurn getVt1() {

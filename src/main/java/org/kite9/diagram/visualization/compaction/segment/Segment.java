@@ -55,6 +55,13 @@ public class Segment implements Comparable<Segment> {
 		return underlyings;
 	}
 	
+	public boolean hasUnderlying(DiagramElement de) {
+		return underlyings.stream()
+				.map(u -> u.de)
+				.filter(a -> a == de)
+				.count() > 0;
+	}
+	
 	private Stream<UnderlyingInfo> convertUnderlyingToUnderlyingInfo(Dart d) {
 		Map<DiagramElement, Direction> diagramElements = d.getDiagramElements();
 		return diagramElements.keySet().stream().map(de -> toUnderlyingInfo(de, diagramElements.get(de)));

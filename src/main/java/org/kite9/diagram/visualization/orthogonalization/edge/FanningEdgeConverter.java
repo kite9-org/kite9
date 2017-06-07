@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -26,8 +27,8 @@ public class FanningEdgeConverter extends LabellingEdgeConverter {
 			// disregard for straight edges
 			if ((e.getDrawDirection() == null) || (Tools.isUnderlyingContradicting(e))) {
 
-				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter);
-				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter);
+				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false);
+				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true);
 				counter++;
 
 				Map<DiagramElement, Direction> map = createMap(e);
