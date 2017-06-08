@@ -106,7 +106,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 				new float[] {0f, 1f}, c);
 		g2d.setPaint(lgp);
 		g2d.fill(new Rectangle(0, 0, 100, 100));
-		g2d.stream(new FileWriter(getOutputFile("-graph.svg")));
+		g2d.stream(new FileWriter(getOutputFile(".svg")));
 		checkIdenticalXML();
 	}
 	

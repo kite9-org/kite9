@@ -74,7 +74,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean everythingStraight = true;
 		public boolean checkLayout = true;
 		public boolean checkNoContradictions = true;
-		public boolean checkLabelOcclusion = true;
+		public boolean checkOcclusion = true;
 		public boolean checkConnectionsMeetConnecteds = true;
 	}
 	
@@ -118,8 +118,8 @@ public class TestingEngine extends TestingHelp {
 				testLayout(d.getDiagramElement());
 			}
 			
-			if (c.checkLabelOcclusion) {
-				checkLabelOverlap(d.getDiagramElement());
+			if (c.checkOcclusion) {
+				checkOverlap(d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now
@@ -393,24 +393,24 @@ public class TestingEngine extends TestingHelp {
 		return cc instanceof GridTemporaryConnected;
 	}
 
-	private void checkLabelOverlap(final Diagram d) {
+	private void checkOverlap(final Diagram d) {
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if (de instanceof Label) {
-					checkLabelOverlap((Label) de, d);
+				if ((de instanceof Label) || (de instanceof Connected))  {
+					checkOverlap((Rectangular) de, d);
 				}
 			}
 		});
 		
 	}
 		
-	private void checkLabelOverlap(Label l, Diagram d) {
+	private void checkOverlap(Rectangular l, Diagram d) {
 		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
-		Rectangle2D labelRect;
+		Rectangle2D lRect;
 		try {
-			labelRect = createRect(ri);
+			lRect = createRect(ri);
 		} catch (NullPointerException e) {
 			throw new ElementsMissingException(l.getID(), 1);
 		}
@@ -418,28 +418,38 @@ public class TestingEngine extends TestingHelp {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if ((de != l) && (!isChildOf(de, l))) {
+				if ((de != l) && (!isChildOf(de, l)) && (!isChildOf(l, de))) {
 					RenderingInformation ri = de.getRenderingInformation();
 					if (ri instanceof RectangleRenderingInformation) {
 						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-						if ((rect2.contains(labelRect)) && ((de instanceof Container) || (de instanceof Decal))) {
+						if ((rect2.contains(lRect)) && ((de instanceof Container) || (de instanceof Decal))) {
 							// probably ok
 							return;
 						}
-						if (rect2.intersects(labelRect)) {
-							throw new LogicException("Label should not be overlapped "+l+" by "+de);
+						if (rect2.intersects(lRect)) {
+							throw new LogicException("Overlapped: "+l+" by "+de);
 						}
 					}
 				}
 			}
 
 			private boolean isChildOf(DiagramElement de, DiagramElement p) {
-				if (de.getParent() == p) {
-					return true;
-				} else if (de.getParent() == null) {
-					return false;
+				if (p instanceof Container) {
+					if (de instanceof Rectangular) {
+						if (((Rectangular) de).getContainer() == p) {
+							return true;
+						} else if (((Rectangular) de).getContainer() == null) {
+							return false;
+						} else {
+							return isChildOf(((Rectangular) de).getContainer(), p);
+						}
+					} else {
+						return false;
+					}
+				} else if (p instanceof Connection) {
+					return (((Connection) p).getFromLabel() == de) || (((Connection) p).getToLabel() == de);
 				} else {
-					return isChildOf(de.getParent(), p);
+					return false;
 				}
 			}
 		});

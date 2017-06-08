@@ -93,7 +93,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			
 		} catch (Exception e1) {
 			copyToErrors(output);
-			Assert.fail("Couldn't perform comparison (no expected file): "+e1.getMessage());
+			Assert.fail("Couldn't perform comparison (no expected file): "+output+" "+e1.getMessage());
 			return false;
 		}
 		
@@ -135,12 +135,14 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		}
 	}
 
-	protected InputStream getExpectedInputStream(String ending) {
+	protected InputStream getExpectedInputStream(String ending) throws FileNotFoundException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
+		String name = m.getName()+ending;
 		File f = new File(theTest.getResource("").getFile());
+		File f2 = new File(f, name);
 		
-		InputStream is2 = theTest.getResourceAsStream(m.getName()+ending);
+		InputStream is2 = new FileInputStream(f2);
 		return is2;
 	}
 	
