@@ -67,7 +67,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected Checks checks() {
 		Checks out = new Checks();
 		out.checkEdgeDirections = checkEdgeDirections();
-		out.checkOcclusion = checkLabelOcclusion();
+		out.checkOcclusion = checkOcclusion();
 		out.checkLayout = checkLayout();
 		out.checkNoContradictions = checkNoContradictions();
 		out.checkNoHops = checkNoHops();
@@ -75,8 +75,8 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return out;
 	}
 	
-	protected boolean checkLabelOcclusion() {
-		return false;
+	protected boolean checkOcclusion() {
+		return true;
 	}
 	
 	protected boolean checkDiagramSize() {

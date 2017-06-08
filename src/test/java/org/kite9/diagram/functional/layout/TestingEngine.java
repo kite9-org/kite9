@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
@@ -22,6 +23,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
 import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
@@ -35,6 +37,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
@@ -52,10 +55,13 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.w3c.dom.css.Rect;
 
+import javafx.scene.shape.Rectangle;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 
@@ -393,57 +399,140 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private void checkOverlap(final Diagram d) {
+		BatikDisplayer disp = new BatikDisplayer(false, 0);
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
 				if ((de instanceof Label) || (de instanceof Connected))  {
-					checkOverlap((Rectangular) de, d);
+					checkOverlap((Rectangular) de, d, disp);
 				}
 			}
 		});
 		
 	}
 		
-	private void checkOverlap(Rectangular l, Diagram d) {
-		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
-		Rectangle2D lRect;
+	private void checkOverlap(Rectangular outer, Diagram d, BatikDisplayer disp) {
+		RectangleRenderingInformation ri = (RectangleRenderingInformation) outer.getRenderingInformation();
+		Rectangle2D outerRect;
 		try {
-			lRect = createRect(ri);
+			outerRect = createRect(ri);
 		} catch (NullPointerException e) {
-			throw new ElementsMissingException(l.getID(), 1);
+			throw new ElementsMissingException(outer.getID(), 1);
 		}
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
-			public void visit(DiagramElement de) {
-				if ((de != l) && (!(de instanceof Decal)) && (!isChildOf(l, de))) {
-					RenderingInformation ri = de.getRenderingInformation();
-					
-					if ((ri.getSize() == null) || (ri.getSize().getWidth() == 0) || (ri.getSize().getHeight() == 0)) {
+			public void visit(DiagramElement inner) {
+				Rectangle2D innerRect = createRect(inner.getRenderingInformation());
+				if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
+
+					if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
 						return;
 					}
-					 
-					if (isChildOf(de, l)) {
+
+					if (isChildOf(inner, outer)) {
 						// de must be inside l
-						
-						if (ri instanceof RectangleRenderingInformation) {
-							Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-							if (!rect2.intersects(lRect)) {
-								throw new LogicException("Should be inside: "+l+" doesn't contain "+de);
+
+						if (!innerRect.intersects(outerRect)) {
+							throw new LogicException("Should be inside: " + outer + " doesn't contain " + inner);
+						}
+
+						if (((Rectangular) inner).getContainer() == outer) {
+							// check margins / padding
+
+							double rightDist = disp.getPadding(outer, Direction.LEFT);
+							double leftDist = disp.getPadding(outer, Direction.RIGHT);
+							double upDist = disp.getPadding(outer, Direction.DOWN);
+							double downDist = disp.getPadding(outer, Direction.UP);
+							
+							if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
+								throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+							}
+		
+							if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
+								throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+							}
+							
+							if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+								throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+							}
+		
+							if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
+								throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
 							}
 						}
-					} else {
-						// ensure no intersection
+ 
+					} else if (inner instanceof Rectangular) {
+						if (innerRect.intersects(outerRect)) {
+							throw new LogicException("Overlapped: " + outer + " by " + inner);
+						}
 						
-						if (ri instanceof RectangleRenderingInformation) {
-							Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-							if (rect2.intersects(lRect)) {
-								throw new LogicException("Overlapped: "+l+" by "+de);
+						if (isInGrid((Rectangular) inner)) {
+							return;
+						}
+						
+						
+						if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
+							// check y-separation
+							
+							if (innerRect.getMaxY() <= outerRect.getMinY()) {
+								// inner above outer
+								double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
+								if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+									throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+								}
+							} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
+								// inner below outer
+								double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
+								if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
+									throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+								}						
+							} else {
+								throw new LogicException("Overlapped: " + outer + " by " + inner);
 							}
+							
+						}
+						
+						if (alongside(innerRect.getMinY(), innerRect.getMaxY(), outerRect.getMinY(), outerRect.getMaxY())) {
+							// check y-separation
+							
+							if (innerRect.getMaxX() < outerRect.getMinX()) {
+								// inner to left of outer
+								double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
+								if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
+									throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+								}
+								
+							} else if (innerRect.getMinX() > outerRect.getMaxX()) {
+								// inner to right of outer
+								double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
+								if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
+									throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+								}
+							} else {
+								throw new LogicException("Overlapped: " + outer + " by " + inner);
+							}
+							
 						}
 					}
 				}
+
+			}
+			
+			private boolean isInGrid(Rectangular inner) {
+				return (inner instanceof Connected) && (inner.getContainer().getLayout() == Layout.GRID);
+			}
+
+			protected boolean alongside(double a1, double a2, double b1, double b2) {
+				return within(a1, b1, b2) || 
+						within(a2, b1, b2) ||
+						within(b1, a1, a2) ||
+						within(b2, a1, a2);
+			}
+
+			protected boolean within(double a, double ja, double jb) {
+				return ((a > ja) && (a < jb));
 			}
 
 			private boolean isChildOf(DiagramElement de, DiagramElement p) {
@@ -469,8 +558,20 @@ public class TestingEngine extends TestingHelp {
 		
 	}
 
-	private static Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
-		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+	private static Rectangle2D createRect(RenderingInformation r) {
+		if (r instanceof RectangleRenderingInformation) {
+			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
+			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+		} else if (r instanceof RouteRenderingInformation) {
+			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
+					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))
+					.reduce((a, b) -> a.createUnion(b));
+			
+			
+			return out.isPresent() ? out.get() : null;
+		} else {
+			throw new Kite9ProcessingException();
+		}
 	}
 
 	public static void checkContentsOverlap(Container d, final Layout l) {
