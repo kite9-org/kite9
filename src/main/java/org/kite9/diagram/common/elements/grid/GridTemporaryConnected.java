@@ -9,6 +9,7 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.NotDisplayed;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;

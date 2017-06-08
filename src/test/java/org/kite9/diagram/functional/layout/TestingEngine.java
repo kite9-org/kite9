@@ -40,12 +40,12 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramChecker;
-import org.kite9.diagram.model.visitors.DiagramElementVisitor;
-import org.kite9.diagram.model.visitors.HopChecker;
-import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
+import org.kite9.diagram.model.visitors.DiagramElementVisitor;
+import org.kite9.diagram.model.visitors.HopChecker;
 import org.kite9.diagram.model.visitors.HopChecker.HopAction;
+import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -55,7 +55,6 @@ import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutin
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.w3c.dom.css.Rect;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
@@ -418,16 +417,30 @@ public class TestingEngine extends TestingHelp {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if ((de != l) && (!isChildOf(de, l)) && (!isChildOf(l, de))) {
+				if ((de != l) && (!(de instanceof Decal)) && (!isChildOf(l, de))) {
 					RenderingInformation ri = de.getRenderingInformation();
-					if (ri instanceof RectangleRenderingInformation) {
-						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-						if ((rect2.contains(lRect)) && ((de instanceof Container) || (de instanceof Decal))) {
-							// probably ok
-							return;
+					
+					if ((ri.getSize() == null) || (ri.getSize().getWidth() == 0) || (ri.getSize().getHeight() == 0)) {
+						return;
+					}
+					 
+					if (isChildOf(de, l)) {
+						// de must be inside l
+						
+						if (ri instanceof RectangleRenderingInformation) {
+							Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
+							if (!rect2.intersects(lRect)) {
+								throw new LogicException("Should be inside: "+l+" doesn't contain "+de);
+							}
 						}
-						if (rect2.intersects(lRect)) {
-							throw new LogicException("Overlapped: "+l+" by "+de);
+					} else {
+						// ensure no intersection
+						
+						if (ri instanceof RectangleRenderingInformation) {
+							Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
+							if (rect2.intersects(lRect)) {
+								throw new LogicException("Overlapped: "+l+" by "+de);
+							}
 						}
 					}
 				}
