@@ -2,6 +2,7 @@ package org.kite9.diagram;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,20 +78,21 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 
 	public boolean checkIdenticalXML() throws Exception {
-		File output = getOutputFile("-graph.svg");
+		File output = getOutputFile(".svg");
 		Source in1;
 		Source in2;
 		try {
-			InputStream is2 = getExpectedInputStream("-graph.svg");
+			InputStream is2 = getExpectedInputStream(".svg");
 			
 			// copy input file to output dir for ease of comparison
 			File expectedOut = getOutputFile("-expected.svg");
 			RepositoryHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
-			is2 = getExpectedInputStream("-graph.svg");
+			is2 = getExpectedInputStream(".svg");
 			
 			in2 = streamToDom(is2);
 			
 		} catch (Exception e1) {
+			copyToErrors(output);
 			Assert.fail("Couldn't perform comparison (no expected file): "+e1.getMessage());
 			return false;
 		}
@@ -105,13 +107,14 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			diff.addDifferenceListener(new ComparisonListener() {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
+					copyToErrors(output);		            
 		            Assert.fail("found a difference: " + comparison);
-		            
 		        }
 		    });
 			
 			diff.compare(in1, in2);
 		} catch (NullPointerException e) {
+			copyToErrors(output);
 			Assert.fail("Missing diagram file: " + e.getMessage());
 			return false;
 		}
@@ -119,9 +122,24 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		return true;
 	}
 
+	private void copyToErrors(File output) {
+		try {
+			File parent = output.getParentFile().getParentFile().getParentFile();
+			File errors = new File(parent, "errors");
+			errors.mkdir();
+			String name = output.getName();
+			File newFile = new File(errors, name);
+			RepositoryHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	protected InputStream getExpectedInputStream(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
+		File f = new File(theTest.getResource("").getFile());
+		
 		InputStream is2 = theTest.getResourceAsStream(m.getName()+ending);
 		return is2;
 	}

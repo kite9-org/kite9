@@ -52,13 +52,13 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	}
 
 	protected TranscoderOutput getTranscoderOutputPNG() throws IOException {
-		File f = getOutputFile("-graph.png");
+		File f = getOutputFile(".png");
 		TranscoderOutput out = new TranscoderOutput(new FileOutputStream(f));
 		return out;
 	}
 	
 	protected TranscoderOutput getTranscoderOutputSVG() throws IOException {
-		File f = getOutputFile("-graph.svg");
+		File f = getOutputFile(".svg");
 		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
 		return out;
 	}

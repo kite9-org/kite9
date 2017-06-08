@@ -69,7 +69,7 @@ public class PrioritisedRectOption extends RectOption {
 			} else if (meets.isConnectionBounded()) {
 				return MeetsType.MINIMIZE_RECT_SIDE_PART;
 			} else {
-				throw new Kite9ProcessingException();
+				return MeetsType.EXTEND_IF_NEEDED;
 			}
 		} else {
 			return MeetsType.EXTEND_IF_NEEDED;
