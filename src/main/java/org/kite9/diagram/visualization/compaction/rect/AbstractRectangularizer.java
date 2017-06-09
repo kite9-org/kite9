@@ -84,7 +84,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			
 			// ensures basic dart separation
 			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace);
+				fixSize(c, getIthElementRotating(theStack, i), 0, isConcave(theStack, i));
 			}
 
 			performFaceRectangularization(c, result, theStack, r);
@@ -103,6 +103,12 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 		}
 
+	}
+
+	private boolean isConcave(List<VertexTurn> theStack, int i) {
+		VertexTurn prev = getIthElementRotating(theStack, i-1);
+		VertexTurn next =  getIthElementRotating(theStack, i+1);
+		return (prev.getDirection() != next.getDirection());
 	}
 
 	private void buildStack(DartFace df, List<VertexTurn> theStack,
@@ -145,7 +151,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				Segment next = uniqueSegments.get((i+1) % us);
 				Direction d = uniqueDirections.get(i);
 				
-				VertexTurn t = new VertexTurn(c, current.getSlideable(), d, last.getSlideable(), next.getSlideable());
+				VertexTurn t = new VertexTurn(i, c, current.getSlideable(), d, last.getSlideable(), next.getSlideable());
 				theStack.add(t);
 			}
 		
@@ -225,9 +231,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		Slideable<Segment> late = link.getEndsWith();
 		Segment early1 = (Segment) early.getUnderlying();
 		Segment late1 = (Segment) late.getUnderlying();
-		Direction d = link.getDirection();
 		
-		double minDistance = getMinimumDistance(Direction.isHorizontal(d), early1, late1,  link.getSegment(), concave);
+		double minDistance = getMinimumDistance(early1, late1,  link.getSegment(), concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureLength(Math.max(minDistance, externalMin));
 	

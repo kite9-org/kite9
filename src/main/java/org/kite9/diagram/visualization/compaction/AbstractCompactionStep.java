@@ -1,10 +1,8 @@
 package org.kite9.diagram.visualization.compaction;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
+import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -12,6 +10,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -44,18 +43,25 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return froms.minimumDistanceTo(tos);
 	}
 
-	protected double getMinimumDistance(boolean horizontalDart, Segment froms, Segment tos, Segment along, boolean concave) {
+	protected double getMinimumDistance(Segment first, Segment second, Segment along, boolean concave) {
+		boolean horizontalDartFirst = first.getDimension() == PositionAction.XAction;
+		boolean horizontalDartSecond = second.getDimension() == PositionAction.XAction;
+		
+		if (horizontalDartFirst != horizontalDartSecond) {
+			throw new Kite9ProcessingException();
+		}
+		
 		double max = 0;
-		for (UnderlyingInfo fromUI : froms.getUnderlyingInfo()) {
-			max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, tos, along, concave));
+		for (UnderlyingInfo fromUI : first.getUnderlyingInfo()) {
+			max = Math.max(max, getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave));
 		}
 		
 		return max;
 	}
 	
-	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, Segment tos, Segment along, boolean concave) {
+	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, Segment second, Segment along, boolean concave) {
 		double max = 0;
-		for (UnderlyingInfo toUI : tos.getUnderlyingInfo()) {
+		for (UnderlyingInfo toUI : second.getUnderlyingInfo()) {
 			max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along, concave));
 		}
 		
@@ -64,9 +70,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 
 	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, UnderlyingInfo toUI, Segment along, boolean concave) {
 		DiagramElement tode = toUI.getDiagramElement();
-		Direction toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.getSide());
+		Direction toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.getSide(), true);
 		DiagramElement fromde = fromUI.getDiagramElement();
-		Direction fromUnderlyingSide = convertSideToDirection(horizontalDart, fromUI.getSide());
+		Direction fromUnderlyingSide = convertSideToDirection(horizontalDart, fromUI.getSide(), false);
 
 		if (!needsLength(fromde, tode)) {
 			return 0;
@@ -92,27 +98,21 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	private DiagramElement getAlongDiagramElement(Segment along) {
-		return along == null ? null : along.getSingleUnderlying();
+		return along == null ? null : along.getUnderlyingWithSide(Side.NEITHER);
 	}
 	
-	private UnderlyingInfo getUnderlyingFor(Segment froms, DiagramElement diagramElement) {
-		for (UnderlyingInfo ui : froms.getUnderlyingInfo()) {
-			if (ui.getDiagramElement() == diagramElement) {
-				return ui;
-			}
-		}
-		
-		return null;
-	}
-
-	private Direction convertSideToDirection(boolean horizontalDart, Side side) {
+	private Direction convertSideToDirection(boolean horizontalDart, Side side, boolean first) {
 		switch (side) {
 		case END:
 			return horizontalDart ? Direction.RIGHT : Direction.DOWN;
 		case START:
 			return horizontalDart ? Direction.LEFT : Direction.UP;
 		default:
-			return null;
+			if (horizontalDart) {
+				return first ? Direction.RIGHT : Direction.LEFT;
+			} else {
+				return first ? Direction.DOWN : Direction.UP;
+			}
 		}
 	}
 	
@@ -157,9 +157,8 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	/**
 	 * Uses the SlackOptimisation to set a minimum distance between outside and inside parts.
 	 */
-	protected void separate(Slideable<Segment> s1, Slideable<Segment> s2, Direction d, Compaction c, Segment along) {
-		boolean horizontal = d == Direction.LEFT || d == Direction.RIGHT;
-		double minDistance = getMinimumDistance(horizontal, s1.getUnderlying(), s2.getUnderlying(), along, true);
+	protected void separate(Slideable<Segment> s1, Slideable<Segment> s2) {
+		double minDistance = getMinimumDistance(s1.getUnderlying(), s2.getUnderlying(), null, true);
 		s1.getSlackOptimisation().ensureMinimumDistance(s1, s2, (int) minDistance);
 	}
 //

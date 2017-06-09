@@ -21,15 +21,20 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 class VertexTurn {
 	
-	public VertexTurn(Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
+	public VertexTurn(int number, Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
 		this.d = d;
 		this.s = s;
 		this.startsWith = startsWith;
 		this.endsWith = endsWith;
 		this.start = commonVertex(s.getUnderlying(), startsWith.getUnderlying());
 		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
+		this.number = number;
 	}
 	
+	public int getNumber() {
+		return number;
+	}
+
 	private Vertex commonVertex(Segment a, Segment b) {
 		Optional<Vertex> out = a.getVerticesInSegment().stream().filter(v -> b.getVerticesInSegment().contains(v)).findFirst();
 		if (out.isPresent()) {
@@ -39,13 +44,13 @@ class VertexTurn {
 		}
 	}
 
-	private Slideable<Segment> s;
-	private int number;
+	private final Slideable<Segment> s;
+	private final int number;
 	private Slideable<Segment> startsWith;
 	private Vertex start;
 	private Slideable<Segment> endsWith;
 	private Vertex end;
-	private Direction d;
+	private final Direction d;
 		
 	public Segment getSegment() {
 		return (Segment) s.getUnderlying();
@@ -145,15 +150,6 @@ class VertexTurn {
 
 	private boolean isStartInnerFan() {
 		return (start instanceof FanVertex); // && ((FanVertex)start).isInner();
-	}
-	
-	public Rectangular getUnderlyingRectangle() {
-		DiagramElement de = s.getUnderlying().getSingleUnderlying();
-		if (de instanceof Rectangular) {
-			return (Rectangular) de;
-		} else {
-			return null;
-		}
 	}
 	
 	public boolean isMinimizeRectangleBounded(Rectangular exclude) {

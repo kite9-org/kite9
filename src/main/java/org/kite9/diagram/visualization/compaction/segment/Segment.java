@@ -55,6 +55,10 @@ public class Segment implements Comparable<Segment> {
 		return underlyings;
 	}
 	
+	public DiagramElement getUnderlyingWithSide(Side s) {
+		return getUnderlyingInfo().stream().filter(ui -> ui.getSide() == s).map(ui -> ui.getDiagramElement()).findFirst().orElse(null);
+	}
+	
 	public boolean hasUnderlying(DiagramElement de) {
 		return underlyings.stream()
 				.map(u -> u.de)
@@ -184,13 +188,5 @@ public class Segment implements Comparable<Segment> {
 
 	public int getNumber() {
 		return i;
-	}
-
-	public DiagramElement getSingleUnderlying() {
-		if ((getUnderlyingInfo().size() > 1) || (getUnderlyingInfo().size() == 0)) {
-			return null;
-		} else {
-			return getUnderlyingInfo().iterator().next().getDiagramElement();
-		}
 	}
 }

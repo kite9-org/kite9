@@ -80,7 +80,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			// this is the distance from the connection to the edge of the connected
 			return getLinkInset(a, d);
 		} else {
-			double margin = calculateMargin(a, aSide, b, bSide, d);
+			double margin = calculateMargin(a, aSide, b, bSide);
 			return incorporateAlongLength(along, d, margin);
 		}
 	}
@@ -95,21 +95,21 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
 			length = getPadding(b, Direction.reverse(d));
 		} else {
-			length =  calculateMargin(a, aSide, b, bSide, d);
+			// no containment, just near each other
+			length = calculateMargin(a, aSide, b, bSide);
 		}
 		
 		return incorporateAlongLength(along, d, length);
 	}
 
 	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along) {
-		double margin = calculateMargin(a, aSide, b, bSide, d);
+		double margin = calculateMargin(a, aSide, b, bSide);
 		return incorporateAlongLength(along, d, margin);
 	}
 
-	private double calculateMargin(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d) {
-		Direction dd = Direction.reverse(d);
-		double marginA = ((aSide == d) || (aSide==null)) ? getMargin(a, dd) : 0;
-		double marginB = ((bSide == dd) || (bSide == null)) ? getMargin(b, d) : 0;
+	private double calculateMargin(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		double marginA = getMargin(a, aSide);
+		double marginB = getMargin(b, bSide);
 		double margin = Math.max(marginA, marginB);
 		return margin;
 	}

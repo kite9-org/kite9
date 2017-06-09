@@ -14,7 +14,6 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -112,14 +111,14 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				
 				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
 						|| (directionOfInsertion == Direction.LEFT)) {
-					separate(top, uLimit, Direction.DOWN, c, null);
-					separate(dLimit, bottom, Direction.DOWN, c, null);
-					separate(left, lLimit, Direction.RIGHT, c, null);
+					separate(top, uLimit);
+					separate(dLimit, bottom);
+					separate(left, lLimit);
 					left = rLimit;
 				} else {
-					separate(top, uLimit,  Direction.DOWN, c, null);
-					separate(left, lLimit, Direction.RIGHT, c, null);
-					separate(rLimit, right, Direction.RIGHT, c, null);
+					separate(top, uLimit);
+					separate(left, lLimit);
+					separate(rLimit, right);
 					top = dLimit;
 				}
 				
@@ -130,9 +129,9 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 		if (addedSomething) {
 			if ((directionOfInsertion == Direction.DOWN) || (directionOfInsertion == Direction.UP)) {
-				separate(top, bottom, Direction.DOWN, c, null);
+				separate(top, bottom);
 			} else {
-				separate(left, right, Direction.RIGHT, c, null);
+				separate(left, right);
 			}
 		}
 	}
