@@ -45,29 +45,12 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	protected double getMinimumDistance(boolean horizontalDart, Segment froms, Segment tos, Segment along, boolean concave) {
-		// where a segment is part of a grid, we can have more than one underlying diagram element.
-		// in these cases, we have to consider pairs.
-		if ((froms.getUnderlyingInfo().size() > 1) && (tos.getUnderlyingInfo().size() > 1)) {
-			Set<DiagramElement> diagramElements = new HashSet<>();
-			froms.getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).forEach(a -> diagramElements.add(a));
-			tos.getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).forEach(a -> diagramElements.add(a));
-			double max = 0;
-			
-			for (DiagramElement diagramElement : diagramElements) {
-				UnderlyingInfo fromUI = getUnderlyingFor(froms, diagramElement);
-				UnderlyingInfo toUI = getUnderlyingFor(tos, diagramElement);
-				if ((fromUI != null) && (toUI != null)) {
-					max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along, concave));
-				}
-			}
-			
-			return max;
-			
-		} else if (froms.getUnderlyingInfo().size() == 1) {
-			return getMinimumDistance(horizontalDart, froms.getUnderlyingInfo().iterator().next(), tos, along, concave);
-		} else {	
-			return getMinimumDistance(horizontalDart, tos.getUnderlyingInfo().iterator().next(), froms, along, concave);
+		double max = 0;
+		for (UnderlyingInfo fromUI : froms.getUnderlyingInfo()) {
+			max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, tos, along, concave));
 		}
+		
+		return max;
 	}
 	
 	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, Segment tos, Segment along, boolean concave) {

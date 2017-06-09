@@ -432,92 +432,100 @@ public class TestingEngine extends TestingHelp {
 					}
 
 					if (isChildOf(inner, outer)) {
-						// de must be inside l
-
-						if (!innerRect.intersects(outerRect)) {
-							throw new LogicException("Should be inside: " + outer + " doesn't contain " + inner);
-						}
-
-						if (((Rectangular) inner).getContainer() == outer) {
-							// check margins / padding
-
-							double rightDist = disp.getPadding(outer, Direction.LEFT);
-							double leftDist = disp.getPadding(outer, Direction.RIGHT);
-							double upDist = disp.getPadding(outer, Direction.DOWN);
-							double downDist = disp.getPadding(outer, Direction.UP);
-							
-							if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
-								throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
-							}
-		
-							if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
-								throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
-							}
-							
-							if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
-								throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
-							}
-		
-							if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
-								throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
-							}
-						}
+						checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
  
 					} else if (inner instanceof Rectangular) {
-						if (innerRect.intersects(outerRect)) {
-							throw new LogicException("Overlapped: " + outer + " by " + inner);
-						}
-						
-						if (isInGrid((Rectangular) inner)) {
-							return;
-						}
-						
-						
-						if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
-							// check y-separation
-							
-							if (innerRect.getMaxY() <= outerRect.getMinY()) {
-								// inner above outer
-								double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
-								if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
-									throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
-								}
-							} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
-								// inner below outer
-								double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
-								if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
-									throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
-								}						
-							} else {
-								throw new LogicException("Overlapped: " + outer + " by " + inner);
-							}
-							
-						}
-						
-						if (alongside(innerRect.getMinY(), innerRect.getMaxY(), outerRect.getMinY(), outerRect.getMaxY())) {
-							// check y-separation
-							
-							if (innerRect.getMaxX() < outerRect.getMinX()) {
-								// inner to left of outer
-								double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
-								if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
-									throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
-								}
-								
-							} else if (innerRect.getMinX() > outerRect.getMaxX()) {
-								// inner to right of outer
-								double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
-								if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
-									throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
-								}
-							} else {
-								throw new LogicException("Overlapped: " + outer + " by " + inner);
-							}
-							
-						}
+						checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
 					}
 				}
 
+			}
+
+			private void checkSiblingMargins(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+				if (innerRect.intersects(outerRect)) {
+					throw new LogicException("Overlapped: " + outer + " by " + inner);
+				}
+				
+				if (isInGrid((Rectangular) inner)) {
+					return;
+				}
+				
+				
+				if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
+					// check y-separation
+					
+					if (innerRect.getMaxY() <= outerRect.getMinY()) {
+						// inner above outer
+						double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
+						if (innerRect.getMaxY() + downDist > outerRect.getMinY()) {
+							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+						}
+					} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
+						// inner below outer
+						double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
+						if (innerRect.getMinY() - upDist < outerRect.getMaxY()) {
+							throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+						}						
+					} else {
+						throw new LogicException("Overlapped: " + outer + " by " + inner);
+					}
+					
+				}
+				
+				if (alongside(innerRect.getMinY(), innerRect.getMaxY(), outerRect.getMinY(), outerRect.getMaxY())) {
+					// check y-separation
+					
+					if (innerRect.getMaxX() < outerRect.getMinX()) {
+						// inner to left of outer
+						double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
+						if (innerRect.getMaxX() + rightDist > outerRect.getMinX()) {
+							throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+						}
+						
+					} else if (innerRect.getMinX() > outerRect.getMaxX()) {
+						// inner to right of outer
+						double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
+						if (innerRect.getMinX() - leftDist < outerRect.getMaxX()) {
+							throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+						}
+					} else {
+						throw new LogicException("Overlapped: " + outer + " by " + inner);
+					}
+					
+				}
+			}
+
+			private void checkContainmentPadding(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+				// de must be inside l
+
+				if (!innerRect.intersects(outerRect)) {
+					throw new LogicException("Should be inside: " + outer + " doesn't contain " + inner);
+				}
+
+				if (((Rectangular) inner).getContainer() == outer) {
+					// check margins / padding
+
+					double rightDist = disp.getPadding(outer, Direction.LEFT);
+					double leftDist = disp.getPadding(outer, Direction.RIGHT);
+					double upDist = disp.getPadding(outer, Direction.DOWN);
+					double downDist = disp.getPadding(outer, Direction.UP);
+					
+					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
+						throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+					}
+
+					if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
+						throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+					}
+					
+					if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+						throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+					}
+
+					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
+						throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+					}
+				}
 			}
 			
 			private boolean isInGrid(Rectangular inner) {
@@ -568,7 +576,7 @@ public class TestingEngine extends TestingHelp {
 					.reduce((a, b) -> a.createUnion(b));
 			
 			
-			return out.isPresent() ? out.get() : null;
+			return out.orElseGet(() -> new Rectangle2D.Double(0,0,0,0));
 		} else {
 			throw new Kite9ProcessingException();
 		}
