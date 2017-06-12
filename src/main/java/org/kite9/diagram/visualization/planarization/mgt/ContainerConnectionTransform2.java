@@ -8,6 +8,8 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.ContainerSideVertex;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -178,7 +180,12 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 	 */
 	private PlanarizationEdge splitEdgeFromVertex(String vertexName, Vertex v, Planarization pln, PlanarizationEdge receivingEdge, PlanarizationEdge mover, PlanarizationEdge after, boolean clockwise) {
 		// ok, splitting time - create a new vertex for the 'next' edge
-		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName);
+		
+		MultiCornerVertex orig = (MultiCornerVertex) v;
+		
+		ContainerSideVertex newVertex = new ContainerSideVertex(vertexName);
+		orig.getAnchors().stream().forEach(a -> newVertex.addUnderlying(a.getDe()));
+		t.breakEdge((PlanarizationEdge) receivingEdge, pln, newVertex);
 
 		// need to move next to the new vertex
 		if (mover.getFrom() == v) {

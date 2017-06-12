@@ -2,18 +2,15 @@ package org.kite9.diagram.visualization.planarization;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
-import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -51,7 +48,7 @@ public class Tools implements Logable {
 	 * This inserts the new EdgeCrossingVertex into an edge to break it in two
 	 * @param underlying if provided, it is assumed we are breaking the container boundary.
 	 */
-	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name) {
+	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, Vertex split) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
 		Vertex from = e.getFrom();
 		Vertex to = e.getTo();
@@ -62,8 +59,6 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Original edge order around " + to + " = " + toEdgeOrdering);
 
 		// split the existing edge to create two edges		
-		Set<DiagramElement> underlyings = new HashSet<>(e.getDiagramElements().keySet());
-		Vertex split = new EdgeCrossingVertex(name, underlyings);
 		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces

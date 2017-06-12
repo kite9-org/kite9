@@ -35,8 +35,8 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 		if (e instanceof ConnectionEdge) {
 			
 			ConnectionEdge ce = (ConnectionEdge) e;
-			boolean fromEnd = ce.getFrom() == planVertex;
-			boolean toEnd = ce.getTo() == planVertex;
+			boolean fromEnd = planVertex.isPartOf(ce.getFromConnected());
+			boolean toEnd = planVertex.isPartOf(ce.getToConnected());
 			
 			
 			if (fromEnd) {
@@ -50,7 +50,8 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 					l = ce.getOriginalUnderlying().getToLabel();
 				} 
 			} else {
-				throw new Kite9ProcessingException();
+				// middle bit of an edge
+				l = null;
 			}
 		} 
 		

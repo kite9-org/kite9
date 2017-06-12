@@ -5,8 +5,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.ContainerSideVertex;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.MultiElementVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
@@ -26,15 +29,19 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * @author robmoffat
  *
  */
-public class MultiCornerVertexArranger extends ConnectedVertexArranger {
+public class MultiElementVertexArranger extends ConnectedVertexArranger {
 	
-	public MultiCornerVertexArranger(ElementMapper em) {
+	public MultiElementVertexArranger(ElementMapper em) {
 		super(em);
 	}
 	
+	/**
+	 * This exclude {@link EdgeCrossingVertex}s and grid elements.
+	 */
 	@Override
 	public boolean needsConversion(Vertex v) {
-		if ((v instanceof MultiCornerVertex) && (v.getDiagramElements().size()==1)) {
+		if (((v instanceof MultiCornerVertex) && (((MultiCornerVertex)v).getDiagramElements().size()==1)) 
+				|| (v instanceof ContainerSideVertex)) {
 			return true;
 		} else {
 			return super.needsConversion(v);
@@ -43,10 +50,11 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 	
 	@Override
 	protected DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
-		if (v instanceof MultiCornerVertex) {
+		if (v instanceof MultiElementVertex) {
 			Map<Direction, List<IncidentDart>> dartDirections = getDartsInDirection(v, o, ti);
 			List<IncidentDart> allIncidentDarts = convertToDartList(dartDirections);
-			createBorderEdges(allIncidentDarts, dartDirections, o, (MultiCornerVertex) v);
+			createBorderEdges(allIncidentDarts, dartDirections, o, (MultiElementVertex) v);
+			log.send("Converting vertex: "+v, allIncidentDarts);
 			setupBoundariesFromIncidentDarts(allIncidentDarts, v);
 			return null;
 		} else {
@@ -54,7 +62,7 @@ public class MultiCornerVertexArranger extends ConnectedVertexArranger {
 		}
 	}
 
-	private void createBorderEdges(List<IncidentDart> dartDirections, Map<Direction, List<IncidentDart>> map, Orthogonalization o, MultiCornerVertex v) {
+	private void createBorderEdges(List<IncidentDart> dartDirections, Map<Direction, List<IncidentDart>> map, Orthogonalization o, MultiElementVertex v) {
 		// create sides for any sides that have > 1 incident darts
 		OPair<IncidentDart> borders = identifyBorders(dartDirections);
 		Direction inDirection = Direction.reverse(borders.getA().getArrivalSide());

@@ -43,7 +43,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected DiagramKite9XMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
-		transcodePNG(full);
+		//transcodePNG(full);
 		transcodeSVG(full);
 		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;

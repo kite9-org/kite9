@@ -8,6 +8,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 
 /**
  * The vertex arranger is part of the Orthogonalization process
@@ -44,4 +45,5 @@ public interface VertexArranger {
 	 * In the case of edge-crossing vertices etc.  we don't need to convert the vertex, so return false.
 	 */
 	public boolean needsConversion(Vertex v);
+	
 }

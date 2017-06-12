@@ -40,7 +40,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  *
  */
-public class ContainerContentsArranger extends MultiCornerVertexArranger {
+public class ContainerContentsArranger extends MultiElementVertexArranger {
 	
 	public ContainerContentsArranger(ElementMapper em) {
 		super(em);
