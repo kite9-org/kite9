@@ -18,8 +18,6 @@ public interface EdgeConverter {
 
 	IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fanStep);
 	
-	void convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex v1, Vertex v2);
-
 	void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, Side s);
 	
 }

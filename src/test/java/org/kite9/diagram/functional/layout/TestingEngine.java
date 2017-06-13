@@ -475,14 +475,14 @@ public class TestingEngine extends TestingHelp {
 				if (alongside(innerRect.getMinY(), innerRect.getMaxY(), outerRect.getMinY(), outerRect.getMaxY())) {
 					// check y-separation
 					
-					if (innerRect.getMaxX() < outerRect.getMinX()) {
+					if (innerRect.getMaxX() <= outerRect.getMinX()) {
 						// inner to left of outer
 						double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
 						if (innerRect.getMaxX() + rightDist > outerRect.getMinX()) {
 							throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
 						}
 						
-					} else if (innerRect.getMinX() > outerRect.getMaxX()) {
+					} else if (innerRect.getMinX() >= outerRect.getMaxX()) {
 						// inner to right of outer
 						double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
 						if (innerRect.getMinX() - leftDist < outerRect.getMaxX()) {
