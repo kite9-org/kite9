@@ -227,11 +227,11 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * This errs on the side of too large right now
 	 */
 	protected void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave) {
-		Slideable<Segment> early = link.getStartsWith();
-		Slideable<Segment> late = link.getEndsWith();
+		Slideable<Segment> early = link.getEarly();
+		Slideable<Segment> late = link.getLate();
 		Segment early1 = (Segment) early.getUnderlying();
 		Segment late1 = (Segment) late.getUnderlying();
-		
+		log.send(log.go() ? null : "Early: "+early+" late: "+late);
 		double minDistance = getMinimumDistance(early1, late1,  link.getSegment(), concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureLength(Math.max(minDistance, externalMin));

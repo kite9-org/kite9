@@ -311,7 +311,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				// process the edge - we need to do this after processing the first vertex 
 				List<DartDirection> created = processEdge(f, pln, o, fg, processingEdgeStartDirection, 
 						processingEdgeDartFromVertex, processingEdgeDartToVertex, processingEdge, doneFaces, doneEdges, lastVertex, processingVertex, edgeBends);
-				dartsInFace.addAll(created);getClass();
+				dartsInFace.addAll(created);
 				processingEdgeStartDirection = created.get(created.size()-1).getDirection();
 			}
 			

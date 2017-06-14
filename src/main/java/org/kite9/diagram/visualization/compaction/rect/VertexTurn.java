@@ -68,7 +68,7 @@ class VertexTurn {
 		return getEarly().minimumDistanceTo(getLate());
 	}
 	
-	private Slideable<Segment> getLate() {
+	public Slideable<Segment> getLate() {
 		switch (d) {
 		case UP:
 		case LEFT:
@@ -80,7 +80,7 @@ class VertexTurn {
 		}
 	}
 
-	private Slideable<Segment> getEarly() {
+	public Slideable<Segment> getEarly() {
 		switch (d) {
 		case UP:
 		case LEFT:

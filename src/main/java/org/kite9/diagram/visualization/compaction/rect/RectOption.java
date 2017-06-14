@@ -11,12 +11,13 @@ public class RectOption implements Comparable<RectOption> {
 	private final VertexTurn vt5;
 	private final Match m;
 	private int initialScore;
+	private final int i;
 
 	public Match getMatch() {
 		return m;
 	}
 
-	public RectOption(VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m) {
+	public RectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m) {
 		super();
 		this.vt1 = vt1;
 		this.vt2 = vt2;
@@ -25,6 +26,7 @@ public class RectOption implements Comparable<RectOption> {
 		this.vt5 = vt5;
 		this.m = m;
 		this.initialScore = getScore();
+		this.i = i;
 	}
 
 	public VertexTurn getMeets() {
@@ -65,7 +67,12 @@ public class RectOption implements Comparable<RectOption> {
 
 	@Override
 	public int compareTo(RectOption o) {
-		return Integer.compare(this.initialScore, o.initialScore);
+		int out = Integer.compare(this.initialScore, o.initialScore);
+		if (out != 0) {
+			return out;
+		} else {
+			return Integer.compare(this.i, o.i);
+		}
 	}
 
 	public String toString() {

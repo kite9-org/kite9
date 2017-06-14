@@ -69,27 +69,27 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, UnderlyingInfo toUI, Segment along, boolean concave) {
-		DiagramElement tode = toUI.getDiagramElement();
-		Direction toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.getSide(), true);
 		DiagramElement fromde = fromUI.getDiagramElement();
-		Direction fromUnderlyingSide = convertSideToDirection(horizontalDart, fromUI.getSide(), false);
+		Direction fromUnderlyingSide = convertSideToDirection(horizontalDart, fromUI.getSide(), true);
+		DiagramElement tode = toUI.getDiagramElement();
+		Direction toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.getSide(), false);
 
 		if (!needsLength(fromde, tode)) {
 			return 0;
 		}
-				
-		// side checking
-		if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
-			if (fromUnderlyingSide==toUnderlyingSide) {
-				// check whether there is containment
-				boolean containment =  contains(fromde, tode);
-				
-				if (!containment) {
-					return 0;
-				}
-				
-			}
-		}
+//				
+//		// side checking
+//		if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
+//			if (fromUnderlyingSide==toUnderlyingSide) {
+//				// check whether there is containment
+//				boolean containment =  contains(fromde, tode);
+//				
+//				if (!containment) {
+//					return 0;
+//				}
+//				
+//			}
+//		}
 		
 		DiagramElement alongDe = getAlongDiagramElement(along);
 		

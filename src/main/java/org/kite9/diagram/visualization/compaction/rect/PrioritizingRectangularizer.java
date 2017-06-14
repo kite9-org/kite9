@@ -164,6 +164,8 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	public boolean turnMatch(Turn t1, Turn t2, Turn t3, List<Turn> turns) {
 		return turns.get(0).equals(t1) && turns.get(1).equals(t2) && turns.get(2).equals(t3);
 	}
+	
+	int rectOptionNo = 0;
 
 	public RectOption createRectOption(List<VertexTurn> stack, int index, Match m, Compaction c, Rectangular partOf) {
 		VertexTurn vt5 = getItemRotating(stack, index);
@@ -171,6 +173,6 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		return new PrioritisedRectOption(this, vt1, vt2, vt3, vt4, vt5, m, c, partOf);
+		return new PrioritisedRectOption(rectOptionNo++, this, vt1, vt2, vt3, vt4, vt5, m, c, partOf);
 	}
 }

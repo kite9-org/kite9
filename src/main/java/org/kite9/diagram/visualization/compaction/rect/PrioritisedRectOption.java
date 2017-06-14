@@ -18,8 +18,8 @@ public class PrioritisedRectOption extends RectOption {
 	private Rectangular partOf;
 	private MeetsType meetsType;
 	
-	public PrioritisedRectOption(PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, Rectangular partOf) {
-		super(vt1, vt2, vt3, vt4, vt5, m);
+	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, Rectangular partOf) {
+		super(i, vt1, vt2, vt3, vt4, vt5, m);
 		this.partOf = partOf;
 		this.meetsType = getMeetsType();
 	}
