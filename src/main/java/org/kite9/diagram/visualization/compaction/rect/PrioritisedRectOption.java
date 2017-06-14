@@ -29,6 +29,10 @@ public class PrioritisedRectOption extends RectOption {
 	 */
 	public int getScore() {
 		VertexTurn extender = getExtender();
+		
+		if (extender.isFanTurn(getPar())) {
+			return -10;		// priority for closing fans
+		} 
 
 		MeetsType mt = getMeetsType();
 		switch (mt) {
@@ -36,18 +40,14 @@ public class PrioritisedRectOption extends RectOption {
 			return 0;
 		case CONNECTION_FAN:
 			return 1;
-		case CONNECTION_NORMAL:
-			if (extender.isFanTurn(getPar())) {
-				return -10;		// priority for closing fans
-			} else {
-				return 2;
-			}
-		case MINIMIZE_RECT_CORNER:
-			return 10;
 		case MINIMIZE_RECT_SIDE:
-			return 5;
+			return 3;
 		case MINIMIZE_RECT_SIDE_PART:
 			return 3;
+		case CONNECTION_NORMAL:
+			return 4;
+		case MINIMIZE_RECT_CORNER:
+			return 5;
 		default: 
 			return 0;
 		}
