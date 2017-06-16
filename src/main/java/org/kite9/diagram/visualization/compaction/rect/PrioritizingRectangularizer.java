@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -32,45 +34,46 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	};
 
 	@Override
-	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack) {
-		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
-		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
-		for (int i = 0; i < theStack.size(); i++) {
-			addNewRectOptions(c, result, theStack, pq, i);
-		}
-		
+	protected void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
 
- 
-		while (pq.size() > 0) {
-			RectOption ro = pq.remove();
-			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
-			if (ok) { 
-				//log.send(log.go() ? null : "Queue Currently: ",pq);
-				log.send(log.go() ? null : "Change: " + ro);
-				if (ro.getMatch() == Match.A) {
-					performRectangularizationA(theStack, c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
-					onStack.remove(ro.getLink());
-					onStack.remove(ro.getPar());
-				} else {
-					performRectangularizationD(theStack, c, result, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
-					onStack.remove(ro.getLink());
-					onStack.remove(ro.getPar());
+		for (List<VertexTurn> theStack : stacks.values()) {
+			PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
+			Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
+			for (int i = 0; i < theStack.size(); i++) {
+				addNewRectOptions(c, theStack, pq, i);
+			}
+
+			while (pq.size() > 0) {
+				RectOption ro = pq.remove();
+				boolean ok = checkRectOptionIsOk(onStack, ro, pq);
+				if (ok) {
+					// log.send(log.go() ? null : "Queue Currently: ",pq);
+					log.send(log.go() ? null : "Change: " + ro);
+					if (ro.getMatch() == Match.A) {
+						performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
+						onStack.remove(ro.getLink());
+						onStack.remove(ro.getPar());
+					} else {
+						performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
+						onStack.remove(ro.getLink());
+						onStack.remove(ro.getPar());
+					}
+
+					int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
+
+					// find more matches
+					for (int i = fromIndex; i <= fromIndex + 8; i++) {
+						addNewRectOptions(c, theStack, pq, i);
+					}
+
 				}
-
-				int fromIndex = theStack.indexOf(ro.getVt1())-4;
-
-				// find more matches
-				for (int i = fromIndex; i <= fromIndex + 8; i++) {
-					addNewRectOptions(c, result, theStack, pq, i);
-				}
- 
 			}
 		}
 	}
 
-	private void addNewRectOptions(Compaction c, List<Dart> result, List<VertexTurn> theStack,
+	private void addNewRectOptions(Compaction c, List<VertexTurn> theStack,
 			PriorityQueue<RectOption> pq, int i) {
-		EnumSet<Match> m = findPattern(theStack, c, result, i);
+		EnumSet<Match> m = findPattern(theStack, c, i);
 		if (m != null) {
 			for (Match match : m) {
 				RectOption ro = createRectOption(theStack, i, match, c);
@@ -120,7 +123,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	 * Examines a particular rotation pattern on the stack and returns a
 	 * RectOption for it if it can be rectangularized.
 	 */
-	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, List<Dart> out, int index) {
+	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, int index) {
 		if (stack.size() < 4)
 			return null;
 
