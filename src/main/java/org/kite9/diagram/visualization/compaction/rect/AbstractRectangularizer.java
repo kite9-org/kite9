@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -63,8 +63,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * overlapping.
 	 */
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		List<DartFace> faces = c.getOrthogonalization().getDartFacesForRectangular(r);
+	public void compact(Compaction c, Embedding r, Compactor rc) {
+		List<DartFace> faces = r.getDartFaces();
 		
 		if (faces == null) {
 			return;
@@ -87,7 +87,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				fixSize(c, getIthElementRotating(theStack, i), 0, isConcave(theStack, i));
 			}
 
-			performFaceRectangularization(c, result, theStack, r);
+			performFaceRectangularization(c, result, theStack);
 
 			if (!df.outerFace) {
 
@@ -159,7 +159,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		}
 	}
 
-	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack, Rectangular partOf);
+	protected abstract void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack);
 
 	private void setSlideableFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack, boolean outer) {
 		Rectangle<Slideable<Segment>> r = new Rectangle<>(

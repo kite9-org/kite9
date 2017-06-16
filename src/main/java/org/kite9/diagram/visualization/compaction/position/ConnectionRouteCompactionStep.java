@@ -7,14 +7,13 @@ import java.util.Set;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -30,8 +29,8 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
  */
 public class ConnectionRouteCompactionStep implements CompactionStep {
 	
-	public void compact(Compaction c, Rectangular r, Compactor cr) {
-		if (r instanceof Diagram) {
+	public void compact(Compaction c, Embedding r, Compactor cr) {
+		if (r.isTopEmbedding()) {
 			Set<Connection> renderedConnections = createTopElementSet(c.getOrthogonalization());
 			
 			for (Connection de : renderedConnections) {

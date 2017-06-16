@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.compaction;
 
-import org.kite9.diagram.model.Rectangular;
-
 /**
  * A step in which some part of the compaction process occurs.
  * 
@@ -11,6 +9,6 @@ import org.kite9.diagram.model.Rectangular;
  */
 public interface CompactionStep {
 
-	public void compact(Compaction c, Rectangular r, Compactor rc);
+	public void compact(Compaction c, Embedding e, Compactor rc);
 	
 }

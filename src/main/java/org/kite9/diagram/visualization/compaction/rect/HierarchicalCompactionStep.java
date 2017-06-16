@@ -1,13 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
@@ -23,14 +19,10 @@ public class HierarchicalCompactionStep extends AbstractCompactionStep {
 	}
 
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		if (r instanceof Container) {
-			for (DiagramElement de : ((Container) r).getContents()) {
-				if ((de instanceof Connected) || (de instanceof Label)) {
-					log.send("Compacting: "+de);
-					rc.compact((Rectangular) de, c);
-				}
-			}
+	public void compact(Compaction c, Embedding e, Compactor rc) {
+		for (Embedding e2: e.getInnerEmbeddings()) {
+			log.send("Compacting: "+e2);
+			rc.compact(e2, c);
 		}
 	}
 	

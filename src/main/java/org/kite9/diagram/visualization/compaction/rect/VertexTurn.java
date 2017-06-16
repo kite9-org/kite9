@@ -155,7 +155,7 @@ class VertexTurn {
 	public boolean isMinimizeRectangleBounded(Rectangular exclude) {
 		long rectsAtBothEnds = getUnderlyingsOfType(startsWith, Rectangular.class)
 				.filter(de -> endsWith.getUnderlying().hasUnderlying(de))
-				.filter(minimizeAndNotExclude(exclude)).count();
+				.filter(minimize()).count();
 		return rectsAtBothEnds > 0;
 	}
 	
@@ -166,17 +166,17 @@ class VertexTurn {
 		return (startsWithConnections > 0) && (endsWithConnections > 0);
 	}
 	
-	public boolean isMinimizeRectangleCorner(Rectangular exclude) {
+	public boolean isMinimizeRectangleCorner() {
 		long rects = getUnderlyingsOfType(s, Rectangular.class)
 			.filter(de -> endsWith.getUnderlying().hasUnderlying(de) || startsWith.getUnderlying().hasUnderlying(de))
-			.filter(minimizeAndNotExclude(exclude)).count();
+			.filter(minimize()).count();
 		
 	
 		return rects > 0;
 	}
 
-	private Predicate<? super Rectangular> minimizeAndNotExclude(Rectangular exclude) {
-		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE) && (r != exclude);
+	private Predicate<? super Rectangular> minimize() {
+		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE);
 	}
 
 	public boolean isConnection() {
@@ -184,8 +184,8 @@ class VertexTurn {
 		return connections > 0;
 	}
 	
-	public boolean isMinimizeRectangular(Rectangular exclude) {
-		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimizeAndNotExclude(exclude)).count();
+	public boolean isMinimizeRectangular() {
+		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimize()).count();
 		return rects > 0;
 	}
 	

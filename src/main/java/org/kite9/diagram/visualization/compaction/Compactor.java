@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction;
 
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
 /**
@@ -14,6 +13,6 @@ public interface Compactor {
 	
 	public Compaction compactDiagram(Orthogonalization o);
 	
-	void compact(Rectangular r, Compaction c);
+	void compact(Embedding e, Compaction c);
 
 }

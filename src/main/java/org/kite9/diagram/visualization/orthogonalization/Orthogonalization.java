@@ -62,4 +62,5 @@ public interface Orthogonalization extends Serializable {
 
 	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 
+	public List<DartFace> getDartFacesForDart(Dart d);
 }

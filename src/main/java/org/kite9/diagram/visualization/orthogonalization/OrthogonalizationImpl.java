@@ -21,7 +21,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
@@ -67,10 +66,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	protected Collection<Vertex> allVertices;												// needed for compaction
 	
 	protected List<DartFace> faces = new ArrayList<DartFace>();						// needed for compaction
-	
-	protected Map<Face, DartFace> dartFaceMap = new HashMap<>();
-	
+		
 	protected Map<Rectangular, List<DartFace>> facesRectangularMap = new HashMap<>();
+	
+	protected Map<Dart, List<DartFace>> dartDartFacesMap = new HashMap<>();
 	
 	public Set<Dart> getDartsForEdge(DiagramElement e) {
 		return waypointMap.get(e);
@@ -268,6 +267,16 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			frl = new ArrayList<>();
 			facesRectangularMap.put(partOf, frl);
 		}
+		
+		for (DartDirection dd : darts) {
+			List<DartFace> faces = dartDartFacesMap.get(dd.getDart());
+			if (faces == null) {
+				faces = new ArrayList<>(2);
+				dartDartFacesMap.put(dd.getDart(), faces);
+			}
+			faces.add(df);
+		}
+		
 		frl.add(df);
 		return df;
 	}
@@ -348,5 +357,10 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	@Override
 	public List<DartFace> getDartFacesForRectangular(Rectangular r) {
 		return facesRectangularMap.getOrDefault(r, Collections.emptyList());
+	}
+
+	@Override
+	public List<DartFace> getDartFacesForDart(Dart d) {
+		return dartDartFacesMap.get(d);
 	}
 }

@@ -1,19 +1,23 @@
 package org.kite9.diagram.visualization.compaction;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.SegmentBuilder;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 
 /**
@@ -42,14 +46,64 @@ public class PluggableCompactor implements Compactor {
 		Map<Dart, Segment> dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical);
 		Map<Vertex, Segment> horizontalSegmentMap = createVertexSegmentMap(horizontal);
 		Map<Vertex, Segment> verticalSegmentMap = createVertexSegmentMap(vertical);
-		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, horizontalSegmentMap, verticalSegmentMap);
-		compact(o.getPlanarization().getDiagram(), compaction);
+		Embedding topEmbedding = generateEmbeddings(o, horizontal, vertical);
+		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, horizontalSegmentMap, verticalSegmentMap, topEmbedding);
+		compact(compaction.getTopEmbedding(), compaction);
 		return compaction;
 	}
 
+	
+	private Embedding generateEmbeddings(Orthogonalization o, List<Segment> horizontal2, List<Segment> vertical2) {
+		Map<DartFace, EmbeddingImpl> done = new HashMap<>();
+		int embeddingNumber = 0;
+		for (DartFace dartFace : o.getFaces()) {
+			if (!done.containsKey(dartFace)) {
+				Set<DartFace> touching = new HashSet<>();
+				touching = getTouchingFaces(touching, dartFace, o);
+				EmbeddingImpl ei = new EmbeddingImpl(embeddingNumber++, touching);
+				touching.forEach(df -> done.put(df, ei));
+			}
+		}
+		
+		for (EmbeddingImpl e : done.values()) {
+			Set<DartFace> contained = e.getDartFaces().stream().flatMap(df -> df.getContainedFaces().stream()).collect(Collectors.toSet());
+			Set<Embedding> inside = contained.stream()
+					.map(df -> done.get(df))
+					.collect(Collectors.toSet());
+			e.setInnerEmbeddings(inside);
+		}
+		
+		// return just the top one
+		EmbeddingImpl topEmbedding = done.values().stream().filter(e -> isTopEmbedding(e)).findFirst().orElseThrow(() -> new Kite9ProcessingException("No top embedding"));
+		topEmbedding.setTopEmbedding(true);
+		return topEmbedding;
+	}
+
+	private boolean isTopEmbedding(Embedding e) {
+		return e.getDartFaces().stream().anyMatch(df -> df.outerFace && df.getContainedBy() == null);
+	}
+
+
+	private Set<DartFace> getTouchingFaces(Set<DartFace> touching, DartFace dartFace, Orthogonalization o) {
+		boolean todo = touching.add(dartFace);
+		if (todo) {
+			for (DartDirection d : dartFace.getDartsInFace()) {
+				List<DartFace> faces = o.getDartFacesForDart(d.getDart());
+				for (DartFace f2 : faces) {
+					if (f2 != dartFace) {
+						touching = getTouchingFaces(touching, f2, o);
+					}
+				}
+			}
+		}
+		
+		return touching;
+	}
+
+
 	protected Compaction instantiateCompaction(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Dart, Segment> dartToSegmentMap,
-			Map<Vertex, Segment> horizontalSegmentMap, Map<Vertex, Segment> verticalSegmentMap) {
-		return new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, dartToSegmentMap);
+			Map<Vertex, Segment> horizontalSegmentMap, Map<Vertex, Segment> verticalSegmentMap, Embedding topEmbedding) {
+		return new CompactionImpl(o, horizontal, vertical, horizontalSegmentMap, verticalSegmentMap, dartToSegmentMap, topEmbedding);
 	}
 	
 	private Map<Dart, Segment> calculateDartToSegmentMap(List<Segment> h1, List<Segment> v1) {
@@ -66,9 +120,9 @@ public class PluggableCompactor implements Compactor {
 	}
 
 	@Override
-	public void compact(Rectangular r, Compaction c) {
+	public void compact(Embedding e, Compaction c) {
 		for (CompactionStep step : steps) {
-			step.compact(c, r, this);
+			step.compact(c, e, this);
 		}
 	}
 	

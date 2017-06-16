@@ -1,27 +1,35 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 public class PrioritisedRectOption extends RectOption {
 	
-	static enum MeetsType { 
-		EXTEND_IF_NEEDED, 
-		MINIMIZE_RECT_CORNER, 		// connection-to-corner of rectangular
-		MINIMIZE_RECT_SIDE, 		// whole side of rectangular
-		MINIMIZE_RECT_SIDE_PART,    // connection-to-connection of rectangular 
-		CONNECTION_NORMAL,
-		CONNECTION_FAN };
+	static enum TurnType {
+		
+		EXTEND_IF_NEEDED(0), 
+		MINIMIZE_RECT_CORNER(50000), 		// connection-to-corner of rectangular
+		MINIMIZE_RECT_SIDE(30000), 		// whole side of rectangular
+		MINIMIZE_RECT_SIDE_PART(30000),    // connection-to-connection of rectangular 
+		CONNECTION_NORMAL(40000),
+		CONNECTION_FAN(10000);
 
-	private Rectangular partOf;
-	private MeetsType meetsType;
+		private TurnType(int c) {
+			this.cost = c;
+		}
+		
+		private final int cost;
+
+		public int getCost() {
+			return cost;
+		}
+	};
+
+	private TurnType meetsType;
 	
-	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, Rectangular partOf) {
+	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c) {
 		super(i, vt1, vt2, vt3, vt4, vt5, m);
-		this.partOf = partOf;
-		this.meetsType = getMeetsType();
+		this.meetsType = getType(getMeets());
 	}
 
 	/**
@@ -34,45 +42,43 @@ public class PrioritisedRectOption extends RectOption {
 			return -10;		// priority for closing fans
 		} 
 
-		MeetsType mt = getMeetsType();
-		switch (mt) {
-		case EXTEND_IF_NEEDED:
-			return 0;
-		case CONNECTION_FAN:
-			return 1;
-		case MINIMIZE_RECT_SIDE:
-			return 3;
-		case MINIMIZE_RECT_SIDE_PART:
-			return 3;
-		case CONNECTION_NORMAL:
-			return 4;
-		case MINIMIZE_RECT_CORNER:
-			return 5;
-		default: 
-			return 0;
-		}
+		int pushOut = calculatePushOut();
+		
+		TurnType mt = getType(getMeets());
+		int meetsCost = mt.getCost();
+		
+		return pushOut + meetsCost;
 	}
 	
-	public MeetsType getMeetsType() {
+	private int calculatePushOut() {
+		VertexTurn par = getPar();
 		VertexTurn meets = getMeets();
+		
+		double parLength = par.getMinimumLength();
+		double meetsLength = meets.getMinimumLength();
+		
+		return (int) Math.max(0,parLength - meetsLength);
+	}
+
+	public TurnType getType(VertexTurn meets) {
 		if (meets.isConnection()) {
 			if (meets.isFanTurn(null)) {
-				return MeetsType.CONNECTION_FAN;
+				return TurnType.CONNECTION_FAN;
 			} else {
-				return MeetsType.CONNECTION_NORMAL;
+				return TurnType.CONNECTION_NORMAL;
 			}
-		} else if (meets.isMinimizeRectangular(partOf)) {
+		} else if (meets.isMinimizeRectangular()) {
 			if (meets.isConnectionBounded()) {
-				return MeetsType.MINIMIZE_RECT_SIDE_PART;
-			} else if (meets.isMinimizeRectangleCorner(partOf)) {
-				return MeetsType.MINIMIZE_RECT_CORNER;
+				return TurnType.MINIMIZE_RECT_SIDE_PART;
+			} else if (meets.isMinimizeRectangleCorner()) {
+				return TurnType.MINIMIZE_RECT_CORNER;
 			} else if (meets.isConnectionBounded()) {
-				return MeetsType.MINIMIZE_RECT_SIDE_PART;
+				return TurnType.MINIMIZE_RECT_SIDE_PART;
 			} else {
-				return MeetsType.EXTEND_IF_NEEDED;
+				return TurnType.EXTEND_IF_NEEDED;
 			}
 		} else {
-			return MeetsType.EXTEND_IF_NEEDED;
+			return TurnType.EXTEND_IF_NEEDED;
 		}
 	}
 	

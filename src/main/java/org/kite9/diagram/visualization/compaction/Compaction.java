@@ -40,13 +40,8 @@ public interface Compaction {
 	
 	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
 	
-	//public Vertex createCompactionVertex(Segment s1, Segment s2);
-
-	//public Segment newSegment(PositionAction direction);
-	
-	//public List<DartFace> getDartFacesForRectangular(Rectangular r);
-	
 	public Segment getSegmentForDart(Dart d);
-
+	
+	public Embedding getTopEmbedding();
 
 }

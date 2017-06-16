@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.compaction.slideable;
 
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 public class LoggingOptimisationStep extends AbstractCompactionStep {
@@ -23,7 +23,8 @@ public class LoggingOptimisationStep extends AbstractCompactionStep {
 	}
 
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
+	public void compact(Compaction c, Embedding r, Compactor rc) {
+		log.send("Embedding: "+r);
 		optimise(c, c.getHorizontalSegmentSlackOptimisation(), c.getVerticalSegmentSlackOptimisation());
 	}
 

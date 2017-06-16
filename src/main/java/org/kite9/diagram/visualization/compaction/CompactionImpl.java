@@ -41,8 +41,9 @@ public class CompactionImpl implements Compaction {
 	private List<Segment> verticalSegments;
 	private List<Segment> horizontalSegments;
 	private Map<Dart, Segment> dartToSegmentMap;
+	private Embedding topEmbedding;
 
-	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Dart, Segment> dartToSegmentMap) {
+	public CompactionImpl(Orthogonalization o, List<Segment> horizontal, List<Segment> vertical, Map<Vertex, Segment> hmap, Map<Vertex, Segment> vmap, Map<Dart, Segment> dartToSegmentMap, Embedding topEmbedding) {
 		this.orthogonalization = o;
 		this.horizontalSegments = horizontal;
 		this.verticalSegments = vertical;
@@ -51,6 +52,7 @@ public class CompactionImpl implements Compaction {
 		this.dartToSegmentMap = dartToSegmentMap;		
 		this.horizontalSegmentSlackOptimisation = new SegmentSlackOptimisation(horizontal);
 		this.verticalSegmentSlackOptimisation = new SegmentSlackOptimisation(vertical);
+		this.topEmbedding = topEmbedding;
 	}
 	
 	private final SegmentSlackOptimisation horizontalSegmentSlackOptimisation; 
@@ -113,5 +115,10 @@ public class CompactionImpl implements Compaction {
 		} else {
 			return getVerticalSegmentSlackOptimisation();
 		} 
+	}
+
+	@Override
+	public Embedding getTopEmbedding() {
+		return topEmbedding;
 	}
 }

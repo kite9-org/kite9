@@ -23,6 +23,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -52,12 +53,12 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
+	public void compact(Compaction c, Embedding r, Compactor rc) {
 		
 		Collection<DartFace> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
-		for (DartFace dartFace : c.getOrthogonalization().getDartFacesForRectangular(r)) {
+		for (DartFace dartFace : r.getDartFaces()) {
 			insertSubFaces(dartFace, done, c);
 		}
 	}

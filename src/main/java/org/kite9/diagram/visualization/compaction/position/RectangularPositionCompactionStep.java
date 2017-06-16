@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -13,6 +12,7 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -25,8 +25,8 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 	}
 
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
-		if (r instanceof Diagram) {
+	public void compact(Compaction c, Embedding r, Compactor rc) {
+		if (r.isTopEmbedding()) {
 			compactInternal(c);
 		}
 	}

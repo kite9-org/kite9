@@ -7,7 +7,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -33,11 +32,11 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	};
 
 	@Override
-	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack, Rectangular partOf) {
+	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack) {
 		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
 		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
 		for (int i = 0; i < theStack.size(); i++) {
-			addNewRectOptions(c, result, theStack, pq, i, partOf);
+			addNewRectOptions(c, result, theStack, pq, i);
 		}
 		
 
@@ -62,7 +61,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 
 				// find more matches
 				for (int i = fromIndex; i <= fromIndex + 8; i++) {
-					addNewRectOptions(c, result, theStack, pq, i, partOf);
+					addNewRectOptions(c, result, theStack, pq, i);
 				}
  
 			}
@@ -70,11 +69,11 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	}
 
 	private void addNewRectOptions(Compaction c, List<Dart> result, List<VertexTurn> theStack,
-			PriorityQueue<RectOption> pq, int i, Rectangular partOf) {
+			PriorityQueue<RectOption> pq, int i) {
 		EnumSet<Match> m = findPattern(theStack, c, result, i);
 		if (m != null) {
 			for (Match match : m) {
-				RectOption ro = createRectOption(theStack, i, match, c, partOf);
+				RectOption ro = createRectOption(theStack, i, match, c);
 				pq.add(ro);
 				log.send(log.go() ? null : "Added option: "+ro);
 			}
@@ -167,12 +166,12 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 	
 	int rectOptionNo = 0;
 
-	public RectOption createRectOption(List<VertexTurn> stack, int index, Match m, Compaction c, Rectangular partOf) {
+	public RectOption createRectOption(List<VertexTurn> stack, int index, Match m, Compaction c) {
 		VertexTurn vt5 = getItemRotating(stack, index);
 		VertexTurn vt4 = getItemRotating(stack, index - 1);
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		return new PrioritisedRectOption(rectOptionNo++, this, vt1, vt2, vt3, vt4, vt5, m, c, partOf);
+		return new PrioritisedRectOption(rectOptionNo++, this, vt1, vt2, vt3, vt4, vt5, m, c);
 	}
 }
