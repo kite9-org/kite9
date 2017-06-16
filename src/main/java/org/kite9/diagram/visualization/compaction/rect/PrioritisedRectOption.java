@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.List;
+
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
@@ -27,8 +29,8 @@ public class PrioritisedRectOption extends RectOption {
 
 	private TurnType meetsType;
 	
-	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c) {
-		super(i, vt1, vt2, vt3, vt4, vt5, m);
+	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, List<VertexTurn> fromStack) {
+		super(i, vt1, vt2, vt3, vt4, vt5, m, fromStack);
 		this.meetsType = getType(getMeets());
 	}
 

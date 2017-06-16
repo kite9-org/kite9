@@ -11,7 +11,6 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.logging.LogicException;
 
@@ -35,39 +34,40 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 
 	@Override
 	protected void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(500);
+		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>();
 
 		for (List<VertexTurn> theStack : stacks.values()) {
-			PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
-			Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
 			for (int i = 0; i < theStack.size(); i++) {
 				addNewRectOptions(c, theStack, pq, i);
+				onStack.addAll(theStack);
 			}
+		}
 
-			while (pq.size() > 0) {
-				RectOption ro = pq.remove();
-				boolean ok = checkRectOptionIsOk(onStack, ro, pq);
-				if (ok) {
-					// log.send(log.go() ? null : "Queue Currently: ",pq);
-					log.send(log.go() ? null : "Change: " + ro);
-					if (ro.getMatch() == Match.A) {
-						performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					} else {
-						performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					}
-
-					int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
-
-					// find more matches
-					for (int i = fromIndex; i <= fromIndex + 8; i++) {
-						addNewRectOptions(c, theStack, pq, i);
-					}
-
+		while (pq.size() > 0) {
+			RectOption ro = pq.remove();
+			List<VertexTurn> theStack = ro.getStack();
+			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
+			if (ok) {
+				// log.send(log.go() ? null : "Queue Currently: ",pq);
+				log.send(log.go() ? null : "Change: " + ro);
+				if (ro.getMatch() == Match.A) {
+					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
+					onStack.remove(ro.getLink());
+					onStack.remove(ro.getPar());
+				} else {
+					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
+					onStack.remove(ro.getLink());
+					onStack.remove(ro.getPar());
 				}
-			}
+
+				int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
+
+				// find more matches
+				for (int i = fromIndex; i <= fromIndex + 8; i++) {
+					addNewRectOptions(c, theStack, pq, i);
+				}
+			}			
 		}
 	}
 
@@ -175,6 +175,6 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		return new PrioritisedRectOption(rectOptionNo++, this, vt1, vt2, vt3, vt4, vt5, m, c);
+		return new PrioritisedRectOption(rectOptionNo++, this, vt1, vt2, vt3, vt4, vt5, m, c, stack);
 	}
 }

@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.List;
+
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
 public class RectOption implements Comparable<RectOption> {
@@ -12,12 +14,13 @@ public class RectOption implements Comparable<RectOption> {
 	private final Match m;
 	private int initialScore;
 	private final int i;
+	private final List<VertexTurn> fromStack;
 
 	public Match getMatch() {
 		return m;
 	}
 
-	public RectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m) {
+	public RectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, List<VertexTurn> fromStack) {
 		super();
 		this.vt1 = vt1;
 		this.vt2 = vt2;
@@ -27,6 +30,11 @@ public class RectOption implements Comparable<RectOption> {
 		this.m = m;
 		this.initialScore = getScore();
 		this.i = i;
+		this.fromStack = fromStack;
+	}
+	
+	public List<VertexTurn> getStack() {
+		return fromStack;
 	}
 
 	public VertexTurn getMeets() {
