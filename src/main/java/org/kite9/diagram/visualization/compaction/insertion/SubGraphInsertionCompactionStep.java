@@ -68,8 +68,8 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 			throw new LogicException("Planarization error: dart face not present");
 		}
 		
-		if (dartFace.outerFace) {
-			return;  // outer faces don't have things embedded in them
+		if (dartFace.getContainedFaces().size() == 0) {
+			return;  // nothing embedded
 		}
 		
 		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);

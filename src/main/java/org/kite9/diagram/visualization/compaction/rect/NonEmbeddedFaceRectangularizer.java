@@ -13,9 +13,9 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
 
-public class OuterFaceRectangularizer extends PrioritizingRectangularizer {
+public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer {
 
-	public OuterFaceRectangularizer(CompleteDisplayer cd) {
+	public NonEmbeddedFaceRectangularizer(CompleteDisplayer cd) {
 		super(cd);
 	}
 
@@ -24,36 +24,36 @@ public class OuterFaceRectangularizer extends PrioritizingRectangularizer {
 //		super.afterChange(c, pq, theStack, fromIndex);
 //	}
 //
-//	/**
-//	 * If we have a 'safe' rectangularization, make sure meets can't increase
-//	 */
-//	@Override
-//	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
-//		if (!super.checkRectOptionIsOk(onStack, ro, pq, c)) {
-//			return false;
-//		}
-//		
-//		if (((PrioritisedRectOption) ro).isSizingSafe()) {
-//			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
-//			// meets won't increase in length
-//			
-//			VertexTurn meets = ro.getMeets();
-//			setMaxLengthWithMidpoint(meets, c);
-//
-//			VertexTurn par = ro.getPar();
-//			setMaxLengthWithMidpoint(par, c);
-//			
-//			int meetsMinimumLength = meets.getMinimumLength();
-//			int parMinimumLength = par.getMinimumLength();
-//			if (meetsMinimumLength < parMinimumLength) {
-//				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
-//				return false;
-//			} 
-//			
-//			log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);						
-//		} 
-//		return true;
-//	}
+	/**
+	 * If we have a 'safe' rectangularization, make sure meets can't increase
+	 */
+	@Override
+	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
+		if (!super.checkRectOptionIsOk(onStack, ro, pq, c)) {
+			return false;
+		}
+		
+		if (((PrioritisedRectOption) ro).isSizingSafe()) {
+			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
+			// meets won't increase in length
+			
+			VertexTurn meets = ro.getMeets();
+			setMaxLengthWithMidpoint(meets, c);
+
+			VertexTurn par = ro.getPar();
+			setMaxLengthWithMidpoint(par, c);
+			
+			int meetsMinimumLength = meets.getMinimumLength();
+			int parMinimumLength = par.getMinimumLength();
+			if (meetsMinimumLength < parMinimumLength) {
+				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
+				return false;
+			} 
+			
+			log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);						
+		} 
+		return true;
+	}
 
 	private void setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
 		vt.ensureMaxLength(vt.getMinimumLength());
@@ -103,7 +103,7 @@ public class OuterFaceRectangularizer extends PrioritizingRectangularizer {
 
 	@Override
 	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
-		return faces.stream().filter(df -> df.outerFace).collect(Collectors.toList());
+		return faces.stream().filter(df -> df.getContainedFaces().size()==0).collect(Collectors.toList());
 	}
 	
 }

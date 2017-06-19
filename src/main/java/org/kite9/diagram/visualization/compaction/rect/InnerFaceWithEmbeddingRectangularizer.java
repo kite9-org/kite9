@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -18,9 +17,9 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
  * @author robmoffat
  *
  */
-public class InnerFaceRectangularizer extends PrioritizingRectangularizer {
+public class InnerFaceWithEmbeddingRectangularizer extends PrioritizingRectangularizer {
 
-	public InnerFaceRectangularizer(CompleteDisplayer cd) {
+	public InnerFaceWithEmbeddingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
 	}
 	
@@ -41,8 +40,12 @@ public class InnerFaceRectangularizer extends PrioritizingRectangularizer {
 
 	@Override
 	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
-		return faces.stream().filter(df -> !df.outerFace).collect(Collectors.toList());
+		return faces.stream().filter(df -> df.getContainedFaces().size() > 0).collect(Collectors.toList());
 	}
+
+//	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
+//		return new ArrayList<>(faces);
+//	}
 
 	
 	

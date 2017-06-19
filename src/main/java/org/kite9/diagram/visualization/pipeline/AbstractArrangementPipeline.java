@@ -11,8 +11,8 @@ import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCom
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
-import org.kite9.diagram.visualization.compaction.rect.InnerFaceRectangularizer;
-import org.kite9.diagram.visualization.compaction.rect.OuterFaceRectangularizer;
+import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
+import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
@@ -83,9 +83,9 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 		CompleteDisplayer cd = getDisplayer();
 		CompactionStep[] steps = new CompactionStep[] {
 				new HierarchicalCompactionStep(cd),
-				new InnerFaceRectangularizer(cd),
+				new InnerFaceWithEmbeddingRectangularizer(cd),
 				new SubGraphInsertionCompactionStep(cd),
-				new OuterFaceRectangularizer(cd),
+				new NonEmbeddedFaceRectangularizer(cd),
 //				new MinimizeCompactionStep(getDisplayer()),
 //				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
