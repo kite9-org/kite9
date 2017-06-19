@@ -14,7 +14,7 @@ public class PrioritisedRectOption extends RectOption {
 		MINIMIZE_RECT_SIDE(30000), 		// whole side of rectangular
 		MINIMIZE_RECT_SIDE_PART(30000),    // connection-to-connection of rectangular 
 		CONNECTION_NORMAL(40000),
-		CONNECTION_FAN(10000);
+		CONNECTION_FAN(-10);
 
 		private TurnType(int c) {
 			this.cost = c;
@@ -27,30 +27,25 @@ public class PrioritisedRectOption extends RectOption {
 		}
 	};
 
-	private TurnType meetsType;
+	private TurnType type;
+	private boolean sizeSafe; 
 	
 	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, List<VertexTurn> fromStack) {
 		super(i, vt1, vt2, vt3, vt4, vt5, m, fromStack);
-		this.meetsType = getType(getMeets());
+		this.type = getType();
+		this.sizeSafe = isSizingSafe();
+		this.initialScore = getScore();
 	}
 
 	/**
 	 * Lower scores are better rect options
 	 */
 	public int getScore() {
-		VertexTurn extender = getExtender();
-		if (extender.isFanTurn(getPar())) {
-			return -10;		// priority for closing fans
-		} 
-		
 		// do safe ones last
-		int safeCost = isSizingSafe() ? 100000 : 0;
-		int pushOut = calculatePushOut();
-		
-		TurnType mt = getType(getMeets());
-		int meetsCost = mt.getCost();
-		
-		return pushOut + meetsCost + safeCost;
+		int safeCost = sizeSafe ? 100000 : 0;
+		int pushOut = sizeSafe ? 0 : calculatePushOut();
+		int typeCost = type.getCost();
+		return pushOut + typeCost + safeCost;
 	}
 	
 	private int calculatePushOut() {
@@ -63,13 +58,15 @@ public class PrioritisedRectOption extends RectOption {
 		return (int) Math.max(0,parLength - meetsLength);
 	}
 
-	public TurnType getType(VertexTurn meets) {
+	public TurnType getType() {
+		VertexTurn extender = getExtender();
+		if (extender.isFanTurn(getPar())) {
+			return TurnType.CONNECTION_FAN;
+		}
+		
+		VertexTurn meets = getMeets();
 		if (meets.isConnection()) {
-			if (meets.isFanTurn(null)) {
-				return TurnType.CONNECTION_FAN;
-			} else {
-				return TurnType.CONNECTION_NORMAL;
-			}
+			return TurnType.CONNECTION_NORMAL;
 		} else if (meets.isMinimizeRectangular()) {
 			if (meets.isConnectionBounded()) {
 				return TurnType.MINIMIZE_RECT_SIDE_PART;
@@ -85,7 +82,15 @@ public class PrioritisedRectOption extends RectOption {
 		}
 	}
 	
+	/**
+	 * This basically says whether we can rectangularize without causing meets to grow IF par is shorter 
+	 * or the same length as meets.
+	 */
+	public boolean isSizingSafe() {
+		return type != TurnType.CONNECTION_FAN && (getPost().getDirection() == getExtender().getDirection());
+	}
+	
 	public String toString() {
-		return "[RO: ("+this.getInitialScore()+")"+ ", safe = "+isSizingSafe()+", meetsType = "+meetsType+ ", extender = " + getExtender().getSegment() +"]"; 
+		return "\n[RO: "+i+"("+this.getInitialScore()+")"+ ", safe = "+sizeSafe+", meetsType = "+type+ ", extender = " + getExtender().getSegment() +"]"; 
 	}
 }

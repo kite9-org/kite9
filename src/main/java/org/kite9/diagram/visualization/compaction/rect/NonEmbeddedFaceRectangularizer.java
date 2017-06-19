@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
@@ -38,27 +39,39 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			// meets won't increase in length
 			
 			VertexTurn meets = ro.getMeets();
-			setMaxLengthWithMidpoint(meets, c);
+			int meetsMinimumLength = setMaxLengthWithMidpoint(meets, c);
 
 			VertexTurn par = ro.getPar();
-			setMaxLengthWithMidpoint(par, c);
+			int parMinimumLength = setMaxLengthWithMidpoint(par, c);
 			
-			int meetsMinimumLength = meets.getMinimumLength();
-			int parMinimumLength = par.getMinimumLength();
+			
 			if (meetsMinimumLength < parMinimumLength) {
 				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
 				return false;
 			} 
 			
-			log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);						
+			log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);	
+			return true;
 		} 
+
+		log.send("Allowing: meets="+ro.getMeets()+"\n          for par="+ro.getPar());						
 		return true;
 	}
 
-	private void setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
-		vt.ensureMaxLength(vt.getMinimumLength());
+	private int setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
 		
-//		Rectangular r = getRectangular(vt);
+		Rectangular r = getRectangular(vt);
+		if ((r!= null) && (r.getSizing() == DiagramElementSizing.MINIMIZE)) {
+			// ok, size is needed.
+			
+			int minimumLength = vt.getMinimumLength();
+			vt.ensureMaxLength(minimumLength);
+			return minimumLength;
+		} 
+		
+		// no size needed
+		return 10000;
+		
 //		OPair<Slideable<Segment>> startEnd;
 //		SegmentSlackOptimisation so = (Direction.isVertical(vt.getDirection())) ? 
 //			c.getHorizontalSegmentSlackOptimisation() : 
@@ -88,8 +101,10 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 	private Rectangular getRectangular(VertexTurn vt) {
 		List<Rectangular> r = vt.getSegment().getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).filter(de -> de instanceof Rectangular).map(de -> (Rectangular) de).collect(Collectors.toList());
 	
-		if (r.size() != 1) {
+		if (r.size() > 1) {
 			throw new Kite9ProcessingException();
+		} else if (r.size() == 0) {
+			return null;
 		}
 		
 		return r.get(0);

@@ -139,23 +139,26 @@ class VertexTurn {
 	}
 	
 	public boolean isFanTurn(VertexTurn atEnd) {
-		if (atEnd == null) {
-			return isStartInnerFan() || isEndInnerFan();
-		} else if (atEnd.s == startsWith) {
-			return isStartInnerFan();
-		} else if (atEnd.s == endsWith) {
-			return isEndInnerFan();
-		} else {
-			throw new Kite9ProcessingException();
+		if ((start instanceof FanVertex) && (end instanceof FanVertex)) {
+			if (atEnd.s == startsWith) {
+				return isStartInnerFan();
+			} else if (atEnd.s == endsWith) {
+				return isEndInnerFan();
+			} else {
+				throw new Kite9ProcessingException();
+			}
 		}
+		
+		return false;
+		
 	}
 
 	private boolean isEndInnerFan() {
-		return (end instanceof FanVertex); // && ((FanVertex)end).isInner();
+		return (end instanceof FanVertex) && ((FanVertex)end).isInner();
 	}
 
 	private boolean isStartInnerFan() {
-		return (start instanceof FanVertex); // && ((FanVertex)start).isInner();
+		return (start instanceof FanVertex) && ((FanVertex)start).isInner();
 	}
 	
 	public boolean isMinimizeRectangleBounded(Rectangular exclude) {

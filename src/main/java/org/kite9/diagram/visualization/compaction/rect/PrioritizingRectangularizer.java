@@ -22,7 +22,7 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class PrioritizingRectangularizer extends AbstractRectangularizer {
+public abstract class PrioritizingRectangularizer extends AbstractRectangularizer {
 
 	public PrioritizingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
@@ -52,11 +52,11 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 				// log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
 				if (ro.getMatch() == Match.A) {
-					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ro.isSizingSafe());
+					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isSizingSafe());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				} else {
-					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ro.isSizingSafe());
+					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isSizingSafe());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				}

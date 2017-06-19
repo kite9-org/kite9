@@ -12,8 +12,8 @@ public class RectOption implements Comparable<RectOption> {
 	private final VertexTurn vt4;
 	private final VertexTurn vt5;
 	private final Match m;
-	private int initialScore;
-	private final int i;
+	protected int initialScore;
+	protected final int i;
 	private final List<VertexTurn> fromStack;
 
 	public Match getMatch() {
@@ -28,7 +28,6 @@ public class RectOption implements Comparable<RectOption> {
 		this.vt4 = vt4;
 		this.vt5 = vt5;
 		this.m = m;
-		this.initialScore = getScore();
 		this.i = i;
 		this.fromStack = fromStack;
 	}
@@ -78,9 +77,9 @@ public class RectOption implements Comparable<RectOption> {
 		int out = Integer.compare(this.initialScore, o.initialScore);
 		if (out != 0) {
 			return out;
-		} else {
-			return Integer.compare(this.i, o.i);
-		}
+		} 
+		
+		return Integer.compare(this.i, o.i);
 	}
 
 	public String toString() {
@@ -106,14 +105,4 @@ public class RectOption implements Comparable<RectOption> {
 	public VertexTurn getVt5() {
 		return vt5;
 	}
-	
-	/**
-	 * This basically says whether we can rectangularize without causing meets to grow IF par is shorter 
-	 * or the same length as meets.
-	 */
-	public boolean isSizingSafe() {
-		return getPost().getDirection() == getExtender().getDirection();
-		
-	}
-
 }

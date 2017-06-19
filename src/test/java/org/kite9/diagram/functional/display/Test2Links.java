@@ -87,5 +87,24 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(d);
 	}
+	
+	/**
+	 * Number of edges added doesn't look right
+	 * @throws Exception
+	 */
+	@Test
+	public void test_2_7_1Glyph1Arrow2() throws Exception {
+		Glyph one = new Glyph("one", "Stereo", "One", null, null);
+		Arrow a = new Arrow("meets", "meets");
+		TurnLink tl1 = new TurnLink(a, one);
+		TurnLink tl2 = new TurnLink(a, one);
+		TurnLink tl3 = new TurnLink(a, one);
+		tl1.setAttribute("id", "tl1");
+		tl2.setAttribute("id", "tl2");
+		tl3.setAttribute("id", "tl3");
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, a));
+
+		renderDiagram(d);
+	}
 
 }
