@@ -39,9 +39,9 @@ class VertexTurn {
 		Optional<Vertex> out = a.getVerticesInSegment().stream().filter(v -> b.getVerticesInSegment().contains(v)).findFirst();
 		if (out.isPresent()) {
 			return out.get();
-		} else {
-			return null;
-		}
+		} 
+		
+		return null;
 	}
 
 	private final Slideable<Segment> s;
@@ -53,7 +53,7 @@ class VertexTurn {
 	private final Direction d;
 		
 	public Segment getSegment() {
-		return (Segment) s.getUnderlying();
+		return s.getUnderlying();
 	}
 	
 	public Slideable<Segment> getSlideable() {
@@ -126,10 +126,16 @@ class VertexTurn {
 		this.start = null;
 	}
 
-	public void ensureLength(double l) {
+	public void ensureMinLength(double l) {
 		Slideable<Segment> early = getEarly();
 		Slideable<Segment> late = getLate();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
+	}
+	
+	public void ensureMaxLength(double l) {
+		Slideable<Segment> early = getEarly();
+		Slideable<Segment> late = getLate();
+		early.getSlackOptimisation().ensureMaximumDistance(early, late, (int) l);
 	}
 	
 	public boolean isFanTurn(VertexTurn atEnd) {
@@ -192,5 +198,9 @@ class VertexTurn {
 	@SuppressWarnings("unchecked")
 	private static <X extends DiagramElement> Stream<X> getUnderlyingsOfType(Slideable<Segment> s, Class<X> c) {
 		return s.getUnderlying().getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).filter(de -> c.isAssignableFrom(de.getClass())).map(de -> (X) de);
+	}
+	
+	public boolean isFixedLength() {
+		return (getEarly().hasMaximumConstraints()) || (getLate().hasMaximumConstraints());
 	}
 }

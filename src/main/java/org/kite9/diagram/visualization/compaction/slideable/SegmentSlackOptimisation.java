@@ -19,6 +19,7 @@ import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
 
 /**
@@ -149,5 +150,6 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 
 	public Collection<OPair<Slideable<Segment>>> getRectangularSlideablePairs() {
 		return rectangularElementToSlideableMap.values();
-	}
+	}	
+	
 }

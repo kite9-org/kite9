@@ -20,8 +20,8 @@ public class HierarchicalCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Embedding e, Compactor rc) {
+		log.send("Compacting: "+e);
 		for (Embedding e2: e.getInnerEmbeddings()) {
-			log.send("Compacting: "+e2);
 			rc.compact(e2, c);
 		}
 	}

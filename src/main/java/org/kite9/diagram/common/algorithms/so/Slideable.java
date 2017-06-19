@@ -150,6 +150,10 @@ public class Slideable<X> implements PositionChangeNotifiable {
 			throw new SlideableException("addMaximumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
 		}
 	}
+	
+	public boolean hasMaximumConstraints() {
+		return false;
+	}
 
 	public void setMinimumPosition(int i) {
 		minimum.increasePosition(i);

@@ -164,4 +164,12 @@ public class SingleDirection {
 		return false;
 	}
 	
+	public boolean hasForwardConstraints() {
+		return forward.size() > 0;
+	}
+	
+	public boolean hasBackwardConstraints() {
+		return backward.size() > 0;
+	}
+	
 }

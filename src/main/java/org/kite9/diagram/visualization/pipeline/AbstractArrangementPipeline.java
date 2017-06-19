@@ -11,6 +11,8 @@ import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCom
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
+import org.kite9.diagram.visualization.compaction.rect.InnerFaceRectangularizer;
+import org.kite9.diagram.visualization.compaction.rect.OuterFaceRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
@@ -78,10 +80,12 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public Compactor createCompactor() {
+		CompleteDisplayer cd = getDisplayer();
 		CompactionStep[] steps = new CompactionStep[] {
-				new HierarchicalCompactionStep(getDisplayer()),
-				new PrioritizingRectangularizer(getDisplayer()),
-				new SubGraphInsertionCompactionStep(getDisplayer()),
+				new HierarchicalCompactionStep(cd),
+				new InnerFaceRectangularizer(cd),
+				new SubGraphInsertionCompactionStep(cd),
+				new OuterFaceRectangularizer(cd),
 //				new MinimizeCompactionStep(getDisplayer()),
 //				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
@@ -90,14 +94,14 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //						//new LinkLengthReductionOptimisationStep(),
 ////						new EdgeAlignmentOptimisationStep(),
 ////						new SlackCenteringOptimisationStep(),
-				new LoggingOptimisationStep(getDisplayer()),
+				new LoggingOptimisationStep(cd),
 //					}
 //
 //				), 
-				new WidthCompactionStep(getDisplayer()), 
-				new LoggingOptimisationStep(getDisplayer()),
+				new WidthCompactionStep(cd), 
+				new LoggingOptimisationStep(cd),
 				new ConnectionRouteCompactionStep(),
-				new RectangularPositionCompactionStep(getDisplayer())
+				new RectangularPositionCompactionStep(cd)
 				};
 
 		compactor = new PluggableCompactor(steps);

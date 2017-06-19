@@ -106,5 +106,14 @@ public class RectOption implements Comparable<RectOption> {
 	public VertexTurn getVt5() {
 		return vt5;
 	}
+	
+	/**
+	 * This basically says whether we can rectangularize without causing meets to grow IF par is shorter 
+	 * or the same length as meets.
+	 */
+	public boolean isSizingSafe() {
+		return getPost().getDirection() == getExtender().getDirection();
+		
+	}
 
 }

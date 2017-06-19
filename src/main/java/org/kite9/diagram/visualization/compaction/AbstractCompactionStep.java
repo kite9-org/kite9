@@ -77,19 +77,6 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		if (!needsLength(fromde, tode)) {
 			return 0;
 		}
-//				
-//		// side checking
-//		if ((fromUnderlyingSide!=null) && (toUnderlyingSide!=null)) {
-//			if (fromUnderlyingSide==toUnderlyingSide) {
-//				// check whether there is containment
-//				boolean containment =  contains(fromde, tode);
-//				
-//				if (!containment) {
-//					return 0;
-//				}
-//				
-//			}
-//		}
 		
 		DiagramElement alongDe = getAlongDiagramElement(along);
 		
@@ -98,7 +85,14 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	private DiagramElement getAlongDiagramElement(Segment along) {
-		return along == null ? null : along.getUnderlyingWithSide(Side.NEITHER);
+		if (along == null) {
+			return null;
+		}
+		DiagramElement best = along.getUnderlyingWithSide(Side.NEITHER);
+		if (best == null) {
+			return along.getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).findFirst().orElse(null);
+		}
+		return best;
 	}
 	
 	private Direction convertSideToDirection(boolean horizontalDart, Side side, boolean first) {

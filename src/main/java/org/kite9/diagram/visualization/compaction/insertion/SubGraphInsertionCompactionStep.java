@@ -54,7 +54,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 	@Override
 	public void compact(Compaction c, Embedding r, Compactor rc) {
-		
+		log.send("Subgraph Insertion: "+r);
 		Collection<DartFace> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
@@ -66,6 +66,10 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 	private void insertSubFaces(DartFace dartFace, Collection<DartFace> done, Compaction c) {
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
+		}
+		
+		if (dartFace.outerFace) {
+			return;  // outer faces don't have things embedded in them
 		}
 		
 		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);

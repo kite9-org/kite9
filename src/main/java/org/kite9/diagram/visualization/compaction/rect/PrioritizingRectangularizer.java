@@ -47,27 +47,30 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		while (pq.size() > 0) {
 			RectOption ro = pq.remove();
 			List<VertexTurn> theStack = ro.getStack();
-			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
+			boolean ok = checkRectOptionIsOk(onStack, ro, pq, c);
 			if (ok) {
 				// log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
 				if (ro.getMatch() == Match.A) {
-					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
+					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ro.isSizingSafe());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				} else {
-					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
+					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ro.isSizingSafe());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				}
 
 				int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
-
-				// find more matches
-				for (int i = fromIndex; i <= fromIndex + 8; i++) {
-					addNewRectOptions(c, theStack, pq, i);
-				}
+				afterChange(c, pq, theStack, fromIndex);
 			}			
+		}
+	}
+
+	protected void afterChange(Compaction c, PriorityQueue<RectOption> pq, List<VertexTurn> theStack, int fromIndex) {
+		// find more matches
+		for (int i = fromIndex; i <= fromIndex + 8; i++) {
+			addNewRectOptions(c, theStack, pq, i);
 		}
 	}
 
@@ -83,7 +86,7 @@ public class PrioritizingRectangularizer extends AbstractRectangularizer {
 		}
 	}
 
-	private boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq) {
+	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
 		boolean allThere = onStack.contains(ro.getExtender()) && onStack.contains(ro.getMeets()) && onStack.contains(ro.getPar())
 				&& onStack.contains(ro.getLink()) && onStack.contains(ro.getPost());
 		if (!allThere) {

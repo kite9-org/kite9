@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
@@ -71,7 +70,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			return;
 		}
 		
-		List<DartFace> orderedFaces = new ArrayList<DartFace>(faces);
+		List<DartFace> orderedFaces = selectFacesToRectangularize(faces);
 		Map<DartFace, List<VertexTurn>> stacks = setupDartFaceStacks(c, orderedFaces);
 
 		performFaceRectangularization(c, stacks);
@@ -85,13 +84,15 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			}
 
 			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace);
+				fixSize(getIthElementRotating(theStack, i), 0, !df.outerFace);
 			}
 			
 			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 		}
 
 	}
+
+	protected abstract List<DartFace> selectFacesToRectangularize(List<DartFace> faces);
 
 	protected Map<DartFace, List<VertexTurn>> setupDartFaceStacks(Compaction c, List<DartFace> orderedFaces) {
 		Map<DartFace, List<VertexTurn>> stacks = new HashMap<>();
@@ -101,14 +102,13 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			// first, add all the segments to the stack in unrectangularized
 			// form
 			List<VertexTurn> theStack = new ArrayList<VertexTurn>();
-			stacks.put(df, theStack);
 			List<DartDirection> turns = df.getDartsInFace();
-			Vertex from = df.getStartVertex();
-			buildStack(df, theStack, turns, from, c);
+			buildStack(df, theStack, turns, c);
 			
 			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(c, getIthElementRotating(theStack, i), 0, isConcave(theStack, i));
+				fixSize(getIthElementRotating(theStack, i), 0, isConcave(theStack, i));
 			}
+			stacks.put(df, theStack);
 		}
 		return stacks;
 	}
@@ -119,8 +119,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		return (prev.getDirection() != next.getDirection());
 	}
 
-	private void buildStack(DartFace df, List<VertexTurn> theStack,
-			List<DartDirection> turns, Vertex from, Compaction c) {
+	private void buildStack(DartFace df, List<VertexTurn> theStack, List<DartDirection> turns, Compaction c) {
 		if (df.getDartsInFace().size() > 2) {
 			
 			int startPoint = 0;
@@ -217,14 +216,11 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	protected void performRectangularizationD(List<VertexTurn> stack, Compaction c, VertexTurn ext,
-			VertexTurn par, VertexTurn link, VertexTurn meets) {
+			VertexTurn par, VertexTurn link, VertexTurn meets, boolean safe) {
 		// logRectangularizationContext(ext, par, link, meets);
 		Slideable<Segment> first = ext.getEndsWith();
 		Slideable<Segment> to = meets.getSlideable();
-		Direction d2 = Direction.reverse(meets.getDirection());
-		Direction d1 = ext.getDirection();
-
-		performRectangularization(c, meets, link, par, ext, first, to, d1, d2);
+		performRectangularization(c, meets, link, par, ext, first, to, safe);
 		cutRectangleCorner(stack, par, link);
 	}
 
@@ -234,35 +230,32 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * 
 	 * This errs on the side of too large right now
 	 */
-	protected void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave) {
+	protected void fixSize(VertexTurn link, double externalMin, boolean concave) {
 		Slideable<Segment> early = link.getEarly();
 		Slideable<Segment> late = link.getLate();
-		Segment early1 = (Segment) early.getUnderlying();
-		Segment late1 = (Segment) late.getUnderlying();
-		log.send(log.go() ? null : "Early: "+early+" late: "+late);
+		Segment early1 = early.getUnderlying();
+		Segment late1 = late.getUnderlying();
+		log.send(log.go() ? null : " Early: "+early+" late: "+late);
 		double minDistance = getMinimumDistance(early1, late1,  link.getSegment(), concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
-		link.ensureLength(Math.max(minDistance, externalMin));
+		link.ensureMinLength(Math.max(minDistance, externalMin));
 	
 	}
 
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, VertexTurn meets,
-			VertexTurn link, VertexTurn par, VertexTurn ext) {
+			VertexTurn link, VertexTurn par, VertexTurn ext, boolean safe) {
 		// logRectangularizationContext(meets, link, par, ext);
 		Slideable<Segment> first = ext.getStartsWith();
 		Slideable<Segment> to = meets.getSlideable();
-		Direction d1 = Direction.reverse(ext.getDirection());
-		Direction d2 = meets.getDirection();
-
-		performRectangularization(c,  meets, link, par, ext, first, to, d1, d2);
+		performRectangularization(c,  meets, link, par, ext, first, to, safe);
 		cutRectangleCorner(stack, link, par);
 	}
 	
 
 	protected void performRectangularization(Compaction c, VertexTurn meets, VertexTurn link,
-			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, Direction d1, Direction d2) {
-		fixSize(c, link, 0, true);
-		fixSize(c, par, 0, true);
+			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, boolean safe) {
+		fixSize(link, 0, true);
+		fixSize(par, 0, !safe);
 
 		if (extender.getStartsWith() == from) {
 			extender.resetEndsWith(to);
@@ -277,19 +270,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			meets.resetEndsWith(extender.getSlideable());
 		}
 		
-	}
-
-	protected double calculateNewMeetsLength(VertexTurn meets, VertexTurn par) {
-		System.out.println("fix this");
-		if (par.isLengthKnown()) {
-			return Math.max(0, calculateLength(meets) - calculateLength(par));
-		} else {
-			return 0;
-		}
-	}
-
-	private int calculateLength(VertexTurn vt) {
-		return vt.getMinimumLength();
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

@@ -165,12 +165,12 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	@Override
-	public double getLinkGutter(DiagramElement element, Direction d) {
+	public double getLinkGutter(Rectangular element, Direction d) {
 		return 10;
 	}
 
 	@Override
-	public double getLinkMinimumLength(DiagramElement element) {
+	public double getLinkMinimumLength(Connection element) {
 		return 10;
 	}
 
@@ -185,7 +185,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	@Override
-	public double getLinkInset(DiagramElement element, Direction d) {
+	public double getLinkInset(Rectangular element, Direction d) {
 		return 5;
 	}
 

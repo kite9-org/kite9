@@ -39,17 +39,18 @@ public class PrioritisedRectOption extends RectOption {
 	 */
 	public int getScore() {
 		VertexTurn extender = getExtender();
-		
 		if (extender.isFanTurn(getPar())) {
 			return -10;		// priority for closing fans
 		} 
-
+		
+		// do safe ones last
+		int safeCost = isSizingSafe() ? 100000 : 0;
 		int pushOut = calculatePushOut();
 		
 		TurnType mt = getType(getMeets());
 		int meetsCost = mt.getCost();
 		
-		return pushOut + meetsCost;
+		return pushOut + meetsCost + safeCost;
 	}
 	
 	private int calculatePushOut() {
@@ -85,6 +86,6 @@ public class PrioritisedRectOption extends RectOption {
 	}
 	
 	public String toString() {
-		return "[RO: ("+this.getInitialScore()+")"+ ", meetsType = "+meetsType+ " extender = " + getExtender().getSegment() +"]"; 
+		return "[RO: ("+this.getInitialScore()+")"+ ", safe = "+isSizingSafe()+", meetsType = "+meetsType+ ", extender = " + getExtender().getSegment() +"]"; 
 	}
 }

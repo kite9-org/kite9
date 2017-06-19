@@ -46,14 +46,14 @@ public class PluggableCompactor implements Compactor {
 		Map<Dart, Segment> dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical);
 		Map<Vertex, Segment> horizontalSegmentMap = createVertexSegmentMap(horizontal);
 		Map<Vertex, Segment> verticalSegmentMap = createVertexSegmentMap(vertical);
-		Embedding topEmbedding = generateEmbeddings(o, horizontal, vertical);
+		Embedding topEmbedding = generateEmbeddings(o);
 		Compaction compaction = instantiateCompaction(o, horizontal, vertical, dartToSegmentMap, horizontalSegmentMap, verticalSegmentMap, topEmbedding);
 		compact(compaction.getTopEmbedding(), compaction);
 		return compaction;
 	}
 
 	
-	private Embedding generateEmbeddings(Orthogonalization o, List<Segment> horizontal2, List<Segment> vertical2) {
+	private Embedding generateEmbeddings(Orthogonalization o) {
 		Map<DartFace, EmbeddingImpl> done = new HashMap<>();
 		int embeddingNumber = 0;
 		for (DartFace dartFace : o.getFaces()) {
@@ -65,7 +65,7 @@ public class PluggableCompactor implements Compactor {
 			}
 		}
 		
-		for (EmbeddingImpl e : done.values()) {
+		for (EmbeddingImpl e : new HashSet<>(done.values())) {
 			Set<DartFace> contained = e.getDartFaces().stream().flatMap(df -> df.getContainedFaces().stream()).collect(Collectors.toSet());
 			Set<Embedding> inside = contained.stream()
 					.map(df -> done.get(df))
