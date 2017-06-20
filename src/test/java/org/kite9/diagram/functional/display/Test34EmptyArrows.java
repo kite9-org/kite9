@@ -63,7 +63,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_4_3WayNonPointArrow() throws Exception {
-		Arrow a = new Arrow("middle", "");
+		Arrow a = new Arrow("middle", "middle");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);

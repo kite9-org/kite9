@@ -31,7 +31,7 @@ public class InnerFaceWithEmbeddingRectangularizer extends PrioritizingRectangul
 
 	@Override
 	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
-		if (ro.isSizingSafe()) {
+		if (((PrioritisedRectOption) ro).isSizingSafe()) {
 			return false;
 		}
 		

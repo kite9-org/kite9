@@ -9,12 +9,12 @@ public class PrioritisedRectOption extends RectOption {
 	
 	static enum TurnType {
 		
+		CONNECTION_FAN(-10),
 		EXTEND_IF_NEEDED(0), 
-		MINIMIZE_RECT_CORNER(50000), 		// connection-to-corner of rectangular
 		MINIMIZE_RECT_SIDE(30000), 		// whole side of rectangular
 		MINIMIZE_RECT_SIDE_PART(30000),    // connection-to-connection of rectangular 
 		CONNECTION_NORMAL(40000),
-		CONNECTION_FAN(-10);
+		MINIMIZE_RECT_CORNER(50000); 		// connection-to-corner of rectangular
 
 		private TurnType(int c) {
 			this.cost = c;

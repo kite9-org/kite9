@@ -64,6 +64,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 */
 	@Override
 	public void compact(Compaction c, Embedding r, Compactor rc) {
+		log.send("Rectangularizing: "+r);
+		
 		List<DartFace> faces = r.getDartFaces();
 		
 		if (faces == null) {
@@ -270,6 +272,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			meets.resetEndsWith(extender.getSlideable());
 		}
 		
+		fixSize(meets, 0, !safe);
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

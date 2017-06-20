@@ -34,6 +34,8 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			return false;
 		}
 		
+		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getExtender().getDirection());
+		
 		if (((PrioritisedRectOption) ro).isSizingSafe()) {
 			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
 			// meets won't increase in length
