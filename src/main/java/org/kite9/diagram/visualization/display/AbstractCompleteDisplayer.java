@@ -103,8 +103,13 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
 			length = getPadding(b, Direction.reverse(d));
 		} else if (concave) {
-			// no containment, just near each other
-			length = calculateMargin(a, aSide, b, bSide);
+			if (aSide == bSide) {
+				// not facing each other
+				length = 0;
+			} else {
+				// no containment, just near each other
+				length = calculateMargin(a, aSide, b, bSide);
+			}
 		} else {
 			length = 0;
 		}
