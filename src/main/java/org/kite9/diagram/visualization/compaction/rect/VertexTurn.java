@@ -43,6 +43,10 @@ class VertexTurn {
 		
 		return null;
 	}
+	
+	public boolean containsVertex(Vertex v) {
+		return s.getUnderlying().getVerticesInSegment().contains(v);
+	}
 
 	private final Slideable<Segment> s;
 	private final int number;
@@ -151,6 +155,16 @@ class VertexTurn {
 		
 		return false;
 		
+	}
+	
+	public FanVertex getInnerFanVertex() {
+		if (isEndInnerFan()) {
+			return (FanVertex) end;
+		} else if (isStartInnerFan()) {
+			return (FanVertex) start;
+		} else {
+			return null;
+		}
 	}
 
 	private boolean isEndInnerFan() {

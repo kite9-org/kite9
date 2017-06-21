@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
@@ -424,23 +425,25 @@ public class TestingEngine extends TestingHelp {
 			
 			@Override
 			public void visit(DiagramElement inner) {
-				Rectangle2D innerRect = createRect(inner.getRenderingInformation());
-				if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
-
-					if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
-						return;
+				if (inner instanceof Rectangular) {
+					Rectangle2D innerRect = createRect(inner.getRenderingInformation());
+					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
+	
+						if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
+							return;
+						}
+	
+						if (isChildOf(inner, outer)) {
+							checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
+	 
+						} else if (inner instanceof Rectangular) {
+							checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
+						}
 					}
-
-					if (isChildOf(inner, outer)) {
-						checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
- 
-					} else if (inner instanceof Rectangular) {
-						checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
-					}
-				}
-
+				} 
 			}
 
+		
 			private void checkSiblingMargins(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
 				if (innerRect.intersects(outerRect)) {
 					throw new LogicException("Overlapped: " + outer + " by " + inner);

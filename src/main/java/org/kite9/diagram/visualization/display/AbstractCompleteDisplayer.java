@@ -61,9 +61,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((a instanceof Rectangular) && (b instanceof Rectangular)) {
 			length = getMinimumDistanceRectangularToRectangular((Rectangular) a, aSide, (Rectangular) b, bSide, d, along, concave);
 		} else if ((a instanceof Rectangular) && (b instanceof Connection)) {
-			length = getMinimumDistanceRectangularToConnection((Rectangular) a, aSide, (Connection) b, bSide, d, along);
+			length = getMinimumDistanceRectangularToConnection((Rectangular) a, (Connection) b, d, along);
 		} else if ((a instanceof Connection) && (b instanceof Rectangular)) {
-			length = getMinimumDistanceRectangularToConnection((Rectangular) b, bSide, (Connection) a, aSide, Direction.reverse(d), along);
+			length = getMinimumDistanceRectangularToConnection((Rectangular) b, (Connection) a, Direction.reverse(d), along);
 		} else {
 			throw new Kite9ProcessingException("Don't know how to calc min distance");
 		}
@@ -71,18 +71,12 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return length;
 	}
 
-	private double getMinimumDistanceRectangularToConnection(Rectangular a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along) {
-		if (along == a) {
-			// this is the distance from the connection to the edge of the connected
-			return getLinkInset(a, d);
-		} else if (aSide == Direction.reverse(d)) {
-			// we are inside a, so use the padding distance
-			double padding = getPadding(a, aSide);
-			return incorporateLinkMinimumLength(along, d, padding);
-		} else {
-			double margin = calculateMargin(a, aSide, b, bSide);
-			return incorporateLinkMinimumLength(along, d, margin);
-		}
+	private double getMinimumDistanceRectangularToConnection(Rectangular a, Connection b, Direction d, DiagramElement along) {
+		// we are inside a, so use the padding distance
+		double inset = getLinkInset(a, d);
+		double margin = getMargin(b, Direction.reverse(d));
+		double length = Math.max(inset, margin);
+		return incorporateLinkMinimumLength(along, d, length);
 	}
 
 	private double incorporateLinkMinimumLength(DiagramElement along, Direction d, double in) {

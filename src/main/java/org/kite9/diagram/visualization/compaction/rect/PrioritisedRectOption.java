@@ -2,6 +2,8 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
 
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
@@ -9,7 +11,7 @@ public class PrioritisedRectOption extends RectOption {
 	
 	static enum TurnType {
 		
-		CONNECTION_FAN(-10),
+		CONNECTION_FAN(-10000),
 		EXTEND_IF_NEEDED(0), 
 		MINIMIZE_RECT_SIDE(30000), 		// whole side of rectangular
 		MINIMIZE_RECT_SIDE_PART(30000),    // connection-to-connection of rectangular 
@@ -60,11 +62,14 @@ public class PrioritisedRectOption extends RectOption {
 
 	public TurnType getType() {
 		VertexTurn extender = getExtender();
+		VertexTurn meets = getMeets();
 		if (extender.isFanTurn(getPar())) {
-			return TurnType.CONNECTION_FAN;
+			Connected c = extender.getInnerFanVertex().getFanForEnd();
+			if (getLink().getSegment().hasUnderlying(c)) {
+				return TurnType.CONNECTION_FAN;
+			}
 		}
 		
-		VertexTurn meets = getMeets();
 		if (meets.isConnection()) {
 			return TurnType.CONNECTION_NORMAL;
 		} else if (meets.isMinimizeRectangular()) {

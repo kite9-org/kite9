@@ -7,6 +7,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -50,7 +51,16 @@ public class MinimizeCompactionStep extends AbstractCompactionStep {
 
 
 	@Override
-	public void compact(Compaction c, Rectangular r, Compactor rc) {
+	public void compact(Compaction c, Embedding e, Compactor rc) {
+		e.getHorizontalSegments(c).stream()
+			.flatMap(s -> s.getUnderlyingInfo().stream())
+			.map(ui -> ui.getDiagramElement())
+			.filter(de -> de instanceof Rectangular)
+			.map(de -> (Rectangular) de)
+			.forEach(r -> minimizeRectangular(r, c));
+	}
+	
+	private void minimizeRectangular(Rectangular r, Compaction c) {
 		DiagramElementSizing sizing = r.getSizing();
 		
 		if (sizing == DiagramElementSizing.MINIMIZE) {

@@ -71,7 +71,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_49_10_KeyTooSmall() throws Exception {
+	public void test_46_11_KeyTooSmall() throws Exception {
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
 				new TextLineWithSymbols("Some Text Here To Make It A Bit Wider", 
@@ -85,6 +85,12 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 				HelpMethods.createList(
 					new Symbol("sdfs", 'W', SymbolShape.HEXAGON)))));
 	}
+	
+	@Test
+	public void test_46_12_UnnecessaryDogleg() throws Exception {
+		generate("dogleg.xml");
+	}
+	
 	
 	protected DiagramKite9XMLElement createDiagram() {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 

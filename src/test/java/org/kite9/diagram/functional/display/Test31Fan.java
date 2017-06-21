@@ -1,10 +1,10 @@
-package org.kite9.diagram.functional.layout;
+package org.kite9.diagram.functional.display;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
@@ -15,14 +15,7 @@ import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
 
-public class Test31Fan extends AbstractLayoutFunctionalTest {
-
-	
-	
-	@Override
-	protected boolean checkEverythingStraight() {
-		return false;
-	}
+public class Test31Fan extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_31_1_Basic2InABox() throws Exception {
@@ -79,7 +72,7 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
 		out.add(g1);
 		List<Kite9XMLElement> cc = new ArrayList<Kite9XMLElement>();
-		Glyph[] l = GraphConstructionTools.createX("fan", 15, cc);
+		Glyph[] l = GraphConstructionTools.createX("fan", 7, cc);
 		Context c1 = new Context("c1", cc,  true, null, null);
 		out.add(c1);
 		
@@ -91,16 +84,16 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		new Link(g1, l[4], null, null, null, null, null);
 		new Link(g1, l[5], null, null, null, null, null);
 		new Link(g1, l[6], null, null, null, null, null);
-		new Link(g1, l[7], null, null, null, null, null);
-		new Link(g1, l[8], null, null, null, null, null);
-	
-		new Link(g1, l[9], null, null, null, null, null);
-		new Link(g1, l[10], null, null, null, null, null);
-		new Link(g1, l[11], null, null, null, null, null);
-		
-		new Link(g1, l[12], null, null, null, null, null);
-		new Link(g1, l[13], null, null, null, null, null);
-		new Link(g1, l[14], null, null, null, null, null);
+//		new Link(g1, l[7], null, null, null, null, null);
+//		new Link(g1, l[8], null, null, null, null, null);
+//	
+//		new Link(g1, l[9], null, null, null, null, null);
+//		new Link(g1, l[10], null, null, null, null, null);
+//		new Link(g1, l[11], null, null, null, null, null);
+//		
+//		new Link(g1, l[12], null, null, null, null, null);
+//		new Link(g1, l[13], null, null, null, null, null);
+//		new Link(g1, l[14], null, null, null, null, null);
 		
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
 		renderDiagram(d1);
@@ -236,11 +229,6 @@ public class Test31Fan extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, g5), null);
 		d1.setLayoutDirection(Layout.RIGHT);
 		renderDiagram(d1);
-	}
-	
-	@Test
-	public void test_31_9_UnnecessaryDogleg() throws Exception {
-		generate("dogleg.xml");
 	}
 	
 	

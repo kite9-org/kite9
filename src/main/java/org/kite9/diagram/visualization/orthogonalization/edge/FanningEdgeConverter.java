@@ -2,10 +2,12 @@ package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Map;
 
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -26,9 +28,13 @@ public class FanningEdgeConverter extends LabellingEdgeConverter {
 
 			// disregard for straight edges
 			if ((e.getDrawDirection() == null) || (Tools.isUnderlyingContradicting(e))) {
+				
+				Connected c = incident == e.getDrawDirection() ? 
+						((BiDirectionalPlanarizationEdge) e).getToConnected() :
+							((BiDirectionalPlanarizationEdge) e).getFromConnected();
 
-				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false);
-				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true);
+				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false, c);
+				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true, c);
 				counter++;
 
 				Map<DiagramElement, Direction> map = createMap(e);
