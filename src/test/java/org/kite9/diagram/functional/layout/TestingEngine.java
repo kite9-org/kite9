@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BinaryOperator;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
@@ -60,9 +59,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.w3c.dom.css.Rect;
 
-import javafx.scene.shape.Rectangle;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 
@@ -167,8 +164,7 @@ public class TestingEngine extends TestingHelp {
 				if (rri.getRoutePositions().size() == 0) {
 					// missing element - will be picked up later though
 				} else {
-					Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
-					Point2D p2d = new Point2D.Double(d2.x(), d2.y());
+					Point2D p2d = getCorrectEndPoint(start, c);
 					Rectangle2D r2d = createRect(rect);
 					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
 					if (largerRect.contains(p2d)) {
@@ -176,7 +172,56 @@ public class TestingEngine extends TestingHelp {
 					} else {
 						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
 					}
+					
+					Direction connectionSide = getConnectionSide(c, v, r2d);
+					if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+						switch (connectionSide) {
+						case UP:
+						case DOWN:
+							if (p2d.getX() != r2d.getCenterX()) {
+								throw new LayoutErrorException(c+" Not mid side of "+v);
+							}
+							break;
+						case LEFT:
+						case RIGHT:
+							if (p2d.getY() != r2d.getCenterY()) {
+								throw new LayoutErrorException(c+" Not mid side of "+v);
+							}
+							break;
+						}
+ 						
+					}
 				}
+			}
+
+			private long connectionsOnSide(Connected v, Direction connectionSide, Rectangle2D r) {
+				return v.getLinks().stream()
+					.filter(l -> getConnectionSide(l, v, r) == connectionSide)
+					.count();
+			}
+
+			private Direction getConnectionSide(Connection c, Connected v, Rectangle2D r) {
+				boolean start = (c.getFrom() == v);
+				Point2D p = getCorrectEndPoint(start, c);
+				
+				if (r.getMinX() == p.getX()) {
+					return Direction.LEFT;
+				} else if (r.getMaxX() == p.getX()) {
+					return Direction.RIGHT;
+				} else if (r.getMinY() == p.getY()) {
+					return Direction.UP;
+				} else if (r.getMaxY() == p.getY()) {
+					return Direction.DOWN;
+				}
+				
+				throw new LogicException("should meet, we tested this");
+			}
+
+			private Point2D getCorrectEndPoint(boolean start, Connection c) {
+				RouteRenderingInformation rri = c.getRenderingInformation();
+				Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
+				Point2D p2d = new Point2D.Double(d2.x(), d2.y());
+				return p2d;
 			}
 		});
 	}
