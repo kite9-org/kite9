@@ -5,11 +5,16 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -61,47 +66,50 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 	}
 
 	private int setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
-		
 		Rectangular r = getRectangular(vt);
+		
+		
 		if ((r!= null) && (r.getSizing() == DiagramElementSizing.MINIMIZE)) {
-			// ok, size is needed.
+			int minimumLength = 0;
+			if (shouldSetMidpoint(vt, c)) {
+				// ok, size is needed of overall rectangle then half.
+				boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
+				OPair<Slideable<Segment>> limits = 
+						(isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
+								.getSlideablesFor(r);
+						
+				int rectangleSize = limits.getA().minimumDistanceTo(limits.getB());	
+				int half = (int) Math.ceil(rectangleSize / 2f);
+				minimumLength = half;
+				
+			} else {
+				// set to minimum possible size
+				minimumLength = vt.getMinimumLength();
+			}
 			
-			int minimumLength = vt.getMinimumLength();
 			vt.ensureMaxLength(minimumLength);
 			return minimumLength;
 		} 
 		
 		// no size needed
 		return 10000;
-		
-//		OPair<Slideable<Segment>> startEnd;
-//		SegmentSlackOptimisation so = (Direction.isVertical(vt.getDirection())) ? 
-//			c.getHorizontalSegmentSlackOptimisation() : 
-//			c.getVerticalSegmentSlackOptimisation();
-//			
-//		
-//		startEnd = so.getSlideablesFor(r);
-//		int minDist = startEnd.getA().minimumDistanceTo(startEnd.getB());	
-//		so.ensureMaximumDistance(startEnd.getA(), startEnd.getB(), minDist);
 	}
-	
-//	private void setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
-//		Rectangular r = getRectangular(vt);
-//		OPair<Slideable<Segment>> startEnd;
-//		SegmentSlackOptimisation so = (Direction.isVertical(vt.getDirection())) ? 
-//			c.getHorizontalSegmentSlackOptimisation() : 
-//			c.getVerticalSegmentSlackOptimisation();
-//			
-//		
-//		startEnd = so.getSlideablesFor(r);
-//		int minDist = startEnd.getA().minimumDistanceTo(startEnd.getB());	
-//		so.ensureMaximumDistance(startEnd.getA(), startEnd.getB(), minDist);
-//	}
-	
-	
+		
+	private boolean shouldSetMidpoint(VertexTurn vt, Compaction c) {
+		Segment s = vt.getSegment();
+		boolean isHorizontal = Direction.isHorizontal(vt.getDirection());
+		
+		// find segments that meet this one
+		Set<Connection> leavingConnections = s.getVerticesInSegment().stream()
+			.map(v -> isHorizontal ? c.getVerticalVertexSegmentMap().get(v) : c.getHorizontalVertexSegmentMap().get(v))
+			.flatMap(seg -> seg.getConnections().stream())
+			.collect(Collectors.toSet());
+			
+		return leavingConnections.size() == 1;
+	}
 
 	private Rectangular getRectangular(VertexTurn vt) {
-		List<Rectangular> r = vt.getSegment().getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).filter(de -> de instanceof Rectangular).map(de -> (Rectangular) de).collect(Collectors.toList());
+		Set<Rectangular> r = vt.getSegment().getRectangulars();
 	
 		if (r.size() > 1) {
 			throw new Kite9ProcessingException();
@@ -109,7 +117,7 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			return null;
 		}
 		
-		return r.get(0);
+		return r.iterator().next();
 	}
 	
 	@Override

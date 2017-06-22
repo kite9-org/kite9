@@ -178,13 +178,13 @@ public class TestingEngine extends TestingHelp {
 						switch (connectionSide) {
 						case UP:
 						case DOWN:
-							if (p2d.getX() != r2d.getCenterX()) {
+							if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
 								throw new LayoutErrorException(c+" Not mid side of "+v);
 							}
 							break;
 						case LEFT:
 						case RIGHT:
-							if (p2d.getY() != r2d.getCenterY()) {
+							if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
 								throw new LayoutErrorException(c+" Not mid side of "+v);
 							}
 							break;

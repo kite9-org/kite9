@@ -13,6 +13,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -35,7 +36,8 @@ public class Segment implements Comparable<Segment> {
 	private double position;
 	private Slideable<Segment> slideable;
 	private Set<UnderlyingInfo> underlyings;
-	
+	private Set<Rectangular> rectangulars;
+	private Set<Connection> connections;
 	
 	public Slideable<Segment> getSlideable() {
 		return slideable;
@@ -48,7 +50,7 @@ public class Segment implements Comparable<Segment> {
 	public Set<UnderlyingInfo> getUnderlyingInfo() {
 		if (underlyings == null) {
 			underlyings = getDartsInSegment().stream().flatMap(o -> convertUnderlyingToUnderlyingInfo(o))
-			.filter(a -> a.de != null)
+			.filter(a -> a.getDiagramElement() != null)
 			.collect(Collectors.toSet());
 		}
 		
@@ -61,7 +63,7 @@ public class Segment implements Comparable<Segment> {
 	
 	public boolean hasUnderlying(DiagramElement de) {
 		return underlyings.stream()
-				.map(u -> u.de)
+				.map(u -> u.getDiagramElement())
 				.filter(a -> a == de)
 				.count() > 0;
 	}
@@ -189,4 +191,28 @@ public class Segment implements Comparable<Segment> {
 	public int getNumber() {
 		return i;
 	}
+	
+
+	public Set<Rectangular> getRectangulars() {
+		if (rectangulars==null) {
+			rectangulars = underlyings.stream()
+					.map(ui -> ui.getDiagramElement())
+					.filter(de -> de instanceof Rectangular)
+					.map(de -> (Rectangular) de).collect(Collectors.toSet());
+		} 
+		
+		return rectangulars;
+	}
+	
+	public Set<Connection> getConnections() {
+		if (connections==null) {
+			connections = underlyings.stream()
+					.map(ui -> ui.getDiagramElement())
+					.filter(de -> de instanceof Connection)
+					.map(de -> (Connection) de).collect(Collectors.toSet());
+		} 
+		
+		return connections;
+	}
+	
 }

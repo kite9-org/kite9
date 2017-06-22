@@ -1,11 +1,15 @@
 package org.kite9.diagram.visualization.compaction.segment;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 
 public class UnderlyingInfo {
 	
-	DiagramElement de;
-	Side side;
+	private final DiagramElement de;
+	private final Side side;
 	
 	public DiagramElement getDiagramElement() {
 		return de;
@@ -53,6 +57,5 @@ public class UnderlyingInfo {
 			return false;
 		return true;
 	}
-	
 	
 }
