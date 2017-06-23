@@ -33,8 +33,8 @@ public class FanningEdgeConverter extends LabellingEdgeConverter {
 						((BiDirectionalPlanarizationEdge) e).getToConnected() :
 							((BiDirectionalPlanarizationEdge) e).getFromConnected();
 
-				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false, c);
-				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true, c);
+				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false, incident);
+				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true, incident);
 				counter++;
 
 				Map<DiagramElement, Direction> map = createMap(e);

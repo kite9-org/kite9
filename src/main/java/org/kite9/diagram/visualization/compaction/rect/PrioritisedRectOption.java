@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
 
-import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
 public class PrioritisedRectOption extends RectOption {
@@ -62,9 +62,11 @@ public class PrioritisedRectOption extends RectOption {
 	public TurnType getType() {
 		VertexTurn extender = getExtender();
 		VertexTurn meets = getMeets();
-		if (extender.isFanTurn(getPar())) {
-			Connected c = extender.getInnerFanVertex().getFanForEnd();
-			if (getLink().getSegment().hasUnderlying(c)) {
+		VertexTurn par = getPar();
+		if (extender.isFanTurn(par)) {
+			Direction parDirection = getTurnDirection(par);
+			Direction fanDirection = extender.getInnerFanVertex().getFanSide();
+			if (parDirection == fanDirection) {
 				return TurnType.CONNECTION_FAN;
 			}
 		}

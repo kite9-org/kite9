@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
 
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
 public class RectOption implements Comparable<RectOption> {
@@ -104,5 +105,13 @@ public class RectOption implements Comparable<RectOption> {
 
 	public VertexTurn getVt5() {
 		return vt5;
+	}
+	
+	public Direction getTurnDirection(VertexTurn vt) {
+		if (getMatch() == Match.A) {
+			return vt.getDirection();
+		} 
+		
+		return Direction.reverse(vt.getDirection());
 	}
 }

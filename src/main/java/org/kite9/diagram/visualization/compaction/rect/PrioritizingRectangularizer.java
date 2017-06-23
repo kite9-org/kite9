@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 				onStack.addAll(theStack);
 			}
 		}
-
+		
 		while (pq.size() > 0) {
 			RectOption ro = pq.remove();
 			List<VertexTurn> theStack = ro.getStack();
