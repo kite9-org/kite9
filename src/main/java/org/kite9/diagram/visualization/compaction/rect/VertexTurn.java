@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -29,6 +31,7 @@ class VertexTurn {
 		this.start = commonVertex(s.getUnderlying(), startsWith.getUnderlying());
 		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
 		this.number = number;
+		this.c = c;
 	}
 	
 	public int getNumber() {
@@ -55,6 +58,7 @@ class VertexTurn {
 	private Slideable<Segment> endsWith;
 	private Vertex end;
 	private final Direction d;
+	private final Compaction c;
 		
 	public Segment getSegment() {
 		return s.getUnderlying();
@@ -219,5 +223,21 @@ class VertexTurn {
 	
 	public boolean isFixedLength() {
 		return (getEarly().hasMaximumConstraints()) || (getLate().hasMaximumConstraints());
+	}
+	
+	private Set<Connection> leavingConnections = null;
+	
+	public Set<Connection> getLeavingConnections() {
+		if (leavingConnections == null) {
+			boolean isHorizontal = Direction.isHorizontal(getDirection());
+			
+			// find segments that meet this one
+			leavingConnections = getSegment().getVerticesInSegment().stream()
+				.map(v -> isHorizontal ? c.getVerticalVertexSegmentMap().get(v) : c.getHorizontalVertexSegmentMap().get(v))
+				.flatMap(seg -> seg.getConnections().stream())
+				.collect(Collectors.toSet());
+				
+		}
+		return leavingConnections;
 	}
 }

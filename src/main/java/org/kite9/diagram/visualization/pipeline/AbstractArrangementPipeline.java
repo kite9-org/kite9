@@ -95,7 +95,6 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //						//new LinkLengthReductionOptimisationStep(),
 ////						new EdgeAlignmentOptimisationStep(),
 ////						new SlackCenteringOptimisationStep(),
-				new LoggingOptimisationStep(cd),
 //					}
 //
 //				), 

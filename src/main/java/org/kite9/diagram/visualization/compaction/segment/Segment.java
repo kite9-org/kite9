@@ -214,5 +214,4 @@ public class Segment implements Comparable<Segment> {
 		
 		return connections;
 	}
-	
 }

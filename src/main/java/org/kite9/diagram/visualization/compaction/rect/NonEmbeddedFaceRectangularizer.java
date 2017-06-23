@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connection;
@@ -18,6 +19,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer {
 
@@ -39,6 +41,7 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			return false;
 		}
 		
+		log.send("Checking: "+ro);
 		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getExtender().getDirection());
 		
 		if (((PrioritisedRectOption) ro).isSizingSafe()) {
@@ -46,10 +49,11 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			// meets won't increase in length
 			
 			VertexTurn meets = ro.getMeets();
-			int meetsMinimumLength = setMaxLengthWithMidpoint(meets, c);
+			VertexTurn link = ro.getLink();
+			int meetsMinimumLength = setMaxLengthWithMidpoint(meets, link, c);
 
 			VertexTurn par = ro.getPar();
-			int parMinimumLength = setMaxLengthWithMidpoint(par, c);
+			int parMinimumLength = setMaxLengthWithMidpoint(par, link, c);
 			
 			
 			if (meetsMinimumLength < parMinimumLength) {
@@ -65,13 +69,12 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		return true;
 	}
 
-	private int setMaxLengthWithMidpoint(VertexTurn vt, Compaction c) {
+	private int setMaxLengthWithMidpoint(VertexTurn vt, VertexTurn link, Compaction c) {
 		Rectangular r = getRectangular(vt);
 		
 		
 		if ((r!= null) && (r.getSizing() == DiagramElementSizing.MINIMIZE)) {
-			int minimumLength = 0;
-			if (shouldSetMidpoint(vt, c)) {
+			if (shouldSetMidpoint(vt, link)) {
 				// ok, size is needed of overall rectangle then half.
 				boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
 				OPair<Slideable<Segment>> limits = 
@@ -80,32 +83,41 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 						
 				int rectangleSize = limits.getA().minimumDistanceTo(limits.getB());	
 				int half = (int) Math.ceil(rectangleSize / 2f);
-				minimumLength = half;
-				
-			} else {
-				// set to minimum possible size
-				minimumLength = vt.getMinimumLength();
-			}
+				rectangleSize = half * 2; // to avoid rounding errors
+				log.send("Setting size of "+r+" to "+rectangleSize+" "+vt.getDirection());
+				AbstractSlackOptimisation<Segment> so = limits.getA().getSlackOptimisation();
+				so.ensureMaximumDistance(limits.getA(), limits.getB(), rectangleSize);
+				Slideable<Segment> linkSlideable = link.getSlideable();
+				so.ensureMinimumDistance(limits.getA(), linkSlideable, half);
+				so.ensureMinimumDistance(linkSlideable, limits.getB(), half);				
+				return half;
+			} 
 			
+			
+			// set to minimum possible size
+			int minimumLength = vt.getMinimumLength();
 			vt.ensureMaxLength(minimumLength);
 			return minimumLength;
+			
+			
 		} 
 		
 		// no size needed
 		return 10000;
 	}
 		
-	private boolean shouldSetMidpoint(VertexTurn vt, Compaction c) {
-		Segment s = vt.getSegment();
-		boolean isHorizontal = Direction.isHorizontal(vt.getDirection());
+	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
+		if (link.getSegment().getConnections().size() == 1) {
+			Set<Connection> leavingConnections = vt.getLeavingConnections();
+			if (leavingConnections.size() == 1) {
+				if (link.getSegment().getConnections().containsAll(leavingConnections)) {
+					return true;
+				}
+			}
+		}
 		
-		// find segments that meet this one
-		Set<Connection> leavingConnections = s.getVerticesInSegment().stream()
-			.map(v -> isHorizontal ? c.getVerticalVertexSegmentMap().get(v) : c.getHorizontalVertexSegmentMap().get(v))
-			.flatMap(seg -> seg.getConnections().stream())
-			.collect(Collectors.toSet());
-			
-		return leavingConnections.size() == 1;
+		return false;
+		
 	}
 
 	private Rectangular getRectangular(VertexTurn vt) {

@@ -2,9 +2,7 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
 
-import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 
 public class PrioritisedRectOption extends RectOption {
@@ -16,7 +14,8 @@ public class PrioritisedRectOption extends RectOption {
 		MINIMIZE_RECT_SIDE(30000), 		// whole side of rectangular
 		MINIMIZE_RECT_SIDE_PART(30000),    // connection-to-connection of rectangular 
 		CONNECTION_NORMAL(40000),
-		MINIMIZE_RECT_CORNER(50000); 		// connection-to-corner of rectangular
+		MINIMIZE_RECT_CORNER(50000),		// connection-to-corner of rectangular
+		MINIMIZE_RECT_CORNER_SINGLE(60000);		// when there is a single connection on the corner
 
 		private TurnType(int c) {
 			this.cost = c;
@@ -32,7 +31,7 @@ public class PrioritisedRectOption extends RectOption {
 	private TurnType type;
 	private boolean sizeSafe; 
 	
-	public PrioritisedRectOption(int i, PrioritizingRectangularizer prioritizingRectangularizer, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c, List<VertexTurn> fromStack) {
+	public PrioritisedRectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, List<VertexTurn> fromStack) {
 		super(i, vt1, vt2, vt3, vt4, vt5, m, fromStack);
 		this.type = getType();
 		this.sizeSafe = isSizingSafe();
@@ -76,6 +75,9 @@ public class PrioritisedRectOption extends RectOption {
 			if (meets.isConnectionBounded()) {
 				return TurnType.MINIMIZE_RECT_SIDE_PART;
 			} else if (meets.isMinimizeRectangleCorner()) {
+				if (meets.getLeavingConnections().size() == 1) {
+					return TurnType.MINIMIZE_RECT_CORNER_SINGLE;
+				}
 				return TurnType.MINIMIZE_RECT_CORNER;
 			} else if (meets.isConnectionBounded()) {
 				return TurnType.MINIMIZE_RECT_SIDE_PART;
