@@ -23,6 +23,8 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 class VertexTurn {
 	
+	static enum TurnPriority { MINIMIZE_RECTANGULAR, CONNECTION, MAXIMIZE_RECTANGULAR }
+	
 	public VertexTurn(int number, Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
 		this.d = d;
 		this.s = s;
@@ -32,6 +34,7 @@ class VertexTurn {
 		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
 		this.number = number;
 		this.c = c;
+		this.turnPriority = calculateTurnPriority();
 	}
 	
 	public int getNumber() {
@@ -59,7 +62,16 @@ class VertexTurn {
 	private Vertex end;
 	private final Direction d;
 	private final Compaction c;
-		
+	private TurnPriority turnPriority;
+
+	public TurnPriority getTurnPriority() {
+		return turnPriority;
+	}
+
+	public Compaction getCompaction() {
+		return c;
+	}
+
 	public Segment getSegment() {
 		return s.getUnderlying();
 	}
@@ -69,7 +81,7 @@ class VertexTurn {
 	}
 	
 	public String toString() {
-		return "["+number+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
+		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
 	}
 	
 	public int getMinimumLength() {
@@ -124,14 +136,16 @@ class VertexTurn {
 		return d;
 	}
 
-	public void resetEndsWith(Slideable<Segment> s) {
+	public void resetEndsWith(Slideable<Segment> s, TurnPriority tp) {
 		this.endsWith = s;
 		this.end = null;
+		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
 	}
 
-	public void resetStartsWith(Slideable<Segment> s) {
+	public void resetStartsWith(Slideable<Segment> s, TurnPriority tp) {
 		this.startsWith = s;
 		this.start = null;
+		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
 	}
 
 	public void ensureMinLength(double l) {
@@ -147,7 +161,7 @@ class VertexTurn {
 	}
 	
 	public boolean isFanTurn(VertexTurn atEnd) {
-		if ((start instanceof FanVertex) && (end instanceof FanVertex)) {
+		if (isFanTurn()) {
 			if (atEnd.s == startsWith) {
 				return isStartInnerFan();
 			} else if (atEnd.s == endsWith) {
@@ -159,6 +173,20 @@ class VertexTurn {
 		
 		return false;
 		
+	}
+	
+	protected TurnPriority calculateTurnPriority() {
+		if (isMinimizeRectangular()) {
+			return TurnPriority.MINIMIZE_RECTANGULAR;
+		} else if (isConnection()) {
+			return TurnPriority.CONNECTION;
+		} else {
+			return TurnPriority.MAXIMIZE_RECTANGULAR;
+		}
+	}
+
+	private boolean isFanTurn() {
+		return (start instanceof FanVertex) && (end instanceof FanVertex);
 	}
 	
 	public FanVertex getInnerFanVertex() {
@@ -179,7 +207,7 @@ class VertexTurn {
 		return (start instanceof FanVertex) && ((FanVertex)start).isInner();
 	}
 	
-	public boolean isMinimizeRectangleBounded(Rectangular exclude) {
+	public boolean isMinimizeRectangleBounded() {
 		long rectsAtBothEnds = getUnderlyingsOfType(startsWith, Rectangular.class)
 				.filter(de -> endsWith.getUnderlying().hasUnderlying(de))
 				.filter(minimize()).count();
@@ -224,20 +252,14 @@ class VertexTurn {
 	public boolean isFixedLength() {
 		return (getEarly().hasMaximumConstraints()) || (getLate().hasMaximumConstraints());
 	}
-	
-	private Set<Connection> leavingConnections = null;
-	
+
 	public Set<Connection> getLeavingConnections() {
-		if (leavingConnections == null) {
-			boolean isHorizontal = Direction.isHorizontal(getDirection());
+		Set<Connection> leavingConnections = getSegment().getAdjoiningSegments(c).stream()
+			.flatMap(seg -> seg.getConnections().stream())
+			.collect(Collectors.toSet());
 			
-			// find segments that meet this one
-			leavingConnections = getSegment().getVerticesInSegment().stream()
-				.map(v -> isHorizontal ? c.getVerticalVertexSegmentMap().get(v) : c.getHorizontalVertexSegmentMap().get(v))
-				.flatMap(seg -> seg.getConnections().stream())
-				.collect(Collectors.toSet());
-				
-		}
 		return leavingConnections;
 	}
+	
+
 }

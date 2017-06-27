@@ -15,8 +15,8 @@ import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRec
 import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
+import org.kite9.diagram.visualization.compaction.slideable.MinimizeAndCenterCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
-import org.kite9.diagram.visualization.compaction.slideable.temp.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
@@ -87,7 +87,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new InnerFaceWithEmbeddingRectangularizer(cd),
 				new SubGraphInsertionCompactionStep(cd),
 				new NonEmbeddedFaceRectangularizer(cd),
-				new MinimizeCompactionStep(getDisplayer()),
+				new MinimizeAndCenterCompactionStep(getDisplayer()),
 //				new EdgeSeparationCompactionStep(getDisplayer()),
 ////						new LabelInsertionOptimisationStep(getDisplayer()), 
 //				new LeafElementSizeCompactionStep(getDisplayer()),

@@ -57,7 +57,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		if ((a instanceof GeneratedLayoutElement) || (b instanceof GeneratedLayoutElement)) {
 			return 0;
 		} else if ((a instanceof Connection) && (b instanceof Connection)) {
-			length = getMinimumDistanceConnectionToConnection((Connection) a, aSide, (Connection) b, bSide, d, along);
+			length = getMinimumDistanceConnectionToConnection((Connection) a, aSide, (Connection) b, bSide, d, along, concave);
 		} else if ((a instanceof Rectangular) && (b instanceof Rectangular)) {
 			length = getMinimumDistanceRectangularToRectangular((Rectangular) a, aSide, (Rectangular) b, bSide, d, along, concave);
 		} else if ((a instanceof Rectangular) && (b instanceof Connection)) {
@@ -111,9 +111,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return incorporateLinkMinimumLength(along, d, length);
 	}
 
-	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along) {
-		double margin = calculateMargin(a, aSide, b, bSide);
-		return incorporateLinkMinimumLength(along, d, margin);
+	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
+		double margin = concave ? calculateMargin(a, aSide, b, bSide) : 0;
+		margin = incorporateLinkMinimumLength(along, d, margin);
+		return margin;
 	}
 
 	private double calculateMargin(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {

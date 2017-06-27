@@ -70,10 +70,12 @@ public class PrioritisedRectOption extends RectOption {
 				return TurnType.CONNECTION_FAN;
 			}
 		}
-		
-		if (meets.isConnection()) {
+
+		switch (meets.getTurnPriority()) {
+		case CONNECTION:
 			return TurnType.CONNECTION_NORMAL;
-		} else if (meets.isMinimizeRectangular()) {
+
+		case MINIMIZE_RECTANGULAR:
 			if (meets.isConnectionBounded()) {
 				return TurnType.MINIMIZE_RECT_SIDE_PART;
 			} else if (meets.isMinimizeRectangleCorner()) {
@@ -86,7 +88,8 @@ public class PrioritisedRectOption extends RectOption {
 			} else {
 				return TurnType.EXTEND_IF_NEEDED;
 			}
-		} else {
+		case MAXIMIZE_RECTANGULAR:
+		default:
 			return TurnType.EXTEND_IF_NEEDED;
 		}
 	}
@@ -96,7 +99,11 @@ public class PrioritisedRectOption extends RectOption {
 	 * or the same length as meets.
 	 */
 	public boolean isSizingSafe() {
-		return type != TurnType.CONNECTION_FAN && (getPost().getDirection() == getExtender().getDirection());
+		return (type != TurnType.CONNECTION_FAN) && !isConcave();
+	}
+	
+	public boolean isConcave() {
+		return getPost().getDirection() != getExtender().getDirection();
 	}
 	
 	public String toString() {

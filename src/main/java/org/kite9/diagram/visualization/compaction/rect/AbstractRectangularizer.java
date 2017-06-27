@@ -86,7 +86,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			}
 
 			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(getIthElementRotating(theStack, i), 0, !df.outerFace);
+				fixSize(getIthElementRotating(theStack, i), 0, !df.outerFace, false);
 			}
 			
 			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
@@ -108,7 +108,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			buildStack(df, theStack, turns, c);
 			
 			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(getIthElementRotating(theStack, i), 0, isConcave(theStack, i));
+				fixSize(getIthElementRotating(theStack, i), 0, isConcave(theStack, i), true);
 			}
 			stacks.put(df, theStack);
 		}
@@ -218,11 +218,11 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	protected void performRectangularizationD(List<VertexTurn> stack, Compaction c, VertexTurn ext,
-			VertexTurn par, VertexTurn link, VertexTurn meets, boolean safe) {
+			VertexTurn par, VertexTurn link, VertexTurn meets, boolean concave) {
 		// logRectangularizationContext(ext, par, link, meets);
 		Slideable<Segment> first = ext.getEndsWith();
 		Slideable<Segment> to = meets.getSlideable();
-		performRectangularization(c, meets, link, par, ext, first, to, safe);
+		performRectangularization(c, meets, link, par, ext, first, to, concave);
 		cutRectangleCorner(stack, par, link);
 	}
 
@@ -231,48 +231,50 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * there may need to be a minimum length set on fixing.
 	 * 
 	 * This errs on the side of too large right now
+	 * @param initialSetting 
 	 */
-	protected void fixSize(VertexTurn link, double externalMin, boolean concave) {
+	protected void fixSize(VertexTurn link, double externalMin, boolean concave, boolean initialSetting) {
 		Slideable<Segment> early = link.getEarly();
 		Slideable<Segment> late = link.getLate();
 		Segment early1 = early.getUnderlying();
 		Segment late1 = late.getUnderlying();
 		log.send(log.go() ? null : " Early: "+early+" late: "+late);
-		double minDistance = getMinimumDistance(early1, late1,  link.getSegment(), concave);
+		Segment along = initialSetting ? link.getSegment() : null;
+		double minDistance = getMinimumDistance(early1, late1,  along, concave);
 		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureMinLength(Math.max(minDistance, externalMin));
 	
 	}
 
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, VertexTurn meets,
-			VertexTurn link, VertexTurn par, VertexTurn ext, boolean safe) {
+			VertexTurn link, VertexTurn par, VertexTurn ext, boolean concave) {
 		// logRectangularizationContext(meets, link, par, ext);
 		Slideable<Segment> first = ext.getStartsWith();
 		Slideable<Segment> to = meets.getSlideable();
-		performRectangularization(c,  meets, link, par, ext, first, to, safe);
+		performRectangularization(c,  meets, link, par, ext, first, to, concave);
 		cutRectangleCorner(stack, link, par);
 	}
 	
 
 	protected void performRectangularization(Compaction c, VertexTurn meets, VertexTurn link,
-			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, boolean safe) {
-		fixSize(link, 0, true);
-		fixSize(par, 0, !safe);
+			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, boolean concave) {
+		fixSize(link, 0, true, false);
+		fixSize(par, 0, false, false);	
 
 		if (extender.getStartsWith() == from) {
-			extender.resetEndsWith(to);
+			extender.resetEndsWith(to, link.getTurnPriority());
 		} else {
-			extender.resetStartsWith(to);
+			extender.resetStartsWith(to, link.getTurnPriority());
 		}
 		
 		// update meets
 		if (meets.getStartsWith() == link.getSlideable()) {
-			meets.resetStartsWith(extender.getSlideable());
+			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority());
 		} else {
-			meets.resetEndsWith(extender.getSlideable());
+			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority());
 		}
 		
-		fixSize(meets, 0, !safe);
+		fixSize(meets, 0, concave, false);
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

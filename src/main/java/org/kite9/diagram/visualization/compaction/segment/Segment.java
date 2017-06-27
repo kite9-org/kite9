@@ -17,6 +17,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -213,5 +214,21 @@ public class Segment implements Comparable<Segment> {
 		} 
 		
 		return connections;
+	}
+	
+	private Set<Segment> leavingSegments = null;
+	
+	public Set<Segment> getAdjoiningSegments(Compaction c) {
+		if (leavingSegments == null) {
+			boolean isHorizontal = dimension == PositionAction.YAction;
+			
+			// find segments that meet this one
+			leavingSegments = getVerticesInSegment().stream()
+				.map(v -> isHorizontal ? c.getVerticalVertexSegmentMap().get(v) : c.getHorizontalVertexSegmentMap().get(v))
+				.filter(x -> x != null)
+				.collect(Collectors.toSet());
+				
+		}
+		return leavingSegments;
 	}
 }

@@ -11,15 +11,12 @@ import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Logable;
 
 /**
@@ -36,7 +33,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	private Diagram theDiagram;
 	
 	private boolean isRectangular(DiagramElement underlying) {
-		return (underlying instanceof Leaf) || (underlying instanceof Connected) || (underlying instanceof Label);
+		return (underlying instanceof Rectangular);
 	}
 
 	public SegmentSlackOptimisation(List<Segment> segments) {

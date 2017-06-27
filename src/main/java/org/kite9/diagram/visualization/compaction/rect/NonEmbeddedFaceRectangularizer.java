@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -15,6 +17,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
@@ -42,7 +45,7 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		}
 		
 		log.send("Checking: "+ro);
-		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getExtender().getDirection());
+		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getTurnDirection(ro.getExtender()));
 		
 		if (((PrioritisedRectOption) ro).isSizingSafe()) {
 			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
@@ -50,10 +53,10 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 			
 			VertexTurn meets = ro.getMeets();
 			VertexTurn link = ro.getLink();
-			int meetsMinimumLength = setMaxLengthWithMidpoint(meets, link, c);
+			int meetsMinimumLength = checkMinimumLength(meets, link, c, true);
 
 			VertexTurn par = ro.getPar();
-			int parMinimumLength = setMaxLengthWithMidpoint(par, link, c);
+			int parMinimumLength = checkMinimumLength(par, link, c, true);
 			
 			
 			if (meetsMinimumLength < parMinimumLength) {
@@ -69,12 +72,10 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		return true;
 	}
 
-	private int setMaxLengthWithMidpoint(VertexTurn vt, VertexTurn link, Compaction c) {
-		Rectangular r = getRectangular(vt);
-		
-		
-		if ((r!= null) && (r.getSizing() == DiagramElementSizing.MINIMIZE)) {
+	private int checkMinimumLength(VertexTurn vt, VertexTurn link, Compaction c, boolean returnMinimum) {
+		if (vt.getTurnPriority() == TurnPriority.MINIMIZE_RECTANGULAR) {
 			if (shouldSetMidpoint(vt, link)) {
+				Rectangular r = getRectangular(vt);
 				// ok, size is needed of overall rectangle then half.
 				boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
 				OPair<Slideable<Segment>> limits = 
@@ -91,33 +92,38 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 				so.ensureMinimumDistance(limits.getA(), linkSlideable, half);
 				so.ensureMinimumDistance(linkSlideable, limits.getB(), half);				
 				return half;
-			} 
-			
-			
-			// set to minimum possible size
-			int minimumLength = vt.getMinimumLength();
-			vt.ensureMaxLength(minimumLength);
-			return minimumLength;
-			
-			
-		} 
+			}
+
+			if (returnMinimum) {
+				// set to minimum possible size
+				int minimumLength = vt.getMinimumLength();
+				return minimumLength;			
+			}
+		}
+		
 		
 		// no size needed
-		return 10000;
+		return Integer.MAX_VALUE;
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
-		if (link.getSegment().getConnections().size() == 1) {
-			Set<Connection> leavingConnections = vt.getLeavingConnections();
-			if (leavingConnections.size() == 1) {
-				if (link.getSegment().getConnections().containsAll(leavingConnections)) {
-					return true;
+		if (hasConnected(vt)) {
+			if (link.getSegment().getConnections().size() == 1) {
+				Set<Connection> leavingConnections = vt.getLeavingConnections();
+				if (leavingConnections.size() == 1) {
+					if (link.getSegment().getConnections().containsAll(leavingConnections)) {
+						return true;
+					}
 				}
 			}
 		}
 		
 		return false;
 		
+	}
+
+	private boolean hasConnected(VertexTurn vt) {
+		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).count() > 0;
 	}
 
 	private Rectangular getRectangular(VertexTurn vt) {
@@ -142,5 +148,4 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
 		return faces.stream().filter(df -> df.getContainedFaces().size()==0).collect(Collectors.toList());
 	}
-	
 }

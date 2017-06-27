@@ -1,10 +1,6 @@
 package org.kite9.diagram.visualization.compaction.segment;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Rectangular;
 
 public class UnderlyingInfo {
 	

@@ -53,11 +53,11 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 				// log.send(log.go() ? null : "Queue Currently: ",pq);
 				log.send(log.go() ? null : "Change: " + ro);
 				if (ro.getMatch() == Match.A) {
-					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isSizingSafe());
+					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isConcave());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				} else {
-					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isSizingSafe());
+					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isConcave());
 					onStack.remove(ro.getLink());
 					onStack.remove(ro.getPar());
 				}

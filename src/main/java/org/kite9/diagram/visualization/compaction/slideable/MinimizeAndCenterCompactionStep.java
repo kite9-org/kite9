@@ -1,7 +1,12 @@
-package org.kite9.diagram.visualization.compaction.slideable.temp;
+package org.kite9.diagram.visualization.compaction.slideable;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -9,8 +14,8 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * This optimisation annotates the {@link Slideable}'s in such a way as to
@@ -42,10 +47,10 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
  * @author robmoffat
  * 
  */
-public class MinimizeCompactionStep extends AbstractCompactionStep {
+public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 	
 
-	public MinimizeCompactionStep(CompleteDisplayer cd) {
+	public MinimizeAndCenterCompactionStep(CompleteDisplayer cd) {
 		super(cd);
 	}
 
@@ -64,20 +69,66 @@ public class MinimizeCompactionStep extends AbstractCompactionStep {
 		DiagramElementSizing sizing = r.getSizing();
 		
 		if (sizing == DiagramElementSizing.MINIMIZE) {
-			OPair<Slideable<Segment>> hs = c.getHorizontalSegmentSlackOptimisation().getSlideablesFor(r);
-			OPair<Slideable<Segment>> vs = c.getVerticalSegmentSlackOptimisation().getSlideablesFor(r);
+			SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
+			OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
+			SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
+			OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 			if ((hs != null) && (vs != null)) {
 				// sometimes, we might not display everything (e.g. labels)
 				log.send("Minimizing Distance "+r);
-				minimizeDistance(c.getHorizontalSegmentSlackOptimisation(), hs.getA(), hs.getB());
-				minimizeDistance(c.getVerticalSegmentSlackOptimisation(), vs.getA(), vs.getB());
+				int y = minimizeDistance(hsso, hs.getA(), hs.getB());
+				int x = minimizeDistance(vsso, vs.getA(), vs.getB());
+			
+				
+				if (r instanceof Connected) {
+					centerSingleConnections(c, hsso, hs, vsso, vs, y, x);
+				}	
+			
 			}			
 		}
+		
+		
 	}
 
-	private void minimizeDistance(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to) {
+
+	private void centerSingleConnections(Compaction c, SegmentSlackOptimisation hsso, OPair<Slideable<Segment>> hs, SegmentSlackOptimisation vsso, OPair<Slideable<Segment>> vs, int y, int x) {
+		optionallyCenter(c, hs.getA(), x, vsso, vs.getA(), vs.getB());
+		optionallyCenter(c, hs.getB(), x, vsso, vs.getA(), vs.getB());
+		optionallyCenter(c, vs.getA(), y, hsso, hs.getA(), hs.getB());
+		optionallyCenter(c, vs.getB(), y, hsso, hs.getA(), hs.getB());
+	}
+
+
+	private void optionallyCenter(Compaction c, Slideable<Segment> s1, int distance, SegmentSlackOptimisation sso, Slideable<Segment> from, Slideable<Segment> to) {
+		Set<Connection> leavingConnections = getLeavingConnections(s1.getUnderlying(), c);
+		if (leavingConnections.size() == 1) {
+			// set the position exactly half-way
+			int half = Math.floorDiv(distance, 2);
+			Slideable<Segment> connectionSegment = getConnectionSegment(s1, c);
+			sso.ensureMinimumDistance(from, connectionSegment, half);
+			sso.ensureMinimumDistance(connectionSegment, to, half);
+		}
+	}
+	
+	public Set<Connection> getLeavingConnections(Segment s, Compaction c) {
+		Set<Connection> leavingConnections = s.getAdjoiningSegments(c).stream()
+			.flatMap(seg -> seg.getConnections().stream())
+			.collect(Collectors.toSet());
+			
+		return leavingConnections;
+	}
+
+	private Slideable<Segment> getConnectionSegment(Slideable<Segment> s1, Compaction c) {
+		return s1.getUnderlying().getAdjoiningSegments(c).stream()
+			.filter(s -> s.getConnections().size() > 0)
+			.map(s -> s.getSlideable()).findFirst().orElseThrow(() -> new Kite9ProcessingException());
+	}
+
+
+	private int minimizeDistance(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to) {
 		Integer minDist = from.minimumDistanceTo(to);
 		opt.ensureMaximumDistance(from, to, minDist);
+		return minDist;
 	}
 
 	public String getPrefix() {
