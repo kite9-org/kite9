@@ -1,14 +1,20 @@
 package org.kite9.diagram.visualization.compaction;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
@@ -168,5 +174,64 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		da.setChangeCost(Dart.EXTEND_IF_NEEDED, null);
 //		result.add(da);
 //	}
+
+	protected void optionallyCenter(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
+		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
+		Slideable<Segment> from = along.getA();
+		Slideable<Segment> to = along.getB();
+		
+		Set<Connection> leavingConnectionsA = getLeavingConnections(perp.getA().getUnderlying(), c);
+		Set<Connection> leavingConnectionsB = getLeavingConnections(perp.getB().getUnderlying(), c);
+		
+		int halfDist = 0;
+		
+		Slideable<Segment> connectionSegmentA = null;
+		Slideable<Segment> connectionSegmentB = null;
+		
+		if (leavingConnectionsA.size() == 1) {
+			connectionSegmentA = getConnectionSegment(perp.getA(), c);
+			
+			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentA));
+			halfDist = Math.max(halfDist, connectionSegmentA.minimumDistanceTo(to));
+		}
+		
+		if (leavingConnectionsB.size() == 1) {
+			connectionSegmentB = getConnectionSegment(perp.getB(), c);
+			
+			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB));
+			halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to));
+		}
+		
+		int totalDist = from.minimumDistanceTo(to);
+			
+		if (totalDist > halfDist * 2) {
+			halfDist = (int) Math.ceil(totalDist / 2d);
+		} 		
+			
+		if (connectionSegmentA != null) {
+			alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
+			alongSSO.ensureMinimumDistance(connectionSegmentA, to, halfDist);
+		}
+		
+		if (connectionSegmentB != null) {
+			alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
+			alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
+		}
+		
+	}
+
+	private Set<Connection> getLeavingConnections(Segment s, Compaction c) {
+		Set<Connection> leavingConnections = s.getAdjoiningSegments(c).stream()
+			.flatMap(seg -> seg.getConnections().stream())
+			.collect(Collectors.toSet());
+			
+		return leavingConnections;
+	}
+
+	private Slideable<Segment> getConnectionSegment(Slideable<Segment> s1, Compaction c) {
+		return s1.getUnderlying().getAdjoiningSegments(c).stream()
+			.filter(s -> s.getConnections().size() > 0)
+			.map(s -> s.getSlideable()).findFirst().orElseThrow(() -> new Kite9ProcessingException());
+	}
 	
 }
