@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.slideable;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -7,6 +8,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -62,6 +64,7 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			.map(ui -> ui.getDiagramElement())
 			.filter(de -> de instanceof Rectangular)
 			.map(de -> (Rectangular) de)
+			.distinct()
 			.forEach(r -> minimizeRectangular(r, c));
 	}
 	
@@ -76,38 +79,68 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			if ((hs != null) && (vs != null)) {
 				// sometimes, we might not display everything (e.g. labels)
 				log.send("Minimizing Distance "+r);
-				int y = minimizeDistance(hsso, hs.getA(), hs.getB());
-				int x = minimizeDistance(vsso, vs.getA(), vs.getB());
-			
+
 				
 				if (r instanceof Connected) {
-					centerSingleConnections(c, hsso, hs, vsso, vs, y, x);
+					centerSingleConnections(c, hsso, hs, vsso, vs);
 				}	
-			
+
+				
+				minimizeDistance(hsso, hs.getA(), hs.getB());
+				minimizeDistance(vsso, vs.getA(), vs.getB());
 			}			
 		}
-		
-		
 	}
 
 
-	private void centerSingleConnections(Compaction c, SegmentSlackOptimisation hsso, OPair<Slideable<Segment>> hs, SegmentSlackOptimisation vsso, OPair<Slideable<Segment>> vs, int y, int x) {
-		optionallyCenter(c, hs.getA(), x, vsso, vs.getA(), vs.getB());
-		optionallyCenter(c, hs.getB(), x, vsso, vs.getA(), vs.getB());
-		optionallyCenter(c, vs.getA(), y, hsso, hs.getA(), hs.getB());
-		optionallyCenter(c, vs.getB(), y, hsso, hs.getA(), hs.getB());
+	private void centerSingleConnections(Compaction c, SegmentSlackOptimisation hsso, OPair<Slideable<Segment>> hs, SegmentSlackOptimisation vsso, OPair<Slideable<Segment>> vs) {
+		optionallyCenter(c, hs, vsso, vs);
+		optionallyCenter(c, vs, hsso, hs);
 	}
 
 
-	private void optionallyCenter(Compaction c, Slideable<Segment> s1, int distance, SegmentSlackOptimisation sso, Slideable<Segment> from, Slideable<Segment> to) {
-		Set<Connection> leavingConnections = getLeavingConnections(s1.getUnderlying(), c);
-		if (leavingConnections.size() == 1) {
-			// set the position exactly half-way
-			int half = Math.floorDiv(distance, 2);
-			Slideable<Segment> connectionSegment = getConnectionSegment(s1, c);
-			sso.ensureMinimumDistance(from, connectionSegment, half);
-			sso.ensureMinimumDistance(connectionSegment, to, half);
+	private void optionallyCenter(Compaction c, OPair<Slideable<Segment>> perp, SegmentSlackOptimisation alongSSO, OPair<Slideable<Segment>> along) {
+		Slideable<Segment> from = along.getA();
+		Slideable<Segment> to = along.getB();
+		
+		Set<Connection> leavingConnectionsA = getLeavingConnections(perp.getA().getUnderlying(), c);
+		Set<Connection> leavingConnectionsB = getLeavingConnections(perp.getB().getUnderlying(), c);
+		
+		int halfDist = 0;
+		
+		Slideable<Segment> connectionSegmentA = null;
+		Slideable<Segment> connectionSegmentB = null;
+		
+		if (leavingConnectionsA.size() == 1) {
+			connectionSegmentA = getConnectionSegment(perp.getA(), c);
+			
+			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentA));
+			halfDist = Math.max(halfDist, connectionSegmentA.minimumDistanceTo(to));
 		}
+		
+		if (leavingConnectionsB.size() == 1) {
+			connectionSegmentB = getConnectionSegment(perp.getB(), c);
+			
+			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB));
+			halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to));
+		}
+		
+		int totalDist = from.minimumDistanceTo(to);
+			
+		if (totalDist > halfDist * 2) {
+			halfDist = (int) Math.ceil(totalDist / 2d);
+		} 		
+			
+		if (connectionSegmentA != null) {
+			alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
+			alongSSO.ensureMinimumDistance(connectionSegmentA, to, halfDist);
+		}
+		
+		if (connectionSegmentB != null) {
+			alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
+			alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
+		}
+		
 	}
 	
 	public Set<Connection> getLeavingConnections(Segment s, Compaction c) {
