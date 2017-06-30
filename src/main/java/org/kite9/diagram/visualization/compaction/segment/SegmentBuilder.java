@@ -9,8 +9,13 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;
@@ -60,17 +65,39 @@ public class SegmentBuilder implements Logable {
 	public AlignStyle getSegmentAlignStyle(Segment s) {
 		if (s.getUnderlyingInfo().size() == 1) {
 			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
-			switch (ui.getSide()) {
-			case END:
-				return AlignStyle.RIGHT;
-			case START:
-				return AlignStyle.LEFT;
-			default:
-				return AlignStyle.CENTER;
+			DiagramElement de = ui.getDiagramElement();
+			if (de instanceof Connection) {
+				for (Vertex v : s.getVerticesInSegment()) {
+					if (v instanceof FanVertex) {
+						Direction d = ((FanVertex) v).getFanSide();
+						switch (d) {
+						case UP:
+						case LEFT:
+							return AlignStyle.LEFT;
+						case DOWN:
+						case RIGHT:
+							return AlignStyle.RIGHT;
+						}
+					}
+				}
+				
+			} else if (de instanceof Rectangular) {
+				DiagramElementSizing des = ((Rectangular) de).getSizing();
+				
+				if (des == DiagramElementSizing.MAXIMIZE) {
+					switch (ui.getSide()) {
+					case END:
+						return AlignStyle.RIGHT;
+					case START:
+						return AlignStyle.LEFT;
+					default:
+					}
+					
+				}
 			}
-		} else {
-			return AlignStyle.CENTER;
 		}
+		
+		return null;
 	}
 	
 
