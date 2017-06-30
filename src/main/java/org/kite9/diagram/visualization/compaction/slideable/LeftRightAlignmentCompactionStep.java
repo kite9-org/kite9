@@ -48,10 +48,10 @@ public class LeftRightAlignmentCompactionStep extends AbstractAlignmentCompactio
 
 	private void alignSegment(Segment s) {
 		Slideable<Segment> sl = s.getSlideable();
-		if (s.getAlignStyle() == AlignStyle.RIGHT) {
+		if (s.getAlignStyle() == AlignStyle.MAX) {
 			Integer max = sl.getMaximumPosition();
 			sl.setMinimumPosition(max);
-		} else if (s.getAlignStyle() == AlignStyle.LEFT) {
+		} else if (s.getAlignStyle() == AlignStyle.MIN) {
 			int min = sl.getMinimumPosition();
 			sl.setMaximumPosition(min);
 		}

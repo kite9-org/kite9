@@ -17,6 +17,8 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.logging.Kite9Log;
@@ -74,10 +76,10 @@ public class SegmentBuilder implements Logable {
 						switch (d) {
 						case UP:
 						case LEFT:
-							return AlignStyle.LEFT;
+							return AlignStyle.MIN;
 						case DOWN:
 						case RIGHT:
-							return AlignStyle.RIGHT;
+							return AlignStyle.MAX;
 						}
 					}
 				}
@@ -88,12 +90,34 @@ public class SegmentBuilder implements Logable {
 				if (des == DiagramElementSizing.MAXIMIZE) {
 					switch (ui.getSide()) {
 					case END:
-						return AlignStyle.RIGHT;
+						return AlignStyle.MAX;
 					case START:
-						return AlignStyle.LEFT;
+						return AlignStyle.MIN;
 					default:
 					}					
-				} 
+				} else {
+					if (s.getDimension() == Dimension.H) {
+						VerticalAlignment va = ((CompactedRectangular) de).getVerticalAlignment();
+						switch (va) {
+						case BOTTOM:
+							return AlignStyle.MAX;
+						case CENTER:
+							return AlignStyle.CENTER;
+						case TOP:
+							return AlignStyle.MIN;
+						}
+					} else if (s.getDimension() == Dimension.V) {
+						HorizontalAlignment ha = ((CompactedRectangular) de).getHorizontalAlignment();
+						switch (ha) {
+						case LEFT:
+							return AlignStyle.MIN;
+						case CENTER:
+							return AlignStyle.CENTER;
+						case RIGHT:
+							return AlignStyle.MAX;
+						}
+					}
+				}
 				
 				((CompactedRectangular) de).getVerticalAlignment();
 			}

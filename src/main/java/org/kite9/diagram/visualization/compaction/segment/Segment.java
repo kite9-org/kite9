@@ -117,7 +117,7 @@ public class Segment implements Comparable<Segment> {
 	}
 
 	public String getIdentifier() {
-		return dimension+" ("+i+" "+getUnderlyingInfo()+" )";
+		return dimension+" ("+i+" "+getUnderlyingInfo()+" "+alignStyle+" )";
 	}
 	
 	@Override
