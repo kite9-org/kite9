@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.display;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -72,13 +73,14 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 	}
 	
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
-		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
-		if (cd==CostedDimension.NOT_DISPLAYABLE) {
-			return cd;
-		}
-		
-		CostedDimension out =  new CostedDimension(snap(cd.getWidth(), element), snap(cd.getHeight(), element), cd.cost);
-		return out;
+//		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
+//		if (cd==CostedDimension.NOT_DISPLAYABLE) {
+//			return cd;
+//		}
+//		
+//		CostedDimension out =  new CostedDimension(snap(cd.getWidth(), element), snap(cd.getHeight(), element), cd.cost);
+//		return out;
+		return null;
 	}
 
 	public String getPrefix() {
@@ -90,19 +92,33 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 	}
 
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy, DiagramElement along) {
-		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy, along);
-		if (needsSnapping(a, aSide, b, bSide)) {
-			minDist = snap(minDist, 1);		
-			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
-			return minDist;
-		} else {
-			return minDist;
-		}
+//		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy, along);
+//		if (needsSnapping(a, aSide, b, bSide)) {
+//			minDist = snap(minDist, 1);		
+//			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
+//			return minDist;
+//		} else {
+//			return minDist;
+//		}
+		
+		return 0;
 	}
 
 	private boolean needsSnapping(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		return true;
 		//return (a!=b) || (a==null) || (b==null);
+	}
+
+	@Override
+	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction direction, DiagramElement along, boolean concave) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean requiresHopForVisibility(Connection a, Connection b) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

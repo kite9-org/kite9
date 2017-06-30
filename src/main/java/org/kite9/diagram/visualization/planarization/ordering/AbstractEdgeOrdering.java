@@ -160,17 +160,18 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 	
 	@Override
 	public Set<DiagramElement> getUnderlyingLeavers() {
-		if (underlyingCache==null) {
-			List<PlanarizationEdge> edges = getEdgesAsList();
-			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
-			for (Edge e : edges) {
-				if (e instanceof BiDirectionalPlanarizationEdge)
-				DiagramElement und = e.getOriginalUnderlying();
-				if (und != null) {
-					underlyingCache.add(und);
-				}
-			}
-		}
-		return underlyingCache;
+		throw new UnsupportedOperationException();
+//		if (underlyingCache==null) {
+//			List<PlanarizationEdge> edges = getEdgesAsList();
+//			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
+//			for (Edge e : edges) {
+//				if (e instanceof BiDirectionalPlanarizationEdge)
+//				DiagramElement und = e.getOriginalUnderlying();
+//				if (und != null) {
+//					underlyingCache.add(und);
+//				}
+//			}
+//		}
+//		return underlyingCache;
 	}
 }

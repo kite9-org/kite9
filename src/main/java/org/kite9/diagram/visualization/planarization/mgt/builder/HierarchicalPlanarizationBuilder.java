@@ -200,36 +200,38 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 
 	private Route getRoute(DiagramElement vUnd, DiagramElement prevUnd,
 			Vertex start, List<PlanarizationEdge> edges, Direction d, Container inside) {
-		Route b = null;
-		for (int j = 0; j < edges.size(); j++) {
-			Edge edge = edges.get(j);
-			boolean metV = start.getOriginalUnderlying()==vUnd;
-			boolean metVPrev = start.getOriginalUnderlying()==prevUnd;
-			
-			if ((metV || metVPrev) && (b!=null)) {
-				b.end = j-1;
-				return b;
-			}  
-				
-			if ((metVPrev || metV) && (b==null)) {
-				b = new Route();
-				b.start = j;
-				b.sv = start;
-				b.reverse = metV;					
-			} 
-			
-//			if ((!metV && !metVPrev) && (b!=null)) {
-//				// we are in the route - make sure nothing is interferes
-//				DiagramElement under = start.getOriginalUnderlying();
-//				if (under!=null) {
-//					return null;
-//				}
-//			}
-			
-			start = edge.otherEnd(start);
-		}
+		throw new UnsupportedOperationException();
 		
-		return b;
+//		Route b = null;
+//		for (int j = 0; j < edges.size(); j++) {
+//			Edge edge = edges.get(j);
+//			boolean metV = start.getOriginalUnderlying()==vUnd;
+//			boolean metVPrev = start.getOriginalUnderlying()==prevUnd;
+//			
+//			if ((metV || metVPrev) && (b!=null)) {
+//				b.end = j-1;
+//				return b;
+//			}  
+//				
+//			if ((metVPrev || metV) && (b==null)) {
+//				b = new Route();
+//				b.start = j;
+//				b.sv = start;
+//				b.reverse = metV;					
+//			} 
+//			
+//	//			if ((!metV && !metVPrev) && (b!=null)) {
+//	//				// we are in the route - make sure nothing is interferes
+//	//				DiagramElement under = start.getOriginalUnderlying();
+//	//				if (under!=null) {
+//	//					return null;
+//	//				}
+//	//			}
+//			
+//			start = edge.otherEnd(start);
+//		}
+//		
+//		return b;
 	}
 	
 	/**

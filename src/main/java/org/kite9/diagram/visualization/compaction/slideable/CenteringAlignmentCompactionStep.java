@@ -50,22 +50,11 @@ public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactio
 			int rightSlack = rightMax - leftMin;
 			
 			int slackToUse = Math.min(leftSlack, rightSlack);
-			left.
+			slackToUse = slackToUse / 2;
+			left.setMinimumPosition(leftMin + slackToUse);
+			right.setMaximumPosition(rightMax - slackToUse);
 		 }
 		
-	}
-
-
-
-	private void alignSegment(Segment s) {
-		Slideable<Segment> sl = s.getSlideable();
-		if (s.getAlignStyle() == AlignStyle.CENTER) {
-			Integer max = sl.getMaximumPosition();
-			sl.setMinimumPosition(max);
-		} else if (s.getAlignStyle() == AlignStyle.LEFT) {
-			int min = sl.getMinimumPosition();
-			sl.setMaximumPosition(min);
-		}
 	}
 
 }
