@@ -11,30 +11,15 @@ import org.kite9.framework.logging.LogicException;
 
 public class Slideable<X> implements PositionChangeNotifiable {
 	
-	private AlignStyle alignStyle;
-	private Slideable<X> alignTo;
 	private AbstractSlackOptimisation<X> so;
 	
 	private SingleDirection minimum = new SingleDirection(this, true);
 	private SingleDirection maximum = new SingleDirection(this, false); 
 	private boolean hasBackwardConstraints = false;
 
-	public Slideable(AbstractSlackOptimisation<X> so, X u, AlignStyle alignStyle) {
+	public Slideable(AbstractSlackOptimisation<X> so, X u) {
 		this.underneath = u;
-		this.alignStyle = alignStyle;
 		this.so = so;
-	}
-
-	public Slideable<X> getAlignTo() {
-		return alignTo;
-	}
-
-	public AlignStyle getAlignStyle() {
-		return alignStyle;
-	}
-
-	public void setAlignStyle(AlignStyle alignStyle) {
-		this.alignStyle = alignStyle;
 	}
 
 	private X underneath;
@@ -90,10 +75,6 @@ public class Slideable<X> implements PositionChangeNotifiable {
 
 	public X getUnderlying() {
 		return underneath;
-	}
-
-	public void setAlignTo(Slideable<X> rs) {
-		this.alignTo = rs;
 	}
 
 	public Integer getMinimumPosition() {

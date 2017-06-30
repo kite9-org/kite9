@@ -40,7 +40,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		List<Slideable<Segment>> slideables = new ArrayList<>(segments.size());
 
 		for (Segment s : segments) {
-			Slideable<Segment> sli = new Slideable<Segment>(this, s, getSegmentAlignStyle(s));
+			Slideable<Segment> sli = new Slideable<Segment>(this, s);
 			s.setSlideable(sli);
 			log.send(log.go() ? null : "Created slideable: " + sli);
 			slideables.add(sli);
@@ -76,8 +76,7 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 	}
 
 	public void updateMaps(Slideable<Segment> s) {
-		Segment seg = (Segment) s.getUnderlying();
-		seg.setPositioned(false);
+		Segment seg = s.getUnderlying();
 		
 		for (Vertex v : seg.getVerticesInSegment()) {
 			vertexToSlidableMap.put(v, s);

@@ -33,8 +33,6 @@ public class Segment implements Comparable<Segment> {
 	
 	private PositionAction dimension;
 	private int i;
-	private boolean positioned = false;
-	private double position;
 	private Slideable<Segment> slideable;
 	private Set<UnderlyingInfo> underlyings;
 	private Set<Rectangular> rectangulars;
@@ -114,15 +112,7 @@ public class Segment implements Comparable<Segment> {
 	
 	@Override
 	public String toString() {
-		 return getIdentifier() + " pos: "+position+"  "+verticesInSegment.toString();
-	}
-
-	public void setPosition(double d) {
-		for (Vertex v : getVerticesInSegment()) {
-			dimension.set(v, d);
-		}
-	
-		position = d;
+		 return getIdentifier() + " "+verticesInSegment.toString();
 	}
 	
 	private Set<Vertex> verticesInSegment = new LinkedHashSet<Vertex>();
@@ -139,18 +129,6 @@ public class Segment implements Comparable<Segment> {
 		return verticesInSegment.contains(b);
 	}
 
-	public boolean isPositioned() {
-		return positioned;
-	}
-
-	public void setPositioned(boolean positioned) {
-		this.positioned = positioned;
-	}
-
-	public double getPosition() {
-		return position;
-	}
-
 	public PositionAction getDimension() {
 		return dimension;
 	}
@@ -159,10 +137,7 @@ public class Segment implements Comparable<Segment> {
 	 * De-facto ordering for segments.
 	 */
 	public int compareTo(Segment o) {
-		Double pos = this.position;
-		return pos.compareTo(o.position);
-		
-		// TODO: need to incorporate dependencies here too, when values are equal
+		return getSlideable().getMinimumPosition().compareTo(o.getSlideable().getMinimumPosition());
 	}
 	
 	/**

@@ -1,24 +1,23 @@
-package org.kite9.diagram.visualization.compaction.slideable.temp;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
 /**
  * Handles the following compaction optimisations:
  * <ul>
- * <li>Moving sections of edges up or down, if they have a preference</li>
+ * <li>Moving sections of edges up or down, left or right if they have a preference</li>
  * </ul>
  * 
  * @author robmoffat
  * 
  */
-public class EdgeAlignmentCompactionStep extends AbstractCompactionStep {
+public class LeftRightAlignmentCompactionStep extends AbstractCompactionStep {
 
-	public EdgeAlignmentCompactionStep(CompleteDisplayer cd) {
+	public LeftRightAlignmentCompactionStep(CompleteDisplayer cd) {
 		super(cd);
 	}
 

@@ -249,10 +249,6 @@ class VertexTurn {
 		return s.getUnderlying().getUnderlyingInfo().stream().map(ui -> ui.getDiagramElement()).filter(de -> c.isAssignableFrom(de.getClass())).map(de -> (X) de);
 	}
 	
-	public boolean isFixedLength() {
-		return (getEarly().hasMaximumConstraints()) || (getLate().hasMaximumConstraints());
-	}
-
 	public Set<Connection> getLeavingConnections() {
 		Set<Connection> leavingConnections = getSegment().getAdjoiningSegments(c).stream()
 			.flatMap(seg -> seg.getConnections().stream())

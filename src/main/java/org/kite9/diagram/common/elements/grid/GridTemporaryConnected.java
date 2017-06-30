@@ -9,10 +9,10 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.NotDisplayed;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 
@@ -97,6 +97,11 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public Container getContainer() {
 		return (Container) getParent();
+	}
+
+	@Override
+	public ConnectionsSeparation getConnectionsSeparationApproach() {
+		return ConnectionsSeparation.SEPARATE;   // irrelevant, won't have connections
 	}
 
 }

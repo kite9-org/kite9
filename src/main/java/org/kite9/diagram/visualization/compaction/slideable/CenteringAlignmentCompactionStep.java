@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.slideable.temp;
+package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +14,11 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 
-public class SlackCenteringCompactionStep extends AbstractCompactionStep {
+public class CenteringAlignmentCompactionStep extends AbstractCompactionStep {
 
-	public SlackCenteringCompactionStep(CompleteDisplayer cd) {
+	public CenteringAlignmentCompactionStep(CompleteDisplayer cd) {
 		super(cd);
 	}
 
@@ -80,8 +79,8 @@ public class SlackCenteringCompactionStep extends AbstractCompactionStep {
 	private void shareSlack(SegmentSlackOptimisation xo, Compaction c) {
 		
 		int capacity = xo.getAllSlideables().size()*2;
-		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, SlackCenteringCompactionStep.SlackPool>(capacity);
-		Set<SlackPool> slackPools = new UnorderedSet<SlackCenteringCompactionStep.SlackPool>(capacity);
+		Map<Slideable, SlackPool> slackPoolMap = new HashMap<Slideable, CenteringAlignmentCompactionStep.SlackPool>(capacity);
+		Set<SlackPool> slackPools = new UnorderedSet<CenteringAlignmentCompactionStep.SlackPool>(capacity);
 		
 		for (Slideable s : xo.getAllSlideables()) {
 			int slack = s.getMaximumPosition() - s.getMinimumPosition();
@@ -118,7 +117,7 @@ public class SlackCenteringCompactionStep extends AbstractCompactionStep {
 		}
 		
 		// order the pools by the amount of slack they have
-		List<SlackPool> out = new ArrayList<SlackCenteringCompactionStep.SlackPool>(slackPools);
+		List<SlackPool> out = new ArrayList<CenteringAlignmentCompactionStep.SlackPool>(slackPools);
 		Collections.sort(out);
 		
 		for (SlackPool slackPool : out) {
