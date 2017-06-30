@@ -232,7 +232,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 	}
 
-	private Set<Connection> getLeavingConnections(Segment s, Compaction c) {
+	protected Set<Connection> getLeavingConnections(Segment s, Compaction c) {
 		Set<Connection> leavingConnections = s.getAdjoiningSegments(c).stream()
 			.flatMap(seg -> seg.getConnections().stream())
 			.collect(Collectors.toSet());

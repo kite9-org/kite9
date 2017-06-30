@@ -122,19 +122,6 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		return true;
 	}
 
-	private void copyToErrors(File output) {
-		try {
-			File parent = output.getParentFile().getParentFile().getParentFile();
-			File errors = new File(parent, "errors");
-			errors.mkdir();
-			String name = output.getName();
-			File newFile = new File(errors, name);
-			RepositoryHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	protected InputStream getExpectedInputStream(String ending) throws FileNotFoundException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();

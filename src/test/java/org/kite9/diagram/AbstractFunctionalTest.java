@@ -1,6 +1,7 @@
 package org.kite9.diagram;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,6 +101,20 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 			firstRun = false;
 		} else {
 			Kite9Log.setLogging(false);
+		}
+	}
+	
+
+	protected void copyToErrors(File output) {
+		try {
+			File parent = output.getParentFile().getParentFile().getParentFile();
+			File errors = new File(parent, "errors");
+			errors.mkdir();
+			String name = output.getName();
+			File newFile = new File(errors, name);
+			RepositoryHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

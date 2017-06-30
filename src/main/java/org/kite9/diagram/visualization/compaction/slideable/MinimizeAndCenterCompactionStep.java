@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction.slideable;
 
+import java.util.Set;
+
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
@@ -59,14 +61,14 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			.filter(de -> de instanceof Rectangular)
 			.map(de -> (Rectangular) de)
 			.distinct()
-			.sorted((a, b) -> compare(a,b))
+			.sorted((a, b) -> compare(a,b,c))
 			.forEach(r -> minimizeRectangular(r, c));
 	}
 	
 	/**
-	 * Returns least-to-most connections
+	 * Returns in an order to maximize number of centerings. 
 	 */
-	private int compare(Rectangular a, Rectangular b) {
+	private int compare(Rectangular a, Rectangular b, Compaction c) {
 		if (a.getDepth() != b.getDepth()) {
 			return ((Integer) a.getDepth()).compareTo(b.getDepth());
 		} 
@@ -76,9 +78,31 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 		} else if (!(b instanceof Connected)) {
 			return 1;
 		} else {
-			return ((Integer) ((Connected)a).getLinks().size())
-					.compareTo(((Connected)b).getLinks().size());
+			// return elements with least number of connections on a side
+			int ac = maxLeavings(a, c);
+			int bc = maxLeavings(b, c);
+			return ((Integer) ac)
+					.compareTo(bc);
 		}
+	}
+
+
+	private int maxLeavings(Rectangular a, Compaction c) {
+		return Math.max(maxLeavingsInAxis(a, c.getHorizontalSegmentSlackOptimisation(), c), 
+				maxLeavingsInAxis(a, c.getVerticalSegmentSlackOptimisation(), c));
+	}
+
+
+	private int maxLeavingsInAxis(Rectangular a, SegmentSlackOptimisation sso, Compaction c) {
+		OPair<Slideable<Segment>> along = sso.getSlideablesFor(a);
+		return Math.max(leavingsOnSide(along.getA(),c),
+				leavingsOnSide(along.getB(), c));
+	}
+
+
+	private int leavingsOnSide(Slideable<Segment> a2, Compaction c) {
+		Set<Connection> connections = getLeavingConnections(a2.getUnderlying(), c);
+		return connections.size();
 	}
 
 
