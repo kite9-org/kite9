@@ -138,14 +138,6 @@ public class PortionNode extends SimpleNode {
 		return face.getBoundary(edgeEndPosition);
 	}
 
-	public Vertex getCorner(int i) {
-		if (edgeStartPosition == -1) {
-			return face.getCorner(i);
-		} else {
-			return face.getCorner(i + edgeStartPosition);
-		}
-	}
-
 	public Edge getEdge(int i) {
 		if (edgeStartPosition != -1) {
 			return face.getBoundary(i + edgeStartPosition);

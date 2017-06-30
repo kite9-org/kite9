@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
-public class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
+public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 
 	Double maximumBoundedAxisDistance;
 	Set<Direction> allowedCrossingDirections;
@@ -278,40 +278,6 @@ public class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		return true;
 	}
 	
-	@Override
-	protected void createInitialPaths(State<LocatedEdgePath> pq) {
-		Vertex from = e.getFrom();
-		
-		if (from instanceof MultiCornerVertex) {
-			Container c = (Container) ((BiDirectionalPlanarizationEdge)e).getFromConnected();
-			checkContainerNotWithinGrid(c);
-			CornerVertices cvs = em.getOuterCornerVertices(c);
-			for (MultiCornerVertex v : cvs.getPerimeterVertices()) {
-				if (!v.isPartOf(c)) {
-					// ensure anchors are set correctly for the perimeter.
-					v.addAnchor(null, null, c);
-				}
-				
-				if (onCorrectSideOfContainer((MultiCornerVertex) v, false)) {
-					createInitialPathsFrom(pq, v);
-				}
-			}
-			
-			if (allowConnectionsToContainerContents()) {
-				for (DiagramElement con : c.getContents()) {
-					if (con instanceof Connected) {
-						if (!(con instanceof Container)) {
-							Vertex vcon = em.getPlanarizationVertex((Connected) con);
-							createInitialPathsFrom(pq, vcon);
-						}
-					}
-				}
-			}
-		} else {
-			createInitialPathsFrom(pq, from);
-		}
-	}
-	
 	protected void createInitialPathsFrom(State<LocatedEdgePath> pq, Vertex from) {
 		try {
 			generatePaths(null, p.getAboveBackwardLinks(from), pq, from,Going.BACKWARDS, PlanarizationSide.ENDING_ABOVE);
@@ -419,43 +385,6 @@ public class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 	@Override
 	protected boolean canTravel(int pathVertex, Going endingDirection, boolean b) {
 		return true;
-	}
-
-	@Override
-	protected boolean isTerminationVertex(int v) {
-		Vertex candidate = p.getVertexOrder().get(v);
-		Connected toDe = ((BiDirectionalPlanarizationEdge)e).getToConnected();
-		
-		if (candidate == e.getTo()) {
-			return true;
-		}
-		
-		if (candidate instanceof MultiCornerVertex) {
-			// return true if this is a container vertex for the container we're trying to get to
-			if ((candidate.isPartOf(toDe)) && (onCorrectSideOfContainer((MultiCornerVertex) candidate, true))) {
-				return true;
-			}
-		}
-		
-		RoutingInfo ri = candidate.getRoutingInfo();
-		if (ri == null) {
-			return false;
-		}
-			
-		if (allowConnectionsToContainerContents()) {
-			if (rh.isWithin(endZone, ri)) {
-				
-				for (DiagramElement de : candidate.getDiagramElements()) {
-					if (de.getParent() == ((BiDirectionalPlanarizationEdge)e).getToConnected()) {
-						return true;
-					}
-				}
-				
-			}
-		}
-		
-		return false;
-		
 	}
 	
 	/**

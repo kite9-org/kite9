@@ -49,9 +49,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	private int pathCount = 0;
 	
 	enum Going { FORWARDS, BACKWARDS};
-	
-	enum TransverseAxis { HORIZONTAL, VERTICAL };
-	
+		
 	private static Routing getRouting(Going going, Place p) {
 		if (p==null) {
 			// start or end routing.

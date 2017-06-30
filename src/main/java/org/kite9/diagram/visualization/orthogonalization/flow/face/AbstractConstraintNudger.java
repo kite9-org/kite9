@@ -155,30 +155,6 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 		i.remove();
 		return out;
 	}
-	
-	protected void undivideNodes(Collection<SubdivisionNode> subdivisions, List<Pair<SubdivisionNode>> splits, int constraintNo) {
-		for (Pair<SubdivisionNode> pair : splits) {
-			SubdivisionNode a = pair.getA();
-			SubdivisionNode b = pair.getB();
-			log.send(log.go() ? null : "Undividing: " + a + " with " + b);
-			a.merge(b);
-			subdivisions.remove(b);
-			log.send(log.go() ? null : "Merged node: " + a);
-		}
-		
-		String aName = "("+constraintNo+"A)";
-		String bName = "("+constraintNo+"B)";
-		
-		
-		for (SubdivisionNode sn : subdivisions) {
-			String subdivision = sn.getSubdivision();
-			if (subdivision.endsWith(aName)) {
-				sn.setSubdivision(subdivision.substring(0, subdivision.length() - aName.length()));
-			} else if (subdivision.endsWith(bName)) {
-				sn.setSubdivision(subdivision.substring(0, subdivision.length() - bName.length()));
-			}
-		}
-	}
 
 	/**
 	 * Where a subdivision node meets a portion in clockwise and anti-clockwise,

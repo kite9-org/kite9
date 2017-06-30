@@ -17,7 +17,6 @@ import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Bounds;
-import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
@@ -116,7 +115,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
 		ConnectionManager connections = null;
 		Map<Container, List<Connected>> sortedContainerContents = null;
-		try {
+//		try {
 			
 			while (run != PlanarizationRun.DONE) {
 				rh =  new PositionRoutableHandler2D();
@@ -170,11 +169,12 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 				run = PlanarizationRun.DONE;
 			}
-		} finally {
-			if (!log.go()) {
-				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "vertex.png");
-			}
-		}
+//		} 
+//			finally {
+//			if (!log.go()) {
+//				TestingEngine.drawPositions(out, RHDPlanarization.class, "positions", "vertex.png");
+//			}
+//		}
 
 		Planarization planOut = buildPlanarization(c, out, connections, sortedContainerContents);
 		((RHDPlanarizationImpl)planOut).setRoutableReader(rh);
