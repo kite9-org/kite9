@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -43,6 +44,7 @@ public class SegmentBuilder implements Logable {
 				if (!done.contains(v)) {
 					Segment s = new Segment(direction, segNo++);
 					extendSegmentFromVertex(v, planeDirection, s, done);
+					s.setAlignStyle(getSegmentAlignStyle(s));
 					done.addAll(s.getVerticesInSegment());
 					result.add(s);
 				}
@@ -53,6 +55,24 @@ public class SegmentBuilder implements Logable {
 		
 		return result;
 	}
+	
+
+	public AlignStyle getSegmentAlignStyle(Segment s) {
+		if (s.getUnderlyingInfo().size() == 1) {
+			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
+			switch (ui.getSide()) {
+			case END:
+				return AlignStyle.RIGHT;
+			case START:
+				return AlignStyle.LEFT;
+			default:
+				return AlignStyle.CENTER;
+			}
+		} else {
+			return AlignStyle.CENTER;
+		}
+	}
+	
 
 	private void extendSegmentFromVertex(Vertex v, Set<Direction> planeDirection, Segment samePlane, Set<Vertex> done) {
 		if (done.contains(v)) 

@@ -22,11 +22,11 @@ public class LeftRightAlignmentCompactionStep extends AbstractCompactionStep {
 	}
 
 	public void optimise(Compaction c, SegmentSlackOptimisation xo, SegmentSlackOptimisation yo) {
-		centerContentRule(xo);
-		centerContentRule(yo);
+		applyContentRule(xo);
+		applyContentRule(yo);
 	}
 
-	private void centerContentRule(SegmentSlackOptimisation so) {
+	private void applyContentRule(SegmentSlackOptimisation so) {
 		for (Slideable s : so.getAllSlideables()) {
 			if (s.getAlignStyle() == AlignStyle.RIGHT) {
 				Slideable from = s;

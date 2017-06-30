@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
-import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
@@ -102,22 +101,6 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 					theDiagram = (Diagram) underlying;
 				}
 			}
-		}
-	}
-	
-	public AlignStyle getSegmentAlignStyle(Segment s) {
-		if (s.getUnderlyingInfo().size() == 1) {
-			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
-			switch (ui.getSide()) {
-			case END:
-				return AlignStyle.RIGHT;
-			case START:
-				return AlignStyle.LEFT;
-			default:
-				return AlignStyle.CENTER;
-			}
-		} else {
-			return AlignStyle.CENTER;
 		}
 	}
 	

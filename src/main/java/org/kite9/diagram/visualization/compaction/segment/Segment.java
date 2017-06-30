@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
+import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -37,7 +38,16 @@ public class Segment implements Comparable<Segment> {
 	private Set<UnderlyingInfo> underlyings;
 	private Set<Rectangular> rectangulars;
 	private Set<Connection> connections;
+	private AlignStyle alignStyle = AlignStyle.CENTER;	// default
 	
+	public AlignStyle getAlignStyle() {
+		return alignStyle;
+	}
+
+	public void setAlignStyle(AlignStyle alignStyle) {
+		this.alignStyle = alignStyle;
+	}
+
 	public Slideable<Segment> getSlideable() {
 		return slideable;
 	}
