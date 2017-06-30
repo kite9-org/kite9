@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
-import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -34,7 +34,7 @@ public class SegmentBuilder implements Logable {
 	
 	Kite9Log log = new Kite9Log(this);
 	
-	public List<Segment> buildSegmentList(Orthogonalization o, Set<Direction> planeDirection, PositionAction direction) {
+	public List<Segment> buildSegmentList(Orthogonalization o, Set<Direction> planeDirection, Dimension direction) {
 		Set<Direction> transversePlane = new LinkedHashSet<Direction>();
 		for (Direction d2 : planeDirection) {
 			transversePlane.add(Direction.rotateClockwise(d2));
@@ -92,9 +92,8 @@ public class SegmentBuilder implements Logable {
 					case START:
 						return AlignStyle.LEFT;
 					default:
-					}
-					
-				}
+					}					
+				} 
 				
 				((CompactedRectangular) de).getVerticalAlignment();
 			}

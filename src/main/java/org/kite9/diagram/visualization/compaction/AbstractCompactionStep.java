@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
-import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -50,8 +50,8 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	}
 
 	protected double getMinimumDistance(Segment first, Segment second, Segment along, boolean concave) {
-		boolean horizontalDartFirst = first.getDimension() == PositionAction.XAction;
-		boolean horizontalDartSecond = second.getDimension() == PositionAction.XAction;
+		boolean horizontalDartFirst = first.getDimension() == Dimension.V;
+		boolean horizontalDartSecond = second.getDimension() == Dimension.V;
 		
 		if (horizontalDartFirst != horizontalDartSecond) {
 			throw new Kite9ProcessingException();

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -137,7 +137,7 @@ public class PluggableCompactor implements Compactor {
 	}
 
 	public List<Segment> buildSegmentList(Orthogonalization o, Set<Direction> direction) {
-		List<Segment> segments = sb.buildSegmentList(o, direction, direction==HORIZONTAL ? PositionAction.YAction : PositionAction.XAction);
+		List<Segment> segments = sb.buildSegmentList(o, direction, direction==HORIZONTAL ? Dimension.H : Dimension.V);
 		return segments;
 	}
 	

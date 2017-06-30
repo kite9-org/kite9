@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -90,9 +90,9 @@ public class CompactionImpl implements Compaction {
 	}
 
 
-	public Segment newSegment(PositionAction direction) {
+	public Segment newSegment(Dimension direction) {
 		Segment snew = null;
-		if (direction==PositionAction.XAction) {
+		if (direction==Dimension.V) {
 			snew = new Segment(direction, getVerticalSegments().size());
 			getVerticalSegments().add(snew);
 		} else {

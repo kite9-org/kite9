@@ -11,7 +11,7 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.PositionAction;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -32,7 +32,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 public class Segment implements Comparable<Segment> {
 	
-	private PositionAction dimension;
+	private Dimension dimension;
 	private int i;
 	private Slideable<Segment> slideable;
 	private Set<UnderlyingInfo> underlyings;
@@ -106,7 +106,7 @@ public class Segment implements Comparable<Segment> {
 		}
 	}
 
-	public Segment(PositionAction dimension, int i) {
+	public Segment(Dimension dimension, int i) {
 		this.dimension = dimension;
 		this.i = i;
 	}
@@ -139,7 +139,7 @@ public class Segment implements Comparable<Segment> {
 		return verticesInSegment.contains(b);
 	}
 
-	public PositionAction getDimension() {
+	public Dimension getDimension() {
 		return dimension;
 	}
 
@@ -158,11 +158,11 @@ public class Segment implements Comparable<Segment> {
 		for (Vertex v : verticesInSegment) {
 			for (Edge e : v.getEdges()) {
 				if (e instanceof Dart) { 
-					if (dimension==PositionAction.YAction) {
+					if (dimension==Dimension.H) {
 						if ((e.getDrawDirection()==Direction.LEFT) || (e.getDrawDirection()==Direction.RIGHT)) {
 							darts.add((Dart)e);
 						}
-					} else if (dimension==PositionAction.XAction) {
+					} else if (dimension==Dimension.V) {
 						if ((e.getDrawDirection()==Direction.UP) || (e.getDrawDirection()==Direction.DOWN)) {
 							darts.add((Dart)e);
 						}
@@ -205,7 +205,7 @@ public class Segment implements Comparable<Segment> {
 	
 	public Set<Segment> getAdjoiningSegments(Compaction c) {
 		if (leavingSegments == null) {
-			boolean isHorizontal = dimension == PositionAction.YAction;
+			boolean isHorizontal = dimension == Dimension.H;
 			
 			// find segments that meet this one
 			leavingSegments = getVerticesInSegment().stream()
