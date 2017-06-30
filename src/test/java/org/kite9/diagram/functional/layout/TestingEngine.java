@@ -42,6 +42,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
@@ -173,23 +174,25 @@ public class TestingEngine extends TestingHelp {
 						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
 					}
 					
-					Direction connectionSide = getConnectionSide(c, v, r2d);
-					if (connectionsOnSide(v, connectionSide, r2d) == 1) {
-						switch (connectionSide) {
-						case UP:
-						case DOWN:
-							if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
-								throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+					if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
+						Direction connectionSide = getConnectionSide(c, v, r2d);
+						if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+							switch (connectionSide) {
+							case UP:
+							case DOWN:
+								if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
+									throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+								}
+								break;
+							case LEFT:
+							case RIGHT:
+								if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
+									throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+								}
+								break;
 							}
-							break;
-						case LEFT:
-						case RIGHT:
-							if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
-								throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
-							}
-							break;
+	 						
 						}
- 						
 					}
 				}
 			}

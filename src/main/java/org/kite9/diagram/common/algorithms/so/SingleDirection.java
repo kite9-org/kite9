@@ -89,15 +89,15 @@ public class SingleDirection {
 		if (ci.cacheItem != cacheMarker) {
 			if (ci.position == null) {
 				return null;
-			} else {
-				return increasing ? ci.position - this.position : this.position - ci.position;
-			}
-		} else {
-			return Math.abs(ci.cachePosition - startPosition);
-		}
+			} 
+			
+			return increasing ? ci.position - this.position : this.position - ci.position;
+			
+		} 
+		
+		return Math.abs(ci.cachePosition - startPosition);
 	}
-
-	
+		
 	public void addForwardConstraint(SingleDirection to, int distance) {
 		Integer existing = forward.get(to);
 		if ((existing == null) || (existing < distance)) {

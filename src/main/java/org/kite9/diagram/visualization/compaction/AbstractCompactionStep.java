@@ -175,10 +175,14 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		result.add(da);
 //	}
 
-	protected void optionallyCenter(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
+	protected void alignConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
+			
+		if (from.hasBackwardConstraints()) {
+			return;
+		}
 		
 		Set<Connection> leavingConnectionsA = getLeavingConnections(perp.getA().getUnderlying(), c);
 		Set<Connection> leavingConnectionsB = getLeavingConnections(perp.getB().getUnderlying(), c);
@@ -201,12 +205,21 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB));
 			halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to));
 		}
-		
-		int totalDist = from.minimumDistanceTo(to);
 			
+		int totalDist = from.minimumDistanceTo(to);
+		
 		if (totalDist > halfDist * 2) {
-			halfDist = (int) Math.ceil(totalDist / 2d);
-		} 		
+			double halfTotal = ((double) totalDist) / 2d;
+			halfDist = (int) Math.floor(halfTotal);
+		} else if (totalDist < halfDist * 2) {
+			int maxDist = from.maximumDistanceTo(to);
+			
+			if (maxDist < halfDist * 2) {
+				return; 	// can't do anything, stop
+			}
+			
+			
+		}
 			
 		if (connectionSegmentA != null) {
 			alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
@@ -217,7 +230,6 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
 			alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
 		}
-		
 	}
 
 	private Set<Connection> getLeavingConnections(Segment s, Compaction c) {

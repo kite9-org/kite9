@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction.slideable;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -58,9 +59,29 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			.filter(de -> de instanceof Rectangular)
 			.map(de -> (Rectangular) de)
 			.distinct()
+			.sorted((a, b) -> compare(a,b))
 			.forEach(r -> minimizeRectangular(r, c));
 	}
 	
+	/**
+	 * Returns least-to-most connections
+	 */
+	private int compare(Rectangular a, Rectangular b) {
+		if (a.getDepth() != b.getDepth()) {
+			return ((Integer) a.getDepth()).compareTo(b.getDepth());
+		} 
+		
+		if (!(a instanceof Connected)) {
+			return -1;  
+		} else if (!(b instanceof Connected)) {
+			return 1;
+		} else {
+			return ((Integer) ((Connected)a).getLinks().size())
+					.compareTo(((Connected)b).getLinks().size());
+		}
+	}
+
+
 	private void minimizeRectangular(Rectangular r, Compaction c) {
 		DiagramElementSizing sizing = r.getSizing();
 		
@@ -87,8 +108,8 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 
 
 	private void centerSingleConnections(Compaction c, OPair<Slideable<Segment>> hs, OPair<Slideable<Segment>> vs) {
-		optionallyCenter(c, hs, vs);
-		optionallyCenter(c, vs, hs);
+		alignConnections(c, hs, vs);
+		alignConnections(c, vs, hs);
 	}
 
 

@@ -1,19 +1,16 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
@@ -22,7 +19,6 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.logging.LogicException;
 
 public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer {
 
@@ -78,20 +74,22 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 				Rectangular r = getRectangular(vt);
 				// ok, size is needed of overall rectangle then half.
 				boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
-				OPair<Slideable<Segment>> limits = 
+				OPair<Slideable<Segment>> perp = 
+						(!isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
+								.getSlideablesFor(r);
+				
+				OPair<Slideable<Segment>> along = 
 						(isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
 								.getSlideablesFor(r);
-						
-				int rectangleSize = limits.getA().minimumDistanceTo(limits.getB());	
-				int half = (int) Math.ceil(rectangleSize / 2f);
-				rectangleSize = half * 2; // to avoid rounding errors
-				log.send("Setting size of "+r+" to "+rectangleSize+" "+vt.getDirection());
-				AbstractSlackOptimisation<Segment> so = limits.getA().getSlackOptimisation();
-				so.ensureMaximumDistance(limits.getA(), limits.getB(), rectangleSize);
-				Slideable<Segment> linkSlideable = link.getSlideable();
-				so.ensureMinimumDistance(limits.getA(), linkSlideable, half);
-				so.ensureMinimumDistance(linkSlideable, limits.getB(), half);				
-				return half;
+				
+				
+				alignConnections(c, perp, along);
+				int sideSize = along.getA().minimumDistanceTo(along.getB());
+				log.send("Setting size of "+r+" to "+sideSize+" "+vt.getDirection());
+				along.getA().getSlackOptimisation().ensureMaximumDistance(along.getA(), along.getB(), sideSize);
+				
+				return vt.getMinimumLength();
+
 			}
 
 			if (returnMinimum) {

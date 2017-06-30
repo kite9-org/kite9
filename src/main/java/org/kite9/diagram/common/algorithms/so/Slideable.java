@@ -17,6 +17,7 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	
 	private SingleDirection minimum = new SingleDirection(this, true);
 	private SingleDirection maximum = new SingleDirection(this, false); 
+	private boolean hasBackwardConstraints = false;
 
 	public Slideable(AbstractSlackOptimisation<X> so, X u, AlignStyle alignStyle) {
 		this.underneath = u;
@@ -57,13 +58,26 @@ public class Slideable<X> implements PositionChangeNotifiable {
 			return slack1;
 		}
 		
-//		if (slack1.intValue() != slack2.intValue()) {
-//			throw new LogicException("Something went wrong");
-//		}
 		return Math.max(slack1, slack2);
-		
-		//return slack1;
 	}
+	
+	/**
+	 * Works out how much further the current slideable can be from s.
+	 */
+	public int maximumDistanceTo(Slideable<X> s) {
+		Integer maxSet = this.getMaximumPosition();
+		maxSet = maxSet == null ? 10000 : maxSet;		// 
+		Integer slack1 = s.minimum.minimumDistanceTo(minimum, maxSet);
+		so.log.send("Calculating maximum distance from "+s+" to "+this+" "+-slack1);
+		Integer slack2 = maximum.minimumDistanceTo(s.maximum, s.getMinimumPosition());
+		so.log.send("Calculating maximum distance from "+this+" to "+s+" "+slack2);
+		if (slack2 == null) {
+			return slack1;
+		}
+		
+		return Math.min(slack1, slack2);
+	}
+	
 	
 	public boolean hasTransitiveForwardConstraintTo(Slideable<X> s2) {
 		return minimum.hasTransitiveForwardConstraintTo(s2.minimum, s2.getMinimumPosition());
@@ -130,6 +144,7 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	void addMinimumBackwardConstraint(Slideable<X> to, int dist) {
 		try {
 			minimum.addBackwardConstraint(to.minimum, dist);
+			this.hasBackwardConstraints = true;
 		} catch (RuntimeException e) {
 			throw new SlideableException("addMinimumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
 		}
@@ -146,13 +161,14 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	void addMaximumBackwardConstraint(Slideable<X> to, int dist) {
 		try {
 			maximum.addBackwardConstraint(to.maximum, dist);
+			this.hasBackwardConstraints = true;
 		} catch (RuntimeException e) {
 			throw new SlideableException("addMaximumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
 		}
 	}
 	
-	public boolean hasMaximumConstraints() {
-		return false;
+	public boolean hasBackwardConstraints() {
+		return this.hasBackwardConstraints;
 	}
 
 	public void setMinimumPosition(int i) {
