@@ -2,7 +2,6 @@ package org.kite9.diagram.model;
 
 import java.util.Collection;
 
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
@@ -14,7 +13,7 @@ import org.kite9.diagram.model.style.ConnectionsSeparation;
  * @author robmoffat
  *
  */
-public interface Connected extends Rectangular {
+public interface Connected extends CompactedRectangular {
 
 	/**
 	 * Returns an unmodifiable collection of links
@@ -31,11 +30,6 @@ public interface Connected extends Rectangular {
 	 * Returns the connection between this object and c.
 	 */
 	Connection getConnectionTo(Connected c);
-	
-	/**
-	 * Overrides the main one, since all Connecteds are areas on the diagram rather than links.
-	 */
-	RectangleRenderingInformation getRenderingInformation();
 	
 	ConnectionsSeparation getConnectionsSeparationApproach();
 }

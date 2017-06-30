@@ -29,7 +29,6 @@ public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactio
 	
 	@Override
 	protected void alignConnectionSegment(Segment s, Compaction c) {
-		alignSegment(s);
 	}
 
 	@Override
@@ -40,15 +39,27 @@ public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactio
 
 	private void alignRectangularAxis(Rectangular de, SegmentSlackOptimisation sso) {
 		OPair<Slideable<Segment>> oss = sso.getSlideablesFor(de);
-		alignSegment(oss.getA().getUnderlying());
-		alignSegment(oss.getB().getUnderlying());
+		
+		Slideable<Segment> left = oss.getA();
+		Slideable<Segment> right = oss.getB();
+		if ((left.getUnderlying().getAlignStyle() == AlignStyle.CENTER) && 
+		 (right.getUnderlying().getAlignStyle() == AlignStyle.CENTER)) {
+			Integer leftMin = left.getMinimumPosition();
+			Integer rightMax = right.getMaximumPosition();
+			int leftSlack = left.getMaximumPosition() - leftMin;
+			int rightSlack = rightMax - leftMin;
+			
+			int slackToUse = Math.min(leftSlack, rightSlack);
+			left.
+		 }
+		
 	}
 
 
 
 	private void alignSegment(Segment s) {
 		Slideable<Segment> sl = s.getSlideable();
-		if (s.getAlignStyle() == AlignStyle.RIGHT) {
+		if (s.getAlignStyle() == AlignStyle.CENTER) {
 			Integer max = sl.getMaximumPosition();
 			sl.setMinimumPosition(max);
 		} else if (s.getAlignStyle() == AlignStyle.LEFT) {

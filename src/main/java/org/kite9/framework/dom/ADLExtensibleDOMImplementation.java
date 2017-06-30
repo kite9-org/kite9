@@ -34,6 +34,8 @@ import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.GenericKite9XMLElement;
@@ -140,6 +142,11 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		
 		// CONNECTION SIDES
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTIONS_PROPERTY, ConnectionsSeparation.class, ConnectionsSeparation.SAME_SIDE));
+		
+		// ALIGNMENT
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.TOP));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER));
+		
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

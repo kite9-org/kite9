@@ -19,7 +19,7 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public abstract class AbstractConnectedDiagramElement extends AbstractRectangularDiagramElement implements Connected {
+public abstract class AbstractConnectedDiagramElement extends AbstractCompactedRectangularDiagramElement implements Connected {
 	
 	public AbstractConnectedDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);

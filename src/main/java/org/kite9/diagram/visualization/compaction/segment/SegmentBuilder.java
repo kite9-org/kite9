@@ -11,6 +11,7 @@ import org.kite9.diagram.common.elements.PositionAction;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -81,7 +82,7 @@ public class SegmentBuilder implements Logable {
 					}
 				}
 				
-			} else if (de instanceof Rectangular) {
+			} else if (de instanceof CompactedRectangular) {
 				DiagramElementSizing des = ((Rectangular) de).getSizing();
 				
 				if (des == DiagramElementSizing.MAXIMIZE) {
@@ -94,6 +95,8 @@ public class SegmentBuilder implements Logable {
 					}
 					
 				}
+				
+				((CompactedRectangular) de).getVerticalAlignment();
 			}
 		}
 		

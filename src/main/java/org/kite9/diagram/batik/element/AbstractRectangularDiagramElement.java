@@ -8,7 +8,6 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -76,8 +75,8 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 			}
 		}
 		
-		initLayout(theElement);
-		initSizing(theElement);
+		initLayout();
+		initSizing();
 	}
 
 	protected void addConnectionReference(Connection de) {
@@ -89,14 +88,14 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return layout;
 	}
 	
-	public void initLayout(Kite9XMLElement theElement) {
+	public void initLayout() {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY);
 		if (ev != null) {
 			layout = (Layout) ev.getTheValue();
 		}
-	}
+	} 
 	
-	public void initSizing(Kite9XMLElement theElement) {
+	public void initSizing() {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
 		this.sizing = (DiagramElementSizing) ev.getTheValue();
 	}
@@ -107,18 +106,6 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return sizing;
 	}
 	
-	@Override
-	public double getMargin(Direction d) {
-		ensureInitialized();
-		return margin[d.ordinal()];
-	}
-
-	@Override
-	public double getPadding(Direction d) {
-		ensureInitialized();
-		return padding[d.ordinal()];
-	}
-
 	private void initContainerPosition() {
 		if (containerPosition == null) {
 			if (getContainer() != null) {

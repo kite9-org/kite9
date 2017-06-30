@@ -4,6 +4,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
@@ -41,7 +42,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 			case MINIMIZE:
 			case MAXIMIZE:
-				Rectangular r = (Rectangular) element;
+				CompactedRectangular r = (CompactedRectangular) element;
 				double left = r.getPadding(Direction.LEFT);
 				double right =  r.getPadding(Direction.RIGHT);
 				double up =  r.getPadding(Direction.UP);
@@ -144,10 +145,10 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	@Override
 	public double getPadding(DiagramElement element, Direction d) {
-		if (element instanceof Rectangular) {
-			return ((Rectangular) element).getPadding(d);
+		if (element instanceof CompactedRectangular) {
+			return ((CompactedRectangular) element).getPadding(d);
 		} else if (element instanceof Connection) {
-			return ((Connection) element).getPadding(d);
+			return ((CompactedRectangular) element).getPadding(d);
 		} else {
 			return 0;
 		}
@@ -155,8 +156,8 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
 	@Override
 	public double getMargin(DiagramElement element, Direction d) {
-		if (element instanceof Rectangular) {
-			return ((Rectangular) element).getMargin(d);
+		if (element instanceof CompactedRectangular) {
+			return ((CompactedRectangular) element).getMargin(d);
 		} else if (element instanceof Connection) {
 			return ((Connection) element).getMargin(d);
 		} else {

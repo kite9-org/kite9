@@ -8,7 +8,7 @@ import org.kite9.diagram.model.Label;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
-public abstract class AbstractLabelImpl extends AbstractRectangularDiagramElement implements Label {
+public abstract class AbstractLabelImpl extends AbstractCompactedRectangularDiagramElement implements Label {
 
 	public AbstractLabelImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);

@@ -15,6 +15,8 @@ import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -102,6 +104,16 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public ConnectionsSeparation getConnectionsSeparationApproach() {
 		return ConnectionsSeparation.SEPARATE;   // irrelevant, won't have connections
+	}
+
+	@Override
+	public VerticalAlignment getVerticalAlignment() {
+		return null;
+	}
+
+	@Override
+	public HorizontalAlignment getHorizontalAlignment() {
+		return null;
 	}
 
 }

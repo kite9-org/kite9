@@ -32,4 +32,9 @@ public interface CSSConstants {
 	
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = "connections";
+	
+	// for aligning content within a container
+	public static final String VERTICAL_ALIGNMENT = "vertical-align";
+	public static final String HORIZONTAL_ALIGNMENT = "horizontal-align";
+	
 }

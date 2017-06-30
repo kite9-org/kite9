@@ -68,11 +68,6 @@ public class GeneratedLayoutElement extends AbstractBiDirectional<Connected> imp
 	}
 
 	@Override
-	public double getMargin(Direction d) {
-		return 0;
-	}
-
-	@Override
 	public int getDepth() {
 		return 1;
 	}

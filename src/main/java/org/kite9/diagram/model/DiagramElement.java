@@ -1,7 +1,6 @@
 package org.kite9.diagram.model;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 
 /**
@@ -29,8 +28,6 @@ public interface DiagramElement extends Comparable<DiagramElement> {
 		
 	@Deprecated
 	public String getShapeName();
-	
-	public double getMargin(Direction d);
 	
 	/**
 	 * Returns the number of levels deep which this element is embedded in the diagram hierarchy, with zero the top level.
