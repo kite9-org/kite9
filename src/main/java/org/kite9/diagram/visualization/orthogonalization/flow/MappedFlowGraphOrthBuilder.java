@@ -188,12 +188,14 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	static class SingleVertexTurnInformation implements TurnInformation {
 
 		final Map<Edge, Direction> map;
+		final Map<Edge, Boolean> turns;
 		final Edge start;
 		
-		public SingleVertexTurnInformation(Map<Edge, Direction> map, Edge start) {
+		public SingleVertexTurnInformation(Map<Edge, Direction> map, Edge start, Map<Edge, Boolean> turns) {
 			super();
 			this.map = map;
 			this.start = start;
+			this.turns = turns;
 		}
 
 		@Override
@@ -210,6 +212,11 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		public Edge getFirstEdgeClockwiseEdgeOnASide() {
 			return start;
 		}
+
+		@Override
+		public boolean doesEdgeHaveTurns(Edge e) {
+			return turns.get(e);
+		}
 		
 		
 	}
@@ -224,7 +231,8 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			return out;
 		}
 		
-		Map<Edge, Direction> map = new HashMap<>();
+		Map<Edge, Direction> directionMap = new HashMap<>();
+		Map<Edge, Boolean> turnsMap = new HashMap<>();
 		List<Face> faces = pln.getVertexFaceMap().get(sv);
 		EdgeOrdering eo = pln.getEdgeOrderings().get(sv);
 		Iterator<PlanarizationEdge> it = eo.getIterator(true, (PlanarizationEdge) e1, (PlanarizationEdge) e1, false);
@@ -233,7 +241,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			PlanarizationEdge e2 = it.next();
 			
 			if (e2 == e1) {
-				map.put(e1, d);
+				directionMap.put(e1, d);
 			} else {
 				Face f = getCorrectFace(faces, sv, e1, e2);
 				int outCap = calculateTurns(f, fg, sv, e2, e1);
@@ -244,13 +252,18 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 					startEdge = e2;
 				}
 				d = Direction.reverse(d);
-				map.put(e2, d);
+				directionMap.put(e2, d);
 			}
 			
 			e1 = e2;
+			
+			// now calculate turn map
+			List<Face> faces2 = pln.getEdgeFaceMap().get(e2);
+			int edgeBends = calculateEdgeBends(faces2.get(0), fg, e2, sv);
+			turnsMap.put(e2, (edgeBends != 0));
 		}
 		
-		out = new SingleVertexTurnInformation(map, startEdge);
+		out = new SingleVertexTurnInformation(directionMap, startEdge, turnsMap);
 		turnInfoMap.put(sv, out);
 
 		return out;

@@ -28,6 +28,8 @@ public interface VertexArranger {
 		 */
 		public Direction getIncidentDartDirection(Edge e);
 		
+		public boolean doesEdgeHaveTurns(Edge e);
+		
 	}
 
 	/**

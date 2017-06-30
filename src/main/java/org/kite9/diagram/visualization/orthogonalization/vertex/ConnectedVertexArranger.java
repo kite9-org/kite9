@@ -109,7 +109,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			throw new Kite9ProcessingException();
 		
 		Connected c = ((ConnectedVertex) v).getOriginalUnderlying();
-		List<DartFace> faces = o.getDartFacesForRectangular((Rectangular) c);
+		List<DartFace> faces = o.getDartFacesForRectangular(c);
 		
 		if (faces.size() == 1) {
 			return faces.get(0).getDartsInFace();
@@ -127,6 +127,11 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 				public Edge getFirstEdgeClockwiseEdgeOnASide() {
 					return null;
 				}
+
+				@Override
+				public boolean doesEdgeHaveTurns(Edge e) {
+					return false;
+				}
 			});
 			
 			return out.getDartsInFace();
@@ -143,16 +148,16 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	 * Creates a dart or darts that arrives at the vertex.  Where more than one dart is created, return just the dart hitting
 	 * the vertex.
 	 */
-	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int idx, Vertex und, int count) {
+	protected IncidentDart convertEdgeToIncidentDart(PlanarizationEdge e, Set<DiagramElement> cd, Orthogonalization o, Direction incident, int idx, Vertex und, int straightCount) {
 		Vertex sideVertex = createSideVertex(cd, und);
 		Vertex externalVertex = createExternalVertex(e, und);
 		Direction fan = null;
-		if (count > 1) {
+		if ((idx != -1) && (straightCount > 1)) {
 			Direction lowerOrders = Direction.rotateClockwise(incident);
 			Direction higherOrders = Direction.rotateAntiClockwise(incident);
 
-			int lower = (int) Math.floor(((double) count / 2d) - 1d);
-			int higher = (int) Math.ceil((double) count / 2d);
+			int lower = (int) Math.floor(((double) straightCount / 2d) - 1d);
+			int higher = (int) Math.ceil((double) straightCount / 2d);
 
 			fan = idx <= lower ? lowerOrders : ((idx >= higher) ? higherOrders : null);
 		}
@@ -270,11 +275,17 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		
 		for (Direction dir : in.keySet()) {
 			List<PlanarizationEdge> list = in.get(dir);
-			int count = list.size();
-			int[] number = { 0 };
-			out.put(dir, list.stream().map(
-				e -> convertEdgeToIncidentDart(e, cd, o, ti.getIncidentDartDirection(e), number[0]++, from, count)).collect(Collectors.toList()));
-		
+			List<IncidentDart> outList = new ArrayList<>(in.size());
+			long straightCount = list.stream().filter(e -> !ti.doesEdgeHaveTurns(e)).count();
+			int straightIndex = 0;
+			for (int i = 0; i < list.size(); i++) {
+				PlanarizationEdge current = list.get(i);
+				boolean turning = ti.doesEdgeHaveTurns(current);
+				int idx = turning ? -1 : straightIndex++;
+				IncidentDart id = convertEdgeToIncidentDart(current, cd, o, ti.getIncidentDartDirection(current), idx, from, (int) straightCount);
+				outList.add(id);
+			}
+			out.put(dir, outList);
 		}
 		
 		return out;
