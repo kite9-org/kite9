@@ -81,9 +81,13 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			// return elements with least number of connections on a side
 			int ac = maxLeavings(a, c);
 			int bc = maxLeavings(b, c);
-			return ((Integer) ac)
-					.compareTo(bc);
-		}
+			if (bc != ac) {
+				return ((Integer) ac)
+						.compareTo(bc);
+			}
+		} 
+		
+		return b.getID().compareTo(a.getID());
 	}
 
 

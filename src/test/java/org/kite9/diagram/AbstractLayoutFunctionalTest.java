@@ -72,9 +72,15 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		out.checkNoContradictions = checkNoContradictions();
 		out.checkNoHops = checkNoHops();
 		out.everythingStraight = checkEverythingStraight();
+		out.checkMidConnection = checkMidConnections();
 		return out;
 	}
 	
+	protected boolean checkMidConnections() {
+		return true;
+	}
+
+
 	protected boolean checkOcclusion() {
 		return true;
 	}

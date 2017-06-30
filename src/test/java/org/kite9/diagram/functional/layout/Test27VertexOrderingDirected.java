@@ -298,4 +298,13 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 		renderDiagram(new DiagramKite9XMLElement(out2, null));
 
 	}
+
+
+
+	@Override
+	protected boolean checkMidConnections() {
+		return false;  // can't be done for 21_7
+	}
+	
+	
 }

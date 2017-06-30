@@ -278,5 +278,10 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 	}
 
+
+	@Override
+	protected boolean checkMidConnections() {
+		return false;  // pyramids usually don't center because it would expand glyph sizes massively
+	}
 	
 }

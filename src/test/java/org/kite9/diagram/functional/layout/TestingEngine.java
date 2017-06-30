@@ -80,6 +80,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkNoContradictions = true;
 		public boolean checkOcclusion = true;
 		public boolean checkConnectionsMeetConnecteds = true;
+		public boolean checkMidConnection = true;
 	}
 	
 	public void testDiagram(DiagramKite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
@@ -115,7 +116,7 @@ public class TestingEngine extends TestingHelp {
 			}
 			
 			if (c.checkConnectionsMeetConnecteds) {
-				testConnectionsMeetConnecteds(d);
+				testConnectionsMeetConnecteds(d, c.checkMidConnection);
 			}
 
 			if (c.checkLayout) {
@@ -146,7 +147,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testConnectionsMeetConnecteds(DiagramKite9XMLElement d) {
+	public static void testConnectionsMeetConnecteds(DiagramKite9XMLElement d, final boolean checkMidConnection) {
 		Diagram d2 = d.getDiagramElement();
 		new DiagramElementVisitor().visit(d2, new VisitorAction() {
 			
@@ -174,24 +175,26 @@ public class TestingEngine extends TestingHelp {
 						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
 					}
 					
-					if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
-						Direction connectionSide = getConnectionSide(c, v, r2d);
-						if (connectionsOnSide(v, connectionSide, r2d) == 1) {
-							switch (connectionSide) {
-							case UP:
-							case DOWN:
-								if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
-									throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+					if (checkMidConnection) {
+						if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
+							Direction connectionSide = getConnectionSide(c, v, r2d);
+							if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+								switch (connectionSide) {
+								case UP:
+								case DOWN:
+									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
+										throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+									}
+									break;
+								case LEFT:
+								case RIGHT:
+									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
+										throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+									}
+									break;
 								}
-								break;
-							case LEFT:
-							case RIGHT:
-								if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
-									throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
-								}
-								break;
+		 						
 							}
-	 						
 						}
 					}
 				}
