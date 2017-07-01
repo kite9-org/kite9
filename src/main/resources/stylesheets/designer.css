@@ -104,27 +104,37 @@ glyph {
 	box-shadow: 4px 4px 0px #333333; 
 }
 
-
 glyph > label {
+	type: connected;
+	sizing: minimize;
+	template: url(template.svg#text-label);
+	occupies: 0 1 1 1;
+}
+
+glyph > label > contents {
 	type: connected;
 	sizing: fixed;
 	font-size: 15px;
 	text-align: middle;
 	fill: black;
 	font-family: "opensans-regular-webfont";
-	template: url(template.svg#text-label);
-	occupies: 0 1 1 1;
 	horizontal-align: center;
 }
 
 glyph > stereotype {
 	type: connected;
+	sizing: minimize;
+	template: url(template.svg#text-label);
+	occupies: 0 0;
+}
+
+glyph > stereotype > label {
+	type: connected;
 	sizing: fixed;
 	font-family: "opensans-bold-webfont";
 	font-size: 14px;
 	fill: black;
-	template: url(template.svg#text-label);
-	occupies: 0 0;
+	horizontal-align: right;
 }
 
 glyph > text-lines {
@@ -187,13 +197,17 @@ arrow {
 
 arrow > label {
 	type: connected;
+	sizing: minimize;
+	template: url(template.svg#text-label);
+}
+
+arrow > label > contents {
 	sizing: fixed;
 	font-size: 12px;
 	stroke: white;
 	fill: white;
-	text-align: middle;
+	horizontal-align: center;
 	font-family: "opensans-regular-webfont";
-	template: url(template.svg#text-label);
 }
 
 /* Context */
