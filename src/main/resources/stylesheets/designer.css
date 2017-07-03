@@ -1,3 +1,5 @@
+@namespace svg "http://www.w3.org/2000/svg";
+
 * {
 	font-family: "opensans-light-webfont";
 }
@@ -8,6 +10,11 @@ glyph,
 arrow,
 link {
 	margin: 10px;
+}
+
+.red {
+	font-size: 25px;
+	fill: red;
 }
 
 diagram {
@@ -115,7 +122,6 @@ glyph > label > contents {
 	type: connected;
 	sizing: fixed;
 	font-size: 15px;
-	text-align: middle;
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	horizontal-align: center;
@@ -131,9 +137,14 @@ glyph > stereotype {
 glyph > stereotype > label {
 	type: connected;
 	sizing: fixed;
+	horizontal-align: right;
+}
+
+glyph > stereotype .text {
 	font-family: "opensans-bold-webfont";
 	font-size: 14px;
 	fill: black;
+	font-size: 20px;
 	horizontal-align: right;
 }
 
@@ -203,10 +214,13 @@ arrow > label {
 
 arrow > label > contents {
 	sizing: fixed;
+	horizontal-align: center;
+}
+
+arrow > label > contents .text {
 	font-size: 12px;
 	stroke: white;
 	fill: white;
-	horizontal-align: center;
 	font-family: "opensans-regular-webfont";
 }
 
@@ -229,7 +243,7 @@ diagram > label {
 	type: label; 
 	fill: #CCC;
 	fill-transparency: 60%;
-	stroke: black;
+	stroke: green;
 	stroke-width: 0;
 	font-size: 10px;
 	font-family: "opensans-light-webfont";

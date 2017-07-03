@@ -42,7 +42,7 @@
   <!-- label template -->
   <template id="text-label">
     <contents style="type: connected; sizing: fixed">
-      <svg:text>{{contents}}</svg:text>
+      <svg:text class="text">{{contents}}</svg:text>
     </contents>
   </template>
 
