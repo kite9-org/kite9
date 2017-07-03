@@ -137,15 +137,13 @@ glyph > stereotype {
 glyph > stereotype > label {
 	type: connected;
 	sizing: fixed;
-	horizontal-align: right;
+	horizontal-align: center;
 }
 
 glyph > stereotype .text {
 	font-family: "opensans-bold-webfont";
-	font-size: 14px;
+	font-size: 12px;
 	fill: black;
-	font-size: 20px;
-	horizontal-align: right;
 }
 
 glyph > text-lines {

@@ -108,12 +108,12 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 
 	@Override
 	public VerticalAlignment getVerticalAlignment() {
-		return null;
+		return VerticalAlignment.TOP;
 	}
 
 	@Override
 	public HorizontalAlignment getHorizontalAlignment() {
-		return null;
+		return HorizontalAlignment.CENTER;
 	}
 
 }
