@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
@@ -33,8 +35,8 @@ public class FanningEdgeConverter extends LabellingEdgeConverter {
 						((BiDirectionalPlanarizationEdge) e).getToConnected() :
 							((BiDirectionalPlanarizationEdge) e).getFromConnected();
 
-				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false, incident);
-				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true, incident);
+				Vertex fanOuter = new FanVertex(planVertex.getID() + "-fo-" + counter, false, Arrays.asList(incident, Direction.reverse(fan)));
+				Vertex fanInner = new FanVertex(planVertex.getID() + "-fi-" + counter, true, Arrays.asList(incident, fan));
 				counter++;
 
 				Map<DiagramElement, Direction> map = createMap(e);

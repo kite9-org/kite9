@@ -1,5 +1,6 @@
 package org.kite9.diagram.common.elements.vertex;
 
+import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.model.DiagramElement;
@@ -14,9 +15,9 @@ import org.kite9.diagram.model.position.Direction;
 public class FanVertex extends AbstractVertex implements NoElementVertex {
 	
 	private final boolean inner;
-	private final Direction fanFromSide;
+	private final List<Direction> fanFromSide;
 	
-	public Direction getFanSide() {
+	public List<Direction> getFanSides() {
 		return fanFromSide;
 	}
 
@@ -24,7 +25,7 @@ public class FanVertex extends AbstractVertex implements NoElementVertex {
 		return inner;
 	}
 
-	public FanVertex(String id, boolean inner, Direction fanFromSide) {
+	public FanVertex(String id, boolean inner, List<Direction> fanFromSide) {
 		super(id);
 		this.inner = inner;
 		this.fanFromSide = fanFromSide;

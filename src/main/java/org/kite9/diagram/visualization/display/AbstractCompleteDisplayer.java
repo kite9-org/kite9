@@ -112,6 +112,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
+		if ((a == b)) {
+			return 0;
+			
+		}
 		double margin = concave ? calculateMargin(a, aSide, b, bSide) : 0;
 		margin = incorporateLinkMinimumLength(along, d, margin);
 		return margin;

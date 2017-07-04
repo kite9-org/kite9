@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
@@ -21,6 +23,7 @@ import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 
@@ -70,19 +73,7 @@ public class SegmentBuilder implements Logable {
 			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
 			DiagramElement de = ui.getDiagramElement();
 			if (de instanceof Connection) {
-				for (Vertex v : s.getVerticesInSegment()) {
-					if (v instanceof FanVertex) {
-						Direction d = ((FanVertex) v).getFanSide();
-						switch (d) {
-						case UP:
-						case LEFT:
-							return AlignStyle.MIN;
-						case DOWN:
-						case RIGHT:
-							return AlignStyle.MAX;
-						}
-					}
-				}
+				return decideConnectionSegmentAlignStyle(s, (Connection) de);
 				
 			} else if (de instanceof CompactedRectangular) {
 				DiagramElementSizing des = ((Rectangular) de).getSizing();
@@ -126,6 +117,68 @@ public class SegmentBuilder implements Logable {
 		return null;
 	}
 	
+
+	private AlignStyle decideConnectionSegmentAlignStyle(Segment s, Connection de) {
+		if (de.getRenderingInformation().isContradicting()) {
+			return null;
+		}
+		
+		if (s.getDimension() == Dimension.H) {
+			// horizontal segment, push up or down
+			Set<Direction> pushDirections = filterFanDirections(s, Direction::isVertical);
+			
+			if (pushDirections.size() > 1) {
+				throw new Kite9ProcessingException();
+			}
+			
+			if (pushDirections.size() == 1) {
+				for (Direction d : pushDirections) {
+					switch (d) {
+					case UP:
+						return AlignStyle.MIN;
+					case DOWN:
+						return AlignStyle.MAX;
+					default:
+					}
+				}
+			}
+			
+			return null;
+		} else if (s.getDimension() == Dimension.V) {
+			Set<Direction> pushDirections = filterFanDirections(s, Direction::isHorizontal);
+			
+			if (pushDirections.size() > 1) {
+				throw new Kite9ProcessingException();
+			}
+			
+			if (pushDirections.size() == 1) {
+				for (Direction d : pushDirections) {
+					switch (d) {
+					case LEFT:
+						return AlignStyle.MIN;
+					case RIGHT:
+						return AlignStyle.MAX;
+					default:
+					}
+				}
+			}
+			
+			return null;
+		} else {
+			throw new Kite9ProcessingException("No dimension on segment");
+		}
+	}
+
+
+	private Set<Direction> filterFanDirections(Segment s, Predicate<? super Direction> axis) {
+		return s.getVerticesInSegment().stream()
+			.filter(v -> v instanceof FanVertex)
+			.map(v -> (FanVertex)v)
+			.flatMap(v -> v.getFanSides().stream())
+			.filter(axis)
+			.collect(Collectors.toSet());
+	}
+
 
 	private void extendSegmentFromVertex(Vertex v, Set<Direction> planeDirection, Segment samePlane, Set<Vertex> done) {
 		if (done.contains(v)) 

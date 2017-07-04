@@ -208,11 +208,14 @@ arrow > label {
 	type: connected;
 	sizing: minimize;
 	template: url(template.svg#text-label);
+	horizontal-align: center;
+	vertical-align: center;
 }
 
 arrow > label > contents {
 	sizing: fixed;
 	horizontal-align: center;
+	vertical-align: center;
 }
 
 arrow > label > contents .text {

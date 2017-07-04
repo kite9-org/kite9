@@ -65,8 +65,8 @@ public class PrioritisedRectOption extends RectOption {
 		VertexTurn par = getPar();
 		if (extender.isFanTurn(par)) {
 			Direction parDirection = getTurnDirection(par);
-			Direction fanDirection = extender.getInnerFanVertex().getFanSide();
-			if (parDirection == fanDirection) {
+			List<Direction> fanDirections = extender.getInnerFanVertex().getFanSides();
+			if (fanDirections.get(0) == parDirection) {
 				return TurnType.CONNECTION_FAN;
 			}
 		}
