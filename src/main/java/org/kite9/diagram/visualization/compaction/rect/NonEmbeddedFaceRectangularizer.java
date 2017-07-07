@@ -14,6 +14,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnType;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -26,82 +27,83 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		super(cd);
 	}
 
-//	@Override
-//	protected void afterChange(Compaction c, PriorityQueue<RectOption> pq, List<VertexTurn> theStack, int fromIndex) {
-//		super.afterChange(c, pq, theStack, fromIndex);
-//	}
-//
 	/**
 	 * If we have a 'safe' rectangularization, make sure meets can't increase
 	 */
 	@Override
-	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
-		if (!super.checkRectOptionIsOk(onStack, ro, pq, c)) {
-			return false;
+	protected Action checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
+		Action superAction = super.checkRectOptionIsOk(onStack, ro, pq, c);
+		
+		if (superAction != Action.OK) {
+			return superAction;
 		}
 		
 		log.send("Checking: "+ro);
 		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getTurnDirection(ro.getExtender()));
 		
-		if (((PrioritisedRectOption) ro).isSizingSafe()) {
+		if (((PrioritisedRectOption) ro).getType() == TurnType.SAFE) {
 			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
 			// meets won't increase in length
 			
 			VertexTurn meets = ro.getMeets();
 			VertexTurn link = ro.getLink();
-			int meetsMinimumLength = checkMinimumLength(meets, link, c, true);
-
 			VertexTurn par = ro.getPar();
-			int parMinimumLength = checkMinimumLength(par, link, c, true);
+			
+			if (meets.getTurnPriority().ordinal() < par.getTurnPriority().ordinal()) {
+				log.send("Not Allowing:"+meets.getTurnPriority()+" for meets="+meets+"\n         "+par.getTurnPriority()+" for par="+par);
+				return Action.DISCARD;
+			}
+			
+			int meetsMinimumLength = checkMinimumLength(meets, link, c);
+
+			int parMinimumLength = checkMinimumLength(par, link, c);
 			
 			
 			if (meetsMinimumLength < parMinimumLength) {
-				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
-				return false;
+				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n   "+parMinimumLength+" for par="+par);
+				return Action.DISCARD;
 			} 
 			
-			log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);	
-			return true;
+			
+			if ((ro.getScore() != ro.getInitialScore())) {
+				// change it and throw it back in - priority has changed.
+				log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
+				return Action.PUT_BACK;
+			} else {
+				log.send("Allowing: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
+				return Action.OK;
+			}
 		} 
 
 		log.send("Allowing: meets="+ro.getMeets()+"\n          for par="+ro.getPar());						
-		return true;
+		return Action.OK;
 	}
 
-	private int checkMinimumLength(VertexTurn vt, VertexTurn link, Compaction c, boolean returnMinimum) {
+	private int checkMinimumLength(VertexTurn vt, VertexTurn link, Compaction c) {
 		if (vt.getTurnPriority() == TurnPriority.MINIMIZE_RECTANGULAR) {
+			Rectangular r = getRectangular(vt);
+			// ok, size is needed of overall rectangle then half.
+			boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
+
+			OPair<Slideable<Segment>> along = 
+					(isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
+							.getSlideablesFor(r);
+
+			
 			if (shouldSetMidpoint(vt, link)) {
-				Rectangular r = getRectangular(vt);
-				// ok, size is needed of overall rectangle then half.
-				boolean isHorizontal = !Direction.isHorizontal(vt.getDirection());
 				OPair<Slideable<Segment>> perp = 
 						(!isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
 								.getSlideablesFor(r);
 				
-				OPair<Slideable<Segment>> along = 
-						(isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
-								.getSlideablesFor(r);
-				
-				
 				alignConnections(c, perp, along);
-				int sideSize = along.getA().minimumDistanceTo(along.getB());
-				log.send("Setting size of "+r+" to "+sideSize+" "+vt.getDirection());
-				along.getA().getSlackOptimisation().ensureMaximumDistance(along.getA(), along.getB(), sideSize);
-				
-				return vt.getMinimumLength();
-
 			}
 
-			if (returnMinimum) {
-				// set to minimum possible size
-				int minimumLength = vt.getMinimumLength();
-				return minimumLength;			
-			}
+			int sideSize = along.getA().minimumDistanceTo(along.getB());
+			log.send("Setting size of "+r+" to "+sideSize+" "+vt.getDirection());
+			along.getA().getSlackOptimisation().ensureMaximumDistance(along.getA(), along.getB(), sideSize);
 		}
 		
-		
-		// no size needed
-		return Integer.MAX_VALUE;
+		return vt.getMinimumLength();
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {

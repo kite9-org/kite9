@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -48,24 +47,38 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		while (pq.size() > 0) {
 			RectOption ro = pq.remove();
 			List<VertexTurn> theStack = ro.getStack();
-			boolean ok = checkRectOptionIsOk(onStack, ro, pq, c);
-			if (ok) {
-				// log.send(log.go() ? null : "Queue Currently: ",pq);
-				log.send(log.go() ? null : "Change: " + ro);
-				if (ro.getMatch() == Match.A) {
-					performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isConcave());
-					onStack.remove(ro.getLink());
-					onStack.remove(ro.getPar());
-				} else {
-					performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isConcave());
-					onStack.remove(ro.getLink());
-					onStack.remove(ro.getPar());
-				}
-
-				int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
-				afterChange(c, pq, theStack, fromIndex);
-			}			
+			Action action = checkRectOptionIsOk(onStack, ro, pq, c);
+			switch (action) {
+			case OK:
+				performChange(c, pq, onStack, ro, theStack);
+				break;
+			case PUT_BACK:
+				log.send(log.go() ? null : "Putting back: " + ro);
+				ro.rescore();
+				pq.add(ro);
+				break;
+			case DISCARD:
+				log.send(log.go() ? null : "Discarding: " + ro);
+				// do nothing
+			} 			
 		}
+	}
+
+	private void performChange(Compaction c, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack, RectOption ro, List<VertexTurn> theStack) {
+		// log.send(log.go() ? null : "Queue Currently: ",pq);
+		log.send(log.go() ? null : "Change: " + ro);
+		if (ro.getMatch() == Match.A) {
+			performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isConcave());
+			onStack.remove(ro.getLink());
+			onStack.remove(ro.getPar());
+		} else {
+			performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isConcave());
+			onStack.remove(ro.getLink());
+			onStack.remove(ro.getPar());
+		}
+
+		int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
+		afterChange(c, pq, theStack, fromIndex);
 	}
 
 	protected void afterChange(Compaction c, PriorityQueue<RectOption> pq, List<VertexTurn> theStack, int fromIndex) {
@@ -86,40 +99,35 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 			}
 		}
 	}
+	
+	enum Action { DISCARD, PUT_BACK, OK};
 
-	protected boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
+	protected Action checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
 		boolean allThere = onStack.contains(ro.getExtender()) && onStack.contains(ro.getMeets()) && onStack.contains(ro.getPar())
 				&& onStack.contains(ro.getLink()) && onStack.contains(ro.getPost());
 		if (!allThere) {
 			log.send(log.go() ? null : "Discarding: " + ro);
-			return false;
+			return Action.DISCARD;
 		}
 		
 		if ((ro.getScore() != ro.getInitialScore())) {
 			// change it and throw it back in
-			log.send(log.go() ? null : "Putting back: " + ro);
-			ro.rescore();
-			pq.add(ro);
-			return false;
+			return Action.PUT_BACK;
 		}
 		
 		if (pq.size()>0) {
 			RectOption top = pq.peek();
 			if (ro.compareTo(top) == 1) {
-				ro.rescore();
-				log.send(log.go() ? null : "Putting back: " + ro);
-				pq.add(ro);
-				return false;
+				return Action.PUT_BACK;
 			}
 		}
 		
 		EnumSet<Match> m =matchTurns(ro.getVt1(), ro.getVt2(), ro.getVt3(), ro.getVt4(), ro.getVt5());
 		if (!m.contains(ro.getMatch())) {
-			log.send(log.go() ? null : "Discarding: " + ro);
-			return false;
+			return Action.DISCARD;
 		}
 		
-		return true;
+		return Action.OK;
 		
 	}
 

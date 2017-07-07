@@ -23,7 +23,19 @@ import org.kite9.framework.common.Kite9ProcessingException;
  */
 class VertexTurn {
 	
-	static enum TurnPriority { MINIMIZE_RECTANGULAR, CONNECTION, MAXIMIZE_RECTANGULAR }
+	static enum TurnPriority { MINIMIZE_RECTANGULAR(3), CONNECTION(1), MAXIMIZE_RECTANGULAR(0);
+		
+		private final int factor;
+		
+		public int getCostFactor() {
+			return factor;
+		}
+
+		private TurnPriority(int factor) {
+			this.factor = factor;
+		}
+	
+	}
 	
 	public VertexTurn(int number, Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
 		this.d = d;

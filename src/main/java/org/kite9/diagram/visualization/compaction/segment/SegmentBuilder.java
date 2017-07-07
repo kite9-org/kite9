@@ -76,41 +76,46 @@ public class SegmentBuilder implements Logable {
 				return decideConnectionSegmentAlignStyle(s, (Connection) de);
 				
 			} else if (de instanceof CompactedRectangular) {
-				DiagramElementSizing des = ((Rectangular) de).getSizing();
-				
-				if (des == DiagramElementSizing.MAXIMIZE) {
-					switch (ui.getSide()) {
-					case END:
-						return AlignStyle.MAX;
-					case START:
-						return AlignStyle.MIN;
-					default:
-					}					
-				} else {
-					if (s.getDimension() == Dimension.H) {
-						VerticalAlignment va = ((CompactedRectangular) de).getVerticalAlignment();
-						switch (va) {
-						case BOTTOM:
-							return AlignStyle.MAX;
-						case CENTER:
-							return AlignStyle.CENTER;
-						case TOP:
-							return AlignStyle.MIN;
-						}
-					} else if (s.getDimension() == Dimension.V) {
-						HorizontalAlignment ha = ((CompactedRectangular) de).getHorizontalAlignment();
-						switch (ha) {
-						case LEFT:
-							return AlignStyle.MIN;
-						case CENTER:
-							return AlignStyle.CENTER;
-						case RIGHT:
-							return AlignStyle.MAX;
-						}
-					}
+				return decideRectangularAlignStyle(s, ui, (CompactedRectangular) de);
+			}
+		}
+		
+		return null;
+	}
+
+
+	private AlignStyle decideRectangularAlignStyle(Segment s, UnderlyingInfo ui, CompactedRectangular de) {
+		DiagramElementSizing des = ((Rectangular) de).getSizing();
+		
+		if (des == DiagramElementSizing.MAXIMIZE) {
+			switch (ui.getSide()) {
+			case END:
+				return AlignStyle.MAX;
+			case START:
+				return AlignStyle.MIN;
+			default:
+			}					
+		} else {
+			if (s.getDimension() == Dimension.H) {
+				VerticalAlignment va = de.getVerticalAlignment();
+				switch (va) {
+				case BOTTOM:
+					return AlignStyle.MAX;
+				case CENTER:
+					return AlignStyle.CENTER;
+				case TOP:
+					return AlignStyle.MIN;
 				}
-				
-				((CompactedRectangular) de).getVerticalAlignment();
+			} else if (s.getDimension() == Dimension.V) {
+				HorizontalAlignment ha = de.getHorizontalAlignment();
+				switch (ha) {
+				case LEFT:
+					return AlignStyle.MIN;
+				case CENTER:
+					return AlignStyle.CENTER;
+				case RIGHT:
+					return AlignStyle.MAX;
+				}
 			}
 		}
 		
@@ -143,7 +148,7 @@ public class SegmentBuilder implements Logable {
 				}
 			}
 			
-			return null;
+			return AlignStyle.CENTER;
 		} else if (s.getDimension() == Dimension.V) {
 			Set<Direction> pushDirections = filterFanDirections(s, Direction::isHorizontal);
 			
@@ -163,7 +168,7 @@ public class SegmentBuilder implements Logable {
 				}
 			}
 			
-			return null;
+			return AlignStyle.CENTER;
 		} else {
 			throw new Kite9ProcessingException("No dimension on segment");
 		}

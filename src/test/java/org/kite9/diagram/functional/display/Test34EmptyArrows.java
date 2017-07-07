@@ -50,7 +50,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
 		Glyph gd = new Glyph("gd","The d", null, null);
-		Glyph ge = new Glyph("gd","The d", null, null);
+		Glyph ge = new Glyph("ge","The e", null, null);
 		new TurnLink(a, gb);
 		new TurnLink(a, ga);
 		new TurnLink(a, gc);
