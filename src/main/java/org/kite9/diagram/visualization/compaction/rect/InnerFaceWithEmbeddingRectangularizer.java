@@ -33,15 +33,7 @@ public class InnerFaceWithEmbeddingRectangularizer extends PrioritizingRectangul
 		super.compact(c, r, rc);
 	}
 
-	@Override
-	protected Action checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
-		if (((PrioritisedRectOption) ro).getType() == TurnType.SAFE) {
-			return Action.DISCARD;
-		}
-		
-		return super.checkRectOptionIsOk(onStack, ro, pq, c);
-	}
-
+	
 	@Override
 	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
 		return faces.stream().filter(df -> df.getContainedFaces().size() > 0).collect(Collectors.toList());

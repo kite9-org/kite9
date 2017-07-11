@@ -226,9 +226,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			double halfTotal = ((double) totalDist) / 2d;
 			halfDist = (int) Math.floor(halfTotal);
 		} else if (totalDist < halfDist * 2) {
-			int maxDist = from.maximumDistanceTo(to);
+			Integer maxDist = from.getKnownMaximumDistanceTo(to);
 			
-			if (maxDist < halfDist * 2) {
+			if ((maxDist != null) && (maxDist < halfDist * 2)) {
 				return; 	// can't do anything, stop
 			}
 			

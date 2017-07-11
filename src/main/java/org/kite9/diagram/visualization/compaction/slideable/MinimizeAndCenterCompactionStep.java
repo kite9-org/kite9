@@ -6,6 +6,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -55,16 +56,18 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 
 	@Override
 	public void compact(Compaction c, Embedding e, Compactor rc) {
-		e.getHorizontalSegments(c).stream()
-			.flatMap(s -> s.getUnderlyingInfo().stream())
-			.map(ui -> ui.getDiagramElement())
-			.filter(de -> de instanceof Rectangular)
-			.map(de -> (Rectangular) de)
-			.distinct()
-			.sorted((a, b) -> compare(a,b,c))
-			.forEach(r -> minimizeRectangular(r, c));
+		if (e.isTopEmbedding()) {
+			e.getHorizontalSegments(c).stream()
+				.flatMap(s -> s.getUnderlyingInfo().stream())
+				.map(ui -> ui.getDiagramElement())
+				.filter(de -> de instanceof Rectangular)
+				.map(de -> (Rectangular) de)
+				.distinct()
+				.sorted((a, b) -> compare(a,b,c))
+				.forEach(r -> minimizeRectangular(r, c));
+		}
 	}
-	
+
 	/**
 	 * Returns in an order to maximize number of centerings. 
 	 */
@@ -120,14 +123,14 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 			if ((hs != null) && (vs != null)) {
 				// sometimes, we might not display everything (e.g. labels)
-				log.send("Minimizing Distance "+r);
+				log.send("Centering Connections "+r);
 
 				
 				if (r instanceof Connected) {
 					centerSingleConnections(c, hs, vs);
 				}	
 
-				
+				log.send("Minimizing Distance "+r);				
 				minimizeDistance(hsso, hs.getA(), hs.getB());
 				minimizeDistance(vsso, vs.getA(), vs.getB());
 			}			
