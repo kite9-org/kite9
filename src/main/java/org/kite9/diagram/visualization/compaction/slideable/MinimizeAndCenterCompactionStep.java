@@ -136,8 +136,8 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 
 
 	private void centerSingleConnections(Compaction c, OPair<Slideable<Segment>> hs, OPair<Slideable<Segment>> vs) {
-		alignConnections(c, hs, vs);
-		alignConnections(c, vs, hs);
+		alignSingleConnections(c, hs, vs);
+		alignSingleConnections(c, vs, hs);
 	}
 
 

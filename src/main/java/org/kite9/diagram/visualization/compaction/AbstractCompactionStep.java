@@ -7,6 +7,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -174,8 +175,21 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		da.setChangeCost(Dart.EXTEND_IF_NEEDED, null);
 //		result.add(da);
 //	}
+	
+	protected void alignSingleConnections(Compaction c, Connected r, boolean horizontal) {
+		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
+		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
+		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
+		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
+		
+		if (horizontal) {
+			alignSingleConnections(c, vs, hs);
+		} else {
+			alignSingleConnections(c, hs, vs);
+		}
+	}
 
-	protected void alignConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
+	protected void alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -221,14 +235,16 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			
 		}
 			
-		if (connectionSegmentA != null) {
-			alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
-			alongSSO.ensureMinimumDistance(connectionSegmentA, to, halfDist);
-		}
-		
-		if (connectionSegmentB != null) {
-			alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
-			alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
+		if (halfDist > 0) {
+			if (connectionSegmentA != null) {
+				alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
+				alongSSO.ensureMinimumDistance(connectionSegmentA, to, halfDist);
+			}
+			
+			if (connectionSegmentB != null) {
+				alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
+				alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
+			}
 		}
 	}
 

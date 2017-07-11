@@ -12,6 +12,7 @@ import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -37,12 +38,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(500);
 		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>();
 
-		for (List<VertexTurn> theStack : stacks.values()) {
-			for (int i = 0; i < theStack.size(); i++) {
-				addNewRectOptions(c, theStack, pq, i);
-				onStack.addAll(theStack);
-			}
-		}
+		createInitialRectOptions(c, stacks, pq, onStack);
 		
 		while (pq.size() > 0) {
 			RectOption ro = pq.remove();
@@ -62,17 +58,31 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 				// do nothing
 			} 			
 		}
+		
+		createInitialRectOptions(c, stacks, pq, onStack);
+		if (pq.size() > 0) {
+			throw new Kite9ProcessingException("Should have completed rectangularization - throwing options away");
+		}
+	}
+
+	private void createInitialRectOptions(Compaction c, Map<DartFace, List<VertexTurn>> stacks, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack) {
+		for (List<VertexTurn> theStack : stacks.values()) {
+			for (int i = 0; i < theStack.size(); i++) {
+				addNewRectOptions(c, theStack, pq, i);
+				onStack.addAll(theStack);
+			}
+		}
 	}
 
 	private void performChange(Compaction c, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack, RectOption ro, List<VertexTurn> theStack) {
 		// log.send(log.go() ? null : "Queue Currently: ",pq);
 		log.send(log.go() ? null : "Change: " + ro);
 		if (ro.getMatch() == Match.A) {
-			performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).isConcave());
+			performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).getTurnShape());
 			onStack.remove(ro.getLink());
 			onStack.remove(ro.getPar());
 		} else {
-			performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).isConcave());
+			performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).getTurnShape());
 			onStack.remove(ro.getLink());
 			onStack.remove(ro.getPar());
 		}

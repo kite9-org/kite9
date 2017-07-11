@@ -89,10 +89,10 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new InnerFaceWithEmbeddingRectangularizer(cd),
 				new SubGraphInsertionCompactionStep(cd),
 				new NonEmbeddedFaceRectangularizer(cd),
-//				new MinimizeAndCenterCompactionStep(getDisplayer()),
+				new MinimizeAndCenterCompactionStep(getDisplayer()),
 				new WidthCompactionStep(cd), 
-//				new LeftRightAlignmentCompactionStep(cd),
-//				new CenteringAlignmentCompactionStep(cd),
+				new LeftRightAlignmentCompactionStep(cd),
+				new CenteringAlignmentCompactionStep(cd),
 				new LoggingOptimisationStep(cd),
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(cd)
