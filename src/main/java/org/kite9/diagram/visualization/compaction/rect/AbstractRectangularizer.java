@@ -131,8 +131,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			.filter(con -> con.getSizing() == DiagramElementSizing.MINIMIZE)
 			.distinct()
 			.forEach(und -> {
-				alignSingleConnections(c, und, true);
-				alignSingleConnections(c, und, false);
+				alignSingleConnections(c, und, true, false);
+				alignSingleConnections(c, und, false, false);
 			});
 	}
 

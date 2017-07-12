@@ -46,27 +46,6 @@ public class Slideable<X> implements PositionChangeNotifiable {
 		return Math.max(slack1, slack2);
 	}
 	
-	/**
-	 * Works out how much further the current slideable can be from s.
-	 */
-	public int maximumDistanceTo(Slideable<X> s) {
-		Integer maxSet = this.getMaximumPosition();
-		maxSet = maxSet == null ? 10000 : maxSet;		// 
-		Integer slack1 = s.minimum.minimumDistanceTo(minimum, maxSet);
-		slack1 = slack1==null ? Integer.MAX_VALUE : slack1;
-		so.log.send("Calculating maximum distance from "+s+" to "+this+" "+-slack1);
-		Integer slack2 = maximum.minimumDistanceTo(s.maximum, s.getMinimumPosition());
-		slack2 = slack2 == null ? Integer.MAX_VALUE : slack2;
-		so.log.send("Calculating maximum distance from "+this+" to "+s+" "+slack2);
-		
-		return Math.min(slack1, slack2);
-	}
-	
-	
-	public boolean hasTransitiveForwardConstraintTo(Slideable<X> s2) {
-		return minimum.hasTransitiveForwardConstraintTo(s2.minimum, s2.getMinimumPosition());
-	}
-
 	@Override
 	public String toString() {
 		return "<" + so.getIdentifier(underneath) + " " + minimum.getPosition() + "," + maximum.getPosition() + ">";
@@ -101,16 +80,8 @@ public class Slideable<X> implements PositionChangeNotifiable {
 		}
 	}
 	
-	public void withMinimumForwardConstraints(Consumer<Slideable<X>> action) {
-		for (SingleDirection sd : minimum.forward.keySet()) {
-			action.accept((Slideable<X>) sd.getOwner());
-		}
-	}
-	
-	public void withMaximumForwardConstraints(Consumer<Slideable<X>> action) {
-		for (SingleDirection sd : maximum.forward.keySet()) {
-			action.accept((Slideable<X>) sd.getOwner());
-		}
+	public boolean canAddMinimumForwardConstraint(Slideable<X> to, int dist) {
+		return minimum.canAddForwardConstraint(to.minimum, dist);
 	}
 
 	void addMinimumForwardConstraint(Slideable<X> to, int dist) {
@@ -147,10 +118,6 @@ public class Slideable<X> implements PositionChangeNotifiable {
 		}
 	}
 	
-	public boolean hasBackwardConstraints() {
-		return this.hasBackwardConstraints;
-	}
-
 	public void setMinimumPosition(int i) {
 		minimum.increasePosition(i);
 	}

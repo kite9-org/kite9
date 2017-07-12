@@ -174,28 +174,6 @@ public class SingleDirection {
 		return depth;
 	}
 	
-
-	/**
-	 * For multiple {@link SingleDirection} elements at the same position, work out if there is an ordering.
-	 * We only consider stuff at the same position because if it's not at the same position, just compare
-	 * the positions directly.
-	 */
-	public boolean hasTransitiveForwardConstraintTo(SingleDirection d, Integer position) {
-		if (this.position != position) {
-			return false;
-		}
-		
-		for (SingleDirection to : forward.keySet()) {
-			if (to == d) {
-				return true;
-			} else if (to.hasTransitiveForwardConstraintTo(d, position)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
 	public boolean hasForwardConstraints() {
 		return forward.size() > 0;
 	}

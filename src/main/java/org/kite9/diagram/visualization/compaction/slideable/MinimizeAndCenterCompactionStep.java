@@ -6,7 +6,6 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -139,8 +138,8 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 
 
 	private void centerSingleConnections(Compaction c, OPair<Slideable<Segment>> hs, OPair<Slideable<Segment>> vs) {
-		alignSingleConnections(c, hs, vs);
-		alignSingleConnections(c, vs, hs);
+		alignSingleConnections(c, hs, vs, true);
+		alignSingleConnections(c, vs, hs, true);
 	}
 
 

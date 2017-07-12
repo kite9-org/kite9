@@ -176,27 +176,23 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		result.add(da);
 //	}
 	
-	protected void alignSingleConnections(Compaction c, Connected r, boolean horizontal) {
+	protected void alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
 		if (horizontal) {
-			alignSingleConnections(c, vs, hs);
+			alignSingleConnections(c, vs, hs, withCheck);
 		} else {
-			alignSingleConnections(c, hs, vs);
+			alignSingleConnections(c, hs, vs, withCheck);
 		}
 	}
 
-	protected void alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along) {
+	protected void alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
-			
-		if (from.hasBackwardConstraints()) {
-			return;
-		}
 		
 		Set<Connection> leavingConnectionsA = getLeavingConnections(perp.getA().getUnderlying(), c);
 		Set<Connection> leavingConnectionsB = getLeavingConnections(perp.getB().getUnderlying(), c);
@@ -221,31 +217,32 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 			
 		int totalDist = from.minimumDistanceTo(to);
-		
 		if (totalDist > halfDist * 2) {
 			double halfTotal = ((double) totalDist) / 2d;
 			halfDist = (int) Math.floor(halfTotal);
-		} else if (totalDist < halfDist * 2) {
-			Integer maxDist = from.getKnownMaximumDistanceTo(to);
-			
-			if ((maxDist != null) && (maxDist < halfDist * 2)) {
-				return; 	// can't do anything, stop
-			}
-			
-			
 		}
 			
 		if (halfDist > 0) {
 			if (connectionSegmentA != null) {
-				alongSSO.ensureMinimumDistance(from, connectionSegmentA, halfDist);
-				alongSSO.ensureMinimumDistance(connectionSegmentA, to, halfDist);
+				addWithCheck(alongSSO, from, halfDist, connectionSegmentA, checkNeeded);
+				addWithCheck(alongSSO, connectionSegmentA, halfDist, to, checkNeeded);
 			}
 			
 			if (connectionSegmentB != null) {
-				alongSSO.ensureMinimumDistance(from, connectionSegmentB, halfDist);
-				alongSSO.ensureMinimumDistance(connectionSegmentB, to, halfDist);
+				addWithCheck(alongSSO, from, halfDist, connectionSegmentB, checkNeeded);
+				addWithCheck(alongSSO, connectionSegmentB, halfDist, to, checkNeeded);
 			}
 		}
+	}
+
+	private void addWithCheck(SegmentSlackOptimisation alongSSO, Slideable<Segment> from, int dist, Slideable<Segment> to, boolean checkNeeded) {
+		if (checkNeeded) {
+			if (!from.canAddMinimumForwardConstraint(to, dist)) {
+				return;
+			}
+		}
+		
+		alongSSO.ensureMinimumDistance(from, to, dist);
 	}
 
 	protected Set<Connection> getLeavingConnections(Segment s, Compaction c) {
