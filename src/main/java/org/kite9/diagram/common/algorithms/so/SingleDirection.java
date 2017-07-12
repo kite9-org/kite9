@@ -35,15 +35,25 @@ public class SingleDirection {
 		}
 	}
 	
-	private void update(int newPos, Object ci, boolean changedConstraints) {
+	static class QuitOnChange {
+		SingleDirection on;
+	}
+	
+	private boolean update(int newPos, Object ci, boolean changedConstraints) {
 		try {
+			if ((this.cacheItem == ci) && (ci instanceof QuitOnChange) && (((QuitOnChange)ci).on == this)) {
+				// we've visited here before - return false if we move
+				return  (increasing ? cachePosition >= newPos : cachePosition <= newPos);
+			}
+			
 			if (this.cacheItem != ci) {
 				this.cacheItem = ci;
 				this.cachePosition = position;
 			}
-			
+						
 			boolean moved = (cachePosition == null) || (increasing ? cachePosition < newPos : cachePosition > newPos);
 			
+			boolean ok = true;
 			if ((moved) || (changedConstraints)) {
 //				System.out.println("moving: "+this+" to "+newPos);
 				cachePosition = newPos;
@@ -51,14 +61,14 @@ public class SingleDirection {
 				for (SingleDirection fwd : forward.keySet()) {
 					int dist = forward.get(fwd);
 					int newPositionFwd = increasing ? cachePosition + dist : cachePosition - dist;
-					fwd.update(newPositionFwd, ci, false);
+					ok = ok && fwd.update(newPositionFwd, ci, false);
 				}
 
 //				System.out.println("(bck)");
 				for (SingleDirection bck : backward.keySet()) {
 					Integer dist = backward.get(bck);
 					int newPositionBck = increasing ? cachePosition - dist : cachePosition + dist;
-					bck.update(newPositionBck, ci, false);
+					ok = ok && bck.update(newPositionBck, ci, false);
 				}
 //				System.out.println("(done)");
 				
@@ -67,6 +77,8 @@ public class SingleDirection {
 					owner.changedPosition(position);
 				}
 			}
+			
+			return ok;
 		} catch (StackOverflowError e) {
 			throw new LogicException("Couldn't adjust (SO): "+this+" pos: "+position+" cachePos: "+cachePosition);
 		} 
@@ -96,6 +108,26 @@ public class SingleDirection {
 		} 
 		
 		return Math.abs(ci.cachePosition - startPosition);
+	}
+	
+	public boolean canAddForwardConstraint(SingleDirection to, int distance) {
+		Integer existing = forward.get(to);
+		QuitOnChange qoc = new QuitOnChange();
+		qoc.on = this;
+		if ((existing == null) || (existing < distance)) {
+			int curPos;
+			if (this.getPosition() == null) {
+				this.update(0, qoc, false);
+				curPos = 0;
+			} else {
+				curPos = this.getPosition();
+				this.update(curPos, qoc, false);
+			}
+			int newPos = increasing ? curPos + distance : curPos - distance;
+			return to.update(newPos, qoc, true);
+		}
+		
+		return true;
 	}
 		
 	public void addForwardConstraint(SingleDirection to, int distance) {

@@ -57,7 +57,7 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 	@Override
 	public void compact(Compaction c, Embedding e, Compactor rc) {
 		if (e.isTopEmbedding()) {
-			e.getHorizontalSegments(c).stream()
+			c.getHorizontalSegments().stream()
 				.flatMap(s -> s.getUnderlyingInfo().stream())
 				.map(ui -> ui.getDiagramElement())
 				.filter(de -> de instanceof Rectangular)

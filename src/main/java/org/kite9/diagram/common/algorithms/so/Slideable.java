@@ -49,16 +49,17 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	/**
 	 * Works out how much further the current slideable can be from s.
 	 */
-	public Integer getKnownMaximumDistanceTo(Slideable<X> s) {
-		Integer knownDistance1 = maximum.backward.get(s.maximum);
-		Integer knownDistance2 = s.minimum.backward.get(this.minimum);
+	public int maximumDistanceTo(Slideable<X> s) {
+		Integer maxSet = this.getMaximumPosition();
+		maxSet = maxSet == null ? 10000 : maxSet;		// 
+		Integer slack1 = s.minimum.minimumDistanceTo(minimum, maxSet);
+		slack1 = slack1==null ? Integer.MAX_VALUE : slack1;
+		so.log.send("Calculating maximum distance from "+s+" to "+this+" "+-slack1);
+		Integer slack2 = maximum.minimumDistanceTo(s.maximum, s.getMinimumPosition());
+		slack2 = slack2 == null ? Integer.MAX_VALUE : slack2;
+		so.log.send("Calculating maximum distance from "+this+" to "+s+" "+slack2);
 		
-		if (knownDistance1 != null) {
-			return knownDistance1;
-		} else {
-			return null;
-		}
-		
+		return Math.min(slack1, slack2);
 	}
 	
 	
