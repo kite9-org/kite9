@@ -75,7 +75,9 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			return ((Integer) a.getDepth()).compareTo(b.getDepth());
 		} 
 		
-		if (!(a instanceof Connected)) {
+		if ((!(a instanceof Connected)) && (!(b instanceof Connected))) {
+			return 0;
+		} else if (!(a instanceof Connected)) {
 			return -1;  
 		} else if (!(b instanceof Connected)) {
 			return 1;
