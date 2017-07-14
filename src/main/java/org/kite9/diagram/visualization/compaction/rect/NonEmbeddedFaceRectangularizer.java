@@ -14,6 +14,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -38,9 +39,10 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		}
 		
 		log.send("Checking: "+ro);
-		log.send("Extender: "+ro.getExtender()+" dir= "+ro.getTurnDirection(ro.getExtender()));
+		Direction turnDirection = ro.getTurnDirection(ro.getExtender());
+		log.send("Extender: "+ro.getExtender()+" dir= "+turnDirection);
 		
-//		if (((PrioritisedRectOption) ro).getType().isSafe()) {
+//		if (((PrioritisedRectOption) ro).getType().getTurnShape() == TurnShape.U) {
 //			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
 //			// meets won't increase in length
 //			
@@ -51,20 +53,6 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 //			int meetsMinimumLength = checkMinimumLength(meets, link, c);
 //
 //			int parMinimumLength = checkMinimumLength(par, link, c);
-////			
-////			
-////			if (meetsMinimumLength < parMinimumLength) {
-////				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n   "+parMinimumLength+" for par="+par);
-////				return Action.PUT_BACK;
-////			} 
-////			
-//			
-//			
-//			if (meetsMinimumLength < parMinimumLength) {
-//				log.send("Not Allowing: "+meetsMinimumLength+" for meets="+meets+"\n   "+parMinimumLength+" for par="+par);
-//				return Action.DISCARD;
-//			} 
-//			
 //			
 //			if ((ro.getScore() != ro.getInitialScore())) {
 //				// change it and throw it back in - priority has changed.
@@ -96,7 +84,7 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 						(!isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
 								.getSlideablesFor(r);
 				
-				alignSingleConnections(c, perp, along);
+				alignSingleConnections(c, perp, along, true);
 			}
 
 			int sideSize = along.getA().minimumDistanceTo(along.getB());

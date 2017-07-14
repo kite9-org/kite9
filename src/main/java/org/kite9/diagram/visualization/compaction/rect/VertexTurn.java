@@ -75,6 +75,11 @@ class VertexTurn {
 	private final Direction d;
 	private final Compaction c;
 	private TurnPriority turnPriority;
+	private double length;
+
+	public double getLength() {
+		return length;
+	}
 
 	public TurnPriority getTurnPriority() {
 		return turnPriority;
@@ -94,10 +99,6 @@ class VertexTurn {
 	
 	public String toString() {
 		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
-	}
-	
-	public int getMinimumLength() {
-		return getEarly().minimumDistanceTo(getLate());
 	}
 	
 	public Slideable<Segment> getLate() {
@@ -164,6 +165,7 @@ class VertexTurn {
 		Slideable<Segment> early = getEarly();
 		Slideable<Segment> late = getLate();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
+		this.length = l;
 	}
 	
 	public void ensureMaxLength(double l) {
@@ -188,12 +190,14 @@ class VertexTurn {
 	}
 	
 	protected TurnPriority calculateTurnPriority() {
-		if (isMinimizeRectangular()) {
-			return TurnPriority.MINIMIZE_RECTANGULAR;
-		} else if (isConnection()) {
+		if (isConnection()) {
 			return TurnPriority.CONNECTION;
-		} else {
+		} else if (isMinimizeRectangular()) {
+			return TurnPriority.MINIMIZE_RECTANGULAR;
+		} else if (isMaximizeRectangular()) {
 			return TurnPriority.MAXIMIZE_RECTANGULAR;
+		} else {
+			return TurnPriority.CONNECTION;	// layout connection?
 		}
 	}
 
@@ -245,6 +249,10 @@ class VertexTurn {
 	private Predicate<? super Rectangular> minimize() {
 		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE);
 	}
+	
+	private Predicate<? super Rectangular> maximize() {
+		return r -> (r.getSizing() == DiagramElementSizing.MAXIMIZE);
+	}
 
 	public boolean isConnection() {
 		long connections = getUnderlyingsOfType(s, Connection.class).count();
@@ -253,6 +261,11 @@ class VertexTurn {
 	
 	public boolean isMinimizeRectangular() {
 		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimize()).count();
+		return rects > 0;
+	}
+	
+	public boolean isMaximizeRectangular() {
+		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(maximize()).count();
 		return rects > 0;
 	}
 	
