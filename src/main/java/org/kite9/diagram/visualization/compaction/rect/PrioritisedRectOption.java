@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.List;
 
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.framework.logging.LogicException;
@@ -21,16 +22,18 @@ public class PrioritisedRectOption extends RectOption {
 	static enum TurnType {
 		
 		CONNECTION_FAN(-10000, null),
-		EXTEND_PREFERRED(0, TurnShape.G),
-		EXTEND_IF_NEEDED(10000, TurnShape.G), 
-		MINIMIZE_RECT_SIDE(30000, TurnShape.G), 		// whole side of rectangular
-		MINIMIZE_RECT_SIDE_PART(30000, TurnShape.G),    // connection-to-connection of rectangular 
-		CONNECTION_NORMAL(40000,TurnShape.G),
-		MINIMIZE_RECT_INSIDE_CORNER(50000, TurnShape.G),		// connection-to-corner of rectangular
-		SAFE(100000, TurnShape.U), 
-		SAFE_BUT_POOR(110000, TurnShape.U),
-		MINIMIZE_RECT_OUTSIDE_CORNER(50000, TurnShape.U),		
-		MINIMIZE_RECT_OUTSIDE_CORNER_SINGLE(60000, TurnShape.U);		
+		EXTEND_PREFERRED(0, null),
+
+		CONNECTION_NORMAL_G(40000,TurnShape.G),
+		CONNECTION_SYMMETRIC_U(40000, TurnShape.U),
+		CONNECTION_ASYMMETRIC_U(40000, TurnShape.U),
+
+		MINIMIZE_RECT_INSIDE_CORNER_G(60000, TurnShape.G),		// connection-to-corner of rectangular
+		MINIMIZE_RECT_SIDE_PART_G(20000, TurnShape.G),    // connection-to-connection of rectangular 
+		MINIMIZE_RECT_OUTSIDE_CORNER_U(60000, TurnShape.U),		
+		MINIMIZE_RECT_OUTSIDE_CORNER_SINGLE_U(60000, TurnShape.U),
+		MINIMIZE_RECT_ASYMMETRIC_U(60000, TurnShape.U),
+		MINIMIZE_RECT_SYMMETRIC_U(60000, TurnShape.U);
 
 		private TurnType(int c, TurnShape shape) {
 			this.cost = c;
@@ -49,11 +52,17 @@ public class PrioritisedRectOption extends RectOption {
 		}
 	};
 
-	private TurnType type;
+	private final TurnType type;
+	private final AbstractCompactionStep acs;
 	
-	public PrioritisedRectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, List<VertexTurn> fromStack) {
+	public TurnType getType() {
+		return type;
+	}
+
+	public PrioritisedRectOption(int i, VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, List<VertexTurn> fromStack, AbstractCompactionStep in) {
 		super(i, vt1, vt2, vt3, vt4, vt5, m, fromStack);
-		this.type = getType();
+		this.type = initializeType();
+		this.acs = in;
 		this.initialScore = getScore();
 	}
 
@@ -72,23 +81,23 @@ public class PrioritisedRectOption extends RectOption {
 		VertexTurn meets = getMeets();
 		
 		TurnPriority tp = meets.calculateTurnPriority();
-		double meetsLength = meets.getLength();
-		
+		double meetsLength = meets.getLength(true);
 		
 		if (getTurnShape() == TurnShape.G) {
-			double parLength = par.getLength();
-			double meetsExtension = getExtender().getSlideable().minimumDistanceTo(getMeets().getSlideable());
+			double parLength = par.getLength(true);
+			double meetsExtension = 0;
+			meetsExtension = acs.getMinimumDistance(getPost().getSegment(), getExtender().getSegment(), getMeets().getSegment(), true);
 			int distance = (int) Math.max(0, parLength + meetsExtension - meetsLength);
 			return distance * tp.getCostFactor();
 			
 		} else {
-			double parLength = par.getLength();
+			double parLength = par.getLength(true);
 			int distance = (int) Math.max(0,parLength - meetsLength);
 			return distance * tp.getCostFactor();
 		}
 	}
 
-	public TurnType getType() {
+	private TurnType initializeType() {
 		VertexTurn extender = getExtender();
 		VertexTurn meets = getMeets();
 		VertexTurn par = getPar();
@@ -100,53 +109,81 @@ public class PrioritisedRectOption extends RectOption {
 			}
 		}
 		
-		if (meets.getTurnPriority() == TurnPriority.CONNECTION) {
-			return TurnType.CONNECTION_NORMAL;
-		} else if (meets.getTurnPriority() == TurnPriority.MAXIMIZE_RECTANGULAR) {
+		if (meets.getTurnPriority() == TurnPriority.MAXIMIZE_RECTANGULAR) {
 			return TurnType.EXTEND_PREFERRED;
+		}
+		
+		if (getTurnShape() == TurnShape.U) {
+			return getUShapedTypes(meets, getLink().getTurnPriority(), getPar().getTurnPriority(), getPost().getTurnPriority());
 		} else {
-			// trying to minimize in some way.
-			
-			if (getTurnShape() == TurnShape.U) {
-				return getUShapedTypes(meets, getLink().getTurnPriority(), getPost().getTurnPriority());
-			} else {
-				return getGShapedTypes(meets, getLink().getTurnPriority(), getPost().getTurnPriority());
-			}
+			return getGShapedTypes(meets, getLink().getTurnPriority(), getPar().getTurnPriority(), getPost().getTurnPriority());
 		}
 	}
 	
 	
 	
-	private TurnType getUShapedTypes(VertexTurn meets, TurnPriority link, TurnPriority post) {
-		switch (link) {
-		case CONNECTION:
-			if (meets.getLeavingConnections().size() == 1) {
-				return TurnType.MINIMIZE_RECT_OUTSIDE_CORNER_SINGLE;
+	private TurnType getUShapedTypes(VertexTurn meetsTurn, TurnPriority linkPriority, TurnPriority parPriority, TurnPriority postPriority) {
+		TurnPriority meetsPriority = meetsTurn.getTurnPriority();
+		if (linkPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
+			
+			// deal with special cases which are symmetrical, and therefore usually higher priority.
+			if (meetsPriority == parPriority) {
+				if (meetsPriority == TurnPriority.CONNECTION) {
+					return TurnType.CONNECTION_SYMMETRIC_U;
+				} else if (meetsPriority == TurnPriority.MINIMIZE_RECTANGULAR) {					
+					return TurnType.MINIMIZE_RECT_SYMMETRIC_U;
+				}
+			} 
+			
+			if (meetsPriority == TurnPriority.CONNECTION) {
+				return TurnType.CONNECTION_ASYMMETRIC_U;
+			} else if (meetsPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
+				return TurnType.MINIMIZE_RECT_ASYMMETRIC_U;
 			} else {
-				return TurnType.MINIMIZE_RECT_OUTSIDE_CORNER;
+				throw new LogicException();
 			}
-		case MAXIMIZE_RECTANGULAR:
-		case MINIMIZE_RECTANGULAR:
-		default:
+			
+		} else if (linkPriority == TurnPriority.CONNECTION) {
+			if (meetsPriority == TurnPriority.CONNECTION) {
+				return TurnType.CONNECTION_ASYMMETRIC_U;
+			} else if (meetsPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
+				if (meetsTurn.getLeavingConnections().size() == 1) {
+					return TurnType.MINIMIZE_RECT_OUTSIDE_CORNER_SINGLE_U;
+				} else {
+					return TurnType.MINIMIZE_RECT_OUTSIDE_CORNER_U;
+				}
+			} else {
+				throw new LogicException();
+			}
+		} else {
 			throw new LogicException();
 		}
 	}
 
-	private TurnType getGShapedTypes(VertexTurn meets, TurnPriority link, TurnPriority post) {
-		switch (link) {
-		case CONNECTION:
-			if (post == TurnPriority.CONNECTION) {
-				return TurnType.MINIMIZE_RECT_SIDE_PART;
-			} else if (post == TurnPriority.MINIMIZE_RECTANGULAR) {
-				return TurnType.MINIMIZE_RECT_INSIDE_CORNER;
-			} else {
+	private TurnType getGShapedTypes(VertexTurn meets, TurnPriority link, TurnPriority par, TurnPriority post) {
+		TurnPriority meetsTurnPriority = meets.getTurnPriority();
+		if (meetsTurnPriority == TurnPriority.CONNECTION) {
+			return TurnType.CONNECTION_NORMAL_G;
+		} else if (meetsTurnPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
+			return TurnType.EXTEND_PREFERRED;
+		} else if (meetsTurnPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
+			switch (link) {
+			case CONNECTION:
+				if (post == TurnPriority.CONNECTION) {
+					return TurnType.MINIMIZE_RECT_SIDE_PART_G;
+				} else if (post == TurnPriority.MINIMIZE_RECTANGULAR) {
+					return TurnType.MINIMIZE_RECT_INSIDE_CORNER_G;
+				} else {
+					throw new LogicException();
+				}
+			case MINIMIZE_RECTANGULAR:
+				return TurnType.MINIMIZE_RECT_INSIDE_CORNER_G;
+			case MAXIMIZE_RECTANGULAR:
+			default:
 				throw new LogicException();
 			}
-		case MINIMIZE_RECTANGULAR:
-			return TurnType.MINIMIZE_RECT_INSIDE_CORNER;
-		case MAXIMIZE_RECTANGULAR:
-		default:
-			return TurnType.EXTEND_PREFERRED;
+		} else {
+			throw new LogicException();
 		}
 	}
 

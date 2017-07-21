@@ -197,6 +197,6 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		return new PrioritisedRectOption(rectOptionNo++, vt1, vt2, vt3, vt4, vt5, m, stack);
+		return new PrioritisedRectOption(rectOptionNo++, vt1, vt2, vt3, vt4, vt5, m, stack, this);
 	}
 }

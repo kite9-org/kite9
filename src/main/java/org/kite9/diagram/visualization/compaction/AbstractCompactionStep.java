@@ -50,7 +50,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return froms.minimumDistanceTo(tos);
 	}
 
-	protected double getMinimumDistance(Segment first, Segment second, Segment along, boolean concave) {
+	public double getMinimumDistance(Segment first, Segment second, Segment along, boolean concave) {
 		boolean horizontalDartFirst = first.getDimension() == Dimension.V;
 		boolean horizontalDartSecond = second.getDimension() == Dimension.V;
 		
@@ -176,20 +176,20 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		result.add(da);
 //	}
 	
-	protected void alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
+	protected int alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
 		if (horizontal) {
-			alignSingleConnections(c, vs, hs, withCheck);
+			return alignSingleConnections(c, vs, hs, withCheck);
 		} else {
-			alignSingleConnections(c, hs, vs, withCheck);
+			return alignSingleConnections(c, hs, vs, withCheck);
 		}
 	}
 
-	protected void alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
+	protected int alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -232,7 +232,12 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 				addWithCheck(alongSSO, from, halfDist, connectionSegmentB, checkNeeded);
 				addWithCheck(alongSSO, connectionSegmentB, halfDist, to, checkNeeded);
 			}
+			
+			return halfDist;
 		}
+		
+		return 0;
+	
 	}
 
 	private void addWithCheck(SegmentSlackOptimisation alongSSO, Slideable<Segment> from, int dist, Slideable<Segment> to, boolean checkNeeded) {

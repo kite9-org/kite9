@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -124,16 +125,22 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected void setupInitialMidPoints(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
 		stacks.values().stream()
 			.flatMap(s -> s.stream())
-			.map(vt -> vt.getSegment())
-			.map(seg -> seg.getUnderlyingWithSide(Side.START))
-			.filter(und -> und instanceof Connected)
-			.map(und -> (Connected) und)
-			.filter(con -> con.getSizing() == DiagramElementSizing.MINIMIZE)
+			.filter(vt -> minimizeConnectedOnly(vt)) 
 			.distinct()
-			.forEach(und -> {
-				alignSingleConnections(c, und, true, false);
-				alignSingleConnections(c, und, false, false);
+			.forEach(vt -> {
+				alignSingleConnections(c, vt);
 			});
+	}
+	
+	protected void alignSingleConnections(Compaction c, VertexTurn vt) {
+		Connected underlying = (Connected) vt.getSegment().getUnderlyingWithSide(Side.START);
+		int out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
+		vt.ensureMinLength(out);
+	}
+	
+	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
+		DiagramElement underlying = vt.getSegment().getUnderlyingWithSide(Side.START);
+		return (underlying instanceof Connected) && (((Connected)underlying).getSizing() == DiagramElementSizing.MINIMIZE);
 	}
 
 	private boolean isConcave(List<VertexTurn> theStack, int i) {
@@ -282,16 +289,16 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 //		fixSize(c, par, 0, false, false);	
 
 		if (extender.getStartsWith() == from) {
-			extender.resetEndsWith(to, link.getTurnPriority());
+			extender.resetEndsWith(to, link.getTurnPriority(), extender.getLength(false) + link.getLength(false));
 		} else {
-			extender.resetStartsWith(to, link.getTurnPriority());
+			extender.resetStartsWith(to, link.getTurnPriority(), extender.getLength(false) + link.getLength(false));
 		}
 		
 		// update meets
 		if (meets.getStartsWith() == link.getSlideable()) {
-			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority());
+			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority(), par.getLength(false));
 		} else {
-			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority());
+			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority(), par.getLength(false));
 		}
 		
 		fixSize(c, meets, 0, shape==TurnShape.G, false);

@@ -77,7 +77,14 @@ class VertexTurn {
 	private TurnPriority turnPriority;
 	private double length;
 
-	public double getLength() {
+	public double getLength(boolean recalculate) {
+		if (recalculate) {
+			double newValue = getEarly().minimumDistanceTo(getLate());
+			if (newValue != length) {
+				length = newValue;
+			}
+		}
+		
 		return length;
 	}
 
@@ -149,22 +156,25 @@ class VertexTurn {
 		return d;
 	}
 
-	public void resetEndsWith(Slideable<Segment> s, TurnPriority tp) {
+	public void resetEndsWith(Slideable<Segment> s, TurnPriority tp, double minLength) {
 		this.endsWith = s;
 		this.end = null;
 		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
+		this.length = Math.max(this.length, minLength);
 	}
 
-	public void resetStartsWith(Slideable<Segment> s, TurnPriority tp) {
+	public void resetStartsWith(Slideable<Segment> s, TurnPriority tp, double minLength) {
 		this.startsWith = s;
 		this.start = null;
 		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
+		this.length = Math.max(this.length, minLength);
 	}
 
 	public void ensureMinLength(double l) {
 		Slideable<Segment> early = getEarly();
 		Slideable<Segment> late = getLate();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
+		System.out.println(this+": "+l);
 		this.length = l;
 	}
 	
