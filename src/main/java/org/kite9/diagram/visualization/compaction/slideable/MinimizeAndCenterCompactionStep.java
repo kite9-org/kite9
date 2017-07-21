@@ -124,12 +124,12 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 			OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 			if ((hs != null) && (vs != null)) {
 				// sometimes, we might not display everything (e.g. labels)
-				log.send("Centering Connections "+r);
-
-				
-				if (r instanceof Connected) {
-					centerSingleConnections(c, hs, vs);
-				}	
+//				log.send("Centering Connections "+r);
+//
+//				
+//				if (r instanceof Connected) {
+//					centerSingleConnections(c, hs, vs);
+//				}	
 
 				log.send("Minimizing Distance "+r);				
 				minimizeDistance(hsso, hs.getA(), hs.getB());
@@ -139,10 +139,10 @@ public class MinimizeAndCenterCompactionStep extends AbstractCompactionStep {
 	}
 
 
-	private void centerSingleConnections(Compaction c, OPair<Slideable<Segment>> hs, OPair<Slideable<Segment>> vs) {
-		alignSingleConnections(c, hs, vs, true);
-		alignSingleConnections(c, vs, hs, true);
-	}
+//	private void centerSingleConnections(Compaction c, OPair<Slideable<Segment>> hs, OPair<Slideable<Segment>> vs) {
+//		alignSingleConnections(c, hs, vs, true);
+//		alignSingleConnections(c, vs, hs, true);
+//	}
 
 
 	private int minimizeDistance(SegmentSlackOptimisation opt, Slideable<Segment> from, Slideable<Segment> to) {

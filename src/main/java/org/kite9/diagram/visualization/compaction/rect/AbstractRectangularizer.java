@@ -82,6 +82,9 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		
 		setupInitialMidPoints(c, stacks);
 
+		log.send("Horizontal Segments:", c.getHorizontalSegmentSlackOptimisation().getAllSlideables());
+		log.send("Vertical Segments:", c.getVerticalSegmentSlackOptimisation().getAllSlideables());
+		
 		performFaceRectangularization(c, stacks);
 
 		for (DartFace df : orderedFaces) {
@@ -269,8 +272,9 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		log.send(log.go() ? null : " Early: "+early+" late: "+late);
 		Segment along = initialSetting ? link.getSegment() : null;
 		double minDistance = getMinimumDistance(early1, late1,  along, concave);
-		log.send(log.go() ? null : "Fixing: "+link+" min length "+minDistance);
 		link.ensureMinLength(Math.max(minDistance, externalMin));
+		log.send(log.go() ? null : "Fixed: "+link+" min length "+minDistance);
+		return;
 	}
 
 	protected void performRectangularizationA(List<VertexTurn> stack, Compaction c, VertexTurn meets,

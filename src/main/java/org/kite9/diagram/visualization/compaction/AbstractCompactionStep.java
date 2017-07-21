@@ -215,6 +215,10 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB));
 			halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to));
 		}
+		
+		if (leavingConnectionsA.size() + leavingConnectionsB.size() == 0) {
+			return 0; 
+		}
 			
 		int totalDist = from.minimumDistanceTo(to);
 		if (totalDist > halfDist * 2) {

@@ -41,14 +41,14 @@ public class NonEmbeddedFaceRectangularizer extends PrioritizingRectangularizer 
 		log.send("Checking: "+ro);
 		Direction turnDirection = ro.getTurnDirection(ro.getExtender());
 		log.send("Extender: "+ro.getExtender()+" dir= "+turnDirection);
+		VertexTurn meets = ro.getMeets();
+		VertexTurn link = ro.getLink();
+		VertexTurn par = ro.getPar();
 		
 		if (((PrioritisedRectOption) ro).getType().getTurnShape() == TurnShape.U) {
 			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
 			// meets won't increase in length
 			
-			VertexTurn meets = ro.getMeets();
-			VertexTurn link = ro.getLink();
-			VertexTurn par = ro.getPar();
 						
 			int meetsMinimumLength = checkMinimumLength(meets, link, c);
 
