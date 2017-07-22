@@ -45,12 +45,13 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_5_5_GlyphWithTextSymbol() throws Exception {
-		Glyph one = new Glyph("Stereo", "One", createList(
-					new TextLineWithSymbols("Here is line 1", createList(new Symbol(
-				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
-				"Some text", 'A', SymbolShape.HEXAGON))), 
-					new TextLine("Here is line 2"),
-					new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
+		Glyph one = new Glyph("Stereo", "One",
+				createList(
+						new TextLineWithSymbols("Here is line 1",
+								createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol("Some text", 'A', SymbolShape.HEXAGON))),
+						new TextLine("Here is line 2"), 
+						new TextLine("Here is line 3")),
+				createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);
 	}

@@ -170,7 +170,7 @@ symbol-text-line {
 text-line, text, boldText, bodyText {
 	occupies: 0 0;
 	type: connected;
-	sizing: fixed;
+	sizing: minimize;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	padding-left: 0px;
