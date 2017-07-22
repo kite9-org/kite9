@@ -9,18 +9,14 @@ import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.Rectangle;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
-import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -128,11 +124,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		return stacks;
 	}
 	
-	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
-		DiagramElement underlying = vt.getSegment().getUnderlyingWithSide(Side.START);
-		return (underlying instanceof Connected) && (((Connected)underlying).getSizing() == DiagramElementSizing.MINIMIZE);
-	}
-
 	private boolean isConcave(List<VertexTurn> theStack, int i) {
 		VertexTurn prev = getIthElementRotating(theStack, i-1);
 		VertexTurn next =  getIthElementRotating(theStack, i+1);

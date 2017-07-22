@@ -9,8 +9,10 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
@@ -19,6 +21,7 @@ import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Does extra calculations of the {@link PrioritisedRectOption} to make sure that it will be
@@ -92,11 +95,11 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
-		if ((vt==null) || hasConnected(vt)) {
-			if (link.getSegment().getConnections().size() == 1) {
+		if (hasOneConnected(vt)) {
+			if ((link == null) || (link.getSegment().getConnections().size() == 1)) {
 				Set<Connection> leavingConnections = vt.getLeavingConnections();
 				if (leavingConnections.size() == 1) {
-					if (link.getSegment().getConnections().containsAll(leavingConnections)) {
+					if ((link == null) || (link.getSegment().getConnections().containsAll(leavingConnections))) {
 						return true;
 					}
 				}
@@ -106,9 +109,9 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		return false;
 		
 	}
-
-	private boolean hasConnected(VertexTurn vt) {
-		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).count() > 0;
+	
+	private boolean hasOneConnected(VertexTurn vt) {
+		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).count() == 1;
 	}
 
 	private Rectangular getRectangular(VertexTurn vt) {
@@ -140,11 +143,22 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 
 
 	protected void alignSingleConnections(Compaction c, VertexTurn vt) {
-		if (shouldSetMidpoint(null, vt)) {
-			Connected underlying = (Connected) vt.getSegment().getUnderlyingWithSide(Side.START);
+		if (shouldSetMidpoint(vt, null)) {
+			Connected underlying = (Connected) vt.getSegment().getUnderlyingInfo().stream()
+					.map(ui -> ui.getDiagramElement())
+					.filter(de-> de instanceof Connected)
+					.findFirst().orElseThrow(() -> new LogicException());
 			int out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
 			vt.ensureMinLength(out);
 		}
+	}
+
+
+	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
+		return vt.getSegment().getUnderlyingInfo().stream()
+			.map(ui -> ui.getDiagramElement())
+			.filter(underlying -> (underlying instanceof Connected) && (((Connected)underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+			.count() > 0;
 	}
 	
 }
