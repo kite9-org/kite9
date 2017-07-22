@@ -1,14 +1,11 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
-import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnType;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 
@@ -21,7 +18,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
  * @author robmoffat
  *
  */
-public class InnerFaceWithEmbeddingRectangularizer extends PrioritizingRectangularizer {
+public class InnerFaceWithEmbeddingRectangularizer extends MidSideCheckingRectangularizer {
 
 	public InnerFaceWithEmbeddingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
@@ -29,7 +26,7 @@ public class InnerFaceWithEmbeddingRectangularizer extends PrioritizingRectangul
 	
 	@Override
 	public void compact(Compaction c, Embedding r, Compactor rc) {
-		log.send("Rectangularizing Inner Faces Of: "+r);
+		log.send("InnerFaceWithEmbeddingRectangularizer Of: "+r);
 		super.compact(c, r, rc);
 	}
 

@@ -13,7 +13,6 @@ import org.kite9.diagram.visualization.compaction.position.RectangularPositionCo
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
-import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.CenteringAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
