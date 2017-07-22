@@ -270,20 +270,22 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 //		fixSize(c, link, 0, true, false);
 //		fixSize(c, par, 0, false, false);	
 
+		double newExtenderLength = extender.getLength(false) + link.getLength(false);
 		if (extender.getStartsWith() == from) {
-			extender.resetEndsWith(to, link.getTurnPriority(), extender.getLength(false) + link.getLength(false));
+			extender.resetEndsWith(to, link.getTurnPriority(), newExtenderLength);
 		} else {
-			extender.resetStartsWith(to, link.getTurnPriority(), extender.getLength(false) + link.getLength(false));
+			extender.resetStartsWith(to, link.getTurnPriority(), newExtenderLength);
 		}
 		
 		// update meets
+		double newMeetsLength = Math.max(0, meets.getLength(false) - par.getLength(false));
 		if (meets.getStartsWith() == link.getSlideable()) {
-			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority(), par.getLength(false));
+			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority(), newMeetsLength);
 		} else {
-			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority(), par.getLength(false));
+			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority(), newMeetsLength);
 		}
 		
-		fixSize(c, meets, 0, shape==TurnShape.G, false);
+		fixSize(c, meets, meets.getLength(false), shape==TurnShape.G, false);
 	}
 
 	private void logRectangularizationContext(VertexTurn vt4, VertexTurn vt3, VertexTurn vt2, VertexTurn vt1) {

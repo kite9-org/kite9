@@ -160,14 +160,14 @@ class VertexTurn {
 		this.endsWith = s;
 		this.end = null;
 		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
-		this.length = Math.max(this.length, minLength);
+		this.length = Math.max(0, minLength);
 	}
 
 	public void resetStartsWith(Slideable<Segment> s, TurnPriority tp, double minLength) {
 		this.startsWith = s;
 		this.start = null;
 		this.turnPriority = TurnPriority.values()[Math.max(tp.ordinal(), turnPriority.ordinal())];
-		this.length = Math.max(this.length, minLength);
+		this.length = Math.max(0, minLength);
 	}
 
 	public void ensureMinLength(double l) {
