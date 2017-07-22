@@ -13,7 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
-import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.functional.layout.TestingEngine;
@@ -41,14 +40,22 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 
 	protected void transcodeSVG(String s) throws Exception {
-		super.transcodeSVG(s);
-		
-		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
-		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
-		writeTemplateExpandedSVG(lastDiagram);
-		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
-		if (checkXML()) {
-			checkIdenticalXML();
+		try {
+			super.transcodeSVG(s);
+			
+			DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+			AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+			writeTemplateExpandedSVG(lastDiagram);
+			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
+			if (checkXML()) {
+				checkIdenticalXML();
+			}
+		} finally {
+			try {
+				copyTo(getOutputFile(".svg"), "svg-output");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -183,9 +183,9 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
 		if (horizontal) {
-			return alignSingleConnections(c, vs, hs, withCheck);
-		} else {
 			return alignSingleConnections(c, hs, vs, withCheck);
+		} else {
+			return alignSingleConnections(c, vs, hs, withCheck);
 		}
 	}
 
@@ -237,7 +237,10 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 				addWithCheck(alongSSO, connectionSegmentB, halfDist, to, checkNeeded);
 			}
 			
-			return halfDist;
+			if ((connectionSegmentA != null) || (connectionSegmentB != null)) {
+				return halfDist;
+			}
+			
 		}
 		
 		return 0;

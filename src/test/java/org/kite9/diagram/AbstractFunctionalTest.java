@@ -106,9 +106,14 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 
 	protected void copyToErrors(File output) {
+		copyTo(output, "errors");
+	}
+	
+	
+	protected void copyTo(File output, String dir) {
 		try {
 			File parent = output.getParentFile().getParentFile().getParentFile();
-			File errors = new File(parent, "errors");
+			File errors = new File(parent, dir);
 			errors.mkdir();
 			String name = output.getName();
 			File newFile = new File(errors, name);

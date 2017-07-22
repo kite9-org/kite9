@@ -94,17 +94,14 @@ public class SingleDirection {
 	
 	/**
 	 * Works out minimum distance to ci, given that our item is in a certain start position.
+	 * Returns null if the elements aren't connected.
 	 */
 	public Integer minimumDistanceTo(SingleDirection ci, int startPosition) {
 		Object cacheMarker = new Object();
 		this.update(startPosition, cacheMarker, false);
 		if (ci.cacheItem != cacheMarker) {
-			if (ci.position == null) {
-				return null;
-			} 
-			
-			return increasing ? ci.position - this.position : this.position - ci.position;
-			
+			// the two elements are independent, one doesn't push the other.
+			return null;
 		} 
 		
 		return Math.abs(ci.cachePosition - startPosition);

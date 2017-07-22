@@ -42,9 +42,9 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 		}
 
 		try {
-			log.send(log.go() ? null : "Updating min distance to " + minLength + " for " + left + " to " + right);
 			left.addMinimumForwardConstraint(right, minLength);
 			right.addMaximumForwardConstraint(left, minLength);
+			log.send(log.go() ? null : "Updated min distance to " + minLength + " for " + left + " to " + right);
 		} catch (LogicException e) {
 			debugOutput(true);
 		}

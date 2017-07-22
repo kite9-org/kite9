@@ -124,9 +124,9 @@ public class PrioritisedRectOption extends RectOption {
 	
 	private TurnType getUShapedTypes(VertexTurn meetsTurn, TurnPriority linkPriority, TurnPriority parPriority, TurnPriority postPriority) {
 		TurnPriority meetsPriority = meetsTurn.getTurnPriority();
-		if (linkPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
+		if ((linkPriority == TurnPriority.MINIMIZE_RECTANGULAR) ||  (linkPriority == TurnPriority.MAXIMIZE_RECTANGULAR)) {
 			
-			// deal with special cases which are symmetrical, and therefore usually higher priority.
+			// deal with special cases which are symmetrical
 			if (meetsPriority == parPriority) {
 				if (meetsPriority == TurnPriority.CONNECTION) {
 					return TurnType.CONNECTION_SYMMETRIC_U;

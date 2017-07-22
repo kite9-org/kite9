@@ -34,16 +34,20 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	 */
 	public int minimumDistanceTo(Slideable<X> s) {
 		Integer maxSet = this.getMaximumPosition();
-		maxSet = maxSet == null ? 10000 : maxSet;		// 
+		maxSet = maxSet == null ? 20000 : maxSet;		// 
 		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
 		so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
 		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
 		so.log.send("Calculating minimum distance from "+s+" to "+this+" "+slack2);
 		if (slack2 == null) {
-			return slack1;
+			if (slack1 == null) {
+				return 0;
+			} else {
+				return slack1;
+			}
+		} else {
+			return Math.max(slack1, slack2);
 		}
-		
-		return Math.max(slack1, slack2);
 	}
 	
 	@Override

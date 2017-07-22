@@ -56,14 +56,14 @@ public class SingleDirectionTest {
 		Assert.assertEquals(10, (int) b.getPosition());
 		Assert.assertEquals(5, (int) e.minimumDistanceTo(b, 100));
 		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+		Assert.assertEquals(null, e.minimumDistanceTo(a, 100));
+		Assert.assertEquals(null, a.minimumDistanceTo(e, 100));
 
 		e.increasePosition(0);
 		Assert.assertEquals(0, (int) e.getPosition());
-		
-		// without moving e
-		Assert.assertEquals(15, (int) e.minimumDistanceTo(d, e.getPosition()));
-		// allow it to move
 		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+		Assert.assertEquals(null, a.minimumDistanceTo(e, 100));
+		Assert.assertEquals(null, e.minimumDistanceTo(a, 100));
 		
 		Assert.assertEquals(0, d.getMaxDepth());
 		Assert.assertEquals(3, a.getMaxDepth());

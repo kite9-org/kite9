@@ -55,17 +55,17 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_29_3_LikeASequence() throws Exception {
-		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
-		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
-		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
-		Glyph g4 = new Glyph("g4", "", "method 4", null, null);
-		Glyph g5 = new Glyph("g5", "", "method 5", null, null);
+		Glyph g1 = new Glyph("g1", "", "method method method 1", null, null);
+		Glyph g2 = new Glyph("g2", "", "method method method 2", null, null);
+		Glyph g3 = new Glyph("g3", "", "method method method 3", null, null);
+		Glyph g4 = new Glyph("g4", "", "method method method 4", null, null);
+		Glyph g5 = new Glyph("g5", "", "method method method 5", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
 		Context c3 = new Context("c3", HelpMethods.listOf(g3, g5), true, new TextLine("c3"), null);
 		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4"), null);
 		
-		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g2, null, null, null, null, Direction.RIGHT); 
 		new Link(g2, g3, null, null, null, null, Direction.RIGHT);
 		new Link(g2, g5, null, null, null, null, Direction.RIGHT);
 		
@@ -85,7 +85,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 	public void test_29_4_CornersInContainers() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
 		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
-		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
+		Glyph g3 = new Glyph("g3", "", "method method method  3", null, null);
 		Glyph g4 = new Glyph("g4", "", "method 4", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
