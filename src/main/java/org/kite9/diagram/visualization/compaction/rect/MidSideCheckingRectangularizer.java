@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -13,7 +15,9 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
@@ -88,7 +92,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
-		if (hasConnected(vt)) {
+		if ((vt==null) || hasConnected(vt)) {
 			if (link.getSegment().getConnections().size() == 1) {
 				Set<Connection> leavingConnections = vt.getLeavingConnections();
 				if (leavingConnections.size() == 1) {
@@ -117,6 +121,30 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		}
 		
 		return r.iterator().next();
+	}
+
+
+	/**
+	 * Sets up the mid-points as part of secondary sizing.
+	 */
+	protected void performSecondarySizing(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+		super.performSecondarySizing(c, stacks);
+		stacks.values().stream()
+			.flatMap(s -> s.stream())
+			.filter(vt -> minimizeConnectedOnly(vt)) 
+			.distinct()
+			.forEach(vt -> {
+				alignSingleConnections(c, vt);
+			});
+	}
+
+
+	protected void alignSingleConnections(Compaction c, VertexTurn vt) {
+		if (shouldSetMidpoint(null, vt)) {
+			Connected underlying = (Connected) vt.getSegment().getUnderlyingWithSide(Side.START);
+			int out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
+			vt.ensureMinLength(out);
+		}
 	}
 	
 }

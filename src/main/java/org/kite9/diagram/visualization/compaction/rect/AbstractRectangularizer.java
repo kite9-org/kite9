@@ -80,7 +80,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		List<DartFace> orderedFaces = selectFacesToRectangularize(faces);
 		Map<DartFace, List<VertexTurn>> stacks = setupDartFaceStacks(c, orderedFaces);
 		
-		setupInitialMidPoints(c, stacks);
+		performSecondarySizing(c, stacks);
 
 		log.send("Horizontal Segments:", c.getHorizontalSegmentSlackOptimisation().getAllSlideables());
 		log.send("Vertical Segments:", c.getVerticalSegmentSlackOptimisation().getAllSlideables());
@@ -104,6 +104,9 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	}
 
+	protected void performSecondarySizing(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+	}
+
 	protected abstract List<DartFace> selectFacesToRectangularize(List<DartFace> faces);
 
 	protected Map<DartFace, List<VertexTurn>> setupDartFaceStacks(Compaction c, List<DartFace> orderedFaces) {
@@ -123,22 +126,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			stacks.put(df, theStack);
 		}
 		return stacks;
-	}
-	
-	protected void setupInitialMidPoints(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
-		stacks.values().stream()
-			.flatMap(s -> s.stream())
-			.filter(vt -> minimizeConnectedOnly(vt)) 
-			.distinct()
-			.forEach(vt -> {
-				alignSingleConnections(c, vt);
-			});
-	}
-	
-	protected void alignSingleConnections(Compaction c, VertexTurn vt) {
-		Connected underlying = (Connected) vt.getSegment().getUnderlyingWithSide(Side.START);
-		int out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
-		vt.ensureMinLength(out);
 	}
 	
 	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
