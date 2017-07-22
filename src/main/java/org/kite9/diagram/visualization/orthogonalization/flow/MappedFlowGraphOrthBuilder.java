@@ -447,19 +447,16 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 		List<DartDirection> out = new ArrayList<DartDirection>();
 
-		DiagramElement thisSideDiagramElement = getThisSideDiagramElement((PlanarizationEdge) e, nextDir);
+		DiagramElement thisSideDiagramElement = getThisSideDiagramElement(e, nextDir);
 		
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			Dart dart = o.createDart(start, end, thisSideDiagramElement, nextDir, Direction.rotateAntiClockwise(nextDir));
-			DartDirection dd = new DartDirection(dart, nextDir);
-			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);
+			clc.createEdgePart(o, nextDir, start, end,  thisSideDiagramElement,Direction.rotateAntiClockwise(nextDir), out);
 			if (i < (wpCount - 1)) {
 				// rotate ready for next dart.
 				nextDir = rotate90(nextDir, arcCost);
 			}
-			out.add(dd);
 		}
 
 		Direction opposite = Direction.reverse(nextDir);
