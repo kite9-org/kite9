@@ -52,21 +52,18 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		VertexTurn link = ro.getLink();
 		VertexTurn par = ro.getPar();
 		
-		if (((PrioritisedRectOption) ro).getType().getTurnShape() == TurnShape.U) {
-			// when sizing is safe, there are always pairs of options.  Make sure we use the one where the 
-			// meets won't increase in length
-			
+		
 						
-			int meetsMinimumLength = checkMinimumLength(meets, link, c);
+		int meetsMinimumLength = checkMinimumLength(meets, link, c);
 
-			int parMinimumLength = checkMinimumLength(par, link, c);
-			
-			if ((ro.getScore() != ro.getInitialScore())) {
-				// change it and throw it back in - priority has changed.
-				log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
-				return Action.PUT_BACK;
-			}
-		} 
+		int parMinimumLength = checkMinimumLength(par, link, c);
+		
+		if ((ro.getScore() != ro.getInitialScore())) {
+			// change it and throw it back in - priority has changed.
+			log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
+			return Action.PUT_BACK;
+		}
+		 
 
 		return Action.OK; 
 //		log.send("Allowing: meets="+ro.getMeets()+"\n          for par="+ro.getPar());						

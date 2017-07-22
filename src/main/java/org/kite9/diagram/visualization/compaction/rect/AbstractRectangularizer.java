@@ -74,6 +74,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		}
 		
 		List<DartFace> orderedFaces = selectFacesToRectangularize(faces);
+		log.send("Rectangularizing faces: ", orderedFaces);
 		Map<DartFace, List<VertexTurn>> stacks = setupDartFaceStacks(c, orderedFaces);
 		
 		performSecondarySizing(c, stacks);
