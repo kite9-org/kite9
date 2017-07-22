@@ -4,7 +4,7 @@ import org.kite9.diagram.visualization.orthogonalization.AbstractOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.framework.logging.LogicException;
@@ -19,9 +19,9 @@ import org.kite9.framework.logging.LogicException;
 public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer implements Orthogonalizer {
 	
 	VertexArranger va;
-	ContainerLabelConverter clc;
+	EdgeConverter clc;
 	
-	public MappedFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+	public MappedFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
 		super();
 		this.va = va;
 		this.clc = clc;

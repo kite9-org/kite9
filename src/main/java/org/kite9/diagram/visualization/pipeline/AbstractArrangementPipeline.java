@@ -21,7 +21,7 @@ import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContentsArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -71,7 +71,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 
 	public Orthogonalizer createOrthogonalizer() {
 		ContainerContentsArranger va = new ContainerContentsArranger(getElementMapper());
-		ContainerLabelConverter clc = va.getContainerLabelConverter();
+		EdgeConverter clc = va.getContainerLabelConverter();
 		orthogonalizer = new ContainerCornerFlowOrthogonalizer(
 						va, clc);
 		return orthogonalizer;

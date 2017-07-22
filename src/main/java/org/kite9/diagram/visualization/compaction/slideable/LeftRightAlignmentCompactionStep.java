@@ -40,8 +40,10 @@ public class LeftRightAlignmentCompactionStep extends AbstractAlignmentCompactio
 
 	private void alignRectangularAxis(Rectangular de, SegmentSlackOptimisation sso) {
 		OPair<Slideable<Segment>> oss = sso.getSlideablesFor(de);
-		alignSegment(oss.getA().getUnderlying());
-		alignSegment(oss.getB().getUnderlying());
+		if (oss != null) {
+			alignSegment(oss.getA().getUnderlying());
+			alignSegment(oss.getB().getUnderlying());
+		}
 	}
 
 

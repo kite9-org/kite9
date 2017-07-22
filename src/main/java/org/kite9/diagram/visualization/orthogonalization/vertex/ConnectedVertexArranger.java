@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.FanningEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
@@ -51,11 +51,11 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 	protected EdgeConverter ec;
 	
-	protected ContainerLabelConverter clc;
+	protected EdgeConverter clc;
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
-	public ContainerLabelConverter getContainerLabelConverter() {
+	public EdgeConverter getContainerLabelConverter() {
 		return clc;
 	}
 
@@ -206,7 +206,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		}
 
 		DartFace inner = createInnerFace(o, allSideDarts, start, originalUnderlying);
-		clc.handleContainerLabels(inner, originalUnderlying, o);
 		log.send("Created face: "+inner); 
 		
 		// convert content

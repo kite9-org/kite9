@@ -39,22 +39,21 @@ public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactio
 
 	private void alignRectangularAxis(Rectangular de, SegmentSlackOptimisation sso) {
 		OPair<Slideable<Segment>> oss = sso.getSlideablesFor(de);
-		
-		Slideable<Segment> left = oss.getA();
-		Slideable<Segment> right = oss.getB();
-		if ((left.getUnderlying().getAlignStyle() == AlignStyle.CENTER) && 
-		 (right.getUnderlying().getAlignStyle() == AlignStyle.CENTER)) {
-			Integer leftMin = left.getMinimumPosition();
-			Integer rightMax = right.getMaximumPosition();
-			int leftSlack = left.getMaximumPosition() - leftMin;
-			int rightSlack = rightMax - leftMin;
-			
-			int slackToUse = Math.min(leftSlack, rightSlack);
-			slackToUse = slackToUse / 2;
-			left.setMinimumPosition(leftMin + slackToUse);
-			right.setMaximumPosition(rightMax - slackToUse);
-		 }
-		
+		if (oss != null) {
+			Slideable<Segment> left = oss.getA();
+			Slideable<Segment> right = oss.getB();
+			if ((left.getUnderlying().getAlignStyle() == AlignStyle.CENTER) && (right.getUnderlying().getAlignStyle() == AlignStyle.CENTER)) {
+				Integer leftMin = left.getMinimumPosition();
+				Integer rightMax = right.getMaximumPosition();
+				int leftSlack = left.getMaximumPosition() - leftMin;
+				int rightSlack = rightMax - leftMin;
+
+				int slackToUse = Math.min(leftSlack, rightSlack);
+				slackToUse = slackToUse / 2;
+				left.setMinimumPosition(leftMin + slackToUse);
+				right.setMaximumPosition(rightMax - slackToUse);
+			}
+		}
 	}
 
 }

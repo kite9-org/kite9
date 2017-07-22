@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.framework.common.Kite9ProcessingException;
 
-public class LabellingEdgeConverter extends SimpleEdgeConverter implements ContainerLabelConverter {
+public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeConverter {
 
 	private ElementMapper em;
 	
@@ -145,7 +145,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements Conta
 		}
 	}
 
-	@Override
 	public void handleContainerLabels(DartFace innerFace, DiagramElement partOf, Orthogonalization o) {
 		if (!(partOf instanceof Container)) {
 			return;

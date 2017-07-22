@@ -23,7 +23,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
@@ -160,8 +160,6 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 				Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
 				ec.convertContainerEdge(underlyings, o, prev, start, d, s);
 				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
-				clc.handleContainerLabels(inner, de, o);
-
 				
 				if (de instanceof Container) {
 					convertContainerContents(o, (Container) de, inner);

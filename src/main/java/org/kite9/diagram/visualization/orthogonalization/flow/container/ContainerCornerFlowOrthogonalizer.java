@@ -6,7 +6,7 @@ import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.flow.balanced.BalancedFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
@@ -25,7 +25,7 @@ import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalizer {
 
 
-	public ContainerCornerFlowOrthogonalizer(VertexArranger va, ContainerLabelConverter clc) {
+	public ContainerCornerFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
 		super(va, clc);
 	}
 

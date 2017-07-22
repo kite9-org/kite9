@@ -26,7 +26,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
-import org.kite9.diagram.visualization.orthogonalization.edge.ContainerLabelConverter;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -48,11 +48,11 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 	private Kite9Log log = new Kite9Log(this);
 	private VertexArranger va;
-	private ContainerLabelConverter clc;
+	private EdgeConverter clc;
 	private MappedFlowGraph fg;
 	private Map<Vertex, TurnInformation> turnInfoMap;
 	
-	public MappedFlowGraphOrthBuilder(VertexArranger va, MappedFlowGraph flowGraph, ContainerLabelConverter clc) {
+	public MappedFlowGraphOrthBuilder(VertexArranger va, MappedFlowGraph flowGraph, EdgeConverter clc) {
 		this.va = va;
 		this.clc = clc;
 		this.fg = flowGraph;
@@ -346,7 +346,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		} 
 
 		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace(), dartsInFace);
-		clc.handleContainerLabels(df, f.getPartOf(), o);
 		doneFaces.put(f, df);
 
 		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.getDartsInFace());
