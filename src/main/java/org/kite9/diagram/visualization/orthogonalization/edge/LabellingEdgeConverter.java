@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
@@ -12,11 +13,14 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeConverter {
 
@@ -53,7 +57,13 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				// middle bit of an edge
 				l = null;
 			}
-		} 
+		} else if (e instanceof BorderEdge) {
+			DiagramElement de = ((BorderEdge) e).getElementForSide(Direction.DOWN);
+			if (de instanceof Container) {
+				l = findUnprocessedLabel((Container) de);
+				labelSide = Direction.DOWN;
+			}
+		}
 		
 		if (l != null) {
 			return convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l);
@@ -145,21 +155,40 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 		}
 	}
 
-	public void handleContainerLabels(DartFace innerFace, DiagramElement partOf, Orthogonalization o) {
-		if (!(partOf instanceof Container)) {
-			return;
-		}
-		for (DartDirection dd : innerFace.getDartsInFace()) {
-			if (dd.getDart().getDiagramElements().get(partOf) == Direction.DOWN) {
-				// found bottom edge of container
-				Label l2 = findUnprocessedLabel((Container) partOf);
-				if (l2 != null) {
-					DartFace df = convertContainerLabel(partOf, o, l2);
-					df.setContainedBy(innerFace);
-				}
-				return;
-			}
-		}
-	}
-	
+//	/**
+//	 * This version adds any container labels that need adding at the same time.
+//	 */
+//	@Override
+//	public void createEdgePart(Orthogonalization o, Direction direction, Vertex start, Vertex end, DiagramElement forDe, Direction forDeSide, List<DartDirection> out) {
+//		if ((forDe instanceof Container) && (forDeSide == Direction.DOWN)) {
+//			Label l2 = findUnprocessedLabel((Container) forDe);
+//			if (l2 != null) {
+//				convertContainerLabel(forDe, o, l2);
+//				CornerVertices cv = em.getOuterCornerVertices(l2);
+//				
+//				// now join them up
+//				
+//				if (direction != Direction.LEFT) {
+//					throw new LogicException();
+//				}
+//				
+//				// darts for the face
+//				Dart left = o.createDart(start, cv.getBottomRight(), forDe, direction, forDeSide);
+//				Dart up = o.createDart(cv.getBottomRight(), cv.getTopRight(), forDe, Direction.UP, Direction.LEFT);
+//				Dart left2 = o.createDart(cv.getTopRight(), cv.getTopLeft(), forDe, Direction.LEFT, Direction.DOWN);
+//				Dart down = o.createDart(cv.getTopLeft(), cv.getBottomLeft(), forDe, Direction.DOWN, Direction.RIGHT);
+//				Dart left3 = o.createDart(cv.getBottomLeft(), end, forDe, Direction.LEFT, Direction.DOWN);
+//				
+//				out.add(new DartDirection(left, Direction.LEFT));
+//				out.add(new DartDirection(up, Direction.UP));
+//				out.add(new DartDirection(left2, Direction.LEFT));
+//				out.add(new DartDirection(down, Direction.DOWN));
+//				out.add(new DartDirection(left3, Direction.LEFT));
+//				return;
+//			}
+//		}
+//		
+//		super.createEdgePart(o, direction, start, end, forDe, forDeSide, out);
+//		
+//	}	
 }

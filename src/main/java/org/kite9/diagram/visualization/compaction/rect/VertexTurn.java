@@ -199,13 +199,17 @@ class VertexTurn {
 		
 	}
 	
+	/**
+	 * The order of deciding this is important, since a segment 
+	 * can be shared by a label.
+	 */
 	protected TurnPriority calculateTurnPriority() {
 		if (isConnection()) {
 			return TurnPriority.CONNECTION;
-		} else if (isMinimizeRectangular()) {
-			return TurnPriority.MINIMIZE_RECTANGULAR;
 		} else if (isMaximizeRectangular()) {
 			return TurnPriority.MAXIMIZE_RECTANGULAR;
+		} else if (isMinimizeRectangular()) {
+			return TurnPriority.MINIMIZE_RECTANGULAR;
 		} else {
 			return TurnPriority.CONNECTION;	// layout connection?
 		}
