@@ -572,8 +572,10 @@ public class TestingEngine extends TestingHelp {
 						throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
 					}
 					
-					if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
-						throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+					if (!(inner instanceof Label)) {
+						if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+						}
 					}
 
 					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {

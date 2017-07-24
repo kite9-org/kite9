@@ -115,8 +115,10 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				
 				ConnectedVertex corner = (ConnectedVertex) f.getCorner(0);
 				List<DartDirection> innerFaceDarts = va.returnAllDarts(corner, o);
-				List<DartDirection> outerFaceDarts = reverseDartDirections(innerFaceDarts);
-				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, outerFaceDarts);
+				Vertex topLeft = innerFaceDarts.get(0).getDart().getFrom();
+				DartFace df = va.convertToOuterFace(o, topLeft, corner.getOriginalUnderlying());
+//				List<DartDirection> outerFaceDarts = reverseDartDirections(innerFaceDarts);
+//				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, outerFaceDarts);
 				df.setContainedBy(dfContainer);
 				
 			} else if (f.isOuterFace()) {

@@ -75,7 +75,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 		orthogonalizer = new ContainerCornerFlowOrthogonalizer(
 						va, clc);
 		return orthogonalizer;
-	}
+	} 
 
 	protected Compaction compactOrthogonalization(Orthogonalization o) {
 		return createCompactor().compactDiagram(o);

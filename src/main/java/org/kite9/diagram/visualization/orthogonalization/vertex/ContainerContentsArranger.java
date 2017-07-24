@@ -57,7 +57,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			for (DiagramElement de : c.getContents()) {
 				if (de instanceof Connected) {
 					DartFace df = convertDiagramElementToInnerFace(de, o);
-					DartFace outerFace = convertGridToOuterFace(o, df.getStartVertex(), (Rectangular) de);
+					DartFace outerFace = convertToOuterFace(o, df.getStartVertex(), (Rectangular) de);
 					outerFace.setContainedBy(inner);
 					log.send("Created face: "+df);
 					log.send("Created face: "+outerFace);
@@ -66,7 +66,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 		}
 	}
 	
-	public DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
+	public DartFace convertToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
 		Vertex current = startVertex, orig = current;
 		Direction d = Direction.DOWN;
 		List<DartDirection> out = new ArrayList<>(); 
@@ -116,7 +116,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 		Set<MultiCornerVertex> createdVertices = new LinkedHashSet<>();
 		placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
 		Vertex startVertex = getTopLeftVertex(createdVertices);
-		return convertGridToOuterFace(o, startVertex, c);
+		return convertToOuterFace(o, startVertex, c);
 	}
 	
 

@@ -221,7 +221,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 	
 	@Override
-	public DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
+	public DartFace convertToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
 		throw new Kite9ProcessingException("Not implemented");
 	}
 

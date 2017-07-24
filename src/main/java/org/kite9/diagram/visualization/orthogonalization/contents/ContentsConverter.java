@@ -16,6 +16,6 @@ public interface ContentsConverter {
 
 	public DartFace convertDiagramElementToInnerFace(DiagramElement original, Orthogonalization o);
 	
-	public DartFace convertGridToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf);
+	public DartFace convertToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf);
 	
 }
