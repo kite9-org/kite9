@@ -13,14 +13,9 @@ import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.HorizontalAlignment;
-import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -74,54 +69,11 @@ public class SegmentBuilder implements Logable {
 			DiagramElement de = ui.getDiagramElement();
 			if (de instanceof Connection) {
 				return decideConnectionSegmentAlignStyle(s, (Connection) de);
-				
-			} else if (de instanceof CompactedRectangular) {
-				return decideRectangularAlignStyle(s, ui, (CompactedRectangular) de);
-			}
+			}	
 		}
 		
 		return null;
 	}
-
-
-	private AlignStyle decideRectangularAlignStyle(Segment s, UnderlyingInfo ui, CompactedRectangular de) {
-		DiagramElementSizing des = ((Rectangular) de).getSizing();
-		
-		if (des == DiagramElementSizing.MAXIMIZE) {
-			switch (ui.getSide()) {
-			case END:
-				return AlignStyle.MAX;
-			case START:
-				return AlignStyle.MIN;
-			default:
-			}					
-		} else {
-			if (s.getDimension() == Dimension.H) {
-				VerticalAlignment va = de.getVerticalAlignment();
-				switch (va) {
-				case BOTTOM:
-					return AlignStyle.MAX;
-				case CENTER:
-					return AlignStyle.CENTER;
-				case TOP:
-					return AlignStyle.MIN;
-				}
-			} else if (s.getDimension() == Dimension.V) {
-				HorizontalAlignment ha = de.getHorizontalAlignment();
-				switch (ha) {
-				case LEFT:
-					return AlignStyle.MIN;
-				case CENTER:
-					return AlignStyle.CENTER;
-				case RIGHT:
-					return AlignStyle.MAX;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
 
 	private AlignStyle decideConnectionSegmentAlignStyle(Segment s, Connection de) {
 		if (de.getRenderingInformation().isContradicting()) {

@@ -16,7 +16,8 @@ import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangula
 import org.kite9.diagram.visualization.compaction.slideable.CenteringAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
-import org.kite9.diagram.visualization.compaction.slideable.MinimizeAndCenterCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
@@ -89,11 +90,12 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new SubGraphInsertionCompactionStep(cd),
 				new NonEmbeddedFaceRectangularizer(cd),
 				new LoggingOptimisationStep(cd),
-				new MinimizeAndCenterCompactionStep(getDisplayer()),
+				new MinimizeCompactionStep(getDisplayer()),
 				new WidthCompactionStep(cd), 
 				new LoggingOptimisationStep(cd),
 				new LeftRightAlignmentCompactionStep(cd),
 				new CenteringAlignmentCompactionStep(cd),
+				new MaximizeCompactionStep(cd),
 				new LoggingOptimisationStep(cd),
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(cd)

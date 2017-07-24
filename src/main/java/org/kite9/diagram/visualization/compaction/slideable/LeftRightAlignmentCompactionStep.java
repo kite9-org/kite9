@@ -14,7 +14,6 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
  * <li>Moving sections of edges up or down, left or right if they have a preference</li>
  * </ul>
  * 
- * This means we can do 
  * 
  * @author robmoffat
  * 
