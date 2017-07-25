@@ -78,9 +78,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		Map<DartFace, List<VertexTurn>> stacks = setupDartFaceStacks(c, orderedFaces);
 		
 		performSecondarySizing(c, stacks);
-
-		log.send("Horizontal Segments:", c.getHorizontalSegmentSlackOptimisation().getAllSlideables());
-		log.send("Vertical Segments:", c.getVerticalSegmentSlackOptimisation().getAllSlideables());
 		
 		performFaceRectangularization(c, stacks);
 

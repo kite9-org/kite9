@@ -105,7 +105,7 @@ class VertexTurn {
 	}
 	
 	public String toString() {
-		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith.getUnderlying()+"\n    to="+endsWith.getUnderlying()+"\n     d="+d+"\n]";
+		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith+"\n    to="+endsWith+"\n     d="+d+"\n]";
 	}
 	
 	public Slideable<Segment> getLate() {

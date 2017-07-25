@@ -33,14 +33,16 @@ public class MaximizeCompactionStep extends AbstractSizingCompactionStep {
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		if ((hs != null) && (vs != null)) {
 			log.send("Maximizing Distance " + r);
-			maximizeDistance(hs.getA(), hs.getB());
-			maximizeDistance(vs.getA(), vs.getB());
+			maximizeDistance(hsso, hs.getA(), hs.getB());
+			maximizeDistance(vsso, vs.getA(), vs.getB());
 		}
 	}
 
-	private void maximizeDistance(Slideable<Segment> min, Slideable<Segment> max) {
-		min.setMaximumPosition(min.getMinimumPosition());
+	private void maximizeDistance(SegmentSlackOptimisation sso, Slideable<Segment> min, Slideable<Segment> max) {
 		max.setMinimumPosition(max.getMaximumPosition());
+		min.setMaximumPosition(min.getMinimumPosition());
+//		int maxDistance = max.getMaximumPosition() - min.getMinimumPosition();
+//		sso.ensureMinimumDistance(min, max, maxDistance);
 	}
 
 }

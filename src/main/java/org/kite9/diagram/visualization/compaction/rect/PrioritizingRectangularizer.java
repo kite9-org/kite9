@@ -41,6 +41,10 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		createInitialRectOptions(c, stacks, pq, onStack);
 		
 		while (pq.size() > 0) {
+			log.send("Horizontal Segments:", c.getHorizontalSegmentSlackOptimisation().getAllSlideables());
+			log.send("Vertical Segments:", c.getVerticalSegmentSlackOptimisation().getAllSlideables());
+
+			
 			RectOption ro = pq.remove();
 			List<VertexTurn> theStack = ro.getStack();
 			Action action = checkRectOptionIsOk(onStack, ro, pq, c);

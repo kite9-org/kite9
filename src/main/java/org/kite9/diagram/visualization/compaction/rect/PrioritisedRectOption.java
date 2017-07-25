@@ -25,8 +25,8 @@ public class PrioritisedRectOption extends RectOption {
 		EXTEND_PREFERRED(0, null),
 
 		CONNECTION_NORMAL_G(40000,TurnShape.G),
-		CONNECTION_SYMMETRIC_U(40000, TurnShape.U),
-		CONNECTION_ASYMMETRIC_U(40000, TurnShape.U),
+		CONNECTION_SYMMETRIC_U(50000, TurnShape.U),
+		CONNECTION_ASYMMETRIC_U(50000, TurnShape.U),
 
 		MINIMIZE_RECT_INSIDE_CORNER_G(60000, TurnShape.G),		// connection-to-corner of rectangular
 		MINIMIZE_RECT_SIDE_PART_G(20000, TurnShape.G),    // connection-to-connection of rectangular 

@@ -181,7 +181,7 @@ public class Segment implements Comparable<Segment> {
 
 	public Set<Rectangular> getRectangulars() {
 		if (rectangulars==null) {
-			rectangulars = underlyings.stream()
+			rectangulars = getUnderlyingInfo().stream()
 					.map(ui -> ui.getDiagramElement())
 					.filter(de -> de instanceof Rectangular)
 					.map(de -> (Rectangular) de).collect(Collectors.toSet());
@@ -192,7 +192,7 @@ public class Segment implements Comparable<Segment> {
 	
 	public Set<Connection> getConnections() {
 		if (connections==null) {
-			connections = underlyings.stream()
+			connections = getUnderlyingInfo().stream()
 					.map(ui -> ui.getDiagramElement())
 					.filter(de -> de instanceof Connection)
 					.map(de -> (Connection) de).collect(Collectors.toSet());

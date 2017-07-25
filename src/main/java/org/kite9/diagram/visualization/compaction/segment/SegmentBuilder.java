@@ -13,14 +13,19 @@ import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -64,12 +69,56 @@ public class SegmentBuilder implements Logable {
 	
 
 	public AlignStyle getSegmentAlignStyle(Segment s) {
-		if (s.getUnderlyingInfo().size() == 1) {
-			UnderlyingInfo ui = s.getUnderlyingInfo().iterator().next();
-			DiagramElement de = ui.getDiagramElement();
-			if (de instanceof Connection) {
-				return decideConnectionSegmentAlignStyle(s, (Connection) de);
-			}	
+		Set<Connection> conns = s.getConnections();
+		if (conns.size() == 1) {
+			Connection de = conns.iterator().next();
+			return decideConnectionSegmentAlignStyle(s, de);
+		} else if (conns.size() == 0) {
+			UnderlyingInfo toUse = s.getUnderlyingInfo().stream()
+				.filter(ui -> ui.getDiagramElement() instanceof CompactedRectangular)
+				.sorted((a, b) -> ((Integer) ((Rectangular) a.getDiagramElement()).getDepth())
+					.compareTo(((Rectangular)b.getDiagramElement()).getDepth()))
+				.findFirst().orElse(null);
+			
+			
+			if (toUse != null) {
+				AlignStyle out = decideRectangularAlignStyle(s, (CompactedRectangular) toUse.getDiagramElement()); 
+				return out;
+			}
+			
+			return null;
+			
+		} else {
+			throw new LogicException();
+		}
+		
+	}
+	
+	private AlignStyle decideRectangularAlignStyle(Segment s, CompactedRectangular de) {
+		DiagramElementSizing des = ((Rectangular) de).getSizing();
+		
+		if (des == DiagramElementSizing.MINIMIZE) {
+			if (s.getDimension() == Dimension.H) {
+				VerticalAlignment va = de.getVerticalAlignment();
+				switch (va) {
+				case BOTTOM:
+					return AlignStyle.MAX;
+				case CENTER:
+					return AlignStyle.CENTER;
+				case TOP:
+					return AlignStyle.MIN;
+				}
+			} else if (s.getDimension() == Dimension.V) {
+				HorizontalAlignment ha = de.getHorizontalAlignment();
+				switch (ha) {
+				case LEFT:
+					return AlignStyle.MIN;
+				case CENTER:
+					return AlignStyle.CENTER;
+				case RIGHT:
+					return AlignStyle.MAX;
+				}
+			}
 		}
 		
 		return null;
