@@ -47,6 +47,7 @@ class VertexTurn {
 		this.number = number;
 		this.c = c;
 		this.turnPriority = calculateTurnPriority();
+		this.otherSide = this.turnPriority == TurnPriority.MINIMIZE_RECTANGULAR;
 	}
 	
 	public int getNumber() {
@@ -76,6 +77,11 @@ class VertexTurn {
 	private final Compaction c;
 	private TurnPriority turnPriority;
 	private double length;
+	private final boolean otherSide;
+
+	public boolean isOtherSide() {
+		return otherSide;
+	}
 
 	public double getLength(boolean recalculate) {
 		if (recalculate) {

@@ -39,7 +39,7 @@ public class Segment implements Comparable<Segment> {
 	private Set<Rectangular> rectangulars;
 	private Set<Connection> connections;
 	private AlignStyle alignStyle = AlignStyle.CENTER;	// default
-	
+
 	public AlignStyle getAlignStyle() {
 		return alignStyle;
 	}

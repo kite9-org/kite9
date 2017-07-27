@@ -1,5 +1,7 @@
 package org.kite9.diagram.common.objects;
 
+import org.kite9.framework.logging.LogicException;
+
 /**
  * Pair, where values are ordered.  I.e. a tuple of length 2
  * @author robmoffat
@@ -29,6 +31,19 @@ public class OPair<X> {
 		this.b = b;
 	}
 
+	public boolean oneOf(X item) {
+		return (a == item) || (b == item);
+	}
+	
+	public X otherOne(X in) {
+		if (a==in) {
+			return b;
+		} else if (b==in) {
+			return a;
+		} else {
+			throw new LogicException();
+		}
+	}
 
 
 	@Override
