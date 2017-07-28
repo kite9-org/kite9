@@ -17,6 +17,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Stores the segments on the stack 
@@ -78,6 +79,15 @@ class VertexTurn {
 	private TurnPriority turnPriority;
 	private double length;
 	private final boolean otherSide;
+	private boolean fixedLength;
+
+	public boolean isFixedLength() {
+		return fixedLength;
+	}
+
+	public void setFixedLength(boolean fixedLength) {
+		this.fixedLength = fixedLength;
+	}
 
 	public boolean isOtherSide() {
 		return otherSide;
@@ -87,6 +97,10 @@ class VertexTurn {
 		if (recalculate) {
 			double newValue = getEarly().minimumDistanceTo(getLate());
 			if (newValue != length) {
+				if (fixedLength) {
+					throw new LogicException("Length shouldn't change!");
+				}
+				
 				length = newValue;
 			}
 		}

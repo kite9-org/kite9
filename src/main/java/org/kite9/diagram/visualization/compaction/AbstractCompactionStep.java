@@ -176,7 +176,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		result.add(da);
 //	}
 	
-	protected int alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
+	protected Integer alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
@@ -189,7 +189,10 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 	}
 
-	protected int alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
+	/**
+	 * Returns the half-dist value if an alignment was made, otherwise null.
+	 */
+	protected Integer alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -217,7 +220,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 		
 		if (leavingConnectionsA.size() + leavingConnectionsB.size() == 0) {
-			return 0; 
+			return null; 
 		}
 			
 		int totalDist = from.minimumDistanceTo(to);
@@ -243,7 +246,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			
 		}
 		
-		return 0;
+		return null;
 	
 	}
 

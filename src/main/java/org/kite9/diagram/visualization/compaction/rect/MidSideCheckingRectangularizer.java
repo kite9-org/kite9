@@ -145,8 +145,11 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 					.map(ui -> ui.getDiagramElement())
 					.filter(de-> de instanceof Connected)
 					.findFirst().orElseThrow(() -> new LogicException());
-			int out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
-			vt.ensureMinLength(out);
+			Integer out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
+			if (out != null) {
+				vt.ensureMinLength(out);
+				vt.setFixedLength(true);
+			}
 		}
 	}
 
