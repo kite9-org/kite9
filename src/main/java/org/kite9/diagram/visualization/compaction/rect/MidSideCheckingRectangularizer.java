@@ -9,15 +9,12 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
-import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -145,10 +142,10 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 					.map(ui -> ui.getDiagramElement())
 					.filter(de-> de instanceof Connected)
 					.findFirst().orElseThrow(() -> new LogicException());
-			Integer out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
+			AlignmentResult out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
 			if (out != null) {
-				vt.ensureMinLength(out);
-				vt.setFixedLength(true);
+				vt.ensureMinLength(out.midPoint);
+				vt.setFixedLength(out.safe);
 			}
 		}
 	}

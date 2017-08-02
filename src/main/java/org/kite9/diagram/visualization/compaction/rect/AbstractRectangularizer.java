@@ -241,8 +241,8 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	 * @param initialSetting 
 	 */
 	protected void fixSize(Compaction c, VertexTurn link, double externalMin, boolean concave, boolean initialSetting) {
-		Slideable<Segment> early = link.getEarly();
-		Slideable<Segment> late = link.getLate();
+		Slideable<Segment> early = link.increasingDirection() ? link.getStartsWith() : link.getEndsWith();
+		Slideable<Segment> late = link.increasingDirection() ? link.getEndsWith() : link.getStartsWith();
 		Segment early1 = early.getUnderlying();
 		Segment late1 = late.getUnderlying();
 		log.send(log.go() ? null : " Early: "+early+" late: "+late);
@@ -265,8 +265,6 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 	protected void performRectangularization(Compaction c, VertexTurn meets, VertexTurn link,
 			VertexTurn par, VertexTurn extender, Slideable<Segment> from, Slideable<Segment> to, TurnShape shape) {
-//		fixSize(c, link, 0, true, false);
-//		fixSize(c, par, 0, false, false);	
 
 		double newExtenderLength = extender.getLength(false) + link.getLength(false);
 		if (extender.getStartsWith() == from) {
@@ -276,11 +274,10 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		}
 		
 		// update meets
-		double newMeetsLength = Math.max(0, meets.getLength(false) - par.getLength(false));
 		if (meets.getStartsWith() == link.getSlideable()) {
-			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority(), newMeetsLength);
+			meets.resetStartsWith(extender.getSlideable(), meets.getTurnPriority(), 0);
 		} else {
-			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority(), newMeetsLength);
+			meets.resetEndsWith(extender.getSlideable(), meets.getTurnPriority(), 0);
 		}
 		
 		fixSize(c, meets, meets.getLength(false), shape==TurnShape.G, false);

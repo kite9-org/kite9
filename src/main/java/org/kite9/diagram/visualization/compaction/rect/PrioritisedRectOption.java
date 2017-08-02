@@ -2,15 +2,10 @@ package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
 
-import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
-import org.kite9.diagram.visualization.compaction.segment.Segment;
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.framework.logging.LogicException;
 
 public class PrioritisedRectOption extends RectOption {
@@ -30,19 +25,14 @@ public class PrioritisedRectOption extends RectOption {
 		EXTEND_PREFERRED(0, null, false, TurnPriority.MAXIMIZE_RECTANGULAR, false),
 
 		MINIMIZE_RECT_SIDE_PART_G(20000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, false),    // lines up connecteds joining to a connection
-		MINIMIZE_RECT_NORMAL_U_KNOWN(30000, TurnShape.U, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
-		MINIMIZE_RECT_NORMAL_G_KNOWN(30000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
+		MINIMIZE_RECT_NORMAL_U_KNOWN(60000, TurnShape.U, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
+		MINIMIZE_RECT_NORMAL_G_KNOWN(60000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
 		
 		CONNECTION_NORMAL_G(40000, TurnShape.G, false, TurnPriority.CONNECTION, false),
-		CONNECTION_OTHERSIDE_G(40000, TurnShape.G, true, TurnPriority.CONNECTION, false),
 		CONNECTION_NORMAL_U(50000, TurnShape.U, false, TurnPriority.CONNECTION, false),
-		CONNECTION_OTHERSIDE_U(50000, TurnShape.U, true, TurnPriority.CONNECTION, false),
 		
 		MINIMIZE_RECT_NORMAL_G(60000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, false),
-		MINIMIZE_RECT_OTHERSIDE_G(60000, TurnShape.G, true, TurnPriority.MINIMIZE_RECTANGULAR, false),
 		MINIMIZE_RECT_NORMAL_U(60000, TurnShape.U, false, TurnPriority.MINIMIZE_RECTANGULAR, false),
-		MINIMIZE_RECT_OTHERSIDE_U(60000, TurnShape.U, true, TurnPriority.MINIMIZE_RECTANGULAR, false)
-		
 		;
 
 		private TurnType(int c, TurnShape shape, boolean otherSide, TurnPriority meetsTurnPriority, boolean parKnown) {
@@ -119,53 +109,24 @@ public class PrioritisedRectOption extends RectOption {
 	private int calculatePushOut() {
 		VertexTurn par = getPar();
 		VertexTurn meets = getMeets();
-		VertexTurn link = getLink();
 		
-		TurnPriority tp = meets.calculateTurnPriority();
-		double meetsLength = getLength(meets, link, type.useOtherSide());
+		TurnPriority tp = meets.getTurnPriority();
+		double meetsLength = meets.getLength(true);
 		
 		if (getTurnShape() == TurnShape.G) {
-			double parLength = getLength(par, link, type.useOtherSide());
+			double parLength = par.getLength(true);
 			double meetsExtension = 0;
 			meetsExtension = acs.getMinimumDistance(getPost().getSegment(), getExtender().getSegment(), getMeets().getSegment(), true);
 			int distance = (int) Math.max(0, parLength + meetsExtension - meetsLength);
 			return distance * tp.getCostFactor();
 			
 		} else {
-			double parLength = getLength(par, link, type.useOtherSide());
+			double parLength = par.getLength(true);
 			int distance = (int) Math.max(0,parLength - meetsLength);
 			return distance * tp.getCostFactor();
 		}
 	}
 	
-	private double getLength(VertexTurn of, VertexTurn to, boolean otherSide) {
-		Slideable<Segment> toSlideable = to.getSlideable();
-		Slideable<Segment> early = of.getEarly();
-		Slideable<Segment> late = of.getLate();
-		
-		if (otherSide) {
-			SegmentSlackOptimisation sso = (SegmentSlackOptimisation) toSlideable.getSlackOptimisation();
-			Connected c = toSlideable.getUnderlying().getRectangulars().stream()
-					.filter(r -> r instanceof Connected)
-					.map(r -> (Connected) r)
-					.findFirst().orElse(null);
-			
-			if (c == null) {
-				throw new LogicException();
-			}
-			
-			OPair<Slideable<Segment>> pair = sso.getSlideablesFor(c);
-			if (pair.oneOf(early)) {
-				early = pair.otherOne(early);
-			} else if (pair.oneOf(late)) {
-				late = pair.otherOne(late);
-			} else {
-				throw new LogicException();
-			}
-		}
-		
-		return early.minimumDistanceTo(late);
-	}
 	
 
 	public TurnType calculateType() {
@@ -198,21 +159,13 @@ public class PrioritisedRectOption extends RectOption {
 		if (meetsPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
 			return TurnType.EXTEND_PREFERRED;
 		} else if (meetsPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
-			if (linkTurn.isOtherSide()) {
-				return TurnType.MINIMIZE_RECT_OTHERSIDE_U;
+			if (parTurn.isFixedLength()) {
+				return TurnType.MINIMIZE_RECT_NORMAL_U_KNOWN;
 			} else {
-				if (parTurn.isFixedLength()) {
-					return TurnType.MINIMIZE_RECT_NORMAL_U_KNOWN;
-				} else {
-					return TurnType.MINIMIZE_RECT_NORMAL_U;
-				}
+				return TurnType.MINIMIZE_RECT_NORMAL_U;
 			}
 		} else if (meetsPriority == TurnPriority.CONNECTION) {
-			if (linkTurn.isOtherSide()) {
-				return TurnType.CONNECTION_OTHERSIDE_U;
-			} else {
-				return TurnType.CONNECTION_NORMAL_U;
-			}
+			return TurnType.CONNECTION_NORMAL_U;
 		}
 		
 		throw new LogicException();
@@ -221,11 +174,7 @@ public class PrioritisedRectOption extends RectOption {
 	private TurnType getGShapedTypes(VertexTurn meets, VertexTurn link, VertexTurn par, TurnPriority post) {
 		TurnPriority meetsTurnPriority = meets.getTurnPriority();
 		if (meetsTurnPriority == TurnPriority.CONNECTION) {
-			if (link.isOtherSide()) {
-				return TurnType.CONNECTION_OTHERSIDE_G;
-			} else {
-				return getNormalGType(par);
-			}
+			return getNormalGType(par);
 		} else if (meetsTurnPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
 			return TurnType.EXTEND_PREFERRED;
 		} else if (meetsTurnPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
@@ -234,18 +183,10 @@ public class PrioritisedRectOption extends RectOption {
 				if (post == TurnPriority.CONNECTION) {
 					return TurnType.MINIMIZE_RECT_SIDE_PART_G;
 				} else {
-					if (link.isOtherSide()) {
-						return TurnType.MINIMIZE_RECT_OTHERSIDE_G;
-					} else {
-						return getNormalGType(par);
-					}
-				}
-			case MINIMIZE_RECTANGULAR:
-				if (link.isOtherSide()) {
-					return TurnType.MINIMIZE_RECT_OTHERSIDE_G;
-				} else {
 					return getNormalGType(par);
 				}
+			case MINIMIZE_RECTANGULAR:
+				return getNormalGType(par);
 			case MAXIMIZE_RECTANGULAR:
 			default:
 				throw new LogicException();
@@ -256,7 +197,7 @@ public class PrioritisedRectOption extends RectOption {
 	}
 
 	private TurnType getNormalGType(VertexTurn par) {
-		if (par.isLengthKnown()) {
+		if (par.isFixedLength()) {
 			return TurnType.MINIMIZE_RECT_NORMAL_G_KNOWN;
 		} else {
 			return TurnType.MINIMIZE_RECT_NORMAL_G;

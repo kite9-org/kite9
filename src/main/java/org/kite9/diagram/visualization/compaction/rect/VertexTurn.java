@@ -16,6 +16,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Side;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
@@ -47,8 +49,7 @@ class VertexTurn {
 		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
 		this.number = number;
 		this.c = c;
-		this.turnPriority = calculateTurnPriority();
-		this.otherSide = this.turnPriority == TurnPriority.MINIMIZE_RECTANGULAR;
+		this.turnPriority = calculateTurnPriority(s);
 	}
 	
 	public int getNumber() {
@@ -78,7 +79,6 @@ class VertexTurn {
 	private final Compaction c;
 	private TurnPriority turnPriority;
 	private double length;
-	private final boolean otherSide;
 	private boolean fixedLength;
 
 	public boolean isFixedLength() {
@@ -89,13 +89,15 @@ class VertexTurn {
 		this.fixedLength = fixedLength;
 	}
 
-	public boolean isOtherSide() {
-		return otherSide;
-	}
-
+	/**
+	 * getLength now considers that some elements need to be minimized.  If it starts/ends with a 
+	 * MINIMIZE section, it will calculate to the other end of this
+	 * @param recalculate
+	 * @return
+	 */
 	public double getLength(boolean recalculate) {
 		if (recalculate) {
-			double newValue = getEarly().minimumDistanceTo(getLate());
+			double newValue = recalculateLength();
 			if (newValue != length) {
 				if (fixedLength) {
 					throw new LogicException("Length shouldn't change!");
@@ -106,6 +108,58 @@ class VertexTurn {
 		}
 		
 		return length;
+	}
+	
+	private double recalculateLength() {
+		Slideable<Segment> startUse = checkMinimizeSlideable(startsWith, true);
+		Slideable<Segment> endUse = checkMinimizeSlideable(endsWith, false);
+		
+		boolean increasing = increasingDirection();
+		double mainDistance = increasing ? startUse.minimumDistanceTo(endUse) : endUse.minimumDistanceTo(startUse);
+		double earlyReduction = 0;
+		double lateReduction = 0;
+		
+		
+		if (startUse != startsWith) {
+			earlyReduction = increasing ? startUse.minimumDistanceTo(startsWith) : startsWith.minimumDistanceTo(startUse);
+		}
+		
+		if (endUse != endsWith) {
+			lateReduction = increasing ? startsWith.minimumDistanceTo(startUse) : startUse.minimumDistanceTo(startsWith);
+		}
+		
+		return mainDistance - earlyReduction - lateReduction;
+		
+	}
+	
+
+	private Slideable<Segment> checkMinimizeSlideable(Slideable<Segment> orig, boolean from) {
+		if (calculateTurnPriority(orig)!=TurnPriority.MINIMIZE_RECTANGULAR) {
+			return orig;
+		}
+		
+		boolean maxTo = increasingDirection();
+		Side needed = (maxTo == from) ? Side.START : Side.END;
+		
+		Side current = orig.getUnderlying().getSingleSide();
+		
+		if (current == needed) {
+			return orig;
+		}
+		
+		Set<Rectangular> rects = orig.getUnderlying().getRectangulars();
+		if (rects.size() != 1) {
+			throw new LogicException();
+		}
+		
+		Rectangular rect = rects.iterator().next();
+		
+		Slideable<Segment> out = ((SegmentSlackOptimisation) orig.getSlackOptimisation()).getSlideablesFor(rect).otherOne(orig);
+		return out;
+	}
+
+	public boolean increasingDirection() {
+		return (getDirection() == Direction.DOWN) || (getDirection() == Direction.RIGHT);
 	}
 
 	public TurnPriority getTurnPriority() {
@@ -128,42 +182,6 @@ class VertexTurn {
 		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith+"\n    to="+endsWith+"\n     d="+d+"\n]";
 	}
 	
-	public Slideable<Segment> getLate() {
-		switch (d) {
-		case UP:
-		case LEFT:
-			return startsWith;
-		case DOWN:
-		case RIGHT:
-		default:
-			return endsWith;
-		}
-	}
-
-	public Slideable<Segment> getEarly() {
-		switch (d) {
-		case UP:
-		case LEFT:
-			return endsWith;
-		case DOWN:
-		case RIGHT:
-		default:
-			return startsWith;
-		}
-	}
-
-	public boolean isLengthKnown() {
-		if ((getEarly().getMaximumPosition() == null) || (getLate().getMaximumPosition() == null)) {
-			return false;
-		}
-		
-		int earlySpan = getEarly().getMaximumPosition() - getEarly().getMinimumPosition();
-		int lateSpan = getLate().getMaximumPosition() - getLate().getMinimumPosition();
-		
-		return (earlySpan == lateSpan);
-	}
-	
-
 	public Slideable<Segment> getStartsWith() {
 		return startsWith;
 	}
@@ -191,17 +209,11 @@ class VertexTurn {
 	}
 
 	public void ensureMinLength(double l) {
-		Slideable<Segment> early = getEarly();
-		Slideable<Segment> late = getLate();
+		Slideable<Segment> early = increasingDirection() ? getStartsWith() : getEndsWith();
+		Slideable<Segment> late = increasingDirection() ? getEndsWith() : getStartsWith();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
 		System.out.println(this+": "+l);
 		this.length = l;
-	}
-	
-	public void ensureMaxLength(double l) {
-		Slideable<Segment> early = getEarly();
-		Slideable<Segment> late = getLate();
-		early.getSlackOptimisation().ensureMaximumDistance(early, late, (int) l);
 	}
 	
 	public boolean isFanTurn(VertexTurn atEnd) {
@@ -223,12 +235,12 @@ class VertexTurn {
 	 * The order of deciding this is important, since a segment 
 	 * can be shared by a label.
 	 */
-	protected TurnPriority calculateTurnPriority() {
-		if (isConnection()) {
+	public static TurnPriority calculateTurnPriority(Slideable<Segment> s) {
+		if (isConnection(s)) {
 			return TurnPriority.CONNECTION;
-		} else if (isMaximizeRectangular()) {
+		} else if (isMaximizeRectangular(s)) {
 			return TurnPriority.MAXIMIZE_RECTANGULAR;
-		} else if (isMinimizeRectangular()) {
+		} else if (isMinimizeRectangular(s)) {
 			return TurnPriority.MINIMIZE_RECTANGULAR;
 		} else {
 			return TurnPriority.CONNECTION;	// layout connection?
@@ -280,25 +292,25 @@ class VertexTurn {
 		return rects > 0;
 	}
 
-	private Predicate<? super Rectangular> minimize() {
+	private static Predicate<? super Rectangular> minimize() {
 		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE);
 	}
 	
-	private Predicate<? super Rectangular> maximize() {
+	private static Predicate<? super Rectangular> maximize() {
 		return r -> (r.getSizing() == DiagramElementSizing.MAXIMIZE);
 	}
 
-	public boolean isConnection() {
+	public static boolean isConnection(Slideable<Segment> s) {
 		long connections = getUnderlyingsOfType(s, Connection.class).count();
 		return connections > 0;
 	}
 	
-	public boolean isMinimizeRectangular() {
+	public static boolean isMinimizeRectangular(Slideable<Segment> s) {
 		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimize()).count();
 		return rects > 0;
 	}
 	
-	public boolean isMaximizeRectangular() {
+	public static boolean isMaximizeRectangular(Slideable<Segment> s) {
 		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(maximize()).count();
 		return rects > 0;
 	}

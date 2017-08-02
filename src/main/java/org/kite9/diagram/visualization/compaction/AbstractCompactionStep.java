@@ -176,7 +176,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 //		result.add(da);
 //	}
 	
-	protected Integer alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
+	protected AlignmentResult alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
@@ -188,11 +188,24 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			return alignSingleConnections(c, vs, hs, withCheck);
 		}
 	}
+	
+	public static class AlignmentResult {
+		
+		public AlignmentResult(int midPoint, boolean safe) {
+			super();
+			this.midPoint = midPoint;
+			this.safe = safe;
+		}
+
+		public final int midPoint;
+		public final boolean safe;
+		
+	}
 
 	/**
 	 * Returns the half-dist value if an alignment was made, otherwise null.
 	 */
-	protected Integer alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
+	protected AlignmentResult alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -241,7 +254,8 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			}
 			
 			if ((connectionSegmentA != null) || (connectionSegmentB != null)) {
-				return halfDist;
+				boolean safe = (leavingConnectionsA.size() < 2) && (leavingConnectionsB.size() < 2);
+				return new AlignmentResult(halfDist, safe);
 			}
 			
 		}
