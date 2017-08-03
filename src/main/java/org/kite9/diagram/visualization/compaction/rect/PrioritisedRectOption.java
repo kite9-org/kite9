@@ -19,58 +19,48 @@ public class PrioritisedRectOption extends RectOption {
 		U, G;		
 	}
 	
+	static enum GrowthRisk {
+		ZERO, LOW, HIGH
+	}
+	
 	static enum TurnType {
 		
-		CONNECTION_FAN(-10000, null, false, TurnPriority.CONNECTION, false),
-		EXTEND_PREFERRED(0, null, false, TurnPriority.MAXIMIZE_RECTANGULAR, false),
+		CONNECTION_FAN(-100000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
+		EXTEND_PREFERRED(0, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 
-		MINIMIZE_RECT_SIDE_PART_G(20000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, false),    // lines up connecteds joining to a connection
-		MINIMIZE_RECT_NORMAL_U_KNOWN(60000, TurnShape.U, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
-		MINIMIZE_RECT_NORMAL_G_KNOWN(60000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, true),	// known lengths
+		MINIMIZE_RECT_SIDE_PART_G(20000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),    // lines up connecteds joining to a connection
 		
-		CONNECTION_NORMAL_G(40000, TurnShape.G, false, TurnPriority.CONNECTION, false),
-		CONNECTION_NORMAL_U(50000, TurnShape.U, false, TurnPriority.CONNECTION, false),
+		MINIMIZE_RECT_ZERO(60000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.ZERO),	
+		MINIMIZE_RECT_LOW(60000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),	
+		MINIMIZE_RECT_HIGH(70000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.HIGH),	
+
+		CONNECTION_ZERO(40000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
+		CONNECTION_LOW(50000, TurnPriority.CONNECTION, GrowthRisk.LOW),
+		CONNECTION_HIGH(50000, TurnPriority.CONNECTION, GrowthRisk.HIGH)
 		
-		MINIMIZE_RECT_NORMAL_G(60000, TurnShape.G, false, TurnPriority.MINIMIZE_RECTANGULAR, false),
-		MINIMIZE_RECT_NORMAL_U(60000, TurnShape.U, false, TurnPriority.MINIMIZE_RECTANGULAR, false),
 		;
 
-		private TurnType(int c, TurnShape shape, boolean otherSide, TurnPriority meetsTurnPriority, boolean parKnown) {
+		private TurnType(int c, TurnPriority meetsTurnPriority, GrowthRisk growthLikely) {
 			this.cost = c;
-			this.shape = shape;
-			this.otherSide = otherSide;
 			this.meetsTurnPriority = meetsTurnPriority;
-			this.parKnown = parKnown;
+			this.growthLikelihood = growthLikely;
 		}
 		
 		private final int cost;
-		private final TurnShape shape;
-		private boolean otherSide;
 		private TurnPriority meetsTurnPriority;
-		private boolean parKnown;
+		private GrowthRisk growthLikelihood;
+		
 
 		public int getCost() {
 			return cost;
-		}
-		
-		public TurnShape getTurnShape() {
-			return shape;
-		}
-		
-		/**
-		 * Indicates we should score push-out using the far-side of the Link VertexTurn, rather 
-		 * than near-side.
-		 */
-		public boolean useOtherSide() {
-			return otherSide;
 		}
 		
 		public TurnPriority getMeetsTurnPriority() {
 			return meetsTurnPriority;
 		}
 		
-		public boolean parKnown() {
-			return parKnown;
+		public GrowthRisk getGrowthLikelihood() {
+			return growthLikelihood;
 		}
 	};
 
@@ -95,10 +85,17 @@ public class PrioritisedRectOption extends RectOption {
 		// do safe ones last
 		int pushOut = calculatePushOut();
 		int typeCost = type.getCost();
-		return pushOut + typeCost;
+		int deduction = getDeduction(pushOut);
+		return pushOut + typeCost + deduction;
 	}
 	
-	
+	private int getDeduction(int pushOut) {
+		if ((pushOut == 0) && (type.getGrowthLikelihood() == GrowthRisk.ZERO)) {
+			return -30000;
+		} else {
+			return 0;
+		}
+	} 
 	
 	@Override
 	public void rescore() {
@@ -159,22 +156,38 @@ public class PrioritisedRectOption extends RectOption {
 		if (meetsPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
 			return TurnType.EXTEND_PREFERRED;
 		} else if (meetsPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
-			if (parTurn.isFixedLength()) {
-				return TurnType.MINIMIZE_RECT_NORMAL_U_KNOWN;
-			} else {
-				return TurnType.MINIMIZE_RECT_NORMAL_U;
-			}
+			return getMinimizeTurnType(parTurn);
 		} else if (meetsPriority == TurnPriority.CONNECTION) {
-			return TurnType.CONNECTION_NORMAL_U;
+			return getConnectionTurnType(parTurn);
 		}
 		
 		throw new LogicException();
 	}
 
+	private TurnType getMinimizeTurnType(VertexTurn parTurn) {
+		if (parTurn.isNonExpandingLength()) {
+			return TurnType.MINIMIZE_RECT_ZERO;
+		} else if (parTurn.getTurnPriority() == TurnPriority.MINIMIZE_RECTANGULAR) {
+			return TurnType.MINIMIZE_RECT_LOW;
+		} else {
+			return TurnType.MINIMIZE_RECT_HIGH;
+		}
+	}
+
+	private TurnType getConnectionTurnType(VertexTurn parTurn) {
+		if (parTurn.isNonExpandingLength()) {
+			return TurnType.CONNECTION_ZERO;
+		} else if (parTurn.getTurnPriority() != TurnPriority.MAXIMIZE_RECTANGULAR) {
+			return TurnType.MINIMIZE_RECT_LOW;
+		} else {
+			return TurnType.MINIMIZE_RECT_HIGH;
+		}
+	}
+
 	private TurnType getGShapedTypes(VertexTurn meets, VertexTurn link, VertexTurn par, TurnPriority post) {
 		TurnPriority meetsTurnPriority = meets.getTurnPriority();
 		if (meetsTurnPriority == TurnPriority.CONNECTION) {
-			return getNormalGType(par);
+			return getConnectionTurnType(par);
 		} else if (meetsTurnPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
 			return TurnType.EXTEND_PREFERRED;
 		} else if (meetsTurnPriority == TurnPriority.MINIMIZE_RECTANGULAR) {
@@ -183,10 +196,10 @@ public class PrioritisedRectOption extends RectOption {
 				if (post == TurnPriority.CONNECTION) {
 					return TurnType.MINIMIZE_RECT_SIDE_PART_G;
 				} else {
-					return getNormalGType(par);
+					return getMinimizeTurnType(par);
 				}
 			case MINIMIZE_RECTANGULAR:
-				return getNormalGType(par);
+				return getMinimizeTurnType(par);
 			case MAXIMIZE_RECTANGULAR:
 			default:
 				throw new LogicException();
@@ -195,15 +208,6 @@ public class PrioritisedRectOption extends RectOption {
 			throw new LogicException();
 		}
 	}
-
-	private TurnType getNormalGType(VertexTurn par) {
-		if (par.isFixedLength()) {
-			return TurnType.MINIMIZE_RECT_NORMAL_G_KNOWN;
-		} else {
-			return TurnType.MINIMIZE_RECT_NORMAL_G;
-		}
-	}
-
 	
 	public TurnShape getTurnShape() {
 		return getPost().getDirection() == getExtender().getDirection() ? TurnShape.U : TurnShape.G;

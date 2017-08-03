@@ -124,12 +124,12 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 			return Action.DISCARD;
 		}
 		
-		if ((ro.getScore() != ro.getInitialScore())) {
-			// change it and throw it back in
+		if (((PrioritisedRectOption) ro).getType() != ((PrioritisedRectOption)ro).calculateType()) {
 			return Action.PUT_BACK;
 		}
-		
-		if (((PrioritisedRectOption) ro).getType() != ((PrioritisedRectOption)ro).calculateType()) {
+
+		if ((ro.getScore() != ro.getInitialScore())) {
+			// change it and throw it back in
 			return Action.PUT_BACK;
 		}
 		

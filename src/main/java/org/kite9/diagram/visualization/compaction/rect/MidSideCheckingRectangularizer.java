@@ -145,7 +145,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 			AlignmentResult out = alignSingleConnections(c, underlying, Direction.isHorizontal(vt.getDirection()), false);
 			if (out != null) {
 				vt.ensureMinLength(out.midPoint);
-				vt.setFixedLength(out.safe);
+				vt.setNonExpandingLength(out.safe);
 			}
 		}
 	}

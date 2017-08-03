@@ -81,11 +81,16 @@ class VertexTurn {
 	private double length;
 	private boolean fixedLength;
 
-	public boolean isFixedLength() {
+	/**
+	 * Returns true if the turn in question cannot be expanded due to a rectangle getting bigger
+	 * Questionable usefulness.
+	 * @return
+	 */
+	public boolean isNonExpandingLength() {
 		return fixedLength;
 	}
 
-	public void setFixedLength(boolean fixedLength) {
+	public void setNonExpandingLength(boolean fixedLength) {
 		this.fixedLength = fixedLength;
 	}
 
@@ -99,9 +104,9 @@ class VertexTurn {
 		if (recalculate) {
 			double newValue = recalculateLength();
 			if (newValue != length) {
-				if (fixedLength) {
-					throw new LogicException("Length shouldn't change!");
-				}
+				//if (fixedLength) {
+				//	throw new LogicException("Length shouldn't change!");
+				//}
 				
 				length = newValue;
 			}
@@ -125,7 +130,7 @@ class VertexTurn {
 		}
 		
 		if (endUse != endsWith) {
-			lateReduction = increasing ? startsWith.minimumDistanceTo(startUse) : startUse.minimumDistanceTo(startsWith);
+			lateReduction = increasing ? endsWith.minimumDistanceTo(endUse) : endUse.minimumDistanceTo(endsWith);
 		}
 		
 		return mainDistance - earlyReduction - lateReduction;
