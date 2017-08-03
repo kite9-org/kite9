@@ -77,12 +77,18 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	public void test_2_6_1Glyph1Arrow() throws Exception {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
 		Arrow a = new Arrow("meets", "meets");
-		new TurnLink(a, one);
-		new TurnLink(a, one);
-		new TurnLink(a, one);
-		new TurnLink(a, one);
-		new TurnLink(a, one);
-		new TurnLink(a, one);
+		TurnLink tl1 = new TurnLink(a, one);
+		TurnLink tl2 =new TurnLink(a, one);
+		TurnLink tl3 =new TurnLink(a, one);
+		TurnLink tl4 =new TurnLink(a, one);
+		TurnLink tl5 =new TurnLink(a, one);
+		TurnLink tl6 =new TurnLink(a, one);
+		tl1.setID("tl1");
+		tl2.setID("tl2");
+		tl3.setID("tl3");
+		tl4.setID("tl4");
+		tl5.setID("tl5");
+		tl6.setID("tl6");
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, a));
 
 		renderDiagram(d);

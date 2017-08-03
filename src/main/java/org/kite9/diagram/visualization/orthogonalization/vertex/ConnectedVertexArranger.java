@@ -275,16 +275,51 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		for (Direction dir : in.keySet()) {
 			List<PlanarizationEdge> list = in.get(dir);
 			List<IncidentDart> outList = new ArrayList<>(in.size());
-			long straightCount = list.stream().filter(e -> !ti.doesEdgeHaveTurns(e)).count();
-			int straightIndex = 0;
+			List<Set<PlanarizationEdge>> fanBuckets = createFanBuckets(list, ti);
+			long straightCount = fanBuckets.size();
 			for (int i = 0; i < list.size(); i++) {
 				PlanarizationEdge current = list.get(i);
-				boolean turning = ti.doesEdgeHaveTurns(current);
-				int idx = turning ? -1 : straightIndex++;
+				int idx = getFanBucket(current, fanBuckets);
 				IncidentDart id = convertEdgeToIncidentDart(current, cd, o, ti.getIncidentDartDirection(current), idx, from, (int) straightCount);
 				outList.add(id);
 			}
 			out.put(dir, outList);
+		}
+		
+		return out;
+	}
+
+	private int getFanBucket(PlanarizationEdge current, List<Set<PlanarizationEdge>> fanBuckets) {
+		for (int i = 0; i < fanBuckets.size(); i++) {
+			if (fanBuckets.get(i).contains(current)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+
+	/**
+	 * Arranges the {@link PlanarizationEdge}s into buckets of same destination.   All elements to same destination
+	 * will get the same fan-style.
+	 */
+	private List<Set<PlanarizationEdge>> createFanBuckets(List<PlanarizationEdge> in, TurnInformation ti) {
+		List<Set<PlanarizationEdge>> out = new ArrayList<>();
+		Set<PlanarizationEdge> currentSet = new HashSet<>();
+		PlanarizationEdge last = null;
+		
+		for (PlanarizationEdge pe : in) {
+			if (!ti.doesEdgeHaveTurns(pe)) {
+				if ((last == null) || (!last.meets(pe.getFrom())) || (!last.meets(pe.getTo()))) {
+					// new bucket required
+					currentSet = new HashSet<>();
+					out.add(currentSet);
+					currentSet.add(pe);
+					last = pe;
+				} else {
+					currentSet.add(pe);
+				}
+			}
 		}
 		
 		return out;

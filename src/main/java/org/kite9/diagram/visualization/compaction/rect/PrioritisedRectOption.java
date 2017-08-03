@@ -178,9 +178,9 @@ public class PrioritisedRectOption extends RectOption {
 		if (parTurn.isNonExpandingLength()) {
 			return TurnType.CONNECTION_ZERO;
 		} else if (parTurn.getTurnPriority() != TurnPriority.MAXIMIZE_RECTANGULAR) {
-			return TurnType.MINIMIZE_RECT_LOW;
+			return TurnType.CONNECTION_LOW;
 		} else {
-			return TurnType.MINIMIZE_RECT_HIGH;
+			return TurnType.CONNECTION_HIGH;
 		}
 	}
 
