@@ -2,6 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -91,8 +92,36 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		return ctx;
 	}
 	
+	/**
+	 * Labels cannot be rendered on gridded containers.
+	 * @throws Exception
+	 */
 	@Test
 	public void test_51_3_GridWithMissingBits() throws Exception {
+		Context tl = new Context("tl", createGlyphContents("Top\nLeft"), true,  null, null);
+		Context tr = new Context("tr", createGlyphContents("Top\nRight"), true,  null, null);
+		Context br = new Context("br", createGlyphContents("Bottom\nRight"), true,  null, null);
+		tl.setStyle("occupies-x: 0; occupies-y: 0;");
+		tr.setStyle("occupies-x: 1; occupies-y: 0;");
+		br.setStyle("occupies-x: 1; occupies-y: 1;");
+		
+		Context ctx = new Context("inner", Arrays.asList(tl, tr, br), true, null, Layout.GRID);
+		ctx.setStyle("layout: grid; grid-size: 2 2; padding: 4px; "); 
+		
+		
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new TextLine("Bits missing")));
+	}
+	
+	private List<Kite9XMLElement> createGlyphContents(String text) {
+		return Collections.singletonList(new Glyph(null, text, null, null));
+	}
+
+	/**
+	 * Labels cannot be rendered on gridded containers.
+	 * @throws Exception
+	 */
+	@Test(expected=ElementsMissingException.class)
+	public void test_51_8_GridWithLabels() throws Exception {
 		Context tl = new Context("tl", null, true,  new TextLine("tll", "Top \n Left"), null);
 		Context tr = new Context("tr", null, true,  new TextLine("trl","Top Right"), null);
 		Context br = new Context("br", null, true,  new TextLine("brl","Bottom Right"), null);
@@ -153,10 +182,10 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	}
 
 	private Context createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
-		Context tl = new Context("tl", Arrays.asList(g1), true,  new TextLine("tll", "Top \n Left"), null);
-		Context tr = new Context("tr", Arrays.asList(g2), true,  new TextLine("trl", "Top Right"), null);
-		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("bll", "Bottom Left"), null);
-		Context br = new Context("br", Arrays.asList(g4), true,  new TextLine("brl", "Bottom Right"), null);
+		Context tl = new Context("tl", Arrays.asList(g1), true,  null, null);
+		Context tr = new Context("tr", Arrays.asList(g2), true,  null, null);
+		Context bl = new Context("bl", Arrays.asList(g3), true,  null, null);
+		Context br = new Context("br", Arrays.asList(g4), true,  null, null);
 		
 		tl.setStyle("occupies: 0 0;");
 		bl.setStyle("occupies: 0 1;");
@@ -175,10 +204,10 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	}
 	
 	private Context createThreeLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
-		Context tl1 = new Context("tl1", Arrays.asList(g1), true,  new TextLine("Top Left 1"), null);
-		Context tl2 = new Context("tl2", Arrays.asList(g2), true,  new TextLine("Top Left 2"), null);
-		Context bl = new Context("bl", Arrays.asList(g3), true,  new TextLine("Bottom Left"), null);
-		Context r = new Context("r", Arrays.asList(g4), true,  new TextLine("Right"), null);
+		Context tl1 = new Context("tl1", Arrays.asList(g1), true,  null, null);
+		Context tl2 = new Context("tl2", Arrays.asList(g2), true, null, null);
+		Context bl = new Context("bl", Arrays.asList(g3), true, null, null);
+		Context r = new Context("r", Arrays.asList(g4), true, null, null);
 		
 		tl1.setStyle("occupies: 0 0;");
 		tl2.setStyle("occupies: 1 0;");
@@ -198,9 +227,9 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	public static List<Kite9XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
-		Context tr = new Context("tr", listOf(g2), true, new TextLine("Top Right"), null);
-		Context bl = new Context("bl", listOf(g3), true,  new TextLine("Bottom Left"), null);
-		Context br = new Context("br", listOf(g4), true,  new TextLine("Bottom Right"), null);
+		Context tr = new Context("tr", listOf(g2), true, null, null);
+		Context bl = new Context("bl", listOf(g3), true,  null, null);
+		Context br = new Context("br", listOf(g4), true,  null, null);
 		
 		tl.setStyle("occupies: 0 0;");
 		tr.setStyle("occupies: 1 0;");

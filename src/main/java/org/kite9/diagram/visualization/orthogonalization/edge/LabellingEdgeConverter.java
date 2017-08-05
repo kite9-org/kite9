@@ -13,6 +13,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
@@ -34,21 +35,26 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 			DiagramElement de = underlyings.entrySet().stream().filter(e -> e.getValue() == Direction.DOWN).map(e -> e.getKey()).findFirst().orElse(null);
 
 			if (de instanceof Container) {
-				Label l = findUnprocessedLabel((Container) de);
-				if (l != null) { 
-					CornerVertices cv = em.getOuterCornerVertices(l);
-					cc.convertDiagramElementToInnerFace(l, o);
-					Dart d1 = o.createDart(end1, cv.getBottomRight(), underlyings, d);
-					Dart d2 = o.createDart(cv.getBottomRight(), cv.getTopRight(), Collections.emptyMap(), Direction.UP);
-					Dart d3 = o.createDart(cv.getTopRight(), cv.getTopLeft(), Collections.emptyMap(), d);
-					Dart d4 = o.createDart(cv.getTopLeft(), cv.getBottomLeft(), Collections.emptyMap(), Direction.DOWN);
-					Dart d5 = o.createDart(cv.getBottomLeft(), end2, underlyings, d);
-					s.newEdgeDarts.add(d1);
-					s.newEdgeDarts.add(d2);
-					s.newEdgeDarts.add(d3);
-					s.newEdgeDarts.add(d4);
-					s.newEdgeDarts.add(d5);
-					return;
+				// only label non-grid elements.  This is because grid edges can be shared between containers, and we don't know how to 
+				// figure out label positioning in this case yet.
+				Container parentContainer = ((Container) de).getContainer();
+				if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
+					Label l = findUnprocessedLabel((Container) de);
+					if (l != null) { 
+						CornerVertices cv = em.getOuterCornerVertices(l);
+						cc.convertDiagramElementToInnerFace(l, o);
+						Dart d1 = o.createDart(end1, cv.getBottomRight(), underlyings, d);
+						Dart d2 = o.createDart(cv.getBottomRight(), cv.getTopRight(), Collections.emptyMap(), Direction.UP);
+						Dart d3 = o.createDart(cv.getTopRight(), cv.getTopLeft(), Collections.emptyMap(), d);
+						Dart d4 = o.createDart(cv.getTopLeft(), cv.getBottomLeft(), Collections.emptyMap(), Direction.DOWN);
+						Dart d5 = o.createDart(cv.getBottomLeft(), end2, underlyings, d);
+						s.newEdgeDarts.add(d1);
+						s.newEdgeDarts.add(d2);
+						s.newEdgeDarts.add(d3);
+						s.newEdgeDarts.add(d4);
+						s.newEdgeDarts.add(d5);
+						return;
+					}
 				}
 			}
 		}
