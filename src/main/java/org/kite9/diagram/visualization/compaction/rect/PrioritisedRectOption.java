@@ -29,14 +29,14 @@ public class PrioritisedRectOption extends RectOption {
 		EXTEND_PREFERRED(0, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 
 		MINIMIZE_RECT_SIDE_PART_G(20000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),    // lines up connecteds joining to a connection
+
+		CONNECTION_ZERO(40000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
+		CONNECTION_LOW(50000, TurnPriority.CONNECTION, GrowthRisk.LOW),
+		CONNECTION_HIGH(50000, TurnPriority.CONNECTION, GrowthRisk.HIGH),
 		
 		MINIMIZE_RECT_ZERO(60000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.ZERO),	
 		MINIMIZE_RECT_LOW(60000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),	
 		MINIMIZE_RECT_HIGH(70000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.HIGH),	
-
-		CONNECTION_ZERO(40000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
-		CONNECTION_LOW(50000, TurnPriority.CONNECTION, GrowthRisk.LOW),
-		CONNECTION_HIGH(50000, TurnPriority.CONNECTION, GrowthRisk.HIGH)
 		
 		;
 

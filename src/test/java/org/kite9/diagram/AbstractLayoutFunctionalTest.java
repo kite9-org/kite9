@@ -45,6 +45,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		String full = addSVGFurniture(xml);
 		//transcodePNG(full);
 		transcodeSVG(full);
+		copyTo(getOutputFile(".svg"), "svg-output");
 		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
