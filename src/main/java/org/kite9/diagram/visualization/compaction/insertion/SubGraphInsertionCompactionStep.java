@@ -14,6 +14,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -153,7 +154,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 
 		for (DartDirection dd : ef.getDartsInFace()) {
 			for (DiagramElement de : dd.getDart().getDiagramElements().keySet()) {
-				if (de instanceof Rectangular) {
+				if (de instanceof Connected) {
 					Container c = ((Rectangular)de).getContainer();
 					
 					if (c!=null) {
