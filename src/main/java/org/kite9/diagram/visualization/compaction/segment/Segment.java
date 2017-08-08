@@ -67,14 +67,30 @@ public class Segment implements Comparable<Segment> {
 		return underlyings;
 	}
 	
+	private Side singleSide = null;
+	
 	public Side getSingleSide() {
-		if (getUnderlyingInfo().size() > 1) {
-			throw new LogicException();
-		} else {
-			return getUnderlyingInfo().iterator().next().getSide();
+		if (singleSide == null) {
+			singleSide = getUnderlyingInfo().stream()
+				.map(ui -> ui.getSide())
+				.reduce(null, (a, b) -> sideReduce(a,b));
 		}
+		
+		return singleSide;
 	}
 	
+	private Side sideReduce(Side a, Side b) {
+		if (a == null) {
+			return b;
+		} else if (b == null) {
+			return a;
+		} else if (a == b) {
+			return a;
+		} else {
+			throw new LogicException();
+		}
+	}
+
 	public DiagramElement getUnderlyingWithSide(Side s) {
 		return getUnderlyingInfo().stream().filter(ui -> ui.getSide() == s).map(ui -> ui.getDiagramElement()).findFirst().orElse(null);
 	}
