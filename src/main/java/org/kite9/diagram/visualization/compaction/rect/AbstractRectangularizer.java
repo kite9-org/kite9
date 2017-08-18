@@ -73,7 +73,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 			return;
 		}
 		
-		List<DartFace> orderedFaces = selectFacesToRectangularize(faces);
+		List<DartFace> orderedFaces = selectFacesToRectangularize(c, faces);
 		log.send("Rectangularizing faces: ", orderedFaces);
 		Map<DartFace, List<VertexTurn>> stacks = setupDartFaceStacks(c, orderedFaces);
 		
@@ -83,17 +83,19 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 
 		for (DartFace df : orderedFaces) {
 			List<VertexTurn> theStack = stacks.get(df);
-			if (!df.outerFace) {
-				if (theStack.size() != 4) {
-					throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df);
+			if (theStack != null) {
+				if (!df.outerFace) {
+					if (theStack.size() != 4) {
+						throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df);
+					}
 				}
+	
+				for (int i = 0; i < theStack.size(); i++) {
+					fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace, false);
+				}
+				
+				setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 			}
-
-			for (int i = 0; i < theStack.size(); i++) {
-				fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace, false);
-			}
-			
-			setSlideableFaceRectangle(c, df, theStack, df.outerFace);
 		}
 
 	}
@@ -101,7 +103,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected void performSecondarySizing(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
 	}
 
-	protected abstract List<DartFace> selectFacesToRectangularize(List<DartFace> faces);
+	protected abstract List<DartFace> selectFacesToRectangularize(Compaction c, List<DartFace> faces);
 
 	protected Map<DartFace, List<VertexTurn>> setupDartFaceStacks(Compaction c, List<DartFace> orderedFaces) {
 		Map<DartFace, List<VertexTurn>> stacks = new HashMap<>();

@@ -74,6 +74,11 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		}
 		
 		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);
+		
+		if ((border == null) || (border == Compaction.DONE)) {
+			// not been rectangularized or already done.
+			return;
+		}
 
 		// get space for the darts to be inserted - this must be an empty
 		// rectangle in the
@@ -140,6 +145,8 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				separate(left, right);
 			}
 		}
+		
+		c.setFaceSpaceToDone(dartFace);
 	}
 
 

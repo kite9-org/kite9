@@ -88,6 +88,10 @@ public class CompactionImpl implements Compaction {
 	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> border) {
 		faceSpaces.put(df, border);
 	}
+	
+	public void setFaceSpaceToDone(DartFace df) {
+		faceSpaces.put(df, DONE);
+	}
 
 
 	public Segment newSegment(Dimension direction) {

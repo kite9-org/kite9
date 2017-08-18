@@ -30,6 +30,8 @@ public interface Compaction {
 
 	public Map<Vertex, Segment> getVerticalVertexSegmentMap();
 	
+	public static final Rectangle<Slideable<Segment>> DONE = new Rectangle<>(null, null, null, null);
+	
 	/**
 	 * For an internal face, returns the empty rectangle in the centre of the space that can
 	 * be used to insert subface contents. 
@@ -39,6 +41,8 @@ public interface Compaction {
 	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df);
 	
 	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
+	
+	public void setFaceSpaceToDone(DartFace df);
 	
 	public Segment getSegmentForDart(Dart d);
 	

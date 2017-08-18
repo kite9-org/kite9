@@ -22,27 +22,28 @@ public class MaximizeCompactionStep extends AbstractSizingCompactionStep {
 	/**
 	 * Orders top-down
 	 */
-	public int compare(Rectangular a, Rectangular b, Compaction c) {
+	public int compare(Rectangular a, Rectangular b, Compaction c, boolean horizontal) {
 		return - ((Integer) a.getDepth()).compareTo(b.getDepth());
 	}
 
-	public void performSizing(Rectangular r, Compaction c) {
+	public void performSizing(Rectangular r, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		if ((hs != null) && (vs != null)) {
 			log.send("Maximizing Distance " + r);
-			maximizeDistance(hsso, hs.getA(), hs.getB());
-			maximizeDistance(vsso, vs.getA(), vs.getB());
+			if (horizontal) {
+				maximizeDistance(vs.getA(), vs.getB());
+			} else {
+				maximizeDistance(hs.getA(), hs.getB());
+			}
 		}
 	}
 
-	private void maximizeDistance(SegmentSlackOptimisation sso, Slideable<Segment> min, Slideable<Segment> max) {
+	private void maximizeDistance(Slideable<Segment> min, Slideable<Segment> max) {
 		max.setMinimumPosition(max.getMaximumPosition());
 		min.setMaximumPosition(min.getMinimumPosition());
-//		int maxDistance = max.getMaximumPosition() - min.getMinimumPosition();
-//		sso.ensureMinimumDistance(min, max, maxDistance);
 	}
 
 }

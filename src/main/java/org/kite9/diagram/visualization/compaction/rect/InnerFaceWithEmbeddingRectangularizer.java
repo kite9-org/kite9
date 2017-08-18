@@ -1,6 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -10,15 +13,12 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 
 /**
- * First-pass rectangularization only does the inner faces which have content in them:
- * we need to know the size of those in order to calculate the size of the outer faces.
- * 
- * That means we need to rectangularize, and embed the contained faces first.
+ * First-pass rectangularization only does square faces with content in them.
  * 
  * @author robmoffat
  *
  */
-public class InnerFaceWithEmbeddingRectangularizer extends MidSideCheckingRectangularizer {
+public class InnerFaceWithEmbeddingRectangularizer extends AbstractRectangularizer {
 
 	public InnerFaceWithEmbeddingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
@@ -32,8 +32,22 @@ public class InnerFaceWithEmbeddingRectangularizer extends MidSideCheckingRectan
 
 	
 	@Override
-	protected List<DartFace> selectFacesToRectangularize(List<DartFace> faces) {
+	protected List<DartFace> selectFacesToRectangularize(Compaction c, List<DartFace> faces) {
 		return faces.stream().filter(df -> df.getContainedFaces().size() > 0).collect(Collectors.toList());
+	}
+
+	/**
+	 * This version will remove any element from the map where there are more than 4 turns (i.e.
+	 * it's not an initial rectangle anyway).
+	 */
+	@Override
+	protected void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+		for (Iterator<Entry<DartFace, List<VertexTurn>>> iterator = stacks.entrySet().iterator(); iterator.hasNext();) {
+			Entry<DartFace, List<VertexTurn>> elem = iterator.next();
+			if (elem.getValue().size() > 4) {
+				iterator.remove();
+			}
+		}
 	}
 
 	

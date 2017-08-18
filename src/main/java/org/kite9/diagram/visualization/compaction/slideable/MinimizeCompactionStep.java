@@ -33,15 +33,18 @@ public class MinimizeCompactionStep extends AbstractSizingCompactionStep {
 		return (r.getSizing() == DiagramElementSizing.MINIMIZE) ;
 	}
 
-	public void performSizing(Rectangular r, Compaction c) {
+	public void performSizing(Rectangular r, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> hs = hsso.getSlideablesFor(r);
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		if ((hs != null) && (vs != null)) {
 			log.send("Minimizing Distance " + r);
-			minimizeDistance(hsso, hs.getA(), hs.getB());
-			minimizeDistance(vsso, vs.getA(), vs.getB());
+			if (horizontal) {
+				minimizeDistance(vsso, vs.getA(), vs.getB());
+			} else {
+				minimizeDistance(hsso, hs.getA(), hs.getB());
+			}
 		}
 	}
 
@@ -62,7 +65,7 @@ public class MinimizeCompactionStep extends AbstractSizingCompactionStep {
 	/**
 	 * Returns in an order to maximize number of centerings.
 	 */
-	public int compare(Rectangular a, Rectangular b, Compaction c) {
+	public int compare(Rectangular a, Rectangular b, Compaction c, boolean horizontal) {
 		if (a.getDepth() != b.getDepth()) {
 			return ((Integer) a.getDepth()).compareTo(b.getDepth());
 		}
@@ -75,8 +78,8 @@ public class MinimizeCompactionStep extends AbstractSizingCompactionStep {
 			return 1;
 		} else {
 			// return elements with least number of connections on a side
-			int ac = maxLeavings(a, c);
-			int bc = maxLeavings(b, c);
+			int ac = maxLeavings(a, c, horizontal);
+			int bc = maxLeavings(b, c, horizontal);
 			if (bc != ac) {
 				return ((Integer) ac).compareTo(bc);
 			}
@@ -85,8 +88,12 @@ public class MinimizeCompactionStep extends AbstractSizingCompactionStep {
 		return b.getID().compareTo(a.getID());
 	}
 
-	private int maxLeavings(Rectangular a, Compaction c) {
-		return Math.max(maxLeavingsInAxis(a, c.getHorizontalSegmentSlackOptimisation(), c), maxLeavingsInAxis(a, c.getVerticalSegmentSlackOptimisation(), c));
+	private int maxLeavings(Rectangular a, Compaction c, boolean horizontal) {
+		if (horizontal) {
+			return maxLeavingsInAxis(a, c.getHorizontalSegmentSlackOptimisation(), c);
+		} else {
+			return maxLeavingsInAxis(a, c.getVerticalSegmentSlackOptimisation(), c);
+		}
 	}
 
 	private int maxLeavingsInAxis(Rectangular a, SegmentSlackOptimisation sso, Compaction c) {

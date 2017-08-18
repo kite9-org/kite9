@@ -16,22 +16,27 @@ public abstract class AbstractSizingCompactionStep extends AbstractCompactionSte
 	@Override
 	public void compact(Compaction c, Embedding e, Compactor rc) {
 		if (e.isTopEmbedding()) {
-			c.getHorizontalSegments().stream()
-				.flatMap(s -> s.getUnderlyingInfo().stream())
-				.map(ui -> ui.getDiagramElement())
-				.filter(de -> de instanceof Rectangular)
-				.map(de -> (Rectangular) de)
-				.filter(r -> filter(r))
-				.distinct()
-				.sorted((a, b) -> compare(a,b,c))
-				.forEach(r -> performSizing(r, c));
+			size(c, true);
+			size(c, false);
 		}
+	}
+
+	private void size(Compaction c, boolean horizontal) {
+		c.getHorizontalSegments().stream()
+			.flatMap(s -> s.getUnderlyingInfo().stream())
+			.map(ui -> ui.getDiagramElement())
+			.filter(de -> de instanceof Rectangular)
+			.map(de -> (Rectangular) de)
+			.filter(r -> filter(r))
+			.distinct()
+			.sorted((a, b) -> compare(a,b,c, horizontal))
+			.forEach(r -> performSizing(r, c, horizontal));
 	}
 
 	public abstract boolean filter(Rectangular r);
 
-	public abstract int compare(Rectangular a, Rectangular b, Compaction c);
+	public abstract int compare(Rectangular a, Rectangular b, Compaction c, boolean horizontal);
 
-	public abstract void performSizing(Rectangular r, Compaction c);
+	public abstract void performSizing(Rectangular r, Compaction c, boolean horizontal);
 	
 }
