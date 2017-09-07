@@ -24,13 +24,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 		generate("46_2.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_3_ServerError() throws Exception {
 		generate("46_3.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_4_FailsToDraw() throws Exception {
 		generate("46_4.xml");

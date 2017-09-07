@@ -183,13 +183,17 @@ public class TestingEngine extends TestingHelp {
 								case UP:
 								case DOWN:
 									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
-										throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										if (!straightWithLayoutException(c, v)) {
+											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										}
 									}
 									break;
 								case LEFT:
 								case RIGHT:
 									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
-										throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										if (!straightWithLayoutException(c, v)) {
+											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										}
 									}
 									break;
 								}
@@ -198,6 +202,23 @@ public class TestingEngine extends TestingHelp {
 						}
 					}
 				}
+			}
+
+			/**
+			 * Connections often cannot be centered when there is a layout also running through the connected.
+			 */
+			private boolean straightWithLayoutException(Connection c, Connected v) {
+				Layout l = v.getContainer().getLayout();
+				if ((l != Layout.GRID) && (l != null)) {
+					// has directed layout
+					
+					if (c.getDrawDirection() != null) {
+						return true;
+					}
+					
+				}
+				
+				return false;
 			}
 
 			private long connectionsOnSide(Connected v, Direction connectionSide, Rectangle2D r) {
