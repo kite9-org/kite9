@@ -93,7 +93,7 @@ public class ElementMapperImpl implements ElementMapper {
 		if (e == null) {
 			if (element instanceof Connection) {
 				e = new ConnectionEdge(vfrom, vto, (Connection) element, dd);
-			} else if (element instanceof GeneratedLayoutElement) {
+			} else if (element instanceof GeneratedLayoutConnection) {
 				e = new ContainerLayoutEdge(vfrom, vto, dd, from, to);
 			} else {
 				throw new LogicException("Unknown BiDirectional type: "+element);

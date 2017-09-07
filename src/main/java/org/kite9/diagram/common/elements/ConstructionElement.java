@@ -8,7 +8,7 @@ import org.kite9.diagram.model.DiagramElement;
  * @author robmoffat
  *
  */
-public interface ArtificialElement {
+public interface ConstructionElement {
 		
 	public boolean isPartOf(DiagramElement de);
 	

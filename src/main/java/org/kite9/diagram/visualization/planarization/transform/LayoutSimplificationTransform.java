@@ -6,7 +6,7 @@ import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
-import org.kite9.diagram.common.elements.mapping.GeneratedLayoutElement;
+import org.kite9.diagram.common.elements.mapping.GeneratedLayoutConnection;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -100,7 +100,7 @@ public class LayoutSimplificationTransform implements PlanarizationTransform {
 	private boolean isGeneratedLayoutElement(PlanarizationEdge e) {
 		if (e.getDiagramElements().keySet().size() == 1) {
 			for (DiagramElement de : e.getDiagramElements().keySet()) {
-				if (de instanceof GeneratedLayoutElement) {
+				if (de instanceof GeneratedLayoutConnection) {
 					return true;
 				}
 			}

@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements.edge;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
-import org.kite9.diagram.common.elements.ArtificialElement;
+import org.kite9.diagram.common.elements.ConstructionElement;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 
 /**
@@ -12,6 +12,6 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
  * @author robmoffat
  *
  */
-public interface Edge extends ArtificialElement, BiDirectional<Vertex>, Deterministic {
+public interface Edge extends ConstructionElement, BiDirectional<Vertex>, Deterministic {
 	
 }

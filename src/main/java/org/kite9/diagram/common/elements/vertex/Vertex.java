@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements.vertex;
 
 import java.util.Set;
 
-import org.kite9.diagram.common.elements.ArtificialElement;
+import org.kite9.diagram.common.elements.ConstructionElement;
 import org.kite9.diagram.common.elements.Positioned;
 import org.kite9.diagram.common.elements.Routable;
 import org.kite9.diagram.common.elements.edge.Edge;
@@ -16,7 +16,7 @@ import org.kite9.diagram.model.DiagramElement;
  *
  * @param <E>
  */
-public interface Vertex extends Comparable<Vertex>, ArtificialElement, Positioned, Routable {
+public interface Vertex extends Comparable<Vertex>, ConstructionElement, Positioned, Routable {
 	
 	/**
 	 * User identifier for the vertex.  
