@@ -590,4 +590,8 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		return false;
 	}
 	
+	@Override
+	protected boolean checkMidConnections() {
+		return false;
+	}
 }

@@ -133,9 +133,9 @@ public class SegmentBuilder implements Logable {
 			// horizontal segment, push up or down
 			Set<Direction> pushDirections = filterFanDirections(s, Direction::isVertical);
 			
-			if (pushDirections.size() > 1) {
-				throw new Kite9ProcessingException();
-			}
+//			if (pushDirections.size() > 1) {
+//				throw new Kite9ProcessingException();
+//			}
 			
 			if (pushDirections.size() == 1) {
 				for (Direction d : pushDirections) {
@@ -153,9 +153,9 @@ public class SegmentBuilder implements Logable {
 		} else if (s.getDimension() == Dimension.V) {
 			Set<Direction> pushDirections = filterFanDirections(s, Direction::isHorizontal);
 			
-			if (pushDirections.size() > 1) {
-				throw new Kite9ProcessingException();
-			}
+//			if (pushDirections.size() > 1) {
+//				throw new Kite9ProcessingException();
+//			}
 			
 			if (pushDirections.size() == 1) {
 				for (Direction d : pushDirections) {

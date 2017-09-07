@@ -232,5 +232,12 @@ public class Test37XMLFiles extends AbstractLayoutFunctionalTest {
 		return false;
 	}
 
+	@Override
+	protected boolean checkMidConnections() {
+		return false;
+	}
+
+	
+	
 	
 }

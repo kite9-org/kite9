@@ -217,7 +217,6 @@ class VertexTurn {
 		Slideable<Segment> early = increasingDirection() ? getStartsWith() : getEndsWith();
 		Slideable<Segment> late = increasingDirection() ? getEndsWith() : getStartsWith();
 		early.getSlackOptimisation().ensureMinimumDistance(early, late, (int) l);
-		System.out.println(this+": "+l);
 		this.length = l;
 	}
 	

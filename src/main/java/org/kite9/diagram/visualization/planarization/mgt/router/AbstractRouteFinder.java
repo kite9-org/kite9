@@ -38,7 +38,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	@Override
 	public boolean isLoggingEnabled() {
-		return true;
+		return false;
 	}
 
 	@Deprecated
