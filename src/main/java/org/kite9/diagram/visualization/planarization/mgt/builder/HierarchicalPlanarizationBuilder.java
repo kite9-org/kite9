@@ -264,7 +264,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 	}
 	
 	/**
-	 * This ensures that the containers' terminal vertices have edges outsideEdge and
+	 * This ensures that the containers' vertices have edges outsideEdge and
 	 * below the planarization line to contain their content vertices.
 	 * 
 	 * This creates an {@link EdgeMapping} in the planarization, which is an ordered list

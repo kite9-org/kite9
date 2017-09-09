@@ -97,7 +97,7 @@ public class SegmentBuilder implements Logable {
 	private AlignStyle decideRectangularAlignStyle(Segment s, CompactedRectangular de) {
 		DiagramElementSizing des = ((Rectangular) de).getSizing();
 		
-		if (des == DiagramElementSizing.MINIMIZE) {
+		if ((des == DiagramElementSizing.MINIMIZE) || (des == DiagramElementSizing.FIXED)) {
 			if (s.getDimension() == Dimension.H) {
 				VerticalAlignment va = de.getVerticalAlignment();
 				switch (va) {
