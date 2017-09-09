@@ -45,9 +45,9 @@ public class AlignedDirectedPriorityRule implements PriorityRule {
 		if (axis) {
 			switch (bt) {
 			case HALF_BUDDY:
-				return AbstractRuleBasedGroupingStrategy.AXIS_ALIGNED_UNSURE;// + mt.getPriorityAdjustment();
+				return AbstractRuleBasedGroupingStrategy.AXIS_ALIGNED_UNSURE + mt.getPriorityAdjustment();
 			case PERFECT_BUDDY:
-				return AbstractRuleBasedGroupingStrategy.AXIS_ALIGNED;// + mt.getPriorityAdjustment();			
+				return AbstractRuleBasedGroupingStrategy.AXIS_ALIGNED+ mt.getPriorityAdjustment();			
 			case NO:
 			default:
 				return UNDECIDED;
