@@ -2,27 +2,25 @@ package org.kite9.diagram.visualization.orthogonalization.flow.balanced;
 
 import java.util.List;
 
-import org.kite9.diagram.common.VertexOnEdge;
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
-import org.kite9.diagram.common.elements.ConnectedVertex;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.LabelledEdge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFaceFlowOrthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
-import org.kite9.diagram.visualization.planarization.mgt.router.PlanarizationCrossingVertex;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * Implements several balancing improvements to multi-edge. These are as
@@ -45,11 +43,12 @@ import org.kite9.framework.common.Kite9ProcessingException;
  * 
  */
 public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalizer {
-
-	public BalancedFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
-	}
 	
+
+	public BalancedFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
+		super(va, clc);
+	}
+
 	public static final int UNBALANCED_VERTEX_COST = 4 * CORNER;
 
 	public static enum BalanceChoice {
@@ -143,7 +142,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return true;
 	}
 
-	protected BalanceChoice decideSide(Vertex v, Node fn, Edge before, Edge after, Node hn, List<Edge> listOfEdges) {
+	protected BalanceChoice decideSide(Vertex v, Node fn, Edge before, Edge after, Node hn, List<? extends Edge> listOfEdges) {
 		// where only 2 edges, make the arrow ends come out opposite, preferably		
 		if (((PlanarizationEdge)before).isLayoutEnforcing() || ((PlanarizationEdge)after).isLayoutEnforcing())  {
 			return BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;
@@ -159,7 +158,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		}
 		
 		// this is used for arrows - try and make heads and tails appear opposite sides
-		if (v.getOriginalUnderlying() instanceof VertexOnEdge) {
+		if ((v instanceof ConnectedVertex) && (((ConnectedVertex)v).isSeparatingConnections())) {
 			if (listOfEdges.size() <= 2) {
 				// place edges on opposite sides
 				return BalanceChoice.OPPOSITE_SIDE_PREFERRED;
@@ -185,18 +184,19 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private Pair<Object> getEdgeStyle(Edge en) {
-		Pair<Object> nextStyle;
-		if (en instanceof LabelledEdge) {
-			nextStyle = new Pair<Object>(((LabelledEdge) en).getFromDecoration(), ((LabelledEdge) en).getToDecoration());
-		} else {
-			nextStyle = new Pair<Object>(null, null);
-		}
-		return nextStyle;
+		if (en instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement und = ((BiDirectionalPlanarizationEdge) en).getOriginalUnderlying();
+			if (und instanceof Connection) {
+				return new Pair<Object>(((Connection)und).getFromDecoration(), ((Connection)und).getToDecoration());
+			}
+		} 
+		
+		return new Pair<Object>(null, null);
 	}
 
 	@Override
 	protected int weightCost(Edge e) {
-		if (e.getOriginalUnderlying() instanceof Connection) {
+		if (e instanceof ConnectionEdge) {
 			// this tries to keep corners inside containers
 			return getDepthBasedWeight(e);
 		}
@@ -205,30 +205,15 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private int getDepthBasedWeight(Edge e) {
-		int depth = Math.max(getContainerDepth(getContainerFor(e.getFrom())), 
-				getContainerDepth(getContainerFor(e.getTo())));
+		int depthFrom = getVertexMaxDepth(e.getFrom());
+		int depthTo = getVertexMaxDepth(e.getTo());
+		int depth = Math.max(depthFrom, depthTo);
 		int orig = super.weightCost(e);
 		return orig -  (depth * 10) ;
 	}
 
-	private Container getContainerFor(Vertex from) {
-		if (from instanceof MultiCornerVertex) {
-			return (Container) ((MultiCornerVertex)from).getOriginalUnderlying();
-		} else if (from instanceof PlanarizationCrossingVertex) {
-			throw new Kite9ProcessingException("These should've all been removed");
-		} else if (from instanceof ConnectedVertex) {
-			return (Container) ((ConnectedVertex)from).getOriginalUnderlying().getParent();
-		}
-		
-		return null;
+	private int getVertexMaxDepth(Vertex v) {
+		return v.getDiagramElements().stream().map(de -> de.getDepth()).reduce(0, (a,b) -> Math.max(a, b)).intValue();
 	}
-	
-	private int getContainerDepth(Container c) {
-		if (c == null) {
-			return 0;
-		} else {
-			return getContainerDepth((Container) c.getParent())+1;
-		}
-	}
-	
+
 }

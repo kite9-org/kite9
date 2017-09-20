@@ -1,7 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.planarization.Face;
 
 public class FaceVertex {
@@ -30,10 +31,6 @@ public class FaceVertex {
 	}
 
 	private String getUnderlying(Edge e) {
-		if (e.getOriginalUnderlying() != null) {
-			return "("+e.getOriginalUnderlying()+")";
-		} else {
-			return "(?)";
-		}
+		return ((PlanarizationEdge)e).getDiagramElements().keySet().toString();
 	}
 }

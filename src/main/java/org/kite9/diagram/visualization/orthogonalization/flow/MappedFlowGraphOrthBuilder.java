@@ -3,25 +3,36 @@ package org.kite9.diagram.visualization.orthogonalization.flow;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
-import org.kite9.diagram.common.elements.Edge;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.model.Container;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.EdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
+import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -33,15 +44,21 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFlowGraph> {
+public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 	private Kite9Log log = new Kite9Log(this);
-	//private CompleteDisplayer completeDisplayer;
-
-	public MappedFlowGraphOrthBuilder(CompleteDisplayer completeDisplayer) {
-	//	this.completeDisplayer = completeDisplayer;
-	}
+	private VertexArranger va;
+	private EdgeConverter clc;
+	private MappedFlowGraph fg;
+	private Map<Vertex, TurnInformation> turnInfoMap;
 	
+	public MappedFlowGraphOrthBuilder(VertexArranger va, MappedFlowGraph flowGraph, EdgeConverter clc) {
+		this.va = va;
+		this.clc = clc;
+		this.fg = flowGraph;
+		this.turnInfoMap = new HashMap<>();
+	}
+
 	static enum StartPointType {
 		
 		DIRECTED, INFERRED, NONE;
@@ -74,20 +91,49 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		}				
 	}
 	
-	public OrthogonalizationImpl build(Planarization pln, MappedFlowGraph fg) {
+	public OrthogonalizationImpl build(Planarization pln) {
 		OrthogonalizationImpl o = new OrthogonalizationImpl(pln);
 
-		Set<Face> doneFaces = new UnorderedSet<Face>();
+		Map<Face, DartFace> doneFaces = new HashMap<Face, DartFace>();
+		Map<Edge, List<Vertex>> doneEdges = new HashMap<>();
 		List<StartPoint> startPoints = selectBestStartPoints(pln);
 		
 		for (StartPoint startPoint : startPoints) {
-			if (!doneFaces.contains(startPoint.f)) {
+			if (!doneFaces.containsKey(startPoint.f)) {
 				log.send("Processing face: "+startPoint);
-				processFace(startPoint.f, pln, o, fg, startPoint.d, doneFaces, startPoint.v, startPoint.e);	
+				processFace(startPoint.f, pln, o, startPoint.d, doneFaces, startPoint.v, (PlanarizationEdge) startPoint.e, doneEdges);	
+			}
+		}
+		
+		// handle single-vertex faces
+		for (Face f : pln.getFaces()) {
+			Face container = f.getContainedBy();
+			DartFace dfContainer = container != null ? doneFaces.get(container) : null;
+			
+			if (!doneFaces.containsKey(f)) {
+				// single-vertex face
+				
+				ConnectedVertex corner = (ConnectedVertex) f.getCorner(0);
+				List<DartDirection> innerFaceDarts = va.returnAllDarts(corner, o);
+				Vertex topLeft = innerFaceDarts.get(0).getDart().getFrom();
+				DartFace df = va.convertToOuterFace(o, topLeft, corner.getOriginalUnderlying());
+//				List<DartDirection> outerFaceDarts = reverseDartDirections(innerFaceDarts);
+//				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, outerFaceDarts);
+				df.setContainedBy(dfContainer);
+				
+			} else if (f.isOuterFace()) {
+				DartFace df = doneFaces.get(f);
+				df.setContainedBy(dfContainer);
 			}
 		}
 		
 		return o;
+	}
+
+	private List<DartDirection> reverseDartDirections(List<DartDirection> innerFaceDarts) {
+		List<DartDirection> out = innerFaceDarts.stream().map(a -> new DartDirection(a.getDart(), Direction.reverse(a.getDirection()))).collect(Collectors.toList());
+		Collections.reverse(out);
+		return out;
 	}
 
 	private List<StartPoint> selectBestStartPoints(Planarization pln) {
@@ -138,45 +184,214 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 		
 		return out;
 	}
+	
+	
+	
+	static class SingleVertexTurnInformation implements TurnInformation {
 
+		final Map<Edge, Direction> map;
+		final Map<Edge, Boolean> turns;
+		final Edge start;
+		
+		public SingleVertexTurnInformation(Map<Edge, Direction> map, Edge start, Map<Edge, Boolean> turns) {
+			super();
+			this.map = map;
+			this.start = start;
+			this.turns = turns;
+		}
 
-	private void processFace(Face f, Planarization pln, OrthogonalizationImpl o, MappedFlowGraph fg, Direction d,
-			Set<Face> doneFaces, Vertex startVertex, Edge incoming) {
-		if (doneFaces.contains(f)) {
+		@Override
+		public Direction getIncidentDartDirection(Edge e) {
+			return map.get(e);
+		}
+
+		@Override
+		public String toString() {
+			return "SingleVertexTurnInformation [map=" + map + "]";
+		}
+
+		@Override
+		public Edge getFirstEdgeClockwiseEdgeOnASide() {
+			return start;
+		}
+
+		@Override
+		public boolean doesEdgeHaveTurns(Edge e) {
+			return turns.get(e);
+		}
+		
+		
+	}
+	
+	/**
+	 * Given an incident edge, and a known direction, and vertex, works out the exit directions for all edges
+	 * surrounding the vertex.
+	 */
+	private TurnInformation getTurnInformationFor(Edge e1, Vertex sv, Direction d, Planarization pln) {
+		TurnInformation out = turnInfoMap.get(sv);
+		if (out != null) {
+			return out;
+		}
+		
+		Map<Edge, Direction> directionMap = new HashMap<>();
+		Map<Edge, Boolean> turnsMap = new HashMap<>();
+		List<Face> faces = pln.getVertexFaceMap().get(sv);
+		EdgeOrdering eo = pln.getEdgeOrderings().get(sv);
+		Iterator<PlanarizationEdge> it = eo.getIterator(true, (PlanarizationEdge) e1, (PlanarizationEdge) e1, false);
+		Edge startEdge = null;
+		while (it.hasNext()) {
+			PlanarizationEdge e2 = it.next();
+			
+			if (e2 == e1) {
+				directionMap.put(e1, d);
+			} else {
+				Face f = getCorrectFace(faces, sv, e1, e2);
+				int outCap = calculateTurns(f, fg, sv, e2, e1);
+				for (int i = 0; i < Math.abs(outCap); i++) {
+					d = rotate90(d, outCap);
+				}
+				if (outCap != -2) {
+					startEdge = e2;
+				}
+				d = Direction.reverse(d);
+				directionMap.put(e2, d);
+			}
+			
+			e1 = e2;
+			
+			// now calculate turn map
+			List<Face> faces2 = pln.getEdgeFaceMap().get(e2);
+			int edgeBends = calculateEdgeBends(faces2.get(0), fg, e2, sv);
+			turnsMap.put(e2, (edgeBends != 0));
+		}
+		
+		out = new SingleVertexTurnInformation(directionMap, startEdge, turnsMap);
+		turnInfoMap.put(sv, out);
+
+		return out;
+	}
+
+	private Face getCorrectFace(List<Face> faces, Vertex v, Edge following, Edge before) {
+		for (Face face : faces) {
+			if ((face.indexOf(v, following) > -1) 
+					&& (face.contains(before))) {
+				return face;
+			}
+		}
+		
+		throw new Kite9ProcessingException();
+	}
+	
+	private void processFace(Face f, Planarization pln, OrthogonalizationImpl o, Direction processingEdgeStartDirection,
+			Map<Face, DartFace> doneFaces, Vertex start, PlanarizationEdge leaving, Map<Edge, List<Vertex>> doneEdges) {
+		
+		if (doneFaces.containsKey(f)) {
 			return;
 		}
 
-		doneFaces.add(f);
 
 		log.send(log.go() ? null : "Processing face: " + f.getId());
-		int index = f.indexOf(startVertex, incoming);
 
-		DartFace df = o.createDartFace(f, f.isOuterFace());
-		df.outerFace = f.isOuterFace();
-		df.dartsInFace = new ArrayList<DartDirection>();
+		doneFaces.put(f, null);
+		List<DartDirection> dartsInFace = new ArrayList<>();
+		
+		int startIndex = f.indexOf(start, leaving);
+	
+		Vertex processingEdgeDartFromVertex = null, processingEdgeDartToVertex = null;
+		
+		for (int i = 0; i < f.size()+1; i++) {
+			// should be lastVertex - processingEdge - processingVertex - nextEdge
+			int ei = startIndex + i;
+			Vertex lastVertex = f.getCorner(ei);
+			PlanarizationEdge processingEdge = f.getBoundary(ei);
+			Vertex processingVertex = f.getCorner(ei+1);
+			PlanarizationEdge nextEdge = f.getBoundary(ei+1);
 
-		for (int i = 0; i < f.vertexCount(); i++) {
-			int ei = (index + i);
-			Edge e = f.getBoundary(ei);
-			Vertex sv = f.getCorner(ei);
-			Vertex ev = f.getCorner(ei + 1);
-			List<DartDirection> created = processEdge(f, pln, o, fg, d, sv, ev, e, doneFaces);
-			Edge next = f.getBoundary(ei + 1);
-			d = getDirectionForNextDart(f, fg, ev, created, e, next, o);
-			df.dartsInFace.addAll(created);
+			int edgeBends = calculateEdgeBends(f, fg, processingEdge, lastVertex);
+			Direction processingEdgeEndDirection = turn(processingEdgeStartDirection, edgeBends);
+			TurnInformation ti = getTurnInformationFor(processingEdge, processingVertex, processingEdgeEndDirection, pln);
+			Direction nextEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
+			
+			List<DartDirection> vertexDarts;
+			if (va.needsConversion(processingVertex)) {
+				vertexDarts = va.returnDartsBetween(processingEdge, nextEdgeStartDirection, processingVertex, nextEdge, o, ti);
+				processingEdgeDartToVertex = firstVertex(vertexDarts);
+			} else {
+				vertexDarts = Collections.emptyList();
+				processingEdgeDartToVertex = processingVertex;
+			}
+
+			
+			if (i > 0) {
+				// process the edge - we need to do this after processing the first vertex 
+				List<DartDirection> created = processEdge(f, pln, o, fg, processingEdgeStartDirection, 
+						processingEdgeDartFromVertex, processingEdgeDartToVertex, processingEdge, doneFaces, doneEdges, lastVertex, processingVertex, edgeBends);
+				dartsInFace.addAll(created);
+				processingEdgeStartDirection = created.get(created.size()-1).getDirection();
+			}
+			
+			if (i < f.size()) {
+				if (va.needsConversion(processingVertex)) {
+					processingEdgeDartFromVertex = lastVertex(vertexDarts);
+				} else {
+					processingEdgeDartFromVertex = processingVertex;
+				}
+				// prevents the vertex from being processed twice
+				dartsInFace.addAll(vertexDarts);
+			}
+
+			
+			// set for next round
+			processingEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
+			
+			log.send("Face  "+f.getId()+" darts so far: "+dartsInFace);
+		} 
+
+		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace(), dartsInFace);
+		doneFaces.put(f, df);
+
+		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.getDartsInFace());
+	}
+
+	private Direction turn(Direction d, int edgeBends) {
+		for (int i = 0; i < Math.abs(edgeBends); i++) {
+			d = rotate90(d, edgeBends);
 		}
-		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.dartsInFace);
+		
+		return d;
+	}
+
+	private Vertex firstVertex(List<DartDirection> toBefore) {
+		Dart d = toBefore.get(0).getDart();
+		if (d.getDrawDirection() == toBefore.get(0).getDirection()) {
+			return d.getFrom();
+		} else {
+			return d.getTo();
+		}
 	}
 	
+	private Vertex lastVertex(List<DartDirection> toBefore) {
+		DartDirection dartDirection = toBefore.get(toBefore.size()-1);
+		Dart d = dartDirection.getDart();
+		if (d.getDrawDirection() == dartDirection.getDirection()) {
+			return d.getTo();
+		} else {
+			return d.getFrom();
+		}
+	}
+
 	public Node getFaceToVertexNode(MappedFlowGraph fg, Face from, Vertex to, Edge before, Edge after) {
 		return fg.getNodeFor(AbstractFlowOrthogonalizer.createFaceVertex(from, to, before, after));
 	}
 
-
-	private Direction getDirectionForNextDart(Face f, MappedFlowGraph fg, Vertex ev, List<DartDirection> created,
-			Edge last, Edge next, OrthogonalizationImpl orth) {
-		Direction d;
-		Node helperNode = getFaceToVertexNode(fg, f, ev, last, next);
+	/**
+	 * Returns the number of turns in this face for incoming last, outgoing next at vertex ev.
+	 * Positive numbers mean clockwise turns, negative mean anti-clockwise.
+	 * 
+	 * The output number can vary between -2 and 2 inclusive.
+	 */
+	private int calculateTurns(Face f, MappedFlowGraph fg, Vertex ev, Edge last, Edge next) {
+		Node helperNode  = getFaceToVertexNode(fg, f, ev, last, next);
 
 		int cap = 0;
 		int outCap = 0;
@@ -200,62 +415,31 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 			throw new LogicException("some strange maths: " + outCap + " " + cap);
 		}
 
-		Dart lastDart = created.get(created.size() - 1).getDart();
-		d = lastDart.getDrawDirectionFrom(ev);
-		d = Direction.reverse(d);
-		if (outCap > -2) {
-			// corner node
-			addCorner(ev, lastDart, orth);
-		}
-
-		for (int i = 0; i < Math.abs(outCap); i++) {
-			d = rotate90(d, -outCap);
-		}
-
-		log.send(log.go() ? null : "turn on " + ev + " is " + outCap + " to " + d + " due to " + helperNode);
-
-		return d;
+		log.send(log.go() ? null : "turn on " + ev + " is " + outCap + " due to " + helperNode);
+		return outCap;
 	}
 
-	private void addCorner(Vertex ev, Dart lastDart, OrthogonalizationImpl orth) {
-		List<Dart> dlist = orth.cornerDarts.get(ev);
-		if (dlist == null) {
-			dlist = new ArrayList<Dart>();
-			orth.cornerDarts.put(ev, dlist);
-		}
-		dlist.add(lastDart);
-	}
-
-	/**
-	 * Creates darts for a single Vertex and Edge in a face. Returns the angle
-	 * of the last dart.
-	 * 
-	 * @return
-	 */
 	private List<DartDirection> processEdge(Face f, Planarization pln, OrthogonalizationImpl o, MappedFlowGraph fg,
-			Direction nextDir, Vertex startVertex, Vertex endVertex, Edge e, Set<Face> doneFaces) {
+			Direction nextDir, Vertex startVertex, Vertex endVertex, PlanarizationEdge e, Map<Face, DartFace> doneFaces, Map<Edge, List<Vertex>> doneEdges, Vertex startPlanVertex, Vertex endPlanVertex, int arcCost) {
 		log.send(log.go() ? null : "Processing edge "+e.toString()+" from: " + startVertex + " to " + endVertex + " in direction " + nextDir);
 
-		if (e.otherEnd(startVertex) != endVertex) {
+		if (e.otherEnd(startPlanVertex) != endPlanVertex) {
 			throw new LogicException("We have a problem");
 		}
 
-		Face outerFace = getOuterFace(e, f, pln);
-		int arcCost = calculateEdgeBends(f, fg, e, startVertex);
 
-		List<Vertex> waypoints = o.getWaypointsForEdge(e);
+		List<Vertex> waypoints = doneEdges.get(e);
 		int wpCount = Math.abs(arcCost) + 1;
 
 		if (waypoints == null) {
 			waypoints = new ArrayList<Vertex>(wpCount);
+			doneEdges.put(e, waypoints);
 			waypoints.add(startVertex);
 			for (int i = 0; i < wpCount - 1; i++) {
-				EdgeBendVertex bv = new EdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), e);
+				ConnectionEdgeBendVertex bv = new ConnectionEdgeBendVertex(startVertex.getID() + "-" + i + "-" + endVertex.getID(), (ConnectionEdge) e);
 				waypoints.add(bv);
-				o.getAllVertices().add(bv);
 			}
 			waypoints.add(endVertex);
-			o.setWaypointsForEdge(e, waypoints);
 		} else if (waypoints.get(0) == endVertex) {
 			waypoints = new ArrayList<Vertex>(waypoints);
 			Collections.reverse(waypoints);
@@ -265,36 +449,35 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder<MappedFl
 
 		List<DartDirection> out = new ArrayList<DartDirection>();
 
+		DiagramElement thisSideDiagramElement = getThisSideDiagramElement(e, nextDir);
+		
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			double minLength = 0;
-			Dart dart = o.createDart(start, end, e, nextDir, minLength);
-			dart.setChangeCost(getChangeCostForEdge(e), null);
-			DartDirection dd = new DartDirection(dart, nextDir);
-			log.send(log.go() ? null : "Created dart " + dart + ", "+dart.getID()+" for cost " + arcCost);
+			clc.createEdgePart(o, nextDir, start, end,  thisSideDiagramElement,Direction.rotateAntiClockwise(nextDir), out);
 			if (i < (wpCount - 1)) {
 				// rotate ready for next dart.
 				nextDir = rotate90(nextDir, arcCost);
 			}
-			out.add(dd);
 		}
 
 		Direction opposite = Direction.reverse(nextDir);
-
-		processFace(outerFace, pln, o, fg, opposite, doneFaces, endVertex, e);
+		Face outerFace = getOuterFace(e, f, pln);
+		processFace(outerFace, pln, o, opposite, doneFaces, endPlanVertex, e, doneEdges);
 
 		return out;
 	}
 
-	private int getChangeCostForEdge(Edge e) {
-		if (e.getOriginalUnderlying() instanceof Container) {
-			return Dart.EXTEND_IF_NEEDED;
+	private DiagramElement getThisSideDiagramElement(PlanarizationEdge e, Direction nextDir) {
+		if (e instanceof BiDirectionalPlanarizationEdge) {
+			return ((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying();
+		} else if (e instanceof TwoElementPlanarizationEdge) {
+			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateAntiClockwise(nextDir));
+			return out;
 		} else {
-			return Dart.CONNECTION_DART;
+			throw new Kite9ProcessingException();
 		}
 	}
-
 
 	public Node getEdgeVertexNode(MappedFlowGraph fg, Edge e, Vertex v) {
 		return fg.getNodeFor(AbstractFlowOrthogonalizer.createEdgeVertex(e, v));

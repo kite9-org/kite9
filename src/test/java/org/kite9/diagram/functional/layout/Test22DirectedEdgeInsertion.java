@@ -94,7 +94,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		// converts
 
 		new Link(converts, client);
-		new Link(converts, xstream, null, null, null, new TextLine("using"), null);
+		new TurnLink(converts, xstream, null, null, null, new TextLine("using"), null);
 		new Link(converts, objects);
 
 		// sends

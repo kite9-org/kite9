@@ -591,4 +591,75 @@ public class Test18DirectedPlanarization extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, b1, b2, c1, c2, c3, d, longone), null);
 		renderDiagram(dia);
 	}
+	
+	@Test
+	public void test_18_23_MultipleContainerMerges() throws Exception {
+		
+		Glyph a = new Glyph("a", "", "a", null, null);
+		Glyph b1 = new Glyph("b1", "", "b1", null, null);
+		Glyph b2 = new Glyph("b2", "", "b2", null, null);
+		
+		new Link(a,b1, null, null, null, null, Direction.RIGHT);
+		new Link(a,b2, null, null, null, null, Direction.RIGHT);
+		
+		Context bc1 = new Context("bc1", HelpMethods.listOf(b1), true, null, null);
+		Context bc2 = new Context("bc2", HelpMethods.listOf(b2), true, null, null);
+		
+		
+		Context bs = new Context("bs", HelpMethods.listOf(bc1, bc2), true, null, Layout.DOWN);
+		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, bs), null);
+		renderDiagram(dia);
+	}
+	
+	@Test
+	public void test_18_24_MultipleContainerMerges2() throws Exception {
+		
+		Glyph a = new Glyph("a", "", "a", null, null);
+		Glyph d = new Glyph("d", "", "d", null, null);
+		Glyph b1 = new Glyph("b1", "", "b1", null, null);
+		Glyph b2 = new Glyph("b2", "", "b2", null, null);
+		Glyph c1 = new Glyph("c1", "", "c1", null, null);
+		Glyph c2 = new Glyph("c2", "", "c2", null, null);
+		
+		new Link(a,b1, null, null, null, null, Direction.RIGHT);
+		new Link(a,c1, null, null, null, null, Direction.RIGHT);
+		
+		new Link(d,b2, null, null, null, null, Direction.LEFT);
+		new Link(d,c2, null, null, null, null, Direction.LEFT);
+		
+		Context b = new Context("b", HelpMethods.listOf(b1, b2), true, null, Layout.VERTICAL);
+		Context c = new Context("c", HelpMethods.listOf(c1, c2), true, null, Layout.VERTICAL);
+		
+		Context bc = new Context("bc", HelpMethods.listOf(b, c), true, null, Layout.VERTICAL);
+
+		
+		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, bc, d), null);
+		renderDiagram(dia);
+	}
+	
+	@Test
+	public void test_18_25_MultipleContainerMerges3() throws Exception {
+		
+		Glyph a = new Glyph("a", "", "a", null, null);
+		Glyph b1 = new Glyph("b1", "", "b1", null, null);
+		Glyph b2 = new Glyph("b2", "", "b2", null, null);
+		
+		Glyph c1 = new Glyph("c1", "", "c1", null, null);
+		Glyph c2 = new Glyph("c2", "", "c2", null, null);
+		
+		new Link(a,c1, null, null, null, null, Direction.RIGHT);
+		new Link(a,c2, null, null, null, null, Direction.RIGHT);
+		
+		new Link(c1,b1, null, null, null, null, Direction.RIGHT);
+		new Link(c2,b2, null, null, null, null, Direction.RIGHT);
+		
+		Context bc1 = new Context("bc1", HelpMethods.listOf(b1), true, null, null);
+		Context bc2 = new Context("bc2", HelpMethods.listOf(b2), true, null, null);
+		Context bs = new Context("bs", HelpMethods.listOf(bc1, bc2), true, null, Layout.DOWN);
+		Context cs = new Context("cs", HelpMethods.listOf(c1, c2), true, null, null);
+		
+		
+		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, bs, cs), null);
+		renderDiagram(dia);
+	}
 }

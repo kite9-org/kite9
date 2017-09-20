@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.framework.logging.Logable;

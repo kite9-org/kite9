@@ -13,7 +13,6 @@ import org.kite9.diagram.model.style.IntegerRange;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -171,8 +170,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 				return;
 			}
 
-			int depthFrom = em.getContainerDepth(fromC);
-			int depthTo = em.getContainerDepth(toC);
+			int depthFrom = fromC.getDepth();
+			int depthTo = toC.getDepth();
 			if (depthFrom < depthTo) {
 				to = toC;
 			} else if (depthFrom > depthTo) {

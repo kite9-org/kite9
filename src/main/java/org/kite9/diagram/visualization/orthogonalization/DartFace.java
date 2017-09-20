@@ -1,11 +1,13 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.Face;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 
 /**
@@ -16,8 +18,9 @@ import org.kite9.diagram.visualization.planarization.Face;
  * @author robmoffat
  *
  */
-public class DartFace implements Serializable, Comparable<DartFace> {
-    private static final long serialVersionUID = -4395910839686963521L;
+public class DartFace implements Serializable {
+
+	private static final long serialVersionUID = -4395910839686963521L;
     
     public static class DartDirection {
     	
@@ -27,19 +30,15 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 			this.dir = dir;
 		}
 
-		Dart dart;
-    	public Dart getDart() {
+		final Dart dart;
+		final Direction dir;
+    	
+		public Dart getDart() {
 			return dart;
 		}
 
 		public Direction getDirection() {
 			return dir;
-		}
-
-		Direction dir;
-    	
-		public void setDirection(Direction dir) {
-			this.dir = dir;
 		}
 
 		@Override
@@ -51,34 +50,46 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 
 	@Override
 	public String toString() {
-		return dartsInFace.toString();
+		String containedByStr = containedBy == null ? "-" : ""+containedBy.id;
+		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedByStr : "inner") +": "+dartsInFace.toString();
 	}
 	
-	public DartFace(Face f, boolean outerFace) {
-		this.f = f;
+	public DartFace(int i, boolean outerFace, List<DartDirection> dartsInFace) {
+		this.id = i;
 		this.outerFace = outerFace;
-		this.faceDepth = f instanceof Face ? getFaceDepth((Face) f) : Integer.MAX_VALUE;
+		this.dartsInFace = dartsInFace;
+	}
+	
+	private final int id;
+	
+	public int getId() {
+		return id;
 	}
 
-	private int getFaceDepth(Face f2) {
-		if (f2.getContainedBy() == null) {
-			return 0;
-		} else {
-			return 1 + getFaceDepth(f2.getContainedBy());
+	private final List<DartDirection> dartsInFace;
+	
+	public final boolean outerFace;
+	
+	private DartFace containedBy;
+	private Set<DartFace> containing = new HashSet<>();
+	
+	public DartFace getContainedBy() {
+		return containedBy;
+	}
+
+	public void setContainedBy(DartFace containedBy) {
+		if (!outerFace) {
+			throw new Kite9ProcessingException();
 		}
-	}
-
-	private Face f;
-	
-	public List<DartDirection> dartsInFace;
-	
-	public boolean outerFace;
-	
-	private int faceDepth;
-
-	
-	public Face getUnderlying() {
-		return f;
+		
+		if (this.containedBy != null) {
+			throw new Kite9ProcessingException();
+		}
+		
+		if (containedBy != null) {
+			this.containedBy = containedBy;
+			this.containedBy.containing.add(this);
+		}
 	}
 
 	public Vertex getStartVertex() {
@@ -90,9 +101,38 @@ public class DartFace implements Serializable, Comparable<DartFace> {
 		}
 	}
 
-	@Override
-	public int compareTo(DartFace o) {
-		return ((Integer)faceDepth).compareTo(o.faceDepth);
+	public Set<DartFace> getContainedFaces() {
+		return containing;
 	}
+
+	public List<DartDirection> getDartsInFace() {
+		return dartsInFace;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + (outerFace ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DartFace other = (DartFace) obj;
+		if (id != other.id)
+			return false;
+		if (outerFace != other.outerFace)
+			return false;
+		return true;
+	}
+	
 	
 }

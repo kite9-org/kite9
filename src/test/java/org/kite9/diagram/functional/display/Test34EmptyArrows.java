@@ -1,42 +1,35 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
-
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.functional.layout.TestingEngine;
-import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.display.complete.ADLBasicCompleteDisplayer;
-import org.kite9.diagram.visualization.format.png.BufferedImageRenderer;
-import org.kite9.diagram.visualization.pipeline.BufferedImageProcessingPipeline;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
-public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
+public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 
 	@Test
-	public void test_34_1_3WayPointArrow() throws IOException {
+	public void test_34_1_3WayPointArrow() throws Exception {
 		Arrow a = new Arrow("a", null);
-		Glyph ga = new Glyph("ga","The a", null, null);
-		Glyph gb = new Glyph("gb","The b", null, null);
-		Glyph gc = new Glyph("gc","The c", null, null);
-		new Link(a, gb);
-		new Link(a, ga);
-		new Link(a, gc);
+		Glyph ga = new Glyph("g1","The 1", null, null);
+		Glyph gb = new Glyph("g2","The 2", null, null);
+		Glyph gc = new Glyph("g3","The 3", null, null);
+		new Link("a-2", a, gb);
+		new Link("a-1", a, ga);
+		new Link("a-3", a, gc);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
 		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_34_2_4WayPointArrow() throws IOException {
-		Arrow a = new Arrow("a", null);
+	public void test_34_2_4WayPointArrow() throws Exception {
+		Arrow a = new Arrow("a", "a");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -51,13 +44,13 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 	}
 	
 	@Test
-	public void test_34_3_5WayPointArrow() throws IOException {
+	public void test_34_3_5WayPointArrow() throws Exception {
 		Arrow a = new Arrow("middle", "");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
 		Glyph gd = new Glyph("gd","The d", null, null);
-		Glyph ge = new Glyph("gd","The d", null, null);
+		Glyph ge = new Glyph("ge","The e", null, null);
 		new TurnLink(a, gb);
 		new TurnLink(a, ga);
 		new TurnLink(a, gc);
@@ -69,8 +62,8 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 	}
 	
 	@Test
-	public void test_34_4_3WayNonPointArrow() throws IOException {
-		Arrow a = new Arrow("middle", "");
+	public void test_34_4_3WayNonPointArrow() throws Exception {
+		Arrow a = new Arrow("middle", "middle");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -83,7 +76,7 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 	}
 	
 	@Test
-	public void test_34_5_3WayPointArrowWithBuffers() throws IOException {
+	public void test_34_5_3WayPointArrowWithBuffers() throws Exception {
 		Arrow a = new Arrow("a", null);
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
@@ -91,23 +84,12 @@ public class Test34EmptyArrows extends AbstractLayoutFunctionalTest  {
 		new Link(a, gb);
 		new Link(a, ga);
 		new Link(a, gc);
-		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(a, ga, gb, gc), null);
-		TestingEngine te = new TestingEngine(getZipName(), false) {
-
-			@Override
-			public BufferedImageProcessingPipeline getPipeline(Class<?> test, String subtest, boolean watermark) {
-				return new BufferedImageProcessingPipeline(new ADLBasicCompleteDisplayer(watermark, true), new BufferedImageRenderer());
-			}
-			
-			
-		};
-		
-		te.renderDiagram(d, true, new Checks());
+		renderDiagram(d);
 	}
 	
 	@Test
-	public void test_34_6_3WayPointArrowWithTerms() throws IOException {
+	public void test_34_6_3WayPointArrowWithTerms() throws Exception {
 		Arrow a = new Arrow("a", null);
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);

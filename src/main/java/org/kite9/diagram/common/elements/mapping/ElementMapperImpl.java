@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.ConnectedVertex;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -49,7 +49,7 @@ public class ElementMapperImpl implements ElementMapper {
 				BaseGridCornerVertices parentCV = getBaseGridCornerVertices((Container)c.getParent());
 				v = createSubGridCornerVertices(c, parentCV);
 			} else {
-				v = new IndependentCornerVertices(c, getContainerDepth(c));
+				v = new IndependentCornerVertices(c, c.getDepth());
 				cornerVertices.put(c, v);
 			}
 		}
@@ -60,7 +60,7 @@ public class ElementMapperImpl implements ElementMapper {
 	private SubGridCornerVertices createSubGridCornerVertices(final DiagramElement c, BaseGridCornerVertices parentCV) {
 		OPair<BigFraction> xspan = gp.getGridXPosition(c);
 		OPair<BigFraction> yspan = gp.getGridYPosition(c);
-		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, getContainerDepth(c));
+		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, c.getDepth());
 		cornerVertices.put(c, v);
 		return v;
 	}
@@ -68,7 +68,7 @@ public class ElementMapperImpl implements ElementMapper {
 	private BaseGridCornerVertices getBaseGridCornerVertices(Container c) {
 		BaseGridCornerVertices bgcv = baseGrids.get(c);
 		if (bgcv == null) {
-			bgcv = new BaseGridCornerVertices(c, getContainerDepth(c)+1);
+			bgcv = new BaseGridCornerVertices(c, c.getDepth()+1);
 			baseGrids.put(c, bgcv);
 		}
 		return bgcv;
@@ -93,7 +93,7 @@ public class ElementMapperImpl implements ElementMapper {
 		if (e == null) {
 			if (element instanceof Connection) {
 				e = new ConnectionEdge(vfrom, vto, (Connection) element, dd);
-			} else if (element instanceof GeneratedLayoutElement) {
+			} else if (element instanceof GeneratedLayoutConnection) {
 				e = new ContainerLayoutEdge(vfrom, vto, dd, from, to);
 			} else {
 				throw new LogicException("Unknown BiDirectional type: "+element);
@@ -152,25 +152,6 @@ public class ElementMapperImpl implements ElementMapper {
 		}
 		
 		return out;
-	}
-
-	private Map<DiagramElement, Integer> containerDepths = new HashMap<DiagramElement, Integer>(100);
-
-	@Override
-	public int getContainerDepth(DiagramElement c) {
-		DiagramElement parent = c.getParent();
-		if (parent==null) {
-			return 0;
-		} else {
-			Integer depth = containerDepths.get(c);
-			if (depth != null) {
-				return depth;
-			} else {
-				depth = getContainerDepth(parent) + 1;
-				containerDepths.put(c, depth);
-			}
-			return depth;
-		}
 	}
 	
 	public boolean requiresPlanarizationCornerVertices(DiagramElement c) {

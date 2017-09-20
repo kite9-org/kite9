@@ -1,24 +1,23 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
-
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.TextLineWithSymbols;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
-public class TestCard extends AbstractLayoutFunctionalTest {
+public class TestCard extends AbstractDisplayFunctionalTest {
 
 	public DiagramKite9XMLElement createTestCard() {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
@@ -41,17 +40,17 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 		Glyph withSymbols = new Glyph("withSymbols", null, "With Symbols", null, HelpMethods.createList(aDia, QCir, gHex));
 
 		Glyph text1 = new Glyph("text1", null, "With Text 1", HelpMethods.createList(
-				new TextLine("This is a piece of text on one line",  HelpMethods.createList(AHex)),
+				new TextLineWithSymbols("This is a piece of text on one line",  HelpMethods.createList(AHex)),
 				new TextLine("A pair of lines in a text\nline without symbols"),
-				new TextLine("This is a piece of text\non two lines",  HelpMethods.createList(AHex, OCir)),
+				new TextLineWithSymbols("This is a piece of text\non two lines",  HelpMethods.createList(AHex, OCir)),
 				new TextLine("Some line of text without symbols"),
-				new TextLine("This is a piece\n of text\non three lines",  HelpMethods.createList(AHex, OCir))
+				new TextLineWithSymbols("This is a piece\n of text\non three lines",  HelpMethods.createList(AHex, OCir))
 				), null);
 		
 		Glyph fullGlyph = new Glyph("fullGlyph", "Some complex stereotype", "Full Glyph", HelpMethods.createList(
-				new TextLine("Small amount of text",  HelpMethods.createList(MDia, aDia, gHex, oCir)),
-				new TextLine("Bit more text",HelpMethods.createList(MDia, aDia, gHex, oCir)),
-				new TextLine("Another text line", HelpMethods.createList(MDia, aDia, gHex, oCir))
+				new TextLineWithSymbols("Small amount of text",  HelpMethods.createList(MDia, aDia, gHex, oCir)),
+				new TextLineWithSymbols("Bit more text",HelpMethods.createList(MDia, aDia, gHex, oCir)),
+				new TextLineWithSymbols("Another text line", HelpMethods.createList(MDia, aDia, gHex, oCir))
 				),  HelpMethods.createList(aDia, QCir, gHex));
 		
 		Arrow a1 = new Arrow("a1", "Arrow with a label");
@@ -62,7 +61,7 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 
 		Context occContext = new Context(HelpMethods.listOf(simple, withStereo), true, new TextLine("Multiline label\nfor this context"), null);
 		
-		Context emptyContext = new Context(null, true, new TextLine("Simple Label", HelpMethods.createList(AHex, gHex, QCir)), null);
+		Context emptyContext = new Context(null, true, new TextLineWithSymbols("Simple Label", HelpMethods.createList(AHex, gHex, QCir)), null);
 		
 		Context otherContext = new Context(HelpMethods.listOf(a1, fullGlyph, occContext), true, null, null);
 		
@@ -70,12 +69,12 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 		
 		new Link(simple, a1);
 		new Link(withSymbols, a1, 
-				LinkEndStyle.ARROW, new TextLine("From Label", HelpMethods.createList(AHex, gHex, QCir)), 
+				LinkEndStyle.ARROW, new TextLineWithSymbols("From Label", HelpMethods.createList(AHex, gHex, QCir)), 
 				null, null, null);
 		
 		new Link(occContext, fullGlyph,
-				LinkEndStyle.ARROW, new TextLine("From Label", HelpMethods.createList(AHex, gHex, QCir)), 
-				LinkEndStyle.ARROW, new TextLine("To\n Label\nwith\n line\nbreaks\n\n\nflip", HelpMethods.createList(AHex, gHex, QCir)), null);
+				LinkEndStyle.ARROW, new TextLineWithSymbols("From Label", HelpMethods.createList(AHex, gHex, QCir)), 
+				LinkEndStyle.ARROW, new TextLineWithSymbols("To\n Label\nwith\n line\nbreaks\n\n\nflip", HelpMethods.createList(AHex, gHex, QCir)), null);
 		
 		new Link(occContext, fullGlyph);
 		
@@ -104,26 +103,12 @@ public class TestCard extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void testCardBasic() throws IOException {
+	public void testCardBasic() throws Exception {
 		DiagramKite9XMLElement d = createTestCard();
-		renderDiagramSVG(d);
-		renderDiagramPDF(d);
 		renderDiagram(d);
-		renderDiagramADLAndSVG(d);
 	}
 	
 
-	@Override
-	protected boolean checkEverythingStraight() {
-		return false;
-	}
-
-	@Override
-	protected boolean checkNoHops() {
-		return false;
-	}
-	
-	
 	
 }
 

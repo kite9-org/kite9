@@ -44,7 +44,7 @@ public class SingleDirectionTest {
 		Assert.assertEquals(0, (int) a.getPosition());
 		Assert.assertEquals(10, (int) b.getPosition());
 		Assert.assertEquals(5, (int) c.getPosition());
-		Assert.assertEquals(null, d.getPosition());
+		Assert.assertEquals(0, (int) d.getPosition());
 
 		// check d
 		b.addForwardConstraint(d, 5);
@@ -56,14 +56,14 @@ public class SingleDirectionTest {
 		Assert.assertEquals(10, (int) b.getPosition());
 		Assert.assertEquals(5, (int) e.minimumDistanceTo(b, 100));
 		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+		Assert.assertEquals(null, e.minimumDistanceTo(a, 100));
+		Assert.assertEquals(null, a.minimumDistanceTo(e, 100));
 
 		e.increasePosition(0);
 		Assert.assertEquals(0, (int) e.getPosition());
-		
-		// without moving e
-		Assert.assertEquals(15, (int) e.minimumDistanceTo(d, e.getPosition()));
-		// allow it to move
 		Assert.assertEquals(10, (int) e.minimumDistanceTo(d, 100));
+		Assert.assertEquals(null, a.minimumDistanceTo(e, 100));
+		Assert.assertEquals(null, e.minimumDistanceTo(a, 100));
 		
 		Assert.assertEquals(0, d.getMaxDepth());
 		Assert.assertEquals(3, a.getMaxDepth());
@@ -116,5 +116,47 @@ public class SingleDirectionTest {
 
 	}
 	
+	/**
+	 * A <------- 10 ------ D
+	 * |--4->B---4--->C
+	 */
+	@Test
+	public void testCanInsertIncreasing() {
+		SingleDirection a = new SingleDirection(createNotifiable("A"), true);
+		SingleDirection b = new SingleDirection(createNotifiable("B"), true);
+		SingleDirection c = new SingleDirection(createNotifiable("C"), true);
+		SingleDirection d = new SingleDirection(createNotifiable("D"), true);
+		d.addBackwardConstraint(a, 10);
+		a.addForwardConstraint(b, 4);
+		b.addForwardConstraint(c, 4);
+		
+		Assert.assertTrue(c.canAddForwardConstraint(d, 2));
+		Assert.assertTrue(a.canAddForwardConstraint(d, 5));
+		Assert.assertFalse(a.canAddForwardConstraint(d, 15));
+		Assert.assertFalse(c.canAddForwardConstraint(d, 3));
+		Assert.assertTrue(b.canAddForwardConstraint(c, 100));
+		Assert.assertTrue(c.canAddForwardConstraint(d, 1));
+	}
 	
+	/**
+	 * D -------- 10 -----> A
+	 * |     C<--4--- B <-4-|
+	 */
+	@Test
+	public void testCanInsertDecreasing() {
+		SingleDirection a = new SingleDirection(createNotifiable("A"), false);
+		SingleDirection b = new SingleDirection(createNotifiable("B"), false);
+		SingleDirection c = new SingleDirection(createNotifiable("C"), false);
+		SingleDirection d = new SingleDirection(createNotifiable("D"), false);
+		d.addBackwardConstraint(a, 10);
+		a.addForwardConstraint(b, 4);
+		b.addForwardConstraint(c, 4);
+		
+		Assert.assertTrue(b.canAddForwardConstraint(c, 100));
+		Assert.assertFalse(a.canAddForwardConstraint(d, 15));
+		Assert.assertTrue(c.canAddForwardConstraint(d, 2));
+		Assert.assertTrue(a.canAddForwardConstraint(d, 5));
+		Assert.assertFalse(c.canAddForwardConstraint(d, 3));
+		Assert.assertTrue(c.canAddForwardConstraint(d, 1));
+	}
 }

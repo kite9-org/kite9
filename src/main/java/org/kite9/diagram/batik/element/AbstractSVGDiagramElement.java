@@ -4,8 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
@@ -14,20 +12,17 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.HasLayeredGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.element.Templater.ValueReplacer;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.dom.CSSConstants;
-import org.kite9.framework.dom.EnumValue;
-import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.w3c.dom.Attr;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering.
@@ -42,84 +37,6 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		super(el, parent, ctx);
 	}
 
-	/**
-	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
-	 * turned into `GraphicsNode`s .  
-	 */
-	protected void performReplace(NodeList nodeList) {
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node n = nodeList.item(i);
-
-			if ((n instanceof Element) && (!(n instanceof Kite9XMLElement))) {
-				performReplace(n.getChildNodes());
-				for (int j = 0; j < n.getAttributes().getLength(); j++) {
-					Attr a = (Attr) n.getAttributes().item(j);
-					a.setValue(performValueReplace(a.getValue()));
-				}
-			} else if (n instanceof Text) {
-				Text text = (Text) n;
-				String data = text.getData();
-				data = performValueReplace(data);
-				if (!data.equals(text.getData())) {
-					text.replaceData(0, text.getLength(), data);
-				}
-				
-				// handle replacing in of contents
-				int found;
-				do {
-					found =  (text.getData().indexOf("{{contents}}"));
-					if (found > -1) {
-						Text text2 = text.splitText(found);
-						text2.replaceData(0, text2.getLength(), text2.getData().substring(12));
-						addContents(text2);
-					}
-				} while (found> -1);
-			}
-		}
-	}
-
-	private void addContents(Text before) {
-		Templater.insertCopyBefore(before, theElement);
-	}
-
-	protected String performValueReplace(String input) {
-		Pattern p = Pattern.compile("\\{([xXyY@])([a-zA-Z0-9]+)}");
-		
-		Matcher m = p.matcher(input);
-		StringBuilder out = new StringBuilder();
-		int place = 0;
-		while (m.find()) {
-			out.append(input.substring(place, m.start()));
-			
-			String prefix = m.group(1).toLowerCase();
-			String indexStr = m.group(2);
-			String replacement = getReplacementValue(prefix, indexStr);
-			
-			if (replacement != null) {
-				out.append(replacement);
-			}
-			
-			place = m.end();
-		}
-		
-		out.append(input.substring(place));
-		return out.toString();
-	}
-	
-	/**
-	 * Handles replacement of {@someattribute} within the SVG.
-	 */
-	protected String getReplacementValue(String prefix, String attr) {
-		if ("@".equals(prefix)) {
-			if (theElement.hasAttribute(attr)) {
-				return theElement.getAttribute(attr);
-			} 
-		} 
-		
-		return null;
-	}
-
-	
 
 	/**
 	 * Handles Batik bits
@@ -181,6 +98,8 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		initSVGGraphicsContents(out);
 		return out;
 	}
+	
+	private boolean childrenInitialized = false;
 
 	/**
 	 * Use this method where the DiagramElement is allowed to contain SVG contents.
@@ -188,18 +107,50 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		NodeList childNodes = theElement.getChildNodes();
-		performReplace(childNodes);
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node child = childNodes.item(i);
-			if (child instanceof Element) {
+			if ((child instanceof Element) && (!(child instanceof Kite9XMLElement))) {
 				// get access to the bridge, to create a graphics node.
+				if (!childrenInitialized) {
+					initializeChildXMLElement((Element) child);
+				}
 				GraphicsNode node = builder.build(ctx, (Element) child);
 				if (node != null) {
 					out.add(node);
 				}
 			}
 		}
+		
+		childrenInitialized = true;
 	}
+
+	protected abstract void initializeChildXMLElement(Element child);
+	
+	protected void processSizesUsingTemplater(Element child, RectangleRenderingInformation rri) {
+		// tells the decal how big it needs to draw itself
+		double [] x = new double[] {0, rri.getSize().getWidth()};
+		double [] y = new double[] {0, rri.getSize().getHeight()};
+		
+		ctx.getTemplater().performReplace(child, new ValueReplacer() {
+			
+			@Override
+			public String getText() {
+				return null;
+			}
+			
+			@Override
+			public String getReplacementValue(String prefix, String attr) {
+				if ("x".equals(prefix) || "y".equals(prefix)) {
+					int index = Integer.parseInt(attr);
+					double v = "x".equals(prefix) ? x[index] : y[index];
+					return ""+v;
+				} else {
+					return prefix+attr;
+				}
+			}
+		});
+	}
+
 
 	/**
 	 * This implementation simply creates a group in the usual way.

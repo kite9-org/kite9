@@ -1,6 +1,17 @@
 package org.kite9.diagram.batik.format;
 
-import static org.apache.batik.util.SVGConstants.*;
+import static org.apache.batik.util.SVGConstants.SVG_GRADIENT_UNITS_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_ID_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_LINEAR_GRADIENT_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
+import static org.apache.batik.util.SVGConstants.SVG_OFFSET_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_OPAQUE_VALUE;
+import static org.apache.batik.util.SVGConstants.SVG_RADIAL_GRADIENT_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_STOP_COLOR_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_STOP_OPACITY_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_STOP_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_TRANSFORM_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_USER_SPACE_ON_USE_VALUE;
 
 import java.awt.Color;
 import java.awt.Paint;

@@ -10,12 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -46,9 +47,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		// fit as many elements as possible into the grid
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (diagramElement instanceof Connected) {
-				IntegerRange xpos = getXOccupies((Connected) diagramElement);
-				IntegerRange ypos = getYOccupies((Connected) diagramElement);
+			if (shoudAddToGrid(diagramElement)) {
+				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
+				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);
 				
 				if ((xpos != null) && (ypos != null)) {
 					if (allowSpanning) {
@@ -66,12 +67,12 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 
-	public static IntegerRange getYOccupies(Connected diagramElement) {
+	public static IntegerRange getYOccupies(Rectangular diagramElement) {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getY();
 	}
 
 
-	public static IntegerRange getXOccupies(Connected diagramElement) {
+	public static IntegerRange getXOccupies(Rectangular diagramElement) {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getX();
 	}
 	
@@ -93,9 +94,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		
 		for (DiagramElement diagramElement : ord.getContents()) {
-			if (diagramElement instanceof Connected) {
-				IntegerRange xpos = getXOccupies((Connected) diagramElement);
-				IntegerRange ypos = getYOccupies((Connected) diagramElement);	
+			if (shoudAddToGrid(diagramElement)) {
+				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
+				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);	
 				
 				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
 					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
@@ -137,7 +138,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
 		
 		for (DiagramElement de : ord.getContents()) {
-			if (de instanceof Connected) {
+			if (shoudAddToGrid(de)) {
 				scaleCoordinates(de, size);
 			}
 		}
@@ -154,6 +155,11 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		placed.put(ord, done);
 		return done;
+	}
+
+
+	private boolean shoudAddToGrid(DiagramElement diagramElement) {
+		return diagramElement instanceof Connected;
 	}
 
 

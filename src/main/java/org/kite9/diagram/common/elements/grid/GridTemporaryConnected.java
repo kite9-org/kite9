@@ -2,21 +2,26 @@ package org.kite9.diagram.common.elements.grid;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.element.AbstractDiagramElement;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
-import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
+import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -24,7 +29,7 @@ import org.kite9.diagram.model.style.ContainerPosition;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractDiagramElement implements Connected {
+public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container {
 
 	private final String id;
 	
@@ -36,11 +41,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public String getID() {
 		return id;
-	}
-
-	@Override
-	public void setRenderingInformation(RenderingInformation ri) {
-		this.rri = (RectangleRenderingInformation) ri;
 	}
 
 	@Override
@@ -89,6 +89,61 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public ContainerPosition getContainerPosition() {
 		return null;
+	}
+
+	@Override
+	public double getPadding(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public DiagramElementSizing getSizing() {
+		return DiagramElementSizing.UNSPECIFIED;
+	}
+
+	@Override
+	public Container getContainer() {
+		return (Container) getParent();
+	}
+
+	@Override
+	public ConnectionsSeparation getConnectionsSeparationApproach() {
+		return ConnectionsSeparation.SEPARATE;   // irrelevant, won't have connections
+	}
+
+	@Override
+	public VerticalAlignment getVerticalAlignment() {
+		return VerticalAlignment.TOP;
+	}
+
+	@Override
+	public HorizontalAlignment getHorizontalAlignment() {
+		return HorizontalAlignment.CENTER;
+	}
+
+	@Override
+	public List<DiagramElement> getContents() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Layout getLayout() {
+		return null;
+	}
+
+	@Override
+	public BorderTraversal getTraversalRule(Direction d) {
+		return BorderTraversal.ALWAYS;
+	}
+
+	@Override
+	public int getGridColumns() {
+		return 1;
+	}
+
+	@Override
+	public int getGridRows() {
+		return 1;
 	}
 
 }

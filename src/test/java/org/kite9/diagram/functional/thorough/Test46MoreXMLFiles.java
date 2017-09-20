@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.TextLineWithSymbols;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
@@ -24,13 +24,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 		generate("46_2.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_3_ServerError() throws Exception {
 		generate("46_3.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_46_4_FailsToDraw() throws Exception {
 		generate("46_4.xml");
@@ -66,10 +64,15 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_49_10_KeyTooSmall() throws Exception {
+	public void test_46_10_PushingRect() throws Exception {
+		generate("label_push_error.xml");
+	}
+	
+	@Test
+	public void test_46_11_KeyTooSmall() throws Exception {
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
-				new TextLine("Some Text Here To Make It A Bit Wider", 
+				new TextLineWithSymbols("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(
 								new Symbol("sdfs", 'W', SymbolShape.HEXAGON)))),				
 			HelpMethods.createList(
@@ -81,10 +84,16 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 					new Symbol("sdfs", 'W', SymbolShape.HEXAGON)))));
 	}
 	
+	@Test
+	public void test_46_12_UnnecessaryDogleg() throws Exception {
+		generate("dogleg.xml");
+	}
+	
+	
 	protected DiagramKite9XMLElement createDiagram() {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 
 			HelpMethods.createList(
-				new TextLine("Some Text Here To Make It A Bit Wider", 
+				new TextLineWithSymbols("Some Text Here To Make It A Bit Wider", 
 						HelpMethods.createList(
 								new Symbol("sdfs", 'W', SymbolShape.HEXAGON)))),				
 			HelpMethods.createList(

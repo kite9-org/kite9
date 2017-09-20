@@ -34,7 +34,7 @@ public class Arrow extends AbstractStyleableXMLElement {
 		super(id, "arrow", doc);
 
 		if (label != null) {
-			setLabel(new TextLine(null, "label", label, null, doc));
+			setLabel(new TextLine(null, "label", label, doc));
 		}
 		
 	}

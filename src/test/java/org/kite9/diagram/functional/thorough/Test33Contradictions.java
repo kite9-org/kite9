@@ -552,6 +552,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	
 	
 	@Test
+	@Ignore("We don't do invisible elements anymore - fix in sprint 15")
 	public void test_33_38_AssertInvisibleContradictionsNotRendered() throws Exception {
 
 		Glyph g1 = new Glyph("1", null, "1", null, null);
@@ -590,4 +591,8 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		return false;
 	}
 	
+	@Override
+	protected boolean checkMidConnections() {
+		return false;
+	}
 }

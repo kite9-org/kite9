@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.awt.Graphics2D;
 import java.awt.Shape;
 
 import org.apache.batik.bridge.BridgeContext;

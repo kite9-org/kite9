@@ -9,40 +9,20 @@ import java.util.function.Consumer;
 
 import org.kite9.framework.logging.LogicException;
 
-public class Slideable implements PositionChangeNotifiable {
+public class Slideable<X> implements PositionChangeNotifiable {
 	
-	int canonicalOrder;
-	int positionalOrder;
-	private AlignStyle alignStyle;
-	private Slideable alignTo;
-	private AbstractSlackOptimisation<?> so;
+	private AbstractSlackOptimisation<X> so;
 	
 	private SingleDirection minimum = new SingleDirection(this, true);
 	private SingleDirection maximum = new SingleDirection(this, false); 
+	private boolean hasBackwardConstraints = false;
 
-	public Slideable(AbstractSlackOptimisation<?> so, Object u, AlignStyle alignStyle) {
+	public Slideable(AbstractSlackOptimisation<X> so, X u) {
 		this.underneath = u;
-		this.alignStyle = alignStyle;
 		this.so = so;
 	}
 
-	public int getPositionalOrder() {
-		return positionalOrder;
-	}
-
-	public Slideable getAlignTo() {
-		return alignTo;
-	}
-
-	public AlignStyle getAlignStyle() {
-		return alignStyle;
-	}
-
-	public void setAlignStyle(AlignStyle alignStyle) {
-		this.alignStyle = alignStyle;
-	}
-
-	private Object underneath;
+	private X underneath;
 
 	/**
 	 * Works out how much closer the current slideable can get to s.
@@ -52,40 +32,31 @@ public class Slideable implements PositionChangeNotifiable {
 	 * We can't move the element any further than the max position without breaking other 
 	 * constraints.
 	 */
-	public int minimumDistanceTo(Slideable s) {
+	public int minimumDistanceTo(Slideable<X> s) {
 		Integer maxSet = this.getMaximumPosition();
-		maxSet = maxSet == null ? 1000 : maxSet;		// 
+		maxSet = maxSet == null ? 20000 : maxSet;		// 
 		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
 		so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
 		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
 		so.log.send("Calculating minimum distance from "+s+" to "+this+" "+slack2);
 		if (slack2 == null) {
-			return slack1;
+			if (slack1 == null) {
+				return 0;
+			} else {
+				return slack1;
+			}
+		} else {
+			return Math.max(slack1, slack2);
 		}
-		
-//		if (slack1.intValue() != slack2.intValue()) {
-//			throw new LogicException("Something went wrong");
-//		}
-		return Math.max(slack1, slack2);
-		
-		//return slack1;
 	}
 	
-	public boolean hasTransitiveForwardConstraintTo(Slideable s2) {
-		return minimum.hasTransitiveForwardConstraintTo(s2.minimum, s2.getMinimumPosition());
-	}
-
 	@Override
 	public String toString() {
 		return "<" + so.getIdentifier(underneath) + " " + minimum.getPosition() + "," + maximum.getPosition() + ">";
 	}
 
-	public Object getUnderlying() {
+	public X getUnderlying() {
 		return underneath;
-	}
-
-	public void setAlignTo(Slideable rs) {
-		this.alignTo = rs;
 	}
 
 	public Integer getMinimumPosition() {
@@ -96,7 +67,7 @@ public class Slideable implements PositionChangeNotifiable {
 		return maximum.getPosition();
 	}
 
-	public AbstractSlackOptimisation<?> getSlackOptimisation() {
+	public AbstractSlackOptimisation<X> getSlackOptimisation() {
 		return so.getSelf();
 	}
 
@@ -113,34 +84,44 @@ public class Slideable implements PositionChangeNotifiable {
 		}
 	}
 	
-	public void withMinimumForwardConstraints(Consumer<Slideable> action) {
-		for (SingleDirection sd : minimum.forward.keySet()) {
-			action.accept((Slideable) sd.getOwner());
+	public boolean canAddMinimumForwardConstraint(Slideable<X> to, int dist) {
+		return minimum.canAddForwardConstraint(to.minimum, dist);
+	}
+
+	void addMinimumForwardConstraint(Slideable<X> to, int dist) {
+		try {
+			minimum.addForwardConstraint(to.minimum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMinimumForwardConstraint: "+this+" to "+to+" dist: "+dist, e);
 		}
 	}
 	
-	public void withMaximumForwardConstraints(Consumer<Slideable> action) {
-		for (SingleDirection sd : maximum.forward.keySet()) {
-			action.accept((Slideable) sd.getOwner());
+	void addMinimumBackwardConstraint(Slideable<X> to, int dist) {
+		try {
+			minimum.addBackwardConstraint(to.minimum, dist);
+			this.hasBackwardConstraints = true;
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMinimumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
+	}
+	
+	void addMaximumForwardConstraint(Slideable<X> to, int dist) {
+		try {
+			maximum.addForwardConstraint(to.maximum, dist);
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMaximumForwardConstraint: "+this+" to "+to+" dist: "+dist, e);
 		}
 	}
 
-	void addMinimumForwardConstraint(Slideable to, int dist) {
-		minimum.addForwardConstraint(to.minimum, dist);
+	void addMaximumBackwardConstraint(Slideable<X> to, int dist) {
+		try {
+			maximum.addBackwardConstraint(to.maximum, dist);
+			this.hasBackwardConstraints = true;
+		} catch (RuntimeException e) {
+			throw new SlideableException("addMaximumBackwardConstraint: "+this+" to "+to+" dist: "+dist, e);
+		}
 	}
 	
-	void addMinimumBackwardConstraint(Slideable to, int dist) {
-		minimum.addBackwardConstraint(to.minimum, dist);
-	}
-	
-	void addMaximumForwardConstraint(Slideable to, int dist) {
-		maximum.addForwardConstraint(to.maximum, dist);
-	}
-	
-	void addMaximumBackwardConstraint(Slideable to, int dist) {
-		maximum.addBackwardConstraint(to.maximum, dist);
-	}
-
 	public void setMinimumPosition(int i) {
 		minimum.increasePosition(i);
 	}
@@ -149,15 +130,15 @@ public class Slideable implements PositionChangeNotifiable {
 		maximum.increasePosition(i);
 	}
 
-	public Set<Slideable> getForwardSlideables(boolean increasing) {
-		Set<Slideable> out = new HashSet<>();
+	public Set<Slideable<X>> getForwardSlideables(boolean increasing) {
+		Set<Slideable<X>> out = new HashSet<>();
 		if (increasing) {
 			for (SingleDirection sd : minimum.forward.keySet()) {
-				out.add((Slideable) sd.getOwner());
+				out.add((Slideable<X>) sd.getOwner());
 			}
 		} else {
 			for (SingleDirection sd : maximum.forward.keySet()) {
-				out.add((Slideable) sd.getOwner());
+				out.add((Slideable<X>) sd.getOwner());
 			}
 		}
 		

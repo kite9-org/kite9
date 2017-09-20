@@ -1,26 +1,39 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
-import org.kite9.diagram.common.elements.AbstractVertex;
+import java.util.Collections;
+import java.util.Set;
+
+import org.kite9.diagram.common.elements.vertex.AbstractVertex;
+import org.kite9.diagram.common.elements.vertex.NoElementVertex;
 import org.kite9.diagram.model.DiagramElement;
 
 
 
 /**
- * This is used where a connection goes from one side of the planarization axis to the other.
+ * This is used where a routing goes from one side of the planarization axis to the other.
  * 
  * @author robmoffat
  */
-public class PlanarizationCrossingVertex extends AbstractVertex {
-
-	DiagramElement und;
+public class PlanarizationCrossingVertex extends AbstractVertex implements NoElementVertex {
 	
-	public PlanarizationCrossingVertex(String name, DiagramElement und) {
+	public PlanarizationCrossingVertex(String name) {
 		super(name);
-		this.und = und;
 	}
 
 	public DiagramElement getOriginalUnderlying() {
-		return und;
+		return null;
 	}
+
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return false;
+	}
+
+	@Override
+	public Set<DiagramElement> getDiagramElements() {
+		return Collections.emptySet();
+	}
+
+	
 	
 }

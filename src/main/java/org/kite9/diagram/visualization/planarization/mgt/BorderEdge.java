@@ -1,96 +1,46 @@
 package org.kite9.diagram.visualization.planarization.mgt;
 
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import org.kite9.diagram.common.elements.AbstractAnchoringVertex.Anchor;
-import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.framework.dom.CSSConstants;
-import org.kite9.framework.dom.EnumValue;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 /**
  * This edge is used for the surrounding of a diagram element.
  * 
- * Since all diagrams are containers
- * of vertices, these edges will be used around the perimeter of the diagram.
+ * Since all diagrams are containers of vertices, these edges will be used around the perimeter of the diagram.
  * 
- * A new constraint on Border edge is that "from" must be before "to" in the clockwise ordering of the edges 
- * on the face, when the edge is created.  That way, we always know whether a face is inside or outside a container 
- * (this doesn't work for grids, because edges are used for multple parts of the face - is this an issue?)
+ * The border edge keeps track of the rectangular border.  You can work out from their containment which side is which.
+ * 
+ * Borders only keep track of outer edges of containers.  So forElements will only return an element if the border is 
+ * one of the four outer sides of the container.
  * 
  * @author robmoffat
  *
  */
-public class BorderEdge extends AbstractPlanarizationEdge {
+public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementPlanarizationEdge {
 
-	DiagramElement underlying;
-	Map<DiagramElement, Direction> forElements;
+	private final Map<DiagramElement, Direction> forElements;
 	String label;
 	
-	public BorderEdge(Vertex from, Vertex to, String label, Direction d, boolean reversed, DiagramElement cide, Map<DiagramElement, Direction> forELements) {
-		super(from, to, null, null, null, null, null);
-		this.underlying = cide;
+	public BorderEdge(Vertex from, Vertex to, String label, Direction d, Map<DiagramElement, Direction> forElements) {
+		super(from, to, d);
 		this.label = label;
-		this.drawDirection = d;
-		this.reversed = reversed;
-		this.forElements = forELements;
+		this.forElements = forElements;
 	}
 	
-	public BorderEdge(MultiCornerVertex from, MultiCornerVertex to, String label, Direction d) {
-		this(from, to, label, d, false, getOuterContainer(from, to), new LinkedHashMap<>());
-	}
-	
-	private static Container getOuterContainer(MultiCornerVertex from, MultiCornerVertex to) {
-		int depth = Integer.MAX_VALUE;
-		DiagramElement out = null;
-		for (Anchor f : from.getAnchors()) {
-			int currentDepth = getDepth(f.getDe());
-			if (currentDepth < depth ) {
-				out = f.getDe();
-				depth = currentDepth;
-			}
-		}
-		
-		for (Anchor f : to.getAnchors()) {
-			int currentDepth = getDepth(f.getDe());
-			if (currentDepth < depth ) {
-				out = f.getDe();
-				depth = currentDepth;
-			}
-		}
-		
-		DiagramElement parent = out.getParent();
-		while ((parent != null) && (((Container)parent).getLayout() == Layout.GRID)) {
-			out = parent;
-			parent = out.getParent();
-		}
-		
-		return (Container) out;
-	}
-
-	private static int getDepth(DiagramElement f) {
-		DiagramElement parent = f.getParent();
-		if (parent==null) {
-			return 0;
-		} else {
-			return 1 + getDepth(parent);
-		}
-	}
-
-	public DiagramElement getOriginalUnderlying() {
-		return underlying;
-	}
-	
+	/**
+	 * For a given diagram element, shows what side of that element this edge is on.
+	 */
 	public Map<DiagramElement, Direction> getDiagramElements() {
 		return forElements;
 	}
@@ -121,8 +71,8 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, isReversed(), underlying, forElements);
-		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, isReversed(), underlying, forElements);
+		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, forElements);
+		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, forElements);
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in
@@ -132,11 +82,6 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 		}
 		
 		return out;
-	}
-
-	@Override
-	public int getLengthCost() {
-		return 0;
 	}
 	
 	private transient BorderTraversal bt = null;
@@ -151,11 +96,55 @@ public class BorderEdge extends AbstractPlanarizationEdge {
 	}
 
 	private BorderTraversal calculateTraversalRule() {
-		if (underlying instanceof Container) {
-			return ((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
+		BorderTraversal out = null;
+		
+		for (Map.Entry<DiagramElement, Direction> e : forElements.entrySet()) {
+			DiagramElement underlying =e.getKey();
+			if (underlying instanceof Container) {
+				BorderTraversal bt = ((Container)underlying).getTraversalRule(Direction.rotateAntiClockwise(getDrawDirection()));
+				out = BorderTraversal.reduce(out, bt);
+			}
 		}
 		
-		return BorderTraversal.NONE;
+		return out;
 	}
 
+	@Override
+	public boolean isPartOf(DiagramElement de) {
+		return forElements.containsKey(de);
+	}
+
+	@Override
+	public DiagramElement getOtherSide(DiagramElement from) {
+		DiagramElement sidea = null, sideb = null;
+		
+		if ((forElements.size() != 2) && (forElements.size() != 1)){
+			throw new Kite9ProcessingException("An BorderEdge must be for 1 or 2 diagram elements");
+		}
+
+		Iterator<DiagramElement> els = forElements.keySet().iterator();	
+		sidea = els.next();
+		sideb = els.hasNext() ? els.next() : sidea.getParent();
+		
+		if (from == sidea) {
+			return sideb;
+		} else if (from == sideb) {
+			return sidea;
+		} else { 
+			throw new Kite9ProcessingException(from+" is not mapped to a side");
+		}
+	}
+
+	@Override
+	public DiagramElement getElementForSide(Direction d) {
+		for (DiagramElement de : forElements.keySet()) {
+			if (forElements.get(de) == d) {
+				return de;
+			}
+		}
+		
+		return null;
+	}
+	
+	
 }

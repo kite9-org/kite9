@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction;
 
-
 /**
  * A step in which some part of the compaction process occurs.
  * 
@@ -10,6 +9,6 @@ package org.kite9.diagram.visualization.compaction;
  */
 public interface CompactionStep {
 
-	public void compactDiagram(Compaction c);
+	public void compact(Compaction c, Embedding e, Compactor rc);
 	
 }

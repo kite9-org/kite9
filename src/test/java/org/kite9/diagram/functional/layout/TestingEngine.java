@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.layout;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,40 +13,50 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.visitors.DiagramChecker;
-import org.kite9.diagram.model.visitors.DiagramElementVisitor;
-import org.kite9.diagram.model.visitors.HopChecker;
-import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
+import org.kite9.diagram.model.visitors.DiagramElementVisitor;
+import org.kite9.diagram.model.visitors.HopChecker;
 import org.kite9.diagram.model.visitors.HopChecker.HopAction;
+import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
@@ -67,7 +78,9 @@ public class TestingEngine extends TestingHelp {
 		public boolean everythingStraight = true;
 		public boolean checkLayout = true;
 		public boolean checkNoContradictions = true;
-		public boolean checkLabelOcclusion = true;
+		public boolean checkOcclusion = true;
+		public boolean checkConnectionsMeetConnecteds = true;
+		public boolean checkMidConnection = true;
 	}
 	
 	public void testDiagram(DiagramKite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
@@ -101,13 +114,17 @@ public class TestingEngine extends TestingHelp {
 			if (c.checkNoHops) {
 				testHopCount(d);
 			}
+			
+			if (c.checkConnectionsMeetConnecteds) {
+				testConnectionsMeetConnecteds(d, c.checkMidConnection);
+			}
 
 			if (c.checkLayout) {
 				testLayout(d.getDiagramElement());
 			}
 			
-			if (c.checkLabelOcclusion) {
-				checkLabelOverlap(d.getDiagramElement());
+			if (c.checkOcclusion) {
+				checkOverlap(d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now
@@ -123,11 +140,124 @@ public class TestingEngine extends TestingHelp {
 			if (addressed) {
 				throw afe;
 			} else {
-				Assert.fail("Not Addressed: "+afe.getMessage());
+				System.err.println("Not Addressed: "+afe.getMessage());
 			}
 		} catch (AssertionFailedError afe) {
 			throw afe;
 		}
+	}
+
+	public static void testConnectionsMeetConnecteds(DiagramKite9XMLElement d, final boolean checkMidConnection) {
+		Diagram d2 = d.getDiagramElement();
+		new DiagramElementVisitor().visit(d2, new VisitorAction() {
+			
+			@Override
+			public void visit(DiagramElement de) {
+				if (de instanceof Connection) {
+					meets((Connection)de, ((Connection) de).getFrom(), true);
+					meets((Connection)de, ((Connection) de).getTo(), false);
+				}
+			}
+
+			private void meets(Connection c, Connected v, boolean start) {
+				RouteRenderingInformation rri = c.getRenderingInformation();
+				RectangleRenderingInformation rect = v.getRenderingInformation();
+				
+				if (rri.getRoutePositions().size() == 0) {
+					// missing element - will be picked up later though
+				} else {
+					Point2D p2d = getCorrectEndPoint(start, c);
+					Rectangle2D r2d = createRect(rect);
+					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
+					if (largerRect.contains(p2d)) {
+						// it's on the border
+					} else {
+						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+					}
+					
+					if (checkMidConnection) {
+						if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
+							Direction connectionSide = getConnectionSide(c, v, r2d);
+							if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+								switch (connectionSide) {
+								case UP:
+								case DOWN:
+									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
+										if (!straightWithLayoutException(c, v)) {
+											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										}
+									}
+									break;
+								case LEFT:
+								case RIGHT:
+									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
+										if (!straightWithLayoutException(c, v)) {
+											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+										}
+									}
+									break;
+								}
+		 						
+							}
+						}
+					}
+				}
+			}
+
+			/**
+			 * Connections often cannot be centered when there is a layout also running through the connected.
+			 */
+			private boolean straightWithLayoutException(Connection c, Connected v) {
+				Layout l = v.getContainer().getLayout();
+				if ((l != Layout.GRID) && (l != null)) {
+					// has directed layout
+					
+					if (c.getDrawDirection() != null) {
+						return true;
+					}
+					
+				}
+				
+				return false;
+			}
+
+			private long connectionsOnSide(Connected v, Direction connectionSide, Rectangle2D r) {
+				return v.getLinks().stream()
+					.filter(l -> getConnectionSide(l, v, r) == connectionSide)
+					.count();
+			}
+
+			private Direction getConnectionSide(Connection c, Connected v, Rectangle2D r) {
+				boolean start = (c.getFrom() == v);
+				Point2D p = getCorrectEndPoint(start, c);
+				
+				if (p == null) {
+					return null;
+				}
+				
+				if (r.getMinX() == p.getX()) {
+					return Direction.LEFT;
+				} else if (r.getMaxX() == p.getX()) {
+					return Direction.RIGHT;
+				} else if (r.getMinY() == p.getY()) {
+					return Direction.UP;
+				} else if (r.getMaxY() == p.getY()) {
+					return Direction.DOWN;
+				}
+				
+				throw new LogicException("should meet, we tested this");
+			}
+
+			private Point2D getCorrectEndPoint(boolean start, Connection c) {
+				RouteRenderingInformation rri = c.getRenderingInformation();
+				if (rri.getRoutePositions().size() == 0) {
+					return null;
+				}
+				Dimension2D d2 = start ? rri.getRoutePositions().get(0) : rri.getRoutePositions().get(rri.getRoutePositions().size()-1);
+				Point2D p2d = new Point2D.Double(d2.x(), d2.y());
+				return p2d;
+			}
+		});
 	}
 
 	private void writeVertexOrder(MGTPlanarization pln, Class<?> theTest, String subtest, String item) {
@@ -198,14 +328,14 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	public static void testConnectionPresence(DiagramKite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
-		final int[] notPresent = { 0 };
+		final Set<Connection> notPresent = new HashSet<>();
 
 		ConnectionAction ca = new ConnectionAction() {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if ((rri == null) || (rri.size() == 0)) {
 					if (!isInvisible(c)) {
-						notPresent[0]++;
+						notPresent.add(c);
 					}
 				}
 				
@@ -259,8 +389,8 @@ public class TestingEngine extends TestingHelp {
 		};
 
 		DiagramChecker.checkConnnectionElements(d, ca);
-		if (notPresent[0] > 0) {
-			throw new ElementsMissingException("Diagram Elements not included " + notPresent[0] + " missing", notPresent[0]);
+		if (notPresent.size() > 0) {
+			throw new ElementsMissingException("Diagram Elements not included " + notPresent + " missing", notPresent.size());
 		}
 	}
 
@@ -301,6 +431,9 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
+				if ((cc instanceof Label) || (cc instanceof Connected)) {
+					checkContentContainment((Rectangular) cc, d);
+				}
 				if (cc instanceof Container) {
 					testLayout((Container) cc);
 				}
@@ -308,46 +441,229 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 	
-	private void checkLabelOverlap(final Diagram d) {
+	private static void checkContentContainment(Rectangular cc, Container d) {
+		
+		if (checkTemporary(cc)) {
+			return;
+		}
+		
+		if ((cc instanceof Label) && (cc.getParent() instanceof Container)) {
+			return; // not processing container labels just yet
+		}
+		
+		RectangleRenderingInformation inside =  cc.getRenderingInformation();
+		RectangleRenderingInformation outside = d.getRenderingInformation();
+		
+		Rectangle2D inR;
+		Rectangle2D outR;
+		try {
+			inR = createRect(inside);
+			outR = createRect(outside);
+		} catch (Exception e) {
+			throw new ElementsMissingException(cc.getID(), 1);
+		}
+		
+		if ((!outR.contains(inR)) && (inR.getWidth()>0) && (inR.getHeight()>0)) {
+			throw new LayoutErrorException(cc+" not entirely within "+d);
+		}
+	}
+
+	/**
+	 * Eventually, we shouldn't be modifying the container structure, it should be immutable.
+	 * @param cc
+	 * @return
+	 */
+	@Deprecated()
+	private static boolean checkTemporary(Rectangular cc) {
+		return cc instanceof GridTemporaryConnected;
+	}
+
+	private void checkOverlap(final Diagram d) {
+		BatikDisplayer disp = new BatikDisplayer(false, 0);
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if (de instanceof Label) {
-					checkLabelOverlap((Label) de, d);
+				if ((de instanceof Label) || (de instanceof Connected))  {
+					checkOverlap((Rectangular) de, d, disp);
 				}
 			}
 		});
 		
 	}
-	
-	private void checkLabelOverlap(Label l, Diagram d) {
-		RectangleRenderingInformation ri = (RectangleRenderingInformation) l.getRenderingInformation();
-		final Rectangle2D labelRect = createRect(ri);
+		
+	private void checkOverlap(Rectangular outer, Diagram d, BatikDisplayer disp) {
+		RectangleRenderingInformation ri = (RectangleRenderingInformation) outer.getRenderingInformation();
+		Rectangle2D outerRect;
+		try {
+			outerRect = createRect(ri);
+		} catch (NullPointerException e) {
+			throw new ElementsMissingException(outer.getID(), 1);
+		}
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
-			public void visit(DiagramElement de) {
-				if (de != l) {
-					RenderingInformation ri = de.getRenderingInformation();
-					if (ri instanceof RectangleRenderingInformation) {
-						Rectangle2D rect2 = createRect((RectangleRenderingInformation) ri);
-						if ((rect2.contains(labelRect)) && (de instanceof Container)) {
-							// probably ok
+			public void visit(DiagramElement inner) {
+				if (inner instanceof Rectangular) {
+					Rectangle2D innerRect = createRect(inner.getRenderingInformation());
+					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
+	
+						if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
 							return;
 						}
-						if (rect2.intersects(labelRect)) {
-							throw new LogicException("Label should not be overlapped "+l+" by "+de);
+	
+						if (isChildOf(inner, outer)) {
+							checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
+	 
+						} else if (inner instanceof Rectangular) {
+							checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
 						}
 					}
+				} 
+			}
+
+		
+			private void checkSiblingMargins(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+				if (innerRect.intersects(outerRect)) {
+					throw new LogicException("Overlapped: " + outer + " by " + inner);
+				}
+				
+				if (isInGrid((Rectangular) inner)) {
+					return;
+				}
+				
+				
+				if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
+					// check y-separation
+					
+					if (innerRect.getMaxY() <= outerRect.getMinY()) {
+						// inner above outer
+						double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
+						if (innerRect.getMaxY() + downDist > outerRect.getMinY()) {
+							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+						}
+					} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
+						// inner below outer
+						double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
+						if (innerRect.getMinY() - upDist < outerRect.getMaxY()) {
+							throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+						}						
+					} else {
+						throw new LogicException("Overlapped: " + outer + " by " + inner);
+					}
+					
+				}
+				
+				if (alongside(innerRect.getMinY(), innerRect.getMaxY(), outerRect.getMinY(), outerRect.getMaxY())) {
+					// check y-separation
+					
+					if (innerRect.getMaxX() <= outerRect.getMinX()) {
+						// inner to left of outer
+						double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
+						if (innerRect.getMaxX() + rightDist > outerRect.getMinX()) {
+							throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+						}
+						
+					} else if (innerRect.getMinX() >= outerRect.getMaxX()) {
+						// inner to right of outer
+						double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
+						if (innerRect.getMinX() - leftDist < outerRect.getMaxX()) {
+							throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+						}
+					} else {
+						throw new LogicException("Overlapped: " + outer + " by " + inner);
+					}
+					
+				}
+			}
+
+			private void checkContainmentPadding(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+				// de must be inside l
+
+				if (!innerRect.intersects(outerRect)) {
+					throw new LogicException("Should be inside: " + outer + " doesn't contain " + inner);
+				}
+
+				if (((Rectangular) inner).getContainer() == outer) {
+					// check margins / padding
+
+					double rightDist = disp.getPadding(outer, Direction.LEFT);
+					double leftDist = disp.getPadding(outer, Direction.RIGHT);
+					double upDist = disp.getPadding(outer, Direction.DOWN);
+					double downDist = disp.getPadding(outer, Direction.UP);
+					
+					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
+						throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+					}
+
+					if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
+						throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+					}
+					
+					if (!(inner instanceof Label)) {
+						if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+						}
+					}
+
+					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
+						throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+					}
+				}
+			}
+			
+			private boolean isInGrid(Rectangular inner) {
+				return (inner instanceof Connected) && (inner.getContainer().getLayout() == Layout.GRID);
+			}
+
+			protected boolean alongside(double a1, double a2, double b1, double b2) {
+				return within(a1, b1, b2) || 
+						within(a2, b1, b2) ||
+						within(b1, a1, a2) ||
+						within(b2, a1, a2);
+			}
+
+			protected boolean within(double a, double ja, double jb) {
+				return ((a > ja) && (a < jb));
+			}
+
+			private boolean isChildOf(DiagramElement de, DiagramElement p) {
+				if (p instanceof Container) {
+					if (de instanceof Rectangular) {
+						if (((Rectangular) de).getContainer() == p) {
+							return true;
+						} else if (((Rectangular) de).getContainer() == null) {
+							return false;
+						} else {
+							return isChildOf(((Rectangular) de).getContainer(), p);
+						}
+					} else {
+						return false;
+					}
+				} else if (p instanceof Connection) {
+					return (((Connection) p).getFromLabel() == de) || (((Connection) p).getToLabel() == de);
+				} else {
+					return false;
 				}
 			}
 		});
 		
 	}
 
-	private Rectangle2D.Double createRect(RectangleRenderingInformation ri) {
-		return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+	private static Rectangle2D createRect(RenderingInformation r) {
+		if (r instanceof RectangleRenderingInformation) {
+			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
+			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+		} else if (r instanceof RouteRenderingInformation) {
+			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
+					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))
+					.reduce((a, b) -> a.createUnion(b));
+			
+			
+			return out.orElseGet(() -> new Rectangle2D.Double(0,0,0,0));
+		} else {
+			throw new Kite9ProcessingException();
+		}
 	}
 
 	public static void checkContentsOverlap(Container d, final Layout l) {
@@ -463,6 +779,16 @@ public class TestingEngine extends TestingHelp {
 		public ElementsMissingException(String arg0, int count) {
 			super(arg0);
 			this.count = count;
+		}
+
+	}
+	
+	public static class LayoutErrorException extends LogicException {
+
+		private static final long serialVersionUID = 1L;
+
+		public LayoutErrorException(String arg0) {
+			super(arg0);
 		}
 
 	}

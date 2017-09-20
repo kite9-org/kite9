@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 
 /**
  * Basic data object class for containing a flow network

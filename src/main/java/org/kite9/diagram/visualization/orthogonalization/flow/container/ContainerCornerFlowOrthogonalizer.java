@@ -3,12 +3,13 @@ package org.kite9.diagram.visualization.orthogonalization.flow.container;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
 import org.kite9.diagram.visualization.orthogonalization.flow.balanced.BalancedFlowOrthogonalizer;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
@@ -23,9 +24,11 @@ import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
  */
 public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalizer {
 
-	public ContainerCornerFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
+
+	public ContainerCornerFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
+		super(va, clc);
 	}
+
 
 	@Override
 	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, Edge before, Edge after,

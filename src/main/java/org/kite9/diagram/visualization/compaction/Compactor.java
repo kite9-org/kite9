@@ -12,5 +12,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 public interface Compactor {
 	
 	public Compaction compactDiagram(Orthogonalization o);
+	
+	void compact(Embedding e, Compaction c);
 
 }

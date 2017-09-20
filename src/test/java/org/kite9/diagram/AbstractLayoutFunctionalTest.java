@@ -43,8 +43,9 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected DiagramKite9XMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
-		transcodePNG(full);
+		//transcodePNG(full);
 		transcodeSVG(full);
+		copyTo(getOutputFile(".svg"), "svg-output");
 		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
@@ -57,10 +58,6 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return !(m.isAnnotationPresent(NotAddressed.class));
 	}
 
-	private String getTestMethod() {
-		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
-	}
-
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
@@ -71,16 +68,22 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected Checks checks() {
 		Checks out = new Checks();
 		out.checkEdgeDirections = checkEdgeDirections();
-		out.checkLabelOcclusion = checkLabelOcclusion();
+		out.checkOcclusion = checkOcclusion();
 		out.checkLayout = checkLayout();
 		out.checkNoContradictions = checkNoContradictions();
 		out.checkNoHops = checkNoHops();
 		out.everythingStraight = checkEverythingStraight();
+		out.checkMidConnection = checkMidConnections();
 		return out;
 	}
 	
-	protected boolean checkLabelOcclusion() {
-		return false;
+	protected boolean checkMidConnections() {
+		return true;
+	}
+
+
+	protected boolean checkOcclusion() {
+		return true;
 	}
 	
 	protected boolean checkDiagramSize() {
@@ -106,24 +109,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected boolean checkNoContradictions() {
 		return true;
 	}
-	
-	static boolean firstRun = true;
-	
-	
-	@Before
-	public void setLogging() {
-		Kite9Log.setLogging(true);
 		
-		// if we are running more than one test, then there's no point in logging.
-		if (firstRun) {
-			firstRun = false;
-		} else {
-			Kite9Log.setLogging(false);
-		}
-	}
-	
-
-	
 	protected DiagramElement getById(final String id, DiagramKite9XMLElement d) {
 		DiagramElementVisitor vis = new DiagramElementVisitor();
 		final DiagramElement[] found = { null };

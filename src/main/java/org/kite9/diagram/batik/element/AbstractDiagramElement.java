@@ -1,7 +1,7 @@
 package org.kite9.diagram.batik.element;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 
 public abstract class AbstractDiagramElement implements DiagramElement {
@@ -32,14 +32,22 @@ public abstract class AbstractDiagramElement implements DiagramElement {
 	public DiagramElement getParent() {
 		return parent;
 	}
+	
+	private int depth = -1;
 
-	/**
-	 * Remove later.
-	 */
 	@Override
-	public Container getContainer() {
-		return (Container) getParent();
+	public int getDepth() {
+		if (depth == -1) {
+			if (this instanceof Diagram) {
+				depth = 0;
+			} else {
+				depth = getParent().getDepth() + 1;
+			}
+		}
+
+		return depth;
 	}
+	
 	
 
 }

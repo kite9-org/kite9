@@ -1,17 +1,24 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
-import org.kite9.diagram.common.elements.AbstractVertex;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import java.util.Set;
+
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.AbstractVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 
 public class EdgeVertex {
 
 	private static Vertex NULL_VERTEX =  new AbstractVertex("NULL") {
-		
+
 		@Override
-		public DiagramElement getOriginalUnderlying() {
+		public Set<DiagramElement> getDiagramElements() {
 			return null;
+		}
+
+		@Override
+		public boolean isPartOf(DiagramElement de) {
+			return false;
 		}
 	};
 	

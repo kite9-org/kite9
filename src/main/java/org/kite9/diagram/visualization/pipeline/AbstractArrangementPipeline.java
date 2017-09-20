@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.pipeline;
 
-import org.kite9.diagram.common.algorithms.so.LoggingOptimisationStep;
-import org.kite9.diagram.common.algorithms.so.OptimisationStep;
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
@@ -10,21 +8,23 @@ import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.PluggableCompactor;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.OptimisablePositionerCompactionStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.EdgeSeparationOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.LabelInsertionOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.LeafElementSizeOptimisationStep;
-import org.kite9.diagram.visualization.compaction.position.optstep.WidthOptimisationStep;
-import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer;
-import org.kite9.diagram.visualization.compaction.route.ConnectionRouteCompactionStep;
-import org.kite9.diagram.visualization.compaction.route.EdgeRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
+import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
+import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
+import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
+import org.kite9.diagram.visualization.compaction.slideable.CenteringAlignmentCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
+import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraphOrthBuilder;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.container.ContainerCornerFlowOrthogonalizer;
-import org.kite9.diagram.visualization.orthogonalization.vertices.ContainerCornerVertexArranger;
-import org.kite9.diagram.visualization.orthogonalization.vertices.VertexArrangementOrthogonalizationDecorator;
+import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContentsArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
@@ -71,36 +71,36 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public Orthogonalizer createOrthogonalizer() {
-		Orthogonalizer basic = new ContainerCornerFlowOrthogonalizer(new MappedFlowGraphOrthBuilder(getDisplayer()));
-		orthogonalizer = new VertexArrangementOrthogonalizationDecorator(basic, getDisplayer(),
- //				new FanInVertexArranger(getDisplayer()));
-				
-				new ContainerCornerVertexArranger(getDisplayer(), getElementMapper()));
+		ContainerContentsArranger va = new ContainerContentsArranger(getElementMapper());
+		EdgeConverter clc = va.getContainerLabelConverter();
+		orthogonalizer = new ContainerCornerFlowOrthogonalizer(
+						va, clc);
 		return orthogonalizer;
-	}
+	} 
 
 	protected Compaction compactOrthogonalization(Orthogonalization o) {
 		return createCompactor().compactDiagram(o);
 	}
 
 	public Compactor createCompactor() {
+		CompleteDisplayer cd = getDisplayer();
 		CompactionStep[] steps = new CompactionStep[] {
-				new PrioritizingRectangularizer(getDisplayer()),
-				new SubGraphInsertionCompactionStep(getDisplayer()),
-				new OptimisablePositionerCompactionStep(new OptimisationStep[] { 
-						new EdgeSeparationOptimisationStep(getDisplayer()),
-						new LabelInsertionOptimisationStep(getDisplayer()), 
-						new WidthOptimisationStep(),
-						new LeafElementSizeOptimisationStep(),
-						//new LinkLengthReductionOptimisationStep(),
-//						new EdgeAlignmentOptimisationStep(),
-//						new SlackCenteringOptimisationStep(),
-						new LoggingOptimisationStep(),
-					}
-
-				), 
-				new EdgeRouteCompactionStep(), 
+				new HierarchicalCompactionStep(cd),
+				new InnerFaceWithEmbeddingRectangularizer(cd),
+				new SubGraphInsertionCompactionStep(cd),
+				new NonEmbeddedFaceRectangularizer(cd),
+				new SubGraphInsertionCompactionStep(cd),
+//				new LoggingOptimisationStep(cd),
+				new MinimizeCompactionStep(getDisplayer()),
+				new WidthCompactionStep(cd), 
+//				new LoggingOptimisationStep(cd),
+				new MaximizeCompactionStep(cd),
+//				new LoggingOptimisationStep(cd),
+				new LeftRightAlignmentCompactionStep(cd),
+				new CenteringAlignmentCompactionStep(cd),
 				new ConnectionRouteCompactionStep(),
+				new RectangularPositionCompactionStep(cd),
+				new LoggingOptimisationStep(cd)
 				};
 
 		compactor = new PluggableCompactor(steps);

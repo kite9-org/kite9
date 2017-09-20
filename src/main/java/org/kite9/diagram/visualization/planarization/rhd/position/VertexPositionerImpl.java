@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.FracMapper;
 import org.kite9.diagram.common.elements.grid.FracMapperImpl;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
@@ -81,6 +81,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				Bounds xBounds = getSideBounds(cx, tox, toHasCornerVertices, borderTrimAreaX, cVertexBounds, gap);
 				
 				setSideVertexRoutingInfo(c, d, out, xBounds, yBounds, cvNew);
+				log.send("Added side vertex: "+cvNew);
 				break;
 			case LEFT:
 			case RIGHT:
@@ -101,6 +102,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 				Bounds yBounds2 = getSideBounds(cy, toy, toHasCornerVertices, borderTrimAreaY, cVertexBounds2, gap2);
 				
 				setSideVertexRoutingInfo(c, d, out, xBounds2, yBounds2, cvNew);
+				log.send("Added side vertex: "+cvNew);
 			}
 		}
 	}
@@ -127,6 +129,12 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			cvNew.setRoutingInfo(rh.createRouting(xNew, yNew));
 			cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c);
 			out.add(cvNew);
+		} else {
+			// extend the existing vertex
+			RoutingInfo existing = cvNew.getRoutingInfo();
+			RoutingInfo ri = rh.createRouting(xNew, yNew);
+			RoutingInfo merged= rh.increaseBounds(existing, ri);
+			cvNew.setRoutingInfo(merged);
 		}
 	}
 
@@ -158,7 +166,8 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			bounds = rh.getPlacedPosition(container);
 			bx = rh.getBoundsOf(bounds, true);
 			by = rh.getBoundsOf(bounds, false);		
-			final OPair<Map<BigFraction, Double>> fracMaps = fracMapper.getFracMapForGrid(c, rh, ((SubGridCornerVertices) cvs).getBaseGrid(), bounds);
+			final OPair<Map<BigFraction, Double>> fracMaps = fracMapper.
+					getFracMapForGrid(c, rh, ((SubGridCornerVertices) cvs).getBaseGrid(), bounds);
 			fracMapX = fracMaps.getA();
 			fracMapY = fracMaps.getB();
 		} else {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Node;
 
 

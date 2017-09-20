@@ -182,9 +182,7 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 		generate("no_point_arrow.xml");
 	}
 	
-	@Test
-	@Ignore
-	// not addressed
+	@Test(expected=ElementsMissingException.class)
 	public void test_38_32_InitBug() throws Exception {
 		generate("init_bug.xml");
 	}
@@ -210,13 +208,15 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 		generate("key_error.xml");
 	}
 	
-	
 	@Override
 	protected boolean checkNoHops() {
 		return false;
 	}
-	
-	
+
+	@Override
+	protected boolean checkMidConnections() {
+		return false;
+	}
 
 	@Override
 	protected boolean checkNoContradictions() {

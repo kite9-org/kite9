@@ -3,12 +3,22 @@ package org.kite9.diagram.visualization.compaction;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.common.elements.PositionAction;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Rectangle;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 
 public interface Compaction {
+
+	public SegmentSlackOptimisation getHorizontalSegmentSlackOptimisation();
+
+	public SegmentSlackOptimisation getVerticalSegmentSlackOptimisation();
+	
+	public SegmentSlackOptimisation getSlackOptimisation(boolean horizontal);
 
 	public abstract Orthogonalization getOrthogonalization();
 
@@ -20,17 +30,22 @@ public interface Compaction {
 
 	public Map<Vertex, Segment> getVerticalVertexSegmentMap();
 	
+	public static final Rectangle<Slideable<Segment>> DONE = new Rectangle<>(null, null, null, null);
+	
 	/**
 	 * For an internal face, returns the empty rectangle in the centre of the space that can
 	 * be used to insert subface contents. 
-	 * An external face returns the segments most extreme in each direction
-	 * @return 4 item array of top, right, bottom, left segments.
+	 * 
+	 * Rectangle is in top, right, bottom, left order.
 	 */
-	public Segment[] getFaceSpace(DartFace df);
+	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df);
 	
-	public void setFaceExtremeSections(DartFace df, Segment[] border);
+	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
 	
-	public Vertex createCompactionVertex(Segment s1, Segment s2);
+	public void setFaceSpaceToDone(DartFace df);
+	
+	public Segment getSegmentForDart(Dart d);
+	
+	public Embedding getTopEmbedding();
 
-	public Segment newSegment(PositionAction direction);
 }

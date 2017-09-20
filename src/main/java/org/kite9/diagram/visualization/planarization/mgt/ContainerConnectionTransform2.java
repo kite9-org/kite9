@@ -4,14 +4,15 @@ package org.kite9.diagram.visualization.planarization.mgt;
 import java.util.List;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.ContainerSideVertex;
+import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.planarization.Face;
@@ -61,29 +62,29 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 					number = splitEdgesGoing(edgeDirectionToSplit, startContainerEdgeDirection, true, (MultiCornerVertex) v, pln, number);
 				}
 				
-			} else if ((v instanceof MultiCornerVertex) && (v.getEdgeCount() > 3)) {
+			} else if ((v instanceof MultiCornerVertex) && (v.getEdgeCount() >= 3)) {
 				MultiCornerVertex cv = (MultiCornerVertex) v;
 				boolean ymin = MultiCornerVertex.isMin(cv.getYOrdinal());
 				boolean xmin = MultiCornerVertex.isMin(cv.getXOrdinal());
 				boolean ymax = MultiCornerVertex.isMax(cv.getYOrdinal());
 				boolean xmax = MultiCornerVertex.isMax(cv.getXOrdinal());
 								
-				if (MultiCornerVertex.isMin(cv.getXOrdinal()) && (cornerOrd(cv.getYOrdinal()))) {
+				if (xmin && (cornerOrd(cv.getYOrdinal()))) {
 					number = splitEdgesGoing(Direction.LEFT, ymin ? Direction.DOWN : Direction.UP, 
 							ymin, cv, pln, number);
 				}
 				
-				if ((cv.getXOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getYOrdinal()))) {
+				if (xmax && (cornerOrd(cv.getYOrdinal()))) {
 					number = splitEdgesGoing(Direction.RIGHT, ymin ? Direction.DOWN : Direction.UP, 
 							ymax, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == BigFraction.ZERO) && (cornerOrd(cv.getXOrdinal()))) {
+				if (ymin && (cornerOrd(cv.getXOrdinal()))) {
 					number = splitEdgesGoing(Direction.UP, xmin ? Direction.RIGHT : Direction.LEFT, 
 							xmax, cv, pln, number);
 				}
 				
-				if ((cv.getYOrdinal() == BigFraction.ONE) && (cornerOrd(cv.getXOrdinal()))) {
+				if (ymax && (cornerOrd(cv.getXOrdinal()))) {
 					number = splitEdgesGoing(Direction.DOWN, xmin ? Direction.RIGHT : Direction.LEFT, 
 							xmin, cv, pln, number);
 				}
@@ -122,33 +123,33 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		log.send("Fixing edges around vertex: "+v+" going "+edgeDirectionToSplit);
 
 		VertexEdgeOrdering eo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(v);
-		List<Edge> originalOrder = eo.getEdgesAsList();
+		List<PlanarizationEdge> originalOrder = eo.getEdgesAsList();
 		
 		int startPoint = 0;
 		int edgesRequiringSplit = 0;
 		int done = 0;
 		for (int i = 0; done < originalOrder.size(); i=i+(turnClockwise ? 1 : -1)) {
 			done++;
-			Edge edge = getRot(originalOrder, i);
-			if ((edge.getOriginalUnderlying() == v.getOriginalUnderlying()) && (getUsedEdgeDirection(v, edge) == startContainerEdgeDirection)) {
+			PlanarizationEdge edge = getRot(originalOrder, i);
+			if ((edge instanceof BorderEdge) && (getUsedEdgeDirection(v, edge) == startContainerEdgeDirection)) {
 				startPoint = i;
 			} else if (getUsedEdgeDirection(v, edge) == edgeDirectionToSplit) {
 				edgesRequiringSplit++;
 			}
 		}
 		
-		Edge receivingEdge = getRot(originalOrder, startPoint);
+		PlanarizationEdge receivingEdge = getRot(originalOrder, startPoint);
 		
 		if (edgesRequiringSplit > 0) {
 			int edgesDoneSplit = 0;
 			for (int i = startPoint +(turnClockwise ? 1 : -1); edgesDoneSplit < edgesRequiringSplit; i=i+(turnClockwise ? 1 : -1)) {
-				Edge edgeMoving = getRot(originalOrder, i);
+				PlanarizationEdge edgeMoving = getRot(originalOrder, i);
 				if (getUsedEdgeDirection(v, edgeMoving) == edgeDirectionToSplit) { 
 					edgesDoneSplit ++;
 				}
 
-				receivingEdge = splitEdgeFromVertex(v.getOriginalUnderlying().getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
-					v.getOriginalUnderlying(), v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
+				receivingEdge = splitEdgeFromVertex(v.getID()+"-"+edgeDirectionToSplit+edgesDoneSplit+n++, 
+					v, pln, receivingEdge, edgeMoving, getRot(originalOrder, i+(turnClockwise ? 1 : -1)), turnClockwise);
 				
 			}
 			
@@ -170,16 +171,21 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		return edge.getDrawDirectionFrom(v);
 	}
 
-	private Edge getRot(List<Edge> originalOrder, int i) {
+	private PlanarizationEdge getRot(List<PlanarizationEdge> originalOrder, int i) {
 		return originalOrder.get((i + originalOrder.size() + originalOrder.size()) % originalOrder.size());
 	}
 
 	/**
 	 * Splits the receivingEdge with a new vertex, and moves "mover" onto it.  "after" is the edge following mover in the current ordering
 	 */
-	private Edge splitEdgeFromVertex(String vertexName, DiagramElement c, Vertex v, Planarization pln, Edge receivingEdge, Edge mover, Edge after, boolean clockwise) {
+	private PlanarizationEdge splitEdgeFromVertex(String vertexName, Vertex v, Planarization pln, PlanarizationEdge receivingEdge, PlanarizationEdge mover, PlanarizationEdge after, boolean clockwise) {
 		// ok, splitting time - create a new vertex for the 'next' edge
-		Vertex newVertex = t.breakEdge((PlanarizationEdge) receivingEdge, pln, vertexName, c);
+		
+		MultiCornerVertex orig = (MultiCornerVertex) v;
+		
+		ContainerSideVertex newVertex = new ContainerSideVertex(vertexName);
+		orig.getAnchors().stream().forEach(a -> newVertex.addUnderlying(a.getDe()));
+		t.breakEdge((PlanarizationEdge) receivingEdge, pln, newVertex);
 
 		// need to move next to the new vertex
 		if (mover.getFrom() == v) {
@@ -195,13 +201,13 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		}
 
 		// fix the faces
-		Edge newArc = getNewArc(newVertex, v);
-		Edge oldArc = getOldArc(newVertex, newArc);
+		PlanarizationEdge newArc = getNewArc(newVertex, v);
+		PlanarizationEdge oldArc = getOldArc(newVertex, newArc);
 		List<Face> faces = pln.getEdgeFaceMap().get(mover);
 		Face onFace = faces.get(0).contains(newArc) ? faces.get(0) : faces.get(1);
 		Face offFace = (!faces.get(0).contains(newArc)) ? faces.get(0) : faces.get(1);
-		List<Edge> onList = onFace.getEdgesCopy();
-		List<Edge> offList = (offFace!=onFace) ? offFace.getEdgesCopy() : onList;
+		List<PlanarizationEdge> onList = onFace.getEdgesCopy();
+		List<PlanarizationEdge> offList = (offFace!=onFace) ? offFace.getEdgesCopy() : onList;
 
 		onList.remove(newArc);
 		insertBetween(offList, newArc, newVertex, mover, after, v, clockwise);
@@ -231,7 +237,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		newOrder.replace(receivingEdge, newArc.meets(v) ? newArc : oldArc);
 
 		// fix vertex edge ordering for newVertex
-		List<Edge> otherEndOrder = pln.getEdgeOrderings().get(newVertex).getEdgesAsList();
+		List<PlanarizationEdge> otherEndOrder = pln.getEdgeOrderings().get(newVertex).getEdgesAsList();
 		int oldArcI = otherEndOrder.indexOf(clockwise ? oldArc : newArc);
 		if (oldArcI==-1) {
 			throw new LogicException("Can't find old arc "+oldArc);
@@ -246,7 +252,7 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		return receivingEdge;
 	}
 
-	private void insertBetween(List<Edge> offFace, Edge newArc, Vertex newVertex, Edge incoming, Edge outgoing, Vertex v, boolean clockwise) {
+	private void insertBetween(List<PlanarizationEdge> offFace, PlanarizationEdge newArc, Vertex newVertex, PlanarizationEdge incoming, PlanarizationEdge outgoing, Vertex v, boolean clockwise) {
 		for (int i = 0; i < offFace.size(); i++) {
 			Edge before = offFace.get((i + offFace.size()) %offFace.size());
 			int afteri = (i + offFace.size() + (clockwise ? -1: 1)) % offFace.size();
@@ -264,20 +270,20 @@ public class ContainerConnectionTransform2 implements PlanarizationTransform, Lo
 		throw new LogicException("Couldn't find point to insert in " + offFace);
 	}
 
-	private Edge getNewArc(Vertex newVertex, Vertex v) {
+	private PlanarizationEdge getNewArc(Vertex newVertex, Vertex v) {
 		for (Edge e : newVertex.getEdges()) {
 			if (e.meets(v)) {
-				return e;
+				return (PlanarizationEdge) e;
 			}
 		}
 
 		throw new LogicException("Could not find edge meeting " + v);
 	}
 
-	private Edge getOldArc(Vertex newVertex, Edge newArc) {
+	private PlanarizationEdge getOldArc(Vertex newVertex, Edge newArc) {
 		for (Edge e : newVertex.getEdges()) {
 			if (e != newArc) {
-				return e;
+				return (PlanarizationEdge) e;
 			}
 		}
 

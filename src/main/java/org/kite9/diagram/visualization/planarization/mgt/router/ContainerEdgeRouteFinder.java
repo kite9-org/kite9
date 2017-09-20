@@ -1,15 +1,17 @@
 package org.kite9.diagram.visualization.planarization.mgt.router;
 
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 
-	public ContainerEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, Edge e) {
+	public ContainerEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BorderEdge e) {
 		super(p, rh, e.getTo().getRoutingInfo(), getExpensiveAxis(e), getBoundedAxis(e), e);
 		this.to = e.getTo();
 		this.entryDirection = e.getDrawDirection();
@@ -98,7 +100,7 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 	}
 
 	@Override
-	protected boolean canRouteToVertex(Vertex from, Edge outsideOf,
+	protected boolean canRouteToVertex(Vertex from, PlanarizationEdge outsideOf,
 			boolean above, Going g, boolean arriving) {
 		return true;
 	}

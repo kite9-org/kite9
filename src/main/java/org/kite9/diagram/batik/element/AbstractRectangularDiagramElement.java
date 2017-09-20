@@ -5,21 +5,26 @@ import java.util.List;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.GridContainerPosition;
+import org.kite9.diagram.model.style.IntegerRange;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
-import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Element;
 
 public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement implements Rectangular {
+	
+	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {};
 	
 	private RectangleRenderingInformation ri;
 	private Layout layout;
@@ -55,14 +60,13 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	protected void initialize() {
 		super.initialize();
 		initElement(theElement);
+		initContainerPosition();
 	}
 
 	private void initElement(Kite9XMLElement theElement) {
 		for (Kite9XMLElement xmlElement : theElement) {
 			DiagramElement de = xmlElement.getDiagramElement();			
-			if (de instanceof Label) {
-				addLabelReference((Label) de);
-			} else if (de instanceof Connection) {
+			if (de instanceof Connection) {
 				addConnectionReference((Connection) de);
 			} else if (de != null) { 
 				contents.add(de);
@@ -71,13 +75,9 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 			}
 		}
 		
-		initLayout(theElement);
-		initSizing(theElement);
+		initLayout();
+		initSizing();
 	}
-
-	protected void addLabelReference(Label de) {
-	}
-	
 
 	protected void addConnectionReference(Connection de) {
 		((ConnectedContainerImpl) getDiagram()).addConnectionReference(de);
@@ -88,14 +88,14 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return layout;
 	}
 	
-	public void initLayout(Kite9XMLElement theElement) {
+	public void initLayout() {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY);
 		if (ev != null) {
 			layout = (Layout) ev.getTheValue();
 		}
-	}
+	} 
 	
-	public void initSizing(Kite9XMLElement theElement) {
+	public void initSizing() {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
 		this.sizing = (DiagramElementSizing) ev.getTheValue();
 	}
@@ -106,17 +106,43 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		return sizing;
 	}
 	
+	private void initContainerPosition() {
+		if (containerPosition == null) {
+			if (getContainer() != null) {
+				if (getContainer().getLayout() == Layout.GRID) {
+					IntegerRange x = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
+					IntegerRange y = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+					containerPosition = new GridContainerPosition(x, y);
+				}
+			}
+			
+			
+			if (containerPosition == null) {
+				containerPosition = NO_CONTAINER_POSITION;
+			}
+		}
+	}
+
+	private ContainerPosition containerPosition = null;
+	
+
 	@Override
-	public double getMargin(Direction d) {
+	public ContainerPosition getContainerPosition() {
 		ensureInitialized();
-		return margin[d.ordinal()];
+		return containerPosition;
+	}
+	
+	@Override
+	public Container getContainer() {
+		return (Container) getParent();
 	}
 
 	@Override
-	public double getPadding(Direction d) {
-		ensureInitialized();
-		return padding[d.ordinal()];
+	protected void initializeChildXMLElement(Element child) {
+		if (getSizing() != DiagramElementSizing.FIXED) {
+			processSizesUsingTemplater(child, getRenderingInformation());
+		}
 	}
 
-
+	
 }

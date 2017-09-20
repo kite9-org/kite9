@@ -112,7 +112,7 @@
 			<symbols></symbols>
 		</label>
 	</context>
-	<label xsi:type="key">
+	<label id="key" xsi:type="key">
 		<boldText>Welcome to Kite9!</boldText>
 		<bodyText>This part of the layout is called the key, and it annotates
 			the diagram. Double click it to set it's properties</bodyText>

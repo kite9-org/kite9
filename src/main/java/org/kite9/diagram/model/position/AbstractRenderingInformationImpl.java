@@ -10,7 +10,6 @@ public abstract class AbstractRenderingInformationImpl implements RenderingInfor
 	private boolean rendered = true;
 	private Dimension2D position;
 	private Dimension2D size;
-	private Dimension2D internalSize;
 	
 	public List<Element> getDisplayData() {
 		return displayData;
@@ -43,13 +42,4 @@ public abstract class AbstractRenderingInformationImpl implements RenderingInfor
 	public void setSize(Dimension2D size) {
 		this.size = size;
 	}
-	
-	public Dimension2D getInternalSize() {
-		return this.internalSize;
-	}
-
-	public void setInternalSize(Dimension2D size) {
-		this.internalSize = size;
-	}
-
 }

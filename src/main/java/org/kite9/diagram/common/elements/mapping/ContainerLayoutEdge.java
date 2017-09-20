@@ -1,8 +1,12 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import java.util.Collections;
+import java.util.Map;
+
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -15,21 +19,22 @@ import org.kite9.diagram.model.position.Direction;
  * @author robmoffat
  *
  */
-public class ContainerLayoutEdge extends AbstractPlanarizationEdge {
+public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
 	
-	GeneratedLayoutElement underlying;
+	final GeneratedLayoutConnection underlying;
+	final Connected fromUnderlying;
+	final Connected toUnderlying;
 	
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
-		super(from, to, null, null, null, null, null);
-		this.drawDirection = d;
-		this.underlying =  new GeneratedLayoutElement((Connected) from.getOriginalUnderlying(), (Connected) to.getOriginalUnderlying(), d);
+		this(from, to, d, true, new GeneratedLayoutConnection(fromElement, toElement, d), fromElement, toElement);
 	}
 	
-	private ContainerLayoutEdge(Vertex from, Vertex toIntroduce, Direction drawDirection, boolean reversed, GeneratedLayoutElement underlying) {
-		super(from, toIntroduce, null, null, null, null, null);
-		this.reversed =true;
+	private ContainerLayoutEdge(Vertex from, Vertex to, Direction drawDirection, boolean straight, GeneratedLayoutConnection underlying, Connected fromC, Connected toC) {
+		super(from, to, drawDirection);
+		this.straight = straight;
 		this.underlying = underlying;
-		this.drawDirection = drawDirection;
+		this.fromUnderlying = fromC;
+		this.toUnderlying = toC;
 	}
 
 	public DiagramElement getOriginalUnderlying() {
@@ -58,19 +63,27 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new ContainerLayoutEdge(getFrom(), toIntroduce, getDrawDirection(), isReversed(), underlying);
-		out[1] = new ContainerLayoutEdge(toIntroduce, getTo(),  getDrawDirection(), isReversed(), underlying);
+		out[0] = new ContainerLayoutEdge(getFrom(), toIntroduce, getDrawDirection(), straight, underlying, fromUnderlying, null);
+		out[1] = new ContainerLayoutEdge(toIntroduce, getTo(),  getDrawDirection(), straight, underlying, null, toUnderlying);
 
 		return out;
 	}
-
+	
 	@Override
-	public boolean isReversed() {
-		return false;
+	public boolean isPartOf(DiagramElement de) {
+		return getOriginalUnderlying() == de;
 	}
 
 	@Override
-	public int getLengthCost() {
-		return 0;
+	public Map<DiagramElement, Direction> getDiagramElements() {
+		return Collections.singletonMap(getOriginalUnderlying(), null);
+	}
+	
+	public Connected getFromConnected() {
+		return fromUnderlying;
+	}
+	
+	public Connected getToConnected() {
+		return toUnderlying;
 	}
 }

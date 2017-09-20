@@ -12,13 +12,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.StateStorage;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
@@ -155,30 +154,6 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 		NudgeItem out = i.next();
 		i.remove();
 		return out;
-	}
-	
-	protected void undivideNodes(Collection<SubdivisionNode> subdivisions, List<Pair<SubdivisionNode>> splits, int constraintNo) {
-		for (Pair<SubdivisionNode> pair : splits) {
-			SubdivisionNode a = pair.getA();
-			SubdivisionNode b = pair.getB();
-			log.send(log.go() ? null : "Undividing: " + a + " with " + b);
-			a.merge(b);
-			subdivisions.remove(b);
-			log.send(log.go() ? null : "Merged node: " + a);
-		}
-		
-		String aName = "("+constraintNo+"A)";
-		String bName = "("+constraintNo+"B)";
-		
-		
-		for (SubdivisionNode sn : subdivisions) {
-			String subdivision = sn.getSubdivision();
-			if (subdivision.endsWith(aName)) {
-				sn.setSubdivision(subdivision.substring(0, subdivision.length() - aName.length()));
-			} else if (subdivision.endsWith(bName)) {
-				sn.setSubdivision(subdivision.substring(0, subdivision.length() - bName.length()));
-			}
-		}
 	}
 
 	/**

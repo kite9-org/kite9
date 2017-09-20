@@ -13,10 +13,6 @@ public class DetHashSet<K extends Deterministic> extends HashSet<K>{
 		super(c);
 	}
 
-	public DetHashSet(int initialCapacity, float loadFactor) {
-		super(initialCapacity, loadFactor);
-	}
-
 	public DetHashSet(int initialCapacity) {
 		super(initialCapacity);
 	}

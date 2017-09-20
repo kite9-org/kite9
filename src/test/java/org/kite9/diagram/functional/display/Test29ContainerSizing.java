@@ -1,9 +1,7 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
-
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -14,10 +12,10 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
-public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
+public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 	@Test
-	public void test_29_1_MidSetEdge() throws IOException {
+	public void test_29_1_MidSetEdge() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
 		Glyph g2 = new Glyph("g2", "", "another long label", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
@@ -36,15 +34,15 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_2_ContainerSizes() throws IOException {
+	public void test_29_2_ContainerSizes() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
 		Glyph g2 = new Glyph("g2", "", "another label", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
 		Glyph g4 = new Glyph("g4", "", "andon", null, null);
-		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
-		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
-		Context c3 = new Context("c3", HelpMethods.listOf(g3), true, new TextLine("c3"), null);
-		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4"), null);
+		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1l", "c1"), null);
+		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2l", "c2"), null);
+		Context c3 = new Context("c3", HelpMethods.listOf(g3), true, new TextLine("c3l", "c3"), null);
+		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4l", "c4"), null);
 		
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
@@ -56,18 +54,18 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_3_LikeASequence() throws IOException {
-		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
-		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
-		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
-		Glyph g4 = new Glyph("g4", "", "method 4", null, null);
-		Glyph g5 = new Glyph("g5", "", "method 5", null, null);
+	public void test_29_3_LikeASequence() throws Exception {
+		Glyph g1 = new Glyph("g1", "", "method method method 1", null, null);
+		Glyph g2 = new Glyph("g2", "", "method method method 2", null, null);
+		Glyph g3 = new Glyph("g3", "", "method method method 3", null, null);
+		Glyph g4 = new Glyph("g4", "", "method method method 4", null, null);
+		Glyph g5 = new Glyph("g5", "", "method method method 5", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
 		Context c3 = new Context("c3", HelpMethods.listOf(g3, g5), true, new TextLine("c3"), null);
 		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLine("c4"), null);
 		
-		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g2, null, null, null, null, Direction.RIGHT); 
 		new Link(g2, g3, null, null, null, null, Direction.RIGHT);
 		new Link(g2, g5, null, null, null, null, Direction.RIGHT);
 		
@@ -84,10 +82,10 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_4_CornersInContainers() throws IOException {
+	public void test_29_4_CornersInContainers() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
 		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
-		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
+		Glyph g3 = new Glyph("g3", "", "method method method  3", null, null);
 		Glyph g4 = new Glyph("g4", "", "method 4", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLine("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLine("c2"), null);
@@ -110,7 +108,7 @@ public class Test29ContainerSizing extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_29_5_EmptyDiagram() throws IOException {
+	public void test_29_5_EmptyDiagram() throws Exception {
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement();
 		renderDiagram(d1);
 	}

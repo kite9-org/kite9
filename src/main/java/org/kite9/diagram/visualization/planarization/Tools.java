@@ -7,16 +7,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.EdgeCrossingVertex;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.visualization.planarization.ordering.BasicVertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -45,7 +48,7 @@ public class Tools implements Logable {
 	 * This inserts the new EdgeCrossingVertex into an edge to break it in two
 	 * @param underlying if provided, it is assumed we are breaking the container boundary.
 	 */
-	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, String name, DiagramElement underlying) {
+	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, Vertex split) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
 		Vertex from = e.getFrom();
 		Vertex to = e.getTo();
@@ -55,9 +58,8 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Original edge order around " + from + " = " + fromEdgeOrdering);
 		log.send(log.go() ? null : "Original edge order around " + to + " = " + toEdgeOrdering);
 
-		// split the existing edge to create two edges
-		Vertex split = new EdgeCrossingVertex(name, underlying);
-		Edge[] newEdges = splitEdge(e, split, pln);
+		// split the existing edge to create two edges		
+		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces
 		pln.getEdgeFaceMap().remove(e);
@@ -69,7 +71,7 @@ public class Tools implements Logable {
 
 		// add to the edge ordering map. since there are only 2 edges, order not
 		// important yet.
-		List<Edge> edges = new ArrayList<Edge>();
+		List<PlanarizationEdge> edges = new ArrayList<PlanarizationEdge>();
 		edges.add(newEdges[0]);
 		edges.add(newEdges[1]);
 		BasicVertexEdgeOrdering splitEdgeOrdering = new BasicVertexEdgeOrdering(edges, split);
@@ -114,8 +116,8 @@ public class Tools implements Logable {
 	 * 
 	 * @param part
 	 */
-	private void fixEdgeFaceMap(Planarization pln, Face f, Iterable<Edge> movedFace, Face f2, Edge part) {
-		for (Edge edge : movedFace) {
+	private void fixEdgeFaceMap(Planarization pln, Face f, Iterable<PlanarizationEdge> movedFace, Face f2, PlanarizationEdge part) {
+		for (PlanarizationEdge edge : movedFace) {
 			if (edge != part) {
 				List<Face> faces = pln.getEdgeFaceMap().get(edge);
 				faces.remove(f);
@@ -164,7 +166,7 @@ public class Tools implements Logable {
 	 * vertices within a face. This creates a new outer face containing those
 	 * vertices.
 	 */
-	private void splitFaces(Edge toRemove, Planarization pln) {
+	private void splitFaces(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 		Face original = faces.get(0);
 		Face newFace = original.split(toRemove);
@@ -193,6 +195,8 @@ public class Tools implements Logable {
 		pln.getVertexFaceMap().get(from).add(newFace);
 		pln.getVertexFaceMap().get(to).add(newFace);
 		
+		newFace.setPartOf(original.getPartOf());
+		
 		log.send(log.go() ? null : "Removed" + toRemove + " splitting into " + original.getId() + " and " + newFace.getId());
 		log.send(log.go() ? null : "Original:" + original);
 		log.send(log.go() ? null : "NewFace:" + newFace);
@@ -201,6 +205,7 @@ public class Tools implements Logable {
 		fixVertexFaceMap(pln, original, newFace.cornerIterator(), false);
 		fixVertexFaceMap(pln, newFace, original.cornerIterator(), false);
 		fixVertexFaceMap(pln, newFace, newFace.cornerIterator(), false);
+		
 
 	}
 
@@ -208,17 +213,19 @@ public class Tools implements Logable {
 	 * Removes the edge from the planarization, preserving the new state of the
 	 * remaining faces, whatever that may be.
 	 */
-	public void removeEdge(Edge toRemove, Planarization pln) {
+	public void removeEdge(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 		
 		Vertex from = toRemove.getFrom();
 		Vertex to = toRemove.getTo();
 		
-		DiagramElement underlying = toRemove.getOriginalUnderlying();
-		if (underlying != null) {
-			EdgeMapping el = pln.getEdgeMappings().get(underlying);
-			el.remove(toRemove);
-			log.send("Route for "+underlying+" is now ",el.getEdges());
+		if (toRemove instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge) toRemove).getOriginalUnderlying();
+			if (underlying != null) {
+				EdgeMapping el = pln.getEdgeMappings().get(underlying);
+				el.remove(toRemove);
+				log.send("Route for "+underlying+" is now ",el.getEdges());
+			}
 		}
 		
 		if (faces.get(0) == faces.get(1)) {
@@ -234,11 +241,11 @@ public class Tools implements Logable {
 	/**
 	 * Merges 2 faces together by removing toRemove.
 	 */
-	private void mergeFace(Edge toRemove, Planarization pln) {
+	private void mergeFace(PlanarizationEdge toRemove, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(toRemove);
 
 		List<Vertex> newCorners = new ArrayList<Vertex>();
-		List<Edge> newBoundary = new ArrayList<Edge>();
+		List<PlanarizationEdge> newBoundary = new ArrayList<PlanarizationEdge>();
 
 		int face = 0;
 		// this is the number of vertices that should be in the merged face
@@ -248,7 +255,7 @@ public class Tools implements Logable {
 		do {
 			Face currentFace = faces.get(face);
 			Vertex currentVertex = currentFace.getCorner(vertexNo);
-			Edge boundEdge = currentFace.getBoundary(vertexNo);
+			PlanarizationEdge boundEdge = currentFace.getBoundary(vertexNo);
 			if (boundEdge != toRemove) {
 				newCorners.add(currentVertex);
 				newBoundary.add(boundEdge);
@@ -262,10 +269,19 @@ public class Tools implements Logable {
 		} while (newCorners.size() < vertexCount);
 
 		Face a = faces.get(0);
-		Face b = faces.get(1);
-
+		Face b = faces.get(1);	// removing this one
+		
 		a.reset(newBoundary, newCorners);
 		pln.getFaces().remove(b);
+		
+		if (a.getPartOf() == null) {
+			a.setPartOf(b.getPartOf());
+		} else {
+			if ((b.getPartOf() != null) && ((b.getPartOf() != a.getPartOf()))) { 
+				throw new Kite9ProcessingException("PartOf set wrongly");
+			}
+		} 
+
 
 		// move all references from b to a
 		fixEdgeFaceMap(pln, b, b.edgeIterator(), a, null);
@@ -289,7 +305,7 @@ public class Tools implements Logable {
 
 		// just tidying up, shouldn't be needed
 		pln.removeEdge(toRemove);
-		log.send(log.go() ? null : "Removed" + toRemove + " merging " + a.getId() + " and " + b.getId() + " gives " + a.getId()
+		log.send(log.go() ? null : "Removed " + toRemove + " merging " + a.getId() + " and " + b.getId() + " gives " + a.getId()
 				+ " with " + a.cornerIterator() + " \n " + a.edgeIterator());
 		
 		// tidy up face hierarchy
@@ -311,6 +327,7 @@ public class Tools implements Logable {
 		Edge a = it.next();
 		Edge b = it.next();
 		Vertex farB = b.otherEnd(toGo);
+		
 
 		log.send(log.go() ? null : "Removing: " + toGo + "involving " + a + " and " + b);
 
@@ -319,11 +336,23 @@ public class Tools implements Logable {
 			log.send(log.go() ? null : "Cannot introduce loopback, finishing");
 			return;
 		}
+		
+		if (a instanceof ConnectionEdge) {
+			Connected otherEnd = b.getFrom() == toGo ? ((ConnectionEdge) b).getToConnected() : ((ConnectionEdge) b).getFromConnected();
+			
+			if (a.getFrom() == toGo) {
+				((ConnectionEdge) a).setFromConnected(otherEnd);
+			} else if (a.getTo() == toGo) {
+				((ConnectionEdge) a).setToConnected(otherEnd);
+			} else {
+				throw new Kite9ProcessingException();
+			}
+		}
 
 		if (a.getFrom() == toGo) {
-			a.setFrom(farB);
+			((PlanarizationEdge) a).setFrom(farB);
 		} else {
-			a.setTo(farB);
+			((PlanarizationEdge) a).setTo(farB);
 		}
 
 		toGo.removeEdge(a);
@@ -345,7 +374,7 @@ public class Tools implements Logable {
 			}
 
 			// make sure we are always keeping the correct edge
-			f.replaceEdge(b, a);
+			f.replaceEdge((PlanarizationEdge) b, (PlanarizationEdge) a);
 
 			f.checkFaceIntegrity();
 		}
@@ -355,19 +384,18 @@ public class Tools implements Logable {
 		pln.getEdgeOrderings().remove(toGo);
 		pln.getEdgeFaceMap().remove(b);
 		
-		DiagramElement underlying = a.getOriginalUnderlying();
-		if (underlying!= null) {
+		((PlanarizationEdge) a).getDiagramElements().keySet().stream().forEach(underlying -> {
 			EdgeMapping list = pln.getEdgeMappings().get(underlying);
 			//log.send("Edge Mapping before: "+list);
 			if (list != null) {
 				list.remove(b);
 				log.send("Route for "+underlying+" is now ",list.getEdges());
 			}
-		}
+		});
 		
 		// fix up vertex edge ordering - only works if vertex is a connected item
 		VertexEdgeOrdering orderingOfTo = (VertexEdgeOrdering) pln.getEdgeOrderings().get(farB);
-		orderingOfTo.replace(b, a);
+		orderingOfTo.replace((PlanarizationEdge) b, (PlanarizationEdge) a);
 	}
 
 	/**
@@ -378,11 +406,13 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Splitting: "+parent);
 		PlanarizationEdge[] out = parent.split(toIntroduce);
 		
-		EdgeMapping list = pln.getEdgeMappings().get(parent.getOriginalUnderlying());
-		if (list != null) {
-			list.replace(parent, out[0], out[1]);
-			//log.send("Route for "+parent.getOriginalUnderlying()+" is now ", list.getEdges());
+		for (DiagramElement de : parent.getDiagramElements().keySet()) {
+			EdgeMapping list = pln.getEdgeMappings().get(de);
+			if (list != null) {
+				list.replace(parent, out[0], out[1]);
+			}
 		}
+		
 		
 		parent.getFrom().removeEdge(parent);
 		parent.getTo().removeEdge(parent);
@@ -411,8 +441,8 @@ public class Tools implements Logable {
 	}
 	
 	public static void setUnderlyingContradiction(BiDirectional<?> c, boolean state) {
-		if (c instanceof Edge) {
-			DiagramElement underlying = ((Edge) c).getOriginalUnderlying();
+		if (c instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge) c).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
 				setConnectionContradiction((Connection)underlying, state);
 			} else {
@@ -422,15 +452,15 @@ public class Tools implements Logable {
 	}
 	
 	public static boolean isUnderlyingContradicting(BiDirectional<?> c2) {
-		if (c2 instanceof Edge) {
-			DiagramElement underlying = ((Edge)c2).getOriginalUnderlying();
+		if (c2 instanceof BiDirectionalPlanarizationEdge) {
+			DiagramElement underlying = ((BiDirectionalPlanarizationEdge)c2).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
 				return isConnectionContradicting((Connection)underlying);
 			}
 			
 			return false;	
 		} else {
-			throw new LogicException("No underlying: "+c2);
+			return false;
 		}
 		
 	}

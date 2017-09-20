@@ -1,7 +1,6 @@
 package org.kite9.diagram.model;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 
 /**
@@ -25,22 +24,14 @@ public interface DiagramElement extends Comparable<DiagramElement> {
 
 	public RenderingInformation getRenderingInformation();
 	
-	@Deprecated
-	public void setRenderingInformation(RenderingInformation ri);
-	
 	public HintMap getPositioningHints();
 		
 	@Deprecated
 	public String getShapeName();
 	
 	/**
-	 * This method returns the container.  Since in the future, not all `Connected` objects will be immediately 
-	 * in containers, we should have this deprecated.
-	 * @return
+	 * Returns the number of levels deep which this element is embedded in the diagram hierarchy, with zero the top level.
 	 */
-	@Deprecated
-	Container getContainer();
-	
-	public double getMargin(Direction d);
-		
+	public int getDepth();
+
 }

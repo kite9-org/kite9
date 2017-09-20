@@ -28,24 +28,20 @@ public class TextLine extends AbstractStyleableXMLElement {
 	}
 	
 	public TextLine(String text, ADLDocument doc) {
-		this(null, "text-line", text, null, doc);
+		this(null, "text-line", text, doc);
+	}
+
+	public TextLine(String id, String text) {
+		this(id, "text-line", text, TESTING_DOCUMENT);
 	}
 	
 	public TextLine(String text) {
 		this(text, TESTING_DOCUMENT);
 	}
 	
-	public TextLine(String text, List<Symbol> symbols) {
-		this(null, "text-line", text, symbols, TESTING_DOCUMENT);
-	}
-
-	
-	public TextLine(String id, String tag, String text, List<Symbol> symbols, ADLDocument doc) {
+	public TextLine(String id, String tag, String text, ADLDocument doc) {
 		super(id, tag, doc);
 		setText(text);
-		if (symbols != null) {
-			setSymbols(new ContainerProperty("symbols", doc, symbols));
-		}
 	}
 
 	public Kite9XMLElement getSymbols() {

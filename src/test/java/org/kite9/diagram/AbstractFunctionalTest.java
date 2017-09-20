@@ -1,6 +1,7 @@
 package org.kite9.diagram;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,7 +16,9 @@ import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractStyleableXMLElement;
 
@@ -50,13 +53,13 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	}
 
 	protected TranscoderOutput getTranscoderOutputPNG() throws IOException {
-		File f = getOutputFile("-graph.png");
+		File f = getOutputFile(".png");
 		TranscoderOutput out = new TranscoderOutput(new FileOutputStream(f));
 		return out;
 	}
 	
 	protected TranscoderOutput getTranscoderOutputSVG() throws IOException {
-		File f = getOutputFile("-graph.svg");
+		File f = getOutputFile(".svg");
 		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
 		return out;
 	}
@@ -81,5 +84,42 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		xml = xml.replaceFirst("<\\?.*\\?>","");
 		String full = prefix + style + xml + suffix;
 		return full;
+	}
+	
+	protected String getTestMethod() {
+		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
+	}
+	
+	static boolean firstRun = true;
+	
+	@Before
+	public void setLogging() {
+		Kite9Log.setLogging(true);
+		
+		// if we are running more than one test, then there's no point in logging.
+		if (firstRun) {
+			firstRun = false;
+		} else {
+			Kite9Log.setLogging(false);
+		}
+	}
+	
+
+	protected void copyToErrors(File output) {
+		copyTo(output, "errors");
+	}
+	
+	
+	protected void copyTo(File output, String dir) {
+		try {
+			File parent = output.getParentFile().getParentFile().getParentFile();
+			File errors = new File(parent, dir);
+			errors.mkdir();
+			String name = output.getName();
+			File newFile = new File(errors, name);
+			RepositoryHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

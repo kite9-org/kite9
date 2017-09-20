@@ -16,10 +16,6 @@ public interface BiDirectional<X> {
 
 	public X getTo();
 
-	public void setFrom(X v);
-
-	public void setTo(X v);
-
 	/**
 	 * Returns from, if to is the argument, or to if from is the argument.
 	 * @param end

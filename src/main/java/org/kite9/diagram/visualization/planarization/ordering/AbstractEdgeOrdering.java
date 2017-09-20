@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -39,15 +41,15 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 	
 	
 	@Override
-	public boolean canInsert(Edge before, Direction d, boolean clockwise, Kite9Log log) {
+	public boolean canInsert(PlanarizationEdge before, Direction d, boolean clockwise, Kite9Log log) {
 		if ((before.getDrawDirection() == null) || (Tools.isUnderlyingContradicting(before))) {
 			// need to find directed edge
-			Iterator<Edge> it = getIterator(!clockwise, before, null, true);
+			Iterator<PlanarizationEdge> it = getIterator(!clockwise, before, null, true);
 			it.next();
 			before = it.next();
 		}
 		
-		Iterator<Edge> it = getIterator(clockwise, before, null, true);
+		Iterator<PlanarizationEdge> it = getIterator(clockwise, before, null, true);
 		it.next();
 		Edge after = it.next();
 
@@ -89,13 +91,13 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 	}
 
 	
-	protected abstract class AbstractEdgeIterator implements Iterator<Edge> {
+	protected abstract class AbstractEdgeIterator implements Iterator<PlanarizationEdge> {
 		
-		private Edge finish;
-		private Edge next = null;
+		private PlanarizationEdge finish;
+		private PlanarizationEdge next = null;
 		private boolean directed;
 		
-		public AbstractEdgeIterator(boolean clockwise, Edge startingAt, Edge finish, boolean directedOnly) {
+		public AbstractEdgeIterator(boolean clockwise, PlanarizationEdge startingAt, PlanarizationEdge finish, boolean directedOnly) {
 			this.next = startingAt;
 			checkEdge(true);
 			this.directed = directedOnly;
@@ -125,7 +127,7 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 			return (next.getDrawDirection()==null) || (Tools.isUnderlyingContradicting(next));
 		}
 
-		public abstract Edge getNext(); 
+		public abstract PlanarizationEdge getNext(); 
 		
 
 		@Override
@@ -134,10 +136,10 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 		}
 
 		@Override
-		public Edge next() {
-			Edge out = next;
+		public PlanarizationEdge next() {
+			PlanarizationEdge out = next;
 			next = getNext();
-			checkEdge(true);
+			checkEdge(false);
 			return out;
 		}
 
@@ -158,16 +160,18 @@ public abstract class AbstractEdgeOrdering implements EdgeOrdering {
 	
 	@Override
 	public Set<DiagramElement> getUnderlyingLeavers() {
-		if (underlyingCache==null) {
-			List<Edge> edges = getEdgesAsList();
-			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
-			for (Edge e : edges) {
-				DiagramElement und = e.getOriginalUnderlying();
-				if (und != null) {
-					underlyingCache.add(und);
-				}
-			}
-		}
-		return underlyingCache;
+		throw new UnsupportedOperationException();
+//		if (underlyingCache==null) {
+//			List<PlanarizationEdge> edges = getEdgesAsList();
+//			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
+//			for (Edge e : edges) {
+//				if (e instanceof BiDirectionalPlanarizationEdge)
+//				DiagramElement und = e.getOriginalUnderlying();
+//				if (und != null) {
+//					underlyingCache.add(und);
+//				}
+//			}
+//		}
+//		return underlyingCache;
 	}
 }

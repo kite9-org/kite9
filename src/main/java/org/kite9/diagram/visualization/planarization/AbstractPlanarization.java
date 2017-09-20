@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -123,7 +123,7 @@ public abstract class AbstractPlanarization implements Planarization {
 
 	Map<Edge, List<Face>> edgeFaceMap = new HashMap<Edge, List<Face>>();
 
-	Map<Object, EdgeOrdering> edgeOrderingMap = new HashMap<Object, EdgeOrdering>();
+	Map<Vertex, EdgeOrdering> edgeOrderingMap = new HashMap<Vertex, EdgeOrdering>();
 	
 	Map<Vertex, List<Face>> vertexFaceMap = new HashMap<Vertex, List<Face>>();
 
@@ -139,7 +139,7 @@ public abstract class AbstractPlanarization implements Planarization {
 		return faces;
 	}
 
-	public Map<Object, EdgeOrdering> getEdgeOrderings() {
+	public Map<Vertex, EdgeOrdering> getEdgeOrderings() {
 		return edgeOrderingMap;
 	}
 

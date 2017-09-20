@@ -9,7 +9,6 @@ import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -40,7 +39,7 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public AbstractStyleableXMLElement(String id, String tag, ADLDocument doc) {
 		this(tag, doc);
 		
-		if (id == null) {
+		if ((id == null) || (id.length()==0)) {
 			id = createID();
 		}
 		

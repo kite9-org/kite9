@@ -12,5 +12,7 @@
   </back>
   
   <!-- label template -->
-  <svg:text id="label" style='font-size: 15px; stroke: black; font-face: sans-serif; '>{@text}</svg:text>
+  <template id="text-label">
+    <svg:text id="label" style='font-size: 15px; stroke: black; font-face: sans-serif; '>{@text}</svg:text>
+  </template>
 </svg:svg>

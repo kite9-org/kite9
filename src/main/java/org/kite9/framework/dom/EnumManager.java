@@ -16,8 +16,9 @@ public class EnumManager extends IdentifierManager {
     private final StringMap values = new StringMap();
     private final String propertyName;
     private final Value defaultValue;
+    private final boolean inherited;
     
-    public EnumManager(String propertyName, Class<?> e, Enum<?> defaultValue) {
+    public EnumManager(String propertyName, Class<?> e, Enum<?> defaultValue, boolean inherited) {
     	if (!e.isEnum()) {
     		throw new UnsupportedOperationException("Can only init with an enum class");
     	}
@@ -27,6 +28,7 @@ public class EnumManager extends IdentifierManager {
     	for (Object o : e.getEnumConstants()) {
 			values.put(cssValueFor(o.toString()), constantValueFor((Enum<?>) o));
 		}
+    	this.inherited = inherited;
     }
     
     public static final String cssValueFor(String identifier) {
@@ -38,7 +40,7 @@ public class EnumManager extends IdentifierManager {
     }
  
     public boolean isInheritedProperty() {
-        return false;
+        return inherited;
     }
 
     public boolean isAnimatableProperty() {

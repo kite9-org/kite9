@@ -10,5 +10,5 @@ public enum DiagramElementType {
 	NONE, 
 	TERMINATOR, 
 	DECAL,
-	UNSPECIFIED, 
+	UNSPECIFIED
 }

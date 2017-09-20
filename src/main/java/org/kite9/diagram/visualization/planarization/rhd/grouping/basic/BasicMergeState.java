@@ -9,8 +9,10 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
@@ -142,7 +144,7 @@ public class BasicMergeState extends GroupResult {
 			super.containerStates.put(c2, csi);
 			
 			for (DiagramElement c : c2.getContents()) {
-				if (c instanceof Container) {
+				if ((c instanceof Container) && (c instanceof Connected)) {
 					ContainerStateInfo csi2 = getStateFor((Container) c);
 					if (csi2 != null) {
 						csi.incompleteSubcontainers.add((Container) c);

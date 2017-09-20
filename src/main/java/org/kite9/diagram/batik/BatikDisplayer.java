@@ -4,11 +4,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.Text;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -24,8 +25,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		super(buffer, gridSize);
 	}
 
-	@Override
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	protected CostedDimension size(DiagramElement element, Dimension2D within) {
 		if (element instanceof HasLayeredGraphics) {
 			DiagramElementSizing sizing = getSizing((HasLayeredGraphics) element);
 
@@ -42,7 +42,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 			case MINIMIZE:
 			case MAXIMIZE:
-				Rectangular r = (Rectangular) element;
+				CompactedRectangular r = (CompactedRectangular) element;
 				double left = r.getPadding(Direction.LEFT);
 				double right =  r.getPadding(Direction.RIGHT);
 				double up =  r.getPadding(Direction.UP);
@@ -63,12 +63,10 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	 */
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
-		
-		if (element instanceof Decal) {
-			// tells the decal how big it needs to draw itself
-			Container parent = element.getContainer();
-			RectangleRenderingInformation rri = parent.getRenderingInformation();
-			((Decal) element).setParentSize(new double[] {0, rri.getSize().getWidth()}, new double[] {0, rri.getSize().getHeight() });
+		if ((!(element instanceof Decal)) && (ri.getPosition() == null)) {
+			return;	// labels and connected should all have positions by now.
+		} else if ((element instanceof Decal) && ((element.getParent().getRenderingInformation().getSize() == null))) {
+			return; // parents of decals should also be positioned.
 		}
 		
 		if (element instanceof HasLayeredGraphics) {
@@ -141,49 +139,16 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		existing.translate(xst, yst);
 	}
 
-	@Override
-	public boolean isOutputting() {
-		return true;
-	}
-
-	@Override
-	public void setOutputting(boolean outputting) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean canDisplay(DiagramElement element) {
-		return true;
-	}
-
-	@Override
-	public boolean requiresDimension(DiagramElement de) {
-		if (de instanceof Text) {
-			String label = getLabel(de);
-			if ((label==null) || (label.trim().length()==0)) {
-				return false;
-			} 
-		} 
-		
-		return true;
-	}
-	
 	public String getLabel(DiagramElement de) {
 		return ((Text)de).getText();
 	}
 
 	@Override
-	public double getLinkPadding(DiagramElement a, Direction d) {
-		return 5;
-	}
-
-	@Override
 	public double getPadding(DiagramElement element, Direction d) {
-		if (element instanceof Rectangular) {
-			return ((Rectangular) element).getPadding(d);
+		if (element instanceof CompactedRectangular) {
+			return ((CompactedRectangular) element).getPadding(d);
 		} else if (element instanceof Connection) {
-			return ((Connection) element).getPadding(d);
+			return ((CompactedRectangular) element).getPadding(d);
 		} else {
 			return 0;
 		}
@@ -191,13 +156,43 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
 	@Override
 	public double getMargin(DiagramElement element, Direction d) {
-		if (element instanceof Rectangular) {
-			return ((Rectangular) element).getMargin(d);
+		if (element instanceof CompactedRectangular) {
+			return ((CompactedRectangular) element).getMargin(d);
 		} else if (element instanceof Connection) {
 			return ((Connection) element).getMargin(d);
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public double getLinkGutter(Rectangular element, Direction d) {
+		return 10;
+	}
+
+	@Override
+	public double getLinkMinimumLength(Connection element) {
+		return 10;
+	}
+
+	@Override
+	public double getTerminatorLength(Terminator terminator) {
+		return 5;
+	}
+
+	@Override
+	public double getTerminatorReserved(Terminator terminator, Connection on) {
+		return 5;
+	}
+
+	@Override
+	public double getLinkInset(Rectangular element, Direction d) {
+		return 5;
+	}
+
+	@Override
+	public boolean requiresHopForVisibility(Connection a, Connection b) {
+		return true;
 	}
 
 }

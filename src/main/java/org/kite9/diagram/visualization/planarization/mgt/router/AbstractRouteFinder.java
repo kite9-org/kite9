@@ -5,14 +5,11 @@ import java.util.List;
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP;
 import org.kite9.diagram.common.algorithms.ssp.PathLocation;
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
 import org.kite9.framework.logging.Kite9Log;
@@ -52,9 +49,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	private int pathCount = 0;
 	
 	enum Going { FORWARDS, BACKWARDS};
-	
-	enum TransverseAxis { HORIZONTAL, VERTICAL };
-	
+		
 	private static Routing getRouting(Going going, Place p) {
 		if (p==null) {
 			// start or end routing.
@@ -252,11 +247,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		
 		public abstract boolean sameCrossing(EdgePath other);
 		
-		/**
-		 * Returns the container we are currently inside
-		 */
-		public abstract Container insideContainer();
-	
 	}
 		
 	/**
@@ -359,12 +349,11 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public abstract class EdgeCrossPath extends EdgePath {
 
-		Edge crossing;
+		PlanarizationEdge crossing;
 		int trailEndVertex;
 		LineRoutingInfo trail;
-		Container inContainer;
 
-		public EdgeCrossPath(Edge crossing, EdgePath prev, Going g) {
+		public EdgeCrossPath(PlanarizationEdge crossing, EdgePath prev, Going g) {
 			super(g, prev.getSide(), prev);
 			this.crossing = crossing;
 			costing.legalEdgeCrossCost += ((PlanarizationEdge) crossing).getCrossCost();
@@ -382,28 +371,10 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			
 			initTrail(prev);
 			
-			if (crossing instanceof BorderEdge) {
-				Container inside = prev.insideContainer();
-				DiagramElement crossingContainer = crossing.getOriginalUnderlying();
-				if (crossingContainer == inside) {
-					// we are leaving the container
-					inContainer = inside.getContainer();
-				} else {
-					// we are entering a new container
-					inContainer = (Container) crossingContainer;
-				}
-			} else {
-				inContainer = prev.insideContainer();
-			}
 			
 		}
 
-		@Override
-		public Container insideContainer() {
-			return inContainer;
-		}
-
-		public Edge getCrossing() {
+		public PlanarizationEdge getCrossing() {
 			return crossing;
 		}
 
@@ -438,7 +409,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class EndCrossEdgePath extends EdgeCrossPath {
 
-		public EndCrossEdgePath(Edge e, EdgePath prev, Going g) {
+		public EndCrossEdgePath(PlanarizationEdge e, EdgePath prev, Going g) {
 			super(e, prev, g);
 		}
 
@@ -454,7 +425,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class FinishPath extends TerminalPath {
 
-		public FinishPath(int vertex, Vertex v, EdgePath prev, Going g, Edge outsideEdge) {
+		public FinishPath(int vertex, Vertex v, EdgePath prev, Going g, PlanarizationEdge outsideEdge) {
 			super(new Location(null, vertex, v), g, prev.getSide(), prev, outsideEdge);
 		}
 
@@ -481,11 +452,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			this.trail = move(prev.getTrail(), prev.getTrailEndVertex(), l.vertex, getGoing(), null, true);
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
-		
 	}
 
 	public class PlanarizationCrossPath extends EdgePath {
@@ -573,12 +539,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			}
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
-
-
 	}
 
 	public class SimpleEdgePath extends LocatedEdgePath {
@@ -605,15 +565,11 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 			this.trail = move(prev.getTrail(), prev.getTrailEndVertex(), l.vertex, getGoing(), l.p, true);
 		}
 
-		@Override
-		public Container insideContainer() {
-			return prev.insideContainer();
-		}
 	}
 
 	public class StartCrossEdgePath extends EdgeCrossPath {
 
-		public StartCrossEdgePath(Edge e, EdgePath prev, Going g) {
+		public StartCrossEdgePath(PlanarizationEdge e, EdgePath prev, Going g) {
 			super(e, prev, g);
 		}
 
@@ -628,9 +584,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	
 	public abstract class TerminalPath extends LocatedEdgePath {
 		
-		Edge outsideEdge;
+		PlanarizationEdge outsideEdge;
 
-		public TerminalPath(Location l, Going g, PlanarizationSide side, EdgePath prev, Edge outsideEdge) {
+		public TerminalPath(Location l, Going g, PlanarizationSide side, EdgePath prev, PlanarizationEdge outsideEdge) {
 			super(l, g, side, prev);
 			this.outsideEdge = outsideEdge;
 		}
@@ -638,7 +594,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		/**
 		 * Edge that this path terminates outside of
 		 */
-		public Edge getOutsideEdge() {
+		public PlanarizationEdge getOutsideEdge() {
 			return outsideEdge;
 		}
 		
@@ -646,7 +602,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	public class StartPath extends TerminalPath {
 
-		public StartPath(int vertex, Vertex v, Place p, PlanarizationSide side, RoutingInfo position, Going going, Edge outsideEdge) {
+		public StartPath(int vertex, Vertex v, Place p, PlanarizationSide side, RoutingInfo position, Going going, PlanarizationEdge outsideEdge) {
 			super(new Location(p, vertex, v), going, side, null, outsideEdge);
 		}
 
@@ -663,14 +619,6 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		public void initTrail(EdgePath unused) {
 			this.trail = getRouteHandler().move(null, l.v.getRoutingInfo(), null);
 		}
-
-		@Override
-		public Container insideContainer() {
-			Vertex v = l.v;
-			DiagramElement de = v.getOriginalUnderlying();
-			return de.getContainer();
-		}
-
 	}
 
 	static enum Place { ABOVE, BELOW };
@@ -728,7 +676,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	
 	enum Axis { HORIZONTAL, VERTICAL }
 
-	public AbstractRouteFinder(MGTPlanarization p, RoutableReader rh, RoutingInfo endZone, Axis expensive, Axis bounded, Edge e) {
+	public AbstractRouteFinder(MGTPlanarization p, RoutableReader rh, RoutingInfo endZone, Axis expensive, Axis bounded, PlanarizationEdge e) {
 		super();
 		this.p = p;
 		this.rh = rh;
@@ -742,7 +690,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	protected RoutableReader rh;
 	protected RoutingInfo endZone;
 	protected Axis expensive, bounded, illegalEdgeCross;
-	protected Edge e;
+	protected PlanarizationEdge e;
 	protected Direction entryDirection;
 
 
@@ -768,7 +716,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	/**
 	 * Takes an EdgePath, and crosses some edges to move it either outsideEdge or below a the pathVertex, which turns it into a proper LocatedEdgePath.
 	 */
-	private LocatedEdgePath escape(Edge outsideOf, EdgePath forwardIn, List<Edge> inside, List<Edge> outside, boolean pathAbove, int pathVertex, Going startingDirection, Going endingDirection) {
+	private LocatedEdgePath escape(PlanarizationEdge outsideOf, EdgePath forwardIn, List<PlanarizationEdge> inside, List<PlanarizationEdge> outside, boolean pathAbove, int pathVertex, Going startingDirection, Going endingDirection) {
 		if (forwardIn==null) {
 			return null;
 		}
@@ -783,7 +731,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		int currentlyOutside = inside.indexOf(outsideOf);
 		if (currentlyOutside > -1) {
 			for (int i = currentlyOutside; i >= 0; i--) {
-				Edge edge = inside.get(i);
+				PlanarizationEdge edge = inside.get(i);
 				Integer toi = meetsDestination(edge, startingDirection); 
 				if (toi != null) {
 					Vertex toV = p.getVertexOrder().get(toi);
@@ -815,7 +763,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		currentlyOutside = outsideOf == null ? -1 : outside.indexOf(outsideOf);
 
 		for (int i = currentlyOutside + 1; i < outside.size(); i++) {
-			Edge edge = outside.get(i);
+			PlanarizationEdge edge = outside.get(i);
 			
 			
 			if (!canCross(edge, forward, !pathAbove)) {
@@ -841,6 +789,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 * Prevents the path wending through vertices that are on top of each other
 	 */
 	protected boolean canSwitchSides(int after) {
+		if (after+1 == p.getVertexOrder().size()) {
+			return false;
+		}
 		Vertex beforeV = p.getVertexOrder().get(after);
 		Vertex afterV = p.getVertexOrder().get(after+1);
 		RoutingInfo bri = beforeV.getRoutingInfo();
@@ -864,24 +815,31 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 
 	protected RoutingInfo getPosition(Vertex v) {
 		RoutingInfo out = v.getRoutingInfo();
-		if (out == null) {
-			DiagramElement und = v.getOriginalUnderlying();
-			out = rh.getPlacedPosition(und);
-		}
+//		if (out == null) {
+//			DiagramElement und = v.getOriginalUnderlying();
+//			out = rh.getPlacedPosition(und);
+//		}
 		
 		return out;
 	}
 
 	private Integer meetsDestination(Edge edge, Going g) {
+		Vertex to = edge.getTo();
+		int toi = p.getVertexIndex(to);
+		Vertex from = edge.getFrom();
+		int fromi = p.getVertexIndex(from);
+		
+		if (fromi > toi) {
+			int temp = fromi;
+			fromi = toi;
+			toi = temp;
+		}
+		
 		if (g==Going.FORWARDS) {
-			Vertex to = edge.getTo();
-			int toi = p.getVertexIndex(to);
 			if (isTerminationVertex(toi)) {
 				return toi;
 			} 
 		} else if (g==Going.BACKWARDS){
-			Vertex from = edge.getFrom();
-			int fromi = p.getVertexIndex(from);
 			if (isTerminationVertex(fromi)) {
 				return fromi;
 			}
@@ -901,7 +859,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		}
 	}
 
-	private List<Edge> getLinkSet(Going g, Vertex from, PlanarizationSide s) {
+	private List<PlanarizationEdge> getLinkSet(Going g, Vertex from, PlanarizationSide s) {
 		if (s == PlanarizationSide.ENDING_ABOVE) {
 			return g == Going.FORWARDS ? p.getAboveForwardLinks(from) : p.getAboveBackwardLinks(from);
 		} else if (s==PlanarizationSide.ENDING_BELOW) {
@@ -916,9 +874,9 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 * Obviously this doesn't get used for directed edges, as they can't turn.
 	 */
 	private void generateSwitchbackPaths(State<LocatedEdgePath> pq, LocatedEdgePath r, Vertex from,  Going toStartWith) {
-		List<Edge> insideLinks;
-		List<Edge> outsideLinks;
-		Edge first = null;
+		List<PlanarizationEdge> insideLinks;
+		List<PlanarizationEdge> outsideLinks;
+		PlanarizationEdge first = null;
 		Going endingUp = toStartWith == Going.FORWARDS ? Going.BACKWARDS : Going.FORWARDS;
 		boolean endingAbove = r.l.p==Place.ABOVE;
 		if (endingAbove) {
@@ -951,25 +909,25 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	}
 	
 
-	private EdgePath createStartPath(EdgePath path, Vertex from, int fromi, Going g, PlanarizationSide side, Edge outsideOf) {
+	private EdgePath createStartPath(EdgePath path, Vertex from, int fromi, Going g, PlanarizationSide side, PlanarizationEdge outsideOf) {
 		if (path != null) {
 			return path;
 		}
 		
 		if (canRouteToVertex(from, outsideOf, side==PlanarizationSide.ENDING_ABOVE, g, false)) {
-			return new StartPath(fromi, from, null, side, getPosition(from), g, outsideOf);
+			return new StartPath(fromi, from, null, side, from.getRoutingInfo(), g, outsideOf);
 		} else {
 			return null;
 		}
 	}
 
-	protected abstract boolean canRouteToVertex(Vertex from, Edge outsideOf, boolean above, Going g, boolean arriving);
+	protected abstract boolean canRouteToVertex(Vertex from, PlanarizationEdge outsideOf, boolean above, Going g, boolean arriving);
 
-	protected void generatePaths(final LocatedEdgePath r, List<Edge> list, State<LocatedEdgePath> pq,  Vertex from, Going g, PlanarizationSide side) {
+	protected void generatePaths(final LocatedEdgePath r, List<PlanarizationEdge> list, State<LocatedEdgePath> pq,  Vertex from, Going g, PlanarizationSide side) {
 		EdgePath current = r;
 		int s = p.getVertexIndex(from);
 		for (int i = list.size() - 1; i >= 0; i--) {
-			Edge edge = list.get(i);
+			PlanarizationEdge edge = list.get(i);
 			Vertex to = edge.otherEnd(from);
 			int e = p.getVertexIndex(to);
 
@@ -1045,16 +1003,16 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	 */
 	protected abstract boolean isTerminationVertex(int v);
 
-	private List<Edge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev) {
+	private List<PlanarizationEdge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev) {
 		return getCorrectEdgeSet(start_pos, ev_pos, above, ev, p);
 	}
 	
 	
-	public static List<Edge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev, MGTPlanarization p) {
+	public static List<PlanarizationEdge> getCorrectEdgeSet(int start_pos, int ev_pos, boolean above, Vertex ev, MGTPlanarization p) {
 		return getCorrectEdgeSet(start_pos < ev_pos ? Going.FORWARDS : Going.BACKWARDS, above, ev, p);
 	}
 	
-	public static List<Edge> getCorrectEdgeSet(Going g, boolean above, Vertex ev, MGTPlanarization p) {
+	public static List<PlanarizationEdge> getCorrectEdgeSet(Going g, boolean above, Vertex ev, MGTPlanarization p) {
 		if (g==Going.FORWARDS) {
 			if (above) {
 				return p.getAboveBackwardLinks(ev);

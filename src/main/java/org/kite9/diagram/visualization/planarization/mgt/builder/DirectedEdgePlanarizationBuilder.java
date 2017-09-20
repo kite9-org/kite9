@@ -3,10 +3,11 @@ package org.kite9.diagram.visualization.planarization.mgt.builder;
 import java.util.Iterator;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -70,7 +71,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 				EdgeMapping redundant = p.getEdgeMappings().get(e);
 				if (redundant != null) {
 					for (Edge edge : redundant.getEdges()) {
-						edge.remove();
+						((PlanarizationEdge) edge).remove();
 					}
 				}
 			}
@@ -118,7 +119,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 	}
 
 	private boolean handleInsertionPhase(MGTPlanarization p, EdgePhase ep, BiDirectional<Connected> c) {
-		Edge e = getEdgeForConnection(c, p);
+		PlanarizationEdge e = getEdgeForConnection(c, p);
 		
 		boolean done = false;
 
@@ -129,14 +130,14 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		switch (ep) {
 		case SINGLE_DIRECTION:
 			if ((!contradicting) && (directed)) {
-				done = er.addEdgeToPlanarization(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+				done = er.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 			}
 
 			break;
 		case SINGLE_DIRECTION_CONTRADICTORS:
 			if (contradicting && directed) {
 				// have a go at getting the connections in, on the off chance they will fit.
-				done = er.addEdgeToPlanarization(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
+				done = er.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 				
 				if (done) {
 					Tools.setUnderlyingContradiction(e, false);
@@ -146,11 +147,11 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		case FORWARDS_DIRECTIONS:
 			if ((!contradicting) && (!directed)) {
 				// stops edges wrapping round containers with layout - go in a straight line
-				Container comm = getCommonContainer(e.getFrom().getOriginalUnderlying(), e.getTo().getOriginalUnderlying());
+				Container comm = getCommonContainer(c.getFrom(), c.getTo());
 				Direction d = null;
 				if ((comm.getLayout()!=null) && (comm.getLayout() != Layout.GRID)) {
 					d = getInsertionDirection(comm.getLayout(), e.getFrom(), e.getTo());
-					done = er.addEdgeToPlanarization(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED);
+					done = er.addPlanarizationEdge(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED);
 				}
 			}
 
@@ -161,7 +162,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 			}
 			
 			if (!removable) {
-				done = er.addEdgeToPlanarization(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED);
+				done = er.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED);
 			}
 			
 			break;
@@ -188,5 +189,5 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		throw new LogicException("Couldn't determine direction to insert in");
 	}
 
-	protected abstract Edge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p);
+	protected abstract PlanarizationEdge getEdgeForConnection(BiDirectional<Connected> c, MGTPlanarization p);
 }

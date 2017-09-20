@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.diagram.common.elements.MultiCornerVertex;
 import org.kite9.diagram.common.elements.RoutingInfo;
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.HPos;
@@ -36,10 +36,12 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		br = createVertex(BigFraction.ONE, BigFraction.ONE);
 		bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
 		
-		tl.addAnchor(HPos.LEFT, VPos.UP, c);
-		tr.addAnchor(HPos.RIGHT, VPos.UP, c);
-		bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
-		br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
+		if (c != null) {
+			tl.addAnchor(HPos.LEFT, VPos.UP, c);
+			tr.addAnchor(HPos.RIGHT, VPos.UP, c);
+			bl.addAnchor(HPos.LEFT, VPos.DOWN, c);
+			br.addAnchor(HPos.RIGHT, VPos.DOWN, c);
+		}
 	}
 
 	public abstract MultiCornerVertex createVertex(BigFraction x, BigFraction y);
@@ -50,7 +52,7 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 		MultiCornerVertex cv = elements.get(d);
 		
 		if (cv == null) {
-			cv = new MultiCornerVertex(getVertexIDStem(), rootContainer, x, y);
+			cv = new MultiCornerVertex(getVertexIDStem(), x, y);
 			elements.put(d, cv);
 		}
 			

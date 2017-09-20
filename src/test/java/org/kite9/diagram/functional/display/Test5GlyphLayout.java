@@ -5,8 +5,9 @@ import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.TextLineWithSymbols;
+import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 
@@ -44,12 +45,13 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_5_5_GlyphWithTextSymbol() throws Exception {
-		Glyph one = new Glyph("Stereo", "One", createList(
-					new TextLine("Here is line 1", createList(new Symbol(
-				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
-				"Some text", 'A', SymbolShape.HEXAGON))), 
-					new TextLine("Here is line 2"),
-					new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
+		Glyph one = new Glyph("Stereo", "One",
+				createList(
+						new TextLineWithSymbols("Here is line 1",
+								createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol("Some text", 'A', SymbolShape.HEXAGON))),
+						new TextLine("Here is line 2"), 
+						new TextLine("Here is line 3")),
+				createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);
 	}
@@ -66,7 +68,7 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 	public void test_5_7_GlyphWithMultilineTextSymbol() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", createList(
 					new TextLine("Here is line 1"),
-					new TextLine("Here is line 2\nand it goes onto multiple\nlines", createList(new Symbol(
+					new TextLineWithSymbols("Here is line 2\nand it goes onto multiple\nlines", createList(new Symbol(
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(
 				"Some text", 'A', SymbolShape.HEXAGON))), 
 					new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));

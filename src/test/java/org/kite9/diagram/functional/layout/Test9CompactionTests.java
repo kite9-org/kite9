@@ -1,12 +1,13 @@
 package org.kite9.diagram.functional.layout;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -16,8 +17,8 @@ import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 
@@ -103,29 +104,42 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
     }
 	
 	@Test
-	@Ignore
     public void test_9_5_CompactionAlignmentRight() throws Exception {
 		createDiagramInDirection(Direction.RIGHT);
 	}
 	
 	@Test
-	@Ignore
     public void test_9_6_CompactionAlignmentLeft() throws Exception {
 		createDiagramInDirection(Direction.LEFT);
 	}
 	
 	@Test
-	@Ignore
-
     public void test_9_7_CompactionAlignmentDown() throws Exception {
 		createDiagramInDirection(Direction.DOWN);
 	}
 	
 	@Test
-	@Ignore
-
-    public void test_9_5_CompactionAlignmentUp() throws Exception {
+	@NotAddressed("Seems like this doesn't work properly due to a rectangularization issue")
+    public void test_9_8_CompactionAlignmentUp() throws Exception {
 		createDiagramInDirection(Direction.UP);
+	}
+	
+
+	@Test
+    public void test_9_9_CheckHorizontalEdgeShortening() throws Exception {
+		Glyph one = new Glyph("", "One", null, null);
+		Glyph two = new Glyph("", "Two", null, null);
+		Glyph three = new Glyph("", "Three", null, null);
+		Glyph four = new Glyph("", "Four - this one has a really long label to make compaction harder", null, null);
+
+		new Link(one, two, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
+		new Link(two, three, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
+		new Link(three, four, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
+		new TurnLink(one, three);
+		new TurnLink(one, three);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
+		renderDiagram(d);
+
 	}
 
 	private void createDiagramInDirection(Direction d) throws Exception {

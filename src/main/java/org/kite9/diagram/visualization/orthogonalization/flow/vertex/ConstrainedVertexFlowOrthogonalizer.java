@@ -12,15 +12,18 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
-import org.kite9.diagram.visualization.orthogonalization.flow.OrthBuilder;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
@@ -37,8 +40,8 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOrthogonalizer {
 
-	public ConstrainedVertexFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
+	public ConstrainedVertexFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
+		super(va, clc);
 	}
 	
 	int nextId = 0;
@@ -142,11 +145,13 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 			return null;
 		}
 		
-		Connected vUnd = (Connected) v.getOriginalUnderlying();
+		
+		
+		Connected vUnd = (Connected) ((ConnectedVertex) v).getOriginalUnderlying();
 		@SuppressWarnings("unchecked")
-		BiDirectional<Connected> beforeUnd = (BiDirectional<Connected>) before.getOriginalUnderlying();
+		BiDirectional<Connected> beforeUnd = (BiDirectional<Connected>) ((BiDirectionalPlanarizationEdge) before).getOriginalUnderlying();
 		@SuppressWarnings("unchecked")
-		BiDirectional<Connected> afterUnd = (BiDirectional<Connected>) after.getOriginalUnderlying();
+		BiDirectional<Connected> afterUnd = (BiDirectional<Connected>) ((BiDirectionalPlanarizationEdge) after).getOriginalUnderlying();
 		
 		Connected beforeConnected = beforeUnd.otherEnd(vUnd);
 		Connected afterConnected = afterUnd.otherEnd(vUnd);
@@ -266,11 +271,11 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 */
 	private List<VertexDivision> createDirectedMap(Vertex v, EdgeOrdering edgeOrdering, Planarization pln) {
 		List<VertexDivision> out = new LinkedList<VertexDivision>();
-		List<Edge> basic = createDirectedList(edgeOrdering);
+		List<PlanarizationEdge> basic = createDirectedList(edgeOrdering);
 		if (basic.size() < 2) {
 			return Collections.emptyList();
 		}
-		List<Edge> edgesAsList = edgeOrdering.getEdgesAsList();
+		List<PlanarizationEdge> edgesAsList = edgeOrdering.getEdgesAsList();
 		int offset = edgesAsList.indexOf(basic.get(0));
 		VertexDivision open = null;
 		for (int current = 0; current < edgeOrdering.size(); current++) {
@@ -301,10 +306,10 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 
 
-	private List<Edge> createDirectedList(EdgeOrdering edgeOrdering) {
-		List<Edge> out = new ArrayList<Edge>();
-		for (Iterator<Edge> iterator =  edgeOrdering.getEdgesAsList().iterator(); iterator.hasNext();) {
-			Edge edge = iterator.next();
+	private List<PlanarizationEdge> createDirectedList(EdgeOrdering edgeOrdering) {
+		List<PlanarizationEdge> out = new ArrayList<>();
+		for (Iterator<PlanarizationEdge> iterator =  edgeOrdering.getEdgesAsList().iterator(); iterator.hasNext();) {
+			PlanarizationEdge edge = iterator.next();
 			if (isConstrained(edge)) {
 				out.add(edge);
 			} 
@@ -346,7 +351,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 * Decide side for container edges and edge crossing vertexes
 	 */
 	private boolean canCorner(Vertex v, Edge before, Edge after) {
-		if (before.getOriginalUnderlying()==after.getOriginalUnderlying()) {
+		if (hasSameUnderlying(before, after)) {
 			if (before.getDrawDirectionFrom(v) != Direction.reverse(after.getDrawDirectionFrom(v))) {
 				return true;
 			}
@@ -354,6 +359,12 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		}
 		
 		return true;
+	}
+
+
+	private boolean hasSameUnderlying(Edge before, Edge after) {
+		return ((PlanarizationEdge) before).getDiagramElements().keySet()
+				.equals(((PlanarizationEdge)after).getDiagramElements().keySet());
 	} 
 
 }

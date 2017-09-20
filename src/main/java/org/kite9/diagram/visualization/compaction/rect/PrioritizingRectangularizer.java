@@ -3,16 +3,16 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.elements.Vertex;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -23,228 +23,88 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
-
-	public enum Match {
-		A, D
-	};
+public abstract class PrioritizingRectangularizer extends AbstractRectangularizer {
 
 	public PrioritizingRectangularizer(CompleteDisplayer cd) {
 		super(cd);
 	}
 
-	public class RectOption implements Comparable<RectOption> {
-
-		VertexTurn vt1;
-		VertexTurn vt2;
-		VertexTurn vt3;
-		VertexTurn vt4;
-		VertexTurn vt5;
-		Match m;
-		int scoreJoin = 0;
-		boolean isPriority = false;
-		boolean rectSafe = false;
-		boolean canBoxout = false;
-		boolean willRect = false;
-		double pushOut = 0;
-		double length = 0;
-		double availableMeets = 0;
-		Compaction c;
-
-		public RectOption(VertexTurn vt1, VertexTurn vt2, VertexTurn vt3, VertexTurn vt4, VertexTurn vt5, Match m, Compaction c) {
-			super();
-			this.vt1 = vt1;
-			this.vt2 = vt2;
-			this.vt3 = vt3;
-			this.vt4 = vt4;
-			this.vt5 = vt5;
-			this.m = m;
-			this.c = c;
-			this.length = getLink().getUnderlying().getLength();
-			// note - we need to store the initial values so that the sort is always correct
-			this.isPriority = isPriority();
-			this.canBoxout = canBoxout();
-			this.availableMeets = calcAvailableMeets();
-			this.rectSafe = isRectangularizationSafe();
-			this.willRect = chooseRectangularization();
-			this.scoreJoin = scoreJoin();
-		}
-		
-		public VertexTurn getMeets() {
-			return m==Match.A ? vt4 : vt2;
-		}
-		
-		public VertexTurn getExtender() {
-			return m==Match.A ? vt1 : vt5;
-		}
-		
-		public VertexTurn getPar() {
-			return m==Match.A ? vt2 : vt4;
-		}
-		
-		public VertexTurn getLink() {
-			return m==Match.A ? vt3 : vt3;
-		}
-		
-		public VertexTurn getPost() {
-			return m==Match.A ? vt5 : vt1;
-		}
-
-		public boolean isPriority() {
-			VertexTurn x = getExtender();
-			boolean out = x.getUnderlying().isChangeEarly(m==Match.A ? x.endsWith : x.startsWith);
-			return out;
-		}
-		
-		public boolean canBoxout() {
-			return getExtender().d == getPost().d;			
-		}
-		
-		public double calcAvailableMeets() {
-			Dart md = getMeets().getUnderlying();
-			
-			double minAdd;
-			
-			if (canBoxout()) {
-				// no double-back dart
-				minAdd = 0;
-			} else {
-				// need to include cost of double-back dart
-				Direction d = getMeets().d;
-				minAdd = getMinimumDistance(c, getPost().startsWith, getExtender().startsWith, d);
-			}
-	
-			return md.getLength() - minAdd;
-		}
-		
-		public boolean isRectangularizationSafe() {
-			Dart pd = getPar().getUnderlying();
-			pushOut = Math.max(0, pd.getLength() - availableMeets);
-			
-			if ((pd.isVertexLengthKnown())) {
-				if (pushOut <= 0) {
-					return true;
-				}
-			}	
-			
-			return false;
-		}
-		
-		/**
-		 * Decide whether to rectangularize, or boxout.
-		 */
-		private boolean chooseRectangularization() {
-			return (getMeets().getUnderlying().getChangeCost()==Dart.EXTEND_IF_NEEDED) 
-				|| (rectSafe)
-				|| (isPriority) 
-				|| (!canBoxout);
-		}
-
-		
-		/**
-		 * Lower scores are better
-		 */
-		public int scoreJoin() {
-			if (rectSafe) {
-				return 0;
-			} else {
-				int changeCost = getMeets().getUnderlying().getChangeCost();
-				if (willRect) {
-					return changeCost;				
-				} else {
-					return Math.min(changeCost, 1);  // option of creating the box-out has a cost of 1.
-				}
-			}
-		}
-		
-		@Override
-		public int compareTo(RectOption o) {
-			// check for priority change
-			if (isPriority != o.isPriority) {
-				return -((Boolean)isPriority).compareTo(o.isPriority);
-			}
-		
-			// pick lowest cost arrangements first
-			if (scoreJoin != o.scoreJoin) {
-				return ((Integer) scoreJoin).compareTo(o.scoreJoin);
-			}
-			
-			if (scoreJoin > 0) {
-				if (o.pushOut != pushOut) {
-					// use the one that wrecks length the least
-					return ((Double)pushOut).compareTo(o.pushOut);
-				}
-				
-			}
-
-			// preserve link length if precious
-			return -((Integer) getLink().getUnderlying().getChangeCost()).compareTo(o.getLink().getUnderlying().getChangeCost());
-		}
-
-		public String toString() {
-			return "[RO: extender = " + getExtender().getUnderlying() + " score = " + scoreJoin + " priority = " + isPriority + " rect_safe = "+rectSafe+" can_boxout? = "+canBoxout+" rect?= "+chooseRectangularization()+" push = "+pushOut+"/"+availableMeets + " length = "+length+"]";
-		}
-	}
+	public enum Match {
+		A, D
+	};
 
 	@Override
-	protected void performFaceRectangularization(Compaction c, List<Dart> result, List<VertexTurn> theStack) {
-		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(theStack.size());
-		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>(theStack);
-		for (int i = 0; i < theStack.size(); i++) {
-			addNewRectOptions(c, result, theStack, pq, i);
+	protected void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(500);
+		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>();
+
+		createInitialRectOptions(c, stacks, pq, onStack);
+		
+		while (pq.size() > 0) {
+//			log.send("Horizontal Segments:", c.getHorizontalSegmentSlackOptimisation().getAllSlideables());
+//			log.send("Vertical Segments:", c.getVerticalSegmentSlackOptimisation().getAllSlideables());
+
+			
+			RectOption ro = pq.remove();
+			List<VertexTurn> theStack = ro.getStack();
+			Action action = checkRectOptionIsOk(onStack, ro, pq, c);
+			switch (action) {
+			case OK:
+				performChange(c, pq, onStack, ro, theStack);
+				break;
+			case PUT_BACK:
+				log.send(log.go() ? null : "Putting back: " + ro);
+				ro.rescore();
+				pq.add(ro);
+				break;
+			case DISCARD:
+				log.send(log.go() ? null : "Discarding: " + ro);
+				// do nothing
+			} 			
 		}
 		
+		createInitialRectOptions(c, stacks, pq, onStack);
+		if (pq.size() > 0) {
+			throw new Kite9ProcessingException("Should have completed rectangularization - throwing options away");
+		}
+	}
 
-
-		while (pq.size() > 0) {
-			RectOption ro = pq.remove();
-			boolean ok = checkRectOptionIsOk(onStack, ro, pq);
-			if (ok) {
-				log.send(log.go() ? null : "Queue Currently: ",pq);
-				log.send(log.go() ? null : "Change: " + ro);
-				if (ro.m == Match.A) {
-					
-					if (ro.willRect) {
-						performRectangularizationA(theStack, c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					} else {
-						Vertex parFrom = ro.getPar().startsWith;
-						Vertex meetsFrom = ro.getMeets().endsWith;
-						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.A);
-						onStack.remove(ro.getLink());
-						onStack.add(newLink);
-						
-					} 
-					
-				} else {
-					if (ro.willRect) {
-						performRectangularizationD(theStack, c, result, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets());
-						onStack.remove(ro.getLink());
-						onStack.remove(ro.getPar());
-					} else { 
-						Vertex parFrom = ro.getPar().endsWith;
-						Vertex meetsFrom = ro.getMeets().startsWith;
-						VertexTurn newLink = performPopOut(c, result, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), parFrom, meetsFrom, theStack, Match.D);
-						onStack.remove(ro.getLink());
-						onStack.add(newLink);
-					}
-				}
-
-				int fromIndex = theStack.indexOf(ro.vt1)-4;
-
-				// find more matches
-				for (int i = fromIndex; i <= fromIndex + 8; i++) {
-					addNewRectOptions(c, result, theStack, pq, i);
-				}
-
+	private void createInitialRectOptions(Compaction c, Map<DartFace, List<VertexTurn>> stacks, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack) {
+		for (List<VertexTurn> theStack : stacks.values()) {
+			for (int i = 0; i < theStack.size(); i++) {
+				addNewRectOptions(c, theStack, pq, i);
+				onStack.addAll(theStack);
 			}
 		}
 	}
 
-	private void addNewRectOptions(Compaction c, List<Dart> result, List<VertexTurn> theStack,
+	private void performChange(Compaction c, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack, RectOption ro, List<VertexTurn> theStack) {
+		// log.send(log.go() ? null : "Queue Currently: ",pq);
+		log.send(log.go() ? null : "Change: " + ro);
+		if (ro.getMatch() == Match.A) {
+			performRectangularizationA(theStack, c, ro.getMeets(), ro.getLink(), ro.getPar(), ro.getExtender(), ((PrioritisedRectOption) ro).getTurnShape());
+			onStack.remove(ro.getLink());
+			onStack.remove(ro.getPar());
+		} else {
+			performRectangularizationD(theStack, c, ro.getExtender(), ro.getPar(), ro.getLink(), ro.getMeets(), ((PrioritisedRectOption) ro).getTurnShape());
+			onStack.remove(ro.getLink());
+			onStack.remove(ro.getPar());
+		}
+
+		int fromIndex = theStack.indexOf(ro.getVt1()) - 4;
+		afterChange(c, pq, theStack, fromIndex);
+	}
+
+	protected void afterChange(Compaction c, PriorityQueue<RectOption> pq, List<VertexTurn> theStack, int fromIndex) {
+		// find more matches
+		for (int i = fromIndex; i <= fromIndex + 8; i++) {
+			addNewRectOptions(c, theStack, pq, i);
+		}
+	}
+
+	private void addNewRectOptions(Compaction c, List<VertexTurn> theStack,
 			PriorityQueue<RectOption> pq, int i) {
-		EnumSet<Match> m = findPattern(theStack, c, result, i);
+		EnumSet<Match> m = findPattern(theStack, c, i);
 		if (m != null) {
 			for (Match match : m) {
 				RectOption ro = createRectOption(theStack, i, match, c);
@@ -253,47 +113,39 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 			}
 		}
 	}
+	
+	enum Action { DISCARD, PUT_BACK, OK};
 
-	private boolean checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq) {
+	protected Action checkRectOptionIsOk(Set<VertexTurn> onStack, RectOption ro, PriorityQueue<RectOption> pq, Compaction c) {
 		boolean allThere = onStack.contains(ro.getExtender()) && onStack.contains(ro.getMeets()) && onStack.contains(ro.getPar())
 				&& onStack.contains(ro.getLink()) && onStack.contains(ro.getPost());
 		if (!allThere) {
 			log.send(log.go() ? null : "Discarding: " + ro);
-			return false;
+			return Action.DISCARD;
 		}
 		
-		if ((ro.scoreJoin != ro.scoreJoin()) || (ro.isPriority != ro.isPriority)) {
+		if (((PrioritisedRectOption) ro).getType() != ((PrioritisedRectOption)ro).calculateType()) {
+			return Action.PUT_BACK;
+		}
+
+		if ((ro.getScore() != ro.getInitialScore())) {
 			// change it and throw it back in
-			log.send(log.go() ? null : "Putting back: " + ro);
-			ro.scoreJoin = ro.scoreJoin();
-			pq.add(ro);
-			return false;
+			return Action.PUT_BACK;
 		}
 		
 		if (pq.size()>0) {
 			RectOption top = pq.peek();
 			if (ro.compareTo(top) == 1) {
-				ro.scoreJoin = ro.scoreJoin();
-				log.send(log.go() ? null : "Putting back: " + ro);
-				pq.add(ro);
-				return false;
+				return Action.PUT_BACK;
 			}
 		}
 		
-		EnumSet<Match> m =matchTurns(ro.vt1, ro.vt2, ro.vt3, ro.vt4, ro.vt5);
-		if (!m.contains(ro.m)) {
-			log.send(log.go() ? null : "Discarding: " + ro);
-			return false;
+		EnumSet<Match> m =matchTurns(ro.getVt1(), ro.getVt2(), ro.getVt3(), ro.getVt4(), ro.getVt5());
+		if (!m.contains(ro.getMatch())) {
+			return Action.DISCARD;
 		}
 		
-		if (!ro.willRect) {
-			// we're supposed to be doing a box-out
-			if (!ro.canBoxout()) {
-				return false;
-			}
-		}
-		
-		return true;
+		return Action.OK;
 		
 	}
 
@@ -301,7 +153,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 	 * Examines a particular rotation pattern on the stack and returns a
 	 * RectOption for it if it can be rectangularized.
 	 */
-	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, List<Dart> out, int index) {
+	protected EnumSet<Match> findPattern(List<VertexTurn> stack, Compaction c, int index) {
 		if (stack.size() < 4)
 			return null;
 
@@ -311,7 +163,7 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		log.send(log.go() ? null : "Checking turns at index ending " + index);
+//		log.send(log.go() ? null : "Checking turns at index ending " + index);
 
 		return matchTurns(vt1, vt2, vt3, vt4, vt5);
 	}
@@ -344,6 +196,8 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 	public boolean turnMatch(Turn t1, Turn t2, Turn t3, List<Turn> turns) {
 		return turns.get(0).equals(t1) && turns.get(1).equals(t2) && turns.get(2).equals(t3);
 	}
+	
+	int rectOptionNo = 0;
 
 	public RectOption createRectOption(List<VertexTurn> stack, int index, Match m, Compaction c) {
 		VertexTurn vt5 = getItemRotating(stack, index);
@@ -351,6 +205,6 @@ public class PrioritizingRectangularizer extends AbstractDartRectangularizer {
 		VertexTurn vt3 = getItemRotating(stack, index - 2);
 		VertexTurn vt2 = getItemRotating(stack, index - 3);
 		VertexTurn vt1 = getItemRotating(stack, index - 4);
-		return new RectOption(vt1, vt2, vt3, vt4, vt5, m, c);
+		return new PrioritisedRectOption(rectOptionNo++, vt1, vt2, vt3, vt4, vt5, m, stack, this);
 	}
 }

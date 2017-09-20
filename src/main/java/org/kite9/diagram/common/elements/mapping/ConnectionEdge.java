@@ -1,10 +1,15 @@
 package org.kite9.diagram.common.elements.mapping;
 
-import org.kite9.diagram.common.elements.AbstractPlanarizationEdge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import java.util.Collections;
+import java.util.Map;
+
+import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 
@@ -14,23 +19,25 @@ import org.kite9.diagram.visualization.planarization.Planarizer;
  * @author robmoffat
  * 
  */
-public class ConnectionEdge extends AbstractPlanarizationEdge {
+public class ConnectionEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
 
-	Connection underlying;
+	final Connection underlying;
+	Connected fromUnderlying;
+	Connected toUnderlying;
 
 	public ConnectionEdge(Vertex from, Vertex to, Connection underlying, Direction d) {
-		super(from, to, underlying.getFromDecoration(), underlying.getFromLabel(), underlying.getToDecoration(),
-				underlying.getToLabel(), d);
-		this.underlying = underlying;
+		this(from, to,  d, true, underlying, underlying.getFrom(), underlying.getTo());
 	}
-	
-	private ConnectionEdge(Vertex from, Vertex to, Connection underlying, Object fromDecoration, 
-			Label fromLabel, Object toDecoration, Label toLabel, Direction d, boolean reversed, boolean straight) {
-		super(from, to, fromDecoration, fromLabel, toDecoration, toLabel, d);
+
+	public ConnectionEdge(Vertex from, Vertex to, Direction d, boolean straight, Connection underlying, Connected fromUnderlying, Connected toUnderlying) {
+		super(from, to, d);
+		this.fromUnderlying = fromUnderlying;
+		this.toUnderlying = toUnderlying;
 		this.underlying = underlying;
-		this.reversed = reversed;
 		this.straight = straight;
 	}
+
+
 
 	public Connection getOriginalUnderlying() {
 		return underlying;
@@ -59,19 +66,36 @@ public class ConnectionEdge extends AbstractPlanarizationEdge {
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new ConnectionEdge(getFrom(), toIntroduce, getOriginalUnderlying(), 
-				getFromDecoration(), getFromLabel(),
-				null, null, 
-				getDrawDirection(), isReversed(), straight);
-		out[1] = new ConnectionEdge(toIntroduce, getTo(), getOriginalUnderlying(), 
-				null, null,
-				getToDecoration(),getToLabel(), getDrawDirection(), isReversed(), straight);
+		out[0] = new ConnectionEdge(getFrom(), toIntroduce, getDrawDirection(), straight, getOriginalUnderlying(), 
+				getFromConnected(), null);
+		out[1] = new ConnectionEdge(toIntroduce, getTo(), getDrawDirection(), straight, getOriginalUnderlying(), null, getToConnected()); 
 
 		return out;
 	}
 
 	@Override
-	public int getLengthCost() {
-		return 1;
+	public boolean isPartOf(DiagramElement de) {
+		return getOriginalUnderlying() == de;
+	}
+
+	@Override
+	public Map<DiagramElement, Direction> getDiagramElements() {
+		return Collections.singletonMap(getOriginalUnderlying(), null);
+	}
+	
+	public Connected getFromConnected() {
+		return fromUnderlying;
+	}
+	
+	public Connected getToConnected() {
+		return toUnderlying;
+	}
+	
+	public void setFromConnected(Connected c) {
+		this.fromUnderlying = c;
+	}
+	
+	public void setToConnected(Connected c) {
+		this.toUnderlying = c;
 	}
 }

@@ -17,8 +17,8 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph(null, "Three", null, null);
 		Arrow a = new Arrow("meets");
 		new Link( a, one);
-		new Link(a, two);
-		new Link( a, three);
+		new TurnLink(a, two);
+		new TurnLink( a, three);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, two, three, a), null);
 
 		renderDiagram(d);
@@ -33,12 +33,12 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 
 		Arrow a = new Arrow("meets");
 		new Link(a, one);
-		new Link(a, two);
-		new Link(a, three);
+		new TurnLink(a, two);
+		new TurnLink(a, three);
 
 		Arrow b = new Arrow("eats");
-		new Link(b, two);
-		new Link( b, three);
+		new TurnLink(b, two);
+		new TurnLink( b, three);
 		new Link(b, four);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, three, four, a, b), null);
 

@@ -35,9 +35,5 @@ public interface RenderingInformation {
 	public Dimension2D getSize();
 
 	public void setSize(Dimension2D size);
-	
-	public Dimension2D getInternalSize();
-
-	public void setInternalSize(Dimension2D size);
 
 }

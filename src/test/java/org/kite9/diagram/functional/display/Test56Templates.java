@@ -35,7 +35,7 @@ public class Test56Templates extends AbstractDisplayFunctionalTest {
 	
 	private String label() {
 		URL u = getClass().getResource("template.svg");
-		String toUse = u.toString() + "#label";
+		String toUse = u.toString() + "#text-label";
 		return "<label id='label' text='This is my Glyph' style='type: connected; sizing: fixed; template: url("+toUse+"); ' />";
 	}
 	

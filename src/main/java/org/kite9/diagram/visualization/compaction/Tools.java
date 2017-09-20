@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction;
 
-import org.kite9.diagram.common.elements.ArtificialElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -17,20 +16,6 @@ public class Tools implements Logable {
 			}
 		}
 	}
-	
-	/**
-	 * Returns the user element represented by this construction element.
-	 */
-	public static Object getUltimateElement(ArtificialElement e) {
-		Object out = e.getOriginalUnderlying();
-		
-		if (out==null) {
-			return e;
-		}
-		
-		return out;
-	}
-
 
 	public String getPrefix() {
 		return "C_TL";

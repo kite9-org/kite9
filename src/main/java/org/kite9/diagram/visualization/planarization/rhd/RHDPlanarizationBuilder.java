@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.Connected;
@@ -607,8 +607,8 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 	
 	protected Container getCommonContainer(DiagramElement from, DiagramElement to) {
 		while (from != to) {
-			int depthFrom = em.getContainerDepth(from);
-			int depthTo = em.getContainerDepth(to);
+			int depthFrom = from.getDepth();
+			int depthTo = to.getDepth();
 			if (depthFrom < depthTo) {
 				to = to.getParent();
 			} else if (depthFrom > depthTo) {

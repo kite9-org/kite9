@@ -25,8 +25,16 @@ public interface CSSConstants {
 	public static final String TRAVERSAL_BOTTOM_PROPERTY = "traversal-bottom";
 	public static final String TRAVERSAL_TOP_PROPERTY = "traversal-top";
 	public static final String TRAVERSAL_RIGHT_PROPERTY = "traversal-right";
-	public static final String TRAVERSAL_LEFT_PROPERTY = "traversal-left";
+	public static final String TRAVERSAL_LEFT_PROPERTY = "traversal-left";	
 	
 	// for importing SVG content into an element
 	public static final String TEMPLATE = "template";
+	
+	// controls which side connections will go into a connected
+	public static final String CONNECTIONS_PROPERTY = "connections";
+	
+	// for aligning content within a container
+	public static final String VERTICAL_ALIGNMENT = "vertical-align";
+	public static final String HORIZONTAL_ALIGNMENT = "horizontal-align";
+	
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -74,13 +73,14 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 	}
 	
 	public CostedDimension size(DiagramElement element, Dimension2D within) {
-		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
-		if (cd==CostedDimension.NOT_DISPLAYABLE) {
-			return cd;
-		}
-		
-		CostedDimension out =  new CostedDimension(snap(cd.getWidth(), element), snap(cd.getHeight(), element), cd.cost);
-		return out;
+//		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
+//		if (cd==CostedDimension.NOT_DISPLAYABLE) {
+//			return cd;
+//		}
+//		
+//		CostedDimension out =  new CostedDimension(snap(cd.getWidth(), element), snap(cd.getHeight(), element), cd.cost);
+//		return out;
+		return null;
 	}
 
 	public String getPrefix() {
@@ -91,23 +91,17 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 		return true;
 	}
 
-	public boolean isVisibleElement(DiagramElement element) {
-		return ded.isVisibleElement(element);
-	}
-
-	public boolean canDisplay(DiagramElement element) {
-		return ded.canDisplay(element);
-	}
-
-	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy) {
-		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy);
-		if (needsSnapping(a, aSide, b, bSide)) {
-			minDist = snap(minDist, 1);		
-			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
-			return minDist;
-		} else {
-			return minDist;
-		}
+	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction xy, DiagramElement along) {
+//		double minDist = ded.getMinimumDistanceBetween(a, aSide, b, bSide, xy, along);
+//		if (needsSnapping(a, aSide, b, bSide)) {
+//			minDist = snap(minDist, 1);		
+//			log.send(log.go() ? null : "Minimum snapped distances between " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + xy + " is " + minDist);
+//			return minDist;
+//		} else {
+//			return minDist;
+//		}
+		
+		return 0;
 	}
 
 	private boolean needsSnapping(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
@@ -116,42 +110,15 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 	}
 
 	@Override
-	public boolean isOutputting() {
-		return ded.isOutputting();
+	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction direction, DiagramElement along, boolean concave) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public void setOutputting(boolean outputting) {
-		ded.setOutputting(outputting);
+	public boolean requiresHopForVisibility(Connection a, Connection b) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	@Override
-	public double getLinkPadding(DiagramElement element, Direction d) {
-		return snap(ded.getLinkPadding(element, d),1);
-	}
-	
-	@Override
-	public double getPadding(DiagramElement element, Direction d) {
-		return ded.getPadding(element, d);
-	}
-
-	@Override
-	public double getTerminatorLength(Terminator terminator) {
-		return ded.getTerminatorLength(terminator);
-	}
-
-	@Override
-	public double getTerminatorReserved(Terminator terminator, Connection c) {
-		return ded.getTerminatorReserved(terminator, c);
-	}
-
-	@Override
-	public boolean requiresDimension(DiagramElement de) {
-		return ded.requiresDimension(de);
-	}
-
-	@Override
-	public double getLinkGutter(DiagramElement element, Direction d) {
-		return snap(ded.getLinkGutter(element, d),1);
-	}
 }

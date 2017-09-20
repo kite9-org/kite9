@@ -8,8 +8,8 @@ import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
-import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
@@ -47,7 +47,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			}
 			return new DiagramImpl(el, context);
 		case LABEL:
-			return new LabelImpl(el, parent, context);
+			switch (sizing) {
+			case MAXIMIZE:
+			case MINIMIZE:
+				return new LabelContainerImpl(el, parent, context);
+			default:
+				return new LabelLeafImpl(el, parent, context);
+			}
 		case DECAL:
 			return new DecalImpl(el, parent, context);
 		case CONNECTED:

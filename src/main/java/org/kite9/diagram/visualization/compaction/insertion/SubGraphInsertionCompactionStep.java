@@ -10,21 +10,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.visualization.compaction.AbstractSegmentModifier;
+import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
-import org.kite9.diagram.visualization.compaction.Segment;
-import org.kite9.diagram.visualization.compaction.Tools;
+import org.kite9.diagram.visualization.compaction.Compactor;
+import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
@@ -39,69 +44,59 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier implements CompactionStep, Logable {
+public class SubGraphInsertionCompactionStep extends AbstractCompactionStep implements CompactionStep, Logable {
 
-	public SubGraphInsertionCompactionStep(CompleteDisplayer displayer) {
-		super(displayer);
+	public SubGraphInsertionCompactionStep(CompleteDisplayer cd) {
+		super(cd);
 	}
 
 	Kite9Log log = new Kite9Log(this);
-	Tools t = new Tools();
 
-	public void compactDiagram(Compaction c) {
 
-		// builds a handy map of faces to dart faces
-		Map<Face, DartFace> faceMap = new HashMap<Face, DartFace>();
-		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			Object underlying = dartFace.getUnderlying();
-			if (underlying instanceof Face) {
-				faceMap.put((Face) underlying, dartFace);
-			}
-		}
-
-		List<Dart> newDarts = new ArrayList<Dart>();
-		Collection<Face> done = new HashSet<>();
+	@Override
+	public void compact(Compaction c, Embedding r, Compactor rc) {
+		log.send("Subgraph Insertion: "+r);
+		Collection<DartFace> done = new HashSet<>();
 
 		// next, recurse through to go bottom up on the insertions
-		for (DartFace dartFace : c.getOrthogonalization().getFaces()) {
-			insertSubFaces(dartFace, faceMap, newDarts, done, c);
+		for (DartFace dartFace : r.getDartFaces()) {
+			insertSubFaces(dartFace, done, c);
 		}
 	}
 
-	private void insertSubFaces(DartFace dartFace, Map<Face, DartFace> faceMap, List<Dart> newDarts, Collection<Face> done, Compaction c) {
+	private void insertSubFaces(DartFace dartFace, Collection<DartFace> done, Compaction c) {
 		if (dartFace == null) {
 			throw new LogicException("Planarization error: dart face not present");
 		}
 		
-		Face underlyingFace = dartFace.getUnderlying();
-
-		if (underlyingFace.getContainedFaces().size() == 0) {
-			return;
+		if (dartFace.getContainedFaces().size() == 0) {
+			return;  // nothing embedded
 		}
 		
-		Segment[] border = c.getFaceSpace(dartFace);
+		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);
+		
+		if ((border == null) || (border == Compaction.DONE)) {
+			// not been rectangularized or already done.
+			return;
+		}
 
 		// get space for the darts to be inserted - this must be an empty
 		// rectangle in the
 		// rectangularization
-		Set<Segment> topSeg = new LinkedHashSet<Segment>();
-		Set<Segment> rightSeg = new LinkedHashSet<Segment>();
-		Set<Segment> leftSeg = new LinkedHashSet<Segment>();
-		Set<Segment> bottomSeg = new LinkedHashSet<Segment>();
-		topSeg.add(border[0]);
-		rightSeg.add(border[1]);
-		bottomSeg.add(border[2]);
-		leftSeg.add(border[3]);
+		Slideable<Segment> top =border.getA();;
+		Slideable<Segment> right = border.getB();
+		Slideable<Segment> bottom = border.getC();
+		Slideable<Segment> left = border.getD();
 
 		Direction directionOfInsertion = null;
 		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
 
-		for (Face ef : underlyingFace.getContainedFaces()) {
-			Direction returned = addLowestContainmentIndex(faceMap.get(ef), faceInsertionOrder);
+		for (DartFace df : dartFace.getContainedFaces()) {
+			Direction returned = addLowestContainmentIndex(df, faceInsertionOrder);
 			if (directionOfInsertion == null) {
 				directionOfInsertion = returned;
 			} else if (directionOfInsertion != returned) {
-				throw new LogicException("Containment problem for " + ef);
+				throw new LogicException("Containment problem for " + df);
 			}
 		}
 
@@ -114,48 +109,47 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 
 		for (Integer i : order) {
 			DartFace embeddedDartFace = faceInsertionOrder.get(i);
-			if (!done.contains(embeddedDartFace.getUnderlying())) {
-				log.send(log.go() ? null : "Inserting face: " + embeddedDartFace.getUnderlying().id + " into: " + dartFace.getUnderlying().id);
+			if (!done.contains(embeddedDartFace)) {
 				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
-				
-				insertSubFaces(embeddedDartFace, faceMap, newDarts, done, c);
-	
+					
 				// find the segment border of the subgraph being inserted
-				Set<Segment> lLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
-						Direction.LEFT);
-				Set<Segment> rLimit = getLimits(embeddedDartFace, c.getVerticalSegments(), c.getVerticalVertexSegmentMap(),
-						Direction.RIGHT);
-				Set<Segment> uLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
-						.getHorizontalVertexSegmentMap(), Direction.UP);
-				Set<Segment> dLimit = getLimits(embeddedDartFace, c.getHorizontalSegments(), c
-						.getHorizontalVertexSegmentMap(), Direction.DOWN);
-	
+				Rectangle<Slideable<Segment>> limits = c.getFaceSpace(embeddedDartFace);
+				
+				Slideable<Segment> uLimit = limits.getA();
+				Slideable<Segment> rLimit = limits.getB();
+				Slideable<Segment> dLimit = limits.getC();
+				Slideable<Segment> lLimit = limits.getD();
+				
 				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
 						|| (directionOfInsertion == Direction.LEFT)) {
-					separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
-					separate(bottomSeg, dLimit, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
-					separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
-					leftSeg = rLimit;
+					separate(top, uLimit);
+					separate(dLimit, bottom);
+					separate(left, lLimit);
+					left = rLimit;
 				} else {
-					separate(topSeg, uLimit, c.getVerticalVertexSegmentMap(), Direction.UP, c, newDarts);
-					separate(leftSeg, lLimit, c.getHorizontalVertexSegmentMap(), Direction.LEFT, c, newDarts);
-					separate(rightSeg, rLimit, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
-					topSeg = dLimit;
+					separate(top, uLimit);
+					separate(left, lLimit);
+					separate(rLimit, right);
+					top = dLimit;
 				}
 				
 				addedSomething = true;
-				done.add(embeddedDartFace.getUnderlying());
+				done.add(embeddedDartFace);
 			}
 		}
 
 		if (addedSomething) {
 			if ((directionOfInsertion == Direction.DOWN) || (directionOfInsertion == Direction.UP)) {
-				separate(bottomSeg, topSeg, c.getVerticalVertexSegmentMap(), Direction.DOWN, c, newDarts);
+				separate(top, bottom);
 			} else {
-				separate(rightSeg, leftSeg, c.getHorizontalVertexSegmentMap(), Direction.RIGHT, c, newDarts);
+				separate(left, right);
 			}
 		}
+		
+		c.setFaceSpaceToDone(dartFace);
 	}
+
+
 
 	/**
 	 * Used for populating the faceInsertionOrder map, and working out the
@@ -165,21 +159,21 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		int out = Integer.MAX_VALUE;
 		Direction outDir = null;
 
-		for (DartDirection dd : ef.dartsInFace) {
-			Object de = Tools.getUltimateElement(dd.getDart().getFrom());
-			
-			if (de instanceof Connected) {
-				Container c = ((Connected)de).getContainer();
-				
-				if (c!=null) {
-					List<DiagramElement> content = c.getContents();
-					// since the collection is ordered, position is important
-					int index = content.indexOf(de);
-					if (index != -1) {
-						out = Math.min(out, index);
-						outDir = getDirectionOfInsertion(c.getLayout());
-					} else {
-						throw new LogicException("The contained object is not contained in the face or something?");
+		for (DartDirection dd : ef.getDartsInFace()) {
+			for (DiagramElement de : dd.getDart().getDiagramElements().keySet()) {
+				if (de instanceof Connected) {
+					Container c = ((Rectangular)de).getContainer();
+					
+					if (c!=null) {
+						List<DiagramElement> content = c.getContents();
+						// since the collection is ordered, position is important
+						int index = content.indexOf(de);
+						if (index != -1) {
+							out = Math.min(out, index);
+							outDir = getDirectionOfInsertion(c.getLayout());
+						} else {
+							throw new LogicException("The contained object is not contained in the face or something?");
+						}
 					}
 				}
 			}
@@ -188,6 +182,50 @@ public class SubGraphInsertionCompactionStep extends AbstractSegmentModifier imp
 		faceInsertionOrder.put(out, ef);
 
 		return outDir;
+	}
+	
+	/**
+	 * Returns all segments at the extreme <direction> edge within the face.
+	 */
+	protected Set<Slideable<Segment>> getLimits(DartFace df, Map<Vertex, Slideable<Segment>> map, Direction direction) {
+		Set<Slideable<Segment>> out = new LinkedHashSet<>(4);
+		for (DartDirection dd : df.getDartsInFace()) {
+			Dart d = dd.getDart();
+			Vertex from = d.getFrom();
+			Vertex to = d.getTo();
+			Slideable<Segment> fs = map.get(from);
+			Slideable<Segment> ts = map.get(to);
+			if ((!out.contains(fs)) && (testSegment(direction, fs.getUnderlying()))) {
+				out.add(fs);
+			}
+			if ((!out.contains(ts)) && (testSegment(direction, ts.getUnderlying()))) {
+				out.add(ts);
+			}
+		}
+		
+		if (out.size()==0) {
+			throw new LogicException("Could not find far-edge segment?? ");
+		}
+		
+		return out;
+	}
+
+	/** 
+	 * Tests that the segment has no darts in the direction given.
+	 */
+	protected boolean testSegment(Direction dir, Segment possible) {
+		for (Vertex v : possible.getVerticesInSegment()) {
+			for (Edge e : v.getEdges()) {
+				if (e instanceof Dart) {
+					Dart d = (Dart) e;
+					if (d.getDrawDirectionFrom(v)==dir) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	private Direction getDirectionOfInsertion(Layout layoutDirection) {

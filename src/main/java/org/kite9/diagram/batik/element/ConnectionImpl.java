@@ -14,12 +14,11 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.LinkLineStyle;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractSVGDiagramElement implements Connection {
@@ -121,18 +120,6 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	public Connected getTo() {
 		ensureInitialized();
 		return to;
-	}
-
-	@Override
-	public void setFrom(Connected v) {
-		System.out.println("Setting value in something that should be immutable");
-		this.from = v;
-	}
-
-	@Override
-	public void setTo(Connected v) {
-		System.out.println("Setting value in something that should be immutable");
-		this.to = v;
 	}
 
 	@Override
@@ -244,6 +231,11 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	@Override
 	public double getPadding(Direction d) {
 		return padding[d.ordinal()];
+	}
+
+	@Override
+	protected void initializeChildXMLElement(Element child) {
+		// currently does nothing - templating not supported yet for connections.
 	}
 	
 }

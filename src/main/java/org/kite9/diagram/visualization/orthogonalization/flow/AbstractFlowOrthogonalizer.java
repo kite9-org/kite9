@@ -8,9 +8,11 @@ import org.kite9.diagram.common.algorithms.fg.FlowGraphSPP;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.RapidFlowGraphSSP;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -31,10 +33,10 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public abstract class AbstractFlowOrthogonalizer extends FlowOrthogonalizer<MappedFlowGraph> implements Logable {
+public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalizer implements Logable {
 
-	public AbstractFlowOrthogonalizer(OrthBuilder<MappedFlowGraph> fb) {
-		super(fb);
+	public AbstractFlowOrthogonalizer(VertexArranger va, EdgeConverter clc) {
+		super(va, clc);
 	}
 
 	public static final String VERTEX_NODE = "vn";

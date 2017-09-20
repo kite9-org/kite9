@@ -3,8 +3,9 @@ package org.kite9.diagram.functional.display;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
@@ -14,21 +15,11 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.LinkEndStyle;
 
-
-public class Test39TerminatorStylesAndBalancing extends AbstractLayoutFunctionalTest {
-	
-	@Override
-	protected boolean checkDiagramSize() {
-		return true;
-	}
-	
-	@Override
-	protected boolean checkImage() {
-		return true;
-	}
+@Ignore
+public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_39_1_BalancedTwo() throws Exception {

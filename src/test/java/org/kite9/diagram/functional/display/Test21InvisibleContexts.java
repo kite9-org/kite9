@@ -1,24 +1,22 @@
 package org.kite9.diagram.functional.display;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.LinkEndStyle;
 
-public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
+public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 
 	int id = 0;
 	
@@ -28,10 +26,6 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 		for (int i = 0; i < count; i++) {
 			id ++;
 			Glyph g = new Glyph("id"+id, "bob", "id"+id, null, null);
-			List<Kite9XMLElement> textLines = new ArrayList<>();
-			for (int j = 0; j < i; j++) {
-				g.appendChild(new TextLine("Some text"));
-			}
 			out.add(g);
 		}
 		return out;
@@ -39,7 +33,7 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 	
 	
 	@Test
-	public void test_21_1_3x3NoLinks() throws IOException {
+	public void test_21_1_3x3NoLinks() throws Exception {
 		List<Kite9XMLElement> row1 = createGlyphs(3);
 		List<Kite9XMLElement> row2 = createGlyphs(3);
 		List<Kite9XMLElement> row3 = createGlyphs(3);
@@ -55,7 +49,7 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_21_2_Nx3NoLinks() throws IOException {
+	public void test_21_2_Nx3NoLinks() throws Exception {
 		List<Kite9XMLElement> row1 = createGlyphs(8);
 		List<Kite9XMLElement> row2 = createGlyphs(7);
 		List<Kite9XMLElement> row3 = createGlyphs(5);
@@ -71,7 +65,7 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_21_3_Nx3SomeLinksWithDirectedContext() throws IOException {
+	public void test_21_3_Nx3SomeLinksWithDirectedContext() throws Exception {
 		List<Kite9XMLElement> row1 = createGlyphs(8);
 		List<Kite9XMLElement> row2 = createGlyphs(7);
 		List<Kite9XMLElement> row3 = createGlyphs(15);
@@ -95,7 +89,7 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_21_4_Nx3SomeLinksWithLinkedContexts() throws IOException {
+	public void test_21_4_Nx3SomeLinksWithLinkedContexts() throws Exception {
 		List<Kite9XMLElement> row1 = createGlyphs(8);
 		List<Kite9XMLElement> row2 = createGlyphs(7);
 		List<Kite9XMLElement> row3 = createGlyphs(15);
@@ -119,7 +113,7 @@ public class Test21InvisibleContexts extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_21_5_hiddenContext() throws IOException {
+	public void test_21_5_hiddenContext() throws Exception {
 		Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
 		Arrow directed = new Arrow("directed");
 		

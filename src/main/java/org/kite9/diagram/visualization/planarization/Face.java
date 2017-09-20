@@ -7,9 +7,11 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
-import org.kite9.diagram.common.elements.Edge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
@@ -39,9 +41,11 @@ import org.kite9.framework.logging.Table;
  */
 public class Face implements Deterministic {
 	
-	private List<Edge> boundary = new ArrayList<Edge>();
+	private List<PlanarizationEdge> boundary = new ArrayList<PlanarizationEdge>();
 	
 	private List<Vertex> corners = new ArrayList<Vertex>();
+
+	private Rectangular partOf;
 	
 	private boolean outerFace = false;
 	
@@ -49,19 +53,27 @@ public class Face implements Deterministic {
 		StringBuffer out = new StringBuffer(300);
 		out.append("[FACE: "+id+(outerFace?"outer"+(containedBy == null ? "" : ", inside "+containedBy.id) :"inner")+"\n");
 		
+		if (partOf != null) {
+			out.append("  Part of: ");
+			out.append(partOf);
+			out.append("\n");
+		}
+		
 		if (boundary.size() == 0) {
-			out.append(" "+corners.get(0));
+			if (corners.size() > 0) {
+				out.append(" "+corners.get(0));
+			}
 		} else {
 		
 			Table t = new Table();
-			t.addRow("Vertex", "Direction", "Contradicting", "Underlying");
+			t.addRow("Vertex", "Direction", "Contradicting", "Underlyings");
 			for (int i = 0; i < this.vertexCount(); i++) {
 				Vertex v = corners.get(i);
-				Edge e = boundary.get(i);
+				PlanarizationEdge e = boundary.get(i);
 				Direction d = e.getDrawDirectionFrom(v);
-				DiagramElement underlying = e.getOriginalUnderlying();
+				Set<DiagramElement> underlyings = e.getDiagramElements().keySet();
 				boolean contradicting = Tools.isUnderlyingContradicting(e);
-				t.addRow(v.toString(),d, contradicting ? "C" : "", underlying);
+				t.addRow(v.toString(),d, contradicting ? "C" : "", underlyings);
 			}
 			t.display(out);
 		}
@@ -122,7 +134,7 @@ public class Face implements Deterministic {
 		return boundary.contains(e);
 	}
 	
-	public Iterable<Edge> edgeIterator() {
+	public Iterable<PlanarizationEdge> edgeIterator() {
 		return boundary;
 	}
 	
@@ -130,12 +142,12 @@ public class Face implements Deterministic {
 		return corners;
 	}
 	
-	public void add(Vertex v, Edge e) {
+	public void add(Vertex v, PlanarizationEdge e) {
 		corners.add(v);
 		boundary.add(e);
 	}
 	
-	public void add(int index, Vertex v, Edge e) {
+	public void add(int index, Vertex v, PlanarizationEdge e) {
 		corners.add(index, v);
 		boundary.add(index, e);
 	}
@@ -145,7 +157,7 @@ public class Face implements Deterministic {
 		boundary.remove(index);
 	}
 	
-	public void replaceEdge(Edge e, Edge with) {
+	public void replaceEdge(PlanarizationEdge e, PlanarizationEdge with) {
 		for (int i = 0; i < edgeCount(); i++) {
 			Edge current = boundary.get(i);
 			if (current==e) {
@@ -168,7 +180,9 @@ public class Face implements Deterministic {
 	}
 	
 	private int normalize(int i) {
-		if (i>=boundary.size()) {
+		if (boundary.size() == 0) {
+			return 0;
+		} else if (i>=boundary.size()) {
 			return i % boundary.size();
 		} else if (i<0) {
 			return (i+boundary.size()) % boundary.size();
@@ -177,12 +191,12 @@ public class Face implements Deterministic {
 		}
 	}
 
-	public Edge getBoundary(int i) {
+	public PlanarizationEdge getBoundary(int i) {
 		i = normalize(i);
 		return boundary.get(i);
 	}
 	
-	public void reset(List<Edge> boundary, List<Vertex> corners) {
+	public void reset(List<PlanarizationEdge> boundary, List<Vertex> corners) {
 		this.boundary = boundary;
 		this.corners  =corners;
 		checkFaceIntegrity();
@@ -191,7 +205,7 @@ public class Face implements Deterministic {
 	/**
 	 * Works out the list of vertices for the edges
 	 */
-	public void reset(List<Edge> boundary) {
+	public void reset(List<PlanarizationEdge> boundary) {
 		List<Vertex> vList = createVertexList(boundary.get(0).getFrom(), boundary);
 		if (vList == null) {
 			vList = createVertexList(boundary.get(0).getTo(), boundary);
@@ -202,7 +216,7 @@ public class Face implements Deterministic {
 		reset(boundary, vList);
 	}
 	
-	private List<Vertex> createVertexList(Vertex from, List<Edge> boundary) {
+	private List<Vertex> createVertexList(Vertex from, List<PlanarizationEdge> boundary) {
 		ArrayList<Vertex> out = new ArrayList<Vertex>(boundary.size());
 		int b = 0;
 		do {
@@ -296,8 +310,8 @@ public class Face implements Deterministic {
 		return out;
 	}
 	
-	public List<Edge> getEdgesCopy() {
-		return new ArrayList<Edge>(boundary);
+	public List<PlanarizationEdge> getEdgesCopy() {
+		return new ArrayList<PlanarizationEdge>(boundary);
 	}
 	
 	/**
@@ -342,7 +356,7 @@ public class Face implements Deterministic {
 	/**
 	 * Splits the current face in two from the given indexes.  The new face is returned, this face is modified.
 	 */
-	public Face split(int start, int end, Edge repair) { 
+	public Face split(int start, int end, PlanarizationEdge repair) { 
 		Face f2 = pln.createFace();
 		f2.boundary = getRotatingSubset(boundary, end, start, false);
 		boundary = getRotatingSubset(boundary, start, end, false);
@@ -359,7 +373,7 @@ public class Face implements Deterministic {
 	 * This is used where an edge appears twice in the face already. 
 	 */
 	public Face split(Edge e) {
-		List<Edge> newBoundary = new ArrayList<Edge>();
+		List<PlanarizationEdge> newBoundary = new ArrayList<PlanarizationEdge>();
 		List<Vertex> newCorners = new ArrayList<Vertex>();
 		Face f2 = pln.createFace();
 		
@@ -463,6 +477,12 @@ public class Face implements Deterministic {
 		return boundary.size();
 	}
 
-	
+	public Rectangular getPartOf() {
+		return partOf;
+	}
+
+	public void setPartOf(Rectangular partOf) {
+		this.partOf = partOf;
+	}
 	
 }

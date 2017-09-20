@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed;
 
 import java.util.Collection;
@@ -34,9 +31,9 @@ public class DirectedMergeState extends BasicMergeState {
 	
 	public ContainerMergeType getContainerMergeType(Group a, Group b) {
 		boolean common = hasCommonLiveContainer(a, b);
-		boolean increases = increasesLiveContainers(a, b);
+		boolean increases = increasesContainers(a, b);
 		if (common) {
-			return increases ? ContainerMergeType.JOINING_LIVE_CONTAINERS : ContainerMergeType.WITHIN_LIVE_CONTAINER;
+			return increases ? ContainerMergeType.JOINING_EXTRA_CONTAINERS : ContainerMergeType.WITHIN_LIVE_CONTAINER;
 		} else {
 			return ContainerMergeType.NO_LIVE_CONTAINER;
 		}
@@ -60,15 +57,15 @@ public class DirectedMergeState extends BasicMergeState {
 	 * If the resulting group is going to end up with more live containers than a or b individually,
 	 * return true.
 	 */
-	public boolean increasesLiveContainers(Group a,
+	public boolean increasesContainers(Group a,
 			Group b) {
 		Map<Container, GroupContainerState> ac = getContainersFor(a);
 		Map<Container, GroupContainerState> bc = getContainersFor(b);
 		
-		return isLiveContainerSuperset(ac, bc) && isLiveContainerSuperset(bc, ac);
+		return hasDifferentContainers(ac, bc) && hasDifferentContainers(bc, ac);
 	}
 
-	private boolean isLiveContainerSuperset(Map<Container, GroupContainerState> ac, Map<Container, GroupContainerState> bc) {
+	private boolean hasDifferentContainers(Map<Container, GroupContainerState> ac, Map<Container, GroupContainerState> bc) {
 		for (Container container : ac.keySet()) {
 			if (bc.get(container) == null) {
 				return true;

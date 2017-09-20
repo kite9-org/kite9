@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.orthogonalization.flow;
 
-import org.kite9.diagram.common.algorithms.fg.FlowGraph;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.planarization.Planarization;
 
@@ -10,8 +9,8 @@ import org.kite9.diagram.visualization.planarization.Planarization;
  * @author robmoffat
  *
  */
-public interface OrthBuilder<X extends FlowGraph> {
+public interface OrthBuilder {
 
-	public abstract OrthogonalizationImpl build(Planarization pln, X fg);
+	public abstract OrthogonalizationImpl build(Planarization pln);
 
 }

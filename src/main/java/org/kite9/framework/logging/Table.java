@@ -31,7 +31,7 @@ public class Table {
 			} else if (object instanceof Collection<?>) {
 				Collection<?> c = (Collection<?>) object;
 				for (Object object2 : c) {
-					longRow.add(object2.toString());
+					longRow.add(object2 != null ? object2.toString() : "");
 				}
 			} else {
 				longRow.add(object.toString());

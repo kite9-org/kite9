@@ -3,9 +3,9 @@ package org.kite9.diagram.common.elements.mapping;
 import java.util.Collection;
 
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.elements.PlanarizationEdge;
-import org.kite9.diagram.common.elements.Vertex;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.DiagramElement;
 
@@ -30,10 +30,5 @@ public interface ElementMapper {
      * Used for debugging purposes
      */
     public Collection<Vertex> allVertices();
-
-    /**
-     * Useful function for returning the depth of a given element.
-     */
-    public int getContainerDepth(DiagramElement c);
     
 }

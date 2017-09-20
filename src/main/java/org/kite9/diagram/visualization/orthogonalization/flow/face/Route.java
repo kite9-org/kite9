@@ -3,7 +3,7 @@
  */
 package org.kite9.diagram.visualization.orthogonalization.flow.face;
 
-import org.kite9.diagram.common.elements.Edge;
+import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.visualization.planarization.Face;
 
 

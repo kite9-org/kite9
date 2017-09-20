@@ -2,10 +2,11 @@ package org.kite9.diagram.common.elements.mapping;
 
 import org.kite9.diagram.model.DiagramElement;
 
-public class BaseGridCornerVertices extends IndependentCornerVertices {
+public class BaseGridCornerVertices extends AbstractBaseCornerVertices {
 
 	public BaseGridCornerVertices(DiagramElement container, int depth) {
-		super(container, depth);
+		super(container, FULL_RANGE, FULL_RANGE, depth);
+		createInitialVertices(null);
 	}
 
 	@Override

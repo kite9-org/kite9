@@ -91,26 +91,6 @@ class SubdivisionNode extends SimpleNode {
 		return nodeb;
 	}
 	
-	/**
-	 * Recombines the split nodes back together, and returns the node to remove from the diagram
-	 */
-	public void merge(SubdivisionNode with) {
-		for (Arc a : with.getArcs()) {
-			if (a.getFrom()==with) {
-				a.setFrom(this);
-			} else if (a.getTo()==with) {
-				a.setTo(this);
-			} else {
-				throw new LogicException("Arc doesn't meet with");
-			}
-		}
-		this.getArcs().addAll(with.getArcs());
-		with.getArcs().clear();
-		
-		this.setSupply(this.getSupply()+with.getSupply());
-		this.setFlow(this.getFlow()+with.getFlow());
-	}
-	
 	public boolean meets(Collection<PortionNode> portions) {
 		for (Arc a : getArcs()) {
 			Node otherEnd = a.otherEnd(this);

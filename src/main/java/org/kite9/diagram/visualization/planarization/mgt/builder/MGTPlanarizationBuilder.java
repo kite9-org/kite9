@@ -7,13 +7,12 @@ import java.util.Map;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.Vertex;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
+import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;

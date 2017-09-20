@@ -23,13 +23,6 @@ public interface Container extends DiagramElement, Rectangular {
 	
 	public Layout getLayout();
 	
-	/**
-	 * Not sure if we should have this method or not.  - Deprecated for now, needs further thought.
-	 * There are plenty of containers now that don't have labels.
-	 */
-	@Deprecated
-	public Label getLabel();
-	
 	public BorderTraversal getTraversalRule(Direction d);
 	
 	public int getGridColumns();

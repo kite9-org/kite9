@@ -7,9 +7,9 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.kite9.diagram.adl.TextLine;
 
 public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
@@ -57,7 +57,7 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_1_6_TwoGlyphsInContainerFinal() throws Exception {
 		Kite9XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
-		Kite9XMLElement two = new Glyph("Stereo", "Two", null, null);
+		Kite9XMLElement two = new Glyph("Stereo", "Two", listOf(new TextLine("Line 1"), new TextLine("Second Line")), null);
 		Kite9XMLElement con = new Context("Context", createList(one, two), true, null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con));
 		renderDiagram(d);
