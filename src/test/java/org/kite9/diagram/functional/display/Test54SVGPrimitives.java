@@ -36,7 +36,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_54_3_TestTranscoderOnRandomSVGFile() throws Exception {
 		StringWriter out = new StringWriter();
-		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("simple.svg"));
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simple.svg"));
 		RepositoryHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
@@ -93,7 +93,6 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			svgClose();
 		transcodeSVG(someXML);
 	}
-	
 
 	@Test
 	public void test_54_6_GradientFill() throws Exception {
@@ -108,6 +107,16 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		g2d.fill(new Rectangle(0, 0, 100, 100));
 		g2d.stream(new FileWriter(getOutputFile(".svg")));
 		checkIdenticalXML();
+	}
+
+	@Test
+	public void test_54_7_FontSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_fontexample.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
 	}
 	
 	

@@ -1,7 +1,5 @@
 package org.kite9.diagram.batik.format;
 
-import java.util.Map;
-
 import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.framework.common.Kite9ProcessingException;

@@ -9,6 +9,11 @@
           <stop offset="95%" stop-color="#FF6" />
     </linearGradient>
   </defs>
+  <style>
+    .green-class {
+      stroke: green;
+    }
+  </style>
   <g>
     <g element-id="one" layer="MAIN">
       <g fill="white" text-rendering="optimizeLegibility" color-interpolation="linearRGB" color-rendering="optimizeQuality" stroke="white"
@@ -19,7 +24,7 @@
         stroke="gray" color-interpolation="linearRGB" stroke-width="3" stroke-miterlimit="4">
         <rect x="1.5" y="1.5" fill="url(#MyGradient)" width="69" rx="4" ry="4" height="69" />
       </g>
-      <text x="50" y="50" style="stroke: green; font-size: 16;">This is some text</text>
+      <text x="50" y="50" style="font-size: 16;" class="green-class">This is some text</text>
     </g>
   </g>
 </svg>

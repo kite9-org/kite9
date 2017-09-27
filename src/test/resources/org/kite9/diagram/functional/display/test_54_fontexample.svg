@@ -1,0 +1,27 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @font-face {
+     font-family: "opensans-bold-webfont";
+     src: url('opensans-bold-webfont.ttf') format('truetype');
+  }
+   
+  .seriftext {
+     font-family: 'Verdana', serif;
+     font-size: 48px;
+  }
+    
+  .otherfont {
+     font-family: "opensans-bold-webfont";
+     font-size: 50px;
+  }
+  </style>
+  <text x="10" y="100" class="seriftext">
+    Some text
+  </text>
+  
+   <text x="10" y="200" class="otherfont">
+    Some text
+  </text>
+  
+  <text x="10" y="300" style="font: 2em 'Arial', sans-serif;" transform="translate(20,50) skewX(20)" text-decoration="underline">Some text</text>
+</svg>

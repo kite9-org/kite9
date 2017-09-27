@@ -274,17 +274,17 @@
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-svggen</artifactId>
-			<version>1.8</version>
+			<version>1.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-bridge</artifactId>
-			<version>1.8</version>
+			<version>1.9.1</version>
 		</dependency>		
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-ext</artifactId>
-			<version>1.8</version>
+			<version>1.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
@@ -294,12 +294,12 @@
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-rasterizer</artifactId>
-			<version>1.8</version>
+			<version>1.9.1</version>
 		</dependency>		
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-codec</artifactId>
-			<version>1.8</version>
+			<version>1.9.1</version>
 		</dependency>
 	</dependencies>
 

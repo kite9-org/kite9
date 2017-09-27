@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.bridge;
 
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
@@ -8,9 +9,8 @@ import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 
 import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.bridge.ConcreteTextLayoutFactory;
+import org.apache.batik.bridge.FlowGlyphLayout;
 import org.apache.batik.bridge.FlowTextPainter;
-import org.apache.batik.bridge.GlyphLayout;
 import org.apache.batik.bridge.TextLayoutFactory;
 import org.apache.batik.bridge.TextNode;
 import org.apache.batik.bridge.TextSpanLayout;
@@ -18,6 +18,8 @@ import org.apache.batik.bridge.svg12.SVG12TextElementBridge;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
 
@@ -28,35 +30,58 @@ import org.w3c.dom.Element;
  *
  */
 public class TextBridge extends SVG12TextElementBridge {
+	
+	
+	
+	public TextBridge() {
+		super();
+		try {
+			this.someFont1 = Font.createFont(Font.TRUETYPE_FONT, TextBridge.class.getResourceAsStream("/fonts/Arial Italic.ttf"));
+			this.someFont2 = Font.createFont(Font.TRUETYPE_FONT, TextBridge.class.getResourceAsStream("/fonts/opensans-regular-webfont.ttf"));
+		} catch (Exception e) {
+			throw new LogicException();
+		}
+	}
 
-	private static final TextLayoutFactory TEXT_LAYOUT_FACTORY = new ConcreteTextLayoutFactory() {
+	private final Font someFont1;
+	private final Font someFont2;
+	
+
+	private final TextLayoutFactory TEXT_LAYOUT_FACTORY = new TextLayoutFactory() {
 
 		@Override
 		public TextSpanLayout createTextLayout(AttributedCharacterIterator aci, int[] charMap, Point2D offset, FontRenderContext frc) {
-			return new GlyphLayout(aci, charMap, offset, frc) {
+			return new FlowGlyphLayout(aci, charMap, offset, frc) {
 
 				@Override
 				public void draw(Graphics2D g2d) {
-					Paint basePaint = g2d.getPaint();
-					TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
-			        if (tpi == null) return;
-			        if (!tpi.visible) return;
+					if (g2d instanceof SVGGraphics2D) {
+						Paint basePaint = g2d.getPaint();
+						Font baseFont = g2d.getFont();
+						TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
+				        if (tpi == null) return;
+				        if (!tpi.visible) return;
 
-			        Paint  fillPaint   = tpi.fillPaint;
-			        
-			        if (fillPaint != null) {
-		                g2d.setPaint(fillPaint);
-						g2d.drawString(aci, (float) getOffset().getX(), (float) getOffset().getY());
-		            }
-
+				        Paint  fillPaint   = tpi.fillPaint;
 				        
-					g2d.setPaint(basePaint);
+				        if (fillPaint != null) {
+				        	g2d.setFont(someFont2.deriveFont(40));
+			                g2d.setPaint(fillPaint);
+							g2d.drawString(aci, (float) getOffset().getX(), (float) getOffset().getY());
+			            }
+
+					        
+						g2d.setPaint(basePaint);
+						g2d.setFont(baseFont);
+					} else {
+						super.draw(g2d);
+					}
 				}
 			};
 		}
 	};
 
-	private static final FlowTextPainter TEXT_PAINTER = new FlowTextPainter() {
+	private final FlowTextPainter TEXT_PAINTER = new FlowTextPainter() {
 
 		@Override
 		protected TextLayoutFactory getTextLayoutFactory() {

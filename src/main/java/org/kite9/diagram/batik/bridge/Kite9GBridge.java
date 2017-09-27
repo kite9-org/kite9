@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * Extends the regular <g> element bridge so that it generates {@link IdentifiableGraphicsNode}s.
+ * Extends the regular &lt;g&gt; element bridge so that it generates {@link IdentifiableGraphicsNode}s.
  * 
  * @author robmoffat
  *
