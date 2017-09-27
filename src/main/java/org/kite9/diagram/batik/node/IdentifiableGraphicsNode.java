@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.GraphicsLayerName;
-import org.kite9.diagram.batik.format.GroupManagingSVGGraphics2D;
+import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
@@ -43,14 +43,14 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 	}
 
 	private void finishGroup(Graphics2D g2d) {
-		if (g2d instanceof GroupManagingSVGGraphics2D) {
-			((GroupManagingSVGGraphics2D)g2d).finishGroup(id);
+		if (g2d instanceof ExtendedSVGGraphics2D) {
+			((ExtendedSVGGraphics2D)g2d).finishGroup(id);
 		}
 	}
 
 	private void createGroup(Graphics2D g2d) {
-		if (g2d instanceof GroupManagingSVGGraphics2D) {
-			((GroupManagingSVGGraphics2D)g2d).createGroup(id);
+		if (g2d instanceof ExtendedSVGGraphics2D) {
+			((ExtendedSVGGraphics2D)g2d).createGroup(id);
 		}
 	}	
 	

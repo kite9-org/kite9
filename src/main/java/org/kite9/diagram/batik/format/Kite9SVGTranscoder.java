@@ -25,6 +25,7 @@ import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
+import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
@@ -82,7 +83,8 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
         Document doc = this.createDocument(output);
-        GroupManagingSVGGraphics2D svgGenerator = new GroupManagingSVGGraphics2D(doc);
+        Templater t = ((Kite9BridgeContext) ctx).getTemplater();
+        ExtendedSVGGraphics2D svgGenerator = new ExtendedSVGGraphics2D(doc, t);
         svgGenerator.setUnsupportedAttributes(null);// writes as text
         
         root.paint(svgGenerator);

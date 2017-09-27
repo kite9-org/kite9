@@ -2,7 +2,6 @@ package org.kite9.diagram.batik.element;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,13 +15,14 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
- * Handles copying of XML from one document to another, and the CSS template directive.
+ * Handles copying of XML from one document to another, and the CSS 'template' directive.
  * 
  * @author robmoffat
  *
@@ -69,10 +69,6 @@ public class Templater {
 		public String getText() {
 			return text;
 		}
-
-		
-		
-		
 	}
 	
 	
@@ -103,7 +99,8 @@ public class Templater {
 					ADLDocument templateDoc = loadReferencedDocument(resource);
 					Element e = templateDoc.getElementById(fragment);
 
-					copyIntoDocument(in, e, resource);
+					ValueReplacer vr = new ParentElementValueReplacer(in);
+					copyIntoElement(in, e, resource, vr, true);
 				} catch (Exception e) {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 				}
@@ -111,10 +108,47 @@ public class Templater {
 		}
 	}
 
-	public void copyIntoDocument(Kite9XMLElement in, Element template, String resource) {
-		// copy all children of e into the new document
-		ValueReplacer vr = new ParentElementValueReplacer(in);
-		
+	/**
+	 * Copies from source into destination, for duplicating XML.
+	 * @param dest
+	 * @param source
+	 * @param resourceBase  Add this if you want to include an xml:base on each copied element (to preserve references to defs)
+	 * @param vr Add this if you want to do value replacement in the source XML.
+	 * @param removeExistingText Add this to clear out text nodes in dest before copying
+	 */
+	public void copyIntoElement(Element dest, Element source, String resourceBase, ValueReplacer vr, boolean removeExistingText) {
+		if (removeExistingText) {
+			removeTextNodes(dest);
+		}
+
+		NodeList children = source.getChildNodes();
+		// copying in reverse order (just simpler, and maintains existing content)
+		for (int i = children.getLength() - 1; i >= 0; i--) {
+			Node n = children.item(i);
+
+			Node copy = ((Element) n).cloneNode(true);
+			Document thisDoc = dest.getOwnerDocument();
+			thisDoc.adoptNode(copy);
+
+			if (dest.getChildNodes().getLength() == 0) {
+				dest.appendChild(copy);
+			} else {
+				Node first = dest.getChildNodes().item(0);
+				dest.insertBefore(copy, first);
+			}
+
+			if ((n instanceof Element) && (resourceBase != null)) {
+				// ensure xml:base is set so references work (e.g. to <defs> for
+				// gradients or whatever)
+				// in the copied content
+				((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resourceBase);
+			}
+
+			performReplace(copy, vr);
+		}
+	}
+
+	private void removeTextNodes(Element in) {
 		// remove any text nodes, as this will be expanded out where needed by the ValueReplacer
 		NodeList existing = in.getChildNodes();
 		for (int i = 0; i < existing.getLength(); i++) {
@@ -123,44 +157,7 @@ public class Templater {
 				in.removeChild(n);
 			}
 		}
-		
-		NodeList children = template.getChildNodes();
-		for (int i = children.getLength()-1; i >=0; i--) {
-			Node n = children.item(i);
-
-			if (n instanceof Element) {
-				Node copy = ((Element) n).cloneNode(true);
-				ADLDocument thisDoc = in.getOwnerDocument();
-				thisDoc.adoptNode(copy);
-
-				if (in.getChildXMLElementCount() == 0) {
-					in.appendChild(copy);
-				} else {
-					Kite9XMLElement first = in.iterator().next();
-					in.insertBefore(copy, first);
-				}
-
-				// ensure xml:base is set so references work in the copied
-				// content
-				((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resource);
-				
-				performReplace(copy, vr);
-			}
-		}
 	}
-	
-	public static void insertCopyBefore(Node before, Element contentsOf) {
-		Element into = (Element) before.getParentNode();
-		ADLDocument thisDoc = (ADLDocument) into.getOwnerDocument();
-		NodeList toCopy = contentsOf.getChildNodes();
-		for (int i = toCopy.getLength()-1; i >=0; i--) {
-			Node e = toCopy.item(i);
-			Node copy = e.cloneNode(true);
-			thisDoc.adoptNode(copy);
-			into.insertBefore(copy, before);
-		}
-	}
-	
 	
 	private ADLDocument loadReferencedDocument(String resource) throws IOException {
 		return (ADLDocument) loader.loadDocument(resource);

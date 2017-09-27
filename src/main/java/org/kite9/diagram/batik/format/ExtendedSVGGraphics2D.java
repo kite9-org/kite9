@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.format;
 
 import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.kite9.diagram.batik.element.Templater;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -16,17 +17,19 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupManagement, Logable {
+public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG, Logable {
 
 	private Element currentSubgroup;
 	private Kite9Log log = new Kite9Log(this);
+	private Templater templater;
 
-	public GroupManagingSVGGraphics2D(Document doc) {
+	public ExtendedSVGGraphics2D(Document doc, Templater templater) {
 		super(doc,
 			new ImageHandlerBase64Encoder(),
 			new GradientExtensionHandlerBatik(), 
 				false);
 		this.currentSubgroup = getTopLevelGroup();
+		this.templater = templater;
 	}
 
 	@Override
@@ -63,5 +66,10 @@ public class GroupManagingSVGGraphics2D extends SVGGraphics2D implements GroupMa
 	public boolean isLoggingEnabled() {
 		return true;
 	}
-	
+
+	@Override
+	public void transcribeContent(Element e) {
+//		templater.copyIntoDocument(in, template, resource);
+//		currentSubgroup.
+	}
 }
