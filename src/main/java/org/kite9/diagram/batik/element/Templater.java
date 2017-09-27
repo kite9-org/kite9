@@ -100,7 +100,7 @@ public class Templater {
 					Element e = templateDoc.getElementById(fragment);
 
 					ValueReplacer vr = new ParentElementValueReplacer(in);
-					copyIntoElement(in, e, resource, vr, true);
+					transcribeContent(in, e, resource, vr, true);
 				} catch (Exception e) {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 				}
@@ -116,7 +116,7 @@ public class Templater {
 	 * @param vr Add this if you want to do value replacement in the source XML.
 	 * @param removeExistingText Add this to clear out text nodes in dest before copying
 	 */
-	public void copyIntoElement(Element dest, Element source, String resourceBase, ValueReplacer vr, boolean removeExistingText) {
+	public void transcribeContent(Element dest, Element source, String resourceBase, ValueReplacer vr, boolean removeExistingText) {
 		if (removeExistingText) {
 			removeTextNodes(dest);
 		}

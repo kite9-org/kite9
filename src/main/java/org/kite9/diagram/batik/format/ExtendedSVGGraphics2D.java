@@ -69,7 +69,6 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 
 	@Override
 	public void transcribeContent(Element e) {
-//		templater.copyIntoDocument(in, template, resource);
-//		currentSubgroup.
+		templater.transcribeContent(currentSubgroup, e, null, null, false);
 	}
 }
