@@ -126,26 +126,46 @@ public class Templater {
 		for (int i = children.getLength() - 1; i >= 0; i--) {
 			Node n = children.item(i);
 
-			Node copy = ((Element) n).cloneNode(true);
-			Document thisDoc = dest.getOwnerDocument();
-			thisDoc.adoptNode(copy);
-
-			if (dest.getChildNodes().getLength() == 0) {
-				dest.appendChild(copy);
-			} else {
-				Node first = dest.getChildNodes().item(0);
-				dest.insertBefore(copy, first);
-			}
-
-			if ((n instanceof Element) && (resourceBase != null)) {
-				// ensure xml:base is set so references work (e.g. to <defs> for
-				// gradients or whatever)
-				// in the copied content
-				((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resourceBase);
-			}
-
-			performReplace(copy, vr);
+			transcribeNode(dest, n, vr, resourceBase, false);
 		}
+	}
+
+	public void transcribeNode(Element dest, Node source, ValueReplacer vr, String resourceBase, boolean removePrefix) {
+		Node copy = source.cloneNode(true);
+		
+		if (removePrefix) {
+			removePrefixes(copy);
+		}
+		
+		Document thisDoc = dest.getOwnerDocument();
+		thisDoc.adoptNode(copy);
+
+		if (dest.getChildNodes().getLength() == 0) {
+			dest.appendChild(copy);
+		} else {
+			Node first = dest.getChildNodes().item(0);
+			dest.insertBefore(copy, first);
+		}
+
+		if ((source instanceof Element) && (resourceBase != null)) {
+			// ensure xml:base is set so references work (e.g. to <defs> for
+			// gradients or whatever)
+			// in the copied content
+			((Element) copy).setAttributeNS(XMLConstants.XML_NAMESPACE_URI, XMLConstants.XML_BASE_ATTRIBUTE, resourceBase);
+		}
+
+		performReplace(copy, vr);
+	}
+
+	private void removePrefixes(Node copy) {
+		if (copy instanceof Element) {
+			((Element)copy).setPrefix("");
+		} 
+		
+		for (int i = 0; i < copy.getChildNodes().getLength(); i++) {
+			removePrefixes(copy.getChildNodes().item(i));
+		}
+		
 	}
 
 	private void removeTextNodes(Element in) {
@@ -169,6 +189,9 @@ public class Templater {
 	 * turned into `GraphicsNode`s .  
 	 */
 	public void performReplace(Node n, ValueReplacer vr) {
+		if (vr == null)
+			return;
+		
 		if (n instanceof Element) {
 			performReplace(n.getChildNodes(), vr);
 			for (int j = 0; j < n.getAttributes().getLength(); j++) {

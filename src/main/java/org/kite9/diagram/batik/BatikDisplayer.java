@@ -59,7 +59,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	/**
-	 * Handle scaling before translation, otherwise everything goes wacky.
+	 * Handle scaling before translation, otherwise everything goes whack.
 	 */
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){

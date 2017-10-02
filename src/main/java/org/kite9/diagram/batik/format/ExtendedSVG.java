@@ -20,8 +20,12 @@ public interface ExtendedSVG {
 	public void finishGroup(String id);
 	
 	/**
-	 * Copies some XML into the SVG file.
+	 * Instead of performing the usual paint, transcribes the XML underlying the graphics node 
+	 * straight into the output SVG.
 	 */
-	public void transcribeContent(Element e);
+	public void transcribeXML(Element el);
+	
+//	public DOMGroupManager getDomGroupManager();
+	
 }
 

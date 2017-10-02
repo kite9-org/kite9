@@ -84,7 +84,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		super.transcode(input, output);
         Document doc = this.createDocument(output);
         Templater t = ((Kite9BridgeContext) ctx).getTemplater();
-        ExtendedSVGGraphics2D svgGenerator = new ExtendedSVGGraphics2D(doc, t);
+        ExtendedSVGGraphics2D svgGenerator = new ExtendedSVGGraphics2D(doc, t, ctx);
         svgGenerator.setUnsupportedAttributes(null);// writes as text
         
         root.paint(svgGenerator);

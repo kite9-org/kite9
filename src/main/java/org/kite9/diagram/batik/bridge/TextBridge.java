@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 
@@ -19,6 +20,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.kite9.diagram.batik.format.ExtendedSVG;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
@@ -47,15 +49,23 @@ public class TextBridge extends SVG12TextElementBridge {
 	private final Font someFont2;
 	
 
-	private final TextLayoutFactory TEXT_LAYOUT_FACTORY = new TextLayoutFactory() {
+	class ExtendedTextLayoutFactory implements TextLayoutFactory {
+		
+		public ExtendedTextLayoutFactory(Element el) {
+			super();
+			this.el = el;
+		}
 
+		private Element el;
+		
 		@Override
 		public TextSpanLayout createTextLayout(AttributedCharacterIterator aci, int[] charMap, Point2D offset, FontRenderContext frc) {
 			return new FlowGlyphLayout(aci, charMap, offset, frc) {
 
 				@Override
 				public void draw(Graphics2D g2d) {
-					if (g2d instanceof SVGGraphics2D) {
+					if (g2d instanceof ExtendedSVG) {
+						ExtendedSVG eSVG = (ExtendedSVG) g2d;
 						Paint basePaint = g2d.getPaint();
 						Font baseFont = g2d.getFont();
 						TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
@@ -67,9 +77,8 @@ public class TextBridge extends SVG12TextElementBridge {
 				        if (fillPaint != null) {
 				        	g2d.setFont(someFont2.deriveFont(40));
 			                g2d.setPaint(fillPaint);
-							g2d.drawString(aci, (float) getOffset().getX(), (float) getOffset().getY());
+			                eSVG.transcribeXML(el);
 			            }
-
 					        
 						g2d.setPaint(basePaint);
 						g2d.setFont(baseFont);
@@ -81,22 +90,18 @@ public class TextBridge extends SVG12TextElementBridge {
 		}
 	};
 
-	private final FlowTextPainter TEXT_PAINTER = new FlowTextPainter() {
-
-		@Override
-		protected TextLayoutFactory getTextLayoutFactory() {
-			return TEXT_LAYOUT_FACTORY;
-		}
-
-	};
-
 	@Override
 	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
 		super.buildGraphicsNode(ctx, e, node);
-		((TextNode)node).setTextPainter(TEXT_PAINTER);
+		((TextNode)node).setTextPainter(new FlowTextPainter() {
+			
+			
+			@Override
+			protected TextLayoutFactory getTextLayoutFactory() {
+				return new ExtendedTextLayoutFactory(e);
+			}
+			
+		});
 	}
-
-
-	
 	
 }

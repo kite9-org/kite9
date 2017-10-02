@@ -1,5 +1,11 @@
 package org.kite9.diagram.batik.format;
 
+import java.awt.geom.Ellipse2D;
+import java.util.Map;
+
+import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.svggen.DOMGroupManager;
 import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.kite9.diagram.batik.element.Templater;
@@ -8,6 +14,8 @@ import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 
 /**
  * Since we are constructing an SVG Document using a Graphics2D object, this
@@ -22,14 +30,16 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	private Element currentSubgroup;
 	private Kite9Log log = new Kite9Log(this);
 	private Templater templater;
+	private BridgeContext ctx;
 
-	public ExtendedSVGGraphics2D(Document doc, Templater templater) {
+	public ExtendedSVGGraphics2D(Document doc, Templater templater, BridgeContext ctx) {
 		super(doc,
 			new ImageHandlerBase64Encoder(),
 			new GradientExtensionHandlerBatik(), 
 				false);
 		this.currentSubgroup = getTopLevelGroup();
 		this.templater = templater;
+		this.ctx = ctx;
 	}
 
 	@Override
@@ -68,7 +78,12 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	}
 
 	@Override
-	public void transcribeContent(Element e) {
-		templater.transcribeContent(currentSubgroup, e, null, null, false);
+	public void transcribeXML(Element e) {
+		Element copy = (Element) e.cloneNode(true);
+		Document thisDoc = getGeneratorContext().getDOMFactory();
+		copy.setPrefix("");
+		thisDoc.adoptNode(copy);
+		
+		domGroupManager.addElement(copy, DOMGroupManager.FILL);
 	}
 }

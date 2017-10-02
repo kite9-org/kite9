@@ -5,13 +5,24 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.HaltingThread;
 import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.w3c.dom.Element;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
 	private String id;
 	private GraphicsLayerName layer;
+	private Element theElement;
+
+	public Element getTheElement() {
+		return theElement;
+	}
+
+	public void setTheElement(Element theElement) {
+		this.theElement = theElement;
+	}
 
 	public GraphicsLayerName getLayer() {
 		return layer;
@@ -41,6 +52,48 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 		super.paint(g2d);
 		finishGroup(g2d);
 	}
+
+//	@Override
+//	public void primitivePaint(Graphics2D g2d) {
+//		if (count == 0) {
+//			return;
+//		}
+//
+//		if (g2d instanceof ExtendedSVGGraphics2D) {
+//			primitivePaintOrTranscribe((ExtendedSVGGraphics2D) g2d);
+//		} else {
+//			super.primitivePaint(g2d);
+//		}
+//
+//	}
+//
+//	private void primitivePaintOrTranscribe(ExtendedSVGGraphics2D g2d) {
+//		 Element text = g2d.getDOMFactory().createElementNS(ExtendedSVGGraphics2D.SVG_NAMESPACE_URI,
+//				 ExtendedSVGGraphics2D.SVG_TEXT_TAG);
+//		  g2d.getDomGroupManager().addElement(text);
+//		
+//		// Thread.currentThread() is potentially expensive, so reuse my instance
+//		// in hasBeenHalted()
+//		Thread currentThread = Thread.currentThread();
+//
+//		// Paint children
+//		for (int i = 0; i < count; ++i) {
+//			if (HaltingThread.hasBeenHalted(currentThread))
+//				return;
+//
+//			GraphicsNode node = children[i];
+//			if (node == null) {
+//				continue;
+//			}
+//			
+//			if (node instanceof Kite9SizedGraphicsNode) {
+//				node.paint(g2d);
+//			} else {
+////				g2d.transcribeXML(node);
+//				node.paint(g2d);
+//			}
+//		}
+//	}
 
 	private void finishGroup(Graphics2D g2d) {
 		if (g2d instanceof ExtendedSVGGraphics2D) {

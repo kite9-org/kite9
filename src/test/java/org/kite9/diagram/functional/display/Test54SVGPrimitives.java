@@ -97,7 +97,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_54_6_GradientFill() throws Exception {
 		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d);
+		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, null, null);
 		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
 		LinearGradientPaint lgp = new LinearGradientPaint(
 				(Point2D) new Point2D.Double(0, 0),
@@ -175,7 +175,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: orange; font-face: sans-serif; '>Some Text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: orange; fill: orange; font-face: sans-serif; '>Some Text</svg:text>";
 	}
 	
 	private String svgRect2() {
