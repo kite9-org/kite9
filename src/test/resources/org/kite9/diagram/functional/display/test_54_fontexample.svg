@@ -15,13 +15,9 @@
      font-size: 50px;
   }
   </style>
-  <text x="10" y="100" class="seriftext">
-    Some text
-  </text>
+  <text x="10" y="100" class="seriftext">Some Verdana Text</text>
   
-   <text x="10" y="200" class="otherfont">
-    Some text
-  </text>
+  <text x="10" y="200" class="otherfont">Some Opensans Text</text>
   
-  <text x="10" y="300" style="font: 2em 'Arial', sans-serif;" transform="translate(20,50) skewX(20)" text-decoration="underline">Some text</text>
+  <text x="10" y="300" style="font-family: 'Arial', sans-serif;" transform="translate(20,50) skewX(20)" text-decoration="underline">Some text</text>
 </svg>

@@ -1,10 +1,16 @@
 package org.kite9.diagram.batik.format;
 
+import java.awt.Font;
 import java.awt.geom.Ellipse2D;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.gvt.font.GVTFont;
+import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.svggen.DOMGroupManager;
 import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -15,6 +21,8 @@ import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import sun.font.AttributeValues;
 
 
 /**
@@ -76,14 +84,38 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	public boolean isLoggingEnabled() {
 		return true;
 	}
+	
+	static class PlaceholderFont extends Font {
+		
+		
+		private String family;
+		
+		public PlaceholderFont(Map<? extends Attribute, ?> attributes, String family) {
+			super(attributes);
+			this.family = family;
+		}
+
+		@Override
+		public String getFamily() {
+			return family;
+		}
+
+		@Override
+		public Font deriveFont(Map<? extends Attribute, ?> attributes) {
+		    return new PlaceholderFont(attributes, family);
+		}
+			
+			
+	}
 
 	@Override
-	public void transcribeXML(Element e) {
-		Element copy = (Element) e.cloneNode(true);
-		Document thisDoc = getGeneratorContext().getDOMFactory();
-		copy.setPrefix("");
-		thisDoc.adoptNode(copy);
+	public Font handleGVTFontFamilies(List<GVTFontFamily> families) {
+		for (GVTFontFamily ff : families) {
+			GVTFont gvtFont = ff.deriveFont(1, new HashMap<>());
+			return new PlaceholderFont(null, ff.getFamilyName());
+			
+		}
 		
-		domGroupManager.addElement(copy, DOMGroupManager.FILL);
+		return null;
 	}
 }

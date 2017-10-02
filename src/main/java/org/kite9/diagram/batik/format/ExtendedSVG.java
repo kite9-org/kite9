@@ -1,6 +1,9 @@
 package org.kite9.diagram.batik.format;
 
-import org.w3c.dom.Element;
+import java.awt.Font;
+import java.util.List;
+
+import org.apache.batik.gvt.font.GVTFontFamily;
 
 /**
  * Marker interface for a `Graphics2D` implementation, to say we are outputting to an SVG file.
@@ -20,12 +23,10 @@ public interface ExtendedSVG {
 	public void finishGroup(String id);
 	
 	/**
-	 * Instead of performing the usual paint, transcribes the XML underlying the graphics node 
-	 * straight into the output SVG.
+	 * Returns a Java2D font which has a font-family which is resolveable.
+	 * Also ensures that the correct @font-face is described in the output SVG.
 	 */
-	public void transcribeXML(Element el);
-	
-//	public DOMGroupManager getDomGroupManager();
+	public Font handleGVTFontFamilies(List<GVTFontFamily> families);
 	
 }
 
