@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.svggen.ImageHandler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -25,7 +26,6 @@ import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
-import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
@@ -37,8 +37,11 @@ import org.xml.sax.XMLFilter;
 public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 	
 	private ADLExtensibleDOMImplementation domImpl;
+	private ResourceReferencer rr;
+	private ImageHandler imageHandler;
 	
-	public Kite9SVGTranscoder() {
+	
+	public Kite9SVGTranscoder(ResourceReferencer rr, ImageHandler imageHandler) {
 		super();
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
@@ -46,6 +49,8 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		domImpl = new ADLExtensibleDOMImplementation();
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
+		this.rr = rr;
+		this.imageHandler = imageHandler;
 	}
 
 	@Override
@@ -78,13 +83,16 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		return doc;
 	}
 	
+	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
+		document.setDocumentURI(uri);
+		super.transcode(document, uri, output);
+	}
 	
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
         Document doc = this.createDocument(output);
-        Templater t = ((Kite9BridgeContext) ctx).getTemplater();
-        ExtendedSVGGraphics2D svgGenerator = new ExtendedSVGGraphics2D(doc, t, ctx);
+        ExtendedSVGGraphics2D svgGenerator = new ExtendedSVGGraphics2D(doc, ctx, imageHandler, rr);
         svgGenerator.setUnsupportedAttributes(null);// writes as text
         
         root.paint(svgGenerator);

@@ -60,7 +60,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			}
 		}
 	}
-
+	
 	private void writeTemplateExpandedSVG(DiagramKite9XMLElement lastDiagram) throws IOException {
 		ADLDocument d = lastDiagram.getOwnerDocument();
 		File f = getOutputFile("-expanded.svg");

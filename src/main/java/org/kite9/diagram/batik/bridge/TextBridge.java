@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
 import org.kite9.diagram.batik.format.ExtendedSVG;
+import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
 import org.w3c.dom.Element;
 
 
@@ -31,22 +33,6 @@ import org.w3c.dom.Element;
  *
  */
 public class TextBridge extends SVG12TextElementBridge {
-	
-	
-	
-	public TextBridge() {
-		super();
-//		try {
-//			this.someFont1 = Font.createFont(Font.TRUETYPE_FONT, TextBridge.class.getResourceAsStream("/fonts/Arial Italic.ttf"));
-//			this.someFont2 = Font.createFont(Font.TRUETYPE_FONT, TextBridge.class.getResourceAsStream("/fonts/opensans-regular-webfont.ttf"));
-//		} catch (Exception e) {
-//			throw new LogicException();
-//		}
-	}
-
-//	private final Font someFont1;
-//	private final Font someFont2;
-	
 
 	class ExtendedTextLayoutFactory implements TextLayoutFactory {
 		
@@ -64,7 +50,7 @@ public class TextBridge extends SVG12TextElementBridge {
 				@Override
 				public void draw(Graphics2D g2d) {
 					if (g2d instanceof ExtendedSVG) {
-						ExtendedSVG eSVG = (ExtendedSVG) g2d;
+						ExtendedSVGGraphics2D eSVG = (ExtendedSVGGraphics2D) g2d;
 						Paint basePaint = g2d.getPaint();
 						Font baseFont = g2d.getFont();
 						TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
@@ -82,7 +68,6 @@ public class TextBridge extends SVG12TextElementBridge {
 					        Font toUse = eSVG.handleGVTFontFamilies(gvtFontFamilies);
 				        	g2d.setFont(toUse);
 			                g2d.setPaint(fillPaint);
-			                //eSVG.transcribeXML(el);
 							g2d.drawString(aci, (float) getOffset().getX(), (float) getOffset().getY());
 			            }
 

@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.batik.ext.awt.LinearGradientPaint;
+import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
@@ -97,7 +98,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_54_6_GradientFill() throws Exception {
 		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, null, null);
+		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, null, new ImageHandlerBase64Encoder(), null);
 		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
 		LinearGradientPaint lgp = new LinearGradientPaint(
 				(Point2D) new Point2D.Double(0, 0),
@@ -113,6 +114,26 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_7_FontSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_fontexample.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_8_ImageSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_9_GradientSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_gradient.svg"));
 		RepositoryHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);

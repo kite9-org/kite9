@@ -5,9 +5,11 @@
      src: url('opensans-bold-webfont.ttf') format('truetype');
   }
    
-  .seriftext {
-     font-family: 'Verdana', serif;
+  .sansseriftext {
+     font-family: 'Verdana', sans-serif;
      font-size: 48px;
+     font-weight: bold;
+     font-style: italic;
   }
     
   .otherfont {
@@ -15,9 +17,13 @@
      font-size: 50px;
   }
   </style>
-  <text x="10" y="100" class="seriftext">Some Verdana Text</text>
   
-  <text x="10" y="200" class="otherfont">Some Opensans Text</text>
+  <text x="10" y="350" style="font-family: Unknownski; font-size: 33px;" >Unknown Font</text>
+
+  <text x="10" y="50" class="sansseriftext">Some Verdana Text</text>
   
-  <text x="10" y="300" style="font-family: 'Arial', sans-serif;" transform="translate(20,50) skewX(20)" text-decoration="underline">Some text</text>
+  <text x="10" y="150" class="otherfont">Some Opensans Text</text>
+  
+  <text x="10" y="250" style="font-family: 'Arial', sans-serif;" font-size="33px" transform="skewX(-20) rotate(-5)" text-decoration="underline">Some Arial Skewed Text</text>
+  
 </svg>

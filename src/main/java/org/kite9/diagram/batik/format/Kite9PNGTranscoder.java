@@ -2,6 +2,8 @@ package org.kite9.diagram.batik.format;
 
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
@@ -12,6 +14,7 @@ import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 public class Kite9PNGTranscoder extends PNGTranscoder {
 
@@ -44,4 +47,10 @@ public class Kite9PNGTranscoder extends PNGTranscoder {
 		return out;
 	}
 
+	@Override
+	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
+		document.setDocumentURI(uri);
+		super.transcode(document, uri, output);
+	}
 }
+

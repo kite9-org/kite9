@@ -37,7 +37,7 @@ import org.w3c.dom.Element;
  * 
  * @author Martin Steiger
  */
-public class GradientExtensionHandlerBatik extends DefaultExtensionHandler {
+public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 	
 	Map<String, SVGPaintDescriptor> paintMap = new HashMap<String, SVGPaintDescriptor>();
 
