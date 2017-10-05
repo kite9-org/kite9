@@ -33,7 +33,6 @@ public interface ExtendedSVG {
 	 * Adds a font-face to the output.
 	 */
 	public void addFontFace(GVTFontFace face);
-	
-	
+
 }
 

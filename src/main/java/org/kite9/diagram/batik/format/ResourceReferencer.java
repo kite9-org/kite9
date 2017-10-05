@@ -1,7 +1,5 @@
 package org.kite9.diagram.batik.format;
 
-import java.io.InputStream;
-
 import org.apache.batik.util.ParsedURL;
 
 /**
@@ -14,7 +12,7 @@ import org.apache.batik.util.ParsedURL;
  */
 public interface ResourceReferencer {
 	
-	static interface Reference {
+	public static interface Reference {
 		
 		String getUrl();
 		

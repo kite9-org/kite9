@@ -1,11 +1,9 @@
 package org.kite9.diagram.batik.bridge;
 
-
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
-import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
@@ -34,14 +32,7 @@ import org.w3c.dom.Element;
  */
 public class TextBridge extends SVG12TextElementBridge {
 
-	class ExtendedTextLayoutFactory implements TextLayoutFactory {
-		
-		public ExtendedTextLayoutFactory(Element el) {
-			super();
-			this.el = el;
-		}
-
-		private Element el;
+	static final TextLayoutFactory CUSTOM_TEXT_LAYOUT = new TextLayoutFactory() {
 		
 		@Override
 		public TextSpanLayout createTextLayout(AttributedCharacterIterator aci, int[] charMap, Point2D offset, FontRenderContext frc) {
@@ -62,7 +53,6 @@ public class TextBridge extends SVG12TextElementBridge {
 				        if (!tpi.visible) return;
 
 				        Paint  fillPaint   = tpi.fillPaint;
-				        
 				        
 				        if (fillPaint != null) {
 					        Font toUse = eSVG.handleGVTFontFamilies(gvtFontFamilies);
@@ -90,7 +80,7 @@ public class TextBridge extends SVG12TextElementBridge {
 			
 			@Override
 			protected TextLayoutFactory getTextLayoutFactory() {
-				return new ExtendedTextLayoutFactory(e);
+				return CUSTOM_TEXT_LAYOUT;
 			}
 			
 		});

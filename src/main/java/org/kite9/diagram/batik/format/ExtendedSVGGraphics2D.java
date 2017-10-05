@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FontFace;
 import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
-import org.apache.batik.svggen.ImageHandler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
+import org.kite9.diagram.batik.bridge.images.Kite9ImageHandler;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -33,19 +32,17 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 
 	private Element currentSubgroup;
 	private Kite9Log log = new Kite9Log(this);
-	private BridgeContext ctx;
 	private List<GVTFontFace> existingFontFaces = new ArrayList<>();
 	private StringBuilder styleInfo = new StringBuilder(1000);
 	private ResourceReferencer rr;
 
-	public ExtendedSVGGraphics2D(Document doc, BridgeContext ctx, ImageHandler imageHandler, ResourceReferencer rr) {
+	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr) {
 		super(doc,
-			imageHandler,
+			new Kite9ImageHandler(rr),
 			new BatikPaintExtensionHandler(), 
 				false);
 		this.currentSubgroup = getTopLevelGroup();
 		this.rr = rr;
-		this.ctx = ctx;
 	}
 
 	@Override
@@ -216,6 +213,5 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 			sb.append(";\n");
 		}
 	}
-
 	
 }

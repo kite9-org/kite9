@@ -4,7 +4,9 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
+import org.kite9.diagram.batik.bridge.images.Kite9ImageElementBridge;
 import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
 import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.Diagram;
@@ -21,7 +23,7 @@ import org.kite9.framework.xml.Kite9XMLElement;
  * @author robmoffat
  *
  */
-public final class Kite9BridgeContext extends SVG12BridgeContext {
+public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader) {
 		super(userAgent, loader);
@@ -63,6 +65,7 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		putBridge(new Kite9DiagramBridge(this));
 		putBridge(new Kite9GBridge());
 		putBridge(new TextBridge());
+		putBridge(new Kite9ImageElementBridge());
 	}
 	
 	/**
@@ -81,5 +84,15 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		setDocumentSize(new Dimension2DDouble(Math.max(width,  oldWidth), Math.max(height, oldHeight)));
 	}
 	
+	private ParsedURL resourceURL;
+	
+	public void setNextOperationResourceURL(ParsedURL url) {
+		this.resourceURL = url;
+	}
 
+	public ParsedURL getAndClearResourceURL() {
+		ParsedURL out = resourceURL;
+		this.resourceURL = null;
+		return out;
+	}
 }
