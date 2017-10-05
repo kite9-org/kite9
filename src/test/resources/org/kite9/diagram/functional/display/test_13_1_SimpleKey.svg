@@ -23,7 +23,7 @@
           ></g
           ><g id="auto:0-a-label-MAIN"
           ><g id="-MAIN"
-            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" transform="matrix(1,0,0,1,31.3462,39.0459)" stroke-linecap="butt"
+            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" font-family="'opensans-regular-webfont'" transform="matrix(1,0,0,1,31.4033,39.0714)" stroke-linecap="butt"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 >a</text
               ></g
@@ -42,5 +42,13 @@
       ></g
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: opensans-regular-webfont;
+  font-weight: all;
+  font-style: all;
+  src: url('opensans-regular-webfont.ttf');;
+}
+</style
 ></svg
 >

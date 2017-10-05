@@ -70,7 +70,9 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 							Class<?> theTest = m.getDeclaringClass();
 							String filename = purl.toString().substring(purl.toString().lastIndexOf("/")+1);
 							File f = TestingHelp.prepareFileName(theTest, m.getName(), filename);
+							File f2 = TestingHelp.prepareFileName(theTest, m.getName(), "../../svg-output/"+filename);
 							RepositoryHelp.streamCopy(purl.openStream(), new FileOutputStream(f), true);
+							RepositoryHelp.streamCopy(purl.openStream(), new FileOutputStream(f2), true);
 							return filename;
 						} catch (IOException e) {
 							throw new RuntimeException(e);

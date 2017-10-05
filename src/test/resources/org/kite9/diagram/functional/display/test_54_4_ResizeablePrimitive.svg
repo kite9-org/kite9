@@ -19,7 +19,7 @@
               /></g
             ></g
             ><g id="someelement-MAIN"
-            ><g fill="yellow" font-size="25px" transform="matrix(1,0,0,1,70.4154,90.15)" stroke="yellow"
+            ><g fill="rgb(255,165,0)" font-size="25px" font-family="'Arial'" transform="matrix(1,0,0,1,70.4154,90.15)" stroke="rgb(255,165,0)"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 ><tspan
                   >S</tspan
@@ -50,5 +50,12 @@
       ></g
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: Arial;
+  font-weight: all;
+  font-style: all;
+}
+</style
 ></svg
 >

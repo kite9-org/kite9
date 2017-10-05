@@ -28,5 +28,12 @@
       ></text
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: Dialog;
+  font-weight: all;
+  font-style: all;
+}
+</style
 ></svg
 >

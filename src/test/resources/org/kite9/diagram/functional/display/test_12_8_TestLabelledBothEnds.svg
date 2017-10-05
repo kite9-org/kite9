@@ -14,16 +14,16 @@
     ><g id="The Diagram-MAIN"
       ><g id="glyph-MAIN"
         ><g id="-MAIN"
-          ><g fill="url(#gradient1)" transform="matrix(0.9524,0,0,0.9394,239.9524,15.9394)" stroke="url(#gradient1)"
+          ><g fill="url(#gradient1)" transform="matrix(0.9524,0,0,0.9394,227.9524,15.9394)" stroke="url(#gradient1)"
             ><rect x="0" y="0" width="40" rx="8" ry="8" height="31" stroke="none"
             /></g
-            ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9524,0,0,0.9394,239.9524,15.9394)" stroke-linecap="butt"
+            ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9524,0,0,0.9394,227.9524,15.9394)" stroke-linecap="butt"
             ><rect x="0" y="0" fill="none" width="40" rx="8" ry="8" height="31"
             /></g
           ></g
           ><g id="glyph-label-MAIN"
           ><g id="-MAIN"
-            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" transform="matrix(1,0,0,1,255.3462,39.0459)" stroke-linecap="butt"
+            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" font-family="'opensans-regular-webfont'" transform="matrix(1,0,0,1,243.4033,39.0714)" stroke-linecap="butt"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 >a</text
               ></g
@@ -32,16 +32,16 @@
         ></g
         ><g id="arrow-glyph-MAIN"
         ><g stroke-linecap="butt" stroke-width="2" stroke-miterlimit="4"
-          ><path fill="none" d="M39 34 L243 34"
+          ><path fill="none" d="M37 34 L231 34"
           /></g
           ><g id="auto:1-MAIN"
           ><g id="-MAIN"
-            ><g fill="rgb(204,204,204)" stroke-miterlimit="4" stroke-width="2" transform="matrix(1,0,0,1,45,30)" stroke-linecap="butt" stroke="rgb(204,204,204)"
-              ><rect x="0" y="0" width="80" rx="4" ry="4" height="24" stroke="none"
+            ><g fill="rgb(204,204,204)" stroke-miterlimit="4" stroke-width="2" transform="matrix(1,0,0,1,43,30)" stroke-linecap="butt" stroke="rgb(204,204,204)"
+              ><rect x="0" y="0" width="76" rx="4" ry="4" height="24" stroke="none"
               /></g
             ></g
             ><g id="-MAIN"
-            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" transform="matrix(1,0,0,1,48.3462,50.0229)" stroke-linecap="butt"
+            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" font-family="'opensans-regular-webfont'" transform="matrix(1,0,0,1,46.4033,49.877)" stroke-linecap="butt"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 ><tspan
                   >a</tspan
@@ -53,12 +53,12 @@
           ></g
           ><g id="auto:2-MAIN"
           ><g id="-MAIN"
-            ><g fill="rgb(204,204,204)" stroke-miterlimit="4" stroke-width="2" transform="matrix(1,0,0,1,135,30)" stroke-linecap="butt" stroke="rgb(204,204,204)"
-              ><rect x="0" y="0" width="94" rx="4" ry="4" height="26" stroke="none"
+            ><g fill="rgb(204,204,204)" stroke-miterlimit="4" stroke-width="2" transform="matrix(1,0,0,1,129,30)" stroke-linecap="butt" stroke="rgb(204,204,204)"
+              ><rect x="0" y="0" width="88" rx="4" ry="4" height="27" stroke="none"
               /></g
             ></g
             ><g id="-MAIN"
-            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" transform="matrix(1,0,0,1,138.2954,50.0229)" stroke-linecap="butt"
+            ><g stroke-miterlimit="4" font-size="13px" stroke-width="2" font-family="'opensans-regular-webfont'" transform="matrix(1,0,0,1,132.7503,49.877)" stroke-linecap="butt"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 ><tspan
                   >g</tspan
@@ -71,16 +71,16 @@
         ></g
         ><g id="arrow-MAIN"
         ><g id="-MAIN"
-          ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9091,0,0,0.9091,15.9091,20.9091)" stroke-linecap="butt"
-            ><rect x="0" y="0" width="20" rx="4" ry="4" height="20" stroke="none"
+          ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9,0,0,0.9091,15.9,20.9091)" stroke-linecap="butt"
+            ><rect x="0" y="0" width="18" rx="4" ry="4" height="20" stroke="none"
             /></g
-            ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9091,0,0,0.9091,15.9091,20.9091)" stroke-linecap="butt"
-            ><rect x="0" y="0" fill="none" width="20" rx="4" ry="4" height="20"
+            ><g stroke-width="2" stroke-miterlimit="4" transform="matrix(0.9,0,0,0.9091,15.9,20.9091)" stroke-linecap="butt"
+            ><rect x="0" y="0" fill="none" width="18" rx="4" ry="4" height="20"
             /></g
           ></g
           ><g id="auto:0-MAIN"
           ><g id="-MAIN"
-            ><g fill="white" stroke-miterlimit="4" stroke-width="2" transform="matrix(1,0,0,1,19.8457,34.1685)" stroke-linecap="butt" stroke="white"
+            ><g stroke-linecap="butt" transform="matrix(1,0,0,1,20.0508,34.0861)" fill="white" font-family="'opensans-regular-webfont'" stroke="white" stroke-width="2" stroke-miterlimit="4"
               ><text x="0" xml:space="preserve" y="0" stroke="none"
                 ><tspan
                   >i</tspan
@@ -94,5 +94,13 @@
       ></g
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: opensans-regular-webfont;
+  font-weight: all;
+  font-style: all;
+  src: url('opensans-regular-webfont.ttf');;
+}
+</style
 ></svg
 >

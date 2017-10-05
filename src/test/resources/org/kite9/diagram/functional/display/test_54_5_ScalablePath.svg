@@ -16,7 +16,7 @@
             /></g
           ></g
           ><g id="someelement-MAIN"
-          ><g font-size="25px" stroke-linecap="butt" transform="matrix(1,0,0,1,60.4154,80.15)" fill="red" stroke="red" stroke-width="3" stroke-miterlimit="4"
+          ><g font-size="25px" stroke-linecap="butt" transform="matrix(1,0,0,1,60.4154,80.15)" fill="rgb(255,165,0)" font-family="'Arial'" stroke="rgb(255,165,0)" stroke-width="3" stroke-miterlimit="4"
             ><text x="0" xml:space="preserve" y="0" stroke="none"
               ><tspan
                 >S</tspan
@@ -29,5 +29,12 @@
       ></g
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: Arial;
+  font-weight: all;
+  font-style: all;
+}
+</style
 ></svg
 >

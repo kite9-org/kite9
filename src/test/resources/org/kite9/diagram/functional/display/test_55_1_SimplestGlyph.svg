@@ -22,7 +22,7 @@
             /></g
           ></g
           ><g id="label-MAIN"
-          ><g stroke-miterlimit="4" font-size="15px" stroke-width="2" transform="matrix(1,0,0,1,19.839,29.4204)" stroke-linecap="butt"
+          ><g stroke-miterlimit="4" font-size="15px" stroke-width="2" font-family="'Arial'" transform="matrix(1,0,0,1,19.839,29.4204)" stroke-linecap="butt"
             ><text x="0" xml:space="preserve" y="0" stroke="none"
               ><tspan
                 >S</tspan
@@ -35,5 +35,12 @@
       ></g
     ></g
   ></g
+  ><style xml:space="preserve"
+  >@font-face {
+  font-family: Arial;
+  font-weight: all;
+  font-style: all;
+}
+</style
 ></svg
 >
