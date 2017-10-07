@@ -24,20 +24,20 @@ public class Kite9ImageHandler extends DefaultImageHandler {
 
 	@Override
 	protected void handleHREF(Image image, Element imageElement, SVGGeneratorContext generatorContext) throws SVGGraphics2DIOException {
-		handleHREFInternal(imageElement, generatorContext);
+		handleHREFInternal(imageElement);
 	}
 
 	@Override
 	protected void handleHREF(RenderedImage image, Element imageElement, SVGGeneratorContext generatorContext) throws SVGGraphics2DIOException {
-		handleHREFInternal(imageElement, generatorContext);
+		handleHREFInternal(imageElement);
 	}
 
 	@Override
 	protected void handleHREF(RenderableImage image, Element imageElement, SVGGeneratorContext generatorContext) throws SVGGraphics2DIOException {
-		handleHREFInternal(imageElement, generatorContext);
+		handleHREFInternal(imageElement);
 	}
 
-	private void handleHREFInternal(Element imageElement, SVGGeneratorContext generatorContext) {
+	private void handleHREFInternal(Element imageElement) {
 		Reference ref = rr.getReference(lastImageURL);
 		imageElement.setAttributeNS(XLINK_NAMESPACE_URI,
                 XLINK_HREF_QNAME,ref.getUrl());

@@ -12,17 +12,31 @@ import static org.apache.batik.util.SVGConstants.SVG_STOP_OPACITY_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_STOP_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_TRANSFORM_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_USER_SPACE_ON_USE_VALUE;
+import static org.apache.batik.util.SVGConstants.SVG_PATTERN_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_USER_SPACE_ON_USE_VALUE;
+import static org.apache.batik.util.SVGConstants.SVG_PATTERN_UNITS_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_X_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_Y_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_WIDTH_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_HEIGHT_ATTRIBUTE;
+
+
+
 
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.batik.bridge.SVGPatternElementBridge.PatternGraphicsNode;
 import org.apache.batik.ext.awt.LinearGradientPaint;
 import org.apache.batik.ext.awt.MultipleGradientPaint;
 import org.apache.batik.ext.awt.RadialGradientPaint;
+import org.apache.batik.gvt.PatternPaint;
 import org.apache.batik.svggen.DefaultExtensionHandler;
 import org.apache.batik.svggen.SVGColor;
 import org.apache.batik.svggen.SVGGeneratorContext;
@@ -40,6 +54,11 @@ import org.w3c.dom.Element;
 public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 	
 	Map<String, SVGPaintDescriptor> paintMap = new HashMap<String, SVGPaintDescriptor>();
+	private ResourceReferencer rr;
+	
+	public BatikPaintExtensionHandler(ResourceReferencer rr) {
+		this.rr = rr;
+	}
 
 	@Override
 	public SVGPaintDescriptor handlePaint(Paint paint, SVGGeneratorContext genCtx) {
@@ -61,7 +80,9 @@ public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 			out = getLgpDescriptor((LinearGradientPaint) paint, genCtx, percentage);
 		} else if (paint instanceof RadialGradientPaint) {
 			out = getRgpDescriptor((RadialGradientPaint) paint, genCtx, percentage);
-		} 
+		} else if (paint instanceof PatternPaint) {
+			out = getPatternDescriptor((PatternPaint) paint, genCtx, percentage);
+		}
 
 		if (paint instanceof TransformedPaint) {
 			String key = ((TransformedPaint) paint).getKey();
@@ -74,6 +95,33 @@ public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 
 		return super.handlePaint(paint, genCtx);
 
+	}
+
+	private SVGPaintDescriptor getPatternDescriptor(PatternPaint paint, SVGGeneratorContext genCtx, boolean percentage) {
+		String id = genCtx.getIDGenerator().generateID("pattern");
+
+		// set up the pattern element
+		Element patternElem = genCtx.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_PATTERN_TAG);
+		Rectangle2D rect = paint.getPatternRect();
+		patternElem.setAttribute(SVG_ID_ATTRIBUTE, id);
+		patternElem.setAttribute(SVG_PATTERN_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
+		patternElem.setAttribute(SVG_X_ATTRIBUTE, ""+rect.getX());
+		patternElem.setAttribute(SVG_Y_ATTRIBUTE, ""+rect.getY());
+		patternElem.setAttribute(SVG_WIDTH_ATTRIBUTE, ""+rect.getWidth());
+		patternElem.setAttribute(SVG_HEIGHT_ATTRIBUTE, ""+rect.getHeight());
+
+		// paint the pattern inside a group element
+		PatternGraphicsNode patternNode = (PatternGraphicsNode) paint.getGraphicsNode();
+		Element groupElem = genCtx.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+		ExtendedSVGGraphics2D esvg = new ExtendedSVGGraphics2D(genCtx, groupElem);
+		esvg.transform(patternNode.getInverseTransform());
+		patternNode.paint(esvg);
+		groupElem = esvg.getTopLevelGroup(true);
+		
+		// add the group to the pattern
+		patternElem.appendChild(groupElem);
+		
+		return new SVGPaintDescriptor("url(#" + id + ")", SVG_OPAQUE_VALUE, patternElem);
 	}
 
 	private SVGPaintDescriptor getRgpDescriptor(RadialGradientPaint gradient, SVGGeneratorContext genCtx, boolean percentage) {

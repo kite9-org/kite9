@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.batik.bridge.FontFace;
 import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
+import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.batik.bridge.images.Kite9ImageHandler;
@@ -36,10 +37,16 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	private StringBuilder styleInfo = new StringBuilder(1000);
 	private ResourceReferencer rr;
 
+	public ExtendedSVGGraphics2D(SVGGeneratorContext ctx, Element currentSubgroup) {
+		super(ctx, false);
+		this.currentSubgroup = currentSubgroup;
+		getDOMTreeManager().setTopLevelGroup(currentSubgroup);
+	}
+	
 	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr) {
 		super(doc,
 			new Kite9ImageHandler(rr),
-			new BatikPaintExtensionHandler(), 
+			new BatikPaintExtensionHandler(rr), 
 				false);
 		this.currentSubgroup = getTopLevelGroup();
 		this.rr = rr;
