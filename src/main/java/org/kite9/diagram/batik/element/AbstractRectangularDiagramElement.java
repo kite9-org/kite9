@@ -29,8 +29,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	private RectangleRenderingInformation ri;
 	private Layout layout;
 	private List<DiagramElement> contents = new ArrayList<>();
-	private DiagramElementSizing sizing;
-	
+	private DiagramElementSizing sizing;	
 
 	public AbstractRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);

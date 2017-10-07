@@ -20,6 +20,9 @@ public interface CSSConstants {
 	public static final String BOX_SHADOW_Y_OFFSET_PROPERTY = "box-shadow-y-offset";
 	public static final String BOX_SHADOW_OPACITY_PROPERTY = "box-shadow-opacity";
 	public static final String BOX_SHADOW_COLOR_PROPERTY = "box-shadow-color";
+	public static final String BOX_SHADOW_BLUR_PROPERTY = "box-shadow-blur";
+	public static final String BOX_SHADOW_SPREAD_PROPERTY = "box-shadow-spread";
+	public static final String BOX_SHADOW_TYPE_PROPERTY = "box-shadow-type";
 		
 	// deciding whether an edge can cross a container border.
 	public static final String TRAVERSAL_BOTTOM_PROPERTY = "traversal-bottom";

@@ -1,12 +1,6 @@
 package org.kite9.framework.dom;
 
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_COLOR_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_OPACITY_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_X_OFFSET_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_Y_OFFSET_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_LEFT_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_RIGHT_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_TOP_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.*;
 
 import java.net.URL;
 
@@ -30,6 +24,7 @@ import org.apache.batik.dom.util.HashTable;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.BoxShadowType;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -96,6 +91,10 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		registerCustomCSSShorthandManager(new BoxShadowShorthandManager());
 		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_X_OFFSET_PROPERTY));
 		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_Y_OFFSET_PROPERTY));
+		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_BLUR_PROPERTY));
+		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_SPREAD_PROPERTY));
+		registerCustomCSSValueManager(new EnumManager(BOX_SHADOW_TYPE_PROPERTY, BoxShadowType.class, BoxShadowType.NONE, false));
+		
 		registerCustomCSSValueManager(new OpacityManager(BOX_SHADOW_OPACITY_PROPERTY, false));
 		ColorManager colourManager = new ColorManager() {
 			

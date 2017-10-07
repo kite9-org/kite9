@@ -17,6 +17,7 @@ import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.style.BoxShadow;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
@@ -166,10 +167,16 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 
 	protected double padding[] = new double[4];
 	protected double margin[] = new double[4];
+	protected BoxShadow boxShadow;
 	
 	protected void initialize() {
 		initializeDirectionalCssValues(padding, "padding");
 		initializeDirectionalCssValues(margin, "margin");
+		initializeBoxShadow();
+	}
+
+	private void initializeBoxShadow() {
+		this.boxShadow = BoxShadow.constructBoxShadow(getTheElement());
 	}
 
 	private void initializeDirectionalCssValues(double[] vals, String prefix) {
