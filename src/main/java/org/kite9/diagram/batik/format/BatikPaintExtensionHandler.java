@@ -1,28 +1,24 @@
 package org.kite9.diagram.batik.format;
 
 import static org.apache.batik.util.SVGConstants.SVG_GRADIENT_UNITS_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_HEIGHT_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_ID_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_LINEAR_GRADIENT_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 import static org.apache.batik.util.SVGConstants.SVG_OFFSET_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_OPAQUE_VALUE;
+import static org.apache.batik.util.SVGConstants.SVG_PATTERN_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_PATTERN_UNITS_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_RADIAL_GRADIENT_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_STOP_COLOR_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_STOP_OPACITY_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_STOP_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_TRANSFORM_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_USER_SPACE_ON_USE_VALUE;
-import static org.apache.batik.util.SVGConstants.SVG_PATTERN_TAG;
-import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
-import static org.apache.batik.util.SVGConstants.SVG_USER_SPACE_ON_USE_VALUE;
-import static org.apache.batik.util.SVGConstants.SVG_PATTERN_UNITS_ATTRIBUTE;
+import static org.apache.batik.util.SVGConstants.SVG_WIDTH_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_X_ATTRIBUTE;
 import static org.apache.batik.util.SVGConstants.SVG_Y_ATTRIBUTE;
-import static org.apache.batik.util.SVGConstants.SVG_WIDTH_ATTRIBUTE;
-import static org.apache.batik.util.SVGConstants.SVG_HEIGHT_ATTRIBUTE;
-
-
-
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -54,19 +50,15 @@ import org.w3c.dom.Element;
 public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 	
 	Map<String, SVGPaintDescriptor> paintMap = new HashMap<String, SVGPaintDescriptor>();
-	private ResourceReferencer rr;
-	
-	public BatikPaintExtensionHandler(ResourceReferencer rr) {
-		this.rr = rr;
-	}
 
 	@Override
 	public SVGPaintDescriptor handlePaint(Paint paint, SVGGeneratorContext genCtx) {
 		boolean percentage = true;
 
-		if (paint instanceof TransformedPaint) {
-			String key = ((TransformedPaint) paint).getKey();
-			paint = ((TransformedPaint) paint).getUnderlyingPaint();
+		Paint paint2 = paint;
+		if (paint2 instanceof TransformedPaint) {
+			String key = ((TransformedPaint) paint2).getKey();
+			paint2 = ((TransformedPaint) paint2).getUnderlyingPaint();
 			percentage = true;
 
 			if (paintMap.containsKey(key)) {
@@ -76,16 +68,16 @@ public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 
 		SVGPaintDescriptor out = null;
 
-		if (paint instanceof LinearGradientPaint) {
-			out = getLgpDescriptor((LinearGradientPaint) paint, genCtx, percentage);
-		} else if (paint instanceof RadialGradientPaint) {
-			out = getRgpDescriptor((RadialGradientPaint) paint, genCtx, percentage);
-		} else if (paint instanceof PatternPaint) {
-			out = getPatternDescriptor((PatternPaint) paint, genCtx, percentage);
+		if (paint2 instanceof LinearGradientPaint) {
+			out = getLgpDescriptor((LinearGradientPaint) paint2, genCtx, percentage);
+		} else if (paint2 instanceof RadialGradientPaint) {
+			out = getRgpDescriptor((RadialGradientPaint) paint2, genCtx, percentage);
+		} else if (paint2 instanceof PatternPaint) {
+			out = getPatternDescriptor((PatternPaint) paint2, genCtx);
 		}
 
-		if (paint instanceof TransformedPaint) {
-			String key = ((TransformedPaint) paint).getKey();
+		if (paint2 instanceof TransformedPaint) {
+			String key = ((TransformedPaint) paint2).getKey();
 			paintMap.put(key, out);
 		}
 
@@ -93,11 +85,11 @@ public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 			return out;
 		}
 
-		return super.handlePaint(paint, genCtx);
+		return super.handlePaint(paint2, genCtx);
 
 	}
 
-	private SVGPaintDescriptor getPatternDescriptor(PatternPaint paint, SVGGeneratorContext genCtx, boolean percentage) {
+	private SVGPaintDescriptor getPatternDescriptor(PatternPaint paint, SVGGeneratorContext genCtx) {
 		String id = genCtx.getIDGenerator().generateID("pattern");
 
 		// set up the pattern element

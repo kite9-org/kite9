@@ -12,13 +12,13 @@ import org.kite9.diagram.batik.format.ResourceReferencer;
 import org.kite9.diagram.batik.format.ResourceReferencer.Reference;
 import org.w3c.dom.Element;
 
-public class Kite9ImageHandler extends DefaultImageHandler {
+public class ResourceReferencerImageHandler extends DefaultImageHandler {
 	
 	private ResourceReferencer rr;
 	
 	private ParsedURL lastImageURL;
 	
-	public Kite9ImageHandler(ResourceReferencer rr) {
+	public ResourceReferencerImageHandler(ResourceReferencer rr) {
 		this.rr = rr;
 	}
 

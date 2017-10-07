@@ -57,7 +57,12 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	protected void transcodeSVG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputSVG();
 		TranscoderInput in = getTranscoderInput(s);
-		Transcoder transcoder = new Kite9SVGTranscoder(new ResourceReferencer() {
+		Transcoder transcoder = new Kite9SVGTranscoder(createTestingResourceReferencer());
+		transcoder.transcode(in, out);
+	}
+
+	protected ResourceReferencer createTestingResourceReferencer() {
+		return new ResourceReferencer() {
 
 			@Override
 			public Reference getReference(ParsedURL purl) {
@@ -82,8 +87,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 			}
 			
 			
-		}, new ImageHandlerBase64Encoder());
-		transcoder.transcode(in, out);
+		};
 	}
 	
 	

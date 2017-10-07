@@ -10,11 +10,11 @@ import java.io.StringWriter;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.batik.ext.awt.LinearGradientPaint;
-import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.format.ResourceReferencer;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.w3c.dom.Document;
@@ -95,10 +95,12 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodeSVG(someXML);
 	}
 
+	@SuppressWarnings("cast")
 	@Test
 	public void test_54_6_GradientFill() throws Exception {
 		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, null, new ImageHandlerBase64Encoder(), null);
+		ResourceReferencer rr = createTestingResourceReferencer();
+		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, rr);
 		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
 		LinearGradientPaint lgp = new LinearGradientPaint(
 				(Point2D) new Point2D.Double(0, 0),

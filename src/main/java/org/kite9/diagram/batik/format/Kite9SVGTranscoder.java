@@ -14,7 +14,6 @@ import java.net.URLConnection;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.svggen.ImageHandler;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -37,11 +36,9 @@ import org.xml.sax.XMLFilter;
 public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 	
 	private ADLExtensibleDOMImplementation domImpl;
-	private ResourceReferencer rr;
-	private ImageHandler imageHandler;
+	private ResourceReferencer rr;	
 	
-	
-	public Kite9SVGTranscoder(ResourceReferencer rr, ImageHandler imageHandler) {
+	public Kite9SVGTranscoder(ResourceReferencer rr) {
 		super();
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
@@ -50,7 +47,6 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
 		this.rr = rr;
-		this.imageHandler = imageHandler;
 	}
 
 	@Override

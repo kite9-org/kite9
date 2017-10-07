@@ -73,7 +73,7 @@ public class Kite9ImageElementBridge extends SVGImageElementBridge {
 		public void primitivePaint(Graphics2D g2d) {
 			if (g2d instanceof ExtendedSVG) {
 				ExtendedSVGGraphics2D eg2d = (ExtendedSVGGraphics2D) g2d;
-				((Kite9ImageHandler) eg2d.getGeneratorContext().getImageHandler()).setLastImageURL(url);
+				((ResourceReferencerImageHandler) eg2d.getGeneratorContext().getImageHandler()).setLastImageURL(url);
 			}
 			
 			super.primitivePaint(g2d);

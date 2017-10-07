@@ -13,7 +13,7 @@ import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.diagram.batik.bridge.images.Kite9ImageHandler;
+import org.kite9.diagram.batik.bridge.images.ResourceReferencerImageHandler;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -45,8 +45,8 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	
 	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr) {
 		super(doc,
-			new Kite9ImageHandler(rr),
-			new BatikPaintExtensionHandler(rr), 
+			new ResourceReferencerImageHandler(rr),
+			new BatikPaintExtensionHandler(), 
 				false);
 		this.currentSubgroup = getTopLevelGroup();
 		this.rr = rr;
