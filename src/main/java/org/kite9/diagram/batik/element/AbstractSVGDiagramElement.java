@@ -63,7 +63,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	 */
 	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
 		initializeChildXMLElements();
-		return name.createLayer(getID(), ctx, theElement);
+		return name.createLayer(getID(), ctx, theElement, this);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		GraphicsNode gn = getGraphicsForLayer(GraphicsLayerName.MAIN);
 		if (gn instanceof IdentifiableGraphicsNode) {
 			return ((IdentifiableGraphicsNode) gn).getSVGBounds();
-		} else if (gn instanceof GraphicsNode) {
+		} else if (gn != null) {
 			return gn.getBounds();
 		} else {
 			return null;

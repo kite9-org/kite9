@@ -1,9 +1,6 @@
 package org.kite9.diagram.batik.element;
 
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.Kite9RouteBridge;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -216,13 +213,6 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 		return rank;
 	}
 
-	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
-		Kite9RouteBridge bridge = new Kite9RouteBridge(this);
-		GraphicsNode gn = bridge.createGraphicsNode(ctx, this.theElement);
-		bridge.buildGraphicsNode(ctx, theElement, gn);
-		out.add(gn);
-	}
-	
 	@Override
 	public double getMargin(Direction d) {
 		return margin[d.ordinal()];
