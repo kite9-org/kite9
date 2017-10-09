@@ -14,16 +14,15 @@ public class DecalImpl extends AbstractRectangularDiagramElement implements Deca
 		super(el, parent, ctx);
 	}
 
-	protected void initializeChildXMLElement(Element child) {
-		RectangleRenderingInformation rri = getContainer().getRenderingInformation();
-
-		if (getRenderingInformation().getSize() == null) {
+	protected void processSizesUsingTemplater(Element child, RectangleRenderingInformation rri) {
+		if (rri.getSize() == null) {
 			// set size of this element same as the parent
-			getRenderingInformation().setSize(rri.getSize());
-			getRenderingInformation().setPosition(rri.getPosition());
+			RectangleRenderingInformation rri2 = getContainer().getRenderingInformation();
+			getRenderingInformation().setSize(rri2.getSize());
+			getRenderingInformation().setPosition(rri2.getPosition());
 		}
 		
-		processSizesUsingTemplater(child, rri);
+		super.processSizesUsingTemplater(child, rri);
 	}
 	
 	@Override

@@ -88,7 +88,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		registerCustomCSSShorthandManager(new PaddingAndMarginShorthandManager("margin"));
 
 		// SHADOW CSS
-		registerCustomCSSShorthandManager(new BoxShadowShorthandManager());
+		registerCustomCSSShorthandManager(new BoxShadowShorthandManager()); 
 		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_X_OFFSET_PROPERTY));
 		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_Y_OFFSET_PROPERTY));
 		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_BLUR_PROPERTY));
@@ -108,7 +108,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 				return BOX_SHADOW_COLOR_PROPERTY;
 			}
 			
-		};
+		}; 
 		
 		/**
 		 * This makes 'no colour' available to all the colour managers, since the 

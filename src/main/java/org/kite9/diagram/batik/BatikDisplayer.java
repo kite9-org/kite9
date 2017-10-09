@@ -3,6 +3,7 @@ package org.kite9.diagram.batik;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;

@@ -234,7 +234,7 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 
 	@Override
-	protected void initializeChildXMLElement(Element child) {
+	protected void initializeChildXMLElements() {
 		// currently does nothing - templating not supported yet for connections.
 	}
 	

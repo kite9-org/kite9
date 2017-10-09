@@ -69,12 +69,13 @@ public class BoxShadow {
 	}
 
 	private static Paint getPaint(StyledKite9SVGElement e) {
-		Value v = e.getCSSStyleProperty(CSSConstants.BOX_SHADOW_COLOR_PROPERTY);
+//		Value v = e.getCSSStyleProperty(CSSConstants.BOX_SHADOW_COLOR_PROPERTY);
+//		
+//		if (v == null) {
+//			v =  e.getCSSStyleProperty(org.apache.batik.util.CSSConstants.CSS_COLOR_PROPERTY);
+//		}
 		
-		if (v == null) {
-			v =  e.getCSSStyleProperty(org.apache.batik.util.CSSConstants.CSS_COLOR_PROPERTY);
-		}
-		
+		return null;
 	}
 
 	private static float getSpread(StyledKite9SVGElement e) {

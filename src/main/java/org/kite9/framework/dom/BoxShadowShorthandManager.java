@@ -29,7 +29,7 @@ public class BoxShadowShorthandManager implements ShorthandManager {
 		boolean inset = getInsetKeyword(xo);
 		
 		if (lengths.size() >= 2) {
-			ph.property(CSSConstants.BOX_SHADOW_TYPE_PROPERTY, CSSLexicalUnit.createString(LexicalUnit.SAC_STRING_VALUE, 
+			ph.property(CSSConstants.BOX_SHADOW_TYPE_PROPERTY, CSSLexicalUnit.createString(LexicalUnit.SAC_IDENT, 
 					(inset ? BoxShadowType.INSET.toString() : BoxShadowType.OUTER.toString()), null), false);
 			
 			ph.property(CSSConstants.BOX_SHADOW_X_OFFSET_PROPERTY, lengths.get(0), false);
@@ -81,6 +81,9 @@ public class BoxShadowShorthandManager implements ShorthandManager {
 	}
 
 	protected boolean isInset(LexicalUnit xo) {
+		if (xo.getLexicalUnitType() != LexicalUnit.SAC_STRING_VALUE) {
+			return false;
+		}
 		return "inset".equals(xo.getStringValue().toLowerCase().trim());
 	}
 

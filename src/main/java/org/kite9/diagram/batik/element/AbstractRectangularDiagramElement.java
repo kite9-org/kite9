@@ -3,7 +3,10 @@ package org.kite9.diagram.batik.element;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -21,6 +24,8 @@ import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement implements Rectangular {
 	
@@ -135,13 +140,26 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	public Container getContainer() {
 		return (Container) getParent();
 	}
+	
+	private boolean initializedChildren = false;
 
 	@Override
-	protected void initializeChildXMLElement(Element child) {
-		if (getSizing() != DiagramElementSizing.FIXED) {
-			processSizesUsingTemplater(child, getRenderingInformation());
+	protected void initializeChildXMLElements() {
+		if (!initializedChildren) {
+			
+			if (getSizing() != DiagramElementSizing.FIXED) {
+				NodeList childNodes = theElement.getChildNodes();
+				for (int i = 0; i < childNodes.getLength(); i++) {
+					Node child = childNodes.item(i);
+					if ((child instanceof Element) && (!(child instanceof Kite9XMLElement))) {
+						// get access to the bridge, to create a graphics node.
+						processSizesUsingTemplater((Element) child, getRenderingInformation());
+					}
+				}
+			}
+			
+			initializedChildren = true;
 		}
 	}
-
 	
 }

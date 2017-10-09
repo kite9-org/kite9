@@ -9,21 +9,18 @@ import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.HasLayeredGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.Templater.ValueReplacer;
+import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.BoxShadow;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering.
@@ -65,11 +62,8 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	 * Override this unless you only need to implement the {@link GraphicsLayerName}.MAIN layer.
 	 */
 	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
-		if (name == GraphicsLayerName.MAIN) {
-			return initMainGraphicsLayer();
-		} else {
-			return null;
-		}
+		initializeChildXMLElements();
+		return name.createLayer(getID(), ctx, theElement);
 	}
 
 	@Override
@@ -93,39 +87,8 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 			return null;
 		}
 	}
-	
-	protected IdentifiableGraphicsNode initMainGraphicsLayer() {
-		IdentifiableGraphicsNode out = createGraphicsNode(GraphicsLayerName.MAIN);
-		initSVGGraphicsContents(out);
-		return out;
-	}
-	
-	private boolean childrenInitialized = false;
 
-	/**
-	 * Use this method where the DiagramElement is allowed to contain SVG contents.
-	 */
-	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
-		GVTBuilder builder = ctx.getGVTBuilder();
-		NodeList childNodes = theElement.getChildNodes();
-		for (int i = 0; i < childNodes.getLength(); i++) {
-			Node child = childNodes.item(i);
-			if ((child instanceof Element) && (!(child instanceof Kite9XMLElement))) {
-				// get access to the bridge, to create a graphics node.
-				if (!childrenInitialized) {
-					initializeChildXMLElement((Element) child);
-				}
-				GraphicsNode node = builder.build(ctx, (Element) child);
-				if (node != null) {
-					out.add(node);
-				}
-			}
-		}
-		
-		childrenInitialized = true;
-	}
-
-	protected abstract void initializeChildXMLElement(Element child);
+	protected abstract void initializeChildXMLElements();
 	
 	protected void processSizesUsingTemplater(Element child, RectangleRenderingInformation rri) {
 		// tells the decal how big it needs to draw itself

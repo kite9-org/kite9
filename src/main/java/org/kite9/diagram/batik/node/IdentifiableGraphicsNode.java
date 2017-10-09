@@ -6,8 +6,8 @@ import java.awt.geom.Rectangle2D;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.HaltingThread;
-import org.kite9.diagram.batik.GraphicsLayerName;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.w3c.dom.Element;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
