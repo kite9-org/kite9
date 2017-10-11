@@ -20,7 +20,6 @@ import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.EdgeRouter;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.framework.logging.LogicException;
 
 /**
@@ -125,7 +124,6 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 
 		boolean contradicting = (c instanceof Connection) && (Tools.isConnectionContradicting((Connection)c));
 		boolean directed = c.getDrawDirection()!=null;
-		boolean removable = GroupPhase.isRemoveableLink(c);
 		
 		switch (ep) {
 		case SINGLE_DIRECTION:
@@ -161,9 +159,7 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 				Tools.setUnderlyingContradiction(e, true);
 			}
 			
-			if (!removable) {
-				done = er.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED);
-			}
+			done = er.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED);
 			
 			break;
 		}

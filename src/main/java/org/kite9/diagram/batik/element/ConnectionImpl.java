@@ -14,7 +14,6 @@ import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
@@ -204,11 +203,6 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 
 	@Override
-	public String getStyle() {
-		return LinkLineStyle.NORMAL;
-	}
-
-	@Override
 	public int getRank() {
 		return rank;
 	}
@@ -225,6 +219,7 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 
 	@Override
 	protected void initializeChildXMLElements() {
+		ensureInitialized();
 		// currently does nothing - templating not supported yet for connections.
 	}
 	

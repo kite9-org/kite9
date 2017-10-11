@@ -27,6 +27,7 @@ public class DecalImpl extends AbstractRectangularDiagramElement implements Deca
 	
 	@Override
 	public DiagramElementSizing getSizing() {
+		ensureInitialized();
 		return DiagramElementSizing.SCALED;
 	}
 

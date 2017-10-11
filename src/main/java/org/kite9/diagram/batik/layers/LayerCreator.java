@@ -9,3 +9,4 @@ public interface LayerCreator {
 
 	IdentifiableGraphicsNode createLayer(String id, Kite9BridgeContext ctx, StyledKite9SVGElement theElement, GraphicsLayerName layer, DiagramElement de);
 }
+  

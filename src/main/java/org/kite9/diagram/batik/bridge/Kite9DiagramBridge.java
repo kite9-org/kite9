@@ -50,9 +50,9 @@ public class Kite9DiagramBridge extends Kite9GBridge {
 		pipeline.arrange(d);
 		((Kite9BridgeContext)ctx).registerDiagramRenderedSize(de);
 
-        	//for (GraphicsLayerName layer : GraphicsLayerName.values()) {
-        		addLayer(out, GraphicsLayerName.MAIN, de);
-    		//}
+        	for (GraphicsLayerName layer : GraphicsLayerName.values()) {
+        		addLayer(out, layer, de);
+    		}
         	
        	processChildren(e, out, ctx);
 

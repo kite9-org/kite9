@@ -7,7 +7,7 @@
   </svg:defs>
 
   <template id='glyph'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='type: decal; sizing: adaptive; box-shadow: 4px 4px 0px #333333; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
   </template>

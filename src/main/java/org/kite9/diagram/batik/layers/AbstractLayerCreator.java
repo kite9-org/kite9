@@ -1,5 +1,9 @@
 package org.kite9.diagram.batik.layers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -18,32 +22,45 @@ public abstract class AbstractLayerCreator implements LayerCreator {
 	@Override
 	public IdentifiableGraphicsNode createLayer(String id, Kite9BridgeContext ctx, StyledKite9SVGElement theElement, GraphicsLayerName layer, DiagramElement de) {
 		IdentifiableGraphicsNode out = createGraphicsNode(id, ctx, theElement, layer, de);
-		initSVGGraphicsContents(out, theElement, ctx, de);
+		List<GraphicsNode> nodes = initSVGGraphicsContents(theElement, ctx, de);
+		for (GraphicsNode g : nodes) {
+			out.add(g);
+		}
 		return out;
 	}
 	
-	protected void initSVGConnection(IdentifiableGraphicsNode out, Element theElement, Kite9BridgeContext ctx, Connection de) {
+	protected List<GraphicsNode> initSVGConnection(Element theElement, Kite9BridgeContext ctx, Connection de) {
+		List<GraphicsNode> out = new ArrayList<>();
 		Kite9RouteBridge bridge = new Kite9RouteBridge(de);
 		GraphicsNode gn = bridge.createGraphicsNode(ctx, theElement);
 		bridge.buildGraphicsNode(ctx, theElement, gn);
 		out.add(gn);
+		return out;
 	}
 	
 	
-	public abstract IdentifiableGraphicsNode createGraphicsNode(String id, Kite9BridgeContext ctx, StyledKite9SVGElement theElement, GraphicsLayerName layer, DiagramElement de);
+	/**
+	 * This implementation simply creates a group in the usual way.
+	 */
+	protected IdentifiableGraphicsNode createGraphicsNode(String id, Kite9BridgeContext ctx, StyledKite9SVGElement theElement, GraphicsLayerName layer, DiagramElement de) {
+		GVTBuilder builder = ctx.getGVTBuilder();
+		Element e = theElement.getOwnerDocument().createElementNS(SVG12DOMImplementation.SVG_NAMESPACE_URI, "g");
+		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
+		out.setId(id+"-"+layer.name());
+		out.setLayer(layer);		
+		return out;
+	}
 	
 	/**
 	 * Use this method where the DiagramElement is allowed to contain SVG contents.
 	 */
-	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out, Element theElement, Kite9BridgeContext ctx, DiagramElement de) {
-		
+	protected List<GraphicsNode> initSVGGraphicsContents(Element theElement, Kite9BridgeContext ctx, DiagramElement de) {
 		if (de instanceof Connection) {
 			// use the special bridge for this
-			initSVGConnection(out, theElement, ctx, (Connection) de); 
-			return;
+			return initSVGConnection(theElement, ctx, (Connection) de); 
 		}
 		
-		
+		List<GraphicsNode> out = new ArrayList<>();
 		GVTBuilder builder = ctx.getGVTBuilder();
 		NodeList childNodes = theElement.getChildNodes();
 		for (int i = 0; i < childNodes.getLength(); i++) {
@@ -56,5 +73,6 @@ public abstract class AbstractLayerCreator implements LayerCreator {
 				}
 			}
 		}
+		return out;
 	}
 }

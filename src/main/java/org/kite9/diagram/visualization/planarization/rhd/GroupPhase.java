@@ -639,12 +639,4 @@ public class GroupPhase {
 		}
 	}
 
-	/**
-	 * An invisible link need not be shown at all if it is causing a contradiction
-	 */
-	public static boolean isRemoveableLink(BiDirectional<Connected> bic) {
-		return (bic instanceof DiagramElement) && (LinkLineStyle.INVISIBLE.equals(((DiagramElement)bic).getShapeName()));
-	}
-
-
 }

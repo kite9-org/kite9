@@ -153,6 +153,12 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		Value v = getCSSStyleProperty(prop);
 		return v.getFloatValue();
 	}
+
+	@Override
+	public BoxShadow getShadow() {
+		ensureInitialized();
+		return boxShadow;
+	}
 	
 	
 	

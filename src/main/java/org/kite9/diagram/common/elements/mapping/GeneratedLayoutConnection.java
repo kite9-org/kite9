@@ -12,6 +12,7 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
+import org.kite9.diagram.model.style.BoxShadow;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 
 /**
@@ -49,11 +50,6 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 		}
 		
 		return rri;
-	}
-
-	@Override
-	public String getShapeName() {
-		return null;
 	}
 
 	@Override
@@ -96,11 +92,6 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	}
 
 	@Override
-	public String getStyle() {
-		return null;
-	}
-
-	@Override
 	public int getRank() {
 		return 0;
 	}
@@ -113,5 +104,10 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	@Override
 	public double getPadding(Direction d) {
 		return 0;
+	}
+
+	@Override
+	public BoxShadow getShadow() {
+		return null;
 	}
 }

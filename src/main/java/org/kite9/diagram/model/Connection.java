@@ -32,10 +32,7 @@ public interface Connection extends DiagramElement, BiDirectional<Connected> {
 
 	
 	public RouteRenderingInformation getRenderingInformation();
-	
-	@Deprecated
-	public String getStyle();
-	
+
 	/**
 	 * Returns the rank of the connection from the ordering of all the connections on the diagram.
 	 */

@@ -3,10 +3,7 @@ package org.kite9.diagram.batik.element;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.batik.bridge.GVTBuilder;
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -145,6 +142,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 
 	@Override
 	protected void initializeChildXMLElements() {
+		ensureInitialized();
 		if (!initializedChildren) {
 			
 			if (getSizing() != DiagramElementSizing.FIXED) {

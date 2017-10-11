@@ -54,15 +54,6 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		return theElement.getID();
 	}
 
-	public String getShapeName() {
-		String out = theElement.getAttribute("shape");
-//		if (out.length() == 0) {
-//			out = getCSSStyleProperty(CSSConstants.SHAPE_PROPERTY).getStringValue();
-//		}
-		
-		return out;
-	}
-
 	public Diagram getDiagram() {
 		if (this instanceof Diagram) {
 			return (Diagram) this;
