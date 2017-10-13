@@ -109,7 +109,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	
 	private void initContainerPosition() {
 		if (containerPosition == null) {
-			if (getContainer() != null) {
+			if (getParent() instanceof Container) {
 				if (getContainer().getLayout() == Layout.GRID) {
 					IntegerRange x = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
 					IntegerRange y = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);

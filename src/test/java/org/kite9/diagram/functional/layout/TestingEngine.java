@@ -334,9 +334,7 @@ public class TestingEngine extends TestingHelp {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if ((rri == null) || (rri.size() == 0)) {
-					if (!isInvisible(c)) {
-						notPresent.add(c);
-					}
+					notPresent.add(c);
 				}
 				
 //				if (isContradictingLink(c)) {
@@ -380,12 +378,6 @@ public class TestingEngine extends TestingHelp {
 				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
-			/**
-			 * It's ok not to render invisible items sometimes.
-			 */
-			private boolean isInvisible(Connection c) {
-				return "INVISIBLE".equals(c.getShapeName());
-			}
 		};
 
 		DiagramChecker.checkConnnectionElements(d, ca);
