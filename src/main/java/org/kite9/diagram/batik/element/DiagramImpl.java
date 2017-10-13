@@ -1,22 +1,14 @@
 package org.kite9.diagram.batik.element;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.layers.AbstractLayerCreator;
-import org.kite9.diagram.batik.layers.GraphicsLayerName;
-import org.kite9.diagram.batik.layers.LayerCreator;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Element;
 
 /**
  * This contains extra code relating to the Diagram itself, specifically, managing 
@@ -51,25 +43,6 @@ public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 		return c;
 	}
 	
-	private static final LayerCreator EMPTY_LAYER_CREATOR = new AbstractLayerCreator() {
-
-		@Override
-		protected List<GraphicsNode> initSVGGraphicsContents(Element theElement, Kite9BridgeContext ctx, DiagramElement de) {
-			return Collections.emptyList();
-		}
-	};
-	
-	/**
-	 * For the diagram itself, we have to create empty CompoundGraphicsNodes for all required layers. 
-	 */
-	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
-		initializeChildXMLElements();
-		if (name == GraphicsLayerName.MAIN) {
-			return name.createLayer(getID(), ctx, theElement, this);
-		} else {
-			return EMPTY_LAYER_CREATOR.createLayer(getID(), ctx, theElement, name, this);
-		}
-	}
 	
 }
 

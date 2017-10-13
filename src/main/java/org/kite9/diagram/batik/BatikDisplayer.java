@@ -3,7 +3,6 @@ package org.kite9.diagram.batik;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.CompactedRectangular;
 import org.kite9.diagram.model.Connection;
@@ -27,8 +26,8 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	protected CostedDimension size(DiagramElement element, Dimension2D within) {
-		if (element instanceof HasLayeredGraphics) {
-			DiagramElementSizing sizing = getSizing((HasLayeredGraphics) element);
+		if (element instanceof HasGraphicsNode) {
+			DiagramElementSizing sizing = getSizing((HasGraphicsNode) element);
 
 			if (sizing == null) {
 				return CostedDimension.ZERO;
@@ -36,7 +35,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			
 			switch (sizing) {
 			case FIXED:
-				Rectangle2D bounds = ((HasLayeredGraphics) element).getSVGBounds();
+				Rectangle2D bounds = ((HasGraphicsNode) element).getSVGBounds();
 				if (bounds == null) {
 					return new CostedDimension(1, 1, 0);
 				}
@@ -70,26 +69,25 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			return; // parents of decals should also be positioned.
 		}
 		
-		if (element instanceof HasLayeredGraphics) {
+		if (element instanceof HasGraphicsNode) {
 			DiagramElement parent = element.getParent();
-			HasLayeredGraphics layered = (HasLayeredGraphics) element;
+			HasGraphicsNode hgn = (HasGraphicsNode) element;
 
 			if (parent != null) {
-				layered.eachLayer(node -> {
+				hgn.withGraphicsNode(node -> {
 					// make sure the graphics node is anchored to it's parent
-					GraphicsLayerName name = ((IdentifiableGraphicsNode) node).getLayer();
-					IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasLayeredGraphics) parent).getGraphicsForLayer(name);
+					IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasGraphicsNode) parent).getGraphicsNode();
 					parentNode.add(node);
 				});
 			}
 
 			
-			Rectangle2D bounds = layered.getSVGBounds();
-			DiagramElementSizing sizing = getSizing(layered);
+			Rectangle2D bounds = hgn.getSVGBounds();
+			DiagramElementSizing sizing = getSizing(hgn);
 			
 			if (bounds != null) {				
 				// reset the scale first
-				layered.eachLayer(node -> {
+				hgn.withGraphicsNode(node -> {
 					AffineTransform existing = node.getTransform();
 					AffineTransform global = node.getGlobalTransform();
 					existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
@@ -98,7 +96,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				if (sizing == DiagramElementSizing.FIXED)  {
 					// apply a translation to the Kite9-specified position
 					
-					layered.eachLayer(node -> {
+					hgn.withGraphicsNode(node -> {
 						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
 						AffineTransform global = node.getGlobalTransform();
 						AffineTransform existing = node.getTransform();
@@ -108,7 +106,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 				
 				if ((sizing == DiagramElementSizing.SCALED) || (sizing == DiagramElementSizing.ADAPTIVE)){
 					// applies scale and translation
-					layered.eachLayer(node -> {
+					hgn.withGraphicsNode(node -> {
 						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
 						AffineTransform existing = node.getTransform();
 						
@@ -124,7 +122,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		}
 	}
 
-	private DiagramElementSizing getSizing(HasLayeredGraphics layered) {
+	private DiagramElementSizing getSizing(HasGraphicsNode layered) {
 		DiagramElementSizing out =  (layered instanceof Rectangular) ?((Rectangular) layered).getSizing() : null;
 		return out;
 	}

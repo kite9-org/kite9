@@ -15,11 +15,11 @@ import org.kite9.diagram.model.DiagramElement;
  * @author robmoffat
  *
  */
-public interface HasLayeredGraphics extends DiagramElement {
+public interface HasGraphicsNode extends DiagramElement {
 	
-	public GraphicsNode getGraphicsForLayer(Object l);
+	public GraphicsNode getGraphicsNode();
 	
-	public void eachLayer(Consumer<GraphicsNode> cb);
+	public void withGraphicsNode(Consumer<GraphicsNode> cb);
 	
 	/**
 	 * Returns just the bounds of the SVG elements.

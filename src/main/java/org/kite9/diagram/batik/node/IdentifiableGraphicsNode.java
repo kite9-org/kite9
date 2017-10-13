@@ -5,15 +5,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
-import org.apache.batik.util.HaltingThread;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
-import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.w3c.dom.Element;
 
 public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements Kite9SizedGraphicsNode {
 
 	private String id;
-	private GraphicsLayerName layer;
 	private Element theElement;
 
 	public Element getTheElement() {
@@ -22,14 +19,6 @@ public class IdentifiableGraphicsNode extends CompositeGraphicsNode implements K
 
 	public void setTheElement(Element theElement) {
 		this.theElement = theElement;
-	}
-
-	public GraphicsLayerName getLayer() {
-		return layer;
-	}
-
-	public void setLayer(GraphicsLayerName layer) {
-		this.layer = layer;
 	}
 
 	public String getId() {

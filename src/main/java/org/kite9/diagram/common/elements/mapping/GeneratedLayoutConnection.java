@@ -12,8 +12,9 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
-import org.kite9.diagram.model.style.BoxShadow;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
+
+import com.sun.scenario.effect.BoxShadow;
 
 /**
  * This connection is used with a {@link ContainerLayoutEdge} and is used to create a layout between
@@ -106,8 +107,4 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 		return 0;
 	}
 
-	@Override
-	public BoxShadow getShadow() {
-		return null;
-	}
 }

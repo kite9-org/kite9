@@ -1,26 +1,26 @@
 package org.kite9.diagram.batik.element;
 
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.HasLayeredGraphics;
+import org.kite9.diagram.batik.HasGraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.Templater.ValueReplacer;
-import org.kite9.diagram.batik.layers.GraphicsLayerName;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.style.BoxShadow;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering.
@@ -28,57 +28,91 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElement implements HasLayeredGraphics {
+public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElement implements HasGraphicsNode {
 
 	
 	public AbstractSVGDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
 	}
 
-
-	/**
-	 * Handles Batik bits
-	 */
-	protected Map<Object, GraphicsNode> graphicsNodeCache = new HashMap<>();
+	protected GraphicsNode graphicsNodeCache;
 
 	@Override
-	public GraphicsNode getGraphicsForLayer(Object l) {
-		if (l instanceof GraphicsLayerName) {
-			GraphicsLayerName name = (GraphicsLayerName) l;
-			GraphicsNode out = graphicsNodeCache.get(name);
-			if (out == null) {
-				out = initGraphicsForLayer(name);
-				graphicsNodeCache.put(name, out);
-				return out;
-			}
-			
+	public GraphicsNode getGraphicsNode() {
+		GraphicsNode out = graphicsNodeCache;
+		if (out == null) {
+			out = initGraphicsNode();
+			graphicsNodeCache = out;
 			return out;
-		} else {
-			throw new Kite9ProcessingException("Unrecognised Layer: "+l);
 		}
+		
+		return out;
 	}
 
-	/**
-	 * Override this unless you only need to implement the {@link GraphicsLayerName}.MAIN layer.
-	 */
-	protected GraphicsNode initGraphicsForLayer(GraphicsLayerName name) {
+	
+	protected GraphicsNode initGraphicsNode() {
 		initializeChildXMLElements();
-		return name.createLayer(getID(), ctx, theElement, this);
+		IdentifiableGraphicsNode out = buildGraphicsNode();
+		List<GraphicsNode> nodes = initSVGGraphicsContents();
+		for (GraphicsNode g : nodes) {
+			out.add(g);
+		}
+		return out;
+	}
+	
+	
+	
+	/**
+	 * This implementation simply creates a group in the usual way.
+	 */
+	protected IdentifiableGraphicsNode buildGraphicsNode() {
+		GVTBuilder builder = ctx.getGVTBuilder();
+		Element e = theElement.getOwnerDocument().createElementNS(SVG12DOMImplementation.SVG_NAMESPACE_URI, "g");
+		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
+		out.setId(getID());
+		return out;
+	}
+	
+	/**
+	 * Use this method where the DiagramElement is allowed to contain SVG contents.
+	 */
+	protected List<GraphicsNode> initSVGGraphicsContents() {
+		List<GraphicsNode> out = new ArrayList<>();
+		GVTBuilder builder = ctx.getGVTBuilder();
+		NodeList childNodes = theElement.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			Node child = childNodes.item(i);
+			if (child instanceof Element)  {
+				GraphicsNode node = null;
+				if (child instanceof Kite9XMLElement) {
+					DiagramElement de = ((Kite9XMLElement) child).getDiagramElement();
+					if (de instanceof HasGraphicsNode) {
+						node = ((HasGraphicsNode) de).getGraphicsNode();
+					}
+				} else {
+					// get access to the bridge, to create a graphics node.
+					node = builder.build(ctx, (Element) child);
+				}
+				
+				if (node != null) {
+					out.add(node);
+				}
+			}
+		}
+		return out;
 	}
 
 	@Override
-	public void eachLayer(Consumer<GraphicsNode> cb) {
-		for (GraphicsLayerName name : GraphicsLayerName.values()) {
-			GraphicsNode layerNode = getGraphicsForLayer(name);
-			if (layerNode != null) {
-				cb.accept(layerNode);
-			}
+	public void withGraphicsNode(Consumer<GraphicsNode> cb) {
+		GraphicsNode gn = getGraphicsNode();
+		if (gn != null) {
+			cb.accept(gn);
 		}
 	}
 
 	@Override
 	public Rectangle2D getSVGBounds() {
-		GraphicsNode gn = getGraphicsForLayer(GraphicsLayerName.MAIN);
+		GraphicsNode gn = getGraphicsNode();
 		if (gn instanceof IdentifiableGraphicsNode) {
 			return ((IdentifiableGraphicsNode) gn).getSVGBounds();
 		} else if (gn != null) {
@@ -115,31 +149,12 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		});
 	}
 
-
-	/**
-	 * This implementation simply creates a group in the usual way.
-	 */
-	public IdentifiableGraphicsNode createGraphicsNode(GraphicsLayerName name) {
-		GVTBuilder builder = ctx.getGVTBuilder();
-		Element e = theElement.getOwnerDocument().createElementNS(SVG12DOMImplementation.SVG_NAMESPACE_URI, "g");
-		IdentifiableGraphicsNode out = (IdentifiableGraphicsNode) builder.build(ctx, e);
-		out.setId(getID()+"-"+name.name());
-		out.setLayer(name);		
-		return out;
-	}
-
 	protected double padding[] = new double[4];
 	protected double margin[] = new double[4];
-	protected BoxShadow boxShadow;
 	
 	protected void initialize() {
 		initializeDirectionalCssValues(padding, "padding");
 		initializeDirectionalCssValues(margin, "margin");
-		initializeBoxShadow();
-	}
-
-	private void initializeBoxShadow() {
-		this.boxShadow = BoxShadow.constructBoxShadow(getTheElement());
 	}
 
 	private void initializeDirectionalCssValues(double[] vals, String prefix) {
@@ -153,13 +168,5 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		Value v = getCSSStyleProperty(prop);
 		return v.getFloatValue();
 	}
-
-	@Override
-	public BoxShadow getShadow() {
-		ensureInitialized();
-		return boxShadow;
-	}
-	
-	
 	
 }

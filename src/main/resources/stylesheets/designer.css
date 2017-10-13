@@ -128,7 +128,7 @@ symbol.diamond {
 glyph {
 	padding: 6px 10px 6px 10px; 
 	margin: 10px;
-	stroke-width: 2px;
+	stroke-width: 1px;
 	stroke: black;
 	fill: white;
 }
@@ -139,6 +139,10 @@ glyph > label {
 	template: url(template.svg#text-label);
 	occupies: 0 1 1 1;
 	vertical-align: top;
+}
+
+back {
+	box-shadow: 4px 4px 0px #777777;	
 }
 
 glyph > label > contents {

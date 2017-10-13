@@ -38,9 +38,11 @@ public class ResourceReferencerImageHandler extends DefaultImageHandler {
 	}
 
 	private void handleHREFInternal(Element imageElement) {
-		Reference ref = rr.getReference(lastImageURL);
-		imageElement.setAttributeNS(XLINK_NAMESPACE_URI,
-                XLINK_HREF_QNAME,ref.getUrl());
+		if (lastImageURL != null) { 
+			Reference ref = rr.getReference(lastImageURL);
+			imageElement.setAttributeNS(XLINK_NAMESPACE_URI,
+	                XLINK_HREF_QNAME,ref.getUrl());
+		}
 		this.lastImageURL = null;
 	}
 
