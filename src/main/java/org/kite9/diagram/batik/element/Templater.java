@@ -246,7 +246,28 @@ public class Templater {
 		out.append(input.substring(place));
 		return out.toString();
 	}
-	
-	
+
+
+	/**
+	 * Used for copying to the output XML file.
+	 */
+	public void transcode(Node from, Node to) {
+		 NodeList nl = from.getChildNodes();
+		 for (int i = 0; i < nl.getLength(); i++) {
+			Node n = nl.item(i);
+			Node copy;
+			if (n instanceof Kite9XMLElement) {
+				copy = ((Kite9XMLElement) n).output(to.getOwnerDocument(), this);
+			} else {
+				copy = n.cloneNode(false);
+				removePrefixes(copy);
+				to.getOwnerDocument().adoptNode(copy);
+				transcode(n, copy);
+			}
+			
+			to.appendChild(copy);
+		}
+	}
+
 
 }

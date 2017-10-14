@@ -3,7 +3,6 @@ package org.kite9.diagram.batik.element;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
@@ -103,14 +102,6 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	}
 
 	@Override
-	public void withGraphicsNode(Consumer<GraphicsNode> cb) {
-		GraphicsNode gn = getGraphicsNode();
-		if (gn != null) {
-			cb.accept(gn);
-		}
-	}
-
-	@Override
 	public Rectangle2D getSVGBounds() {
 		GraphicsNode gn = getGraphicsNode();
 		if (gn instanceof IdentifiableGraphicsNode) {
@@ -168,5 +159,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		Value v = getCSSStyleProperty(prop);
 		return v.getFloatValue();
 	}
+	
+	
 	
 }

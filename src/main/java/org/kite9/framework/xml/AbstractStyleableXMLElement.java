@@ -10,12 +10,15 @@ import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
+import org.kite9.diagram.batik.HasGraphicsNode;
+import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.XMLHelper;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -304,4 +307,14 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return e.getComputedStyle(this, null, e.getPropertyIndex(name));
 	}
 
+	@Override
+	public Element output(Document d, Templater t) {
+		DiagramElement de = getDiagramElement();
+		if (de instanceof HasGraphicsNode) {
+			return ((HasGraphicsNode) de).output(d, t);
+		} else {
+			return null;
+		}
+	}
+	
 }

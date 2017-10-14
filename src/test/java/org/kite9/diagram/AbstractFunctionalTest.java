@@ -124,7 +124,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	public String getDesignerStylesheetReference() {
 		URL u = this.getClass().getResource("/stylesheets/designer.css");
-		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
+		return "<svg:defs><svg:style type=\"text/css\"> @import url(\""+u+"\");</svg:style></svg:defs>";
 	}
 
 	protected String addSVGFurniture(String xml) {

@@ -1,6 +1,15 @@
 package org.kite9.framework.dom;
 
-import static org.kite9.framework.dom.CSSConstants.*;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_BLUR_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_COLOR_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_OPACITY_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_SPREAD_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_TYPE_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_X_OFFSET_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_Y_OFFSET_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.PADDING_LEFT_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.PADDING_RIGHT_PROPERTY;
+import static org.kite9.framework.dom.CSSConstants.PADDING_TOP_PROPERTY;
 
 import java.net.URL;
 
@@ -34,7 +43,6 @@ import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.GenericKite9XMLElement;
-import org.kite9.framework.xml.StylesheetReference;
 import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -64,14 +72,6 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 			public Element create(String prefix, Document doc) {
 				DiagramKite9XMLElement out = new DiagramKite9XMLElement((ADLDocument) doc);
 				out.setOwnerDocument(doc);
-				return out;
-			}
-		});
-		
-		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, "stylesheet", new ElementFactory() {
-			
-			public Element create(String prefix, Document doc) {
-				StylesheetReference out = new StylesheetReference((ADLDocument) doc);
 				return out;
 			}
 		});

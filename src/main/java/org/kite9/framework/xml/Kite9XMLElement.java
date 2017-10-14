@@ -1,6 +1,8 @@
 package org.kite9.framework.xml;
 
+import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.DiagramElement;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -27,4 +29,5 @@ public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 	
 	public <E extends Element> E replaceProperty(String propertyName, E e);
 	
+	public Element output(Document d, Templater t);
 }
