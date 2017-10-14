@@ -1,19 +1,20 @@
 package org.kite9.diagram.batik.bridge;
 
 import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.bridge.images.Kite9ImageElementBridge;
-import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
 import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.w3c.dom.Document;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -50,15 +51,17 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		templater = new Templater(getDocumentLoader());
 	}
 
+	/**
+	 * Setting this true allows us to keep track of XML-GraphicsNode mapping.
+	 */
 	public boolean isInteractive() {
-		return false;
+		return true;	
 	}
 
 	public boolean isDynamic() {
 		return false;
 	}
 	
-
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
@@ -72,7 +75,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	 * This needs to copy the template XML source into the destination.
 	 */
 	public void handleTemplateElement(Kite9XMLElement in, DiagramElement out) {
-		templater.handleTemplateElement(in, (AbstractXMLDiagramElement) out);
+		templater.handleTemplateElement(in, out);
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {
@@ -95,4 +98,21 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		this.resourceURL = null;
 		return out;
 	}
+
+	@Override
+	public void setDocument(Document document) {
+		super.setDocument(document);
+	}
+
+	@Override
+	public void setGVTBuilder(GVTBuilder gvtBuilder) {
+		super.setGVTBuilder(gvtBuilder);
+	}
+
+	@Override
+	public void initializeDocument(Document document) {
+		super.initializeDocument(document);
+	}
+	
+	
 }

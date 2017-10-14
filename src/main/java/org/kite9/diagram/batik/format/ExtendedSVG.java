@@ -3,6 +3,7 @@ package org.kite9.diagram.batik.format;
 import java.awt.Font;
 import java.util.List;
 
+import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
 
@@ -33,6 +34,12 @@ public interface ExtendedSVG {
 	 * Adds a font-face to the output.
 	 */
 	public void addFontFace(GVTFontFace face);
+	
+	/**
+	 * Sends the original XML of the GraphicsNode to the output.
+	 * @param gn
+	 */
+	public void passthroughXML(GraphicsNode gn);
 
 }
 

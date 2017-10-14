@@ -20,8 +20,6 @@ import org.w3c.dom.Node;
  * 
  * 
  * @author robmoffat
- * 
- * @TODO: replace with SVGOMStyleElement
  *
  */
 public class StylesheetReference extends SVGOMStyleElement implements CSSStyleSheetNode, Kite9XMLElement {

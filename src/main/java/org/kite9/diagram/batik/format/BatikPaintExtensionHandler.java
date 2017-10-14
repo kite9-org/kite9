@@ -105,7 +105,7 @@ public class BatikPaintExtensionHandler extends DefaultExtensionHandler {
 		// paint the pattern inside a group element
 		PatternGraphicsNode patternNode = (PatternGraphicsNode) paint.getGraphicsNode();
 		Element groupElem = genCtx.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
-		ExtendedSVGGraphics2D esvg = new ExtendedSVGGraphics2D(genCtx, groupElem);
+		ExtendedSVGGraphics2D esvg = new ExtendedSVGGraphics2D((ExtendedSVGGeneratorContext) genCtx, groupElem);
 		esvg.transform(patternNode.getInverseTransform());
 		patternNode.paint(esvg);
 		groupElem = esvg.getTopLevelGroup(true);

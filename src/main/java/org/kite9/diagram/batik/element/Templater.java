@@ -129,17 +129,21 @@ public class Templater {
 			transcribeNode(dest, n, vr, resourceBase, false);
 		}
 	}
-
-	public void transcribeNode(Element dest, Node source, ValueReplacer vr, String resourceBase, boolean removePrefix) {
+	
+	public Node transcribeNode(Document dest, Node source, boolean removePrefix) {
 		Node copy = source.cloneNode(true);
 		
 		if (removePrefix) {
 			removePrefixes(copy);
 		}
 		
-		Document thisDoc = dest.getOwnerDocument();
-		thisDoc.adoptNode(copy);
+		dest.adoptNode(copy);
+		return copy;
+	}
 
+	public void transcribeNode(Element dest, Node source, ValueReplacer vr, String resourceBase, boolean removePrefix) {
+		Node copy = transcribeNode(dest.getOwnerDocument(), source, removePrefix);
+		
 		if (dest.getChildNodes().getLength() == 0) {
 			dest.appendChild(copy);
 		} else {

@@ -100,7 +100,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_6_GradientFill() throws Exception {
 		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 		ResourceReferencer rr = createTestingResourceReferencer();
-		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, rr);
+		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, rr, null);
 		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
 		LinearGradientPaint lgp = new LinearGradientPaint(
 				(Point2D) new Point2D.Double(0, 0),
