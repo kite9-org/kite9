@@ -7,41 +7,41 @@
   </svg:defs>
 
   <template id='glyph'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='kite9-type: decal; kite9-sizing: adaptive; ' class="glyph">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
   </template>
   
   <template id='key'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' style='fill: blue; ' />
     </back>
   </template>
 
   <template id='arrow'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />
     </back>
   </template>
 
   <template id='connection-label'>
-    <back style='type: decal; sizing: adaptive; '>
+    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #ccc; ' />
     </back>
-    <front style="type: connected; sizing: fixed">
+    <front style="kite9-type: connected; kite9-sizing: fixed">
       <svg:text>{{contents}}</svg:text>
     </front>
   </template>
 
   <template id='context'>
-    <back style='type: decal; sizing: adaptive; ' id="cback">
+    <back style='kite9-type: decal; kite9-sizing: adaptive; ' id="cback">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
     </back>
   </template>
 
   <!-- label template -->
   <template id="text-label">
-    <contents style="type: connected; sizing: fixed">
+    <contents style="kite9-type: connected; kite9-sizing: fixed">
       <svg:text class="text">{{contents}}</svg:text>
     </contents>
   </template>
@@ -49,15 +49,15 @@
 
   <!-- symbol -->
   <template id="circle">
-    <svg:circle cx="5" cy="5" r="5" />
+    <svg:circle style="fill: rgb(0, 150, 73); " cx="5" cy="5" r="5" />
   </template>
 
   <template id="hexagon">
-    <svg:polygon points="0,4 6,0 12,4 12,8 6,12 0,8" />
+    <svg:polygon points="0,4 6,0 12,4 12,8 6,12 0,8" style="fill: rgb(207, 36, 42);"/>
   </template>
 
   <template id="diamond">
-    <svg:polygon points="6,0 12,6 6,12 0,6" />
+    <svg:polygon points="6,0 12,6 6,12 0,6"  style="fill: rgb(237, 106, 86);" />
   </template>
 
 </svg:svg>

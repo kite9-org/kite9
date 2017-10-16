@@ -4,6 +4,7 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
+import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
@@ -15,6 +16,7 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -113,6 +115,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	public void initializeDocument(Document document) {
 		super.initializeDocument(document);
 	}
-	
+
 	
 }

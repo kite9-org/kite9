@@ -15,6 +15,7 @@ import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
@@ -144,15 +145,15 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 	protected double margin[] = new double[4];
 	
 	protected void initialize() {
-		initializeDirectionalCssValues(padding, "padding");
-		initializeDirectionalCssValues(margin, "margin");
+		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
+		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 	}
 
 	private void initializeDirectionalCssValues(double[] vals, String prefix) {
-		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+"-top");
-		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+"-bottom");
-		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+"-left");
-		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+"-right");	
+		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+CSSConstants.TOP);
+		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
+		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
+		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
 	}
 
 	private double getCssDoubleValue(String prop) {

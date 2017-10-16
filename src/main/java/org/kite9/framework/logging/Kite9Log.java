@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.css.sac.CSSParseException;
+
 /**
  * Very simple abstraction class for all logging functions.  
  * 
@@ -145,5 +147,10 @@ public class Kite9Log {
 	public void error(String string, Throwable e) {
 	    System.err.println(logFor.getPrefix()+" "+string);
 	    e.printStackTrace();
+	}
+
+	public void send(String prefix, Exception arg0) {
+	    System.out.println(logFor.getPrefix()+" "+prefix);
+	    arg0.printStackTrace(System.out);
 	}
 }

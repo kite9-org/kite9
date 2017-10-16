@@ -9,6 +9,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -165,7 +166,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	/**
 	 * The basic output approach is to turn any DiagramElement into a <g> tag, with the same ID set
 	 * as the DiagramElement.  Any style and class properties are copied across, and 
-	 * the tag name is also added as a class, prefixed with an underbar.
+	 * the tag name is also added as a class.
 	 * 
 	 * Finally a translate transform is applid so it appears in the right place.
 	 */
@@ -175,9 +176,18 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
 		t.transcode(theElement, out);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, getID());
-		out.setAttribute("class", theElement.getCSSClass()+" _"+theElement.getTagName());
+		out.setAttribute("class", theElement.getCSSClass()+" "+theElement.getTagName());
+		
+		// work out translation
 		RectangleRenderingInformation rri = getRenderingInformation();
-		out.setAttribute("transform", "translate("+rri.getPosition().x()+","+rri.getPosition().y()+")");
+		Dimension2D position = rri.getPosition();
+		if (getParent() != null) {
+			rri = ((Container) getParent()).getRenderingInformation();
+			Dimension2D parentPosition = rri.getPosition();
+			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());
+		}
+		
+		out.setAttribute("transform", "translate("+position.x()+","+position.y()+")");
 		return out;
 	}
 	

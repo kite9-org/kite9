@@ -73,54 +73,50 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		if (element instanceof HasGraphicsNode) {
 			DiagramElement parent = element.getParent();
 			HasGraphicsNode hgn = (HasGraphicsNode) element;
+			if (hgn.getGraphicsNode() == null) {
+				return;
+			}
+			
+			GraphicsNode node = hgn.getGraphicsNode();
 
 			if (parent != null) {
-				GraphicsNode node = hgn.getGraphicsNode();
-				if (node != null) {
-					// make sure the graphics node is anchored to it's parent
-					IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasGraphicsNode) parent).getGraphicsNode();
-					parentNode.add(node);
+				// make sure the graphics node is anchored to it's parent
+				IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasGraphicsNode) parent).getGraphicsNode();
+				parentNode.add(node);
+			}
+			
+			
+			Rectangle2D bounds = hgn.getSVGBounds();
+			DiagramElementSizing sizing = getSizing(hgn);
+			
+			if (bounds != null) {				
+				// reset the scale first
+				AffineTransform existing = node.getTransform();
+				AffineTransform global = node.getGlobalTransform();
+				existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
+				
+				if (sizing == DiagramElementSizing.FIXED)  {
+					// apply a translation to the Kite9-specified position
+					
+					RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
+					global = node.getGlobalTransform();
+					existing = node.getTransform();
+					translateRelative(bounds, existing, global, rri);
+				}
+				
+				if ((sizing == DiagramElementSizing.SCALED) || (sizing == DiagramElementSizing.ADAPTIVE)){
+					// applies scale and translation
+					RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
+					existing = node.getTransform();
+					
+					if (bounds != null) {
+						existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
+						existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
+						global = node.getGlobalTransform();
+						translateRelative(bounds, existing, global, rri);
+					}
 				}
 			}
-
-			
-//			Rectangle2D bounds = hgn.getSVGBounds();
-//			DiagramElementSizing sizing = getSizing(hgn);
-//			
-//			if (bounds != null) {				
-//				// reset the scale first
-//				hgn.withGraphicsNode(node -> {
-//					AffineTransform existing = node.getTransform();
-//					AffineTransform global = node.getGlobalTransform();
-//					existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
-//				});
-//				
-//				if (sizing == DiagramElementSizing.FIXED)  {
-//					// apply a translation to the Kite9-specified position
-//					
-//					hgn.withGraphicsNode(node -> {
-//						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-//						AffineTransform global = node.getGlobalTransform();
-//						AffineTransform existing = node.getTransform();
-//						translateRelative(bounds, existing, global, rri);
-//					});
-//				}
-//				
-//				if ((sizing == DiagramElementSizing.SCALED) || (sizing == DiagramElementSizing.ADAPTIVE)){
-//					// applies scale and translation
-//					hgn.withGraphicsNode(node -> {
-//						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-//						AffineTransform existing = node.getTransform();
-//						
-//						if (bounds != null) {
-//							existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
-//							existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
-//							AffineTransform global = node.getGlobalTransform();
-//							translateRelative(bounds, existing, global, rri);
-//						}
-//					});
-//				}
-//			}
 		}
 	}
 
