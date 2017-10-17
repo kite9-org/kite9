@@ -13,10 +13,15 @@ public interface CSSConstants {
 	public static final String ELEMENT_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"sizing";
 	
 	public static final String LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"layout";			// for containers, to decide how to layout their contents
+	
+	// grid property
 	public static final String GRID_OCCUPIES_X_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies-x";			// for containers, to decide how to layout their contents
 	public static final String GRID_OCCUPIES_Y_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies-y";			// for containers, to decide how to layout their contents
 	public static final String GRID_ROWS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"grid-rows";			// for containers, to decide how to layout their contents
 	public static final String GRID_COLUMNS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"grid-columns";			// for containers, to decide how to layout their contents
+	public static final String GRID_SIZE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"grid-size";
+	public static final String GRID_OCCUPIES_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies";
+	
 	
 	// margin property
 	public static final String KITE9_CSS_MARGIN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"margin-";

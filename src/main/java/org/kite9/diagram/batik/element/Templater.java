@@ -118,7 +118,7 @@ public class Templater {
 	 */
 	public void transcribeContent(Element dest, Element source, String resourceBase, ValueReplacer vr, boolean removeExistingText) {
 		if (removeExistingText) {
-			removeTextNodes(dest);
+			removeTextNodes(source);
 		}
 
 		NodeList children = source.getChildNodes();

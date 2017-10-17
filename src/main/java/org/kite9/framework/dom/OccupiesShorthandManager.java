@@ -9,7 +9,7 @@ import org.w3c.dom.DOMException;
 public class OccupiesShorthandManager implements ShorthandManager {
 
 	public String getPropertyName() {
-		return "occupies";
+		return CSSConstants.GRID_OCCUPIES_PROPERTY;
 	}
 
 	public boolean isAnimatableProperty() {
