@@ -1,7 +1,7 @@
 package org.kite9.diagram.batik.format;
 
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.element.Templater;
+import org.kite9.diagram.batik.templater.Templater;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

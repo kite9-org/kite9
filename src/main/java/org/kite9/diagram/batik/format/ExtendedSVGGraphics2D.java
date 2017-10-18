@@ -20,7 +20,7 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGIDGenerator;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.batik.bridge.images.ResourceReferencerImageHandler;
-import org.kite9.diagram.batik.element.Templater;
+import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;

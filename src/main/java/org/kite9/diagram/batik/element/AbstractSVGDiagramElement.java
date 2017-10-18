@@ -10,8 +10,9 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.HasGraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.element.Templater.ValueReplacer;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.batik.templater.Templater;
+import org.kite9.diagram.batik.templater.Templater.ValueReplacer;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -121,7 +122,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 		double [] x = new double[] {0, rri.getSize().getWidth()};
 		double [] y = new double[] {0, rri.getSize().getHeight()};
 		
-		ctx.getTemplater().performReplace(child, new ValueReplacer() {
+		ctx.getTemplater().performReplace(child, new Templater.ValueReplacer() {
 			
 			@Override
 			public String getText() {

@@ -9,7 +9,9 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.bridge.images.Kite9ImageElementBridge;
-import org.kite9.diagram.batik.element.Templater;
+import org.kite9.diagram.batik.templater.BasicTemplater;
+import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
+import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -50,7 +52,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 
 	public Kite9BridgeContext(UserAgent userAgent, Kite9DocumentFactory dbf) {
 		this(userAgent, new Kite9DocumentLoader(userAgent, dbf));
-		templater = new Templater(getDocumentLoader());
+		templater = new DefsHandlingTemplater(getDocumentLoader());
 	}
 
 	/**

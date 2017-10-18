@@ -86,7 +86,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 		super.transcode(input, uri, output);
 		
 		this.outputDocument = createDocument(output);
-	    ((Kite9BridgeContext) ctx).getTemplater().transcode(input.getDocumentElement(), outputDocument.getDocumentElement());
+	    ((Kite9BridgeContext) ctx).getTemplater().transcode(input.getDocumentElement(), outputDocument.getDocumentElement(), true);
 	}
 	
 	

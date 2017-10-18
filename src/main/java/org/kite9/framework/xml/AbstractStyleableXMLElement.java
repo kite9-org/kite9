@@ -11,7 +11,7 @@ import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.batik.HasGraphicsNode;
-import org.kite9.diagram.batik.element.Templater;
+import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -304,7 +304,8 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 
 	public Value getCSSStyleProperty(String name) {
 		CSSEngine e = getOwnerDocument().getCSSEngine();
-		return e.getComputedStyle(this, null, e.getPropertyIndex(name));
+		int pi = e.getPropertyIndex(name);
+		return e.getComputedStyle(this, null, pi);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.element;
+package org.kite9.diagram.batik.templater;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +9,7 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.util.XMLConstants;
+import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
@@ -27,15 +28,7 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public class Templater {
-	
-	public interface ValueReplacer {
-		
-		public String getReplacementValue(String prefix, String attr);	
-		
-		public String getText();
-		
-	}
+public class BasicTemplater implements Templater {
 	
 	public static class ParentElementValueReplacer implements ValueReplacer {
 		
@@ -73,15 +66,13 @@ public class Templater {
 	
 	
 	
-	private DocumentLoader loader;
+	protected DocumentLoader loader;
 
-	public Templater(DocumentLoader loader) {
+	public BasicTemplater(DocumentLoader loader) {
 		this.loader = loader;
 	}
 
-	/**
-	 * This needs to copy the template XML source into the destination.
-	 */
+	@Override
 	public void handleTemplateElement(Kite9XMLElement in, DiagramElement o) {
 		if (o instanceof AbstractXMLDiagramElement) {
 			AbstractXMLDiagramElement out = (AbstractXMLDiagramElement) o;
@@ -96,10 +87,10 @@ public class Templater {
 					URI u = new URI(uri);
 					String fragment = u.getFragment();
 					String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
-					ADLDocument templateDoc = loadReferencedDocument(resource);
+					ADLDocument templateDoc = loadReferencedDocument(resource, in);
 					Element e = templateDoc.getElementById(fragment);
 
-					ValueReplacer vr = new ParentElementValueReplacer(in);
+					Templater.ValueReplacer vr = new ParentElementValueReplacer(in);
 					transcribeContent(in, e, resource, vr, true);
 				} catch (Exception e) {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
@@ -108,15 +99,7 @@ public class Templater {
 		}
 	}
 
-	/**
-	 * Copies from source into destination, for duplicating XML.
-	 * @param dest
-	 * @param source
-	 * @param resourceBase  Add this if you want to include an xml:base on each copied element (to preserve references to defs)
-	 * @param vr Add this if you want to do value replacement in the source XML.
-	 * @param removeExistingText Add this to clear out text nodes in dest before copying
-	 */
-	public void transcribeContent(Element dest, Element source, String resourceBase, ValueReplacer vr, boolean removeExistingText) {
+	public void transcribeContent(Element dest, Element source, String resourceBase, Templater.ValueReplacer vr, boolean removeExistingText) {
 		if (removeExistingText) {
 			removeTextNodes(source);
 		}
@@ -130,6 +113,7 @@ public class Templater {
 		}
 	}
 	
+	@Override
 	public Node transcribeNode(Document dest, Node source, boolean removePrefix) {
 		Node copy = source.cloneNode(true);
 		
@@ -141,7 +125,7 @@ public class Templater {
 		return copy;
 	}
 
-	public void transcribeNode(Element dest, Node source, ValueReplacer vr, String resourceBase, boolean removePrefix) {
+	public void transcribeNode(Element dest, Node source, Templater.ValueReplacer vr, String resourceBase, boolean removePrefix) {
 		Node copy = transcribeNode(dest.getOwnerDocument(), source, removePrefix);
 		
 		if (dest.getChildNodes().getLength() == 0) {
@@ -183,7 +167,7 @@ public class Templater {
 		}
 	}
 	
-	private ADLDocument loadReferencedDocument(String resource) throws IOException {
+	protected ADLDocument loadReferencedDocument(String resource, @SuppressWarnings("unused") Kite9XMLElement in) throws IOException {
 		return (ADLDocument) loader.loadDocument(resource);
 	}
 	
@@ -192,7 +176,7 @@ public class Templater {
 	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
 	 * turned into `GraphicsNode`s .  
 	 */
-	public void performReplace(Node n, ValueReplacer vr) {
+	public void performReplace(Node n, Templater.ValueReplacer vr) {
 		if (vr == null)
 			return;
 		
@@ -216,14 +200,14 @@ public class Templater {
 		}
 	}
 
-	public void performReplace(NodeList nodeList, ValueReplacer vr) {
+	public void performReplace(NodeList nodeList, Templater.ValueReplacer vr) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
 			performReplace(n, vr);
 		}
 	}
 
-	protected String performValueReplace(String input, ValueReplacer vr) {
+	protected String performValueReplace(String input, Templater.ValueReplacer vr) {
 		Pattern p = Pattern.compile("\\{([xXyY@])([a-zA-Z0-9]+)}");
 		
 		Matcher m = p.matcher(input);
@@ -247,27 +231,23 @@ public class Templater {
 		return out.toString();
 	}
 
-
-	/**
-	 * Used for copying to the output XML file.
-	 */
-	public void transcode(Node from, Node to) {
+	@Override
+	public void transcode(Node from, Node to, boolean expandKite9) {
 		 NodeList nl = from.getChildNodes();
 		 for (int i = 0; i < nl.getLength(); i++) {
 			Node n = nl.item(i);
 			Node copy;
-			if (n instanceof Kite9XMLElement) {
+			if ((n instanceof Kite9XMLElement) && (expandKite9)) {
 				copy = ((Kite9XMLElement) n).output(to.getOwnerDocument(), this);
+				to.appendChild(copy);
 			} else {
 				copy = n.cloneNode(false);
 				removePrefixes(copy);
 				to.getOwnerDocument().adoptNode(copy);
-				transcode(n, copy);
+				transcode(n, copy, expandKite9);
+				to.appendChild(copy);
 			}
 			
-			to.appendChild(copy);
 		}
 	}
-
-
 }

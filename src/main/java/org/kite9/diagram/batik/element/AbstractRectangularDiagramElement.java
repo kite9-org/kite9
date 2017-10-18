@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -166,7 +167,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	/**
 	 * The basic output approach is to turn any DiagramElement into a <g> tag, with the same ID set
 	 * as the DiagramElement.  Any style and class properties are copied across, and 
-	 * the tag name is also added as a class.
+	 * the tag name is also added as a class, prefixed with an underbar.
 	 * 
 	 * Finally a translate transform is applid so it appears in the right place.
 	 */
@@ -174,9 +175,10 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	public Element output(Document d, Templater t) {
 		initializeChildXMLElements();
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
-		t.transcode(theElement, out);
+		t.transcode(theElement, out, true);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, getID());
 		out.setAttribute("class", theElement.getCSSClass()+" "+theElement.getTagName());
+		out.setAttribute("style", theElement.getAttribute("style"));
 		
 		// work out translation
 		RectangleRenderingInformation rri = getRenderingInformation();

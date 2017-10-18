@@ -3,7 +3,7 @@ package org.kite9.diagram.batik;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.element.Templater;
+import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
