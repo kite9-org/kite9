@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><svg:svg xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" contentScriptType="text/ecmascript" zoomAndPan="magnify" contentStyleType="text/css" id="defs-file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/template.svg" preserveAspectRatio="xMidYMid meet" xml:id="defs-file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/template.svg" version="1.0">
+  <svg:defs>
+    <svg:style type="text/css" xml:space="preserve"> @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</svg:style>
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" xml:id="The Diagram" id="The Diagram">
+  <glyph xml:id="auto:0-rob's glyph" id="auto:0-rob's glyph" rank="0">
+    <back class="glyph" style="kite9-type: decal; kite9-sizing: adaptive; ">
+      <svg:rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="42.0"/>
+    </back>
+    StereoRob's Glyph
+  </glyph>
+</diagram>
+<svg:defs>
+    <svg:linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background">
+      <svg:stop stop-color="#FFF" offset="0%"/>
+      <svg:stop stop-color="#DDD" offset="100%"/>
+    </svg:linearGradient>
+    
+    <svg:filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow">
+      <svg:feGaussianBlur stdDeviation="3" in="SourceAlpha"/> 
+      <svg:feOffset result="offsetblur" dx="2" dy="2"/> 
+      <svg:feMerge> 
+        <svg:feMergeNode/>
+        <svg:feMergeNode in="SourceGraphic"/> 
+      </svg:feMerge>
+    </svg:filter>
+  </svg:defs>
+</svg:svg>

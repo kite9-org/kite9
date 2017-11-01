@@ -8,6 +8,7 @@ import org.apache.batik.util.SVG12Constants;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGSVGElement;
 
@@ -15,7 +16,7 @@ import org.w3c.dom.svg.SVGSVGElement;
  * Provides extra functionality for ensuring that we correctly set
  * up the `<defs>` element in the output document.
  */
-public class DefsHandlingTemplater extends BasicTemplater {
+public class DefsHandlingTemplater extends AbstractTemplater {
 
 	public DefsHandlingTemplater(DocumentLoader loader) {
 		super(loader);
@@ -28,16 +29,19 @@ public class DefsHandlingTemplater extends BasicTemplater {
 		
 		if (importDefs) {
 			SVGSVGElement top = getSVGTopElement(in);
+			String prefix = top.getPrefix();
 			ADLDocument topDoc = (ADLDocument) top.getDocument();
 			
 			Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
+			newDefs.setPrefix(prefix);
 			top.insertBefore(newDefs, null);
 			top.setAttribute("id", "defs-"+resource);
 			
 			NodeList defs = out.getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
 			for (int i = 0; i < defs.getLength(); i++) {
 				Element def = (Element) defs.item(i);
-				transcode(def, newDefs, false);
+				XMLProcessor c = new PrefixingCopier(prefix);
+				c.process(def, newDefs);
 			}
 		}
 		
@@ -47,7 +51,7 @@ public class DefsHandlingTemplater extends BasicTemplater {
 	private SVGOMSVGElement getSVGTopElement(Kite9XMLElement in) {
 		return (SVGOMSVGElement) in.getOwnerDocument().getDocumentElement();
 	}
-	
+
 	
 
 }

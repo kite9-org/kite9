@@ -3,7 +3,7 @@ package org.kite9.diagram.batik;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.templater.Templater;
+import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,5 +34,5 @@ public interface HasGraphicsNode extends DiagramElement {
 	 * Creates SVG elements representing this DiagramElement and anything 
 	 * nested within it.
 	 */
-	public Element output(Document d, Templater t);
+	public Element output(Document d, XMLProcessor t);
 }

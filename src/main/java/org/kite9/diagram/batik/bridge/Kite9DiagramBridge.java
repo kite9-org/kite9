@@ -1,5 +1,9 @@
 package org.kite9.diagram.batik.bridge;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
@@ -8,6 +12,7 @@ import org.kite9.diagram.batik.HasGraphicsNode;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Element;
 
@@ -50,6 +55,18 @@ public class Kite9DiagramBridge extends Kite9GBridge {
        	// used in testing nowhere else
        	lastDiagram = d;
         lastPipeline = pipeline;
+        
+        ADLDocument doc = lastDiagram.getOwnerDocument();
+		try {
+			File f = new File("expanded.svg");
+			String input2 = new XMLHelper().toXML(doc);
+			FileWriter fw = new FileWriter(f);
+			fw.write(input2);
+			fw.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
        	
        	return ((HasGraphicsNode) de).getGraphicsNode();
     }

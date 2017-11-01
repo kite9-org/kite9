@@ -27,6 +27,7 @@ import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.ContentsElement;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.GenericKite9XMLElement;
 import org.w3c.css.sac.CSSException;
@@ -62,6 +63,15 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 			 
 			public Element create(String prefix, Document doc) {
 				DiagramKite9XMLElement out = new DiagramKite9XMLElement((ADLDocument) doc);
+				out.setOwnerDocument(doc);
+				return out;
+			}
+		});
+		
+		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.CONTENTS_ELEMENT, new ElementFactory() {
+			 
+			public Element create(String prefix, Document doc) {
+				ContentsElement out = new ContentsElement((ADLDocument) doc);
 				out.setOwnerDocument(doc);
 				return out;
 			}
@@ -125,7 +135,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	public Element createElementNS(AbstractDocument document, String namespaceURI, String qualifiedName) {
 		if (USE_GENERIC_XML_ELEMENT) {
 			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
-				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"stylesheet".equals(qualifiedName))) {
+				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"contents".equals(qualifiedName))) {
 					return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
 				}
 			} 

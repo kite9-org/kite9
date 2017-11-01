@@ -5,32 +5,35 @@
       <svg:stop offset='100%' stop-color='#DDD' />
     </svg:linearGradient>
     
-    <filter id="dropshadow" height="130%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> 
-      <feOffset dx="2" dy="2" result="offsetblur"/> 
-      <feMerge> 
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/> 
-      </feMerge>
-    </filter>
+    <svg:filter id="dropshadow" height="130%">
+      <svg:feGaussianBlur in="SourceAlpha" stdDeviation="3"/> 
+      <svg:feOffset dx="2" dy="2" result="offsetblur"/> 
+      <svg:feMerge> 
+        <svg:feMergeNode/>
+        <svg:feMergeNode in="SourceGraphic"/> 
+      </svg:feMerge>
+    </svg:filter>
   </svg:defs>
 
   <template id='glyph'>
     <back style='kite9-type: decal; kite9-sizing: adaptive; ' class="glyph">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
+    <contents />
   </template>
   
   <template id='key'>
     <back style='kite9-type: decal; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' style='fill: blue; ' />
     </back>
+    <contents />
   </template>
 
   <template id='arrow'>
     <back style='kite9-type: decal; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />
     </back>
+    <contents />
   </template>
 
   <template id='connection-label'>
@@ -38,7 +41,7 @@
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #ccc; ' />
     </back>
     <front style="kite9-type: connected; kite9-sizing: fixed">
-      <svg:text>{{contents}}</svg:text>
+      <svg:text><contents /></svg:text>
     </front>
   </template>
 
@@ -46,12 +49,13 @@
     <back style='kite9-type: decal; kite9-sizing: adaptive; ' id="cback">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
     </back>
+    <contents />
   </template>
 
   <!-- label template -->
   <template id="text-label">
     <contents style="kite9-type: connected; kite9-sizing: fixed">
-      <svg:text class="text">{{contents}}</svg:text>
+      <svg:text class="text"><contents /></svg:text>
     </contents>
   </template>
 
@@ -67,6 +71,12 @@
 
   <template id="diamond">
     <svg:polygon points="6,0 12,6 6,12 0,6"  style="fill: rgb(237, 106, 86);" />
+  </template>
+  
+  <template id="diagram">
+    <svg:g filter="url(#dropshadow)">
+      <contents />
+    </svg:g>
   </template>
 
 </svg:svg>

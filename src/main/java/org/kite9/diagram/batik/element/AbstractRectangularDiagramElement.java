@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -150,14 +151,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 		if (!initializedChildren) {
 			
 			if (getSizing() != DiagramElementSizing.FIXED) {
-				NodeList childNodes = theElement.getChildNodes();
-				for (int i = 0; i < childNodes.getLength(); i++) {
-					Node child = childNodes.item(i);
-					if ((child instanceof Element) && (!(child instanceof Kite9XMLElement))) {
-						// get access to the bridge, to create a graphics node.
-						processSizesUsingTemplater((Element) child, getRenderingInformation());
-					}
-				}
+				processSizesUsingTemplater(theElement, getRenderingInformation());
 			}
 			
 			initializedChildren = true;
@@ -172,10 +166,10 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	 * Finally a translate transform is applid so it appears in the right place.
 	 */
 	@Override
-	public Element output(Document d, Templater t) {
+	public Element output(Document d, XMLProcessor t) {
 		initializeChildXMLElements();
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
-		t.transcode(theElement, out, true);
+		t.process(theElement, out);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, getID());
 		out.setAttribute("class", theElement.getCSSClass()+" "+theElement.getTagName());
 		out.setAttribute("style", theElement.getAttribute("style"));
