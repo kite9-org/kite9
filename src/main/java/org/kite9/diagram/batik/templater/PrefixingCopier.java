@@ -13,14 +13,14 @@ public class PrefixingCopier extends BasicCopier {
 	
 	private String newPrefix;
 	
-	public PrefixingCopier(String prefix) {
-		super();
+	public PrefixingCopier(String prefix, Node destination) {
+		super(destination);
 		this.newPrefix = prefix;
 	}
 
 	@Override
-	protected Node processNode(Node n, Node to) {
-		Node out =  super.processNode(n, to);
+	protected Node copyChild(Node n, Node inside) {
+		Node out =  super.copyChild(n, inside);
 		if (newPrefix != null) {
 			changePrefix(out);
 		}

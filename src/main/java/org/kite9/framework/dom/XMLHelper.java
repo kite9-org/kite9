@@ -18,6 +18,8 @@ import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Utility methods for converting to and from XML in the expected format. This
@@ -48,7 +50,7 @@ public class XMLHelper {
 	public XMLHelper() {
 	}
 
-	public String toXML(ADLDocument dxe) {
+	public String toXML(Node dxe) {
 		try {
 			 TransformerFactory transfac = TransformerFactory.newInstance();
 			 Transformer trans = transfac.newTransformer();

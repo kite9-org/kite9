@@ -2,6 +2,8 @@ package org.kite9.diagram.batik.templater;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.value.Value;
@@ -10,9 +12,13 @@ import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -23,8 +29,20 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public abstract class AbstractTemplater implements Templater {
+public abstract class AbstractTemplater implements Templater, Logable {
 	
+	protected Kite9Log log = new Kite9Log(this);
+	
+	@Override
+	public String getPrefix() {
+		return "TXML";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
+	}
+
 	protected DocumentLoader loader;
 
 	public AbstractTemplater(DocumentLoader loader) {
@@ -49,12 +67,13 @@ public abstract class AbstractTemplater implements Templater {
 					ADLDocument templateDoc = loadReferencedDocument(resource, in);
 					Element e = templateDoc.getElementById(fragment);
 					
-					XMLProcessor c = new ContentElementHandlingCopier(in);
+					List<Node> contents = createContentsList(in);
+					XMLProcessor c = new ContentElementHandlingCopier(contents, in);
+					c.processContents(e);
+					removeOriginalChildren(contents, in);
 					
-					// remove the existing content from 'in'
-					removeChildren(in);
+					log.send("Templated: ("+fragment+")\n"+new XMLHelper().toXML(in));
 					
-					c.process(e, in);
 				} catch (Exception e) {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 				}
@@ -62,11 +81,18 @@ public abstract class AbstractTemplater implements Templater {
 		}
 	}
 	
+	private List<Node> createContentsList(Node contentNode) {
+		List<Node> out = new ArrayList<>(contentNode.getChildNodes().getLength());
+		for (int i = 0; i < contentNode.getChildNodes().getLength(); i++) {
+			out.add(contentNode.getChildNodes().item(i));
+		}
+		return out;
+	}
+	
 
-	private void removeChildren(Kite9XMLElement in) {
-		NodeList contents = in.getChildNodes();
-		while (contents.getLength() > 0) {
-			in.removeChild(contents.item(0));
+	private void removeOriginalChildren(List<Node> contents, Node in) {
+		for (Node node : contents) {
+			in.removeChild(node);
 		}
 	}
 

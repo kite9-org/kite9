@@ -11,18 +11,20 @@ import org.w3c.dom.Node;
  */
 public class Kite9ExpandingCopier extends PrefixingCopier {
 
-	public Kite9ExpandingCopier(String newPrefix) {
-		super(newPrefix);
+	public Kite9ExpandingCopier(String newPrefix, Node destination) {
+		super(newPrefix, destination);
 	}
 
 	@Override
-	protected Node processNode(Node n, Node to) {
+	protected Node copyChild(Node n, Node to) {
 		Node copy = null;
 		if (n instanceof Kite9XMLElement) {
-			copy = ((Kite9XMLElement) n).output(to.getOwnerDocument(), this);
-			to.appendChild(copy);	
+			copy = ((Kite9XMLElement) n).output(to.getOwnerDocument());
+			if (copy != null) {
+				to.appendChild(copy);
+			}
 		} else {
-			copy = super.processNode(n, to);
+			copy = super.copyChild(n, to);
 		}
 		
 		return copy;

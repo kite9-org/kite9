@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.templater.XMLProcessor;
+import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
 import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -166,10 +167,10 @@ public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagr
 	 * Finally a translate transform is applid so it appears in the right place.
 	 */
 	@Override
-	public Element output(Document d, XMLProcessor t) {
-		initializeChildXMLElements();
+	public Element output(Document d) {
+		ensureInitialized();
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
-		t.process(theElement, out);
+		new Kite9ExpandingCopier("", out).processContents(theElement);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, getID());
 		out.setAttribute("class", theElement.getCSSClass()+" "+theElement.getTagName());
 		out.setAttribute("style", theElement.getAttribute("style"));

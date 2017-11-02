@@ -12,7 +12,6 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.batik.HasGraphicsNode;
 import org.kite9.diagram.batik.templater.XMLProcessor;
-import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -207,14 +206,25 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public Iterator<Kite9XMLElement> iterator() {
-		NodeList childNodes2 = getChildNodes();
-		List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>(childNodes2.getLength());
-		for (int i = 0; i < childNodes2.getLength(); i++) {
-			Node n = childNodes2.item(i);
-			if (n instanceof Kite9XMLElement) {
-				elems.add((Kite9XMLElement) n);
+		final List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>();
+		
+		new XMLProcessor() {
+
+			@Override
+			public void processContents(Node from) {
+				if (from instanceof Element) {
+					NodeList nl = from.getChildNodes();
+					for (int i = 0; i < nl.getLength(); i++) {
+						Node item = nl.item(i);
+						if (item instanceof Kite9XMLElement) {
+							elems.add((Kite9XMLElement) item);
+						} else {
+							processContents(item);
+						}
+					}
+				}
 			}
-		}
+		}.processContents(this);
 		
 		return elems.iterator();
 	}
@@ -249,14 +259,22 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return cachedDiagramElement;
 	}
 	
-	protected DiagramElement getParentElement() {
+	private Kite9XMLElement getParentKite9Element() {
 		Node n = getParentNode();
-		if (n instanceof Kite9XMLElement) {
-			Kite9XMLElement p = (Kite9XMLElement) n;
-			return (p == null) ? null : p.getDiagramElement();
-		} else {
-			return null;
-		}
+		do {
+			if (n instanceof Kite9XMLElement) {
+				return (Kite9XMLElement) n;
+			} else if (n == null) {
+				return null;
+			} else {
+				n = n.getParentNode();
+			}
+		} while (true);
+	}
+	
+	protected DiagramElement getParentElement() {
+		Kite9XMLElement p = getParentKite9Element();
+		return (p == null) ? null : p.getDiagramElement();
 	}
 	
 	
@@ -310,10 +328,10 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	@Override
-	public Element output(Document d, XMLProcessor t) {
+	public Element output(Document d) {
 		DiagramElement de = getDiagramElement();
 		if (de instanceof HasGraphicsNode) {
-			return ((HasGraphicsNode) de).output(d, t);
+			return ((HasGraphicsNode) de).output(d);
 		} else {
 			return null;
 		}

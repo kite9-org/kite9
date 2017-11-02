@@ -34,5 +34,5 @@ public interface HasGraphicsNode extends DiagramElement {
 	 * Creates SVG elements representing this DiagramElement and anything 
 	 * nested within it.
 	 */
-	public Element output(Document d, XMLProcessor t);
+	public Element output(Document d);
 }

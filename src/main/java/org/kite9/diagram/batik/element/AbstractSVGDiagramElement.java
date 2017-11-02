@@ -137,7 +137,7 @@ public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElemen
 			}
 		};
 		
-		new ValueReplacingProcessor(valueReplacer).process(child, null);
+		new ValueReplacingProcessor(valueReplacer).processContents(child);
 	}
 
 	protected double padding[] = new double[4];

@@ -1,10 +1,10 @@
 package org.kite9.diagram.batik.templater;
 
 import org.apache.batik.anim.dom.SVGOMDocument;
-import org.kite9.framework.xml.ADLDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Contains basic functionality for copying the contents of one XML node 
@@ -13,9 +13,29 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class BasicCopier extends AbstractXMLProcessor {
+public class BasicCopier implements XMLProcessor {
+	
+	private Node destination;
+	
+	public BasicCopier(Node destination) {
+		this.destination = destination;
+	}
+	
+	protected void copyContents(Node from, Node to) {
+		NodeList nl = from.getChildNodes();
+		 for (int i = 0; i < nl.getLength(); i++) {
+			Node n = nl.item(i);
+			copyChild(n, to);
+		 }
+	}
+	
 
-	protected Node processNode(Node n, Node inside) {
+	@Override
+	public void processContents(Node from) {
+		copyContents(from, destination);
+	}
+
+	protected Node copyChild(Node n, Node inside) {
 		Node copy = n.cloneNode(false);
 		
 		Document ownerDocument = inside.getOwnerDocument();
@@ -26,6 +46,8 @@ public class BasicCopier extends AbstractXMLProcessor {
 		}
 		
 		inside.appendChild(copy);
+		
+		copyContents(n, copy);
 		return copy;
 	}
 
@@ -38,4 +60,5 @@ public class BasicCopier extends AbstractXMLProcessor {
 			((SVGOMDocument) copy.getOwnerDocument()).updateIdEntry(copy, null, id);
 		}
 	}
+
 }

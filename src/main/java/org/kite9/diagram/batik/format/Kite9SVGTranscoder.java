@@ -3,8 +3,6 @@ package org.kite9.diagram.batik.format;
 import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
 import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -27,7 +25,6 @@ import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
-import org.kite9.diagram.batik.templater.BasicCopier;
 import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
 import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -35,16 +32,19 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
-public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
+public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
 	private ADLExtensibleDOMImplementation domImpl;
 	private ResourceReferencer rr;	
+	private Kite9Log log = new Kite9Log(this);
 	
 	public Kite9SVGTranscoder(ResourceReferencer rr) {
 		super();
@@ -95,21 +95,11 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);
-			XMLProcessor copier = new Kite9ExpandingCopier("");
-			copier.process(input.getDocumentElement(), outputDocument.getDocumentElement());
+			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
+			copier.processContents(input.getDocumentElement());
 		} catch (Exception e) {
 			ADLDocument d = (ADLDocument)input;
-			try {
-				File f = new File("expanded.svg");
-				String input2 = new XMLHelper().toXML(d);
-				FileWriter fw = new FileWriter(f);
-				fw.write(input2);
-				fw.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
+			log.error("Problem with XML: "+new XMLHelper().toXML(d));
 			throw new Kite9ProcessingException(e);
 		}
 	}
@@ -185,6 +175,16 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
         throw new TranscoderException("" + ERROR_INCOMPATIBLE_OUTPUT_TYPE);
 
     }
+
+	@Override
+	public String getPrefix() {
+		return "KSVG";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
+	}
     
 
 }

@@ -30,5 +30,5 @@ public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 	
 	public <E extends Element> E replaceProperty(String propertyName, E e);
 	
-	public Element output(Document d, XMLProcessor t);
+	public Element output(Document d);
 }

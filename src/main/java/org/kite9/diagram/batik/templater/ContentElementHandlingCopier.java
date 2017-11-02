@@ -17,22 +17,20 @@ public class ContentElementHandlingCopier extends BasicCopier {
 	
 	private List<Node> contents;
 
-	public ContentElementHandlingCopier(Node contentNode) {
-		this.contents = new ArrayList<>(contentNode.getChildNodes().getLength());
-		for (int i = 0; i < contentNode.getChildNodes().getLength(); i++) {
-			this.contents.add(contentNode.getChildNodes().item(i));
-		}
+	public ContentElementHandlingCopier(List<Node> contents, Node destination) {
+		super(destination);
+		this.contents = contents;
 	}
 
 	@Override
-	protected Node processNode(Node n, Node inside) {
+	protected Node copyChild(Node n, Node inside) {
 		if (n instanceof ContentsElement) {
 			for (Node node : contents) {
-				process(node, inside);
+				copyChild(node, inside);
 			}
 			return null; 
 		} else {
-			return super.processNode(n, inside);
+			return super.copyChild(n, inside);
 		}
 	}
 

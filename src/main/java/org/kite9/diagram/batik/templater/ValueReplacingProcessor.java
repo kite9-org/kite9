@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class ValueReplacingProcessor extends AbstractXMLProcessor {
+public class ValueReplacingProcessor implements XMLProcessor {
 	
 	public interface ValueReplacer {
 		
@@ -29,16 +29,12 @@ public class ValueReplacingProcessor extends AbstractXMLProcessor {
 		this.valueReplacer = vr;
 	}
 
-	
-	
+
+
 	@Override
-	protected Node processNode(Node n, Node to) {
-		Node out = super.processNode(n, to);
-		performReplace(out, valueReplacer);
-		return out;
+	public void processContents(Node from) {
+		performReplace(from, valueReplacer);
 	}
-
-
 
 	/**
 	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
@@ -87,6 +83,5 @@ public class ValueReplacingProcessor extends AbstractXMLProcessor {
 		out.append(input.substring(place));
 		return out.toString();
 	}
-
 	
 }

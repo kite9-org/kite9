@@ -55,19 +55,7 @@ public class Kite9DiagramBridge extends Kite9GBridge {
        	// used in testing nowhere else
        	lastDiagram = d;
         lastPipeline = pipeline;
-        
-        ADLDocument doc = lastDiagram.getOwnerDocument();
-		try {
-			File f = new File("expanded.svg");
-			String input2 = new XMLHelper().toXML(doc);
-			FileWriter fw = new FileWriter(f);
-			fw.write(input2);
-			fw.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-       	
+               	
        	return ((HasGraphicsNode) de).getGraphicsNode();
     }
     

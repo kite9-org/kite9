@@ -54,9 +54,9 @@
 
   <!-- label template -->
   <template id="text-label">
-    <contents style="kite9-type: connected; kite9-sizing: fixed">
+    <text-label style="kite9-type: connected; kite9-sizing: fixed">
       <svg:text class="text"><contents /></svg:text>
-    </contents>
+    </text-label>
   </template>
 
 
