@@ -3,6 +3,8 @@ package org.kite9.diagram.batik.templater;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,7 +35,12 @@ public class ValueReplacingProcessor implements XMLProcessor {
 
 	@Override
 	public void processContents(Node from) {
-		performReplace(from, valueReplacer);
+		if (from instanceof Element) {
+			performReplaceOnAttributes(from, valueReplacer);
+			performReplace(((Element)from).getChildNodes(), valueReplacer);
+		} else {
+			throw new Kite9ProcessingException("Was expecting an element");
+		}
 	}
 
 	/**
@@ -43,13 +50,27 @@ public class ValueReplacingProcessor implements XMLProcessor {
 	public void performReplace(Node n, ValueReplacer vr) {
 		if (vr == null)
 			return;
-		
+
 		if (n instanceof Element) {
-			performReplace(n.getChildNodes(), vr);
-			for (int j = 0; j < n.getAttributes().getLength(); j++) {
-				Attr a = (Attr) n.getAttributes().item(j);
-				a.setValue(performValueReplace(a.getValue(), vr));
+			performReplaceOnAttributes(n, vr);
+
+			if (n instanceof Kite9XMLElement) {
+				// we don't do sub-elements - they're someone else's problem
+				return;	
+			} else {
+				performReplace(n.getChildNodes(), vr);
 			}
+		}
+
+		
+	}
+
+
+
+	private void performReplaceOnAttributes(Node n, ValueReplacer vr) {
+		for (int j = 0; j < n.getAttributes().getLength(); j++) {
+			Attr a = (Attr) n.getAttributes().item(j);
+			a.setValue(performValueReplace(a.getValue(), vr));
 		}
 	}
 
