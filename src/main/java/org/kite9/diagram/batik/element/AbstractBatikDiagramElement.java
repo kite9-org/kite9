@@ -30,10 +30,10 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public abstract class AbstractSVGDiagramElement extends AbstractXMLDiagramElement implements HasGraphicsNode {
+public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElement implements HasGraphicsNode {
 
 	
-	public AbstractSVGDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
+	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);
 	}
 

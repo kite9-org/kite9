@@ -311,6 +311,38 @@ key > text-lines {
 	kite9-layout: vertical;
 }
 
+
+/* Glyph */
+
+
+.glyph-back {
+	stroke-width: 1px;
+	stroke: black;
+	fill: white;
+}
+
+
+.glyph  .label  .text {
+	font-size: 15px;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	stroke: none;
+}
+
+.glyph  .stereotype  .text {
+	font-family: "opensans-bold-webfont";
+	font-size: 12px;
+	fill: black;
+	stroke: none;
+}
+
+/*.text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;	
+}*/
+
 .red {
 	font-size: 25px;
 	fill: red;
@@ -347,39 +379,17 @@ key > text-lines {
 	font-size: 12px;
 }
 
-.glyph .label .contents {
-	font-size: 15px;
-	fill: black;
-	font-family: "opensans-regular-webfont";
-}
-
-
-.arrow {
+.arrow .label {
 	fill: black;
 	stroke: black;
 	stroke-width: 2px;
-}
-
-.glyph {
-	stroke-width: 1px;
-	stroke: black;
-	fill: white;
-}
-
-.glyph > .stereotype .text {
-	font-family: "opensans-bold-webfont";
 	font-size: 12px;
-	fill: black;
 }
+
 
 .text-line,
-.text,
 .boldText,
 .bodyText {
-	font-size: 13px;
-	stroke: black;
-	fill: black;
-	font-family: "opensans-regular-webfont";
-	text-align: start;
+	font-size: 11px;
 }
 

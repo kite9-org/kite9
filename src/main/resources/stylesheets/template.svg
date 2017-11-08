@@ -16,7 +16,7 @@
   </svg:defs>
 
   <template id='glyph'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; ' class="glyph">
+    <back style='kite9-type: decal; kite9-sizing: adaptive; ' class="glyph-back">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
     <contents />

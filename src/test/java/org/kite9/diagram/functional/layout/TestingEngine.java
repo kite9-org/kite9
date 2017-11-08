@@ -24,7 +24,7 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
+import org.kite9.diagram.batik.element.AbstractDOMDiagramElement;
 import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -371,11 +371,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isContradictingLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
 			}
 
 			private boolean isTurnLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
 		};
@@ -397,7 +397,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isHopLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
 			}
 		});
 	}

@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
-import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
+import org.kite9.diagram.batik.element.AbstractDOMDiagramElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
@@ -51,8 +51,8 @@ public abstract class AbstractTemplater implements Templater, Logable {
 
 	@Override
 	public void handleTemplateElement(Kite9XMLElement in, DiagramElement o) {
-		if (o instanceof AbstractXMLDiagramElement) {
-			AbstractXMLDiagramElement out = (AbstractXMLDiagramElement) o;
+		if (o instanceof AbstractDOMDiagramElement) {
+			AbstractDOMDiagramElement out = (AbstractDOMDiagramElement) o;
 			Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
 			if (template != ValueConstants.NONE_VALUE) {
 				String uri = template.getStringValue();

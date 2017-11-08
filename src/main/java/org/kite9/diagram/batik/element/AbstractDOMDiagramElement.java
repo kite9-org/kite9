@@ -15,7 +15,7 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement implements DiagramElement, Serializable {
+public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements DiagramElement, Serializable {
 	
 	protected StyledKite9SVGElement theElement;
 	protected Kite9BridgeContext ctx;
@@ -26,8 +26,8 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 	
 	protected void ensureInitialized() {
 		if (!initialized) {
-			if (parent instanceof AbstractXMLDiagramElement) {
-				((AbstractXMLDiagramElement)parent).ensureInitialized();
+			if (parent instanceof AbstractDOMDiagramElement) {
+				((AbstractDOMDiagramElement)parent).ensureInitialized();
 			}
 			this.initialized = true;
 			initialize();
@@ -39,7 +39,7 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		return theElement;
 	}
 
-	public AbstractXMLDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
+	public AbstractDOMDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(parent);
 		this.theElement = el;
 		this.ctx = ctx;
@@ -58,7 +58,7 @@ public abstract class AbstractXMLDiagramElement extends AbstractDiagramElement i
 		if (this instanceof Diagram) {
 			return (Diagram) this;
 		} else {
-			return ((AbstractXMLDiagramElement)getParent()).getDiagram();
+			return ((AbstractDOMDiagramElement)getParent()).getDiagram();
 		}
 	}
 

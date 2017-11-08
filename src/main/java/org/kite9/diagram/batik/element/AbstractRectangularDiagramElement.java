@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public abstract class AbstractRectangularDiagramElement extends AbstractSVGDiagramElement implements Rectangular {
+public abstract class AbstractRectangularDiagramElement extends AbstractBatikDiagramElement implements Rectangular {
 	
 	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {};
 	

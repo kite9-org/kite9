@@ -22,7 +22,7 @@ import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
-public class ConnectionImpl extends AbstractSVGDiagramElement implements Connection {
+public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
 
 	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
 		super(el, parent, ctx);

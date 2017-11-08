@@ -277,28 +277,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return (p == null) ? null : p.getDiagramElement();
 	}
 	
-	
-	public String getShapeName() {
-		return getAttribute("shape");
-	}
-	
-	public void setShapeName(String s) {
-		setAttribute("shape", s);
-	}
-
-
-	public void setClasses(String s) {
-		setAttribute("class", s);
-	}
-	
-	public String getClasses() {
-		return getAttribute("class");
-	}
-
-	public void setStyle(String s) {
-		setAttribute("style", s);
-	}
-	
 	public StyleMap getComputedStyleMap(String pseudoElement) {
 		return sm;
 	}
@@ -308,9 +286,8 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public String getCSSClass() {
-		return getAttribute("class");
+		return getAttribute("class")+" "+getTagName();
 	}
-	
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;
