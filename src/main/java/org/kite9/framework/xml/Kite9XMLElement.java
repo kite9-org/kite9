@@ -1,7 +1,5 @@
 package org.kite9.framework.xml;
 
-import org.kite9.diagram.batik.templater.XMLProcessor;
-import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

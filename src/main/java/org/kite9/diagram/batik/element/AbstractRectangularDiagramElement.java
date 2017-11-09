@@ -172,7 +172,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
 		new Kite9ExpandingCopier("", out).processContents(theElement);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, getID());
-		out.setAttribute("class", theElement.getCSSClass()+" "+theElement.getTagName());
+		out.setAttribute("class", theElement.getCSSClass());
 		out.setAttribute("style", theElement.getAttribute("style"));
 		
 		// work out translation
