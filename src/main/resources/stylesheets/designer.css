@@ -55,7 +55,7 @@ toLabel,
 fromLabel,
 label {
 	kite9-type: label; 
-	kite9-padding: 4px 4px 4px 4px;
+	/*kite9-padding: 4px 4px 4px 4px; */
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#connection-label)
 }
@@ -102,6 +102,11 @@ symbol.diamond {
 	kite9-template: url(template.svg#diamond);
 }
 
+symbol.square {
+	kite9-template: url(template.svg#square);
+}
+
+
 glyph {
 	kite9-padding: 6px 10px 6px 10px; 
 	kite9-margin: 10px;
@@ -113,7 +118,7 @@ glyph > label {
 	kite9-template: url(template.svg#text-label);
 	kite9-occupies: 0 1 1 1;
 	kite9-vertical-align: top;
-	kite9-margin: 5px
+	/*kite9-margin: 5px */
 }
 
 glyph > label > contents {
@@ -127,8 +132,8 @@ glyph > stereotype {
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#text-label);
 	kite9-occupies: 0 0;
-	kite9-vertical-align: top;
-	kite9-margin: 0px 0px 2px 0px;
+	kite9-vertical-align: bottom;
+	/*kite9-margin: 0px 4px 2px 0px; */
 }
 
 glyph > stereotype > label {
@@ -162,11 +167,11 @@ text-line, text, boldText, bodyText {
 	kite9-occupies: 0 0;
 	kite9-type: connected;
 	kite9-sizing: minimize;
-	kite9-padding-top: 2px;
+	/*kite9-padding-top: 2px;
 	kite9-padding-bottom: 2px;
 	kite9-padding-left: 0px;
 	kite9-padding-right: 0px;
-	kite9-margin: 0 0 0 0; 
+	kite9-margin: 0 0 0 0; */
 	kite9-template: url(template.svg#text-label);
 	kite9-vertical-align: top;
 	kite9-horizontal-align: left;
@@ -335,7 +340,7 @@ key > text-lines {
 	font-size: 12px;
 	fill: black;
 	stroke: none;
-	kite9-padding: 2px 2px 2px 2px;
+	/*kite9-padding: 2px 2px 2px 2px; */
 }
 
 .glyph .text-lines .text {

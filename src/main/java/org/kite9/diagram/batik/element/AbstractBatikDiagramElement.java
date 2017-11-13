@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.TextNode;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.HasGraphicsNode;
@@ -109,6 +110,8 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		GraphicsNode gn = getGraphicsNode();
 		if (gn instanceof IdentifiableGraphicsNode) {
 			return ((IdentifiableGraphicsNode) gn).getSVGBounds();
+		} else if (gn instanceof TextNode) {
+			return ((TextNode)gn).getBounds();
 		} else if (gn != null) {
 			return gn.getBounds();
 		} else {

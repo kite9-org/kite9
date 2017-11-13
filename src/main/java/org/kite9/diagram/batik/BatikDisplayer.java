@@ -136,10 +136,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		existing.translate(xst, yst);
 	}
 
-	public String getLabel(DiagramElement de) {
-		return ((Text)de).getText();
-	}
-
 	@Override
 	public double getPadding(DiagramElement element, Direction d) {
 		if (element instanceof CompactedRectangular) {
