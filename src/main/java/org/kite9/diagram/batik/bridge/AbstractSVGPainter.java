@@ -18,8 +18,15 @@ public abstract class AbstractSVGPainter<X extends DiagramElement> implements Pa
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
 		processContents(theElement, out, d, r);
 		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, r.getID());
-		out.setAttribute("class", theElement.getCSSClass());
-		out.setAttribute("style", theElement.getAttribute("style"));
+		String clazz = theElement.getCSSClass().trim();
+		if (clazz.length() > 0) {
+			out.setAttribute("class", clazz);
+		}
+		
+		String style = theElement.getAttribute("style");
+		if (style.length() > 0) {
+			out.setAttribute("style", style);
+		}
 		return out;
 	}
 
