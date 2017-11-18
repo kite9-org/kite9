@@ -10,6 +10,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -300,11 +301,11 @@ class VertexTurn {
 	}
 
 	private static Predicate<? super Rectangular> minimize() {
-		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE);
+		return r -> (r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MINIMIZE);
 	}
 	
 	private static Predicate<? super Rectangular> maximize() {
-		return r -> (r.getSizing() == DiagramElementSizing.MAXIMIZE);
+		return r ->(r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MAXIMIZE);
 	}
 
 	public static boolean isConnection(Slideable<Segment> s) {

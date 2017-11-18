@@ -1,5 +1,6 @@
 package org.kite9.diagram.batik.bridge;
 
+import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
@@ -13,6 +14,7 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
+import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Document;
 
@@ -54,13 +56,12 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return false;
 	}
 	
+	private Kite9GBridge gBridge = new Kite9GBridge();
+	
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
 		putBridge(new Kite9DiagramBridge(this));
-		putBridge(new Kite9GBridge());
-		putBridge(new TextBridge());
-		putBridge(new Kite9ImageElementBridge());
 	}
 	
 	/**
@@ -106,5 +107,17 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		super.initializeDocument(document);
 	}
 
+	@Override
+	public Bridge getBridge(String namespaceURI, String localName) {
+		if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
+			if (!XMLHelper.DIAGRAM_ELEMENT.equals(localName)) {
+				return gBridge;
+			}
+		}
+		return super.getBridge(namespaceURI, localName);
+	}
+
+	
+	
 	
 }

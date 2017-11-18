@@ -21,7 +21,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 	
 	public interface ValueReplacer {
 		
-		public String getReplacementValue(String prefix, String attr);	
+		public String getReplacementValue(String in);	
 		
 	}
 
@@ -82,7 +82,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 	}
 
 	protected String performValueReplace(String input, ValueReplacer vr) {
-		Pattern p = Pattern.compile("\\{([xXyY@])([a-zA-Z0-9]+)}");
+		Pattern p = Pattern.compile("\\{([a-zA-Z0-9@_]+)}");
 		
 		Matcher m = p.matcher(input);
 		StringBuilder out = new StringBuilder();
@@ -90,9 +90,8 @@ public class ValueReplacingProcessor implements XMLProcessor {
 		while (m.find()) {
 			out.append(input.substring(place, m.start()));
 			
-			String prefix = m.group(1).toLowerCase();
-			String indexStr = m.group(2);
-			String replacement = vr.getReplacementValue(prefix, indexStr);
+			String in = m.group(1).toLowerCase();
+			String replacement = vr.getReplacementValue(in);
 			
 			if (replacement != null) {
 				out.append(replacement);

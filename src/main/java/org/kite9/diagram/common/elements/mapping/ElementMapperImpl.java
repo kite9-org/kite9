@@ -18,6 +18,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
@@ -77,6 +78,11 @@ public class ElementMapperImpl implements ElementMapper {
 
 	private boolean isEmbeddedWithinGrid(DiagramElement c) {
 		DiagramElement parent = c.getParent();
+		
+		if (c instanceof Label) {
+			return false;
+		}
+		
 		if ((parent != null) && (parent instanceof Container)) {
 			return ((Container)parent).getLayout()==Layout.GRID;
 		}

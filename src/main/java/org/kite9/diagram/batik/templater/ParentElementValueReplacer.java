@@ -17,18 +17,18 @@ public class ParentElementValueReplacer implements ValueReplacer {
 	/**
 	 * Handles replacement of {@someattribute} within the SVG.
 	 */
-	public String getReplacementValue(String prefix, String attr) {
+	public String getReplacementValue(String in) {
 		Element parent = this.e;
-		if ("@".equals(prefix)) {
+		if (in.startsWith("@")) {
 			while (parent != null) {
-				if (parent.hasAttribute(attr)) {
-					return parent.getAttribute(attr);
+				if (parent.hasAttribute(in.substring(1))) {
+					return parent.getAttribute(in.substring(1));
 				} 
 				parent=(Element) parent.getParentNode();
 			}
 		} 
 		
-		return "{"+prefix+attr+"}";	// couldn't be replaced - leave original
+		return "{"+in+"}";	// couldn't be replaced - leave original
 	}
 
 }

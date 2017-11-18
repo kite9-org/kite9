@@ -22,46 +22,46 @@
   </svg:defs>
 
   <template id='glyph'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; ' class="glyph-back">
+    <back style='kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; ' class="glyph-back">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' />
     </back>
     <contents />
   </template>
   
   <template id='key'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
+    <back style='kite9-usage: decal; kite9-type: svg;  kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' style='fill: blue; ' />
     </back>
     <contents />
   </template>
 
   <template id='arrow'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
+    <back style='kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: black; ' />
     </back>
     <contents />
   </template>
 
   <template id='connection-label'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; '>
+    <back style='kite9-usage: decal; kite9-type: svg;  kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #ccc; ' />
     </back>
-    <front style="kite9-type: connected; kite9-sizing: fixed">
+    <front style="kite9-type: svg; ">
       <svg:text><contents /></svg:text>
     </front>
   </template>
 
   <template id='context'>
-    <back style='kite9-type: decal; kite9-sizing: adaptive; ' id="cback">
+    <back style='kite9-usage: decal; kite9-type: svg;  ' id="cback">
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' />
     </back>
     <contents />
   </template>
 
   <!-- label template -->
-  <template id="text-label">
+  <template id="text-label-container">
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1"/  -->
-    <text-label style="kite9-type: connected; kite9-sizing: fixed">
+    <text-label style="kite9-type: svg; ">
       <svg:text class="text"><contents /></svg:text>
     </text-label>
   </template>

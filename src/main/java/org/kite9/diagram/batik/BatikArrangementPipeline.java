@@ -28,7 +28,7 @@ public class BatikArrangementPipeline extends AbstractArrangementPipeline {
 	@Override
 	public DiagramKite9XMLElement arrange(DiagramKite9XMLElement d) {
 		DiagramKite9XMLElement out = super.arrange(d);
-		drawDiagramElements(d.getDiagramElement());
+//		drawDiagramElements(d.getDiagramElement());
 		return out;
 	}
 	

@@ -13,7 +13,7 @@ import org.kite9.diagram.model.style.ConnectionsSeparation;
  * @author robmoffat
  *
  */
-public interface Connected extends CompactedRectangular {
+public interface Connected extends Rectangular {
 
 	/**
 	 * Returns an unmodifiable collection of links

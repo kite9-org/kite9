@@ -84,7 +84,6 @@ public class TestingHelp {
 		Rowify cr = getIdentifiableRowify();
 		Rowify lr = getLinkRowify();
 
-		getPositions(d, details, Text.class, cr);
 		getPositions(d, details, Container.class, cr);
 		getPositions(d, details, Connected.class, cr);
 		getPositions(d, details, Diagram.class, cr);

@@ -1,13 +1,21 @@
 package org.kite9.diagram.model.style;
 
 /**
- * Eventually, this will be used to decide which displayer to use to draw the diagram
+ * This is used to choose the right approach for laying out the diagram element.
+ * 
+ * 
  * 
  * @author robmoffat
  *
  */
 public enum DiagramElementSizing {
 
-	MINIMIZE, MAXIMIZE, FIXED, SCALED, ADAPTIVE, UNSPECIFIED
+	MINIMIZE, MAXIMIZE, 	// these apply to Container elements
+	
+	// these appply to decals
+	SCALED, 		// used for decals, where the decal is scaled to the size of the parent
+	ADAPTIVE, 		// used for decals, where the decal is sized at display time.
+	
+	UNSPECIFIED		// for anything else
 	
 }

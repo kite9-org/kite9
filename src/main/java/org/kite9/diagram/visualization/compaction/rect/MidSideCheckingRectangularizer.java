@@ -9,6 +9,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -154,7 +155,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
 		return vt.getSegment().getUnderlyingInfo().stream()
 			.map(ui -> ui.getDiagramElement())
-			.filter(underlying -> (underlying instanceof Connected) && (((Connected)underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+			.filter(underlying -> (underlying instanceof Container) && (((Container)underlying).getSizing() == DiagramElementSizing.MINIMIZE))
 			.count() > 0;
 	}
 	

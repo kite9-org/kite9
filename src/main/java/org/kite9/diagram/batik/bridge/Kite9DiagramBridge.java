@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.GenericBridge;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.batik.HasGraphicsNode;
+import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.framework.dom.XMLHelper;
@@ -22,7 +24,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class Kite9DiagramBridge extends Kite9GBridge {
+public class Kite9DiagramBridge implements GenericBridge {
 	
 	public Kite9DiagramBridge(Kite9BridgeContext kite9BridgeContext) {
 		super();
@@ -56,7 +58,7 @@ public class Kite9DiagramBridge extends Kite9GBridge {
        	lastDiagram = d;
         lastPipeline = pipeline;
                	
-       	return ((HasGraphicsNode) de).getGraphicsNode();
+       	return ((HasSVGGraphics) de).getGraphicsNode();
     }
     
     public static BatikArrangementPipeline lastPipeline;
@@ -71,6 +73,28 @@ public class Kite9DiagramBridge extends Kite9GBridge {
 	@Override
 	public String getNamespaceURI() {
 		return XMLHelper.KITE9_NAMESPACE;
+	}
+
+	@Override
+	public Bridge getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void handleElement(BridgeContext ctx, Element e) {
+		DiagramKite9XMLElement d = (DiagramKite9XMLElement) e;
+    	Diagram de = d.getDiagramElement();
+       	
+       	// work out the positions of all the elements in te diagram, 
+       	BatikArrangementPipeline pipeline = createPipeline();
+		pipeline.arrange(d);
+
+       	// used in testing nowhere else
+       	lastDiagram = d;
+        lastPipeline = pipeline;
+               	
+       	//return ((HasSVGGraphics) de).getGraphicsNode();
 	}
 	
 

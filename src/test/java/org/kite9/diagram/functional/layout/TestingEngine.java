@@ -497,8 +497,8 @@ public class TestingEngine extends TestingHelp {
 			@Override
 			public void visit(DiagramElement inner) {
 				if (inner instanceof Rectangular) {
-					Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
+						Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 	
 						if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
 							return;

@@ -3,6 +3,7 @@ package org.kite9.diagram.batik.element;
 import java.util.Collection;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -21,8 +22,8 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  */
 public abstract class AbstractConnectedDiagramElement extends AbstractCompactedRectangularDiagramElement implements Connected {
 	
-	public AbstractConnectedDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
-		super(el, parent, ctx);
+	public AbstractConnectedDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<?> rp) {
+		super(el, parent, ctx, rp);
 	}
 	
 	/**

@@ -1,10 +1,13 @@
 package org.kite9.diagram.batik.element;
 
+import org.kite9.diagram.batik.bridge.ContainerRectangularPainter;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.SVGRectangularPainter;
+import org.kite9.diagram.batik.bridge.TextRectangularPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
+import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
@@ -29,8 +32,8 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			try {
 				StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 				DiagramElementType lt = getElementType(in2);
-				DiagramElementSizing sizing = getElementSizing(in2);
-				AbstractDOMDiagramElement out = instantiateDiagramElement(parent, in2, lt, sizing);
+				RectangularElementUsage usage = getElementUsage(in2);
+				AbstractDOMDiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
 				if (out != null) {
 					context.handleTemplateElement(in, out);
 				}
@@ -44,42 +47,54 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		
 	}
 
-	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, DiagramElementSizing sizing) {
+	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, RectangularElementUsage usage) {
 		switch (lt) {
 		case DIAGRAM:
 			if (parent != null) {
 				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
 			}
-			return new DiagramImpl(el, context);
-		case LABEL:
-			switch (sizing) {
-			case MAXIMIZE:
-			case MINIMIZE:
-				return new LabelContainerImpl(el, parent, context);
+			return new DiagramImpl(el, context, new ContainerRectangularPainter());
+		case CONTAINER:
+			switch (usage) {
+			case LABEL:
+				return new LabelContainerImpl(el, parent, context, new ContainerRectangularPainter());
+			case REGULAR:
+				return new ConnectedContainerImpl(el, parent, context, new ContainerRectangularPainter());
+			case DECAL:
 			default:
-				return new LabelLeafImpl(el, parent, context);
+				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
 			}
-		case DECAL:
-			return new DecalImpl(el, parent, context);
-		case CONNECTED:
-			switch (sizing) {
-			case MAXIMIZE:
-			case MINIMIZE:
-				return new ConnectedContainerImpl(el, parent, context);
+		case TEXT:
+			switch (usage) {
+			case LABEL:
+				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter());
+			case DECAL:
+				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter());
+			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context);
+				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter());
+			} 
+		case SVG:
+			switch (usage) {
+			case LABEL:
+				return new LabelLeafImpl(el, parent, context, new SVGRectangularPainter(context));
+			case DECAL:
+				return new DecalLeafImpl(el, parent, context, new SVGRectangularPainter(context));
+			case REGULAR:
+			default:
+				return new ConnectedLeafImpl(el, parent, context, new SVGRectangularPainter(context));
 			}
 		case LINK:
 			return new ConnectionImpl(el, parent, context);
 		case LINK_END:
 			return (AbstractDOMDiagramElement) ((Kite9XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
-			return new TerminatorImpl(el, parent, context);
+			return new TerminatorImpl(el, parent, context, new SVGRectangularPainter(context));
 		case NONE:
 			return null;
 		case UNSPECIFIED:
 		default:
-			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt);	
+			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage);	
 		}
 	}
 
@@ -89,10 +104,10 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		return lt;
 	}
 	
-	private static DiagramElementSizing getElementSizing(StyledKite9SVGElement in2) {
-		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
-		DiagramElementSizing lt = (DiagramElementSizing) v.getTheValue();
-		return lt;
+	private static RectangularElementUsage getElementUsage(StyledKite9SVGElement in2) {
+		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_USAGE_PROPERTY);
+		RectangularElementUsage reu = (RectangularElementUsage) v.getTheValue();
+		return reu;
 	}
 
 }

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
@@ -117,8 +116,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				List<DartDirection> innerFaceDarts = va.returnAllDarts(corner, o);
 				Vertex topLeft = innerFaceDarts.get(0).getDart().getFrom();
 				DartFace df = va.convertToOuterFace(o, topLeft, corner.getOriginalUnderlying());
-//				List<DartDirection> outerFaceDarts = reverseDartDirections(innerFaceDarts);
-//				DartFace df = o.createDartFace(corner.getOriginalUnderlying(), true, outerFaceDarts);
 				df.setContainedBy(dfContainer);
 				
 			} else if (f.isOuterFace()) {
@@ -128,12 +125,6 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		}
 		
 		return o;
-	}
-
-	private List<DartDirection> reverseDartDirections(List<DartDirection> innerFaceDarts) {
-		List<DartDirection> out = innerFaceDarts.stream().map(a -> new DartDirection(a.getDart(), Direction.reverse(a.getDirection()))).collect(Collectors.toList());
-		Collections.reverse(out);
-		return out;
 	}
 
 	private List<StartPoint> selectBestStartPoints(Planarization pln) {

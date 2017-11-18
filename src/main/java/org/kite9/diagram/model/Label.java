@@ -5,7 +5,7 @@ package org.kite9.diagram.model;
  * Labels take up space on the diagram, so they have to be processed in the *orthogonalization* phase.
  * however they don't have connections so they are excluded from the Planarization phase.
  */
-public interface Label extends CompactedRectangular {
+public interface Label extends Rectangular {
 	
 	public boolean hasContent();
 	

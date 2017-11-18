@@ -10,7 +10,7 @@ import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.diagram.batik.HasGraphicsNode;
+import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -306,8 +306,8 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	@Override
 	public Element output(Document d) {
 		DiagramElement de = getDiagramElement();
-		if (de instanceof HasGraphicsNode) {
-			return ((HasGraphicsNode) de).output(d);
+		if (de instanceof HasSVGGraphics) {
+			return ((HasSVGGraphics) de).output(d);
 		} else {
 			return null;
 		}

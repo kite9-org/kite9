@@ -83,7 +83,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	protected void renderDiagram(String xml) throws Exception {
-		transcodePNG(addSVGFurniture(xml));
+		//transcodePNG(addSVGFurniture(xml));
 		transcodeSVG(addSVGFurniture(xml));
 	}
 

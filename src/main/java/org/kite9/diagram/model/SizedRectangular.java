@@ -1,13 +1,16 @@
 package org.kite9.diagram.model;
 
+import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
- * Interface for elements that are involved in compaction (i.e. will have segments)
+ * Interface for rectangular elements that can affect their own sizes.  i.e. not `Decal`s, which
+ * are passive.
  */
-public interface CompactedRectangular extends Rectangular {
+public interface SizedRectangular extends Rectangular {
 
 	/**
 	 * Margin is the minimum distance from this element to elements around it that it's not connected to.
@@ -24,5 +27,7 @@ public interface CompactedRectangular extends Rectangular {
 	public VerticalAlignment getVerticalAlignment();
 	
 	public HorizontalAlignment getHorizontalAlignment();
+	
+	public CostedDimension getSize(Dimension2D within);
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 
 
 /**
@@ -17,7 +18,7 @@ import org.kite9.diagram.model.style.BorderTraversal;
  * @author robmoffat
  *
  */
-public interface Container extends DiagramElement, Rectangular {
+public interface Container extends Rectangular {
 
 	public List<DiagramElement> getContents();
 	
@@ -28,4 +29,7 @@ public interface Container extends DiagramElement, Rectangular {
 	public int getGridColumns();
 	
 	public int getGridRows();
+	
+	public DiagramElementSizing getSizing();
+	
 }

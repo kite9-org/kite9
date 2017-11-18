@@ -23,6 +23,7 @@ import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -96,6 +97,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		// ELEMENT TYPE / SIZING / LAYOUT CONTROL
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_TYPE_PROPERTY, DiagramElementType.class, DiagramElementType.UNSPECIFIED, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.UNSPECIFIED, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_USAGE_PROPERTY, RectangularElementUsage.class, RectangularElementUsage.REGULAR, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LAYOUT_PROPERTY, Layout.class, null, false));
 		
 		// GRIDS

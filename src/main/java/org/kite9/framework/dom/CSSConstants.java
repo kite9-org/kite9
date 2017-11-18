@@ -11,6 +11,7 @@ public interface CSSConstants {
 
 	public static final String ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"type";
 	public static final String ELEMENT_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"sizing";
+	public static final String ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"usage";
 	
 	public static final String LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"layout";			// for containers, to decide how to layout their contents
 	
