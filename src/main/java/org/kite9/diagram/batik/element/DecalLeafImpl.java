@@ -11,6 +11,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
@@ -42,14 +43,30 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 
 	@Override
 	protected Element postProcess(Element out) {
-		processSizesUsingTemplater(out, (RectangleRenderingInformation) getParent().getRenderingInformation()); 
+		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
+		double width = parentRRI.getSize().getWidth();
+		double height = parentRRI.getSize().getHeight();
+		
+		if (this.sizing == DiagramElementSizing.SCALED) {
+			Rectangle2D myBounds = getSVGBounds();
+			double xs = width / myBounds.getWidth();
+			double ys = height / myBounds.getHeight();
+			
+			out.setAttribute("transform", 
+					"scale("+xs+","+ys+")"+
+					"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+					);
+			
+		} else {
+			processSizesUsingTemplater(out, width, height); 
+		}
 		return out;
 	}
 
-	protected void processSizesUsingTemplater(Element child, RectangleRenderingInformation rri) {
+	protected void processSizesUsingTemplater(Element child, double width, double height) {
 		// tells the decal how big it needs to draw itself
-		double [] x = new double[] {0, rri.getSize().getWidth()};
-		double [] y = new double[] {0, rri.getSize().getHeight()};
+		double [] x = new double[] {0, width};
+		double [] y = new double[] {0, height};
 		
 		ValueReplacer valueReplacer = new ValueReplacer() {
 			

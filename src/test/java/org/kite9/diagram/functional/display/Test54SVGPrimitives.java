@@ -95,22 +95,6 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodeSVG(someXML);
 	}
 
-	@SuppressWarnings("cast")
-	@Test
-	public void test_54_6_GradientFill() throws Exception {
-		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		ResourceReferencer rr = createTestingResourceReferencer();
-		SVGGraphics2D g2d = new ExtendedSVGGraphics2D(d, rr, null);
-		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
-		LinearGradientPaint lgp = new LinearGradientPaint(
-				(Point2D) new Point2D.Double(0, 0),
-				(Point2D) new Point2D.Double(0, 1), 
-				new float[] {0f, 1f}, c);
-		g2d.setPaint(lgp);
-		g2d.fill(new Rectangle(0, 0, 100, 100));
-		g2d.stream(new FileWriter(getOutputFile(".svg")));
-		checkIdenticalXML();
-	}
 
 	@Test
 	public void test_54_7_FontSVGTranscoding() throws Exception {
@@ -170,7 +154,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String diagramOpen() {
-		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='type: diagram; padding: 50px; fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='kite9-type: diagram; padding: 50px; fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 
@@ -179,11 +163,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String fixedSizeOpen() {
-		return "<someelement id='someelement' style='type: connected; sizing: fixed; '>";
+		return "<someelement id='someelement' style='kite9-type: svg; '>";
 	}
 	
 	private String scaledOpen() {
-		return "<somescaled style='type: decal; sizing: scaled; '>"; 
+		return "<somescaled style='kite9-usage: decal; kite9-type: svg; sizing: scaled; '>"; 
 	}
 	
 	private String scaledClose() {
@@ -191,7 +175,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String adaptiveOpen() {
-		return "<someadaptive id=\"adap\" style='type: decal; sizing: adaptive; '>"; 
+		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; sizing: adaptive; '>"; 
 	}
 	
 	private String adaptiveClose() {
@@ -200,7 +184,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; padding: 10px; margin: 10px; '>";
+		return "<container id='"+id+"' style='kite9-type: container; sizing: minimize; fill: "+fill+"; kite9-padding: 10px; kite9-margin: 10px; '>";
 	}
 
 	private String containerClose() {
@@ -208,7 +192,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: orange; fill: orange; font-face: sans-serif; '>Some Text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: none; fill: orange; alignment-baseline: hanging; '>Some Text</svg:text>";
 	}
 	
 	private String svgRect2() {
