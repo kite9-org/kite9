@@ -1,20 +1,11 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GenericBridge;
-import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.batik.HasSVGGraphics;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.w3c.dom.Element;
 
@@ -26,40 +17,13 @@ import org.w3c.dom.Element;
  */
 public class Kite9DiagramBridge implements GenericBridge {
 	
-	public Kite9DiagramBridge(Kite9BridgeContext kite9BridgeContext) {
+	public Kite9DiagramBridge() {
 		super();
 	}
 
 	private BatikArrangementPipeline createPipeline() {
 		return new BatikArrangementPipeline(new BatikDisplayer(false, 20));
 	}
-	
-	/**
-	 * We are overriding this because we are going to control our 
-	 * own compositing approach based Kite9 rendering.
-	 */
-	@Override
-	public boolean isComposite() {
-		return false;
-	}
-	
-	/**
-     * Creates the `g` for the diagram, plus layers that it contains.
-     */
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-    	DiagramKite9XMLElement d = (DiagramKite9XMLElement) e;
-    	Diagram de = d.getDiagramElement();
-       	
-       	// work out the positions of all the elements in te diagram, 
-       	BatikArrangementPipeline pipeline = createPipeline();
-		pipeline.arrange(d);
-
-       	// used in testing nowhere else
-       	lastDiagram = d;
-        lastPipeline = pipeline;
-               	
-       	return ((HasSVGGraphics) de).getGraphicsNode();
-    }
     
     public static BatikArrangementPipeline lastPipeline;
     public static DiagramKite9XMLElement lastDiagram;
@@ -77,14 +41,12 @@ public class Kite9DiagramBridge implements GenericBridge {
 
 	@Override
 	public Bridge getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Kite9DiagramBridge();
 	}
 
 	@Override
 	public void handleElement(BridgeContext ctx, Element e) {
 		DiagramKite9XMLElement d = (DiagramKite9XMLElement) e;
-    	Diagram de = d.getDiagramElement();
        	
        	// work out the positions of all the elements in te diagram, 
        	BatikArrangementPipeline pipeline = createPipeline();
@@ -93,8 +55,6 @@ public class Kite9DiagramBridge implements GenericBridge {
        	// used in testing nowhere else
        	lastDiagram = d;
         lastPipeline = pipeline;
-               	
-       	//return ((HasSVGGraphics) de).getGraphicsNode();
 	}
 	
 

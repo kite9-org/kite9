@@ -8,7 +8,6 @@ import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
-import org.kite9.diagram.batik.bridge.images.Kite9ImageElementBridge;
 import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -61,7 +60,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
-		putBridge(new Kite9DiagramBridge(this));
+		putBridge(new Kite9DiagramBridge());
 	}
 	
 	/**
