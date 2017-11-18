@@ -176,7 +176,7 @@ public class TestingEngine extends TestingHelp {
 					}
 					
 					if (checkMidConnection) {
-						if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
+						if (isMinimizedContainer(v)) {
 							Direction connectionSide = getConnectionSide(c, v, r2d);
 							if (connectionsOnSide(v, connectionSide, r2d) == 1) {
 								switch (connectionSide) {
@@ -202,6 +202,10 @@ public class TestingEngine extends TestingHelp {
 						}
 					}
 				}
+			}
+
+			private boolean isMinimizedContainer(Connected v) {
+				return (v instanceof Container) && (((Container) v).getSizing()==DiagramElementSizing.MINIMIZE);
 			}
 
 			/**

@@ -1,8 +1,9 @@
 package org.kite9.diagram.batik.element;
 
-import org.kite9.diagram.batik.bridge.ContainerRectangularPainter;
+import org.kite9.diagram.batik.bridge.ConnectionPainter;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.SVGRectangularPainter;
+import org.kite9.diagram.batik.bridge.SVGContainerRectangularPainter;
+import org.kite9.diagram.batik.bridge.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.bridge.TextRectangularPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -53,13 +54,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			if (parent != null) {
 				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
 			}
-			return new DiagramImpl(el, context, new ContainerRectangularPainter());
+			return new DiagramImpl(el, context, new SVGContainerRectangularPainter());
 		case CONTAINER:
 			switch (usage) {
 			case LABEL:
-				return new LabelContainerImpl(el, parent, context, new ContainerRectangularPainter());
+				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter());
 			case REGULAR:
-				return new ConnectedContainerImpl(el, parent, context, new ContainerRectangularPainter());
+				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter());
 			case DECAL:
 			default:
 				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
@@ -77,19 +78,19 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case SVG:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new SVGRectangularPainter(context));
+				return new LabelLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new SVGRectangularPainter(context));
+				return new DecalLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new SVGRectangularPainter(context));
+				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context);
+			return new ConnectionImpl(el, parent, context, new ConnectionPainter());
 		case LINK_END:
 			return (AbstractDOMDiagramElement) ((Kite9XMLElement) el.getParentNode()).getDiagramElement();
 		case TERMINATOR:
-			return new TerminatorImpl(el, parent, context, new SVGRectangularPainter(context));
+			return new TerminatorImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

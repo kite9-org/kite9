@@ -1,7 +1,7 @@
 package org.kite9.diagram.batik.element;
 
-import org.kite9.diagram.batik.bridge.ConnectionPainter;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.Painter;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -20,8 +20,8 @@ import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
 
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
-		super(el, parent, ctx, new ConnectionPainter());
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter<Connection> p) {
+		super(el, parent, ctx, p);
 	}
 
 	@Override

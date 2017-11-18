@@ -6,8 +6,17 @@ import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.svggen.DefaultErrorHandler;
+import org.apache.batik.svggen.DefaultStyleHandler;
+import org.apache.batik.svggen.SVGGeneratorContext;
+import org.apache.batik.svggen.SVGIDGenerator;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
+import org.kite9.diagram.batik.bridge.images.ResourceReferencerImageHandler;
+import org.kite9.diagram.batik.format.BatikPaintExtensionHandler;
+import org.kite9.diagram.batik.format.ElementNodeMapper;
+import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.format.ResourceReferencer;
 import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -116,7 +125,5 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return super.getBridge(namespaceURI, localName);
 	}
 
-	
-	
 	
 }

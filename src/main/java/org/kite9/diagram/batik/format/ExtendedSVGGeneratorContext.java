@@ -8,7 +8,7 @@ public class ExtendedSVGGeneratorContext extends SVGGeneratorContext {
 	private ResourceReferencer resourceReferencer;
 	private ElementNodeMapper elementNodeMapper;
 	
-	protected ExtendedSVGGeneratorContext(Document domFactory) {
+	public ExtendedSVGGeneratorContext(Document domFactory) {
 		super(domFactory);
 	}
 	

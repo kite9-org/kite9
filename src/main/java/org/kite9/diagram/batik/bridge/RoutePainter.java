@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
@@ -23,10 +22,16 @@ import org.kite9.framework.logging.LogicException;
  */
 public class RoutePainter {
 	
-	float xo = 4;
-	float yo = 4;
-	Color shadowColour = Color.DARK_GRAY;
+	float xo;
+	float yo;
 
+	public RoutePainter(float xo, float yo) {
+		super();
+		this.xo = xo;
+		this.yo = yo;
+	}
+
+	
 	static interface EndDisplayer {
 		
 		public void draw(Graphics2D gp, Paint lineColour, Paint fillColour);
