@@ -175,7 +175,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String adaptiveOpen() {
-		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; sizing: adaptive; '>"; 
+		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; kite9-sizing: adaptive; '>"; 
 	}
 	
 	private String adaptiveClose() {
