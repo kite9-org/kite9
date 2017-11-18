@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
-import org.kite9.diagram.batik.templater.ParentElementValueReplacer;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.Decal;

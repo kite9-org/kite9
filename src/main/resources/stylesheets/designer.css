@@ -52,7 +52,7 @@ context {
 
 toLabel, 
 fromLabel,
-label {
+context > label {
 	kite9-usage: label;
 	kite9-type: container; 
 	/*kite9-padding: 4px 4px 4px 4px; */
@@ -86,7 +86,7 @@ context {
 /* Symbols */
 
 symbol {
-	kite9-type: container;
+	kite9-type: svg;
 }
 
 symbol.circle {
