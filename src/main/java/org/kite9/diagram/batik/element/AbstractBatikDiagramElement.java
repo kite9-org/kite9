@@ -50,15 +50,23 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	@Override
 	public Element output(Document d) {
 		ensureInitialized();
+		preProcess(theElement);
 		Element out = ((Painter<DiagramElement>)p).output(d, theElement, this);
-		return postProcess(out);
+		postProcess(out);
+		return out;
+	}
+
+
+	/**
+	 * Perform pre-processing, such as value replacements.
+	 */
+	protected void preProcess(StyledKite9SVGElement theElement) {
 	}
 
 	/**
 	 * Performs any necessary post-processing, such as translation.
 	 */
-	protected Element postProcess(Element out) {
-		return out;
+	protected void postProcess(Element out) {
 	}
 
 }

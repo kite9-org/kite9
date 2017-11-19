@@ -167,7 +167,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scaledOpen() {
-		return "<somescaled style='kite9-usage: decal; kite9-type: svg; sizing: scaled; '>"; 
+		return "<somescaled style='kite9-usage: decal; kite9-type: svg; '>"; 
 	}
 	
 	private String scaledClose() {
@@ -175,7 +175,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String adaptiveOpen() {
-		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; kite9-sizing: adaptive; '>"; 
+		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; '>"; 
 	}
 	
 	private String adaptiveClose() {
@@ -184,7 +184,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='kite9-type: container; sizing: minimize; fill: "+fill+"; kite9-padding: 10px; kite9-margin: 10px; '>";
+		return "<container id='"+id+"' style='kite9-type: container; kite9-sizing: minimize; fill: "+fill+"; kite9-padding: 10px; kite9-margin: 10px; '>";
 	}
 
 	private String containerClose() {

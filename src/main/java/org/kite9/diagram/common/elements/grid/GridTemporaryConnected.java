@@ -93,7 +93,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 
 	@Override
 	public DiagramElementSizing getSizing() {
-		return DiagramElementSizing.UNSPECIFIED;
+		return DiagramElementSizing.MINIMIZE;
 	}
 
 	@Override

@@ -133,7 +133,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	}
 	
 	@Override
-	protected Element postProcess(Element out) {
+	protected void postProcess(Element out) {
 		// work out translation
 		RectangleRenderingInformation rri = getRenderingInformation();
 		Dimension2D position = rri.getPosition();
@@ -144,7 +144,6 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		}
 
 		out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
-		return out;
 	}
 	
 	

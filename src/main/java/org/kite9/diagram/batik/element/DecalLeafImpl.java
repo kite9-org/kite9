@@ -10,7 +10,6 @@ import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
@@ -20,47 +19,40 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 	public DecalLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> lo) {
 		super(el, parent, ctx, lo);
 	}
-	
-	@Override
-	protected void initSizing() {
-		super.initSizing();
-		if (this.sizing != DiagramElementSizing.ADAPTIVE) {
-			this.sizing = DiagramElementSizing.SCALED;		 
-		}
-	}
-
-	@Override
-	public DiagramElementSizing getSizing() {
-		ensureInitialized();
-		return sizing;
-	}
 
 	@Override
 	public Rectangle2D getSVGBounds() {
-		ensureInitialized();
-		return ((RectangularPainter<?>) this.p).bounds(theElement);
+		throw new Kite9ProcessingException("Decal doesn't have bounds");
 	}
 
+	/**
+	 * Uses templating to set size of decal (where we are using x0, x1 etc in the template)
+	 */
 	@Override
-	protected Element postProcess(Element out) {
+	protected void preProcess(StyledKite9SVGElement out) {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
 		double width = parentRRI.getSize().getWidth();
 		double height = parentRRI.getSize().getHeight();
+		processSizesUsingTemplater(out, width, height); 
+	}
+	
+	/**
+	 * Ensures the decal is the same size as it's parent (for scaled decals)
+	 */
+	@Override
+	protected void postProcess(Element out) {	
+		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
+		double width = parentRRI.getSize().getWidth();
+		double height = parentRRI.getSize().getHeight();
+		Rectangle2D myBounds = ((RectangularPainter<?>) this.p).bounds(theElement);
+		double xs = width / myBounds.getWidth();
+		double ys = height / myBounds.getHeight();
 		
-		if (this.sizing == DiagramElementSizing.SCALED) {
-			Rectangle2D myBounds = getSVGBounds();
-			double xs = width / myBounds.getWidth();
-			double ys = height / myBounds.getHeight();
-			
-			out.setAttribute("transform", 
-					"scale("+xs+","+ys+")"+
-					"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
-					);
-			
-		} else {
-			processSizesUsingTemplater(out, width, height); 
-		}
-		return out;
+		out.setAttribute("transform", 
+				"scale("+xs+","+ys+")"+
+				"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+				);
+		
 	}
 
 	protected void processSizesUsingTemplater(Element child, double width, double height) {

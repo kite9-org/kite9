@@ -1,7 +1,5 @@
 package org.kite9.diagram.model;
 
-import org.kite9.diagram.model.style.DiagramElementSizing;
-
 /**
  * A decal is a decorative element that overlays it's parent {@link DiagramElement}.
  * Decals are only processed during the display phase, as they have no effect on 
@@ -12,8 +10,5 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
  *
  */
 public interface Decal extends Rectangular {
-
-
-	public DiagramElementSizing getSizing();
 	
 }
