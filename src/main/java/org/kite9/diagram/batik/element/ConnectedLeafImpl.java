@@ -25,7 +25,7 @@ public class ConnectedLeafImpl extends AbstractConnectedDiagramElement implement
 	@Override
 	public Rectangle2D getBounds() {
 		ensureInitialized();
-		return ((RectangularPainter<?>) this.p).bounds(theElement);
+		return ((RectangularPainter<Leaf>) this.p).bounds(theElement, this);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
 /**
@@ -25,8 +26,9 @@ public class SVGLeafRectangularPainter extends AbstractSVGPainter<Leaf> implemen
 	}
 
 	@Override
-	public Rectangle2D bounds(Element theElement) {
-		GraphicsNode gn = getGraphicsNode(getDrawableContents(theElement));
+	public Rectangle2D bounds(StyledKite9SVGElement theElement, Leaf l) {
+		initializeSourceContents(theElement, l);
+		GraphicsNode gn = getGraphicsNode(theElement);
 		return gn.getBounds();
 	}
 
@@ -35,24 +37,17 @@ public class SVGLeafRectangularPainter extends AbstractSVGPainter<Leaf> implemen
 	private GraphicsNode getGraphicsNode(Element theElement) {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(getDrawableContents(theElement));
+			out = initGraphicsNode(theElement);
 			graphicsNodeCache = out;
 			return out;
 		}
 		
 		return out;
 	}
-
 	
 	protected GraphicsNode initGraphicsNode(Element theElement) {
 		GVTBuilder builder = ctx.getGVTBuilder();
-		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, getDrawableContents(theElement));
+		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, theElement);
 		return out;
 	}
-
-	protected Element getDrawableContents(Element theElement) {
-		return theElement;
-	}
-
-
 }

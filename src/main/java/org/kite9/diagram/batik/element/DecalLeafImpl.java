@@ -4,8 +4,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
-import org.kite9.diagram.batik.templater.ValueReplacingProcessor;
-import org.kite9.diagram.batik.templater.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
@@ -26,6 +24,9 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 	}
 
 	
+	/**
+	 * Decal size is based on it's parent element, since it doesn't have a computed size of it's own.
+	 */
 	@Override
 	protected void preProcessSize(StyledKite9SVGElement out) {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
@@ -42,7 +43,7 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
 		double width = parentRRI.getSize().getWidth();
 		double height = parentRRI.getSize().getHeight();
-		Rectangle2D myBounds = ((RectangularPainter<?>) this.p).bounds(theElement);
+		Rectangle2D myBounds = ((RectangularPainter<Leaf>) this.p).bounds(theElement, this);
 		double xs = width / myBounds.getWidth();
 		double ys = height / myBounds.getHeight();
 		

@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
 public class ConnectionPainter extends AbstractSVGPainter<Connection>{
 
 	 @Override
-	protected void processContents(StyledKite9SVGElement in, Element out, Document d, Connection r) {
+	protected void processOutput(StyledKite9SVGElement in, Element out, Document d, Connection r) {
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		SVGShape shapeConverter = new SVGShape(buildSVGGeneratorContext(d, null, null));
 		GeneralPath gp = routePainter.drawRouting(r.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
@@ -46,6 +46,6 @@ public class ConnectionPainter extends AbstractSVGPainter<Connection>{
 //       generatorCtx.setElementNodeMapper(enm);
 
        return generatorCtx;
-   }	
-	
+   }
+
 }

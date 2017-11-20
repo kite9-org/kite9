@@ -18,14 +18,12 @@ import org.w3c.dom.Element;
  *
  */
 public class TextRectangularPainter extends SVGLeafRectangularPainter {
-
-	
 	
 	public TextRectangularPainter(Kite9BridgeContext ctx) {
 		super(ctx);
 	}
 
-	protected void processContents(StyledKite9SVGElement theElement, Element out, Document d, Leaf l) {
+	protected void processOutput(StyledKite9SVGElement theElement, Element out, Document d, Leaf l) {
 		float lineHeight = getLineHeight(theElement);
 		float lineDrop = getLineDrop(theElement);
 		String theText = theElement.getTextContent();
@@ -55,7 +53,7 @@ public class TextRectangularPainter extends SVGLeafRectangularPainter {
 	}
 
 	@Override
-	public Rectangle2D bounds(Element theElement) {
+	public Rectangle2D bounds(StyledKite9SVGElement theElement, Leaf l) {
 		return new Rectangle2D.Double(0, 0, 100, 100);
 	}
 

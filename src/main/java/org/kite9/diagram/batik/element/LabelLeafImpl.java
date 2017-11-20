@@ -36,7 +36,7 @@ public class LabelLeafImpl extends AbstractLabelImpl implements Label, Leaf {
 	@Override
 	public Rectangle2D getBounds() {
 		ensureInitialized();
-		return ((RectangularPainter) this.p).bounds(theElement);
+		return ((RectangularPainter) this.p).bounds(theElement, this);
 	}
 	
 	@Override
