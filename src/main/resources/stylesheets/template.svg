@@ -46,8 +46,8 @@
     <back style='kite9-usage: decal; kite9-type: svg;  kite9-sizing: adaptive; '>
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #ccc; ' />
     </back>
-    <front style="kite9-type: svg; ">
-      <svg:text><contents /></svg:text>
+    <front style="kite9-type: text; ">
+      <contents />
     </front>
   </template>
 
@@ -60,9 +60,9 @@
 
   <!-- label template -->
   <template id="text-label-container">
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1"/  -->
-    <text-label style="kite9-type: svg; ">
-      <svg:text class="text"><contents /></svg:text>
+    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" />
+    <text-label style="kite9-type: text; ">
+      <contents />
     </text-label>
   </template>
 

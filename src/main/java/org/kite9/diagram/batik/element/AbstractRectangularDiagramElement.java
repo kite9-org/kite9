@@ -146,6 +146,16 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
 	}
 	
-	
+	@Override
+	protected void preProcess(StyledKite9SVGElement out) {
+		preProcessSize(out); 
+	}
+
+	protected void preProcessSize(StyledKite9SVGElement out) {
+		RectangleRenderingInformation rri = getRenderingInformation();
+		double width = rri.getSize().getWidth();
+		double height = rri.getSize().getHeight();
+		processSizesUsingTemplater(out, width, height);
+	}
 	
 }

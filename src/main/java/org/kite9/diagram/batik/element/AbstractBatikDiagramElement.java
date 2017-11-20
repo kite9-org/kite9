@@ -4,6 +4,8 @@ import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Painter;
+import org.kite9.diagram.batik.templater.ValueReplacingProcessor;
+import org.kite9.diagram.batik.templater.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.dom.CSSConstants;
@@ -60,13 +62,40 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	/**
 	 * Perform pre-processing, such as value replacements.
 	 */
-	protected void preProcess(StyledKite9SVGElement theElement) {
-	}
+	protected abstract void preProcess(StyledKite9SVGElement theElement);
 
 	/**
 	 * Performs any necessary post-processing, such as translation.
 	 */
-	protected void postProcess(Element out) {
-	}
+	protected abstract void postProcess(Element out);
 
+	/**
+	 * This is likely to be temporary, and can only be used in containers and decals since 
+	 * leaf elements need to know what their XML looks like in order to size themselves.
+	 * Use this in preProcess.
+	 */
+	protected void processSizesUsingTemplater(Element child, double width, double height) {
+		double [] x = new double[] {0, width};
+		double [] y = new double[] {0, height};
+		
+		ValueReplacer valueReplacer = new ValueReplacer() {
+			
+			@Override
+			public String getReplacementValue(String in) {
+				try {
+					if (in.startsWith("x") || in.startsWith("y")) {
+						int index = Integer.parseInt(in.substring(1));
+						double v = ('x' == in.charAt(0)) ? x[index] : y[index];
+						return ""+v;
+					}
+				} catch (NumberFormatException e) {
+					// just move on...
+				} 
+				
+				return in;
+			}
+		};
+		
+		new ValueReplacingProcessor(valueReplacer).processContents(child);
+	}
 }

@@ -5,6 +5,7 @@ import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.dom.CSSConstants;
@@ -57,5 +58,5 @@ public abstract class AbstractCompactedRectangularDiagramElement extends Abstrac
 		ev = (EnumValue) getCSSStyleProperty(CSSConstants.VERTICAL_ALIGNMENT);
 		verticalAlignment = (VerticalAlignment) ev.getTheValue();
 	}
-	
+
 }

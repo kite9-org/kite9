@@ -21,19 +21,17 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 	}
 
 	@Override
-	public Rectangle2D getSVGBounds() {
+	public Rectangle2D getBounds() {
 		throw new Kite9ProcessingException("Decal doesn't have bounds");
 	}
 
-	/**
-	 * Uses templating to set size of decal (where we are using x0, x1 etc in the template)
-	 */
+	
 	@Override
-	protected void preProcess(StyledKite9SVGElement out) {
+	protected void preProcessSize(StyledKite9SVGElement out) {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
 		double width = parentRRI.getSize().getWidth();
 		double height = parentRRI.getSize().getHeight();
-		processSizesUsingTemplater(out, width, height); 
+		processSizesUsingTemplater(out, width, height);
 	}
 	
 	/**
@@ -55,29 +53,5 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 		
 	}
 
-	protected void processSizesUsingTemplater(Element child, double width, double height) {
-		// tells the decal how big it needs to draw itself
-		double [] x = new double[] {0, width};
-		double [] y = new double[] {0, height};
-		
-		ValueReplacer valueReplacer = new ValueReplacer() {
-			
-			@Override
-			public String getReplacementValue(String in) {
-				try {
-					if (in.startsWith("x") || in.startsWith("y")) {
-						int index = Integer.parseInt(in.substring(1));
-						double v = ('x' == in.charAt(0)) ? x[index] : y[index];
-						return ""+v;
-					}
-				} catch (NumberFormatException e) {
-					// just move on...
-				} 
-				
-				return in;
-			}
-		};
-		
-		new ValueReplacingProcessor(valueReplacer).processContents(child);
-	}
+	
 }

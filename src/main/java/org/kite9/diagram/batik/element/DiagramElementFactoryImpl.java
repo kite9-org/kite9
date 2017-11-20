@@ -68,12 +68,12 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case TEXT:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter());
+				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter(context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter());
+				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter(context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter());
+				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter(context));
 			} 
 		case SVG:
 			switch (usage) {

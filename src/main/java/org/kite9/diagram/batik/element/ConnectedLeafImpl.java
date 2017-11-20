@@ -23,14 +23,14 @@ public class ConnectedLeafImpl extends AbstractConnectedDiagramElement implement
 	}
 
 	@Override
-	public Rectangle2D getSVGBounds() {
+	public Rectangle2D getBounds() {
 		ensureInitialized();
 		return ((RectangularPainter<?>) this.p).bounds(theElement);
 	}
 
 	@Override
 	public CostedDimension getSize(Dimension2D within) {
-		Rectangle2D bounds = this.getSVGBounds();
+		Rectangle2D bounds = this.getBounds();
 		if (bounds == null) {
 			return new CostedDimension(1, 1, 0);
 		}

@@ -218,5 +218,13 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		return padding[d.ordinal()];
 	}
 
+	@Override
+	protected void preProcess(StyledKite9SVGElement theElement) {
+	}
+
+	@Override
+	protected void postProcess(Element out) {
+	}
+
 
 }

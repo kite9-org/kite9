@@ -14,6 +14,6 @@ import java.awt.geom.Rectangle2D;
  */
 public interface Leaf extends Rectangular {
 	
-	public Rectangle2D getSVGBounds();
+	public Rectangle2D getBounds();
 
 }

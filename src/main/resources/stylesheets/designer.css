@@ -322,14 +322,14 @@ key > text-lines {
 	fill: white;
 }
 
-.glyph  .label  .text {
+.glyph  .label  text {
 	font-size: 15px;
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	stroke: none;
 }
 
-.glyph  .stereotype  .text {
+.glyph  .stereotype  text {
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	fill: black;
@@ -337,7 +337,7 @@ key > text-lines {
 	/*kite9-padding: 2px 2px 2px 2px; */
 }
 
-.glyph .text-lines .text {
+.glyph .text-lines text {
 	stroke: none;
 	fill: black;
 	font-family: "opensans-regular-webfont";
@@ -381,7 +381,7 @@ key > text-lines {
 	font-size: 12px;
 }
 
-.arrow .label .text {
+.arrow .label text {
 	fill: white;
 	stroke: none;
 	font-size: 12px;

@@ -26,7 +26,7 @@ public class SVGLeafRectangularPainter extends AbstractSVGPainter<Leaf> implemen
 
 	@Override
 	public Rectangle2D bounds(Element theElement) {
-		GraphicsNode gn = getGraphicsNode(theElement);
+		GraphicsNode gn = getGraphicsNode(getDrawableContents(theElement));
 		return gn.getBounds();
 	}
 
@@ -35,7 +35,7 @@ public class SVGLeafRectangularPainter extends AbstractSVGPainter<Leaf> implemen
 	private GraphicsNode getGraphicsNode(Element theElement) {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(theElement);
+			out = initGraphicsNode(getDrawableContents(theElement));
 			graphicsNodeCache = out;
 			return out;
 		}
@@ -46,8 +46,12 @@ public class SVGLeafRectangularPainter extends AbstractSVGPainter<Leaf> implemen
 	
 	protected GraphicsNode initGraphicsNode(Element theElement) {
 		GVTBuilder builder = ctx.getGVTBuilder();
-		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, theElement);
+		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, getDrawableContents(theElement));
 		return out;
+	}
+
+	protected Element getDrawableContents(Element theElement) {
+		return theElement;
 	}
 
 

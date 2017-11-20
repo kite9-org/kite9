@@ -30,7 +30,7 @@ public abstract class AbstractSVGPainter<X extends DiagramElement> implements Pa
 		return out;
 	}
 
-	protected void processContents(StyledKite9SVGElement in, Element out, Document d, X r) {
+	protected void processContents(StyledKite9SVGElement in, Element out, @SuppressWarnings("unused") Document d, @SuppressWarnings("unused") X z) {
 		new Kite9ExpandingCopier("", out).processContents(in);
 	}
 }
