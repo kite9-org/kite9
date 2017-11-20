@@ -38,6 +38,7 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 	/**
 	 * Ensures the decal is the same size as it's parent (for scaled decals)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void postProcess(Element out) {	
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();

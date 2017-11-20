@@ -22,6 +22,7 @@ public class ConnectedLeafImpl extends AbstractConnectedDiagramElement implement
 		super(el, parent, ctx, lo);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Rectangle2D getBounds() {
 		ensureInitialized();
