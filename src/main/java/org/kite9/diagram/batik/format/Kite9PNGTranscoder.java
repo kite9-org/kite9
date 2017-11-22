@@ -39,13 +39,13 @@ public class Kite9PNGTranscoder extends PNGTranscoder {
 		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
 	}
 	
-	@Override
-	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
-		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
-		domImpl.setDiagramElementFactory(def);
-		return out;
-	}
+//	@Override
+//	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
+//		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
+//		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
+//		domImpl.setDiagramElementFactory(def);
+//		return out;
+//	}
 
 	@Override
 	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {

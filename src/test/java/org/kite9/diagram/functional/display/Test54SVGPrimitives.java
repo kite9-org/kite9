@@ -136,6 +136,16 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodeSVG(xml);
 	}
 	
+	@Test
+	public void test_54_11_FlowingText() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simpleflow.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
 	
 	private String scalablePath() {
 		return "<svg:path d='M{x0} {y0} H {x1} V {y1}z' />";

@@ -14,6 +14,7 @@ import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.junit.Before;
 import org.junit.Test;

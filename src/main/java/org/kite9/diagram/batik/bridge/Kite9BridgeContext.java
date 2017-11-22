@@ -1,10 +1,15 @@
 package org.kite9.diagram.batik.bridge;
 
+import java.util.List;
+
 import org.apache.batik.bridge.Bridge;
+import org.apache.batik.bridge.BridgeExtension;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.SVGBridgeExtension;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
+import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
@@ -61,6 +66,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
 		putBridge(new Kite9DiagramBridge());
+		putBridge(new TextBridge());
 	}
 	
 	/**
@@ -116,5 +122,23 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return super.getBridge(namespaceURI, localName);
 	}
 
+	/**
+	 * Adding support for SVG1.2, whether version is specified or not.
+	 */
+	@SuppressWarnings({"unchecked", "cast", "rawtypes"})
+	@Override
+	public List getBridgeExtensions(Document doc) {
+		List<BridgeExtension> out = (List<BridgeExtension>) super.getBridgeExtensions(doc);
+		for (int i = 0; i < out.size(); i++) {
+			BridgeExtension be = out.get(i);
+			if (be instanceof SVGBridgeExtension) {
+				// upgrade it
+				out.set(i, new SVG12BridgeExtension());
+			}
+		}
+		return out;
+	}
+
+	
 	
 }

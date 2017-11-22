@@ -85,5 +85,13 @@ public class TextBridge extends SVG12TextElementBridge {
 			
 		});
 	}
+
+	@Override
+	protected GraphicsNode instantiateGraphicsNode() {
+		// TODO Auto-generated method stub
+		return super.instantiateGraphicsNode();
+	}
+	
+	
 	
 }

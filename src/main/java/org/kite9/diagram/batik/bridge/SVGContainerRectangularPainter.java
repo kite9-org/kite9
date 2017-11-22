@@ -6,6 +6,8 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Handles painting for {@link DiagramElementType.CONTAINER}
@@ -15,7 +17,7 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class SVGContainerRectangularPainter extends AbstractSVGPainter<Container> implements RectangularPainter<Container> {
+public class SVGContainerRectangularPainter extends AbstractDirectSVGPainter<Container> implements RectangularPainter<Container> {
 
 	/**
 	 * Bounds for rectangles is special - it should be the minimum size possible.
@@ -23,6 +25,11 @@ public class SVGContainerRectangularPainter extends AbstractSVGPainter<Container
 	@Override
 	public Rectangle2D bounds(StyledKite9SVGElement in, Container c) {
 		throw new Kite9ProcessingException("No fixed bounds for Container, it depends on contents: " + in);
+	}
+
+	@Override
+	public Element output(Document d, StyledKite9SVGElement theElement, Container r) {
+		return outputDirect(d, theElement, r);
 	}
 
 }

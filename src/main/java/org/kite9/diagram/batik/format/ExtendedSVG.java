@@ -40,6 +40,8 @@ public interface ExtendedSVG {
 	 * @param gn
 	 */
 	public void passthroughXML(GraphicsNode gn);
+	
+	public void recordSize();
 
 }
 

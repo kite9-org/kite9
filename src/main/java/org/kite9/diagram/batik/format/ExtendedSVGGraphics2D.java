@@ -50,7 +50,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	}
 	
 	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr, ElementNodeMapper enm) {
-		super(buildSVGGeneratorContext(doc, rr, enm) ,false);
+		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc, rr, enm) ,false);
 		this.currentSubgroup = getTopLevelGroup();
 	}
 	
@@ -61,9 +61,6 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	private ElementNodeMapper getElementNodeMapper() {
 		return ((ExtendedSVGGeneratorContext) this.generatorCtx).getElementNodeMapper();
 	}
-
-	
-	 
 
 	@Override
 	public void createGroup(String id) {
@@ -240,6 +237,24 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		Templater t = em.getTemplater();
 		Element copy = (Element) t.transcribeNode(generatorCtx.getDOMFactory(), e, true);
 		getDOMGroupManager().addElement(copy);
+		
+	}
+
+	@Override
+	public void recordSize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setRenderingHints(Map<?, ?> hints) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addRenderingHints(Map<?, ?> hints) {
+		// TODO Auto-generated method stub
 		
 	}
 
