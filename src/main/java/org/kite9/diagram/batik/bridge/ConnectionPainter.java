@@ -16,19 +16,12 @@ public class ConnectionPainter extends AbstractGraphicsNodePainter<Connection> {
 	}
 
 	@Override
-	protected void processDirectOutput(StyledKite9SVGElement in, Element out, Document d, Connection r) {
+	protected void processOutput(StyledKite9SVGElement in, Element out, Document d, Connection r) {
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		SVGShape shapeConverter = new SVGShape(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d, null, null));
 		GeneralPath gp = routePainter.drawRouting(r.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
 		Element path = shapeConverter.toSVG(gp);
 		out.appendChild(path);
 	} 
-
-	@Override
-	public Element output(Document d, StyledKite9SVGElement theElement, Connection r) {
-		return outputDirect(d, theElement, r);
-	}
-
-	
 
 }

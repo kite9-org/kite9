@@ -17,15 +17,15 @@ public abstract class AbstractDirectSVGPainter<X extends DiagramElement> extends
 	 * The basic output approach is to turn any DiagramElement into a <g> tag, with the same ID set
 	 * as the DiagramElement.  
 	 */
-	public Element outputDirect(Document d, StyledKite9SVGElement theElement, X r) {
+	public final Element output(Document d, StyledKite9SVGElement theElement, X r) {
 		StyledKite9SVGElement toUse = getContents(theElement, r);
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
-		processDirectOutput(toUse, out, d, r);
+		processOutput(toUse, out, d, r);
 		addStyleAndClass(toUse, r, out);
 		return out;
 	}
 	
-	protected void processDirectOutput(StyledKite9SVGElement in, Element out, @SuppressWarnings("unused") Document d, @SuppressWarnings("unused") X z) {
+	protected void processOutput(StyledKite9SVGElement in, Element out, @SuppressWarnings("unused") Document d, @SuppressWarnings("unused") X z) {
 		new Kite9ExpandingCopier("", out).processContents(in);
 	}
 }

@@ -1,10 +1,11 @@
 package org.kite9.diagram.batik.bridge;
 
+import java.awt.geom.Rectangle2D;
+
+import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Handles painting for {@link DiagramElementType.SVG}
@@ -12,15 +13,16 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class SVGLeafRectangularPainter extends AbstractRectangularGraphicsNodePainter<Leaf> implements RectangularPainter<Leaf> {
+public class SVGLeafRectangularPainter extends AbstractGraphicsNodePainter<Leaf> implements RectangularPainter<Leaf> {
 	
 	public SVGLeafRectangularPainter(Kite9BridgeContext ctx) {
 		super(ctx);
 	}
-
+	
 	@Override
-	public Element output(Document d, StyledKite9SVGElement theElement, Leaf r) {
-		return outputDirect(d, theElement, r);
+	public Rectangle2D bounds(StyledKite9SVGElement theElement, Leaf l) {
+		GraphicsNode gn = getGraphicsNode(getContents(theElement, l));
+		return gn.getBounds();
 	}
 
 }

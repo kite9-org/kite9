@@ -47,17 +47,5 @@ public abstract class AbstractGraphicsNodePainter<X extends DiagramElement> exte
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, theElement);
 		return out;
 	}
-	
-	public Element outputViaGraphicsNode(Document d, StyledKite9SVGElement theElement, @SuppressWarnings("unused") X r) {
-		GraphicsNode node = getGraphicsNode(theElement);
-		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
-		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d, null, null);
-		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
-		g2d.transform(node.getInverseTransform());
-		node.paint(g2d);
-		groupElem = g2d.getTopLevelGroup(true);
-		
-		return groupElem;
-	}
 
 }

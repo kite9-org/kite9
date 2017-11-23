@@ -1,12 +1,20 @@
 package org.kite9.diagram.batik.bridge;
 
+import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
+
+import java.awt.geom.Rectangle2D;
+
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.anim.dom.SVGOMFlowDivElement;
 import org.apache.batik.anim.dom.SVGOMFlowParaElement;
 import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
+import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.SVG12Constants;
+import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.StyledKite9SVGElement;
@@ -20,7 +28,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class TextRectangularPainter extends AbstractRectangularGraphicsNodePainter<Leaf> {
+public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> implements RectangularPainter<Leaf> {
 	
 	public TextRectangularPainter(Kite9BridgeContext ctx) {
 		super(ctx);
@@ -53,12 +61,34 @@ public class TextRectangularPainter extends AbstractRectangularGraphicsNodePaint
 			theElement.removeChild(old.item(0));
 		}
 
+		// convert the flow element into regular svg:text
+		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines);
+		GraphicsNode gn = getGraphicsNode(flowRoot);
+		Element group = graphicsNodeToXML(d, gn);
+		theElement.appendChild(group);
+
+		return theElement;
+	}
+	
+	
+	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
+		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d, null, null);
+		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
+		//g2d.transform(node.getInverseTransform());
+		node.paint(g2d);
+		groupElem = g2d.getTopLevelGroup(true);
+		
+		return groupElem;
+	}
+
+
+	private SVGOMFlowRootElement createFlowRootElement(Document d, String[] lines) {
 		SVGOMFlowRootElement flowRoot = (SVGOMFlowRootElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_ROOT_TAG);
 		SVGOMFlowDivElement flowDiv = (SVGOMFlowDivElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_DIV_TAG);
 		SVGOMFlowRegionElement flowRegion = (SVGOMFlowRegionElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
 		SVGOMRectElement rect = (SVGOMRectElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_RECT_TAG);
 		
-		theElement.appendChild(flowRoot);
 		flowRoot.appendChild(flowRegion);
 		flowRoot.appendChild(flowDiv);
 		flowRegion.appendChild(rect);
@@ -70,13 +100,24 @@ public class TextRectangularPainter extends AbstractRectangularGraphicsNodePaint
 			flowDiv.appendChild(flowPara);
 			flowPara.setTextContent(line);
 		}
-
-		return theElement;
+		return flowRoot;
 	}
-
+	
 	@Override
-	public Element output(Document d, StyledKite9SVGElement theElement, Leaf r) {
-		return outputViaGraphicsNode(d, theElement, r);
+	public Rectangle2D bounds(StyledKite9SVGElement in, Leaf l) {
+		GraphicsNode gn = getGraphicsNode(getContents(in, l));
+		return gn.getBounds();
 	}
+
+	/**
+	 * Rather than returning the top-level graphics node, we are going
+	 * to return the Flow node within it, as otherwise we'll get the text container too.
+	 */
+	@Override
+	protected GraphicsNode initGraphicsNode(Element theElement) {
+		return super.initGraphicsNode(theElement);
+	}
+	
+	
 	
 }

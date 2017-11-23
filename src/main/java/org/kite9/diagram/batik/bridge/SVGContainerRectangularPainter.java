@@ -27,9 +27,4 @@ public class SVGContainerRectangularPainter extends AbstractDirectSVGPainter<Con
 		throw new Kite9ProcessingException("No fixed bounds for Container, it depends on contents: " + in);
 	}
 
-	@Override
-	public Element output(Document d, StyledKite9SVGElement theElement, Container r) {
-		return outputDirect(d, theElement, r);
-	}
-
 }
