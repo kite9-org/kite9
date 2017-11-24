@@ -4,18 +4,17 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
-import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
-import java.text.AttributedCharacterIterator.Attribute;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FlowGlyphLayout;
 import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.bridge.FlowTextPainter;
 import org.apache.batik.bridge.TextLayoutFactory;
+import org.apache.batik.bridge.TextNode.Anchor;
 import org.apache.batik.bridge.TextSpanLayout;
 import org.apache.batik.bridge.svg12.SVGFlowRootElementBridge;
 import org.apache.batik.gvt.CompositeGraphicsNode;
@@ -50,17 +49,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 						Paint basePaint = g2d.getPaint();
 						Font baseFont = g2d.getFont();
 						TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
-						
-						// width-check
-						Map<Attribute, Object> atts = aci.getAttributes();
-						if (atts.containsKey(TextAttribute.WIDTH)) {
-							Object value = atts.get(TextAttribute.WIDTH);
-							//if (null == value) {
-								atts.remove(TextAttribute.WIDTH);
-							//}
-						}
-						
-						
+						float lineHeight = (float) aci.getAttribute(GVTAttributedCharacterIterator.TextAttribute.LINE_HEIGHT);
 						@SuppressWarnings("unchecked")
 						List<GVTFontFamily> gvtFontFamilies = (List<GVTFontFamily>) aci.getAttribute(GVT_FONT_FAMILIES);
 
@@ -73,7 +62,10 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 					        Font toUse = eSVG.handleGVTFontFamilies(gvtFontFamilies);
 				        	g2d.setFont(toUse);
 			                g2d.setPaint(fillPaint);
-							g2d.drawString(aci, (float) getOffset().getX(), (float) getOffset().getY());
+							float x = (float) getOffset().getX();
+							float y = (float) getOffset().getY();
+							g2d.drawString(aci, x, y);
+							eSVG.setTextBounds(eSVG.getTextBounds().createUnion(new Rectangle2D.Float(x, y, 0f, lineHeight)));
 			            }
 
 					        

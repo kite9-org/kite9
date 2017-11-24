@@ -34,8 +34,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		super(ctx);
 	}
 	
-	float totalHeight = 0;
-	String theText;
+	private Rectangle2D bounds;
+	private String theText;
 
 	/**
 	 * Turn the text that's in the input element into a bunch of paragraphs in a SVG 1.2 flow.
@@ -63,8 +63,11 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines);
+		addStyleAndClass(theElement, r, flowRoot);
+//		theElement.appendChild(flowRoot);
 		GraphicsNode gn = getGraphicsNode(flowRoot);
 		Element group = graphicsNodeToXML(d, gn);
+//		theElement.removeChild(flowRoot);
 		theElement.appendChild(group);
 
 		return theElement;
@@ -77,7 +80,7 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
 		node.paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
-		
+		bounds = g2d.getTextBounds();
 		return groupElem;
 	}
 
@@ -91,8 +94,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		flowRoot.appendChild(flowRegion);
 		flowRoot.appendChild(flowDiv);
 		flowRegion.appendChild(rect);
-		rect.setAttribute("width", "100");
-		rect.setAttribute("height", "100");
+		rect.setAttribute("width", "10000");
+		rect.setAttribute("height", "10000");
 		
 		for (String line : lines) {
 			SVGOMFlowParaElement flowPara = (SVGOMFlowParaElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_PARA_TAG);
@@ -105,7 +108,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	@Override
 	public Rectangle2D bounds(StyledKite9SVGElement in, Leaf l) {
 		GraphicsNode gn = getGraphicsNode(getContents(in, l));
-		return gn.getBounds();
+		Rectangle2D graphicsBounds = gn.getBounds();
+		return graphicsBounds.createUnion(bounds);
 	}
 
 	/**

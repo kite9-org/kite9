@@ -1,10 +1,12 @@
 package org.kite9.diagram.batik.format;
 
 import java.awt.Font;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
+import org.kite9.diagram.batik.bridge.LocalRenderingFlowRootElementBridge;
 
 /**
  * Marker interface for a `Graphics2D` implementation, to say we are outputting to an SVG file.
@@ -34,7 +36,17 @@ public interface ExtendedSVG {
 	 */
 	public void addFontFace(GVTFontFace face);
 	
-	public void recordSize();
+	/**
+	 * Used by {@link LocalRenderingFlowRootElementBridge} to set the size of the 
+	 * bounds used in drawing the text.
+	 */
+	public Rectangle2D getTextBounds();
 
+	/**
+	 * Used by {@link LocalRenderingFlowRootElementBridge} to set the size of the 
+	 * bounds used in drawing the text.
+	 */
+	public void setTextBounds(Rectangle2D r);
+	
 }
 

@@ -1,16 +1,9 @@
 package org.kite9.diagram.batik.bridge;
 
-import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
-import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
-
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
-import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
-import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**

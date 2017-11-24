@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.format;
 
 import java.awt.Font;
+import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Field;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	private Kite9Log log = new Kite9Log(this);
 	private List<GVTFontFace> existingFontFaces = new ArrayList<>();
 	private StringBuilder styleInfo = new StringBuilder(1000);
+	private Rectangle2D textBounds = new Rectangle2D.Float(0, 0, 0, 0);
 
 	public ExtendedSVGGraphics2D(ExtendedSVGGeneratorContext ctx, Element currentSubgroup) {
 		super(ctx, false);
@@ -229,12 +231,14 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		}
 	}
 
-	
+	@Override
+	public Rectangle2D getTextBounds() {
+		return textBounds;
+	}
 
 	@Override
-	public void recordSize() {
-		// TODO Auto-generated method stub
+	public void setTextBounds(Rectangle2D r) {
+		this.textBounds = r;
 	}
-	
 
 }
