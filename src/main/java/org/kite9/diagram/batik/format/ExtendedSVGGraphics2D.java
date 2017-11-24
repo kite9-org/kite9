@@ -4,23 +4,15 @@ import java.awt.Font;
 import java.lang.reflect.Field;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.batik.bridge.FontFace;
-import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
-import org.apache.batik.svggen.DefaultErrorHandler;
-import org.apache.batik.svggen.DefaultStyleHandler;
-import org.apache.batik.svggen.ExtensionHandler;
-import org.apache.batik.svggen.ImageHandler;
-import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.svggen.SVGIDGenerator;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.diagram.batik.bridge.images.ResourceReferencerImageHandler;
-import org.kite9.diagram.batik.templater.Templater;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -29,7 +21,7 @@ import org.w3c.dom.Element;
 
 
 /**
- * Since we are constructing an SVG Document using a Graphics2D object, this
+ * When we are constructing an SVG using a Graphics2D object, this
  * class allows us to add extra details in the XML that otherwise wouldn't be
  * part of the SVG.
  * 
@@ -47,11 +39,18 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		super(ctx, false);
 		this.currentSubgroup = currentSubgroup;
 		getDOMTreeManager().setTopLevelGroup(currentSubgroup);
+		clearUnsupportedAttributes();
 	}
 	
 	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr, ElementNodeMapper enm) {
 		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc, rr, enm) ,false);
 		this.currentSubgroup = getTopLevelGroup();
+		clearUnsupportedAttributes();
+	}
+	
+	private void clearUnsupportedAttributes() {
+		// since we are converting from svg to svg, there should be no unsupported attributes
+		setUnsupportedAttributes(Collections.emptySet());
 	}
 	
 	private ResourceReferencer getResourceReferencer() {
@@ -130,7 +129,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		for (GVTFontFamily ff : families) {
 			
 			if (ff.getFontFace() != null) {
-				addFontFace(ff.getFontFace());
+				//addFontFace(ff.getFontFace());
 				return new PlaceholderFont(null, ff.getFamilyName());
 			}
 			
@@ -230,32 +229,12 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		}
 	}
 
-	@Override
-	public void passthroughXML(GraphicsNode gn) {
-		ElementNodeMapper em = getElementNodeMapper();
-		Element e = em.getElement(gn);
-		Templater t = em.getTemplater();
-		Element copy = (Element) t.transcribeNode(generatorCtx.getDOMFactory(), e, true);
-		getDOMGroupManager().addElement(copy);
-		
-	}
+	
 
 	@Override
 	public void recordSize() {
 		// TODO Auto-generated method stub
-		
 	}
-
-	@Override
-	public void setRenderingHints(Map<?, ?> hints) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addRenderingHints(Map<?, ?> hints) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

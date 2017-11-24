@@ -75,7 +75,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d, null, null);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
-		//g2d.transform(node.getInverseTransform());
 		node.paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
 		
@@ -115,8 +114,11 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	 */
 	@Override
 	protected GraphicsNode initGraphicsNode(Element theElement) {
-		return super.initGraphicsNode(theElement);
+		return LocalRenderingFlowRootElementBridge.getFlowNode(
+				super.initGraphicsNode(theElement));
 	}
+
+
 	
 	
 	

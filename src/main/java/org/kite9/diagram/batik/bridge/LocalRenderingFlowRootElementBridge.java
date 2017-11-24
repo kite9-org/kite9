@@ -4,23 +4,28 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FlowGlyphLayout;
+import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.bridge.FlowTextPainter;
 import org.apache.batik.bridge.TextLayoutFactory;
-import org.apache.batik.bridge.TextNode;
 import org.apache.batik.bridge.TextSpanLayout;
-import org.apache.batik.bridge.svg12.SVG12TextElementBridge;
+import org.apache.batik.bridge.svg12.SVGFlowRootElementBridge;
+import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
 import org.kite9.diagram.batik.format.ExtendedSVG;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 
 
@@ -30,7 +35,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class TextBridge extends SVG12TextElementBridge {
+public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridge {
 
 	static final TextLayoutFactory CUSTOM_TEXT_LAYOUT = new TextLayoutFactory() {
 		
@@ -45,6 +50,16 @@ public class TextBridge extends SVG12TextElementBridge {
 						Paint basePaint = g2d.getPaint();
 						Font baseFont = g2d.getFont();
 						TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute (GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
+						
+						// width-check
+						Map<Attribute, Object> atts = aci.getAttributes();
+						if (atts.containsKey(TextAttribute.WIDTH)) {
+							Object value = atts.get(TextAttribute.WIDTH);
+							//if (null == value) {
+								atts.remove(TextAttribute.WIDTH);
+							//}
+						}
+						
 						
 						@SuppressWarnings("unchecked")
 						List<GVTFontFamily> gvtFontFamilies = (List<GVTFontFamily>) aci.getAttribute(GVT_FONT_FAMILIES);
@@ -75,7 +90,9 @@ public class TextBridge extends SVG12TextElementBridge {
 	@Override
 	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
 		super.buildGraphicsNode(ctx, e, node);
-		((TextNode)node).setTextPainter(new FlowTextPainter() {
+		FlowTextNode fn = getFlowNode(node);
+		
+		fn.setTextPainter(new FlowTextPainter() {
 			
 			
 			@Override
@@ -85,13 +102,17 @@ public class TextBridge extends SVG12TextElementBridge {
 			
 		});
 	}
-
-	@Override
-	protected GraphicsNode instantiateGraphicsNode() {
-		// TODO Auto-generated method stub
-		return super.instantiateGraphicsNode();
+	
+	public static FlowTextNode getFlowNode(GraphicsNode n) {
+		CompositeGraphicsNode cgn = (CompositeGraphicsNode) n;
+		
+		for (GraphicsNode gn : (List<GraphicsNode>) cgn.getChildren()) {
+			if (gn instanceof FlowTextNode) {
+				return (FlowTextNode) gn;
+			}
+		}
+		
+		throw new Kite9ProcessingException("No Flow node!");
 	}
-	
-	
 	
 }

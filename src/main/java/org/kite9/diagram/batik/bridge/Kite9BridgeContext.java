@@ -66,7 +66,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
 		putBridge(new Kite9DiagramBridge());
-		putBridge(new TextBridge());
+		putBridge(new LocalRenderingFlowRootElementBridge());
 	}
 	
 	/**
