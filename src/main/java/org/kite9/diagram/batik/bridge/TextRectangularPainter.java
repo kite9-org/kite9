@@ -111,8 +111,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		flowRoot.appendChild(flowDiv);
 //		flowRegion.appendChild(path);
 		flowRegion.appendChild(rect);
-		rect.setAttribute("width", "1000");
-		rect.setAttribute("height", "1000");
+		rect.setAttribute("width", "100");
+		rect.setAttribute("height", "100");
 //		rect.setAttribute("x", "30");
 //		rect.setAttribute("y", "30");
 //		path.setAttribute("d", "M100,50L50,300L250,300L200,50z");

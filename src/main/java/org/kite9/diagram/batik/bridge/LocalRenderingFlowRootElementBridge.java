@@ -57,7 +57,6 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 						int charEnd = 0;
 						double linePosition = 0;
 						double startPosition = 0;
-						Rectangle2D bounds = null;
 						for (int i = 0; i < gv.getNumGlyphs(); i++) {
 				            if (gv.isGlyphVisible(i)) {
 				            	int charCount = gv.getCharacterCount(i, i);
@@ -75,7 +74,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 				            	}
 
 				            	charEnd += charCount;
-				            	bounds = increaseBounds(gv.getLogicalBounds(), bounds);
+				            	eSVG.setTextBounds(gv.getLogicalBounds().createUnion(eSVG.getTextBounds()));
 				            }
 				        }
 						
@@ -86,17 +85,8 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 						
 						g2d.setPaint(basePaint);
 						g2d.setFont(baseFont);
-						eSVG.setTextBounds(bounds);
 					} else {
 						super.draw(g2d);
-					}
-				}
-
-				private Rectangle2D increaseBounds(Rectangle2D logicalBounds, Rectangle2D bounds) {
-					if (bounds != null) {
-						return bounds.createUnion(logicalBounds);
-					} else {
-						return logicalBounds;
 					}
 				}
 
