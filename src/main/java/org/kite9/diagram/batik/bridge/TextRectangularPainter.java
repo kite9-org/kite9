@@ -10,8 +10,11 @@ import org.apache.batik.anim.dom.SVGOMFlowDivElement;
 import org.apache.batik.anim.dom.SVGOMFlowParaElement;
 import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
+import org.apache.batik.anim.dom.SVGOMPathElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
+import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
@@ -63,17 +66,30 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines);
+		addFontSizeAndFamily(theElement, r, flowRoot);
 		addStyleAndClass(theElement, r, flowRoot);
-//		theElement.appendChild(flowRoot);
 		GraphicsNode gn = getGraphicsNode(flowRoot);
 		Element group = graphicsNodeToXML(d, gn);
-//		theElement.removeChild(flowRoot);
+
 		theElement.appendChild(group);
 
 		return theElement;
 	}
 	
 	
+	/**
+	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
+	 * we need to set correctly.
+
+	 */
+	private void addFontSizeAndFamily(StyledKite9SVGElement theElement, Leaf r, SVGOMFlowRootElement flowRoot) {
+		Value size = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
+		Value family = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
+		flowRoot.setAttribute("font-size", ""+size.getFloatValue());
+		flowRoot.setAttribute("font-family", ""+family.getCssText());
+	}
+
+
 	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d, null, null);
@@ -90,12 +106,16 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		SVGOMFlowDivElement flowDiv = (SVGOMFlowDivElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_DIV_TAG);
 		SVGOMFlowRegionElement flowRegion = (SVGOMFlowRegionElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
 		SVGOMRectElement rect = (SVGOMRectElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_RECT_TAG);
-		
+		//SVGOMPathElement path = (SVGOMPathElement) d.createElementNS(SVG_NAMESPACE_URI, SVG12Constants.SVG_PATH_TAG);
 		flowRoot.appendChild(flowRegion);
 		flowRoot.appendChild(flowDiv);
+//		flowRegion.appendChild(path);
 		flowRegion.appendChild(rect);
-		rect.setAttribute("width", "10000");
-		rect.setAttribute("height", "10000");
+		rect.setAttribute("width", "1000");
+		rect.setAttribute("height", "1000");
+//		rect.setAttribute("x", "30");
+//		rect.setAttribute("y", "30");
+//		path.setAttribute("d", "M100,50L50,300L250,300L200,50z");
 		
 		for (String line : lines) {
 			SVGOMFlowParaElement flowPara = (SVGOMFlowParaElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_PARA_TAG);
@@ -108,8 +128,7 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	@Override
 	public Rectangle2D bounds(StyledKite9SVGElement in, Leaf l) {
 		GraphicsNode gn = getGraphicsNode(getContents(in, l));
-		Rectangle2D graphicsBounds = gn.getBounds();
-		return graphicsBounds.createUnion(bounds);
+		return bounds;
 	}
 
 	/**
@@ -118,8 +137,12 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	 */
 	@Override
 	protected GraphicsNode initGraphicsNode(Element theElement) {
-		return LocalRenderingFlowRootElementBridge.getFlowNode(
-				super.initGraphicsNode(theElement));
+		return
+		LocalRenderingFlowRootElementBridge.getFlowNode(
+				super.initGraphicsNode(theElement)
+				
+				)
+;
 	}
 
 

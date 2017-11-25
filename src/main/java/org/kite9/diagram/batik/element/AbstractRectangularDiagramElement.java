@@ -142,8 +142,10 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 			Dimension2D parentPosition = rri.getPosition();
 			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());
 		}
-
-		out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+		
+		if ((position.x() != 0) || (position.y() != 0)) {
+			out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+		}
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_1_1_Glyph() throws Exception {
-		Kite9XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
+		Kite9XMLElement one = new Glyph("Stereo\nMike", "Rob's Glyph df  sfsdfs  weferw asfsdf sdfsd", null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one));
 		renderDiagram(d);
 	}

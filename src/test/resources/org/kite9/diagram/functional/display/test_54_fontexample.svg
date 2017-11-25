@@ -19,6 +19,8 @@
   </style>
   
   <text x="10" y="350" style="font-family: Unknownski; font-size: 33px;" >Unknown Font</text>
+  
+  <rect x="10" y="350" width="300" height="33" stroke="grey" stroke-width="1px" fill="none"/>
 
   <text x="10" y="50" class="sansseriftext">Some Verdana Text</text>
   
