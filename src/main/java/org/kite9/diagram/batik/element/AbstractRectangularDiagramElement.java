@@ -137,7 +137,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		// work out translation
 		RectangleRenderingInformation rri = getRenderingInformation();
 		Dimension2D position = rri.getPosition();
-		if (getParent() != null) {
+		if (getParent() instanceof Container) {
 			rri = ((Container) getParent()).getRenderingInformation();
 			Dimension2D parentPosition = rri.getPosition();
 			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());

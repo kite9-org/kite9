@@ -88,7 +88,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case LINK:
 			return new ConnectionImpl(el, parent, context, new ConnectionPainter(context));
 		case LINK_END:
-			return (AbstractDOMDiagramElement) ((Kite9XMLElement) el.getParentNode()).getDiagramElement();
+			return null;
 		case TERMINATOR:
 			return new TerminatorImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 		case NONE:

@@ -4,6 +4,7 @@ import java.awt.geom.GeneralPath;
 
 import org.apache.batik.svggen.SVGShape;
 import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
 import org.kite9.diagram.model.Connection;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Document;
@@ -22,6 +23,7 @@ public class ConnectionPainter extends AbstractGraphicsNodePainter<Connection> {
 		GeneralPath gp = routePainter.drawRouting(r.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
 		Element path = shapeConverter.toSVG(gp);
 		out.appendChild(path);
+		new Kite9ExpandingCopier("", out).processContents(in);
 	} 
 
 }
