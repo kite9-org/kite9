@@ -13,14 +13,14 @@
       
   <g class="context" id="Context" transform="translate(15.0,15.0)"
       >
-    <g id="cback" style="kite9-usage: decal; kite9-type: svg;  " class="back" transform="scale(0.9903846153846154,0.9775280898876404)translate(1.0,1.0)"
+    <g id="cback" style="kite9-usage: decal; kite9-type: svg;  " class="back" transform="scale(0.9903846153846154,0.979381443298969)translate(1.0,1.0)"
         >
-      <rect rx="12" ry="12" x="0" width="206.0" height="87.0" y="0"
+      <rect rx="12" ry="12" x="0" width="206.0" height="95.0" y="0"
           />
     </g
           >
     
-    <g class="glyph" id="auto:0-rob's glyph" transform="translate(12.0,32.0)"
+    <g class="glyph" id="auto:0-rob's glyph" transform="translate(12.0,40.0)"
           >
     <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9902912621359223,0.9772727272727273)translate(0.5,0.5)"
             >
@@ -72,9 +72,9 @@
                   >
     <g class="glyph" id="auto:3-two" transform="translate(124.0,12.0)"
                   >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9859154929577465,0.984375)translate(0.5,0.5)"
+    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9859154929577465,0.9861111111111112)translate(0.5,0.5)"
                     >
-      <rect x="0" y="0" width="70.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="63.0"
+      <rect x="0" y="0" width="70.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="71.0"
                       />
     </g
                       >
@@ -120,7 +120,7 @@
         <g class="text-line" id="auto:1"
                             >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
+    <g id="" style="kite9-type: text; " class="text-label" transform="translate(0.0,2.0)"
                               ><g
                                 ><g font-family="'opensans-regular-webfont'" font-size="9px"
                                   ><text x="0" xml:space="preserve" y="7.9625" stroke="none"
@@ -137,10 +137,10 @@
                               >
   </g
                               >
-        <g class="text-line" id="auto:2" transform="translate(0.0,10.0)"
+        <g class="text-line" id="auto:2" transform="translate(0.0,14.0)"
                               >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
+    <g id="" style="kite9-type: text; " class="text-label" transform="translate(0.0,2.0)"
                                 ><g
                                   ><g font-family="'opensans-regular-webfont'" font-size="9px"
                                     ><text x="0" xml:space="preserve" y="7.9625" stroke="none"

@@ -33,7 +33,7 @@ public class Symbol extends AbstractStyleableXMLElement {
 
 	public Symbol(String text, char preferredChar, SymbolShape shape, ADLDocument doc) {
 		super(null, "symbol", doc);
-		setTextContent(text);
+		setTextContent(""+preferredChar);
 		setChar(preferredChar);
 		setShape(shape);
 		setClass(shape.toString().toLowerCase());

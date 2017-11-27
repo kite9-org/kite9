@@ -24,7 +24,7 @@ public class Test56Templates extends AbstractDisplayFunctionalTest {
 	private String glyphOpen() {
 		URL u = getClass().getResource("template.svg");
 		String toUse = u.toString() + "#glyph";
-		return "<glyph id='g1' style='type: connected; sizing: minimize; padding: 8px 10px 8px 10px; template: url("+toUse+");  '>"; 
+		return "<glyph id='g1' style='kite9-type: container; kiite9-sizing: minimize; padding: 8px 10px 8px 10px; template: url("+toUse+");  '>"; 
 	}
 	
 	
@@ -36,7 +36,7 @@ public class Test56Templates extends AbstractDisplayFunctionalTest {
 	private String label() {
 		URL u = getClass().getResource("template.svg");
 		String toUse = u.toString() + "#text-label";
-		return "<label id='label' text='This is my Glyph' style='type: connected; sizing: fixed; template: url("+toUse+"); ' />";
+		return "<label id='label' text='This is my Glyph' style='kite9-type: text; kite9-usage: label; fixed; template: url("+toUse+"); ' />";
 	}
 	
 	private String svgOpen() {
