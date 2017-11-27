@@ -40,10 +40,11 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	public void test_1_4_GlyphSymbolsAndText() throws Exception {
 		Kite9XMLElement one = new Glyph("Stereoy", "One", 
 			listOf(new TextLine("Line 1\nThis has more than one row"), new TextLine("Second Line")), 
-			listOf(new Symbol("Sym1", 'a', SymbolShape.SQUARE)
-//					,
-//					new Symbol("Sym2", 'f', SymbolShape.DIAMOND),
-//				   new Symbol("Sym3", 'k', SymbolShape.HEXAGON)
+			listOf(new Symbol("Sym1", 'a', SymbolShape.SQUARE),
+					new Symbol("Sym1", 'a', SymbolShape.CIRCLE)
+					,
+					new Symbol("Sym2", 'f', SymbolShape.DIAMOND),
+				   new Symbol("Sym3", 'k', SymbolShape.HEXAGON)
 	));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one));
 		renderDiagram(d);

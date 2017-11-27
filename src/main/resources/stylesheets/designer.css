@@ -229,11 +229,11 @@ toDecoration {
 }
 
 .symbol {
-	font-weight: bold;
 	font-size: 10px;
 	font-family: "opensans-bold-webfont";
 	text-align:  middle;
-	stroke: white;
+	fill: white;
+	stroke: none;
 }
 
 .symbol.label {
@@ -318,7 +318,7 @@ key > text-lines {
 
 .glyph  .label  .text-label {
 	font-size: 15px;
-	fill: red;
+	fill: black;
 	font-family: "opensans-regular-webfont";
 	stroke: none;
 }
@@ -375,7 +375,7 @@ key > text-lines {
 	font-size: 12px;
 }
 
-.arrow .label text {
+.arrow .label  .text-label {
 	fill: white;
 	stroke: none;
 	font-size: 12px;
