@@ -1,7 +1,13 @@
 package org.kite9.diagram.batik.element;
 
+import java.awt.geom.GeneralPath;
+import java.util.Map;
+
+import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Painter;
+import org.kite9.diagram.batik.bridge.RoutePainter;
+import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -219,12 +225,20 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	protected void preProcess(StyledKite9SVGElement theElement) {
-	}
-
-	@Override
 	protected void postProcess(Element out) {
 	}
 
+	@Override
+	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
+		Map<String, String> out = super.getReplacementMap(theElement);
+		RoutePainter routePainter = new RoutePainter(0, 0);
+		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(theElement.getOwnerDocument(), null, null);
+		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
+		String path = SVGPath.toSVGPathData(gp, ctx);
+		out.put("path", path);
+		return out;
+	}
+
+	
 
 }

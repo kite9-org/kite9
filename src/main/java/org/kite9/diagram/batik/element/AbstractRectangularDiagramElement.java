@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
@@ -148,16 +149,24 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		}
 	}
 	
+	
+
 	@Override
-	protected void preProcess(StyledKite9SVGElement out) {
-		preProcessSize(out); 
+	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
+		Map<String, String> out = super.getReplacementMap(theElement);
+		Dimension2D size = getRectangularRenderedSize();
+		double width = size.getWidth();
+		double height = size.getHeight();
+		out.put("x0", "0");
+		out.put("y0", "0");
+		out.put("x1", ""+width);
+		out.put("y1", ""+height);	
+		return out;
 	}
 
-	protected void preProcessSize(StyledKite9SVGElement out) {
+	protected Dimension2D getRectangularRenderedSize() {
 		RectangleRenderingInformation rri = getRenderingInformation();
-		double width = rri.getSize().getWidth();
-		double height = rri.getSize().getHeight();
-		processSizesUsingTemplater(out, width, height);
+		Dimension2D size = rri.getSize();
+		return size;
 	}
-	
 }

@@ -97,6 +97,11 @@
     <svg:text x="6" y="9" style="fill: white; font-size: 8px; text-anchor: middle;">    <contents /></svg:text>
   </template>
   
+  <template id="link">
+    <contents />
+    <svg:path d="{path}" />
+  </template>
+  
   <template id="diagram">
     <svg:g filter="url(#dropshadow)">
       <contents />

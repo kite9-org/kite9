@@ -7,6 +7,7 @@ import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
@@ -28,13 +29,11 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 	 * Decal size is based on it's parent element, since it doesn't have a computed size of it's own.
 	 */
 	@Override
-	protected void preProcessSize(StyledKite9SVGElement out) {
+	protected Dimension2D getRectangularRenderedSize() {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
-		double width = parentRRI.getSize().getWidth();
-		double height = parentRRI.getSize().getHeight();
-		processSizesUsingTemplater(out, width, height);
+		return parentRRI.getSize();
 	}
-	
+
 	/**
 	 * Ensures the decal is the same size as it's parent (for scaled decals)
 	 */

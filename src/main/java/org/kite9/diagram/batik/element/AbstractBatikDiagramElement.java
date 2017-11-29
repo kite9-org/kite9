@@ -1,5 +1,8 @@
 package org.kite9.diagram.batik.element;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -62,37 +65,35 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	/**
 	 * Perform pre-processing, such as value replacements.
 	 */
-	protected abstract void preProcess(StyledKite9SVGElement theElement);
+	protected void preProcess(StyledKite9SVGElement theElement) {
+		preProcessPlaceholders(theElement, getReplacementMap(theElement));
+	}
+
+	
+	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
+		return new HashMap<>();
+	}
 
 	/**
 	 * Performs any necessary post-processing, such as translation.
 	 */
 	protected abstract void postProcess(Element out);
-
+	
 	/**
 	 * This is likely to be temporary, and can only be used in containers and decals since 
 	 * leaf elements need to know what their XML looks like in order to size themselves.
 	 * Use this in preProcess.
 	 */
-	protected void processSizesUsingTemplater(Element child, double width, double height) {
-		double [] x = new double[] {0, width};
-		double [] y = new double[] {0, height};
-		
+	protected void preProcessPlaceholders(Element child, Map<String, String> replacements) {
 		ValueReplacer valueReplacer = new ValueReplacer() {
 			
 			@Override
 			public String getReplacementValue(String in) {
-				try {
-					if (in.startsWith("x") || in.startsWith("y")) {
-						int index = Integer.parseInt(in.substring(1));
-						double v = ('x' == in.charAt(0)) ? x[index] : y[index];
-						return ""+v;
-					}
-				} catch (NumberFormatException e) {
-					// just move on...
-				} 
-				
-				return in;
+				if (replacements.containsKey(in)) {
+					return replacements.get(in);
+				} else {
+					return in;
+				}
 			}
 		};
 		
