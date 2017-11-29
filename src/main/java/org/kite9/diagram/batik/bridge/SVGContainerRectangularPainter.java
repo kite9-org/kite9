@@ -17,7 +17,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class SVGContainerRectangularPainter extends AbstractDirectSVGPainter<Container> implements RectangularPainter<Container> {
+public class SVGContainerRectangularPainter extends DirectSVGPainter<Container> implements RectangularPainter<Container> {
 
 	/**
 	 * Bounds for rectangles is special - it should be the minimum size possible.

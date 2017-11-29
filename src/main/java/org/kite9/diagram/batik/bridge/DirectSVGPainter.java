@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
  * Base class for painter implementations where we are simply copying some XML from the 
  * source to the destination.
  */
-public abstract class AbstractDirectSVGPainter<X extends DiagramElement> extends AbstractPainter<X> implements Painter<X> {
+public class DirectSVGPainter<X extends DiagramElement> extends AbstractPainter<X> implements Painter<X> {
 
 	/**
 	 * The basic output approach is to turn any DiagramElement into a <g> tag, with the same ID set

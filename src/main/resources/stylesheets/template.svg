@@ -44,9 +44,9 @@
 
   <template id='connection-label'>
     <back style='kite9-usage: decal; kite9-type: svg;  kite9-sizing: adaptive; '>
-      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #cccccc66; ' />
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' style='fill: #777777; ' />
     </back>
-    <front style="kite9-type: text; ">
+    <front style="kite9-type: text; fill: white; ">
       <contents />
     </front>
   </template>

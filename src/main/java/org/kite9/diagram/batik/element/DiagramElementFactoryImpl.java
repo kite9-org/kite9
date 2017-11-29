@@ -1,10 +1,11 @@
 package org.kite9.diagram.batik.element;
 
-import org.kite9.diagram.batik.bridge.NonRectangularPainter;
+import org.kite9.diagram.batik.bridge.DirectSVGPainter;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.SVGContainerRectangularPainter;
 import org.kite9.diagram.batik.bridge.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.bridge.TextRectangularPainter;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementType;
@@ -86,7 +87,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new NonRectangularPainter());
+			return new ConnectionImpl(el, parent, context, new DirectSVGPainter<Connection>());
 		case LINK_END:
 			return null;
 		case TERMINATOR:

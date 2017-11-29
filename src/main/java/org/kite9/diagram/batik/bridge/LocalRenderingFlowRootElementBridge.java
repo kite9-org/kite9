@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
 
@@ -103,11 +102,9 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 					
 					if (fillPaint != null) {
 					    Font toUse = eSVG.handleGVTFontFamilies(gvtFontFamilies);
-//					    float fontSize = toUse.getSize2D();
 						g2d.setFont(toUse);
 					    g2d.setPaint(fillPaint);
 						g2d.drawString(aci, (float) x, (float) y);
-//						eSVG.setTextBounds(eSVG.getTextBounds().createUnion(new Rectangle2D.Float(x, y-fontSize, 0f, lineHeight)));
 					}
 				}
 			};

@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
  *
  * @param <X>
  */
-public abstract class AbstractGraphicsNodePainter<X extends DiagramElement> extends AbstractDirectSVGPainter<X> {
+public abstract class AbstractGraphicsNodePainter<X extends DiagramElement> extends DirectSVGPainter<X> {
 
 	private Kite9BridgeContext ctx;
 	
