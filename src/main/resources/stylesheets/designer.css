@@ -195,7 +195,7 @@ arrow {
 arrow > label {
 	kite9-type: container;
 	kite9-sizing: minimize;
-	kite9-template: url(template.svg#generic-text);
+	kite9-template: url(template.svg#arrow-label-text);
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
 }
@@ -272,13 +272,6 @@ key > text-lines {
 
 /* Classes And Styles */
 
-.arrow > .label > .contents .text {
-	font-size: 12px;
-	stroke: white;
-	fill: white;
-	font-family: "opensans-regular-webfont";
-}
-
 .copyright {
 	font-weight: normal;
 	font-size: 12px;
@@ -348,12 +341,12 @@ key > text-lines {
 	kite9-padding: 2px 2px 2px 2px; 
 }
 
-.glyph .text-lines .text-label {
+.generic-text {
 	stroke: none;
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	text-align: start;	
-	font-size: 9px;
+	font-size: 10px;
 }
 
 .red {
@@ -392,7 +385,7 @@ key > text-lines {
 	font-size: 12px;
 }
 
-.arrow .label  .text-label {
+.arrow-label-text {
 	fill: white;
 	stroke: none;
 	font-size: 12px;
@@ -404,5 +397,12 @@ key > text-lines {
 .boldText,
 .bodyText {
 	font-size: 13px;
+}
+
+.symbol-text {
+	fill: white; 
+	font-family: opensans-regular-webfont; 
+	font-size: 8px; 
+	text-anchor: middle;
 }
 
