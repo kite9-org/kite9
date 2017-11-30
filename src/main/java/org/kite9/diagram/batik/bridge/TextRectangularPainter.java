@@ -67,9 +67,10 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
 		addFontSizeAndFamily(theElement, r, flowRoot);
-		addStyleAndClass(theElement, r, flowRoot);
+//		addStyleAndClass(theElement, r, flowRoot);
 		GraphicsNode gn = getGraphicsNode(flowRoot);
 		Element group = graphicsNodeToXML(d, gn);
+		removeFontSizeAndFamily(group);
 
 		theElement.appendChild(group);
 
@@ -78,9 +79,18 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	
 	
 	/**
-	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
-	 * we need to set correctly.
+	 * Remove the temporary attributes
+	 */
+	private void removeFontSizeAndFamily(Element group) {
+		group.removeAttribute("font-family");
+		group.removeAttribute("font-size");
+		
+	}
 
+
+	/**
+	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
+	 * we need to set correctly, temporarily, for the layout
 	 */
 	private void addFontSizeAndFamily(StyledKite9SVGElement theElement, Leaf r, SVGOMFlowRootElement flowRoot) {
 		Value size = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
@@ -97,7 +107,7 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		node.paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
 		bounds = g2d.getTextBounds();
-		return groupElem;
+		return (Element) groupElem.getFirstChild();
 	}
 
 

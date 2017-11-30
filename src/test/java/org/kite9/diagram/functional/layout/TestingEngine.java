@@ -583,10 +583,10 @@ public class TestingEngine extends TestingHelp {
 				if (((Rectangular) inner).getContainer() == outer) {
 					// check margins / padding
 
-					double rightDist = disp.getPadding(outer, Direction.LEFT);
-					double leftDist = disp.getPadding(outer, Direction.RIGHT);
-					double upDist = disp.getPadding(outer, Direction.DOWN);
-					double downDist = disp.getPadding(outer, Direction.UP);
+					double rightDist = disp.getPadding(outer, Direction.RIGHT);
+					double leftDist = disp.getPadding(outer, Direction.LEFT);
+					double upDist = disp.getPadding(outer, Direction.UP);
+					double downDist = disp.getPadding(outer, Direction.DOWN);
 					
 					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
 						throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);

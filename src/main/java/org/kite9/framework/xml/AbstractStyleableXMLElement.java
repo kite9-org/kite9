@@ -283,10 +283,10 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
 		this.sm = sm;
 	}
-
-	public String getCSSClass() {
-		return getAttribute("class")+" "+getTagName();
-	}
+//
+//	public String getCSSClass() {
+//		return getAttribute("class");
+//	}
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;

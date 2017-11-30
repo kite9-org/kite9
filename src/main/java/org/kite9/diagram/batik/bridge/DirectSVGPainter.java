@@ -21,10 +21,11 @@ public class DirectSVGPainter<X extends DiagramElement> extends AbstractPainter<
 		StyledKite9SVGElement toUse = getContents(theElement, r);
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
 		processOutput(toUse, out, d, r);
-		addStyleAndClass(toUse, r, out);
+		addAttributes(toUse, r, out);
 		return out;
 	}
 	
+
 	protected void processOutput(StyledKite9SVGElement in, Element out, @SuppressWarnings("unused") Document d, @SuppressWarnings("unused") X z) {
 		new Kite9ExpandingCopier("", out).processContents(in);
 	}

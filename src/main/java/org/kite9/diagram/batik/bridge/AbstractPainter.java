@@ -3,7 +3,9 @@ package org.kite9.diagram.batik.bridge;
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  * Base class for painter implementations
@@ -29,6 +31,23 @@ public abstract class AbstractPainter<X extends DiagramElement> implements Paint
 		if (style.length() > 0) {
 			out.setAttribute("style", style);
 		}
+	}
+//	
+//	protected void addAttributes(StyledKite9SVGElement in, X r, Element out) {
+//		NamedNodeMap nnm = in.getAttributes();
+//		for (int i = 0; i < nnm.getLength(); i++) {
+//			Attr a = (Attr) nnm.item(i);
+//			out.setAttribute(a.getNodeName(), a.getNodeValue());
+//		}
+//	}
+	
+
+	protected void addAttributes(StyledKite9SVGElement toUse, X r, Element out) {
+		String id = toUse.getID();
+		if (id.length() > 0) {
+			out.setAttribute("id", id);
+		}
+		out.setAttribute("kite9-elem", toUse.getTagName());
 	}
 
 	private StyledKite9SVGElement source;

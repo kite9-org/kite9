@@ -36,13 +36,61 @@ glyph {
 	kite9-layout: grid;	
 	kite9-grid-size: 1 2;
 	kite9-template: url(template.svg#glyph);
+	kite9-padding: 6px 10px 6px 10px; 
+	kite9-margin: 10px;
 }
+
+glyph symbols {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-occupies: 1 0;
+	kite9-layout: horizontal;
+}
+
+glyph label {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#glyph-label-text);
+	kite9-occupies: 0 1 1 1;
+	kite9-vertical-align: top;
+	/*kite9-margin: 5px */
+}
+
+
+glyph stereotype {
+	kite9-type: container;
+	kite9-template: url(template.svg#glyph-stereotype-text);
+	kite9-occupies: 0 0;
+	kite9-vertical-align: bottom;
+	kite9-horizontal-align: center;
+	/*kite9-margin: 0px 4px 2px 0px; */
+}
+
+glyph text-lines {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-occupies: 0 1 2 2;
+	kite9-layout: vertical;
+}
+
 
 context {
 	kite9-template: url(template.svg#context);
-	kite9-padding: 10px;	
+	kite9-padding: 10px;
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-traversal: always;
+	kite9-padding: 12px;	
 }
 
+context > label {
+	kite9-usage: label;
+	kite9-type: container; 
+	kite9-padding-top: 35px; 
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#container-label);
+	kite9-margin: 4px;
+}
 
 toLabel, 
 fromLabel {
@@ -55,15 +103,14 @@ fromLabel {
 }
 
 
-context > label {
-	kite9-usage: label;
-	kite9-type: container; 
-	kite9-padding: 4px 4px 4px 4px; 
-	kite9-sizing: minimize;
-	kite9-template: url(template.svg#container-label);
-	kite9-margin: 4px;
+context > label > inset {
+	kite9-padding: 4px 4px 4px 4px; 	
 }
 
+/*
+ * Required so we can process old XML content
+ */
+ 
 renderingInformation,
 position,
 size,
@@ -81,14 +128,14 @@ to {
 	kite9-type: link-end;
 } 
 
-context {
-	kite9-type: container;
-	kite9-sizing: maximize;
-	kite9-traversal: always;
-	kite9-padding: 12px;
-}
-
 /* Symbols */
+
+symbols {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-layout: horizontal;
+	kite9-occupies: 1 0;
+}
 
 symbol {
 	kite9-type: svg;
@@ -111,53 +158,6 @@ symbol.square {
 	kite9-template: url(template.svg#square);
 }
 
-
-glyph {
-	kite9-padding: 6px 10px 6px 10px; 
-	kite9-margin: 10px;
-}
-
-glyph > label {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-template: url(template.svg#text-label-container);
-	kite9-occupies: 0 1 1 1;
-	kite9-vertical-align: top;
-	/*kite9-margin: 5px */
-}
-
-glyph > label > contents {
-	kite9-type: container;
-	kite9-horizontal-align: center;
-}
-
-stereotype {
-	kite9-type: container;
-	kite9-template: url(template.svg#text-label-container);
-	kite9-occupies: 0 0;
-	kite9-vertical-align: bottom;
-	/*kite9-margin: 0px 4px 2px 0px; */
-}
-
-glyph > stereotype > label {
-	kite9-type: container;
-	kite9-horizontal-align: center;
-}
-
-glyph > text-lines {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-occupies: 0 1 2 2;
-	kite9-layout: vertical;
-}
-
-symbols {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-layout: horizontal;
-	kite9-occupies: 1 0;
-}
-
 symbol-text-line {
 	kite9-type: container;
 	kite9-sizing: minimize;
@@ -174,17 +174,12 @@ text-line, text, boldText, bodyText {
 	kite9-padding-left: 0px;
 	kite9-padding-right: 0px;
 	kite9-margin: 0 0 0 0; 
-	kite9-template: url(template.svg#text-label-container);
+	kite9-template: url(template.svg#generic-text);
 	kite9-vertical-align: top;
 	kite9-horizontal-align: left;
 }
 
-glyph > symbols {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-occupies: 1 0;
-	kite9-layout: horizontal;
-}
+
 
 /* Arrow */
 arrow {
@@ -200,7 +195,7 @@ arrow {
 arrow > label {
 	kite9-type: container;
 	kite9-sizing: minimize;
-	kite9-template: url(template.svg#text-label-container);
+	kite9-template: url(template.svg#generic-text);
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
 }
@@ -223,6 +218,56 @@ toDecoration {
 .link-terminator.none {
 	kite9-margin: 0 0 0 0;
 }
+
+
+/* Key */
+
+
+key {
+	kite9-type: container;
+	kite9-usage: label;
+	kite9-layout: grid;
+	kite9-sizing: maximize;
+	kite9-grid-size: 1 3;
+	kite9-padding: 3px 6px 3px 6px; 
+	kite9-margin: 12px 12px 12px 12px;
+	kite9-template: url(template.svg#key)
+}
+
+key > boldText,
+key > bodyText {
+	kite9-padding-top: 2px;
+	kite9-padding-bottom: 2px;
+	kite9-padding-left: 0px;
+	kite9-padding-right: 0px;
+	kite9-margin: 0 0 0 0; 
+	kite9-template: url(template.svg#generic-text);
+	font-size: 13px;
+	stroke: black;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;
+}
+
+
+key > boldText {
+	kite9-occupies: 0 0;
+	kite9-type: container;
+	kite9-template: url(template.svg#generic-text);
+}
+
+key > bodyText {
+	kite9-occupies: 0 1;
+	kite9-type: container;
+}
+
+key > text-lines {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-occupies: 0 2;
+	kite9-layout: vertical;
+}
+
 
 
 /* Classes And Styles */
@@ -252,7 +297,7 @@ toDecoration {
 	color: white;
 }
 
-.context {
+.context-back {
 	fill: none;
 	stroke: black;
 	stroke-width: 2px;
@@ -261,61 +306,21 @@ toDecoration {
 .fromLabel,
 .toLabel, 
 .label {
-	fill: #CCC;
-	fill-transparency: 60%;
-	stroke: green;
 	stroke-width: 0;
 	font-size: 11px;
 	font-family: "opensans-light-webfont";
 }
 
-
-/* Key */
-
-
-key {
-	kite9-type: container;
-	kite9-usage: label;
-	kite9-layout: grid;
-	kite9-sizing: maximize;
-	kite9-grid-size: 1 3;
-	kite9-padding: 3px 6px 3px 6px; 
-	kite9-margin: 12px 12px 12px 12px;
-	kite9-template: url(template.svg#key)
+.fromLabel .back,
+.toLabel .back, 
+.label .back {
+	fill: #777;
 }
 
-key > boldText,
-key > bodyText {
-	kite9-padding-top: 2px;
-	kite9-padding-bottom: 2px;
-	kite9-padding-left: 0px;
-	kite9-padding-right: 0px;
-	kite9-margin: 0 0 0 0; 
-	kite9-template: url(template.svg#text-label-container);
-	font-size: 13px;
-	stroke: black;
-	fill: black;
-	font-family: "opensans-regular-webfont";
-	text-align: start;
-}
-
-
-key > boldText {
-	kite9-occupies: 0 0;
-	kite9-type: container;
-	kite9-template: url(template.svg#text-label-container);
-}
-
-key > bodyText {
-	kite9-occupies: 0 1;
-	kite9-type: container;
-}
-
-key > text-lines {
-	kite9-type: container;
-	kite9-sizing: maximize;
-	kite9-occupies: 0 2;
-	kite9-layout: vertical;
+.fromLabel .front,
+.toLabel .front, 
+.label .front {
+	fill: white;
 }
 
 
@@ -328,14 +333,14 @@ key > text-lines {
 	fill: white;
 }
 
-.glyph  .label  .text-label {
+.glyph-label-text {
 	font-size: 15px;
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	stroke: none;
 }
 
-.glyph  .stereotype  .text-label {
+.glyph-stereotype-text {
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	fill: black;
