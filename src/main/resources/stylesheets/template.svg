@@ -54,19 +54,16 @@
       </front>
     </svg:g>
   </template>
-  
-   <template id='container-label'>
-    <inset style="kite9-type: container">
-      <back style="kite9-usage: decal; kite9-type: svg;">
-        <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' class="container-label-back"/>
-      </back>
-      <svg:g class="container-label-front">
-        <front style="kite9-type: text; " >
-          <contents />
-        </front>
-      </svg:g>
-    </inset>
-    
+
+  <template id='container-label'>
+    <back style="kite9-usage: decal; kite9-type: svg;">
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='4' ry='4' class="container-label-back" />
+    </back>
+    <svg:g class="container-label-front">
+      <front style="kite9-type: text; ">
+        <contents />
+      </front>
+    </svg:g>
   </template>
 
   <template id='context'>

@@ -86,10 +86,9 @@ context {
 context > label {
 	kite9-usage: label;
 	kite9-type: container; 
-	kite9-padding-top: 35px; 
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#container-label);
-	kite9-margin: 4px;
+	kite9-padding: 4px;
 }
 
 toLabel, 
@@ -102,15 +101,9 @@ fromLabel {
 	kite9-margin: 4px;	
 }
 
-
-context > label > inset {
-	kite9-padding: 4px 4px 4px 4px; 	
-}
-
 /*
  * Required so we can process old XML content
  */
- 
 renderingInformation,
 position,
 size,
