@@ -536,13 +536,13 @@ public class TestingEngine extends TestingHelp {
 						// inner above outer
 						double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
 						if (innerRect.getMaxY() + downDist > outerRect.getMinY()) {
-							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "RIGHT", inner, downDist, outerRect, innerRect));
 						}
 					} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
 						// inner below outer
 						double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
 						if (innerRect.getMinY() - upDist < outerRect.getMaxY()) {
-							throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "RIGHT", inner, upDist, outerRect, innerRect));
 						}						
 					} else {
 						throw new LogicException("Overlapped: " + outer + " by " + inner);
@@ -557,14 +557,14 @@ public class TestingEngine extends TestingHelp {
 						// inner to left of outer
 						double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
 						if (innerRect.getMaxX() + rightDist > outerRect.getMinX()) {
-							throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
 						}
 						
 					} else if (innerRect.getMinX() >= outerRect.getMaxX()) {
 						// inner to right of outer
 						double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
 						if (innerRect.getMinX() - leftDist < outerRect.getMaxX()) {
-							throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
 						}
 					} else {
 						throw new LogicException("Overlapped: " + outer + " by " + inner);
@@ -589,25 +589,34 @@ public class TestingEngine extends TestingHelp {
 					double downDist = disp.getPadding(outer, Direction.DOWN);
 					
 					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
-						throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
 					}
 
 					if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
-						throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
 					}
 					
 					if (!(inner instanceof Label)) {
 						if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
-							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "DOWN", inner, downDist, outerRect, innerRect));
 						}
 					}
 
 					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
-						throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
 					}
 				}
 			}
-			
+
+
+			private String createExceptionText(Rectangular outer, String string, DiagramElement inner, double d, Rectangle2D outerRect, Rectangle2D innerRect) {
+				return "Too Close on "+string+" dist: "+d+" side: \n"+
+						" inner: "+inner+" "+innerRect+"\n"+
+						" outer: "+outer+" "+outerRect+"\n";
+			}
+
+
+		
 			private boolean isInGrid(Rectangular inner) {
 				return (inner instanceof Connected) && (inner.getContainer().getLayout() == Layout.GRID);
 			}

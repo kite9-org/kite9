@@ -286,34 +286,32 @@ key > text-lines {
 	stroke: none;
 }
 
-.symbol.label {
-	color: white;
-}
-
 .context-back {
 	fill: none;
 	stroke: black;
 	stroke-width: 2px;
 }
 
-.fromLabel,
-.toLabel, 
-.label {
+.container-label-front {
 	stroke-width: 0;
 	font-size: 11px;
 	font-family: "opensans-light-webfont";
-}
-
-.fromLabel .back,
-.toLabel .back, 
-.label .back {
-	fill: #777;
-}
-
-.fromLabel .front,
-.toLabel .front, 
-.label .front {
 	fill: white;
+}
+
+.container-label-back {
+	fill: #777;	
+}
+
+.connection-label-front {
+	stroke-width: 0;
+	font-size: 11px;
+	font-family: "opensans-light-webfont";
+	fill: white;
+}
+
+.connection-label-back {
+	fill: #777;	
 }
 
 
@@ -362,7 +360,7 @@ key > text-lines {
 .link {
 	stroke: black;
 	stroke-width: 2px;
-	
+	fill: none;
 }
 
 .link.dotted {
