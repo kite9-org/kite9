@@ -27,6 +27,9 @@
   <text style="font-family: Unknownski; font-size: 33px;" x="10" y="350"
   >Unknown Font</text
   >
+  
+  <rect x="10" y="350" fill="none" width="300" height="33" stroke="grey" stroke-width="1px"
+  />
 
   <text class="sansseriftext" x="10" y="50"
   >Some Verdana Text</text

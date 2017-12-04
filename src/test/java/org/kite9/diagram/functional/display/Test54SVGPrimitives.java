@@ -143,7 +143,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		RepositoryHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
-		transcodeSVG(xml);
+		// no svg, as it won't render in any browser!
 	}
 	
 	
@@ -160,11 +160,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String diagramClose() {
-		return "</diagram>";
+		return "</svg:g></diagram>";
 	}
 
 	private String diagramOpen() {
-		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='kite9-type: diagram; padding: 50px; fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='kite9-type: diagram; kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 
@@ -194,11 +194,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='kite9-type: container; kite9-sizing: minimize; fill: "+fill+"; kite9-padding: 10px; kite9-margin: 10px; '>";
+		return "<container id='"+id+"' style='kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  '><svg:g style='fill: "+fill+"; '>";
 	}
 
 	private String containerClose() {
-		return "</container>";
+		return "</svg:g></container>";
 	}
 	
 	private String svgText() {
