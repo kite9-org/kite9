@@ -6,299 +6,407 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g class="diagram" id="auto:0"
+  ><g kite9-elem="diagram" id="auto:0"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g class="glyph" id="g1" transform="translate(15.0,15.0)"
+  <g kite9-elem="glyph" id="g1" transform="translate(15.0,15.0)"
       >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9836065573770492,0.9666666666666667)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9836065573770492,0.9666666666666667)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="60.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
+      <rect x="0" y="0" width="60.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
           />
     </g
           >
-    
-    <g class="label" id="g1-label" transform="translate(22.0,6.0)"
+    <g class="glyph"
           >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-            ><g
-              ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                  ><tspan
-                    >g</tspan
-                    ><tspan
-                    >1</tspan
-                  ></text
-                ></g
-              ></g
-            ></g
+      
+    <g kite9-elem="label" id="g1-label" transform="translate(22.0,6.0)"
             >
-  </g
-            >
-  
-  </g
-            >
-  <g class="glyph" id="fan0" transform="translate(85.0,15.0)"
-            >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
               >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
-                />
-    </g
-                >
-    
-    <g class="label" id="fan0-label" transform="translate(10.0,6.0)"
-                >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                  ><g
-                    ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                        ><tspan
-                          >f</tspan
-                          ><tspan
-                          >an0</tspan
-                        ></text
-                      ></g
-                    ></g
+      <g kite9-elem="text-label"
+                ><g
+                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                    ><tspan
+                      >g</tspan
+                      ><tspan
+                      >1</tspan
+                    ></text
                   ></g
-                  >
-  </g
-                  >
-  
-  </g
-                  >
-  <g class="glyph" id="fan1" transform="translate(84.0,54.0)"
-                  >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
-                    >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
-                      />
+                ></g
+                >
     </g
+                >
+  </g
+                >
+  
+    </g
+                >
+  </g
+                >
+  <g kite9-elem="glyph" id="fan0" transform="translate(85.0,15.0)"
+                >
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+                  >
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
+                    />
+    </g
+                    >
+    <g class="glyph"
+                    >
+      
+    <g kite9-elem="label" id="fan0-label" transform="translate(10.0,6.0)"
                       >
-    
-    <g class="label" id="fan1-label" transform="translate(10.0,6.0)"
-                      >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                        ><g
-                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
+                        >
+      <g kite9-elem="text-label"
+                          ><g
                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
                                 >f</tspan
                                 ><tspan
-                                >an1</tspan
+                                >an0</tspan
                               ></text
                             ></g
                           ></g
-                        ></g
-                        >
-  </g
-                        >
-  
-  </g
-                        >
-  <g class="glyph" id="fan2" transform="translate(83.0,93.0)"
-                        >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
                           >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
-                            />
     </g
-                            >
-    
-    <g class="label" id="fan2-label" transform="translate(10.0,6.0)"
-                            >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                              ><g
-                                ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                    ><tspan
-                                      >f</tspan
-                                      ><tspan
-                                      >an2</tspan
-                                    ></text
-                                  ></g
-                                ></g
-                              ></g
-                              >
+                          >
   </g
-                              >
+                          >
   
-  </g
-                              >
-  <g class="glyph" id="fan3" transform="translate(82.0,132.0)"
-                              >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
-                                >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
-                                  />
     </g
+                          >
+  </g
+                          >
+  <g kite9-elem="glyph" id="fan1" transform="translate(84.0,54.0)"
+                          >
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+                            >
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
+                              />
+    </g
+                              >
+    <g class="glyph"
+                              >
+      
+    <g kite9-elem="label" id="fan1-label" transform="translate(10.0,6.0)"
+                                >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
                                   >
-    
-    <g class="label" id="fan3-label" transform="translate(10.0,6.0)"
-                                  >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
+      <g kite9-elem="text-label"
                                     ><g
-                                      ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                        ><tspan
+                                          >f</tspan
                                           ><tspan
-                                            >f</tspan
-                                            ><tspan
-                                            >an3</tspan
-                                          ></text
-                                        ></g
+                                          >an1</tspan
+                                        ></text
                                       ></g
                                     ></g
                                     >
+    </g
+                                    >
   </g
                                     >
   
+    </g
+                                    >
   </g
                                     >
-  <g class="glyph" id="fan4" transform="translate(81.0,171.0)"
+  <g kite9-elem="glyph" id="fan2" transform="translate(83.0,93.0)"
                                     >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
                                       >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                         />
     </g
                                         >
-    
-    <g class="label" id="fan4-label" transform="translate(10.0,6.0)"
+    <g class="glyph"
                                         >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                                          ><g
-                                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                ><tspan
-                                                  >f</tspan
-                                                  ><tspan
-                                                  >an4</tspan
-                                                ></text
-                                              ></g
-                                            ></g
-                                          ></g
+      
+    <g kite9-elem="label" id="fan2-label" transform="translate(10.0,6.0)"
                                           >
-  </g
-                                          >
-  
-  </g
-                                          >
-  <g class="glyph" id="fan5" transform="translate(80.0,210.0)"
-                                          >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
                                             >
-      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="29.0"
-                                              />
+      <g kite9-elem="text-label"
+                                              ><g
+                                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                  ><tspan
+                                                    >f</tspan
+                                                    ><tspan
+                                                    >an2</tspan
+                                                  ></text
+                                                ></g
+                                              ></g
+                                              >
     </g
                                               >
-    
-    <g class="label" id="fan5-label" transform="translate(10.0,6.0)"
+  </g
                                               >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                                                ><g
-                                                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                      ><tspan
-                                                        >f</tspan
-                                                        ><tspan
-                                                        >an5</tspan
-                                                      ></text
-                                                    ></g
-                                                  ></g
-                                                ></g
-                                                >
-  </g
-                                                >
   
+    </g
+                                              >
   </g
+                                              >
+  <g kite9-elem="glyph" id="fan3" transform="translate(82.0,132.0)"
+                                              >
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
                                                 >
-  <g class="link" id="g1-fan0"
-                                                ><path d="M75 29 L85 29"
-                                                /></g
-                                                >
-  <g class="link" id="g1-fan1"
-                                                ><path d="M65 44 L65 63 C65 65.7614 67.2386 68 70 68 L84 68"
-                                                /></g
-                                                >
-  <g class="link" id="g1-fan2"
-                                                ><path d="M55 44 L55 102 C55 104.7614 57.2386 107 60 107 L83 107"
-                                                /></g
-                                                >
-  <g class="link" id="g1-fan3"
-                                                ><path d="M45 44 L45 141 C45 143.7614 47.2386 146 50 146 L82 146"
-                                                /></g
-                                                >
-  <g class="link" id="g1-fan4"
-                                                ><path d="M35 44 L35 180 C35 182.7614 37.2386 185 40 185 L81 185"
-                                                /></g
-                                                >
-  <g class="link" id="g1-fan5"
-                                                ><path d="M25 44 L25 219 C25 221.7614 27.2386 224 30 224 L80 224"
-                                                /></g
-                                                >
-  <g class="link" id="fan0-fan1"
-                                                ><path d="M110 44 L110 54"
-                                                /></g
-                                                >
-  <g class="link" id="fan1-fan2"
-                                                ><path d="M109 83 L109 93"
-                                                /></g
-                                                >
-  <g class="link" id="fan2-fan3"
-                                                ><path d="M108 122 L108 132"
-                                                /></g
-                                                >
-  <g class="link" id="fan3-fan4"
-                                                ><path d="M107 161 L107 171"
-                                                /></g
-                                                >
-  <g class="link" id="fan4-fan5"
-                                                ><path d="M106 200 L106 210"
-                                                /></g
-                                                >
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
+                                                  />
+    </g
+                                                  >
+    <g class="glyph"
+                                                  >
+      
+    <g kite9-elem="label" id="fan3-label" transform="translate(10.0,6.0)"
+                                                    >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
+                                                      >
+      <g kite9-elem="text-label"
+                                                        ><g
+                                                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                            ><tspan
+                                                              >f</tspan
+                                                              ><tspan
+                                                              >an3</tspan
+                                                            ></text
+                                                          ></g
+                                                        ></g
+                                                        >
+    </g
+                                                        >
+  </g
+                                                        >
+  
+    </g
+                                                        >
+  </g
+                                                        >
+  <g kite9-elem="glyph" id="fan4" transform="translate(81.0,171.0)"
+                                                        >
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+                                                          >
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
+                                                            />
+    </g
+                                                            >
+    <g class="glyph"
+                                                            >
+      
+    <g kite9-elem="label" id="fan4-label" transform="translate(10.0,6.0)"
+                                                              >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
+                                                                >
+      <g kite9-elem="text-label"
+                                                                  ><g
+                                                                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                                      ><tspan
+                                                                        >f</tspan
+                                                                        ><tspan
+                                                                        >an4</tspan
+                                                                      ></text
+                                                                    ></g
+                                                                  ></g
+                                                                  >
+    </g
+                                                                  >
+  </g
+                                                                  >
+  
+    </g
+                                                                  >
+  </g
+                                                                  >
+  <g kite9-elem="glyph" id="fan5" transform="translate(80.0,210.0)"
+                                                                  >
+    <g kite9-elem="back" transform="scale(0.9807692307692307,0.9666666666666667)translate(0.5,0.5)"
+                                                                    >
+      <rect x="0" y="0" width="51.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
+                                                                      />
+    </g
+                                                                      >
+    <g class="glyph"
+                                                                      >
+      
+    <g kite9-elem="label" id="fan5-label" transform="translate(10.0,6.0)"
+                                                                        >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
+                                                                          >
+      <g kite9-elem="text-label"
+                                                                            ><g
+                                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                                                ><tspan
+                                                                                  >f</tspan
+                                                                                  ><tspan
+                                                                                  >an5</tspan
+                                                                                ></text
+                                                                              ></g
+                                                                            ></g
+                                                                            >
+    </g
+                                                                            >
+  </g
+                                                                            >
+  
+    </g
+                                                                            >
+  </g
+                                                                            >
+  <g kite9-elem="link" id="g1-fan0"
+                                                                            >
+    
+    
+    
+  
+    <path class="link" d="M75 29 L85 29"
+                                                                              />
+  </g
+                                                                              >
+  <g kite9-elem="link" id="g1-fan1"
+                                                                              >
+    
+    
+    
+  
+    <path class="link" d="M65 44 L65 63 C65 65.7614 67.2386 68 70 68 L84 68"
+                                                                                />
+  </g
+                                                                                >
+  <g kite9-elem="link" id="g1-fan2"
+                                                                                >
+    
+    
+    
+  
+    <path class="link" d="M55 44 L55 102 C55 104.7614 57.2386 107 60 107 L83 107"
+                                                                                  />
+  </g
+                                                                                  >
+  <g kite9-elem="link" id="g1-fan3"
+                                                                                  >
+    
+    
+    
+  
+    <path class="link" d="M45 44 L45 141 C45 143.7614 47.2386 146 50 146 L82 146"
+                                                                                    />
+  </g
+                                                                                    >
+  <g kite9-elem="link" id="g1-fan4"
+                                                                                    >
+    
+    
+    
+  
+    <path class="link" d="M35 44 L35 180 C35 182.7614 37.2386 185 40 185 L81 185"
+                                                                                      />
+  </g
+                                                                                      >
+  <g kite9-elem="link" id="g1-fan5"
+                                                                                      >
+    
+    
+    
+  
+    <path class="link" d="M25 44 L25 219 C25 221.7614 27.2386 224 30 224 L80 224"
+                                                                                        />
+  </g
+                                                                                        >
+  <g kite9-elem="link" id="fan0-fan1"
+                                                                                        >
+    
+    
+    
+  
+    <path class="link" d="M110 44 L110 54"
+                                                                                          />
+  </g
+                                                                                          >
+  <g kite9-elem="link" id="fan1-fan2"
+                                                                                          >
+    
+    
+    
+  
+    <path class="link" d="M109 83 L109 93"
+                                                                                            />
+  </g
+                                                                                            >
+  <g kite9-elem="link" id="fan2-fan3"
+                                                                                            >
+    
+    
+    
+  
+    <path class="link" d="M108 122 L108 132"
+                                                                                              />
+  </g
+                                                                                              >
+  <g kite9-elem="link" id="fan3-fan4"
+                                                                                              >
+    
+    
+    
+  
+    <path class="link" d="M107 161 L107 171"
+                                                                                                />
+  </g
+                                                                                                >
+  <g kite9-elem="link" id="fan4-fan5"
+                                                                                                >
+    
+    
+    
+  
+    <path class="link" d="M106 200 L106 210"
+                                                                                                  />
+  </g
+                                                                                                  >
 
     </g
-                                                >
+                                                                                                  >
   </g
-                                                >
+                                                                                                  >
 <defs
-                                                >
+                                                                                                  >
     <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
-                                                  >
+                                                                                                    >
       <stop stop-color="#FFF" offset="0%"
-                                                    />
+                                                                                                      />
       <stop stop-color="#DDD" offset="100%"
-                                                    />
+                                                                                                      />
     </linearGradient
-                                                    >
+                                                                                                      >
     
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-                                                    >
+                                                                                                      >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                                                      /> 
+                                                                                                        /> 
       <feOffset dx="2" dy="2"
-                                                      /> 
+                                                                                                        /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                                                      />
+                                                                                                        />
       <feMerge
-                                                      > 
+                                                                                                        > 
         <feMergeNode
-                                                        />
+                                                                                                          />
         <feMergeNode in="SourceGraphic"
-                                                        /> 
+                                                                                                          /> 
       </feMerge
-                                                        >
+                                                                                                          >
     </filter
-                                                        >
+                                                                                                          >
   </defs
-                                                      ></svg
-                                                    >
+                                                                                                        ></svg
+                                                                                                      >
