@@ -32,7 +32,7 @@
   
   <template id='key'>
     <back style='kite9-usage: decal; kite9-type: svg; '>
-      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' style='fill: blue; ' />
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='0' ry='0' class="key-back" />
     </back>
     <contents />
   </template>
@@ -73,7 +73,6 @@
     </back>
   </template>
 
-  <!-- label template -->
   <template id="generic-text">
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <svg:g class="generic-text">
@@ -110,6 +109,14 @@
     </svg:g>
   </template>
   
+  <template id="bold-text">
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <svg:g class="bold-text">
+      <text-label style="kite9-type: text;">
+        <contents />
+      </text-label>
+    </svg:g>
+  </template>
   
  
   <!-- symbol -->

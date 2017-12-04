@@ -202,7 +202,9 @@ public class PrioritisedRectOption extends RectOption {
 				return getMinimizeTurnType(par);
 			case MAXIMIZE_RECTANGULAR:
 			default:
-				throw new LogicException();
+				// can be for keys, apparently
+				return TurnType.EXTEND_PREFERRED;
+				
 			}
 		} else {
 			throw new LogicException();

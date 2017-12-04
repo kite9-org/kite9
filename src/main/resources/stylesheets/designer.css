@@ -151,13 +151,6 @@ symbol.square {
 	kite9-template: url(template.svg#square);
 }
 
-symbol-text-line {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-layout: grid;
-	kite9-grid-size: 2 1;
-} 
-
 text-line, text, boldText, bodyText {
 	kite9-occupies: 0 0;
 	kite9-type: container;
@@ -167,9 +160,17 @@ text-line, text, boldText, bodyText {
 	kite9-padding-left: 0px;
 	kite9-padding-right: 0px;
 	kite9-margin: 0 0 0 0; 
-	kite9-template: url(template.svg#generic-text);
 	kite9-vertical-align: top;
+}
+
+text-line, text, bodyText {
 	kite9-horizontal-align: left;
+	kite9-template: url(template.svg#generic-text);
+}
+
+boldText {
+	kite9-template: url(template.svg#bold-text);
+	kite9-horizontal-align: center;
 }
 
 
@@ -227,42 +228,6 @@ key {
 	kite9-template: url(template.svg#key)
 }
 
-key > boldText,
-key > bodyText {
-	kite9-padding-top: 2px;
-	kite9-padding-bottom: 2px;
-	kite9-padding-left: 0px;
-	kite9-padding-right: 0px;
-	kite9-margin: 0 0 0 0; 
-	kite9-template: url(template.svg#generic-text);
-	font-size: 13px;
-	stroke: black;
-	fill: black;
-	font-family: "opensans-regular-webfont";
-	text-align: start;
-}
-
-
-key > boldText {
-	kite9-occupies: 0 0;
-	kite9-type: container;
-	kite9-template: url(template.svg#generic-text);
-}
-
-key > bodyText {
-	kite9-occupies: 0 1;
-	kite9-type: container;
-}
-
-key > text-lines {
-	kite9-type: container;
-	kite9-sizing: maximize;
-	kite9-occupies: 0 2;
-	kite9-layout: vertical;
-}
-
-
-
 /* Classes And Styles */
 
 .copyright {
@@ -307,10 +272,6 @@ key > text-lines {
 	fill: #777;	
 }
 
-
-/* Glyph */
-
-
 .glyph-back {
 	stroke-width: 1px;
 	stroke: black;
@@ -322,6 +283,13 @@ key > text-lines {
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	stroke: none;
+}
+
+.arrow-label-text {
+	fill: white;
+	stroke: none;
+	font-size: 12px;
+	font-family: "opensans-regular-webfont";
 }
 
 .glyph-stereotype-text {
@@ -340,6 +308,14 @@ key > text-lines {
 	font-size: 10px;
 }
 
+.bold-text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-bold-webfont";
+	text-align: start;	
+	font-size: 10px;
+}
+
 .red {
 	font-size: 25px;
 	fill: red;
@@ -347,7 +323,10 @@ key > text-lines {
 
 .diagram {
 	fill: none;
-	
+}
+
+.key-back {
+	fill: rgba(235, 235, 235, 1);
 }
 
 .link {
@@ -356,44 +335,4 @@ key > text-lines {
 	fill: none;
 }
 
-.link.dotted {
-	stroke-dasharray: 5px 5px;
-	
-}
-
-.link-terminator {
-	height: 10px;
-	fill: black;
-	stroke: black;
-	stroke-width: 1px;
-}
-
-.link-terminator.open {
-	fill: none;	
-}
-
-.copyright {
-	font-size: 12px;
-}
-
-.arrow-label-text {
-	fill: white;
-	stroke: none;
-	font-size: 12px;
-	font-family: "opensans-regular-webfont";
-}
-
-
-.text-line,
-.boldText,
-.bodyText {
-	font-size: 13px;
-}
-
-.symbol-text {
-	fill: white; 
-	font-family: opensans-regular-webfont; 
-	font-size: 8px; 
-	text-anchor: middle;
-}
 
