@@ -6,217 +6,261 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g class="diagram" id="The Diagram"
+  ><g kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g class="glyph" id="One" transform="translate(15.0,50.0)"
+  <g kite9-elem="glyph" id="One" transform="translate(15.0,50.0)"
       >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9830508474576272,0.9772727272727273)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9830508474576272,0.9772727272727273)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="58.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="43.0"
+      <rect x="0" y="0" width="58.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="43.0"
           />
     </g
           >
-    
-    <g class="stereotype" id="One-stereo" transform="translate(10.0,6.0)"
+    <g class="glyph"
           >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-            ><g
-              ><g font-family="'opensans-bold-webfont'"
-                ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
-                  ><tspan
-                    >S</tspan
+      
+    <g kite9-elem="stereotype" id="One-stereo" transform="translate(10.0,6.0)"
+            >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-stereotype-text"
+              >
+      <g kite9-elem="text-label"
+                ><g
+                  ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                     ><tspan
-                    >tereo</tspan
-                  ></text
-                ></g
-              ></g
-            ></g
-            >
-  </g
-            >
-    <g class="label" id="One-label" transform="translate(10.0,20.0)"
-            >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g id="" style="kite9-type: text; " class="text-label" transform="translate(4.0,0.0)"
-              ><g
-                ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                    ><tspan
-                      >O</tspan
+                      >S</tspan
                       ><tspan
-                      >ne</tspan
+                      >tereo</tspan
                     ></text
                   ></g
                 ></g
-              ></g
-              >
-  </g
-              >
-  
-  </g
-              >
-  <g class="glyph" id="Two" transform="translate(137.0,50.0)"
-              >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9830508474576272,0.9772727272727273)translate(0.5,0.5)"
                 >
-      <rect x="0" y="0" width="58.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="43.0"
-                  />
     </g
+                >
+  </g
+                >
+    <g kite9-elem="label" id="One-label" transform="translate(10.0,20.0)"
+                >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
                   >
-    
-    <g class="stereotype" id="Two-stereo" transform="translate(10.0,6.0)"
-                  >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
+      <g kite9-elem="text-label" transform="translate(4.0,0.0)"
                     ><g
-                      ><g font-family="'opensans-bold-webfont'"
-                        ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
+                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                        ><tspan
+                          >O</tspan
                           ><tspan
-                            >S</tspan
-                            ><tspan
-                            >tereo</tspan
-                          ></text
-                        ></g
+                          >ne</tspan
+                        ></text
                       ></g
                     ></g
                     >
-  </g
-                    >
-    <g class="label" id="Two-label" transform="translate(10.0,20.0)"
-                    >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g id="" style="kite9-type: text; " class="text-label" transform="translate(4.0,0.0)"
-                      ><g
-                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                            ><tspan
-                              >T</tspan
-                              ><tspan
-                              >wo</tspan
-                            ></text
-                          ></g
-                        ></g
-                      ></g
-                      >
-  </g
-                      >
-  
-  </g
-                      >
-  <g class="arrow" id="meets" transform="translate(83.0,61.0)"
-                      >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
-                        >
-      <rect x="0" y="0" width="44.0" style="fill: black; " rx="4" ry="4" height="20.0"
-                          />
     </g
+                    >
+  </g
+                    >
+  
+    </g
+                    >
+  </g
+                    >
+  <g kite9-elem="glyph" id="Two" transform="translate(137.0,50.0)"
+                    >
+    <g kite9-elem="back" transform="scale(0.9830508474576272,0.9772727272727273)translate(0.5,0.5)"
+                      >
+      <rect x="0" y="0" width="58.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="43.0"
+                        />
+    </g
+                        >
+    <g class="glyph"
+                        >
+      
+    <g kite9-elem="stereotype" id="Two-stereo" transform="translate(10.0,6.0)"
                           >
-    
-    <g class="label" id="auto:0" transform="translate(5.0,3.0)"
-                          >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                            ><g
-                              ><g font-family="'opensans-regular-webfont'"
-                                ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-stereotype-text"
+                            >
+      <g kite9-elem="text-label"
+                              ><g
+                                ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                                   ><tspan
-                                    >m</tspan
+                                    >S</tspan
                                     ><tspan
-                                    >eets</tspan
+                                    >tereo</tspan
                                   ></text
                                 ></g
                               ></g
-                            ></g
-                            >
-  </g
-                            >
-  
-  </g
-                            >
-  <g class="arrow" id="eats" transform="translate(149.0,20.0)"
-                            >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                               >
-      <rect x="0" y="0" width="33.0" style="fill: black; " rx="4" ry="4" height="20.0"
-                                />
     </g
+                              >
+  </g
+                              >
+    <g kite9-elem="label" id="Two-label" transform="translate(10.0,20.0)"
+                              >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
                                 >
-    
-    <g class="label" id="auto:1" transform="translate(5.0,3.0)"
-                                >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
+      <g kite9-elem="text-label" transform="translate(4.0,0.0)"
                                   ><g
-                                    ><g font-family="'opensans-regular-webfont'"
-                                      ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                      ><tspan
+                                        >T</tspan
                                         ><tspan
-                                          >e</tspan
-                                          ><tspan
-                                          >ats</tspan
-                                        ></text
-                                      ></g
+                                        >wo</tspan
+                                      ></text
                                     ></g
                                   ></g
                                   >
-  </g
-                                  >
-  
-  </g
-                                  >
-  <g class="link" id="meets-One"
-                                  ><path d="M83 71 L73 71"
-                                  /></g
-                                  >
-  <g class="link" id="meets-Two"
-                                  ><path d="M127 71 L137 71"
-                                  /></g
-                                  >
-  <g class="link" id="eats-One"
-                                  ><path d="M165 20 L165 15 C165 12.2386 162.7614 10 160 10 L49 10 C46.2386 10 44 12.2386 44 15 L44 50"
-                                  /></g
-                                  >
-  <g class="link" id="eats-Two"
-                                  ><path d="M166 40 L166 50"
-                                  /></g
-                                  >
-
     </g
                                   >
   </g
                                   >
-<defs
+  
+    </g
                                   >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+  </g
+                                  >
+  <g kite9-elem="arrow" id="meets" transform="translate(83.0,61.0)"
+                                  >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                     >
-      <stop stop-color="#FFF" offset="0%"
+      <rect x="0" y="0" width="44.0" style="fill: black; " rx="4" ry="4" height="20.0"
                                       />
-      <stop stop-color="#DDD" offset="100%"
-                                      />
-    </linearGradient
+    </g
                                       >
     
+    <g kite9-elem="label" id="auto:0" transform="translate(5.0,3.0)"
+                                      >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+                                        >
+      <g kite9-elem="text-label"
+                                          ><g
+                                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                              ><tspan
+                                                >m</tspan
+                                                ><tspan
+                                                >eets</tspan
+                                              ></text
+                                            ></g
+                                          ></g
+                                          >
+    </g
+                                          >
+  </g
+                                          >
+  
+  </g
+                                          >
+  <g kite9-elem="arrow" id="eats" transform="translate(149.0,20.0)"
+                                          >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                                            >
+      <rect x="0" y="0" width="33.0" style="fill: black; " rx="4" ry="4" height="20.0"
+                                              />
+    </g
+                                              >
+    
+    <g kite9-elem="label" id="auto:1" transform="translate(5.0,3.0)"
+                                              >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+                                                >
+      <g kite9-elem="text-label"
+                                                  ><g
+                                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                                      ><tspan
+                                                        >e</tspan
+                                                        ><tspan
+                                                        >ats</tspan
+                                                      ></text
+                                                    ></g
+                                                  ></g
+                                                  >
+    </g
+                                                  >
+  </g
+                                                  >
+  
+  </g
+                                                  >
+  <g kite9-elem="link" id="meets-One"
+                                                  >
+    
+    
+    
+  
+    <path class="link" d="M83 71 L73 71"
+                                                    />
+  </g
+                                                    >
+  <g kite9-elem="link" id="meets-Two"
+                                                    >
+    
+    
+    
+  
+    <path class="link" d="M127 71 L137 71"
+                                                      />
+  </g
+                                                      >
+  <g kite9-elem="link" id="eats-One"
+                                                      >
+    
+    
+    
+  
+    <path class="link" d="M165 20 L165 15 C165 12.2386 162.7614 10 160 10 L49 10 C46.2386 10 44 12.2386 44 15 L44 50"
+                                                        />
+  </g
+                                                        >
+  <g kite9-elem="link" id="eats-Two"
+                                                        >
+    
+    
+    
+  
+    <path class="link" d="M166 40 L166 50"
+                                                          />
+  </g
+                                                          >
+
+    </g
+                                                          >
+  </g
+                                                          >
+<defs
+                                                          >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+                                                            >
+      <stop stop-color="#FFF" offset="0%"
+                                                              />
+      <stop stop-color="#DDD" offset="100%"
+                                                              />
+    </linearGradient
+                                                              >
+    
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-                                      >
+                                                              >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                                        /> 
+                                                                /> 
       <feOffset dx="2" dy="2"
-                                        /> 
+                                                                /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                                        />
+                                                                />
       <feMerge
-                                        > 
+                                                                > 
         <feMergeNode
-                                          />
+                                                                  />
         <feMergeNode in="SourceGraphic"
-                                          /> 
+                                                                  /> 
       </feMerge
-                                          >
+                                                                  >
     </filter
-                                          >
+                                                                  >
   </defs
-                                        ></svg
-                                      >
+                                                                ></svg
+                                                              >

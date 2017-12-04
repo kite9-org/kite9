@@ -6,56 +6,60 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g class="diagram" id="The Diagram"
+  ><g kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g class="glyph" id="auto:0" transform="translate(15.0,15.0)"
+  <g kite9-elem="glyph" id="auto:0" transform="translate(15.0,15.0)"
       >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9523460937249528,0.9230769230769231)translate(0.5007687211036682,0.5)"
+    <g kite9-elem="back" transform="scale(0.9523460937249528,0.9230769230769231)translate(0.5007687211036682,0.5)"
         >
-      <rect x="0" y="0" width="20.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="12.0"
+      <rect x="0" y="0" width="20.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="12.0"
           />
     </g
           >
-    
-  </g
+    <g class="glyph"
           >
+      
+    </g
+            >
+  </g
+            >
 
     </g
-          >
-  </g
-          >
-<defs
-          >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
             >
-      <stop stop-color="#FFF" offset="0%"
-              />
-      <stop stop-color="#DDD" offset="100%"
-              />
-    </linearGradient
+  </g
+            >
+<defs
+            >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
               >
+      <stop stop-color="#FFF" offset="0%"
+                />
+      <stop stop-color="#DDD" offset="100%"
+                />
+    </linearGradient
+                >
     
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-              >
+                >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                /> 
-      <feOffset dx="2" dy="2"
-                /> 
-      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                />
-      <feMerge
-                > 
-        <feMergeNode
-                  />
-        <feMergeNode in="SourceGraphic"
                   /> 
+      <feOffset dx="2" dy="2"
+                  /> 
+      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
+                  />
+      <feMerge
+                  > 
+        <feMergeNode
+                    />
+        <feMergeNode in="SourceGraphic"
+                    /> 
       </feMerge
-                  >
+                    >
     </filter
-                  >
+                    >
   </defs
-                ></svg
-              >
+                  ></svg
+                >

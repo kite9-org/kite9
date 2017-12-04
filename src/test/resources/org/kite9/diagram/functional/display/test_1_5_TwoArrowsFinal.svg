@@ -6,27 +6,28 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g class="diagram" id="The Diagram"
+  ><g kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g class="arrow" id="One
+  <g kite9-elem="arrow" id="One
 Multiline" transform="translate(15.0,15.0)"
       >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
         >
       <rect x="0" y="0" width="58.0" style="fill: black; " rx="4" ry="4" height="33.0"
           />
     </g
           >
     
-    <g class="label" id="auto:0" transform="translate(5.0,3.0)"
+    <g kite9-elem="label" id="auto:0" transform="translate(5.0,3.0)"
           >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-            ><g
-              ><g font-family="'opensans-regular-webfont'"
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+            >
+      <g kite9-elem="text-label"
+              ><g
                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                   ><tspan
                     >O</tspan
@@ -37,77 +38,80 @@ Multiline" transform="translate(15.0,15.0)"
                   >Multiline</text
                 ></g
               ></g
-            ></g
-            >
-  </g
-            >
-  
-  </g
-            >
-  <g class="arrow" id="Two" transform="translate(83.0,21.0)"
-            >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
               >
-      <rect x="0" y="0" width="33.0" style="fill: black; " rx="4" ry="4" height="20.0"
-                />
     </g
-                >
-    
-    <g class="label" id="auto:1" transform="translate(5.0,3.0)"
-                >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-                  ><g
-                    ><g font-family="'opensans-regular-webfont'"
-                      ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                        ><tspan
-                          >T</tspan
-                          ><tspan
-                          >wo</tspan
-                        ></text
-                      ></g
-                    ></g
-                  ></g
-                  >
+              >
   </g
-                  >
+              >
   
   </g
+              >
+  <g kite9-elem="arrow" id="Two" transform="translate(83.0,21.0)"
+              >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                >
+      <rect x="0" y="0" width="33.0" style="fill: black; " rx="4" ry="4" height="20.0"
+                  />
+    </g
                   >
+    
+    <g kite9-elem="label" id="auto:1" transform="translate(5.0,3.0)"
+                  >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+                    >
+      <g kite9-elem="text-label"
+                      ><g
+                        ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                          ><tspan
+                            >T</tspan
+                            ><tspan
+                            >wo</tspan
+                          ></text
+                        ></g
+                      ></g
+                      >
+    </g
+                      >
+  </g
+                      >
+  
+  </g
+                      >
 
     </g
-                  >
-  </g
-                  >
-<defs
-                  >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
-                    >
-      <stop stop-color="#FFF" offset="0%"
-                      />
-      <stop stop-color="#DDD" offset="100%"
-                      />
-    </linearGradient
                       >
+  </g
+                      >
+<defs
+                      >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+                        >
+      <stop stop-color="#FFF" offset="0%"
+                          />
+      <stop stop-color="#DDD" offset="100%"
+                          />
+    </linearGradient
+                          >
     
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-                      >
+                          >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                        /> 
+                            /> 
       <feOffset dx="2" dy="2"
-                        /> 
+                            /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                        />
+                            />
       <feMerge
-                        > 
+                            > 
         <feMergeNode
-                          />
+                              />
         <feMergeNode in="SourceGraphic"
-                          /> 
+                              /> 
       </feMerge
-                          >
+                              >
     </filter
-                          >
+                              >
   </defs
-                        ></svg
-                      >
+                            ></svg
+                          >

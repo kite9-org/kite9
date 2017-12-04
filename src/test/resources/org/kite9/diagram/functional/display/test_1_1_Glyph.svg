@@ -6,116 +6,124 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g class="diagram" id="The Diagram"
+  ><g kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g class="glyph" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
+  <g kite9-elem="glyph" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
 line 2" transform="translate(15.0,15.0)"
       >
-    <g id="" style="kite9-usage: decal; kite9-type: svg; kite9-sizing: adaptive; " class="glyph-back back" transform="scale(0.9967637540453075,0.9864864864864865)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9967637540453075,0.9864864864864865)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="308.0" style="fill: url(#glyph-background); " rx="8" ry="8" height="73.0"
+      <rect x="0" y="0" width="308.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="73.0"
           />
     </g
           >
-    
-    <g class="stereotype" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-stereo" transform="translate(10.0,6.0)"
+    <g class="glyph"
           >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-            ><g
-              ><g font-family="'opensans-bold-webfont'"
-                ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
-                  ><tspan
-                    >S</tspan
+      
+    <g kite9-elem="stereotype" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
+line 2-stereo" transform="translate(10.0,6.0)"
+            >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-stereotype-text"
+              >
+      <g kite9-elem="text-label"
+                ><g
+                  ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                     ><tspan
-                    >tereo</tspan
-                  ></text
-                  ><text x="0" xml:space="preserve" y="23.8283" stroke="none"
-                  >Mike</text
-                ></g
-              ></g
-            ></g
-            >
-  </g
-            >
-    <g class="label" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-label" transform="translate(10.0,33.0)"
-            >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" /-->
-    <g style="kite9-type: text; " class="text-label" id=""
-              ><g
-                ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                    ><tspan
-                      >R</tspan
+                      >S</tspan
                       ><tspan
-                      >ob's </tspan
-                      ><tspan
-                      >Glyph </tspan
-                      ><tspan
-                      >df </tspan
-                      ><tspan
-                      >sfsdfs </tspan
-                      ><tspan
-                      >weferw </tspan
-                      ><tspan
-                      >asfsdf </tspan
-                      ><tspan
-                      >sdfsd</tspan
+                      >tereo</tspan
                     ></text
-                    ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
-                    ><tspan
-                      >Line </tspan
-                      ><tspan
-                      >2</tspan
-                    ></text
+                    ><text x="0" xml:space="preserve" y="23.8283" stroke="none"
+                    >Mike</text
                   ></g
                 ></g
-              ></g
-              >
+                >
+    </g
+                >
   </g
-              >
+                >
+    <g kite9-elem="label" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
+line 2-label" transform="translate(10.0,33.0)"
+                >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-label-text"
+                  >
+      <g kite9-elem="text-label"
+                    ><g
+                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                        ><tspan
+                          >R</tspan
+                          ><tspan
+                          >ob's </tspan
+                          ><tspan
+                          >Glyph </tspan
+                          ><tspan
+                          >df </tspan
+                          ><tspan
+                          >sfsdfs </tspan
+                          ><tspan
+                          >weferw </tspan
+                          ><tspan
+                          >asfsdf </tspan
+                          ><tspan
+                          >sdfsd</tspan
+                        ></text
+                        ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
+                        ><tspan
+                          >Line </tspan
+                          ><tspan
+                          >2</tspan
+                        ></text
+                      ></g
+                    ></g
+                    >
+    </g
+                    >
+  </g
+                    >
   
+    </g
+                    >
   </g
-              >
+                    >
 
     </g
-              >
+                    >
   </g
-              >
+                    >
 <defs
-              >
+                    >
     <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
-                >
+                      >
       <stop stop-color="#FFF" offset="0%"
-                  />
+                        />
       <stop stop-color="#DDD" offset="100%"
-                  />
+                        />
     </linearGradient
-                  >
+                        >
     
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-                  >
+                        >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                    /> 
+                          /> 
       <feOffset dx="2" dy="2"
-                    /> 
+                          /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                    />
+                          />
       <feMerge
-                    > 
+                          > 
         <feMergeNode
-                      />
+                            />
         <feMergeNode in="SourceGraphic"
-                      /> 
+                            /> 
       </feMerge
-                      >
+                            >
     </filter
-                      >
+                            >
   </defs
-                    ></svg
-                  >
+                          ></svg
+                        >

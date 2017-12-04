@@ -43,7 +43,7 @@ public abstract class AbstractPainter<X extends DiagramElement> implements Paint
 	
 
 	protected void addAttributes(StyledKite9SVGElement toUse, X r, Element out) {
-		String id = toUse.getID();
+		String id = r.getID();
 		if (id.length() > 0) {
 			out.setAttribute("id", id);
 		}
