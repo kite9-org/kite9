@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="One" transform="translate(15.0,50.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
     <g kite9-elem="stereotype" id="One-stereo" transform="translate(10.0,6.0)"
@@ -75,7 +75,7 @@
                         />
     </g
                         >
-    <g class="glyph"
+    <g put="here" class="glyph"
                         >
       
     <g kite9-elem="stereotype" id="Two-stereo" transform="translate(10.0,6.0)"
@@ -155,7 +155,7 @@
   
   </g
                                           >
-  <g kite9-elem="arrow" id="eats" transform="translate(149.0,20.0)"
+  <g kite9-elem="arrow" id="eats" transform="translate(28.0,20.0)"
                                           >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                             >
@@ -213,7 +213,7 @@
     
     
   
-    <path class="link" d="M165 20 L165 15 C165 12.2386 162.7614 10 160 10 L49 10 C46.2386 10 44 12.2386 44 15 L44 50"
+    <path class="link" d="M44 40 L44 50"
                                                         />
   </g
                                                         >
@@ -223,7 +223,7 @@
     
     
   
-    <path class="link" d="M166 40 L166 50"
+    <path class="link" d="M45 20 L45 15 C45 12.2386 47.2386 10 50 10 L161 10 C163.7614 10 166 12.2386 166 15 L166 50"
                                                           />
   </g
                                                           >

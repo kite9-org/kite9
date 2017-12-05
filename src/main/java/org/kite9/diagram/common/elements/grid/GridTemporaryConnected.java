@@ -77,23 +77,13 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public double getMargin(Direction d) {
-		return 0;
-	}
-
-	@Override
 	public ContainerPosition getContainerPosition() {
 		return null;
 	}
-
-	@Override
-	public double getPadding(Direction d) {
-		return 0;
-	}
-
+	
 	@Override
 	public DiagramElementSizing getSizing() {
-		return DiagramElementSizing.MINIMIZE;
+		return null;	// no preference
 	}
 
 	@Override
@@ -104,16 +94,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public ConnectionsSeparation getConnectionsSeparationApproach() {
 		return ConnectionsSeparation.SEPARATE;   // irrelevant, won't have connections
-	}
-
-	@Override
-	public VerticalAlignment getVerticalAlignment() {
-		return VerticalAlignment.TOP;
-	}
-
-	@Override
-	public HorizontalAlignment getHorizontalAlignment() {
-		return HorizontalAlignment.CENTER;
 	}
 
 	@Override

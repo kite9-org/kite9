@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="auto:4"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g class="glyph"
+    <g put="here" class="glyph"
             >
       
       <g kite9-elem="label" id="g1-label" transform="translate(10.0,6.0)"
@@ -82,7 +82,7 @@
   </g
                         >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9923076923076923,0.9850746268656716)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9961389961389961,0.9924812030075187)translate(0.5,0.5)"
                         >
       <rect x="0" y="0" width="258.0" rx="12" class="context-back" ry="12" height="132.0"
                           />
@@ -101,7 +101,7 @@
                                 />
     </g
                                 >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                 >
       
       <g kite9-elem="label" id="g2-label" transform="translate(10.0,6.0)"
@@ -161,7 +161,7 @@
   </g
                                             >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9913419913419913,0.9850746268656716)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9956521739130435,0.9924812030075187)translate(0.5,0.5)"
                                             >
       <rect x="0" y="0" width="229.0" rx="12" class="context-back" ry="12" height="132.0"
                                               />
@@ -180,7 +180,7 @@
                                                     />
     </g
                                                     >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                     >
       
       <g kite9-elem="label" id="g3-label" transform="translate(10.0,6.0)"
@@ -222,7 +222,7 @@
                                                               />
     </g
                                                               >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                               >
       
       <g kite9-elem="label" id="g5-label" transform="translate(10.0,6.0)"
@@ -282,7 +282,7 @@
   </g
                                                                           >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9913419913419913,0.9850746268656716)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9956521739130435,0.9924812030075187)translate(0.5,0.5)"
                                                                           >
       <rect x="0" y="0" width="229.0" rx="12" class="context-back" ry="12" height="132.0"
                                                                             />
@@ -301,7 +301,7 @@
                                                                                   />
     </g
                                                                                   >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                                                   >
       
       <g kite9-elem="label" id="g4-label" transform="translate(10.0,6.0)"
@@ -361,7 +361,7 @@
   </g
                                                                                               >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9913419913419913,0.9850746268656716)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9956521739130435,0.9924812030075187)translate(0.5,0.5)"
                                                                                               >
       <rect x="0" y="0" width="229.0" rx="12" class="context-back" ry="12" height="132.0"
                                                                                                 />

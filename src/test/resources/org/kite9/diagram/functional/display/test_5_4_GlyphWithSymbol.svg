@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="auto:3-one" transform="translate(15.0,15.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
     <g kite9-elem="stereotype" id="auto:3-one-stereo" transform="translate(10.0,6.0)"
@@ -66,7 +66,7 @@
                     >
       <g kite9-elem="symbol" id="auto:0" transform="translate(2.0,1.0)"
                       >
-    <circle r="6" style="fill: rgb(0, 150, 73);  stroke: none" cx="6" cy="6"
+    <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                         />
     <text class="symbol-text" x="6" y="9"
                         >a</text
@@ -75,19 +75,19 @@
                         >
       <g kite9-elem="symbol" id="auto:1" transform="translate(16.0,1.0)"
                         >
-    <polygon style="fill: rgb(237, 106, 86);  stroke: none" points="6,0 12,6 6,12 0,6"
+    <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
                           />
     <text class="symbol-text" x="6" y="9"
-                          >    B</text
+                          >B</text
                           >
   </g
                           >
       <g kite9-elem="symbol" id="auto:2" transform="translate(30.0,1.0)"
                           >
-    <polygon style="fill: rgb(207, 36, 42);  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
+    <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                             />
     <text class="symbol-text" x="6" y="9"
-                            >    m</text
+                            >m</text
                             >   
   </g
                             >

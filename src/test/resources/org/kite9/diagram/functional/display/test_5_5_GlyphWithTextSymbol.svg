@@ -8,10 +8,10 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="glyph" id="auto:7-one" transform="translate(15.0,15.0)"
+  <g kite9-elem="glyph" id="auto:8-one" transform="translate(15.0,15.0)"
       >
     <g kite9-elem="back" transform="scale(0.991869918699187,0.9887640449438202)translate(0.5,0.5)"
         >
@@ -19,10 +19,10 @@
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
-    <g kite9-elem="stereotype" id="auto:7-one-stereo" transform="translate(10.0,6.0)"
+    <g kite9-elem="stereotype" id="auto:8-one-stereo" transform="translate(10.0,6.0)"
             >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
@@ -42,7 +42,7 @@
                 >
   </g
                 >
-    <g kite9-elem="label" id="auto:7-one-label" transform="translate(10.0,20.0)"
+    <g kite9-elem="label" id="auto:8-one-label" transform="translate(10.0,20.0)"
                 >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
@@ -62,7 +62,7 @@
                     >
   </g
                     >
-    <g kite9-elem="text-lines" id="auto:7-one-text-lines" transform="translate(10.0,37.0)"
+    <g kite9-elem="text-lines" id="auto:8-one-text-lines" transform="translate(10.0,37.0)"
                     >
       <g kite9-elem="symbol-text-line" id="auto:3"
                       >
@@ -96,7 +96,7 @@
                             >
           <g kite9-elem="symbol" id="auto:0" transform="translate(2.0,1.0)"
                               >
-    <circle r="6" style="fill: rgb(0, 150, 73);  stroke: none" cx="6" cy="6"
+    <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                 />
     <text class="symbol-text" x="6" y="9"
                                 >a</text
@@ -105,19 +105,19 @@
                                 >
           <g kite9-elem="symbol" id="auto:1" transform="translate(16.0,1.0)"
                                 >
-    <polygon style="fill: rgb(237, 106, 86);  stroke: none" points="6,0 12,6 6,12 0,6"
+    <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
                                   />
     <text class="symbol-text" x="6" y="9"
-                                  >    A</text
+                                  >A</text
                                   >
   </g
                                   >
           <g kite9-elem="symbol" id="auto:2" transform="translate(30.0,1.0)"
                                   >
-    <polygon style="fill: rgb(207, 36, 42);  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
+    <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                                     />
     <text class="symbol-text" x="6" y="9"
-                                    >    A</text
+                                    >A</text
                                     >   
   </g
                                     >
@@ -151,86 +151,103 @@
                                         >
   </g
                                         >
-      <g kite9-elem="text-line" id="auto:5" transform="translate(0.0,30.0)"
+      <g kite9-elem="symbol-text-line" id="auto:6" transform="translate(0.0,30.0)"
                                         >
+        <g kite9-elem="text" id="null-txt"
+                                          >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
-                                          >
+                                            >
       <g kite9-elem="text-label" transform="translate(0.0,2.0)"
-                                            ><g
-                                              ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                ><tspan
-                                                  >H</tspan
+                                              ><g
+                                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                   ><tspan
-                                                  >ere </tspan
-                                                  ><tspan
-                                                  >is </tspan
-                                                  ><tspan
-                                                  >line </tspan
-                                                  ><tspan
-                                                  >3</tspan
-                                                ></text
+                                                    >H</tspan
+                                                    ><tspan
+                                                    >ere </tspan
+                                                    ><tspan
+                                                    >is </tspan
+                                                    ><tspan
+                                                    >line </tspan
+                                                    ><tspan
+                                                    >3</tspan
+                                                  ></text
+                                                ></g
                                               ></g
-                                            ></g
-                                            >
-    </g
-                                            >
-  </g
-                                            >
-    </g
-                                            >
-    <g kite9-elem="symbols" id="auto:7-one-symbols" transform="translate(98.0,6.0)"
-                                            >
-      <g kite9-elem="symbol" id="auto:6" transform="translate(2.0,1.0)"
                                               >
-    <polygon style="fill: rgb(237, 106, 86);  stroke: none" points="6,0 12,6 6,12 0,6"
-                                                />
-    <text class="symbol-text" x="6" y="9"
-                                                >    q</text
-                                                >
-  </g
-                                                >
     </g
+                                              >
+  </g
+                                              >
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(60.0,0.0)"
+                                              >
+          <g kite9-elem="symbol" id="auto:5" transform="translate(30.0,1.0)"
                                                 >
+    <rect x="0" width="12" y="0" height="12" style="fill: #CC8050; stroke: none"
+                                                  />
+    <text class="symbol-text" x="6" y="9"
+                                                  >b</text
+                                                  >
+  </g
+                                                  >
+        </g
+                                                  >
+      </g
+                                                  >
+    </g
+                                                  >
+    <g kite9-elem="symbols" id="auto:8-one-symbols" transform="translate(98.0,6.0)"
+                                                  >
+      <g kite9-elem="symbol" id="auto:7" transform="translate(2.0,1.0)"
+                                                    >
+    <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
+                                                      />
+    <text class="symbol-text" x="6" y="9"
+                                                      >q</text
+                                                      >
+  </g
+                                                      >
+    </g
+                                                      >
   
     </g
-                                                >
+                                                      >
   </g
-                                                >
+                                                      >
 
     </g
-                                                >
+                                                      >
   </g
-                                                >
+                                                      >
 <defs
-                                                >
+                                                      >
     <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
-                                                  >
+                                                        >
       <stop stop-color="#FFF" offset="0%"
-                                                    />
+                                                          />
       <stop stop-color="#DDD" offset="100%"
-                                                    />
+                                                          />
     </linearGradient
-                                                    >
+                                                          >
     
     <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
-                                                    >
+                                                          >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                                                      /> 
+                                                            /> 
       <feOffset dx="2" dy="2"
-                                                      /> 
+                                                            /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                                                      />
+                                                            />
       <feMerge
-                                                      > 
+                                                            > 
         <feMergeNode
-                                                        />
+                                                              />
         <feMergeNode in="SourceGraphic"
-                                                        /> 
+                                                              /> 
       </feMerge
-                                                        >
+                                                              >
     </filter
-                                                        >
+                                                              >
   </defs
-                                                      ></svg
-                                                    >
+                                                            ></svg
+                                                          >

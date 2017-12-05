@@ -78,13 +78,17 @@ symbol-text-line {
 	kite9-sizing: maximize;
 	kite9-layout: grid;
 	kite9-grid-size: 2 1;
-	/*kite9-template: url(template.svg#show-box) */
+	/* kite9-template: url(template.svg#show-box); */
 } 
+
+symbol-text-line text {
+	kite9-horizontal-align: left;
+}
 
 symbol-text-line symbols {
 	kite9-sizing: maximize;
 	kite9-horizontal-align: right;
-	/*kite9-template: url(template.svg#show-box) */
+	/* kite9-template: url(template.svg#show-box) */
 }
 
 context {
@@ -167,7 +171,7 @@ symbol.square {
 text-line, text, boldText, bodyText {
 	kite9-occupies: 0 0;
 	kite9-type: container;
-	kite9-sizing: minimize;
+	kite9-sizing: maximize;
 	kite9-padding-top: 2px;
 	kite9-padding-bottom: 2px;
 	kite9-padding-left: 0px;
@@ -272,7 +276,7 @@ key text-lines {
 .context-back {
 	fill: none;
 	stroke: black;
-	stroke-width: 2px;
+	stroke-width: 1px;
 }
 
 .container-label-front {
@@ -351,7 +355,7 @@ key text-lines {
 }
 
 .key-back {
-	fill: rgba(235, 235, 235, 1);
+	fill: #ebebeb;
 }
 
 .link {

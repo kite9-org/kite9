@@ -128,22 +128,22 @@
  
   <!-- symbol -->
   <template id="circle">
-    <svg:circle style="fill: rgb(0, 150, 73);  stroke: none" cx="6" cy="6" r="6" />
+    <svg:circle style="fill: #00A070;  stroke: none" cx="6" cy="6" r="6" />
     <svg:text x="6" y="9" class="symbol-text"><contents xpath="substring(@theChar,1, 1)" type="string"/></svg:text>
   </template>
 
   <template id="hexagon">
-    <svg:polygon points="0,3 6,0 12,3 12,9 6,12 0,9" style="fill: rgb(207, 36, 42);  stroke: none"/>
+    <svg:polygon points="0,3 6,0 12,3 12,9 6,12 0,9" style="fill: #AA2030;  stroke: none"/>
     <svg:text x="6" y="9" class="symbol-text"><contents xpath="substring(@theChar,1, 1)"  type="string"/></svg:text>   
   </template>
 
   <template id="diamond">
-    <svg:polygon points="6,0 12,6 6,12 0,6"  style="fill: rgb(237, 106, 86);  stroke: none" />
+    <svg:polygon points="6,0 12,6 6,12 0,6"  style="fill: #BB8040;  stroke: none" />
     <svg:text x="6" y="9" class="symbol-text"><contents xpath="substring(@theChar,1, 1)"  type="string" /></svg:text>
   </template>
   
   <template id="square">
-    <svg:rect width="12" height="12" x="0" y="0"  style="fill: rgb(237, 106, 86); stroke: none" />
+    <svg:rect width="12" height="12" x="0" y="0"  style="fill: #CC8050; stroke: none" />
     <svg:text x="6" y="9" class="symbol-text"><contents xpath="substring(@theChar,1, 1)"  type="string"/></svg:text>
   </template>
   

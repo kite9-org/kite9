@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="a" transform="translate(15.0,15.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
     <g kite9-elem="label" id="a-label" transform="translate(10.0,6.0)"
@@ -75,7 +75,7 @@
   
   </g
                         >
-  <g kite9-elem="arrow" id="i2" transform="translate(202.0,202.0)"
+  <g kite9-elem="arrow" id="i2" transform="translate(277.0,20.0)"
                         >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                           >
@@ -115,7 +115,7 @@
                                     />
     </g
                                     >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                     >
       
     <g kite9-elem="label" id="b-label" transform="translate(10.0,6.0)"
@@ -304,7 +304,7 @@
   </g
                                                                   >
   
-    <path class="link" d="M221 212 L272 212 C274.7614 212 277 209.7614 277 207 L277 35 C277 32.2386 274.7614 30 272 30 L43 30"
+    <path class="link" d="M277 30 L43 30"
                                                                   />
   </g
                                                                   >
@@ -313,7 +313,7 @@
     
     
     
-    <g kite9-elem="toLabel" id="auto:5" transform="translate(77.0,212.0)"
+    <g kite9-elem="toLabel" id="auto:5" transform="translate(128.0,212.0)"
                                                                     >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                       >
@@ -347,7 +347,7 @@
   </g
                                                                           >
   
-    <path class="link" d="M202 212 L44 212"
+    <path class="link" d="M296 30 L301 30 C303.7614 30 306 32.2386 306 35 L306 207 C306 209.7614 303.7614 212 301 212 L44 212"
                                                                           />
   </g
                                                                           >

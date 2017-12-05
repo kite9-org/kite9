@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="auto:0"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g class="glyph"
+    <g put="here" class="glyph"
             >
       
       <g kite9-elem="label" id="g2-label" transform="translate(10.0,6.0)"
@@ -50,7 +50,7 @@
                   >
   </g
                   >
-    <g kite9-elem="glyph" id="g3" transform="translate(12.0,81.0)"
+    <g kite9-elem="glyph" id="g3" transform="translate(12.0,71.0)"
                   >
     <g kite9-elem="back" transform="scale(0.972972972972973,0.9666666666666667)translate(0.5,0.5)"
                     >
@@ -58,7 +58,7 @@
                       />
     </g
                       >
-    <g class="glyph"
+    <g put="here" class="glyph"
                       >
       
       <g kite9-elem="label" id="g3-label" transform="translate(10.0,6.0)"
@@ -86,15 +86,15 @@
                             >
   </g
                             >
-    <g kite9-elem="glyph" id="g1" transform="translate(68.0,12.0)"
+    <g kite9-elem="glyph" id="g1" transform="translate(68.0,31.0)"
                             >
-    <g kite9-elem="back" transform="scale(0.972972972972973,0.9875)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.972972972972973,0.9803921568627451)translate(0.5,0.5)"
                               >
-      <rect x="0" y="0" width="36.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="79.0"
+      <rect x="0" y="0" width="36.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
                                 />
     </g
                                 >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                 >
       
       <g kite9-elem="label" id="g1-label" transform="translate(10.0,6.0)"
@@ -122,7 +122,7 @@
                                       >
   </g
                                       >
-    <g kite9-elem="glyph" id="g4" transform="translate(12.0,32.0)"
+    <g kite9-elem="glyph" id="g4" transform="translate(12.0,12.0)"
                                       >
     <g kite9-elem="back" transform="scale(0.972972972972973,0.9666666666666667)translate(0.5,0.5)"
                                         >
@@ -130,7 +130,7 @@
                                           />
     </g
                                           >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                           >
       
       <g kite9-elem="label" id="g4-label" transform="translate(10.0,6.0)"
@@ -159,9 +159,9 @@
   </g
                                                 >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9885057471264368,0.9838709677419355)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9942196531791907,0.9911504424778761)translate(0.5,0.5)"
                                                 >
-      <rect x="0" y="0" width="172.0" rx="12" class="context-back" ry="12" height="122.0"
+      <rect x="0" y="0" width="172.0" rx="12" class="context-back" ry="12" height="112.0"
                                                   />
     </g
                                                   >
@@ -175,7 +175,7 @@
                                                       />
     </g
                                                       >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                       >
       
     <g kite9-elem="label" id="g5-label" transform="translate(10.0,6.0)"
@@ -219,7 +219,7 @@
     
     
   
-    <path class="link" d="M119 42 L139 42"
+    <path class="link" d="M119 56 L124 56 C126.7614 56 129 53.7614 129 51 L129 47 C129 44.2386 131.2386 42 134 42 L139 42"
                                                                 />
   </g
                                                                 >
@@ -229,7 +229,7 @@
     
     
   
-    <path class="link" d="M83 96 L78 96 C75.2386 96 73 98.2386 73 101 L73 105 C73 107.7614 70.7614 110 68 110 L63 110"
+    <path class="link" d="M83 86 L78 86 C75.2386 86 73 88.2386 73 91 L73 95 C73 97.7614 70.7614 100 68 100 L63 100"
                                                                   />
   </g
                                                                   >
@@ -239,7 +239,7 @@
     
     
   
-    <path class="link" d="M83 86 L50 86 C47.2386 86 45 88.2386 45 91 L45 96"
+    <path class="link" d="M83 76 L50 76 C47.2386 76 45 78.2386 45 81 L45 86"
                                                                     />
   </g
                                                                     >
@@ -249,7 +249,7 @@
     
     
   
-    <path class="link" d="M83 62 L63 62"
+    <path class="link" d="M83 66 L50 66 C47.2386 66 45 63.7614 45 61 L45 56"
                                                                       />
   </g
                                                                       >
@@ -259,7 +259,7 @@
     
     
   
-    <path class="link" d="M83 37 L50 37 C47.2386 37 45 39.2386 45 42 L45 47"
+    <path class="link" d="M83 56 L78 56 C75.2386 56 73 53.7614 73 51 L73 47 C73 44.2386 70.7614 42 68 42 L63 42"
                                                                         />
   </g
                                                                         >

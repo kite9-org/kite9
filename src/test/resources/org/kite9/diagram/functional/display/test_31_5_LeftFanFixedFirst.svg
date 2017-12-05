@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="auto:0"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="g1" transform="translate(76.0,15.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
     <g kite9-elem="label" id="g1-label" transform="translate(22.0,6.0)"
@@ -55,7 +55,7 @@
                     />
     </g
                     >
-    <g class="glyph"
+    <g put="here" class="glyph"
                     >
       
     <g kite9-elem="label" id="fan0-label" transform="translate(10.0,6.0)"
@@ -91,7 +91,7 @@
                               />
     </g
                               >
-    <g class="glyph"
+    <g put="here" class="glyph"
                               >
       
     <g kite9-elem="label" id="fan1-label" transform="translate(10.0,6.0)"
@@ -127,7 +127,7 @@
                                         />
     </g
                                         >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                         >
       
     <g kite9-elem="label" id="fan2-label" transform="translate(10.0,6.0)"
@@ -163,7 +163,7 @@
                                                   />
     </g
                                                   >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                   >
       
     <g kite9-elem="label" id="fan3-label" transform="translate(10.0,6.0)"
@@ -199,7 +199,7 @@
                                                             />
     </g
                                                             >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                             >
       
     <g kite9-elem="label" id="fan4-label" transform="translate(10.0,6.0)"
@@ -235,7 +235,7 @@
                                                                       />
     </g
                                                                       >
-    <g class="glyph"
+    <g put="here" class="glyph"
                                                                       >
       
     <g kite9-elem="label" id="fan5-label" transform="translate(10.0,6.0)"

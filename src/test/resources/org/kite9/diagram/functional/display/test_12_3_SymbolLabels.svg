@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g class="glyph"
+    <g put="here" class="glyph"
             >
       
       <g kite9-elem="stereotype" id="auto:1-a-stereo" transform="translate(10.0,6.0)"
@@ -65,7 +65,7 @@
                       >
         <g kite9-elem="symbol" id="auto:0" transform="translate(2.0,1.0)"
                         >
-    <circle r="6" style="fill: rgb(0, 150, 73);  stroke: none" cx="6" cy="6"
+    <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                           />
     <text class="symbol-text" x="6" y="9"
                           >b</text
@@ -79,7 +79,7 @@
                           >
   </g
                           >
-    <g kite9-elem="glyph" id="auto:5-b" transform="translate(169.0,12.0)"
+    <g kite9-elem="glyph" id="auto:5-b" transform="translate(195.0,12.0)"
                           >
     <g kite9-elem="back" transform="scale(0.991304347826087,0.9824561403508771)translate(0.5,0.5)"
                             >
@@ -87,7 +87,7 @@
                               />
     </g
                               >
-    <g class="glyph"
+    <g put="here" class="glyph"
                               >
       
       <g kite9-elem="label" id="auto:5-b-label" transform="translate(10.0,18.0)"
@@ -140,10 +140,10 @@
                                             >
             <g kite9-elem="symbol" id="auto:2" transform="translate(2.0,1.0)"
                                               >
-    <polygon style="fill: rgb(207, 36, 42);  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
+    <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                                                 />
     <text class="symbol-text" x="6" y="9"
-                                                >    B</text
+                                                >B</text
                                                 >   
   </g
                                                 >
@@ -157,10 +157,10 @@
                                                 >
         <g kite9-elem="symbol" id="auto:4" transform="translate(2.0,0.0)"
                                                   >
-    <polygon style="fill: rgb(207, 36, 42);  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
+    <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                                                     />
     <text class="symbol-text" x="6" y="9"
-                                                    >    b</text
+                                                    >b</text
                                                     >   
   </g
                                                     >
@@ -171,7 +171,7 @@
                                                     >
   </g
                                                     >
-    <g kite9-elem="arrow" id="i1" transform="translate(140.0,30.0)"
+    <g kite9-elem="arrow" id="i1" transform="translate(166.0,30.0)"
                                                     >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                       >
@@ -207,7 +207,7 @@
                                                             >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                               >
-      <rect x="0" y="0" width="95.0" rx="4" class="container-label-back" ry="4" height="22.0"
+      <rect x="0" y="0" width="120.0" rx="4" class="container-label-back" ry="4" height="22.0"
                                                                 />
     </g
                                                                 >
@@ -221,7 +221,7 @@
                                                                         ><tspan
                                                                         >ontainer </tspan
                                                                         ><tspan
-                                                                        >LabelBJ</tspan
+                                                                        >Labelbobjeff</tspan
                                                                       ></text
                                                                     ></g
                                                                   ></g
@@ -231,9 +231,9 @@
   </g
                                                                   >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9932659932659933,0.9791666666666666)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9968944099378882,0.9894736842105263)translate(0.5,0.5)"
                                                                   >
-      <rect x="0" y="0" width="295.0" rx="12" class="context-back" ry="12" height="94.0"
+      <rect x="0" y="0" width="321.0" rx="12" class="context-back" ry="12" height="94.0"
                                                                     />
     </g
                                                                     >
@@ -248,7 +248,7 @@
                                                                       >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                         >
-      <rect x="0" y="0" width="36.0" rx="4" class="connection-label-back" ry="4" height="28.0"
+      <rect x="0" y="0" width="62.0" rx="4" class="connection-label-back" ry="4" height="28.0"
                                                                           />
     </g
                                                                           >
@@ -260,7 +260,7 @@
                                                                                 ><tspan
                                                                                   >l</tspan
                                                                                   ><tspan
-                                                                                  >inesT</tspan
+                                                                                  >inesTrevor</tspan
                                                                                 ></text
                                                                               ></g
                                                                             ></g
@@ -270,7 +270,7 @@
   </g
                                                                             >
   
-    <path class="link" d="M155 55 L99 55"
+    <path class="link" d="M181 55 L99 55"
                                                                             />
   </g
                                                                             >
@@ -280,7 +280,7 @@
     
     
   
-    <path class="link" d="M174 55 L184 55"
+    <path class="link" d="M200 55 L210 55"
                                                                               />
   </g
                                                                               >

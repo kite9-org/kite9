@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
@@ -20,7 +20,7 @@ line 2" transform="translate(15.0,15.0)"
           />
     </g
           >
-    <g class="glyph"
+    <g put="here" class="glyph"
           >
       
     <g kite9-elem="stereotype" id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd

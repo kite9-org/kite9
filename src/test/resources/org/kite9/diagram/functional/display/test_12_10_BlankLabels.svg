@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><defs
+  ><style type="text/css" xml:space="preserve"
+    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
+  ></defs
+  ><g kite9-elem="diagram" id="The Diagram"
+  >
+    <g put="here" filter="url(#dropshadow)"
+    >
+      
+  <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
+      >
+    
+    <g kite9-elem="label" id="auto:2" transform="translate(12.0,66.0)"
+        >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+          >
+      <rect x="0" y="0" width="32.0" rx="4" class="container-label-back" ry="4" height="22.0"
+            />
+    </g
+            >
+    <g class="container-label-front"
+            >
+      <g kite9-elem="front" transform="translate(4.0,4.0)"
+              ><g
+                ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
+                  ><tspan
+                    >B</tspan
+                    ><tspan
+                    >ig </tspan
+                    ><tspan
+                    >C</tspan
+                  ></text
+                ></g
+              ></g
+              >
+    </g
+              >
+  </g
+              >
+  
+    <g kite9-elem="back" id="cback" transform="scale(0.9824561403508771,0.9887640449438202)translate(0.5,0.5)"
+              >
+      <rect x="0" y="0" width="56.0" rx="12" class="context-back" ry="12" height="88.0"
+                />
+    </g
+                >
+  </g
+                >
+  <g kite9-elem="context" id="c2" transform="translate(81.0,15.0)"
+                >
+    
+    <g kite9-elem="arrow" id="i1" transform="translate(32.0,12.0)"
+                  >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                    >
+      <rect x="0" y="0" width="20.0" style="fill: black; " rx="4" ry="4" height="20.0"
+                      />
+    </g
+                      >
+    
+      <g kite9-elem="label" id="auto:0" transform="translate(5.0,3.0)"
+                      >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+                        >
+      <g kite9-elem="text-label"
+                          ><g
+                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                              ><tspan
+                                >i</tspan
+                                ><tspan
+                                >1</tspan
+                              ></text
+                            ></g
+                          ></g
+                          >
+    </g
+                          >
+  </g
+                          >
+    
+  </g
+                          >
+    <g kite9-elem="arrow" id="i2" transform="translate(32.0,46.0)"
+                          >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                            >
+      <rect x="0" y="0" width="20.0" style="fill: black; " rx="4" ry="4" height="20.0"
+                              />
+    </g
+                              >
+    
+      <g kite9-elem="label" id="auto:1" transform="translate(5.0,3.0)"
+                              >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="arrow-label-text"
+                                >
+      <g kite9-elem="text-label"
+                                  ><g
+                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                      ><tspan
+                                        >i</tspan
+                                        ><tspan
+                                        >2</tspan
+                                      ></text
+                                    ></g
+                                  ></g
+                                  >
+    </g
+                                  >
+  </g
+                                  >
+    
+  </g
+                                  >
+    <g kite9-elem="label" id="auto:3" transform="translate(28.0,76.0)"
+                                  >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                                    >
+      <rect x="0" y="0" width="8.0" rx="4" class="container-label-back" ry="4" height="12.0"
+                                      />
+    </g
+                                      >
+    <g class="container-label-front"
+                                      >
+      <g kite9-elem="front" transform="translate(4.0,6.0)"
+                                        />
+    </g
+                                        >
+  </g
+                                        >
+  
+    <g kite9-elem="back" id="cback" transform="scale(0.9846153846153847,0.9887640449438202)translate(0.5,0.5)"
+                                        >
+      <rect x="0" y="0" width="64.0" rx="12" class="context-back" ry="12" height="88.0"
+                                          />
+    </g
+                                          >
+  </g
+                                          >
+  <g kite9-elem="key" id="auto:6" transform="translate(15.0,115.0)"
+                                          >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                                            >
+      <rect x="0" y="0" width="130.0" rx="0" class="key-back" ry="0" height="15.0"
+                                              />
+    </g
+                                              >
+    
+    <g kite9-elem="bodyText" id="auto:7" transform="translate(6.0,3.0)"
+                                              >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="generic-text"
+                                                >
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+                                                  />
+    </g
+                                                  >
+  </g
+                                                  >
+    <g kite9-elem="text-lines" transform="translate(6.0,12.0)"
+                                                  />
+  
+  </g
+                                                  >
+  <g kite9-elem="link" id="c1-i1"
+                                                  >
+    
+    
+    
+    <g kite9-elem="toLabel" id="auto:4" transform="translate(93.0,37.0)"
+                                                    >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                                                      >
+      <rect x="0" y="0" width="10.0" rx="4" class="connection-label-back" ry="4" height="14.0"
+                                                        />
+    </g
+                                                        >
+    <g class="connection-label-front"
+                                                        >
+      <g kite9-elem="front" transform="translate(5.0,10.0)"
+                                                          />
+    </g
+                                                          >
+  </g
+                                                          >
+  
+    <path class="link" d="M71 37 L113 37"
+                                                          />
+  </g
+                                                          >
+  <g kite9-elem="link" id="c1-i2"
+                                                          >
+    
+    
+    
+    <g kite9-elem="toLabel" id="auto:5" transform="translate(93.0,71.0)"
+                                                            >
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+                                                              >
+      <rect x="0" y="0" width="10.0" rx="4" class="connection-label-back" ry="4" height="14.0"
+                                                                />
+    </g
+                                                                >
+    <g class="connection-label-front"
+                                                                >
+      <g kite9-elem="front" transform="translate(5.0,10.0)"
+                                                                  />
+    </g
+                                                                  >
+  </g
+                                                                  >
+  
+    <path class="link" d="M71 71 L113 71"
+                                                                  />
+  </g
+                                                                  >
+  <g kite9-elem="link" id="i1-i2"
+                                                                  >
+    
+    
+    
+  
+    <path class="link" d="M123 47 L123 61"
+                                                                    />
+  </g
+                                                                    >
+
+    </g
+                                                                    >
+  </g
+                                                                    >
+<defs
+                                                                    >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+                                                                      >
+      <stop stop-color="#FFF" offset="0%"
+                                                                        />
+      <stop stop-color="#DDD" offset="100%"
+                                                                        />
+    </linearGradient
+                                                                        >
+    
+    <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
+                                                                        >
+      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
+                                                                          /> 
+      <feOffset dx="2" dy="2"
+                                                                          /> 
+      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
+                                                                          />
+      <feMerge
+                                                                          > 
+        <feMergeNode
+                                                                            />
+        <feMergeNode in="SourceGraphic"
+                                                                            /> 
+      </feMerge
+                                                                            >
+    </filter
+                                                                            >
+  </defs
+                                                                          ></svg
+                                                                        >

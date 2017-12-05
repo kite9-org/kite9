@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
@@ -42,7 +42,7 @@
   </g
               >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9655172413793104,0.9886363636363636)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9824561403508771,0.9942857142857143)translate(0.5,0.5)"
               >
       <rect x="0" y="0" width="56.0" rx="12" class="context-back" ry="12" height="174.0"
                 />
@@ -145,7 +145,7 @@
   </g
                                         >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9895833333333334,0.9886363636363636)translate(1.0,1.0)"
+    <g kite9-elem="back" id="cback" transform="scale(0.9947643979057592,0.9942857142857143)translate(0.5,0.5)"
                                         >
       <rect x="0" y="0" width="190.0" rx="12" class="context-back" ry="12" height="174.0"
                                           />
