@@ -44,8 +44,8 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		clearUnsupportedAttributes();
 	}
 	
-	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr, ElementNodeMapper enm) {
-		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc, rr, enm) ,false);
+	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr) {
+		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc, rr) ,false);
 		this.currentSubgroup = getTopLevelGroup();
 		clearUnsupportedAttributes();
 	}
@@ -57,10 +57,6 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	
 	private ResourceReferencer getResourceReferencer() {
 		return ((ExtendedSVGGeneratorContext) this.generatorCtx).getResourceReferencer();
-	}
-
-	private ElementNodeMapper getElementNodeMapper() {
-		return ((ExtendedSVGGeneratorContext) this.generatorCtx).getElementNodeMapper();
 	}
 
 	@Override

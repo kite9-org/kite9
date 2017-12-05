@@ -35,10 +35,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
 				DiagramElementType lt = getElementType(in2);
 				RectangularElementUsage usage = getElementUsage(in2);
-				AbstractDOMDiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
-				if (out != null) {
-					context.handleTemplateElement(in, out);
-				}
+				DiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
 				return out;
 			} catch (Exception e2) {
 				e = e2;

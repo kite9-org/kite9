@@ -13,13 +13,10 @@ import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
-import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
 import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Document;
 
 /**
@@ -37,18 +34,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		this.setDocumentSize(new Dimension2DDouble(0,0));
 	}
 	
-	static class Kite9DocumentLoader extends DocumentLoader {
-
-		public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf) {
-			super(userAgent);
-			this.documentFactory = dbf;
-		}
-	}
-
-	public Kite9BridgeContext(UserAgent userAgent, Kite9DocumentFactory dbf) {
-		this(userAgent, new Kite9DocumentLoader(userAgent, dbf));
-	}
-
 	/**
 	 * Setting this true allows us to keep track of XML-GraphicsNode mapping.
 	 */
@@ -67,13 +52,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		super.registerSVGBridges();
 		putBridge(new Kite9DiagramBridge());
 		putBridge(new LocalRenderingFlowRootElementBridge());
-	}
-	
-	/**
-	 * This needs to copy the template XML source into the destination.
-	 */
-	public void handleTemplateElement(Kite9XMLElement in, DiagramElement out) {
-		new DefsHandlingTemplater(getDocumentLoader()).handleTemplateElement(in, out);
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {

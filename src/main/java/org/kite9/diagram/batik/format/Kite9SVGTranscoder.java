@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -25,6 +26,7 @@ import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
+import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
 import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
 import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -45,6 +47,8 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	private ADLExtensibleDOMImplementation domImpl;
 	private ResourceReferencer rr;	
 	private Kite9Log log = new Kite9Log(this);
+	private Kite9DocumentFactory docFactory;
+	private DocumentLoader docLoader;
 	
 	public Kite9SVGTranscoder(ResourceReferencer rr) {
 		super();
@@ -52,6 +56,8 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
 		domImpl = new ADLExtensibleDOMImplementation();
+		docFactory = createDocumentFactory();
+	    docLoader = new DocumentLoader(userAgent);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
 		this.rr = rr;
@@ -59,7 +65,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 
 	@Override
 	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
+		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, docLoader);
 		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
 		domImpl.setDiagramElementFactory(def);
 		return out;
@@ -92,6 +98,8 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
 		try {
 			input.setDocumentURI(uri);
+			DefsHandlingTemplater templater = new DefsHandlingTemplater(docLoader);
+			
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);

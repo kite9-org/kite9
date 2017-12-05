@@ -93,5 +93,12 @@ public class ADLDocument extends SVG12OMDocument {
 	public ADLExtensibleDOMImplementation getImplementation() {
 		return (ADLExtensibleDOMImplementation) super.getImplementation();
 	}
+
+	@Override
+	public Element getChildElementById(Node requestor, String id) {
+		return super.getChildElementById(requestor, id);
+	}
+	
+	
 	
 }
