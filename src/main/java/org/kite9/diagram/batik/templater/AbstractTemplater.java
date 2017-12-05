@@ -2,8 +2,6 @@ package org.kite9.diagram.batik.templater;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.value.Value;
@@ -18,8 +16,6 @@ import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Handles copying of XML from one document to another, and the CSS 'template' directive.
@@ -67,10 +63,8 @@ public abstract class AbstractTemplater implements Templater, Logable {
 					ADLDocument templateDoc = loadReferencedDocument(resource, in);
 					Element e = templateDoc.getElementById(fragment);
 					
-					List<Node> contents = createContentsList(in);
-					XMLProcessor c = new ContentElementHandlingCopier(contents, in);
+					ContentElementHandlingCopier c = new ContentElementHandlingCopier(in);
 					c.processContents(e);
-					removeOriginalChildren(contents, in);
 					
 					log.send("Templated: ("+fragment+")\n"+new XMLHelper().toXML(in));
 					
@@ -78,21 +72,6 @@ public abstract class AbstractTemplater implements Templater, Logable {
 					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 				}
 			}
-		}
-	}
-	
-	private List<Node> createContentsList(Node contentNode) {
-		List<Node> out = new ArrayList<>(contentNode.getChildNodes().getLength());
-		for (int i = 0; i < contentNode.getChildNodes().getLength(); i++) {
-			out.add(contentNode.getChildNodes().item(i));
-		}
-		return out;
-	}
-	
-
-	private void removeOriginalChildren(List<Node> contents, Node in) {
-		for (Node node : contents) {
-			in.removeChild(node);
 		}
 	}
 

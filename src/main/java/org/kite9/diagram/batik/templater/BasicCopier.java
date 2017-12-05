@@ -23,12 +23,15 @@ public class BasicCopier implements XMLProcessor {
 	
 	protected void copyContents(Node from, Node to) {
 		NodeList nl = from.getChildNodes();
-		 for (int i = 0; i < nl.getLength(); i++) {
+		copyContents(nl, to);
+	}
+
+	protected void copyContents(NodeList nl, Node to) {
+		for (int i = 0; i < nl.getLength(); i++) {
 			Node n = nl.item(i);
 			copyChild(n, to);
 		 }
 	}
-	
 
 	@Override
 	public void processContents(Node from) {

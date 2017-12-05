@@ -228,6 +228,13 @@ key {
 	kite9-template: url(template.svg#key)
 }
 
+key text-lines {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-layout: vertical;
+}
+
+
 /* Classes And Styles */
 
 .copyright {
@@ -242,6 +249,13 @@ key {
 	text-align:  middle;
 	fill: white;
 	stroke: none;
+}
+
+.symbol-text {
+	fill: white; 
+	font-family: opensans-regular-webfont; 
+	font-size: 8px; 
+	text-anchor: middle;
 }
 
 .context-back {

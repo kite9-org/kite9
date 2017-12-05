@@ -1,20 +1,14 @@
 package org.kite9.diagram.batik;
 
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-
-import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -40,11 +34,6 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
 		throw new Kite9ProcessingException("Unsupported operation");
-	}
-
-	private DiagramElementSizing getSizing(HasSVGGraphics layered) {
-		DiagramElementSizing out =  (layered instanceof Rectangular) ?((Rectangular) layered).getSizing() : null;
-		return out;
 	}
 
 	@Override
