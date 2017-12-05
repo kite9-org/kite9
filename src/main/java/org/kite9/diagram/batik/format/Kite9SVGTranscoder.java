@@ -15,6 +15,7 @@ import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -37,6 +38,7 @@ import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.AbstractStyleableXMLElement;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -49,6 +51,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	private Kite9Log log = new Kite9Log(this);
 	private Kite9DocumentFactory docFactory;
 	private DocumentLoader docLoader;
+	private Kite9BridgeContext bridgeContext;
 	
 	public Kite9SVGTranscoder(ResourceReferencer rr) {
 		super();
@@ -57,18 +60,21 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
 		domImpl = new ADLExtensibleDOMImplementation();
 		docFactory = createDocumentFactory();
-	    docLoader = new DocumentLoader(userAgent);
+	    docLoader = new Kite9BridgeContext.Kite9DocumentLoader(userAgent, docFactory);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
 		this.rr = rr;
 	}
 
 	@Override
-	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, docLoader);
-		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
-		domImpl.setDiagramElementFactory(def);
-		return out;
+	protected Kite9BridgeContext createBridgeContext(SVGOMDocument doc) {
+		if (bridgeContext == null) {
+			bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
+			DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
+			domImpl.setDiagramElementFactory(def);
+		}
+		
+		return bridgeContext;
 	}
 
 	protected Kite9DocumentFactory createDocumentFactory() {
@@ -98,7 +104,11 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
 		try {
 			input.setDocumentURI(uri);
-			DefsHandlingTemplater templater = new DefsHandlingTemplater(docLoader);
+			
+			CSSEngine engine = domImpl.createCSSEngine((ADLDocument) input, createBridgeContext());
+			((ADLDocument) input).setCSSEngine(engine);
+			XMLProcessor templater = new DefsHandlingTemplater(docLoader);
+			templater.processContents(input);
 			
 			super.transcode(input, uri, output);
 			

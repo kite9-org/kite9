@@ -163,8 +163,14 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	public StyleSheet createStyleSheet(Node node, HashTable pseudoAttrs) {
         throw new UnsupportedOperationException("StyleSheetFactory.createStyleSheet is not implemented"); // XXX
 	}
+	
+	
 
 	public CSSEngine createCSSEngine(AbstractStylableDocument doc, CSSContext ctx, ExtendedParser ep, ValueManager[] vms, ShorthandManager[] sms) {
+		if (doc.getCSSEngine() != null) {
+			return doc.getCSSEngine();
+		}
+		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
 		CSSEngine result = new SVG12CSSEngine(doc, durl, ep, vms, sms, ctx);
 		

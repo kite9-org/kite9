@@ -7,8 +7,8 @@ import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGSVGElement;
 
@@ -23,7 +23,7 @@ public class DefsHandlingTemplater extends AbstractTemplater {
 	}
 
 	@Override
-	protected ADLDocument loadReferencedDocument(String resource, Kite9XMLElement in) throws IOException {
+	protected ADLDocument loadReferencedDocument(String resource, StyledKite9SVGElement in) throws IOException {
 		boolean importDefs = (loader.checkCache(resource) == null);
 		ADLDocument out = super.loadReferencedDocument(resource, in);
 		

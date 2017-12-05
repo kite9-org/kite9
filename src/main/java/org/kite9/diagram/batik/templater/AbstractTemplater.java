@@ -6,16 +6,16 @@ import java.net.URI;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
-import org.kite9.diagram.batik.element.AbstractDOMDiagramElement;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Handles copying of XML from one document to another, and the CSS 'template' directive.
@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public abstract class AbstractTemplater implements Templater, Logable {
+public abstract class AbstractTemplater implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -45,37 +45,48 @@ public abstract class AbstractTemplater implements Templater, Logable {
 		this.loader = loader;
 	}
 
-	@Override
-	public void handleTemplateElement(Kite9XMLElement in, DiagramElement o) {
-		if (o instanceof AbstractDOMDiagramElement) {
-			AbstractDOMDiagramElement out = (AbstractDOMDiagramElement) o;
-			Value template = out.getCSSStyleProperty(CSSConstants.TEMPLATE);
-			if (template != ValueConstants.NONE_VALUE) {
-				String uri = template.getStringValue();
+	public void handleTemplateElement(StyledKite9SVGElement transform) {
+		Value template = transform.getCSSStyleProperty(CSSConstants.TEMPLATE);
+		if (template != ValueConstants.NONE_VALUE) {
+			String uri = template.getStringValue();
 
-				try {
-					// identify the fragment referenced in the other document
-					// and
-					// load it
-					URI u = new URI(uri);
-					String fragment = u.getFragment();
-					String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
-					ADLDocument templateDoc = loadReferencedDocument(resource, in);
-					Element e = templateDoc.getElementById(fragment);
-					
-					ContentElementHandlingCopier c = new ContentElementHandlingCopier(in);
-					c.processContents(e);
-					
-					log.send("Templated: ("+fragment+")\n"+new XMLHelper().toXML(in));
-					
-				} catch (Exception e) {
-					throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
-				}
+			try {
+				// identify the fragment referenced in the other document
+				// and
+				// load it
+				URI u = new URI(uri);
+				String fragment = u.getFragment();
+				String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
+				ADLDocument templateDoc = loadReferencedDocument(resource, transform);
+				Element e = templateDoc.getElementById(fragment);
+				
+				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
+				c.processContents(e);
+				
+				log.send("Templated: ("+fragment+")\n"+new XMLHelper().toXML(transform));
+				
+			} catch (Exception e) {
+				throw new Kite9ProcessingException("Couldn't resolve template: " + uri, e);
 			}
 		}
+		
 	}
 
-	protected ADLDocument loadReferencedDocument(String resource, @SuppressWarnings("unused") Kite9XMLElement in) throws IOException {
+	protected ADLDocument loadReferencedDocument(String resource, @SuppressWarnings("unused") StyledKite9SVGElement in) throws IOException {
 		return (ADLDocument) loader.loadDocument(resource);
 	}
+
+	@Override
+	public void processContents(Node n) {
+		if (n instanceof StyledKite9SVGElement) {
+			handleTemplateElement((StyledKite9SVGElement) n);
+		}
+		
+		NodeList contents = n.getChildNodes();
+		for (int i = 0; i < contents.getLength(); i++) {
+			processContents(contents.item(i));
+		}
+		 
+	}
+	
 }
