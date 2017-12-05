@@ -72,6 +72,13 @@
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' class="context-back" />
     </back>
   </template>
+  
+  <template id='show-box'>
+    <back style="kite9-usage: decal; kite9-type: svg;" >
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
+    </back>
+    <contents />
+  </template>
 
   <template id="generic-text">
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->

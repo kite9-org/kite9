@@ -75,11 +75,17 @@ glyph text-lines {
 
 symbol-text-line {
 	kite9-type: container;
-	kite9-sizing: minimize;
+	kite9-sizing: maximize;
 	kite9-layout: grid;
 	kite9-grid-size: 2 1;
+	/*kite9-template: url(template.svg#show-box) */
 } 
 
+symbol-text-line symbols {
+	kite9-sizing: maximize;
+	kite9-horizontal-align: right;
+	/*kite9-template: url(template.svg#show-box) */
+}
 
 context {
 	kite9-template: url(template.svg#context);
@@ -237,10 +243,9 @@ key {
 
 key text-lines {
 	kite9-type: container;
-	kite9-sizing: minimize;
+	kite9-sizing: maximize;
 	kite9-layout: vertical;
 }
-
 
 /* Classes And Styles */
 
@@ -253,7 +258,6 @@ key text-lines {
 .symbol {
 	font-size: 10px;
 	font-family: "opensans-bold-webfont";
-	text-align:  middle;
 	fill: white;
 	stroke: none;
 }
