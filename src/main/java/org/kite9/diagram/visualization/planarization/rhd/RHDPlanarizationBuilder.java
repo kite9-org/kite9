@@ -317,6 +317,9 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				rh.setPlacedPosition(l, ri);
 			}
 			ensureContainerBoundsAreLargeEnough(ri, c, lg);
+			
+			// leaf groups shouldn't have connections, so these won't get rendered
+			connections.handleLinks(lg);
 		}	
 	}
 	

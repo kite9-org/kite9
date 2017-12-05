@@ -22,6 +22,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
@@ -226,6 +227,17 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	protected void postProcess(Element out) {
+	}
+	
+	
+
+	@Override
+	public Element output(Document d) {
+		if (getRenderingInformation().isRendered()) {
+			return super.output(d);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
