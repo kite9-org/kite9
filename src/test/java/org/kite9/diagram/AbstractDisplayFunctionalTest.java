@@ -70,7 +70,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		fw.close();
 	}
 
-	private Checks checks() {
+	protected Checks checks() {
 		Checks out = new Checks();
 		out.everythingStraight = false;
 		out.checkNoHops = false;

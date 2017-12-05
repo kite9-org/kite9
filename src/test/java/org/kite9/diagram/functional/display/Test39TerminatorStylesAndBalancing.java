@@ -18,7 +18,6 @@ import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.LinkEndStyle;
 
-@Ignore
 public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctionalTest {
 
 	@Test

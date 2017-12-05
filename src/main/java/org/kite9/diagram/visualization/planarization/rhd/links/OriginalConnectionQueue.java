@@ -113,11 +113,13 @@ public class OriginalConnectionQueue implements ConnectionManager, Logable {
 		} else {
 			// self-links aren't allowed yet
 			LinkDetail internalLinks = g.getLink(g);
-			for (BiDirectional<Connected> l : internalLinks.getConnections()) {
-				if (l instanceof Connection) {
-					((Connection) l).getRenderingInformation().setRendered(false);
-				} else {
-					throw new LogicException("Not sure what this is: "+l);
+			if (internalLinks != null) {
+				for (BiDirectional<Connected> l : internalLinks.getConnections()) {
+					if (l instanceof Connection) {
+						((Connection) l).getRenderingInformation().setRendered(false);
+					} else {
+						throw new LogicException("Not sure what this is: "+l);
+					}
 				}
 			}
 		}
