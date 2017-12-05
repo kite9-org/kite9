@@ -67,12 +67,13 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
 		addFontSizeAndFamily(theElement, r, flowRoot);
-//		addStyleAndClass(theElement, r, flowRoot);
 		GraphicsNode gn = getGraphicsNode(flowRoot);
 		Element group = graphicsNodeToXML(d, gn);
-		removeFontSizeAndFamily(group);
-
-		theElement.appendChild(group);
+		
+		if (group != null ) {
+			removeFontSizeAndFamily(group);
+			theElement.appendChild(group);
+		}
 
 		return theElement;
 	}
