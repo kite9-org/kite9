@@ -33,11 +33,11 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		setDrawDirection(drawDirection);
 		
 		if (fromDecoration != null) {
-			setFromDecoration(new LinkTerminator(fromDecoration, true, this.getOwnerDocument()));
+			setFromDecoration(fromDecoration);
 		}
 
 		if (toDecoration != null) {
-			setToDecoration(new LinkTerminator(toDecoration, false, this.getOwnerDocument()));
+			setToDecoration(toDecoration);
 		}
 		
 		if (fromLabel!=null) {
@@ -51,10 +51,6 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		doc.addConnection(this);
 		
 	}
-	
-	public abstract Kite9XMLElement getFromDecoration();
-
-	public abstract Kite9XMLElement getToDecoration();
 
 	public Kite9XMLElement getFromLabel() {
 		return getProperty("fromLabel");
@@ -72,9 +68,17 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		}
 	}
 
-	public abstract void setFromDecoration(Kite9XMLElement fromDecoration);
+	public void setFromDecoration(String fromDecoration) {
+		Element fromElement = getProperty("from");
+		fromElement.setAttribute("id", createID());
+		fromElement.setAttribute("markerReference", fromDecoration);
+	}
 
-	public abstract void setToDecoration(Kite9XMLElement toDecoration);
+	public void setToDecoration(String toDecoration) {
+		Element fromElement = getProperty("to");
+		fromElement.setAttribute("id", createID());
+		fromElement.setAttribute("markerReference", toDecoration);
+	}
 
 	public void setFromLabel(Kite9XMLElement fromLabel) {
 	    replaceProperty("fromLabel", fromLabel);

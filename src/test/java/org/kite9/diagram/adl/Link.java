@@ -52,26 +52,6 @@ public class Link extends AbstractXMLConnectionElement {
 		this(id, from, to, fromStyle, fromLabel, toStyle, toLabel, d,  TESTING_DOCUMENT);
 	}
 
-	@Override
-	public Kite9XMLElement getFromDecoration() {
-		return getProperty("fromDecoration");
-	}
-
-	@Override
-	public Kite9XMLElement getToDecoration() {
-		return getProperty("toDecoration");
-	}
-
-	@Override
-	public void setFromDecoration(Kite9XMLElement fromDecoration) {
-		replaceProperty("fromDecoration", fromDecoration);
-	}
-
-	@Override
-	public void setToDecoration(Kite9XMLElement toDecoration) {
-		replaceProperty("toDecoration", toDecoration);
-	}
-
 	/**
 	 * Contains the ordering of the field within the diagram allLinks() list.
 	 */
