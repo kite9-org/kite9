@@ -13,4 +13,5 @@ public interface Terminator extends Rectangular {
 	
 	double getMargin();
 		
+	String getMarkerUrl();
 }

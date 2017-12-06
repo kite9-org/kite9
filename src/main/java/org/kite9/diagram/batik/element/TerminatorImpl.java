@@ -1,8 +1,5 @@
 package org.kite9.diagram.batik.element;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.Connection;
@@ -12,11 +9,15 @@ import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
+	
+	private Element markerElement;
+	private String reference;
 
 	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> rp) {
 		super(el, parent, ctx, rp);
@@ -24,6 +25,11 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 
 	@Override
 	protected void initialize() {
+		reference = theElement.getAttribute("markerReference");
+		if (reference.trim().length() > 0) {
+			ADLDocument owner = theElement.getOwnerDocument();
+			markerElement = owner.getChildElementById(owner, reference);
+		} 
 	}
 	
 	@Override
@@ -40,11 +46,13 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 
 	@Override
 	public double getReservedLength() {
+		ensureInitialized();
 		return 0;
 	}
 
 	@Override
 	public double getMargin() {
+		ensureInitialized();
 		return 0;
 	}
 
@@ -63,6 +71,16 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	protected Dimension2D getRectangularRenderedPosition() {
 		return new Dimension2D(10, 10);
 	}
-	
+
+	@Override
+	public String getMarkerUrl() {
+		ensureInitialized();
+		if (markerElement != null) {
+			return "url(#"+reference+")";
+		} else {
+			return null;
+		}
+	}
+
 	
 }

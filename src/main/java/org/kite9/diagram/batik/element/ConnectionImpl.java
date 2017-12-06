@@ -7,7 +7,6 @@ import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Painter;
 import org.kite9.diagram.batik.bridge.RoutePainter;
-import org.kite9.diagram.batik.bridge.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
@@ -243,6 +242,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
 		String path = SVGPath.toSVGPathData(gp, ctx);
 		out.put("path", path);
+		out.put("markerstart", fromDecoration.getMarkerUrl());
+		out.put("markerend", toDecoration.getMarkerUrl());
 		return out;
 	}
 
