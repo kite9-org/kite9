@@ -35,7 +35,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	protected double margin[] = new double[4];
 	
 	protected void initialize() {
-		System.err.println("initializing: "+this.getID()+" "+this.getTheElement().getAttribute("id"));
+		//System.err.println("initializing: "+this.getID()+" "+this.getTheElement().getAttribute("id"));
 		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
 		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 	}

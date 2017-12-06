@@ -67,7 +67,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	}
 
 	@Override
-	protected Kite9BridgeContext createBridgeContext(SVGOMDocument doc) {
+	protected Kite9BridgeContext createBridgeContext(String version) {
 		if (bridgeContext == null) {
 			bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
 			DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
