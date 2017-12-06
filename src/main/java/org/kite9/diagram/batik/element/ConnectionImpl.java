@@ -7,6 +7,7 @@ import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Painter;
 import org.kite9.diagram.batik.bridge.RoutePainter;
+import org.kite9.diagram.batik.bridge.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
@@ -41,11 +42,9 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		to = (Connected) toElement.getDiagramElement();
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
-		Kite9XMLElement fromDecorationEl = theElement.getProperty("fromDecoration");
-		this.fromDecoration = getTerminator(fromDecorationEl);
+		this.fromDecoration = getTerminator(fromElement);
 		
-		Kite9XMLElement toDecorationEl = theElement.getProperty("toDecoration");
-		this.toDecoration = getTerminator(toDecorationEl);
+		this.toDecoration = getTerminator(toElement);
 		
 		Kite9XMLElement fromLabelEl = theElement.getProperty("fromLabel");
 		this.fromLabel = getLabel(fromLabelEl);
@@ -61,11 +60,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 
 	private Terminator getTerminator(Kite9XMLElement el) {
-		if (el == null) {
-			el = (Kite9XMLElement) theElement.getOwnerDocument().createElement("terminator");
-			theElement.appendChild(el);
-		}
-		return (Terminator) el.getDiagramElement();
+		return (Terminator) new TerminatorImpl((StyledKite9SVGElement) el, this, ctx, new SVGLeafRectangularPainter(ctx));
 	}
 	
 	private Label getLabel(Kite9XMLElement el) {

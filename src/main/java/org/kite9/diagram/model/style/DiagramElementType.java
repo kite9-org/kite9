@@ -4,9 +4,7 @@ public enum DiagramElementType {
 
 	DIAGRAM, 
 	LINK, 
-	LINK_END, 
-	NONE, 
-	TERMINATOR, 
+	NONE,  
 	TEXT,
 	SVG, 
 	CONTAINER,

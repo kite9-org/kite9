@@ -135,7 +135,7 @@ link {
 
 from,
 to {
-	kite9-type: link-end;
+	kite9-type: none;
 } 
 
 /* Symbols */
@@ -214,20 +214,6 @@ arrow > label {
 arrow > label > contents {
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
-}
-
-terminator,
-fromDecoration, 
-toDecoration {
-	kite9-type: terminator;
-}
-
-.link-terminator {
-	kite9-margin: 0 5px 10px 5px;
-}
-
-.link-terminator.none {
-	kite9-margin: 0 0 0 0;
 }
 
 

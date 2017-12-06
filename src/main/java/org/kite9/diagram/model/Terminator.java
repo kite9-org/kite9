@@ -6,7 +6,7 @@ package org.kite9.diagram.model;
  * @author robmoffat
  *
  */
-public interface Terminator extends DiagramElement {
+public interface Terminator extends Rectangular {
 
 
 	double getReservedLength();
