@@ -136,20 +136,12 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	@Override
 	protected void postProcess(Element out) {
 		// work out translation
-		RectangleRenderingInformation rri = getRenderingInformation();
-		Dimension2D position = rri.getPosition();
-		if (getParent() instanceof Container) {
-			rri = ((Container) getParent()).getRenderingInformation();
-			Dimension2D parentPosition = rri.getPosition();
-			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());
-		}
+		Dimension2D position = getRectangularRenderedPosition();
 		
 		if ((position.x() != 0) || (position.y() != 0)) {
 			out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
 		}
-	}
-	
-	
+	}	
 
 	@Override
 	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
@@ -169,4 +161,16 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		Dimension2D size = rri.getSize();
 		return size;
 	}
+	
+	protected Dimension2D getRectangularRenderedPosition() {
+		RectangleRenderingInformation rri = getRenderingInformation();
+		Dimension2D position = rri.getPosition();
+		if (getParent() instanceof Container) {
+			rri = ((Container) getParent()).getRenderingInformation();
+			Dimension2D parentPosition = rri.getPosition();
+			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());
+		}
+		return position;
+	}
+
 }

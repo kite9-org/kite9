@@ -4,6 +4,7 @@ public enum DiagramElementType {
 
 	DIAGRAM, 
 	LINK, 
+	LINK_END, 
 	NONE,  
 	TEXT,
 	SVG, 

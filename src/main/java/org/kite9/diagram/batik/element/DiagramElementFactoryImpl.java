@@ -85,6 +85,8 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			}
 		case LINK:
 			return new ConnectionImpl(el, parent, context, new DirectSVGPainter<Connection>());
+		case LINK_END:
+			return new TerminatorImpl(el, parent, context, new SVGLeafRectangularPainter(context));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

@@ -1,5 +1,8 @@
 package org.kite9.diagram.batik.element;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.Connection;
@@ -7,8 +10,11 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
 
@@ -19,7 +25,6 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	@Override
 	protected void initialize() {
 	}
-
 	
 	@Override
 	public Container getContainer() {
@@ -42,4 +47,22 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	public double getMargin() {
 		return 0;
 	}
+
+	@Override
+	public Element output(Document d) {
+		// TODO Auto-generated method stub
+		return super.output(d);
+	}
+
+	@Override
+	protected Dimension2D getRectangularRenderedSize() {
+		return new Dimension2D(10, 10);
+	}
+	
+	@Override
+	protected Dimension2D getRectangularRenderedPosition() {
+		return new Dimension2D(10, 10);
+	}
+	
+	
 }

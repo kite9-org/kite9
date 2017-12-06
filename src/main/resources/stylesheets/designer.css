@@ -135,7 +135,7 @@ link {
 
 from,
 to {
-	kite9-type: none;
+	kite9-type: link-end;
 } 
 
 /* Symbols */

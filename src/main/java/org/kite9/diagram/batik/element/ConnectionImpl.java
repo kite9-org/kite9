@@ -42,9 +42,9 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		to = (Connected) toElement.getDiagramElement();
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
-		this.fromDecoration = getTerminator(fromElement);
+		this.fromDecoration = getTerminator(theElement.getProperty("from"));
 		
-		this.toDecoration = getTerminator(toElement);
+		this.toDecoration = getTerminator(theElement.getProperty("to"));
 		
 		Kite9XMLElement fromLabelEl = theElement.getProperty("fromLabel");
 		this.fromLabel = getLabel(fromLabelEl);
@@ -60,7 +60,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 
 	private Terminator getTerminator(Kite9XMLElement el) {
-		return (Terminator) new TerminatorImpl((StyledKite9SVGElement) el, this, ctx, new SVGLeafRectangularPainter(ctx));
+		return (Terminator) el.getDiagramElement();
 	}
 	
 	private Label getLabel(Kite9XMLElement el) {
