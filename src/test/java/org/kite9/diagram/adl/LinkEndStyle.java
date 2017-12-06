@@ -1,4 +1,4 @@
-package org.kite9.framework.xml;
+package org.kite9.diagram.adl;
 
 /**
  * Styles of link-end.  Can be either an arrow-head or unstyled in ADL.

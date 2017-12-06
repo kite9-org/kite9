@@ -33,11 +33,11 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 		setDrawDirection(drawDirection);
 		
 		if (fromDecoration != null) {
-	//		setFromDecoration(new LinkTerminator("fromDecoration", this.getOwnerDocument(), fromDecoration));
+			setFromDecoration(new LinkTerminator(fromDecoration, true, this.getOwnerDocument()));
 		}
 
 		if (toDecoration != null) {
-	//		setToDecoration(new LinkTerminator("toDecoration", this.getOwnerDocument(), toDecoration));
+			setToDecoration(new LinkTerminator(toDecoration, false, this.getOwnerDocument()));
 		}
 		
 		if (fromLabel!=null) {

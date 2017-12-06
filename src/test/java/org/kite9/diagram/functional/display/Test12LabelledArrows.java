@@ -10,8 +10,9 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.KeyHelper;
-import org.kite9.diagram.adl.LabelTextLine;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLineWithSymbols;
@@ -19,7 +20,6 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 
 
 public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
@@ -32,8 +32,8 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		Arrow i1 = new Arrow("arrow1", "i1");
 		
-		new Link(i1, a, null, null, null, new LabelTextLine("from"), Direction.LEFT);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new LabelTextLine("to"), Direction.RIGHT);
+		new Link(i1, a, null, null, null, new TextLabel("from"), Direction.LEFT);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to"), Direction.RIGHT);
 						
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);
@@ -47,8 +47,8 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		Arrow i1 = new Arrow("i1", "i1");
 		
-		new Link(i1, a, null, null, null, new LabelTextLine("from"), Direction.UP);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new LabelTextLine("to"), Direction.DOWN);
+		new Link(i1, a, null, null, null, new TextLabel("from"), Direction.UP);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to"), Direction.DOWN);
 						
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);
@@ -89,10 +89,10 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		Arrow i1 = new Arrow("i1");
 		
-		new Link(i1, a, null, null, null, new LabelTextLine("from the wild side"), Direction.UP);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new LabelTextLine("to the safe side"), Direction.DOWN);
+		new Link(i1, a, null, null, null, new TextLabel("from the wild side"), Direction.UP);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side"), Direction.DOWN);
 		
-		Context con = new Context("c1",createList(a, b, i1), true, new LabelTextLine("Container Label, oh the old container"), null);
+		Context con = new Context("c1",createList(a, b, i1), true, new TextLabel("Container Label, oh the old container"), null);
 				
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( con), null);
 		renderDiagram(d);
@@ -106,10 +106,10 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		Arrow i1 = new Arrow("i1", "i1");
 		
-		new Link(i1, a, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new LabelTextLine("to the safe side"), Direction.DOWN);
+		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side"), Direction.DOWN);
 		
-		Context con = new Context("c1",createList(a, b, i1), true, new LabelTextLine("Container Label\n oh the old container\nhas a very long and tedious label"), null);
+		Context con = new Context("c1",createList(a, b, i1), true, new TextLabel("Container Label\n oh the old container\nhas a very long and tedious label"), null);
 				
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con), null);
 		renderDiagram(d);
@@ -124,7 +124,7 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i2 = new Arrow("i2");
 		Arrow i3 = new Arrow("i3");
 		
-		new Link(i1, a, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
+		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
 		new Link(i2, a, null, null, LinkEndStyle.ARROW, null /* new LabelTextLine("to the safe side A") */, Direction.UP);
 		new Link(i3, a, null, null, LinkEndStyle.ARROW, null /* new LabelTextLine("to the safe side B") */, Direction.UP);
 		
@@ -143,10 +143,10 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		new TurnLink(i1, a, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog 1"), null);
-		new TurnLink(i1, b, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog 2"), null);
-		new TurnLink(i2, a, null, null, LinkEndStyle.ARROW, new LabelTextLine("to the safe side A"), null);
-		new TurnLink(i2, b, null, null, LinkEndStyle.ARROW, new LabelTextLine("to the safe side B"), null);
+		new TurnLink(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), null);
+		new TurnLink(i1, b, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), null);
+		new TurnLink(i2, a, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side A"), null);
+		new TurnLink(i2, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side B"), null);
 		
 				
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( a, i1, i2, b), null);
@@ -159,8 +159,8 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i1 = new Arrow("arrow", "i1");
 		Link l = new Link(i1, a);
 		l.setDrawDirection(Direction.RIGHT);
-		l.setFromLabel(new LabelTextLine("arrow-hello"));
-		l.setToLabel(new LabelTextLine("glyph-gopher"));
+		l.setFromLabel(new TextLabel("arrow-hello"));
+		l.setToLabel(new TextLabel("glyph-gopher"));
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, i1), null);
 		renderDiagram(d);
@@ -175,11 +175,11 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		Context c = new Context("c1", Collections.EMPTY_LIST, true, new LabelTextLine("Big C"), null);
-		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new LabelTextLine("Arrow Holder"), null);
+		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLabel("Big C"), null);
+		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLabel("Arrow Holder"), null);
 		
-		new Link(c, i1, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
-		new Link(c, i2, null, null, null, new LabelTextLine("from the wild side\ngoing east on the highway\nwith a frog 2"), Direction.RIGHT);
+		new Link(c, i1, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
+		new Link(c, i2, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), Direction.RIGHT);
 		
 		new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		
@@ -194,11 +194,11 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		Context c = new Context("c1", Collections.EMPTY_LIST, true, new LabelTextLine("Big C"), null);
-		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new LabelTextLine(""), null);
+		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLabel("Big C"), null);
+		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLabel(""), null);
 		
-		new Link(c, i1, null, null, null, new LabelTextLine(null), Direction.RIGHT);
-		new Link(c, i2, null, null, null, new LabelTextLine("  "), Direction.RIGHT);
+		new Link(c, i1, null, null, null, new TextLabel(null), Direction.RIGHT);
+		new Link(c, i2, null, null, null, new TextLabel("  "), Direction.RIGHT);
 		
 		new Link(i1, i2, null, null, null, null, Direction.DOWN);
 		

@@ -9,4 +9,8 @@ package org.kite9.diagram.model;
 public interface Terminator extends DiagramElement {
 
 
+	double getReservedLength();
+	
+	double getMargin();
+		
 }

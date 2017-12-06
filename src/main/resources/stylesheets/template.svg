@@ -19,6 +19,15 @@
         <svg:feMergeNode in="SourceGraphic"/> 
       </svg:feMerge>
     </svg:filter>
+
+    <svg:marker id="markerCircle" markerWidth="8" markerHeight="8" refX="5" refY="5" style="kite9-type: terminator; ">
+      <svg:circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"></svg:circle>
+    </svg:marker>
+  
+    <svg:marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto" style="kite9-type: terminator; ">
+      <svg:path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"></svg:path>
+    </svg:marker>
+    
   </svg:defs>
 
   <template id='glyph'>
@@ -149,7 +158,7 @@
   
   <template id="link">
     <contents />
-    <svg:path d="{path}" class="link" />
+    <svg:path d="{path}" class="link" style="marker-start: url(#markerCircle); marker-end: url(#markerArrow)"/>
   </template>
   
   <template id="diagram">

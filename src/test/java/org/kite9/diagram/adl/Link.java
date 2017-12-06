@@ -41,7 +41,7 @@ public class Link extends AbstractXMLConnectionElement {
 	}
 
 	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel) {
-		super(from.getID()+"-"+to.getID(), "link",  from, to, null, null, fromLabel, null, toLabel, TESTING_DOCUMENT);
+		super(from.getID()+"-"+to.getID(), "link",  from, to, null, fromStyle, fromLabel, toStyle, toLabel, TESTING_DOCUMENT);
 	}
 
 	public Link(String id, Kite9XMLElement from, Kite9XMLElement to) {
@@ -60,12 +60,6 @@ public class Link extends AbstractXMLConnectionElement {
 	@Override
 	public Kite9XMLElement getToDecoration() {
 		return getProperty("toDecoration");
-	}
-	
-	private void setDecoration(String name, Object d) {
-		Kite9XMLElement e = (Kite9XMLElement) ownerDocument.createElement(name);
-		e.setTextContent((String) d);
-		replaceProperty(name, e);
 	}
 
 	@Override
