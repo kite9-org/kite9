@@ -19,6 +19,8 @@ import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
@@ -55,11 +57,13 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		if (!"".equals(rank)) {
 			this.rank = Integer.parseInt(rank);
 		}
+		
+		this.minimumLength = theElement.getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
 	}
 
 
-	private Terminator getTerminator(Kite9XMLElement el) {
-		return (Terminator) el.getDiagramElement();
+	private TerminatorImpl getTerminator(Kite9XMLElement el) {
+		return (TerminatorImpl) el.getDiagramElement();
 	}
 	
 	private Label getLabel(Kite9XMLElement el) {
@@ -101,11 +105,12 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	private Connected from;
 	private Connected to;
 	private Direction drawDirection;
-	private Terminator fromDecoration;
-	private Terminator toDecoration;
+	private TerminatorImpl fromDecoration;
+	private TerminatorImpl toDecoration;
 	private Label fromLabel;
 	private Label toLabel;
 	private int rank;
+	private double minimumLength;
 	
 
 	@Override
@@ -245,6 +250,22 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		out.put("markerstart", fromDecoration.getMarkerUrl());
 		out.put("markerend", toDecoration.getMarkerUrl());
 		return out;
+	}
+
+	@Override
+	public Terminator getDecorationForEnd(DiagramElement end) {
+		if (from == end) {
+			return fromDecoration;
+		} else if (to == end) {
+			return toDecoration;
+		} else {
+			throw new LogicException("Trying to get decoration for not-an-end");
+		}
+	}
+
+	@Override
+	public double getMinimumLength() {
+		return minimumLength;
 	}
 
 	

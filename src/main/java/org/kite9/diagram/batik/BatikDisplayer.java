@@ -1,5 +1,6 @@
 package org.kite9.diagram.batik;
 
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -57,35 +58,35 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 			return 0;
 		}
 	}
-
-	@Override
-	public double getLinkGutter(Rectangular element, Direction d) {
-		return 10;
+	
+	protected double getLinkGutter(Connected along, Terminator a, Terminator b) {
+		double length = along.getLinkGutter();
+		length = Math.max(length, a.getMargin() + b.getMargin());
+		return length;
 	}
 
 	@Override
-	public double getLinkMinimumLength(Connection element) {
-		return 10;
-	}
-
-	@Override
-	public double getTerminatorLength(Terminator terminator) {
-		return 5;
-	}
-
-	@Override
-	public double getTerminatorReserved(Terminator terminator, Connection on) {
-		return 5;
-	}
-
-	@Override
-	public double getLinkInset(Rectangular element, Direction d) {
-		return 5;
+	public double getLinkMinimumLength(Connection element, boolean starting, boolean ending) {
+		double length = element.getMinimumLength();
+		if (starting) {
+			length += element.getFromDecoration().getReservedLength();
+		} 
+		
+		if (ending) {
+			length += element.getToDecoration().getReservedLength();
+		}
+		
+		return length;
 	}
 
 	@Override
 	public boolean requiresHopForVisibility(Connection a, Connection b) {
 		return true;
+	}
+
+	@Override
+	protected double getLinkInset(Connected element, Direction d) {
+		return element.getLinkInset();
 	}
 
 }

@@ -58,4 +58,10 @@ public interface CSSConstants {
 	public static final String VERTICAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX+"vertical-align";
 	public static final String HORIZONTAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX+"horizontal-align";
 	
+	// Length settings
+	public static final String LINK_INSET = KITE9_CSS_PROPERTY_PREFIX+"link-inset";
+	public static final String LINK_GUTTER = KITE9_CSS_PROPERTY_PREFIX+"link-gutter";
+	public static final String LINK_MINIMUM_LENGTH = KITE9_CSS_PROPERTY_PREFIX+"link-minimum-length";
+	
+	
 }

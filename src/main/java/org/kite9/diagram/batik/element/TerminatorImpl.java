@@ -11,13 +11,14 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
 	
 	private Element markerElement;
 	private String reference;
+	private double margin;
+	private double reservedLength;
 
 	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> rp) {
 		super(el, parent, ctx, rp);
@@ -47,19 +48,13 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	@Override
 	public double getReservedLength() {
 		ensureInitialized();
-		return 0;
+		return reservedLength;
 	}
 
 	@Override
 	public double getMargin() {
 		ensureInitialized();
-		return 0;
-	}
-
-	@Override
-	public Element output(Document d) {
-		// TODO Auto-generated method stub
-		return super.output(d);
+		return margin;
 	}
 
 	@Override
@@ -72,7 +67,6 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 		return new Dimension2D(10, 10);
 	}
 
-	@Override
 	public String getMarkerUrl() {
 		ensureInitialized();
 		if (markerElement != null) {

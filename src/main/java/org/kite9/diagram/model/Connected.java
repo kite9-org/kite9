@@ -32,5 +32,15 @@ public interface Connected extends Rectangular {
 	Connection getConnectionTo(Connected c);
 	
 	ConnectionsSeparation getConnectionsSeparationApproach();
+
+	/**
+	 * The minimum distance between two links on any side of the Connected.
+	 */
+	double getLinkGutter();
+
+	/**
+	 * The minimum distance from the start of a link and the corner of this connected.
+	 */
+	double getLinkInset();
 }
 

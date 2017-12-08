@@ -74,6 +74,10 @@
       </front>
     </svg:g>
   </template>
+  
+  <template id='empty-terminator'>
+    <svg:rect x='0' y='0' width='{x1}' height='{y1}' style='fill: none; stroke: red; ' />
+  </template>
 
   <template id='context'>
     <contents />

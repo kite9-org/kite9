@@ -136,6 +136,7 @@ link {
 from,
 to {
 	kite9-type: link-end;
+	kite9-template: url(template.svg#empty-terminator)
 } 
 
 /* Symbols */

@@ -13,12 +13,14 @@ public interface Connection extends DiagramElement, BiDirectional<Connected> {
 	/**
 	 * The shape of the end of the edge at the from end
 	 */
-	public org.kite9.diagram.model.Terminator getFromDecoration();
+	public Terminator getFromDecoration();
 	
 	/**
 	 * The shape of the end of the edge at the to end
 	 */
-	public org.kite9.diagram.model.Terminator getToDecoration();
+	public Terminator getToDecoration();
+	
+	public Terminator getDecorationForEnd(DiagramElement end);
 	
 	/**
 	 * The text written on the from end
@@ -48,4 +50,9 @@ public interface Connection extends DiagramElement, BiDirectional<Connected> {
 	 * the corner of the element it connects to.
 	 */
 	public double getPadding(Direction d);
+
+	/**
+	 * Smallest length this connection can have (when terminators are zero-size)
+	 */
+	public double getMinimumLength();
 }

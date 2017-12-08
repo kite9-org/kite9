@@ -34,10 +34,14 @@ public abstract class AbstractConnectedDiagramElement extends AbstractCompactedR
 		super.initialize();
 		Diagram d = getDiagram();
 		links = d.getConnectionsFor(this.getID());
+		linkGutter = theElement.getCSSStyleProperty(CSSConstants.LINK_GUTTER).getFloatValue();
+		linkInset = theElement.getCSSStyleProperty(CSSConstants.LINK_INSET).getFloatValue();
 	}
 
 
 	private Collection<Connection> links;
+	private double linkGutter;
+	private double linkInset;
 
 	@Override
 	public Collection<Connection> getLinks() {
@@ -63,6 +67,16 @@ public abstract class AbstractConnectedDiagramElement extends AbstractCompactedR
 	public ConnectionsSeparation getConnectionsSeparationApproach() {
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONNECTIONS_PROPERTY);
 		return (ConnectionsSeparation) ev.getTheValue();
+	}
+
+	@Override
+	public double getLinkGutter() {
+		return linkGutter;
+	}
+
+	@Override
+	public double getLinkInset() {
+		return linkInset;
 	}
 	
 	

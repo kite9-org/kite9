@@ -159,14 +159,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 			super.setAttribute(name, value);
 		}		
 	}
-//
-//	public Object getParent() {
-//		return parent;
-//	}
-//
-//	public void setParent(Object parent) {
-//		this.parent = parent;
-//	}
 
 	public void setOwnerDocument(ADLDocument doc) {
 		this.ownerDocument = doc;
@@ -283,10 +275,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
 		this.sm = sm;
 	}
-//
-//	public String getCSSClass() {
-//		return getAttribute("class");
-//	}
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;

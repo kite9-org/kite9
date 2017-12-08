@@ -32,7 +32,6 @@ import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the
