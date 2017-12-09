@@ -20,8 +20,6 @@ import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.HorizontalAlignment;
-import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -119,5 +117,15 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public int getGridRows() {
 		return 1;
+	}
+
+	@Override
+	public double getLinkGutter() {
+		return 0;
+	}
+
+	@Override
+	public double getLinkInset() {
+		return 0;
 	}
 }

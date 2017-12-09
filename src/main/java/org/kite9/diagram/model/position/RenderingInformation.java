@@ -1,11 +1,5 @@
 package org.kite9.diagram.model.position;
 
-import java.util.List;
-
-import org.w3c.dom.Element;
-
-
-
 /**
  * This holds formatting information for the graphical renderer to use.
  * 
@@ -20,13 +14,6 @@ public interface RenderingInformation {
 	public boolean isRendered();
 
 	public abstract void setRendered(boolean r);
- 
-	/**
-	 * For storing format-specific rendering details.
-	 */
-	public List<Element> getDisplayData();
-	
-	public void setDisplayData(List<Element> o);
 	
 	public Dimension2D getPosition();
 

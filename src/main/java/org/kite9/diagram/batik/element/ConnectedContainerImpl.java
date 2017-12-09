@@ -73,11 +73,6 @@ public class ConnectedContainerImpl extends AbstractConnectedDiagramElement impl
 
 	@Override
 	public CostedDimension getSize(Dimension2D within) {
-		double left = getPadding(Direction.LEFT);
-		double right = getPadding(Direction.RIGHT);
-		double up = getPadding(Direction.UP);
-		double down = getPadding(Direction.DOWN);
-		return new CostedDimension(left + right, up + down, CostedDimension.UNBOUNDED);
-	}
-	
+		return getSizeBasedOnPadding();
+	}	
 }

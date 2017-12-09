@@ -3,8 +3,6 @@ package org.kite9.diagram.model;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.HorizontalAlignment;
-import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
  * Interface for rectangular elements that can affect their own sizes.  i.e. not `Decal`s, which
@@ -23,10 +21,6 @@ public interface SizedRectangular extends Rectangular {
 	 */
 	public double getPadding(Direction d);
 	
-	
-	public VerticalAlignment getVerticalAlignment();
-	
-	public HorizontalAlignment getHorizontalAlignment();
 	
 	public CostedDimension getSize(Dimension2D within);
 

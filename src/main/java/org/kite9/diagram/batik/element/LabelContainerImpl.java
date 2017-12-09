@@ -50,11 +50,6 @@ public class LabelContainerImpl extends AbstractLabelImpl implements Label, Cont
 	}
 
 	@Override
-	public boolean hasContent() {
-		return true;
-	}
-
-	@Override
 	public DiagramElementSizing getSizing() {
 		ensureInitialized();
 		return this.sizing;

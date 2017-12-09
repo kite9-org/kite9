@@ -14,8 +14,6 @@ import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 
-import com.sun.scenario.effect.BoxShadow;
-
 /**
  * This connection is used with a {@link ContainerLayoutEdge} and is used to create a layout between
  * two elements of a container.  
@@ -104,6 +102,16 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 
 	@Override
 	public double getPadding(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public Terminator getDecorationForEnd(DiagramElement end) {
+		return null;
+	}
+
+	@Override
+	public double getMinimumLength() {
 		return 0;
 	}
 

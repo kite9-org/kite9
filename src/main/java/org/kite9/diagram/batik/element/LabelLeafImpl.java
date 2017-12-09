@@ -23,11 +23,6 @@ public class LabelLeafImpl extends AbstractLabelImpl implements Label, Leaf {
 		super(el, parent, ctx, lo);
 	}
 
-	@Override
-	public boolean hasContent() {
-		return !getText().isEmpty();
-	}
-	
 	public String getText() {
 		ensureInitialized();
 		return theElement.getTextContent().trim();

@@ -161,8 +161,8 @@
   </template>
   
   <template id="link">
-    <contents />
     <svg:path d="{path}" class="link" style="marker-start: {markerstart}; marker-end: {markerend}"/>
+    <contents />
   </template>
   
   <template id="diagram">

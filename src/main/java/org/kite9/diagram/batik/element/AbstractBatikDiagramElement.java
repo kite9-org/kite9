@@ -3,6 +3,7 @@ package org.kite9.diagram.batik.element;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -10,8 +11,10 @@ import org.kite9.diagram.batik.bridge.Painter;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.xml.AbstractStyleableXMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,20 +38,29 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	protected double margin[] = new double[4];
 	
 	protected void initialize() {
-		//System.err.println("initializing: "+this.getID()+" "+this.getTheElement().getAttribute("id"));
-		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
-		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
+		initializeDirectionalCssValues(theElement, padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
+		initializeDirectionalCssValues(theElement, margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
+	}
+	
+	public double getMargin(Direction d) {
+		ensureInitialized();
+		return margin[d.ordinal()];
 	}
 
-	private void initializeDirectionalCssValues(double[] vals, String prefix) {
-		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+CSSConstants.TOP);
-		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
-		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
-		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
+	public double getPadding(Direction d) {
+		ensureInitialized();
+		return padding[d.ordinal()];
 	}
 
-	private double getCssDoubleValue(String prop) {
-		Value v = getCSSStyleProperty(prop);
+	protected static void initializeDirectionalCssValues(CSSStylableElement el, double[] vals, String prefix) {
+		vals[Direction.UP.ordinal()] = getCssDoubleValue(el, prefix+CSSConstants.TOP);
+		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(el, prefix+CSSConstants.BOTTOM);
+		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(el, prefix+CSSConstants.LEFT);
+		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(el, prefix+CSSConstants.RIGHT);	
+	}
+
+	private static double getCssDoubleValue(CSSStylableElement el,String prop) {
+		Value v = AbstractStyleableXMLElement.getCSSStyleProperty(el, prop);
 		return v.getFloatValue();
 	}
 
@@ -71,7 +83,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	
-	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
+	protected Map<String, String> getReplacementMap(@SuppressWarnings("unused") StyledKite9SVGElement theElement) {
 		return new HashMap<>();
 	}
 
@@ -100,4 +112,13 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		
 		new ValueReplacingProcessor(valueReplacer).processContents(child);
 	}
+	
+	protected CostedDimension getSizeBasedOnPadding() {
+		double left = getPadding(Direction.LEFT);
+		double right = getPadding(Direction.RIGHT);
+		double up = getPadding(Direction.UP);
+		double down = getPadding(Direction.DOWN);
+		return new CostedDimension(left + right, up + down, CostedDimension.UNBOUNDED);
+	}
+
 }

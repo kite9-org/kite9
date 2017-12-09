@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.element;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
+import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Direction;
@@ -11,7 +12,7 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
-public abstract class AbstractCompactedRectangularDiagramElement extends AbstractRectangularDiagramElement implements SizedRectangular {
+public abstract class AbstractCompactedRectangularDiagramElement extends AbstractRectangularDiagramElement implements SizedRectangular, AlignedRectangular {
 
 	public AbstractCompactedRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<?> rp) {
 		super(el, parent, ctx, rp);
@@ -20,17 +21,7 @@ public abstract class AbstractCompactedRectangularDiagramElement extends Abstrac
 	private VerticalAlignment verticalAlignment;
 	private HorizontalAlignment horizontalAlignment;
 
-	@Override
-	public double getMargin(Direction d) {
-		ensureInitialized();
-		return margin[d.ordinal()];
-	}
 
-	public double getPadding(Direction d) {
-		ensureInitialized();
-		return padding[d.ordinal()];
-	}
-	
 	
 
 	@Override

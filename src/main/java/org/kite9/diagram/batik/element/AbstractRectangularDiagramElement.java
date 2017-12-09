@@ -11,6 +11,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -50,8 +51,6 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	public void setRenderingInformation(RenderingInformation ri) {
 		this.ri = (RectangleRenderingInformation) ri;
 	}
-	
-
 
 	public List<DiagramElement> getContents() {
 		ensureInitialized();

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.batik.anim.dom.SVGGraphicsElement;
 import org.apache.batik.css.engine.CSSEngine;
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
@@ -286,9 +287,13 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public Value getCSSStyleProperty(String name) {
-		CSSEngine e = getOwnerDocument().getCSSEngine();
+		return getCSSStyleProperty(this, name);
+	}
+
+	public static Value getCSSStyleProperty(CSSStylableElement el, String name) {
+		CSSEngine e = ((ADLDocument) el.getOwnerDocument()).getCSSEngine();
 		int pi = e.getPropertyIndex(name);
-		return e.getComputedStyle(this, null, pi);
+		return e.getComputedStyle(el, null, pi);
 	}
 
 	@Override

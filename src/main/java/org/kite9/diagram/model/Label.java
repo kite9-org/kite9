@@ -6,8 +6,6 @@ package org.kite9.diagram.model;
  * however they don't have connections so they are excluded from the Planarization phase.
  */
 public interface Label extends Rectangular {
-	
-	public boolean hasContent();
-	
+		
 	public boolean isConnectionLabel();
 }

@@ -130,7 +130,6 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 10f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 10f));
 
-		
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

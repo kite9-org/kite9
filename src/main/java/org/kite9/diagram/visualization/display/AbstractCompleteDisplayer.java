@@ -79,17 +79,17 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			double inset = getMargin(a, aSide);
 			double margin = getMargin(b, bSide);
 			double length = Math.max(inset, margin);
-			return incorporateAlongMinimumLength(along, d, length, a, b);
+			return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
 		} else {
 			// we are inside a, so use the padding distance
 			double inset = getPadding(a, d);
 			double margin = getMargin(b, Direction.reverse(d));
 			double length = Math.max(inset, margin);
-			return incorporateAlongMinimumLength(along, d, length, a, b);
+			return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
 		}
 	}
 
-	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, DiagramElement b) {
+	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
 			Connection c = (Connection) along;
 			boolean starting = c.getFrom() == a || c.getFrom() == b;
@@ -106,7 +106,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 				// the gutter space between two connections arriving on a side
 				Terminator startA = ((Connection)a).getDecorationForEnd(along);
 				Terminator startB = ((Connection)b).getDecorationForEnd(along);
-				return getLinkGutter((Connected) along, startA, startB);
+				return getLinkGutter((Connected) along, startA, aSide, startB, bSide);
 			} else {
 				// sides of a rectangle or something
 				return 0;
@@ -137,7 +137,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			length = 0;
 		}
 		
-		return incorporateAlongMinimumLength(along, d, length,a ,b);
+		return incorporateAlongMinimumLength(along, d, length,a, aSide, b, bSide);
 	}
 
 	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
@@ -146,7 +146,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			
 		}
 		double margin = concave ? calculateMargin(a, aSide, b, bSide) : 0;
-		margin = incorporateAlongMinimumLength(along, d, margin, a, b);
+		margin = incorporateAlongMinimumLength(along, d, margin, a, aSide, b, bSide);
 		return margin;
 	}
 
@@ -191,7 +191,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	 * This is the amount of space along the side of "along" that should be reserved between two
 	 * connections.   Should also consider the amount of room required for the terminators.
 	 */
-	protected abstract double getLinkGutter(Connected along, Terminator a, Terminator b);
+	protected abstract double getLinkGutter(Connected along, Terminator a, Direction aSide, Terminator b, Direction bSide);
 
 	public String getPrefix() {
 		return "DD  ";

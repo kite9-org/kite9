@@ -13,7 +13,7 @@ import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
@@ -76,14 +76,14 @@ public class SegmentBuilder implements Logable {
 			return decideConnectionSegmentAlignStyle(s, de);
 		} else if (conns.size() == 0) {
 			UnderlyingInfo toUse = s.getUnderlyingInfo().stream()
-				.filter(ui -> ui.getDiagramElement() instanceof SizedRectangular)
+				.filter(ui -> ui.getDiagramElement() instanceof AlignedRectangular)
 				.sorted((a, b) -> ((Integer) ((Rectangular) a.getDiagramElement()).getDepth())
 					.compareTo(((Rectangular)b.getDiagramElement()).getDepth()))
 				.findFirst().orElse(null);
 			
 			
 			if (toUse != null) {
-				AlignStyle out = decideRectangularAlignStyle(s, (SizedRectangular) toUse.getDiagramElement()); 
+				AlignStyle out = decideRectangularAlignStyle(s, (AlignedRectangular) toUse.getDiagramElement()); 
 				return out;
 			}
 			
@@ -95,7 +95,7 @@ public class SegmentBuilder implements Logable {
 		
 	}
 	
-	private AlignStyle decideRectangularAlignStyle(Segment s, SizedRectangular de) {
+	private AlignStyle decideRectangularAlignStyle(Segment s, AlignedRectangular de) {
 		DiagramElementSizing des = de instanceof Container ? ((Container)de).getSizing() : null;
 		
 		if ((des == DiagramElementSizing.MINIMIZE) || (des == null)) {

@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.compaction.slideable;
 
 import java.util.List;
 
-import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -49,7 +49,7 @@ public abstract class AbstractAlignmentCompactionStep extends AbstractCompaction
 	}
 
 	private boolean hasSegments(DiagramElement e, Compaction c) {
-		return (e instanceof SizedRectangular); 
+		return (e instanceof AlignedRectangular); 
 	}
 
 	protected abstract void alignRectangular(Rectangular de, Compaction c);
