@@ -32,7 +32,12 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	@Override
 	protected void initialize() {
 		super.initialize();
-		reference = theElement.getCSSStyleProperty(CSSConstants.MARKER_REFERENCE);
+		
+		boolean from = ((Connection)parent).getFromDecoration() == this;
+		
+		reference = from ? theElement.getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
+			theElement.getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
+		
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
 			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);

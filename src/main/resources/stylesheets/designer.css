@@ -142,17 +142,20 @@ to {
 
 from.circle,
 to.circle {
-	kite9-marker-reference: url(template.svg#circle-marker)
+	kite9-marker-start-reference: url(template.svg#circle-marker);
+	kite9-marker-end-reference: url(template.svg#circle-marker);
 }
 
 from.arrow,
 to.arrow {
-	kite9-marker-reference: url(template.svg#arrow-marker)
+	kite9-marker-start-reference: url(template.svg#arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#arrow-end-marker);
 }
 
 from.arrow-open,
 to.arrow-open {
-	kite9-marker-reference: url(template.svg#arrow-open-marker)
+	kite9-marker-start-reference: url(template.svg#arrow-open-start-marker);
+	kite9-marker-end-reference: url(template.svg#arrow-open-end-marker);
 }
 
 from.gap,
@@ -162,19 +165,22 @@ to.gap {
 
 from.diamond, 
 to.diamond {
-	kite9-marker-reference: url(template.svg#diamond-marker)
+	kite9-marker-start-reference: url(template.svg#diamond-marker);
+	kite9-marker-end-reference: url(template.svg#diamond-marker);
 	
 }
 
 from.diamond-open, 
 to.diamond-open {
-	kite9-marker-reference: url(template.svg#diamond-open-marker)
+	kite9-marker-start-reference: url(template.svg#diamond-open-marker);
+	kite9-marker-end-reference: url(template.svg#diamond-open-marker);
 	
 }
 
 from.barbed-arrow, 
 to.barbed-arrow {
-	kite9-marker-reference: url(template.svg#barbed-arrow-marker);
+	kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
 	kite9-padding: 20px 20px 20px 20px; 
 }
 
