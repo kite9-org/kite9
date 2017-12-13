@@ -110,7 +110,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		Glyph two = new Glyph("two", "", "two", null, null);
 
 		Link l = new Link(con1, two, null, null, null, null, Direction.DOWN);
-		l.setShapeName("INVISIBLE");
+		l.setAttribute("class", "INVISIBLE");
 		new Link(one, two);
 
 		

@@ -116,7 +116,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		renderDiagram(d);
 	}
 	
-	public static final String[] STYLES = {"ARROW", "ARROW OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND OPEN", "BARBED ARROW"};
+	public static final String[] STYLES = {"ARROW", "ARROW-OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND-OPEN", "BARBED-ARROW"};
 	@Test 
 	public void test_39_9_AllTheTerminators2012() throws Exception {
 		List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>();

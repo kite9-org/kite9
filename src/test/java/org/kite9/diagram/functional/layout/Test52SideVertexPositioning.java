@@ -3,7 +3,6 @@ package org.kite9.diagram.functional.layout;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
@@ -28,7 +27,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Context c5 = new Context("five", listOf(g6), true, null, null);
 		List<Kite9XMLElement> contexts = Test51Grid.createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
 		new Link(g2, g6);
 		new Link(ctx, c5, null, null, null, null, Direction.RIGHT);
@@ -46,7 +45,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Context c5 = new Context("five", listOf(g6), true, null, null);
 		List<Kite9XMLElement> contexts = Test51Grid.createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
 		new Link(g2, g6);
 		new Link(ctx, c5, null, null, null, null, Direction.DOWN);
@@ -122,7 +121,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Context c5 = new Context("five", listOf(g6), true, null, null);
 		List<Kite9XMLElement> contexts = Test51Grid.createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
-		ctx.setStyle("layout: grid; grid-size: 2 2;");
+		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
 		new Link(g2, g6);
 		new Link(ctx, c5, null, null, null, null, Direction.DOWN);

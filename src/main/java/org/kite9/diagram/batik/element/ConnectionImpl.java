@@ -244,7 +244,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		Map<String, String> out = super.getReplacementMap(theElement);
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(theElement.getOwnerDocument(), null);
-		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), routePainter.NULL_END_DISPLAYER, routePainter.NULL_END_DISPLAYER, routePainter.LINK_HOP_DISPLAYER, false);
+		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), fromDecoration, toDecoration, routePainter.LINK_HOP_DISPLAYER, false);
 		String path = SVGPath.toSVGPathData(gp, ctx);
 		out.put("path", path);
 		out.put("markerstart", fromDecoration.getMarkerUrl());

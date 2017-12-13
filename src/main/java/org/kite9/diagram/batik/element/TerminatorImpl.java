@@ -6,6 +6,7 @@ import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
+import org.kite9.diagram.batik.bridge.RoutePainter.EndDisplayer;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -19,7 +20,7 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
-public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
+public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator, EndDisplayer {
 	
 	private SVGOMMarkerElement markerElement;
 	private Value reference;
@@ -30,6 +31,7 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 
 	@Override
 	protected void initialize() {
+		super.initialize();
 		reference = theElement.getCSSStyleProperty(CSSConstants.MARKER_REFERENCE);
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();

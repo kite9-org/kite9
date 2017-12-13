@@ -18,5 +18,5 @@ public class PaddingLengthManager extends MarginLengthManager {
 	public boolean isInheritedProperty() {
 		return false;
 	}
-
+	
 }

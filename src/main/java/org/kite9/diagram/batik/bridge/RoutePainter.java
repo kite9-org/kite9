@@ -32,16 +32,13 @@ public class RoutePainter {
 	}
 
 	
-	static interface EndDisplayer {
+	public static interface EndDisplayer {
 		
-		public void draw(Graphics2D gp, Paint lineColour, Paint fillColour);
-
 		/**
 		 * Call this method before draw to set the position of the EndDisplayer
 		 */
 		public void reserve(Move m, boolean start);
 		
-		public Shape getTerminatorPerimeterShape();
 	}
 	
 	static interface LineDisplayer {
@@ -55,16 +52,7 @@ public class RoutePainter {
 	public final EndDisplayer NULL_END_DISPLAYER = new EndDisplayer() {
 
 		@Override
-		public void draw(Graphics2D gp, Paint lineColour, Paint fillColour) {
-		}
-
-		@Override
 		public void reserve(Move m, boolean start) {
-		}
-
-		@Override
-		public Shape getTerminatorPerimeterShape() {
-			return null;
 		}
 	};
 	

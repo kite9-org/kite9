@@ -20,11 +20,28 @@
       </svg:feMerge>
     </svg:filter>
 
-    <svg:marker id="CIRCLE" markerWidth="8" markerHeight="8" refX="5" refY="5">
+    <svg:marker id="circle-marker" markerWidth="8" markerHeight="8" refX="5" refY="5">
       <svg:circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"></svg:circle>
     </svg:marker>
+    
+    <svg:marker id="diamond-marker" markerWidth="20" markerHeight="20" refX="5" refY="5">
+      <svg:path d="M 5,5 l6 -5 l6 5 l-6 5z" style="stroke: none; fill:#000000;"></svg:path>
+    </svg:marker>
+    
+    <svg:marker id="diamond-open-marker" markerWidth="20" markerHeight="20" refX="5" refY="5">
+      <svg:path d="M 5,5 l6 -5 l6 5 l-6 5z" style="stroke-width: 1px; stroke: black; fill: none;"></svg:path>
+    </svg:marker>
   
-    <svg:marker id="ARROW" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+    <svg:marker id="barbed-arrow-marker" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+      <svg:path d="M2,2 L10,6 L2,11" style="stroke-width: 1px; stroke: black; fill: none;"></svg:path>
+    </svg:marker>
+  
+    
+    <svg:marker id="arrow-open-marker" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+      <svg:path d="M2,2 L2,11 L10,6 L2,2" style="stroke-width: 1px; stroke: black; fill: none;"></svg:path>
+    </svg:marker>
+  
+    <svg:marker id="arrow-marker" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
       <svg:path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"></svg:path>
     </svg:marker>
     

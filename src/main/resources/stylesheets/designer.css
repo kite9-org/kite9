@@ -136,18 +136,48 @@ link {
 from,
 to {
 	kite9-type: link-end;
-	kite9-template: url(template.svg#empty-terminator)
+	kite9-template: url(template.svg#empty-terminator);
+	kite9-padding: 5px 5px 5px 5px; 
 } 
 
 from.circle,
 to.circle {
-	kite9-marker-reference: url(template.svg#CIRCLE)
+	kite9-marker-reference: url(template.svg#circle-marker)
 }
 
 from.arrow,
 to.arrow {
-	kite9-marker-reference: url(template.svg#ARROW)
+	kite9-marker-reference: url(template.svg#arrow-marker)
 }
+
+from.arrow-open,
+to.arrow-open {
+	kite9-marker-reference: url(template.svg#arrow-open-marker)
+}
+
+from.gap,
+to.gap {
+	kite9-padding: 14px 14px 14px 14px; 
+}
+
+from.diamond, 
+to.diamond {
+	kite9-marker-reference: url(template.svg#diamond-marker)
+	
+}
+
+from.diamond-open, 
+to.diamond-open {
+	kite9-marker-reference: url(template.svg#diamond-open-marker)
+	
+}
+
+from.barbed-arrow, 
+to.barbed-arrow {
+	kite9-marker-reference: url(template.svg#barbed-arrow-marker);
+	kite9-padding: 20px 20px 20px 20px; 
+}
+
 
 /* Symbols */
 
