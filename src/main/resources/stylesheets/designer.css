@@ -139,6 +139,16 @@ to {
 	kite9-template: url(template.svg#empty-terminator)
 } 
 
+from.circle,
+to.circle {
+	kite9-marker-reference: url(template.svg#CIRCLE)
+}
+
+from.arrow,
+to.arrow {
+	kite9-marker-reference: url(template.svg#ARROW)
+}
+
 /* Symbols */
 
 symbols {
@@ -350,5 +360,3 @@ key text-lines {
 	stroke-width: 2px;
 	fill: none;
 }
-
-

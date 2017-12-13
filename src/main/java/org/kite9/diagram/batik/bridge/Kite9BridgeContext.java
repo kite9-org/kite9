@@ -15,7 +15,6 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.dom.Kite9DocumentFactory;
 import org.kite9.framework.dom.XMLHelper;
 import org.w3c.dom.Document;
 
@@ -34,14 +33,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		this.setDocumentSize(new Dimension2DDouble(0,0));
 	}
 	
-	public static class Kite9DocumentLoader extends DocumentLoader {
-
-		public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf) {
-			super(userAgent);
-			this.documentFactory = dbf;
-		}
-	}
-
 	/**
 	 * Setting this true allows us to keep track of XML-GraphicsNode mapping.
 	 */

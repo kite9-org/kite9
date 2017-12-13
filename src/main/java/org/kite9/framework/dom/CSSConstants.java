@@ -51,6 +51,9 @@ public interface CSSConstants {
 	// for importing SVG content into an element
 	public static final String TEMPLATE = KITE9_CSS_PROPERTY_PREFIX+"template";
 	
+	// for referencing <defs> within CSS
+	public static final String MARKER_REFERENCE = KITE9_CSS_PROPERTY_PREFIX+"marker-reference";
+	
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";
 	

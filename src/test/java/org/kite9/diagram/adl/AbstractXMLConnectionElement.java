@@ -71,13 +71,13 @@ public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLE
 	public void setFromDecoration(String fromDecoration) {
 		Element fromElement = getProperty("from");
 		fromElement.setAttribute("id", createID());
-		fromElement.setAttribute("markerReference", fromDecoration);
+		fromElement.setAttribute("class", fromDecoration.toLowerCase());
 	}
 
 	public void setToDecoration(String toDecoration) {
 		Element fromElement = getProperty("to");
 		fromElement.setAttribute("id", createID());
-		fromElement.setAttribute("markerReference", toDecoration);
+		fromElement.setAttribute("class", toDecoration.toLowerCase());
 	}
 
 	public void setFromLabel(Kite9XMLElement fromLabel) {

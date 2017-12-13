@@ -1,7 +1,10 @@
 package org.kite9.diagram.batik.element;
 
 import org.apache.batik.anim.dom.SVGOMMarkerElement;
+import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -12,14 +15,14 @@ import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
 public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
 	
 	private SVGOMMarkerElement markerElement;
-	private String reference;
+	private Value reference;
 
 	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> rp) {
 		super(el, parent, ctx, rp);
@@ -27,15 +30,19 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 
 	@Override
 	protected void initialize() {
-		reference = theElement.getAttribute("markerReference");
-		if (reference.trim().length() > 0) {
-			ADLDocument owner = theElement.getOwnerDocument();
-			markerElement = (SVGOMMarkerElement) owner.getChildElementById(owner, reference);
-			if (markerElement != null) {
-				double[] elemSizes = getSizesFromElement(markerElement);
-				for (int i = 0; i < padding.length; i++) {
-					padding[i] = Math.max(padding[i], elemSizes[i]);
+		reference = theElement.getCSSStyleProperty(CSSConstants.MARKER_REFERENCE);
+		if (reference != ValueConstants.NONE_VALUE) {
+			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
+			try {
+				markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
+				if (markerElement != null) {
+					double[] elemSizes = getSizesFromElement(markerElement);
+					for (int i = 0; i < padding.length; i++) {
+						padding[i] = Math.max(padding[i], elemSizes[i]);
+					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		} 
 	}
@@ -74,7 +81,7 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	public String getMarkerUrl() {
 		ensureInitialized();
 		if (markerElement != null) {
-			return "url(#"+reference+")";
+			return "url(#"+markerElement.getId()+")";
 		} else {
 			return null;
 		}

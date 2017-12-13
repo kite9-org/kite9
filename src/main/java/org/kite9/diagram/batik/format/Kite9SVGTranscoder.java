@@ -12,9 +12,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.bridge.BridgeContext;
-import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
@@ -26,8 +23,9 @@ import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
-import org.kite9.diagram.batik.templater.DefsHandlingTemplater;
+import org.kite9.diagram.batik.templater.BasicTemplater;
 import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
 import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementFactory;
@@ -38,7 +36,6 @@ import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.AbstractStyleableXMLElement;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -50,7 +47,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	private ResourceReferencer rr;	
 	private Kite9Log log = new Kite9Log(this);
 	private Kite9DocumentFactory docFactory;
-	private DocumentLoader docLoader;
+	private Kite9DocumentLoader docLoader;
 	private Kite9BridgeContext bridgeContext;
 	
 	public Kite9SVGTranscoder(ResourceReferencer rr) {
@@ -60,7 +57,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
 		domImpl = new ADLExtensibleDOMImplementation();
 		docFactory = createDocumentFactory();
-	    docLoader = new Kite9BridgeContext.Kite9DocumentLoader(userAgent, docFactory);
+	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
 		this.rr = rr;
@@ -107,7 +104,7 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 			
 			CSSEngine engine = domImpl.createCSSEngine((ADLDocument) input, createBridgeContext());
 			((ADLDocument) input).setCSSEngine(engine);
-			XMLProcessor templater = new DefsHandlingTemplater(docLoader);
+			XMLProcessor templater = new BasicTemplater(docLoader);
 			templater.processContents(input);
 			
 			super.transcode(input, uri, output);
