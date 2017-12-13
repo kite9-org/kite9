@@ -33,17 +33,13 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 		reference = theElement.getCSSStyleProperty(CSSConstants.MARKER_REFERENCE);
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
-			try {
-				markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
-				if (markerElement != null) {
-					double[] elemSizes = getSizesFromElement(markerElement);
-					for (int i = 0; i < padding.length; i++) {
-						padding[i] = Math.max(padding[i], elemSizes[i]);
-					}
+			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
+			if (markerElement != null) {
+				double[] elemSizes = getSizesFromElement(markerElement);
+				for (int i = 0; i < padding.length; i++) {
+					padding[i] = Math.max(padding[i], elemSizes[i]);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			}	
 		} 
 	}
 	

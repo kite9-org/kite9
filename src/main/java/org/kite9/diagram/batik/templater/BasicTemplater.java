@@ -44,21 +44,20 @@ public class BasicTemplater implements XMLProcessor, Logable {
 	public void handleTemplateElement(StyledKite9SVGElement transform) {
 		Value template = transform.getCSSStyleProperty(CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
-			try {
-				Element e = loadReferencedElement(template, transform);
+			Element e = loadReferencedElement(template, transform);
+			if (e != null) {
 				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
 				c.processContents(e);
 
 				log.send("Templated: (" + template.getStringValue() + ")\n" + new XMLHelper().toXML(transform));
-
-			} catch (Exception e) {
-				throw new Kite9ProcessingException("Couldn't resolve template: " + template.getStringValue(), e);
+			} else {
+				throw new Kite9ProcessingException("Couldn't resolve template: " + template.getStringValue());
 			}
 		}
 		
 	}
 
-	protected Element loadReferencedElement(Value v, StyledKite9SVGElement usedIn) throws Exception {
+	protected Element loadReferencedElement(Value v, StyledKite9SVGElement usedIn) {
 		return loader.loadElementFromUrl(v, usedIn);
 	}
 
