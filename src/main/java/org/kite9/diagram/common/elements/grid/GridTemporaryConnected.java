@@ -67,7 +67,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		return getConnectionTo(c) != null;
 	}
 
-	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, null, false);
+	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, false);
 	
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {

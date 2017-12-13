@@ -20,7 +20,7 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
-public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator, EndDisplayer {
+public class TerminatorImpl extends AbstractRectangularDiagramElement implements Terminator {
 	
 	private SVGOMMarkerElement markerElement;
 	private Value reference;

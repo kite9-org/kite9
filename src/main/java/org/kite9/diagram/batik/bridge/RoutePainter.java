@@ -1,7 +1,5 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
@@ -39,6 +37,65 @@ public class RoutePainter {
 		 */
 		public void reserve(Move m, boolean start);
 		
+	}
+	
+	public static class ReservedLengthEndDisplayer implements EndDisplayer {
+		
+		private final double toReserve;
+
+		public ReservedLengthEndDisplayer(double toReserve) {
+			super();
+			this.toReserve = toReserve;
+		}
+
+		@Override
+		public void reserve(Move m, boolean start) {
+			if (start) {
+				if (m.xs == m.xe) {
+					if (m.ys < m.ye) {
+						 m.ys += toReserve;
+					} else if (m.ys > m.ye) {
+						 m.ys -= toReserve;
+					} else {
+						throw new LogicException();
+					}
+				} else if (m.ys == m.ye) {
+					if (m.xs < m.xe) {
+						 m.xs += toReserve;
+					} else if (m.xs > m.xe) {
+						 m.xs -= toReserve;
+					} else {
+						throw new LogicException();
+					}
+					
+				} else {
+					throw new LogicException();
+				}
+				
+				
+			} else {
+				if (m.xs == m.xe) {
+					if (m.ys < m.ye) {
+						 m.ye -= toReserve;
+					} else if (m.ys > m.ye) {
+						 m.ye += toReserve;
+					} else {
+						throw new LogicException();
+					}
+				} else if (m.ys == m.ye) {
+					if (m.xs < m.xe) {
+						 m.xe -= toReserve;
+					} else if (m.xs > m.xe) {
+						 m.xe += toReserve;
+					} else {
+						throw new LogicException();
+					}
+					
+				} else {
+					throw new LogicException();
+				}
+			}
+		}
 	}
 	
 	static interface LineDisplayer {

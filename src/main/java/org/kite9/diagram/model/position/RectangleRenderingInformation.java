@@ -9,5 +9,8 @@ package org.kite9.diagram.model.position;
  *
  */
 public interface RectangleRenderingInformation extends RenderingInformation {
-
+	
+	public void setPosition(Dimension2D position);
+	
+	public void setSize(Dimension2D size);
 }

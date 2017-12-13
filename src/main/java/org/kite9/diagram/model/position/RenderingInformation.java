@@ -14,13 +14,15 @@ public interface RenderingInformation {
 	public boolean isRendered();
 
 	public abstract void setRendered(boolean r);
-	
-	public Dimension2D getPosition();
 
-	public void setPosition(Dimension2D position);
-
+	/**
+	 * Returns the bounds consumed by this element
+	 */
 	public Dimension2D getSize();
-
-	public void setSize(Dimension2D size);
+	
+	/**
+	 * Returns top-left most coordinate of element.
+	 */
+	public Dimension2D getPosition();
 
 }
