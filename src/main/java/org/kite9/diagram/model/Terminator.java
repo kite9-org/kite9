@@ -16,4 +16,9 @@ public interface Terminator extends SizedRectangular {
 	 */
 	double getReservedLength();
 		
+	/**
+	 * The part of the connection, from the end inwards, that doesn't need to be 
+	 * drawn because the marker will draw it instead.
+	 */
+	double getMarkerReserve();
 }

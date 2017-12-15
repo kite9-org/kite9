@@ -150,38 +150,40 @@ from.arrow,
 to.arrow {
 	kite9-marker-start-reference: url(template.svg#arrow-start-marker);
 	kite9-marker-end-reference: url(template.svg#arrow-end-marker);
+	kite9-padding: 5px 7px 5px 1px;
 }
 
 from.arrow-open,
 to.arrow-open {
-	kite9-marker-start-reference: url(template.svg#arrow-open-start-marker);
-	kite9-marker-end-reference: url(template.svg#arrow-open-end-marker);
+	kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
+	kite9-padding: 5px 7px 5px 1px;
 }
 
 from.gap,
 to.gap {
-	kite9-padding: 14px 14px 14px 14px; 
+	kite9-marker-reserve: 2px;
 }
 
 from.diamond, 
 to.diamond {
-	kite9-marker-start-reference: url(template.svg#diamond-marker);
-	kite9-marker-end-reference: url(template.svg#diamond-marker);
-	
+	kite9-marker-start-reference: url(template.svg#diamond-start-marker);
+	kite9-marker-end-reference: url(template.svg#diamond-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
 }
 
 from.diamond-open, 
 to.diamond-open {
-	kite9-marker-start-reference: url(template.svg#diamond-open-marker);
-	kite9-marker-end-reference: url(template.svg#diamond-open-marker);
-	
+	kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
+	kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
 }
 
 from.barbed-arrow, 
 to.barbed-arrow {
 	kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
 	kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
-	kite9-padding: 20px 20px 20px 20px; 
+	kite9-padding: 5px 7px 5px 1px;
 }
 
 
@@ -395,4 +397,43 @@ key text-lines {
 	stroke: black;
 	stroke-width: 2px;
 	fill: none;
+}
+
+
+
+/** Marker Classes */
+
+.diamond-marker {
+	fill: black;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.arrow-marker {
+	fill: black;
+	stroke-width: 1px; 
+	stroke: black; 
+}
+
+.circle-marker {
+	fill: black;
+	stroke: none;
+}
+
+.open-diamond-marker {
+	fill: white;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.barbed-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: none;
+}
+
+.open-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: white;
 }

@@ -134,6 +134,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		// TERMINATORS
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_END_REFERENCE));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.MARKER_RESERVE, 0f));
 
 	}
 

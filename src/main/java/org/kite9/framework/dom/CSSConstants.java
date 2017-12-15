@@ -54,7 +54,8 @@ public interface CSSConstants {
 	// for referencing <defs> within CSS
 	public static final String MARKER_START_REFERENCE = KITE9_CSS_PROPERTY_PREFIX+"marker-start-reference";
 	public static final String MARKER_END_REFERENCE = KITE9_CSS_PROPERTY_PREFIX+"marker-end-reference";
-
+	public static final String MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX+"marker-reserve";
+	
 	
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";

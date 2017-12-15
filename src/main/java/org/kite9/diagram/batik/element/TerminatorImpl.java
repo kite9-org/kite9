@@ -6,7 +6,6 @@ import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.bridge.RectangularPainter;
-import org.kite9.diagram.batik.bridge.RoutePainter.EndDisplayer;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -24,6 +23,7 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	
 	private SVGOMMarkerElement markerElement;
 	private Value reference;
+	private double markerReserve;
 
 	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> rp) {
 		super(el, parent, ctx, rp);
@@ -38,30 +38,33 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 		reference = from ? theElement.getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
 			theElement.getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
 		
+		markerReserve  = theElement.getCSSStyleProperty(CSSConstants.MARKER_RESERVE).getFloatValue();
+		
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
 			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
-			if (markerElement != null) {
-				double[] elemSizes = getSizesFromElement(markerElement);
-				for (int i = 0; i < padding.length; i++) {
-					padding[i] = Math.max(padding[i], elemSizes[i]);
-				}
-			}	
+//			if (markerElement != null) {
+//				double[] elemSizes = getSizesFromElement(markerElement);
+//				drawnLength = elemSizes[3];
+//				for (int i = 0; i < padding.length; i++) {
+//					padding[i] = Math.max(padding[i], elemSizes[i]);
+//				}
+//			}	
 		} 
 	}
 	
-	private double[] getSizesFromElement(SVGOMMarkerElement markerElement) {
-		double markerWidth=markerElement.getMarkerWidth().getAnimVal().getValue();
-		double markerHeight=markerElement.getMarkerHeight().getAnimVal().getValue();
-		double refX=markerElement.getRefX().getAnimVal().getValue();
-		double refY=markerElement.getRefY().getAnimVal().getValue();
-		return new double[] {
-			refY, 
-			markerWidth - refX,
-			markerHeight - refY,
-			refX
-		};
-	}
+//	private double[] getSizesFromElement(SVGOMMarkerElement markerElement) {
+//		double markerWidth=markerElement.getMarkerWidth().getAnimVal().getValue();
+//		double markerHeight=markerElement.getMarkerHeight().getAnimVal().getValue();
+//		double refX=markerElement.getRefX().getAnimVal().getValue();
+//		double refY=markerElement.getRefY().getAnimVal().getValue();
+//		return new double[] {
+//			refY, 
+//			markerWidth - refX,
+//			markerHeight - refY,
+//			refX
+//		};
+//	}
 
 	@Override
 	public Container getContainer() {
@@ -78,7 +81,7 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	@Override
 	public double getReservedLength() {
 		ensureInitialized();
-		return getPadding(Direction.LEFT) + getMargin(Direction.LEFT);
+		return getPadding(Direction.RIGHT) + getMargin(Direction.RIGHT);
 	}
 
 	public String getMarkerUrl() {
@@ -95,4 +98,8 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 		throw new LogicException("Shouldn't be using size for terminators");
 	}
 
+	@Override
+	public double getMarkerReserve() {
+		return markerReserve;
+	}
 }

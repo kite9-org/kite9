@@ -41,6 +41,15 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		
 		from = (Connected) fromElement.getDiagramElement();
 		to = (Connected) toElement.getDiagramElement();
+		
+		if (from == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
+		}
+		
+		if (to == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
+		}
+		
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
 		this.fromDecoration = getTerminator(theElement.getProperty("from"));
@@ -244,8 +253,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		Map<String, String> out = super.getReplacementMap(theElement);
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(theElement.getOwnerDocument(), null);
-		double startReserve = fromDecoration.getReservedLength();
-		double endReserve = toDecoration.getReservedLength();
+		double startReserve = fromDecoration.getMarkerReserve();
+		double endReserve = toDecoration.getMarkerReserve();
 		
 		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
 				new RoutePainter.ReservedLengthEndDisplayer(startReserve), 

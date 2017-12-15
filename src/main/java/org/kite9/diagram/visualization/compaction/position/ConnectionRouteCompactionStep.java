@@ -128,10 +128,10 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 			// horizontal
 			if (from.x() < pos.x()) {
 				// right
-				r = 0;
+				r = 2;
 			} else if (from.x() > pos.x()) {
 				// left
-				r = 2;
+				r = 0;
 			} else {
 				throw new LogicException();
 			}
@@ -141,7 +141,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 			if (from.y() < pos.y()) {
 				// down
 				r = 1;
-			} else if (from.y() < pos.y()) {
+			} else if (from.y() > pos.y()) {
 				// up
 				r = 3;
 			} else {
