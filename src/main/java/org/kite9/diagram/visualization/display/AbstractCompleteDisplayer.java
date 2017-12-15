@@ -122,9 +122,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		if (a == b) {
 			length =  getInternalDistance(a, aSide, bSide); 
 		} else if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
-			length = getPadding(a, aSide);
+			length = Math.max(getPadding(a, aSide), getMargin(b, bSide));
 		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
-			length = getPadding(b, bSide);
+			length = Math.max(getPadding(b, bSide), getMargin(a, aSide));
 		} else if (concave) {
 			if (aSide == bSide) {
 				// not facing each other
