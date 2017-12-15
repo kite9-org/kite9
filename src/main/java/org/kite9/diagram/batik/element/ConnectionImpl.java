@@ -274,7 +274,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		} else if (to == end) {
 			return toDecoration;
 		} else {
-			throw new LogicException("Trying to get decoration for not-an-end");
+			throw new LogicException("Trying to get decoration for an end that isn't from or to");
 		}
 	}
 

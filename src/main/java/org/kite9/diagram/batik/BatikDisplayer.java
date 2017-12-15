@@ -61,8 +61,13 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
 	protected double getLinkGutter(Connected along, Terminator a, Direction aSide, Terminator b, Direction bSide) {
 		double length = along.getLinkGutter();
-		double terminatorSize = a.getPadding(aSide) + b.getPadding(bSide);
-		double margin = Math.max(a.getMargin(aSide), b.getMargin(bSide));
+		double aPadding = (a != null) ? a.getPadding(aSide) : 0;
+		double bPadding = (b != null) ? b.getPadding(bSide) : 0;
+		double aMargin = (a != null) ? a.getMargin(aSide) : 0;
+		double bMargin = (b != null) ? b.getMargin(bSide) : 0;
+
+		double terminatorSize = aPadding + bPadding;
+		double margin = Math.max(aMargin, bMargin);
 		length = Math.max(length, terminatorSize + margin);
 		return length;
 	}

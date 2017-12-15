@@ -13,7 +13,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSizer, Logable {
 	
@@ -90,11 +89,16 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		double alongDist = incorporateAlongMinimumLength(along, d, a, aSide, b, bSide);
+		return Math.max(in, alongDist);
+	}
+		
+	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
 			Connection c = (Connection) along;
 			boolean starting = c.getFrom() == a || c.getFrom() == b;
 			boolean ending = c.getFrom() == b ||c.getFrom() == a;
-			return Math.max(in, getLinkMinimumLength((Connection) along, starting, ending));
+			return getLinkMinimumLength((Connection) along, starting, ending);
 		} else if (along instanceof Connected) {
 			if ((along == a) && (b instanceof Connection)) {
 				// link meeting connected, and we're working out distance to corner.
@@ -104,8 +108,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 				return getLinkInset((Connected) along, d);
 			} else if ((a instanceof Connection) && (b instanceof Connection)) {
 				// the gutter space between two connections arriving on a side
-				Terminator startA = ((Connection)a).getDecorationForEnd(along);
-				Terminator startB = ((Connection)b).getDecorationForEnd(along);
+				Terminator startA = ((Connection)a).meets((Connected) along) ? ((Connection)a).getDecorationForEnd(along) : null;
+				Terminator startB = ((Connection)b).meets((Connected) along) ? ((Connection)b).getDecorationForEnd(along) : null;
 				return getLinkGutter((Connected) along, startA, aSide, startB, bSide);
 			} else {
 				// sides of a rectangle or something
@@ -113,7 +117,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			} 
 		}
 		
-		return in;
+		return 0;
 	}
 
 	private double getMinimumDistanceRectangularToRectangular(Rectangular a, Direction aSide, Rectangular b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
