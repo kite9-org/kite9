@@ -89,11 +89,11 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
-		double alongDist = incorporateAlongMinimumLength(along, d, a, aSide, b, bSide);
+		double alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide);
 		return Math.max(in, alongDist);
 	}
 		
-	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+	private double getAlongMinimumLength(DiagramElement along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
 			Connection c = (Connection) along;
 			boolean starting = c.getFrom() == a || c.getFrom() == b;

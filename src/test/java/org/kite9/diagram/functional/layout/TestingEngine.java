@@ -536,13 +536,13 @@ public class TestingEngine extends TestingHelp {
 						// inner above outer
 						double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
 						if (innerRect.getMaxY() + downDist > outerRect.getMinY()) {
-							throw new LogicException(createExceptionText(outer, "RIGHT", inner, downDist, outerRect, innerRect));
+							throw new LogicException(createExceptionText(outer, "DOWN", inner, downDist, outerRect, innerRect));
 						}
 					} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
 						// inner below outer
 						double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
 						if (innerRect.getMinY() - upDist < outerRect.getMaxY()) {
-							throw new LogicException(createExceptionText(outer, "RIGHT", inner, upDist, outerRect, innerRect));
+							throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
 						}						
 					} else {
 						throw new LogicException("Overlapped: " + outer + " by " + inner);
