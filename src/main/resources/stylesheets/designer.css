@@ -93,7 +93,6 @@ symbol-text-line symbols {
 
 context {
 	kite9-template: url(template.svg#context);
-	kite9-padding: 10px;
 	kite9-type: container;
 	kite9-sizing: maximize;
 	kite9-traversal: always;
@@ -106,6 +105,24 @@ context > label {
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#container-label);
 	kite9-padding: 4px;
+}
+
+grid {
+	kite9-template: url(template.svg#grid);
+	kite9-padding: 0px;
+	kite9-margin: 0px;
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-traversal: always;
+}
+
+cell {
+	kite9-template: url(template.svg#cell);
+	kite9-padding: 0px;
+	kite9-margin: 0px;
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-traversal: always;
 }
 
 toLabel, 
@@ -312,6 +329,21 @@ key text-lines {
 	fill: none;
 	stroke: black;
 	stroke-width: 1px;
+}
+
+.grid {
+	
+}
+
+.cell-back {
+	fill: white;
+	stroke: #BBBBBB;
+	stroke-width: .5px;
+}
+
+.grid-back {
+	stroke: black;
+	stroke-width: 1px;	
 }
 
 .container-label-front {

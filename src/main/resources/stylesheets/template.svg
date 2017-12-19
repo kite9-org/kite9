@@ -117,9 +117,23 @@
 
   <template id='context'>
     <contents />
-    <back style='kite9-usage: decal; kite9-type: svg;  ' id="cback" >
+    <back style='kite9-usage: decal; kite9-type: svg;  ' >
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='12' ry='12' class="context-back" />
     </back>
+  </template>
+
+  <template id='grid'>
+    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' class="grid-back" />
+    </back>
+    <contents />
+  </template>
+  
+  <template id='cell'>
+    <back style='kite9-usage: decal; kite9-type: svg;  '>
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' class="cell-back" />
+    </back>
+    <contents />
   </template>
   
   <template id='show-box'>
