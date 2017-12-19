@@ -105,11 +105,13 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 		tr.setAttribute("style", "kite9-occupies: 0 0;");
 		br.setAttribute("style", "kite9-occupies: 0 1;");
+		Grid lg = new Grid("lg", Arrays.asList(tl, bl), null, null);
+		Grid rg = new Grid("lg", Arrays.asList(tr, br), null, null);
 
-		Cell l = new Cell("l", Arrays.asList(tl, bl), null, null);
-		Cell r = new Cell("r", Arrays.asList(tr, br), null, null);
-		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: 5px;"); 
-		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px;"); 
+		Cell l = new Cell("l", Arrays.asList(lg), null, null);
+		Cell r = new Cell("r", Arrays.asList(rg), null, null);
+		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: 10px"); 
+		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px"); 
 		
 		Grid ctx = new Grid("outer", Arrays.asList(l, r), null, Layout.GRID);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
@@ -126,9 +128,9 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		
 		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4); 
 
-		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g2, null, null, "DIAMOND", null, Direction.RIGHT);
 		new Link(g1, g3, null, null, null, null, Direction.DOWN);
-		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
+		new Link(g1, g4, "ARROW", null, null, null, Direction.RIGHT);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}

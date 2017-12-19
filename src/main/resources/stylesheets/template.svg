@@ -127,11 +127,14 @@
       <svg:rect x='0' y='0' width='{x1}' height='{y1}' class="grid-back" />
     </back>
     <contents />
+    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+      <svg:rect x='0' y='0' width='{x1}' height='{y1}' class="grid-frame" />
+    </back>
   </template>
   
   <template id='cell'>
     <back style='kite9-usage: decal; kite9-type: svg;  '>
-      <svg:rect x='0' y='0' width='{x1}' height='{y1}' class="cell-back" />
+      <svg:path d='M 0,{y1} L0,0 L{x1},0' class="cell-edge" />
     </back>
     <contents />
   </template>

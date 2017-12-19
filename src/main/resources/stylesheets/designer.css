@@ -112,7 +112,7 @@ grid {
 	kite9-padding: 0px;
 	kite9-margin: 0px;
 	kite9-type: container;
-	kite9-sizing: minimize;
+	kite9-sizing: maximize;
 	kite9-traversal: always;
 }
 
@@ -331,19 +331,21 @@ key text-lines {
 	stroke-width: 1px;
 }
 
-.grid {
-	
-}
-
-.cell-back {
-	fill: white;
+.cell-edge {
 	stroke: #BBBBBB;
 	stroke-width: .5px;
+	fill: none;
 }
 
 .grid-back {
+	stroke: none;
+	fill: white;
+}
+
+.grid-frame {
 	stroke: black;
 	stroke-width: 1px;	
+	fill: none;
 }
 
 .container-label-front {
