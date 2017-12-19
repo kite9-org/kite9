@@ -11,7 +11,7 @@ import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TextLineWithSymbols;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
-public class Test54OddLinks extends AbstractLayoutFunctionalTest {
+public class Test55OddLinks extends AbstractLayoutFunctionalTest {
 
 	Symbol s1, s2, s3, s4;
 	TextLine line2, line3;
