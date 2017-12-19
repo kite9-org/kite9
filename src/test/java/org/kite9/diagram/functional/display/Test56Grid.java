@@ -137,9 +137,8 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_56_4_OddSupergrid() throws Exception {
-		Grid ctx = createSupergrid(false, false, 5);
+		Grid ctx = createSupergrid(false, true, 5);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 5 5;"); 
-		ctx.setAttribute("class", "grid");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 }
