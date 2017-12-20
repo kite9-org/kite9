@@ -89,35 +89,56 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
-		double alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide);
-		return Math.max(in, alongDist);
-	}
-		
-	private double getAlongMinimumLength(DiagramElement along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
-			Connection c = (Connection) along;
-			boolean starting = c.getFrom() == a || c.getFrom() == b;
-			boolean ending = c.getFrom() == b ||c.getFrom() == a;
-			return getLinkMinimumLength((Connection) along, starting, ending);
-		} else if (along instanceof Connected) {
-			if ((along == a) && (b instanceof Connection)) {
-				// link meeting connected, and we're working out distance to corner.
-				return getLinkInset((Connected) along, d);
-			} else if ((along == b) && (a instanceof Connection)) {
-				// link meeting connected, and we're working out distance to corner.
-				return getLinkInset((Connected) along, d);
-			} else if ((a instanceof Connection) && (b instanceof Connection)) {
-				// the gutter space between two connections arriving on a side
-				Terminator startA = ((Connection)a).meets((Connected) along) ? ((Connection)a).getDecorationForEnd(along) : null;
-				Terminator startB = ((Connection)b).meets((Connected) along) ? ((Connection)b).getDecorationForEnd(along) : null;
-				return getLinkGutter((Connected) along, startA, aSide, startB, bSide);
-			} else {
-				// sides of a rectangle or something
+			if ((in == 0) && passingThrough((Connection) along, a, b)) {
+				// in this special case, the link can pass 
 				return 0;
-			} 
+			}
+			
+			double alongDist = getAlongMinimumLength((Connection) along, d, a, aSide, b, bSide);
+			return Math.max(in, alongDist);
+			
+		} else if (along instanceof Connected) {
+			
+			double alongDist = getAlongMinimumLength((Connected) along, d, a, aSide, b, bSide);
+			return Math.max(in, alongDist);
+			
+		} else {
+			return in;
 		}
 		
-		return 0;
+	}
+	
+	private boolean passingThrough(Connection along, DiagramElement a, DiagramElement b) {
+		boolean touchesA = (a instanceof Connected) && along.meets((Connected)a);
+		boolean touchesB = (b instanceof Connected) && along.meets((Connected)b);
+			
+		return !touchesA && !touchesB;
+	}
+
+	private double getAlongMinimumLength(Connection along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		Connection c = along;
+		boolean starting = c.getFrom() == a || c.getFrom() == b;
+		boolean ending = c.getTo() == b ||c.getTo() == a;
+		return getLinkMinimumLength(along, starting, ending);
+	}
+			
+	private double getAlongMinimumLength(Connected along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		if ((along == a) && (b instanceof Connection)) {
+			// link meeting connected, and we're working out distance to corner.
+			return getLinkInset(along, d);
+		} else if ((along == b) && (a instanceof Connection)) {
+			// link meeting connected, and we're working out distance to corner.
+			return getLinkInset(along, d);
+		} else if ((a instanceof Connection) && (b instanceof Connection)) {
+			// the gutter space between two connections arriving on a side
+			Terminator startA = ((Connection)a).meets(along) ? ((Connection)a).getDecorationForEnd(along) : null;
+			Terminator startB = ((Connection)b).meets(along) ? ((Connection)b).getDecorationForEnd(along) : null;
+			return getLinkGutter(along, startA, aSide, startB, bSide);
+		} else {
+			// sides of a rectangle or something
+			return 0;
+		} 
 	}
 
 	private double getMinimumDistanceRectangularToRectangular(Rectangular a, Direction aSide, Rectangular b, Direction bSide, Direction d, DiagramElement along, boolean concave) {

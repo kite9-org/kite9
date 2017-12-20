@@ -119,13 +119,17 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 			Glyph a = new Glyph("", "A", null, null);
 			Glyph b = new Glyph("", "B", null, null);
 			Glyph c = new Glyph("", "C", null, null);
-			new Link(a, b, s, null, s, null, Direction.RIGHT);
-			new Link(b, a, s, null, s, null, Direction.LEFT);
-			new Link(a, c, s, null, s, null, Direction.DOWN);
-			new Link(c, a, s, null, s, null, Direction.UP);
+			Glyph d = new Glyph("", "D", null, null);
+			Glyph e = new Glyph("", "E", null, null);
+			new Link(a, b, null, null, s, null, Direction.RIGHT);
+			new Link(a, c, null, null, s, null, Direction.LEFT);
+			new Link(a, d, null, null, s, null, Direction.DOWN);
+			new Link(a, e, null, null, s, null, Direction.UP);
 			elems.add(a);
 			elems.add(b);
 			elems.add(c);
+			elems.add(d);
+			elems.add(e);
 		}
 		
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement(elems, null);

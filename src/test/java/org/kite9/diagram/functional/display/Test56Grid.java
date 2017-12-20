@@ -23,7 +23,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_56_1_GridWithSpanningSquares() throws Exception {
-		Grid ctx = createTwoLayerGridContext(null, null, null, null);
+		Grid ctx = createTwoLayerGridContext(null, null, null, null, 10, 10);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -32,7 +32,6 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 	 * Problem with grouping is that we really need to group according to how likely the
 	 * subgroups are to be on the same line.  The closer we can predict this, the higher the priority.
 	 */
-//	@Ignore("Currently broken - grouping rules need some extra work.")
 	@Test
 	public void test_56_2_GridWithDirectedConnections() throws Exception {
 		Glyph g1 = new Glyph("one", "","one", null, null);
@@ -40,11 +39,12 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four", null, null);
 		
-		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4); 
+		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4, 0, 0); 
 
-		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
-		new Link(g1, g3, null, null, null, null, Direction.DOWN);
-		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
+		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
+		new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, Direction.UP);
+		new Link(g4, g1, "ARROW", null, null, null, Direction.LEFT);
+		
 		new Link(g2, g4, null, null, null, null, Direction.DOWN);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
@@ -94,7 +94,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		return ctx;
 	}
 
-	private Grid createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	private Grid createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4, int leftPad, int rightPad) {
 		Cell tl = new Cell("tl", Arrays.asList(g1), null, null);
 		Cell tr = new Cell("tr", Arrays.asList(g2), null, null);
 		Cell bl = new Cell("bl", Arrays.asList(g3), null, null);
@@ -110,8 +110,8 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 		Cell l = new Cell("l", Arrays.asList(lg), null, null);
 		Cell r = new Cell("r", Arrays.asList(rg), null, null);
-		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: 10px"); 
-		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px"); 
+		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: "+leftPad+"px"); 
+		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: "+rightPad+"px"); 
 		
 		Grid ctx = new Grid("outer", Arrays.asList(l, r), null, Layout.GRID);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
@@ -126,11 +126,11 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four", null, null);
 		
-		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4); 
+		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4, 10, 10); 
 
-		new Link(g1, g2, null, null, "DIAMOND", null, Direction.RIGHT);
-		new Link(g1, g3, null, null, null, null, Direction.DOWN);
-		new Link(g1, g4, "ARROW", null, null, null, Direction.RIGHT);
+		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
+		new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, Direction.UP);
+		new Link(g4, g1, "ARROW", null, null, null, Direction.LEFT);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
