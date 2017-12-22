@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
@@ -72,8 +71,8 @@ public class CompactionImpl implements Compaction {
 		return hMap;
 	}
 
-	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df) {
-		Rectangle<Slideable<Segment>> out = faceSpaces.get(df);
+	public Rectangle<FaceSide> getFaceSpace(DartFace df) {
+		Rectangle<FaceSide> out = faceSpaces.get(df);
 		return out;
 	}
 	
@@ -83,9 +82,9 @@ public class CompactionImpl implements Compaction {
 		return vMap;
 	}
 
-	private Map<DartFace, Rectangle<Slideable<Segment>>> faceSpaces = new HashMap<>();
+	private Map<DartFace, Rectangle<FaceSide>> faceSpaces = new HashMap<>();
 	
-	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> border) {
+	public void createFaceSpace(DartFace df, Rectangle<FaceSide> border) {
 		faceSpaces.put(df, border);
 	}
 	

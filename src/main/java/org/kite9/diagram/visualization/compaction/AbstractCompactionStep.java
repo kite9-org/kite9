@@ -4,12 +4,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Dimension;
+import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -117,32 +116,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 	}
 	
-	private DiagramElement moveUp(DiagramElement move, int toDepth, int cDepth) {
-		while (cDepth > toDepth) {
-			move = move.getParent();
-			cDepth--;
-		}
-		
-		return move;
-	}
- 
-	private boolean contains(DiagramElement a, DiagramElement b) {
-		int ad = a.getDepth();
-		int bd = b.getDepth();
-		
-		if ((ad < bd) && (a instanceof Container)) {
-			// b might be in a
-			b = moveUp(b, ad+1, bd);
-			return ((Container)a).getContents().contains(b);
-		} else if ((ad > bd) && (b instanceof Container)) {
-			// a might be in b
-			a = moveUp(a, bd+1, ad);
-			return ((Container)b).getContents().contains(a);
-		} else {
-			return false;
-		}
-	}
-
+	
 	private boolean needsLength(DiagramElement a, DiagramElement b) {
 		if ((a instanceof DirectionEnforcingElement) || (b instanceof DirectionEnforcingElement)) {
 			return false;
@@ -151,17 +125,23 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return true;
 	}
 	
+	protected void separate(Slideable<Segment> s1, FaceSide fs) {
+		for (Slideable<Segment> s2 : fs.getAll()) {
+			separate(s1, s2);
+		}
+	}
 	
-	
-	
-	
-	/**
-	 * Uses the SlackOptimisation to set a minimum distance between outside and inside parts.
-	 */
+	protected void separate(FaceSide fs, Slideable<Segment> s2) {
+		for (Slideable<Segment> s1 : fs.getAll()) {
+			separate(s1, s2);
+		}
+	}
+
 	protected void separate(Slideable<Segment> s1, Slideable<Segment> s2) {
 		double minDistance = getMinimumDistance(s1.getUnderlying(), s2.getUnderlying(), null, true);
 		s1.getSlackOptimisation().ensureMinimumDistance(s1, s2, (int) minDistance);
 	}
+
 	
 	protected AlignmentResult alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction;
 import java.util.List;
 import java.util.Map;
 
-import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -30,7 +29,7 @@ public interface Compaction {
 
 	public Map<Vertex, Segment> getVerticalVertexSegmentMap();
 	
-	public static final Rectangle<Slideable<Segment>> DONE = new Rectangle<>(null, null, null, null);
+	public static final Rectangle<FaceSide> DONE = new Rectangle<>(null, null, null, null);
 	
 	/**
 	 * For an internal face, returns the empty rectangle in the centre of the space that can
@@ -38,9 +37,9 @@ public interface Compaction {
 	 * 
 	 * Rectangle is in top, right, bottom, left order.
 	 */
-	public Rectangle<Slideable<Segment>> getFaceSpace(DartFace df);
+	public Rectangle<FaceSide> getFaceSpace(DartFace df);
 	
-	public void createFaceSpace(DartFace df, Rectangle<Slideable<Segment>> r);
+	public void createFaceSpace(DartFace df, Rectangle<FaceSide> r);
 	
 	public void setFaceSpaceToDone(DartFace df);
 	
