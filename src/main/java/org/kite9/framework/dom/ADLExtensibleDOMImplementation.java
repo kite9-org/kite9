@@ -127,9 +127,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, true));
 		
 		// LINK LENGTHS
-		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 10f));
-		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 10f));
-		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 10f));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 0f));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 0f));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 0f));
 		
 		// TERMINATORS
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));

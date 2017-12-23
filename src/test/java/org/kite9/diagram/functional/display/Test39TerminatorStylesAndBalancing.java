@@ -84,7 +84,8 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		new TurnLink(g1, a1);
 		new TurnLink(g2, a1);
 		new TurnLink(g3, a1);	
-		new Link(g4, a1, LinkEndStyle.CIRCLE, null, null, null);	
+		Link l = new Link(g4, a1, LinkEndStyle.CIRCLE, null, null, null);	
+		l.setAttribute("style", "kite9-minimum-length: 40px");
 		
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
