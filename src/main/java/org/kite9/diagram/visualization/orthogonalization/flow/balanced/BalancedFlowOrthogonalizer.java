@@ -21,6 +21,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFa
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
+import org.kite9.diagram.model.Terminator;
 
 /**
  * Implements several balancing improvements to multi-edge. These are as
@@ -132,8 +133,8 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	private boolean opposite(Edge a, Edge b) {
-		Pair<Object> aStyle = getEdgeStyle(a);
-		Pair<Object> bStyle = getEdgeStyle(b);
+		Pair<Terminator> aStyle = getEdgeStyle(a);
+		Pair<Terminator> bStyle = getEdgeStyle(b);
 
 		if (aStyle.equals(bStyle)) {
 			return false;
@@ -183,15 +184,15 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return before.getDrawDirection() != null && (!Tools.isUnderlyingContradicting(before));
 	}
 
-	private Pair<Object> getEdgeStyle(Edge en) {
+	private TerminatorPair getEdgeStyle(Edge en) {
 		if (en instanceof BiDirectionalPlanarizationEdge) {
 			DiagramElement und = ((BiDirectionalPlanarizationEdge) en).getOriginalUnderlying();
 			if (und instanceof Connection) {
-				return new Pair<Object>(((Connection)und).getFromDecoration(), ((Connection)und).getToDecoration());
+				return new TerminatorPair(((Connection)und).getFromDecoration(), ((Connection)und).getToDecoration());
 			}
 		} 
 		
-		return new Pair<Object>(null, null);
+		return new TerminatorPair(null, null);
 	}
 
 	@Override

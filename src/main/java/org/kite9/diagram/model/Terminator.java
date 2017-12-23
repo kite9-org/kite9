@@ -1,5 +1,7 @@
 package org.kite9.diagram.model;
 
+import org.kite9.diagram.model.style.ConnectionsSeparation;
+
 /**
  * Describes what's at the end of a {@link Connection}.
  * 
@@ -21,4 +23,10 @@ public interface Terminator extends SizedRectangular {
 	 * drawn because the marker will draw it instead.
 	 */
 	double getMarkerReserve();
+	
+	/**
+	 * This is used for making like-terminators collect around elements which have
+	 * {@link ConnectionsSeparation}
+	 */
+	boolean styleMatches(Terminator t2);
 }

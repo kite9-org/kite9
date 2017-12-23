@@ -43,29 +43,9 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
 			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
-//			if (markerElement != null) {
-//				double[] elemSizes = getSizesFromElement(markerElement);
-//				drawnLength = elemSizes[3];
-//				for (int i = 0; i < padding.length; i++) {
-//					padding[i] = Math.max(padding[i], elemSizes[i]);
-//				}
-//			}	
 		} 
 	}
 	
-//	private double[] getSizesFromElement(SVGOMMarkerElement markerElement) {
-//		double markerWidth=markerElement.getMarkerWidth().getAnimVal().getValue();
-//		double markerHeight=markerElement.getMarkerHeight().getAnimVal().getValue();
-//		double refX=markerElement.getRefX().getAnimVal().getValue();
-//		double refY=markerElement.getRefY().getAnimVal().getValue();
-//		return new double[] {
-//			refY, 
-//			markerWidth - refX,
-//			markerHeight - refY,
-//			refX
-//		};
-//	}
-
 	@Override
 	public Container getContainer() {
 		Connection c = (Connection) getParent();
@@ -102,4 +82,21 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	public double getMarkerReserve() {
 		return markerReserve;
 	}
+
+	@Override
+	public boolean styleMatches(Terminator t2) {
+		if (t2 instanceof TerminatorImpl) {
+			boolean styleMatch = attributesMatch("style", this, (TerminatorImpl) t2);
+			boolean classMatch = attributesMatch("class", this, (TerminatorImpl) t2);
+			return styleMatch && classMatch;
+		} else {
+			return false;
+		}
+	}
+	
+	private static boolean attributesMatch(String name, TerminatorImpl a, TerminatorImpl b) {
+		return a.theElement.getAttribute(name).equals(b.theElement.getAttribute(name));
+	}
+	
+	
 }
