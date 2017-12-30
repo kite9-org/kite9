@@ -11,7 +11,7 @@
     <g put="here" filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="glyph" id="auto:0-a" transform="translate(286.0,15.0)"
+  <g kite9-elem="glyph" id="auto:0-a" transform="translate(296.0,15.0)"
       >
     <g kite9-elem="back" transform="scale(0.9655172413793104,0.9666666666666667)translate(0.5,0.5)"
         >
@@ -426,10 +426,8 @@
                                                                                                     >
   <g kite9-elem="link" id="auto:0-a-b"
                                                                                                     >
-    <path style="marker-start: ; marker-end: " class="link" d="M314 29 L334 29"
-                                                                                                      />
     
-    <g kite9-elem="from" transform="translate(309.0,24.0)"
+    <g kite9-elem="from" transform="translate(319.0,24.0)"
                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                         />
@@ -442,6 +440,8 @@
   </g
                                                                                                           >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M324 29 L334 29"
+                                                                                                          />
   </g
                                                                                                           >
 

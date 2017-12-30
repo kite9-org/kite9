@@ -11,7 +11,7 @@
     <g put="here" filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="glyph" id="g1" transform="translate(15.0,88.0)"
+  <g kite9-elem="glyph" id="g1" transform="translate(15.0,78.0)"
       >
     <g kite9-elem="back" transform="scale(0.9978813559322034,0.9666666666666667)translate(0.5,0.5)"
         >
@@ -223,7 +223,7 @@
   </g
                                                           >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9978813559322034,0.9814814814814815)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9978813559322034,0.9814814814814815)translate(0.5,0.5)"
                                                           >
       <rect x="0" y="0" width="471.0" rx="12" class="context-back" ry="12" height="53.0"
                                                             />
@@ -233,10 +233,8 @@
                                                             >
   <g kite9-elem="link" id="g1-g2"
                                                             >
-    <path style="marker-start: ; marker-end: " class="link" d="M181 88 L181 56"
-                                                              />
     
-    <g kite9-elem="from" transform="translate(176.0,83.0)"
+    <g kite9-elem="from" transform="translate(176.0,73.0)"
                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                 />
@@ -249,14 +247,14 @@
   </g
                                                                   >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M181 78 L181 56"
+                                                                  />
   </g
                                                                   >
   <g kite9-elem="link" id="g1-g3"
                                                                   >
-    <path style="marker-start: ; marker-end: " class="link" d="M295 88 L295 56"
-                                                                    />
     
-    <g kite9-elem="from" transform="translate(290.0,83.0)"
+    <g kite9-elem="from" transform="translate(290.0,73.0)"
                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                       />
@@ -269,14 +267,14 @@
   </g
                                                                         >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M295 78 L295 56"
+                                                                        />
   </g
                                                                         >
   <g kite9-elem="link" id="g1-g4"
                                                                         >
-    <path style="marker-start: ; marker-end: " class="link" d="M375 88 L375 56"
-                                                                          />
     
-    <g kite9-elem="from" transform="translate(370.0,83.0)"
+    <g kite9-elem="from" transform="translate(370.0,73.0)"
                                                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                             />
@@ -289,14 +287,14 @@
   </g
                                                                               >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M375 78 L375 56"
+                                                                              />
   </g
                                                                               >
   <g kite9-elem="link" id="g1-g5"
                                                                               >
-    <path style="marker-start: ; marker-end: " class="link" d="M438 88 L438 56"
-                                                                                />
     
-    <g kite9-elem="from" transform="translate(433.0,83.0)"
+    <g kite9-elem="from" transform="translate(433.0,73.0)"
                                                                                 >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                   />
@@ -309,6 +307,8 @@
   </g
                                                                                     >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M438 78 L438 56"
+                                                                                    />
   </g
                                                                                     >
 

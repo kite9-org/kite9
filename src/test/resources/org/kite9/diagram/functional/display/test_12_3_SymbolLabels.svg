@@ -79,7 +79,7 @@
                           >
   </g
                           >
-    <g kite9-elem="glyph" id="auto:5-b" transform="translate(193.0,12.0)"
+    <g kite9-elem="glyph" id="auto:5-b" transform="translate(178.0,12.0)"
                           >
     <g kite9-elem="back" transform="scale(0.9914529914529915,0.9824561403508771)translate(0.5,0.5)"
                             >
@@ -171,7 +171,7 @@
                                                     >
   </g
                                                     >
-    <g kite9-elem="arrow" id="i1" transform="translate(152.0,30.0)"
+    <g kite9-elem="arrow" id="i1" transform="translate(142.0,30.0)"
                                                     >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                       >
@@ -203,7 +203,7 @@
     
   </g
                                                             >
-    <g kite9-elem="label" id="auto:12" transform="translate(113.0,72.0)"
+    <g kite9-elem="label" id="auto:12" transform="translate(105.0,78.0)"
                                                             >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                               >
@@ -231,9 +231,9 @@
   </g
                                                                   >
   
-    <g kite9-elem="back" id="cback" transform="scale(0.9968944099378882,0.9894736842105263)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.996742671009772,0.9900990099009901)translate(0.5,0.5)"
                                                                   >
-      <rect x="0" y="0" width="321.0" rx="12" class="context-back" ry="12" height="94.0"
+      <rect x="0" y="0" width="306.0" rx="12" class="context-back" ry="12" height="100.0"
                                                                     />
     </g
                                                                     >
@@ -241,10 +241,8 @@
                                                                     >
   <g kite9-elem="link" id="i1-auto:1-a"
                                                                     >
-    <path style="marker-start: ; marker-end: " class="link" d="M167 55 L101 55"
-                                                                      />
     
-    <g kite9-elem="from" transform="translate(162.0,50.0)"
+    <g kite9-elem="from" transform="translate(152.0,50.0)"
                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                         />
@@ -260,13 +258,13 @@
                                                                           >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                             >
-      <rect x="0" y="0" width="36.0" rx="4" class="connection-label-back" ry="4" height="28.0"
+      <rect x="0" y="0" width="36.0" rx="4" class="connection-label-back" ry="4" height="22.0"
                                                                               />
     </g
                                                                               >
     <g class="connection-label-front"
                                                                               >
-      <g kite9-elem="front" transform="translate(4.0,10.0)"
+      <g kite9-elem="front" transform="translate(4.0,4.0)"
                                                                                 ><g
                                                                                   ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                                                     ><tspan
@@ -282,26 +280,28 @@
   </g
                                                                                 >
   
+    <path style="marker-start: ; marker-end: " class="link" d="M157 55 L101 55"
+                                                                                />
   </g
                                                                                 >
   <g kite9-elem="link" id="i1-auto:5-b"
                                                                                 >
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M186 55 L208 55"
-                                                                                  />
     
-    <g kite9-elem="from" transform="translate(181.0,50.0)"
+    <g kite9-elem="from" transform="translate(171.0,50.0)"
                                                                                   >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                     />
   </g
                                                                                     >
-    <g kite9-elem="to" id="auto:9" transform="translate(201.0,50.0)"
+    <g kite9-elem="to" id="auto:9" transform="translate(181.0,50.0)"
                                                                                     >
-    <rect x="0" width="8.0" height="10.0" y="0" style="fill: none; stroke: none "
+    <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                       />
   </g
                                                                                       >
   
+    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M176 55 L193 55"
+                                                                                      />
   </g
                                                                                       >
 

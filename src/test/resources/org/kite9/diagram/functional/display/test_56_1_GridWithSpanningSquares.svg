@@ -6,180 +6,128 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
   ></defs
-  ><g kite9-elem="diagram" id="The Diagram"
+  ><g kite9-elem="diagram" id="diagram"
   >
     <g put="here" filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="context" id="Context" transform="translate(15.0,15.0)"
+  <g kite9-elem="grid" id="outer" transform="translate(15.0,15.0)"
       >
-    
-    <g kite9-elem="glyph" id="auto:0-rob's glyph" transform="translate(12.0,42.0)"
+    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
         >
-    <g kite9-elem="back" transform="scale(0.9902912621359223,0.9772727272727273)translate(0.5,0.5)"
+      <rect x="0" width="40.0" height="20.0" y="0" class="grid-back"
+          />
+    </g
           >
-      <rect x="0" y="0" width="102.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="43.0"
-            />
+    
+    <g kite9-elem="cell" id="l"
+          >
+    <g kite9-elem="back" transform="scale(0.9876543209876543,0.9876543209876543)translate(0.25,0.25)"
+            >
+      <path class="cell-edge" d="M 0,20.0 L0,0 L20.0,0"
+              />
     </g
-            >
-    <g put="here" class="glyph"
-            >
-      
-      <g kite9-elem="stereotype" id="auto:0-rob's glyph-stereo" transform="translate(10.0,6.0)"
               >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="glyph-stereotype-text"
+    
+      <g kite9-elem="grid" id="lg" transform="translate(10.0,10.0)"
+              >
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,-0.0)"
                 >
-      <g kite9-elem="text-label"
-                  ><g
-                    ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
-                      ><tspan
-                        >S</tspan
-                        ><tspan
-                        >tereo</tspan
-                      ></text
-                    ></g
-                  ></g
-                  >
+      <rect x="0" width="0.0" height="0.0" y="0" class="grid-back"
+                  />
     </g
                   >
-  </g
+    
+        <g kite9-elem="cell" id="tl"
                   >
-      <g kite9-elem="label" id="auto:0-rob's glyph-label" transform="translate(10.0,20.0)"
-                  >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="glyph-label-text"
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(3.834950039163232E-4,0.24999970197677612)"
                     >
-      <g kite9-elem="text-label"
-                      ><g
-                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                          ><tspan
-                            >R</tspan
-                            ><tspan
-                            >ob's </tspan
-                            ><tspan
-                            >Glyph</tspan
-                          ></text
-                        ></g
-                      ></g
-                      >
+      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+                      />
     </g
-                      >
-  </g
                       >
     
-    </g
-                      >
   </g
                       >
-    <g kite9-elem="glyph" id="auto:3-two" transform="translate(124.0,12.0)"
+        <g kite9-elem="cell" id="bl"
                       >
-    <g kite9-elem="back" transform="scale(0.987012987012987,0.9864864864864865)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(3.834950039163232E-4,0.24999970197677612)"
                         >
-      <rect x="0" y="0" width="76.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="73.0"
+      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
                           />
     </g
                           >
-    <g put="here" class="glyph"
+    
+  </g
                           >
       
-      <g kite9-elem="stereotype" id="auto:3-two-stereo" transform="translate(10.0,6.0)"
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,-0.0)"
+                          >
+      <rect x="0" width="0.0" height="0.0" y="0" class="grid-frame"
+                            />
+    </g
                             >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="glyph-stereotype-text"
+  </g
+                            >
+    
+  </g
+                            >
+    <g kite9-elem="cell" id="r" transform="translate(20.0,0.0)"
+                            >
+    <g kite9-elem="back" transform="scale(0.9876543209876543,0.9876543209876543)translate(0.25,0.25)"
                               >
-      <g kite9-elem="text-label"
-                                ><g
-                                  ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
-                                    ><tspan
-                                      >S</tspan
-                                      ><tspan
-                                      >tereo</tspan
-                                    ></text
-                                  ></g
-                                ></g
-                                >
+      <path class="cell-edge" d="M 0,20.0 L0,0 L20.0,0"
+                                />
     </g
                                 >
-  </g
+    
+      <g kite9-elem="grid" id="lg" transform="translate(10.0,10.0)"
                                 >
-      <g kite9-elem="label" id="auto:3-two-label" transform="translate(10.0,20.0)"
-                                >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="glyph-label-text"
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,-0.0)"
                                   >
-      <g kite9-elem="text-label" transform="translate(13.0,0.0)"
-                                    ><g
-                                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                        ><tspan
-                                          >T</tspan
-                                          ><tspan
-                                          >wo</tspan
-                                        ></text
-                                      ></g
-                                    ></g
-                                    >
+      <rect x="0" width="0.0" height="0.0" y="0" class="grid-back"
+                                    />
     </g
                                     >
-  </g
+    
+        <g kite9-elem="cell" id="tr"
                                     >
-      <g kite9-elem="text-lines" id="auto:3-two-text-lines" transform="translate(10.0,37.0)"
-                                    >
-        <g kite9-elem="text-line" id="auto:1"
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(3.834950039163232E-4,0.24999970197677612)"
                                       >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="generic-text"
+      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+                                        />
+    </g
                                         >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
-                                          ><g
-                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                              ><tspan
-                                                >L</tspan
-                                                ><tspan
-                                                >ine </tspan
-                                                ><tspan
-                                                >1</tspan
-                                              ></text
-                                            ></g
-                                          ></g
-                                          >
-    </g
-                                          >
+    
   </g
+                                        >
+        <g kite9-elem="cell" id="br"
+                                        >
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(3.834950039163232E-4,0.24999970197677612)"
                                           >
-        <g kite9-elem="text-line" id="auto:2" transform="translate(0.0,15.0)"
-                                          >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="generic-text"
+      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+                                            />
+    </g
                                             >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
-                                              ><g
-                                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                  ><tspan
-                                                    >S</tspan
-                                                    ><tspan
-                                                    >econd </tspan
-                                                    ><tspan
-                                                    >Line</tspan
-                                                  ></text
-                                                ></g
-                                              ></g
-                                              >
+    
+  </g
+                                            >
+      
+    <g kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,-0.0)"
+                                            >
+      <rect x="0" width="0.0" height="0.0" y="0" class="grid-frame"
+                                              />
     </g
                                               >
   </g
-                                              >
-      </g
                                               >
     
-    </g
-                                              >
   </g
                                               >
   
-    <g kite9-elem="back" transform="scale(0.9953051643192489,0.9897959183673469)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.975609756097561,0.9523809523809523)translate(0.5,0.5)"
                                               >
-      <rect x="0" y="0" width="212.0" rx="12" class="context-back" ry="12" height="97.0"
+      <rect x="0" width="40.0" height="20.0" y="0" class="grid-frame"
                                                 />
     </g
                                                 >
