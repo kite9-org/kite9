@@ -214,8 +214,8 @@
   </template>
   
   <template id="link">
-    <svg:path d="{path}" class="link" style="marker-start: {markerstart}; marker-end: {markerend}"/>
     <contents />
+    <svg:path d="{path}" class="link" style="marker-start: {markerstart}; marker-end: {markerend}"/>
   </template>
   
   <template id="diagram">

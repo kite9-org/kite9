@@ -129,7 +129,7 @@ toLabel,
 fromLabel {
 	kite9-usage: label;
 	kite9-type: container; 
-	kite9-padding: 4px 4px 4px 4px; 
+	kite9-padding: 4px; 
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#connection-label);
 	kite9-margin: 4px;	

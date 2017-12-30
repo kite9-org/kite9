@@ -75,10 +75,14 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	private double getMinimumDistanceRectangularToConnection(Rectangular a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along) {
 		if (aSide == d) {
 			// we are outside a
-			double inset = getMargin(a, aSide);
-			double margin = getMargin(b, bSide);
-			double length = Math.max(inset, margin);
-			return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
+			if (isEventualParent(a, b)) {
+				return 0;
+			} else {
+				double inset = getMargin(a, aSide);
+				double margin = getMargin(b, bSide);
+				double length = Math.max(inset, margin);
+				return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
+			}
 		} else {
 			// we are inside a, so use the padding distance
 			double inset = getPadding(a, d);
@@ -146,9 +150,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		double length;
 		if (a == b) {
 			length =  getInternalDistance(a, aSide, bSide); 
-		} else if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
+		} else if (isImmediateParent(b, a)) {
 			length = Math.max(getPadding(a, aSide), getMargin(b, bSide));
-		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
+		} else if (isImmediateParent(a, b)) {
 			length = Math.max(getPadding(b, bSide), getMargin(a, aSide));
 		} else if (concave) {
 			if (aSide == bSide) {
@@ -163,6 +167,21 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		}
 		
 		return incorporateAlongMinimumLength(along, d, length,a, aSide, b, bSide);
+	}
+
+	protected boolean isImmediateParent(DiagramElement a, DiagramElement parent) {
+		return a.getParent() == parent;
+	}
+	
+	protected boolean isEventualParent(DiagramElement d, DiagramElement parent) {
+		if (d == null) {
+			return false;
+		} else if (isImmediateParent(d, parent)) {
+			return true;
+		} else {
+			return isEventualParent(d.getParent(), parent);
+		}
+		
 	}
 
 	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along, boolean concave) {

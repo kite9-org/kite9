@@ -335,7 +335,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	public boolean isLoggingEnabled() {
-		return true;
+		return false;
 	}
 
 }
