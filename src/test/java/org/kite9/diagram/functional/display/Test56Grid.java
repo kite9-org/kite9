@@ -72,10 +72,10 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		}
 		
 		
-		Glyph g1 = new Glyph("one", "ster","Some gylph", null, null);
-		Glyph g2 = new Glyph("two", "ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
-		Glyph g3 = new Glyph("three", "ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
-		Glyph g4 = new Glyph("four", "","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g1 = new Glyph("one", "one-ster","Some gylph", null, null);
+		Glyph g2 = new Glyph("two", "two-ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g3 = new Glyph("three", "three-ster","sdlfkjsdlkfsdlkfk lksdjf ", null, null);
+		Glyph g4 = new Glyph("four", "","four ster sdlfkjsdlkfsdlkfk lksdjf ", null, null);
 		elems[2][1].appendChild(g1);
 		elems[1][3].appendChild(g2);
 		elems[3][0].appendChild(g3);

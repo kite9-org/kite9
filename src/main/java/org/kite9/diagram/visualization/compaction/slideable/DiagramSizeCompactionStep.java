@@ -2,8 +2,6 @@ package org.kite9.diagram.visualization.compaction.slideable;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -17,9 +15,9 @@ import org.kite9.framework.logging.Kite9Log;
  * @author robmoffat
  *
  */
-public class WidthCompactionStep extends AbstractCompactionStep {
+public class DiagramSizeCompactionStep extends AbstractCompactionStep {
 
-	public WidthCompactionStep(CompleteDisplayer cd) {
+	public DiagramSizeCompactionStep(CompleteDisplayer cd) {
 		super(cd);
 	}
 
@@ -37,10 +35,11 @@ public class WidthCompactionStep extends AbstractCompactionStep {
 		Slideable<Segment> highSide = diagramSlideables.getB();
 		int min = highSide.getMinimumPosition();
 		highSide.setMaximumPosition(min);
+		log.send("Set Overall Diagram Size: "+highSide);
 	}
 
 	public String getPrefix() {
-		return "WOS ";
+		return "DSCS";
 	}
 
 	public boolean isLoggingEnabled() {

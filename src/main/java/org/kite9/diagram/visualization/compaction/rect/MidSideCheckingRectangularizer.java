@@ -153,10 +153,21 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 
 
 	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
-		return vt.getSegment().getUnderlyingInfo().stream()
+		boolean out = vt.getSegment().getUnderlyingInfo().stream()
 			.map(ui -> ui.getDiagramElement())
-			.filter(underlying -> (underlying instanceof Container) && (((Container)underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+			.filter(underlying -> (underlying instanceof Connected))
+			.filter(underlying -> (underlying instanceof Container) && (((Container) underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+			.filter(underlying -> { 
+				return matchesPattern((Container) underlying, vt.getStartsWith().getUnderlying(), vt.getEndsWith().getUnderlying()) 
+					|| matchesPattern((Container) underlying, vt.getEndsWith().getUnderlying(), vt.getStartsWith().getUnderlying());
+			})
 			.count() > 0;
+
+		return out;
+	}
+	
+	private static boolean matchesPattern(Container underlying, Segment underlyingEnd, Segment connectionEnd) {
+		return underlyingEnd.hasUnderlying(underlying) && connectionEnd.getConnections().size()==1;
 	}
 	
 }

@@ -287,8 +287,8 @@ arrow > label > contents {
 
 
 key {
-	kite9-type: container;
 	kite9-usage: label;
+	kite9-type: container;
 	kite9-layout: grid;
 	kite9-sizing: maximize;
 	kite9-grid-size: 1 3;

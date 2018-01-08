@@ -75,7 +75,7 @@
   
   </g
                         >
-  <g kite9-elem="arrow" id="i2" transform="translate(271.0,20.0)"
+  <g kite9-elem="arrow" id="i2" transform="translate(195.0,202.0)"
                         >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                           >
@@ -288,7 +288,7 @@
   <g kite9-elem="link" id="i2-a"
                                                                   >
     
-    <g kite9-elem="from" transform="translate(266.0,25.0)"
+    <g kite9-elem="from" transform="translate(209.0,207.0)"
                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                       />
@@ -334,14 +334,14 @@
   </g
                                                                               >
   
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M271 30 L43 30"
+    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M214 212 L256 212 C258.7614 212 261 209.7614 261 207 L261 35 C261 32.2386 258.7614 30 256 30 L43 30"
                                                                               />
   </g
                                                                               >
   <g kite9-elem="link" id="i2-b"
                                                                               >
     
-    <g kite9-elem="from" transform="translate(285.0,25.0)"
+    <g kite9-elem="from" transform="translate(190.0,207.0)"
                                                                                 >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                   />
@@ -353,7 +353,7 @@
                                                                                     />
   </g
                                                                                     >
-    <g kite9-elem="toLabel" id="auto:6" transform="translate(131.0,212.0)"
+    <g kite9-elem="toLabel" id="auto:6" transform="translate(74.0,212.0)"
                                                                                     >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                                       >
@@ -387,7 +387,7 @@
   </g
                                                                                           >
   
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M290 30 L295 30 C297.7614 30 300 32.2386 300 35 L300 207 C300 209.7614 297.7614 212 295 212 L44 212"
+    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M195 212 L44 212"
                                                                                           />
   </g
                                                                                           >
