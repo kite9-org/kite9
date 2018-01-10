@@ -46,6 +46,7 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	public RouteRenderingInformation getRenderingInformation() {
 		if (rri == null) {
 			rri = new RouteRenderingInformationImpl();
+			rri.setRendered(false);
 		}
 		
 		return rri;

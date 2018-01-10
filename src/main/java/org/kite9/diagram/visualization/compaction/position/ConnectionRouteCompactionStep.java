@@ -48,7 +48,9 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		for (Dart e : c.getAllDarts()) {
 			for (DiagramElement de : e.getDiagramElements().keySet()) {
 				if (de instanceof Connection) {
-					out.add((Connection) de);
+					if (((Connection)de).getRenderingInformation().isRendered()) {
+						out.add((Connection) de);
+					}
 				}
 			}
 		}	

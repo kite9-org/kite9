@@ -135,6 +135,11 @@ fromLabel {
 	kite9-margin: 4px;	
 }
 
+text-label {
+	kite9-horizontal-align: center;
+	kite9-vertical-align: center;
+}
+
 /*
  * Required so we can process old XML content
  */

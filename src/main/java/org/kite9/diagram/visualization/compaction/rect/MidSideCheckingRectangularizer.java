@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
@@ -90,10 +91,20 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
-		if (hasOneConnected(vt)) {
+		Set<Connected> connecteds = getConnecteds(vt);
+		if (connecteds.size() == 1) {
 			if ((link == null) || (link.getSegment().getConnections().size() == 1)) {
 				Set<Connection> leavingConnections = vt.getLeavingConnections();
 				if (leavingConnections.size() == 1) {
+					
+					Connected theConnected = connecteds.iterator().next();
+					Connection theConnection = leavingConnections.iterator().next();
+					
+					if (!theConnection.meets(theConnected)) {
+						// we should only do a mid-point if we're connecting to this element
+						return false;
+					}
+					
 					if ((link == null) || (link.getSegment().getConnections().containsAll(leavingConnections))) {
 						return true;
 					}
@@ -105,8 +116,8 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		
 	}
 	
-	private boolean hasOneConnected(VertexTurn vt) {
-		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).count() == 1;
+	private Set<Connected> getConnecteds(VertexTurn vt) {
+		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).map(r -> (Connected) r).collect(Collectors.toSet());
 	}
 
 	private Rectangular getRectangular(VertexTurn vt) {
@@ -156,7 +167,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		boolean out = vt.getSegment().getUnderlyingInfo().stream()
 			.map(ui -> ui.getDiagramElement())
 			.filter(underlying -> (underlying instanceof Connected))
-			.filter(underlying -> (underlying instanceof Container) && (((Container) underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+			.filter(underlying -> (underlying instanceof Container)) // && (((Container) underlying).getSizing() == DiagramElementSizing.MINIMIZE))
 			.filter(underlying -> { 
 				return matchesPattern((Container) underlying, vt.getStartsWith().getUnderlying(), vt.getEndsWith().getUnderlying()) 
 					|| matchesPattern((Container) underlying, vt.getEndsWith().getUnderlying(), vt.getStartsWith().getUnderlying());

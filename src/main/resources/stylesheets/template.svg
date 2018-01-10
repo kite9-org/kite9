@@ -147,7 +147,7 @@
   </template>
 
   <template id="generic-text">
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" />
     <svg:g class="generic-text">
       <text-label style="kite9-type: text;">
         <contents />

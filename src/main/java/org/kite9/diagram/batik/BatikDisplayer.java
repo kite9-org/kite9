@@ -76,11 +76,13 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	public double getLinkMinimumLength(Connection element, boolean starting, boolean ending) {
 		double length = element.getMinimumLength();
 		if (starting) {
-			length += element.getFromDecoration().getReservedLength();
+			Terminator term = element.getFromDecoration();
+			length += term != null ? term.getReservedLength() : 0;
 		} 
 		
 		if (ending) {
-			length += element.getToDecoration().getReservedLength();
+			Terminator term = element.getToDecoration();
+			length += term != null ? term.getReservedLength() : 0;
 		}
 		
 		return length;
