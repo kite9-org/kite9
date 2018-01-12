@@ -2,6 +2,8 @@ package org.kite9.diagram.model;
 
 import java.util.Collection;
 
+import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
@@ -42,5 +44,11 @@ public interface Connected extends Rectangular {
 	 * The minimum distance from the start of a link and the corner of this connected.
 	 */
 	double getLinkInset();
+	
+	/**
+	 * In the case of single connections on a side, returns how that connection
+	 * should meet the side.
+	 */
+	ConnectionAlignment getAlignment(Direction side); 
 }
 

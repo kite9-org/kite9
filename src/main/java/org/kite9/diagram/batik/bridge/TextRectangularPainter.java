@@ -10,7 +10,6 @@ import org.apache.batik.anim.dom.SVGOMFlowDivElement;
 import org.apache.batik.anim.dom.SVGOMFlowParaElement;
 import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
-import org.apache.batik.anim.dom.SVGOMPathElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
@@ -163,12 +162,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 		LocalRenderingFlowRootElementBridge.getFlowNode(
 				super.initGraphicsNode(theElement)
 				
-				)
-;
-	}
-
-
-	
-	
-	
+				);
+	}	
 }

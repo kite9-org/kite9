@@ -60,6 +60,16 @@ public interface CSSConstants {
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";
 	
+	// controls whether we try and align connections along the mid-point of the connected.
+	public static final String CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-align";
+//	public static final String CONNECTION_VERTICAL_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-vertical-align";
+//	public static final String CONNECTION_HORIZONTAL_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-horizontal-align";
+	public static final String CONNECTION_ALIGN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"connection-align-";
+	public static final String CONNECTION_ALIGN_BOTTOM_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+BOTTOM;
+	public static final String CONNECTION_ALIGN_TOP_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+TOP;
+	public static final String CONNECTION_ALIGN_RIGHT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+RIGHT;
+	public static final String CONNECTION_ALIGN_LEFT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+LEFT;	
+	
 	// for aligning content within a container
 	public static final String VERTICAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX+"vertical-align";
 	public static final String HORIZONTAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX+"horizontal-align";

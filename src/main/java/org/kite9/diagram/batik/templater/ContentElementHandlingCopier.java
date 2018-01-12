@@ -9,7 +9,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ContentsElement;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -59,7 +58,6 @@ public class ContentElementHandlingCopier extends BasicCopier {
 				}
 			} else {
 				copyContents(copyOfOriginal, inside);
-				((Element)inside).setAttribute("put", "here");
 			}
 			return null;
 		} else {

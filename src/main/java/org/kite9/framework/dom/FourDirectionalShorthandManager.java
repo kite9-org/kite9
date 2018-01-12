@@ -14,13 +14,13 @@ import org.w3c.dom.DOMException;
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @version $Id: MarginShorthandManager.java 475685 2006-11-16 11:16:05Z cam $
  */
-public class PaddingAndMarginShorthandManager
+public class FourDirectionalShorthandManager
     extends AbstractValueFactory
     implements ShorthandManager {
 
 	private final String propertyPrefix;
 	
-    public PaddingAndMarginShorthandManager(String pp) {
+    public FourDirectionalShorthandManager(String pp) {
     	this.propertyPrefix = pp;
     }
     

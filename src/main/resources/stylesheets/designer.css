@@ -36,7 +36,7 @@ glyph {
 	kite9-layout: grid;	
 	kite9-grid-size: 1 2;
 	kite9-template: url(template.svg#glyph);
-	kite9-padding: 6px 10px 6px 10px; 
+	kite9-padding: 0;
 	kite9-margin: 10px;
 }
 
@@ -104,7 +104,7 @@ context > label {
 	kite9-type: container; 
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#container-label);
-	kite9-padding: 4px;
+	kite9-padding: 14px;
 }
 
 grid {
@@ -129,10 +129,10 @@ toLabel,
 fromLabel {
 	kite9-usage: label;
 	kite9-type: container; 
-	kite9-padding: 4px; 
+	kite9-padding: 14px; 
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#connection-label);
-	kite9-margin: 4px;	
+	kite9-margin: 14px;	
 }
 
 text-label {

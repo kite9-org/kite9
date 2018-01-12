@@ -17,6 +17,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -127,5 +128,10 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public double getLinkInset() {
 		return 0;
+	}
+
+	@Override
+	public ConnectionAlignment getAlignment(Direction side) {
+		return ConnectionAlignment.NONE;
 	}
 }

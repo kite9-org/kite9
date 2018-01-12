@@ -18,10 +18,9 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_57_1_TextLineLink1() throws Exception {
 		TextLine tl = new TextLine("linker", "some row");
-		TextLine tl2 = new TextLine("some other row");
-		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl, tl2), null);
+		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
 		Arrow a = new Arrow("meets");
-		new Link(a, tl, null, null, null, null, Direction.LEFT);
+		new Link(a, tl, null, null, null, null, Direction.RIGHT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, a));
 
 		renderDiagram(d);

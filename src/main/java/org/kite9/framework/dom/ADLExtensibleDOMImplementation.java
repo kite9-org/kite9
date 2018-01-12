@@ -80,7 +80,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		});
 		
 		// PADDING CSS
-		registerCustomCSSShorthandManager(new PaddingAndMarginShorthandManager(CSSConstants.PADDING_PROPERTY));
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.PADDING_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_LEFT_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_RIGHT_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_TOP_PROPERTY));
@@ -88,7 +88,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 
 		// MARGIN CSS
 		// We are using Kite9 margin here to differentiate from the one in regular CSS (not sure if this is a good idea)
-		registerCustomCSSShorthandManager(new PaddingAndMarginShorthandManager(CSSConstants.MARGIN_PROPERTY));
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.MARGIN_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_LEFT_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_RIGHT_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_TOP_PROPERTY));
@@ -125,6 +125,12 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		// ALIGNMENT
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, true));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, true));
+		
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.CONNECTION_ALIGN_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY));
 		
 		// LINK LENGTHS
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 0f));
