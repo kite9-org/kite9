@@ -131,7 +131,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public ConnectionAlignment getAlignment(Direction side) {
+	public ConnectionAlignment getConnectionAlignment(Direction side) {
 		return ConnectionAlignment.NONE;
 	}
 }

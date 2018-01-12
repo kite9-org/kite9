@@ -42,7 +42,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
@@ -162,50 +162,53 @@ public class TestingEngine extends TestingHelp {
 			private void meets(Connection c, Connected v, boolean start) {
 				RouteRenderingInformation rri = c.getRenderingInformation();
 				RectangleRenderingInformation rect = v.getRenderingInformation();
-				
+
 				if (rri.getRoutePositions().size() == 0) {
 					// missing element - will be picked up later though
 				} else {
 					Point2D p2d = getCorrectEndPoint(start, c);
 					Rectangle2D r2d = createRect(rect);
-					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
+					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX() - 1, r2d.getY() - 1, r2d.getWidth() + 2, r2d.getHeight() + 2);
 					if (largerRect.contains(p2d)) {
 						// it's on the border
 					} else {
-						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+						throw new LayoutErrorException(c + " doesn't meet " + v + "\nc = " + rri.getRoutePositions() + "\n v= " + r2d);
 					}
-					
+
 					if (checkMidConnection) {
-						if (isMinimizedContainer(v)) {
-							Direction connectionSide = getConnectionSide(c, v, r2d);
-							if (connectionsOnSide(v, connectionSide, r2d) == 1) {
-								switch (connectionSide) {
-								case UP:
-								case DOWN:
+						Direction connectionSide = getConnectionSide(c, v, r2d);
+						if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+							switch (connectionSide) {
+							case UP:
+							case DOWN:
+								if (isAligning(v, connectionSide)) {
 									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
 										if (!straightWithLayoutException(c, v)) {
-											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
 									}
-									break;
-								case LEFT:
-								case RIGHT:
+								}
+								break;
+							case LEFT:
+							case RIGHT:
+								if (isAligning(v, connectionSide)) {
 									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
 										if (!straightWithLayoutException(c, v)) {
-											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
 									}
-									break;
 								}
-		 						
+								break;
 							}
+
 						}
+
 					}
 				}
 			}
 
-			private boolean isMinimizedContainer(Connected v) {
-				return (v instanceof Container) && (((Container) v).getSizing()==DiagramElementSizing.MINIMIZE);
+			private boolean isAligning(Connected v, Direction side) {
+				return v.getConnectionAlignment(side) != ConnectionAlignment.NONE;
 			}
 
 			/**

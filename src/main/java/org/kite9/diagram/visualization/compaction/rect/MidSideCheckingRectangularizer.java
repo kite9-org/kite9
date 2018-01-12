@@ -13,10 +13,11 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -140,7 +141,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		super.performSecondarySizing(c, stacks);
 		stacks.values().stream()
 			.flatMap(s -> s.stream())
-			.filter(vt -> minimizeConnectedOnly(vt)) 
+			.filter(vt -> onlyAligned(vt)) 
 			.distinct()
 			.forEach(vt -> {
 				alignSingleConnections(c, vt);
@@ -163,20 +164,46 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 
 
-	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
+	protected static boolean onlyAligned(VertexTurn vt) {
 		boolean out = vt.getSegment().getUnderlyingInfo().stream()
-			.map(ui -> ui.getDiagramElement())
-			.filter(underlying -> (underlying instanceof Connected))
-			.filter(underlying -> (underlying instanceof Container)) // && (((Container) underlying).getSizing() == DiagramElementSizing.MINIMIZE))
-			.filter(underlying -> { 
-				return matchesPattern((Container) underlying, vt.getStartsWith().getUnderlying(), vt.getEndsWith().getUnderlying()) 
-					|| matchesPattern((Container) underlying, vt.getEndsWith().getUnderlying(), vt.getStartsWith().getUnderlying());
+			.filter(ui -> (ui.getDiagramElement() instanceof Connected))
+			.filter(ui -> (ui.getDiagramElement() instanceof Container))
+			.filter(ui -> (((Connected) ui.getDiagramElement()).getConnectionAlignment(getDirection(ui.getSide(), vt.getDirection())) != ConnectionAlignment.NONE))
+			.filter(ui -> { 
+				return matchesPattern((Container) ui.getDiagramElement(), vt.getStartsWith().getUnderlying(), vt.getEndsWith().getUnderlying()) 
+					|| matchesPattern((Container) ui.getDiagramElement(), vt.getEndsWith().getUnderlying(), vt.getStartsWith().getUnderlying());
 			})
 			.count() > 0;
 
 		return out;
 	}
 	
+	private static Direction getDirection(Side side, Direction vtDirection) {
+		switch (vtDirection) {
+		case UP:
+		case DOWN:
+			if (side == Side.START) {
+				return Direction.UP; 
+			} else if (side == Side.END) {
+				return Direction.DOWN;
+			} else {
+				throw new LogicException();
+			}
+		case LEFT:
+		case RIGHT:
+			if (side == Side.START) {
+				return Direction.UP; 
+			} else if (side == Side.END) {
+				return Direction.DOWN;
+			} else {
+				throw new LogicException();
+			}
+		}
+		
+		throw new LogicException();
+	}
+
+
 	private static boolean matchesPattern(Container underlying, Segment underlyingEnd, Segment connectionEnd) {
 		return underlyingEnd.hasUnderlying(underlying) && connectionEnd.getConnections().size()==1;
 	}

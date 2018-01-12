@@ -109,7 +109,7 @@ public abstract class AbstractConnectedDiagramElement extends AbstractCompactedR
 	}
 
 	@Override
-	public ConnectionAlignment getAlignment(Direction d) {
+	public ConnectionAlignment getConnectionAlignment(Direction d) {
 		ensureInitialized();
 		return alignments[d.ordinal()];
 	}

@@ -49,6 +49,6 @@ public interface Connected extends Rectangular {
 	 * In the case of single connections on a side, returns how that connection
 	 * should meet the side.
 	 */
-	ConnectionAlignment getAlignment(Direction side); 
+	ConnectionAlignment getConnectionAlignment(Direction side); 
 }
 

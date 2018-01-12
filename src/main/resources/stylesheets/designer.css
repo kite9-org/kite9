@@ -38,6 +38,7 @@ glyph {
 	kite9-template: url(template.svg#glyph);
 	kite9-padding: 0;
 	kite9-margin: 10px;
+	kite9-connection-align: 50%;
 }
 
 glyph symbols {
@@ -78,6 +79,7 @@ symbol-text-line {
 	kite9-sizing: maximize;
 	kite9-layout: grid;
 	kite9-grid-size: 2 1;
+	kite9-connection-align: 50%;
 	/* kite9-template: url(template.svg#show-box); */
 } 
 
@@ -221,6 +223,7 @@ symbols {
 symbol {
 	kite9-type: svg;
 	kite9-margin: 0 2px 0 2px;
+	kite9-connection-align: 50%;
 }
 
 symbol.circle {
@@ -249,6 +252,7 @@ text-line, text, boldText, bodyText {
 	kite9-padding-right: 0px;
 	kite9-margin: 0 0 0 0; 
 	kite9-vertical-align: top;
+	kite9-connection-align: 50%;
 }
 
 text-line, text, bodyText {
@@ -271,6 +275,7 @@ arrow {
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#arrow);
 	kite9-connections: separate;
+	kite9-connection-align: 50%;
 }
 
 
