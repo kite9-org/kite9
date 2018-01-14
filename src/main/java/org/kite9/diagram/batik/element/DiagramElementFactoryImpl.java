@@ -47,6 +47,11 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 	}
 
 	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, RectangularElementUsage usage) {
+		if ((parent == null) && (lt != DiagramElementType.DIAGRAM)) {
+			// all elements apart from diagram must have a parent
+			return null;
+		}
+		
 		switch (lt) {
 		case DIAGRAM:
 			if (parent != null) {
@@ -91,7 +96,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			return null;
 		case UNSPECIFIED:
 		default:
-			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage);	
+			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage+" and parent "+parent);	
 		}
 	}
 

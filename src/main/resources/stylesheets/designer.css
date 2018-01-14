@@ -14,6 +14,18 @@
 	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
 }
 
+/*
+ * Required so we can process old XML content
+ */
+renderingInformation,
+fromDecoration,
+toDecoration, 
+position,
+size,
+allLinks {
+	kite9-type: none;
+}
+
 /* Definitions of Kite9 Elements */
 
 context, 
@@ -30,6 +42,25 @@ diagram {
 	kite9-traversal: none;
 	kite9-template: url(template.svg#diagram);
 }
+
+diagram > label, 
+key {
+	kite9-usage: label;
+	kite9-type: container;
+	kite9-layout: grid;
+	kite9-sizing: maximize;
+	kite9-grid-size: 1 3;
+	kite9-padding: 3px 6px 3px 6px; 
+	kite9-margin: 12px 12px 12px 12px;
+	kite9-template: url(template.svg#key)
+}
+
+key text-lines {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-layout: vertical;
+}
+
 
 glyph {
 	kite9-type: container;
@@ -48,7 +79,7 @@ glyph symbols {
 	kite9-layout: horizontal;
 }
 
-glyph label {
+diagram glyph label {
 	kite9-type: container;
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#glyph-label-text);
@@ -140,16 +171,6 @@ fromLabel {
 text-label {
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
-}
-
-/*
- * Required so we can process old XML content
- */
-renderingInformation,
-position,
-size,
-allLinks {
-	kite9-type: none;
 }
 
 link {
@@ -290,27 +311,6 @@ arrow > label {
 arrow > label > contents {
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
-}
-
-
-/* Key */
-
-
-key {
-	kite9-usage: label;
-	kite9-type: container;
-	kite9-layout: grid;
-	kite9-sizing: maximize;
-	kite9-grid-size: 1 3;
-	kite9-padding: 3px 6px 3px 6px; 
-	kite9-margin: 12px 12px 12px 12px;
-	kite9-template: url(template.svg#key)
-}
-
-key text-lines {
-	kite9-type: container;
-	kite9-sizing: maximize;
-	kite9-layout: vertical;
 }
 
 /* Classes And Styles */

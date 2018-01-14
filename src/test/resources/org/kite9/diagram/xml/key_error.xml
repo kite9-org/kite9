@@ -25,7 +25,7 @@ Container</text>
   <text-lines/>
   <symbols/>
  </glyph>
- <glyph id="id_11" shape="umlCOMPONENT" style="fill: '270-#68a0d3-#497094';">
+ <glyph id="id_11" shape="umlCOMPONENT" style="">
   
   <hints py1="0.37462476" py2="0.49862775" px2="0.98706585" px1="0.012934124" y1="182.0" y2="254.0" x2="168.0" x1="72.0"/>
   <stereotype style=""/>
