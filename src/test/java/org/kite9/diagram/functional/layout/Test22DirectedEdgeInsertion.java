@@ -100,7 +100,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		// sends
 		new Link(client, sends, null, null, null, null, Direction.RIGHT);
 		new Link(sends, diagramServer, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		new Link(sends, diagram);
+		new TurnLink(sends, diagram);
 
 		// receives
 		new Link(diagramServer, receives, null, null, null, null, Direction.LEFT);

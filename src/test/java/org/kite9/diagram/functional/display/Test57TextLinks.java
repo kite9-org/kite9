@@ -39,5 +39,20 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(d);
 	}
+	
+
+	@Test
+	public void test_57_3_ExpandingArrow() throws Exception {
+		TextLine tl = new TextLine("linker", "some row blah blah blah");
+		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
+		Glyph two = new Glyph("Stereo", "Two", null, null);
+		Arrow a = new Arrow("a");
+		a.setAttribute("style","	kite9-sizing: maximize;");
+		new Link(a, tl, null, null, null, null, Direction.UP);
+		new Link(one, two, null, null, null, null, Direction.LEFT);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
+
+		renderDiagram(d);
+	}
 
 }
