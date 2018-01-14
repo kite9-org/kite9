@@ -40,7 +40,10 @@ public class Context extends AbstractXMLContainerElement {
 			}
 		}
 		
-		setLayoutDirection(layoutDirection);
+		if (layoutDirection != null) {
+			setAttribute("style", "kite9-layout: "+layoutDirection.toString().toLowerCase()+";");
+		}
+		
 		setLabel(label);
 		setBordered(bordered);
 	}

@@ -145,6 +145,7 @@ grid {
 	kite9-type: container;
 	kite9-sizing: maximize;
 	kite9-traversal: always;
+	kite9-layout: grid;
 }
 
 cell {

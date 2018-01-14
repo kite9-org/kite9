@@ -28,8 +28,8 @@ public interface ContradictionHandler {
 	public abstract Direction checkContradiction(LinkDetail ld1, LinkDetail ld2,
 			Layout containerLayout);
 
-	public abstract void setContradiction(BiDirectional<Connected> bic);
+	public abstract void setContradiction(BiDirectional<Connected> bic, boolean dontRender);
 
-	public abstract void setContradicting(Iterable<BiDirectional<Connected>> connections);
+	public abstract void setContradicting(Iterable<BiDirectional<Connected>> connections, boolean dontRender);
 
 }

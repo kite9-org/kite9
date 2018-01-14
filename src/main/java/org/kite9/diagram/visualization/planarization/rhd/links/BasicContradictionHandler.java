@@ -27,17 +27,17 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	@Override
-	public void setContradicting(Iterable<BiDirectional<Connected>> connections) {
+	public void setContradicting(Iterable<BiDirectional<Connected>> connections, boolean dontRender) {
 		for (BiDirectional<Connected> bic : connections) {
-			setContradiction(bic);
+			setContradiction(bic, dontRender);
 		}
 	}
 
 	@Override
-	public void setContradiction(BiDirectional<Connected> bic) {
+	public void setContradiction(BiDirectional<Connected> bic, boolean dontRender) {
 		log.error("Contradiction: " + bic);
 		if (bic instanceof Connection) {
-			Tools.setConnectionContradiction((Connection) bic, true);
+			Tools.setConnectionContradiction((Connection) bic, true, !dontRender);
 		} else {
 			// this will only get called when we are adding an illegal.
 			// however, this would be setting a contradiction on a layout, so
@@ -65,18 +65,18 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 			switch (containerLayout) {
 			case HORIZONTAL:
 				if (GroupPhase.isVerticalDirection(ad)) {
-					setContradicting(ac);
+					setContradicting(ac, false);
 				}
 				if (GroupPhase.isVerticalDirection(bd)) {
-					setContradicting(bc);
+					setContradicting(bc, false);
 				}
 				break;
 			case VERTICAL:
 				if (GroupPhase.isHorizontalDirection(ad)) {
-					setContradicting(ac);
+					setContradicting(ac, false);
 				}
 				if (GroupPhase.isHorizontalDirection(bd)) {
-					setContradicting(bc);
+					setContradicting(bc, false);
 				}
 				break;
 			default:
@@ -90,17 +90,17 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		} else if (bd == null) {
 			return ad;
 		} else if (aOrdering && !bOrdering) {
-			setContradicting(bc);
+			setContradicting(bc, false);
 			return ad;
 		} else if (bOrdering && !aOrdering) {
-			setContradicting(ac);
+			setContradicting(ac, false);
 			return bd;
 		} else if (!bOrdering && !aOrdering) {
 			if (aRank >= bRank) {
-				setContradicting(bc);
+				setContradicting(bc, false);
 				return ad;
 			} else {
-				setContradicting(ac);
+				setContradicting(ac, false);
 				return bd;
 			}
 		} else {
@@ -119,6 +119,17 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		Direction drawDirection = c.getDrawDirection();
 		DiagramElement from = c.getFrom();
 		DiagramElement to = c.getTo();
+		
+		if (((Connected) from).getContainer().getLayout() == Layout.GRID) {
+			setContradiction(c, true);
+			return;
+		}
+		
+		if (((Connected) to).getContainer().getLayout() == Layout.GRID) {
+			setContradiction(c, true);
+			return;
+		}
+		
 
 		while (true) {
 			Container fromC = ((Connected) from).getContainer();
@@ -152,17 +163,17 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 					}
 				}
 			}
-
+			
 			// check for illegal containment
 			if (to instanceof Container) {
 				if (((Container) to).getContents().contains(from)) {
-					setContradiction(c);
+					setContradiction(c, true);
 				}
 			}
 
 			if (from instanceof Container) {
 				if (((Container) from).getContents().contains(to)) {
-					setContradiction(c);
+					setContradiction(c, true);
 				}
 			}
 			
@@ -184,6 +195,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	private void gridContradiction(Connection c, Direction drawDirection, Connected fromC, Connected toC) {
+		
 		// do special grid checking
 		switch (drawDirection) {
 		case LEFT:
@@ -210,13 +222,13 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		boolean fromInside = (a.getFrom() <= b.getFrom()) && (a.getFrom() >= b.getTo());
 		boolean toInside = (a.getTo() <= b.getFrom()) && (a.getTo() >= b.getTo());
 		if (!(fromInside || toInside)) {
-			setContradiction(c);
+			setContradiction(c, false);
 		}
 	}
 
 	private void gridPositionAfterOrContradiction(IntegerRange a, IntegerRange b, Connection c) {
 		if (a.getTo() < b.getFrom()) {
-			setContradiction(c);
+			setContradiction(c, false);
 		}
 	}
 
@@ -228,7 +240,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 																	// fix
 																	// later.
 		if (GroupPhase.isHorizontalDirection(ld) != GroupPhase.isHorizontalDirection(d)) {
-			setContradiction(c);
+			setContradiction(c, false);
 			return;
 		}
 
@@ -239,18 +251,18 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 
 		boolean contradiction = fromI < toI ? reversed : !reversed;
 		if (contradiction)
-			setContradiction(c);
+			setContradiction(c, false);
 	}
 
 	private void horizontalContradiction(Connection c, Direction drawDirection) {
 		if (GroupPhase.isHorizontalDirection(drawDirection)) {
-			setContradiction(c);
+			setContradiction(c, false);
 		}
 	}
 
 	private void verticalContradiction(Connection c, Direction drawDirection) {
 		if (GroupPhase.isVerticalDirection(drawDirection)) {
-			setContradiction(c);
+			setContradiction(c, false);
 		}
 	}
 

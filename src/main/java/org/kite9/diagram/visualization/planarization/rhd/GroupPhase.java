@@ -156,18 +156,21 @@ public class GroupPhase {
 				if (!allLinks.contains(c)) {
 					allLinks.add(c);
 					ch.checkForContainerContradiction(c);
-					LeafGroup to = getConnectionEnd(c.otherEnd((Connected) o));
-					LeafGroup from = getConnectionEnd((Connected) o);
 					
-					if ((to != null) && (to != o)) {
-						Direction d = c.getDrawDirectionFrom((Connected) o);
-						if (Tools.isConnectionContradicting(c)) {
-							d = null;
-						}
+					if (Tools.isConnectionRendered(c)) {
+						LeafGroup to = getConnectionEnd(c.otherEnd((Connected) o));
+						LeafGroup from = getConnectionEnd((Connected) o);
 						
-						boolean ordering = c instanceof OrderingTemporaryConnection;
-						from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
-						to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+						if ((to != null) && (to != o)) {
+							Direction d = c.getDrawDirectionFrom((Connected) o);
+							if (Tools.isConnectionContradicting(c)) {
+								d = null;
+							}
+							
+							boolean ordering = c instanceof OrderingTemporaryConnection;
+							from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+							to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+						}
 					}
 				}
 			}		

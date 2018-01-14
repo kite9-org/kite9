@@ -42,7 +42,7 @@ public class Test55OddLinks extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_54_1_LinkToTextLine() throws Exception {
+	public void test_55_1_LinkToTextLine() throws Exception {
 		new Link(tls, two);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two), null);
@@ -50,7 +50,7 @@ public class Test55OddLinks extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	public void test_54_2_LinkToSymbols() throws Exception {
+	public void test_55_2_LinkToSymbols() throws Exception {
 		new Link(s1, two);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two), null);
@@ -59,7 +59,7 @@ public class Test55OddLinks extends AbstractLayoutFunctionalTest {
 	
 	
 	@Test
-	public void test_54_3_LinkTwoSymbols() throws Exception {
+	public void test_55_3_LinkTwoSymbols() throws Exception {
 		new Link(s1, s4);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two), null);

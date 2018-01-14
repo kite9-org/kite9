@@ -29,7 +29,7 @@ public class Grid extends AbstractXMLContainerElement {
 		this.tagName = "grid";
 	}
 	
-	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, Layout layoutDirection, ADLDocument doc) {
+	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, ADLDocument doc) {
 		super(id, "grid", doc);
 		
 		if (contents != null) {
@@ -40,16 +40,15 @@ public class Grid extends AbstractXMLContainerElement {
 			}
 		}
 		
-		setLayoutDirection(layoutDirection);
 		setLabel(label);
 	}
 
-	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, Layout layoutDirection) {
-		this(id, contents, label, layoutDirection, TESTING_DOCUMENT);
+	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label) {
+		this(id, contents, label, TESTING_DOCUMENT);
 	}
 
-	public Grid(List<Kite9XMLElement> contents, Kite9XMLElement label, Layout l) {
-		this(createID(), contents, label, l);
+	public Grid(List<Kite9XMLElement> contents, Kite9XMLElement label) {
+		this(createID(), contents, label);
 	}
 
 	@Override

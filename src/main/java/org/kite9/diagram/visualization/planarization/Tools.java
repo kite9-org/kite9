@@ -444,7 +444,7 @@ public class Tools implements Logable {
 		if (c instanceof BiDirectionalPlanarizationEdge) {
 			DiagramElement underlying = ((BiDirectionalPlanarizationEdge) c).getOriginalUnderlying();
 			if (underlying instanceof Connection) {
-				setConnectionContradiction((Connection)underlying, state);
+				setConnectionContradiction((Connection)underlying, state, true);
 			} else {
 				throw new LogicException("Wasn't expecting to set contradiction on "+underlying);
 			}
@@ -466,14 +466,22 @@ public class Tools implements Logable {
 	}
 
 	public static boolean isConnectionContradicting(Connection c) {
-		RouteRenderingInformation rri = (RouteRenderingInformation) c.getRenderingInformation();
+		RouteRenderingInformation rri = c.getRenderingInformation();
 		return rri.isContradicting();
 	}
 	
-	public static void setConnectionContradiction(Connection c, boolean state) {
+	public static boolean isConnectionRendered(Connection c) {
+		RouteRenderingInformation rri = c.getRenderingInformation();
+		return rri.isRendered();
+	}
+	
+	
+	public static void setConnectionContradiction(Connection c, boolean contradicting, boolean rendering) {
+		RouteRenderingInformation rri = c.getRenderingInformation();
 		if (c.getDrawDirection() != null) {
-			RouteRenderingInformation rri = (RouteRenderingInformation) c.getRenderingInformation();
-			rri.setContradicting(state);
+			rri.setContradicting(contradicting);
 		}
+		
+		rri.setRendered(rendering);
 	}
 }

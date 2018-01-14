@@ -2,7 +2,6 @@ package org.kite9.diagram.adl;
 
 import java.util.List;
 
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.AbstractXMLContainerElement;
 import org.kite9.framework.xml.Kite9XMLElement;
@@ -29,7 +28,7 @@ public class Cell extends AbstractXMLContainerElement {
 		this.tagName = "cell";
 	}
 	
-	public Cell(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, Layout layoutDirection, ADLDocument doc) {
+	public Cell(String id, List<Kite9XMLElement> contents, ADLDocument doc) {
 		super(id, "cell", doc);
 		
 		if (contents != null) {
@@ -39,17 +38,15 @@ public class Cell extends AbstractXMLContainerElement {
 				}
 			}
 		}
-		
-		setLayoutDirection(layoutDirection);
-		setLabel(label);
+
 	}
 
-	public Cell(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, Layout layoutDirection) {
-		this(id, contents, label, layoutDirection, TESTING_DOCUMENT);
+	public Cell(String id, List<Kite9XMLElement> contents) {
+		this(id, contents, TESTING_DOCUMENT);
 	}
 
-	public Cell(List<Kite9XMLElement> contents, Kite9XMLElement label, Layout l) {
-		this(createID(), contents, label, l);
+	public Cell(List<Kite9XMLElement> contents) {
+		this(createID(), contents);
 	}
 
 	@Override

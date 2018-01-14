@@ -123,7 +123,12 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 		boolean done = false;
 
 		boolean contradicting = (c instanceof Connection) && (Tools.isConnectionContradicting((Connection)c));
+		boolean rendered = (c instanceof Connection) && (Tools.isConnectionRendered((Connection) c));
 		boolean directed = c.getDrawDirection()!=null;
+		
+		if (!rendered) {
+			return true;
+		}
 		
 		switch (ep) {
 		case SINGLE_DIRECTION:
