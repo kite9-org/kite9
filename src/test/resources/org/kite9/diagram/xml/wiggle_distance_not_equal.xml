@@ -71,16 +71,7 @@
    <symbols/>
   </label>
  </context>
- 
- 
-<label xsi:type="key">
-  
-  <boldText/>
-  <bodyText/>
-  <symbols>
-   
-  <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="K" shape="CIRCLE"/></symbols>
- </label><allLinks>
+ <allLinks>
   <link id="id_23" style="NORMAL">
    
    <from xsi:type="glyph" reference="id_18"/>

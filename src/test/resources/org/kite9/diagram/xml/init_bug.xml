@@ -16,7 +16,7 @@
 
 
 
-<label xsi:type="key" id="id_75">
+<key id="id_75">
 
  <boldText>Welcome To Kite9</boldText>
  <bodyText>This part at the bottom is the key.  You can add notes here 
@@ -65,7 +65,7 @@ to explain what's going on in the diagram</bodyText>
    </symbols>
   </text-line>
  </symbols>
-</label>
+</key>
 
 <context id="id_11" bordered="true">
 

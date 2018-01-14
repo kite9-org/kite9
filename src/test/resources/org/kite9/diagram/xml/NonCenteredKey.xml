@@ -49,7 +49,7 @@
   <text-lines/>
   <symbols/>
  </glyph>
- <label xsi:type="key" id="id_15">
+ <key id="id_15">
   
   <hints y1="282.0" y2="378.0" x2="576.0" x1="12.0"/>
   <boldText>Actors and Use Cases</boldText>
@@ -69,7 +69,7 @@ They are either human or machine agents outside of the system being designed.</t
     <symbols/>
    </text-line>
   </symbols>
- </label>
+ </key>
  
 <allLinks>
   <link id="id_2" shape="NORMAL" style="" drawDirection="RIGHT">

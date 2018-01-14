@@ -118,7 +118,7 @@ on three lines</text>
   <text-lines></text-lines>
   <symbols></symbols>
  </glyph>
- <label xsi:type="key" id="auto:20">
+ <key>
   <boldText>This is a test card</boldText>
   <bodyText>It demonstrates all the elements in the ADL
 language to allow you to check rendering</bodyText>
@@ -168,7 +168,7 @@ language to allow you to check rendering</bodyText>
     </symbols>
    </text-line>
   </symbols>
- </label>
+ </key>
  <allLinks>
   <link id="auto:30">
    <from xsi:type="arrow" reference="a2"></from>

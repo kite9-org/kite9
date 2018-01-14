@@ -16,14 +16,6 @@
 	</context>
 
 
-	<label xsi:type="key">
-
-		<boldText>Empty Diagram</boldText>
-		<bodyText>Double click to edit the key</bodyText>
-		<symbols />
-	</label>
-
-
 	<allLinks>
 		<link id="id_5">
 			<from xsi:type="context" reference="auto:1" />

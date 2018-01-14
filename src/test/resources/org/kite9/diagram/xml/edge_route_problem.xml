@@ -38,11 +38,7 @@
 			<symbols />
 		</label>
 	</context>
-	<label xsi:type="key">
-		<boldText />
-		<bodyText />
-		<symbols />
-	</label>
+
 	<allLinks>
 		<link id="id_5">
 			<from xsi:type="arrow" reference="eats" />

@@ -111,12 +111,12 @@
  </context>
  
  
-<label xsi:type="key">
+<key>
   
   <boldText>Empty Diagram</boldText>
   <bodyText>Double click to edit the key</bodyText>
   <symbols/>
- </label><allLinks>
+ </key><allLinks>
   <link id="id_25">
    
    <from xsi:type="glyph" reference="id_20"/>

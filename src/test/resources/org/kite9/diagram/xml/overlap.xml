@@ -112,16 +112,6 @@
 			<symbols></symbols>
 		</label>
 	</context>
-	<label id="key" xsi:type="key">
-		<boldText>Welcome to Kite9!</boldText>
-		<bodyText>This part of the layout is called the key, and it annotates
-			the diagram. Double click it to set it's properties</bodyText>
-		<symbols>
-			<symbol text="Step 1" theChar="1" shape="CIRCLE"></symbol>
-			<symbol text="Step 2" theChar="2" shape="CIRCLE"></symbol>
-			<symbol text="Step 3" theChar="3" shape="CIRCLE"></symbol>
-		</symbols>
-	</label>
 	<allLinks>
 		<link id="id_8" style="NORMAL">
 			<from xsi:type="glyph" reference="id_6"></from>

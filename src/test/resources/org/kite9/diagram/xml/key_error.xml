@@ -36,22 +36,7 @@ c
   <text-lines/>
   <symbols/>
  </glyph>
- <label xsi:type="key" id="id_12">
-  
-  <hints y1="348.0" y2="432.0" x2="198.0" x1="12.0"/>
-  <boldText>My New Key</boldText>
-  <bodyText>Tgfexcv</bodyText>
-  <symbols>
-   <text-line id="auto:1621">
-    
-    <hints y1="393.25" y2="414.25" x2="161.75" x1="48.25"/>
-    <text>New Text Line  d</text>
-    <symbols>
-     <symbol theChar="s" shape="DIAMOND"/>
-    </symbols>
-   </text-line>
-  </symbols>
- </label>
+
  
 <allLinks>
   <link id="id_24" shape="NORMAL" style="">

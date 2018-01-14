@@ -31,16 +31,7 @@
    <symbols/>
   </label>
  </context>
- 
- 
-<label xsi:type="key">
-  
-  <boldText/>
-  <bodyText/>
-  <symbols>
-   <symbol text="Describe the symbol here" theChar="e" shape="HEXAGON"/>
-  </symbols>
- </label><allLinks>
+<allLinks>
   <link id="id_41" style="NORMAL">
    
    <from xsi:type="arrow" reference="id_36"/>

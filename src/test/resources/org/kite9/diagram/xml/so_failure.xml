@@ -44,14 +44,14 @@
  </arrow>
  
  
-<label xsi:type="key">
+<key>
   
   <boldText>This is the key</boldText>
   <bodyText>Double click to provide text to describe your diagram</bodyText>
   <symbols>
    <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="C" shape="CIRCLE"/>
   </symbols>
- </label><allLinks>
+ </key><allLinks>
   <link id="id_6" style="NORMAL">
    
    <from xsi:type="arrow" reference="id_1"/>

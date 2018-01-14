@@ -156,7 +156,7 @@ and fiction works</text></text-line></text-lines>
 			<toDecoration>NONE</toDecoration>
 		</link>
 	</allLinks>
-	<label xsi:type="key">
+	<key>
 		<boldText>Library Example</boldText>
 		<bodyText>This diagram shows where books can go when taken out of the library, and the activities of the librarian and the reader.  </bodyText>
 		<symbols>
@@ -169,5 +169,5 @@ and fiction works</text></text-line></text-lines>
 			<symbol theChar="F" shape="CIRCLE"><text>Fee of 20p / day for each unreturned book</text></symbol>
 			<symbol theChar="C" shape="CIRCLE"><text>Client of the library</text></symbol>
 		</symbols>
-	</label>
+	</key>
 </diagram>

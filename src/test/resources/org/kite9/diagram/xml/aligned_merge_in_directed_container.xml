@@ -70,10 +70,10 @@
   </context>
  </context>
 </context>
-<label xsi:type="key" id="id_5">
+<key id="id_5">
 
  <boldText>My New Key</boldText>
-</label>
+</key>
 
 <allLinks>
  <link id="id_0" drawDirection="RIGHT">

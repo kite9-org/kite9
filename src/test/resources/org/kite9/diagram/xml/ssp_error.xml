@@ -137,7 +137,7 @@ for this context</text>
   
  </arrow>
  
- <label xsi:type="key" id="auto:20">
+ <key id="auto:20">
   
   <boldText>This is a test card</boldText>
   <bodyText>It demonstrates all the elements in the ADL
@@ -194,7 +194,7 @@ language to allow you to check rendering</bodyText>
     </symbols>
    </text-line>
   </symbols>
- </label>
+ </key>
  <allLinks>
   <link id="auto:30">
    

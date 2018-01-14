@@ -47,10 +47,7 @@
 <context id="auto:10448" layout="RIGHT" bordered="false">
 
 </context>
-<label xsi:type="key" id="id_5">
 
- <boldText>My New Key</boldText>
-</label>
 
 <allLinks>
  <link id="id_2" drawDirection="RIGHT">
