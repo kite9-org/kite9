@@ -130,6 +130,7 @@ context {
 	kite9-padding: 12px;	
 }
 
+cell > label, 
 context > label {
 	kite9-usage: label;
 	kite9-type: container; 

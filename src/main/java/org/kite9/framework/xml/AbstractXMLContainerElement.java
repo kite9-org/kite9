@@ -1,5 +1,7 @@
 package org.kite9.framework.xml;
 
+import org.kite9.diagram.model.position.Layout;
+
 public abstract class AbstractXMLContainerElement extends AbstractStyleableXMLElement {
 
 	public AbstractXMLContainerElement() {
@@ -20,5 +22,13 @@ public abstract class AbstractXMLContainerElement extends AbstractStyleableXMLEl
 	
 	public Kite9XMLElement getLabel() {
 		return getProperty("label");
+	}
+	
+	public void setLayoutDirection(Layout layoutDirection) {
+		if (layoutDirection != null) {
+			setAttribute("style", "kite9-layout: "+layoutDirection.toString().toLowerCase()+";");
+		} else {
+			removeAttribute("style");
+		}
 	}
 }

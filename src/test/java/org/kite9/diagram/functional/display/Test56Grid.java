@@ -56,7 +56,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Cell[size];
 			for (int j = 0; j < elems[i].length; j++) {
-				elems[i][j] = new Cell("c" + i + "-" + j, null,  null , null);
+				elems[i][j] = new Cell("c" + i + "-" + j, null);
 				elems[i][j].setAttribute("style", "kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
 				if (addLinks) {
 					if (j > 0) {
@@ -90,30 +90,30 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		}
 		
 		
-		Grid ctx = new Grid("outer", contents, null, null);
+		Grid ctx = new Grid("outer", contents, null);
 		return ctx;
 	}
 
 	private Grid createTwoLayerGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4, int leftPad, int rightPad) {
-		Cell tl = new Cell("tl", Arrays.asList(g1), null, null);
-		Cell tr = new Cell("tr", Arrays.asList(g2), null, null);
-		Cell bl = new Cell("bl", Arrays.asList(g3), null, null);
-		Cell br = new Cell("br", Arrays.asList(g4), null, null);
+		Cell tl = new Cell("tl", Arrays.asList(g1));
+		Cell tr = new Cell("tr", Arrays.asList(g2));
+		Cell bl = new Cell("bl", Arrays.asList(g3));
+		Cell br = new Cell("br", Arrays.asList(g4));
 		
 		tl.setAttribute("style", "kite9-occupies: 0 0;");
 		bl.setAttribute("style", "kite9-occupies: 0 1;");
 
 		tr.setAttribute("style", "kite9-occupies: 0 0;");
 		br.setAttribute("style", "kite9-occupies: 0 1;");
-		Grid lg = new Grid("lg", Arrays.asList(tl, bl), null, null);
-		Grid rg = new Grid("lg", Arrays.asList(tr, br), null, null);
+		Grid lg = new Grid("lg", Arrays.asList(tl, bl), null);
+		Grid rg = new Grid("lg", Arrays.asList(tr, br), null);
 
-		Cell l = new Cell("l", Arrays.asList(lg), null, null);
-		Cell r = new Cell("r", Arrays.asList(rg), null, null);
+		Cell l = new Cell("l", Arrays.asList(lg));
+		Cell r = new Cell("r", Arrays.asList(rg));
 		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: "+leftPad+"px"); 
 		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: "+rightPad+"px"); 
 		
-		Grid ctx = new Grid("outer", Arrays.asList(l, r), null, Layout.GRID);
+		Grid ctx = new Grid("outer", Arrays.asList(l, r), null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
 
 		return ctx;

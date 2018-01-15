@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Cell;
 import org.kite9.diagram.adl.Context;
@@ -124,9 +123,9 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	 */
 	@Test
 	public void test_51_3_GridWithMissingBits() throws Exception {
-		Cell tl = new Cell("tl", createGlyphContents("Top\nLeft"), null);
-		Cell tr = new Cell("tr", createGlyphContents("Top\nRight"), null);
-		Cell br = new Cell("br", createGlyphContents("Bottom\nRight"),  null);
+		Cell tl = new Cell("tl", createGlyphContents("Top\nLeft"));
+		Cell tr = new Cell("tr", createGlyphContents("Top\nRight"));
+		Cell br = new Cell("br", createGlyphContents("Bottom\nRight"));
 		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0;");
 		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0;");
 		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1;");
@@ -146,14 +145,14 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	 * Labels cannot be rendered on gridded containers.
 	 * @throws Exception
 	 */
-	@Test
+	@Test(expected=ElementsMissingException.class)
 	public void test_51_8_GridWithLabels() throws Exception {
 		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
 		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));
 		Cell br = new Cell("br", Arrays.asList(new TextLine("brl","label",  "Bottom Right")));
-		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0; kite9-usage: label;");
-		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0; kite9-usage: label;");
-		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1; kite9-usage: label;");
+		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0; ");
+		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0; ");
+		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1; ");
 		
 		Grid ctx = new Grid("inner", Arrays.asList(tl, tr, br), null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2; kite9-padding: 4px; "); 
@@ -221,7 +220,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		
-		Context ctx = setupContext(g1, g2, g3, g4); 
+		Grid ctx = setupContext(g1, g2, g3, g4); 
 		
 		new ContradictingLink(g1, g3, null, null, null, null, Direction.RIGHT);
 

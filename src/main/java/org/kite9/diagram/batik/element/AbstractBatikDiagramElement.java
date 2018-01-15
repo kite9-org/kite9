@@ -67,11 +67,15 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	@SuppressWarnings("unchecked")
 	@Override
 	public Element output(Document d) {
-		ensureInitialized();
-		preProcess(theElement);
-		Element out = ((Painter<DiagramElement>)p).output(d, theElement, this);
-		postProcess(out);
-		return out;
+		if (getRenderingInformation().isRendered()) {
+			ensureInitialized();
+			preProcess(theElement);
+			Element out = ((Painter<DiagramElement>)p).output(d, theElement, this);
+			postProcess(out);
+			return out;
+		} else {
+			return null;
+		}
 	}
 
 

@@ -236,17 +236,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	@Override
 	protected void postProcess(Element out) {
 	}
-	
-	
-
-	@Override
-	public Element output(Document d) {
-		if (getRenderingInformation().isRendered()) {
-			return super.output(d);
-		} else {
-			return null;
-		}
-	}
 
 	@Override
 	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {

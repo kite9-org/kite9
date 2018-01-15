@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.display;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
@@ -47,8 +48,8 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		Arrow eats = new Arrow("eats", "eats");
 		new Link(meets, one, null, null, null, null, Direction.LEFT);
 		new TurnLink(meets, two);
-		new Link(eats, one, null, null, null, null, Direction.UP);
-		new Link(eats, two, null, null, null, null, Direction.DOWN);
+		new ContradictingLink(eats, one, null, null, null, null, Direction.UP);
+		new ContradictingLink(eats, two, null, null, null, null, Direction.DOWN);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, meets, eats), Layout.HORIZONTAL, null);
 
 		renderDiagram(d);
