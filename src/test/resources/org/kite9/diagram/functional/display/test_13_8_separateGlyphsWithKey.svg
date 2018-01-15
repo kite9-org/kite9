@@ -155,7 +155,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                           >
-      <g kite9-elem="text-label" transform="translate(17.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                             ><g
                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                 ><tspan
@@ -212,7 +212,7 @@
                                                     >
   </g
                                                     >
-    <g kite9-elem="bodyText" id="auto:5" transform="translate(6.0,33.0)"
+    <g kite9-elem="bodyText" id="auto:5" transform="translate(6.0,18.0)"
                                                     >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
@@ -223,7 +223,7 @@
                                                         >
   </g
                                                         >
-    <g kite9-elem="text-lines" transform="translate(6.0,18.0)"
+    <g kite9-elem="text-lines" transform="translate(6.0,22.0)"
                                                         >
       <g kite9-elem="symbol-text-line" id="auto:6"
                                                           >
@@ -232,7 +232,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                               >
-      <g kite9-elem="text-label" transform="translate(70.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                                 ><g
                                                                   ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                     ><tspan

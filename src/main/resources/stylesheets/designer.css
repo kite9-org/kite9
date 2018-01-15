@@ -57,6 +57,15 @@ key text-lines {
 	kite9-type: container;
 	kite9-sizing: maximize;
 	kite9-layout: vertical;
+	kite9-occupies: 0 2;
+}
+
+key boldText {
+	kite9-occupies: 0 0;
+}
+
+key bodyText {
+	kite9-occupies: 0 1;
 }
 
 
@@ -98,7 +107,7 @@ glyph stereotype {
 
 glyph text-lines {
 	kite9-type: container;
-	kite9-sizing: minimize;
+	kite9-sizing: maximize;
 	kite9-occupies: 0 1 2 2;
 	kite9-layout: vertical;
 }
@@ -112,6 +121,8 @@ symbol-text-line {
 	/* kite9-template: url(template.svg#show-box); */
 } 
 
+key text-lines text-label,
+glyph text-lines text-label,
 symbol-text-line text {
 	kite9-horizontal-align: left;
 }
@@ -264,7 +275,6 @@ symbol.square {
 }
 
 text-line, text, boldText, bodyText {
-	kite9-occupies: 0 0;
 	kite9-type: container;
 	kite9-sizing: maximize;
 	kite9-padding-top: 2px;

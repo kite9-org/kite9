@@ -141,7 +141,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                       >
-      <g kite9-elem="text-label" transform="translate(175.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                         ><g
                                           ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                             ><tspan
@@ -169,7 +169,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                             >
-      <g kite9-elem="text-label" transform="translate(195.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                               ><g
                                                 ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                   ><tspan
@@ -195,7 +195,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                   >
-      <g kite9-elem="text-label" transform="translate(173.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                     ><g
                                                       ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                         ><tspan
@@ -234,7 +234,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                             >
-      <g kite9-elem="text-label" transform="translate(138.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                               ><g
                                                                 ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                   ><tspan
@@ -289,7 +289,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                       >
-      <g kite9-elem="text-label" transform="translate(188.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                                         ><g
                                                                           ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                             ><tspan
@@ -332,7 +332,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                                 >
-      <g kite9-elem="text-label" transform="translate(167.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                                                   ><g
                                                                                     ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                                       ><tspan
@@ -371,7 +371,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                                           >
-      <g kite9-elem="text-label" transform="translate(187.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                                                                                             ><g
                                                                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                                                 ><tspan
