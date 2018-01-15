@@ -8,73 +8,103 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g filter="url(#dropshadow)"
+    <g put="here" filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
+  <g kite9-elem="glyph" id="auto:1-one" transform="translate(15.0,15.0)"
       >
-    
-    <g kite9-elem="glyph" id="auto:0-a" transform="translate(12.0,12.0)"
+    <g kite9-elem="back" transform="scale(0.99,0.9873417721518988)translate(0.5,0.5)"
         >
-    <g kite9-elem="back" transform="scale(0.9655172413793104,0.9666666666666667)translate(0.5,0.5)"
+      <rect x="0" y="0" width="99.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="78.0"
+          />
+    </g
           >
-      <rect x="0" y="0" width="28.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
-            />
-    </g
-            >
-    <g class="glyph"
-            >
+    <g put="here" class="glyph"
+          >
       
-      <g kite9-elem="label" id="auto:0-a-label" transform="translate(10.0,6.0)"
+    <g kite9-elem="stereotype" id="auto:1-one-stereo" transform="translate(10.0,6.0)"
+            >
+    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="glyph-stereotype-text"
               >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="glyph-label-text"
-                >
-      <g kite9-elem="text-label"
-                  ><g
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                      >a</text
-                    ></g
+      <g kite9-elem="text-label" transform="translate(20.0,0.0)"
+                ><g
+                  ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
+                    ><tspan
+                      >S</tspan
+                      ><tspan
+                      >tereo</tspan
+                    ></text
                   ></g
-                  >
+                ></g
+                >
     </g
-                  >
+                >
   </g
-                  >
-    
-    </g
-                  >
-  </g
-                  >
-  
-    <g kite9-elem="back" transform="scale(0.9811320754716981,0.9814814814814815)translate(0.5,0.5)"
-                  >
-      <rect x="0" y="0" width="52.0" rx="12" class="context-back" ry="12" height="53.0"
-                    />
-    </g
-                    >
-  </g
-                    >
-  <g kite9-elem="glyph" id="auto:1-b" transform="translate(77.0,26.0)"
-                    >
-    <g kite9-elem="back" transform="scale(0.9666666666666667,0.9666666666666667)translate(0.5,0.5)"
-                      >
-      <rect x="0" y="0" width="29.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
-                        />
-    </g
-                        >
-    <g class="glyph"
-                        >
-      
-    <g kite9-elem="label" id="auto:1-b-label" transform="translate(10.0,6.0)"
-                          >
+                >
+    <g kite9-elem="label" id="auto:1-one-label" transform="translate(10.0,20.0)"
+                >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
+                  >
+      <g kite9-elem="text-label" transform="translate(25.0,0.0)"
+                    ><g
+                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                        ><tspan
+                          >O</tspan
+                          ><tspan
+                          >ne</tspan
+                        ></text
+                      ></g
+                    ></g
+                    >
+    </g
+                    >
+  </g
+                    >
+    <g kite9-elem="text-lines" id="auto:1-one-text-lines" transform="translate(10.0,37.0)"
+                    >
+      <g kite9-elem="text-line" id="linker"
+                      >
+    <rect x="0" y="0" fill="none" width="74.0" rx="2" ry="2" height="20.0" stroke="black" stroke-width="1"
+                        />
+    <g class="generic-text"
+                        >
+      <g kite9-elem="text-label" transform="translate(14.0,4.0)"
+                          ><g
+                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                              ><tspan
+                                >s</tspan
+                                ><tspan
+                                >ome </tspan
+                                ><tspan
+                                >row</tspan
+                              ></text
+                            ></g
+                          ></g
+                          >
+    </g
+                          >
+  </g
+                          >
+      <g kite9-elem="text-line" id="auto:0" transform="translate(0.0,20.0)"
+                          >
+    <rect x="0" y="0" fill="none" width="74.0" rx="2" ry="2" height="15.0" stroke="black" stroke-width="1"
+                            />
+    <g class="generic-text"
                             >
-      <g kite9-elem="text-label"
+      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
                               ><g
-                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                  >b</text
+                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                  ><tspan
+                                    >s</tspan
+                                    ><tspan
+                                    >ome </tspan
+                                    ><tspan
+                                    >other </tspan
+                                    ><tspan
+                                    >row</tspan
+                                  ></text
                                 ></g
                               ></g
                               >
@@ -82,34 +112,34 @@
                               >
   </g
                               >
+    </g
+                              >
   
     </g
                               >
   </g
                               >
-  <g kite9-elem="key" id="auto:2" transform="translate(15.0,80.0)"
+  <g kite9-elem="arrow" id="meets" transform="translate(124.0,52.0)"
                               >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                 >
-      <rect x="0" y="0" width="91.0" rx="0" class="key-back" ry="0" height="21.0"
+      <rect x="0" y="0" width="44.0" style="fill: black; " rx="4" ry="4" height="20.0"
                                   />
     </g
                                   >
     
-    <g kite9-elem="boldText" id="auto:3" transform="translate(6.0,3.0)"
+    <g kite9-elem="label" id="auto:2" transform="translate(5.0,3.0)"
                                   >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="bold-text"
+    <g class="arrow-label-text"
                                     >
-      <g kite9-elem="text-label" transform="translate(20.0,2.0)"
+      <g kite9-elem="text-label"
                                       ><g
-                                        ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
+                                        ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                           ><tspan
                                             >m</tspan
                                             ><tspan
-                                            >on </tspan
-                                            ><tspan
-                                            >cle</tspan
+                                            >eets</tspan
                                           ></text
                                         ></g
                                       ></g
@@ -121,23 +151,23 @@
   
   </g
                                       >
-  <g kite9-elem="link" id="auto:0-a-auto:1-b"
+  <g kite9-elem="link" id="meets-linker"
                                       >
     
-    <g kite9-elem="from" transform="translate(50.0,36.0)"
+    <g kite9-elem="from" transform="translate(119.0,57.0)"
                                         >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                           />
   </g
                                           >
-    <g kite9-elem="to" transform="translate(72.0,36.0)"
+    <g kite9-elem="to" transform="translate(94.0,57.0)"
                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                             />
   </g
                                             >
   
-    <path style="marker-start: ; marker-end: " class="link" d="M55 41 L77 41"
+    <path style="marker-start: ; marker-end: " class="link" d="M124 62 L99 62"
                                             />
   </g
                                             >

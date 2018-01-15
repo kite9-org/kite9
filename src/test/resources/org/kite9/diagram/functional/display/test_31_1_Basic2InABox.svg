@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="auto:0"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="g1" transform="translate(123.0,68.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g put="here" class="glyph"
+    <g class="glyph"
           >
       
     <g kite9-elem="stereotype" id="g1-stereo" transform="translate(10.0,6.0)"
@@ -74,7 +74,7 @@
                           />
     </g
                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                           >
       
       <g kite9-elem="stereotype" id="g2-stereo" transform="translate(10.0,6.0)"
@@ -134,7 +134,7 @@
                                         />
     </g
                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                         >
       
       <g kite9-elem="stereotype" id="g3-stereo" transform="translate(10.0,6.0)"
@@ -199,7 +199,7 @@
                                                         />
     </g
                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                         >
       
     <g kite9-elem="stereotype" id="g6-stereo" transform="translate(10.0,6.0)"
@@ -255,7 +255,7 @@
                                                                       />
     </g
                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                       >
       
     <g kite9-elem="stereotype" id="g5-stereo" transform="translate(10.0,6.0)"
@@ -311,7 +311,7 @@
                                                                                     />
     </g
                                                                                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                     >
       
     <g kite9-elem="stereotype" id="g7-stereo" transform="translate(10.0,6.0)"

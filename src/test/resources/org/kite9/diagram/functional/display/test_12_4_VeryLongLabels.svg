@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g put="here" class="glyph"
+    <g class="glyph"
             >
       
       <g kite9-elem="label" id="auto:0-a-label" transform="translate(10.0,6.0)"
@@ -54,7 +54,7 @@
                       />
     </g
                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                       >
       
       <g kite9-elem="label" id="auto:1-b-label" transform="translate(10.0,6.0)"

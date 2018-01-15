@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="my_diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="bladerunner" transform="translate(15.0,15.0)"
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g put="here" class="glyph"
+    <g class="glyph"
             >
       
       <g kite9-elem="stereotype" id="harrison_ford-stereo" transform="translate(10.0,6.0)"
@@ -80,7 +80,7 @@
                           />
     </g
                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                           >
       
       <g kite9-elem="stereotype" id="ridley_scott-stereo" transform="translate(10.0,6.0)"

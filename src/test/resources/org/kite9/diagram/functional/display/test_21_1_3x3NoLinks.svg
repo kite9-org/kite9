@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="d"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="ctxn" transform="translate(15.0,15.0)"
@@ -25,7 +25,7 @@
               />
     </g
               >
-    <g put="here" class="glyph"
+    <g class="glyph"
               >
       
         <g kite9-elem="stereotype" id="id1-stereo" transform="translate(10.0,6.0)"
@@ -81,7 +81,7 @@
                             />
     </g
                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                             >
       
         <g kite9-elem="stereotype" id="id2-stereo" transform="translate(10.0,6.0)"
@@ -137,7 +137,7 @@
                                           />
     </g
                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                           >
       
         <g kite9-elem="stereotype" id="id3-stereo" transform="translate(10.0,6.0)"
@@ -194,7 +194,7 @@
                                                       >
   </g
                                                       >
-    <g kite9-elem="context" id="ctx2" transform="translate(192.0,12.0)"
+    <g kite9-elem="context" id="ctx2" transform="translate(12.0,89.0)"
                                                       >
     
       <g kite9-elem="glyph" id="id4" transform="translate(12.0,12.0)"
@@ -205,7 +205,7 @@
                                                             />
     </g
                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                             >
       
         <g kite9-elem="stereotype" id="id4-stereo" transform="translate(10.0,6.0)"
@@ -261,7 +261,7 @@
                                                                           />
     </g
                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                           >
       
         <g kite9-elem="stereotype" id="id5-stereo" transform="translate(10.0,6.0)"
@@ -317,7 +317,7 @@
                                                                                         />
     </g
                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                         >
       
         <g kite9-elem="stereotype" id="id6-stereo" transform="translate(10.0,6.0)"
@@ -374,7 +374,7 @@
                                                                                                     >
   </g
                                                                                                     >
-    <g kite9-elem="context" id="ctx3" transform="translate(372.0,12.0)"
+    <g kite9-elem="context" id="ctx3" transform="translate(12.0,166.0)"
                                                                                                     >
     
       <g kite9-elem="glyph" id="id7" transform="translate(12.0,12.0)"
@@ -385,7 +385,7 @@
                                                                                                           />
     </g
                                                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                           >
       
         <g kite9-elem="stereotype" id="id7-stereo" transform="translate(10.0,6.0)"
@@ -441,7 +441,7 @@
                                                                                                                         />
     </g
                                                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                         >
       
         <g kite9-elem="stereotype" id="id8-stereo" transform="translate(10.0,6.0)"
@@ -497,7 +497,7 @@
                                                                                                                                       />
     </g
                                                                                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                       >
       
         <g kite9-elem="stereotype" id="id9-stereo" transform="translate(10.0,6.0)"
@@ -555,9 +555,9 @@
   </g
                                                                                                                                                   >
   
-    <g kite9-elem="back" transform="scale(0.9981981981981982,0.9891304347826086)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9948717948717949,0.9959349593495935)translate(0.5,0.5)"
                                                                                                                                                   >
-      <rect x="0" y="0" width="554.0" rx="12" class="context-back" ry="12" height="91.0"
+      <rect x="0" y="0" width="194.0" rx="12" class="context-back" ry="12" height="245.0"
                                                                                                                                                     />
     </g
                                                                                                                                                     >

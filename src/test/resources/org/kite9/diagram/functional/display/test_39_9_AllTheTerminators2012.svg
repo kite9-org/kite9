@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="auto:72"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="auto:0-a" transform="translate(61.0,61.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g put="here" class="glyph"
+    <g class="glyph"
           >
       
     <g kite9-elem="label" id="auto:0-a-label" transform="translate(10.0,6.0)"
@@ -51,7 +51,7 @@
                     />
     </g
                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                     >
       
     <g kite9-elem="label" id="auto:1-b-label" transform="translate(10.0,6.0)"
@@ -83,7 +83,7 @@
                               />
     </g
                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                               >
       
     <g kite9-elem="label" id="auto:2-c-label" transform="translate(10.0,6.0)"
@@ -115,7 +115,7 @@
                                         />
     </g
                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                         >
       
     <g kite9-elem="label" id="auto:3-d-label" transform="translate(10.0,6.0)"
@@ -147,7 +147,7 @@
                                                   />
     </g
                                                   >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                   >
       
     <g kite9-elem="label" id="auto:4-e-label" transform="translate(10.0,6.0)"
@@ -179,7 +179,7 @@
                                                             />
     </g
                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                             >
       
     <g kite9-elem="label" id="auto:9-a-label" transform="translate(10.0,6.0)"
@@ -211,7 +211,7 @@
                                                                       />
     </g
                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                       >
       
     <g kite9-elem="label" id="auto:10-b-label" transform="translate(10.0,6.0)"
@@ -243,7 +243,7 @@
                                                                                 />
     </g
                                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                 >
       
     <g kite9-elem="label" id="auto:11-c-label" transform="translate(10.0,6.0)"
@@ -275,7 +275,7 @@
                                                                                           />
     </g
                                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                           >
       
     <g kite9-elem="label" id="auto:12-d-label" transform="translate(10.0,6.0)"
@@ -307,7 +307,7 @@
                                                                                                     />
     </g
                                                                                                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                     >
       
     <g kite9-elem="label" id="auto:13-e-label" transform="translate(10.0,6.0)"
@@ -339,7 +339,7 @@
                                                                                                               />
     </g
                                                                                                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                               >
       
     <g kite9-elem="label" id="auto:18-a-label" transform="translate(10.0,6.0)"
@@ -371,7 +371,7 @@
                                                                                                                         />
     </g
                                                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                         >
       
     <g kite9-elem="label" id="auto:19-b-label" transform="translate(10.0,6.0)"
@@ -403,7 +403,7 @@
                                                                                                                                   />
     </g
                                                                                                                                   >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                   >
       
     <g kite9-elem="label" id="auto:20-c-label" transform="translate(10.0,6.0)"
@@ -435,7 +435,7 @@
                                                                                                                                             />
     </g
                                                                                                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                             >
       
     <g kite9-elem="label" id="auto:21-d-label" transform="translate(10.0,6.0)"
@@ -467,7 +467,7 @@
                                                                                                                                                       />
     </g
                                                                                                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                       >
       
     <g kite9-elem="label" id="auto:22-e-label" transform="translate(10.0,6.0)"
@@ -499,7 +499,7 @@
                                                                                                                                                                 />
     </g
                                                                                                                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                 >
       
     <g kite9-elem="label" id="auto:27-a-label" transform="translate(10.0,6.0)"
@@ -531,7 +531,7 @@
                                                                                                                                                                           />
     </g
                                                                                                                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                           >
       
     <g kite9-elem="label" id="auto:28-b-label" transform="translate(10.0,6.0)"
@@ -563,7 +563,7 @@
                                                                                                                                                                                     />
     </g
                                                                                                                                                                                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                     >
       
     <g kite9-elem="label" id="auto:29-c-label" transform="translate(10.0,6.0)"
@@ -595,7 +595,7 @@
                                                                                                                                                                                               />
     </g
                                                                                                                                                                                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                               >
       
     <g kite9-elem="label" id="auto:30-d-label" transform="translate(10.0,6.0)"
@@ -627,7 +627,7 @@
                                                                                                                                                                                                         />
     </g
                                                                                                                                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                         >
       
     <g kite9-elem="label" id="auto:31-e-label" transform="translate(10.0,6.0)"
@@ -659,7 +659,7 @@
                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                   >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                   >
       
     <g kite9-elem="label" id="auto:36-a-label" transform="translate(10.0,6.0)"
@@ -691,7 +691,7 @@
                                                                                                                                                                                                                             />
     </g
                                                                                                                                                                                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                             >
       
     <g kite9-elem="label" id="auto:37-b-label" transform="translate(10.0,6.0)"
@@ -723,7 +723,7 @@
                                                                                                                                                                                                                                       />
     </g
                                                                                                                                                                                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                       >
       
     <g kite9-elem="label" id="auto:38-c-label" transform="translate(10.0,6.0)"
@@ -755,7 +755,7 @@
                                                                                                                                                                                                                                                 />
     </g
                                                                                                                                                                                                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                 >
       
     <g kite9-elem="label" id="auto:39-d-label" transform="translate(10.0,6.0)"
@@ -787,7 +787,7 @@
                                                                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                           >
       
     <g kite9-elem="label" id="auto:40-e-label" transform="translate(10.0,6.0)"
@@ -819,7 +819,7 @@
                                                                                                                                                                                                                                                                     />
     </g
                                                                                                                                                                                                                                                                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                     >
       
     <g kite9-elem="label" id="auto:45-a-label" transform="translate(10.0,6.0)"
@@ -851,7 +851,7 @@
                                                                                                                                                                                                                                                                               />
     </g
                                                                                                                                                                                                                                                                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                               >
       
     <g kite9-elem="label" id="auto:46-b-label" transform="translate(10.0,6.0)"
@@ -883,7 +883,7 @@
                                                                                                                                                                                                                                                                                         />
     </g
                                                                                                                                                                                                                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                         >
       
     <g kite9-elem="label" id="auto:47-c-label" transform="translate(10.0,6.0)"
@@ -915,7 +915,7 @@
                                                                                                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                                                                                                   >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                   >
       
     <g kite9-elem="label" id="auto:48-d-label" transform="translate(10.0,6.0)"
@@ -947,7 +947,7 @@
                                                                                                                                                                                                                                                                                                             />
     </g
                                                                                                                                                                                                                                                                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                             >
       
     <g kite9-elem="label" id="auto:49-e-label" transform="translate(10.0,6.0)"
@@ -979,7 +979,7 @@
                                                                                                                                                                                                                                                                                                                       />
     </g
                                                                                                                                                                                                                                                                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                       >
       
     <g kite9-elem="label" id="auto:54-a-label" transform="translate(10.0,6.0)"
@@ -1011,7 +1011,7 @@
                                                                                                                                                                                                                                                                                                                                 />
     </g
                                                                                                                                                                                                                                                                                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                 >
       
     <g kite9-elem="label" id="auto:55-b-label" transform="translate(10.0,6.0)"
@@ -1043,7 +1043,7 @@
                                                                                                                                                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                                                                                                                                                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                           >
       
     <g kite9-elem="label" id="auto:56-c-label" transform="translate(10.0,6.0)"
@@ -1075,7 +1075,7 @@
                                                                                                                                                                                                                                                                                                                                                     />
     </g
                                                                                                                                                                                                                                                                                                                                                     >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                     >
       
     <g kite9-elem="label" id="auto:57-d-label" transform="translate(10.0,6.0)"
@@ -1107,7 +1107,7 @@
                                                                                                                                                                                                                                                                                                                                                               />
     </g
                                                                                                                                                                                                                                                                                                                                                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                               >
       
     <g kite9-elem="label" id="auto:58-e-label" transform="translate(10.0,6.0)"
@@ -1139,7 +1139,7 @@
                                                                                                                                                                                                                                                                                                                                                                         />
     </g
                                                                                                                                                                                                                                                                                                                                                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                                         >
       
     <g kite9-elem="label" id="auto:63-a-label" transform="translate(10.0,6.0)"
@@ -1171,7 +1171,7 @@
                                                                                                                                                                                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                                                                                                                                                                                   >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                                                   >
       
     <g kite9-elem="label" id="auto:64-b-label" transform="translate(10.0,6.0)"
@@ -1203,7 +1203,7 @@
                                                                                                                                                                                                                                                                                                                                                                                             />
     </g
                                                                                                                                                                                                                                                                                                                                                                                             >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                                                             >
       
     <g kite9-elem="label" id="auto:65-c-label" transform="translate(10.0,6.0)"
@@ -1235,7 +1235,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                       />
     </g
                                                                                                                                                                                                                                                                                                                                                                                                       >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                                                                       >
       
     <g kite9-elem="label" id="auto:66-d-label" transform="translate(10.0,6.0)"
@@ -1267,7 +1267,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                 />
     </g
                                                                                                                                                                                                                                                                                                                                                                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                                                                                                                                                                                                                                                                                                                                                                 >
       
     <g kite9-elem="label" id="auto:67-e-label" transform="translate(10.0,6.0)"

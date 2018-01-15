@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="auto:7-one" transform="translate(15.0,15.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g put="here" class="glyph"
+    <g class="glyph"
           >
       
     <g kite9-elem="stereotype" id="auto:7-one-stereo" transform="translate(10.0,6.0)"
@@ -69,7 +69,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                         >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(50.0,2.0)"
                           ><g
                             ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                               ><tspan
@@ -170,7 +170,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                           >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(50.0,2.0)"
                                             ><g
                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                 ><tspan

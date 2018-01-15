@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="grid" id="outer" transform="translate(15.0,15.0)"
@@ -55,7 +55,7 @@
                           />
     </g
                           >
-    <g put="here" class="glyph"
+    <g class="glyph"
                           >
       
             <g kite9-elem="label" id="one-label" transform="translate(10.0,6.0)"
@@ -103,7 +103,7 @@
                                         />
     </g
                                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                         >
       
             <g kite9-elem="label" id="three-label" transform="translate(10.0,6.0)"
@@ -181,7 +181,7 @@
                                                                 />
     </g
                                                                 >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                 >
       
             <g kite9-elem="label" id="two-label" transform="translate(10.0,6.0)"
@@ -229,7 +229,7 @@
                                                                               />
     </g
                                                                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                                                                               >
       
             <g kite9-elem="label" id="four-label" transform="translate(10.0,6.0)"

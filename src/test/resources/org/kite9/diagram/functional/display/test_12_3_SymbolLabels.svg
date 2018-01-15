@@ -8,13 +8,13 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="context" id="c1" transform="translate(15.0,15.0)"
       >
     
-    <g kite9-elem="glyph" id="auto:1-a" transform="translate(12.0,19.0)"
+    <g kite9-elem="glyph" id="auto:1-a" transform="translate(12.0,18.0)"
         >
     <g kite9-elem="back" transform="scale(0.9866666666666667,0.9772727272727273)translate(0.5,0.5)"
           >
@@ -22,7 +22,7 @@
             />
     </g
             >
-    <g put="here" class="glyph"
+    <g class="glyph"
             >
       
       <g kite9-elem="stereotype" id="auto:1-a-stereo" transform="translate(10.0,6.0)"
@@ -87,7 +87,7 @@
                               />
     </g
                               >
-    <g put="here" class="glyph"
+    <g class="glyph"
                               >
       
       <g kite9-elem="label" id="auto:5-b-label" transform="translate(10.0,18.0)"

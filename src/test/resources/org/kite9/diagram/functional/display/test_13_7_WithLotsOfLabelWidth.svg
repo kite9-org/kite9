@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="The Diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="auto:0-a" transform="translate(296.0,15.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g put="here" class="glyph"
+    <g class="glyph"
           >
       
     <g kite9-elem="label" id="auto:0-a-label" transform="translate(10.0,6.0)"
@@ -135,7 +135,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                   >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(146.0,2.0)"
                                     ><g
                                       ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                         ><tspan
@@ -159,7 +159,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                           >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(120.0,2.0)"
                                             ><g
                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                 ><tspan
@@ -176,7 +176,7 @@
                                             >
   </g
                                             >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(84.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(324.0,0.0)"
                                             />
       </g
                                             >
@@ -187,7 +187,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                 >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(140.0,2.0)"
                                                   ><g
                                                     ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                       ><tspan
@@ -202,7 +202,7 @@
                                                   >
   </g
                                                   >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(43.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(324.0,0.0)"
                                                   />
       </g
                                                   >
@@ -213,7 +213,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                       >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(118.0,2.0)"
                                                         ><g
                                                           ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                             ><tspan
@@ -230,9 +230,9 @@
                                                         >
   </g
                                                         >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(72.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(308.0,0.0)"
                                                         >
-          <g kite9-elem="symbol" id="auto:4" transform="translate(238.0,1.0)"
+          <g kite9-elem="symbol" id="auto:4" transform="translate(2.0,1.0)"
                                                           >
     <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                                                             />
@@ -252,7 +252,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                 >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(83.0,2.0)"
                                                                   ><g
                                                                     ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                       ><tspan
@@ -285,9 +285,9 @@
                                                                   >
   </g
                                                                   >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(142.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(308.0,0.0)"
                                                                   >
-          <g kite9-elem="symbol" id="auto:5" transform="translate(168.0,12.0)"
+          <g kite9-elem="symbol" id="auto:5" transform="translate(2.0,12.0)"
                                                                     >
     <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
                                                                       />
@@ -307,7 +307,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                           >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(133.0,2.0)"
                                                                             ><g
                                                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                                 ><tspan
@@ -328,9 +328,9 @@
                                                                             >
   </g
                                                                             >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(41.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(308.0,0.0)"
                                                                             >
-          <g kite9-elem="symbol" id="auto:6" transform="translate(269.0,7.0)"
+          <g kite9-elem="symbol" id="auto:6" transform="translate(2.0,7.0)"
                                                                               >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                                 />
@@ -350,7 +350,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                                     >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(112.0,2.0)"
                                                                                       ><g
                                                                                         ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                                           ><tspan
@@ -367,9 +367,9 @@
                                                                                       >
   </g
                                                                                       >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(84.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(308.0,0.0)"
                                                                                       >
-          <g kite9-elem="symbol" id="auto:2" transform="translate(226.0,1.0)"
+          <g kite9-elem="symbol" id="auto:2" transform="translate(2.0,1.0)"
                                                                                         >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                                           />
@@ -389,7 +389,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                                               >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(132.0,2.0)"
                                                                                                 ><g
                                                                                                   ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                                                     ><tspan
@@ -404,9 +404,9 @@
                                                                                                 >
   </g
                                                                                                 >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(43.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(308.0,0.0)"
                                                                                                 >
-          <g kite9-elem="symbol" id="auto:3" transform="translate(267.0,1.0)"
+          <g kite9-elem="symbol" id="auto:3" transform="translate(2.0,1.0)"
                                                                                                   >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                                                     />

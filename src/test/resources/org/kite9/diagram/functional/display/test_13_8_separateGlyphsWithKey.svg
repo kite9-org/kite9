@@ -8,7 +8,7 @@
   ></defs
   ><g kite9-elem="diagram" id="my_diagram"
   >
-    <g put="here" filter="url(#dropshadow)"
+    <g filter="url(#dropshadow)"
     >
       
   <g kite9-elem="glyph" id="HF" transform="translate(15.0,45.0)"
@@ -19,7 +19,7 @@
           />
     </g
           >
-    <g put="here" class="glyph"
+    <g class="glyph"
           >
       
     <g kite9-elem="stereotype" id="HF-stereo" transform="translate(10.0,6.0)"
@@ -77,7 +77,7 @@
                         />
     </g
                         >
-    <g put="here" class="glyph"
+    <g class="glyph"
                         >
       
     <g kite9-elem="stereotype" id="RS-stereo" transform="translate(10.0,6.0)"
@@ -155,7 +155,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                           >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(17.0,2.0)"
                                             ><g
                                               ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                 ><tspan
@@ -217,7 +217,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                       >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(128.0,2.0)"
                                                         />
     </g
                                                         >
@@ -232,7 +232,7 @@
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                               >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(70.0,2.0)"
                                                                 ><g
                                                                   ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                     ><tspan
@@ -253,9 +253,9 @@
                                                                 >
   </g
                                                                 >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(99.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(240.0,0.0)"
                                                                 >
-          <g kite9-elem="symbol" id="auto:0" transform="translate(143.0,1.0)"
+          <g kite9-elem="symbol" id="auto:0" transform="translate(2.0,1.0)"
                                                                   >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                     />
