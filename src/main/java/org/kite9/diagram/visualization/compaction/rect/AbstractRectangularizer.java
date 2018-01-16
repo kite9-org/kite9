@@ -331,7 +331,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	public String getPrefix() {
-		return "RECT";
+		return "ARec";
 	}
 
 	public boolean isLoggingEnabled() {

@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -275,6 +277,16 @@ class VertexTurn {
 
 	private boolean isStartInnerFan() {
 		return (start instanceof FanVertex) && ((FanVertex)start).isInner();
+	}
+	
+	public boolean isHorizontalContainerLabel() {
+		if (s.getUnderlying().getDimension() == Dimension.V) {
+			long labels = getUnderlyingsOfType(s, Label.class)
+					.filter(l -> !l.isConnectionLabel()).count();
+			return (labels > 0);			
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean isMinimizeRectangleBounded() {

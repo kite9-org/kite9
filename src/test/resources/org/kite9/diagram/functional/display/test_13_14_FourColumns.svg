@@ -126,7 +126,7 @@
                                 >
   </g
                                 >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(470.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(84.0,0.0)"
                                 />
       </g
                                 >
@@ -152,7 +152,7 @@
                                       >
   </g
                                       >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(470.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(43.0,0.0)"
                                       />
       </g
                                       >
@@ -180,7 +180,7 @@
                                             >
   </g
                                             >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(470.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(72.0,0.0)"
                                             />
       </g
                                             >
@@ -212,9 +212,9 @@
                                                   >
   </g
                                                   >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(454.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(41.0,0.0)"
                                                   >
-          <g kite9-elem="symbol" id="auto:5" transform="translate(2.0,7.0)"
+          <g kite9-elem="symbol" id="auto:5" transform="translate(415.0,7.0)"
                                                     >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                       />
@@ -251,9 +251,9 @@
                                                             >
   </g
                                                             >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(454.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(84.0,0.0)"
                                                             >
-          <g kite9-elem="symbol" id="auto:1" transform="translate(2.0,1.0)"
+          <g kite9-elem="symbol" id="auto:1" transform="translate(372.0,1.0)"
                                                               >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                 />
@@ -288,9 +288,9 @@
                                                                       >
   </g
                                                                       >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(454.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(43.0,0.0)"
                                                                       >
-          <g kite9-elem="symbol" id="auto:2" transform="translate(2.0,1.0)"
+          <g kite9-elem="symbol" id="auto:2" transform="translate(413.0,1.0)"
                                                                         >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                                                           />
@@ -327,9 +327,9 @@
                                                                                 >
   </g
                                                                                 >
-        <g kite9-elem="symbols" id="null-symbols" transform="translate(454.0,0.0)"
+        <g kite9-elem="symbols" id="null-symbols" transform="translate(72.0,0.0)"
                                                                                 >
-          <g kite9-elem="symbol" id="auto:3" transform="translate(2.0,1.0)"
+          <g kite9-elem="symbol" id="auto:3" transform="translate(384.0,1.0)"
                                                                                   >
     <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
                                                                                     />

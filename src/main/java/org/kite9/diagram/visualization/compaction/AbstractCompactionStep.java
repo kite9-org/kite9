@@ -9,8 +9,10 @@ import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
@@ -149,10 +151,12 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
+		boolean minimizing = (r instanceof Container) ? ((Container)r).getSizing() == DiagramElementSizing.MINIMIZE : true;
+		
 		if (horizontal) {
-			return alignSingleConnections(c, hs, vs, withCheck);
+			return alignSingleConnections(c, hs, vs, withCheck, minimizing);
 		} else {
-			return alignSingleConnections(c, vs, hs, withCheck);
+			return alignSingleConnections(c, vs, hs, withCheck, minimizing);
 		}
 	}
 	
@@ -172,7 +176,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	/**
 	 * Returns the half-dist value if an alignment was made, otherwise null.
 	 */
-	protected AlignmentResult alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
+	protected AlignmentResult alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded, boolean minimizingContainer) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -221,7 +225,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			}
 			
 			if ((connectionSegmentA != null) || (connectionSegmentB != null)) {
-				boolean safe = (leavingConnectionsA.size() < 2) && (leavingConnectionsB.size() < 2);
+				boolean safe = (leavingConnectionsA.size() < 2) && (leavingConnectionsB.size() < 2) && (minimizingContainer);
 				return new AlignmentResult(halfDist, safe);
 			}
 			

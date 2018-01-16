@@ -112,11 +112,11 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 	}
 
 	public String getPrefix() {
-		return "SLOP";
+		return "ASO ";
 	}
 
 	public boolean isLoggingEnabled() {
-		return true;
+		return false;
 	}
 
 	protected AbstractSlackOptimisation<X> getSelf() {

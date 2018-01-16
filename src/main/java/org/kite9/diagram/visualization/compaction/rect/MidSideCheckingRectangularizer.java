@@ -51,8 +51,6 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		VertexTurn meets = ro.getMeets();
 		VertexTurn link = ro.getLink();
 		VertexTurn par = ro.getPar();
-		
-		
 						
 		int meetsMinimumLength = checkMinimumLength(meets, link, c);
 
@@ -63,6 +61,8 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 			log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
 			return Action.PUT_BACK;
 		}
+		
+		
 		 
 
 		return Action.OK; 
@@ -84,7 +84,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 						(!isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
 								.getSlideablesFor(r);
 				
-				alignSingleConnections(c, perp, along, false);
+				alignSingleConnections(c, perp, along, false, true);
 			}
 		}
 		

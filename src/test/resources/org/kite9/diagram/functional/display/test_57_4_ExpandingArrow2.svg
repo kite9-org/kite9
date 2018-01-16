@@ -11,23 +11,23 @@
     <g filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="glyph" id="auto:0-one" transform="translate(83.0,15.0)"
+  <g kite9-elem="glyph" id="one" transform="translate(83.0,15.0)"
       >
-    <g kite9-elem="back" transform="scale(0.9926470588235294,0.9830508474576272)translate(0.5,0.5)"
+    <g kite9-elem="back" transform="scale(0.9926470588235294,0.984375)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="135.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="58.0"
+      <rect x="0" y="0" width="135.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="63.0"
           />
     </g
           >
     <g class="glyph"
           >
       
-    <g kite9-elem="stereotype" id="auto:0-one-stereo" transform="translate(10.0,6.0)"
+    <g kite9-elem="stereotype" id="one-stereo" transform="translate(10.0,6.0)"
             >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
               >
-      <g kite9-elem="text-label"
+      <g kite9-elem="text-label" transform="translate(38.0,0.0)"
                 ><g
                   ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                     ><tspan
@@ -42,7 +42,7 @@
                 >
   </g
                 >
-    <g kite9-elem="label" id="auto:0-one-label" transform="translate(10.0,20.0)"
+    <g kite9-elem="label" id="one-label" transform="translate(10.0,20.0)"
                 >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
@@ -62,7 +62,7 @@
                     >
   </g
                     >
-    <g kite9-elem="text-lines" id="auto:0-one-text-lines" transform="translate(10.0,37.0)"
+    <g kite9-elem="text-lines" id="one-text-lines" transform="translate(10.0,37.0)"
                     >
       <g kite9-elem="text-line" id="linker"
                       >
@@ -99,7 +99,7 @@
                           >
   </g
                           >
-  <g kite9-elem="glyph" id="auto:1-two" transform="translate(15.0,23.0)"
+  <g kite9-elem="glyph" id="two" transform="translate(15.0,26.0)"
                           >
     <g kite9-elem="back" transform="scale(0.9830508474576272,0.9772727272727273)translate(0.5,0.5)"
                             >
@@ -110,7 +110,7 @@
     <g class="glyph"
                               >
       
-    <g kite9-elem="stereotype" id="auto:1-two-stereo" transform="translate(10.0,6.0)"
+    <g kite9-elem="stereotype" id="two-stereo" transform="translate(10.0,6.0)"
                                 >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
@@ -130,7 +130,7 @@
                                     >
   </g
                                     >
-    <g kite9-elem="label" id="auto:1-two-label" transform="translate(10.0,20.0)"
+    <g kite9-elem="label" id="two-label" transform="translate(10.0,20.0)"
                                     >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
@@ -155,7 +155,7 @@
                                         >
   </g
                                         >
-  <g kite9-elem="arrow" id="a" transform="translate(15.0,83.0)"
+  <g kite9-elem="arrow" id="a" transform="translate(15.0,88.0)"
                                         >
     <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                           >
@@ -164,7 +164,7 @@
     </g
                                             >
     
-    <g kite9-elem="label" id="auto:2" transform="translate(98.0,3.0)"
+    <g kite9-elem="label" id="auto:0" transform="translate(98.0,3.0)"
                                             >
     <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -183,43 +183,43 @@
   
   </g
                                                 >
-  <g kite9-elem="link" id="a-auto:0-one"
+  <g kite9-elem="link" id="a-linker"
                                                 >
     
-    <g kite9-elem="from" transform="translate(145.0,78.0)"
+    <g kite9-elem="from" transform="translate(145.0,83.0)"
                                                   >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                     />
   </g
                                                     >
-    <g kite9-elem="to" transform="translate(145.0,68.0)"
+    <g kite9-elem="to" transform="translate(145.0,62.0)"
                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                       />
   </g
                                                       >
   
-    <path style="marker-start: ; marker-end: " class="link" d="M150 83 L150 73"
+    <path style="marker-start: ; marker-end: " class="link" d="M150 88 L150 67"
                                                       />
   </g
                                                       >
-  <g kite9-elem="link" id="auto:0-one-auto:1-two"
+  <g kite9-elem="link" id="one-two"
                                                       >
     
-    <g kite9-elem="from" transform="translate(78.0,39.0)"
+    <g kite9-elem="from" transform="translate(78.0,42.0)"
                                                         >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                           />
   </g
                                                           >
-    <g kite9-elem="to" transform="translate(68.0,39.0)"
+    <g kite9-elem="to" transform="translate(68.0,42.0)"
                                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                             />
   </g
                                                             >
   
-    <path style="marker-start: ; marker-end: " class="link" d="M83 44 L73 44"
+    <path style="marker-start: ; marker-end: " class="link" d="M83 47 L73 47"
                                                             />
   </g
                                                             >

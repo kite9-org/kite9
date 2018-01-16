@@ -8,12 +8,19 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class Test57TextLinks extends AbstractDisplayFunctionalTest {
+	
+	protected Checks checks() {
+		Checks out = new Checks();
+		out.checkMidConnection = false;
+		return out;
+	}
 	
 	@Test
 	public void test_57_1_TextLineLink1() throws Exception {
@@ -42,11 +49,28 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	
 
 	@Test
-	public void test_57_3_ExpandingArrow() throws Exception {
+	public void test_57_3_ExpandingArrow1() throws Exception {
 		TextLine tl = new TextLine("linker", "some row blah blah blah");
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Arrow a = new Arrow("a");
+		a.setAttribute("style","	kite9-sizing: maximize;");
+		new Link(a, one, null, null, null, null, Direction.UP);
+		new Link(one, two, null, null, null, null, Direction.LEFT);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
+
+		renderDiagram(d);
+	}
+	
+	/**
+	 * Unlike 57_3, this one joins to the text line.
+	 */
+	@Test
+	public void test_57_4_ExpandingArrow2() throws Exception {
+		TextLine tl = new TextLine("linker", "some row blah blah blah");
+		Glyph one = new Glyph("one", "Stereo", "One", HelpMethods.listOf(tl), null);
+		Glyph two = new Glyph("two","Stereo", "Two", null, null);
+		Arrow a = new Arrow("a", "a");
 		a.setAttribute("style","	kite9-sizing: maximize;");
 		new Link(a, tl, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
