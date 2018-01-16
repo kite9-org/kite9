@@ -40,7 +40,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl, tl2), null);
 		Arrow a = new Arrow("a");
 		Arrow b = new Arrow("b");
-		new Link(a, tl, null, null, null, null, Direction.LEFT);
+		new Link(a, tl, null, null, null, null, Direction.RIGHT);
 		new Link(b, tl2, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, a, b));
 
