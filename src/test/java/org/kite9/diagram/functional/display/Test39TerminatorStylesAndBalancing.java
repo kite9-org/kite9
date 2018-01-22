@@ -3,22 +3,21 @@ package org.kite9.diagram.functional.display;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 
-@Ignore
 public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctionalTest {
 
 	@Test
@@ -26,9 +25,9 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g1 = new Glyph("g1", null, "g1", null, null);
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Arrow a1 = new Arrow("meets");
-		new Link(g1, a1);
+		Link l = new Link(g1, a1);
 		new Link(g2, a1);
-		
+		l.setAttribute("style", CSSConstants.LINK_MINIMUM_LENGTH+": 50px; ");
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(g1, g2, a1), null));
 	}
 	
@@ -38,6 +37,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Arrow a1 = new Arrow("meets");
+		a1.setAttribute("style", CSSConstants.LINK_GUTTER+": 50px; ");
 		new Link(g1, a1);
 		new Link(g2, a1);
 		new Link(g3, a1);	
@@ -84,7 +84,8 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		new TurnLink(g1, a1);
 		new TurnLink(g2, a1);
 		new TurnLink(g3, a1);	
-		new Link(g4, a1, LinkEndStyle.CIRCLE, null, null, null);	
+		Link l = new Link(g4, a1, LinkEndStyle.CIRCLE, null, null, null);	
+		l.setAttribute("style", "kite9-minimum-length: 40px");
 		
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(g1, g2, a1, g3, g4), null));
 	}
@@ -110,13 +111,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		renderDiagram(d);
 	}
 	
-	@Test
-	public void test_39_8_Terminators2012() throws Exception {
-		DiagramKite9XMLElement d = createTerminatorDiagram();
-		renderDiagram(d);
-	}
-	
-	public static final String[] STYLES = {"ARROW", "ARROW OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND OPEN", "BARBED ARROW"};
+	public static final String[] STYLES = {"ARROW", "ARROW-OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND-OPEN", "BARBED-ARROW"};
 	@Test 
 	public void test_39_9_AllTheTerminators2012() throws Exception {
 		List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>();
@@ -124,11 +119,18 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		for (String s : STYLES) {
 			Glyph a = new Glyph("", "A", null, null);
 			Glyph b = new Glyph("", "B", null, null);
-			new Link(a, b, s, null, s, null, Direction.RIGHT);
-			Link l2 = new Link(a, b, s, null, s, null, Direction.RIGHT);
-			l2.setStyle("stroke-width: 1px; stroke-dasharray: 5px 3px 5px; stroke: red");
+			Glyph c = new Glyph("", "C", null, null);
+			Glyph d = new Glyph("", "D", null, null);
+			Glyph e = new Glyph("", "E", null, null);
+			new Link(a, b, null, null, s, null, Direction.RIGHT);
+			new Link(a, c, null, null, s, null, Direction.LEFT);
+			new Link(a, d, null, null, s, null, Direction.DOWN);
+			new Link(a, e, null, null, s, null, Direction.UP);
 			elems.add(a);
 			elems.add(b);
+			elems.add(c);
+			elems.add(d);
+			elems.add(e);
 		}
 		
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement(elems, null);

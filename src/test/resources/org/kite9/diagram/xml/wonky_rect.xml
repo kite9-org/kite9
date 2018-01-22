@@ -31,17 +31,8 @@
    <symbols/>
   </label>
  </context>
- 
- 
-<label xsi:type="key">
-  
-  <boldText/>
-  <bodyText/>
-  <symbols>
-   <symbol text="Describe the symbol here" theChar="e" shape="HEXAGON"/>
-  </symbols>
- </label><allLinks>
-  <link id="id_41" style="NORMAL">
+<allLinks>
+  <link id="id_41" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="id_33"/>
@@ -54,7 +45,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_37" drawDirection="UP" style="NORMAL">
+  <link id="id_37" drawDirection="UP" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="id_2"/>
@@ -67,7 +58,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_38" style="NORMAL">
+  <link id="id_38" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="id_34"/>
@@ -80,7 +71,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_39" style="NORMAL">
+  <link id="id_39" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="id_35"/>

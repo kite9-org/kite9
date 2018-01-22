@@ -1,23 +1,17 @@
 package org.kite9.diagram.batik;
 
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
-import org.kite9.diagram.model.CompactedRectangular;
+import org.kite9.diagram.model.AlignedRectangular;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.Text;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
+import org.kite9.framework.common.Kite9ProcessingException;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
@@ -26,129 +20,29 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	}
 
 	protected CostedDimension size(DiagramElement element, Dimension2D within) {
-		if (element instanceof HasLayeredGraphics) {
-			DiagramElementSizing sizing = getSizing((HasLayeredGraphics) element);
-
-			if (sizing == null) {
-				return CostedDimension.ZERO;
-			}
-			
-			switch (sizing) {
-			case FIXED:
-				Rectangle2D bounds = ((HasLayeredGraphics) element).getSVGBounds();
-				if (bounds == null) {
-					return new CostedDimension(1, 1, 0);
-				}
-				return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
-			case MINIMIZE:
-			case MAXIMIZE:
-				CompactedRectangular r = (CompactedRectangular) element;
-				double left = r.getPadding(Direction.LEFT);
-				double right =  r.getPadding(Direction.RIGHT);
-				double up =  r.getPadding(Direction.UP);
-				double down =  r.getPadding(Direction.DOWN);
-				return new CostedDimension(left+right, up+down, CostedDimension.UNBOUNDED);
-			case ADAPTIVE:
-			case SCALED:
-			case UNSPECIFIED:
-			default:
-			}
+		if (element instanceof AlignedRectangular) {
+			return ((SizedRectangular) element).getSize(within);
 		}
+
+		// not a CompactedRectangular
 		return CostedDimension.ZERO;
 
 	}
 
 	/**
-	 * Handle scaling before translation, otherwise everything goes wacky.
+	 * Handle scaling before translation, otherwise everything goes whack.
 	 */
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
-		if ((!(element instanceof Decal)) && (ri.getPosition() == null)) {
-			return;	// labels and connected should all have positions by now.
-		} else if ((element instanceof Decal) && ((element.getParent().getRenderingInformation().getSize() == null))) {
-			return; // parents of decals should also be positioned.
-		}
-		
-		if (element instanceof HasLayeredGraphics) {
-			DiagramElement parent = element.getParent();
-			HasLayeredGraphics layered = (HasLayeredGraphics) element;
-
-			if (parent != null) {
-				layered.eachLayer(node -> {
-					// make sure the graphics node is anchored to it's parent
-					GraphicsLayerName name = ((IdentifiableGraphicsNode) node).getLayer();
-					IdentifiableGraphicsNode parentNode = (IdentifiableGraphicsNode) ((HasLayeredGraphics) parent).getGraphicsForLayer(name);
-					parentNode.add(node);
-				});
-			}
-
-			
-			Rectangle2D bounds = layered.getSVGBounds();
-			DiagramElementSizing sizing = getSizing(layered);
-			
-			if (bounds != null) {				
-				// reset the scale first
-				layered.eachLayer(node -> {
-					AffineTransform existing = node.getTransform();
-					AffineTransform global = node.getGlobalTransform();
-					existing.scale(1d/ global.getScaleX(), 1d /global.getScaleY());
-				});
-				
-				if (sizing == DiagramElementSizing.FIXED)  {
-					// apply a translation to the Kite9-specified position
-					
-					layered.eachLayer(node -> {
-						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-						AffineTransform global = node.getGlobalTransform();
-						AffineTransform existing = node.getTransform();
-						translateRelative(bounds, existing, global, rri);
-					});
-				}
-				
-				if ((sizing == DiagramElementSizing.SCALED) || (sizing == DiagramElementSizing.ADAPTIVE)){
-					// applies scale and translation
-					layered.eachLayer(node -> {
-						RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-						AffineTransform existing = node.getTransform();
-						
-						if (bounds != null) {
-							existing.scale(1d / bounds.getWidth(), 1d/bounds.getHeight());
-							existing.scale(rri.getSize().getWidth(), rri.getSize().getHeight());
-							AffineTransform global = node.getGlobalTransform();
-							translateRelative(bounds, existing, global, rri);
-						}
-					});
-				}
-			}
-		}
-	}
-
-	private DiagramElementSizing getSizing(HasLayeredGraphics layered) {
-		DiagramElementSizing out =  (layered instanceof Rectangular) ?((Rectangular) layered).getSizing() : null;
-		return out;
-	}
-
-	private void translateRelative(Rectangle2D bounds, AffineTransform existing, AffineTransform global, RectangleRenderingInformation rri) {
-		existing.translate(-bounds.getX(), -bounds.getY());
-		double xs = global.getScaleX();
-		double ys = global.getScaleY();
-		double xt = rri.getPosition().x() - global.getTranslateX();
-		double yt = rri.getPosition().y() - global.getTranslateY();
-		double xst = xt / xs;
-		double yst = yt  / ys;
-		existing.translate(xst, yst);
-	}
-
-	public String getLabel(DiagramElement de) {
-		return ((Text)de).getText();
+		throw new Kite9ProcessingException("Unsupported operation");
 	}
 
 	@Override
 	public double getPadding(DiagramElement element, Direction d) {
-		if (element instanceof CompactedRectangular) {
-			return ((CompactedRectangular) element).getPadding(d);
+		if (element instanceof AlignedRectangular) {
+			return ((SizedRectangular) element).getPadding(d);
 		} else if (element instanceof Connection) {
-			return ((CompactedRectangular) element).getPadding(d);
+			return ((SizedRectangular) element).getPadding(d);
 		} else {
 			return 0;
 		}
@@ -156,43 +50,52 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
 	@Override
 	public double getMargin(DiagramElement element, Direction d) {
-		if (element instanceof CompactedRectangular) {
-			return ((CompactedRectangular) element).getMargin(d);
+		if (element instanceof AlignedRectangular) {
+			return ((SizedRectangular) element).getMargin(d);
 		} else if (element instanceof Connection) {
 			return ((Connection) element).getMargin(d);
 		} else {
 			return 0;
 		}
 	}
+	
+	protected double getLinkGutter(Connected along, Terminator a, Direction aSide, Terminator b, Direction bSide) {
+		double length = along.getLinkGutter();
+		double aPadding = (a != null) ? a.getPadding(aSide) : 0;
+		double bPadding = (b != null) ? b.getPadding(bSide) : 0;
+		double aMargin = (a != null) ? a.getMargin(aSide) : 0;
+		double bMargin = (b != null) ? b.getMargin(bSide) : 0;
 
-	@Override
-	public double getLinkGutter(Rectangular element, Direction d) {
-		return 10;
+		double terminatorSize = aPadding + bPadding;
+		double margin = Math.max(aMargin, bMargin);
+		length = Math.max(length, terminatorSize + margin);
+		return length;
 	}
 
 	@Override
-	public double getLinkMinimumLength(Connection element) {
-		return 10;
-	}
-
-	@Override
-	public double getTerminatorLength(Terminator terminator) {
-		return 5;
-	}
-
-	@Override
-	public double getTerminatorReserved(Terminator terminator, Connection on) {
-		return 5;
-	}
-
-	@Override
-	public double getLinkInset(Rectangular element, Direction d) {
-		return 5;
+	public double getLinkMinimumLength(Connection element, boolean starting, boolean ending) {
+		double length = element.getMinimumLength();
+		if (starting) {
+			Terminator term = element.getFromDecoration();
+			length += term != null ? term.getReservedLength() : 0;
+		} 
+		
+		if (ending) {
+			Terminator term = element.getToDecoration();
+			length += term != null ? term.getReservedLength() : 0;
+		}
+		
+		return length;
 	}
 
 	@Override
 	public boolean requiresHopForVisibility(Connection a, Connection b) {
 		return true;
+	}
+
+	@Override
+	protected double getLinkInset(Connected element, Direction d) {
+		return element.getLinkInset();
 	}
 
 }

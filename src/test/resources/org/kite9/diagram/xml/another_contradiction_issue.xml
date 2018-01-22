@@ -194,7 +194,7 @@
   <from xsi:type="glyph" reference="id_44"/>
   <to xsi:type="glyph" reference="id_46"/>
  </link>
- <link id="id_72" style="DOTTED" drawDirection="RIGHT">
+ <link id="id_72"  drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_61"/>
   <to xsi:type="glyph" reference="id_69"/>
@@ -219,7 +219,7 @@
   <from xsi:type="glyph" reference="id_58"/>
   <to xsi:type="glyph" reference="id_69"/>
  </link>
- <link id="id_59" style="DOTTED" drawDirection="DOWN">
+ <link id="id_59"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_58"/>
   <to xsi:type="glyph" reference="id_54"/>

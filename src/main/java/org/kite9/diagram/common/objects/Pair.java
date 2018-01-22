@@ -24,6 +24,10 @@ public class Pair<X> {
 			return false;
 		}
 		
+		return elementEquals(a2, a3);
+	}
+
+	protected boolean elementEquals(Object a2, Object a3) {
 		return a2.equals(a3);
 	}
 

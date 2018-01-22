@@ -7,6 +7,7 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
@@ -18,7 +19,6 @@ import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 
@@ -118,7 +118,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		createDiagramInDirection(Direction.DOWN);
 	}
 	
-	@Test
+	@Test(expected=TestingEngine.LayoutErrorException.class)
 	@NotAddressed("Seems like this doesn't work properly due to a rectangularization issue")
     public void test_9_8_CompactionAlignmentUp() throws Exception {
 		createDiagramInDirection(Direction.UP);
@@ -163,7 +163,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 					RouteRenderingInformation rri = ((Connection)de).getRenderingInformation();
 					Dimension2D size = rri.getSize();
 					if ((size.getWidth() > 20) || (size.getHeight() > 20)) {
-						throw new LogicException("Link too long: "+de);
+						throw new TestingEngine.LayoutErrorException("Link too long: "+de);
 					}
 				}
 			}

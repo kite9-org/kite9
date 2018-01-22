@@ -13,8 +13,9 @@ import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.model.CompactedRectangular;
+import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -75,14 +76,14 @@ public class SegmentBuilder implements Logable {
 			return decideConnectionSegmentAlignStyle(s, de);
 		} else if (conns.size() == 0) {
 			UnderlyingInfo toUse = s.getUnderlyingInfo().stream()
-				.filter(ui -> ui.getDiagramElement() instanceof CompactedRectangular)
+				.filter(ui -> ui.getDiagramElement() instanceof AlignedRectangular)
 				.sorted((a, b) -> ((Integer) ((Rectangular) a.getDiagramElement()).getDepth())
 					.compareTo(((Rectangular)b.getDiagramElement()).getDepth()))
 				.findFirst().orElse(null);
 			
 			
 			if (toUse != null) {
-				AlignStyle out = decideRectangularAlignStyle(s, (CompactedRectangular) toUse.getDiagramElement()); 
+				AlignStyle out = decideRectangularAlignStyle(s, (AlignedRectangular) toUse.getDiagramElement()); 
 				return out;
 			}
 			
@@ -94,10 +95,10 @@ public class SegmentBuilder implements Logable {
 		
 	}
 	
-	private AlignStyle decideRectangularAlignStyle(Segment s, CompactedRectangular de) {
-		DiagramElementSizing des = ((Rectangular) de).getSizing();
+	private AlignStyle decideRectangularAlignStyle(Segment s, AlignedRectangular de) {
+		DiagramElementSizing des = de instanceof Container ? ((Container)de).getSizing() : null;
 		
-		if ((des == DiagramElementSizing.MINIMIZE) || (des == DiagramElementSizing.FIXED)) {
+		if ((des == DiagramElementSizing.MINIMIZE) || (des == null)) {
 			if (s.getDimension() == Dimension.H) {
 				VerticalAlignment va = de.getVerticalAlignment();
 				switch (va) {

@@ -47,14 +47,14 @@
  </glyph>
  
 <allLinks>
-  <link id="id_30" shape="NORMAL" style="" drawDirection="DOWN">
+  <link id="id_30" shape="NORMAL"  drawDirection="DOWN">
    
    <from xsi:type="glyph" reference="id_8"/>
    <to xsi:type="glyph" reference="id_31"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>BARBED ARROW</toDecoration>
   </link>
-  <link id="id_21" shape="NORMAL" style="">
+  <link id="id_21" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_20"/>
    <to xsi:type="glyph" reference="id_22"/>
@@ -66,7 +66,7 @@
    <from xsi:type="glyph" reference="id_2"/>
    <to xsi:type="glyph" reference="id_22"/>
   </link>
-  <link id="id_34" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_34" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_22"/>
    <to xsi:type="glyph" reference="id_8"/>

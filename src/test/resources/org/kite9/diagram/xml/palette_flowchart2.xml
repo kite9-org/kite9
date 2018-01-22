@@ -1,6 +1,6 @@
 <?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="pid_6" layout="RIGHT">
  
- <context id="pid_7" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+ <context id="pid_7" layout="DOWN" >
   
   <glyph id="palette:id_8" shape="fcPREPARATION">
    
@@ -46,7 +46,7 @@ Connector</label>
    <symbols/>
   </glyph>
  </context>
- <context id="pid_12" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+ <context id="pid_12" layout="DOWN" >
   
   <glyph id="palette:id_9" shape="fcDISPLAY">
    
@@ -87,7 +87,7 @@ Data</label>
  </context>
  
 <allLinks>
-  <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none">
+  <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE" >
    
    <from xsi:type="glyph" reference="pid_10"/>
    <to xsi:type="glyph" reference="pid_16"/>

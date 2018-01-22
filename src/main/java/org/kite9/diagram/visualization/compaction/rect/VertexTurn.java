@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -187,7 +190,7 @@ class VertexTurn {
 	}
 	
 	public String toString() {
-		return "["+number+" "+turnPriority+"\n     s="+s.getUnderlying()+"\n  from="+startsWith+"\n    to="+endsWith+"\n     d="+d+"\n]";
+		return "["+number+" "+turnPriority+"\n     s="+s+"\n  from="+startsWith+"\n    to="+endsWith+"\n     d="+d+"\n]";
 	}
 	
 	public Slideable<Segment> getStartsWith() {
@@ -276,6 +279,16 @@ class VertexTurn {
 		return (start instanceof FanVertex) && ((FanVertex)start).isInner();
 	}
 	
+	public boolean isHorizontalContainerLabel() {
+		if (s.getUnderlying().getDimension() == Dimension.V) {
+			long labels = getUnderlyingsOfType(s, Label.class)
+					.filter(l -> !l.isConnectionLabel()).count();
+			return (labels > 0);			
+		} else {
+			return false;
+		}
+	}
+	
 	public boolean isMinimizeRectangleBounded() {
 		long rectsAtBothEnds = getUnderlyingsOfType(startsWith, Rectangular.class)
 				.filter(de -> endsWith.getUnderlying().hasUnderlying(de))
@@ -300,11 +313,11 @@ class VertexTurn {
 	}
 
 	private static Predicate<? super Rectangular> minimize() {
-		return r -> (r.getSizing() == DiagramElementSizing.MINIMIZE);
+		return r -> (r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MINIMIZE);
 	}
 	
 	private static Predicate<? super Rectangular> maximize() {
-		return r -> (r.getSizing() == DiagramElementSizing.MAXIMIZE);
+		return r ->(r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MAXIMIZE);
 	}
 
 	public static boolean isConnection(Slideable<Segment> s) {

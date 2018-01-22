@@ -16,7 +16,7 @@
 
 
 
-<label xsi:type="key" id="id_75">
+<key id="id_75">
 
  <boldText>Welcome To Kite9</boldText>
  <bodyText>This part at the bottom is the key.  You can add notes here 
@@ -65,14 +65,14 @@ to explain what's going on in the diagram</bodyText>
    </symbols>
   </text-line>
  </symbols>
-</label>
+</key>
 
 <context id="id_11" bordered="true">
 
- <glyph id="id_50" shape="" style="">
+ <glyph id="id_50" shape="" >
 
-  <stereotype style="">Step 5</stereotype>
-  <label style="">Add Something to my Container</label>
+  <stereotype >Step 5</stereotype>
+  <label >Add Something to my Container</label>
   <text-lines>
    <text-line id="auto:5467">
 
@@ -89,10 +89,10 @@ to explain what's going on in the diagram</bodyText>
    <symbol theChar="d" shape="CIRCLE"/>
   </symbols>
  </label>
-</context><glyph id="id_10" shape="fcDECISION" style="fill: '270-#ffff87-#ffe65f';">
+</context><glyph id="id_10" shape="fcDECISION" >
 
  <stereotype/>
- <label style="">Delete Me</label>
+ <label >Delete Me</label>
  <text-lines/>
  <symbols/>
 </glyph><glyph id="id_3">
@@ -101,10 +101,10 @@ to explain what's going on in the diagram</bodyText>
    <label>New Part</label>
    <text-lines/>
    <symbols/>
-  </glyph><glyph id="id_32" shape="fcREFERENCE" style="fill: '270-#fff233-#fbaa24';">
+  </glyph><glyph id="id_32" shape="fcREFERENCE" >
 
  <stereotype/>
- <label style="">Move Me</label>
+ <label >Move Me</label>
  <text-lines/>
  <symbols/>
 </glyph><glyph id="id_48">
@@ -169,16 +169,16 @@ to explain what's going on in the diagram</bodyText>
   </text-line>
  </text-lines>
  <symbols/>
-</glyph><glyph id="id_6" shape="fcSTART1" style="fill: '270-#33ebff-#24a5fb';">
+</glyph><glyph id="id_6" shape="fcSTART1" >
 
- <stereotype style="font-size: 20px;fill: #30276e;">Start</stereotype>
- <label style="">Welcome to the Kite9 Tutorial</label>
+ <stereotype >Start</stereotype>
+ <label >Welcome to the Kite9 Tutorial</label>
  <text-lines/>
  <symbols/>
-</glyph><glyph id="id_29" shape="" style="">
+</glyph><glyph id="id_29" shape="" >
 
- <stereotype style="">Step 3</stereotype>
- <label style="">Move the Orange Circle 
+ <stereotype >Step 3</stereotype>
+ <label >Move the Orange Circle 
 to my right</label>
  <text-lines>
   <text-line id="auto:4282">
@@ -188,10 +188,10 @@ to my right</label>
   </text-line>
  </text-lines>
  <symbols/>
-</glyph><glyph id="id_35" shape="" style="">
+</glyph><glyph id="id_35" shape="" >
 
- <stereotype style="">Step 4</stereotype>
- <label style="">Connect A to B</label>
+ <stereotype >Step 4</stereotype>
+ <label >Connect A to B</label>
  <text-lines>
   <text-line id="auto:30158">
 
@@ -203,10 +203,10 @@ to my right</label>
   </text-line>
  </text-lines>
  <symbols/>
-</glyph><glyph id="id_20" shape="" style="">
+</glyph><glyph id="id_20" shape="" >
 
- <stereotype style="">Step 2</stereotype>
- <label style="">Edit the blue hexagon's label</label>
+ <stereotype >Step 2</stereotype>
+ <label >Edit the blue hexagon's label</label>
  <text-lines>
   <text-line id="auto:2755">
 
@@ -215,10 +215,10 @@ to my right</label>
   </text-line>
  </text-lines>
  <symbols/>
-</glyph><glyph id="id_8" shape="" style="">
+</glyph><glyph id="id_8" shape="" >
 
- <stereotype style="">Step 1</stereotype>
- <label style="">Delete the Yellow Diamond</label>
+ <stereotype >Step 1</stereotype>
+ <label >Delete the Yellow Diamond</label>
  <text-lines>
   <text-line id="auto:2644">
 
@@ -246,22 +246,22 @@ the rectangle to group them)</text>
  <label>Group Me</label>
  <text-lines/>
  <symbols/>
-</glyph><glyph id="id_25" shape="fcPREPARATION" style="fill: '270-#68a0d3-#497094';">
+</glyph><glyph id="id_25" shape="fcPREPARATION" >
 
- <stereotype style=""/>
- <label style="">Change Me</label>
+ <stereotype />
+ <label >Change Me</label>
  <text-lines/>
  <symbols/>
-</glyph><glyph id="id_37" style="fill: '270-#ff0000-#df0000';">
+</glyph><glyph id="id_37" >
 
- <stereotype style=""/>
- <label style="fill: #ffffff;font-family: opensans-bold-webfont;font-size: 19px;">A</label>
+ <stereotype />
+ <label >A</label>
  <text-lines/>
  <symbols/>
-</glyph><glyph id="id_39" style="fill: '270-#ff0000-#df0000';">
+</glyph><glyph id="id_39" >
 
- <stereotype style=""/>
- <label style="fill: #ffffff;font-size: 19px;font-family: opensans-bold-webfont;">B</label>
+ <stereotype />
+ <label >B</label>
  <text-lines/>
  <symbols/>
 </glyph><allLinks>
@@ -314,7 +314,7 @@ connection</text>
   <to xsi:type="glyph" reference="id_8"/>
   <toDecoration>ARROW OPEN</toDecoration>
  </link>
- <link id="id_51" shape="DOTTED" style="" drawDirection="DOWN">
+ <link id="id_51" shape="DOTTED"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_26"/>
   <to xsi:type="glyph" reference="id_52"/>
@@ -359,12 +359,12 @@ connection</text>
   <to xsi:type="glyph" reference="id_25"/>
   <toDecoration>ARROW OPEN</toDecoration>
  </link>
- <link id="id_47" shape="DOTTED" style="" drawDirection="DOWN">
+ <link id="id_47" shape="DOTTED"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_26"/>
   <to xsi:type="glyph" reference="id_48"/>
  </link>
- <link id="id_53" shape="DOTTED" style="" drawDirection="DOWN">
+ <link id="id_53" shape="DOTTED"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_26"/>
   <to xsi:type="glyph" reference="id_54"/>

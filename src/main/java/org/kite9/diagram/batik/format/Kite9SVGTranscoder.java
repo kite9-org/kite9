@@ -12,8 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
@@ -24,35 +23,55 @@ import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
+import org.kite9.diagram.batik.templater.BasicTemplater;
+import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;
+import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementFactory;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.Kite9DocumentFactory;
+import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
+import org.kite9.framework.xml.ADLDocument;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
-public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
+public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
 	private ADLExtensibleDOMImplementation domImpl;
+	private ResourceReferencer rr;	
+	private Kite9Log log = new Kite9Log(this);
+	private Kite9DocumentFactory docFactory;
+	private Kite9DocumentLoader docLoader;
+	private Kite9BridgeContext bridgeContext;
 	
-	public Kite9SVGTranscoder() {
+	public Kite9SVGTranscoder(ResourceReferencer rr) {
 		super();
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
 		domImpl = new ADLExtensibleDOMImplementation();
+		docFactory = createDocumentFactory();
+	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
+		this.rr = rr;
 	}
 
 	@Override
-	protected BridgeContext createBridgeContext(SVGOMDocument doc) {
-		Kite9BridgeContext out = new Kite9BridgeContext(userAgent, createDocumentFactory());
-		DiagramElementFactory def = new DiagramElementFactoryImpl(out);
-		domImpl.setDiagramElementFactory(def);
-		return out;
+	protected Kite9BridgeContext createBridgeContext(String version) {
+		if (bridgeContext == null) {
+			bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
+			DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
+			domImpl.setDiagramElementFactory(def);
+		}
+		
+		return bridgeContext;
 	}
 
 	protected Kite9DocumentFactory createDocumentFactory() {
@@ -76,41 +95,44 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
 
 		return doc;
 	}
+
+	private Document outputDocument;
+	
+	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
+		try {
+			input.setDocumentURI(uri);
+			
+			CSSEngine engine = domImpl.createCSSEngine((ADLDocument) input, createBridgeContext());
+			((ADLDocument) input).setCSSEngine(engine);
+			XMLProcessor templater = new BasicTemplater(docLoader);
+			templater.processContents(input);
+			
+			super.transcode(input, uri, output);
+			
+			this.outputDocument = createDocument(output);
+			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
+			copier.processContents(input.getDocumentElement());
+		} catch (Exception e) {
+			ADLDocument d = (ADLDocument)input;
+			log.error("Problem with XML: "+new XMLHelper().toXML(d));
+			throw new Kite9ProcessingException(e);
+		}
+	}
 	
 	
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
-        Document doc = this.createDocument(output);
-        GroupManagingSVGGraphics2D svgGenerator = new GroupManagingSVGGraphics2D(doc);
-        svgGenerator.setUnsupportedAttributes(null);// writes as text
-        
-        root.paint(svgGenerator);
-        
-        /** set precision
-         ** otherwise Ellipses aren't working (for example) (because of Decimal format
-         * modifications ins SVGGenerator Context
-         */
-        svgGenerator.getGeneratorContext().setPrecision(4);
-
-
-        //svgGenerator.setSVGCanvasSize(new Dimension(vpW, vpH));
-
-        Element svgRoot = svgGenerator.getRoot();
-
-//        svgRoot.setAttributeNS(null, SVG_VIEW_BOX_ATTRIBUTE,
-//                                String.valueOf( vpX ) + ' ' + vpY + ' ' +
-//                               vpW + ' ' + vpH );
-
-        // Now, write the SVG content to the output
-        writeSVGToOutput(svgGenerator, svgRoot, output);
+		
+        Document doc = createDocument(output);
+		writeSVGToOutput(outputDocument, output);
 	}
 
-	 /** Writes the SVG content held by the svgGenerator to the
+	/** Writes the SVG content held by the svgGenerator to the
      * <code>TranscoderOutput</code>. This method does nothing if the output already
      * contains a Document.
      */
-    protected void writeSVGToOutput(SVGGraphics2D svgGenerator, Element svgRoot,
+    protected void writeSVGToOutput(Document outputDocument,
         TranscoderOutput output) throws TranscoderException {
 
         Document doc = output.getDocument();
@@ -123,6 +145,10 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
             handler.fatalError(new TranscoderException("" + ERROR_INCOMPATIBLE_OUTPUT_TYPE));
         }
 
+        Element svgRoot = outputDocument.getDocumentElement();
+        SVGGraphics2D svgGenerator = new SVGGraphics2D(outputDocument);
+        
+        
         try {
             boolean escaped = false;
             if (hints.containsKey(KEY_ESCAPED)) {
@@ -164,6 +190,16 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder {
         throw new TranscoderException("" + ERROR_INCOMPATIBLE_OUTPUT_TYPE);
 
     }
+
+	@Override
+	public String getPrefix() {
+		return "KSVG";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
+	}
     
 
 }

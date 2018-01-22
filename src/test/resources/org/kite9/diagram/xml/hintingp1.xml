@@ -4,11 +4,11 @@
  <context id="id_34" layout="VERTICAL" bordered="true">
   
   <hints py1="7.495E-4" py2="0.9995" px2="0.99" px1="0.01" y1="12.0" y2="298.0" x2="336.0" x1="12.0"/>
-  <glyph id="id_40" shape="DIAMOND" style="fill: '270-#ffff87-#ffe65f';">
+  <glyph id="id_40" shape="DIAMOND" >
    
    <hints py1="0.2502496" py2="0.4992504" px2="0.9801999" px1="0.0198001" y1="110.0" y2="230.0" x2="324.0" x1="24.0"/>
    <stereotype/>
-   <label style="">id_40</label>
+   <label >id_40</label>
    <text-lines>
     <text-line id="auto:23823">
      
@@ -40,13 +40,13 @@
  </context>
  
 <allLinks>
-  <link id="id_50.1" shape="NORMAL" style="">
+  <link id="id_50.1" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_40"/>
    <to xsi:type="glyph" reference="id_54"/>
    <fromDecoration>NONE</fromDecoration>
   </link>
-  <link id="id_41" shape="NORMAL" style="">
+  <link id="id_41" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_37"/>
    <to xsi:type="glyph" reference="id_40"/>

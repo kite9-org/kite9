@@ -107,14 +107,14 @@
   <from xsi:type="glyph" reference="id_48"/>
   <to xsi:type="glyph" reference="id_2"/>
  </link>
- <link id="id_34" shape="NORMAL" style="" drawDirection="DOWN">
+ <link id="id_34" shape="NORMAL"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_33"/>
   <to xsi:type="glyph" reference="id_35"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_53" shape="NORMAL" style="" drawDirection="RIGHT">
+ <link id="id_53" shape="NORMAL"  drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_33"/>
   <to xsi:type="glyph" reference="id_54"/>
@@ -141,7 +141,7 @@
   <from xsi:type="glyph" reference="id_35"/>
   <to xsi:type="glyph" reference="id_13"/>
  </link>
- <link id="id_6" shape="NORMAL" style="" drawDirection="RIGHT">
+ <link id="id_6" shape="NORMAL"  drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_54"/>
   <to xsi:type="glyph" reference="id_7"/>

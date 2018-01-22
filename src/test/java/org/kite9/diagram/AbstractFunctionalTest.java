@@ -2,21 +2,29 @@ package org.kite9.diagram;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 
+import org.apache.batik.svggen.ImageHandlerBase64Encoder;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.apache.batik.util.ParsedURL;
 import org.junit.Before;
+import org.junit.Test;
 import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.batik.format.ResourceReferencer;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
+import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.xml.ADLDocument;
@@ -45,12 +53,45 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		transcoder.transcode(in, out);
 	}
 	
+	
+	
 	protected void transcodeSVG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputSVG();
 		TranscoderInput in = getTranscoderInput(s);
-		Transcoder transcoder = new Kite9SVGTranscoder();
+		Transcoder transcoder = new Kite9SVGTranscoder(createTestingResourceReferencer());
 		transcoder.transcode(in, out);
 	}
+
+	protected ResourceReferencer createTestingResourceReferencer() {
+		return new ResourceReferencer() {
+
+			@Override
+			public Reference getReference(ParsedURL purl) {
+				return new Reference() {
+
+					@Override
+					public String getUrl() {
+						try {
+							Method m = StackHelp.getAnnotatedMethod(Test.class);
+							Class<?> theTest = m.getDeclaringClass();
+							String filename = purl.toString().substring(purl.toString().lastIndexOf("/")+1);
+							File f = TestingHelp.prepareFileName(theTest, m.getName(), filename);
+							File f2 = TestingHelp.prepareFileName(theTest, m.getName(), "../../svg-output/"+filename);
+							RepositoryHelp.streamCopy(purl.openStream(), new FileOutputStream(f), true);
+							RepositoryHelp.streamCopy(purl.openStream(), new FileOutputStream(f2), true);
+							return filename;
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				};
+			}
+			
+			
+		};
+	}
+	
+	
 
 	protected TranscoderOutput getTranscoderOutputPNG() throws IOException {
 		File f = getOutputFile(".png");
@@ -61,20 +102,30 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	protected TranscoderOutput getTranscoderOutputSVG() throws IOException {
 		File f = getOutputFile(".svg");
 		TranscoderOutput out = new TranscoderOutput(new FileWriter(f));
+		out.setURI(f.getAbsolutePath());
 		return out;
 	}
 
 	protected TranscoderInput getTranscoderInput(String s) throws IOException {
 		File f = getOutputFile("-input.svg");
 		RepositoryHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
-		return new TranscoderInput(new StringReader(s));
+		TranscoderInput out = new TranscoderInput(new StringReader(s));
+		out.setURI(getInputURI(f));
+		return out;
 	}
 
 	protected abstract File getOutputFile(String ending);
+	
+	protected String getInputURI(File f) {
+		String name = f.getName();
+		String packageName = this.getClass().getPackage().getName();
+		String root = "src/test/resources";
+		return root+"/"+packageName.replace('.', '/') + "/" + name;
+	}
 
 	public String getDesignerStylesheetReference() {
 		URL u = this.getClass().getResource("/stylesheets/designer.css");
-		return "<stylesheet xmlns='"+XMLHelper.KITE9_NAMESPACE+"' href=\""+u.toString()+"\" xml:space=\"preserve \"/>";
+		return "<svg:defs><svg:style type=\"text/css\"> @import url(\""+u+"\");</svg:style></svg:defs>";
 	}
 
 	protected String addSVGFurniture(String xml) {

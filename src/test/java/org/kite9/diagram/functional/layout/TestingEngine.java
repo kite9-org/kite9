@@ -24,7 +24,7 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
+import org.kite9.diagram.batik.element.AbstractDOMDiagramElement;
 import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -42,7 +42,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
@@ -162,46 +162,53 @@ public class TestingEngine extends TestingHelp {
 			private void meets(Connection c, Connected v, boolean start) {
 				RouteRenderingInformation rri = c.getRenderingInformation();
 				RectangleRenderingInformation rect = v.getRenderingInformation();
-				
+
 				if (rri.getRoutePositions().size() == 0) {
 					// missing element - will be picked up later though
 				} else {
 					Point2D p2d = getCorrectEndPoint(start, c);
 					Rectangle2D r2d = createRect(rect);
-					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX()-1, r2d.getY()-1, r2d.getWidth()+2, r2d.getHeight()+2);
+					Rectangle2D largerRect = new Rectangle2D.Double(r2d.getX() - 1, r2d.getY() - 1, r2d.getWidth() + 2, r2d.getHeight() + 2);
 					if (largerRect.contains(p2d)) {
 						// it's on the border
 					} else {
-						throw new LayoutErrorException(c+" doesn't meet "+v+"\nc = " +rri.getRoutePositions()+"\n v= "+r2d);
+						throw new LayoutErrorException(c + " doesn't meet " + v + "\nc = " + rri.getRoutePositions() + "\n v= " + r2d);
 					}
-					
+
 					if (checkMidConnection) {
-						if (v.getSizing()==DiagramElementSizing.MINIMIZE) {
-							Direction connectionSide = getConnectionSide(c, v, r2d);
-							if (connectionsOnSide(v, connectionSide, r2d) == 1) {
-								switch (connectionSide) {
-								case UP:
-								case DOWN:
+						Direction connectionSide = getConnectionSide(c, v, r2d);
+						if (connectionsOnSide(v, connectionSide, r2d) == 1) {
+							switch (connectionSide) {
+							case UP:
+							case DOWN:
+								if (isAligning(v, connectionSide)) {
 									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
 										if (!straightWithLayoutException(c, v)) {
-											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
 									}
-									break;
-								case LEFT:
-								case RIGHT:
+								}
+								break;
+							case LEFT:
+							case RIGHT:
+								if (isAligning(v, connectionSide)) {
 									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
 										if (!straightWithLayoutException(c, v)) {
-											throw new LayoutErrorException(c+" Not mid side of "+v+": "+r2d+" and "+p2d);
+											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
 									}
-									break;
 								}
-		 						
+								break;
 							}
+
 						}
+
 					}
 				}
+			}
+
+			private boolean isAligning(Connected v, Direction side) {
+				return v.getConnectionAlignment(side) != ConnectionAlignment.NONE;
 			}
 
 			/**
@@ -334,9 +341,7 @@ public class TestingEngine extends TestingHelp {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if ((rri == null) || (rri.size() == 0)) {
-					if (!isInvisible(c)) {
-						notPresent.add(c);
-					}
+					notPresent.add(c);
 				}
 				
 //				if (isContradictingLink(c)) {
@@ -373,19 +378,13 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isContradictingLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
 			}
 
 			private boolean isTurnLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
-			/**
-			 * It's ok not to render invisible items sometimes.
-			 */
-			private boolean isInvisible(Connection c) {
-				return "INVISIBLE".equals(c.getShapeName());
-			}
 		};
 
 		DiagramChecker.checkConnnectionElements(d, ca);
@@ -405,7 +404,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isHopLink(Connection c) {
-				return ((AbstractXMLDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
+				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
 			}
 		});
 	}
@@ -505,8 +504,8 @@ public class TestingEngine extends TestingHelp {
 			@Override
 			public void visit(DiagramElement inner) {
 				if (inner instanceof Rectangular) {
-					Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
+						Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 	
 						if ((innerRect.getWidth() == 0) || (innerRect.getHeight() == 0)) {
 							return;
@@ -540,13 +539,13 @@ public class TestingEngine extends TestingHelp {
 						// inner above outer
 						double downDist = Math.max(disp.getMargin(inner, Direction.DOWN), disp.getMargin(outer, Direction.UP));
 						if (innerRect.getMaxY() + downDist > outerRect.getMinY()) {
-							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "DOWN", inner, downDist, outerRect, innerRect));
 						}
 					} else if (innerRect.getMinY() >= outerRect.getMaxY()) {
 						// inner below outer
 						double upDist = Math.max(disp.getMargin(inner, Direction.UP), disp.getMargin(outer, Direction.DOWN));
 						if (innerRect.getMinY() - upDist < outerRect.getMaxY()) {
-							throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
 						}						
 					} else {
 						throw new LogicException("Overlapped: " + outer + " by " + inner);
@@ -561,14 +560,14 @@ public class TestingEngine extends TestingHelp {
 						// inner to left of outer
 						double rightDist = Math.max(disp.getMargin(inner, Direction.RIGHT), disp.getMargin(outer, Direction.LEFT));
 						if (innerRect.getMaxX() + rightDist > outerRect.getMinX()) {
-							throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
 						}
 						
 					} else if (innerRect.getMinX() >= outerRect.getMaxX()) {
 						// inner to right of outer
 						double leftDist = Math.max(disp.getMargin(inner, Direction.LEFT), disp.getMargin(outer, Direction.RIGHT));
 						if (innerRect.getMinX() - leftDist < outerRect.getMaxX()) {
-							throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
 						}
 					} else {
 						throw new LogicException("Overlapped: " + outer + " by " + inner);
@@ -587,31 +586,40 @@ public class TestingEngine extends TestingHelp {
 				if (((Rectangular) inner).getContainer() == outer) {
 					// check margins / padding
 
-					double rightDist = disp.getPadding(outer, Direction.LEFT);
-					double leftDist = disp.getPadding(outer, Direction.RIGHT);
-					double upDist = disp.getPadding(outer, Direction.DOWN);
-					double downDist = disp.getPadding(outer, Direction.UP);
+					double rightDist = disp.getPadding(outer, Direction.RIGHT);
+					double leftDist = disp.getPadding(outer, Direction.LEFT);
+					double upDist = disp.getPadding(outer, Direction.UP);
+					double downDist = disp.getPadding(outer, Direction.DOWN);
 					
 					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
-						throw new LogicException("Too Close on RIGHT side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
 					}
 
 					if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
-						throw new LogicException("Too Close on LEFT side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
 					}
 					
 					if (!(inner instanceof Label)) {
 						if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
-							throw new LogicException("Too Close on DOWN side: "+inner+" to "+outer);
+							throw new LogicException(createExceptionText(outer, "DOWN", inner, downDist, outerRect, innerRect));
 						}
 					}
 
 					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
-						throw new LogicException("Too Close on UP side: "+inner+" to "+outer);
+						throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
 					}
 				}
 			}
-			
+
+
+			private String createExceptionText(Rectangular outer, String string, DiagramElement inner, double d, Rectangle2D outerRect, Rectangle2D innerRect) {
+				return "Too Close on "+string+" dist: "+d+" side: \n"+
+						" inner: "+inner+" "+innerRect+"\n"+
+						" outer: "+outer+" "+outerRect+"\n";
+			}
+
+
+		
 			private boolean isInGrid(Rectangular inner) {
 				return (inner instanceof Connected) && (inner.getContainer().getLayout() == Layout.GRID);
 			}

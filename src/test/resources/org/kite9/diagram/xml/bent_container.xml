@@ -80,12 +80,7 @@
  </context>
  
  
-<label xsi:type="key">
-  
-  <boldText>Key</boldText>
-  <bodyText>Double click to edit the key</bodyText>
-  <symbols/>
- </label><allLinks>
+<allLinks>
   <link id="id_50">
    
    <from xsi:type="glyph" reference="id_21"/>

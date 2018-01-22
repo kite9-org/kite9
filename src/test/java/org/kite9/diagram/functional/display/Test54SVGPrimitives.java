@@ -13,7 +13,8 @@ import org.apache.batik.ext.awt.LinearGradientPaint;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.batik.format.GroupManagingSVGGraphics2D;
+import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.format.ResourceReferencer;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.dom.XMLHelper;
 import org.w3c.dom.Document;
@@ -36,7 +37,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_54_3_TestTranscoderOnRandomSVGFile() throws Exception {
 		StringWriter out = new StringWriter();
-		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("simple.svg"));
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simple.svg"));
 		RepositoryHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
@@ -93,21 +94,56 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			svgClose();
 		transcodeSVG(someXML);
 	}
-	
+
 
 	@Test
-	public void test_54_6_GradientFill() throws Exception {
-		Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		SVGGraphics2D g2d = new GroupManagingSVGGraphics2D(d);
-		Color[] c = new Color[] { Color.BLACK, Color.WHITE};
-		LinearGradientPaint lgp = new LinearGradientPaint(
-				(Point2D) new Point2D.Double(0, 0),
-				(Point2D) new Point2D.Double(0, 1), 
-				new float[] {0f, 1f}, c);
-		g2d.setPaint(lgp);
-		g2d.fill(new Rectangle(0, 0, 100, 100));
-		g2d.stream(new FileWriter(getOutputFile(".svg")));
-		checkIdenticalXML();
+	public void test_54_7_FontSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_fontexample.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_8_ImageSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_9_GradientSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_gradient.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_10_ShadowSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_dropshadow.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_54_11_FlowingText() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simpleflow.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		// no svg, as it won't render in any browser!
 	}
 	
 	
@@ -124,11 +160,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String diagramClose() {
-		return "</diagram>";
+		return "</svg:g></diagram>";
 	}
 
 	private String diagramOpen() {
-		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='type: diagram; padding: 50px; fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='kite9-type: diagram; kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 
@@ -137,11 +173,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String fixedSizeOpen() {
-		return "<someelement id='someelement' style='type: connected; sizing: fixed; '>";
+		return "<someelement id='someelement' style='kite9-type: svg; '>";
 	}
 	
 	private String scaledOpen() {
-		return "<somescaled style='type: decal; sizing: scaled; '>"; 
+		return "<somescaled style='kite9-usage: decal; kite9-type: svg; '>"; 
 	}
 	
 	private String scaledClose() {
@@ -149,7 +185,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String adaptiveOpen() {
-		return "<someadaptive id=\"adap\" style='type: decal; sizing: adaptive; '>"; 
+		return "<someadaptive id=\"adap\" style='kite9-type: svg; kite9-usage: decal; '>"; 
 	}
 	
 	private String adaptiveClose() {
@@ -158,15 +194,15 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='type: connected; sizing: minimize; fill: "+fill+"; padding: 10px; margin: 10px; '>";
+		return "<container id='"+id+"' style='kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  '><svg:g style='fill: "+fill+"; '>";
 	}
 
 	private String containerClose() {
-		return "</container>";
+		return "</svg:g></container>";
 	}
 	
 	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: orange; font-face: sans-serif; '>Some Text</svg:text>";
+		return "<svg:text style='font-size: 25px; stroke: none; fill: orange; alignment-baseline: hanging; '>Some Text</svg:text>";
 	}
 	
 	private String svgRect2() {

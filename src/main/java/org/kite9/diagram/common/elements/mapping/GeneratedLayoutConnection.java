@@ -46,14 +46,10 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	public RouteRenderingInformation getRenderingInformation() {
 		if (rri == null) {
 			rri = new RouteRenderingInformationImpl();
+			rri.setRendered(false);
 		}
 		
 		return rri;
-	}
-
-	@Override
-	public String getShapeName() {
-		return null;
 	}
 
 	@Override
@@ -96,11 +92,6 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	}
 
 	@Override
-	public String getStyle() {
-		return null;
-	}
-
-	@Override
 	public int getRank() {
 		return 0;
 	}
@@ -114,4 +105,15 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	public double getPadding(Direction d) {
 		return 0;
 	}
+
+	@Override
+	public Terminator getDecorationForEnd(DiagramElement end) {
+		return null;
+	}
+
+	@Override
+	public double getMinimumLength() {
+		return 0;
+	}
+
 }

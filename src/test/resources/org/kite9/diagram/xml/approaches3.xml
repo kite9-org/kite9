@@ -15,14 +15,14 @@
  </glyph>
  
 <allLinks>
-  <link id="id_4" drawDirection="UP" style="NORMAL">
+  <link id="id_4" drawDirection="UP" >
    
    <from xsi:type="arrow" reference="id_1"/>
    <to xsi:type="glyph" reference="idd"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_6" style="NORMAL">
+  <link id="id_6" >
    
    <from xsi:type="arrow" reference="id_1"/>
    <to xsi:type="glyph" reference="id_2"/>

@@ -44,9 +44,11 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			super.transcodeSVG(s);
 			
 			DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
-			AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
-			writeTemplateExpandedSVG(lastDiagram);
-			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
+			if (lastDiagram != null) {
+				AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+				writeTemplateExpandedSVG(lastDiagram);
+				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
+			}
 			if (checkXML()) {
 				checkIdenticalXML();
 			}
@@ -58,7 +60,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			}
 		}
 	}
-
+	
 	private void writeTemplateExpandedSVG(DiagramKite9XMLElement lastDiagram) throws IOException {
 		ADLDocument d = lastDiagram.getOwnerDocument();
 		File f = getOutputFile("-expanded.svg");
@@ -68,7 +70,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		fw.close();
 	}
 
-	private Checks checks() {
+	protected Checks checks() {
 		Checks out = new Checks();
 		out.everythingStraight = false;
 		out.checkNoHops = false;
@@ -81,6 +83,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	protected void renderDiagram(String xml) throws Exception {
+		//transcodePNG(addSVGFurniture(xml));
 		transcodeSVG(addSVGFurniture(xml));
 	}
 

@@ -4,17 +4,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
+import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -48,8 +51,6 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		VertexTurn meets = ro.getMeets();
 		VertexTurn link = ro.getLink();
 		VertexTurn par = ro.getPar();
-		
-		
 						
 		int meetsMinimumLength = checkMinimumLength(meets, link, c);
 
@@ -60,6 +61,8 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 			log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
 			return Action.PUT_BACK;
 		}
+		
+		
 		 
 
 		return Action.OK; 
@@ -81,7 +84,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 						(!isHorizontal ? c.getHorizontalSegmentSlackOptimisation() : c.getVerticalSegmentSlackOptimisation())
 								.getSlideablesFor(r);
 				
-				alignSingleConnections(c, perp, along, false);
+				alignSingleConnections(c, perp, along, false, true);
 			}
 		}
 		
@@ -89,10 +92,20 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 		
 	private boolean shouldSetMidpoint(VertexTurn vt, VertexTurn link) {
-		if (hasOneConnected(vt)) {
+		Set<Connected> connecteds = getConnecteds(vt);
+		if (connecteds.size() == 1) {
 			if ((link == null) || (link.getSegment().getConnections().size() == 1)) {
 				Set<Connection> leavingConnections = vt.getLeavingConnections();
 				if (leavingConnections.size() == 1) {
+					
+					Connected theConnected = connecteds.iterator().next();
+					Connection theConnection = leavingConnections.iterator().next();
+					
+					if (!theConnection.meets(theConnected)) {
+						// we should only do a mid-point if we're connecting to this element
+						return false;
+					}
+					
 					if ((link == null) || (link.getSegment().getConnections().containsAll(leavingConnections))) {
 						return true;
 					}
@@ -104,8 +117,8 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		
 	}
 	
-	private boolean hasOneConnected(VertexTurn vt) {
-		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).count() == 1;
+	private Set<Connected> getConnecteds(VertexTurn vt) {
+		return vt.getSegment().getRectangulars().stream().filter(r -> r instanceof Connected).map(r -> (Connected) r).collect(Collectors.toSet());
 	}
 
 	private Rectangular getRectangular(VertexTurn vt) {
@@ -128,7 +141,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 		super.performSecondarySizing(c, stacks);
 		stacks.values().stream()
 			.flatMap(s -> s.stream())
-			.filter(vt -> minimizeConnectedOnly(vt)) 
+			.filter(vt -> onlyAligned(vt)) 
 			.distinct()
 			.forEach(vt -> {
 				alignSingleConnections(c, vt);
@@ -151,11 +164,48 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	}
 
 
-	protected static boolean minimizeConnectedOnly(VertexTurn vt) {
-		return vt.getSegment().getUnderlyingInfo().stream()
-			.map(ui -> ui.getDiagramElement())
-			.filter(underlying -> (underlying instanceof Connected) && (((Connected)underlying).getSizing() == DiagramElementSizing.MINIMIZE))
+	protected static boolean onlyAligned(VertexTurn vt) {
+		boolean out = vt.getSegment().getUnderlyingInfo().stream()
+			.filter(ui -> (ui.getDiagramElement() instanceof Connected))
+			.filter(ui -> (ui.getDiagramElement() instanceof Container))
+			.filter(ui -> (((Connected) ui.getDiagramElement()).getConnectionAlignment(getDirection(ui.getSide(), vt.getDirection())) != ConnectionAlignment.NONE))
+			.filter(ui -> { 
+				return matchesPattern((Container) ui.getDiagramElement(), vt.getStartsWith().getUnderlying(), vt.getEndsWith().getUnderlying()) 
+					|| matchesPattern((Container) ui.getDiagramElement(), vt.getEndsWith().getUnderlying(), vt.getStartsWith().getUnderlying());
+			})
 			.count() > 0;
+
+		return out;
+	}
+	
+	private static Direction getDirection(Side side, Direction vtDirection) {
+		switch (vtDirection) {
+		case UP:
+		case DOWN:
+			if (side == Side.START) {
+				return Direction.UP; 
+			} else if (side == Side.END) {
+				return Direction.DOWN;
+			} else {
+				throw new LogicException();
+			}
+		case LEFT:
+		case RIGHT:
+			if (side == Side.START) {
+				return Direction.UP; 
+			} else if (side == Side.END) {
+				return Direction.DOWN;
+			} else {
+				throw new LogicException();
+			}
+		}
+		
+		throw new LogicException();
+	}
+
+
+	private static boolean matchesPattern(Container underlying, Segment underlyingEnd, Segment connectionEnd) {
+		return underlyingEnd.hasUnderlying(underlying) && connectionEnd.getConnections().size()==1;
 	}
 	
 }

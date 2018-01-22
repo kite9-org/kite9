@@ -1,13 +1,16 @@
 package org.kite9.diagram.model.style;
 
 /**
- * Eventually, this will be used to decide which displayer to use to draw the diagram
+ * This is used to choose the right approach for laying out the diagram element.
+ * Currently, this is only used for containers.
+ * 
+ * When elements are part of a grid, MINIMIZE has priority over MAXIMIZE.
  * 
  * @author robmoffat
  *
  */
 public enum DiagramElementSizing {
 
-	MINIMIZE, MAXIMIZE, FIXED, SCALED, ADAPTIVE, UNSPECIFIED
+	MINIMIZE, MAXIMIZE 	// these apply to Container elements
 	
 }

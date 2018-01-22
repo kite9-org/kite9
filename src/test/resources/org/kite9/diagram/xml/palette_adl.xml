@@ -1,8 +1,8 @@
 <?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:12081" layout="VERTICAL">
  
- <context id="auto:1395" layout="DOWN" style="stroke: white; stroke-dasharray: none">
+ <context id="auto:1395" layout="DOWN" >
   
-  <context id="auto:2796" layout="RIGHT" style="stroke: white; stroke-dasharray: none">
+  <context id="auto:2796" layout="RIGHT" >
    
    <glyph id="palette:id_0">
     
@@ -19,7 +19,7 @@
     <symbols/>
    </glyph>
   </context>
-  <context id="auto:2964" layout="RIGHT" style="stroke: white; stroke-dasharray: none">
+  <context id="auto:2964" layout="RIGHT" >
    
    <arrow id="palette:id_11">
     
@@ -63,12 +63,12 @@ Container</text>
  </context>
  
 <allLinks>
-  <link id="pid_0" drawDirection="DOWN" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none">
+  <link id="pid_0" drawDirection="DOWN" shape="INVISIBLE" >
    
    <from xsi:type="glyph" reference="palette:id_0"/>
    <to xsi:type="arrow" reference="palette:id_11"/>
   </link>
-  <link id="pid_1" drawDirection="DOWN" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none">
+  <link id="pid_1" drawDirection="DOWN" shape="INVISIBLE" >
    
    <from xsi:type="glyph" reference="palette:id_2"/>
    <to xsi:type="glyph" reference="palette:id_4"/>

@@ -14,7 +14,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
@@ -91,7 +90,7 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 			Glyph to = items[r.nextInt(items.length)];
 			if (from != to) {
 				Link l = new Link(from, to);
-				l.setStyle(LinkLineStyle.DOTTED);
+				l.setAttribute("class", "dotted");
 			}
 			
 		}

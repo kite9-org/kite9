@@ -67,15 +67,8 @@
  </arrow>
  
  
-<label xsi:type="key">
-  
-  <boldText/>
-  <bodyText/>
-  <symbols>
-   <symbol text="Describe the symbol here" theChar="e" shape="HEXAGON"/>
-  </symbols>
- </label><allLinks>
-  <link id="id_41" style="NORMAL">
+<allLinks>
+  <link id="id_41" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="lmc"/>
@@ -93,7 +86,7 @@
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="paul"/>
   </link>
-  <link id="id_38" style="NORMAL">
+  <link id="id_38" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="hm"/>
@@ -106,7 +99,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_39" style="NORMAL">
+  <link id="id_39" >
    
    <from xsi:type="arrow" reference="id_36"/>
    <to xsi:type="glyph" reference="ns"/>
@@ -122,7 +115,7 @@ dfdsf</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_31" style="NORMAL">
+  <link id="id_31" >
    
    <from xsi:type="arrow" reference="id_28"/>
    <to xsi:type="glyph" reference="ota"/>
@@ -135,7 +128,7 @@ dfdsf</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_23" style="NORMAL">
+  <link id="id_23" >
    
    <from xsi:type="arrow" reference="m2"/>
    <to xsi:type="glyph" reference="bb"/>

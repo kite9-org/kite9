@@ -14,7 +14,7 @@
 	<arrow id="mar1" label="married"></arrow>
 
 	<allLinks>
-		<link id="id_41" style="NORMAL">
+		<link id="id_41" >
 			<from xsi:type="arrow" reference="mar2" />
 			<to xsi:type="glyph" reference="lmc" />
 		</link>
@@ -22,11 +22,11 @@
 			<from xsi:type="arrow" reference="mar2" />
 			<to xsi:type="glyph" reference="paul" />
 		</link>
-		<link id="id_38" style="NORMAL">
+		<link id="id_38" >
 			<from xsi:type="arrow" reference="mar2" />
 			<to xsi:type="glyph" reference="hm" />
 		</link>
-		<link id="id_39" style="NORMAL">
+		<link id="id_39" >
 			<from xsi:type="arrow" reference="mar2" />
 			<to xsi:type="glyph" reference="ns" />
 		</link>

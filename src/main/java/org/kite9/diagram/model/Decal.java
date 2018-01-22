@@ -10,5 +10,5 @@ package org.kite9.diagram.model;
  *
  */
 public interface Decal extends Rectangular {
-
+	
 }

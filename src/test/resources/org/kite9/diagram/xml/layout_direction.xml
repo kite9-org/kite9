@@ -49,7 +49,7 @@
   <symbols/>
  </label>
 </context>
-<label xsi:type="key" id="id_65">
+<key>
 
  <boldText>Total Eclipse of The Heart</boldText>
  <bodyText>For the better understanding of it... and showing the basic Kite9 diagram components</bodyText>
@@ -75,10 +75,10 @@
    <symbols/>
   </text-line>
  </symbols>
-</label>
+</key>
 
 <allLinks>
- <link id="id_51" style="DOTTED">
+ <link id="id_51" >
 
   <from xsi:type="arrow" reference="id_37"/>
   <to xsi:type="glyph" reference="id_46"/>
@@ -90,7 +90,7 @@
   <to xsi:type="glyph" reference="id_48"/>
   <toDecoration>ARROW</toDecoration>
  </link>
- <link id="id_42" drawDirection="LEFT" style="DOTTED">
+ <link id="id_42" drawDirection="LEFT" >
 
   <from xsi:type="glyph" reference="id_41"/>
   <to xsi:type="arrow" reference="id_37"/>

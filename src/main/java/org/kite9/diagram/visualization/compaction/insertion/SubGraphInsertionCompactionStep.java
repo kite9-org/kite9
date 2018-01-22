@@ -25,6 +25,7 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.FaceSide;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -73,7 +74,7 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 			return;  // nothing embedded
 		}
 		
-		Rectangle<Slideable<Segment>> border = c.getFaceSpace(dartFace);
+		Rectangle<FaceSide> border = c.getFaceSpace(dartFace);
 		
 		if ((border == null) || (border == Compaction.DONE)) {
 			// not been rectangularized or already done.
@@ -83,10 +84,10 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 		// get space for the darts to be inserted - this must be an empty
 		// rectangle in the
 		// rectangularization
-		Slideable<Segment> top =border.getA();;
-		Slideable<Segment> right = border.getB();
-		Slideable<Segment> bottom = border.getC();
-		Slideable<Segment> left = border.getD();
+		Slideable<Segment> top =border.getA().getMain();
+		Slideable<Segment> right = border.getB().getMain();
+		Slideable<Segment> bottom = border.getC().getMain();
+		Slideable<Segment> left = border.getD().getMain();
 
 		Direction directionOfInsertion = null;
 		Map<Integer, DartFace> faceInsertionOrder = new HashMap<Integer, DartFace>();
@@ -113,24 +114,24 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 				log.send(log.go() ? null : "Inserting: \n\t\t " + embeddedDartFace + "\n     into: \n\t\t" + dartFace);
 					
 				// find the segment border of the subgraph being inserted
-				Rectangle<Slideable<Segment>> limits = c.getFaceSpace(embeddedDartFace);
+				Rectangle<FaceSide> limits = c.getFaceSpace(embeddedDartFace);
 				
-				Slideable<Segment> uLimit = limits.getA();
-				Slideable<Segment> rLimit = limits.getB();
-				Slideable<Segment> dLimit = limits.getC();
-				Slideable<Segment> lLimit = limits.getD();
+				FaceSide uLimit = limits.getA();
+				FaceSide rLimit = limits.getB();
+				FaceSide dLimit = limits.getC();
+				FaceSide lLimit = limits.getD();
 				
 				if ((directionOfInsertion == null) || (directionOfInsertion == Direction.RIGHT)
 						|| (directionOfInsertion == Direction.LEFT)) {
 					separate(top, uLimit);
 					separate(dLimit, bottom);
 					separate(left, lLimit);
-					left = rLimit;
+					left = rLimit.getMain();
 				} else {
 					separate(top, uLimit);
 					separate(left, lLimit);
 					separate(rLimit, right);
-					top = dLimit;
+					top = dLimit.getMain();
 				}
 				
 				addedSomething = true;

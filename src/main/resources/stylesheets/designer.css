@@ -1,64 +1,344 @@
-@namespace svg "http://www.w3.org/2000/svg";
-
-* {
+@font-face {
 	font-family: "opensans-light-webfont";
+	src: url('../fonts/opensans-light-webfont.ttf') format('truetype');
 }
+
+@font-face {
+	font-family: "opensans-bold-webfont";
+	src: url('../fonts/opensans-bold-webfont.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "opensans-regular-webfont";
+	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
+}
+
+/*
+ * Required so we can process old XML content
+ */
+renderingInformation,
+fromDecoration,
+toDecoration, 
+position,
+size,
+allLinks {
+	kite9-type: none;
+}
+
+/* Definitions of Kite9 Elements */
 
 context, 
 diagram,
 glyph,
 arrow,
 link {
-	margin: 10px;
-}
-
-.red {
-	font-size: 25px;
-	fill: red;
+	kite9-margin: 10px;
+	kite9-link-inset: 10px;
+	kite9-link-gutter: 10px;
 }
 
 diagram {
-	type: diagram;
-	fill: none;
-	padding: 15px;
-	traversal: none;
+	kite9-type: diagram;
+	kite9-padding: 15px;
+	kite9-traversal: none;
+	kite9-template: url(template.svg#diagram);
 }
+
+key {
+	kite9-usage: label;
+	kite9-type: container;
+	kite9-layout: grid;
+	kite9-sizing: maximize;
+	kite9-grid-size: 1 3;
+	kite9-padding: 3px 6px 3px 6px; 
+	kite9-margin: 12px 12px 12px 12px;
+	kite9-template: url(template.svg#key)
+}
+
+key text-lines {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-layout: vertical;
+	kite9-occupies: 0 2;
+}
+
+key boldText {
+	kite9-occupies: 0 0;
+}
+
+key bodyText {
+	kite9-occupies: 0 1;
+}
+
 
 glyph {
-	type: connected;
-	sizing: minimize;
-	layout: grid;	
-	grid-size: 1 2;
-	template: url(template.svg#glyph);
+	kite9-type: container;
+	kite9-layout: grid;	
+	kite9-grid-size: 1 2;
+	kite9-template: url(template.svg#glyph);
+	kite9-padding: 6px 10px 6px 10px; 
+	kite9-margin: 10px;
+	kite9-connection-align: 50%;
 }
 
-renderingInformation,
-position,
-size {
-	type: none;
+glyph symbols {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-occupies: 1 0;
+	kite9-layout: horizontal;
 }
 
+diagram glyph label {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#glyph-label-text);
+	kite9-occupies: 0 0 0 0;
+	kite9-vertical-align: top;
+	kite9-margin: 5px 
+}
+
+/*
+ This rule handles the case where the label is after a stereotype, 
+ and therefore needs to appear on the line below
+*/
+diagram glyph stereotype + label {
+	kite9-occupies: 0 1 1 1;
+}
+
+
+glyph stereotype {
+	kite9-type: container;
+	kite9-template: url(template.svg#glyph-stereotype-text);
+	kite9-occupies: 0 0;
+	kite9-vertical-align: bottom;
+	kite9-horizontal-align: center;
+	kite9-margin: 0px 4px 2px 0px; 
+	kite9-sizing: maximize;
+}
+
+glyph text-lines {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-occupies: 0 1 2 2;
+	kite9-layout: vertical;
+}
+
+symbol-text-line {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-layout: grid;
+	kite9-grid-size: 2 1;
+	kite9-connection-align: 50%;
+	/* kite9-template: url(template.svg#show-box); */
+} 
+
+key text-lines text-label,
+glyph text-lines text-label,
+symbol-text-line text {
+	kite9-horizontal-align: left;
+}
+
+symbol-text-line symbols {
+	kite9-sizing: maximize;
+	kite9-horizontal-align: right;
+	/* kite9-template: url(template.svg#show-box) */
+}
+
+context {
+	kite9-template: url(template.svg#context);
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-traversal: always;
+	kite9-padding: 12px;	
+	kite9-link-inset: 12px;
+}
+
+cell > label, 
+context > label {
+	kite9-usage: label;
+	kite9-type: container; 
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#container-label);
+	kite9-padding: 4px;
+}
+
+grid {
+	kite9-template: url(template.svg#grid);
+	kite9-padding: 0px;
+	kite9-margin: 0px;
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-traversal: always;
+	kite9-layout: grid;
+}
+
+cell {
+	kite9-template: url(template.svg#cell);
+	kite9-padding: 0px;
+	kite9-margin: 0px;
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-traversal: always;
+}
+
+toLabel, 
+fromLabel {
+	kite9-usage: label;
+	kite9-type: container; 
+	kite9-padding: 4px; 
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#connection-label);
+	kite9-margin: 4px;	
+}
+
+text-label {
+	kite9-horizontal-align: center;
+	kite9-vertical-align: center;
+}
 
 link {
-	type: link;
+	kite9-type: link;
+	kite9-template: url(template.svg#link);
 }
 
 from,
 to {
-	type: link-end;
+	kite9-type: link-end;
+	kite9-template: url(template.svg#empty-terminator);
+	kite9-padding: 5px 5px 5px 5px; 
 } 
 
-context {
-	type: connected;
-	sizing: maximize;
-	traversal: always;
-	padding: 12px;
+from.circle,
+to.circle {
+	kite9-marker-start-reference: url(template.svg#circle-marker);
+	kite9-marker-end-reference: url(template.svg#circle-marker);
 }
 
-.background {
-	
-	
+from.arrow,
+to.arrow {
+	kite9-marker-start-reference: url(template.svg#arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#arrow-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
 }
+
+from.arrow-open,
+to.arrow-open {
+	kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
+}
+
+from.gap,
+to.gap {
+	kite9-marker-reserve: 2px;
+}
+
+from.diamond, 
+to.diamond {
+	kite9-marker-start-reference: url(template.svg#diamond-start-marker);
+	kite9-marker-end-reference: url(template.svg#diamond-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
+}
+
+from.diamond-open, 
+to.diamond-open {
+	kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
+	kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
+	kite9-padding: 5px 12px 5px 1px;
+}
+
+from.barbed-arrow, 
+to.barbed-arrow {
+	kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
+	kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
+	kite9-padding: 5px 7px 5px 1px;
+}
+
+
+/* Symbols */
+
+symbols {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-layout: horizontal;
+	kite9-occupies: 1 0;
+}
+
+symbol {
+	kite9-type: svg;
+	kite9-margin: 0 2px 0 2px;
+	kite9-sizing: minimize;
+	kite9-connection-align: 50%;
+	kite9-link-inset: 0px;
+}
+
+symbol.circle {
+	kite9-template: url(template.svg#circle);	 
+}
+
+symbol.hexagon {
+	kite9-template: url(template.svg#hexagon);
+}
+
+symbol.diamond {
+	kite9-template: url(template.svg#diamond);
+}
+
+symbol.square {
+	kite9-template: url(template.svg#square);
+}
+
+text-line, text, boldText, bodyText {
+	kite9-type: container;
+	kite9-sizing: maximize;
+	kite9-padding-top: 2px;
+	kite9-padding-bottom: 2px;
+	kite9-padding-left: 0px;
+	kite9-padding-right: 0px;
+	kite9-margin: 0 0 0 0; 
+	kite9-vertical-align: top;
+	kite9-connection-align: 50%;
+}
+
+text-line, text, bodyText {
+	kite9-horizontal-align: left;
+	kite9-template: url(template.svg#generic-text);
+}
+
+boldText {
+	kite9-template: url(template.svg#bold-text);
+	kite9-horizontal-align: center;
+}
+
+
+
+/* Arrow */
+arrow {
+	kite9-padding: 3px 5px 3px 5px; 
+	kite9-margin: 10 10 10 10; 
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#arrow);
+	kite9-connections: separate;
+	kite9-connection-align: 50%;
+	kite9-link-inset: 4px;
+}
+
+
+arrow > label {
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-template: url(template.svg#arrow-label-text);
+	kite9-horizontal-align: center;
+	kite9-vertical-align: center;
+}
+
+arrow > label > contents {
+	kite9-horizontal-align: center;
+	kite9-vertical-align: center;
+}
+
+/* Classes And Styles */
 
 .copyright {
 	font-weight: normal;
@@ -66,295 +346,163 @@ context {
 	stroke: black;
 }
 
-.shadow {
-	fill: #040404;
-	offset-x: 2px;
-	offset-y: 2px;
-}
-
-
-/* Symbols */
-
-symbol {
-	type: connected;
-	sizing: fixed;
-	font-weight: bold;
+.symbol {
 	font-size: 10px;
 	font-family: "opensans-bold-webfont";
-	text-align:  middle;
-	width: 14px;
-	height: 14px;
-	stroke: white;
+	fill: white;
+	stroke: none;
 }
 
-.symbol.label {
-	color: white;
+.symbol-text {
+	fill: white; 
+	font-family: opensans-regular-webfont; 
+	font-size: 8px; 
+	text-anchor: middle;
 }
 
-symbol.circle {
-	fill: rgb(0, 150, 73);
-	template: url(template.svg#circle);
-	 
+.context-back {
+	fill: none;
+	stroke: black;
+	stroke-width: 1px;
 }
 
-symbol.hexagon {
-	fill: rgb(207, 36, 42);
-	template: url(template.svg#hexagon);
+.cell-edge {
+	stroke: #BBBBBB;
+	stroke-width: .5px;
+	fill: none;
 }
 
-symbol.diamond {
-	fill: rgb(237, 106, 86);
-	template: url(template.svg#diamond);
+.grid-back {
+	stroke: none;
+	fill: white;
 }
 
-/* Glyph */
-glyph {
-	padding: 6px 10px 6px 10px; 
-	margin: 10px;
-	stroke-width: 2px;
+.grid-frame {
+	stroke: black;
+	stroke-width: 1px;	
+	fill: none;
+}
+
+.container-label-front {
+	stroke-width: 0;
+	font-size: 11px;
+	font-family: "opensans-light-webfont";
+	fill: white;
+}
+
+.container-label-back {
+	fill: #777;	
+}
+
+.connection-label-front {
+	stroke-width: 0;
+	font-size: 11px;
+	font-family: "opensans-light-webfont";
+	fill: white;
+}
+
+.connection-label-back {
+	fill: #777;	
+}
+
+.glyph-back {
+	stroke-width: 1px;
 	stroke: black;
 	fill: white;
-	box-shadow: 4px 4px 0px #333333; 
 }
 
-glyph > label {
-	type: connected;
-	sizing: minimize;
-	template: url(template.svg#text-label);
-	occupies: 0 1 1 1;
-	vertical-align: top;
-}
-
-glyph > label > contents {
-	type: connected;
-	sizing: fixed;
+.glyph-label-text {
 	font-size: 15px;
 	fill: black;
 	font-family: "opensans-regular-webfont";
-	horizontal-align: center;
+	stroke: none;
 }
 
-glyph > stereotype {
-	type: connected;
-	sizing: minimize;
-	template: url(template.svg#text-label);
-	occupies: 0 0;
-	vertical-align: top;
+.arrow-label-text {
+	fill: white;
+	stroke: none;
+	font-size: 12px;
+	font-family: "opensans-regular-webfont";
 }
 
-glyph > stereotype > label {
-	type: connected;
-	sizing: fixed;
-	horizontal-align: center;
-}
-
-glyph > stereotype .text {
+.glyph-stereotype-text {
 	font-family: "opensans-bold-webfont";
 	font-size: 12px;
 	fill: black;
+	stroke: none;
+	kite9-padding: 2px 2px 2px 2px; 
 }
 
-glyph > text-lines {
-	type: connected;
-	sizing: minimize;
-	occupies: 0 1 2 2;
-	layout: vertical;
-}
-
-symbols {
-	type: connected;
-	sizing: minimize;
-	layout: horizontal;
-	occupies: 1 0;
-}
-
-symbol-text-line {
-	type: connected;
-	sizing: minimize;
-	layout: grid;
-	grid-size: 2 1;
-} 
-
-text-line, text, boldText, bodyText {
-	occupies: 0 0;
-	type: connected;
-	sizing: minimize;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 0px;
-	padding-right: 0px;
-	margin: 0 0 0 0; 
-	font-size: 13px;
-	stroke: black;
+.generic-text {
+	stroke: none;
 	fill: black;
 	font-family: "opensans-regular-webfont";
-	text-align: start;
-	template: url(template.svg#text-label);
-	vertical-align: top;
-	horizontal-align: left;
-}
-
-glyph > symbols {
-	type: connected;
-	sizing: minimize;
-	occupies: 1 0;
-	layout: horizontal;
-}
-
-/* Arrow */
-arrow {
-	padding: 3px 5px 3px 5px; 
-	margin: 10 10 10 10; 
-	fill: black;
-	stroke: black;
-	stroke-width: 2px;
-	type: connected;
-	sizing: minimize;
-	template: url(template.svg#arrow);
-	connections: separate;
-}
-
-arrow > label {
-	type: connected;
-	sizing: minimize;
-	template: url(template.svg#text-label);
-	horizontal-align: center;
-	vertical-align: center;
-}
-
-arrow > label > contents {
-	sizing: fixed;
-	horizontal-align: center;
-	vertical-align: center;
-}
-
-arrow > label > contents .text {
-	font-size: 12px;
-	stroke: white;
-	fill: white;
-	font-family: "opensans-regular-webfont";
-}
-
-/* Context */
-
-context {
-	fill: none;
-	stroke: black;
-	stroke-width: 2px;
-	template: url(template.svg#context);
-	padding: 10px;
-}
-
-/* Labels */
-
-toLabel, 
-fromLabel,
-context > label,
-diagram > label {
-	type: label; 
-	fill: #CCC;
-	fill-transparency: 60%;
-	stroke: green;
-	stroke-width: 0;
+	text-align: start;	
 	font-size: 10px;
-	font-family: "opensans-light-webfont";
-	padding: 4px 4px 4px 4px;
-	sizing: minimize;
-	template: url(template.svg#connection-label)
 }
 
-allLinks {
-	type: none;	
-}
-
-
-/* Key */
-
-
-key {
-	type: label;
-	layout: grid;
-	sizing: maximize;
-	grid-size: 1 3;
-	padding: 3px 6px 3px 6px; 
-	margin: 12px 12px 12px 12px;
-	template: url(template.svg#key)
-}
-
-key > boldText,
-key > bodyText {
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 0px;
-	padding-right: 0px;
-	margin: 0 0 0 0; 
-	font-size: 13px;
-	stroke: black;
+.bold-text {
+	stroke: none;
 	fill: black;
-	font-family: "opensans-regular-webfont";
-	text-align: start;
-	template: url(template.svg#text-label);
+	font-family: "opensans-bold-webfont";
+	text-align: start;	
+	font-size: 10px;
 }
 
-
-key > boldText {
-	occupies: 0 0;
-	type: connected;
-	sizing: fixed;
-	template: url(template.svg#text-label);
+.red {
+	font-size: 25px;
+	fill: red;
 }
 
-key > bodyText {
-	occupies: 0 1;
-	type: connected;
-	sizing: fixed;
+.diagram {
+	fill: none;
 }
 
-key > text-lines {
-	type: connected;
-	sizing: maximize;
-	occupies: 0 2;
-	layout: vertical;
+.key-back {
+	fill: #ebebeb;
 }
 
-/* Link */
-
-link {
+.link {
 	stroke: black;
 	stroke-width: 2px;
-	
+	fill: none;
 }
 
-link.dotted {
-	stroke-dasharray: 5px 5px;
-	
-}
 
-/* Terminators */
 
-terminator,
-fromDecoration, 
-toDecoration {
-	type: terminator;
-}
+/** Marker Classes */
 
-.link-terminator {
-	margin: 0 5px 10px 5px;
-	height: 10px;
+.diamond-marker {
 	fill: black;
 	stroke: black;
 	stroke-width: 1px;
 }
 
-.link-terminator.open {
-	fill: none;	
+.arrow-marker {
+	fill: black;
+	stroke-width: 1px; 
+	stroke: black; 
 }
 
-.link-terminator.none {
-	margin: 0 0 0 0;
+.circle-marker {
+	fill: black;
+	stroke: none;
 }
 
+.open-diamond-marker {
+	fill: white;
+	stroke: black;
+	stroke-width: 1px;
+}
 
-.copyright {
-	font-size: 12px;
+.barbed-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: none;
+}
+
+.open-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: white;
 }

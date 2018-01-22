@@ -21,7 +21,7 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g6 = new Glyph("six", "","six ", null, null);
 		Context c5 = new Context("five", listOf(g6), true, null, null);
-		c5.setStyle("traversal: always none none none; ");
+		c5.setAttribute("style", "traversal: always none none none; ");
 		
 		Link l = new Link(g2, g6);
 
@@ -36,7 +36,7 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		Glyph b = new Glyph("b", "b", null, null, null);
 		Glyph inner = new Glyph("inner", "inner", null, null, null);
 		Context c = new Context("c", Arrays.asList(inner), true, null, null);
-		c.setStyle("traversal: leaving; ");
+		c.setAttribute("style", "traversal: leaving; ");
 		Glyph d = new Glyph("d", "d", null, null, null);
 		Glyph e = new Glyph("e", "e", null, null, null);
 		

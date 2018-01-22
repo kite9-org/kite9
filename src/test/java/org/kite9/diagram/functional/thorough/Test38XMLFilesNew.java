@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.TestingHelp;
@@ -119,7 +120,13 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 		generate("outer_face.xml");
 	}
 	
+	
+	/**
+	 * For some reason, id_31 appears inside a container it's not in.
+	 * @throws Exception
+	 */
 	@Test
+	@NotAddressed
 	public void test_38_19_CantCompleteOrth() throws Exception {
 		generate("cant_complete_orth.xml");
 	}

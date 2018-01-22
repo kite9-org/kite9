@@ -43,6 +43,10 @@ public class TextLine extends AbstractStyleableXMLElement {
 		super(id, tag, doc);
 		setText(text);
 	}
+	
+	public TextLine(String id, String tag, String text) {
+		this(id, tag, text, TESTING_DOCUMENT);
+	}
 
 	public Kite9XMLElement getSymbols() {
 		return getProperty("symbols");

@@ -39,10 +39,7 @@
   <arrow id="m1/rel_implements" label="implements"></arrow>
   <arrow id="m/rel_implements" label="implements"></arrow>
   <arrow id="m/rel_extends" label="extends"></arrow>
-  <label xsi:type="key">
-   <boldText>Planarization Diagram</boldText>
-   <bodyText>This diagram shows how the main elements of a planarization come together</bodyText>
-  </label>
+
   <allLinks>
    <link id="auto:49">
     <from xsi:type="arrow" reference="Face/boundary/rel_is a"></from>

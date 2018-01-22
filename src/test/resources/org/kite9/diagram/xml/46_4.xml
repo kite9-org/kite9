@@ -4,11 +4,11 @@
  <context id="id_34" layout="VERTICAL" bordered="true">
   
   <hints py1="0.001499" py2="0.9980035" px2="0.250251" px1="0.001748001" y1="12.0" y2="428.0" x2="354.0" x1="12.0"/>
-  <glyph id="id_40" shape="DIAMOND" style="fill: '270-#ffff87-#ffe65f';">
+  <glyph id="id_40" shape="DIAMOND" >
    
    <hints py1="0.5012446" py2="0.7487544" px2="0.24975438" px1="0.0022446099" y1="174.0" y2="294.0" x2="324.0" x1="24.0"/>
    <stereotype/>
-   <label style="">New Party</label>
+   <label >New Party</label>
    <text-lines>
     <text-line id="auto:23823">
      
@@ -38,11 +38,11 @@
    <symbols/>
   </glyph>
  </context>
- <glyph id="id_36" shape="fcDIRECT" style="">
+ <glyph id="id_36" shape="fcDIRECT" >
   
   <hints py1="0.5012446" py2="0.7487544" px2="0.4992519" px1="0.2507491" y1="210.0" y2="258.0" x2="564.0" x1="420.0"/>
-  <stereotype style=""/>
-  <label style="font-family: opensans-bold-webfont;font-size: 24px;">New Part</label>
+  <stereotype />
+  <label >New Part</label>
   <text-lines/>
   <symbols/>
  </glyph>
@@ -57,19 +57,19 @@
    <text-lines/>
    <symbols/>
   </glyph>
-  <glyph id="id_39" shape="fcLOOP LIMIT" style="">
+  <glyph id="id_39" shape="fcLOOP LIMIT" >
    
    <hints py1="0.56306" py2="0.6248135" px2="0.9975059" px1="0.5014941" y1="132.0" y2="168.0" x2="806.0" x1="722.0"/>
-   <stereotype style=""/>
-   <label style="">New Part</label>
+   <stereotype />
+   <label >New Part</label>
    <text-lines/>
    <symbols/>
   </glyph>
-  <glyph id="id_38" shape="umlACTOR" style="">
+  <glyph id="id_38" shape="umlACTOR" >
    
    <hints py1="0.6251236" py2="0.7488784" px2="0.9975059" px1="0.5014941" y1="180.0" y2="276.0" x2="818.0" x1="710.0"/>
    <stereotype/>
-   <label style="">New Parthhh</label>
+   <label >New Parthhh</label>
    <text-lines/>
    <symbols/>
   </glyph>
@@ -91,13 +91,13 @@ Container</text>
  </context>
  
 <allLinks>
-  <link id="id_50.1" shape="NORMAL" style="">
+  <link id="id_50.1" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_40"/>
    <to xsi:type="glyph" reference="id_54"/>
    <fromDecoration>NONE</fromDecoration>
   </link>
-  <link id="id_48" shape="NORMAL" style="" drawDirection="LEFT">
+  <link id="id_48" shape="NORMAL"  drawDirection="LEFT">
    
    <from xsi:type="glyph" reference="id_36"/>
    <to xsi:type="glyph" reference="id_40"/>
@@ -110,7 +110,7 @@ Container</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
-  <link id="id_41" shape="NORMAL" style="">
+  <link id="id_41" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_37"/>
    <to xsi:type="glyph" reference="id_40"/>
@@ -123,14 +123,14 @@ Container</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
-  <link id="id_45" shape="NORMAL" style="">
+  <link id="id_45" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_37"/>
    <to xsi:type="glyph" reference="id_36"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
-  <link id="id_46" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_46" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_37"/>
    <to xsi:type="context" reference="id_32"/>
@@ -142,12 +142,12 @@ Container</text>
    <from xsi:type="glyph" reference="id_37"/>
    <to xsi:type="glyph" reference="id_1"/>
   </link>
-  <link id="id_50" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_50" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_54"/>
    <to xsi:type="glyph" reference="id_51"/>
   </link>
-  <link id="id_42" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_42" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_36"/>
    <to xsi:type="glyph" reference="id_38"/>
@@ -160,14 +160,14 @@ Container</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
-  <link id="id_43" shape="NORMAL" style="">
+  <link id="id_43" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_36"/>
    <to xsi:type="glyph" reference="id_39"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
-  <link id="id_50.2" shape="NORMAL" style="" drawDirection="DOWN">
+  <link id="id_50.2" shape="NORMAL"  drawDirection="DOWN">
    
    <from xsi:type="glyph" reference="id_51"/>
    <to xsi:type="glyph" reference="id_39"/>

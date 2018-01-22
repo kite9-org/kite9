@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
 import java.util.List;
+import java.util.Set;
 
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
@@ -26,6 +28,7 @@ public class PrioritisedRectOption extends RectOption {
 	static enum TurnType {
 		
 		CONNECTION_FAN(-100000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
+		CONTAINER_LABEL(-20000, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 		EXTEND_PREFERRED(0, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 
 		MINIMIZE_RECT_SIDE_PART_G(20000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),    // lines up connecteds joining to a connection
@@ -138,8 +141,13 @@ public class PrioritisedRectOption extends RectOption {
 			}
 		}
 		
-		if (meets.getTurnPriority() == TurnPriority.MAXIMIZE_RECTANGULAR) {
-			return TurnType.EXTEND_PREFERRED;
+		if ((meets.getTurnPriority() == TurnPriority.MAXIMIZE_RECTANGULAR) || (inside(par, meets))) {
+			if (par.isHorizontalContainerLabel()) {
+				return TurnType.CONTAINER_LABEL;
+			} else {
+				return TurnType.EXTEND_PREFERRED;
+			}
+			
 		}
 		
 		if (getTurnShape() == TurnShape.U) {
@@ -151,6 +159,20 @@ public class PrioritisedRectOption extends RectOption {
 	
 	
 	
+	private boolean inside(VertexTurn par, VertexTurn meets) {
+		Set<Rectangular> containers = meets.getSegment().getRectangulars();
+ 		
+		long count = par.getSegment().getRectangulars().stream().filter(r -> {
+			if (containers.contains(r.getParent())) {
+				return true;
+			}
+			
+			return false;
+		}).count();
+		
+		return count > 0;
+	}
+
 	private TurnType getUShapedTypes(VertexTurn meetsTurn, VertexTurn linkTurn, VertexTurn parTurn) {
 		TurnPriority meetsPriority = meetsTurn.getTurnPriority();
 		if (meetsPriority == TurnPriority.MAXIMIZE_RECTANGULAR) {
@@ -202,7 +224,9 @@ public class PrioritisedRectOption extends RectOption {
 				return getMinimizeTurnType(par);
 			case MAXIMIZE_RECTANGULAR:
 			default:
-				throw new LogicException();
+				// can be for keys, apparently
+				return TurnType.EXTEND_PREFERRED;
+				
 			}
 		} else {
 			throw new LogicException();

@@ -1,8 +1,5 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
@@ -23,20 +20,82 @@ import org.kite9.framework.logging.LogicException;
  */
 public class RoutePainter {
 	
-	float xo = 4;
-	float yo = 4;
-	Color shadowColour = Color.DARK_GRAY;
+	float xo;
+	float yo;
 
-	static interface EndDisplayer {
+	public RoutePainter(float xo, float yo) {
+		super();
+		this.xo = xo;
+		this.yo = yo;
+	}
+
+	
+	public static interface EndDisplayer {
 		
-		public void draw(Graphics2D gp, Paint lineColour, Paint fillColour);
-
 		/**
 		 * Call this method before draw to set the position of the EndDisplayer
 		 */
 		public void reserve(Move m, boolean start);
 		
-		public Shape getTerminatorPerimeterShape();
+	}
+	
+	public static class ReservedLengthEndDisplayer implements EndDisplayer {
+		
+		private final double toReserve;
+
+		public ReservedLengthEndDisplayer(double toReserve) {
+			super();
+			this.toReserve = toReserve;
+		}
+
+		@Override
+		public void reserve(Move m, boolean start) {
+			if (start) {
+				if (m.xs == m.xe) {
+					if (m.ys < m.ye) {
+						 m.ys += toReserve;
+					} else if (m.ys > m.ye) {
+						 m.ys -= toReserve;
+					} else {
+						throw new LogicException();
+					}
+				} else if (m.ys == m.ye) {
+					if (m.xs < m.xe) {
+						 m.xs += toReserve;
+					} else if (m.xs > m.xe) {
+						 m.xs -= toReserve;
+					} else {
+						throw new LogicException();
+					}
+					
+				} else {
+					throw new LogicException();
+				}
+				
+				
+			} else {
+				if (m.xs == m.xe) {
+					if (m.ys < m.ye) {
+						 m.ye -= toReserve;
+					} else if (m.ys > m.ye) {
+						 m.ye += toReserve;
+					} else {
+						throw new LogicException();
+					}
+				} else if (m.ys == m.ye) {
+					if (m.xs < m.xe) {
+						 m.xe -= toReserve;
+					} else if (m.xs > m.xe) {
+						 m.xe += toReserve;
+					} else {
+						throw new LogicException();
+					}
+					
+				} else {
+					throw new LogicException();
+				}
+			}
+		}
 	}
 	
 	static interface LineDisplayer {
@@ -50,16 +109,7 @@ public class RoutePainter {
 	public final EndDisplayer NULL_END_DISPLAYER = new EndDisplayer() {
 
 		@Override
-		public void draw(Graphics2D gp, Paint lineColour, Paint fillColour) {
-		}
-
-		@Override
 		public void reserve(Move m, boolean start) {
-		}
-
-		@Override
-		public Shape getTerminatorPerimeterShape() {
-			return null;
 		}
 	};
 	

@@ -1,17 +1,22 @@
 package org.kite9.diagram.batik.bridge;
 
+import java.util.List;
+
+import org.apache.batik.bridge.Bridge;
+import org.apache.batik.bridge.BridgeExtension;
 import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.SVGBridgeExtension;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
+import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
-import org.kite9.diagram.batik.element.AbstractXMLDiagramElement;
-import org.kite9.diagram.batik.element.Templater;
 import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.dom.Kite9DocumentFactory;
-import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.dom.XMLHelper;
+import org.w3c.dom.Document;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -21,55 +26,31 @@ import org.kite9.framework.xml.Kite9XMLElement;
  * @author robmoffat
  *
  */
-public final class Kite9BridgeContext extends SVG12BridgeContext {
+public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader) {
 		super(userAgent, loader);
 		this.setDocumentSize(new Dimension2DDouble(0,0));
 	}
 	
-	static class Kite9DocumentLoader extends DocumentLoader {
-
-		public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf) {
-			super(userAgent);
-			this.documentFactory = dbf;
-		}
-		
-	}
-
-	private Templater templater;
-	
-	public Templater getTemplater() {
-		return templater;
-	}
-
-	public Kite9BridgeContext(UserAgent userAgent, Kite9DocumentFactory dbf) {
-		this(userAgent, new Kite9DocumentLoader(userAgent, dbf));
-		templater = new Templater(getDocumentLoader());
-	}
-
+	/**
+	 * Setting this true allows us to keep track of XML-GraphicsNode mapping.
+	 */
 	public boolean isInteractive() {
-		return false;
+		return true;	
 	}
 
 	public boolean isDynamic() {
 		return false;
 	}
 	
-
+	private Kite9GBridge gBridge = new Kite9GBridge();
+	
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
-		putBridge(new Kite9DiagramBridge(this));
-		putBridge(new Kite9GBridge());
-		putBridge(new TextBridge());
-	}
-	
-	/**
-	 * This needs to copy the template XML source into the destination.
-	 */
-	public void handleTemplateElement(Kite9XMLElement in, DiagramElement out) {
-		templater.handleTemplateElement(in, (AbstractXMLDiagramElement) out);
+		putBridge(new Kite9DiagramBridge());
+		putBridge(new LocalRenderingFlowRootElementBridge());
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {
@@ -81,5 +62,60 @@ public final class Kite9BridgeContext extends SVG12BridgeContext {
 		setDocumentSize(new Dimension2DDouble(Math.max(width,  oldWidth), Math.max(height, oldHeight)));
 	}
 	
+	private ParsedURL resourceURL;
+	
+	public void setNextOperationResourceURL(ParsedURL url) {
+		this.resourceURL = url;
+	}
 
+	public ParsedURL getAndClearResourceURL() {
+		ParsedURL out = resourceURL;
+		this.resourceURL = null;
+		return out;
+	}
+
+	@Override
+	public void setDocument(Document document) {
+		super.setDocument(document);
+	}
+
+	@Override
+	public void setGVTBuilder(GVTBuilder gvtBuilder) {
+		super.setGVTBuilder(gvtBuilder);
+	}
+
+	@Override
+	public void initializeDocument(Document document) {
+		super.initializeDocument(document);
+	}
+
+	@Override
+	public Bridge getBridge(String namespaceURI, String localName) {
+		if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
+			if (!XMLHelper.DIAGRAM_ELEMENT.equals(localName)) {
+				return gBridge;
+			}
+		}
+		return super.getBridge(namespaceURI, localName);
+	}
+
+	/**
+	 * Adding support for SVG1.2, whether version is specified or not.
+	 */
+	@SuppressWarnings({"unchecked", "cast", "rawtypes"})
+	@Override
+	public List getBridgeExtensions(Document doc) {
+		List<BridgeExtension> out = (List<BridgeExtension>) super.getBridgeExtensions(doc);
+		for (int i = 0; i < out.size(); i++) {
+			BridgeExtension be = out.get(i);
+			if (be instanceof SVGBridgeExtension) {
+				// upgrade it
+				out.set(i, new SVG12BridgeExtension());
+			}
+		}
+		return out;
+	}
+
+	
+	
 }

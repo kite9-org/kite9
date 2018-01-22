@@ -16,24 +16,19 @@ public abstract class AbstractXMLContainerElement extends AbstractStyleableXMLEl
 		super(id, tag, doc);
 	}
 
-	public Layout getLayoutDirection() {
-		String layout = getAttribute("layout");
-		return layout.length() == 0 ? null : Layout.valueOf(layout);
-	}
-
-	public void setLayoutDirection(Layout layout) {
-	    if (layout == null) {
-	    	removeAttribute("layout");
-	    } else {
-	    	setAttribute("layout", layout.name());
-	    }
-	}
-
 	public void setLabel(Kite9XMLElement label) {
 	    replaceProperty("label", label);
 	}
 	
 	public Kite9XMLElement getLabel() {
 		return getProperty("label");
+	}
+	
+	public void setLayoutDirection(Layout layoutDirection) {
+		if (layoutDirection != null) {
+			setAttribute("style", "kite9-layout: "+layoutDirection.toString().toLowerCase()+";");
+		} else {
+			removeAttribute("style");
+		}
 	}
 }

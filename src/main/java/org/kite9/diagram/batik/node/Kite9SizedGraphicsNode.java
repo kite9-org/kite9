@@ -4,7 +4,7 @@ import org.apache.batik.gvt.GraphicsNode;
 
 /**
  * Marker interface to say that the element inside is managed and sized by Kite9 
- * diagram layout, rather than by its contents.
+ * diagram layout, rather than by its contents or attributes;
  * 
  * @author robmoffat
  *

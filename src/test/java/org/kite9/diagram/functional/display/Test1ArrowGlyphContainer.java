@@ -15,7 +15,7 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_1_1_Glyph() throws Exception {
-		Kite9XMLElement one = new Glyph("Stereo", "Rob's Glyph", null, null);
+		Kite9XMLElement one = new Glyph("Stereo\nMike", "Rob's Glyph df  sfsdfs  weferw asfsdf sdfsd\nLine 2", null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one));
 		renderDiagram(d);
 	}
@@ -31,24 +31,28 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_1_3_TwoGlyphsFinal() throws Exception {
 		Kite9XMLElement one = new Glyph("Stereo", "One", null, null);
-		Kite9XMLElement two = new Glyph("Stereo", "Two", null, null);
+		Kite9XMLElement two = new Glyph(null, "Two", null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two));
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_1_4_GlyphSymbolsAndText() throws Exception {
-		Kite9XMLElement one = new Glyph("Stereo", "One", 
-			listOf(new TextLine("Line 1"), new TextLine("Second Line")), 
-			listOf(new Symbol("Sym1", 'a', SymbolShape.CIRCLE),
-					new Symbol("Sym2", 'f', SymbolShape.CIRCLE)));
+		Kite9XMLElement one = new Glyph("Stereoy", "One", 
+			listOf(new TextLine("Line 1\nThis has more than one row"), new TextLine("Second Line")), 
+			listOf(new Symbol("Sym1", 'a', SymbolShape.SQUARE),
+					new Symbol("Sym1", 'a', SymbolShape.CIRCLE)
+					,
+					new Symbol("Sym2", 'f', SymbolShape.DIAMOND),
+				   new Symbol("Sym3", 'k', SymbolShape.HEXAGON)
+	));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one));
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_1_5_TwoArrowsFinal() throws Exception {
-		Kite9XMLElement one = new Arrow("One");
+		Kite9XMLElement one = new Arrow("One\nMultiline");
 		Kite9XMLElement two = new Arrow("Two");
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two));
 		renderDiagram(d);

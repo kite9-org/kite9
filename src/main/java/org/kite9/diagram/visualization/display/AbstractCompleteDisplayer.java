@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.display;
 
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutConnection;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -61,9 +62,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((a instanceof Rectangular) && (b instanceof Rectangular)) {
 			length = getMinimumDistanceRectangularToRectangular((Rectangular) a, aSide, (Rectangular) b, bSide, d, along, concave);
 		} else if ((a instanceof Rectangular) && (b instanceof Connection)) {
-			length = getMinimumDistanceRectangularToConnection((Rectangular) a, (Connection) b, d, along);
+			length = getMinimumDistanceRectangularToConnection((Rectangular) a, aSide, (Connection) b, bSide, d, along);
 		} else if ((a instanceof Connection) && (b instanceof Rectangular)) {
-			length = getMinimumDistanceRectangularToConnection((Rectangular) b, (Connection) a, Direction.reverse(d), along);
+			length = getMinimumDistanceRectangularToConnection((Rectangular) b, bSide, (Connection) a, aSide, Direction.reverse(d), along);
 		} else {
 			throw new Kite9ProcessingException("Don't know how to calc min distance");
 		}
@@ -71,20 +72,82 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return length;
 	}
 
-	private double getMinimumDistanceRectangularToConnection(Rectangular a, Connection b, Direction d, DiagramElement along) {
-		// we are inside a, so use the padding distance
-		double inset = getLinkInset(a, d);
-		double margin = getMargin(b, Direction.reverse(d));
-		double length = Math.max(inset, margin);
-		return incorporateLinkMinimumLength(along, d, length);
+	private double getMinimumDistanceRectangularToConnection(Rectangular a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along) {
+		if (aSide == d) {
+			// we are outside a
+			if (isEventualParent(a, b)) {
+				return 0;
+			} else {
+				double inset = getMargin(a, aSide);
+				double margin = getMargin(b, bSide);
+				double length = Math.max(inset, margin);
+				return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
+			}
+		} else {
+			if ((a instanceof Connected) && (b.meets((Connected) a))) {
+				// a connection arriving at a rectangular
+				return incorporateAlongMinimumLength(along, d, 0, a, aSide, b, bSide);
+			} else {
+				// we are inside a, so use the padding distance
+				double inset = getPadding(a, d);
+				double margin = getMargin(b, Direction.reverse(d));
+				double length = Math.max(inset, margin);
+				return incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide);
+			}
+		}
 	}
 
-	private double incorporateLinkMinimumLength(DiagramElement along, Direction d, double in) {
+	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
-			return Math.max(in, getLinkMinimumLength((Connection) along));
+			if ((in == 0) && passingThrough((Connection) along, a, b)) {
+				// in this special case, the link can pass 
+				return 0;
+			}
+			
+			double alongDist = getAlongMinimumLength((Connection) along, d, a, aSide, b, bSide);
+			return Math.max(in, alongDist);
+			
+		} else if (along instanceof Connected) {
+			
+			double alongDist = getAlongMinimumLength((Connected) along, d, a, aSide, b, bSide);
+			return Math.max(in, alongDist);
+			
+		} else {
+			return in;
 		}
 		
-		return in;
+	}
+	
+	private boolean passingThrough(Connection along, DiagramElement a, DiagramElement b) {
+		boolean touchesA = (a instanceof Connected) && along.meets((Connected)a);
+		boolean touchesB = (b instanceof Connected) && along.meets((Connected)b);
+			
+		return !touchesA && !touchesB;
+	}
+
+	private double getAlongMinimumLength(Connection along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		Connection c = along;
+		boolean starting = c.getFrom() == a || c.getFrom() == b;
+		boolean ending = c.getTo() == b ||c.getTo() == a;
+		return getLinkMinimumLength(along, starting, ending);
+	}
+			
+	private double getAlongMinimumLength(Connected along, Direction d, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
+		if ((along == a) && (b instanceof Connection)) {
+			// link meeting connected, and we're working out distance to corner.
+			return getLinkInset(along, d);
+		} else if ((along == b) && (a instanceof Connection)) {
+			// link meeting connected, and we're working out distance to corner.
+			return getLinkInset(along, d);
+		} else if ((a instanceof Connection) && (b instanceof Connection)) {
+			// the gutter space between two connections arriving on a side
+			Terminator startA = ((Connection)a).meets(along) ? ((Connection)a).getDecorationForEnd(along) : null;
+			Terminator startB = ((Connection)b).meets(along) ? ((Connection)b).getDecorationForEnd(along) : null;
+			return getLinkGutter(along, startA, aSide, startB, bSide);
+		} else {
+			// sides of a rectangle or something
+			return 0;
+		} 
 	}
 
 	private double getMinimumDistanceRectangularToRectangular(Rectangular a, Direction aSide, Rectangular b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
@@ -92,10 +155,10 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		double length;
 		if (a == b) {
 			length =  getInternalDistance(a, aSide, bSide); 
-		} else if ((a instanceof Container) && (((Container) a).getContents().contains(b))) {
-			length = getPadding(a, d);
-		} else if ((b instanceof Container) && (((Container) b).getContents().contains(a))) {
-			length = getPadding(b, Direction.reverse(d));
+		} else if (isImmediateParent(b, a)) {
+			length = Math.max(getPadding(a, aSide), getMargin(b, bSide));
+		} else if (isImmediateParent(a, b)) {
+			length = Math.max(getPadding(b, bSide), getMargin(a, aSide));
 		} else if (concave) {
 			if (aSide == bSide) {
 				// not facing each other
@@ -108,7 +171,22 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			length = 0;
 		}
 		
-		return incorporateLinkMinimumLength(along, d, length);
+		return incorporateAlongMinimumLength(along, d, length,a, aSide, b, bSide);
+	}
+
+	protected boolean isImmediateParent(DiagramElement a, DiagramElement parent) {
+		return (parent instanceof Container) && ((Container)parent).getContents().contains(a);
+	}
+	
+	protected boolean isEventualParent(DiagramElement d, DiagramElement parent) {
+		if (d == null) {
+			return false;
+		} else if (d.getParent() == parent) {
+			return true;
+		} else {
+			return isEventualParent(d.getParent(), parent);
+		}
+		
 	}
 
 	private double getMinimumDistanceConnectionToConnection(Connection a, Direction aSide, Connection b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
@@ -117,7 +195,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 			
 		}
 		double margin = concave ? calculateMargin(a, aSide, b, bSide) : 0;
-		margin = incorporateLinkMinimumLength(along, d, margin);
+		margin = incorporateAlongMinimumLength(along, d, margin, a, aSide, b, bSide);
 		return margin;
 	}
 
@@ -127,8 +205,6 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		double margin = Math.max(marginA, marginB);
 		return margin;
 	}
-
-	protected abstract double getPadding(DiagramElement a, Direction d);
 
 	private double getInternalDistance(DiagramElement a, Direction aSide, Direction bSide) {
 		if (a == null) {
@@ -143,13 +219,28 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	}
 	
+	public abstract double getPadding(DiagramElement a, Direction d);
+	
+	public abstract double getMargin(DiagramElement element, Direction d);
+	
 	protected abstract CostedDimension size(DiagramElement a, Dimension2D s);
-
-	public abstract double getLinkGutter(Rectangular element, Direction d);
 	
-	public abstract double getLinkInset(Rectangular element, Direction d);
+	/**
+	 * The smallest possible length of element, when the element is starting or ending in the length being considered.
+	 * This should include terminators.
+	 */
+	protected abstract double getLinkMinimumLength(Connection element, boolean starting, boolean ending);
 	
-	public abstract double getLinkMinimumLength(Connection element);
+	/**
+	 * Distance from the edge of a connected element to the connection, minimum.  (Could be increased by terminators)
+	 */
+	protected abstract double getLinkInset(Connected element, Direction d);
+	
+	/**
+	 * This is the amount of space along the side of "along" that should be reserved between two
+	 * connections.   Should also consider the amount of room required for the terminators.
+	 */
+	protected abstract double getLinkGutter(Connected along, Terminator a, Direction aSide, Terminator b, Direction bSide);
 
 	public String getPrefix() {
 		return "DD  ";
@@ -159,12 +250,6 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		return true;
 	}
 	
-	public abstract double getMargin(DiagramElement element, Direction d);
 
-	public abstract double getTerminatorLength(Terminator terminator);
-	
-	public abstract double getTerminatorReserved(Terminator terminator, Connection on);
-	
-	
 
 }

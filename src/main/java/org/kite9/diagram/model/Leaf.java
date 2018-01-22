@@ -1,7 +1,9 @@
 package org.kite9.diagram.model;
 
+import java.awt.geom.Rectangle2D;
+
 /**
- * An item which is not a container of further connected items.
+ * An item which is not a container of further connected items. (i.e. not a container)
  * 
  * e.g. Text, static svg or scalable shapes.
  * 
@@ -10,6 +12,8 @@ package org.kite9.diagram.model;
  * @author robmoffat
  *
  */
-public interface Leaf extends DiagramElement, Rectangular {
+public interface Leaf extends Rectangular {
+	
+	public Rectangle2D getBounds();
 
 }

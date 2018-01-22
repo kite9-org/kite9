@@ -26,15 +26,8 @@
 </symbols>
 </label>
 </context>
-<label xsi:type="key">
-<boldText>Welcome to Kite9 Designer</boldText>
-<bodyText>Double click an item to edit, or drag elements in
-from the palette on the left.</bodyText>
-<symbols>
-<symbol text="This is a symbol which can be attached to an item to help describe it" theChar="K" shape="CIRCLE"/>
-</symbols>
-</label><allLinks>
-<link id="id_5" style="NORMAL">
+<allLinks>
+<link id="id_5" >
 <from xsi:type="arrow" reference="id_4"/>
 <to xsi:type="glyph" reference="id_3"/>
 <fromLabel xsi:type="text-line">
@@ -46,7 +39,7 @@ from the palette on the left.</bodyText>
 <fromDecoration>NONE</fromDecoration>
 <toDecoration>NONE</toDecoration>
 </link>
-<link id="id_7" style="NORMAL">
+<link id="id_7" >
 <from xsi:type="arrow" reference="id_4"/>
 <to xsi:type="glyph" reference="id_2"/>
 <fromLabel xsi:type="text-line">

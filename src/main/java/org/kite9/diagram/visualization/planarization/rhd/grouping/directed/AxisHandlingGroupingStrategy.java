@@ -137,13 +137,13 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 						
 						if ((fromExpanded!=null) && (!isParentOrSelf(to, fromExpanded))) {
 							// from has been expanded, from outside itself
-							ms.getContradictionHandler().setContradicting(ld.getConnections());
+							ms.getContradictionHandler().setContradicting(ld.getConnections(), false);
 							return;
 						}
 						
 						if ((toExpanded!=null) && (!isParentOrSelf(from, toExpanded))) {
 							// from has been expanded, from outside itself
-							ms.getContradictionHandler().setContradicting(ld.getConnections());
+							ms.getContradictionHandler().setContradicting(ld.getConnections(), false);
 							return;
 						}
 						

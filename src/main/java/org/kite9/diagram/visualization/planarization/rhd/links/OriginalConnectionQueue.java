@@ -11,9 +11,13 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
+import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
+import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
+import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Creates a queue of edges to embed in the planarization.  Since at the time of writing, I 
@@ -94,13 +98,28 @@ public class OriginalConnectionQueue implements ConnectionManager, Logable {
 	}
 		
 	@Override
-	public void handleLinks(CompoundGroup cg) {
-		if (cg.getInternalLinkA() != null) {
-			
-			for (BiDirectional<Connected> c : cg.getInternalLinkA().getConnections()) {
-				if (considerThis(c, cg)) {
-					//checkForPositionContradiction(c);
-					add(c);
+	public void handleLinks(Group g) {
+		if (g instanceof CompoundGroup) {
+			CompoundGroup cg = (CompoundGroup) g;
+			if (cg.getInternalLinkA() != null) {
+				
+				for (BiDirectional<Connected> c : cg.getInternalLinkA().getConnections()) {
+					if (considerThis(c, cg)) {
+						//checkForPositionContradiction(c);
+						add(c);
+					}
+				}
+			}
+		} else {
+			// self-links aren't allowed yet
+			LinkDetail internalLinks = g.getLink(g);
+			if (internalLinks != null) {
+				for (BiDirectional<Connected> l : internalLinks.getConnections()) {
+					if (l instanceof Connection) {
+						((Connection) l).getRenderingInformation().setRendered(false);
+					} else {
+						throw new LogicException("Not sure what this is: "+l);
+					}
 				}
 			}
 		}

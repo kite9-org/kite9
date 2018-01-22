@@ -112,18 +112,8 @@
 			<symbols></symbols>
 		</label>
 	</context>
-	<label id="key" xsi:type="key">
-		<boldText>Welcome to Kite9!</boldText>
-		<bodyText>This part of the layout is called the key, and it annotates
-			the diagram. Double click it to set it's properties</bodyText>
-		<symbols>
-			<symbol text="Step 1" theChar="1" shape="CIRCLE"></symbol>
-			<symbol text="Step 2" theChar="2" shape="CIRCLE"></symbol>
-			<symbol text="Step 3" theChar="3" shape="CIRCLE"></symbol>
-		</symbols>
-	</label>
 	<allLinks>
-		<link id="id_8" style="NORMAL">
+		<link id="id_8" >
 			<from xsi:type="glyph" reference="id_6"></from>
 			<to xsi:type="glyph" reference="id_5"></to>
 			<fromLabel xsi:type="text-line">
@@ -131,7 +121,7 @@
 			<toLabel xsi:type="text-line">
 			</toLabel>
 		</link>
-		<link id="id_15" style="NORMAL">
+		<link id="id_15" >
 			<from xsi:type="arrow" reference="id_2"></from>
 			<to xsi:type="glyph" reference="id_6"></to>
 			<fromLabel xsi:type="text-line">
@@ -141,7 +131,7 @@
 			<fromDecoration>ARROW</fromDecoration>
 			<toDecoration>ARROW</toDecoration>
 		</link>
-		<link id="id_10" style="NORMAL">
+		<link id="id_10" >
 			<from xsi:type="glyph" reference="id_1"></from>
 			<to xsi:type="arrow" reference="id_2"></to>
 			<fromLabel xsi:type="text-line">
@@ -154,7 +144,7 @@
 			<fromDecoration>ARROW</fromDecoration>
 			<toDecoration>ARROW</toDecoration>
 		</link>
-		<link id="id_13" style="NORMAL">
+		<link id="id_13" >
 			<from xsi:type="arrow" reference="id_2"></from>
 			<to xsi:type="context" reference="id_19"></to>
 			<fromLabel xsi:type="text-line">
@@ -167,7 +157,7 @@
 			<fromDecoration>ARROW</fromDecoration>
 			<toDecoration>ARROW</toDecoration>
 		</link>
-		<link id="id_14" style="NORMAL">
+		<link id="id_14" >
 			<from xsi:type="arrow" reference="id_2"></from>
 			<to xsi:type="glyph" reference="id_16"></to>
 			<fromLabel xsi:type="text-line">

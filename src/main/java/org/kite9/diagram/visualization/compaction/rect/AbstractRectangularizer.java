@@ -3,8 +3,10 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
@@ -15,6 +17,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
+import org.kite9.diagram.visualization.compaction.FaceSide;
 import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
@@ -180,28 +183,40 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	protected abstract void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks);
 
 	private void setSlideableFaceRectangle(Compaction c, DartFace df, List<VertexTurn> theStack, boolean outer) {
-		Rectangle<Slideable<Segment>> r = new Rectangle<>(
-				getSlideableInDirection(theStack, outer ? Direction.LEFT : Direction.RIGHT),
-				getSlideableInDirection(theStack, outer ? Direction.UP : Direction.DOWN),
-				getSlideableInDirection(theStack, outer ? Direction.RIGHT : Direction.LEFT), 
-				getSlideableInDirection(theStack, outer ? Direction.DOWN : Direction.UP));
+		Rectangle<FaceSide> r = new Rectangle<>(
+				getSlideableInDirection(theStack, outer ? Direction.LEFT : Direction.RIGHT, outer),
+				getSlideableInDirection(theStack, outer ? Direction.UP : Direction.DOWN, outer),
+				getSlideableInDirection(theStack, outer ? Direction.RIGHT : Direction.LEFT, outer), 
+				getSlideableInDirection(theStack, outer ? Direction.DOWN : Direction.UP, outer));
 			
 
 		c.createFaceSpace(df, r);
 	}
 
-	private Slideable<Segment> getSlideableInDirection(List<VertexTurn> vt, Direction d) {
+	private FaceSide getSlideableInDirection(List<VertexTurn> vt, Direction d, boolean outer) {
+		Set<Slideable<Segment>> others = new HashSet<>();
+		Slideable<Segment> main = null;
 		for (int i = 0; i < vt.size(); i++) {
 			VertexTurn prev = vt.get(( i + vt.size() -1 ) % vt.size());
 			VertexTurn curr = vt.get(i);
 			VertexTurn next = vt.get(( i + 1 ) % vt.size());
 			
-			if ((curr.getDirection() == d) && (prev.getDirection() != next.getDirection())) {
-				return curr.getSlideable();
+			if (curr.getDirection() == d) {
+				if (prev.getDirection() != next.getDirection()) {
+					main = curr.getSlideable();
+				}
+				
+				if (outer == true) {
+					others.add(curr.getSlideable());
+				}
 			}
 		}		
+			
+		if (main == null) {
+			throw new LogicException("No turn in that direction");
+		}
 
-		throw new LogicException("No turn in that direction");
+		return new FaceSide(main, others);
 	}
 
 	/**
@@ -316,7 +331,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 	}
 
 	public String getPrefix() {
-		return "RECT";
+		return "ARec";
 	}
 
 	public boolean isLoggingEnabled() {

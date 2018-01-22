@@ -32,7 +32,6 @@ import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the
@@ -157,18 +156,21 @@ public class GroupPhase {
 				if (!allLinks.contains(c)) {
 					allLinks.add(c);
 					ch.checkForContainerContradiction(c);
-					LeafGroup to = getConnectionEnd(c.otherEnd((Connected) o));
-					LeafGroup from = getConnectionEnd((Connected) o);
 					
-					if ((to != null) && (to != o)) {
-						Direction d = c.getDrawDirectionFrom((Connected) o);
-						if (Tools.isConnectionContradicting(c)) {
-							d = null;
-						}
+					if (Tools.isConnectionRendered(c)) {
+						LeafGroup to = getConnectionEnd(c.otherEnd((Connected) o));
+						LeafGroup from = getConnectionEnd((Connected) o);
 						
-						boolean ordering = c instanceof OrderingTemporaryConnection;
-						from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
-						to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+						if ((to != null) && (to != o)) {
+							Direction d = c.getDrawDirectionFrom((Connected) o);
+							if (Tools.isConnectionContradicting(c)) {
+								d = null;
+							}
+							
+							boolean ordering = c instanceof OrderingTemporaryConnection;
+							from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+							to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
+						}
 					}
 				}
 			}		
@@ -638,13 +640,5 @@ public class GroupPhase {
 			return otherGroup;
 		}
 	}
-
-	/**
-	 * An invisible link need not be shown at all if it is causing a contradiction
-	 */
-	public static boolean isRemoveableLink(BiDirectional<Connected> bic) {
-		return (bic instanceof DiagramElement) && (LinkLineStyle.INVISIBLE.equals(((DiagramElement)bic).getShapeName()));
-	}
-
 
 }

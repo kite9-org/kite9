@@ -45,6 +45,7 @@
 
 
 <allLinks>
+
  <link id="id_32" drawDirection="UP">
 
   <from xsi:type="glyph" reference="id_22"/>
@@ -75,11 +76,7 @@
   <from xsi:type="glyph" reference="id_10"/>
   <to xsi:type="glyph" reference="id_27"/>
  </link>
- <link id="id_28" drawDirection="RIGHT">
 
-  <from xsi:type="glyph" reference="id_27"/>
-  <to xsi:type="glyph" reference="id_29"/>
- </link>
  <link id="id_30" drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_27"/>
@@ -133,4 +130,10 @@
 <link id="id_37" drawDirection="LEFT">
 <from xsi:type="glyph" reference="id_19"/>
 <to xsi:type="glyph" reference="id_17"/>
-</link></allLinks></diagram>
+</link>
+ <link id="id_28" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_27"/>
+  <to xsi:type="glyph" reference="id_29"/>
+ </link>
+ </allLinks></diagram>

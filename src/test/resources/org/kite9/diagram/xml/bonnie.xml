@@ -83,7 +83,7 @@
    <symbols/>
   </label>
  </context>
- <label xsi:type="key" id="id_65">
+ <key id="id_65">
   
   <boldText>Total Eclipse of The Heart</boldText>
   <bodyText>For the better understanding of it... and showing the basic Kite9 diagram components</bodyText>
@@ -109,7 +109,7 @@
     <symbols/>
    </text-line>
   </symbols>
- </label>
+ </key>
  
 <allLinks>
   <link id="id_61">

@@ -1,6 +1,6 @@
 <?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:12081">
  
- <context id="auto:23389" layout="DOWN" style="stroke: white; stroke-dasharray: none" >
+ <context id="auto:23389" layout="DOWN"  >
   
   <glyph id="palette:id_0" shape="umlCLASS">
    
@@ -68,7 +68,7 @@ method2</text>
    <symbols/>
   </label>
  </context>
- <context id="pid_18" layout="VERTICAL" style="stroke: white; stroke-dasharray: none">
+ <context id="pid_18" layout="VERTICAL" >
   
   <context id="palette:id_28" bordered="true" shape="umlPACKAGE">
    

@@ -3,12 +3,14 @@ package org.kite9.diagram.functional.display;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 
 public class Test2Links extends AbstractDisplayFunctionalTest {
 	
@@ -42,13 +44,13 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	public void test_2_4_2Glyphs2Arrows() throws Exception {
 		Glyph one = new Glyph("One", "Stereo", "One", null, null);
 		Glyph two = new Glyph("Two", "Stereo", "Two", null, null);
-		Arrow a = new Arrow("meets", "meets");
-		Arrow b = new Arrow("eats", "eats");
-		new TurnLink(a, one);
-		new TurnLink(a, two);
-		new TurnLink(b, one);
-		new TurnLink(b, two);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a, b), Layout.HORIZONTAL, null);
+		Arrow meets = new Arrow("meets", "meets");
+		Arrow eats = new Arrow("eats", "eats");
+		new Link(meets, one, null, null, null, null, Direction.LEFT);
+		new TurnLink(meets, two);
+		new ContradictingLink(eats, one, null, null, null, null, Direction.UP);
+		new ContradictingLink(eats, two, null, null, null, null, Direction.DOWN);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, meets, eats), Layout.HORIZONTAL, null);
 
 		renderDiagram(d);
 	}

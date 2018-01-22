@@ -6,16 +6,19 @@ import java.util.List;
 
 import org.apache.batik.anim.dom.SVGGraphicsElement;
 import org.apache.batik.css.engine.CSSEngine;
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
+import org.kite9.diagram.batik.HasSVGGraphics;
+import org.kite9.diagram.batik.templater.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.dom.ADLExtensibleDOMImplementation;
 import org.kite9.framework.dom.XMLHelper;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -157,14 +160,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 			super.setAttribute(name, value);
 		}		
 	}
-//
-//	public Object getParent() {
-//		return parent;
-//	}
-//
-//	public void setParent(Object parent) {
-//		this.parent = parent;
-//	}
 
 	public void setOwnerDocument(ADLDocument doc) {
 		this.ownerDocument = doc;
@@ -203,14 +198,25 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public Iterator<Kite9XMLElement> iterator() {
-		NodeList childNodes2 = getChildNodes();
-		List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>(childNodes2.getLength());
-		for (int i = 0; i < childNodes2.getLength(); i++) {
-			Node n = childNodes2.item(i);
-			if (n instanceof Kite9XMLElement) {
-				elems.add((Kite9XMLElement) n);
+		final List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>();
+		
+		new XMLProcessor() {
+
+			@Override
+			public void processContents(Node from) {
+				if (from instanceof Element) {
+					NodeList nl = from.getChildNodes();
+					for (int i = 0; i < nl.getLength(); i++) {
+						Node item = nl.item(i);
+						if (item instanceof Kite9XMLElement) {
+							elems.add((Kite9XMLElement) item);
+						} else {
+							processContents(item);
+						}
+					}
+				}
 			}
-		}
+		}.processContents(this);
 		
 		return elems.iterator();
 	}
@@ -233,7 +239,7 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public DiagramElement getDiagramElement() {
 		
 		if (cachedDiagramElement == null) {
-			DiagramElementFactory f = ((ADLExtensibleDOMImplementation) getOwnerDocument().getImplementation()).getDiagramElementFactory();
+			DiagramElementFactory f = getOwnerDocument().getImplementation().getDiagramElementFactory();
 			
 			if (f == null) {
 				throw new Kite9ProcessingException("No configured DiagramElementFactory on DOMImplementation");
@@ -245,36 +251,22 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return cachedDiagramElement;
 	}
 	
-	protected DiagramElement getParentElement() {
+	private Kite9XMLElement getParentKite9Element() {
 		Node n = getParentNode();
-		if (n instanceof Kite9XMLElement) {
-			Kite9XMLElement p = (Kite9XMLElement) n;
-			return (p == null) ? null : p.getDiagramElement();
-		} else {
-			return null;
-		}
+		do {
+			if (n instanceof Kite9XMLElement) {
+				return (Kite9XMLElement) n;
+			} else if (n == null) {
+				return null;
+			} else {
+				n = n.getParentNode();
+			}
+		} while (true);
 	}
 	
-	
-	public String getShapeName() {
-		return getAttribute("shape");
-	}
-	
-	public void setShapeName(String s) {
-		setAttribute("shape", s);
-	}
-
-
-	public void setClasses(String s) {
-		setAttribute("class", s);
-	}
-	
-	public String getClasses() {
-		return getAttribute("class");
-	}
-
-	public void setStyle(String s) {
-		setAttribute("style", s);
+	protected DiagramElement getParentElement() {
+		Kite9XMLElement p = getParentKite9Element();
+		return (p == null) ? null : p.getDiagramElement();
 	}
 	
 	public StyleMap getComputedStyleMap(String pseudoElement) {
@@ -284,11 +276,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
 		this.sm = sm;
 	}
-
-	public String getCSSClass() {
-		return getAttribute("class");
-	}
-	
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;
@@ -300,8 +287,23 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public Value getCSSStyleProperty(String name) {
-		CSSEngine e = getOwnerDocument().getCSSEngine();
-		return e.getComputedStyle(this, null, e.getPropertyIndex(name));
+		return getCSSStyleProperty(this, name);
 	}
 
+	public static Value getCSSStyleProperty(CSSStylableElement el, String name) {
+		CSSEngine e = ((ADLDocument) el.getOwnerDocument()).getCSSEngine();
+		int pi = e.getPropertyIndex(name);
+		return e.getComputedStyle(el, null, pi);
+	}
+
+	@Override
+	public Element output(Document d) {
+		DiagramElement de = getDiagramElement();
+		if (de instanceof HasSVGGraphics) {
+			return ((HasSVGGraphics) de).output(d);
+		} else {
+			return null;
+		}
+	}
+	
 }

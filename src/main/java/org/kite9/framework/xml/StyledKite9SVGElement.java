@@ -6,16 +6,6 @@ import org.w3c.dom.svg.SVGTransformable;
 
 public interface StyledKite9SVGElement extends CSSStylableElement, Kite9XMLElement, SVGTransformable {
 
-	public void setClasses(String c);
-	
-	public String getClasses();
-	
-	public void setStyle(String s);
-	
-	public void setShapeName(String s);
-	
-	public String getShapeName();
-	
 	public Value getCSSStyleProperty(String prop);
 }
 

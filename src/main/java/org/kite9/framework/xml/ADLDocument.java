@@ -16,11 +16,7 @@ import org.w3c.dom.css.DocumentCSS;
 import org.w3c.dom.stylesheets.StyleSheetList;
 
 /**
- * NOTE:  It would be better not to extend SVG12OMDocument, and extend AbstractStyleableDocument,
- * but CSSUtilities does lots of casting to SVGOMDocument, and we want to use that in the
- * kite9-visualisation project.
- * 
- * Now, Kite9 elements are first-class members of SVG.
+ * Now, Kite9 elements are first-class members of SVG, and support SVG version 1.2.
  * 
  * @author robmoffat
  *
@@ -97,5 +93,12 @@ public class ADLDocument extends SVG12OMDocument {
 	public ADLExtensibleDOMImplementation getImplementation() {
 		return (ADLExtensibleDOMImplementation) super.getImplementation();
 	}
+
+	@Override
+	public Element getChildElementById(Node requestor, String id) {
+		return super.getChildElementById(requestor, id);
+	}
+	
+	
 	
 }

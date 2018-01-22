@@ -14,7 +14,7 @@
 
 
 	<allLinks>
-		<link id="id_1" drawDirection="UP" style="NORMAL">
+		<link id="id_1" drawDirection="UP" >
 			<from xsi:type="context" reference="con_i3" />
 			<to xsi:type="context" reference="con3" />
 		</link>

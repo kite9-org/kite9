@@ -38,14 +38,14 @@
    <from xsi:type="glyph" reference="id_1"/>
    <to xsi:type="glyph" reference="id_6"/>
   </link>
-  <link id="id_5.1" shape="NORMAL" style="">
+  <link id="id_5.1" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_6"/>
    <to xsi:type="glyph" reference="id_2"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>BARBED ARROW</toDecoration>
   </link>
-  <link id="id_0" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_0" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_1"/>
    <to xsi:type="glyph" reference="id_2"/>

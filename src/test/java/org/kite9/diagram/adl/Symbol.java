@@ -9,7 +9,7 @@ public class Symbol extends AbstractStyleableXMLElement {
 
 	private static final long serialVersionUID = 3578883565482903409L;
 	
-	public enum SymbolShape { HEXAGON, CIRCLE,  DIAMOND };
+	public enum SymbolShape { HEXAGON, CIRCLE,  DIAMOND, SQUARE };
 
 	@Override
 	public boolean equals(Object arg0) {
@@ -33,10 +33,14 @@ public class Symbol extends AbstractStyleableXMLElement {
 
 	public Symbol(String text, char preferredChar, SymbolShape shape, ADLDocument doc) {
 		super(null, "symbol", doc);
-		setTextContent(text);
+		setTextContent(""+text);
 		setChar(preferredChar);
 		setShape(shape);
-		setClasses(getClasses()+" "+shape.toString().toLowerCase());
+		setClass(shape.toString().toLowerCase());
+	}
+
+	public void setClass(String c) {
+		setAttribute("class", c);
 	}
 
 	public Symbol(String string, char c, SymbolShape shape) {

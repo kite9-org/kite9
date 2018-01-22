@@ -17,11 +17,10 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.HorizontalAlignment;
-import org.kite9.diagram.model.style.VerticalAlignment;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -48,11 +47,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		return null;
 	}
 
-	@Override
-	public String getShapeName() {
-		return null;
-	}
-	
 	private Collection<Connection> links = new ArrayList<>();
 
 	@Override
@@ -74,7 +68,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		return getConnectionTo(c) != null;
 	}
 
-	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, null, false);
+	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, false);
 	
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {
@@ -82,23 +76,13 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public double getMargin(Direction d) {
-		return 0;
-	}
-
-	@Override
 	public ContainerPosition getContainerPosition() {
 		return null;
 	}
-
-	@Override
-	public double getPadding(Direction d) {
-		return 0;
-	}
-
+	
 	@Override
 	public DiagramElementSizing getSizing() {
-		return DiagramElementSizing.UNSPECIFIED;
+		return null;	// no preference
 	}
 
 	@Override
@@ -109,16 +93,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public ConnectionsSeparation getConnectionsSeparationApproach() {
 		return ConnectionsSeparation.SEPARATE;   // irrelevant, won't have connections
-	}
-
-	@Override
-	public VerticalAlignment getVerticalAlignment() {
-		return VerticalAlignment.TOP;
-	}
-
-	@Override
-	public HorizontalAlignment getHorizontalAlignment() {
-		return HorizontalAlignment.CENTER;
 	}
 
 	@Override
@@ -146,4 +120,18 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		return 1;
 	}
 
+	@Override
+	public double getLinkGutter() {
+		return 0;
+	}
+
+	@Override
+	public double getLinkInset() {
+		return 0;
+	}
+
+	@Override
+	public ConnectionAlignment getConnectionAlignment(Direction side) {
+		return ConnectionAlignment.NONE;
+	}
 }

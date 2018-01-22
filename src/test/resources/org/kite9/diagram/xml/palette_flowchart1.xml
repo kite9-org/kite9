@@ -1,6 +1,6 @@
 <?xml version="1.0"?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="pid_6" layout="RIGHT">
  
- <context id="pid_7" layout="DOWN" style="stroke: white; stroke-dasharray: none" >
+ <context id="pid_7" layout="DOWN"  >
   
   <glyph id="palette:id_8" shape="fcDECISION">
    
@@ -39,7 +39,7 @@ Operation</label>
    <symbols/>
   </glyph>
  </context>
- <context id="pid_12" layout="DOWN" style="stroke: white; stroke-dasharray: none" >
+ <context id="pid_12" layout="DOWN"  >
   
   <glyph id="palette:id_9" shape="fcSTART1">
    
@@ -80,27 +80,27 @@ Input</label>
  </context>
  
 <allLinks>
-  <link id="pid_2" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none" >
+  <link id="pid_2" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_8"/>
    <to xsi:type="glyph" reference="pid_9"/>
   </link>
-  <link id="pid_22" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none" >
+  <link id="pid_22" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_15"/>
    <to xsi:type="glyph" reference="pid_13"/>
   </link>
-  <link id="pid_18" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none" >
+  <link id="pid_18" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_1"/>
    <to xsi:type="glyph" reference="pid_14"/>
   </link>
-  <link id="pid_21" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none" >
+  <link id="pid_21" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_11"/>
    <to xsi:type="glyph" reference="pid_0"/>
   </link>
-  <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE" style="stroke: white; stroke-dasharray: none" >
+  <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_10"/>
    <to xsi:type="glyph" reference="pid_16"/>

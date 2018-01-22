@@ -50,7 +50,7 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 						new TextLineWithSymbols("Here is line 1",
 								createList(new Symbol("Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol("Some text", 'A', SymbolShape.HEXAGON))),
 						new TextLine("Here is line 2"), 
-						new TextLine("Here is line 3")),
+						new TextLineWithSymbols("Here is line 3", createList(new Symbol("Bit o text", 'b', SymbolShape.SQUARE)))),
 				createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);

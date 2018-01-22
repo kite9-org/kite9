@@ -1,13 +1,5 @@
 package org.kite9.framework.dom;
 
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_COLOR_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_OPACITY_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_X_OFFSET_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.BOX_SHADOW_Y_OFFSET_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_LEFT_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_RIGHT_PROPERTY;
-import static org.kite9.framework.dom.CSSConstants.PADDING_TOP_PROPERTY;
-
 import java.net.URL;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
@@ -18,11 +10,8 @@ import org.apache.batik.css.engine.SVG12CSSEngine;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.ShorthandManager;
-import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueManager;
-import org.apache.batik.css.engine.value.svg.ColorManager;
-import org.apache.batik.css.engine.value.svg.OpacityManager;
-import org.apache.batik.css.engine.value.svg12.MarginLengthManager;
+import org.apache.batik.css.engine.value.svg.MarkerManager;
 import org.apache.batik.css.parser.ExtendedParser;
 import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
@@ -35,11 +24,17 @@ import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.diagram.model.style.VerticalAlignment;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.xml.ContentsElement;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
 import org.kite9.framework.xml.GenericKite9XMLElement;
-import org.kite9.framework.xml.StylesheetReference;
+import org.w3c.css.sac.CSSException;
+import org.w3c.css.sac.CSSParseException;
+import org.w3c.css.sac.ErrorHandler;
 import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -58,7 +53,9 @@ import org.w3c.dom.stylesheets.StyleSheet;
  * @author robmoffat
  *
  */
-public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
+public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable {
+	
+	private final Kite9Log log = new Kite9Log(this);
 	
 	public static final boolean USE_GENERIC_XML_ELEMENT = true;
 
@@ -73,56 +70,38 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 			}
 		});
 		
-		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, "stylesheet", new ElementFactory() {
-			
+		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.CONTENTS_ELEMENT, new ElementFactory() {
+			 
 			public Element create(String prefix, Document doc) {
-				StylesheetReference out = new StylesheetReference((ADLDocument) doc);
+				ContentsElement out = new ContentsElement((ADLDocument) doc);
+				out.setOwnerDocument(doc);
 				return out;
 			}
 		});
 		
 		// PADDING CSS
-		registerCustomCSSShorthandManager(new PaddingAndMarginShorthandManager("padding"));
-		registerCustomCSSValueManager(new PaddingLengthManager(PADDING_LEFT_PROPERTY));
-		registerCustomCSSValueManager(new PaddingLengthManager(PADDING_RIGHT_PROPERTY));
-		registerCustomCSSValueManager(new PaddingLengthManager(PADDING_TOP_PROPERTY));
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.PADDING_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_LEFT_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_RIGHT_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_TOP_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_BOTTOM_PROPERTY));
 
 		// MARGIN CSS
-		// Margin is already handled, but there is no shorthand manager.
-		registerCustomCSSShorthandManager(new PaddingAndMarginShorthandManager("margin"));
-
-		// SHADOW CSS
-		registerCustomCSSShorthandManager(new BoxShadowShorthandManager());
-		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_X_OFFSET_PROPERTY));
-		registerCustomCSSValueManager(new MarginLengthManager(BOX_SHADOW_Y_OFFSET_PROPERTY));
-		registerCustomCSSValueManager(new OpacityManager(BOX_SHADOW_OPACITY_PROPERTY, false));
-		ColorManager colourManager = new ColorManager() {
-			
-			@Override
-			public Value getDefaultValue() {
-				return NO_COLOR;
-			}
-
-			@Override
-			public String getPropertyName() {
-				return BOX_SHADOW_COLOR_PROPERTY;
-			}
-			
-		};
-		
-		/**
-		 * This makes 'no colour' available to all the colour managers, since the 
-		 * colour list is static.
-		 */
-		colourManager.getIdentifiers().put("none", NO_COLOR);
-		registerCustomCSSValueManager(colourManager) ;
+		// We are using Kite9 margin here to differentiate from the one in regular CSS (not sure if this is a good idea)
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.MARGIN_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_LEFT_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_RIGHT_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_TOP_PROPERTY));
+		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_BOTTOM_PROPERTY));
 		
 		
 		// ELEMENT TYPE / SIZING / LAYOUT CONTROL
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_TYPE_PROPERTY, DiagramElementType.class, DiagramElementType.UNSPECIFIED, false));
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.UNSPECIFIED, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_USAGE_PROPERTY, RectangularElementUsage.class, RectangularElementUsage.REGULAR, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LAYOUT_PROPERTY, Layout.class, null, false));
+		
+		// GRIDS
 		registerCustomCSSValueManager(new IntegerRangeManager(CSSConstants.GRID_OCCUPIES_X_PROPERTY));
 		registerCustomCSSValueManager(new IntegerRangeManager(CSSConstants.GRID_OCCUPIES_Y_PROPERTY));
 		registerCustomCSSValueManager(new GridSizeManager(CSSConstants.GRID_ROWS_PROPERTY));
@@ -131,11 +110,11 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		registerCustomCSSShorthandManager(new OccupiesShorthandManager());
 		
 		// CONNECTION TRAVERSAL
+		registerCustomCSSShorthandManager(new TraversalShorthandManager());
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_BOTTOM_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_RIGHT_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_LEFT_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_TOP_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
-		registerCustomCSSShorthandManager(new TraversalShorthandManager());
 		
 		// TEMPLATES
 		registerCustomCSSValueManager(new TemplateManager());
@@ -147,6 +126,22 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, true));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, true));
 		
+		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.CONNECTION_ALIGN_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY));
+		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY));
+		
+		// LINK LENGTHS
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 0f));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 0f));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 0f));
+		
+		// TERMINATORS
+		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));
+		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_END_REFERENCE));
+		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.MARKER_RESERVE, 0f));
+
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(
@@ -159,7 +154,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 	public Element createElementNS(AbstractDocument document, String namespaceURI, String qualifiedName) {
 		if (USE_GENERIC_XML_ELEMENT) {
 			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
-				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"stylesheet".equals(qualifiedName))) {
+				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"contents".equals(qualifiedName))) {
 					return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
 				}
 			} 
@@ -181,13 +176,42 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
         return result;
 	}
 	
+
 	public StyleSheet createStyleSheet(Node node, HashTable pseudoAttrs) {
         throw new UnsupportedOperationException("StyleSheetFactory.createStyleSheet is not implemented"); // XXX
 	}
+	
+	
 
 	public CSSEngine createCSSEngine(AbstractStylableDocument doc, CSSContext ctx, ExtendedParser ep, ValueManager[] vms, ShorthandManager[] sms) {
+		if (doc.getCSSEngine() != null) {
+			return doc.getCSSEngine();
+		}
+		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
 		CSSEngine result = new SVG12CSSEngine(doc, durl, ep, vms, sms, ctx);
+		
+		ep.setErrorHandler(new ErrorHandler() {
+			
+			private String getLocation(CSSParseException arg0) {
+				return "("+arg0.getLineNumber()+","+arg0.getColumnNumber()+")";
+			}
+			
+			@Override
+			public void warning(CSSParseException arg0) throws CSSException {
+				log.send("Warning: "+getLocation(arg0), arg0);
+			}
+			
+			@Override
+			public void fatalError(CSSParseException arg0) throws CSSException {
+				log.send("Fatal: "+getLocation(arg0), arg0);
+			}
+			
+			@Override
+			public void error(CSSParseException arg0) throws CSSException {
+				log.send("Error: "+getLocation(arg0), arg0);
+			}
+		});
 
 		URL url = getClass().getResource("resources/UserAgentStyleSheet.css");
 		if (url != null) {
@@ -214,5 +238,17 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation {
 	public void setDiagramElementFactory(DiagramElementFactory diagramElementFactory) {
 		this.diagramElementFactory = diagramElementFactory;
 	}
+
+	@Override
+	public String getPrefix() {
+		return "ADOM";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
+	}
+	
+	
     
 }

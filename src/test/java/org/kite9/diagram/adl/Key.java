@@ -38,7 +38,7 @@ public class Key extends AbstractStyleableXMLElement {
 		for (Symbol s : symbols) {
 			List<Symbol> sl = new ArrayList<Symbol>(1);
 			sl.add(s);
-			out.appendChild(new TextLineWithSymbols(null, "text-line", s.getText(), sl, (ADLDocument) ownerDocument));
+			out.appendChild(new TextLineWithSymbols(null, "symbol-text-line", s.getText(), sl, (ADLDocument) ownerDocument));
 		}
 		return out;
 	}

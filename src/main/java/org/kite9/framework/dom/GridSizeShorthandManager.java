@@ -8,7 +8,7 @@ import org.w3c.dom.DOMException;
 public class GridSizeShorthandManager implements ShorthandManager {
 
 	public String getPropertyName() {
-		return "grid-size";
+		return CSSConstants.GRID_SIZE_PROPERTY;
 	}
 
 	public boolean isAnimatableProperty() {

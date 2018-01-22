@@ -184,7 +184,10 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		new Link(c, d, null, null, null, null, Direction.UP);
 		new Link(c, e);
 		
-		Context ctx = new Context("ctx", listOf(a, b, c), true, new Key("Big Movies", "some text\nhere blah blah bah", null), null);
+		Key key = new Key("Big Movies", "some text\nhere blah blah bah", null);
+		key.setId("key");
+		Context ctx = new Context("ctx", listOf(a, b, c), true, null, null);
+		ctx.appendChild(key);
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(ctx, d, e), null);
 		renderDiagram(d1);
 	}
@@ -260,5 +263,15 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c1, b), k);
 		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_13_17_separateGlyphsWithKey3() throws Exception {
+		Glyph c = new Glyph("c", "", "c", null, null);
+		Glyph e = new Glyph("e", "", "e", null, null);
+		new Link(c, e, null, null, null, null, Direction.DOWN);
+		Context ctx = new Context("ctx", listOf( c), true, new TextLine("ssdvd ds fsdfs ds dsf dsf dsf ds"), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(ctx, e), null);
+		renderDiagram(d1);
 	}
 }

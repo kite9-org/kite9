@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCo
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
-import org.kite9.diagram.visualization.compaction.slideable.WidthCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
@@ -92,7 +92,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new SubGraphInsertionCompactionStep(cd),
 //				new LoggingOptimisationStep(cd),
 				new MinimizeCompactionStep(getDisplayer()),
-				new WidthCompactionStep(cd), 
+				new DiagramSizeCompactionStep(cd), 
 //				new LoggingOptimisationStep(cd),
 				new MaximizeCompactionStep(cd),
 //				new LoggingOptimisationStep(cd),

@@ -9,7 +9,7 @@ import org.w3c.dom.DOMException;
 public class TraversalShorthandManager implements ShorthandManager {
 
 	public String getPropertyName() {
-		return "traversal";
+		return CSSConstants.TRAVERSAL_PROPERTY;
 	}
 
 	public boolean isAnimatableProperty() {

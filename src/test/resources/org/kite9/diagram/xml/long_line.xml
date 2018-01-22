@@ -100,7 +100,7 @@
    <from xsi:type="glyph" reference="id_17"/>
    <to xsi:type="glyph" reference="id_20"/>
   </link>
-  <link id="id_27" style="DOTTED">
+  <link id="id_27" >
    
    <from xsi:type="glyph" reference="id_18"/>
    <to xsi:type="glyph" reference="id_22"/>

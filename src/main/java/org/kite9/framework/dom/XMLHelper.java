@@ -18,6 +18,8 @@ import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.ADLDocument;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Utility methods for converting to and from XML in the expected format. This
@@ -42,11 +44,13 @@ public class XMLHelper {
 	public static final String XML_SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
 	public static final String KITE9_NAMESPACE = "http://www.kite9.org/schema/adl";
 	public static final String DIAGRAM_ELEMENT = "diagram";
+	public static final String CONTENTS_ELEMENT = "contents";
 
+	
 	public XMLHelper() {
 	}
 
-	public String toXML(ADLDocument dxe) {
+	public String toXML(Node dxe) {
 		try {
 			 TransformerFactory transfac = TransformerFactory.newInstance();
 			 Transformer trans = transfac.newTransformer();

@@ -41,6 +41,7 @@ public class Context extends AbstractXMLContainerElement {
 		}
 		
 		setLayoutDirection(layoutDirection);
+		
 		setLabel(label);
 		setBordered(bordered);
 	}

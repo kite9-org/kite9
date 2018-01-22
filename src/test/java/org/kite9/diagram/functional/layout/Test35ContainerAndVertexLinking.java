@@ -12,7 +12,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 
 public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTest  {
 
@@ -108,7 +107,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(g5, g0);
 		new Link(g6, g0);
 		Link l = new Link(con1, con2);
-		l.setStyle(LinkLineStyle.DOTTED);
+		l.setAttribute("class", "dotted");
 		new Link(con2, con1);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(g0, con1, con2, g7), Layout.HORIZONTAL, null);
@@ -141,7 +140,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(g5, g0);
 		new Link(g6, g0);
 		Link l = new Link(con1, con2);
-		l.setStyle(LinkLineStyle.DOTTED);
+		l.setAttribute("class", "dotted");
 		new Link(con2, con1);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList( g0, con1, g7, con2), Layout.RIGHT, null);
@@ -174,7 +173,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 		new Link(g5, g0);
 		new Link(g6, g0);
 		Link l = new Link(con1, con2);
-		l.setStyle(LinkLineStyle.DOTTED);
+		l.setAttribute("class", "dotted");
 		new Link(con2, con1);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con1, g0, g7, con2), Layout.DOWN, null);

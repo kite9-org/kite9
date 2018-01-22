@@ -23,11 +23,9 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
-import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
@@ -127,7 +125,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 		// set up vertices for each grid element
 		for (DiagramElement de : c.getContents()) {
-			if ((de instanceof Connected) || (de instanceof Label)) {
+			if (de instanceof Connected) {
 				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 				createdVertices.addAll(cv.getVerticesAtThisLevel());
 			}

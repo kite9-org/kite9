@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * This class contains methods for creating SVGDocument instances
@@ -324,4 +325,24 @@ public class Kite9DocumentFactory
         // Let the SAX parser find the entity.
         return null;
     }
+
+	@Override
+	public void fatalError(SAXParseException ex) throws SAXException {
+		// TODO Auto-generated method stub
+		super.fatalError(ex);
+	}
+
+	@Override
+	public void error(SAXParseException ex) throws SAXException {
+		// TODO Auto-generated method stub
+		super.error(ex);
+	}
+
+	@Override
+	public void warning(SAXParseException ex) throws SAXException {
+		// TODO Auto-generated method stub
+		super.warning(ex);
+	}
+    
+    
 }

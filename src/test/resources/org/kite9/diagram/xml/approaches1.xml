@@ -20,7 +20,7 @@
    <from xsi:type="arrow" reference="id_8"/>
    <to xsi:type="glyph" reference="id_7"/>
   </link>
-  <link id="id_12" drawDirection="DOWN" style="NORMAL">
+  <link id="id_12" drawDirection="DOWN" >
    
    <from xsi:type="arrow" reference="id_8"/>
    <to xsi:type="glyph" reference="id_9"/>

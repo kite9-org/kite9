@@ -38,9 +38,9 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				// only label non-grid elements.  This is because grid edges can be shared between containers, and we don't know how to 
 				// figure out label positioning in this case yet.
 				Container parentContainer = ((Container) de).getContainer();
-				if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
-					Label l = findUnprocessedLabel((Container) de);
-					if (l != null) { 
+				Label l = findUnprocessedLabel((Container) de);
+				if (l != null) { 
+					if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
 						CornerVertices cv = em.getOuterCornerVertices(l);
 						cc.convertDiagramElementToInnerFace(l, o);
 						Dart d1 = o.createDart(end1, cv.getBottomRight(), underlyings, d);
@@ -54,8 +54,10 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 						s.newEdgeDarts.add(d4);
 						s.newEdgeDarts.add(d5);
 						return;
+					} else {
+						l.getRenderingInformation().setRendered(false);
 					}
-				}
+				} 
 			}
 		}
 		super.convertContainerEdge(underlyings, o, end1, end2, d, s);

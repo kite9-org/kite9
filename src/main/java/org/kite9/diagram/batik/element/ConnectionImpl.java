@@ -1,9 +1,13 @@
 package org.kite9.diagram.batik.element;
 
-import org.apache.batik.gvt.GraphicsNode;
+import java.awt.geom.GeneralPath;
+import java.util.Map;
+
+import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.Kite9RouteBridge;
-import org.kite9.diagram.batik.node.IdentifiableGraphicsNode;
+import org.kite9.diagram.batik.bridge.Painter;
+import org.kite9.diagram.batik.bridge.RoutePainter;
+import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -15,16 +19,18 @@ import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.dom.CSSConstants;
+import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
-import org.kite9.framework.xml.LinkLineStyle;
 import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class ConnectionImpl extends AbstractSVGDiagramElement implements Connection {
+public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
 
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx) {
-		super(el, parent, ctx);
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter<Connection> p) {
+		super(el, parent, ctx, p);
 	}
 
 	@Override
@@ -35,13 +41,20 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 		
 		from = (Connected) fromElement.getDiagramElement();
 		to = (Connected) toElement.getDiagramElement();
+		
+		if (from == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
+		}
+		
+		if (to == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
+		}
+		
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
-		Kite9XMLElement fromDecorationEl = theElement.getProperty("fromDecoration");
-		this.fromDecoration = getTerminator(fromDecorationEl);
+		this.fromDecoration = getTerminator(theElement.getProperty("from"));
 		
-		Kite9XMLElement toDecorationEl = theElement.getProperty("toDecoration");
-		this.toDecoration = getTerminator(toDecorationEl);
+		this.toDecoration = getTerminator(theElement.getProperty("to"));
 		
 		Kite9XMLElement fromLabelEl = theElement.getProperty("fromLabel");
 		this.fromLabel = getLabel(fromLabelEl);
@@ -53,15 +66,13 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 		if (!"".equals(rank)) {
 			this.rank = Integer.parseInt(rank);
 		}
+		
+		this.minimumLength = theElement.getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
 	}
 
 
-	private Terminator getTerminator(Kite9XMLElement el) {
-		if (el == null) {
-			el = (Kite9XMLElement) theElement.getOwnerDocument().createElement("terminator");
-			theElement.appendChild(el);
-		}
-		return (Terminator) el.getDiagramElement();
+	private TerminatorImpl getTerminator(Kite9XMLElement el) {
+		return (TerminatorImpl) el.getDiagramElement();
 	}
 	
 	private Label getLabel(Kite9XMLElement el) {
@@ -103,11 +114,12 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	private Connected from;
 	private Connected to;
 	private Direction drawDirection;
-	private Terminator fromDecoration;
-	private Terminator toDecoration;
+	private TerminatorImpl fromDecoration;
+	private TerminatorImpl toDecoration;
 	private Label fromLabel;
 	private Label toLabel;
 	private int rank;
+	private double minimumLength;
 	
 
 	@Override
@@ -207,22 +219,10 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 
 	@Override
-	public String getStyle() {
-		return LinkLineStyle.NORMAL;
-	}
-
-	@Override
 	public int getRank() {
 		return rank;
 	}
 
-	protected void initSVGGraphicsContents(IdentifiableGraphicsNode out) {
-		Kite9RouteBridge bridge = new Kite9RouteBridge(this);
-		GraphicsNode gn = bridge.createGraphicsNode(ctx, this.theElement);
-		bridge.buildGraphicsNode(ctx, theElement, gn);
-		out.add(gn);
-	}
-	
 	@Override
 	public double getMargin(Direction d) {
 		return margin[d.ordinal()];
@@ -234,8 +234,44 @@ public class ConnectionImpl extends AbstractSVGDiagramElement implements Connect
 	}
 
 	@Override
-	protected void initializeChildXMLElement(Element child) {
-		// currently does nothing - templating not supported yet for connections.
+	protected void postProcess(Element out) {
 	}
+
+	@Override
+	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
+		Map<String, String> out = super.getReplacementMap(theElement);
+		RoutePainter routePainter = new RoutePainter(0, 0);
+		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(theElement.getOwnerDocument(), null);
+		double startReserve = fromDecoration.getMarkerReserve();
+		double endReserve = toDecoration.getMarkerReserve();
+		
+		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
+				new RoutePainter.ReservedLengthEndDisplayer(startReserve), 
+				new RoutePainter.ReservedLengthEndDisplayer(endReserve),
+				routePainter.LINK_HOP_DISPLAYER, false);
+		String path = SVGPath.toSVGPathData(gp, ctx);
+		out.put("path", path);
+		out.put("markerstart", fromDecoration.getMarkerUrl());
+		out.put("markerend", toDecoration.getMarkerUrl());
+		return out;
+	}
+
+	@Override
+	public Terminator getDecorationForEnd(DiagramElement end) {
+		if (from == end) {
+			return fromDecoration;
+		} else if (to == end) {
+			return toDecoration;
+		} else {
+			throw new LogicException("Trying to get decoration for an end that isn't from or to");
+		}
+	}
+
+	@Override
+	public double getMinimumLength() {
+		return minimumLength;
+	}
+
 	
+
 }

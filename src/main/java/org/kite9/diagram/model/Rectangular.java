@@ -1,9 +1,7 @@
 package org.kite9.diagram.model;
 
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ContainerPosition;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 
 /**
  * Marker interface for diagram elements which consume a rectangular space, and therefore
@@ -15,8 +13,6 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 public interface Rectangular extends DiagramElement {
 
 	public RectangleRenderingInformation getRenderingInformation();
-	
-	public DiagramElementSizing getSizing();
 	
 	
 	/**

@@ -589,7 +589,7 @@ public class DirectedLinkManager implements LinkManager {
 		}
 		
 		for (BiDirectional<Connected> c : best.getConnections()) {
-			ms.getContradictionHandler().setContradiction(c);
+			ms.getContradictionHandler().setContradiction(c, false);
 		}
 	}
 

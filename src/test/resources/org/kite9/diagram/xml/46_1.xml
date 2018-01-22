@@ -46,21 +46,21 @@ Container</text>
  </glyph>
  
 <allLinks>
-  <link id="id_2" shape="NORMAL" style="" drawDirection="LEFT">
+  <link id="id_2" shape="NORMAL"  drawDirection="LEFT">
    
    <from xsi:type="glyph" reference="id_1"/>
    <to xsi:type="context" reference="id_6"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>BARBED ARROW</toDecoration>
   </link>
-  <link id="id_4" shape="NORMAL" style="" drawDirection="RIGHT">
+  <link id="id_4" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_3"/>
    <to xsi:type="glyph" reference="id_5"/>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>BARBED ARROW</toDecoration>
   </link>
-  <link id="id_0" shape="NORMAL" style="" drawDirection="UP">
+  <link id="id_0" shape="NORMAL"  drawDirection="UP">
    
    <from xsi:type="glyph" reference="id_5"/>
    <to xsi:type="glyph" reference="id_1"/>

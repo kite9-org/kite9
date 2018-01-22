@@ -61,11 +61,11 @@ functionality</text>
  <context id="auto:2046" layout="DOWN" bordered="true">
 
   <hints py1="0.0010" py2="0.999" px2="0.62487525" px1="0.50087225" y1="30.0" y2="448.0" x2="774.0" x1="544.0"/>
-  <glyph id="id_2" shape="fcPROCESS" style="">
+  <glyph id="id_2" shape="fcPROCESS" >
 
    <hints py1="0.5009325" py2="0.562686" px2="0.6246274" px1="0.5011201" y1="106.0" y2="178.0" x2="744.0" x1="564.0"/>
-   <stereotype style=""/>
-   <label style="">SIT Drop</label>
+   <stereotype />
+   <label >SIT Drop</label>
    <text-lines>
     <text-line id="auto:1652">
 
@@ -387,41 +387,41 @@ release have gone in</text>
 </context>
 
 <allLinks>
- <link id="id_1" shape="NORMAL" style="" drawDirection="RIGHT">
+ <link id="id_1" shape="NORMAL"  drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_0"/>
   <to xsi:type="glyph" reference="id_2"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_85" shape="DOTTED" style="">
+ <link id="id_85" shape="DOTTED" >
 
   <from xsi:type="glyph" reference="id_58"/>
   <to xsi:type="context" reference="auto:40619"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_83" shape="DOTTED" style="">
+ <link id="id_83" shape="DOTTED" >
 
   <from xsi:type="glyph" reference="id_16"/>
   <to xsi:type="context" reference="auto:40619"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_84" shape="DOTTED" style="">
+ <link id="id_84" shape="DOTTED" >
 
   <from xsi:type="glyph" reference="id_14"/>
   <to xsi:type="context" reference="auto:40619"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_26.1" shape="NORMAL" style="" drawDirection="DOWN">
+ <link id="id_26.1" shape="NORMAL"  drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_38"/>
   <to xsi:type="arrow" reference="id_27"/>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_33" shape="NORMAL" style="">
+ <link id="id_33" shape="NORMAL" >
 
   <from xsi:type="arrow" reference="id_27"/>
   <to xsi:type="glyph" reference="id_24"/>
@@ -433,14 +433,14 @@ release have gone in</text>
   <from xsi:type="arrow" reference="id_27"/>
   <to xsi:type="arrow" reference="id_37"/>
  </link>
- <link id="id_52" shape="NORMAL" style="">
+ <link id="id_52" shape="NORMAL" >
 
   <from xsi:type="glyph" reference="id_30"/>
   <to xsi:type="arrow" reference="id_37"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_53" shape="NORMAL" style="">
+ <link id="id_53" shape="NORMAL" >
 
   <from xsi:type="arrow" reference="id_37"/>
   <to xsi:type="glyph" reference="id_45"/>
@@ -452,14 +452,14 @@ release have gone in</text>
   <from xsi:type="arrow" reference="id_37"/>
   <to xsi:type="arrow" reference="id_54"/>
  </link>
- <link id="id_55" shape="NORMAL" style="">
+ <link id="id_55" shape="NORMAL" >
 
   <from xsi:type="glyph" reference="id_50"/>
   <to xsi:type="arrow" reference="id_54"/>
   <fromDecoration>NONE</fromDecoration>
   <toDecoration>BARBED ARROW</toDecoration>
  </link>
- <link id="id_67" shape="NORMAL" style="">
+ <link id="id_67" shape="NORMAL" >
 
   <from xsi:type="arrow" reference="id_54"/>
   <to xsi:type="glyph" reference="id_62"/>
@@ -471,7 +471,7 @@ release have gone in</text>
   <from xsi:type="arrow" reference="id_54"/>
   <to xsi:type="arrow" reference="id_68"/>
  </link>
- <link id="id_80" shape="NORMAL" style="">
+ <link id="id_80" shape="NORMAL" >
 
   <from xsi:type="arrow" reference="id_68"/>
   <to xsi:type="glyph" reference="id_76"/>

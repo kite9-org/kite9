@@ -72,12 +72,7 @@
  </glyph>
  
  
-<label xsi:type="key">
-  
-  <boldText>Key</boldText>
-  <bodyText>Double click to edit the key</bodyText>
-  <symbols/>
- </label><allLinks>
+<allLinks>
   <link id="id_7">
    
    <from xsi:type="arrow" reference="id_3"/>

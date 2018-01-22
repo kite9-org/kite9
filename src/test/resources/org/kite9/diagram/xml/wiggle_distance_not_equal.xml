@@ -71,17 +71,8 @@
    <symbols/>
   </label>
  </context>
- 
- 
-<label xsi:type="key">
-  
-  <boldText/>
-  <bodyText/>
-  <symbols>
-   
-  <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="K" shape="CIRCLE"/></symbols>
- </label><allLinks>
-  <link id="id_23" style="NORMAL">
+ <allLinks>
+  <link id="id_23" >
    
    <from xsi:type="glyph" reference="id_18"/>
    <to xsi:type="glyph" reference="id_19"/>
@@ -98,7 +89,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_22" style="NORMAL">
+  <link id="id_22" >
    
    <from xsi:type="glyph" reference="id_16"/>
    <to xsi:type="glyph" reference="id_19"/>
@@ -115,7 +106,7 @@
    <fromDecoration>ARROW</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_20" style="NORMAL">
+  <link id="id_20" >
    
    <from xsi:type="glyph" reference="id_17"/>
    <to xsi:type="glyph" reference="id_16"/>
@@ -132,7 +123,7 @@
    <fromDecoration>ARROW</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_11" style="NORMAL">
+  <link id="id_11" >
    
    <from xsi:type="glyph" reference="id_17"/>
    <to xsi:type="glyph" reference="id_8"/>
@@ -149,12 +140,12 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_21" style="NORMAL">
+  <link id="id_21" >
    
    
    
   <from xsi:type="glyph" reference="id_8"/><to xsi:type="glyph" reference="id_7"/><fromLabel xsi:type="text-line"><text>1</text><symbols/></fromLabel><toLabel xsi:type="text-line"><text>m</text><symbols/></toLabel><fromDecoration>NONE</fromDecoration><toDecoration>ARROW</toDecoration></link>
-  <link id="id_5" style="NORMAL">
+  <link id="id_5" >
    
    <from xsi:type="glyph" reference="id_3"/>
    <to xsi:type="glyph" reference="id_4"/>
@@ -171,7 +162,7 @@
    <fromDecoration>ARROW</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_6" style="NORMAL">
+  <link id="id_6" >
    
    <from xsi:type="glyph" reference="id_1"/>
    <to xsi:type="glyph" reference="id_4"/>
@@ -188,7 +179,7 @@
    <fromDecoration>ARROW</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_10" style="NORMAL">
+  <link id="id_10" >
    
    <from xsi:type="glyph" reference="id_7"/>
    <to xsi:type="glyph" reference="id_1"/>
@@ -205,7 +196,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
-  <link id="id_13" style="NORMAL">
+  <link id="id_13" >
    
    <from xsi:type="glyph" reference="id_12"/>
    <to xsi:type="glyph" reference="id_7"/>
@@ -222,7 +213,7 @@
    <fromDecoration>ARROW</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_14" style="NORMAL">
+  <link id="id_14" >
    
    <from xsi:type="glyph" reference="id_12"/>
    <to xsi:type="glyph" reference="id_3"/>

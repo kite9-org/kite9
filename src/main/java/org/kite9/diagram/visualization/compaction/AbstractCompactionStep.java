@@ -1,17 +1,20 @@
 package org.kite9.diagram.visualization.compaction;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.elements.Dimension;
+import org.kite9.diagram.common.elements.DirectionEnforcingElement;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
@@ -20,6 +23,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -58,12 +62,34 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			throw new Kite9ProcessingException();
 		}
 		
+		
+		if ((first.getUnderlyingInfo().size() > 1) && (second.getUnderlyingInfo().size() > 1)) {
+			// we're in a grid, look for common diagram elements
+			Set<Rectangular> combined = new HashSet<>(first.getRectangulars());
+			Set<Rectangular> secondRs = second.getRectangulars();
+			combined.removeAll(secondRs);
+		
+			if (combined.size() == 1) {
+				// ok, run just the single found combination
+				double max = 0;
+				for (UnderlyingInfo fromUI : first.getUnderlyingInfo()) {
+					if (combined.contains(fromUI.getDiagramElement())) {
+						return getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave);
+					}
+				}
+				
+				throw new LogicException();
+			}
+		} 
+		
+		// ok, run all the combinations
 		double max = 0;
 		for (UnderlyingInfo fromUI : first.getUnderlyingInfo()) {
 			max = Math.max(max, getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave));
 		}
 		
 		return max;
+		
 	}
 	
 	private double getMinimumDistance(boolean horizontalDart, UnderlyingInfo fromUI, Segment second, Segment along, boolean concave) {
@@ -117,32 +143,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		}
 	}
 	
-	private DiagramElement moveUp(DiagramElement move, int toDepth, int cDepth) {
-		while (cDepth > toDepth) {
-			move = move.getParent();
-			cDepth--;
-		}
-		
-		return move;
-	}
- 
-	private boolean contains(DiagramElement a, DiagramElement b) {
-		int ad = a.getDepth();
-		int bd = b.getDepth();
-		
-		if ((ad < bd) && (a instanceof Container)) {
-			// b might be in a
-			b = moveUp(b, ad+1, bd);
-			return ((Container)a).getContents().contains(b);
-		} else if ((ad > bd) && (b instanceof Container)) {
-			// a might be in b
-			a = moveUp(a, bd+1, ad);
-			return ((Container)b).getContents().contains(a);
-		} else {
-			return false;
-		}
-	}
-
+	
 	private boolean needsLength(DiagramElement a, DiagramElement b) {
 		if ((a instanceof DirectionEnforcingElement) || (b instanceof DirectionEnforcingElement)) {
 			return false;
@@ -151,17 +152,23 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		return true;
 	}
 	
+	protected void separate(Slideable<Segment> s1, FaceSide fs) {
+		for (Slideable<Segment> s2 : fs.getAll()) {
+			separate(s1, s2);
+		}
+	}
 	
-	
-	
-	
-	/**
-	 * Uses the SlackOptimisation to set a minimum distance between outside and inside parts.
-	 */
+	protected void separate(FaceSide fs, Slideable<Segment> s2) {
+		for (Slideable<Segment> s1 : fs.getAll()) {
+			separate(s1, s2);
+		}
+	}
+
 	protected void separate(Slideable<Segment> s1, Slideable<Segment> s2) {
 		double minDistance = getMinimumDistance(s1.getUnderlying(), s2.getUnderlying(), null, true);
 		s1.getSlackOptimisation().ensureMinimumDistance(s1, s2, (int) minDistance);
 	}
+
 	
 	protected AlignmentResult alignSingleConnections(Compaction c, Connected r, boolean horizontal, boolean withCheck) {
 		SegmentSlackOptimisation hsso = c.getHorizontalSegmentSlackOptimisation();
@@ -169,10 +176,12 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
+		boolean minimizing = (r instanceof Container) ? ((Container)r).getSizing() == DiagramElementSizing.MINIMIZE : true;
+		
 		if (horizontal) {
-			return alignSingleConnections(c, hs, vs, withCheck);
+			return alignSingleConnections(c, hs, vs, withCheck, minimizing);
 		} else {
-			return alignSingleConnections(c, vs, hs, withCheck);
+			return alignSingleConnections(c, vs, hs, withCheck, minimizing);
 		}
 	}
 	
@@ -192,7 +201,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	/**
 	 * Returns the half-dist value if an alignment was made, otherwise null.
 	 */
-	protected AlignmentResult alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded) {
+	protected AlignmentResult alignSingleConnections(Compaction c, OPair<Slideable<Segment>> perp, OPair<Slideable<Segment>> along, boolean checkNeeded, boolean minimizingContainer) {
 		SegmentSlackOptimisation alongSSO = (SegmentSlackOptimisation) along.getA().getSlackOptimisation();
 		Slideable<Segment> from = along.getA();
 		Slideable<Segment> to = along.getB();
@@ -241,7 +250,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			}
 			
 			if ((connectionSegmentA != null) || (connectionSegmentB != null)) {
-				boolean safe = (leavingConnectionsA.size() < 2) && (leavingConnectionsB.size() < 2);
+				boolean safe = (leavingConnectionsA.size() < 2) && (leavingConnectionsB.size() < 2) && (minimizingContainer);
 				return new AlignmentResult(halfDist, safe);
 			}
 			

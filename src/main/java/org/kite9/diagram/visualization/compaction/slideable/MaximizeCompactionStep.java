@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction.slideable;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -16,7 +17,7 @@ public class MaximizeCompactionStep extends AbstractSizingCompactionStep {
 
 	@Override
 	public boolean filter(Rectangular r) {
-		return (r.getSizing() == DiagramElementSizing.MAXIMIZE);
+		return (r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MAXIMIZE) ;
 	}
 
 	/**

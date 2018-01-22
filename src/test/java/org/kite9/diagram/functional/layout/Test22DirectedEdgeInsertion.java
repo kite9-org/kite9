@@ -10,13 +10,13 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.builder.DirectedEdgePlanarizationBuilder;
 import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.LinkEndStyle;
 import org.kite9.framework.xml.Kite9XMLElement;
 
 /**
@@ -100,7 +100,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		// sends
 		new Link(client, sends, null, null, null, null, Direction.RIGHT);
 		new Link(sends, diagramServer, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
-		new Link(sends, diagram);
+		new TurnLink(sends, diagram);
 
 		// receives
 		new Link(diagramServer, receives, null, null, null, null, Direction.LEFT);

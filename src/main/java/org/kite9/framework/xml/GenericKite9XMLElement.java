@@ -27,7 +27,5 @@ public class GenericKite9XMLElement extends AbstractStyleableXMLElement {
 	public String getNodeName() {
 		return tagName;
 	}
-	
-	
 
 }

@@ -109,13 +109,7 @@
   </label>
  </context>
  
- 
-<label xsi:type="key">
-  
-  <boldText>Empty Diagram</boldText>
-  <bodyText>Double click to edit the key</bodyText>
-  <symbols/>
- </label><allLinks>
+ <allLinks>
   <link id="id_9">
    
    <from xsi:type="glyph" reference="id_5"/>
@@ -171,7 +165,7 @@
    <from xsi:type="glyph" reference="id_14"/>
    <to xsi:type="glyph" reference="id_13"/>
   </link>
-  <link id="id_34" drawDirection="LEFT" style="NORMAL">
+  <link id="id_34" drawDirection="LEFT" >
    
    <from xsi:type="glyph" reference="id_30"/>
    <to xsi:type="glyph" reference="id_15"/>
@@ -186,7 +180,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_35" drawDirection="RIGHT" style="NORMAL">
+  <link id="id_35" drawDirection="RIGHT" >
    
    <from xsi:type="glyph" reference="id_29"/>
    <to xsi:type="glyph" reference="id_15"/>
@@ -201,7 +195,7 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>NONE</toDecoration>
   </link>
-  <link id="id_33" drawDirection="LEFT" style="NORMAL">
+  <link id="id_33" drawDirection="LEFT" >
    
    <from xsi:type="glyph" reference="id_31"/>
    <to xsi:type="glyph" reference="id_17"/>
