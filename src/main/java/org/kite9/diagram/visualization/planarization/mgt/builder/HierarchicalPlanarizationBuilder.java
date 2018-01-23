@@ -48,8 +48,11 @@ import org.kite9.framework.logging.LogicException;
  */
 public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationBuilder {
 
+	public static String LAST_PLANARIZATION_DEBUG = null;
+	
 	public HierarchicalPlanarizationBuilder(ElementMapper em, GridPositioner gp) {
 		super(em, gp);
+		LAST_PLANARIZATION_DEBUG = null;
 	}
 
 	@Override
@@ -57,13 +60,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		setupElementBorderEdges(p, p.getDiagram());
 		super.completeEmbedding(p);
 		if (!log.go()) {
-			try {
-				FileWriter fw = new FileWriter("plan.txt", true);
-				fw.write(p.toString());
-				fw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			LAST_PLANARIZATION_DEBUG = p.toString();
 		}
 	}
 	

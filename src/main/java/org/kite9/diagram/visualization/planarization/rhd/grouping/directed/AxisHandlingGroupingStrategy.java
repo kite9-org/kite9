@@ -1,9 +1,5 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,19 +37,21 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGroupingStrategy {
 
+	public static String LAST_MERGE_DEBUG = null;
 	
 	protected BasicMergeState ms;
 	
 	public AxisHandlingGroupingStrategy(BasicMergeState ms) {
 		super();
-		if (debug_write_file) {
-			File f = new File("merges.txt");
-			f.delete();
+		if (!hack.go()) {
+			LAST_MERGE_DEBUG = "";
+		} else {
+			LAST_MERGE_DEBUG = null;
 		}
 		this.ms = ms;
 	}
 
-	static Kite9Log hack = new Kite9Log(new Logable() {
+	Kite9Log hack = new Kite9Log(new Logable() {
 
 		@Override
 		public boolean isLoggingEnabled() {
@@ -65,8 +63,6 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 			return "DGA ";
 		}
 	});
-
-	static boolean debug_write_file = !hack.go();
 
 	@Override
 	protected void groupChangedContainer(BasicMergeState ms, final Group g) {
@@ -277,18 +273,10 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 	}
 	
 	private void writeGroup(CompoundGroup g, MergeOption mo) {
-		if (debug_write_file) {
-			try {
-				File out = new File("merges.txt");
-				Writer os = new FileWriter(out, true);
-				os.write(g.getGroupNumber()+"\t"+g.getA()+"\t"+g.getB()+"\t"+g.getAxis()+"\t"+mo.getPriority()+"\n");
-				os.close();
-			} catch (IOException e) {
-				throw new LogicException("Couldn't write file");
-			}
+		if (!hack.go()) {
+			LAST_MERGE_DEBUG = LAST_MERGE_DEBUG + g.getGroupNumber()+"\t"+g.getA()+"\t"+g.getB()+"\t"+g.getAxis()+"\t"+mo.getPriority()+"\n";
 		}
 	}
-
 	
 	/**
 	 * Once all the directed merges have been completed for a group, (say X_FIRST) it should 

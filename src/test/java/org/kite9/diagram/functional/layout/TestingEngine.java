@@ -55,6 +55,8 @@ import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
+import org.kite9.diagram.visualization.planarization.mgt.builder.HierarchicalPlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
@@ -90,6 +92,12 @@ public class TestingEngine extends TestingHelp {
 			try {
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
+				if (HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
+					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG);
+				}
+				if (AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG != null) {
+					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG);
+				}
 			} catch (PlanarizationException pe) {
 				pln = pe.getPlanarization();
 				out = pe;
@@ -321,17 +329,6 @@ public class TestingEngine extends TestingHelp {
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);
 
-	}
-
-	public static void renderToFile(Class<?> theTest, String subtest, String item, byte[] bytes) {
-		File f = prepareFileName(theTest, subtest, item);
-		try {
-			FileOutputStream fos = new FileOutputStream(f);
-			fos.write(bytes);
-			fos.close();
-		} catch (IOException e) {
-			throw new LogicException("Could not save output: " + f.toString(), e);
-		}
 	}
 
 	public static void testConnectionPresence(DiagramKite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
