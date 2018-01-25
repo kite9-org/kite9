@@ -44,8 +44,8 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		clearUnsupportedAttributes();
 	}
 	
-	public ExtendedSVGGraphics2D(Document doc, ResourceReferencer rr) {
-		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc, rr) ,false);
+	public ExtendedSVGGraphics2D(Document doc) {
+		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc) ,false);
 		this.currentSubgroup = getTopLevelGroup();
 		clearUnsupportedAttributes();
 	}
@@ -55,10 +55,6 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		setUnsupportedAttributes(Collections.emptySet());
 	}
 	
-	private ResourceReferencer getResourceReferencer() {
-		return ((ExtendedSVGGeneratorContext) this.generatorCtx).getResourceReferencer();
-	}
-
 	@Override
 	public void createGroup(String id) {
 		if (id != null) {
@@ -165,7 +161,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 					styleInfo.append(",\n      ");
 				}
 				styleInfo.append("url('");
-				styleInfo.append(this.getResourceReferencer().getReference(parsedURL).getUrl());
+//				styleInfo.append(this.getResourceReferencer().getReference(parsedURL).getUrl());
 				styleInfo.append("');");
 				first = false;
 			}

@@ -56,6 +56,8 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.builder.HierarchicalPlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
+import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -97,6 +99,10 @@ public class TestingEngine extends TestingHelp {
 				}
 				if (AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG != null) {
 					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG);
+				}
+				if (RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
+					TestingEngine.drawPositions(RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG , RHDPlanarization.class, "positions", "vertex.png");
+
 				}
 			} catch (PlanarizationException pe) {
 				pln = pe.getPlanarization();

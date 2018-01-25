@@ -15,7 +15,6 @@
 	</properties>
 
 	<build>
-		<finalName>kite9-diagram-vis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -122,62 +121,8 @@
                     </execution>
                 </executions>
             </plugin>
-			
-			<plugin>
-			    <artifactId>maven-jar-plugin</artifactId>
-			    <executions>
-			        <execution>
-			            <id>full</id>
-			            <phase>package</phase>
-			            <goals>
-			                <goal>jar</goal>
-			            </goals>
-			            <configuration>
-			                <archive>
-			                    <index>true</index>
-			                    <manifest>
-			                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-			                    </manifest>
-			                </archive>
-			
-			                <classifier>full</classifier>
-			                <includes>
-			                    <include>**</include>
-			                </includes>
-			            </configuration>
-			        </execution>
-			
-			        <execution>
-			            <id>only-display</id>
-			            <phase>package</phase>
-			            <goals>
-			                <goal>jar</goal>
-			            </goals>
-			            <configuration>
-			                <archive>
-			                    <index>true</index>
-			                    <manifest>
-			                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-			                    </manifest>
-			                </archive>
-			
-			                <classifier>only-display</classifier>
-			                <includes>
-			                    <include>org/kite9/diagram/visualization/display/**</include>
-			                    <include>org/kite9/diagram/visualization/format/**</include>
-			                    <include>org/kite9/diagram/visualization/pipeline/rendering/**</include>
-			                    <include>org/kite9/diagram/common/elements/**</include>
-			                    <include>stylesheets/**</include>
-			                    <include>fonts/**</include>
-			                    <include>logo/**</include>
-			                </includes>
-			            </configuration>
-			        </execution>
-			    </executions>
-			</plugin>
-			
-			
-		</plugins>
+	 </plugins>		
+	
 	</build>
 	
 	<reporting>

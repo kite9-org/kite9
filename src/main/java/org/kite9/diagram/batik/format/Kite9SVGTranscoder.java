@@ -44,13 +44,12 @@ import org.xml.sax.XMLFilter;
 public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
 	private ADLExtensibleDOMImplementation domImpl;
-	private ResourceReferencer rr;	
 	private Kite9Log log = new Kite9Log(this);
 	private Kite9DocumentFactory docFactory;
 	private Kite9DocumentLoader docLoader;
 	private Kite9BridgeContext bridgeContext;
 	
-	public Kite9SVGTranscoder(ResourceReferencer rr) {
+	public Kite9SVGTranscoder() {
 		super();
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
@@ -60,7 +59,6 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
-		this.rr = rr;
 	}
 
 	@Override
