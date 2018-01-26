@@ -44,7 +44,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return false;
 	}
 	
-	private Kite9GBridge gBridge = new Kite9GBridge();
+	private Kite9Bridge gBridge = new Kite9Bridge();
 	
 	@Override
 	public void registerSVGBridges() {

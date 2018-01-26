@@ -9,38 +9,10 @@ import java.util.List;
  *
  */
 public interface RouteRenderingInformation extends RenderingInformation {
-	
-	public static class Decoration {
-		
-		public Decoration() {
-		}
-		
-		public Decoration(String name, Direction d, Dimension2D position) {
-			super();
-			this.name = name;
-			this.d = d;
-			this.position = position;
-		}
-		
-		String name;
-		Direction d;
-		Dimension2D position;
-		
-	}
 
 	public List<Dimension2D> getRoutePositions();
 	
 	public List<Boolean> getHops();
-
-	public void reverse();
-	
-	public Decoration getFromDecoration();
-
-	public void setFromDecoration(Decoration fromDecoration);
-
-	public Decoration getToDecoration();
-
-	public void setToDecoration(Decoration toDecoration);
 	
 	public Dimension2D getWaypoint(int pos);
 	

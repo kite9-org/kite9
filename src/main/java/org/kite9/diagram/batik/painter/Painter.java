@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;

@@ -1,8 +1,9 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
+import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Element;
 

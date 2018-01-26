@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.RectangularPainter;
+import org.kite9.diagram.batik.painter.RectangularPainter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.CostedDimension;

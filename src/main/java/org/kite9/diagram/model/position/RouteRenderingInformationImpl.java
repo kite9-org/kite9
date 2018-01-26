@@ -30,25 +30,6 @@ public class RouteRenderingInformationImpl extends AbstractRenderingInformationI
 		hops.set(pos, true);
 	}
 
-	public void reverse() {
-		Collections.reverse(hops);
-		Collections.reverse(routePositions);
-	}
-
-	public Decoration getFromDecoration() {
-		return null;
-	}
-
-	public void setFromDecoration(Decoration fromDecoration) {
-	}
-
-	public Decoration getToDecoration() {
-		return null;
-	}
-
-	public void setToDecoration(Decoration toDecoration) {
-	}
-
 	public Dimension2D getWaypoint(int pos) {
 		return getRoutePositions().get(pos);
 	}

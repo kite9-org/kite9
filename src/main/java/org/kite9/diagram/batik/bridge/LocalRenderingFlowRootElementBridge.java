@@ -22,11 +22,10 @@ import org.apache.batik.gvt.font.GVTGlyphVector;
 import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
-import org.kite9.diagram.batik.format.ExtendedSVG;
-import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.text.ExtendedSVG;
+import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
-
 
 /**
  * Overrides the regular text bridge to allow SVG to be written as text, rather than converted to glyph vectors each time.

@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import java.awt.geom.Rectangle2D;
 
@@ -6,8 +6,6 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Handles painting for {@link DiagramElementType.CONTAINER}

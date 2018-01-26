@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.format;
+package org.kite9.diagram.batik.text;
 
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
@@ -17,7 +17,6 @@ import org.apache.batik.util.ParsedURL;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 
@@ -44,45 +43,15 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		clearUnsupportedAttributes();
 	}
 	
-	public ExtendedSVGGraphics2D(Document doc) {
-		super(ExtendedSVGGeneratorContext.buildSVGGeneratorContext(doc) ,false);
-		this.currentSubgroup = getTopLevelGroup();
-		clearUnsupportedAttributes();
-	}
-	
 	private void clearUnsupportedAttributes() {
 		// since we are converting from svg to svg, there should be no unsupported attributes
 		setUnsupportedAttributes(Collections.emptySet());
 	}
 	
-	@Override
-	public void createGroup(String id) {
-		if (id != null) {
-			Element newGroup = currentSubgroup.getOwnerDocument().createElement("g");
-			currentSubgroup.appendChild(newGroup);
-			newGroup.setAttribute("id", id);
-			this.currentSubgroup = newGroup;
-			setTopLevelGroup(newGroup);
-			log.send("Started. Current group: "+this.currentSubgroup.getAttribute("id"));
-		}
-	}
-	
-	public void finishGroup(String id) {
-		if (id != null) {
-			if (!id.equals(currentSubgroup.getAttribute("id"))) {
-				throw new Kite9ProcessingException("Was expecting current group with id: "+id);
-			}
-			
-			Element parent = (Element) currentSubgroup.getParentNode();
-			setTopLevelGroup(parent);
-			this.currentSubgroup = parent;
-			log.send("Finished.  Current group: "+this.currentSubgroup.getAttribute("id"));
-		}
-	}
 
 	@Override
 	public String getPrefix() {
-		return "GRUP";
+		return "ESG2";
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.batik.templater.Kite9ExpandingCopier;

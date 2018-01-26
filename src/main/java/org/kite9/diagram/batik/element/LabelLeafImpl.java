@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.element;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.RectangularPainter;
+import org.kite9.diagram.batik.painter.RectangularPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Leaf;

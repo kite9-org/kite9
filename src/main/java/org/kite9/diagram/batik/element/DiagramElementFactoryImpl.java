@@ -1,10 +1,10 @@
 package org.kite9.diagram.batik.element;
 
-import org.kite9.diagram.batik.bridge.DirectSVGPainter;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.SVGContainerRectangularPainter;
-import org.kite9.diagram.batik.bridge.SVGLeafRectangularPainter;
-import org.kite9.diagram.batik.bridge.TextRectangularPainter;
+import org.kite9.diagram.batik.painter.DirectSVGPainter;
+import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
+import org.kite9.diagram.batik.painter.SVGLeafRectangularPainter;
+import org.kite9.diagram.batik.painter.TextRectangularPainter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;

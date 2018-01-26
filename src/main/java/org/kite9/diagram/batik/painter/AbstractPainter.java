@@ -1,11 +1,9 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * Base class for painter implementations

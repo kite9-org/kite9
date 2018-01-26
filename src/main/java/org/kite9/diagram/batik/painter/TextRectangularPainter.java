@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.painter;
 
 import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
@@ -15,8 +15,10 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVG12Constants;
-import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
-import org.kite9.diagram.batik.format.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.bridge.LocalRenderingFlowRootElementBridge;
+import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.StyledKite9SVGElement;

@@ -7,7 +7,7 @@ import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.HasSVGGraphics;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.Painter;
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor;
 import org.kite9.diagram.batik.templater.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.DiagramElement;

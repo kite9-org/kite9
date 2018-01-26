@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.Painter;
-import org.kite9.diagram.batik.bridge.RoutePainter;
-import org.kite9.diagram.batik.format.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.painter.Painter;
+import org.kite9.diagram.batik.painter.RoutePainter;
+import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
