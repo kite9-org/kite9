@@ -24,15 +24,15 @@ import org.kite9.framework.logging.LogicException;
 public class FlowGraphSPP<X extends FlowGraph> extends AbstractSSP<Path> implements FlowAlgorithm<X>, Logable {
 
 	Kite9Log log = new Kite9Log(this);
-
+	
+	public static final boolean LOG_FLOW_INFORMATION = false;
+	
 	List<Node> destination;
 	List<Node> startingPoints;
 
 	int iterations = 0;
 	int cost = 0;
 	long paths = 0;
-	
-	public boolean logFlowInformation = true;
 
 	public int maximiseFlow(X fg) {
 		iterations = 0;
@@ -56,13 +56,15 @@ public class FlowGraphSPP<X extends FlowGraph> extends AbstractSSP<Path> impleme
 				"\n\tnodes:    "+fg.getAllNodes().size()+
 				"\n\tarcs:     "+fg.getAllArcs().size());
 		
-		File out = new File("ssp.info");
-		try {
-			FileWriter w = new FileWriter(out, true);
-			w.write(paths+","+cost+","+fg.getAllNodes().size()+","+fg.getAllArcs().size()+"\n");
-			w.close();
-		} catch (IOException e) {
-			throw new LogicException("could not write ssp file: ",e);
+		if (!log.go()) {
+			File out = new File("ssp.info");
+			try {
+				FileWriter w = new FileWriter(out, true);
+				w.write(paths+","+cost+","+fg.getAllNodes().size()+","+fg.getAllArcs().size()+"\n");
+				w.close();
+			} catch (IOException e) {
+				throw new LogicException("could not write ssp file: ",e);
+			}
 		}
 		
 		displayFlowInformation(fg);
@@ -84,7 +86,7 @@ public class FlowGraphSPP<X extends FlowGraph> extends AbstractSSP<Path> impleme
 	}
 
 	public void displayFlowInformation(FlowGraph fg) {
-		if (!logFlowInformation)
+		if (!LOG_FLOW_INFORMATION)
 			return;
 		
 		List<String> lines = new ArrayList<String>();
