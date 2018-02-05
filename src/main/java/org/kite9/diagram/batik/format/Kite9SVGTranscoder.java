@@ -41,7 +41,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
-public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
+public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
 	private ADLExtensibleDOMImplementation domImpl;
 	private Kite9Log log = new Kite9Log(this);
@@ -121,8 +121,6 @@ public final class Kite9SVGTranscoder extends SVGAbstractTranscoder implements L
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
-		
-        Document doc = createDocument(output);
 		writeSVGToOutput(outputDocument, output);
 	}
 

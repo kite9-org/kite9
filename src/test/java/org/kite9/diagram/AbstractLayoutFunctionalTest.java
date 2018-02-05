@@ -168,7 +168,6 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		// fix for old-style <allLinks> tag
 		String theXML = xmlHelper.toXML(dxe);
 		//Kite9Log.setLogging(false);
-		transcodePNG(theXML);
 		transcodeSVG(theXML);
 		boolean addressed = isAddressed();
 		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
