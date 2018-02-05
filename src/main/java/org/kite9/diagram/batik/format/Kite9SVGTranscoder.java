@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
@@ -20,6 +21,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
+import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -59,6 +61,25 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
+	}
+
+	@Override
+	protected UserAgent createUserAgent() {
+		return new SVGAbstractTranscoderUserAgent() {
+
+			@Override
+			public void checkLoadScript(String scriptType, ParsedURL scriptURL, ParsedURL docURL) throws SecurityException {
+				// TODO Auto-generated method stub
+				super.checkLoadScript(scriptType, scriptURL, docURL);
+			}
+
+			@Override
+			public void checkLoadExternalResource(ParsedURL resourceURL, ParsedURL docURL) throws SecurityException {
+				// TODO Auto-generated method stub
+				super.checkLoadExternalResource(resourceURL, docURL);
+			}
+			
+		};
 	}
 
 	@Override
