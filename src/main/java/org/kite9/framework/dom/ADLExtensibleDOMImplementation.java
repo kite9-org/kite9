@@ -44,7 +44,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.css.ViewCSS;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSInput;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSParser;
+import org.w3c.dom.ls.LSSerializer;
 import org.w3c.dom.stylesheets.StyleSheet;
+
+import com.sun.org.apache.xerces.internal.dom.CoreDOMImplementationImpl;
+import com.sun.org.apache.xerces.internal.dom.DOMInputImpl;
+import com.sun.org.apache.xerces.internal.dom.DOMOutputImpl;
+import com.sun.org.apache.xml.internal.serialize.DOMSerializerImpl;
 
 /**
  * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
@@ -53,7 +63,7 @@ import org.w3c.dom.stylesheets.StyleSheet;
  * @author robmoffat
  *
  */
-public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable {
+public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable, DOMImplementationLS {
 	
 	private final Kite9Log log = new Kite9Log(this);
 	
@@ -162,6 +172,8 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		
 		return super.createElementNS(document, namespaceURI, qualifiedName);
 	}
+	
+	
 
 	public CSSStyleSheet createCSSStyleSheet(String title, String media) throws DOMException {
         throw new UnsupportedOperationException("StyleSheetFactory.createCSSStyleSheet is not implemented"); // XXX
@@ -169,7 +181,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 
 	public Document createDocument(String namespaceURI, String qualifiedName, DocumentType doctype) throws DOMException {
 		ADLDocument result = new ADLDocument(this);
-		result.setIsSVG12(true);
+		result.setIsSVG12(false);		// prevent creation of extraneous xml:id fields.
         if (qualifiedName != null)
             result.appendChild(result.createElementNS(namespaceURI,
                                                       qualifiedName));
@@ -249,6 +261,26 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		return true;
 	}
 	
-	
+    public LSSerializer createLSSerializer() {
+        return new DOMSerializerImpl();
+    }
+    /**
+     * DOM Level 3 LS CR - Experimental.
+     * Create a new empty input source.
+     * @return  The newly created input object.
+     */
+    public LSInput createLSInput() {
+            return new DOMInputImpl();
+    }
+
+    public LSOutput createLSOutput() {
+        return new DOMOutputImpl();
+    }
+
+	@Override
+	public LSParser createLSParser(short arg0, String arg1) throws DOMException {
+		return ((DOMImplementationLS) CoreDOMImplementationImpl.getDOMImplementation()).createLSParser(arg0, arg1);
+	}
+    
     
 }
