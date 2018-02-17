@@ -43,24 +43,34 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.XMLFilter;
 
+/**
+ * Please note - this transcoder is single-use.
+ */
 public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
-	private ADLExtensibleDOMImplementation domImpl;
-	private Kite9Log log = new Kite9Log(this);
-	private Kite9DocumentFactory docFactory;
-	private Kite9DocumentLoader docLoader;
-	private Kite9BridgeContext bridgeContext;
+	private final ADLExtensibleDOMImplementation domImpl;
+	private final Kite9Log log = new Kite9Log(this);
+	private final Kite9DocumentFactory docFactory;
+	private final Kite9DocumentLoader docLoader;
+	private final Kite9BridgeContext bridgeContext;
 	
 	public Kite9SVGTranscoder() {
 		super();
+		domImpl = new ADLExtensibleDOMImplementation();
+		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
+	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
+		bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
+		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
+		domImpl.setDiagramElementFactory(def);
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, ADLExtensibleDOMImplementation.SVG_NAMESPACE_URI);
-		domImpl = new ADLExtensibleDOMImplementation();
-		docFactory = createDocumentFactory();
-	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
+	}
+
+	public Kite9DocumentFactory getDocFactory() {
+		return docFactory;
 	}
 
 	@Override
@@ -84,22 +94,12 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 	@Override
 	protected Kite9BridgeContext createBridgeContext(String version) {
-		if (bridgeContext == null) {
-			bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
-			DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
-			domImpl.setDiagramElementFactory(def);
-		}
-		
 		return bridgeContext;
-	}
-
-	protected Kite9DocumentFactory createDocumentFactory() {
-		return createDocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	}
 	
 	@Override
 	protected Kite9DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
-		return new Kite9DocumentFactory((ADLExtensibleDOMImplementation) domImpl, parserClassname);
+		return docFactory;
 	}
 
 	private Document createDocument(TranscoderOutput output) {
@@ -149,7 +149,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
      * <code>TranscoderOutput</code>. This method does nothing if the output already
      * contains a Document.
      */
-    protected void writeSVGToOutput(Document outputDocument,
+    public void writeSVGToOutput(Document outputDocument,
         TranscoderOutput output) throws TranscoderException {
 
         Document doc = output.getDocument();

@@ -28,4 +28,5 @@ public class GenericKite9XMLElement extends AbstractStyleableXMLElement {
 		return tagName;
 	}
 
+	
 }
