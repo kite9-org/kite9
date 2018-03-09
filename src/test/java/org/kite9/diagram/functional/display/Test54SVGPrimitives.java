@@ -8,7 +8,6 @@ import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.dom.XMLHelper;
 
-
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	@Test
