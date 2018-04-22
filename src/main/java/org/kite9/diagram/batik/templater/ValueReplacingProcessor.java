@@ -9,6 +9,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * Performs value replacement, where the elements to be replaced contain 
@@ -47,7 +48,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
 	 * turned into `GraphicsNode`s .  
 	 */
-	public void performReplace(Node n, ValueReplacer vr) {
+	private void performReplace(Node n, ValueReplacer vr) {
 		if (vr == null)
 			return;
 
@@ -60,9 +61,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 			} else {
 				performReplace(n.getChildNodes(), vr);
 			}
-		}
-
-		
+		} 
 	}
 
 
@@ -74,9 +73,17 @@ public class ValueReplacingProcessor implements XMLProcessor {
 		}
 	}
 
-	public void performReplace(NodeList nodeList, ValueReplacer vr) {
+	private void performReplace(NodeList nodeList, ValueReplacer vr) {
+		Text lastTextNode = null;
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
+			if (n instanceof Text) {
+				if (lastTextNode != null) {
+					lastTextNode.setData(lastTextNode.getData() + ((Text)n).getData());
+					n.getParentNode().removeChild(n);
+				}
+				
+			}
 			performReplace(n, vr);
 		}
 	}

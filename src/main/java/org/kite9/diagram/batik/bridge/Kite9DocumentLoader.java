@@ -51,7 +51,12 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 				boolean importDefsForThisDoc = this.importDefs && (checkCache(resource) == null);
 
 				ADLDocument templateDoc = (ADLDocument) loadDocument(resource);
-				out = templateDoc.getElementById(fragment);
+				
+				if (fragment != null) {
+					out = templateDoc.getElementById(fragment);
+				} else {
+					out = templateDoc.getRootElement();
+				}
 
 				
 				if (importDefsForThisDoc) {
