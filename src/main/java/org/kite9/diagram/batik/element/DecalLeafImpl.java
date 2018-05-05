@@ -44,14 +44,16 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 		double width = parentRRI.getSize().getWidth();
 		double height = parentRRI.getSize().getHeight();
 		Rectangle2D myBounds = ((RectangularPainter<Leaf>) this.p).bounds(theElement, this);
-		double xs = width / myBounds.getWidth();
-		double ys = height / myBounds.getHeight();
 		
-		out.setAttribute("transform", 
-				"scale("+xs+","+ys+")"+
-				"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
-				);
-		
+		if (myBounds != null) {
+			double xs = width / myBounds.getWidth();
+			double ys = height / myBounds.getHeight();
+			
+			out.setAttribute("transform", 
+					"scale("+xs+","+ys+")"+
+					"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+					);
+		}
 	}
 
 	

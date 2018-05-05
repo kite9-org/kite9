@@ -2,11 +2,20 @@ package org.kite9.framework.common;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
 
 public class RepositoryHelp {
+	
+	public static String stream(InputStream is) throws IOException {
+		Reader r = new InputStreamReader(is);
+		StringWriter sw = new StringWriter();
+		streamCopy(r, sw, true);
+		return sw.toString();
+	}
 
 	public static void streamCopy(InputStream zis, OutputStream fos, boolean closeOs) throws IOException {
 		try {
