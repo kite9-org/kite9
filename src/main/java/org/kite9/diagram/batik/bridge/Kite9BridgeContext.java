@@ -30,7 +30,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader) {
 		super(userAgent, loader);
-		this.setDocumentSize(new Dimension2DDouble(0,0));
 	}
 	
 	/**

@@ -24,6 +24,7 @@ import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.xml.serializer.utils.Utils;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
@@ -38,9 +39,11 @@ import org.kite9.framework.dom.XMLHelper;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.xml.ADLDocument;
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.XMLFilter;
 
 /**
@@ -129,6 +132,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);
+			copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
 			copier.processContents(input.getDocumentElement());
 		} catch (Exception e) {
@@ -137,8 +141,21 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			throw new Kite9ProcessingException(e);
 		}
 	}
-	
-	
+		
+	private void copySVGAttributes(Element in, Element out) {
+		NamedNodeMap nnm = in.getAttributes();
+		
+		for (int i = 0; i < nnm.getLength(); i++) {
+			Attr a = (Attr) nnm.item(i);
+			
+			if ((a.getNamespaceURI() == null) || (a.getNamespaceURI().equals(SVGConstants.SVG_NAMESPACE_URI))) {
+				if(!a.getName().equals("id")) {
+					out.setAttributeNS(a.getNamespaceURI(), a.getName(), a.getValue());
+				}
+			}
+		}
+	}
+
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
@@ -200,12 +217,12 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
                     handler.fatalError(new TranscoderException(e));
                 }
             }
+            
+            // nothing set
+            output.setDocument(outputDocument);
         } catch(IOException e){
             throw new TranscoderException(e);
         }
-
-        throw new TranscoderException("" + ERROR_INCOMPATIBLE_OUTPUT_TYPE);
-
     }
 
 	@Override

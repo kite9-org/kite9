@@ -4,6 +4,7 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.w3c.dom.Document;
 
 /**
  * This is a massive, horrible hack - we end up creating the doc twice.  Isn't there a better way?
@@ -25,9 +26,11 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		TranscoderOutput inter1 = new TranscoderOutput();
 		super.transcode(input, inter1);
+		Document svg = inter1.getDocument();
+		svg.setDocumentURI(input.getURI());
 		
 		PNGTranscoder png = new PNGTranscoder();
-		TranscoderInput inter2 = new TranscoderInput(inter1.getDocument());
+		TranscoderInput inter2 = new TranscoderInput(svg);
 		png.transcode(inter2, output);
 	}
 	
