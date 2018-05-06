@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
  */
 public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 
+	
 
 	@Override
 	public String getPrefix() {
@@ -28,8 +29,8 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 		super.transcode(input, inter1);
 		Document svg = inter1.getDocument();
 		svg.setDocumentURI(input.getURI());
-		
 		PNGTranscoder png = new PNGTranscoder();
+		png.setTranscodingHints(this.getTranscodingHints());
 		TranscoderInput inter2 = new TranscoderInput(svg);
 		png.transcode(inter2, output);
 	}

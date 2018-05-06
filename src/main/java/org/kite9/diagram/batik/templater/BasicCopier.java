@@ -1,8 +1,14 @@
 package org.kite9.diagram.batik.templater;
 
+import javax.xml.XMLConstants;
+
 import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.util.SVGConstants;
+import org.kite9.framework.dom.XMLHelper;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -41,6 +47,8 @@ public class BasicCopier implements XMLProcessor {
 	protected Node copyChild(Node n, Node inside) {
 		Node copy = n.cloneNode(false);
 		
+		removeExtraneousNamespaces(copy);
+		
 		Document ownerDocument = inside.getOwnerDocument();
 		ownerDocument.adoptNode(copy);
 		
@@ -52,6 +60,31 @@ public class BasicCopier implements XMLProcessor {
 		
 		copyContents(n, copy);
 		return copy;
+	}
+
+	private void removeExtraneousNamespaces(Node copy) {
+		NamedNodeMap nnm = copy.getAttributes();
+		
+		if (nnm == null) {
+			return;
+		}
+		
+		int i = 0;
+		while (i < nnm.getLength()) {
+			Attr a = (Attr) nnm.item(i);
+			String ns = a.getNamespaceURI();
+			
+			if ((ns != null) && (!ns.equals("")) 
+					&& (!ns.equals(SVGConstants.SVG_NAMESPACE_URI)) 
+					&& (!ns.equals(XMLHelper.KITE9_NAMESPACE))
+					&& (!ns.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
+					&& (!ns.equals(SVGConstants.XLINK_NAMESPACE_URI))
+					&& (!ns.equals(XMLConstants.XML_NS_URI))) {
+				nnm.removeNamedItemNS(ns, a.getLocalName());
+			} else {
+				i++;
+			}
+		}
 	}
 
 	/**

@@ -24,7 +24,6 @@ import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.apache.xml.serializer.utils.Utils;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.element.DiagramElementFactoryImpl;
