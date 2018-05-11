@@ -12,6 +12,7 @@ public interface CSSConstants {
 	public static final String ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"type";
 	public static final String ELEMENT_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"sizing";
 	public static final String ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"usage";
+	public static final String CONTENT_TRANSFORM = KITE9_CSS_PROPERTY_PREFIX+"transform";
 	
 	public static final String LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"layout";			// for containers, to decide how to layout their contents
 	
@@ -22,7 +23,6 @@ public interface CSSConstants {
 	public static final String GRID_COLUMNS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"grid-columns";			// for containers, to decide how to layout their contents
 	public static final String GRID_SIZE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"grid-size";
 	public static final String GRID_OCCUPIES_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies";
-	
 	
 	// margin property
 	public static final String KITE9_CSS_MARGIN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"margin-";
@@ -56,7 +56,6 @@ public interface CSSConstants {
 	public static final String MARKER_END_REFERENCE = KITE9_CSS_PROPERTY_PREFIX+"marker-end-reference";
 	public static final String MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX+"marker-reserve";
 	
-	
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";
 	
@@ -78,5 +77,11 @@ public interface CSSConstants {
 	public static final String LINK_INSET = KITE9_CSS_PROPERTY_PREFIX+"link-inset";
 	public static final String LINK_GUTTER = KITE9_CSS_PROPERTY_PREFIX+"link-gutter";
 	public static final String LINK_MINIMUM_LENGTH = KITE9_CSS_PROPERTY_PREFIX+"link-minimum-length";
+	
+	// Rectangular Sizing 
+	public static final String RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX+"min-size";
+	public static final String RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX+"min-width";
+	public static final String RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX+"min-height";
+	
 	
 }

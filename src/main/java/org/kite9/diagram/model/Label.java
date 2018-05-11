@@ -1,7 +1,7 @@
 package org.kite9.diagram.model;
 
 /**
- * DiagramElement to contain a label an edge, container or diagram.
+ * DiagramElement to contain a label for an edge, container or diagram.
  * Labels take up space on the diagram, so they have to be processed in the *orthogonalization* phase.
  * however they don't have connections so they are excluded from the Planarization phase.
  */

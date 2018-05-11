@@ -1,7 +1,7 @@
 package org.kite9.diagram.batik.element;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.RectangularPainter;
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
@@ -22,8 +22,7 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  */
 public class LabelContainerImpl extends AbstractLabelImpl implements Label, Container {
 	
-	
-	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Container> rp) {
+	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
 	}
 	

@@ -23,5 +23,11 @@ public interface SizedRectangular extends Rectangular {
 	
 	
 	public CostedDimension getSize(Dimension2D within);
+	
+	/**
+	 * This is the user-defined minimum size the rectangle can take.  Acts as minimum limit on the
+	 * getSize() method.
+	 */
+	public Dimension2D getMinimumSize();
 
 }

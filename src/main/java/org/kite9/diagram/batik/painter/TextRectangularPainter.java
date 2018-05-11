@@ -16,9 +16,9 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
+import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.StyledKite9SVGElement;
@@ -32,10 +32,10 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> implements RectangularPainter<Leaf> {
+public class TextRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
 	
-	public TextRectangularPainter(Kite9BridgeContext ctx) {
-		super(ctx);
+	public TextRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+		super(theElement, ctx);
 	}
 	
 	private Rectangle2D bounds;
@@ -52,8 +52,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	 *   </flowDiv>
 	 * </flowRoot>
 	 */
-	protected StyledKite9SVGElement initializeSourceContents(StyledKite9SVGElement theElement, Leaf r) {
-		theElement = super.initializeSourceContents(theElement, r);
+	protected StyledKite9SVGElement initializeSourceContents(StyledKite9SVGElement theElement) {
+		theElement = super.initializeSourceContents(theElement);
 		Document d = theElement.getOwnerDocument();
 
 		theText = theElement.getTextContent();
@@ -67,8 +67,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
-		addFontSizeAndFamily(theElement, r, flowRoot);
-		GraphicsNode gn = getGraphicsNode(flowRoot);
+		addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
+		GraphicsNode gn = getGraphicsNode();
 		Element group = graphicsNodeToXML(d, gn);
 		
 		if (group != null ) {
@@ -149,8 +149,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	}
 	
 	@Override
-	public Rectangle2D bounds(StyledKite9SVGElement in, Leaf l) {
-		GraphicsNode gn = getGraphicsNode(getContents(in, l));
+	public Rectangle2D bounds() {
+		GraphicsNode gn = getGraphicsNode();
 		return bounds;
 	}
 
@@ -159,11 +159,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter<Leaf> im
 	 * to return the Flow node within it, as otherwise we'll get the text container too.
 	 */
 	@Override
-	protected GraphicsNode initGraphicsNode(Element theElement) {
-		return
-		LocalRenderingFlowRootElementBridge.getFlowNode(
-				super.initGraphicsNode(theElement)
-				
-				);
-	}	
+	protected GraphicsNode initGraphicsNode() {
+		return LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode());
+	}
+
 }

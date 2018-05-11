@@ -1,0 +1,40 @@
+package org.kite9.diagram.batik.transform;
+
+import java.awt.geom.Rectangle2D;
+
+import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.w3c.dom.Element;
+
+public class RescalingTransformer extends AbstractRectangularTransformer  {
+
+	private Leaf l;
+	
+	public RescalingTransformer(Leaf l) {
+		this.l = l;
+	}
+	
+	/**
+	 * Ensures the decal is the same size as it's parent (for scaled decals)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void postProcess(Element out) {	
+		Dimension2D size = getRectangularRenderedSize(l);
+		double width = size.getWidth();
+		double height = size.getHeight();
+	
+		Rectangle2D myBounds = l.getBounds();
+		
+		if (myBounds != null) {
+			double xs = width / myBounds.getWidth();
+			double ys = height / myBounds.getHeight();
+			
+			out.setAttribute("transform", 
+					"scale("+xs+","+ys+")"+
+					"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+					);
+		}
+	}
+
+}

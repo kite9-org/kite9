@@ -18,18 +18,18 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.xml.ADLDocument;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
 
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter<Connection> p) {
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
 		super(el, parent, ctx, p);
 	}
 
@@ -234,10 +234,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	protected void postProcess(Element out) {
-	}
-
-	@Override
 	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
 		Map<String, String> out = super.getReplacementMap(theElement);
 		RoutePainter routePainter = new RoutePainter(0, 0);
@@ -272,6 +268,9 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		return minimumLength;
 	}
 
-	
+	@Override
+	protected ContentTransform getDefaultTransform() {
+		return ContentTransform.NONE;
+	}
 
 }

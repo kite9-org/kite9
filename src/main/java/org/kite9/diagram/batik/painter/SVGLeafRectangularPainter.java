@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
@@ -14,15 +13,15 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class SVGLeafRectangularPainter extends AbstractGraphicsNodePainter<Leaf> implements RectangularPainter<Leaf> {
+public class SVGLeafRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
 	
-	public SVGLeafRectangularPainter(Kite9BridgeContext ctx) {
-		super(ctx);
+	public SVGLeafRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+		super(theElement, ctx);
 	}
 	
 	@Override
-	public Rectangle2D bounds(StyledKite9SVGElement theElement, Leaf l) {
-		GraphicsNode gn = getGraphicsNode(getContents(theElement, l));
+	public Rectangle2D bounds() {
+		GraphicsNode gn = getGraphicsNode();
 		return gn.getBounds();
 	}
 

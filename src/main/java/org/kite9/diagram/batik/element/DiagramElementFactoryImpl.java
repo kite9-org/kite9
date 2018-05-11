@@ -57,13 +57,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			if (parent != null) {
 				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
 			}
-			return new DiagramImpl(el, context, new SVGContainerRectangularPainter());
+			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el));
 		case CONTAINER:
 			switch (usage) {
 			case LABEL:
-				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter());
+				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el));
 			case REGULAR:
-				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter());
+				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el));
 			case DECAL:
 			default:
 				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
@@ -71,27 +71,27 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case TEXT:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter(context));
+				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter(el, context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter(context));
+				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter(el, context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter(context));
+				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter(el, context));
 			} 
 		case SVG:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
+				return new LabelLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
+				return new DecalLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(context));
+				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new DirectSVGPainter<Connection>());
+			return new ConnectionImpl(el, parent, context, new DirectSVGPainter(el));
 		case LINK_END:
-			return new TerminatorImpl(el, parent, context, new SVGLeafRectangularPainter(context));
+			return new TerminatorImpl(el, parent, context, new DirectSVGPainter(el));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

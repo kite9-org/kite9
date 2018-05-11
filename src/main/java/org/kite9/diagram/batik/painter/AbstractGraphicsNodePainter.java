@@ -5,6 +5,7 @@ import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
 /**
@@ -14,21 +15,21 @@ import org.w3c.dom.Element;
  *
  * @param <X>
  */
-public abstract class AbstractGraphicsNodePainter<X extends DiagramElement> extends DirectSVGPainter<X> {
+public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 
 	private Kite9BridgeContext ctx;
 	
-	public AbstractGraphicsNodePainter(Kite9BridgeContext ctx) {
-		super();
+	public AbstractGraphicsNodePainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+		super(theElement);
 		this.ctx = ctx;
 	}
 
 	private GraphicsNode graphicsNodeCache;
 
-	protected GraphicsNode getGraphicsNode(Element theElement) {
+	protected GraphicsNode getGraphicsNode() {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(theElement);
+			out = initGraphicsNode();
 			graphicsNodeCache = out;
 			return out;
 		}
@@ -36,7 +37,7 @@ public abstract class AbstractGraphicsNodePainter<X extends DiagramElement> exte
 		return out;
 	}
 	
-	protected GraphicsNode initGraphicsNode(Element theElement) {
+	protected GraphicsNode initGraphicsNode() {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, theElement);
 		return out;

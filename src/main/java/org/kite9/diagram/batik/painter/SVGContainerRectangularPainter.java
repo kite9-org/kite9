@@ -1,10 +1,6 @@
 package org.kite9.diagram.batik.painter;
 
-import java.awt.geom.Rectangle2D;
-
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.style.DiagramElementType;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 
 /**
@@ -15,14 +11,10 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public class SVGContainerRectangularPainter extends DirectSVGPainter<Container> implements RectangularPainter<Container> {
+public class SVGContainerRectangularPainter extends DirectSVGPainter {
 
-	/**
-	 * Bounds for rectangles is special - it should be the minimum size possible.
-	 */
-	@Override
-	public Rectangle2D bounds(StyledKite9SVGElement in, Container c) {
-		throw new Kite9ProcessingException("No fixed bounds for Container, it depends on contents: " + in);
+	public SVGContainerRectangularPainter(StyledKite9SVGElement theElement) {
+		super(theElement);
 	}
 
 }

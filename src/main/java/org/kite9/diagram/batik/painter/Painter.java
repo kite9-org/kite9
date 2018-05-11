@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.painter;
 
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -16,8 +15,10 @@ import org.w3c.dom.Element;
  *
  * @param <X>
  */
-public interface Painter<X extends DiagramElement> {
+public interface Painter {
 	
-	Element output(Document d, StyledKite9SVGElement theElement, X r);
+	Element output(Document d);
+	
+	void setDiagramElement(DiagramElement de);
 
 }

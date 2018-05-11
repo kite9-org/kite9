@@ -2,21 +2,19 @@ package org.kite9.diagram.batik.element;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.RectangularPainter;
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.style.ContainerPosition;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
@@ -24,7 +22,6 @@ import org.kite9.framework.dom.CSSConstants;
 import org.kite9.framework.dom.EnumValue;
 import org.kite9.framework.xml.Kite9XMLElement;
 import org.kite9.framework.xml.StyledKite9SVGElement;
-import org.w3c.dom.Element;
 
 public abstract class AbstractRectangularDiagramElement extends AbstractBatikDiagramElement implements Rectangular {
 	
@@ -35,7 +32,7 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	private List<DiagramElement> contents = new ArrayList<>();
 	protected DiagramElementSizing sizing;	
 
-	public AbstractRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<?> rp) {
+	public AbstractRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
 	}
 
@@ -131,45 +128,11 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	public Container getContainer() {
 		return (Container) getParent();
 	}
-	
-	@Override
-	protected void postProcess(Element out) {
-		// work out translation
-		Dimension2D position = getRectangularRenderedPosition();
-		
-		if ((position.x() != 0) || (position.y() != 0)) {
-			out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
-		}
-	}	
 
 	@Override
-	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
-		Map<String, String> out = super.getReplacementMap(theElement);
-		Dimension2D size = getRectangularRenderedSize();
-		double width = size.getWidth();
-		double height = size.getHeight();
-		out.put("x0", "0");
-		out.put("y0", "0");
-		out.put("x1", ""+width);
-		out.put("y1", ""+height);	
-		return out;
+	protected ContentTransform getDefaultTransform() {
+		return ContentTransform.POSITION;
 	}
 
-	protected Dimension2D getRectangularRenderedSize() {
-		RectangleRenderingInformation rri = getRenderingInformation();
-		Dimension2D size = rri.getSize();
-		return size;
-	}
 	
-	protected Dimension2D getRectangularRenderedPosition() {
-		RectangleRenderingInformation rri = getRenderingInformation();
-		Dimension2D position = rri.getPosition();
-		if (getParent() instanceof Container) {
-			rri = ((Container) getParent()).getRenderingInformation();
-			Dimension2D parentPosition = rri.getPosition();
-			position = new Dimension2D(position.x() - parentPosition.x(), position.y() - parentPosition.y());
-		}
-		return position;
-	}
-
 }

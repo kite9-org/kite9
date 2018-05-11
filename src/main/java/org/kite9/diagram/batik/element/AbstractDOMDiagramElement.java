@@ -15,7 +15,7 @@ import org.kite9.framework.xml.StyledKite9SVGElement;
  * @author robmoffat
  *
  */
-public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements DiagramElement, Serializable {
+public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements Serializable {
 	
 	protected StyledKite9SVGElement theElement;
 	protected Kite9BridgeContext ctx;

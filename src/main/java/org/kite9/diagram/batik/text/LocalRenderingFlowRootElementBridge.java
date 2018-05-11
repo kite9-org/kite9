@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.bridge;
+package org.kite9.diagram.batik.text;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -22,8 +22,6 @@ import org.apache.batik.gvt.font.GVTGlyphVector;
 import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
-import org.kite9.diagram.batik.text.ExtendedSVG;
-import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 

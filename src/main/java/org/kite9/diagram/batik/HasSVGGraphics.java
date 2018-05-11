@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik;
 
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -20,5 +21,10 @@ public interface HasSVGGraphics extends DiagramElement {
 	 * nested within it.
 	 */
 	public Element output(Document d);
+	
+	/**
+	 * Returns details of how the svg is transformed as it's written.
+	 */
+	public ContentTransform getTransform();
 
 }

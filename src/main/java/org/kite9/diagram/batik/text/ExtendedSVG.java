@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.apache.batik.gvt.font.GVTFontFamily;
-import org.kite9.diagram.batik.bridge.LocalRenderingFlowRootElementBridge;
 
 /**
  * Marker interface for a `Graphics2D` implementation, to say we are outputting to an SVG file.

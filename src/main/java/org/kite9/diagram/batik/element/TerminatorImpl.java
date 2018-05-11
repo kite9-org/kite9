@@ -5,12 +5,10 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
-import org.kite9.diagram.batik.painter.RectangularPainter;
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -26,7 +24,7 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	private Value reference;
 	private double markerReserve;
 
-	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, RectangularPainter<Leaf> rp) {
+	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
 	}
 
@@ -97,6 +95,11 @@ public class TerminatorImpl extends AbstractRectangularDiagramElement implements
 	
 	private static boolean attributesMatch(String name, TerminatorImpl a, TerminatorImpl b) {
 		return a.theElement.getAttribute(name).equals(b.theElement.getAttribute(name));
+	}
+
+	@Override
+	public Dimension2D getMinimumSize() {
+		return CostedDimension.ZERO;
 	}
 	
 	

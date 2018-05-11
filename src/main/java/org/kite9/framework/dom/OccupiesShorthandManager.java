@@ -6,7 +6,7 @@ import org.apache.batik.css.parser.CSSLexicalUnit;
 import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
-public class OccupiesShorthandManager implements ShorthandManager {
+public class OccupiesShorthandManager implements ShorthandManager {	
 
 	public String getPropertyName() {
 		return CSSConstants.GRID_OCCUPIES_PROPERTY;
