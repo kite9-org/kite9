@@ -2,7 +2,7 @@ package org.kite9.diagram.batik.painter;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.kite9.framework.dom.elements.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
 /**

@@ -21,7 +21,7 @@ import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
-import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.kite9.framework.dom.elements.StyledKite9SVGElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -72,7 +72,7 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
 		addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
-		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode(flowRoot));
+		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
 		Element group = graphicsNodeToXML(d, gn);
 		
 		if (group != null ) {

@@ -28,10 +28,10 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 /**
  * A GroupPhase is responsible for creating the Group data structures out of the

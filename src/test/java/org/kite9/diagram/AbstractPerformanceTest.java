@@ -33,9 +33,9 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.dom.XMLHelper;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Table;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	

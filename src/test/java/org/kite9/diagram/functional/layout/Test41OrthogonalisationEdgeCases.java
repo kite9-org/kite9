@@ -9,7 +9,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 @Ignore
 public class Test41OrthogonalisationEdgeCases extends AbstractLayoutFunctionalTest {

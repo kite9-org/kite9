@@ -21,7 +21,7 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.functional.layout.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 
 public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {

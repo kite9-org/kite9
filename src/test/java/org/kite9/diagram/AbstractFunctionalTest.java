@@ -17,9 +17,9 @@ import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
+import org.kite9.framework.dom.elements.ADLDocument;
+import org.kite9.framework.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.AbstractStyleableXMLElement;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
 

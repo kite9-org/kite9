@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.pipeline;
 
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 public interface ArrangementPipeline {
 

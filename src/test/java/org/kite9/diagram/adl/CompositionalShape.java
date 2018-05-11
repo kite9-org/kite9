@@ -2,8 +2,8 @@ package org.kite9.diagram.adl;
 
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.AbstractStyleableXMLElement;
+import org.kite9.framework.dom.elements.ADLDocument;
+import org.kite9.framework.dom.elements.AbstractStyleableXMLElement;
 import org.w3c.dom.Node;
 
 public class CompositionalShape extends AbstractStyleableXMLElement  {

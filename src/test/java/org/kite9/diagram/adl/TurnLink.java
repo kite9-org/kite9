@@ -1,7 +1,7 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 
 /** 
  * Link which allows turns 

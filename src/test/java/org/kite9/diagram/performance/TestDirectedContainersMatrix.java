@@ -27,10 +27,10 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGrou
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
+import org.kite9.framework.dom.elements.ADLDocument;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.Kite9XMLElement;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 

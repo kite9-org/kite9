@@ -1,6 +1,6 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.dom.elements.ADLDocument;
 
 public class TextLabel extends TextLine {
 

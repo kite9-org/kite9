@@ -23,9 +23,9 @@ import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.LogicException;
 import org.kite9.framework.logging.Table;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 /**
  * Helps with comparing the results of tests

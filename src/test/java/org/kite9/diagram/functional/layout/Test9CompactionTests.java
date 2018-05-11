@@ -16,9 +16,9 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.Kite9XMLElement;
 
 public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 

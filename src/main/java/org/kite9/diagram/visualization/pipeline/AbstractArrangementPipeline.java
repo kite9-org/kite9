@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContent
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Planarizer;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 /**
  * Basic pipeline that can render to any form of output.

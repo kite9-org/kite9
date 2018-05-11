@@ -24,7 +24,6 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.batik.element.AbstractDOMDiagramElement;
 import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -62,8 +61,9 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisH
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
+import org.kite9.framework.dom.AbstractDOMDiagramElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;

@@ -1,8 +1,8 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.AbstractStyleableXMLElement;
-import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.dom.elements.ADLDocument;
+import org.kite9.framework.dom.elements.AbstractStyleableXMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;
 
 /**

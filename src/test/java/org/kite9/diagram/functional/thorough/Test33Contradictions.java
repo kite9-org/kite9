@@ -21,10 +21,10 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.Kite9XMLElement;
 import org.w3c.dom.Element;
 
 import junit.framework.Assert;

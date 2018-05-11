@@ -6,7 +6,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 public class Test4Containers extends AbstractLayoutFunctionalTest {
 

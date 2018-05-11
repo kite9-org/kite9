@@ -14,9 +14,9 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.xml.ADLDocument;
-import org.kite9.framework.xml.DiagramKite9XMLElement;
-import org.kite9.framework.xml.Kite9XMLElement;
+import org.kite9.framework.dom.elements.ADLDocument;
+import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
+import org.kite9.framework.dom.elements.Kite9XMLElement;
 
 public class TestConnected extends AbstractPerformanceTest {
 

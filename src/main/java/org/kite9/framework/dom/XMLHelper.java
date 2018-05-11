@@ -16,14 +16,13 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.dom.elements.ADLDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * Utility methods for converting to and from XML in the expected format. This
- * uses XStream under the hood to do the conversion.
+ * Utility methods for converting to and from XML in the expected format.
  * 
  * This copy exists here because we need it for testing.
  * 

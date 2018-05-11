@@ -14,7 +14,7 @@ import org.apache.batik.dom.svg.SVGDocumentFactory;
 import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.apache.batik.util.MimeTypeConstants;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.framework.xml.ADLDocument;
+import org.kite9.framework.dom.elements.ADLDocument;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGDocument;

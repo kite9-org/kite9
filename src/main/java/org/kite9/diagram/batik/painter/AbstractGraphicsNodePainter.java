@@ -4,8 +4,7 @@ import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.xml.StyledKite9SVGElement;
+import org.kite9.framework.dom.elements.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
 /**
@@ -17,7 +16,7 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 
-	private Kite9BridgeContext ctx;
+	protected Kite9BridgeContext ctx;
 	
 	public AbstractGraphicsNodePainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
 		super(theElement);
@@ -29,7 +28,7 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 	protected GraphicsNode getGraphicsNode() {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(getContents());
+			out = initGraphicsNode(getContents(), ctx);
 			graphicsNodeCache = out;
 			return out;
 		}
@@ -37,7 +36,7 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 		return out;
 	}
 	
-	protected GraphicsNode initGraphicsNode(Element e) {
+	public static GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
 		return out;
