@@ -4,7 +4,7 @@ import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.framework.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.w3c.dom.Element;
 
 /**

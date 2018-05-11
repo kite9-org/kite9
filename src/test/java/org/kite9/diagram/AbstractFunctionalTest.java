@@ -14,11 +14,11 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
 import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.dom.elements.ADLDocument;
-import org.kite9.framework.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.framework.logging.Kite9Log;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {

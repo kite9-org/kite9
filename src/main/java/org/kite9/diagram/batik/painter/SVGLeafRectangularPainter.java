@@ -4,8 +4,8 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.model.style.DiagramElementType;
-import org.kite9.framework.dom.elements.StyledKite9SVGElement;
 
 /**
  * Handles painting for {@link DiagramElementType.SVG}

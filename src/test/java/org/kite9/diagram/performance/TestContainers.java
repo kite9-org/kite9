@@ -15,10 +15,10 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.dom.elements.ADLDocument;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
-import org.kite9.framework.dom.elements.Kite9XMLElement;
 
 public class TestContainers extends AbstractPerformanceTest {
 

@@ -7,8 +7,8 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
-import org.kite9.framework.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.adl.TextLine;
 
 public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {

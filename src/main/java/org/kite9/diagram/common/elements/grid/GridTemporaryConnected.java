@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.dom.model.AbstractDiagramElement;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -20,7 +21,6 @@ import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.framework.dom.AbstractDiagramElement;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.

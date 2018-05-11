@@ -16,6 +16,8 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
@@ -32,8 +34,6 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Table;
 

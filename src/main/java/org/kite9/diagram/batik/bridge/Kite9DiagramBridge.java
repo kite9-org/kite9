@@ -5,8 +5,8 @@ import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GenericBridge;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.w3c.dom.Element;
 
 /**

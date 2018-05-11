@@ -6,10 +6,10 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 

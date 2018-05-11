@@ -12,9 +12,9 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
-import org.kite9.framework.dom.elements.Kite9XMLElement;
 
 public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 

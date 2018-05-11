@@ -1,11 +1,11 @@
 package org.kite9.diagram.model.visitors;
 
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class DiagramChecker {

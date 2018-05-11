@@ -15,15 +15,15 @@ import javax.xml.transform.Source;
 
 import org.junit.Test;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.dom.XMLHelper;
-import org.kite9.framework.dom.elements.ADLDocument;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 import org.w3c.dom.Document;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;

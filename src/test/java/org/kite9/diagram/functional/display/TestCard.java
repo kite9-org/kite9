@@ -10,12 +10,12 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TextLineWithSymbols;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.dom.elements.ADLDocument;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
 
 public class TestCard extends AbstractDisplayFunctionalTest {
 

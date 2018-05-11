@@ -20,6 +20,9 @@ import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
@@ -27,9 +30,6 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGrou
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
-import org.kite9.framework.dom.elements.ADLDocument;
-import org.kite9.framework.dom.elements.DiagramKite9XMLElement;
-import org.kite9.framework.dom.elements.Kite9XMLElement;
 import org.kite9.framework.logging.LogicException;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
