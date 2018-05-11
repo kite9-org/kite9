@@ -2,8 +2,11 @@ package org.kite9.diagram.batik.transform;
 
 import java.awt.geom.Rectangle2D;
 
+import org.kite9.diagram.batik.painter.LeafPainter;
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class RescalingTransformer extends AbstractRectangularTransformer  {
@@ -17,24 +20,30 @@ public class RescalingTransformer extends AbstractRectangularTransformer  {
 	/**
 	 * Ensures the decal is the same size as it's parent (for scaled decals)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public void postProcess(Element out) {	
+	public Element postProcess(Painter p, Document d) {	
 		Dimension2D size = getRectangularRenderedSize(l);
 		double width = size.getWidth();
 		double height = size.getHeight();
-	
-		Rectangle2D myBounds = l.getBounds();
 		
-		if (myBounds != null) {
-			double xs = width / myBounds.getWidth();
-			double ys = height / myBounds.getHeight();
+		Element out = p.output(d);
+		
+		if (p instanceof LeafPainter) {
+			Rectangle2D myBounds = ((LeafPainter) p).bounds();
 			
-			out.setAttribute("transform", 
-					"scale("+xs+","+ys+")"+
-					"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
-					);
+			if (myBounds != null) {
+				double xs = width / myBounds.getWidth();
+				double ys = height / myBounds.getHeight();
+				
+				out.setAttribute("transform", 
+						"scale("+xs+","+ys+")"+
+						"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+						);
+			}
 		}
+		
+		return out;
+	
 	}
 
 }

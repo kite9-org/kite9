@@ -87,9 +87,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 
 	protected Element paintElementToDocument(Document d) {
 		preProcess(theElement);
-		Element out = p.output(d);
-		transformer.postProcess(out);
-		return out;
+		return transformer.postProcess(p, d);
 	}
 
 

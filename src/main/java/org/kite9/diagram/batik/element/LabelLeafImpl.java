@@ -29,9 +29,7 @@ public class LabelLeafImpl extends AbstractLabelImpl implements Label, Leaf {
 		return theElement.getTextContent().trim();
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Rectangle2D getBounds() {
+	protected Rectangle2D getBounds() {
 		ensureInitialized();
 		return ((LeafPainter) this.p).bounds();
 	}

@@ -57,21 +57,8 @@ public abstract class AbstractPainter implements Painter {
 		out.setAttribute("kite9-elem", toUse.getTagName());
 	}
 
-	private StyledKite9SVGElement source;
-	
-	protected StyledKite9SVGElement getContents(StyledKite9SVGElement source) {
-		if (this.source == null) {
-			this.source = initializeSourceContents(source);
-		} 
-		
-		return this.source;
+	protected StyledKite9SVGElement getContents() {
+		return theElement;
 	}
 	
-	/**
-	 * Called where we need to set up the XML content for the element in advance to processing it.
-	 */
-	protected StyledKite9SVGElement initializeSourceContents(StyledKite9SVGElement source) {
-		return source;
-	}
-
 }

@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.element;
 
-import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -10,7 +9,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.xml.StyledKite9SVGElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,11 +19,6 @@ public class DecalLeafImpl extends AbstractRectangularDiagramElement implements 
 		super(el, parent, ctx, lo);
 	}
 
-	@Override
-	public Rectangle2D getBounds() {
-		throw new Kite9ProcessingException("Decal doesn't have bounds");
-	}
-	
 	/**
 	 * Decal size is based on it's parent element, since it doesn't have a computed size of it's own.
 	 */

@@ -21,7 +21,7 @@ public class DirectSVGPainter extends AbstractPainter {
 	 * as the DiagramElement.  
 	 */
 	public final Element output(Document d) {
-		StyledKite9SVGElement toUse = getContents(theElement);
+		StyledKite9SVGElement toUse = getContents();
 		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
 		processOutput(toUse, out, d);
 		addAttributes(toUse, out);

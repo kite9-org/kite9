@@ -40,7 +40,8 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	
 	private Rectangle2D bounds;
 	private String theText;
-
+	private StyledKite9SVGElement textContents;
+	
 	/**
 	 * Turn the text that's in the input element into a bunch of paragraphs in a SVG 1.2 flow.
 	 * <flowRoot>
@@ -52,8 +53,11 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	 *   </flowDiv>
 	 * </flowRoot>
 	 */
-	protected StyledKite9SVGElement initializeSourceContents(StyledKite9SVGElement theElement) {
-		theElement = super.initializeSourceContents(theElement);
+	protected StyledKite9SVGElement getContents() {
+		if (textContents != null) {
+			return textContents;
+		}
+		
 		Document d = theElement.getOwnerDocument();
 
 		theText = theElement.getTextContent();
@@ -68,15 +72,17 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
 		addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
-		GraphicsNode gn = getGraphicsNode();
+		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode(flowRoot));
 		Element group = graphicsNodeToXML(d, gn);
 		
 		if (group != null ) {
 			removeFontSizeAndFamily(group);
 			theElement.appendChild(group);
 		}
+		
+		textContents = theElement;
 
-		return theElement;
+		return textContents;
 	}
 	
 	
@@ -152,15 +158,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	public Rectangle2D bounds() {
 		GraphicsNode gn = getGraphicsNode();
 		return bounds;
-	}
-
-	/**
-	 * Rather than returning the top-level graphics node, we are going
-	 * to return the Flow node within it, as otherwise we'll get the text container too.
-	 */
-	@Override
-	protected GraphicsNode initGraphicsNode() {
-		return LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode());
 	}
 
 }

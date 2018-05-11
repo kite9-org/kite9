@@ -79,11 +79,16 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	/**
-	 * Uses contents to set the size of the decal
+	 * Uses contents to set the svg of the decal
 	 */
 	@Test
 	public void test_59_10_TextAndBadge() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello", "")+badgeDecal(),"kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("hello something", "")+badgeDecal(),"kite9-padding: 10px;")));
+	}
+	
+	@Test
+	public void test_59_11_TextAndScaledDecal() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "")+polyDecal(),"kite9-padding: 10px;")));
 	}
 
 	private String svgLeaf(String xml, String extraAtts) {
@@ -134,6 +139,11 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		return "      <badge style='kite9-usage: decal; kite9-type: svg; '>\n" +
 	           "        <svg:circle cx='{x1-5}' cy='{y1-5}' r='15' fill='red' /> \n"+
 	           "      </badge>\n";
+	}
+	
+	private String polyDecal() {
+		return "      <bg style='kite9-usage: decal; kite9-type: svg; kite9-transform: rescale;'>\n" + polygon() + 
+ 	           "      </bg>\n";
 	}
 	
 	private String polygon() {

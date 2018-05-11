@@ -1,7 +1,9 @@
 package org.kite9.diagram.batik.transform;
 
+import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -19,13 +21,16 @@ public class PositioningTransformer extends AbstractRectangularTransformer {
 	}
 	
 	@Override
-	public void postProcess(Element out) {
+	public Element postProcess(Painter p, Document d) {	
 		// work out translation
 		Dimension2D position = getRenderedRelativePosition(owner);
+		Element out = p.output(d);
 		
 		if ((position.x() != 0) || (position.y() != 0)) {
 			out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
 		}
+		
+		return out;
 	}	
 
 	protected Rectangular getOwner() {

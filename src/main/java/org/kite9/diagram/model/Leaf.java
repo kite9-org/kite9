@@ -1,7 +1,5 @@
 package org.kite9.diagram.model;
 
-import java.awt.geom.Rectangle2D;
-
 /**
  * An item which is not a container of further connected items. (i.e. not a container)
  * 
@@ -14,6 +12,4 @@ import java.awt.geom.Rectangle2D;
  */
 public interface Leaf extends Rectangular {
 	
-	public Rectangle2D getBounds();
-
 }

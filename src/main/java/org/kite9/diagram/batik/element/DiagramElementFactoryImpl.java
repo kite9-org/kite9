@@ -5,7 +5,6 @@ import org.kite9.diagram.batik.painter.DirectSVGPainter;
 import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
 import org.kite9.diagram.batik.painter.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.painter.TextRectangularPainter;
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementFactory;
 import org.kite9.diagram.model.style.DiagramElementType;

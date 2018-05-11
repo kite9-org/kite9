@@ -29,7 +29,7 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 	protected GraphicsNode getGraphicsNode() {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode();
+			out = initGraphicsNode(getContents());
 			graphicsNodeCache = out;
 			return out;
 		}
@@ -37,9 +37,9 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 		return out;
 	}
 	
-	protected GraphicsNode initGraphicsNode() {
+	protected GraphicsNode initGraphicsNode(Element e) {
 		GVTBuilder builder = ctx.getGVTBuilder();
-		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, theElement);
+		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
 		return out;
 	}
 
