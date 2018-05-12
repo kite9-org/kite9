@@ -1,7 +1,6 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;
 
@@ -13,7 +12,7 @@ import org.w3c.dom.Node;
  *
  */
 
-public class Arrow extends AbstractStyleableXMLElement {
+public class Arrow extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = 5054715961820271315L;
 

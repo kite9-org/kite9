@@ -9,6 +9,9 @@ import org.w3c.dom.Node;
  *
  */
 public class GenericKite9XMLElement extends AbstractStyleableXMLElement {
+	
+	public GenericKite9XMLElement() {
+	}
 
 	public GenericKite9XMLElement(String name, ADLDocument owner) {
 		super(name, owner);

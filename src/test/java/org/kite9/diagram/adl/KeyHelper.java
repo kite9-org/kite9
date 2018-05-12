@@ -59,7 +59,7 @@ public class KeyHelper {
 	private ADLDocument doc;
 	
 	public KeyHelper() {
-		this(AbstractStyleableXMLElement.TESTING_DOCUMENT);
+		this(AbstractMutableXMLElement.TESTING_DOCUMENT);
 	}
 
 	public KeyHelper(ADLDocument doc) {

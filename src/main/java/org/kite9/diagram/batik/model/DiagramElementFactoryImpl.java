@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.DirectSVGPainter;
 import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
 import org.kite9.diagram.batik.painter.SVGLeafRectangularPainter;
 import org.kite9.diagram.batik.painter.TextRectangularPainter;
@@ -11,6 +10,7 @@ import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
+import org.kite9.diagram.dom.painter.DirectSVGPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
@@ -57,13 +57,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			if (parent != null) {
 				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
 			}
-			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el));
+			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el, context));
 		case CONTAINER:
 			switch (usage) {
 			case LABEL:
-				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el));
+				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context));
 			case REGULAR:
-				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el));
+				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context));
 			case DECAL:
 			default:
 				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
@@ -89,9 +89,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new DirectSVGPainter(el));
+			return new ConnectionImpl(el, parent, context, new DirectSVGPainter(el, context.getXMLProcessor()));
 		case LINK_END:
-			return new TerminatorImpl(el, parent, context, new DirectSVGPainter(el));
+			return new TerminatorImpl(el, parent, context, new DirectSVGPainter(el, context.getXMLProcessor()));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

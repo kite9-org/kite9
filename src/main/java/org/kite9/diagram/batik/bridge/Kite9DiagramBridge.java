@@ -6,7 +6,10 @@ import org.apache.batik.bridge.GenericBridge;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 
 /**
@@ -26,7 +29,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 	}
     
     public static BatikArrangementPipeline lastPipeline;
-    public static DiagramKite9XMLElement lastDiagram;
+    public static GenericKite9XMLElement lastDiagram;
 
 
 	@Override
@@ -46,15 +49,21 @@ public class Kite9DiagramBridge implements GenericBridge {
 
 	@Override
 	public void handleElement(BridgeContext ctx, Element e) {
-		DiagramKite9XMLElement d = (DiagramKite9XMLElement) e;
+		GenericKite9XMLElement d = (GenericKite9XMLElement) e;
        	
        	// work out the positions of all the elements in te diagram, 
        	BatikArrangementPipeline pipeline = createPipeline();
-		pipeline.arrange(d);
-
-       	// used in testing nowhere else
-       	lastDiagram = d;
-        lastPipeline = pipeline;
+       	
+       	DiagramElement de = d.getDiagramElement();
+       	
+       	if (de instanceof Diagram) {
+       		pipeline.arrange((Diagram) de);
+           	// used in testing nowhere else
+           	lastDiagram = d;
+            lastPipeline = pipeline;
+       	} else {
+       		throw new Kite9ProcessingException("Outermost element-type of kite9 element must be a diagram "+e.getTagName()+ " is a "+de.getClass());
+       	}
 	}
 	
 

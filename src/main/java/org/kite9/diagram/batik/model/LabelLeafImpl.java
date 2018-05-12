@@ -18,17 +18,12 @@ import org.kite9.diagram.model.style.ContentTransform;
  * @author robmoffat
  * 
  */
-public class LabelLeafImpl extends AbstractLabelImpl implements Label, Leaf {
+public class LabelLeafImpl extends AbstractLabel implements Label, Leaf {
 	
 	public LabelLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
 		super(el, parent, ctx, lo);
 	}
 
-	public String getText() {
-		ensureInitialized();
-		return theElement.getTextContent().trim();
-	}
-	
 	protected Rectangle2D getBounds() {
 		ensureInitialized();
 		return ((LeafPainter) this.p).bounds();

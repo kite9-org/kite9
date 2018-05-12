@@ -3,10 +3,10 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 
 public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 

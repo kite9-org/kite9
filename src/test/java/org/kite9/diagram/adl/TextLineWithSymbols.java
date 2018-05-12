@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Node;
@@ -16,7 +15,7 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class TextLineWithSymbols extends AbstractStyleableXMLElement {
+public class TextLineWithSymbols extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = -1917135065467101779L;
 	

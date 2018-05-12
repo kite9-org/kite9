@@ -19,7 +19,6 @@ import org.apache.batik.dom.util.HashTable;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
 import org.kite9.diagram.dom.managers.ConnectionAlignmentLengthManager;
 import org.kite9.diagram.dom.managers.EnumManager;
@@ -88,7 +87,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.DIAGRAM_ELEMENT, new ElementFactory() {
 			 
 			public Element create(String prefix, Document doc) {
-				DiagramKite9XMLElement out = new DiagramKite9XMLElement((ADLDocument) doc);
+				GenericKite9XMLElement out = new GenericKite9XMLElement();
 				out.setOwnerDocument(doc);
 				return out;
 			}
@@ -183,7 +182,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	public Element createElementNS(AbstractDocument document, String namespaceURI, String qualifiedName) {
 		if (USE_GENERIC_XML_ELEMENT) {
 			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
-				if ((!XMLHelper.DIAGRAM_ELEMENT.equals(qualifiedName)) && (!"contents".equals(qualifiedName))) {
+				if (!"contents".equals(qualifiedName)) {
 					return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
 				}
 			} 

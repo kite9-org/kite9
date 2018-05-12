@@ -1,5 +1,8 @@
-package org.kite9.diagram.batik.painter;
+package org.kite9.diagram.dom.painter;
 
+import java.util.Map;
+
+import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,8 +20,19 @@ import org.w3c.dom.Element;
  */
 public interface Painter {
 	
+	/**
+	 * Paints the XML to a new document (i.e. copy).  This forces the conversion from 
+	 * Kite9 ADL document into SVG.
+	 */
 	Element output(Document d);
 	
 	void setDiagramElement(DiagramElement de);
+	
+	void setParameters(Map<String, String> parameters);
 
+	/**
+	 * Returns the XML in the current document (i.e. original).
+	 * This will force any templating to be done.
+	 */
+	StyledKite9SVGElement getContents();
 }

@@ -53,10 +53,12 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	 *   </flowDiv>
 	 * </flowRoot>
 	 */
-	protected StyledKite9SVGElement getContents() {
+	public StyledKite9SVGElement getContents() {
 		if (textContents != null) {
 			return textContents;
 		}
+		
+		StyledKite9SVGElement theElement = super.getContents();
 		
 		Document d = theElement.getOwnerDocument();
 

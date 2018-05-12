@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,11 +17,11 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public class ValueReplacingProcessor implements XMLProcessor {
+public class ValueReplacingProcessor extends AbstractProcessor {
 	
 	public interface ValueReplacer {
 		
-		public String getReplacementValue(String in);	
+		public String getReplacementValue(String in, Element context);	
 		
 	}
 
@@ -35,13 +34,9 @@ public class ValueReplacingProcessor implements XMLProcessor {
 
 
 	@Override
-	public void processContents(Node from) {
-		if (from instanceof Element) {
-			performReplaceOnAttributes(from, valueReplacer);
-			performReplace(((Element)from).getChildNodes(), valueReplacer);
-		} else {
-			throw new Kite9ProcessingException("Was expecting an element");
-		}
+	public void processElement(Element from) {
+		performReplaceOnAttributes((Element) from, valueReplacer);
+		performReplace(((Element)from).getChildNodes(), valueReplacer);
 	}
 
 	/**
@@ -53,7 +48,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 			return;
 
 		if (n instanceof Element) {
-			performReplaceOnAttributes(n, vr);
+			performReplaceOnAttributes((Element) n, vr);
 
 			if (n instanceof Kite9XMLElement) {
 				// we don't do sub-elements - they're someone else's problem
@@ -66,10 +61,10 @@ public class ValueReplacingProcessor implements XMLProcessor {
 
 
 
-	private void performReplaceOnAttributes(Node n, ValueReplacer vr) {
+	private void performReplaceOnAttributes(Element n, ValueReplacer vr) {
 		for (int j = 0; j < n.getAttributes().getLength(); j++) {
 			Attr a = (Attr) n.getAttributes().item(j);
-			a.setValue(performValueReplace(a.getValue(), vr));
+			a.setValue(performValueReplace(a.getValue(), vr, n));
 		}
 	}
 
@@ -88,7 +83,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 		}
 	}
 
-	protected String performValueReplace(String input, ValueReplacer vr) {
+	protected String performValueReplace(String input, ValueReplacer vr, Element at) {
 		Pattern p = Pattern.compile("\\{([a-zA-Z0-9@_]+)}");
 		
 		Matcher m = p.matcher(input);
@@ -98,7 +93,7 @@ public class ValueReplacingProcessor implements XMLProcessor {
 			out.append(input.substring(place, m.start()));
 			
 			String in = m.group(1).toLowerCase();
-			String replacement = vr.getReplacementValue(in);
+			String replacement = vr.getReplacementValue(in, at);
 			
 			if (replacement != null) {
 				out.append(replacement);

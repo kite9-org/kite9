@@ -3,7 +3,6 @@ package org.kite9.diagram.adl;
 import java.util.List;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;
 
@@ -16,7 +15,7 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class Glyph extends AbstractStyleableXMLElement {
+public class Glyph extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = -6572545083931316651L;
 	

@@ -1,7 +1,9 @@
-package org.kite9.diagram.dom.elements;
+package org.kite9.diagram.adl;
 
 import java.util.List;
 
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Layout;
 import org.w3c.dom.Node;

@@ -1,8 +1,9 @@
-package org.kite9.diagram.batik.painter;
+package org.kite9.diagram.dom.painter;
 
-import org.apache.batik.anim.dom.SVG12OMDocument;
+import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.Kite9ExpandingCopier;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -12,8 +13,8 @@ import org.w3c.dom.Element;
  */
 public class DirectSVGPainter extends AbstractPainter {
 
-	public DirectSVGPainter(StyledKite9SVGElement theElement) {
-		super(theElement);
+	public DirectSVGPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
+		super(theElement, processor);
 	}
 
 	/**
@@ -22,7 +23,7 @@ public class DirectSVGPainter extends AbstractPainter {
 	 */
 	public final Element output(Document d) {
 		StyledKite9SVGElement toUse = getContents();
-		Element out = d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12OMDocument.SVG_G_TAG);
+		Element out = d.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_G_TAG);
 		processOutput(toUse, out, d);
 		addAttributes(toUse, out);
 		return out;

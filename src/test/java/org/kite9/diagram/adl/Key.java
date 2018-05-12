@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;
 
-public class Key extends AbstractStyleableXMLElement {
+public class Key extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = 7705875104684442878L;
 	

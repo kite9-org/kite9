@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.transform;
 import java.awt.geom.Rectangle2D;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
-import org.kite9.diagram.batik.painter.Painter;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;

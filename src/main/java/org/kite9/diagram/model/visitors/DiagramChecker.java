@@ -1,6 +1,6 @@
 package org.kite9.diagram.model.visitors;
 
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;

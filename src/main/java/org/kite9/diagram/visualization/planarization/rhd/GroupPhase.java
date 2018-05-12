@@ -9,13 +9,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.hints.PositioningHints;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;

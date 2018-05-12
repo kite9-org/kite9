@@ -1,8 +1,12 @@
-package org.kite9.diagram.batik.painter;
+package org.kite9.diagram.dom.painter;
+
+import java.util.Map;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 
 /**
@@ -14,12 +18,22 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractPainter implements Painter {
 
-	protected StyledKite9SVGElement theElement;
+	private StyledKite9SVGElement theElement;
 	protected DiagramElement r;
+	private Map<String, String> parameters;
+	private boolean performedPreprocess = false;
+	private XMLProcessor processor;
 	
-	public AbstractPainter(StyledKite9SVGElement theElement) {
+	
+	@Override
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
+	}
+
+	public AbstractPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
 		super();
 		this.theElement = theElement;
+		this.processor = processor;
 	}
 
 	@Override
@@ -57,7 +71,28 @@ public abstract class AbstractPainter implements Painter {
 		out.setAttribute("kite9-elem", toUse.getTagName());
 	}
 
-	protected StyledKite9SVGElement getContents() {
+	/**
+	 * Use this method to decorate the contents before processing.
+	 */
+	public StyledKite9SVGElement getContents() {
+		if (parameters == null) {
+			throw new Kite9ProcessingException("Painter parameters not set");
+		}
+		
+		if (theElement == null) {
+			throw new Kite9ProcessingException("Painter xml element not set");
+		}
+		
+		if (r == null) {
+			throw new Kite9ProcessingException("Painter diagram element not set");
+		}
+		
+		if (performedPreprocess) {
+			return theElement;
+		}
+		
+		processor.processContents(theElement);
+		
 		return theElement;
 	}
 	

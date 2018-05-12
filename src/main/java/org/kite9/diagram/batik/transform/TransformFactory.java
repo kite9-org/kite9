@@ -1,6 +1,6 @@
 package org.kite9.diagram.batik.transform;
 
-import org.kite9.diagram.dom.model.HasSVGGraphics;
+import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.ContentTransform;
@@ -8,7 +8,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 
 public class TransformFactory {
 
-	public static SVGTransformer initializeTransformer(HasSVGGraphics diagramElement) {
+	public static SVGTransformer initializeTransformer(AbstractBatikDiagramElement diagramElement) {
 		ContentTransform t = diagramElement.getTransform();
 		
 		// note we are using the fall-through approach here.

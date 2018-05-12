@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.batik.painter.RoutePainter;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
@@ -13,6 +12,7 @@ import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
@@ -36,8 +36,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	@Override
 	protected void initialize() {
 		super.initialize();
-		Kite9XMLElement fromElement = getFromElement(theElement);
-		Kite9XMLElement toElement = getToElement(theElement);
+		Kite9XMLElement fromElement = getFromElement();
+		Kite9XMLElement toElement = getToElement();
 		
 		from = (Connected) fromElement.getDiagramElement();
 		to = (Connected) toElement.getDiagramElement();
@@ -83,7 +83,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 
-	public static Kite9XMLElement getFromElement(Kite9XMLElement theElement) {
+	public Kite9XMLElement getFromElement(Kite9XMLElement theElement) {
 		String reference = getFromReference(theElement);
 		ADLDocument owner = theElement.getOwnerDocument();
 		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, reference);
@@ -91,22 +91,22 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 
-	public static String getFromReference(Kite9XMLElement theElement) {
+	public String getFromReference(Kite9XMLElement theElement) {
 		Element fromEl = theElement.getProperty("from");
 		String reference = fromEl.getAttribute("reference");
 		return reference;
 	}
 
-	public static Kite9XMLElement getToElement(Kite9XMLElement theElement) {
-		String reference = getToReference(theElement);
-		ADLDocument owner = theElement.getOwnerDocument();
+	public Kite9XMLElement getToElement() {
+		String reference = getToReference();
+		ADLDocument owner = getOwnerDocument();
 		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, reference);
 		return to;
 	}
 
 
-	public static String getToReference(Kite9XMLElement theElement) {
-		Element toEl = theElement.getProperty("to");
+	public String getToReference() {
+		Element toEl = getProperty("to");
 		String reference = toEl.getAttribute("reference");
 		return reference;
 	}

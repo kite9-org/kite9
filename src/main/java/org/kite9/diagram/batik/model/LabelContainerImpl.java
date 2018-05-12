@@ -1,9 +1,11 @@
 package org.kite9.diagram.batik.model;
 
+import java.util.List;
+
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
@@ -20,7 +22,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
  * @author robmoffat
  * 
  */
-public class LabelContainerImpl extends AbstractLabelImpl implements Label, Container {
+public class LabelContainerImpl extends AbstractLabel implements Label, Container {
 	
 	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
@@ -70,6 +72,19 @@ public class LabelContainerImpl extends AbstractLabelImpl implements Label, Cont
 		double up = getPadding(Direction.UP);
 		double down = getPadding(Direction.DOWN);
 		return new CostedDimension(left + right, up + down, CostedDimension.UNBOUNDED);
+	}
+	
+	private List<DiagramElement> contents;
+	
+	@Override
+	protected void initialize() {
+		super.initialize();
+		this.contents = initContents();
+	}
+
+	@Override
+	public List<DiagramElement> getContents() {
+		return contents;
 	}
 	
 }

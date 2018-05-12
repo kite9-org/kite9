@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.model.Connection;
@@ -25,7 +25,6 @@ import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,18 +34,18 @@ import org.w3c.dom.Text;
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
-	protected DiagramKite9XMLElement renderDiagram(DiagramKite9XMLElement d) throws Exception {
+	protected Kite9XMLElement renderDiagram(DiagramKite9XMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		return renderDiagram(xml);
 	}
 
 
-	protected DiagramKite9XMLElement renderDiagram(String xml) throws Exception {
+	protected Kite9XMLElement renderDiagram(String xml) throws Exception {
 		String full = addSVGFurniture(xml);
 		//transcodePNG(full);
 		transcodeSVG(full);
 		copyTo(getOutputFile(".svg"), "svg-output");
-		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		boolean addressed = isAddressed();
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
@@ -170,7 +169,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		//Kite9Log.setLogging(false);
 		transcodeSVG(theXML);
 		boolean addressed = isAddressed();
-		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		

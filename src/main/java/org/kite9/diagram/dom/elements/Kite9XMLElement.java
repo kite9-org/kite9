@@ -5,7 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Useful helper methods for creating and inspecting Kite9 SVG documents, mainly used in testing.
+ * Useful helper methods for inspecting Kite9 XML elements.
  * 
  * @author robmoffat
  *
@@ -13,10 +13,6 @@ import org.w3c.dom.Element;
 public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 	
 	public String getID();
-
-	public void setTagName(String tag);
-	
-	public void setOwnerDocument(ADLDocument doc);
 	
 	public int getChildXMLElementCount();
 	
@@ -25,8 +21,6 @@ public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 	public ADLDocument getOwnerDocument();
 
 	public <E extends Element> E getProperty(String name);
-	
-	public <E extends Element> E replaceProperty(String propertyName, E e);
 	
 	public Element output(Document d);
 }

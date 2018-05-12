@@ -13,11 +13,10 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
-import org.kite9.diagram.dom.model.HasSVGGraphics;
+import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,45 +24,17 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement {
-
-	/**
-	 * Used only in test methods.
-	 */
-	public static ADLDocument TESTING_DOCUMENT = new ADLDocument();
+	
 	protected String tagName;
-	boolean readonly = false;
-	private static int counter = 0;
 
 	public AbstractStyleableXMLElement(String name, ADLDocument owner) {
 		super(name, owner);
 		this.tagName = name;
 	}
 	
-	public AbstractStyleableXMLElement(String id, String tag, ADLDocument doc) {
-		this(tag, doc);
-		
-		if ((id == null) || (id.length()==0)) {
-			id = createID();
-		}
-		
-		setID(id);
-	}
-	
 	public ParsedURL getCSSBase() {
 	    String bu = getBaseURI();
 	    return bu == null ? null : new ParsedURL(bu);
-	}
-
-	protected static synchronized String createID() {
-		return AUTO_GENERATED_ID_PREFIX+counter++;
-	}
-
-	public boolean isReadonly() {
-		return readonly;
-	}
-
-	public void setReadonly(boolean v) {
-		this.readonly = v;
 	}
 
 	public String getNodeName() {
@@ -87,35 +58,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return found;
 	}
 
-	public <E extends Element> E replaceProperty(String propertyName, E e) {
-		E existing = getProperty(propertyName);
-		if (e == null) {
-			if (existing != null) {
-				this.removeChild(existing);
-			}
-		 	return null;
-		}
-	
-		((Kite9XMLElement)e).setTagName(propertyName);
-		((Kite9XMLElement)e).setOwnerDocument((ADLDocument) this.ownerDocument); 
-		
-		if (!e.getNodeName().equals(propertyName)) {
-			throw new Kite9ProcessingException("Incorrect name.  Expected "+propertyName+" but was "+e.getNodeName());
-		}
-		
-		if (existing != null) {
-			this.removeChild(existing);
-		}
-		
-		this.appendChild(e);
-		
-		return e;
-	}
-
-	public void setTagName(String name) {
-		this.tagName = name;
-	}
-
 	protected String getTextData() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < getChildNodes().getLength(); i++) {
@@ -127,20 +69,7 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		
 		return sb.toString().trim();
 	}
-
-	protected void setTextData(String text) {
-		int i = 0;
-		while (i < getChildNodes().getLength()) {
-			Node child = getChildNodes().item(i);
-			if (child instanceof Text) {
-				removeChild(child);
-			} else {
-				i++;
-			}
-		}
-		
-		appendChild(ownerDocument.createTextNode(text));
-	}
+	
 
 	@Override
 	public String getNamespaceURI() {
@@ -152,18 +81,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		return getNodeName();
 	}
 
-	@Override
-	public void setAttribute(String name, String value) throws DOMException {
-		if (value == null) {
-			removeAttribute(name);
-		} else {
-			super.setAttribute(name, value);
-		}		
-	}
-
-	public void setOwnerDocument(ADLDocument doc) {
-		this.ownerDocument = doc;
-	}
 
 	public ADLDocument getOwnerDocument() {
 		return (ADLDocument) super.getOwnerDocument();
@@ -171,16 +88,6 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 
 	public final String getID() {
 		return getAttribute("id");
-	}
-
-	public void setID(String id) {
-		setAttribute("id", id);
-	}
-
-	public static final String AUTO_GENERATED_ID_PREFIX = "auto:";
-
-	public static void resetCounter() {
-		counter = 0;
 	}
 
 	protected StyleMap sm;
@@ -299,8 +206,8 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	@Override
 	public Element output(Document d) {
 		DiagramElement de = getDiagramElement();
-		if (de instanceof HasSVGGraphics) {
-			return ((HasSVGGraphics) de).output(d);
+		if (de instanceof HasSVGRepresentation) {
+			return ((HasSVGRepresentation) de).output(d);
 		} else {
 			return null;
 		}

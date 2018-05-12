@@ -1,13 +1,19 @@
 package org.kite9.diagram.dom.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Encapsulates an {@link StyledKite9SVGElement} as a {@link DiagramElement}.
@@ -15,9 +21,9 @@ import org.kite9.diagram.model.DiagramElement;
  * @author robmoffat
  *
  */
-public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements Serializable {
+public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements Serializable, HasSVGRepresentation {
 	
-	protected StyledKite9SVGElement theElement;
+	private StyledKite9SVGElement theElement;
 	
 	private boolean initialized = false;
 
@@ -32,11 +38,8 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 			initialize();
 		}
 	}
-
 	
-	public StyledKite9SVGElement getTheElement() {
-		return theElement;
-	}
+	protected abstract Painter getPainter();
 
 	public AbstractDOMDiagramElement(StyledKite9SVGElement el, DiagramElement parent) {
 		super(parent);
@@ -45,6 +48,14 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 	public Value getCSSStyleProperty(String prop) {
 		return theElement.getCSSStyleProperty(prop);
+	}
+	
+	public Element getProperty(String prop) {
+		return theElement.getProperty(prop);
+	}
+	
+	public Document getOwnerDocument() {
+		return theElement.getOwnerDocument();
 	}
 	
 	@Override
@@ -72,5 +83,34 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		return null;
 	}
 
-	
+	@Override
+	public Element output(Document d) {
+		if (getRenderingInformation().isRendered()) {
+			ensureInitialized();
+			Element out = paintElementToDocument(d);
+			return out;
+		} else {
+			return null;
+		}
+	}
+
+	protected abstract Element paintElementToDocument(Document d);
+
+
+	/**
+	 * For elements which are containers, call this methood as part of initialize.
+	 */
+	protected List<DiagramElement> initContents() {
+		List<DiagramElement> contents = new ArrayList<>();
+		for (Kite9XMLElement xmlElement : getPainter().getContents()) {
+			DiagramElement de = xmlElement.getDiagramElement();			
+			if (de instanceof Connection) {
+				addConnectionReference((Connection) de);
+			} else if (de != null) { 
+				contents.add(de);
+			} 
+		}
+		
+		return contents;
+	}
 }

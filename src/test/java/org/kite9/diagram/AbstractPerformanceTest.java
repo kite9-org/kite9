@@ -14,12 +14,14 @@ import java.util.TreeSet;
 import org.junit.Test;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -121,7 +123,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			currentMetrics = m;
 			
 			transcodeSVG(xml);
-			DiagramKite9XMLElement d = Kite9DiagramBridge.lastDiagram;
+			Kite9XMLElement d = Kite9DiagramBridge.lastDiagram;
 			AbstractArrangementPipeline pipeline = Kite9DiagramBridge.lastPipeline;
 			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
@@ -138,8 +140,8 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	}
 
-	private void measure(DiagramKite9XMLElement d, final Metrics m) {
-		new DiagramElementVisitor().visit(d.getDiagramElement(), new VisitorAction() {
+	private void measure(Kite9XMLElement d, final Metrics m) {
+		new DiagramElementVisitor().visit((Container) d.getDiagramElement(), new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {

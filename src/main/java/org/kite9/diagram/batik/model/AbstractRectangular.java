@@ -1,18 +1,14 @@
 package org.kite9.diagram.batik.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.dom.CSSConstants;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
-import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -23,16 +19,15 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
 
-public abstract class AbstractRectangularDiagramElement extends AbstractBatikDiagramElement implements Rectangular {
+public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular {
 	
 	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {};
 	
 	private RectangleRenderingInformation ri;
 	private Layout layout;
-	private List<DiagramElement> contents = new ArrayList<>();
 	protected DiagramElementSizing sizing;	
 
-	public AbstractRectangularDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
+	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
 	}
 
@@ -49,36 +44,12 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 		this.ri = (RectangleRenderingInformation) ri;
 	}
 
-	public List<DiagramElement> getContents() {
-		ensureInitialized();
-		return contents;
-	}
-
 	@Override
 	protected void initialize() {
 		super.initialize();
-		initElement(theElement);
 		initContainerPosition();
-	}
-
-	protected void initElement(Kite9XMLElement theElement) {
-		for (Kite9XMLElement xmlElement : theElement) {
-			DiagramElement de = xmlElement.getDiagramElement();			
-			if (de instanceof Connection) {
-				addConnectionReference((Connection) de);
-			} else if (de != null) { 
-				contents.add(de);
-			} else {
-				initElement(xmlElement);
-			}
-		}
-		
-		initLayout();
-		initSizing();
-	}
-
-	protected void addConnectionReference(Connection de) {
-		((ConnectedContainerImpl) getDiagram()).addConnectionReference(de);
+		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
+		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 	}
 
 	public Layout getLayout() {
@@ -116,6 +87,10 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	}
 
 	private ContainerPosition containerPosition = null;
+
+	protected double margin[] = new double[4];
+
+	protected double padding[] = new double[4];
 	
 
 	@Override
@@ -132,6 +107,23 @@ public abstract class AbstractRectangularDiagramElement extends AbstractBatikDia
 	@Override
 	protected ContentTransform getDefaultTransform() {
 		return ContentTransform.POSITION;
+	}
+
+	public double getMargin(Direction d) {
+		ensureInitialized();
+		return margin[d.ordinal()];
+	}
+
+	public double getPadding(Direction d) {
+		ensureInitialized();
+		return padding[d.ordinal()];
+	}
+
+	protected void initializeDirectionalCssValues(double[] vals, String prefix) {
+		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+CSSConstants.TOP);
+		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
+		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
+		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
 	}
 
 	

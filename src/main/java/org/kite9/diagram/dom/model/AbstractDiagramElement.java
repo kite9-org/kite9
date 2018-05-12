@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom.model;
 
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 
@@ -48,6 +49,8 @@ public abstract class AbstractDiagramElement implements DiagramElement {
 		return depth;
 	}
 	
-	
+	protected void addConnectionReference(Connection de) {
+		((AbstractDiagramElement) getParent()).addConnectionReference(de);
+	} 
 
 }

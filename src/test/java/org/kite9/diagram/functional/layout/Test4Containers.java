@@ -3,9 +3,9 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 import org.kite9.diagram.model.position.Layout;
 
 public class Test4Containers extends AbstractLayoutFunctionalTest {

@@ -17,7 +17,7 @@ import org.kite9.diagram.model.style.ContentTransform;
  * @author robmoffat
  *
  */
-public class ConnectedLeafImpl extends AbstractConnectedDiagramElement implements Leaf {
+public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 	
 	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
 		super(el, parent, ctx, lo);

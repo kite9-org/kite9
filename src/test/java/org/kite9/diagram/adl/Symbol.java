@@ -1,11 +1,10 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Node;
 
-public class Symbol extends AbstractStyleableXMLElement {
+public class Symbol extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = 3578883565482903409L;
 	

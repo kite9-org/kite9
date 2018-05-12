@@ -125,8 +125,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			
 			CSSEngine engine = domImpl.createCSSEngine((ADLDocument) input, createBridgeContext());
 			((ADLDocument) input).setCSSEngine(engine);
-			XMLProcessor templater = new BasicTemplater(docLoader);
-			templater.processContents(input);
 			
 			super.transcode(input, uri, output);
 			
@@ -135,6 +133,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
 			copier.processContents(input.getDocumentElement());
 		} catch (Exception e) {
+			e.printStackTrace();
 			ADLDocument d = (ADLDocument)input;
 			log.error("Problem with XML: "+new XMLHelper().toXML(d));
 			throw new Kite9ProcessingException(e);

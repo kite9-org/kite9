@@ -5,6 +5,7 @@ import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.DirectSVGPainter;
 import org.w3c.dom.Element;
 
 /**
@@ -19,7 +20,7 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGPainter {
 	protected Kite9BridgeContext ctx;
 	
 	public AbstractGraphicsNodePainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
-		super(theElement);
+		super(theElement, ctx.getXMLProcessor());
 		this.ctx = ctx;
 	}
 

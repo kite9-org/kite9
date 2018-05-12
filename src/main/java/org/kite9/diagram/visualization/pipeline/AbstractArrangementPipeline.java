@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.pipeline;
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -15,11 +15,11 @@ import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionSte
 import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
 import org.kite9.diagram.visualization.compaction.slideable.CenteringAlignmentCompactionStep;
+import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
-import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
@@ -47,8 +47,8 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	Compaction c;
 	ElementMapper em;
 
-	protected Planarization createPlanarization(DiagramKite9XMLElement d) {
-		return createPlanarizer().planarize(d.getDiagramElement());
+	protected Planarization createPlanarization(Diagram d) {
+		return createPlanarizer().planarize(d);
 	}
 
 	public Planarizer createPlanarizer() {
@@ -111,8 +111,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 		return false;
 	}
 		
-	public DiagramKite9XMLElement arrange(DiagramKite9XMLElement d) {
-		
+	public Diagram arrange(Diagram d) {
 		pln = createPlanarization(d);
 		orth = createOrthogonalization(pln);
 		c = compactOrthogonalization(orth);

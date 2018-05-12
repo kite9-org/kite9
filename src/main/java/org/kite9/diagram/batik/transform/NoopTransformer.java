@@ -1,6 +1,6 @@
 package org.kite9.diagram.batik.transform;
 
-import org.kite9.diagram.batik.painter.Painter;
+import org.kite9.diagram.dom.painter.Painter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

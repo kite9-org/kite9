@@ -6,8 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 

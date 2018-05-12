@@ -1,13 +1,14 @@
 package org.kite9.diagram.batik.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.CostedDimension;
@@ -17,7 +18,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 
-public class ConnectedContainerImpl extends AbstractConnectedDiagramElement implements Container {
+public class ConnectedContainerImpl extends AbstractConnected implements Container {
 	
 	public static final Map<Direction, String> TRAVERSAL_PROPERTIES = new HashMap<Direction, String>();
 	
@@ -32,10 +33,19 @@ public class ConnectedContainerImpl extends AbstractConnectedDiagramElement impl
 		super(el, parent, ctx, rp);
 	}
 	
+	
 	@Override
 	public DiagramElementSizing getSizing() {
 		ensureInitialized();
 		return this.sizing;
+	}
+
+	private List<DiagramElement> contents;
+	
+	@Override
+	protected void initialize() {
+		super.initialize();
+		this.contents = initContents();
 	}
 
 	@Override
@@ -74,5 +84,10 @@ public class ConnectedContainerImpl extends AbstractConnectedDiagramElement impl
 	@Override
 	public CostedDimension getSize(Dimension2D within) {
 		return getSizeBasedOnPadding();
+	}
+
+	public List<DiagramElement> getContents() {
+		ensureInitialized();
+		return contents;
 	}	
 }

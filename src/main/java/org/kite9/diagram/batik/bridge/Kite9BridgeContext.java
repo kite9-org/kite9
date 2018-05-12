@@ -15,6 +15,10 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.processors.BasicTemplater;
+import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.XPathValueReplacer;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.w3c.dom.Document;
@@ -45,6 +49,8 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	}
 	
 	private Kite9Bridge gBridge = new Kite9Bridge();
+	
+	private XMLProcessor xmlProcessor;
 	
 	@Override
 	public void registerSVGBridges() {
@@ -94,7 +100,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
 			if (!XMLHelper.DIAGRAM_ELEMENT.equals(localName)) {
 				return gBridge;
-			}
+			} 
 		}
 		return super.getBridge(namespaceURI, localName);
 	}
@@ -116,6 +122,17 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return out;
 	}
 
-	
+	public XMLProcessor getXMLProcessor() {
+		if (xmlProcessor == null) {
+			xmlProcessor = createXMLProcessor();
+		}
+		return xmlProcessor;
+	}
+
+	private XMLProcessor createXMLProcessor() {
+		XPathValueReplacer vr = new XPathValueReplacer((ADLDocument) getDocument());
+		return new BasicTemplater(vr, (Kite9DocumentLoader)  getDocumentLoader());
+	}
+
 	
 }

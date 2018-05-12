@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.Painter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -24,9 +24,9 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  * @author robmoffat
  *
  */
-public abstract class AbstractConnectedDiagramElement extends AbstractCompactedRectangularDiagramElement implements Connected {
+public abstract class AbstractConnected extends AbstractCompactedRectangular implements Connected {
 	
-	public AbstractConnectedDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
+	public AbstractConnected(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
 		super(el, parent, ctx, rp);
 	}
 	
@@ -38,24 +38,24 @@ public abstract class AbstractConnectedDiagramElement extends AbstractCompactedR
 		super.initialize();
 		Diagram d = getDiagram();
 		links = d.getConnectionsFor(this.getID());
-		linkGutter = theElement.getCSSStyleProperty(CSSConstants.LINK_GUTTER).getFloatValue();
-		linkInset = theElement.getCSSStyleProperty(CSSConstants.LINK_INSET).getFloatValue();
+		linkGutter = getCSSStyleProperty(CSSConstants.LINK_GUTTER).getFloatValue();
+		linkInset = getCSSStyleProperty(CSSConstants.LINK_INSET).getFloatValue();
 		initConnectionAlignment();
 	}
 
 
 	protected void initConnectionAlignment() {
 		alignments = new ConnectionAlignment[] {
-				getConnectionAlignment(theElement, CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY),
-				getConnectionAlignment(theElement, CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY),
-				getConnectionAlignment(theElement, CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY),
-				getConnectionAlignment(theElement, CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY),			
+				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY),
+				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY),
+				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY),
+				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY),			
 		};
 	}
 
 
-	public static ConnectionAlignment getConnectionAlignment(StyledKite9SVGElement theElement, String prop) {
-		Value v = theElement.getCSSStyleProperty(prop);
+	public ConnectionAlignment getConnectionAlignment(String prop) {
+		Value v = getCSSStyleProperty(prop);
 		
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
 			return new ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue());

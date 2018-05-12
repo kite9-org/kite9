@@ -4,8 +4,8 @@ import java.net.URL;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
 
 public class Test58ScriptTag extends AbstractDisplayFunctionalTest {
 

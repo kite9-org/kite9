@@ -10,8 +10,6 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Handles copying of XML from one document to another, and the CSS 'template' directive.
@@ -21,7 +19,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class BasicTemplater implements XMLProcessor, Logable {
+public class BasicTemplater extends ValueReplacingProcessor implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -37,7 +35,8 @@ public class BasicTemplater implements XMLProcessor, Logable {
 
 	protected Kite9DocumentLoader loader;
 
-	public BasicTemplater(Kite9DocumentLoader  loader) {
+	public BasicTemplater(ValueReplacer vr, Kite9DocumentLoader  loader) {
+		super(vr);
 		this.loader = loader;
 	}
 
@@ -45,7 +44,7 @@ public class BasicTemplater implements XMLProcessor, Logable {
 		Value template = transform.getCSSStyleProperty(CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
 			Element e = loadReferencedElement(template, transform);
-			if (e != null) {
+			if (e != null) { 
 				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
 				c.processContents(e);
 
@@ -62,16 +61,12 @@ public class BasicTemplater implements XMLProcessor, Logable {
 	}
 
 	@Override
-	public void processContents(Node n) {
-		if (n instanceof StyledKite9SVGElement) {
-			handleTemplateElement((StyledKite9SVGElement) n);
+	public void processElement(Element e) {
+		if (e instanceof StyledKite9SVGElement) {
+			handleTemplateElement((StyledKite9SVGElement) e);
 		}
 		
-		NodeList contents = n.getChildNodes();
-		for (int i = 0; i < contents.getLength(); i++) {
-			processContents(contents.item(i));
-		}
-		 
+		super.processElement(e);
 	}
 	
 }

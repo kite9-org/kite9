@@ -1,7 +1,6 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
@@ -13,7 +12,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public abstract class AbstractXMLConnectionElement extends AbstractStyleableXMLElement {
+public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = -1941426216200603569L;
 	

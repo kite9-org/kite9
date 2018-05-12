@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
@@ -27,7 +28,7 @@ import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -87,7 +88,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkMidConnection = true;
 	}
 	
-	public void testDiagram(DiagramKite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
+	public void testDiagram(Kite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
 			Planarization pln = null;
@@ -337,7 +338,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public static void testConnectionPresence(DiagramKite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
+	public static void testConnectionPresence(Kite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
 		final Set<Connection> notPresent = new HashSet<>();
 
 		ConnectionAction ca = new ConnectionAction() {
@@ -396,7 +397,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testHopCount(DiagramKite9XMLElement d) {
+	public static void testHopCount(Kite9XMLElement d) {
 		HopChecker.checkHops(d, new HopAction() {
 
 			@Override

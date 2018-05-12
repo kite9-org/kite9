@@ -1,7 +1,8 @@
 package org.kite9.diagram.model.visitors;
 
-import org.kite9.diagram.dom.elements.DiagramKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
@@ -14,9 +15,9 @@ public class HopChecker {
 		
 	}
 
-	public static void checkHops(DiagramKite9XMLElement d, final HopAction ca) {
+	public static void checkHops(Kite9XMLElement d, final HopAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
-		dev.visit(d.getDiagramElement(), new VisitorAction() {
+		dev.visit((Diagram) d.getDiagramElement(), new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {
