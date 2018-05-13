@@ -8,19 +8,23 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 
+import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
+import org.kite9.diagram.adl.GenericMutableXMLElement;
 import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.logging.Kite9Log;
+import org.w3c.dom.Element;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
 
@@ -30,7 +34,16 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	@Before
 	public void initTestDocument() {
-		AbstractMutableXMLElement.TESTING_DOCUMENT =  new ADLDocument();
+		AbstractMutableXMLElement.TESTING_DOCUMENT =  new ADLDocument(new ADLExtensibleDOMImplementation() {
+
+			@Override
+			public Element createGenericADLElement(AbstractDocument document, String qualifiedName) {
+				return new GenericMutableXMLElement(qualifiedName, (ADLDocument) document);
+			}
+			
+			
+			
+		});
 	}
 	
 	@Before

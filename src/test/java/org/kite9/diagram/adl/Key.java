@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;
 
@@ -28,8 +27,8 @@ public class Key extends AbstractMutableXMLElement {
 		replaceProperty("boldText", boldText);
 	}
 	
-	public GenericKite9XMLElement convert(List<Symbol> symbols) {
-		GenericKite9XMLElement out = (GenericKite9XMLElement) ownerDocument.createElement("text-lines");
+	public Kite9XMLElement convert(List<Symbol> symbols) {
+		Kite9XMLElement out = (Kite9XMLElement) ownerDocument.createElement("text-lines");
 		if (symbols == null) {
 			return out;
 		}

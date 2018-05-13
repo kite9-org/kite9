@@ -22,8 +22,6 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.visitors.DiagramElementVisitor;
-import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
@@ -102,20 +100,25 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 
 	static enum PlanarizationRun { FIRST, REDO, DONE }
 	
-	public Planarization planarize(Diagram c) {
-		final int[] elements = new int[1];
-
-		new DiagramElementVisitor().visit(c, new VisitorAction() {
-
-			@Override
-			public void visit(DiagramElement de) {
-				if (de instanceof Connected) {
-					elements[0]++;
+	public int countConnectedElements(DiagramElement de) {
+		int out = 0;
+		if (de instanceof Connected) {
+			out++;
+			if (de instanceof Container) {
+				for (DiagramElement c : ((Container) de).getContents()) {
+					out += countConnectedElements(c);
 				}
 			}
-		});
+		}
+		
+		return out;
+		
+	}
+	
+	public Planarization planarize(Diagram c) {
+		final int elements = countConnectedElements(c);
 		PlanarizationRun run = PlanarizationRun.FIRST;
-		List<Vertex> out = new ArrayList<Vertex>(elements[0] * 2);
+		List<Vertex> out = new ArrayList<Vertex>(elements * 2);
 		ConnectionManager connections = null;
 		Map<Container, List<Connected>> sortedContainerContents = null;
 		try {
@@ -127,7 +130,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
 				
 				// Grouping
-				GroupPhase gp = new GroupPhase(log, c, elements[0], strategy, ch, gridHelp, em);
+				GroupPhase gp = new GroupPhase(log, c, elements, strategy, ch, gridHelp, em);
 				GroupResult mr = strategy.group(gp);
 				
 				if (!log.go()) {

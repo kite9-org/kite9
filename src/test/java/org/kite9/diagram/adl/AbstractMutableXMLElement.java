@@ -95,9 +95,9 @@ public abstract class AbstractMutableXMLElement extends AbstractStyleableXMLElem
 		 	return null;
 		}
 	
-//		e.setTagName(propertyName);
-//		((AbstractMutableXMLElement)e).setOwnerDocument((ADLDocument) this.ownerDocument); 
-//		
+		((AbstractMutableXMLElement)e).setTagName(propertyName);
+		((AbstractMutableXMLElement)e).setOwnerDocument((ADLDocument) this.ownerDocument); 
+		
 		if (!e.getNodeName().equals(propertyName)) {
 			throw new Kite9ProcessingException("Incorrect name.  Expected "+propertyName+" but was "+e.getNodeName());
 		}

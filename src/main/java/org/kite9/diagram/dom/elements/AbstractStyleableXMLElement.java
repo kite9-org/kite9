@@ -197,7 +197,9 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	public Value getCSSStyleProperty(String name) {
-		return getCSSStyleProperty(this, name);
+		Value out = getCSSStyleProperty(this, name);
+		System.out.println("getting style for "+this+" "+name+ " "+ out);
+		return out;
 	}
 
 	public static Value getCSSStyleProperty(CSSStylableElement el, String name) {

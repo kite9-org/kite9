@@ -174,15 +174,17 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		if (USE_GENERIC_XML_ELEMENT) {
 			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
 				if (!"contents".equals(qualifiedName)) {
-					return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
+					return createGenericADLElement(document, qualifiedName);
 				}
 			} 
 		}
 		
 		return super.createElementNS(document, namespaceURI, qualifiedName);
 	}
-	
-	
+
+	public Element createGenericADLElement(AbstractDocument document, String qualifiedName) {
+		return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
+	}
 
 	public CSSStyleSheet createCSSStyleSheet(String title, String media) throws DOMException {
         throw new UnsupportedOperationException("StyleSheetFactory.createCSSStyleSheet is not implemented"); // XXX

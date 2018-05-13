@@ -84,6 +84,7 @@ public class LabelContainerImpl extends AbstractLabel implements Label, Containe
 
 	@Override
 	public List<DiagramElement> getContents() {
+		ensureInitialized();
 		return contents;
 	}
 	
