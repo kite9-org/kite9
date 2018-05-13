@@ -13,6 +13,7 @@ import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.Document;
@@ -90,6 +91,14 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
 		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
 		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
+	}
+
+	protected CostedDimension getSizeBasedOnPadding() {
+		double left = getPadding(Direction.LEFT);
+		double right = getPadding(Direction.RIGHT);
+		double up = getPadding(Direction.UP);
+		double down = getPadding(Direction.DOWN);
+		return new CostedDimension(left + right, up + down, CostedDimension.UNBOUNDED);
 	}
 	
 }

@@ -1,5 +1,8 @@
 package org.kite9.diagram.batik.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.batik.anim.dom.SVGOMMarkerElement;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
@@ -102,6 +105,20 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	public Dimension2D getMinimumSize() {
 		return CostedDimension.ZERO;
 	}
-	
+
+	@Override
+	public Map<String, String> getXPathVariables() {
+		HashMap<String, String> out = new HashMap<>();
+		out.put("x0", "0");
+		out.put("y0", "0");
+		double width = getSizeBasedOnPadding().getWidth();
+		double height = getSizeBasedOnPadding().getHeight();
+		out.put("x1", ""+ width);
+		out.put("y1", ""+ height);
+		out.put("width", ""+ width);
+		out.put("height", ""+ height);
+		
+		return out;	
+	}
 	
 }
