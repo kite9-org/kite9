@@ -58,11 +58,6 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		return transformer.postProcess(p, d);
 	}
 
-	
-	protected Map<String, String> getXPathVariables() {
-		return Collections.emptyMap();
-	}
-
 	public ContentTransform getTransform() {
 		ContentTransform t = null;
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM);

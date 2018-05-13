@@ -16,6 +16,7 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramChecker;
@@ -34,7 +35,7 @@ import org.w3c.dom.Text;
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
-	protected Kite9XMLElement renderDiagram(DiagramKite9XMLElement d) throws Exception {
+	protected Kite9XMLElement renderDiagram(Kite9XMLElement d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		return renderDiagram(xml);
 	}
@@ -109,10 +110,10 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return true;
 	}
 		
-	protected DiagramElement getById(final String id, DiagramKite9XMLElement d) {
+	protected DiagramElement getById(final String id, Kite9XMLElement d) {
 		DiagramElementVisitor vis = new DiagramElementVisitor();
 		final DiagramElement[] found = { null };
-		vis.visit(d.getDiagramElement(), new VisitorAction() {
+		vis.visit((Diagram) d.getDiagramElement(), new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {
@@ -125,7 +126,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return found[0];
 	}
 
-	protected void mustTurn(DiagramKite9XMLElement d, Link l) {
+	protected void mustTurn(Kite9XMLElement d, Link l) {
 		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
 	
 			@Override

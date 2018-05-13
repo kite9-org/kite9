@@ -28,8 +28,6 @@ public interface Painter {
 	
 	void setDiagramElement(DiagramElement de);
 	
-	void setParameters(Map<String, String> parameters);
-
 	/**
 	 * Returns the XML in the current document (i.e. original).
 	 * This will force any templating to be done.

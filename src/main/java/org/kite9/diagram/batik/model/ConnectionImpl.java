@@ -14,6 +14,7 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
@@ -28,7 +29,7 @@ import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
-public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection {
+public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
 
 	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
 		super(el, parent, ctx, p);
@@ -239,7 +240,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	protected Map<String, String> getXPathVariables() {
+	public Map<String, String> getXPathVariables() {
 		Map<String, String> out = new HashMap<>();
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(

@@ -11,9 +11,9 @@ import org.w3c.dom.Element;
  * Base class for painter implementations where we are simply copying some XML from the 
  * source to the destination.
  */
-public class DirectSVGPainter extends AbstractPainter {
+public class DirectSVGGroupPainter extends AbstractPainter {
 
-	public DirectSVGPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
+	public DirectSVGGroupPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
 		super(theElement, processor);
 	}
 

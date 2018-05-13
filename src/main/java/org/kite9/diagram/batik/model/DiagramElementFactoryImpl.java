@@ -10,7 +10,7 @@ import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
-import org.kite9.diagram.dom.painter.DirectSVGPainter;
+import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
@@ -89,9 +89,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new DirectSVGPainter(el, context.getXMLProcessor()));
+			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()));
 		case LINK_END:
-			return new TerminatorImpl(el, parent, context, new DirectSVGPainter(el, context.getXMLProcessor()));
+			return new TerminatorImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

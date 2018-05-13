@@ -1,8 +1,10 @@
 package org.kite9.diagram.dom.elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.batik.anim.dom.SVGGraphicsElement;
 import org.apache.batik.css.engine.CSSEngine;
@@ -15,6 +17,7 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
@@ -23,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement {
+public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement, XPathAware {
 	
 	protected String tagName;
 
@@ -212,5 +215,15 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 			return null;
 		}
 	}
+
+	@Override
+	public Map<String, String> getXPathVariables() {
+		if (getDiagramElement() instanceof XPathAware) {
+			return ((XPathAware) getDiagramElement()).getXPathVariables();
+		}
+		
+		return Collections.emptyMap();
+	}
+
 	
 }

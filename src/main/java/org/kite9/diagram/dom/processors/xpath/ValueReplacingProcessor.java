@@ -3,11 +3,9 @@ package org.kite9.diagram.dom.processors.xpath;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -21,7 +19,7 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 	
 	public interface ValueReplacer {
 		
-		public String getReplacementValue(String in, Element context);	
+		public String getReplacementValue(String in, Node context);	
 		
 	}
 
@@ -31,60 +29,26 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 		this.valueReplacer = vr;
 	}
 
-
-
 	@Override
 	public void processElement(Element from) {
-		performReplaceOnAttributes(from, valueReplacer);
-		performReplace(from.getChildNodes(), valueReplacer);
+		performReplaceOnAttributes(from);
+		super.processElement(from);
 	}
 
-	/**
-	 * Replaces parameters in the SVG contents of the diagram element, prior to being 
-	 * turned into `GraphicsNode`s .  
-	 */
-	private void performReplace(Node n, ValueReplacer vr) {
-		if (vr == null)
-			return;
-
-		if (n instanceof Element) {
-			performReplaceOnAttributes((Element) n, vr);
-
-			if (n instanceof Kite9XMLElement) {
-				// we don't do sub-elements - they're someone else's problem
-				return;	
-			} else {
-				performReplace(n.getChildNodes(), vr);
-			}
-		} 
-	}
-
-
-
-	private void performReplaceOnAttributes(Element n, ValueReplacer vr) {
+	private void performReplaceOnAttributes(Element n) {
 		for (int j = 0; j < n.getAttributes().getLength(); j++) {
 			Attr a = (Attr) n.getAttributes().item(j);
-			a.setValue(performValueReplace(a.getValue(), vr, n));
+			a.setValue(performValueReplace(a.getValue(), n));
 		}
 	}
-
-	private void performReplace(NodeList nodeList, ValueReplacer vr) {
-		Text lastTextNode = null;
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node n = nodeList.item(i);
-			if (n instanceof Text) {
-				if (lastTextNode != null) {
-					lastTextNode.setData(lastTextNode.getData() + ((Text)n).getData());
-					n.getParentNode().removeChild(n);
-				}
-				
-			}
-			performReplace(n, vr);
-		}
+	
+	protected void processText(Text n) {
+		n.setData(performValueReplace(n.getData(), n));
+		super.processText(n);
 	}
 
-	protected String performValueReplace(String input, ValueReplacer vr, Element at) {
-		Pattern p = Pattern.compile("\\{([a-zA-Z0-9@_]+)}");
+	protected String performValueReplace(String input, Node at) {
+		Pattern p = Pattern.compile("\\#\\{(.*?)\\}");
 		
 		Matcher m = p.matcher(input);
 		StringBuilder out = new StringBuilder();
@@ -93,7 +57,7 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 			out.append(input.substring(place, m.start()));
 			
 			String in = m.group(1).toLowerCase();
-			String replacement = vr.getReplacementValue(in, at);
+			String replacement = valueReplacer.getReplacementValue(in, at);
 			
 			if (replacement != null) {
 				out.append(replacement);

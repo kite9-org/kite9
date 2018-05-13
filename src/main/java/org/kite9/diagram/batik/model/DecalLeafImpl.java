@@ -1,8 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
@@ -27,20 +24,7 @@ public class DecalLeafImpl extends AbstractRectangular implements Decal, Leaf {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
 		this.getRenderingInformation().setSize(parentRRI.getSize());
 		this.getRenderingInformation().setPosition(parentRRI.getPosition());
-		getPainter().setParameters(getXPathVariables());
 		return super.paintElementToDocument(d);
 	}
-
-	@Override
-	protected Map<String, String> getXPathVariables() {
-		HashMap<String, String> out = new HashMap<>();
-		out.put("x0", "0");
-		out.put("x1", ""+ getRenderingInformation().getSize().getWidth());
-		out.put("y0", "0");
-		out.put("y1", ""+ getRenderingInformation().getSize().getWidth());
-		return out;
-		
-	}
-	
 	
 }

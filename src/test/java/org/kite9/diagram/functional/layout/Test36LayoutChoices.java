@@ -10,6 +10,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.visitors.DiagramChecker;
@@ -207,7 +208,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 	}
 
-	private boolean assertDirection(DiagramKite9XMLElement d2, Direction d) {
+	private boolean assertDirection(Kite9XMLElement d2, Direction d) {
 		try {
 			DiagramAssert.assertInDirection(d, 
 					getById("g5", d2), 
@@ -269,7 +270,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_36_14_SimpleCombSlackAllButOrdered() throws Exception {
 		DiagramKite9XMLElement d = doSimpleComb(null, null, null, false);
-		DiagramKite9XMLElement d2 = renderDiagram(d);
+		Kite9XMLElement d2 = renderDiagram(d);
 		if ((assertDirection(d2, Direction.UP) || assertDirection(d2, Direction.DOWN))) {
 			// ok
 		}  else {

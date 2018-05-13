@@ -133,10 +133,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
 			copier.processContents(input.getDocumentElement());
 		} catch (Exception e) {
-			e.printStackTrace();
 			ADLDocument d = (ADLDocument)input;
-			log.error("Problem with XML: "+new XMLHelper().toXML(d));
-			throw new Kite9ProcessingException(e);
+			String s = new XMLHelper().toXML(d);
+			log.error("Problem with XML: "+e);
+			throw new Kite9ProcessingException("Transcoder problem: \n"+s+"\n", e);
 		}
 	}
 		

@@ -1,10 +1,14 @@
 package org.kite9.diagram.batik.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -18,7 +22,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
 
-public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular {
+public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
 	
 	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {};
 	
@@ -101,5 +105,19 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		return ContentTransform.POSITION;
 	}
 
+	@Override
+	public Map<String, String> getXPathVariables() {
+		HashMap<String, String> out = new HashMap<>();
+		out.put("x0", "0");
+		out.put("y0", "0");
+		double width = getRenderingInformation().getSize().getWidth();
+		double height = getRenderingInformation().getSize().getHeight();
+		out.put("x1", ""+ width);
+		out.put("y1", ""+ height);
+		out.put("width", ""+ width);
+		out.put("height", ""+ height);
+		
+		return out;	
+	}
 	
 }

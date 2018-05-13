@@ -1,7 +1,5 @@
 package org.kite9.diagram.dom.painter;
 
-import java.util.Map;
-
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
@@ -20,15 +18,8 @@ public abstract class AbstractPainter implements Painter {
 
 	private StyledKite9SVGElement theElement;
 	protected DiagramElement r;
-	private Map<String, String> parameters;
 	private boolean performedPreprocess = false;
 	private XMLProcessor processor;
-	
-	
-	@Override
-	public void setParameters(Map<String, String> parameters) {
-		this.parameters = parameters;
-	}
 
 	public AbstractPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
 		super();
@@ -74,11 +65,7 @@ public abstract class AbstractPainter implements Painter {
 	/**
 	 * Use this method to decorate the contents before processing.
 	 */
-	public StyledKite9SVGElement getContents() {
-		if (parameters == null) {
-			throw new Kite9ProcessingException("Painter parameters not set");
-		}
-		
+	public StyledKite9SVGElement getContents() {		
 		if (theElement == null) {
 			throw new Kite9ProcessingException("Painter xml element not set");
 		}

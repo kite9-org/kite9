@@ -110,7 +110,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String glyphContainer(String xml, String extraAtts) {
 		return "    <rect style=\"kite9-type: container; " +extraAtts+" \">\n"+
 	           "      <decal style='kite9-usage: decal; kite9-type: svg; '>\n" + 
-	           "        <svg:rect x='0' y='0' width='{$width}' height='{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
+	           "        <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
 	           "      </decal>\n" + 
 	           xml + 
 	           "    </rect>";
@@ -120,7 +120,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String glyphLeaf(String xml, String extraAtts) {
 		return "    <rect style=\"kite9-type: svg; " +extraAtts+" \">\n"+
 	           "      <decal style='kite9-usage: decal; kite9-type: svg; '>\n" + 
-	           "        <svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
+	           "        <svg:rect x='0' y='0' width='#{$x1}' height='#{$y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
 	           "      </decal>\n" + 
 	           xml + 
 	           "    </rect>";
@@ -137,7 +137,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	private String badgeDecal() {
 		return "      <badge style='kite9-usage: decal; kite9-type: svg; '>\n" +
-	           "        <svg:circle cx='{$width-5}' cy='{$height-5}' r='15' fill='red' /> \n"+
+	           "        <svg:circle cx='#{$width - 5}' cy='5' r='15' fill='red' /> \n"+
 	           "      </badge>\n";
 	}
 	

@@ -5,8 +5,11 @@ import java.util.Set;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.util.XMLConstants;
+import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.processors.xpath.XPathAware;
+import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -14,6 +17,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.DocumentCSS;
 import org.w3c.dom.stylesheets.StyleSheetList;
+import org.w3c.dom.xpath.XPathException;
+import org.w3c.dom.xpath.XPathExpression;
+import org.w3c.dom.xpath.XPathNSResolver;
 
 /**
  * Now, Kite9 elements are first-class members of SVG, and support SVG version 1.2.
@@ -98,7 +104,34 @@ public class ADLDocument extends SVG12OMDocument {
 	public Element getChildElementById(Node requestor, String id) {
 		return super.getChildElementById(requestor, id);
 	}
+
+	/**
+	 * Overrides the basic implementation to provide {@link XPathAware} support
+	 */
+	@Override
+	public Object evaluate(String expression, Node contextNode, XPathNSResolver resolver, short type, Object result) throws XPathException, DOMException {
+		XPathExpression xpath = createExpression(expression, resolver);
+		ADLXPathExpr expr = (ADLXPathExpr) xpath;
+		expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
+        return xpath.evaluate(contextNode, type, result);
+	}
+
+	protected class ADLXPathExpr extends XPathExpr {
+
+		public ADLXPathExpr(String expr, XPathNSResolver res) throws DOMException, XPathException {
+			super(expr, res);
+		}
+
+		public XPathContext getContext() {
+			return context;
+		}	
+	}
 	
+	@Override
+	public XPathExpression createExpression(String expression, XPathNSResolver resolver) throws DOMException, XPathException {
+		 return new ADLXPathExpr(expression, resolver);
+	}
+
 	
 	
 }
