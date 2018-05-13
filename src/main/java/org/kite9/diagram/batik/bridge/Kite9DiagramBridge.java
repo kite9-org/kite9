@@ -6,7 +6,7 @@ import org.apache.batik.bridge.GenericBridge;
 import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -29,7 +29,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 	}
     
     public static BatikArrangementPipeline lastPipeline;
-    public static GenericKite9XMLElement lastDiagram;
+    public static Kite9XMLElement lastDiagram;
 
 
 	@Override
@@ -49,7 +49,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 
 	@Override
 	public void handleElement(BridgeContext ctx, Element e) {
-		GenericKite9XMLElement d = (GenericKite9XMLElement) e;
+		Kite9XMLElement d = (Kite9XMLElement) e;
        	
        	// work out the positions of all the elements in te diagram, 
        	BatikArrangementPipeline pipeline = createPipeline();

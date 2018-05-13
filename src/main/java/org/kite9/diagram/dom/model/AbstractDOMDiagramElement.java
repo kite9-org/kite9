@@ -97,7 +97,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		for (Kite9XMLElement xmlElement : getPainter().getContents()) {
 			DiagramElement de = xmlElement.getDiagramElement();			
 			if (de instanceof Connection) {
-				addConnectionReference((Connection) de);
+				// doesn't get added.
 			} else if (de != null) { 
 				contents.add(de);
 			} 

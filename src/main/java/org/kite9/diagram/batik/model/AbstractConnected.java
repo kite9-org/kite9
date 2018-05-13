@@ -10,7 +10,6 @@ import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ConnectionAlignment;
@@ -36,8 +35,6 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 	 */
 	protected void initialize() {
 		super.initialize();
-		Diagram d = getDiagram();
-		links = d.getConnectionsFor(this.getID());
 		linkGutter = getCSSStyleProperty(CSSConstants.LINK_GUTTER).getFloatValue();
 		linkInset = getCSSStyleProperty(CSSConstants.LINK_INSET).getFloatValue();
 		initConnectionAlignment();
@@ -75,6 +72,9 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 	@Override
 	public Collection<Connection> getLinks() {
 		ensureInitialized();
+		if (links == null) {
+			links = getDiagram().getConnectionsFor(getID());
+		}
 		return links;
 	}
 

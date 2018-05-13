@@ -26,11 +26,8 @@ public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 	
 	private transient Map<String, Collection<Connection>> references = new HashMap<>();
 
-	protected void addConnectionReference(Connection c) {
-		String fromId = c.getFrom().getID();
-		String toId = c.getTo().getID();
-		getConnectionsFor(fromId).add(c);
-		getConnectionsFor(toId).add(c);
+	protected void addConnectionReference(String id, Connection c) {
+		getConnectionsFor(id).add(c);
 	}
 
 	@Override

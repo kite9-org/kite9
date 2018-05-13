@@ -49,8 +49,8 @@ public abstract class AbstractDiagramElement implements DiagramElement {
 		return depth;
 	}
 	
-	protected void addConnectionReference(Connection de) {
-		((AbstractDiagramElement) getParent()).addConnectionReference(de);
+	protected void addConnectionReference(String connected, Connection de) {
+		((AbstractDiagramElement) getParent()).addConnectionReference(connected, de);
 	} 
 
 }

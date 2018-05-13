@@ -18,7 +18,7 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
@@ -44,7 +44,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		try {
 			super.transcodeSVG(s);
 			
-			GenericKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+			Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 			if (lastDiagram != null) {
 				AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
 				writeTemplateExpandedSVG(lastDiagram);
@@ -62,7 +62,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		}
 	}
 	
-	private void writeTemplateExpandedSVG(GenericKite9XMLElement lastDiagram) throws IOException {
+	private void writeTemplateExpandedSVG(Kite9XMLElement lastDiagram) throws IOException {
 		ADLDocument d = lastDiagram.getOwnerDocument();
 		File f = getOutputFile("-expanded.svg");
 		String input2 = new XMLHelper().toXML(d);

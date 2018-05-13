@@ -84,15 +84,6 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 
 	public ADLExtensibleDOMImplementation() {
 		super();
-		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.DIAGRAM_ELEMENT, new ElementFactory() {
-			 
-			public Element create(String prefix, Document doc) {
-				GenericKite9XMLElement out = new GenericKite9XMLElement();
-				out.setOwnerDocument(doc);
-				return out;
-			}
-		});
-		
 		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.CONTENTS_ELEMENT, new ElementFactory() {
 			 
 			public Element create(String prefix, Document doc) {

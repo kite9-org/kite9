@@ -31,18 +31,22 @@ import org.w3c.dom.Element;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
 
+	private String fromId;
+	private String toId;
+	
 	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
 		super(el, parent, ctx, p);
+		this.fromId = getFromReference();
+		this.toId = getToReference();
+		addConnectionReference(fromId, this);
+		addConnectionReference(toId, this);
 	}
 
 	@Override
 	protected void initialize() {
 		super.initialize();
-		Kite9XMLElement fromElement = getFromElement();
-		Kite9XMLElement toElement = getToElement();
-		
-		from = (Connected) fromElement.getDiagramElement();
-		to = (Connected) toElement.getDiagramElement();
+		from = (Connected) getFromElement().getDiagramElement();
+		to = (Connected) getToElement().getDiagramElement();
 		
 		if (from == null) {
 			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
@@ -87,31 +91,29 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 
-	public Kite9XMLElement getFromElement() {
-		Kite9XMLElement theElement = getPainter().getContents();
-		String reference = getFromReference(theElement);
-		ADLDocument owner = theElement.getOwnerDocument();
-		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, reference);
+	private Kite9XMLElement getFromElement() {
+		ADLDocument owner = getPainter().getContents().getOwnerDocument();
+		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, fromId);
 		return from;
 	}
 
 
-	public String getFromReference(Kite9XMLElement theElement) {
+	private String getFromReference() {
+		Kite9XMLElement theElement = getPainter().getContents();
 		Element fromEl = theElement.getProperty("from");
 		String reference = fromEl.getAttribute("reference");
 		return reference;
 	}
 
 	public Kite9XMLElement getToElement() {
-		Kite9XMLElement theElement = getPainter().getContents();
-		String reference = getToReference(theElement);
-		ADLDocument owner = theElement.getOwnerDocument();
-		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, reference);
+		ADLDocument owner = getPainter().getContents().getOwnerDocument();
+		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, toId);
 		return to;
 	}
 
 
-	public String getToReference(Kite9XMLElement theElement) {
+	public String getToReference() {
+		Kite9XMLElement theElement = getPainter().getContents();
 		Element toEl = theElement.getProperty("to");
 		String reference = toEl.getAttribute("reference");
 		return reference;
@@ -163,6 +165,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	public Direction getDrawDirection() {
+		ensureInitialized();
 		return drawDirection;
 	}
 
@@ -226,21 +229,25 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	public int getRank() {
+		ensureInitialized();
 		return rank;
 	}
 
 	@Override
 	public double getMargin(Direction d) {
+		ensureInitialized();
 		return margin[d.ordinal()];
 	}
 
 	@Override
 	public double getPadding(Direction d) {
+		ensureInitialized();
 		return padding[d.ordinal()];
 	}
 
 	@Override
 	public Map<String, String> getXPathVariables() {
+		ensureInitialized();
 		Map<String, String> out = new HashMap<>();
 		RoutePainter routePainter = new RoutePainter(0, 0);
 		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
@@ -261,6 +268,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	public Terminator getDecorationForEnd(DiagramElement end) {
+		ensureInitialized();
 		if (from == end) {
 			return fromDecoration;
 		} else if (to == end) {
@@ -272,6 +280,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	public double getMinimumLength() {
+		ensureInitialized();
 		return minimumLength;
 	}
 
