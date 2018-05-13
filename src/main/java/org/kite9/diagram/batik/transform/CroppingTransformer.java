@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +27,10 @@ public class CroppingTransformer extends AbstractRectangularTransformer {
 		
 		Element out = p.output(d);
 		
+		if (position == null) {
+			return out;
+		}
+		
 		if (p instanceof LeafPainter) {
 			Rectangle2D content = ((LeafPainter) p).bounds();
 			position = position.minus(new Dimension2D(content.getX(), content.getY()));
@@ -39,8 +42,4 @@ public class CroppingTransformer extends AbstractRectangularTransformer {
 		
 		return out;
 	}	
-
-	protected Rectangular getOwner() {
-		return owner;
-	}
 }

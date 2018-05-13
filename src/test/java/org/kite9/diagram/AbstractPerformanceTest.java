@@ -128,7 +128,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
-			TestingEngine.testLayout(d.getDiagramElement());
+			TestingEngine.testLayout((Container) d.getDiagramElement());
 			
 			// write the outputs
 			measure(d, m);

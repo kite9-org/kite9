@@ -11,6 +11,6 @@ package org.kite9.diagram.model;
  * @author robmoffat
  *
  */
-public interface Leaf extends Rectangular {
+public interface Leaf extends DiagramElement {
 	
 }

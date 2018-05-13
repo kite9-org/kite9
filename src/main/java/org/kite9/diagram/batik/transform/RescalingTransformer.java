@@ -23,10 +23,15 @@ public class RescalingTransformer extends AbstractRectangularTransformer  {
 	@Override
 	public Element postProcess(Painter p, Document d) {	
 		Dimension2D size = getRectangularRenderedSize(l);
+		Element out = p.output(d);
+		
+		if (size == null) {
+			// not a rectangular transform.
+			return out;
+		}
+		
 		double width = size.getWidth();
 		double height = size.getHeight();
-		
-		Element out = p.output(d);
 		
 		if (p instanceof LeafPainter) {
 			Rectangle2D myBounds = ((LeafPainter) p).bounds();

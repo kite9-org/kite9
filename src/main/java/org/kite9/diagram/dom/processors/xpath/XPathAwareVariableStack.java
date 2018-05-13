@@ -39,7 +39,7 @@ public class XPathAwareVariableStack extends VariableStack {
 			n = n.getParentNode();
 		}
 		
-		throw new Kite9ProcessingException("Couldn't resolve variable: "+key+" from "+context);
+		return XObject.create("");
 	}
 
 	

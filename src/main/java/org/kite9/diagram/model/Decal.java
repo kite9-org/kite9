@@ -9,6 +9,6 @@ package org.kite9.diagram.model;
  * @author robmoffat
  *
  */
-public interface Decal extends Rectangular {
+public interface Decal {
 	
 }
