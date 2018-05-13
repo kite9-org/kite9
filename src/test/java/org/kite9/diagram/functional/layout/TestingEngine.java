@@ -135,11 +135,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			if (c.checkLayout) {
-				testLayout(d.getDiagramElement());
+				testLayout((Container) d.getDiagramElement());
 			}
 			
 			if (c.checkOcclusion) {
-				checkOverlap(d.getDiagramElement());
+				checkOverlap((Diagram) d.getDiagramElement());
 			}
 
 			// check the outputs. only going to check final diagrams now
@@ -162,8 +162,8 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testConnectionsMeetConnecteds(DiagramKite9XMLElement d, final boolean checkMidConnection) {
-		Diagram d2 = d.getDiagramElement();
+	public static void testConnectionsMeetConnecteds(Kite9XMLElement d, final boolean checkMidConnection) {
+		Diagram d2 = (Diagram) d.getDiagramElement();
 		new DiagramElementVisitor().visit(d2, new VisitorAction() {
 			
 			@Override
@@ -382,11 +382,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isContradictingLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
+				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
 			}
 
 			private boolean isTurnLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
+				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
 		};
@@ -408,7 +408,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isHopLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getTheElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
+				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
 			}
 		});
 	}

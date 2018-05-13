@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.xpath;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,8 +35,8 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 
 	@Override
 	public void processElement(Element from) {
-		performReplaceOnAttributes((Element) from, valueReplacer);
-		performReplace(((Element)from).getChildNodes(), valueReplacer);
+		performReplaceOnAttributes(from, valueReplacer);
+		performReplace(from.getChildNodes(), valueReplacer);
 	}
 
 	/**

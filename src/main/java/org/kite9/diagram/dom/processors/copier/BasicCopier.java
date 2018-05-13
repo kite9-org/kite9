@@ -1,10 +1,11 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.copier;
 
 import javax.xml.XMLConstants;
 
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

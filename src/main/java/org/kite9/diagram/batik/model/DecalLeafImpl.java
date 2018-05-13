@@ -27,12 +27,12 @@ public class DecalLeafImpl extends AbstractRectangular implements Decal, Leaf {
 		RectangleRenderingInformation parentRRI = (RectangleRenderingInformation) getParent().getRenderingInformation();
 		this.getRenderingInformation().setSize(parentRRI.getSize());
 		this.getRenderingInformation().setPosition(parentRRI.getPosition());
-		getPainter().setParameters(getParameters());
+		getPainter().setParameters(getXPathVariables());
 		return super.paintElementToDocument(d);
 	}
 
 	@Override
-	protected Map<String, String> getParameters() {
+	protected Map<String, String> getXPathVariables() {
 		HashMap<String, String> out = new HashMap<>();
 		out.put("x0", "0");
 		out.put("x1", ""+ getRenderingInformation().getSize().getWidth());

@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.model;
 
 import java.awt.geom.GeneralPath;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
@@ -50,6 +51,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
 		}
 		
+		Kite9XMLElement theElement = getPainter().getContents();
+		
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
 		this.fromDecoration = getTerminator(theElement.getProperty("from"));
@@ -67,7 +70,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 			this.rank = Integer.parseInt(rank);
 		}
 		
-		this.minimumLength = theElement.getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
+		this.minimumLength = getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
 	}
 
 
@@ -83,7 +86,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 
-	public Kite9XMLElement getFromElement(Kite9XMLElement theElement) {
+	public Kite9XMLElement getFromElement() {
+		Kite9XMLElement theElement = getPainter().getContents();
 		String reference = getFromReference(theElement);
 		ADLDocument owner = theElement.getOwnerDocument();
 		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, reference);
@@ -98,15 +102,16 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	public Kite9XMLElement getToElement() {
-		String reference = getToReference();
-		ADLDocument owner = getOwnerDocument();
+		Kite9XMLElement theElement = getPainter().getContents();
+		String reference = getToReference(theElement);
+		ADLDocument owner = theElement.getOwnerDocument();
 		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, reference);
 		return to;
 	}
 
 
-	public String getToReference() {
-		Element toEl = getProperty("to");
+	public String getToReference(Kite9XMLElement theElement) {
+		Element toEl = theElement.getProperty("to");
 		String reference = toEl.getAttribute("reference");
 		return reference;
 	}
@@ -234,10 +239,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	protected Map<String, String> getReplacementMap(StyledKite9SVGElement theElement) {
-		Map<String, String> out = super.getReplacementMap(theElement);
+	protected Map<String, String> getXPathVariables() {
+		Map<String, String> out = new HashMap<>();
 		RoutePainter routePainter = new RoutePainter(0, 0);
-		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(theElement.getOwnerDocument());
+		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
+				getPainter().getContents().getOwnerDocument());
 		double startReserve = fromDecoration.getMarkerReserve();
 		double endReserve = toDecoration.getMarkerReserve();
 		

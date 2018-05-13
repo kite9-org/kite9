@@ -39,7 +39,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		}
 	}
 	
-	protected abstract Painter getPainter();
+	public abstract Painter getPainter();
 
 	public AbstractDOMDiagramElement(StyledKite9SVGElement el, DiagramElement parent) {
 		super(parent);
@@ -48,14 +48,6 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 	public Value getCSSStyleProperty(String prop) {
 		return theElement.getCSSStyleProperty(prop);
-	}
-	
-	public Element getProperty(String prop) {
-		return theElement.getProperty(prop);
-	}
-	
-	public Document getOwnerDocument() {
-		return theElement.getOwnerDocument();
 	}
 	
 	@Override
@@ -98,7 +90,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 
 	/**
-	 * For elements which are containers, call this methood as part of initialize.
+	 * For elements which are containers, call this method as part of initialize.
 	 */
 	protected List<DiagramElement> initContents() {
 		List<DiagramElement> contents = new ArrayList<>();

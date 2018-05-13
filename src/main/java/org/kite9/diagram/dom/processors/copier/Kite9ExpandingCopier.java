@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.copier;
 
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.w3c.dom.Node;

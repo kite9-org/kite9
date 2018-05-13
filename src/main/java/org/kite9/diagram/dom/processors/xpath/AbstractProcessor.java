@@ -1,5 +1,6 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.xpath;
 
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

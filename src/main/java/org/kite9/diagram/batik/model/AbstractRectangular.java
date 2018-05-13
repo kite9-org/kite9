@@ -8,7 +8,6 @@ import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -48,8 +47,6 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	protected void initialize() {
 		super.initialize();
 		initContainerPosition();
-		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
-		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 	}
 
 	public Layout getLayout() {
@@ -88,11 +85,6 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 
 	private ContainerPosition containerPosition = null;
 
-	protected double margin[] = new double[4];
-
-	protected double padding[] = new double[4];
-	
-
 	@Override
 	public ContainerPosition getContainerPosition() {
 		ensureInitialized();
@@ -107,23 +99,6 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	@Override
 	protected ContentTransform getDefaultTransform() {
 		return ContentTransform.POSITION;
-	}
-
-	public double getMargin(Direction d) {
-		ensureInitialized();
-		return margin[d.ordinal()];
-	}
-
-	public double getPadding(Direction d) {
-		ensureInitialized();
-		return padding[d.ordinal()];
-	}
-
-	protected void initializeDirectionalCssValues(double[] vals, String prefix) {
-		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+CSSConstants.TOP);
-		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
-		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
-		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
 	}
 
 	

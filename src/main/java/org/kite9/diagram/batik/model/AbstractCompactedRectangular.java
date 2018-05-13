@@ -41,7 +41,7 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 		super.initialize();
 		initAlignment();
 		initMinimumSize();
-		getPainter().setParameters(getParameters());
+		getPainter().setParameters(getXPathVariables());
 	}
 
 	private void initAlignment() {

@@ -92,6 +92,7 @@ public abstract class AbstractPainter implements Painter {
 		}
 		
 		processor.processContents(theElement);
+		performedPreprocess = true;
 		
 		return theElement;
 	}

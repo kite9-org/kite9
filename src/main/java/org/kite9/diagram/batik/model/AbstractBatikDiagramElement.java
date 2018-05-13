@@ -13,7 +13,7 @@ import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,8 +38,12 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	protected Kite9BridgeContext ctx;
 	
 	private SVGTransformer transformer;
+	protected double margin[] = new double[4];
+	protected double padding[] = new double[4];
 	
 	protected void initialize() {
+		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
+		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 		this.transformer = TransformFactory.initializeTransformer(this);
 	}
 	
@@ -55,7 +59,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	
-	protected Map<String, String> getParameters() {
+	protected Map<String, String> getXPathVariables() {
 		return Collections.emptyMap();
 	}
 
@@ -72,8 +76,25 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	@Override
-	protected Painter getPainter() {
+	public Painter getPainter() {
 		return p;
+	}
+
+	public double getMargin(Direction d) {
+		ensureInitialized();
+		return margin[d.ordinal()];
+	}
+
+	public double getPadding(Direction d) {
+		ensureInitialized();
+		return padding[d.ordinal()];
+	}
+
+	protected void initializeDirectionalCssValues(double[] vals, String prefix) {
+		vals[Direction.UP.ordinal()] = getCssDoubleValue(prefix+CSSConstants.TOP);
+		vals[Direction.DOWN.ordinal()] = getCssDoubleValue(prefix+CSSConstants.BOTTOM);
+		vals[Direction.LEFT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.LEFT);
+		vals[Direction.RIGHT.ordinal()] = getCssDoubleValue(prefix+CSSConstants.RIGHT);	
 	}
 	
 }

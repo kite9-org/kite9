@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.template;
 
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
@@ -6,6 +6,8 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;

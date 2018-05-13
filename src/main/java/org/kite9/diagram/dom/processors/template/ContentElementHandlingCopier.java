@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.processors;
+package org.kite9.diagram.dom.processors.template;
 
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
@@ -8,6 +8,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.kite9.diagram.dom.elements.ContentsElement;
+import org.kite9.diagram.dom.processors.copier.BasicCopier;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

@@ -34,14 +34,14 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		
 		boolean from = ((Connection)parent).getFromDecoration() == this;
 		
-		reference = from ? theElement.getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
-			theElement.getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
+		reference = from ? getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
+			getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
 		
-		markerReserve  = theElement.getCSSStyleProperty(CSSConstants.MARKER_RESERVE).getFloatValue();
+		markerReserve  = getCSSStyleProperty(CSSConstants.MARKER_RESERVE).getFloatValue();
 		
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
-			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, theElement);
+			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getPainter().getContents());
 		} 
 	}
 	
@@ -94,7 +94,8 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	}
 	
 	private static boolean attributesMatch(String name, TerminatorImpl a, TerminatorImpl b) {
-		return a.theElement.getAttribute(name).equals(b.theElement.getAttribute(name));
+		return a.getPainter().getContents().getAttribute(name).equals(
+				b.getPainter().getContents().getAttribute(name));
 	}
 
 	@Override

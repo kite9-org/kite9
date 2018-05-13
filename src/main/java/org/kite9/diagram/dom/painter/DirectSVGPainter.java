@@ -2,8 +2,8 @@ package org.kite9.diagram.dom.painter;
 
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
-import org.kite9.diagram.dom.processors.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
