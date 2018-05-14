@@ -34,8 +34,6 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
-import org.kite9.diagram.dom.processors.template.BasicTemplater;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
@@ -136,7 +134,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			ADLDocument d = (ADLDocument)input;
 			String s = new XMLHelper().toXML(d);
 			log.error("Problem with XML: "+e);
-			throw new Kite9ProcessingException("Transcoder problem: \n"+s+"\n", e);
+			throw new Kite9TranscoderException("Transcoder problem: "+e.getMessage(), e, s);
 		}
 	}
 		
