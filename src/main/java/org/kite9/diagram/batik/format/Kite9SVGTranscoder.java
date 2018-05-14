@@ -102,7 +102,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return docFactory;
 	}
 
-	private Document createDocument(TranscoderOutput output) {
+	protected Document createDocument(TranscoderOutput output) {
 		// Use SVGGraphics2D to generate SVG content
 		Document doc;
 		if (output.getDocument() == null) {
