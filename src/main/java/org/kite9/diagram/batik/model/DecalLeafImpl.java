@@ -11,18 +11,12 @@ import org.kite9.diagram.model.style.ContentTransform;
 
 public class DecalLeafImpl extends AbstractBatikDiagramElement implements Decal, Leaf {
 
-	public DecalLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
-		super(el, parent, ctx, lo);
+	public DecalLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
+		super(el, parent, ctx, lo, t);
 	}
 
 	@Override
 	public RenderingInformation getRenderingInformation() {
 		return parent.getRenderingInformation();
 	}
-
-	@Override
-	protected ContentTransform getDefaultTransform() {
-		return ContentTransform.RESCALE;
-	}
-	
 }

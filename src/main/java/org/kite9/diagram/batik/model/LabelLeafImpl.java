@@ -20,8 +20,8 @@ import org.kite9.diagram.model.style.ContentTransform;
  */
 public class LabelLeafImpl extends AbstractLabel implements Label, Leaf {
 	
-	public LabelLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
-		super(el, parent, ctx, lo);
+	public LabelLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
+		super(el, parent, ctx, lo, t);
 	}
 
 	protected Rectangle2D getBounds() {
@@ -37,9 +37,4 @@ public class LabelLeafImpl extends AbstractLabel implements Label, Leaf {
 		}
 		return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 	} 
-	
-	@Override
-	protected ContentTransform getDefaultTransform() {
-		return ContentTransform.CROP;
-	}
 }

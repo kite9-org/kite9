@@ -19,8 +19,8 @@ import org.kite9.diagram.model.style.ContentTransform;
  */
 public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 	
-	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
-		super(el, parent, ctx, lo);
+	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
+		super(el, parent, ctx, lo, t);
 	}
 
 	protected Rectangle2D getBounds() {
@@ -37,8 +37,4 @@ public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 		return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 	}
 
-	@Override
-	protected ContentTransform getDefaultTransform() {
-		return ContentTransform.CROP;
-	}	
 }

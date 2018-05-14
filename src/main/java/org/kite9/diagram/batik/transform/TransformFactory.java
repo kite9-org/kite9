@@ -8,8 +8,11 @@ import org.kite9.framework.common.Kite9ProcessingException;
 
 public class TransformFactory {
 
-	public static SVGTransformer initializeTransformer(AbstractBatikDiagramElement diagramElement) {
-		ContentTransform t = diagramElement.getTransform();
+	public static SVGTransformer initializeTransformer(AbstractBatikDiagramElement diagramElement, ContentTransform t, ContentTransform defaultTransform) {
+		
+		if (t == ContentTransform.DEFAULT) {
+			t = defaultTransform;
+		}
 		
 		// note we are using the fall-through approach here.
 		switch (t) {
@@ -30,8 +33,9 @@ public class TransformFactory {
 			//$FALL-THROUGH$
 		case NONE:
 			return new NoopTransformer();
+		case DEFAULT:
 		default:
-			throw new Kite9ProcessingException("Not dealt with enum value: "+t);
+			throw new Kite9ProcessingException("No transform defined");
 		}
 	}
 }

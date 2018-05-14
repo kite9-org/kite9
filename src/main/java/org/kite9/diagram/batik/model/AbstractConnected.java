@@ -14,6 +14,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
@@ -25,8 +26,8 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public abstract class AbstractConnected extends AbstractCompactedRectangular implements Connected {
 	
-	public AbstractConnected(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
-		super(el, parent, ctx, rp);
+	public AbstractConnected(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+		super(el, parent, ctx, rp, t);
 	}
 	
 	/**

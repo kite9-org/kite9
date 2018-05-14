@@ -16,6 +16,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 
 public class ConnectedContainerImpl extends AbstractConnected implements Container {
@@ -29,8 +30,8 @@ public class ConnectedContainerImpl extends AbstractConnected implements Contain
 		TRAVERSAL_PROPERTIES.put(Direction.RIGHT, CSSConstants.TRAVERSAL_RIGHT_PROPERTY);
 	};
 	
-	public ConnectedContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
-		super(el, parent, ctx, rp);
+	public ConnectedContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+		super(el, parent, ctx, rp, t);
 	}
 	
 	

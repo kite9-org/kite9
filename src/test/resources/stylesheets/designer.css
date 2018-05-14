@@ -94,7 +94,8 @@ diagram glyph label {
 	kite9-template: url(template.svg#glyph-label-text);
 	kite9-occupies: 0 0 0 0;
 	kite9-vertical-align: top;
-	kite9-margin: 5px 
+	kite9-margin: 5px;
+	text-align: middle;
 }
 
 /*
@@ -437,7 +438,6 @@ arrow > label > contents {
 	stroke: none;
 	fill: black;
 	font-family: "opensans-regular-webfont";
-	text-align: start;	
 	font-size: 10px;
 }
 
@@ -445,7 +445,6 @@ arrow > label > contents {
 	stroke: none;
 	fill: black;
 	font-family: "opensans-bold-webfont";
-	text-align: start;	
 	font-size: 10px;
 }
 

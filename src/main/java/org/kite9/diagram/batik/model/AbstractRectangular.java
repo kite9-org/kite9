@@ -30,8 +30,8 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	private Layout layout;
 	protected DiagramElementSizing sizing;	
 
-	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
-		super(el, parent, ctx, rp);
+	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+		super(el, parent, ctx, rp, t);
 	}
 
 	@Override
@@ -100,11 +100,6 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	@Override
 	public Container getContainer() {
 		return (Container) getParent();
-	}
-
-	@Override
-	protected ContentTransform getDefaultTransform() {
-		return ContentTransform.POSITION;
 	}
 
 	@Override

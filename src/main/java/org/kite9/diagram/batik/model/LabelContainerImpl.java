@@ -14,6 +14,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 
 /**
@@ -24,8 +25,8 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
  */
 public class LabelContainerImpl extends AbstractLabel implements Label, Container {
 	
-	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
-		super(el, parent, ctx, rp);
+	public LabelContainerImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+		super(el, parent, ctx, rp, t);
 	}
 	
 	public BorderTraversal getTraversalRule(Direction d) {

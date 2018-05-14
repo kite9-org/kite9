@@ -1,8 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.transform.SVGTransformer;
@@ -28,16 +25,18 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElement {
 	
-	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
+	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
 		super(el, parent);
 		this.p = p;
 		this.p.setDiagramElement(this);
 		this.ctx = ctx;
+		this.defaultTransform = t;
 	}
 
 	protected Painter p;
 	protected Kite9BridgeContext ctx;
 	
+	private ContentTransform defaultTransform;
 	private SVGTransformer transformer;
 	protected double margin[] = new double[4];
 	protected double padding[] = new double[4];
@@ -45,11 +44,9 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	protected void initialize() {
 		initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX);
 		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
-		this.transformer = TransformFactory.initializeTransformer(this);
+		initTransform();
 	}
 	
-	protected abstract ContentTransform getDefaultTransform();
-
 	protected double getCssDoubleValue(String prop) {
 		Value v = getCSSStyleProperty(prop);
 		return v.getFloatValue();
@@ -59,16 +56,11 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		return transformer.postProcess(p, d);
 	}
 
-	public ContentTransform getTransform() {
+	private void initTransform() {
 		ContentTransform t = null;
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM);
 		t = (ContentTransform) ev.getTheValue();
-
-		if ((t == null) || (t==ContentTransform.DEFAULT)) {
-			t = getDefaultTransform();
-		}
-		
-		return t;
+		this.transformer = TransformFactory.initializeTransformer(this, t, this.defaultTransform);
 	}
 
 	@Override

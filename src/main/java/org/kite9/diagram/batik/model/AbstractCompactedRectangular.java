@@ -9,13 +9,14 @@ import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 
 public abstract class AbstractCompactedRectangular extends AbstractRectangular implements SizedRectangular, AlignedRectangular {
 
-	public AbstractCompactedRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
-		super(el, parent, ctx, rp);
+	public AbstractCompactedRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+		super(el, parent, ctx, rp, t);
 	}
 
 	private VerticalAlignment verticalAlignment;

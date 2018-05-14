@@ -38,7 +38,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		super(theElement, ctx);
 	}
 	
-	private Rectangle2D bounds;
 	private String theText;
 	private StyledKite9SVGElement textContents;
 	
@@ -73,12 +72,15 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 
 		// convert the flow element into regular svg:text
 		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
-		addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
+		//addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
+		theElement.appendChild(flowRoot);
 		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
 		Element group = graphicsNodeToXML(d, gn);
 		
-		if (group != null ) {
-			removeFontSizeAndFamily(group);
+		theElement.removeChild(flowRoot);
+		
+		if (group != null) {
+//			removeFontSizeAndFamily(group);
 			theElement.appendChild(group);
 		}
 		
@@ -98,16 +100,16 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	}
 
 
-	/**
-	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
-	 * we need to set correctly, temporarily, for the layout
-	 */
-	private void addFontSizeAndFamily(StyledKite9SVGElement theElement, Leaf r, SVGOMFlowRootElement flowRoot) {
-		Value size = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
-		Value family = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
-		flowRoot.setAttribute("font-size", ""+size.getFloatValue());
-		flowRoot.setAttribute("font-family", ""+family.getCssText());
-	}
+//	/**
+//	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
+//	 * we need to set correctly, temporarily, for the layout
+//	 */
+//	private void addFontSizeAndFamily(StyledKite9SVGElement theElement, Leaf r, SVGOMFlowRootElement flowRoot) {
+//		Value size = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
+//		Value family = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
+//		flowRoot.setAttribute("font-size", ""+size.getFloatValue());
+//		flowRoot.setAttribute("font-family", ""+family.getCssText());
+//	}
 
 
 	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
@@ -116,7 +118,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
 		node.paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
-		bounds = g2d.getTextBounds();
 		return (Element) groupElem.getFirstChild();
 	}
 
@@ -159,7 +160,7 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	@Override
 	public Rectangle2D bounds() {
 		GraphicsNode gn = getGraphicsNode();
-		return bounds;
+		return gn.getBounds();
 	}
 
 }

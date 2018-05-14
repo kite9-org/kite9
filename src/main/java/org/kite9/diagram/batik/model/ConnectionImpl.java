@@ -34,8 +34,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	private String fromId;
 	private String toId;
 	
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
-		super(el, parent, ctx, p);
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
+		super(el, parent, ctx, p, t);
 		this.fromId = getFromReference();
 		this.toId = getToReference();
 		addConnectionReference(fromId, this);
@@ -283,10 +283,4 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		ensureInitialized();
 		return minimumLength;
 	}
-
-	@Override
-	protected ContentTransform getDefaultTransform() {
-		return ContentTransform.NONE;
-	}
-
 }
