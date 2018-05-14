@@ -7,8 +7,6 @@ import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.position.CostedDimension;
-import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.style.ContentTransform;
 
 /**
@@ -26,15 +24,6 @@ public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 	protected Rectangle2D getBounds() {
 		ensureInitialized();
 		return ((LeafPainter) this.p).bounds();
-	}
-
-	@Override
-	public CostedDimension getSize(Dimension2D within) {
-		Rectangle2D bounds = this.getBounds();
-		if (bounds == null) {
-			return new CostedDimension(1, 1, 0);
-		}
-		return new CostedDimension(bounds.getWidth(), bounds.getHeight(), within);
 	}
 
 }

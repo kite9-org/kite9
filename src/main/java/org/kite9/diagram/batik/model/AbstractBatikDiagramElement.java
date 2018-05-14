@@ -37,7 +37,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	protected Kite9BridgeContext ctx;
 	
 	private ContentTransform defaultTransform;
-	private SVGTransformer transformer;
+	protected SVGTransformer transformer;
 	protected double margin[] = new double[4];
 	protected double padding[] = new double[4];
 	

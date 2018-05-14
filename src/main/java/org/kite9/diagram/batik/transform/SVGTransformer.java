@@ -15,5 +15,5 @@ import org.w3c.dom.Element;
 public interface SVGTransformer {
 
 	public Element postProcess(Painter p, Document d);
-	
+		
 }

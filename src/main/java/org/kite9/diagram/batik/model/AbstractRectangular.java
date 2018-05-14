@@ -4,14 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.painter.LeafPainter;
+import org.kite9.diagram.batik.transform.LeafTransformer;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Dimension2D;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
@@ -21,6 +29,7 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
 	
@@ -117,4 +126,33 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		return out;	
 	}
 	
+	
+	public final CostedDimension getSize(Dimension2D within) {
+		if (this instanceof Decal) {
+			throw new LogicException("Shouldn't be using size for decals");
+		}else if (this instanceof Terminator) {
+			throw new LogicException("Shouldn't be using size for terminators");
+		} else if (this instanceof Container) {
+			return getSizeBasedOnPadding();
+		} else if (this instanceof Leaf) {
+			double left = getPadding(Direction.LEFT);
+			double right = getPadding(Direction.RIGHT);
+			double up = getPadding(Direction.UP);
+			double down = getPadding(Direction.DOWN);
+			Dimension2D bounds = getLeafBounds();
+			return new CostedDimension(left + right + bounds.getWidth(), up + down + bounds.getHeight(), within);
+		}
+	
+		throw new LogicException("Not sure how to size: "+this);
+	}
+	
+	private Dimension2D getLeafBounds() {
+		Painter p = getPainter();
+		if ((p instanceof LeafPainter) && (transformer instanceof LeafTransformer)) {
+			return ((LeafTransformer)transformer).getBounds((LeafPainter)  p);
+		}
+		
+		return CostedDimension.ZERO;
+	}
+
 }

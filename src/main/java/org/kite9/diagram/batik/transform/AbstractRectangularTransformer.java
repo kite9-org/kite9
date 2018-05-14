@@ -5,7 +5,7 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 
-public abstract class AbstractRectangularTransformer implements SVGTransformer {
+public abstract class AbstractRectangularTransformer {
 
 	protected Dimension2D getRectangularRenderedSize(DiagramElement de) {
 		if (de instanceof Rectangular) {

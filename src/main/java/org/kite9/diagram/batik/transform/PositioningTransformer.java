@@ -1,5 +1,8 @@
 package org.kite9.diagram.batik.transform;
 
+import java.awt.geom.Rectangle2D;
+
+import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -12,7 +15,7 @@ import org.w3c.dom.Element;
  * Content is expected to be defined from 0,0
  * 
  */
-public class PositioningTransformer extends AbstractRectangularTransformer {
+public class PositioningTransformer extends AbstractRectangularTransformer implements LeafTransformer {
 
 	private Rectangular owner;
 	
@@ -31,9 +34,11 @@ public class PositioningTransformer extends AbstractRectangularTransformer {
 		}
 		
 		return out;
-	}	
-
-	protected Rectangular getOwner() {
-		return owner;
 	}
+
+	@Override
+	public Dimension2D getBounds(LeafPainter p) {
+		Rectangle2D r = p.bounds();
+		return new Dimension2D(r.getMaxX(), r.getMaxY());
+	}	
 }

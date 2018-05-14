@@ -5,11 +5,12 @@ import java.awt.geom.Rectangle2D;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Leaf;
+import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class RescalingTransformer extends AbstractRectangularTransformer  {
+public class RescalingTransformer extends AbstractRectangularTransformer implements LeafTransformer  {
 
 	private Leaf l;
 	
@@ -49,6 +50,11 @@ public class RescalingTransformer extends AbstractRectangularTransformer  {
 		
 		return out;
 	
+	}
+
+	@Override
+	public Dimension2D getBounds(LeafPainter p) {
+		return CostedDimension.ZERO;
 	}
 
 }

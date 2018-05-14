@@ -11,8 +11,6 @@ import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.CostedDimension;
-import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
@@ -82,11 +80,6 @@ public class ConnectedContainerImpl extends AbstractConnected implements Contain
 		} else {
 			return 0;
 		}
-	}
-
-	@Override
-	public CostedDimension getSize(Dimension2D within) {
-		return getSizeBasedOnPadding();
 	}
 
 	public List<DiagramElement> getContents() {

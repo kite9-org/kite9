@@ -20,7 +20,6 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.logging.LogicException;
 
 public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	
@@ -74,11 +73,6 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		} else {
 			return null;
 		}
-	}
-
-	@Override
-	public CostedDimension getSize(Dimension2D within) {
-		throw new LogicException("Shouldn't be using size for terminators");
 	}
 
 	@Override
