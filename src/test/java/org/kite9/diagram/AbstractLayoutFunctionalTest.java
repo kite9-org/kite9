@@ -140,7 +140,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		});
 	}
 
-	protected void mustContradict(DiagramKite9XMLElement diag, Link l) {
+	protected void mustContradict(Kite9XMLElement diag, Link l) {
 		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
 			
 			@Override

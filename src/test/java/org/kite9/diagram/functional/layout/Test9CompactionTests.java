@@ -12,6 +12,7 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -153,9 +154,9 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(one, four, null, null, null, null, d);
 		
 		
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
-		DiagramKite9XMLElement d2 = renderDiagram(d1);
-		new DiagramElementVisitor().visit(d2.getDiagramElement(), new VisitorAction() {
+		Kite9XMLElement d1 = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
+		Kite9XMLElement d2 = renderDiagram(d1);
+		new DiagramElementVisitor().visit((Diagram) d2.getDiagramElement(), new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {

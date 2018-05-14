@@ -52,7 +52,7 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		Link l = new ContradictingLink(a, e, null, null, null, null, Direction.DOWN);
 		l.setRank(-1000);
 
-		DiagramKite9XMLElement diag = new DiagramKite9XMLElement("dia", createList(a, b, c, d, e), null);
+		Kite9XMLElement diag = new DiagramKite9XMLElement("dia", createList(a, b, c, d, e), null);
 		diag = renderDiagram(diag);
 
 		mustContradict(diag, l);
