@@ -20,7 +20,7 @@ import org.kite9.framework.common.HelpMethods;
 public class TestCard extends AbstractDisplayFunctionalTest {
 
 	public DiagramKite9XMLElement createTestCard() {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+//		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Symbol aDia = new Symbol("Some description\n taking multiple lines", 'a', SymbolShape.DIAMOND);
 		Symbol MDia = new Symbol("Some description blah blah blah", 'M', SymbolShape.DIAMOND);
 		Symbol QCir = new Symbol("Some description sdkjfsd flksdjf", 'Q', SymbolShape.CIRCLE);

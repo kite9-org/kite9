@@ -51,6 +51,8 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	protected void initialize() {
 		super.initialize();
 		initContainerPosition();
+		initSizing();
+		initLayout();
 	}
 
 	public Layout getLayout() {

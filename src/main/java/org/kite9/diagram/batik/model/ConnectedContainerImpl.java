@@ -45,6 +45,8 @@ public class ConnectedContainerImpl extends AbstractConnected implements Contain
 	@Override
 	protected void initialize() {
 		super.initialize();
+		initLayout();
+		initSizing();
 		this.contents = initContents();
 	}
 
