@@ -33,10 +33,12 @@ public class CroppingTransformer extends AbstractRectangularTransformer {
 		
 		if (p instanceof LeafPainter) {
 			Rectangle2D content = ((LeafPainter) p).bounds();
-			position = position.minus(new Dimension2D(content.getX(), content.getY()));
-			
-			if ((position.x() != 0) || (position.y() != 0)) {
-				out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+			if (content != null) {
+				position = position.minus(new Dimension2D(content.getX(), content.getY()));
+				
+				if ((position.x() != 0) || (position.y() != 0)) {
+					out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+				}
 			}
 		}
 		

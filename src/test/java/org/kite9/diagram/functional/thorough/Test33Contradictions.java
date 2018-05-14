@@ -57,7 +57,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	private DiagramElement getOriginalElement(Kite9XMLElement l) {
 		String id = l.getID();
-		DiagramKite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+		Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
 		Element e = lastDiagram.getOwnerDocument().getElementById(id);
 		Kite9XMLElement xe = (Kite9XMLElement) e;
 		DiagramElement diagramElement = xe.getDiagramElement();
