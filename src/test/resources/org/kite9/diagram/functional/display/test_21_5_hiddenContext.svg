@@ -4,7 +4,7 @@
 <svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   ><g kite9-elem="diagram" id="my_diagram"
   >
@@ -13,7 +13,7 @@
       
   <g kite9-elem="glyph" id="ridley_scott" transform="translate(150.0,15.0)"
       >
-    <g kite9-elem="back" transform="scale(0.9900990099009901,0.9803921568627451)translate(0.5,0.5)"
+    <g kite9-elem="back"
         >
       <rect x="0" y="0" width="100.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
           />
@@ -24,10 +24,10 @@
       
     <g kite9-elem="stereotype" id="ridley_scott-stereo" transform="translate(10.0,6.0)"
             >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
               >
-      <g kite9-elem="text-label" transform="translate(15.0,0.0)"
+      <g kite9-elem="text-label" transform="translate(15.0,0.5455074310302734)"
                 ><g
                   ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                     ><tspan
@@ -44,10 +44,10 @@
                 >
     <g kite9-elem="label" id="ridley_scott-label" transform="translate(10.0,25.0)"
                 >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
                   >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.696533203125)"
                     ><g
                       ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                         ><tspan
@@ -71,7 +71,7 @@
                     >
   <g kite9-elem="arrow" id="directed" transform="translate(172.0,75.0)"
                     >
-    <g kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g kite9-elem="back"
                       >
       <rect x="0" y="0" width="56.0" style="fill: black; " rx="4" ry="4" height="20.0"
                         />
@@ -80,10 +80,10 @@
     
     <g kite9-elem="label" id="auto:0" transform="translate(5.0,3.0)"
                         >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                           >
-      <g kite9-elem="text-label"
+      <g kite9-elem="text-label" transform="translate(0.0,0.5572261810302734)"
                             ><g
                               ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                 ><tspan
@@ -106,7 +106,7 @@
     
     <g kite9-elem="glyph" id="auto:1-bladerunner" transform="translate(12.0,12.0)"
                               >
-    <g kite9-elem="back" transform="scale(0.9907407407407407,0.9803921568627451)translate(0.5,0.5)"
+    <g kite9-elem="back"
                                 >
       <rect x="0" y="0" width="107.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
                                   />
@@ -117,10 +117,10 @@
       
       <g kite9-elem="stereotype" id="auto:1-bladerunner-stereo" transform="translate(10.0,6.0)"
                                     >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
                                       >
-      <g kite9-elem="text-label" transform="translate(32.0,0.0)"
+      <g kite9-elem="text-label" transform="translate(32.0,0.5455074310302734)"
                                         ><g
                                           ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                                             ><tspan
@@ -137,10 +137,10 @@
                                         >
       <g kite9-elem="label" id="auto:1-bladerunner-label" transform="translate(10.0,25.0)"
                                         >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
                                           >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.696533203125)"
                                             ><g
                                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                 ><tspan
@@ -162,7 +162,7 @@
                                             >
     <g kite9-elem="glyph" id="auto:2-gladiator" transform="translate(129.0,12.0)"
                                             >
-    <g kite9-elem="back" transform="scale(0.9882352941176471,0.9803921568627451)translate(0.5,0.5)"
+    <g kite9-elem="back"
                                               >
       <rect x="0" y="0" width="84.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
                                                 />
@@ -173,10 +173,10 @@
       
       <g kite9-elem="stereotype" id="auto:2-gladiator-stereo" transform="translate(10.0,6.0)"
                                                   >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
                                                     >
-      <g kite9-elem="text-label" transform="translate(20.0,0.0)"
+      <g kite9-elem="text-label" transform="translate(20.0,0.5455074310302734)"
                                                       ><g
                                                         ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                                                           ><tspan
@@ -193,10 +193,10 @@
                                                       >
       <g kite9-elem="label" id="auto:2-gladiator-label" transform="translate(10.0,25.0)"
                                                       >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
                                                         >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.696533203125)"
                                                           ><g
                                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                               ><tspan
@@ -218,7 +218,7 @@
                                                           >
     <g kite9-elem="glyph" id="auto:3-thelma &amp; louise" transform="translate(223.0,12.0)"
                                                           >
-    <g kite9-elem="back" transform="scale(0.9927007299270073,0.9803921568627451)translate(0.5,0.5)"
+    <g kite9-elem="back"
                                                             >
       <rect x="0" y="0" width="136.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
                                                               />
@@ -229,10 +229,10 @@
       
       <g kite9-elem="stereotype" id="auto:3-thelma &amp; louise-stereo" transform="translate(10.0,6.0)"
                                                                 >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-stereotype-text"
                                                                   >
-      <g kite9-elem="text-label" transform="translate(46.0,0.0)"
+      <g kite9-elem="text-label" transform="translate(46.0,0.5455074310302734)"
                                                                     ><g
                                                                       ><text x="0" xml:space="preserve" y="10.6283" stroke="none"
                                                                         ><tspan
@@ -249,10 +249,10 @@
                                                                     >
       <g kite9-elem="label" id="auto:3-thelma &amp; louise-label" transform="translate(10.0,25.0)"
                                                                     >
-    <!-- svg:rect x='0' y='0' width='{x1}' height='{y1}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="glyph-label-text"
                                                                       >
-      <g kite9-elem="text-label" transform="translate(0.0,2.0)"
+      <g kite9-elem="text-label" transform="translate(0.0,2.696533203125)"
                                                                         ><g
                                                                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                             ><tspan
@@ -277,7 +277,7 @@
   </g
                                                                         >
   
-    <g kite9-elem="back" transform="scale(0.9973118279569892,0.9866666666666667)translate(0.5,0.5)"
+    <g kite9-elem="back"
                                                                         >
       <rect x="0" y="0" width="371.0" rx="12" class="context-back" ry="12" height="74.0"
                                                                           />
@@ -301,182 +301,198 @@
   </g
                                                                                 >
   
-    <path style="marker-start: ; marker-end: " class="link" d="M200 75 L200 65"
-                                                                                />
+    <g kite9-elem="link-body"
+                                                                                >
+      <path style="marker-start: ; marker-end: " class="link" d="M200 75 L200 65"
+                                                                                  />
+    </g
+                                                                                  >
   </g
-                                                                                >
+                                                                                  >
   <g kite9-elem="link" id="directed-auto:1-bladerunner"
-                                                                                >
+                                                                                  >
     
     <g kite9-elem="from" transform="translate(171.0,90.0)"
-                                                                                  >
+                                                                                    >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
-                                                                                    />
+                                                                                      />
   </g
-                                                                                    >
+                                                                                      >
     <g kite9-elem="to" id="auto:4" transform="translate(76.0,115.0)"
-                                                                                    >
-    <rect x="0" width="10.0" height="13.0" y="0" style="fill: none; stroke: none "
-                                                                                      />
-  </g
                                                                                       >
+    <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
+                                                                                        />
+  </g
+                                                                                        >
   
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M176 95 L176 100 C176 102.7614 173.7614 105 171 105 L86 105 C83.2386 105 81 107.2386 81 110 L81 127"
-                                                                                      />
+    <g kite9-elem="link-body"
+                                                                                        >
+      <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M176 95 L176 100 C176 102.7614 173.7614 105 171 105 L86 105 C83.2386 105 81 107.2386 81 110 L81 127"
+                                                                                          />
+    </g
+                                                                                          >
   </g
-                                                                                      >
+                                                                                          >
   <g kite9-elem="link" id="directed-auto:2-gladiator"
-                                                                                      >
+                                                                                          >
     
     <g kite9-elem="from" transform="translate(181.0,90.0)"
-                                                                                        >
+                                                                                            >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
-                                                                                          />
+                                                                                              />
   </g
-                                                                                          >
-    <g kite9-elem="to" id="auto:5" transform="translate(181.0,115.0)"
-                                                                                          >
-    <rect x="0" width="10.0" height="13.0" y="0" style="fill: none; stroke: none "
-                                                                                            />
-  </g
-                                                                                            >
-  
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M186 95 L186 127"
-                                                                                            />
-  </g
-                                                                                            >
-  <g kite9-elem="link" id="directed-auto:3-thelma &amp; louise"
-                                                                                            >
-    
-    <g kite9-elem="from" transform="translate(219.0,90.0)"
                                                                                               >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+    <g kite9-elem="to" id="auto:5" transform="translate(181.0,115.0)"
+                                                                                              >
+    <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                 />
   </g
                                                                                                 >
-    <g kite9-elem="to" id="auto:6" transform="translate(301.0,115.0)"
-                                                                                                >
-    <rect x="0" width="10.0" height="13.0" y="0" style="fill: none; stroke: none "
-                                                                                                  />
-  </g
-                                                                                                  >
   
-    <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M224 95 L224 100 C224 102.7614 226.2386 105 229 105 L301 105 C303.7614 105 306 107.2386 306 110 L306 127"
+    <g kite9-elem="link-body"
+                                                                                                >
+      <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M186 95 L186 127"
                                                                                                   />
-  </g
-                                                                                                  >
-
     </g
                                                                                                   >
   </g
                                                                                                   >
-<defs
+  <g kite9-elem="link" id="directed-auto:3-thelma &amp; louise"
                                                                                                   >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
-                                                                                                    >
-      <stop stop-color="#FFF" offset="0%"
-                                                                                                      />
-      <stop stop-color="#DDD" offset="100%"
-                                                                                                      />
-    </linearGradient
-                                                                                                      >
     
-    <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="dropshadow" height="130%" xlink:show="other" xml:id="dropshadow"
+    <g kite9-elem="from" transform="translate(219.0,90.0)"
+                                                                                                    >
+    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+                                                                                                      />
+  </g
                                                                                                       >
-      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                                                                                                        /> 
-      <feOffset dx="2" dy="2"
-                                                                                                        /> 
-      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
+    <g kite9-elem="to" id="auto:6" transform="translate(301.0,115.0)"
+                                                                                                      >
+    <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                         />
-      <feMerge
-                                                                                                        > 
-        <feMergeNode
+  </g
+                                                                                                        >
+  
+    <g kite9-elem="link-body"
+                                                                                                        >
+      <path style="marker-start: ; marker-end: url(#arrow-end-marker)" class="link" d="M224 95 L224 100 C224 102.7614 226.2386 105 229 105 L301 105 C303.7614 105 306 107.2386 306 110 L306 127"
                                                                                                           />
-        <feMergeNode in="SourceGraphic"
-                                                                                                          /> 
-      </feMerge
+    </g
                                                                                                           >
-    </filter
+  </g
                                                                                                           >
 
-    <marker refX="3" refY="3" id="circle-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="6" xml:id="circle-marker"
+    </g
                                                                                                           >
-      <circle r="2" class="circle-marker" cx="3" cy="3"
-                                                                                                            />
-    </marker
+  </g
+                                                                                                          >
+<defs
+                                                                                                          >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
                                                                                                             >
-    
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8" xml:id="diamond-start-marker"
-                                                                                                            >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+      <stop stop-color="#FFF" offset="0%"
                                                                                                               />
-    </marker
+      <stop stop-color="#DDD" offset="100%"
+                                                                                                              />
+    </linearGradient
                                                                                                               >
     
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8" xml:id="diamond-end-marker"
+    <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                                                                               >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
+                                                                                                                /> 
+      <feOffset dx="2" dy="2"
+                                                                                                                /> 
+      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                                                                                                                 />
-    </marker
-                                                                                                                >
-    
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8" xml:id="open-diamond-start-marker"
-                                                                                                                >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+      <feMerge
+                                                                                                                > 
+        <feMergeNode
                                                                                                                   />
-    </marker
+        <feMergeNode in="SourceGraphic"
+                                                                                                                  /> 
+      </feMerge
                                                                                                                   >
-    
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8" xml:id="open-diamond-end-marker"
+    </filter
                                                                                                                   >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+
+    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
+                                                                                                                  >
+      <circle r="2" class="circle-marker" cx="3" cy="3"
                                                                                                                     />
     </marker
                                                                                                                     >
-
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="barbed-arrow-end-marker"
+    
+    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                     >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                       />
     </marker
                                                                                                                       >
-
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="barbed-arrow-start-marker"
+    
+     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                       >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                         />
     </marker
                                                                                                                         >
- 
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="open-arrow-end-marker"
+    
+    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                         >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                           />
     </marker
                                                                                                                           >
-
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="open-arrow-start-marker"
+    
+     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                           >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                             />
     </marker
                                                                                                                             >
-  
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="arrow-start-marker"
+
+    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                             >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
+      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                                                                                               />
     </marker
                                                                                                                               >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7" xml:id="arrow-end-marker"
+    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                               >
-       <polygon class="arrow-marker" points="6,4 2,2 2,6"
+      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                                                                                                 />
-   </marker
+    </marker
                                                                                                                                 >
+ 
+    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                                                                                                                >
+      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+                                                                                                                                  />
+    </marker
+                                                                                                                                  >
+
+    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                                                                                                                  >
+      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+                                                                                                                                    />
+    </marker
+                                                                                                                                    >
+  
+    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                                                                                                                    >
+      <polygon class="arrow-marker" points="2,4 6,2 6,6"
+                                                                                                                                      />
+    </marker
+                                                                                                                                      >
+
+    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                                                                                                                      >
+       <polygon class="arrow-marker" points="6,4 2,2 2,6"
+                                                                                                                                        />
+   </marker
+                                                                                                                                        >
     
   </defs
-                                                                                                                              ></svg
-                                                                                                                            >
+                                                                                                                                      ></svg
+                                                                                                                                    >

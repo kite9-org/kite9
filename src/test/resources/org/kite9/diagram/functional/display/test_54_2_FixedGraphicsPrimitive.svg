@@ -4,7 +4,7 @@
 <svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><g kite9-elem="diagram" id="one"
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g kite9-elem="someelement" id="someelement" transform="translate(50.0,50.0)"
+    ><g kite9-elem="someelement" id="someelement" transform="translate(48.876953125,68.20068359375)"
       ><text style="font-size: 25px; stroke: none; fill: orange; alignment-baseline: hanging; "
         >Some Text</text
       ></g
