@@ -156,7 +156,7 @@
   </template>
 
   <template id="glyph-stereotype-text">
-    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <show-box />
     <svg:g class="glyph-stereotype-text">
       <text-label style="kite9-type: text;">
         <contents />
@@ -165,7 +165,7 @@
   </template>
 
   <template id="glyph-label-text">
-    <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <show-box />
     <svg:g class="glyph-label-text">
       <text-label style="kite9-type: text;" class="glyph-label-text">
         <contents />
