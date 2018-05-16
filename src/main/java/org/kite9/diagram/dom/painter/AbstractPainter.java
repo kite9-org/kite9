@@ -1,9 +1,13 @@
 package org.kite9.diagram.dom.painter;
 
-import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.model.AlignedRectangular;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
 
@@ -32,34 +36,35 @@ public abstract class AbstractPainter implements Painter {
 		this.r = de;
 	}
 
-	protected void addStyleAndClass(StyledKite9SVGElement in, Element out) {
-		out.setAttribute(SVG12OMDocument.SVG_ID_ATTRIBUTE, r.getID());
-		String clazz = in.getCSSClass().trim();
-		if (clazz.length() > 0) {
-			out.setAttribute("class", clazz);
-		}
-		
-		String style = in.getAttribute("style");
-		if (style.length() > 0) {
-			out.setAttribute("style", style);
-		}
-	}
-//	
-//	protected void addAttributes(StyledKite9SVGElement in, X r, Element out) {
-//		NamedNodeMap nnm = in.getAttributes();
-//		for (int i = 0; i < nnm.getLength(); i++) {
-//			Attr a = (Attr) nnm.item(i);
-//			out.setAttribute(a.getNodeName(), a.getNodeValue());
-//		}
-//	}
-	
-
 	protected void addAttributes(StyledKite9SVGElement toUse, Element out) {
 		String id = r.getID();
 		if (id.length() > 0) {
 			out.setAttribute("id", id);
 		}
 		out.setAttribute("kite9-elem", toUse.getTagName());
+		addDebugAttributes(out);
+	}
+
+	private void addDebugAttributes(Element out) {
+		StringBuilder debug = new StringBuilder();
+		if (r instanceof SizedRectangular) {
+			debug.append("position: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
+		} 
+		if (r instanceof AlignedRectangular) {
+			debug.append("horiz: "+ ((AlignedRectangular) r).getHorizontalAlignment()+"; ");
+			debug.append("vert: "+ ((AlignedRectangular) r).getVerticalAlignment()+"; ");
+		}
+		if (r instanceof Container) {
+			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
+			debug.append("layout: " + ((Container) r).getLayout() + "; ");
+
+			if (((Container) r).getLayout() == Layout.GRID) {
+				debug.append("grid-x: " + ((Container) r).getGridColumns() + "; ");
+				debug.append("grid-y: " + ((Container) r).getGridRows() + "; ");
+			}
+		}
+		
+		out.setAttribute("debug", debug.toString());
 	}
 
 	/**

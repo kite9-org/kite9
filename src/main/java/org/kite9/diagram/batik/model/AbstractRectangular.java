@@ -16,6 +16,7 @@ import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -33,7 +34,13 @@ import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
 	
-	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {};
+	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {
+		
+		public String toString() {
+			return "";
+		}
+		
+	};
 	
 	private RectangleRenderingInformation ri;
 	private Layout layout;
@@ -133,17 +140,29 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		}else if (this instanceof Terminator) {
 			throw new LogicException("Shouldn't be using size for terminators");
 		} else if (this instanceof Container) {
-			return getSizeBasedOnPadding();
+			return ensureMinimumSize(getSizeBasedOnPadding(), within);
 		} else if (this instanceof Leaf) {
 			double left = getPadding(Direction.LEFT);
 			double right = getPadding(Direction.RIGHT);
 			double up = getPadding(Direction.UP);
 			double down = getPadding(Direction.DOWN);
 			Dimension2D bounds = getLeafBounds();
-			return new CostedDimension(left + right + bounds.getWidth(), up + down + bounds.getHeight(), within);
+			return ensureMinimumSize(new Dimension2D(left + right + bounds.getWidth(), up + down + bounds.getHeight()), within);
 		}
 	
 		throw new LogicException("Not sure how to size: "+this);
+	}
+	
+	private CostedDimension ensureMinimumSize(Dimension2D c, Dimension2D within) {
+//		if (this instanceof SizedRectangular) {
+//			Dimension2D min = ((SizedRectangular)this).getMinimumSize();
+//			return new CostedDimension(
+//					Math.max(c.getWidth(), min.getWidth()), 
+//					Math.max(c.getHeight(), min.getHeight()), within);
+//			
+//		} else {
+			return new CostedDimension(Math.max(c.getWidth(),1), Math.max(1, c.getHeight()), within);
+//		}
 	}
 	
 	private Dimension2D getLeafBounds() {

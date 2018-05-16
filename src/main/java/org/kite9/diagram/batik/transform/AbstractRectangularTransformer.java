@@ -4,13 +4,14 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.position.RenderingInformation;
 
 public abstract class AbstractRectangularTransformer {
 
 	protected Dimension2D getRectangularRenderedSize(DiagramElement de) {
-		if (de instanceof Rectangular) {
-			RectangleRenderingInformation rri = ((Rectangular) de).getRenderingInformation();
-			Dimension2D size = rri.getSize();
+		RenderingInformation ri = de.getRenderingInformation();
+		if (ri instanceof RectangleRenderingInformation) {
+			Dimension2D size = ((RectangleRenderingInformation)ri).getSize();
 			return size;
 		} else {
 			return null;

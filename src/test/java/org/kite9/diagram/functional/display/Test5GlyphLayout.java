@@ -66,7 +66,7 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_5_7_GlyphWithMultilineTextSymbol() throws Exception {
-		Glyph one = new Glyph("Stereo", "One", createList(
+		Glyph one = new Glyph("Stereo\ntwoer", "One", createList(
 					new TextLine("Here is line 1"),
 					new TextLineWithSymbols("Here is line 2\nand it goes onto multiple\nlines", createList(new Symbol(
 				"Some text", 'a', SymbolShape.CIRCLE), new Symbol("Some text", 'A', SymbolShape.DIAMOND), new Symbol(

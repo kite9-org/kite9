@@ -37,4 +37,12 @@ class IntegerRangeValue extends AbstractValue implements IntegerRange {
 	public static boolean notSet(IntegerRangeValue in) {
 		return (in == null) || (in.from == -1);
 	}
+	
+	public String toString() {
+		if (from == -1) {
+			return "*";
+		} else {
+			return from+"-"+to;
+		}
+	}
 }

@@ -13,64 +13,63 @@ import org.apache.batik.util.SVGTypes;
  */
 public class EnumManager extends IdentifierManager {
 
-    private final StringMap values = new StringMap();
-    private final String propertyName;
-    private final Value defaultValue;
-    private final boolean inherited;
-    
-    public EnumManager(String propertyName, Class<?> e, Enum<?> defaultValue, boolean inherited) {
-    	if (!e.isEnum()) {
-    		throw new UnsupportedOperationException("Can only init with an enum class");
-    	}
-    	
-    	this.propertyName = propertyName;
-    	this.defaultValue = constantValueFor(defaultValue);
-    	for (Object o : e.getEnumConstants()) {
+	private final StringMap values = new StringMap();
+	private final String propertyName;
+	private final Value defaultValue;
+	private final boolean inherited;
+
+	public EnumManager(String propertyName, Class<?> e, Enum<?> defaultValue, boolean inherited) {
+		if (!e.isEnum()) {
+			throw new UnsupportedOperationException("Can only init with an enum class");
+		}
+
+		this.propertyName = propertyName;
+		this.defaultValue = constantValueFor(defaultValue);
+		for (Object o : e.getEnumConstants()) {
 			values.put(cssValueFor(o.toString()), constantValueFor((Enum<?>) o));
 		}
-    	this.inherited = inherited;
-    }
-    
-    public static final String cssValueFor(String identifier) {
-    	return identifier.toLowerCase().replace("_", "-").intern();
-    }
-    
-    public static final EnumValue constantValueFor(Enum<?> e) {
-    	return new EnumValue(e);
-    }
- 
-    public boolean isInheritedProperty() {
-        return inherited;
-    }
+		this.inherited = inherited;
+	}
 
-    public boolean isAnimatableProperty() {
-        return false;
-    }
+	public static final String cssValueFor(String identifier) {
+		return identifier.toLowerCase().replace("_", "-").intern();
+	}
 
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	public static final EnumValue constantValueFor(Enum<?> e) {
+		return new EnumValue(e);
+	}
 
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	public boolean isInheritedProperty() {
+		return inherited;
+	}
 
-    public String getPropertyName() {
-        return propertyName;
-    }
+	public boolean isAnimatableProperty() {
+		return false;
+	}
 
-    public Value getDefaultValue() {
-        return defaultValue;
-    }
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public Value getDefaultValue() {
+		return defaultValue;
+	}
+
+	public StringMap getIdentifiers() {
+		return values;
+	}
 
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm, Value value) {
 		return value;
 	}
-    
-    
+
 }

@@ -74,7 +74,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			case LABEL:
 				return new LabelLeafImpl(el, parent, context, new TextRectangularPainter(el, context), ContentTransform.CROP);
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter(el, context), ContentTransform.CROP);
+				return new DecalLeafImpl(el, parent, context, new TextRectangularPainter(el, context), ContentTransform.RESCALE);
 			case REGULAR:
 			default:
 				return new ConnectedLeafImpl(el, parent, context, new TextRectangularPainter(el, context), ContentTransform.CROP);
