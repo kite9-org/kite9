@@ -136,7 +136,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	
 	private String scalablePath() {
-		return "<svg:path d='M{x0} {y0} H {x1} V {y1}z' />";
+		return "<svg:path d='M0 0 H #{$width} V #{$height}z' />";
 	}
 
 	private String svgOpen() {

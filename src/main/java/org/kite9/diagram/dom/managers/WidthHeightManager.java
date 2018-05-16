@@ -22,7 +22,7 @@ public class WidthHeightManager extends MarginLengthManager {
 
 	@Override
 	public boolean isInheritedProperty() {
-		return true;
+		return false;
 	}
 
 	@Override
