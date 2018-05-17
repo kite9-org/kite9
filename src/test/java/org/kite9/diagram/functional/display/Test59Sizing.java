@@ -96,6 +96,15 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	public void test_59_12_TestContainerMinimumSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "font-size: 25px;")+text("hello b", "font-size: 15px; kite9-vertical-align: bottom;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
 	}
+	
+	@Test
+	public void test_59_13_TextAlign() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(
+				text("hello something else", "font-size: 25px;")+
+				text("bette\nmiddler", "font-size: 15px;kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;")+
+				text("hello\n bottom", "font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;"),
+			"kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px")));
+	}
 
 	private String svgLeaf(String xml, String extraAtts) {
 		return    "      <shape style=\"kite9-type: svg; "+extraAtts+"\">\n" 
