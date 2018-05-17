@@ -19,6 +19,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
@@ -59,8 +60,8 @@ public class ElementMapperImpl implements ElementMapper {
 	}
 
 	private SubGridCornerVertices createSubGridCornerVertices(final DiagramElement c, BaseGridCornerVertices parentCV) {
-		OPair<BigFraction> xspan = gp.getGridXPosition(c);
-		OPair<BigFraction> yspan = gp.getGridYPosition(c);
+		OPair<BigFraction> xspan = ((Rectangular)c).getRenderingInformation().gridXPosition();
+		OPair<BigFraction> yspan = ((Rectangular)c).getRenderingInformation().gridYPosition();
 		SubGridCornerVertices v = new SubGridCornerVertices(c, xspan, yspan, parentCV, c.getDepth());
 		cornerVertices.put(c, v);
 		return v;

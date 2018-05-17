@@ -17,9 +17,9 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.kite9.framework.logging.Table;
@@ -35,8 +35,6 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	private Kite9Log log = new Kite9Log(this);
 
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
-	Map<DiagramElement, OPair<BigFraction>> xPositions = new HashMap<>(100);
-	Map<DiagramElement, OPair<BigFraction>> yPositions = new HashMap<>(100);
 	
 	
 	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
@@ -102,7 +100,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
 					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
 					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
-					storeCoordinates1(diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
+					storeCoordinates1((Connected) diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
 				} else {
 					overlaps.add(diagramElement);
 				}
@@ -128,7 +126,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 						ys[y] = new GridTemporaryConnected(ord, xr, y);
 						modifyContainerContents(ord, ys[y]);
 					}
-					storeCoordinates1(ys[y], xr, xr, y, y);
+					storeCoordinates1((Connected) ys[y], xr, xr, y, y);
 				}
 			}
 		
@@ -139,7 +137,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		for (DiagramElement de : ord.getContents()) {
 			if (shoudAddToGrid(de)) {
-				scaleCoordinates(de, size);
+				scaleCoordinates((Connected) de, size);
 			}
 		}
 		
@@ -172,18 +170,19 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 	
-	private void storeCoordinates1(DiagramElement diagramElement, int sx, int ex, int sy, int ey) {
-		xPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sx, 1), BigFraction.getReducedFraction(ex+1, 1)));
-		yPositions.put(diagramElement, new OPair<BigFraction>(BigFraction.getReducedFraction(sy, 1), BigFraction.getReducedFraction(ey+1, 1)));
+	private void storeCoordinates1(Connected d, int sx, int ex, int sy, int ey) {
+		d.getRenderingInformation().setGridXPosition(new OPair<BigFraction>(BigFraction.getReducedFraction(sx, 1), BigFraction.getReducedFraction(ex+1, 1)));
+		d.getRenderingInformation().setGridYPosition(new OPair<BigFraction>(BigFraction.getReducedFraction(sy, 1), BigFraction.getReducedFraction(ey+1, 1)));
 	}
 	
-	private void scaleCoordinates(DiagramElement de, Dimension size) {
-		OPair<BigFraction> xin = xPositions.get(de);
-		OPair<BigFraction> yin = yPositions.get(de);
+	private void scaleCoordinates(Connected de, Dimension size) {
+		RectangleRenderingInformation ri = de.getRenderingInformation();
+		OPair<BigFraction> xin = ri.gridXPosition();
+		OPair<BigFraction> yin = ri.gridYPosition();
 		xin = new OPair<BigFraction>(BigFraction.getReducedFraction(xin.getA().intValue(), size.width), BigFraction.getReducedFraction(xin.getB().intValue(), size.width));
 		yin = new OPair<BigFraction>(BigFraction.getReducedFraction(yin.getA().intValue(), size.height), BigFraction.getReducedFraction(yin.getB().intValue(), size.height));
-		xPositions.put(de, xin);
-		yPositions.put(de, yin);
+		ri.setGridXPosition(xin);
+		ri.setGridYPosition(yin);
 	}
 
 
@@ -213,27 +212,6 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		return true;
 	}
-
-
-	@Override
-	public OPair<BigFraction> getGridXPosition(DiagramElement elem) {
-		if (!xPositions.containsKey(elem)) {
-			throw new Kite9ProcessingException("Would expect the element to have been given a grid position: "+elem);
-		}
-		
-		return xPositions.get(elem);
-	}
-
-
-	@Override
-	public OPair<BigFraction> getGridYPosition(DiagramElement elem) {
-		if (!yPositions.containsKey(elem)) {
-			throw new Kite9ProcessingException("Would expect the element to have been given a grid position: "+elem);
-		}
-		
-		return yPositions.get(elem);
-	}
-
 
 	public List<MultiCornerVertex> getClockwiseOrderedContainerVertices(CornerVertices cvs) {
 		BigFraction minx = null;

@@ -28,18 +28,6 @@ public interface GridPositioner {
 	public DiagramElement[][] placeOnGrid(Container gridContainer, boolean allowSpanning);
 	
 	/**
-	 * Returns the XPosition as a pair of fractions, showing where a given element has been 
-	 * placed within the grid.
-	 */
-	public OPair<BigFraction> getGridXPosition(DiagramElement elem);
-	
-	/**
-	 * Returns the XPosition as a pair of fractions, showing where a given element has been 
-	 * placed within the grid.
-	 */
-	public OPair<BigFraction> getGridYPosition(DiagramElement elem);
-
-	/**
 	 * Used for creating the perimeter of a grid.  Returns the perimeter vertices in clockwise
 	 * order.
 	 */
