@@ -22,7 +22,7 @@ public class OPair<X> {
 
 	@Override
 	public String toString() {
-		return "OPair [a=" + a + ", b=" + b + "]";
+		return "[" + a + ", " + b + "]";
 	}
 
 	public OPair(X from, X b) {

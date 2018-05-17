@@ -3,6 +3,7 @@ package org.kite9.diagram.dom.painter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.AlignedRectangular;
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -57,12 +58,15 @@ public abstract class AbstractPainter implements Painter {
 		if (r instanceof Container) {
 			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
 			debug.append("layout: " + ((Container) r).getLayout() + "; ");
-
-			if (((Container) r).getLayout() == Layout.GRID) {
-				debug.append("grid-x: " + ((Container) r).getGridColumns() + "; ");
-				debug.append("grid-y: " + ((Container) r).getGridRows() + "; ");
+		}
+		if (r instanceof Connected) {
+			Container p = (Container) r.getParent();
+			if ((p!= null) && (p.getLayout() == Layout.GRID)) {
+				debug.append("grid-x: "+((Connected) r).getRenderingInformation().gridXPosition()+"; ");
+				debug.append("grid-y: "+((Connected) r).getRenderingInformation().gridYPosition()+"; ");
 			}
 		}
+		
 		
 		out.setAttribute("debug", debug.toString());
 	}
