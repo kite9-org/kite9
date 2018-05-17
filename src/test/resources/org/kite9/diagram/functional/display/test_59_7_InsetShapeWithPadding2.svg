@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [101.0,101.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [71.0,71.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g kite9-elem="decal"
+      <g debug="" kite9-elem="decal" transform="scale(0.9861111111111112,0.9861111111111112)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="41.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="41.0"
+        <rect x="0" y="0" width="71.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="71.0"
           />
       </g
           >
-      <g kite9-elem="shape" transform="translate(5.5,5.5)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [71.0,71.0]; " kite9-elem="shape" transform="translate(20.5,20.5)"
           >
       <ellipse rx="20" ry="20" stroke-width="1" cx="15" cy="15" stroke="black"
             />      </g

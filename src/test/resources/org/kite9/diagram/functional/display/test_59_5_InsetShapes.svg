@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [285.0,245.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [255.0,215.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g kite9-elem="decal"
+      <g debug="" kite9-elem="decal" transform="scale(0.99609375,0.9953703703703703)translate(0.5,0.5)"
         >
         <rect x="0" y="0" width="255.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="215.0"
           />
       </g
           >
-      <g kite9-elem="shape" transform="translate(5.5,5.5)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [255.0,215.0]; " kite9-elem="shape" transform="translate(5.5,5.5)"
           >
       <ellipse rx="20" ry="20" stroke-width="1" cx="15" cy="15" stroke="black"
             />      <polygon style="fill:lime;stroke-width:0" points="200,10 250,190 160,210"

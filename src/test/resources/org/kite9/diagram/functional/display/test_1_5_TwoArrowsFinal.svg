@@ -6,28 +6,28 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g kite9-elem="diagram" id="The Diagram"
+  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [129.0,58.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g kite9-elem="arrow" id="One
-Multiline" transform="translate(15.0,15.0)"
+  <g id="One
+Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [57.0,28.0]; " kite9-elem="arrow" transform="translate(15.0,15.0)"
       >
-    <g kite9-elem="back"
+    <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
         >
-      <rect x="0" y="0" width="58.0" style="fill: black; " rx="4" ry="4" height="33.0"
+      <rect x="0" y="0" width="57.0" style="fill: black; " rx="4" ry="4" height="28.0"
           />
     </g
           >
     
-    <g kite9-elem="label" id="auto:0" transform="translate(5.0,3.0)"
+    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,18.0] [47.0,22.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
           >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
             >
-      <g kite9-elem="text-label" transform="translate(0.0,0.5572261810302734)"
-              ><g
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,22.0]; " kite9-elem="text-label" transform="translate(-0.734375,-1.9134750366210938)"
+              ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                   ><tspan
                     >O</tspan
@@ -46,22 +46,22 @@ Multiline" transform="translate(15.0,15.0)"
   
   </g
               >
-  <g kite9-elem="arrow" id="Two" transform="translate(83.0,21.0)"
+  <g id="Two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [82.0,22.0] [32.0,14.0]; " kite9-elem="arrow" transform="translate(82.0,22.0)"
               >
-    <g kite9-elem="back"
+    <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                 >
-      <rect x="0" y="0" width="33.0" style="fill: black; " rx="4" ry="4" height="20.0"
+      <rect x="0" y="0" width="32.0" style="fill: black; " rx="4" ry="4" height="14.0"
                   />
     </g
                   >
     
-    <g kite9-elem="label" id="auto:1" transform="translate(5.0,3.0)"
+    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,25.0] [22.0,8.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                     >
-      <g kite9-elem="text-label" transform="translate(0.0,0.5572261810302734)"
-                      ><g
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,8.0]; " kite9-elem="text-label" transform="translate(-0.10546875,-2.0501937866210938)"
+                      ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                           ><tspan
                             >T</tspan

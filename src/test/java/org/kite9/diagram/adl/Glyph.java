@@ -29,19 +29,19 @@ public class Glyph extends AbstractMutableXMLElement {
 	
 	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols, boolean divider, ADLDocument doc) {
 		super(id, "glyph", doc);
-		
-		if ((label != null) && (label.length() > 0)) {
-			setLabel(new TextLine(id+"-label", "label", label, doc));
-		}
 
-		if ((stereotype != null) && (stereotype.length() > 0)) {
-			setStereotype(new TextLine(id+"-stereo", "stereotype", stereotype, doc));
-		}
-		
 		if (symbols!=null) {
 			setSymbols(new ContainerProperty(id+"-symbols", "symbols", doc, symbols));
 		}		
+		
+		if ((stereotype != null) && (stereotype.length() > 0)) {
+			setStereotype(new TextLine(id+"-stereo", "stereotype", stereotype, doc));
+		}
 
+		if ((label != null) && (label.length() > 0)) {
+			setLabel(new TextLine(id+"-label", "label", label, doc));
+		}
+		
 		if (text!=null) {
 			setText(new ContainerProperty(id+"-text-lines", "text-lines", doc, text));
 		}

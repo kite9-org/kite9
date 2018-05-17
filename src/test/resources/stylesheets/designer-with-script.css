@@ -71,11 +71,11 @@ key bodyText {
 	kite9-occupies: 0 1;
 }
 
+/* GLYPH GENERAL SHAPE */
 
 glyph {
 	kite9-type: container;
-	kite9-layout: grid;	
-	kite9-grid-size: 1 2;
+	kite9-layout: down;	
 	kite9-template: url(template.svg#glyph);
 	kite9-padding: 6px 10px 6px 10px; 
 	kite9-margin: 10px;
@@ -85,44 +85,35 @@ glyph {
 glyph symbols {
 	kite9-type: container;
 	kite9-sizing: minimize;
-	kite9-occupies: 1 0;
 	kite9-layout: horizontal;
+	kite9-margin: 5px 
 }
 
 diagram glyph label {
 	kite9-type: container;
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#glyph-label-text);
-	kite9-occupies: 0 0 0 0;
 	kite9-vertical-align: top;
 	kite9-margin: 5px 
 }
 
-/*
- This rule handles the case where the label is after a stereotype, 
- and therefore needs to appear on the line below
-*/
-diagram glyph stereotype + label {
-	kite9-occupies: 0 1 1 1;
-}
-
-
 glyph stereotype {
 	kite9-type: container;
 	kite9-template: url(template.svg#glyph-stereotype-text);
-	kite9-occupies: 0 0;
 	kite9-vertical-align: bottom;
 	kite9-horizontal-align: center;
-	kite9-margin: 0px 4px 2px 0px; 
+	kite9-margin: 5px; 
 	kite9-sizing: maximize;
+	text-align: middle;
 }
 
 glyph text-lines {
 	kite9-type: container;
 	kite9-sizing: maximize;
-	kite9-occupies: 0 1 2 2;
 	kite9-layout: vertical;
 }
+
+/* SYMBOLS */
 
 symbol-text-line {
 	kite9-type: container;
@@ -142,7 +133,15 @@ symbol-text-line text {
 symbol-text-line symbols {
 	kite9-sizing: maximize;
 	kite9-horizontal-align: right;
+	kite9-occupies: 1 0;
+	margin: 0px;
 	/* kite9-template: url(template.svg#show-box) */
+}
+
+show-box {
+	kite9-template: url(template.svg#show-box);
+	kite9-usage: decal;
+	kite9-type: svg;
 }
 
 context {

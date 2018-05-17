@@ -9,8 +9,10 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Element;
+import org.w3c.dom.css.Rect;
 
 /**
  * Base class for painter implementations
@@ -65,6 +67,11 @@ public abstract class AbstractPainter implements Painter {
 				debug.append("grid-x: "+((Connected) r).getRenderingInformation().gridXPosition()+"; ");
 				debug.append("grid-y: "+((Connected) r).getRenderingInformation().gridYPosition()+"; ");
 			}
+		}
+		
+		if (r instanceof Rectangular) {
+			RectangleRenderingInformation rri = ((Rectangular) r).getRenderingInformation();
+			debug.append("d-bounds: "+rri.getPosition()+" "+rri.getSize()+ "; "); 
 		}
 		
 		

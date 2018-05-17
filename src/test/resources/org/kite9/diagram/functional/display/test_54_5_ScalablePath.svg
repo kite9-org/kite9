@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g kite9-elem="diagram" id="one"
+><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [239.0,138.0]; " kite9-elem="diagram" id="one"
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g kite9-elem="container" id="container1" transform="translate(50.0,50.0)"
+    ><g id="container1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [139.0,38.0]; " kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g kite9-elem="someadaptive" id="adap"
-          ><path d="M{x0} {y0} H {x1} V {y1}z"
+        ><g id="adap" debug="" kite9-elem="someadaptive" transform="scale(0.9865458574947346,0.9164306547122645)translate(0.3956319987773895,1.5)"
+          ><path d="M0 0 H 139.0 V 38.0z"
           /></g
-          ><g kite9-elem="someelement" id="someelement" transform="translate(8.876953125,28.20068359375)"
+          ><g id="someelement" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [119.0,18.0]; " kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"
           ><text style="font-size: 25px; stroke: none; fill: orange; alignment-baseline: hanging; "
             >Some Text</text
           ></g

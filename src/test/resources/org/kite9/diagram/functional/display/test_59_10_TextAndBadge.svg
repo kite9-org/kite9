@@ -7,21 +7,21 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [132.0,65.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [102.0,35.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g kite9-elem="decal"
+      <g debug="" kite9-elem="decal" transform="scale(0.9902912621359223,0.9722222222222222)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="104.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="33.0"
+        <rect x="0" y="0" width="102.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="35.0"
           />
       </g
           >
-      <g kite9-elem="text" transform="translate(10.0,10.103124618530273)"
-          ><g
+      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [82.0,15.0]; " kite9-elem="text" transform="translate(9.208984375,9.829644203186035)"
+          ><g font-family="'Arial'"
             ><text x="0" xml:space="preserve" y="10.7602" stroke="none"
               ><tspan
                 >h</tspan
@@ -33,9 +33,9 @@
             ></g
           ></g
           >
-      <g kite9-elem="badge"
+      <g debug="" kite9-elem="badge"
           >
-        <circle fill="red" r="15" cx="99" cy="5"
+        <circle fill="red" r="15" cx="97" cy="5"
             /> 
       </g
             >

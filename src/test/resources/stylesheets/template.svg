@@ -143,7 +143,7 @@
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
     </back>
-    <contents /> -->
+    <contents />  -->
   </template>
 
   <template id="generic-text">
