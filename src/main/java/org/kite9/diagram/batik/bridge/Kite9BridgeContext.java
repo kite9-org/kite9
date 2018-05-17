@@ -16,12 +16,14 @@ import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.template.BasicTemplater;
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -49,6 +51,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	}
 	
 	private Kite9Bridge gBridge = new Kite9Bridge();
+	private Kite9DiagramBridge dBridge = new Kite9DiagramBridge();
 	
 	private XMLProcessor xmlProcessor;
 	
@@ -95,14 +98,19 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		super.initializeDocument(document);
 	}
 
+	
+	
 	@Override
-	public Bridge getBridge(String namespaceURI, String localName) {
-		if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
-			if (!XMLHelper.DIAGRAM_ELEMENT.equals(localName)) {
+	public Bridge getBridge(Element element) {
+		if (element instanceof Kite9XMLElement) {
+			if (((Kite9XMLElement) element).getDiagramElement() instanceof Diagram) {
+				return dBridge;
+			} else {
 				return gBridge;
-			} 
+			}
 		}
-		return super.getBridge(namespaceURI, localName);
+		
+		return super.getBridge(element);
 	}
 
 	/**
