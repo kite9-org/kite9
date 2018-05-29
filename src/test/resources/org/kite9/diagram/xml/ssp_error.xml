@@ -308,5 +308,5 @@ flip</text>
    <from xsi:type="glyph" reference="withSymbols"/>
    <to xsi:type="glyph" reference="other"/>
   </link>
- </allLinks>
+  
 </diagram>

@@ -320,5 +320,5 @@
    <from xsi:type="glyph" reference="g26"></from>
    <to xsi:type="glyph" reference="g28"></to>
   </link>
- </allLinks>
+  
 </diagram>

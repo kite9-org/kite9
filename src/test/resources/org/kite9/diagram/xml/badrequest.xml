@@ -225,4 +225,4 @@
    <from xsi:type="glyph" reference="id_26"/>
    <to xsi:type="glyph" reference="id_16"/>
   </link>
- <link id="id_37"><from xsi:type="glyph" reference="id_8"/><to xsi:type="glyph" reference="id_15"/></link></allLinks></diagram>
+ <link id="id_37"><from xsi:type="glyph" reference="id_8"/><to xsi:type="glyph" reference="id_15"/></link> </diagram>

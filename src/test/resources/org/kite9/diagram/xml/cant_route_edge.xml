@@ -42,5 +42,5 @@
 			<from xsi:type="arrow" reference="mar1" />
 			<to xsi:type="glyph" reference="ringo" />
 		</link>
-	</allLinks>
+	 
 </diagram>

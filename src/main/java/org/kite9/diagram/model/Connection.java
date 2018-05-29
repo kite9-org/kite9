@@ -55,4 +55,9 @@ public interface Connection extends DiagramElement, BiDirectional<Connected> {
 	 * Smallest length this connection can have (when terminators are zero-size)
 	 */
 	public double getMinimumLength();
+	
+	/**
+	 * Arc radius used for corners and hops
+	 */
+	public double getCornerRadius();
 }

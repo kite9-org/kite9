@@ -155,7 +155,7 @@ and fiction works</text></text-line></text-lines>
 			<fromDecoration>NONE</fromDecoration>
 			<toDecoration>NONE</toDecoration>
 		</link>
-	</allLinks>
+	 
 	<key>
 		<boldText>Library Example</boldText>
 		<bodyText>This diagram shows where books can go when taken out of the library, and the activities of the librarian and the reader.  </bodyText>

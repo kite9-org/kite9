@@ -508,5 +508,5 @@
     <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Diagram"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Diagram/rel_extends"></to>
    </link>
-  </allLinks>
+   
  </diagram>

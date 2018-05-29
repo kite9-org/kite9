@@ -76,6 +76,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		}
 		
 		this.minimumLength = getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
+		this.cornerRadius = getCSSStyleProperty(CSSConstants.LINK_CORNER_RADIUS).getFloatValue();
 	}
 
 
@@ -128,6 +129,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	private Label toLabel;
 	private int rank;
 	private double minimumLength;
+	private double cornerRadius;
 	
 
 	@Override
@@ -249,7 +251,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	public Map<String, String> getXPathVariables() {
 		ensureInitialized();
 		Map<String, String> out = new HashMap<>();
-		RoutePainter routePainter = new RoutePainter(0, 0);
+		RoutePainter routePainter = new RoutePainter();
 		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
 				getPainter().getContents().getOwnerDocument());
 		double startReserve = fromDecoration.getMarkerReserve();
@@ -258,7 +260,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
 				new RoutePainter.ReservedLengthEndDisplayer(startReserve), 
 				new RoutePainter.ReservedLengthEndDisplayer(endReserve),
-				routePainter.LINK_HOP_DISPLAYER, false);
+				new RoutePainter.CurvedCornerHopDisplayer((float) getCornerRadius()), false);
 		String path = SVGPath.toSVGPathData(gp, ctx);
 		out.put("path", path);
 		out.put("markerstart", fromDecoration.getMarkerUrl());
@@ -282,5 +284,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	public double getMinimumLength() {
 		ensureInitialized();
 		return minimumLength;
+	}
+	
+	@Override
+	public double getCornerRadius() {
+		ensureInitialized();
+		return cornerRadius;
 	}
 }

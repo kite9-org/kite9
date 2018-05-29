@@ -139,4 +139,4 @@
   <from xsi:type="context" reference="auto:60741"/>
   <to xsi:type="context" reference="auto:59342"/>
  </link>
-<link id="id_82" drawDirection="RIGHT"><from xsi:type="glyph" reference="id_74"/><to xsi:type="glyph" reference="id_83"/></link></allLinks></diagram>
+<link id="id_82" drawDirection="RIGHT"><from xsi:type="glyph" reference="id_74"/><to xsi:type="glyph" reference="id_83"/></link> </diagram>

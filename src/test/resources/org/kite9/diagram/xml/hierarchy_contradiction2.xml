@@ -205,5 +205,5 @@
    <from xsi:type="glyph" reference="Conc3"></from>
    <to xsi:type="arrow" reference="Conc3/rel_implements"></to>
   </link>
- </allLinks>
+  
 </diagram>

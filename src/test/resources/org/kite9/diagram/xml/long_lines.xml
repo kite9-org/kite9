@@ -264,5 +264,5 @@ flip</text>
    <from xsi:type="glyph" reference="text1"></from>
    <to xsi:type="glyph" reference="other"></to>
   </link>
- </allLinks>
+  
 </diagram>

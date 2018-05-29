@@ -212,4 +212,4 @@ taking multiple lines</text>
   <from xsi:type="glyph" reference="text1"/>
   <to xsi:type="glyph" reference="fullGlyph"/>
  </link>
-</allLinks></diagram>
+ </diagram>

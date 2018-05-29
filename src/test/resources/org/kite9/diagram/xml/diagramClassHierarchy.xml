@@ -918,5 +918,5 @@
     <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.VertexOnEdge"></to>
     <toDecoration>ARROW</toDecoration>
    </link>
-  </allLinks>
+   
  </diagram>

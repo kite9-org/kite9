@@ -77,6 +77,7 @@ public interface CSSConstants {
 	public static final String LINK_INSET = KITE9_CSS_PROPERTY_PREFIX+"link-inset";
 	public static final String LINK_GUTTER = KITE9_CSS_PROPERTY_PREFIX+"link-gutter";
 	public static final String LINK_MINIMUM_LENGTH = KITE9_CSS_PROPERTY_PREFIX+"link-minimum-length";
+	public static final String LINK_CORNER_RADIUS = KITE9_CSS_PROPERTY_PREFIX+"link-corner-radius";
 	
 	// Rectangular Sizing 
 	public static final String RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX+"min-size";

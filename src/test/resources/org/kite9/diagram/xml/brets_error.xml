@@ -18,5 +18,5 @@
 			<from xsi:type="context" reference="con_i3" />
 			<to xsi:type="context" reference="con3" />
 		</link>
-	</allLinks>
+	 
 </diagram>

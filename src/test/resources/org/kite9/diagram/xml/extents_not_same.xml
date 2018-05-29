@@ -98,5 +98,5 @@
    <from xsi:type="glyph" reference="g7(c2)"></from>
    <to xsi:type="glyph" reference="g9(c2)"></to>
   </link>
- </allLinks>
+  
 </diagram>

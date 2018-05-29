@@ -166,4 +166,4 @@ Seat</label>
    <from xsi:type="arrow" reference="id_22"/>
    <to xsi:type="glyph" reference="id_18"/>
   </link>
- </allLinks></diagram>
+  </diagram>

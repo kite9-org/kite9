@@ -199,4 +199,4 @@
    <from xsi:type="glyph" reference="id_26"/>
    <to xsi:type="glyph" reference="id_22"/>
   </link>
- <link id="id_30" drawDirection="UP" shape="INVISIBLE"><from xsi:type="glyph" reference="id_39"/><to xsi:type="glyph" reference="id_26"/></link></allLinks></diagram>
+ <link id="id_30" drawDirection="UP" shape="INVISIBLE"><from xsi:type="glyph" reference="id_39"/><to xsi:type="glyph" reference="id_26"/></link> </diagram>

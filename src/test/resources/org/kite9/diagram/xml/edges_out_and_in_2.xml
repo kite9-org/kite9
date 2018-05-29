@@ -200,5 +200,5 @@
    <from xsi:type="context" reference="c5"></from>
    <to xsi:type="glyph" reference="g3(c3)"></to>
   </link>
- </allLinks>
+  
 </diagram>

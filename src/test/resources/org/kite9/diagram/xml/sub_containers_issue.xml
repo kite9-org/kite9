@@ -216,5 +216,5 @@
    <from xsi:type="glyph" reference="g13(c5)"></from>
    <to xsi:type="glyph" reference="g11(c5)"></to>
   </link>
- </allLinks>
+  
 </diagram>

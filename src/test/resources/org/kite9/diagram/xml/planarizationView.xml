@@ -209,5 +209,5 @@
     <from xsi:type="glyph" reference="m"></from>
     <to xsi:type="arrow" reference="m/rel_extends"></to>
    </link>
-  </allLinks>
+   
  </diagram>

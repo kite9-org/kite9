@@ -20,15 +20,9 @@ import org.kite9.framework.logging.LogicException;
  */
 public class RoutePainter {
 	
-	float xo;
-	float yo;
-
-	public RoutePainter(float xo, float yo) {
+	public RoutePainter() {
 		super();
-		this.xo = xo;
-		this.yo = yo;
 	}
-
 	
 	public static interface EndDisplayer {
 		
@@ -113,8 +107,12 @@ public class RoutePainter {
 		}
 	};
 	
-	public final LineDisplayer LINK_HOP_DISPLAYER = new AbstractCurveCornerDisplayer(5) {
+	public static class CurvedCornerHopDisplayer extends AbstractCurveCornerDisplayer {
 
+		public CurvedCornerHopDisplayer(float radius) {
+			super(radius);
+		}
+		
 		@Override
 		public void drawMove(Move m1, Move next, Move prev, GeneralPath gp) {
 			if (m1.hopStart) {
@@ -128,15 +126,15 @@ public class RoutePainter {
 			if (m1.hopEnd) {
 				Move c = (Move) m1.clone();
 				c.trim(0, hopSize);
-				gp.lineTo(c.xe + xo, c.ye + yo);
+				gp.lineTo(c.xe, c.ye);
 				drawHopEnd(m1.xe, m1.ye, m1.xs, m1.ys, gp);
 			} else if (next != null) {
 				Move c = (Move) m1.clone();
 				c.trim(0, radius);
-				gp.lineTo(c.xe + xo, c.ye + yo);
+				gp.lineTo(c.xe, c.ye);
 				drawCorner(gp, m1, next, m1.getDirection(), next.getDirection());
 			} else {
-				gp.lineTo(m1.xe + xo, m1.ye + yo);
+				gp.lineTo(m1.xe, m1.ye);
 			}
 		}
 
@@ -145,14 +143,14 @@ public class RoutePainter {
 		public double drawHopStart(double x1, double y1, double x2, double y2, GeneralPath gp) {
 			if (x1 < x2) {
 				// hop left
-				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 90d, -90d,
+				Arc2D arc = new Arc2D.Double(x1 - hopSize, y1 - hopSize, hopSize * 2, hopSize * 2, 90d, -90d,
 						Arc2D.OPEN);
 				gp.append(arc, true);
 
 			} else if (x1 > x2) {
 
 				// hop right
-				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 90d, 90d,
+				Arc2D arc = new Arc2D.Double(x1 - hopSize, y1 - hopSize, hopSize * 2, hopSize * 2, 90d, 90d,
 						Arc2D.OPEN);
 				gp.append(arc, true);
 			} else {
@@ -165,14 +163,14 @@ public class RoutePainter {
 		public double drawHopEnd(double x1, double y1, double x2, double y2, GeneralPath gp) {
 			if (x1 < x2) {
 				// hop left
-				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 0d, 90d,
+				Arc2D arc = new Arc2D.Double(x1 - hopSize, y1 - hopSize, hopSize * 2, hopSize * 2, 0d, 90d,
 						Arc2D.OPEN);
 				gp.append(arc, true);
 
 			} else if (x1 > x2) {
 
 				// hop right
-				Arc2D arc = new Arc2D.Double(x1 - hopSize + xo, y1 - hopSize + yo, hopSize * 2, hopSize * 2, 180d,
+				Arc2D arc = new Arc2D.Double(x1 - hopSize, y1 - hopSize, hopSize * 2, hopSize * 2, 180d,
 						-90d, Arc2D.OPEN);
 				gp.append(arc, true);
 			} else {
@@ -184,7 +182,7 @@ public class RoutePainter {
 
 	};
 	
-	public abstract class AbstractCurveCornerDisplayer implements LineDisplayer {
+	public abstract static class AbstractCurveCornerDisplayer implements LineDisplayer {
 		
 		@Override
 		public float cornerRadius() {
@@ -243,7 +241,7 @@ public class RoutePainter {
 
 		private void doArcPortion(GeneralPath gp, float tlx, float tly, float a1,
 				float a2, float radius) {
-			Shape s = new Arc2D.Double(tlx + xo, tly + yo, radius * 2, radius * 2, a1, a2,
+			Shape s = new Arc2D.Double(tlx, tly, radius * 2, radius * 2, a1, a2,
 					Arc2D.OPEN);
 			gp.append(s, true);
 		}
@@ -273,9 +271,9 @@ public class RoutePainter {
 				// start
 				if (!closed) {
 					start.reserve(a, true);
-					gp.moveTo(a.xs +xo, a.ys+yo);
+					gp.moveTo(a.xs, a.ys);
 				} else {
-					gp.moveTo(a.xs +xo, a.ys+yo);
+					gp.moveTo(a.xs, a.ys);
 				}
 			}  
 			
@@ -314,23 +312,23 @@ public class RoutePainter {
 			if (x1 < x2) {
 				// left right arrow
 				if (start)
-					gp.moveTo(x1 + xo + startCrop, y1 + yo);
-				gp.lineTo(x2 + xo - endCrop, y2 + yo);
+					gp.moveTo(x1 + startCrop, y1);
+				gp.lineTo(x2 - endCrop, y2);
 			} else {
 				// right-left arrow
 				if (start)
-					gp.moveTo(x1 + xo - startCrop, y1 + yo);
-				gp.lineTo(x2 + xo + endCrop, y2 + yo);
+					gp.moveTo(x1 - startCrop, y1);
+				gp.lineTo(x2 + endCrop, y2);
 			}
 		} else {
 			if (y1 < y2) {
 				if (start)
-					gp.moveTo(x1 + xo, y1 + yo + startCrop);
-				gp.lineTo(x2 + xo, y2 + yo - endCrop);
+					gp.moveTo(x1, y1 + startCrop);
+				gp.lineTo(x2, y2 - endCrop);
 			} else {
 				if (start)
-					gp.moveTo(x1 + xo, y1 + yo - startCrop);
-				gp.lineTo(x2 + xo, y2 + yo + endCrop);
+					gp.moveTo(x1, y1 - startCrop);
+				gp.lineTo(x2, y2 + endCrop);
 			}
 		}
 	}

@@ -116,4 +116,9 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 		return 0;
 	}
 
+	@Override
+	public double getCornerRadius() {
+		return 0;
+	}
+
 }

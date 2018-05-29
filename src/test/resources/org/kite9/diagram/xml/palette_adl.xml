@@ -73,4 +73,4 @@ Container</text>
    <from xsi:type="glyph" reference="palette:id_2"/>
    <to xsi:type="glyph" reference="palette:id_4"/>
   </link>
- </allLinks></diagram>
+  </diagram>
