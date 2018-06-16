@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
@@ -543,7 +542,7 @@ public class GroupPhase {
 			
 		@Override
 		public String toString() {
-			return "["+getGroupNumber()+ o + "("+(c instanceof DiagramKite9XMLElement ? "" :" c: "+c)+","+getAxis()+")]";
+			return "["+getGroupNumber()+ o + "("+(c instanceof Diagram ? "" :" c: "+c)+","+getAxis()+")]";
 		}
 	
 		@Override
