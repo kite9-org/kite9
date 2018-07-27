@@ -105,7 +105,21 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				text("hello\n bottom", "font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;"),
 			"kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px")));
 	}
-
+	
+	@Test
+	public void test_59_14_TextInShape() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(text(para(), "", textPath()),"")));
+	}
+	
+	private String para() {
+		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
+			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";
+	}
+	
+	private String textPath() {
+		return "<svg:path d=\"M100,50L50,300L250,300L200,50z\" />";
+	}
+	
 	private String svgLeaf(String xml, String extraAtts) {
 		return    "      <shape style=\"kite9-type: svg; "+extraAtts+"\">\n" 
 				+ xml 
@@ -115,6 +129,15 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String text(String xml, String extraAtts) {
 		return    "      <text style=\"kite9-type: text; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
+				+ "      </text>\n";
+	}
+	
+	private String text(String xml, String extraAtts, String flowRegionShape) {
+		return    "      <text style=\"kite9-type: text; "+extraAtts+"\">\n" 
+				+ "        "+xml+"\n"
+				+ "        <svg:flowRegion>"
+				+ "          "+flowRegionShape
+				+ "        </svg:flowRegion>"
 				+ "      </text>\n";
 	}
 

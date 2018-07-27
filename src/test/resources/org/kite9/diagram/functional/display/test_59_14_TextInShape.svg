@@ -1,50 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="275.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="150.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="158.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="150.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,150.0]; " kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [158.0,150.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,120.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [128.0,120.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.9959349593495935,0.9917355371900827)translate(0.5,0.5)"
+      <g debug="" kite9-elem="decal" transform="scale(0.9922480620155039,0.9917355371900827)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="245.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
+        <rect x="0" y="0" width="128.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
           />
       </g
           >
-      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,27.0]; " kite9-elem="text" transform="translate(8.35205078125,7.478507995605469)"
-          ><g font-family="'Arial'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="22.417" stroke="none"
+      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [15.0,15.0] [128.0,120.0]; " kite9-elem="text" transform="translate(-79.07335662841797,-50.02387237548828)"
+          ><g font-family="'Arial'"
+            ><text x="100" xml:space="preserve" y="60.7602" stroke="none"
               ><tspan
-                >h</tspan
+                >S</tspan
                 ><tspan
-                >ello </tspan
+                >earch </tspan
                 ><tspan
-                >something </tspan
+                >the </tspan
                 ><tspan
-                >else</tspan
+                >world's </tspan
               ></text
-            ></g
-          ></g
-          >
-      <g debug="position: ; horiz: LEFT; vert: BOTTOM; d-bounds: [25.0,111.0] [42.0,14.0]; " kite9-elem="text" transform="translate(9.01123046875,95.28710460662842)"
-          ><g font-family="'Arial'" font-size="15px"
-            ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
+              ><text x="97.36" xml:space="preserve" y="73.9602" stroke="none"
+              >information, </text
+              ><text x="94.72" xml:space="preserve" y="87.1602" stroke="none"
               ><tspan
-                >h</tspan
+                >including </tspan
                 ><tspan
-                >ello </tspan
-                ><tspan
-                >b</tspan
+                >webpages, </tspan
               ></text
+              ><text x="92.08" xml:space="preserve" y="100.3602" stroke="none"
+              ><tspan
+                >images, </tspan
+                ><tspan
+                >videos </tspan
+                ><tspan
+                >and </tspan
+              ></text
+              ><text x="89.44" xml:space="preserve" y="113.5602" stroke="none"
+              >more.</text
+              ><text x="86.8" xml:space="preserve" y="126.7602" stroke="none"
+              ><tspan
+                >Google </tspan
+                ><tspan
+                >has </tspan
+                ><tspan
+                >many </tspan
+              ></text
+              ><text x="84.16" xml:space="preserve" y="139.9602" stroke="none"
+              ><tspan
+                >special </tspan
+                ><tspan
+                >features </tspan
+                ><tspan
+                >to </tspan
+                ><tspan
+                >help </tspan
+              ></text
+              ><text x="81.52" xml:space="preserve" y="153.1602" stroke="none"
+              ><tspan
+                >you </tspan
+                ><tspan
+                >find </tspan
+                ><tspan
+                >exactly </tspan
+                ><tspan
+                >what </tspan
+              ></text
+              ><text x="78.88" xml:space="preserve" y="166.3602" stroke="none"
+              >you.</text
             ></g
           ></g
           >

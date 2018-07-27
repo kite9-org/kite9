@@ -11,23 +11,24 @@ import org.apache.batik.anim.dom.SVGOMFlowParaElement;
 import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
-import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.gvt.GraphicsNode;
-import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
-import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
- * Handles painting for {@link DiagramElementType.TEXT}
+ * Handles painting for {@link DiagramElementType.TEXT} using SVG1.2's flowRoot
+ * (supported by Batik, but not implemented in most browsers). 
+ * 
+ * With the help of {@link LocalRenderingFlowRootElementBridge} we convert this into 
+ * regular svg text elements.
  * 
  * @author robmoffat
  *
@@ -61,18 +62,15 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		
 		Document d = theElement.getOwnerDocument();
 
-		theText = theElement.getTextContent();
-		String[] lines = theText.split("\n");
+		// convert the flow element into regular svg:text
+		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, theElement);
 
 		// remove old content
 		NodeList old = theElement.getChildNodes();
 		while (old.getLength() > 0) {
 			theElement.removeChild(old.item(0));
 		}
-
-		// convert the flow element into regular svg:text
-		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, lines, theElement);
-		//addFontSizeAndFamily(theElement, (Leaf) r, flowRoot);
+		
 		theElement.appendChild(flowRoot);
 		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
 		Element group = graphicsNodeToXML(d, gn);
@@ -80,7 +78,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		theElement.removeChild(flowRoot);
 		
 		if (group != null) {
-//			removeFontSizeAndFamily(group);
 			theElement.appendChild(group);
 		}
 		
@@ -88,29 +85,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 
 		return textContents;
 	}
-	
-	
-	/**
-	 * Remove the temporary attributes
-	 */
-	private void removeFontSizeAndFamily(Element group) {
-		group.removeAttribute("font-family");
-		group.removeAttribute("font-size");
-		
-	}
-
-
-//	/**
-//	 * Font size and family really affect the positioning and size of the text, so these are 2 attributes
-//	 * we need to set correctly, temporarily, for the layout
-//	 */
-//	private void addFontSizeAndFamily(StyledKite9SVGElement theElement, Leaf r, SVGOMFlowRootElement flowRoot) {
-//		Value size = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_SIZE_PROPERTY);
-//		Value family = theElement.getCSSStyleProperty(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
-//		flowRoot.setAttribute("font-size", ""+size.getFloatValue());
-//		flowRoot.setAttribute("font-family", ""+family.getCssText());
-//	}
-
 
 	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
@@ -122,39 +96,59 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 	}
 
 
-	private SVGOMFlowRootElement createFlowRootElement(Document d, String[] lines, StyledKite9SVGElement theElement) {
+	private SVGOMFlowRootElement createFlowRootElement(Document d, StyledKite9SVGElement theElement) {
 		SVGOMFlowRootElement flowRoot = (SVGOMFlowRootElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_ROOT_TAG);
-		SVGOMFlowDivElement flowDiv = (SVGOMFlowDivElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_DIV_TAG);
-		SVGOMFlowRegionElement flowRegion = (SVGOMFlowRegionElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
-		flowRoot.appendChild(flowRegion);
-		flowRoot.appendChild(flowDiv);
-
-		setupFlowRegion(d, flowRegion, theElement);
-		
-		for (String line : lines) {
-			SVGOMFlowParaElement flowPara = (SVGOMFlowParaElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_PARA_TAG);
-			flowDiv.appendChild(flowPara);
-			flowPara.setTextContent(line);
-		}
+		setupFlowRegions(d, theElement, flowRoot);
+		setupFlowDiv(d, theElement, flowRoot);
 		return flowRoot;
+	}
+
+	public void setupFlowDiv(Document d, StyledKite9SVGElement theElement, SVGOMFlowRootElement in) {
+		NodeList toAdd = theElement.getElementsByTagNameNS(SVG12OMDocument.SVG_NAMESPACE_URI,SVG12Constants.SVG_FLOW_DIV_TAG);
+		
+		if (toAdd.getLength() > 0) {
+			for (int i = 0; i < toAdd.getLength(); i++) {
+				in.appendChild(toAdd.item(i));
+			}
+		} else {
+			String theText = theElement.getTextContent();
+			String[] lines = theText.split("\n");
+
+			// create one from text
+			SVGOMFlowDivElement flowDiv = (SVGOMFlowDivElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_DIV_TAG);
+			
+			for (String line : lines) {
+				SVGOMFlowParaElement flowPara = (SVGOMFlowParaElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_PARA_TAG);
+				flowDiv.appendChild(flowPara);
+				flowPara.setTextContent(line);
+			}
+			
+			in.appendChild(flowDiv);
+		}
 	}
 
 
 	/**
-	 * By default, this uses a bounding box, but that can be overridden.
-	 * Later, we can do some cool stuff in here with flow shapes, paths, width/height etc.
+	 * If a flowRegion exists within the input node, use that. Otherwise create
+	 * one with a really large bounding box.
 	 */
-	protected void setupFlowRegion(Document d, SVGOMFlowRegionElement flowRegion, StyledKite9SVGElement theElement) {
-		SVGOMRectElement rect = (SVGOMRectElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_RECT_TAG);
-		//SVGOMPathElement path = (SVGOMPathElement) d.createElementNS(SVG_NAMESPACE_URI, SVG12Constants.SVG_PATH_TAG);
+	protected void setupFlowRegions(Document d, StyledKite9SVGElement theElement, SVGOMFlowRootElement in) {
+		NodeList toAdd = theElement.getElementsByTagNameNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
+		boolean alreadyExist = false;
+		for (int i = 0; i < toAdd.getLength(); i++) {
+			in.appendChild(toAdd.item(i));
+			alreadyExist = true;
+		}
 		
-//		flowRegion.appendChild(path);
-		flowRegion.appendChild(rect);
-		rect.setAttribute("width", "10000");
-		rect.setAttribute("height", "10000");
-//		rect.setAttribute("x", "30");
-//		rect.setAttribute("y", "30");
-//		path.setAttribute("d", "M100,50L50,300L250,300L200,50z");
+		if (!alreadyExist) {
+			SVGOMFlowRegionElement flowRegion = (SVGOMFlowRegionElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
+			SVGOMRectElement rect = (SVGOMRectElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_RECT_TAG);
+			flowRegion.appendChild(rect);
+			rect.setAttribute("width", "10000");
+			rect.setAttribute("height", "10000");
+			in.appendChild(flowRegion);
+		}
+
 	}
 	
 	@Override
