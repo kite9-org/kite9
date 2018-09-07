@@ -247,7 +247,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	public boolean isLoggingEnabled() {
-		return true;
+		return false;
 	}
 	
 

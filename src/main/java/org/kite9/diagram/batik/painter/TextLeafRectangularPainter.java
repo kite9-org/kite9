@@ -33,13 +33,12 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class TextRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
+public class TextLeafRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
 	
-	public TextRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+	public TextLeafRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx);
 	}
 	
-	private String theText;
 	private StyledKite9SVGElement textContents;
 	
 	/**
@@ -148,7 +147,6 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 			rect.setAttribute("height", "10000");
 			in.appendChild(flowRegion);
 		}
-
 	}
 	
 	@Override
@@ -156,5 +154,4 @@ public class TextRectangularPainter extends AbstractGraphicsNodePainter implemen
 		GraphicsNode gn = getGraphicsNode();
 		return gn.getBounds();
 	}
-
 }

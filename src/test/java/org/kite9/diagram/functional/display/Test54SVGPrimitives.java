@@ -134,7 +134,6 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		// no svg, as it won't render in any browser!
 	}
 	
-	
 	private String scalablePath() {
 		return "<svg:path d='M0 0 H #{$width} V #{$height}z' />";
 	}

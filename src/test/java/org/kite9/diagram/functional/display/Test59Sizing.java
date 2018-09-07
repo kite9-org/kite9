@@ -98,6 +98,11 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	@Test
+	public void test_59_13_TestContainerMinimumSize() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "font-size: 25px;")+text("hello b", "font-size: 15px; kite9-vertical-align: bottom;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
+	}
+	
+	@Test
 	public void test_59_13_TextAlign() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("hello something else", "font-size: 25px;")+
@@ -111,6 +116,11 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(basicDiagram(glyphContainer(text(para(), "", textPath()),"")));
 	}
 	
+	@Test
+	public void test_59_15_ScaledLeaf() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(svgLeaf(scaled(ellipse()),""),"")));
+	}
+		
 	private String para() {
 		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
 			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";
@@ -132,6 +142,12 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				+ "      </text>\n";
 	}
 	
+	private String scaledText(String xml, String extraAtts) {
+		return    "      <text transform=\"scale(3,3)\" style=\"kite9-type: text; "+extraAtts+"\">\n" 
+				+ "        "+xml+"\n"
+				+ "      </text>\n";
+	}
+	
 	private String text(String xml, String extraAtts, String flowRegionShape) {
 		return    "      <text style=\"kite9-type: text; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
@@ -145,6 +161,13 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		return "\n  <diagram xmlns=\"http://www.kite9.org/schema/adl\" id=\"The Diagram\">\n" + xml +"\n  </diagram>\n"; 
 	}
 
+	private String scaled(String xml) {
+		return "      <svg:g transform=\"scale(3, 3)\">\n"+
+	           xml + 
+	           "      </svg:g>";
+	           
+	}
+	
 	private String glyphContainer(String xml, String extraAtts) {
 		return "    <rect style=\"kite9-type: container; " +extraAtts+" \">\n"+
 	           "      <decal style='kite9-usage: decal; kite9-type: svg; '>\n" + 
@@ -166,7 +189,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 
 	private String ellipse() {
-		return "      <svg:ellipse cx=\"15\" cy=\"15\" rx=\"20\" ry=\"20\" stroke=\"black\" stroke-width=\"1\" />";
+		return "      <svg:ellipse cx=\"20\" cy=\"20\" rx=\"20\" ry=\"20\" stroke=\"black\" stroke-width=\"1\" />";
 	}
 
 	private String redRect() {

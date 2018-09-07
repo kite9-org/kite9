@@ -7,7 +7,7 @@
     
     <svg:filter id="dropshadow" height="130%">
       <svg:feGaussianBlur in="SourceAlpha" stdDeviation="1"/> 
-      <svg:feOffset dx="2" dy="2" /> 
+      <svg:feOffset dx="2pt" dy="2pt" /> 
       <svg:feColorMatrix
         type="matrix"
         values="0 0 0 0 .5
