@@ -1,7 +1,5 @@
 package org.kite9.diagram.dom.painter;
 
-import java.util.Map;
-
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;

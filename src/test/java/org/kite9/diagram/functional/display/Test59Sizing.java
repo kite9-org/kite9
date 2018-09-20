@@ -103,22 +103,31 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	@Test
-	public void test_59_13_TextAlign() throws Exception {
+	public void test_59_14_TextAlign() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("hello something else", "font-size: 25px;")+
+				text("hello 2", "font-size: 25px;")+
 				text("bette\nmiddler", "font-size: 15px;kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;")+
 				text("hello\n bottom", "font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;"),
 			"kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px")));
 	}
 	
 	@Test
-	public void test_59_14_TextInShape() throws Exception {
+	public void test_59_15_TextInShape() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(text(para(), "", textPath()),"")));
 	}
 	
 	@Test
-	public void test_59_15_ScaledLeaf() throws Exception {
+	public void test_59_16_ScaledLeaf() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(svgLeaf(scaled(ellipse()),""),"")));
+	}
+	
+	@Test
+	public void test_59_17_TextDescenders() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(
+				text("hello 1", "font-size: 25px; kite9-vertical-align: bottom; ")+
+				text("pello 2", "font-size: 25px; kite9-vertical-align: bottom; "),
+			"kite9-padding: 10px; kite9-layout: right; kite9-min-size: 150px 150px")));
 	}
 		
 	private String para() {

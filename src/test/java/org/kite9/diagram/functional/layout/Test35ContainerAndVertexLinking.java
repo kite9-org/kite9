@@ -14,8 +14,6 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;
 
 public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTest  {
-
-	
 	
 	@Override
 	protected boolean checkEverythingStraight() {

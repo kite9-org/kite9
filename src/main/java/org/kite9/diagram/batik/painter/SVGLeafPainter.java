@@ -13,9 +13,9 @@ import org.kite9.diagram.model.style.DiagramElementType;
  * @author robmoffat
  *
  */
-public class SVGLeafRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
+public class SVGLeafPainter extends AbstractGraphicsNodePainter implements LeafPainter {
 	
-	public SVGLeafRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+	public SVGLeafPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx);
 	}
 	

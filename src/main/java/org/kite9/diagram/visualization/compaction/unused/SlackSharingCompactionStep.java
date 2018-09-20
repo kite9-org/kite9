@@ -1,16 +1,5 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.unused;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -150,5 +139,6 @@ public class SlackSharingCompactionStep extends AbstractCompactionStep {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

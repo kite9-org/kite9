@@ -33,9 +33,9 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class TextLeafRectangularPainter extends AbstractGraphicsNodePainter implements LeafPainter {
+public class TextLeafPainter extends AbstractGraphicsNodePainter implements LeafPainter {
 	
-	public TextLeafRectangularPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+	public TextLeafPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx);
 	}
 	

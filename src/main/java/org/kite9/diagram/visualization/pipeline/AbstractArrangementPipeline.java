@@ -8,15 +8,17 @@ import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.PluggableCompactor;
+import org.kite9.diagram.visualization.compaction.align.AlignmentCompactionStep;
+import org.kite9.diagram.visualization.compaction.align.CenteringAligner;
+import org.kite9.diagram.visualization.compaction.align.ConnectionAlignmentCompactionStep;
+import org.kite9.diagram.visualization.compaction.align.LeftRightAligner;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
 import org.kite9.diagram.visualization.compaction.rect.NonEmbeddedFaceRectangularizer;
-import org.kite9.diagram.visualization.compaction.slideable.CenteringAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep;
-import org.kite9.diagram.visualization.compaction.slideable.LeftRightAlignmentCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep;
 import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep;
 import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep;
@@ -96,8 +98,8 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //				new LoggingOptimisationStep(cd),
 				new MaximizeCompactionStep(cd),
 //				new LoggingOptimisationStep(cd),
-				new LeftRightAlignmentCompactionStep(cd),
-				new CenteringAlignmentCompactionStep(cd),
+				new AlignmentCompactionStep(cd, new LeftRightAligner(), new CenteringAligner()),
+				new ConnectionAlignmentCompactionStep(cd),
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(cd),
 				new LoggingOptimisationStep(cd)

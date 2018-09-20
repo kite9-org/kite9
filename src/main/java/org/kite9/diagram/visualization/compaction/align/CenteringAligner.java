@@ -1,54 +1,34 @@
-package org.kite9.diagram.visualization.compaction.slideable;
+package org.kite9.diagram.visualization.compaction.align;
 
+import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
-import org.kite9.diagram.visualization.display.CompleteDisplayer;
+import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
 
 /**
- * Handles the following compaction optimisations:
- * <ul>
- * <li>Moving sections of edges up or down, left or right if they have a preference</li>
- * </ul>
-
+ * Currently, this doesn't consider multiple elements together
+ * 
  * @author robmoffat
  * 
  */
-public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactionStep {
+public class CenteringAligner implements Aligner {
 
-	public CenteringAlignmentCompactionStep(CompleteDisplayer cd) {
-		super(cd);
-	}
-
-	
-	
 	@Override
-	protected void alignConnectionSegment(Segment s, Compaction c) {
-		int balance = s.getAdjoiningSegmentBalance();
-		int pos = 0;
-		Slideable<Segment> slideable = s.getSlideable();
-		if (balance == 0) {
-			int slack = slideable.getMaximumPosition() - slideable.getMinimumPosition();
-			pos = slideable.getMinimumPosition() + (slack/2);
-		} else if (balance < 0) {
-			pos = slideable.getMinimumPosition();
-		} else {
-			pos = slideable.getMaximumPosition();
+	public void alignRectangulars(List<AlignedRectangular> des, Compaction c, boolean horizontal) {
+		SegmentSlackOptimisation sso = horizontal ?  c.getVerticalSegmentSlackOptimisation() : c.getHorizontalSegmentSlackOptimisation();
+		for (AlignedRectangular alignedRectangular : des) {
+			alignRectangularAxis(alignedRectangular, sso, c);
 		}
-		slideable.setMinimumPosition(pos);
-		slideable.setMaximumPosition(pos);
-	}
-
-	@Override
-	protected void alignRectangular(Rectangular de, Compaction c) {
-		alignRectangularAxis(de, c.getHorizontalSegmentSlackOptimisation(), c);
-		alignRectangularAxis(de, c.getVerticalSegmentSlackOptimisation(), c);
 	}
 
 	private void alignRectangularAxis(Rectangular de, SegmentSlackOptimisation sso, Compaction c) {
@@ -108,6 +88,15 @@ public class CenteringAlignmentCompactionStep extends AbstractAlignmentCompactio
 			return adjoiningSegments.stream().flatMap(s -> s.getConnections().stream()).filter(cc -> cc.meets(c)).count();
 		} else {
 			return 0;
+		}
+	}
+
+	@Override
+	public boolean willAlign(AlignedRectangular de, boolean horizontal) {
+		if (horizontal) {
+			return de.getHorizontalAlignment() == HorizontalAlignment.CENTER;
+		} else {
+			return de.getVerticalAlignment() == VerticalAlignment.CENTER;
 		}
 	}
 

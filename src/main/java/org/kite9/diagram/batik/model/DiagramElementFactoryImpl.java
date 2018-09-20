@@ -2,8 +2,8 @@ package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
-import org.kite9.diagram.batik.painter.SVGLeafRectangularPainter;
-import org.kite9.diagram.batik.painter.TextLeafRectangularPainter;
+import org.kite9.diagram.batik.painter.SVGLeafPainter;
+import org.kite9.diagram.batik.painter.TextLeafPainter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
@@ -72,22 +72,22 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case TEXT:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new TextLeafRectangularPainter(el, context), ContentTransform.CROP);
+				return new LabelLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.CROP);
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new TextLeafRectangularPainter(el, context), ContentTransform.RESCALE);
+				return new DecalLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.RESCALE);
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new TextLeafRectangularPainter(el, context), ContentTransform.CROP);
+				return new ConnectedLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.CROP);
 			} 
 		case SVG:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context), ContentTransform.CROP);
+				return new LabelLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context), ContentTransform.RESCALE);
+				return new DecalLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.RESCALE);
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new SVGLeafRectangularPainter(el, context), ContentTransform.CROP);
+				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
 			}
 		case LINK:
 			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()), ContentTransform.POSITION);

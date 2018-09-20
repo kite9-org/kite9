@@ -200,6 +200,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 	@Override
 	public void setTextBounds(Rectangle2D r) {
 		this.textBounds = r;
+		currentSubgroup.setAttribute("text-bounds", r.toString());
 	}
 
 }
