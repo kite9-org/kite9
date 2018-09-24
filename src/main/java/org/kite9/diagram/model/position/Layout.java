@@ -66,5 +66,21 @@ public enum Layout {
 			return RIGHT;
 		}
 	}
+	
+	public static boolean isHorizontal(Layout d) {
+		if (d==null)
+			return true;
+		switch (d) {
+		case HORIZONTAL:
+		case LEFT: 
+		case RIGHT:
+			return true;
+		case VERTICAL:
+		case UP:
+		case DOWN:
+		default:
+			return false;
+		}
+	}
 }
 

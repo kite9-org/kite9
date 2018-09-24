@@ -21,7 +21,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -99,6 +98,13 @@ public class Segment implements Comparable<Segment> {
 		return underlyings.stream()
 				.map(u -> u.getDiagramElement())
 				.filter(a -> a == de)
+				.count() > 0;
+	}
+	
+	public boolean hasUnderlying(Set<? extends DiagramElement> des) {
+		return underlyings.stream()
+				.map(u -> u.getDiagramElement())
+				.filter(a -> des.contains(a))
 				.count() > 0;
 	}
 	

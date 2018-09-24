@@ -1,11 +1,13 @@
 package org.kite9.diagram.visualization.compaction.align;
 
-import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.AlignedRectangular;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.compaction.Compaction;
@@ -14,26 +16,20 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 
 /**
  * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right wants to align left)
- * then this is going to be inconsistent.  Works outside-to-in aligning stuff.
+ * then this is going to be inconsistent. 
  */
 public class LeftRightAligner implements Aligner {
 
 	@Override
-	public void alignRectangulars(List<AlignedRectangular> des, Compaction c, boolean horizontal) {
+	public void alignFor(Container co, Set<Rectangular> des, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation sso = horizontal ? c.getVerticalSegmentSlackOptimisation() : c.getHorizontalSegmentSlackOptimisation();
 
-		for (int i = 0; i < (int) Math.ceil(des.size() / 2d); i++) {
-			AlignedRectangular bottom = des.get(i);
-			AlignedRectangular top = des.get(des.size()-i-1);
-
-			alignRectangular(bottom, sso);
-			if (top!=bottom) {
-				alignRectangular(top, sso);
-			}
+		for (Rectangular r : des) {
+			alignRectangular(r, sso);
 		}
 	}
 
-	private void alignRectangular(AlignedRectangular de, SegmentSlackOptimisation sso) {
+	private void alignRectangular(Rectangular de, SegmentSlackOptimisation sso) {
 		OPair<Slideable<Segment>> oss = sso.getSlideablesFor(de);
 		
 		if (oss != null) {
@@ -56,11 +52,16 @@ public class LeftRightAligner implements Aligner {
 	}
 
 	@Override
-	public boolean willAlign(AlignedRectangular de, boolean horizontal) {
+	public boolean willAlign(Rectangular de, boolean horizontal) {
+		if (!(de instanceof AlignedRectangular)) {
+			return false;
+		}
 		if (horizontal) {
-			return de.getHorizontalAlignment() != HorizontalAlignment.CENTER;
+			return (((AlignedRectangular) de).getHorizontalAlignment() == HorizontalAlignment.LEFT) ||
+					(((AlignedRectangular) de).getHorizontalAlignment() == HorizontalAlignment.RIGHT);
 		} else {
-			return de.getVerticalAlignment() != VerticalAlignment.CENTER;
+			return (((AlignedRectangular) de).getVerticalAlignment() == VerticalAlignment.TOP) ||
+					(((AlignedRectangular) de).getVerticalAlignment() == VerticalAlignment.BOTTOM);
 		}
 	}
 

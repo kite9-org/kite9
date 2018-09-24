@@ -98,8 +98,10 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //				new LoggingOptimisationStep(cd),
 				new MaximizeCompactionStep(cd),
 //				new LoggingOptimisationStep(cd),
-				new AlignmentCompactionStep(cd, new LeftRightAligner(), new CenteringAligner()),
-				new ConnectionAlignmentCompactionStep(cd),
+				new AlignmentCompactionStep(cd, 
+						new LeftRightAligner(),
+						new CenteringAligner()),
+				new ConnectionAlignmentCompactionStep(),
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(cd),
 				new LoggingOptimisationStep(cd)

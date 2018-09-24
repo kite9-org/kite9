@@ -6,12 +6,12 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: LEFT; d-bounds: [0.0,0.0] [230.0,230.0]; " kite9-elem="diagram" id="diagram"
+  ><g debug="position: ; horiz: null; vert: null; sizing: MINIMIZE; layout: LEFT; d-bounds: [0.0,0.0] [230.0,230.0]; " kite9-elem="diagram" id="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="c5" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: LEFT; d-bounds: [15.0,15.0] [200.0,200.0]; " kite9-elem="context" transform="translate(15.0,15.0)"
+  <g id="c5" debug="position: ; horiz: null; vert: null; sizing: MAXIMIZE; layout: LEFT; d-bounds: [15.0,15.0] [200.0,200.0]; " kite9-elem="context" transform="translate(15.0,15.0)"
       >
     
     <g id="one" debug="position: ; horiz: LEFT; vert: TOP; sizing: MINIMIZE; layout: DOWN; d-bounds: [147.0,27.0] [45.0,20.0]; " kite9-elem="glyph" transform="translate(132.0,12.0)"

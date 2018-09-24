@@ -2,102 +2,125 @@ package org.kite9.diagram.visualization.compaction.align;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.AlignedRectangular;
-import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation;
+import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Logable;
 
 /**
- * Currently, this doesn't consider multiple elements together
- * 
- * @author robmoffat
- * 
+ * Basic approach:
+ *  - The container is fixed, but we want to make the amount of space between each element, or element and container, even.
+ *  - To do this, proceed from the outside to the inside elements.  
+ *  - For the outside elements, work out the minimum amount of slack they have, divide it by the number of gaps (i.e. remaining elements + 1)
+ *  - Reduce the outside gaps by this amount.
+ *  - Move to the next level of analysis.
  */
-public class CenteringAligner implements Aligner {
+public class CenteringAligner implements Aligner, Logable {
 
+	protected Kite9Log log = new Kite9Log(this);
+	
 	@Override
-	public void alignRectangulars(List<AlignedRectangular> des, Compaction c, boolean horizontal) {
+	public void alignFor(Container co, Set<Rectangular> des, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation sso = horizontal ?  c.getVerticalSegmentSlackOptimisation() : c.getHorizontalSegmentSlackOptimisation();
-		for (AlignedRectangular alignedRectangular : des) {
-			alignRectangularAxis(alignedRectangular, sso, c);
-		}
-	}
-
-	private void alignRectangularAxis(Rectangular de, SegmentSlackOptimisation sso, Compaction c) {
-		OPair<Slideable<Segment>> oss = sso.getSlideablesFor(de);
-		if (oss != null) {
-			Slideable<Segment> left = oss.getA();
-			Slideable<Segment> right = oss.getB();
-			if ((left.getUnderlying().getAlignStyle() == AlignStyle.CENTER) && (right.getUnderlying().getAlignStyle() == AlignStyle.CENTER)) {
-				
-				long onLeft = getConnectionsCount(de, left.getUnderlying().getAdjoiningSegments(c));
-				long onRight = getConnectionsCount(de, right.getUnderlying().getAdjoiningSegments(c));
-				
-				if (onLeft == onRight) {
-					centerSlideables(left, right);
-				} else if (onLeft > onRight) {
-					leftAlignSlideables(left, right);
-				} else {
-					rightAlignSlideables(left, right);
-				}
+		log.send("Center Align: "+(horizontal ? "horiz" : "vert"), des);
+		
+		Layout l = co.getLayout();
+		boolean inLine = Layout.isHorizontal(l) == horizontal;
+		
+		if (inLine) {
+			List<Slideable<Segment>> matches = findRelevantSlideables(des, sso);
+			
+			if (matches.size() != des.size() * 2) {
+				throw new Kite9ProcessingException("Was expecting this to be true");
+			}
+			
+			log.send("Slideables to Align: ", matches);
+			
+			for (int i = 0; i < Math.ceil(des.size() / 2d); i++) {
+				Slideable<Segment> leftD = matches.get(i * 2);
+				Slideable<Segment> rightD = matches.get(matches.size() - (i * 2) - 1);
+				centerSlideables(leftD, rightD, des.size() - (i*2));
+			}
+		} else {
+			// do one-at-a-time
+			for (Rectangular r : des) {
+				OPair<Slideable<Segment>> rSlideables = sso.getSlideablesFor(r);
+				centerSlideables(rSlideables.getA(), rSlideables.getB(), 1);
 			}
 		}
 	}
 
-
-
-	private void leftAlignSlideables(Slideable<Segment> left, Slideable<Segment> right) {
-		left.setMaximumPosition(left.getMinimumPosition());
-		right.setMaximumPosition(right.getMinimumPosition());
+	public List<Slideable<Segment>> findRelevantSlideables(Set<Rectangular> des, SegmentSlackOptimisation sso) {
+		return sso.getAllSlideables().stream()
+			.filter(s -> s.getUnderlying().hasUnderlying(des))
+			.sorted((a, b) -> Integer.compare(a.getMinimumPosition(), b.getMinimumPosition()))
+			.collect(Collectors.toList());
 	}
 
-
-
-	private void rightAlignSlideables(Slideable<Segment> left, Slideable<Segment> right) {
-		left.setMinimumPosition(left.getMaximumPosition());
-		right.setMinimumPosition(right.getMaximumPosition());
-	}
-
-
-
-	private void centerSlideables(Slideable<Segment> left, Slideable<Segment> right) {
-		Integer leftMin = left.getMinimumPosition();
-		Integer rightMax = right.getMaximumPosition();
-		int leftSlack = left.getMaximumPosition() - leftMin;
-		int rightSlack = rightMax - leftMin;
-
+	private void centerSlideables(Slideable<Segment> left, Slideable<Segment> right, int elementCount) {
+		int leftSlack = minSlack(left);
+		int rightSlack = minSlack(right);
 		int slackToUse = Math.min(leftSlack, rightSlack);
-		slackToUse = slackToUse / 2;
-		left.setMinimumPosition(leftMin + slackToUse);
-		right.setMaximumPosition(rightMax - slackToUse);
+		
+		if (slackToUse == 0) {
+			return;
+		}
+		
+		slackToUse = slackToUse / (elementCount + 1);
+		try {
+			int leftFixed = left.getMinimumPosition() + slackToUse;
+			int rightFixed = right.getMaximumPosition() - slackToUse;
+			
+			left.setMinimumPosition(leftFixed);
+			right.setMaximumPosition(rightFixed);
+			
+			// remove all remaining slack
+			right.setMinimumPosition(right.getMaximumPosition());
+			left.setMaximumPosition(left.getMinimumPosition());
+		} catch (Exception e) {
+			throw new Kite9ProcessingException("Could not set center align constraint: ", e);
+		}
+	}
+	
+	private int minSlack(Slideable<Segment> l) {
+		Integer leftMin = l.getMinimumPosition();
+		Integer leftMax = l.getMaximumPosition();
+		int leftSlack = leftMax - leftMin;
+		return leftSlack;
 	}
 
-
-
-	private long getConnectionsCount(Rectangular de, Set<Segment> adjoiningSegments) {
-		if (de instanceof Connected) {
-			Connected c = (Connected) de;
-			return adjoiningSegments.stream().flatMap(s -> s.getConnections().stream()).filter(cc -> cc.meets(c)).count();
+	@Override
+	public boolean willAlign(Rectangular de, boolean horizontal) {
+		if (!(de instanceof AlignedRectangular)) {
+			return false;
+		}
+		if (horizontal) {
+			return (((AlignedRectangular) de).getHorizontalAlignment() == HorizontalAlignment.CENTER);
 		} else {
-			return 0;
+			return (((AlignedRectangular) de).getVerticalAlignment() == VerticalAlignment.CENTER);
 		}
 	}
 
 	@Override
-	public boolean willAlign(AlignedRectangular de, boolean horizontal) {
-		if (horizontal) {
-			return de.getHorizontalAlignment() == HorizontalAlignment.CENTER;
-		} else {
-			return de.getVerticalAlignment() == VerticalAlignment.CENTER;
-		}
+	public String getPrefix() {
+		return "CNRA";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
 	}
 
 }

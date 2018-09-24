@@ -1,13 +1,14 @@
 package org.kite9.diagram.visualization.compaction.align;
 
 import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.Compaction;
-import org.kite9.diagram.visualization.compaction.CompactionStep;
-import org.kite9.diagram.visualization.compaction.Compactor;
-import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 
 
@@ -17,22 +18,33 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
  * @author robmoffat
  *
  */
-public class ConnectionAlignmentCompactionStep implements CompactionStep {
+public class ConnectionAligner implements Aligner {
 	
+
 	@Override
-	public void compact(Compaction c, Embedding e, Compactor rc) {
-		if  (e.isTopEmbedding()) {
-			alignConnections(c.getHorizontalSegments());
-			alignConnections(c.getVerticalSegments());
-		}
+	public void alignFor(Container co, Set<Rectangular> de, Compaction c, boolean horizontal) {
+		List<Segment> segs = horizontal ?  c.getHorizontalSegments() : c.getVerticalSegments();
+		alignConnections(segs, de);
+		
 	}
 
-	private void alignConnections(List<Segment> horizontalSegments) {
+	private void alignConnections(List<Segment> horizontalSegments, Set<Rectangular> de) {
 		horizontalSegments.stream()
 			.filter(s -> s.getConnections().size() > 0)
+			.filter(s -> hasConnectionMeeting(s, de))
 			.forEach(s -> alignSegment(s));
 	}
 	
+	private boolean hasConnectionMeeting(Segment s, Set<Rectangular> de) {
+		for (Connection c : s.getConnections()) {
+			if (de.contains(c.getFrom()) || (de.contains(c.getTo()))) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	private void alignSegment(Segment s) {
 		Slideable<Segment> sl = s.getSlideable();
 		if (s.getAlignStyle() == AlignStyle.MAX) {
@@ -56,6 +68,12 @@ public class ConnectionAlignmentCompactionStep implements CompactionStep {
 			slideable.setMinimumPosition(pos);
 			slideable.setMaximumPosition(pos);			
 		}
+	}
+
+
+	@Override
+	public boolean willAlign(Rectangular de, boolean horizontal) {
+		return true;
 	}
 
 }

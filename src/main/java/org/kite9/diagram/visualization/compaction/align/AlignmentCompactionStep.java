@@ -1,11 +1,12 @@
 package org.kite9.diagram.visualization.compaction.align;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -36,8 +37,8 @@ public class AlignmentCompactionStep extends AbstractCompactionStep {
 		List<DiagramElement> contents = de.getContents();
 		
 		for (Aligner a : aligners) {
-			alignOnAxis(c, contents, a, true);
-			alignOnAxis(c, contents, a, false);
+			alignOnAxis(c, contents, a, true, de);
+			alignOnAxis(c, contents, a, false, de);
 		}
 		
 		for (DiagramElement de2 : contents) {
@@ -48,15 +49,15 @@ public class AlignmentCompactionStep extends AbstractCompactionStep {
 	}
 
 
-	public void alignOnAxis(Compaction c, List<DiagramElement> contents, Aligner a, boolean horizontal) {
-		List<AlignedRectangular> filtered = contents.stream()
-			.filter(e -> (e instanceof AlignedRectangular))
-			.map(e -> (AlignedRectangular) e)
+	public void alignOnAxis(Compaction c, List<DiagramElement> contents, Aligner a, boolean horizontal, Container de) {
+		Set<Rectangular> filtered = contents.stream()
+			.filter(e -> (e instanceof Rectangular))
+			.map(e -> (Rectangular) e)
 			.filter(e -> a.willAlign(e, horizontal))
-			.collect(Collectors.toList());
+			.collect(Collectors.toSet());
 		
 		if (filtered.size() > 0) {
-			a.alignRectangulars(filtered, c, horizontal);
+			a.alignFor(de, filtered, c, horizontal);
 		}
 	}
 }

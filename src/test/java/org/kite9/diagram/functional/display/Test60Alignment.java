@@ -2,6 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import java.util.Arrays;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Context;
@@ -47,21 +48,29 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 		return d;
 	}
 	
-	public DiagramKite9XMLElement setUpDiagram3(Layout cLayout, boolean link) {
+	public DiagramKite9XMLElement setUpDiagram3(Layout cLayout, boolean link, boolean outLink, boolean addAlignments) {
 		g1 = new Glyph("one", "","one", null, null);
 		g2 = new Glyph("two", "","two ", null, null);
 		g3 = new Glyph("three", "","three ", null, null);
 		c5 = new Context("c5", listOf(g1, g2, g3), true, null, null);
-		g1.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-		g2.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-		g3.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-		c5.setAttribute("style", "kite9-min-size: 400px 200px; kite9-layout: "+cLayout);
+		c4 = new Context("c4", null, true, null, null);
+
+		if (addAlignments) {
+			g1.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+			g2.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+			g3.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+		}
+		c5.setAttribute("style", "kite9-min-size: 400px 200px; "+(cLayout != null ? "kite9-layout: "+cLayout : ""));
 		
 		if (link) {
 			new Link(g1, g3);
 		}
+		
+		if (outLink) {
+			new Link(g2, c4);
+		}
 
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("diagram", Arrays.asList(c5), cLayout, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("diagram", Arrays.asList(c5, c4));
 		return d;
 	}
 	
@@ -89,7 +98,9 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 	
-	@Test
+	/*
+	 * Result of these tests is unspecified, because it depends on the order you process the elements.
+	 * @Test
 	public void test_60_5_ContentsAlignedDifferentlyUp() throws Exception {
 		DiagramKite9XMLElement d = setUpDiagram2(Layout.UP);
 		renderDiagram(d);
@@ -99,7 +110,7 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 	public void test_60_6_ContentsAlignedDifferentlyLeft() throws Exception {
 		DiagramKite9XMLElement d = setUpDiagram2(Layout.LEFT);
 		renderDiagram(d);
-	}
+	}*/
 	
 	@Test
 	public void test_60_7_ContentsAlignedDifferentlyRight() throws Exception {
@@ -109,26 +120,61 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_60_8_ContentsAlignedCentreDown() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, false);
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, false, false, true);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_60_9_ContentsAlignedCentreLeft() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram3(Layout.LEFT, false);
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.LEFT, false, false, true);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_60_10_ContentsAlignedCentreDown() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, true);
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, true, false, true);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_60_11_ContentsAlignedCentreLeft() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram3(Layout.LEFT, true);
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.LEFT, true, false, true);
 		renderDiagram(d);
 	}
 	
+	@Test
+	public void test_60_12_ContentsAlignedOutlink1() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.LEFT, false, true, true);
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_60_13_ContentsAlignedOutlink2() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, true, true, true);
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_60_14_ContentsAlignedOutlink3() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.UP, true, true, true);
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_60_15_ContentsUnAlignedOutlink1() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.DOWN, true, true, false);
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_60_16_ContentsUnAlignedOutlink2() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(Layout.RIGHT, true, true, false);
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_60_17_ContentsUnAlignedOutlink3() throws Exception {
+		DiagramKite9XMLElement d = setUpDiagram3(null, true, true, false);
+		renderDiagram(d);
+	}
 }

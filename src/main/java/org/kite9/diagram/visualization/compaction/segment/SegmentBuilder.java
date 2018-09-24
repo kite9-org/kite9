@@ -101,6 +101,9 @@ public class SegmentBuilder implements Logable {
 		if ((des == DiagramElementSizing.MINIMIZE) || (des == null)) {
 			if (s.getDimension() == Dimension.H) {
 				VerticalAlignment va = de.getVerticalAlignment();
+//				if (va == null) {
+//					return AlignStyle.NONE;
+//				}
 				switch (va) {
 				case BOTTOM:
 					return AlignStyle.MAX;
@@ -111,6 +114,9 @@ public class SegmentBuilder implements Logable {
 				}
 			} else if (s.getDimension() == Dimension.V) {
 				HorizontalAlignment ha = de.getHorizontalAlignment();
+//				if (ha == null) {
+//					return AlignStyle.NONE;
+//				}
 				switch (ha) {
 				case LEFT:
 					return AlignStyle.MIN;
