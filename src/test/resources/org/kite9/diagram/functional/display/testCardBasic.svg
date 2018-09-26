@@ -438,7 +438,7 @@
                                                                                                           >
   </g
                                                                                                           >
-  <g id="a2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [397.0,434.0] [10.0,8.0]; " kite9-elem="arrow" transform="translate(397.0,434.0)"
+  <g id="a2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [304.0,434.0] [10.0,8.0]; " kite9-elem="arrow" transform="translate(304.0,434.0)"
                                                                                                           >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                                                             >
@@ -1350,7 +1350,7 @@
   <g debug="" kite9-elem="link" id="a2-fullGlyph"
                                                                                                                                                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [402.0,433.0] [10.0,10.0]; " kite9-elem="from" transform="translate(402.0,433.0)"
+    <g debug="position: ; d-bounds: [309.0,433.0] [10.0,10.0]; " kite9-elem="from" transform="translate(309.0,433.0)"
                                                                                                                                                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                                                                                               />
@@ -1365,7 +1365,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                                                                                                                                                                                                                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M407 438 L803 438 L803 398"
+      <path style="marker-start: ; marker-end: " class="link" d="M314 438 L803 438 L803 398"
                                                                                                                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                                                                                                                   >
@@ -1374,7 +1374,7 @@
   <g debug="" kite9-elem="link" id="a2-auto:17"
                                                                                                                                                                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [397.0,429.0] [10.0,10.0]; " kite9-elem="from" transform="translate(397.0,429.0)"
+    <g debug="position: ; d-bounds: [304.0,429.0] [10.0,10.0]; " kite9-elem="from" transform="translate(304.0,429.0)"
                                                                                                                                                                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                                                                                                       />
@@ -1389,7 +1389,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                                                                                                                                                                                                                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M402 434 L402 245"
+      <path style="marker-start: ; marker-end: " class="link" d="M309 434 L309 290 L402 290 L402 245"
                                                                                                                                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                                                                                                                                           >
@@ -1398,13 +1398,13 @@
   <g debug="" kite9-elem="link" id="a2-auto:19"
                                                                                                                                                                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [397.0,437.0] [10.0,10.0]; " kite9-elem="from" transform="translate(397.0,437.0)"
+    <g debug="position: ; d-bounds: [304.0,437.0] [10.0,10.0]; " kite9-elem="from" transform="translate(304.0,437.0)"
                                                                                                                                                                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [397.0,447.0] [10.0,10.0]; " kite9-elem="to" transform="translate(397.0,447.0)"
+    <g debug="position: ; d-bounds: [304.0,447.0] [10.0,10.0]; " kite9-elem="to" transform="translate(304.0,447.0)"
                                                                                                                                                                                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                                                                                                                 />
@@ -1413,7 +1413,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                                                                                                                                                                                                                                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M402 442 L402 452"
+      <path style="marker-start: ; marker-end: " class="link" d="M309 442 L309 452"
                                                                                                                                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                                                                                                                                   >

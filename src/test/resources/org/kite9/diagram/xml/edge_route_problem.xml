@@ -39,7 +39,7 @@
 		</label>
 	</context>
 
-	<allLinks>
+	
 		<link id="id_5">
 			<from xsi:type="arrow" reference="eats" />
 			<to xsi:type="glyph" reference="rob" />
@@ -92,5 +92,5 @@
 			<fromDecoration>NONE</fromDecoration>
 			<toDecoration>ARROW</toDecoration>
 		</link>
-	 </allLinks>
+	 
 </diagram>

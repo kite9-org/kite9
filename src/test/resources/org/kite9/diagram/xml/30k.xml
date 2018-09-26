@@ -4602,7 +4602,7 @@
   <arrow id="class org.kite9.diagram.builders.java.FieldValue3983/rel_references" label="references"></arrow>
   <arrow id="class org.kite9.diagram.builders.java.FieldValue3984/rel_references" label="references"></arrow>
   <arrow id="class org.kite9.diagram.builders.java.FieldValue3985/rel_references" label="references"></arrow>
-  <allLinks>
+  
    <link id="auto:0" drawDirection="RIGHT">
     <from xsi:type="glyph" reference="class org.kite9.diagram.builders.Test18ObjectDependencyWizard$MyOb0"></from>
     <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.FieldValue0/rel_references"></to>

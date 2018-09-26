@@ -127,7 +127,7 @@
    <symbols></symbols>
   </label>
  </context>
- <allLinks>
+ 
   <link id="auto:65137">
    <from xsi:type="context" reference="c0"></from>
    <to xsi:type="glyph" reference="g15(c2)"></to>

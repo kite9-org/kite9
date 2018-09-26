@@ -88,7 +88,7 @@
   <symbols/>
  </label>
 </context>
-<allLinks>
+
  <link id="id_17" drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_2"/>
@@ -249,4 +249,5 @@
   <from xsi:type="glyph" reference="id_54"/>
   <to xsi:type="glyph" reference="id_3"/>
  </link>
+ 
  </diagram>

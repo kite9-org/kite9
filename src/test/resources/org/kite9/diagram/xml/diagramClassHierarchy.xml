@@ -187,7 +187,7 @@
   <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContained/rel_extends" label="extends"></arrow>
   <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnectedContainer/rel_extends" label="extends"></arrow>
   <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_extends" label="extends"></arrow>
-  <allLinks>
+  
    <link id="auto:58" drawDirection="UP">
     <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></to>

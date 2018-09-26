@@ -79,7 +79,7 @@ Input</label>
   </glyph>
  </context>
  
-<allLinks>
+
   <link id="pid_2" drawDirection="RIGHT" shape="INVISIBLE"  >
    
    <from xsi:type="glyph" reference="pid_8"/>

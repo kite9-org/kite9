@@ -101,7 +101,7 @@
  <text-lines/>
  <symbols/>
 </glyph>
-<allLinks>
+
  <link id="id_51" shape="INVISIBLE" drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_48"/>
@@ -163,4 +163,5 @@
   <from xsi:type="glyph" reference="id_7"/>
   <to xsi:type="glyph" reference="id_11"/>
  </link>
+ 
  </diagram>

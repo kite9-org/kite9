@@ -71,7 +71,7 @@ They are either human or machine agents outside of the system being designed.</t
   </symbols>
  </key>
  
-<allLinks>
+
   <link id="id_2" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_1"/>

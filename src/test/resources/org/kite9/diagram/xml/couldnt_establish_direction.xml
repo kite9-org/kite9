@@ -8,7 +8,7 @@
 
 <arrow id="id_37" label="id_37" />
 
-<allLinks>
+
  <link id="id_1" drawDirection="UP">
 
   <from xsi:type="arrow" reference="id_37"/>

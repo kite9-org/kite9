@@ -82,7 +82,7 @@
  <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue12/rel_references" label="references"></arrow>
  <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue13/rel_references" label="references"></arrow>
  <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue14/rel_references" label="references"></arrow>
- <allLinks>
+ 
   <link id="auto:12" drawDirection="RIGHT">
    <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
    <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue0/rel_references"></to>

@@ -95,7 +95,7 @@
   </label>
  </context>
  
-<allLinks>
+
   <link id="id_13" drawDirection="UP">
    
    <from xsi:type="arrow" reference="id_7"/>

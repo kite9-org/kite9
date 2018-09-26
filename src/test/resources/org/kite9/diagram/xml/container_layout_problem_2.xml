@@ -99,7 +99,7 @@
  </label>
 </context>
 
-<allLinks>
+
  <link id="id_22" drawDirection="DOWN">
 
   <from xsi:type="glyph" reference="id_19"/>

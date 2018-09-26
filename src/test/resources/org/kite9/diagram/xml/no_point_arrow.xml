@@ -11,7 +11,7 @@
  <arrow id="id_44">
   <label></label>
  </arrow>
- <allLinks>
+ 
   <link id="id_46">
    <from xsi:type="glyph" reference="id_32"></from>
    <to xsi:type="arrow" reference="id_44"></to>

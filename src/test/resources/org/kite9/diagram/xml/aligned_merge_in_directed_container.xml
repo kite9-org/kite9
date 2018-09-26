@@ -75,7 +75,7 @@
  <boldText>My New Key</boldText>
 </key>
 
-<allLinks>
+
  <link id="id_0" drawDirection="RIGHT">
 
   <from xsi:type="context" reference="id_27"/>
@@ -92,4 +92,5 @@
   </toLabel>
   <toDecoration>CIRCLE</toDecoration>
  </link>
+ 
  </diagram>

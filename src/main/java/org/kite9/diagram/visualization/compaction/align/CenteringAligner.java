@@ -18,6 +18,7 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Basic approach:
@@ -48,7 +49,7 @@ public class CenteringAligner implements Aligner, Logable {
 			List<Slideable<Segment>> matches = findRelevantSlideables(des, sso);
 			
 			if (matches.size() != des.size() * 2) {
-				throw new Kite9ProcessingException("Was expecting this to be true");
+				throw new LogicException("Elements missing");
 			}
 			
 			log.send("Slideables to Align: ", matches);

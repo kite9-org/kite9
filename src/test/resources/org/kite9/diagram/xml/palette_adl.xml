@@ -62,7 +62,7 @@ Container</text>
   </context>
  </context>
  
-<allLinks>
+
   <link id="pid_0" drawDirection="DOWN" shape="INVISIBLE" >
    
    <from xsi:type="glyph" reference="palette:id_0"/>

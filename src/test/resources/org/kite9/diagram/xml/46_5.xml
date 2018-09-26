@@ -82,7 +82,7 @@ Container</text>
   </glyph>
  </context>
  
-<allLinks>
+
   <link id="id_45" shape="NORMAL"  drawDirection="RIGHT">
    
    <from xsi:type="glyph" reference="id_38"/>
@@ -125,4 +125,5 @@ Container</text>
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>BARBED ARROW</toDecoration>
   </link>
+  
   </diagram>

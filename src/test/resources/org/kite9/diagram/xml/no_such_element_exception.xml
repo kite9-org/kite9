@@ -13,7 +13,7 @@
  </arrow>
 </context>
 
-<allLinks>
+
  <link id="id_22" drawDirection="DOWN">
 
   <from xsi:type="arrow" reference="id_6"/>

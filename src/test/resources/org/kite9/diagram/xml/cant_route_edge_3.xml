@@ -119,7 +119,7 @@
   <text-lines></text-lines>
   <symbols></symbols>
  </glyph>
- <allLinks>
+ 
   <link id="auto:284920">
    <from xsi:type="glyph" reference="g0"></from>
    <to xsi:type="glyph" reference="g21"></to>

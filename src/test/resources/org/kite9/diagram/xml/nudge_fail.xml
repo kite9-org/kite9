@@ -10,7 +10,7 @@
   </context>
  </context>
  <arrow id="id_4" label="id_4" />
- <allLinks>
+ 
   <link id="id_11">
    <from xsi:type="arrow" reference="id_10"/>
    <to xsi:type="glyph" reference="id_3"/>

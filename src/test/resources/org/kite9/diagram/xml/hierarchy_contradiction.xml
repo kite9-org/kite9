@@ -56,7 +56,7 @@
    <symbols></symbols>
   </label>
  </context>
- <allLinks>
+ 
   <link id="auto:0">
    <from xsi:type="context" reference="Rob's Hierarchy0"></from>
    <to xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></to>

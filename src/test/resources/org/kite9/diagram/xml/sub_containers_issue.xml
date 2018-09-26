@@ -95,7 +95,7 @@
    <symbols></symbols>
   </label>
  </context>
- <allLinks>
+ 
   <link id="auto:5112">
    <from xsi:type="glyph" reference="g9(c4)"></from>
    <to xsi:type="context" reference="c0"></to>

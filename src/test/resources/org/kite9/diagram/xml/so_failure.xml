@@ -51,7 +51,7 @@
   <symbols>
    <symbol text="This is a symbol which can be attached to an item to help describe it" theChar="C" shape="CIRCLE"/>
   </symbols>
- </key><allLinks>
+ </key>
   <link id="id_6" >
    
    <from xsi:type="arrow" reference="id_1"/>

@@ -86,7 +86,7 @@ Data</label>
   </glyph>
  </context>
  
-<allLinks>
+
   <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE" >
    
    <from xsi:type="glyph" reference="pid_10"/>

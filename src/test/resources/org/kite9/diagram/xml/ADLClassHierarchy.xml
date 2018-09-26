@@ -198,7 +198,7 @@
     <arrow id="project_java_class:org.kite9.diagram.adl.Diagram/rel_extends" label="extends"></arrow>
    </context>
   </context>
-  <allLinks>
+  
    <link id="auto:147" drawDirection="UP">
     <from xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></from>
     <to xsi:type="glyph" reference="project_java_class:org.kite9.diagram.primitives.VertexOnEdge"></to>

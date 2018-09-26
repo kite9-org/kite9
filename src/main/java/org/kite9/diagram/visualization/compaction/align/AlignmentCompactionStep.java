@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -54,6 +55,7 @@ public class AlignmentCompactionStep extends AbstractCompactionStep {
 			.filter(e -> (e instanceof Rectangular))
 			.map(e -> (Rectangular) e)
 			.filter(e -> a.willAlign(e, horizontal))
+			.filter(e -> (e instanceof Connected))
 			.collect(Collectors.toSet());
 		
 		if (filtered.size() > 0) {

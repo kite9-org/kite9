@@ -195,7 +195,7 @@
   <text-lines></text-lines>
   <symbols></symbols>
  </glyph>
- <allLinks>
+ 
   <link id="auto:15080" drawDirection="RIGHT">
    <from xsi:type="glyph" reference="x5y0"></from>
    <to xsi:type="glyph" reference="x14y0"></to>

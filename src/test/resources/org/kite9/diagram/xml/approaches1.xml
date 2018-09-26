@@ -14,7 +14,7 @@
   <symbols/>
  </glyph>
  
-<allLinks>
+
   <link id="id_10">
    
    <from xsi:type="arrow" reference="id_8"/>
@@ -27,4 +27,5 @@
    <fromDecoration>NONE</fromDecoration>
    <toDecoration>ARROW</toDecoration>
   </link>
+  
   </diagram>

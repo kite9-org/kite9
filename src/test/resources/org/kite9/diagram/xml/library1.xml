@@ -60,7 +60,7 @@ and fiction works</text></text-line></text-lines>
 		<text-lines />
 		<symbols><symbol theChar="C" shape="CIRCLE"></symbol></symbols>
 	</glyph>
-	<allLinks>
+	
 		<link id="0" >
 			<from xsi:type="glyph" reference="id_10" />
 			<to xsi:type="arrow" reference="id_12" />

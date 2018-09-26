@@ -26,7 +26,7 @@
 </symbols>
 </label>
 </context>
-<allLinks>
+
 <link id="id_5" >
 <from xsi:type="arrow" reference="id_4"/>
 <to xsi:type="glyph" reference="id_3"/>

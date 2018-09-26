@@ -92,7 +92,7 @@
   <label>New Part</label>
   <text-lines/>
   <symbols/>
- </glyph><allLinks>
+ </glyph>
   <link id="id_35" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_9"/>

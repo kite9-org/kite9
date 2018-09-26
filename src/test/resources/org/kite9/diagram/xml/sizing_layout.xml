@@ -49,7 +49,7 @@
 </context>
 
 
-<allLinks>
+
  <link id="id_2" drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_0"/>

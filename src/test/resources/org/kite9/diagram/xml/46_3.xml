@@ -82,7 +82,7 @@ Container</text>
   </label>
  </context>
  
-<allLinks>
+
   <link id="id_50.1" shape="NORMAL" >
    
    <from xsi:type="glyph" reference="id_40"/>
@@ -161,4 +161,5 @@ Container</text>
    <to xsi:type="glyph" reference="id_39"/>
    <toDecoration>DIAMOND OPEN</toDecoration>
   </link>
+  
   </diagram>

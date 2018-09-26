@@ -16,7 +16,7 @@
 	</context>
 
 
-	<allLinks>
+	
 		<link id="id_5">
 			<from xsi:type="context" reference="auto:1" />
 			<to xsi:type="context" reference="auto:3" />

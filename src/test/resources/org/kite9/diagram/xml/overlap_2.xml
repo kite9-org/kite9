@@ -198,7 +198,7 @@
     </context>
   </context>
 
-  <allLinks>
+  
     <link id="id_38" shape="NORMAL"  drawDirection="RIGHT">
 
       <from xsi:type="glyph" reference="id_32" />

@@ -169,7 +169,7 @@ language to allow you to check rendering</bodyText>
    </text-line>
   </symbols>
  </key>
- <allLinks>
+ 
   <link id="auto:30">
    <from xsi:type="arrow" reference="a2"></from>
    <to xsi:type="context" reference="auto:11"></to>

@@ -40,7 +40,7 @@
   <arrow id="m/rel_implements" label="implements"></arrow>
   <arrow id="m/rel_extends" label="extends"></arrow>
 
-  <allLinks>
+  
    <link id="auto:49">
     <from xsi:type="arrow" reference="Face/boundary/rel_is a"></from>
     <to xsi:type="glyph" reference="edg"></to>

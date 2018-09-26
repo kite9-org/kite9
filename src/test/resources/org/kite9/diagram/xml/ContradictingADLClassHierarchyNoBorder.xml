@@ -174,7 +174,7 @@
     <arrow id="Diagram/rel_extends" label="extends"></arrow>
    </context>
   </context>
-  <allLinks>
+  
    <link id="auto:153" drawDirection="UP">
     <from xsi:type="arrow" reference="Connection/rel_implements"></from>
     <to xsi:type="glyph" reference="BiDirectional"></to>

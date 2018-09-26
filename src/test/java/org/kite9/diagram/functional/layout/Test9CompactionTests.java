@@ -119,8 +119,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		createDiagramInDirection(Direction.DOWN);
 	}
 	
-	@Test(expected=TestingEngine.LayoutErrorException.class)
-	@NotAddressed("Seems like this doesn't work properly due to a rectangularization issue")
+	@Test
     public void test_9_8_CompactionAlignmentUp() throws Exception {
 		createDiagramInDirection(Direction.UP);
 	}
@@ -163,7 +162,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 				if (de instanceof Connection) {
 					RouteRenderingInformation rri = ((Connection)de).getRenderingInformation();
 					Dimension2D size = rri.getSize();
-					if ((size.getWidth() > 20) || (size.getHeight() > 20)) {
+					if ((size.getWidth() > 50) || (size.getHeight() > 50)) {
 						throw new TestingEngine.LayoutErrorException("Link too long: "+de);
 					}
 				}

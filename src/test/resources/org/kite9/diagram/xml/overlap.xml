@@ -112,7 +112,7 @@
 			<symbols></symbols>
 		</label>
 	</context>
-	<allLinks>
+	
 		<link id="id_8" >
 			<from xsi:type="glyph" reference="id_6"></from>
 			<to xsi:type="glyph" reference="id_5"></to>

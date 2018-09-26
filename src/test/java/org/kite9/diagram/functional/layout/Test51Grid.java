@@ -16,6 +16,7 @@ import org.kite9.diagram.adl.Grid;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.batik.format.Kite9TranscoderException;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.layout.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
@@ -141,26 +142,6 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		return Collections.singletonList(new Glyph(null, text, null, null));
 	}
 
-	/**
-	 * Labels cannot be rendered on gridded containers.
-	 * @throws Exception
-	 */
-	@Test(expected=ElementsMissingException.class)
-	public void test_51_8_GridWithLabels() throws Exception {
-		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
-		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));
-		Cell br = new Cell("br", Arrays.asList(new TextLine("brl","label",  "Bottom Right")));
-		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0; ");
-		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0; ");
-		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1; ");
-		
-		Grid ctx = new Grid("inner", Arrays.asList(tl, tr, br), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2; kite9-padding: 4px; "); 
-		
-		
-		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new TextLine("key", "key", "Bits missing")));
-	}
-	
 
 	@Test
 	public void test_51_4_ProperSupergrid() throws Exception {
@@ -211,6 +192,26 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		
 		List<Kite9XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
+	}
+
+	/**
+	 * Labels cannot be rendered on gridded containers.
+	 * @throws Exception
+	 */
+	@Test(expected=Kite9TranscoderException.class)
+	public void test_51_8_GridWithLabels() throws Exception {
+		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
+		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));
+		Cell br = new Cell("br", Arrays.asList(new TextLine("brl","label",  "Bottom Right")));
+		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0; ");
+		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0; ");
+		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1; ");
+		
+		Grid ctx = new Grid("inner", Arrays.asList(tl, tr, br), null);
+		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2; kite9-padding: 4px; "); 
+		
+		
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new TextLine("key", "key", "Bits missing")));
 	}
 	
 	@Test

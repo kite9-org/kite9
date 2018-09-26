@@ -13,7 +13,7 @@
 	</context>
 	<arrow id="mar1" label="married"></arrow>
 
-	<allLinks>
+	
 		<link id="id_41" >
 			<from xsi:type="arrow" reference="mar2" />
 			<to xsi:type="glyph" reference="lmc" />
