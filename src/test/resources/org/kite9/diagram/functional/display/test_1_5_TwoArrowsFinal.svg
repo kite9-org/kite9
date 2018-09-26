@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="129.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="59.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [129.0,58.0]; " kite9-elem="diagram" id="The Diagram"
+  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [129.0,59.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
   <g id="One
-Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [57.0,28.0]; " kite9-elem="arrow" transform="translate(15.0,15.0)"
+Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [57.0,29.0]; " kite9-elem="arrow" transform="translate(15.0,15.0)"
       >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
         >
-      <rect x="0" y="0" width="57.0" style="fill: black; " rx="4" ry="4" height="28.0"
+      <rect x="0" y="0" width="57.0" style="fill: black; " rx="4" ry="4" height="29.0"
           />
     </g
           >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,18.0] [47.0,22.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,18.0] [47.0,23.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
           >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,22.0]; " kite9-elem="text-label" transform="translate(-0.734375,-1.9134750366210938)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,23.0]; " kite9-elem="text-label" transform="translate(-0.734375,0.0)"
               ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                   ><tspan
@@ -46,21 +46,21 @@ Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; lay
   
   </g
               >
-  <g id="Two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [82.0,22.0] [32.0,14.0]; " kite9-elem="arrow" transform="translate(82.0,22.0)"
+  <g id="Two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [82.0,20.0] [32.0,20.0]; " kite9-elem="arrow" transform="translate(82.0,20.0)"
               >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                 >
-      <rect x="0" y="0" width="32.0" style="fill: black; " rx="4" ry="4" height="14.0"
+      <rect x="0" y="0" width="32.0" style="fill: black; " rx="4" ry="4" height="20.0"
                   />
     </g
                   >
     
-    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,25.0] [22.0,8.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,23.0] [22.0,14.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,8.0]; " kite9-elem="text-label" transform="translate(-0.10546875,-2.0501937866210938)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,23.0] [22.0,14.0]; " kite9-elem="text-label" transform="translate(-0.10546875,0.0)"
                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                           ><tspan
@@ -98,7 +98,7 @@ Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; lay
                           >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                             /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                             /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                             />

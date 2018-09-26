@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
   width="100%" height="100%" viewBox="0 0 300 310" version="1.2">
+  <defs>
+    <path id="textpath1" d="M 250 500 A 250,1 50 0 1 1 750,500"
+  </defs>
   <title>Basic textflow</title>
   <rect x="0" y="0" width="100%" height="100%" fill="yellow"/>
   <flowRoot>
@@ -8,9 +11,7 @@
       <path d="M100,50L50,300L250,300L200,50z" fill="none" stroke="none"/>
     </flowRegion>
     <flowDiv>
-      <flowPara stroke="none" fill="red" font-size="12" text-align="full" text-decoration="underline">
-      aaaaaaaaaa aaaaaaaaaa
-      pppppppp ppppppppp pppppppppp
+      <flowPara stroke="none" fill="red" font-size="12" text-align="full">
       Search the world's information, including webpages, images, videos and more. 
       Google has many special features to help you find exactly what you.
      </flowPara>

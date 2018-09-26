@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
 
@@ -13,12 +14,14 @@ import org.apache.batik.bridge.FlowGlyphLayout;
 import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.bridge.FlowTextPainter;
 import org.apache.batik.bridge.TextLayoutFactory;
+import org.apache.batik.bridge.TextNode;
 import org.apache.batik.bridge.TextSpanLayout;
 import org.apache.batik.bridge.svg12.SVGFlowRootElementBridge;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.gvt.font.GVTGlyphVector;
+import org.apache.batik.gvt.font.GVTLineMetrics;
 import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
@@ -71,7 +74,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 								}
 
 								charEnd += charCount;
-								eSVG.setTextBounds(gv.getLogicalBounds().createUnion(eSVG.getTextBounds()));
+								//eSVG.setTextBounds(gv.getLogicalBounds().createUnion(eSVG.getTextBounds()));
 							}
 						}
 
@@ -79,7 +82,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 							AttributedCharacterIterator innerAci = new AttributedCharacterSpanIterator(aci, charStart, charEnd);
 							outputTextSpan(innerAci, g2d, eSVG, startPosition, linePosition);
 						}
-
+						
 						g2d.setPaint(basePaint);
 						g2d.setFont(baseFont);
 					} else {
@@ -121,6 +124,35 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 			protected TextLayoutFactory getTextLayoutFactory() {
 				return CUSTOM_TEXT_LAYOUT;
 			}
+
+			/**
+			 * Since the flowRoot will always render considering line height, 
+			 * we should use that here.
+			 */
+			@SuppressWarnings("unchecked")
+			@Override
+			public Rectangle2D getBounds2D(TextNode node) {
+				Rectangle2D out = super.getBounds2D(node);
+				
+				List<TextRun> textRuns = node.getTextRuns();
+				double minY = 0;
+				double maxY = 0;
+				for (TextRun textRun : textRuns) {
+					TextSpanLayout tsl = textRun.getLayout();
+					if (!tsl.isVertical()) {
+						Point2D startPoint = textRun.getLayout().getOffset();
+						GVTLineMetrics glm = tsl.getLineMetrics();
+						float height = glm.getHeight();
+						maxY = Math.max(maxY, startPoint.getY() + height);
+						minY = Math.min(minY, startPoint.getY());
+					}
+				}
+				out.add(new Point2D.Double(out.getMinX(), maxY));
+				out.add(new Point2D.Double(out.getMinX(), minY));
+				return out;
+			}
+			
+			
 
 		});
 	}

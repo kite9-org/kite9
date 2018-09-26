@@ -1,139 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="60.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="60.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="153.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="153.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [60.0,60.0]; " kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [153.0,153.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [30.0,30.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [123.0,123.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.967741935483871,0.967741935483871)translate(0.5,0.5)"
+      <g debug="" kite9-elem="decal" transform="scale(0.9919354838709677,0.9919354838709677)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="30.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="30.0"
+        <rect x="0" y="0" width="123.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="123.0"
           />
       </g
           >
-    </g
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [123.0,123.0]; " kite9-elem="shape" transform="translate(1.5,1.5)"
           >
+      <g transform="scale(3, 3)"
+            >
+      <ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"
+              />      </g
+              >      </g
+              >    </g
+              >
   
     </g
-          >
-  </g
-          >
-<defs
-          >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-            >
-      <stop stop-color="#FFF" offset="0%"
-              />
-      <stop stop-color="#DDD" offset="100%"
-              />
-    </linearGradient
               >
+  </g
+              >
+<defs
+              >
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
+                >
+      <stop stop-color="#FFF" offset="0%"
+                  />
+      <stop stop-color="#DDD" offset="100%"
+                  />
+    </linearGradient
+                  >
     
     <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
+                  >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                /> 
+                    /> 
       <feOffset dx="2pt" dy="2pt"
-                /> 
+                    /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                />
+                    />
       <feMerge
-                > 
+                    > 
         <feMergeNode
-                  />
+                      />
         <feMergeNode in="SourceGraphic"
-                  /> 
+                      /> 
       </feMerge
-                  >
+                      >
     </filter
-                  >
+                      >
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
-                  >
+                      >
       <circle r="2" class="circle-marker" cx="3" cy="3"
-                    />
-    </marker
-                    >
-    
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                    >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                      />
-    </marker
-                      >
-    
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                      >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                         />
     </marker
                         >
     
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                         >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                           />
     </marker
                           >
     
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                           >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                             />
     </marker
                             >
-
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    
+    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                             >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                               />
     </marker
                               >
-
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    
+     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                               >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                 />
     </marker
                                 >
- 
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+
+    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                 >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                   />
     </marker
                                   >
 
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                   >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                     />
     </marker
                                     >
-  
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+ 
+    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                     >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
+      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                       />
     </marker
                                       >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                       >
-       <polygon class="arrow-marker" points="6,4 2,2 2,6"
+      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                         />
-   </marker
+    </marker
                                         >
+  
+    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                        >
+      <polygon class="arrow-marker" points="2,4 6,2 6,6"
+                                          />
+    </marker
+                                          >
+
+    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                          >
+       <polygon class="arrow-marker" points="6,4 2,2 2,6"
+                                            />
+   </marker
+                                            >
     
   </defs
-                                      ></svg
-                                    >
+                                          ></svg
+                                        >

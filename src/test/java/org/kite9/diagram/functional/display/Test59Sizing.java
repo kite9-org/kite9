@@ -129,7 +129,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				text("pello 2", "font-size: 25px; kite9-vertical-align: bottom; "),
 			"kite9-padding: 10px; kite9-layout: right; kite9-min-size: 150px 150px")));
 	}
-		
+	
 	private String para() {
 		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
 			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="275.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="180.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="275.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="150.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,180.0]; " kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,150.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,150.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,120.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.9959349593495935,0.9933774834437086)translate(0.5,0.5)"
+      <g debug="" kite9-elem="decal" transform="scale(0.9959349593495935,0.9917355371900827)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="245.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="150.0"
+        <rect x="0" y="0" width="245.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
           />
       </g
           >
-      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,27.0]; " kite9-elem="text" transform="translate(8.35205078125,7.478507995605469)"
+      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,32.0]; " kite9-elem="text" transform="translate(8.35205078125,12.0)"
           ><g font-family="'Arial'" font-size="25px"
             ><text x="0" xml:space="preserve" y="22.417" stroke="none"
               ><tspan
@@ -35,29 +35,16 @@
             ></g
           ></g
           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [113.0,72.0] [48.0,31.0]; " kite9-elem="text" transform="translate(-4878.39794921875,56.28710460662842)"
+      <g debug="position: ; horiz: LEFT; vert: BOTTOM; d-bounds: [25.0,104.0] [42.0,21.0]; " kite9-elem="text" transform="translate(9.01123046875,91.0)"
           ><g font-family="'Arial'" font-size="15px"
-            ><text x="4983.3193" xml:space="preserve" y="13.4502" stroke="none"
-              ><tspan
-                >b</tspan
-                ><tspan
-                >ette</tspan
-              ></text
-              ><text x="4975.4092" xml:space="preserve" y="29.9502" stroke="none"
-              >middler</text
-            ></g
-          ></g
-          >
-      <g debug="position: ; horiz: RIGHT; vert: BOTTOM; d-bounds: [206.0,124.0] [44.0,31.0]; " kite9-elem="text" transform="translate(-9764.1240234375,108.28710460662842)"
-          ><g font-family="'Arial'" font-size="15px"
-            ><text x="9968.3086" xml:space="preserve" y="13.4502" stroke="none"
+            ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
               ><tspan
                 >h</tspan
                 ><tspan
-                >ello</tspan
+                >ello </tspan
+                ><tspan
+                >b</tspan
               ></text
-              ><text x="9954.1426" xml:space="preserve" y="29.9502" stroke="none"
-              >bottom</text
             ></g
           ></g
           >
@@ -83,7 +70,7 @@
               >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                 /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                 /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                 />

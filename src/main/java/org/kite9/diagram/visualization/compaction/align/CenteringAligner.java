@@ -39,6 +39,11 @@ public class CenteringAligner implements Aligner, Logable {
 		Layout l = co.getLayout();
 		boolean inLine = Layout.isHorizontal(l) == horizontal;
 		
+		if (l==Layout.GRID) {
+			// you can't centre anything on a grid, since cells use all the space in the grid.
+			return;
+		}
+		
 		if (inLine) {
 			List<Slideable<Segment>> matches = findRelevantSlideables(des, sso);
 			

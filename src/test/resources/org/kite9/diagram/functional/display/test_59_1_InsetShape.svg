@@ -20,9 +20,9 @@
           />
       </g
           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [41.0,41.0]; " kite9-elem="shape" transform="translate(5.5,5.5)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [41.0,41.0]; " kite9-elem="shape" transform="translate(0.5,0.5)"
           >
-      <ellipse rx="20" ry="20" stroke-width="1" cx="15" cy="15" stroke="black"
+      <ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"
             />      </g
             >    </g
             >
@@ -46,7 +46,7 @@
                 >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                   /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                   /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                   />

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="184.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="146.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [184.0,140.0]; " kite9-elem="diagram" id="auto:3"
+  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [184.0,146.0]; " kite9-elem="diagram" id="auto:3"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="g1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [17.0,15.0] [33.0,26.0]; " kite9-elem="glyph" transform="translate(17.0,15.0)"
+  <g id="g1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [16.0,15.0] [33.0,29.0]; " kite9-elem="glyph" transform="translate(16.0,15.0)"
       >
-    <g debug="" kite9-elem="back" transform="scale(0.9705882352941176,0.9629629629629629)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9705882352941176,0.9666666666666667)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="33.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="26.0"
+      <rect x="0" y="0" width="33.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
           />
     </g
           >
     <g class="glyph"
           >
       
-    <g id="g1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [27.0,21.0] [13.0,14.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="g1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [26.0,21.0] [13.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
             >
     <g debug="" kite9-elem="show-box"
               >
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [27.0,21.0] [13.0,14.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,-2.5627918243408203)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [26.0,21.0] [13.0,17.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,0.0)"
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       ><tspan
@@ -54,18 +54,18 @@
                   >
   </g
                   >
-  <g id="g2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [133.0,99.0] [35.0,26.0]; " kite9-elem="glyph" transform="translate(133.0,99.0)"
+  <g id="g2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [134.0,102.0] [35.0,29.0]; " kite9-elem="glyph" transform="translate(134.0,102.0)"
                   >
-    <g debug="" kite9-elem="back" transform="scale(0.9722222222222222,0.9629629629629629)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9722222222222222,0.9666666666666667)translate(0.5,0.5)"
                     >
-      <rect x="0" y="0" width="35.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="26.0"
+      <rect x="0" y="0" width="35.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                       />
     </g
                       >
     <g class="glyph"
                       >
       
-    <g id="g2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [143.0,105.0] [15.0,14.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="g2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [144.0,108.0] [15.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
                         >
     <g debug="" kite9-elem="show-box"
                           >
@@ -77,7 +77,7 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [143.0,105.0] [15.0,14.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,-2.4065418243408203)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [144.0,108.0] [15.0,17.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,0.0)"
                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                   ><tspan
@@ -97,21 +97,21 @@
                               >
   </g
                               >
-  <g id="meets" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [70.0,61.0] [43.0,18.0]; " kite9-elem="arrow" transform="translate(70.0,61.0)"
+  <g id="meets" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [70.0,63.0] [43.0,20.0]; " kite9-elem="arrow" transform="translate(70.0,63.0)"
                               >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                 >
-      <rect x="0" y="0" width="43.0" style="fill: black; " rx="4" ry="4" height="18.0"
+      <rect x="0" y="0" width="43.0" style="fill: black; " rx="4" ry="4" height="20.0"
                                   />
     </g
                                   >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [75.0,66.0] [33.0,8.0]; " kite9-elem="label" transform="translate(5.0,5.0)"
+    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [75.0,66.0] [33.0,14.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
                                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [75.0,66.0] [33.0,8.0]; " kite9-elem="text-label" transform="translate(-1.03125,-2.7064437866210938)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [75.0,66.0] [33.0,14.0]; " kite9-elem="text-label" transform="translate(-1.03125,0.0)"
                                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                           ><tspan
@@ -129,18 +129,18 @@
   
   </g
                                       >
-  <g id="g3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,76.0] [35.0,26.0]; " kite9-elem="glyph" transform="translate(15.0,76.0)"
+  <g id="g3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,78.0] [35.0,29.0]; " kite9-elem="glyph" transform="translate(15.0,78.0)"
                                       >
-    <g debug="" kite9-elem="back" transform="scale(0.9722222222222222,0.9629629629629629)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9722222222222222,0.9666666666666667)translate(0.5,0.5)"
                                         >
-      <rect x="0" y="0" width="35.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="26.0"
+      <rect x="0" y="0" width="35.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                           />
     </g
                                           >
     <g class="glyph"
                                           >
       
-    <g id="g3-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,82.0] [15.0,14.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="g3-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,84.0] [15.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
                                             >
     <g debug="" kite9-elem="show-box"
                                               >
@@ -152,7 +152,7 @@
                                                 >
     <g class="glyph-label-text"
                                                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,82.0] [15.0,14.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,-2.4065418243408203)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,84.0] [15.0,17.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,0.0)"
                                                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                       ><tspan
@@ -172,18 +172,18 @@
                                                   >
   </g
                                                   >
-  <g id="g4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [133.0,38.0] [36.0,26.0]; " kite9-elem="glyph" transform="translate(133.0,38.0)"
+  <g id="g4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [133.0,39.0] [36.0,29.0]; " kite9-elem="glyph" transform="translate(133.0,39.0)"
                                                   >
-    <g debug="" kite9-elem="back" transform="scale(0.972972972972973,0.9629629629629629)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.972972972972973,0.9666666666666667)translate(0.5,0.5)"
                                                     >
-      <rect x="0" y="0" width="36.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="26.0"
+      <rect x="0" y="0" width="36.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                       />
     </g
                                                       >
     <g class="glyph"
                                                       >
       
-    <g id="g4-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [143.0,44.0] [16.0,14.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="g4-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [143.0,45.0] [16.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
                                                         >
     <g debug="" kite9-elem="show-box"
                                                           >
@@ -195,7 +195,7 @@
                                                             >
     <g class="glyph-label-text"
                                                             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [143.0,44.0] [16.0,14.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,-2.5041980743408203)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [143.0,45.0] [16.0,17.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,0.0)"
                                                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                   ><tspan
@@ -218,13 +218,13 @@
   <g debug="" kite9-elem="link" id="g1-meets"
                                                               >
     
-    <g id="auto:1" debug="position: ; d-bounds: [45.0,23.0] [10.0,10.0]; " kite9-elem="from" transform="translate(45.0,23.0)"
+    <g id="auto:1" debug="position: ; d-bounds: [44.0,24.0] [10.0,10.0]; " kite9-elem="from" transform="translate(44.0,24.0)"
                                                                 >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                   />
   </g
                                                                   >
-    <g debug="position: ; d-bounds: [65.0,60.0] [10.0,10.0]; " kite9-elem="to" transform="translate(65.0,60.0)"
+    <g debug="position: ; d-bounds: [65.0,62.0] [10.0,10.0]; " kite9-elem="to" transform="translate(65.0,62.0)"
                                                                   >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                     />
@@ -233,7 +233,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                     >
-      <path style="marker-start: url(#circle-marker); marker-end: " class="link" d="M50 28 L55 28 C57.7614 28 60 30.2386 60 33 L60 60 C60 62.7614 62.2386 65 65 65 L70 65"
+      <path style="marker-start: url(#circle-marker); marker-end: " class="link" d="M49 29 L60 29 L60 67 L70 67"
                                                                       />
     </g
                                                                       >
@@ -242,13 +242,13 @@
   <g debug="" kite9-elem="link" id="g2-meets"
                                                                       >
     
-    <g debug="position: ; d-bounds: [128.0,107.0] [10.0,10.0]; " kite9-elem="from" transform="translate(128.0,107.0)"
+    <g debug="position: ; d-bounds: [129.0,112.0] [10.0,10.0]; " kite9-elem="from" transform="translate(129.0,112.0)"
                                                                         >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                           />
   </g
                                                                           >
-    <g debug="position: ; d-bounds: [108.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(108.0,70.0)"
+    <g debug="position: ; d-bounds: [108.0,74.0] [10.0,10.0]; " kite9-elem="to" transform="translate(108.0,74.0)"
                                                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                             />
@@ -257,7 +257,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                             >
-      <path style="marker-start: ; marker-end: " class="link" d="M133 112 L128 112 C125.2386 112 123 109.7614 123 107 L123 80 C123 77.2386 120.7614 75 118 75 L113 75"
+      <path style="marker-start: ; marker-end: " class="link" d="M134 117 L123 117 L123 79 L113 79"
                                                                               />
     </g
                                                                               >
@@ -266,13 +266,13 @@
   <g debug="" kite9-elem="link" id="g3-meets"
                                                                               >
     
-    <g id="auto:2" debug="position: ; d-bounds: [45.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(45.0,84.0)"
+    <g id="auto:2" debug="position: ; d-bounds: [45.0,88.0] [10.0,10.0]; " kite9-elem="from" transform="translate(45.0,88.0)"
                                                                                 >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                   />
   </g
                                                                                   >
-    <g debug="position: ; d-bounds: [65.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(65.0,70.0)"
+    <g debug="position: ; d-bounds: [65.0,74.0] [10.0,10.0]; " kite9-elem="to" transform="translate(65.0,74.0)"
                                                                                   >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                     />
@@ -281,7 +281,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                                     >
-      <path style="marker-start: url(#circle-marker); marker-end: " class="link" d="M50 89 L55 89 C57.7614 89 60 86.7614 60 84 L60 80 C60 77.2386 62.2386 75 65 75 L70 75"
+      <path style="marker-start: url(#circle-marker); marker-end: " class="link" d="M50 93 L60 93 L60 79 L70 79"
                                                                                       />
     </g
                                                                                       >
@@ -290,13 +290,13 @@
   <g debug="" kite9-elem="link" id="g4-meets"
                                                                                       >
     
-    <g debug="position: ; d-bounds: [128.0,46.0] [10.0,10.0]; " kite9-elem="from" transform="translate(128.0,46.0)"
+    <g debug="position: ; d-bounds: [128.0,48.0] [10.0,10.0]; " kite9-elem="from" transform="translate(128.0,48.0)"
                                                                                         >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                           />
   </g
                                                                                           >
-    <g debug="position: ; d-bounds: [108.0,60.0] [10.0,10.0]; " kite9-elem="to" transform="translate(108.0,60.0)"
+    <g debug="position: ; d-bounds: [108.0,62.0] [10.0,10.0]; " kite9-elem="to" transform="translate(108.0,62.0)"
                                                                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                             />
@@ -305,7 +305,7 @@
   
     <g debug="" kite9-elem="link-body"
                                                                                             >
-      <path style="marker-start: ; marker-end: " class="link" d="M133 51 L128 51 C125.2386 51 123 53.2386 123 56 L123 60 C123 62.7614 120.7614 65 118 65 L113 65"
+      <path style="marker-start: ; marker-end: " class="link" d="M133 53 L123 53 L123 67 L113 67"
                                                                                               />
     </g
                                                                                               >
@@ -331,7 +331,7 @@
                                                                                                   >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                                                                                                     /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                                                                                                     /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                                                                                                     />

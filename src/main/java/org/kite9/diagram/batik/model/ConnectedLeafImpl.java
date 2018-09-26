@@ -1,7 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import java.awt.geom.Rectangle2D;
-
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
@@ -20,10 +18,4 @@ public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
 		super(el, parent, ctx, lo, t);
 	}
-
-	protected Rectangle2D getBounds() {
-		ensureInitialized();
-		return ((LeafPainter) this.p).bounds();
-	}
-
 }

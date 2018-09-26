@@ -20,7 +20,7 @@
           />
       </g
           >
-      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,27.0]; " kite9-elem="text" transform="translate(8.35205078125,7.478507995605469)"
+      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,32.0]; " kite9-elem="text" transform="translate(8.35205078125,12.0)"
           ><g font-family="'Arial'" font-size="25px"
             ><text x="0" xml:space="preserve" y="22.417" stroke="none"
               ><tspan
@@ -35,7 +35,7 @@
             ></g
           ></g
           >
-      <g debug="position: ; horiz: LEFT; vert: BOTTOM; d-bounds: [25.0,111.0] [42.0,14.0]; " kite9-elem="text" transform="translate(9.01123046875,95.28710460662842)"
+      <g debug="position: ; horiz: LEFT; vert: BOTTOM; d-bounds: [25.0,104.0] [42.0,21.0]; " kite9-elem="text" transform="translate(9.01123046875,91.0)"
           ><g font-family="'Arial'" font-size="15px"
             ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
               ><tspan
@@ -70,7 +70,7 @@
               >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                 /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                 /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                 />

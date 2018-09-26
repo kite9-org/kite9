@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.text;
 
 import java.awt.Font;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.apache.batik.gvt.font.GVTFontFamily;
@@ -18,18 +17,6 @@ public interface ExtendedSVG {
 	 * Also ensures that the correct @font-face is described in the output SVG.
 	 */
 	Font handleGVTFontFamilies(List<GVTFontFamily> families);
-	
-	/**
-	 * Used by {@link LocalRenderingFlowRootElementBridge} to set the size of the 
-	 * bounds used in drawing the text.
-	 */
-	public Rectangle2D getTextBounds();
-
-	/**
-	 * Used by {@link LocalRenderingFlowRootElementBridge} to set the size of the 
-	 * bounds used in drawing the text.
-	 */
-	public void setTextBounds(Rectangle2D r);
 	
 }
 

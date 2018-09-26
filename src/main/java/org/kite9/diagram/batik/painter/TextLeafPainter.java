@@ -40,6 +40,7 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 	}
 	
 	private StyledKite9SVGElement textContents;
+	private Rectangle2D bounds;
 	
 	/**
 	 * Turn the text that's in the input element into a bunch of paragraphs in a SVG 1.2 flow.
@@ -53,10 +54,15 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 	 * </flowRoot>
 	 */
 	public StyledKite9SVGElement getContents() {
-		if (textContents != null) {
-			return textContents;
+		if (textContents == null) {
+			initializeTextRuns();
 		}
 		
+
+		return textContents;
+	}
+
+	public void initializeTextRuns() {
 		StyledKite9SVGElement theElement = super.getContents();
 		
 		Document d = theElement.getOwnerDocument();
@@ -72,6 +78,7 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 		
 		theElement.appendChild(flowRoot);
 		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
+		bounds = gn.getBounds();
 		Element group = graphicsNodeToXML(d, gn);
 		
 		theElement.removeChild(flowRoot);
@@ -81,8 +88,6 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 		}
 		
 		textContents = theElement;
-
-		return textContents;
 	}
 
 	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
@@ -151,7 +156,10 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 	
 	@Override
 	public Rectangle2D bounds() {
-		GraphicsNode gn = getGraphicsNode();
-		return gn.getBounds();
+		if (bounds == null) {
+			initializeTextRuns();
+		}
+		
+		return bounds;
 	}
 }

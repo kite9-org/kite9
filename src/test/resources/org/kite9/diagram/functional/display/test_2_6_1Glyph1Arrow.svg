@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="140.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="100.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g id="one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [37.0,42.0]; " kite9-elem="stereotype" transform="translate(10.0,6.0)"
+    <g id="one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [37.0,36.0]; " kite9-elem="stereotype" transform="translate(10.0,6.0)"
             >
     <g debug="" kite9-elem="show-box"
               >
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,38.0] [37.0,8.0]; " kite9-elem="text-label" transform="translate(-4981.1123046875,15.063106536865234)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,32.0] [37.0,14.0]; " kite9-elem="text-label" transform="translate(-4981.1123046875,11.0)"
                   ><g font-family="'opensans-bold-webfont'"
                     ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
@@ -49,7 +49,7 @@
                   >
   </g
                   >
-    <g id="one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [30.0,68.0] [27.0,11.0]; " kite9-elem="label" transform="translate(15.0,53.0)"
+    <g id="one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [30.0,62.0] [27.0,17.0]; " kite9-elem="label" transform="translate(15.0,47.0)"
                   >
     <g debug="" kite9-elem="show-box"
                     >
@@ -61,7 +61,7 @@
                       >
     <g class="glyph-label-text"
                       >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [30.0,68.0] [27.0,11.0]; " kite9-elem="text-label" transform="translate(-0.91796875,-2.3918933868408203)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [30.0,62.0] [27.0,17.0]; " kite9-elem="text-label" transform="translate(-0.91796875,0.0)"
                         ><g font-family="'opensans-regular-webfont'" font-size="15px"
                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
@@ -90,12 +90,12 @@
     </g
                             >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,46.0] [33.0,8.0]; " kite9-elem="label" transform="translate(5.0,25.0)"
+    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,43.0] [33.0,14.0]; " kite9-elem="label" transform="translate(5.0,22.0)"
                             >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                               >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,46.0] [33.0,8.0]; " kite9-elem="text-label" transform="translate(-1.03125,-2.7064437866210938)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,43.0] [33.0,14.0]; " kite9-elem="text-label" transform="translate(-1.03125,0.0)"
                                 ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                   ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                     ><tspan
@@ -277,7 +277,7 @@
                                                                                     >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
                                                                                       /> 
-      <feOffset dx="2" dy="2"
+      <feOffset dx="2pt" dy="2pt"
                                                                                       /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
                                                                                       />

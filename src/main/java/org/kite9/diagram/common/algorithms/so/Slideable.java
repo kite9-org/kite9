@@ -33,20 +33,26 @@ public class Slideable<X> implements PositionChangeNotifiable {
 	 * constraints.
 	 */
 	public int minimumDistanceTo(Slideable<X> s) {
-		Integer maxSet = this.getMaximumPosition();
-		maxSet = maxSet == null ? 20000 : maxSet;		// 
-		Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
-		so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
-		Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
-		so.log.send("Calculating minimum distance from "+s+" to "+this+" "+slack2);
-		if (slack2 == null) {
-			if (slack1 == null) {
-				return 0;
+		try {
+			Integer maxSet = this.getMaximumPosition();
+			maxSet = maxSet == null ? 20000 : maxSet;		// 
+			Integer slack1 = minimum.minimumDistanceTo(s.minimum, maxSet);
+			so.log.send("Calculating minimum distance from "+this+" to "+s+" "+slack1);
+			Integer slack2 = s.maximum.minimumDistanceTo(maximum, s.getMinimumPosition());
+			so.log.send("Calculating minimum distance from "+s+" to "+this+" "+slack2);
+			if (slack2 == null) {
+				if (slack1 == null) {
+					return 0;
+				} else {
+					return slack1;
+				}
+			} else if (slack1 == null) {
+				return slack2;
 			} else {
-				return slack1;
+				return Math.max(slack1, slack2);
 			}
-		} else {
-			return Math.max(slack1, slack2);
+		} catch (NullPointerException e) {
+			throw new LogicException("Some maximum size not set");
 		}
 	}
 	

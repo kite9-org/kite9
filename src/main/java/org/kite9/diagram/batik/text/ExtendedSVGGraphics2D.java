@@ -192,15 +192,16 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		}
 	}
 
-	@Override
-	public Rectangle2D getTextBounds() {
-		return textBounds;
-	}
-
-	@Override
-	public void setTextBounds(Rectangle2D r) {
-		this.textBounds = r;
-		currentSubgroup.setAttribute("text-bounds", r.toString());
-	}
+//	@Override
+//	public Rectangle2D getTextBounds() {
+//		return textBounds;
+//	}
+//
+//	@Override
+//	public void setTextBounds(Rectangle2D r) {
+//		this.textBounds = r;
+//		currentSubgroup.setAttribute("text-bounds", r.toString());
+//		System.out.println("Text bounds changed:"+r);
+//	}
 
 }

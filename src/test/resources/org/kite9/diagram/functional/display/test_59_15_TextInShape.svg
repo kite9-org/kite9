@@ -1,24 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="60.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="60.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="158.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="202.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [60.0,60.0]; " kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [158.0,202.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [30.0,30.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [128.0,172.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.967741935483871,0.967741935483871)translate(0.5,0.5)"
+      <g debug="" kite9-elem="decal" transform="scale(0.9922480620155039,0.9942196531791907)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="30.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="30.0"
+        <rect x="0" y="0" width="128.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="172.0"
           />
       </g
+          >
+      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [15.0,15.0] [128.0,172.0]; " kite9-elem="text" transform="translate(-79.07335662841797,2.0)"
+          ><g font-family="'Arial'"
+            ><text x="100" xml:space="preserve" y="60.7602" stroke="none"
+              ><tspan
+                >S</tspan
+                ><tspan
+                >earch </tspan
+                ><tspan
+                >the </tspan
+                ><tspan
+                >world's </tspan
+              ></text
+              ><text x="97.36" xml:space="preserve" y="73.9602" stroke="none"
+              >information, </text
+              ><text x="94.72" xml:space="preserve" y="87.1602" stroke="none"
+              ><tspan
+                >including </tspan
+                ><tspan
+                >webpages, </tspan
+              ></text
+              ><text x="92.08" xml:space="preserve" y="100.3602" stroke="none"
+              ><tspan
+                >images, </tspan
+                ><tspan
+                >videos </tspan
+                ><tspan
+                >and </tspan
+              ></text
+              ><text x="89.44" xml:space="preserve" y="113.5602" stroke="none"
+              >more.</text
+              ><text x="86.8" xml:space="preserve" y="126.7602" stroke="none"
+              ><tspan
+                >Google </tspan
+                ><tspan
+                >has </tspan
+                ><tspan
+                >many </tspan
+              ></text
+              ><text x="84.16" xml:space="preserve" y="139.9602" stroke="none"
+              ><tspan
+                >special </tspan
+                ><tspan
+                >features </tspan
+                ><tspan
+                >to </tspan
+                ><tspan
+                >help </tspan
+              ></text
+              ><text x="81.52" xml:space="preserve" y="153.1602" stroke="none"
+              ><tspan
+                >you </tspan
+                ><tspan
+                >find </tspan
+                ><tspan
+                >exactly </tspan
+                ><tspan
+                >what </tspan
+              ></text
+              ><text x="78.88" xml:space="preserve" y="166.3602" stroke="none"
+              >you.</text
+            ></g
+          ></g
           >
     </g
           >

@@ -76,10 +76,12 @@
   </template>
   
   <template id='key'>
-    <back style='kite9-usage: decal; kite9-type: svg; '>
-      <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='0' ry='0' class="key-back" />
-    </back>
-    <contents />
+    <body>
+      <back style='kite9-usage: decal; kite9-type: svg;'>
+        <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='0' ry='0' class="key-back" />
+      </back>
+      <contents />
+    </body>
   </template>
 
   <template id='arrow'>
