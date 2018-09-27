@@ -7,7 +7,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FlowGlyphLayout;
@@ -126,25 +128,27 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 			}
 
 			/**
-			 * Since the flowRoot will always render considering line height, 
+			 * Since the flowRoot will always render considering ascent and descent, 
 			 * we should use that here.
 			 */
 			@SuppressWarnings("unchecked")
 			@Override
 			public Rectangle2D getBounds2D(TextNode node) {
 				Rectangle2D out = super.getBounds2D(node);
-				
+				double minY = out.getMinY();
+				double maxY = out.getMaxY();
+
 				List<TextRun> textRuns = node.getTextRuns();
-				double minY = 0;
-				double maxY = 0;
 				for (TextRun textRun : textRuns) {
-					TextSpanLayout tsl = textRun.getLayout();
-					if (!tsl.isVertical()) {
-						Point2D startPoint = textRun.getLayout().getOffset();
-						GVTLineMetrics glm = tsl.getLineMetrics();
-						float height = glm.getHeight();
-						maxY = Math.max(maxY, startPoint.getY() + height);
-						minY = Math.min(minY, startPoint.getY());
+					TextSpanLayout layout = textRun.getLayout();
+					if ((!layout.isOnATextPath()) && (!layout.isVertical())) {
+						// count lines
+						GVTLineMetrics glm = layout.getLineMetrics();
+						for (int i = 0; i < layout.getGlyphVector().getNumGlyphs(); i++) {
+							Point2D p = layout.getGlyphVector().getGlyphPosition(i);
+							minY = Math.min(minY, p.getY() - glm.getAscent());
+							maxY = Math.max(maxY, p.getY() + glm.getDescent());
+						}
 					}
 				}
 				out.add(new Point2D.Double(out.getMinX(), maxY));

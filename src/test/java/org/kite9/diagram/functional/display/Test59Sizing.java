@@ -124,10 +124,25 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_59_17_TextDescenders() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(
-				text("hello 1", "font-size: 25px; kite9-vertical-align: bottom; ")+
-				text("pello 2", "font-size: 25px; kite9-vertical-align: bottom; "),
-			"kite9-padding: 10px; kite9-layout: right; kite9-min-size: 150px 150px")));
+		String frs =  "<svg:rect width=\"70pt\" height=\"400pt\" />";
+		String text1 = "hello hello hello hello";
+		String text2 = "pello hello pello";
+		
+		
+		renderDiagram(basicDiagram(
+				glyphContainer(
+			glyphContainer(
+				text("hello 1", "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px")+
+				text("pello 2", "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px"),
+			"kite9-padding: 0px; kite9-layout: right; kite9-min-size: 150px 150px") + 
+			glyphContainer(
+					text(text1, "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px", frs)+
+					text(text2, "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px", frs),
+				"kite9-padding: 0px; kite9-layout: down; ")+
+			glyphContainer(
+					text(text2, "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px", frs)+
+					text(text2, "font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px", frs),
+				"kite9-padding: 00px; kite9-layout: down;"), "kite9-vertical-align: top")));
 	}
 	
 	private String para() {

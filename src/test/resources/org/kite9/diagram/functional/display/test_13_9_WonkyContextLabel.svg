@@ -37,7 +37,7 @@
                   >
     <g class="glyph-stereotype-text"
                   >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [264.0,33.0] [32.0,14.0]; " kite9-elem="text-label" transform="translate(-4952.7314453125,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [264.0,33.0] [32.0,14.0]; " kite9-elem="text-label" transform="translate(-4952.7314453125,0.5455074310302734)"
                     ><g font-family="'opensans-bold-webfont'"
                       ><text x="4983.7314" xml:space="preserve" y="10.6283" stroke="none"
                         ><tspan
@@ -64,7 +64,7 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [233.0,52.0] [94.0,17.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [233.0,52.0] [94.0,17.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.696533203125)"
                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
@@ -109,7 +109,7 @@
                                     >
     <g class="glyph-stereotype-text"
                                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [52.0,33.0] [49.0,14.0]; " kite9-elem="text-label" transform="translate(-4961.4072265625,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [52.0,33.0] [49.0,14.0]; " kite9-elem="text-label" transform="translate(-4961.4072265625,0.5455074310302734)"
                                       ><g font-family="'opensans-bold-webfont'"
                                         ><text x="4975.3291" xml:space="preserve" y="10.6283" stroke="none"
                                           ><tspan
@@ -136,7 +136,7 @@
                                           >
     <g class="glyph-label-text"
                                           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [37.0,52.0] [79.0,17.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [37.0,52.0] [79.0,17.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.696533203125)"
                                             ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                 ><tspan
@@ -172,7 +172,7 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                   >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [141.0,44.0] [67.0,14.0]; " kite9-elem="text-label" transform="translate(-0.13671875,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [141.0,44.0] [67.0,14.0]; " kite9-elem="text-label" transform="translate(-0.13671875,0.5572261810302734)"
                                                     ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                                       ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                         ><tspan
@@ -202,7 +202,7 @@
                                                         >
     <g class="container-label-front"
                                                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [152.0,89.0] [60.0,14.0]; " kite9-elem="front" transform="translate(2.886393189430237,4.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [152.0,89.0] [60.0,14.0]; " kite9-elem="front" transform="translate(2.886393189430237,5.439990043640137)"
                                                           ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                                             ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                               ><tspan

@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,85.0] [55.0,17.0]; " kite9-elem="text-label" transform="translate(-1.2890625,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,85.0] [55.0,17.0]; " kite9-elem="text-label" transform="translate(-1.2890625,0.696533203125)"
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       ><tspan
@@ -68,7 +68,7 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,18.0] [40.0,14.0]; " kite9-elem="text-label" transform="translate(-0.94921875,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,18.0] [40.0,14.0]; " kite9-elem="text-label" transform="translate(-0.94921875,0.5572261810302734)"
                           ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                             ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                               ><tspan
@@ -111,7 +111,7 @@
                                     >
     <g class="connection-label-front"
                                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [56.0,49.0] [78.0,14.0]; " kite9-elem="front" transform="translate(3.8639322966337204,4.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [56.0,49.0] [78.0,14.0]; " kite9-elem="front" transform="translate(3.8639322966337204,5.439990043640137)"
                                       ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                         ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                           ><tspan

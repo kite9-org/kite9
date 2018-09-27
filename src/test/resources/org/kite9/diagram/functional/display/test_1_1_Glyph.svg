@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="335.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="99.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="335.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="108.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [335.0,99.0]; " kite9-elem="diagram" id="The Diagram"
+  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [335.0,108.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
   <g id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [305.0,69.0]; " kite9-elem="glyph" transform="translate(15.0,15.0)"
+line 2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [305.0,78.0]; " kite9-elem="glyph" transform="translate(15.0,15.0)"
       >
-    <g debug="" kite9-elem="back" transform="scale(0.9967320261437909,0.9857142857142858)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9967320261437909,0.9873417721518988)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="305.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="69.0"
+      <rect x="0" y="0" width="305.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="78.0"
           />
     </g
           >
@@ -24,7 +24,7 @@ line 2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout
           >
       
     <g id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [285.0,23.0]; " kite9-elem="stereotype" transform="translate(10.0,6.0)"
+line 2-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [285.0,27.0]; " kite9-elem="stereotype" transform="translate(10.0,6.0)"
             >
     <g debug="" kite9-elem="show-box"
               >
@@ -36,7 +36,7 @@ line 2-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE;
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [149.0,21.0] [37.0,23.0]; " kite9-elem="text-label" transform="translate(-4857.1123046875,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [149.0,21.0] [37.0,27.0]; " kite9-elem="text-label" transform="translate(-4857.1123046875,0.5455074310302734)"
                   ><g font-family="'opensans-bold-webfont'"
                     ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
@@ -54,7 +54,7 @@ line 2-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE;
   </g
                   >
     <g id="auto:0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,49.0] [285.0,29.0]; " kite9-elem="label" transform="translate(10.0,34.0)"
+line 2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,53.0] [285.0,34.0]; " kite9-elem="label" transform="translate(10.0,38.0)"
                   >
     <g debug="" kite9-elem="show-box"
                     >
@@ -66,7 +66,7 @@ line 2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; lay
                       >
     <g class="glyph-label-text"
                       >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,49.0] [285.0,29.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.0)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,53.0] [285.0,34.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.696533203125)"
                         ><g font-family="'opensans-regular-webfont'" font-size="15px"
                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
