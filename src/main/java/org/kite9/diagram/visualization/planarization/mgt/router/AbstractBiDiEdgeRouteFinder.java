@@ -84,11 +84,10 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			Direction dd;
 			if (!arriving) {
 				clockwise = !clockwise;
-				dd = entryDirection;
-			} else {
 				dd = exitDirection;
+			} else {
+				dd = Direction.reverse(entryDirection);
 			}
-
 			
 			if (dd==null) {
 				return true;
@@ -106,6 +105,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			
 	//		System.out.println(p);
 	//		System.out.println("Can route to="+to+" edge = "+edge+" above="+pathAbove+" going="+g+" arriving="+arriving);
+
 			if (edge==null) {
 				boolean forwardSet = arriving ? g==Going.BACKWARDS : g==Going.FORWARDS;
 				edge = p.getFirstEdgeAfterPlanarizationLine(to, forwardSet, pathAbove);
@@ -143,9 +143,9 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
 		this.allowedCrossingDirections = getCrossingDirections(edgeDir, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(edgeDir, it);
-		this.exitDirection = getExitDirection(edgeDir, it);
-		this.exitDirection = Direction.reverse(entryDirection);
-		this.pathDirection = this.exitDirection;
+		this.entryDirection = getEntryDirection(edgeDir, it);
+		this.exitDirection = this.entryDirection;
+		this.pathDirection = this.entryDirection;
 	
 				
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
@@ -193,7 +193,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		return rh.increaseBounds(from, to);
 	}
 
-	private Direction getExitDirection(Direction edgeDir, CrossingType it) {
+	private Direction getEntryDirection(Direction edgeDir, CrossingType it) {
 		if (it == CrossingType.UNDIRECTED) {
 			return null;
 		} else {
@@ -395,7 +395,8 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 	 * container we are leaving/arriving at.
 	 */
 	protected boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
-		Direction dd = (termination) ? exitDirection : entryDirection;
+		Direction dd = termination ? exitDirection : entryDirection;
+		
 		if (dd == null) {
 			return true;
 		}
