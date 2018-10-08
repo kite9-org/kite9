@@ -692,6 +692,8 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	protected Axis expensive, bounded, illegalEdgeCross;
 	protected PlanarizationEdge e;
 	protected Direction entryDirection;
+	protected Direction exitDirection;
+	protected Direction pathDirection;
 
 
 	public RoutableReader getRouteHandler() {
@@ -853,7 +855,7 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 		log.send(log.go() ? null : "Extending path: "+r);
 		Vertex from = p.getVertexOrder().get(r.l.vertex);
 		generatePaths(r, getLinkSet(r.getGoing(), from, r.getSide()), pq, from, r.getGoing(), r.getSide());
-		boolean backOk = (r.l.vertex > 0) && (r.l.vertex < p.getVertexOrder().size()-1) && (entryDirection==null);
+		boolean backOk = (r.l.vertex > 0) && (r.l.vertex < p.getVertexOrder().size()-1) && (pathDirection==null);
 		if (backOk) {
 			generateSwitchbackPaths(pq, r, from, r.getGoing());
 		}

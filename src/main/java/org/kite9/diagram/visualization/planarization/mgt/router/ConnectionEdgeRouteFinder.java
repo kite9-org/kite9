@@ -39,23 +39,23 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 			}
 		}
 		
-		if (entryDirection==null) {
+		if (pathDirection==null) {
 			return true;
 		} else {
-			if (Direction.isHorizontal(entryDirection) == Direction.isHorizontal(crossing.getDrawDirection())) {
+			if (Direction.isHorizontal(pathDirection) == Direction.isHorizontal(crossing.getDrawDirection())) {
 				// edges must be perpendicular
 				return false;
 			}
 			
-			DiagramElement entering = crossing.getElementForSide(entryDirection);
+			DiagramElement entering = crossing.getElementForSide(pathDirection);
 			
 			if (entering == null) {
 				// we are actually leaving a container
-				entering = crossing.getElementForSide(Direction.reverse(entryDirection)).getParent();
+				entering = crossing.getElementForSide(Direction.reverse(pathDirection)).getParent();
 			}
 		
 			// check that the container is positioned somewhere that intersects with the edge direction 
-			if (!checkContainerPathIntersection(ep, entering, entryDirection)) {
+			if (!checkContainerPathIntersection(ep, entering, pathDirection)) {
 				log.send(e+" can't cross into "+entering);
 				return false;
 			}
@@ -76,7 +76,7 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 	private boolean checkContainerPathIntersection(EdgePath ep, DiagramElement c,
 			Direction ed) {
 		RoutingInfo cri = rh.getPlacedPosition(c);
-		return rh.isInPlane(cri, startZone, (entryDirection == Direction.RIGHT) || (entryDirection == Direction.LEFT));
+		return rh.isInPlane(cri, startZone, (pathDirection == Direction.RIGHT) || (pathDirection == Direction.LEFT));
 	}
 
 	

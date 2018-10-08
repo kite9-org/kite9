@@ -14,7 +14,7 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 	public ContainerEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BorderEdge e) {
 		super(p, rh, e.getTo().getRoutingInfo(), getExpensiveAxis(e), getBoundedAxis(e), e);
 		this.to = e.getTo();
-		this.entryDirection = e.getDrawDirection();
+		this.pathDirection = e.getDrawDirection();
 	}
 
 	private static Axis getBoundedAxis(Edge e) {
