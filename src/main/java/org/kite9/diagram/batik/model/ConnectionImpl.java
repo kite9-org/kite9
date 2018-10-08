@@ -291,4 +291,18 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		ensureInitialized();
 		return cornerRadius;
 	}
+
+	@Override
+	public Direction getFromArrivalSide() {
+		ensureInitialized();
+		return Direction.reverse(drawDirection);
+	}
+
+	@Override
+	public Direction getToArrivalSide() {
+		ensureInitialized();
+		return drawDirection;
+	}
+	
+	
 }
