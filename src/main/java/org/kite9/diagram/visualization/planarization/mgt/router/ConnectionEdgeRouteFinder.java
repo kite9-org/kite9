@@ -80,8 +80,8 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 	}
 
 	
-	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ConnectionEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
-		super(p, rh, ci, em, edgeDir, it, gt);
+	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ConnectionEdge ci, ElementMapper em,  Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt) {
+		super(p, rh, ci, em, path, entry, exit, it, gt);
 		this.mustCrossContainers = getMustCrossContainers(ci.getOriginalUnderlying().getFrom(), ci.getOriginalUnderlying().getTo());
 	}
 

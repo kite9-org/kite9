@@ -131,7 +131,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 	
-	public AbstractBiDiEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction edgeDir, CrossingType it, GeographyType gt) {
+	public AbstractBiDiEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
 		this.startZone = getRoutingZone(rh, ci, true);
 		RoutingInfo endZone = getRoutingZone(rh, ci, false);
@@ -141,13 +141,12 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.gt = gt;
 		
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
-		this.allowedCrossingDirections = getCrossingDirections(edgeDir, it);
-		this.illegalEdgeCross = getIllegalEdgeCrossAxis(edgeDir, it);
-		this.entryDirection = getEntryDirection(edgeDir, it);
-		this.exitDirection = this.entryDirection;
-		this.pathDirection = this.entryDirection;
+		this.allowedCrossingDirections = getCrossingDirections(path, it);
+		this.illegalEdgeCross = getIllegalEdgeCrossAxis(path, it);
+		this.entryDirection = getDirection(entry, it);
+		this.exitDirection = getDirection(exit, it);
+		this.pathDirection = getDirection(path, it);
 	
-				
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
@@ -193,7 +192,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		return rh.increaseBounds(from, to);
 	}
 
-	private Direction getEntryDirection(Direction edgeDir, CrossingType it) {
+	private Direction getDirection(Direction edgeDir, CrossingType it) {
 		if (it == CrossingType.UNDIRECTED) {
 			return null;
 		} else {
