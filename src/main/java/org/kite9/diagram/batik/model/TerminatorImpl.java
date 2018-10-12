@@ -10,6 +10,7 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -26,6 +27,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	private SVGOMMarkerElement markerElement;
 	private Value reference;
 	private double markerReserve;
+	private Direction arrivalSide;
 
 	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
@@ -46,6 +48,9 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
 			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getPainter().getContents());
 		} 
+		
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE);
+		arrivalSide = (Direction) ev.getTheValue();
 	}
 	
 	@Override
@@ -77,6 +82,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 
 	@Override
 	public double getMarkerReserve() {
+		ensureInitialized();
 		return markerReserve;
 	}
 
@@ -114,6 +120,12 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		out.put("height", ""+ height);
 		
 		return out;	
+	}
+
+	@Override
+	public Direction getArrivalSide() {
+		ensureInitialized();
+		return arrivalSide;
 	}
 	
 }

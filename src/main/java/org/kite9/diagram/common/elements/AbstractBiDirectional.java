@@ -116,17 +116,5 @@ public abstract class AbstractBiDirectional<X> implements BiDirectional<X> {
 	public Direction getDrawDirection() {
 		return drawDirection;
 	}
-
-	@Override
-	public Direction getFromArrivalSide() {
-		return Direction.reverse(drawDirection);
-	}
-
-	@Override
-	public Direction getToArrivalSide() {
-		return drawDirection;
-	}
-	
-	
 	
 }

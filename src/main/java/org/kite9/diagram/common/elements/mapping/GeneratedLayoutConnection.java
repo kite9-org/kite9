@@ -120,5 +120,15 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	public double getCornerRadius() {
 		return 0;
 	}
+	
+	@Override
+	public Direction getFromArrivalSide() {
+		return Direction.reverse(drawDirection);
+	}
+
+	@Override
+	public Direction getToArrivalSide() {
+		return drawDirection;
+	}
 
 }

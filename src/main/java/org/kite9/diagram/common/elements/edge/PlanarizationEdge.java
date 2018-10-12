@@ -66,4 +66,16 @@ public interface PlanarizationEdge extends Edge {
 	 * Unlinks the edge from the from, to vertices it is connected to.
 	 */
 	public void remove();
+	
+	/**
+	 * If drawDirection is set, this will be the reverse of draw direction.
+	 */
+	public Direction getFromArrivalSide();
+	
+	/**
+	 * If drawDirection is set, this will be the same as draw direction.
+	 */
+	public Direction getToArrivalSide();
+
+
 }

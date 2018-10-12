@@ -72,7 +72,7 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 		fromElement.setAttribute("id", createID());
 		fromElement.setAttribute("class", fromDecoration.toLowerCase());
 	}
-
+	
 	public void setToDecoration(String toDecoration) {
 		Element fromElement = getProperty("to");
 		fromElement.setAttribute("id", createID());

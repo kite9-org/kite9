@@ -60,4 +60,9 @@ public interface Connection extends DiagramElement, BiDirectional<Connected> {
 	 * Arc radius used for corners and hops
 	 */
 	public double getCornerRadius();
+	
+	public Direction getFromArrivalSide();
+	
+	public Direction getToArrivalSide();
+ 
 }

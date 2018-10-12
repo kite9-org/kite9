@@ -58,6 +58,7 @@ public interface CSSConstants {
 	
 	// controls which side connections will go into a connected
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";
+	public static final String ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX+"arrival-side";
 	
 	// controls whether we try and align connections along the mid-point of the connected.
 	public static final String CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-align";

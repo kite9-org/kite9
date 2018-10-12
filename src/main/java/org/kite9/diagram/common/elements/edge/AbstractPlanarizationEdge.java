@@ -46,4 +46,15 @@ public abstract class AbstractPlanarizationEdge extends AbstractEdge implements 
 		this.straight = straight;
 	}
 
+	@Override
+	public Direction getFromArrivalSide() {
+		return Direction.reverse(drawDirection);
+	}
+
+	@Override
+	public Direction getToArrivalSide() {
+		return drawDirection;
+	}
+
+	
 }

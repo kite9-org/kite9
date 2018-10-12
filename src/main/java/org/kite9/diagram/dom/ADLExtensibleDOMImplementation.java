@@ -34,6 +34,7 @@ import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
@@ -136,6 +137,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		
 		// CONNECTION SIDES
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTIONS_PROPERTY, ConnectionsSeparation.class, ConnectionsSeparation.SAME_SIDE, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ARRIVAL_SIDE, Direction.class, null, false));
 		
 		// ALIGNMENT
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, true));

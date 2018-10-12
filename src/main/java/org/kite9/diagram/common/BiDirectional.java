@@ -39,15 +39,4 @@ public interface BiDirectional<X> {
 	
 	public void setDrawDirectionFrom(Direction d, X from);
 	
-	/**
-	 * If drawDirection is set, this will be the reverse of draw direction.
-	 */
-	public Direction getFromArrivalSide();
-	
-	/**
-	 * If drawDirection is set, this will be the same as draw direction.
-	 */
-	public Direction getToArrivalSide();
-
-
 }

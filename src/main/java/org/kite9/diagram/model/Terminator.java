@@ -1,5 +1,6 @@
 package org.kite9.diagram.model;
 
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
@@ -29,4 +30,9 @@ public interface Terminator extends SizedRectangular {
 	 * {@link ConnectionsSeparation}
 	 */
 	boolean styleMatches(Terminator t2);
+	
+	/**
+	 * Gives the side of the Connected element the terminator should be placed on.
+	 */
+	Direction getArrivalSide();
 }
