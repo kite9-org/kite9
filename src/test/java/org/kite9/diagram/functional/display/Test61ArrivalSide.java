@@ -25,8 +25,9 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
     	Context i4 = new Context("i4", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	
     	Context outer = new Context("outer", HelpMethods.listOf(i1, i2, i3, i4), true, null, null);
-    	Link l1 = new Link(i1, i2, null, null, null, null, Direction.DOWN);
-    	Link l2 = new Link(i4, i3,null, null, null, null, Direction.RIGHT);
+    	Link l1 = new Link(i1, i2, null, null, null, null, null);
+    	Link l2 = new Link(i1, i2, null, null, null, null, null);
+    	l2.setDrawDirection(Direction.RIGHT);
     	
     	AbstractMutableXMLElement fromT = l1.getProperty("from");
     	fromT.setAttribute("style", "kite9-arrival-side: up; ");
