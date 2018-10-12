@@ -84,9 +84,9 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			Direction dd;
 			if (!arriving) {
 				clockwise = !clockwise;
-				dd = exitDirection;
+				dd = entryDirection;
 			} else {
-				dd = Direction.reverse(entryDirection);
+				dd = exitDirection;
 			}
 			
 			if (dd==null) {
@@ -104,15 +104,19 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			}
 			
 	//		System.out.println(p);
-	//		System.out.println("Can route to="+to+" edge = "+edge+" above="+pathAbove+" going="+g+" arriving="+arriving);
+			System.out.println("Can route to="+to+" edge = "+edge+" above="+pathAbove+" going="+g+" arriving="+arriving+ " direction= "+dd);
 
 			if (edge==null) {
 				boolean forwardSet = arriving ? g==Going.BACKWARDS : g==Going.FORWARDS;
 				edge = p.getFirstEdgeAfterPlanarizationLine(to, forwardSet, pathAbove);
 				boolean out = eo.canInsert(edge, dd, !clockwise, log);
+				System.out.println(out);
 				return out;
 			} else {
-				return eo.canInsert(edge, dd, clockwise, log);
+				boolean out = eo.canInsert(edge, dd, clockwise, log);
+				System.out.println(out);
+
+				return out;
 			}
 		}
 
@@ -143,8 +147,8 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
 		this.allowedCrossingDirections = getCrossingDirections(path, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(path, it);
-		this.entryDirection = getDirection(entry, it);
-		this.exitDirection = getDirection(exit, it);
+		this.entryDirection = entry;
+		this.exitDirection = exit;
 		this.pathDirection = getDirection(path, it);
 	
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {

@@ -33,8 +33,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	private String fromId;
 	private String toId;
-	private Direction fromArrivalSide = null;
-	private Direction toArrivalSide = null;
 	
 	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
 		super(el, parent, ctx, p, t);
