@@ -219,12 +219,12 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 	}
 
 	@Override
-	public Map<String, String> getXPathVariables() {
+	public String getXPathVariable(String key) {
 		if (getDiagramElement() instanceof XPathAware) {
-			return ((XPathAware) getDiagramElement()).getXPathVariables();
+			return ((XPathAware) getDiagramElement()).getXPathVariable(key);
 		}
 		
-		return Collections.emptyMap();
+		return null;
 	}
 
 	

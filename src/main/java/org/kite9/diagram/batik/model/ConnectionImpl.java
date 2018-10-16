@@ -45,6 +45,15 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	@Override
 	protected void initialize() {
 		super.initialize();
+		
+		if (getFromElement() == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
+		}
+
+		if (getToElement() == null) {
+			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
+		}
+
 		from = (Connected) getFromElement().getDiagramElement();
 		to = (Connected) getToElement().getDiagramElement();
 		
@@ -248,24 +257,29 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	public Map<String, String> getXPathVariables() {
+	public String getXPathVariable(String name) {
 		ensureInitialized();
-		Map<String, String> out = new HashMap<>();
-		RoutePainter routePainter = new RoutePainter();
-		ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
-				getPainter().getContents().getOwnerDocument());
-		double startReserve = fromDecoration.getMarkerReserve();
-		double endReserve = toDecoration.getMarkerReserve();
+		if ("path".equals(name)) {
+			Map<String, String> out = new HashMap<>();
+			RoutePainter routePainter = new RoutePainter();
+			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
+					getPainter().getContents().getOwnerDocument());
+			double startReserve = fromDecoration.getMarkerReserve();
+			double endReserve = toDecoration.getMarkerReserve();
+			
+			GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
+					new RoutePainter.ReservedLengthEndDisplayer(startReserve), 
+					new RoutePainter.ReservedLengthEndDisplayer(endReserve),
+					new RoutePainter.CurvedCornerHopDisplayer((float) getCornerRadius()), false);
+			String path = SVGPath.toSVGPathData(gp, ctx);
+			return path;
+		} else if ("markerstart".equals(name)) {
+			return fromDecoration.getMarkerUrl();
+		} else if ("markerend".equals(name)) {
+			return toDecoration.getMarkerUrl();
+		} 
 		
-		GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
-				new RoutePainter.ReservedLengthEndDisplayer(startReserve), 
-				new RoutePainter.ReservedLengthEndDisplayer(endReserve),
-				new RoutePainter.CurvedCornerHopDisplayer((float) getCornerRadius()), false);
-		String path = SVGPath.toSVGPathData(gp, ctx);
-		out.put("path", path);
-		out.put("markerstart", fromDecoration.getMarkerUrl());
-		out.put("markerend", toDecoration.getMarkerUrl());
-		return out;
+		return null;
 	}
 
 	@Override

@@ -119,18 +119,16 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	}
 
 	@Override
-	public Map<String, String> getXPathVariables() {
-		HashMap<String, String> out = new HashMap<>();
-		out.put("x0", "0");
-		out.put("y0", "0");
-		double width = getRenderingInformation().getSize().getWidth();
-		double height = getRenderingInformation().getSize().getHeight();
-		out.put("x1", ""+ width);
-		out.put("y1", ""+ height);
-		out.put("width", ""+ width);
-		out.put("height", ""+ height);
+	public String getXPathVariable(String name) {
+		if (("x0".equals(name) )|| ("y0".equals(name))) {
+			return "0";
+		} else if ("x1".equals(name) || "width".equals(name)) {
+			return ""+getRenderingInformation().getSize().getWidth();
+		} else if ("y1".equals(name) || "height".equals(name)) {
+			return ""+getRenderingInformation().getSize().getHeight();
+		}
 		
-		return out;	
+		return null;
 	}
 	
 	

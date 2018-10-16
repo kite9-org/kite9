@@ -1,9 +1,12 @@
 package org.kite9.diagram.dom.elements;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
+import org.apache.batik.bridge.UnitProcessor;
+import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.util.XMLConstants;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
@@ -27,7 +30,7 @@ import org.w3c.dom.xpath.XPathNSResolver;
  * @author robmoffat
  *
  */
-public class ADLDocument extends SVG12OMDocument {
+public class ADLDocument extends SVG12OMDocument implements XPathAware {
 
 	public ADLDocument() {
 		this(new ADLExtensibleDOMImplementation());
@@ -115,6 +118,48 @@ public class ADLDocument extends SVG12OMDocument {
 		expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
         return xpath.evaluate(contextNode, type, result);
 	}
+	
+	
+	public static final Set<String> UNITS = new HashSet<>();
+	
+	static {
+		for (String string : new String[] { "pt", "cm","em", "in", "ex","px" }) {
+			UNITS.add(string);
+		}
+	}	
+
+	/**
+	 * Because our ADLDocument knows about the CSSContext, we can resolve units in the xpath expresions.
+	 */
+	@Override
+	public String getXPathVariable(String name) {
+		if (UNITS.contains(name)) {
+			CSSContext ctx = this.getCSSEngine().getCSSContext();
+			UnitProcessor.Context me = new UnitProcessor.Context() {
+
+				public Element getElement() { return null; }
+				public float getFontSize() { return 0; }
+				public float getXHeight() { return 0; }
+				public float getViewportHeight() {return 0;}
+				public float getViewportWidth() {return 0;}
+
+				public float getPixelUnitToMillimeter() {
+					return ctx.getPixelUnitToMillimeter();
+				}
+
+				public float getPixelToMM() {
+					return ctx.getPixelToMillimeter();
+				}
+				
+			};
+			
+			float f = UnitProcessor.svgToUserSpace("1"+name, "", UnitProcessor.HORIZONTAL_LENGTH, me);
+			return ""+f;
+		}
+
+		return null;
+	}
+
 
 	protected class ADLXPathExpr extends XPathExpr {
 
@@ -131,7 +176,5 @@ public class ADLDocument extends SVG12OMDocument {
 	public XPathExpression createExpression(String expression, XPathNSResolver resolver) throws DOMException, XPathException {
 		 return new ADLXPathExpr(expression, resolver);
 	}
-
-	
 	
 }

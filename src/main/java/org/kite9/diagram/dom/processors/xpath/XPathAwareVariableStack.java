@@ -6,17 +6,11 @@ import org.apache.xml.utils.QName;
 import org.apache.xpath.VariableStack;
 import org.apache.xpath.XPathContext;
 import org.apache.xpath.objects.XObject;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Node;
 
 public class XPathAwareVariableStack extends VariableStack {
 	
 	private Node context;
-
-	public XPathAwareVariableStack(Node context) {
-		super();
-		this.context = context;
-	}
 
 	public XPathAwareVariableStack(int initStackSize, Node context) {
 		super(initStackSize);
@@ -30,7 +24,7 @@ public class XPathAwareVariableStack extends VariableStack {
 
 		while (n != null) {
 			if (n instanceof XPathAware) {
-				String out = ((XPathAware) n).getXPathVariables().get(key);
+				String out = ((XPathAware) n).getXPathVariable(key);
 				if (out != null) {
 					return XObject.create(out);
 				}

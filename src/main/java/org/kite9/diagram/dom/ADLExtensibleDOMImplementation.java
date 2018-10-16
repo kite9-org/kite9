@@ -208,7 +208,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	}
 	
 	
-
+	/**
+	 * Allows us to carry on in the face of invalid css - happens a lot with noun project files.
+	 */
 	public CSSEngine createCSSEngine(AbstractStylableDocument doc, CSSContext ctx, ExtendedParser ep, ValueManager[] vms, ShorthandManager[] sms) {
 		if (doc.getCSSEngine() != null) {
 			return doc.getCSSEngine();
@@ -225,17 +227,17 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 			
 			@Override
 			public void warning(CSSParseException arg0) throws CSSException {
-				log.send("Warning: "+getLocation(arg0), arg0);
+				log.send("Warning: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
 			}
 			
 			@Override
 			public void fatalError(CSSParseException arg0) throws CSSException {
-				log.send("Fatal: "+getLocation(arg0), arg0);
+				log.send("Fatal: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
 			}
 			
 			@Override
 			public void error(CSSParseException arg0) throws CSSException {
-				log.send("Error: "+getLocation(arg0), arg0);
+				log.send("Error: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
 			}
 		});
 
