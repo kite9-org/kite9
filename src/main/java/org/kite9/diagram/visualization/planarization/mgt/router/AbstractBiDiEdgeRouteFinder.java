@@ -148,8 +148,14 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.allowedCrossingDirections = getCrossingDirections(path, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(path, it);
 		this.pathDirection = getDirection(path, it);
-		this.entryDirection = pathDirection;
-		this.exitDirection = pathDirection;
+		
+		if (this.pathDirection != null) {
+			this.entryDirection = pathDirection;
+			this.exitDirection = pathDirection;
+		} else if (ci.getDrawDirection() == null) {
+			this.entryDirection = ci.getFromArrivalSide();
+			this.exitDirection = ci.getToArrivalSide();
+		}
 		
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
