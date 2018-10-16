@@ -84,9 +84,9 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			Direction dd;
 			if (!arriving) {
 				clockwise = !clockwise;
-				dd = pathDirection;
+				dd = exitDirection;
 			} else {
-				dd = Direction.reverse(pathDirection);
+				dd = Direction.reverse(entryDirection);
 			}
 			
 			if (dd==null) {
@@ -148,6 +148,8 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.allowedCrossingDirections = getCrossingDirections(path, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(path, it);
 		this.pathDirection = getDirection(path, it);
+		this.entryDirection = pathDirection;
+		this.exitDirection = pathDirection;
 		
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
@@ -396,7 +398,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 	 * container we are leaving/arriving at.
 	 */
 	protected boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
-		Direction dd = termination ? pathDirection : pathDirection;
+		Direction dd = termination ? exitDirection : entryDirection;
 		
 		if (dd == null) {
 			return true;

@@ -691,8 +691,8 @@ public abstract class AbstractRouteFinder extends AbstractSSP<AbstractRouteFinde
 	protected RoutingInfo endZone;
 	protected Axis expensive, bounded, illegalEdgeCross;
 	protected PlanarizationEdge e;
-	//protected Direction entryDirection;
-	//protected Direction exitDirection;
+	protected Direction entryDirection;
+	protected Direction exitDirection;
 	protected Direction pathDirection;
 
 
