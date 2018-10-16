@@ -130,21 +130,17 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 			return true;
 		}
 		
-		Direction dd = e.getDrawDirection();
-		Direction fd = Direction.reverse(e.getFromArrivalSide());
-		Direction td = e.getToArrivalSide();
-		
 		switch (ep) {
 		case SINGLE_DIRECTION:
 			if ((!contradicting) && (directed)) {
-				done = er.addPlanarizationEdge(p, e, dd, fd, td, CrossingType.STRICT, GeographyType.STRICT);
+				done = er.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 			}
 
 			break;
 		case SINGLE_DIRECTION_CONTRADICTORS:
 			if (contradicting && directed) {
 				// have a go at getting the connections in, on the off chance they will fit.
-				done = er.addPlanarizationEdge(p, e, dd, fd, td, CrossingType.STRICT, GeographyType.STRICT);
+				done = er.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT);
 				
 				if (done) {
 					Tools.setUnderlyingContradiction(e, false);
@@ -158,17 +154,17 @@ public abstract class DirectedEdgePlanarizationBuilder extends
 				Direction d = null;
 				if ((comm.getLayout()!=null) && (comm.getLayout() != Layout.GRID)) {
 					d = getInsertionDirection(comm.getLayout(), e.getFrom(), e.getTo());
-					done = er.addPlanarizationEdge(p, e, d, fd, td, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED);
+					done = er.addPlanarizationEdge(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED);
 				}
 			}
 
 			break;
 		case RELAXED_DIRECTIONS:
-			if (dd!=null) {
+			if (e.getDrawDirection()!=null) {
 				Tools.setUnderlyingContradiction(e, true);
 			}
 			
-			done = er.addPlanarizationEdge(p, e, null, fd, td, CrossingType.UNDIRECTED, GeographyType.RELAXED);
+			done = er.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED);
 			
 			break;
 		}

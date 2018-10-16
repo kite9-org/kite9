@@ -334,14 +334,13 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 	}
 
 	@Override
-	public boolean addPlanarizationEdge(MGTPlanarization p, PlanarizationEdge ci, Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt) {
+	public boolean addPlanarizationEdge(MGTPlanarization p, PlanarizationEdge ci, Direction d, CrossingType it, GeographyType gt) {
 		try {	
 			MGTPlanarizationBuilder.logPlanarEmbeddingDetails(p, log);
-			
 			AbstractRouteFinder f = 
-				ci instanceof ContainerLayoutEdge ? new LayoutEdgeRouteFinder(p, rh, (ContainerLayoutEdge) ci, em, path) : 
+				ci instanceof ContainerLayoutEdge ? new LayoutEdgeRouteFinder(p, rh, (ContainerLayoutEdge) ci, em, d) : 
 				ci instanceof BorderEdge ? new ContainerEdgeRouteFinder(p, rh, (BorderEdge) ci) :
-				new ConnectionEdgeRouteFinder(p, rh, (ConnectionEdge) ci, em, path, entry, exit, it, gt);
+				new ConnectionEdgeRouteFinder(p, rh, (ConnectionEdge) ci, em, d, it, gt);
 			log.send("Routing "+ci+" from "+ci.getFrom()+" to "+ci.getTo()+"d="+ci.getDrawDirection());
 			EdgePath ep = f.createShortestPath();		
 			

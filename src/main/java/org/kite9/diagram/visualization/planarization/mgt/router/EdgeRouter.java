@@ -16,6 +16,6 @@ public interface EdgeRouter {
 	 * Called for each edge added to the planarization.  Edges must be added in aboveSet, belowSet
 	 * onLine, or a combination of the above.  Otherwise, false is returned.
 	 */
-	public boolean addPlanarizationEdge(MGTPlanarization p, PlanarizationEdge edge, Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt);
+	public boolean addPlanarizationEdge(MGTPlanarization p, PlanarizationEdge edge, Direction d, CrossingType it, GeographyType gt);
 	
 }

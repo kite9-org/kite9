@@ -15,8 +15,8 @@ public class ContainerEdgeRouteFinder extends AbstractRouteFinder {
 		super(p, rh, e.getTo().getRoutingInfo(), getExpensiveAxis(e), getBoundedAxis(e), e);
 		this.to = e.getTo();
 		this.pathDirection = e.getDrawDirection();
-		this.entryDirection = this.pathDirection;
-		this.exitDirection = this.pathDirection;
+//		this.entryDirection = this.pathDirection;
+//		this.exitDirection = this.pathDirection;
 	}
 
 	private static Axis getBoundedAxis(Edge e) {

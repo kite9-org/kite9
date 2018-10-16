@@ -84,9 +84,9 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			Direction dd;
 			if (!arriving) {
 				clockwise = !clockwise;
-				dd = entryDirection;
+				dd = pathDirection;
 			} else {
-				dd = exitDirection;
+				dd = Direction.reverse(pathDirection);
 			}
 			
 			if (dd==null) {
@@ -135,7 +135,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		}
 	}
 	
-	public AbstractBiDiEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt) {
+	public AbstractBiDiEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, BiDirectionalPlanarizationEdge ci, ElementMapper em, Direction path, CrossingType it, GeographyType gt) {
 		super(p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci);
 		this.startZone = getRoutingZone(rh, ci, true);
 		RoutingInfo endZone = getRoutingZone(rh, ci, false);
@@ -147,10 +147,8 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 		this.maximumBoundedAxisDistance = getMaximumBoundedAxisDistance(this.bounded);
 		this.allowedCrossingDirections = getCrossingDirections(path, it);
 		this.illegalEdgeCross = getIllegalEdgeCrossAxis(path, it);
-		this.entryDirection = entry;
-		this.exitDirection = exit;
 		this.pathDirection = getDirection(path, it);
-	
+		
 		if (rh.isWithin(startZone, endZone) || rh.isWithin(endZone, startZone)) {
 			throw new EdgeRoutingException("Edge can't be routed as it is from something inside something else: "+e);
 		}
@@ -398,7 +396,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 	 * container we are leaving/arriving at.
 	 */
 	protected boolean onCorrectSideOfContainer(MultiCornerVertex v, boolean termination) {
-		Direction dd = termination ? exitDirection : entryDirection;
+		Direction dd = termination ? pathDirection : pathDirection;
 		
 		if (dd == null) {
 			return true;

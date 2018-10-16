@@ -22,7 +22,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 public class LayoutEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 
 	public LayoutEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ContainerLayoutEdge ci, ElementMapper em, Direction edgeDir) {
-		super(p, rh, ci, em, edgeDir, edgeDir, edgeDir, CrossingType.STRICT, GeographyType.STRICT);
+		super(p, rh, ci, em, edgeDir, CrossingType.STRICT, GeographyType.STRICT);
 		this.start = identifyActualVertex(ci, ci.getDrawDirection(), true);
 		this.destination = identifyActualVertex(ci, Direction.reverse(ci.getDrawDirection()), false);
 	}

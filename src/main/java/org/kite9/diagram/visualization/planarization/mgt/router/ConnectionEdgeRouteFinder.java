@@ -73,15 +73,14 @@ public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 		return crossing.getBorderTraversal();
 	}
 
-	private boolean checkContainerPathIntersection(EdgePath ep, DiagramElement c,
-			Direction ed) {
+	private boolean checkContainerPathIntersection(EdgePath ep, DiagramElement c, Direction ed) {
 		RoutingInfo cri = rh.getPlacedPosition(c);
 		return rh.isInPlane(cri, startZone, (pathDirection == Direction.RIGHT) || (pathDirection == Direction.LEFT));
 	}
 
 	
-	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ConnectionEdge ci, ElementMapper em,  Direction path, Direction entry, Direction exit, CrossingType it, GeographyType gt) {
-		super(p, rh, ci, em, path, entry, exit, it, gt);
+	public ConnectionEdgeRouteFinder(MGTPlanarization p, RoutableReader rh, ConnectionEdge ci, ElementMapper em,  Direction path, CrossingType it, GeographyType gt) {
+		super(p, rh, ci, em, path, it, gt);
 		this.mustCrossContainers = getMustCrossContainers(ci.getOriginalUnderlying().getFrom(), ci.getOriginalUnderlying().getTo());
 	}
 
