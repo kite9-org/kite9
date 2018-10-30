@@ -18,7 +18,7 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 
     @SuppressWarnings("unchecked")
 	@Test
-    public void test_60_1_LinkedDifferentDirection() throws Exception {
+    public void test_61_1_LinkedDifferentDirection() throws Exception {
     	Context i1 = new Context("i1", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	Context i2 = new Context("i2", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	Context i3 = new Context("i3", Collections.EMPTY_LIST, true, null, Layout.DOWN);

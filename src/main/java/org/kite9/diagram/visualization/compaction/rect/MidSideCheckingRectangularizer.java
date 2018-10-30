@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.rect;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -124,7 +125,21 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	private Rectangular getRectangular(VertexTurn vt) {
 		Set<Rectangular> r = vt.getSegment().getRectangulars();
 	
-		if (r.size() > 1) {
+		if (r.size() == 2) {
+			// label and container
+			Iterator<Rectangular> i = r.iterator();
+			Rectangular r1 = i.next();
+			Rectangular r2 = i.next();
+			
+			if (r1.getParent() == r2) {
+				return r2;
+			} else if (r2.getParent() == r1) {
+				return r1;
+			} else {
+				throw new Kite9ProcessingException();
+			}
+			
+		} else if (r.size() > 2) {
 			throw new Kite9ProcessingException();
 		} else if (r.size() == 0) {
 			return null;
