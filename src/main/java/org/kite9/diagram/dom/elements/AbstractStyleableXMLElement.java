@@ -26,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement, XPathAware {
+public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement {
 	
 	protected String tagName;
 
@@ -218,14 +218,4 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 		}
 	}
 
-	@Override
-	public String getXPathVariable(String key) {
-		if (getDiagramElement() instanceof XPathAware) {
-			return ((XPathAware) getDiagramElement()).getXPathVariable(key);
-		}
-		
-		return null;
-	}
-
-	
 }

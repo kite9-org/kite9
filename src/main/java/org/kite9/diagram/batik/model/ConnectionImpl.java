@@ -1,7 +1,9 @@
 package org.kite9.diagram.batik.model;
 
 import java.awt.geom.GeneralPath;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
@@ -260,7 +262,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	public String getXPathVariable(String name) {
 		ensureInitialized();
 		if ("path".equals(name)) {
-			Map<String, String> out = new HashMap<>();
 			RoutePainter routePainter = new RoutePainter();
 			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
 					getPainter().getContents().getOwnerDocument());
@@ -282,6 +283,12 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		return null;
 	}
 
+	private static final List<String> VARIABLES = Arrays.asList("path", "markerstart", "markerend");
+	
+	public List<String> getXPathVariables() {
+		return VARIABLES;
+	}
+	
 	@Override
 	public Terminator getDecorationForEnd(DiagramElement end) {
 		ensureInitialized();

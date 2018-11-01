@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.elements;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -116,7 +117,8 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware {
 		XPathExpression xpath = createExpression(expression, resolver);
 		ADLXPathExpr expr = (ADLXPathExpr) xpath;
 		expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
-        return xpath.evaluate(contextNode, type, result);
+        Object out = xpath.evaluate(contextNode, type, result);
+        return out;
 	}
 	
 	
@@ -127,6 +129,11 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware {
 			UNITS.add(string);
 		}
 	}	
+	
+	@Override
+	public Collection<String> getXPathVariables() {
+		return UNITS;
+	}
 
 	/**
 	 * Because our ADLDocument knows about the CSSContext, we can resolve units in the xpath expresions.
@@ -159,6 +166,8 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware {
 
 		return null;
 	}
+	
+	
 
 
 	protected class ADLXPathExpr extends XPathExpr {

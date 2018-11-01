@@ -2,13 +2,14 @@ package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
+import org.kite9.diagram.dom.elements.AbstractXPathAwareXMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-public abstract class AbstractMutableXMLElement extends AbstractStyleableXMLElement {
+public abstract class AbstractMutableXMLElement extends AbstractXPathAwareXMLElement {
 
 	/**
 	 * Used only in test methods.

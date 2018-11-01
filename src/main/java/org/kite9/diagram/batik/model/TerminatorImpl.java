@@ -1,5 +1,8 @@
 package org.kite9.diagram.batik.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.batik.anim.dom.SVGOMMarkerElement;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
@@ -115,6 +118,12 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		}
 		
 		return null;
+	}
+	
+	private static final List<String> VARIABLES = Arrays.asList("x0", "y0", "x1", "y1", "width", "height");
+	
+	public List<String> getXPathVariables() {
+		return VARIABLES;
 	}
 
 	@Override

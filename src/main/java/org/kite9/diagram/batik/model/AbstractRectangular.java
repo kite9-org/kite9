@@ -1,6 +1,8 @@
 package org.kite9.diagram.batik.model;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -120,15 +122,40 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 
 	@Override
 	public String getXPathVariable(String name) {
-		if (("x0".equals(name) )|| ("y0".equals(name))) {
-			return "0";
-		} else if ("x1".equals(name) || "width".equals(name)) {
-			return ""+getRenderingInformation().getSize().getWidth();
-		} else if ("y1".equals(name) || "height".equals(name)) {
-			return ""+getRenderingInformation().getSize().getHeight();
+		try {
+			if ("x".equals(name)) {
+				return ""+getOffset().x();
+			} else if ("y".equals(name)) {
+				return ""+getOffset().y();
+			} else if (("x0".equals(name) )|| ("y0".equals(name))) {
+				return "0";
+			} else if ("x1".equals(name) || "width".equals(name)) {
+				return ""+getRenderingInformation().getSize().getWidth();
+			} else if ("y1".equals(name) || "height".equals(name)) {
+				return ""+getRenderingInformation().getSize().getHeight();
+			}
+		} catch (NullPointerException e) {
+			return "";	// probably variable not set yet
 		}
 		
 		return null;
+	}
+	
+	private Dimension2D getOffset() {
+		if (getContainer() == null) {
+			return CostedDimension.ZERO;
+		} else if (getRenderingInformation().getPosition() == null) {
+			return CostedDimension.ZERO;
+		} else {
+			return getRenderingInformation().getPosition().minus(getContainer().getRenderingInformation().getPosition());
+		}
+	}
+	
+	
+	private static final List<String> VARIABLES = Arrays.asList("x", "y", "x0", "y0", "x1", "y1", "width", "height");
+	
+	public List<String> getXPathVariables() {
+		return VARIABLES;
 	}
 	
 	

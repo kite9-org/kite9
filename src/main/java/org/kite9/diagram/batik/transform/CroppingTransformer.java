@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
