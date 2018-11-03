@@ -1,18 +1,15 @@
 package org.kite9.diagram.batik.model;
 
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.transform.SVGTransformer;
-import org.kite9.diagram.batik.transform.TransformFactory;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,19 +22,17 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElement {
 	
-	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
+	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
 		super(el, parent);
 		this.p = p;
 		this.p.setDiagramElement(this);
 		this.ctx = ctx;
-		this.defaultTransform = t;
 	}
 
 	protected Painter p;
 	protected Kite9BridgeContext ctx;
 	
-	private ContentTransform defaultTransform;
-	protected SVGTransformer transformer;
+	protected String transform;
 	protected double margin[] = new double[4];
 	protected double padding[] = new double[4];
 	
@@ -47,20 +42,30 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		initTransform();
 	}
 	
+	@Override
+	public String getTransform() {
+		return transform;
+	}
+
 	protected double getCssDoubleValue(String prop) {
 		Value v = getCSSStyleProperty(prop);
 		return v.getFloatValue();
 	}
 
 	protected Element paintElementToDocument(Document d) {
-		return transformer.postProcess(p, d);
+		return p.output(d);
 	}
 
 	private void initTransform() {
-		ContentTransform t = null;
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM);
-		t = (ContentTransform) ev.getTheValue();
-		this.transformer = TransformFactory.initializeTransformer(this, t, this.defaultTransform);
+		this.transform = getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM).getStringValue();
+		if (ValueConstants.DEFAULT_VALUE.getStringValue().equals(transform)) {
+			this.transform = getDefaultTransform();
+		}
+	}
+	
+	protected String getDefaultTransform() {
+		// this is the default "position" transform
+		return "translate(#{@x}, #{@y})";
 	}
 
 	@Override

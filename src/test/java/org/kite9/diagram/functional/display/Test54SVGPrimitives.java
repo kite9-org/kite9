@@ -193,14 +193,14 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String svgRect2() {
-		return "<svg:rect x='0' y='0' width='1' height='1' stroke-width='0' stroke='black' />";
+		return "<svg:rect x='0' y='0' width='#{$width}' height='#{$height}' stroke-width='0' stroke='black' />";
 	}
 	
 	private String svgRect1() {
-		return "<svg:rect x='0' y='30' width='30' height='10' rx='3' ry='3' stroke-width='1' stroke='black' />";
+		return "<svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='3' ry='3' stroke-width='1' stroke='black' />";
 	}
 	
 	private String svgRect3() {
-		return "<svg:rect x='1' y='1' width='3' height='3' stroke-width='0' stroke='black' />";
+		return "<svg:rect x='1' y='1' width='#{$width}' height='#{$height}' stroke-width='0' stroke='black' />";
 	}
 }

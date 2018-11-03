@@ -12,7 +12,6 @@ import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -46,6 +45,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in, e);
 		
 	}
+	
+	public static final String SCALE_TRANSFORM = "";
+	public static final String POSITION_TRANSFORM = "translate(#{@x}, #{@y})";
 
 	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, RectangularElementUsage usage) {
 		if ((parent == null) && (lt != DiagramElementType.DIAGRAM)) {
@@ -58,13 +60,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			if (parent != null) {
 				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
 			}
-			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
+			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el, context));
 		case CONTAINER:
 			switch (usage) {
 			case LABEL:
-				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
+				return new LabelContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context));
 			case REGULAR:
-				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
+				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context));
 			case DECAL:
 			default:
 				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
@@ -72,27 +74,27 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		case TEXT:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.CROP);
+				return new LabelLeafImpl(el, parent, context, new TextLeafPainter(el, context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.RESCALE);
+				return new DecalLeafImpl(el, parent, context, new TextLeafPainter(el, context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new TextLeafPainter(el, context), ContentTransform.CROP);
+				return new ConnectedLeafImpl(el, parent, context, new TextLeafPainter(el, context));
 			} 
 		case SVG:
 			switch (usage) {
 			case LABEL:
-				return new LabelLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
+				return new LabelLeafImpl(el, parent, context, new SVGLeafPainter(el, context));
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.RESCALE);
+				return new DecalLeafImpl(el, parent, context, new SVGLeafPainter(el, context));
 			case REGULAR:
 			default:
-				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
+				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context));
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()), ContentTransform.POSITION);
+			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el, context));
 		case LINK_END:
-			return new TerminatorImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()), ContentTransform.POSITION);
+			return new TerminatorImpl(el, parent, context, new DirectSVGGroupPainter(el, context));
 		case NONE:
 			return null;
 		case UNSPECIFIED:

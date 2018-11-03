@@ -7,16 +7,25 @@ import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.style.ContentTransform;
 
 public class DecalLeafImpl extends AbstractBatikDiagramElement implements Decal, Leaf {
 
-	public DecalLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
-		super(el, parent, ctx, lo, t);
+	public DecalLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
+		super(el, parent, ctx, lo);
 	}
 
 	@Override
 	public RenderingInformation getRenderingInformation() {
 		return parent.getRenderingInformation();
 	}
+
+	/**
+	 * Decals by default are set to consume the same size as their parents.
+	 */
+	@Override
+	protected String getDefaultTransform() {
+		return super.getDefaultTransform()+" scale(#{1}, #{1})";
+	}
+	
+	
 }

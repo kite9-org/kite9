@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom.painter;
 
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
@@ -13,8 +14,8 @@ import org.w3c.dom.Element;
  */
 public class DirectSVGGroupPainter extends AbstractPainter {
 
-	public DirectSVGGroupPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
-		super(theElement, processor);
+	public DirectSVGGroupPainter(StyledKite9SVGElement theElement, Kite9BridgeContext context) {
+		super(theElement, context.getXMLPreProcessor());
 	}
 
 	/**
@@ -24,8 +25,8 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	public final Element output(Document d) {
 		StyledKite9SVGElement toUse = getContents();
 		Element out = d.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_G_TAG);
+		setGroupAttributes(toUse, out);
 		processOutput(toUse, out, d);
-		addAttributes(toUse, out);
 		return out;
 	}
 	

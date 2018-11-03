@@ -19,7 +19,6 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 public class TerminatorImpl extends AbstractRectangular implements Terminator {
@@ -29,8 +28,8 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	private double markerReserve;
 	private Direction arrivalSide;
 
-	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
-		super(el, parent, ctx, rp, t);
+	public TerminatorImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
+		super(el, parent, ctx, rp);
 	}
 
 	@Override

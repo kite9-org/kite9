@@ -7,13 +7,12 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 
 public abstract class AbstractLabel extends AbstractCompactedRectangular implements Label {
 
-	public AbstractLabel(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
-		super(el, parent, ctx, rp, t);
+	public AbstractLabel(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
+		super(el, parent, ctx, rp);
 	}
 
 	@Override 

@@ -20,7 +20,7 @@ public abstract class AbstractGraphicsNodePainter extends DirectSVGGroupPainter 
 	protected Kite9BridgeContext ctx;
 	
 	public AbstractGraphicsNodePainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
-		super(theElement, ctx.getXMLProcessor());
+		super(theElement, ctx);
 		this.ctx = ctx;
 	}
 

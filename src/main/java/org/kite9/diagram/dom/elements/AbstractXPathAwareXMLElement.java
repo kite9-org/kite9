@@ -90,7 +90,6 @@ public abstract class AbstractXPathAwareXMLElement extends AbstractStyleableXMLE
 		public String getNodeValue() throws DOMException {
 			String name = getName();
 			String out = xpathAware.getXPathVariable(name);
-			System.out.println(name+" "+out);;
 			return out;
 		}
 

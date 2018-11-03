@@ -18,6 +18,7 @@ import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -162,4 +163,14 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 		
 		return bounds;
 	}
+
+	@Override
+	protected Dimension2D getOriginPosition() {
+		Dimension2D orig = super.getOriginPosition();
+		Rectangle2D bounds = bounds();
+		Dimension2D out = orig.minus(new Dimension2D(bounds.getMinX(), bounds.getMinY()));
+		return out;
+	}
+	
+	
 }

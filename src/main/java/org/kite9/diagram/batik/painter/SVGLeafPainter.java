@@ -22,7 +22,9 @@ public class SVGLeafPainter extends AbstractGraphicsNodePainter implements LeafP
 	@Override
 	public Rectangle2D bounds() {
 		GraphicsNode gn = getGraphicsNode();
-		return gn.getBounds();
+		Rectangle2D drawnBounds = gn.getBounds();
+		Rectangle2D diagramElementBounds = new Rectangle2D.Double(0, 0, drawnBounds.getMaxX(), drawnBounds.getMaxY());
+		return diagramElementBounds;
 	}
 
 }

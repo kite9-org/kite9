@@ -221,13 +221,13 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String badgeDecal() {
-		return "      <badge style='kite9-usage: decal; kite9-type: svg; kite9-transform: none; '>\n" +
+		return "      <badge style='kite9-usage: decal; kite9-type: svg; '>\n" +
 	           "        <svg:circle cx='#{../../@width - (5 * $px)}' cy='5' r='15' fill='red' /> \n"+
 	           "      </badge>\n";
 	}
 	
 	private String polyDecal() {
-		return "      <bg style='kite9-usage: decal; kite9-type: svg; kite9-transform: rescale;'>\n" + polygon() + 
+		return "      <bg style='kite9-usage: decal; kite9-type: svg; '>\n" + polygon() + 
  	           "      </bg>\n";
 	}
 	

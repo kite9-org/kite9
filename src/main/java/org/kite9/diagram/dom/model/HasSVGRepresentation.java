@@ -18,5 +18,10 @@ public interface HasSVGRepresentation extends DiagramElement {
 	 * nested within it.
 	 */
 	public Element output(Document d);
+	
+	/**
+	 * Returns the transform set for this element
+	 */
+	public String getTransform();
 
 }

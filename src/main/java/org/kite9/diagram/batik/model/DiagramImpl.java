@@ -10,7 +10,6 @@ import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.style.ContentTransform;
 
 /**
  * This contains extra code relating to the Diagram itself, specifically, managing 
@@ -21,8 +20,8 @@ import org.kite9.diagram.model.style.ContentTransform;
  */
 public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 	
-	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
-		super(el, null, ctx, rp, t);
+	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx, Painter rp) {
+		super(el, null, ctx, rp);
 	}
 	
 	private transient Map<String, Collection<Connection>> references = new HashMap<>();

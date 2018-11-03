@@ -1,13 +1,11 @@
 package org.kite9.diagram.batik.model;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.LeafPainter;
-import org.kite9.diagram.batik.transform.LeafTransformer;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.managers.EnumValue;
@@ -28,7 +26,6 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.style.ContainerPosition;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
@@ -48,8 +45,8 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	private Layout layout;
 	protected DiagramElementSizing sizing;	
 
-	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
-		super(el, parent, ctx, rp, t);
+	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp) {
+		super(el, parent, ctx, rp);
 	}
 
 	@Override
@@ -191,8 +188,9 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	
 	private Dimension2D getLeafBounds() {
 		Painter p = getPainter();
-		if ((p instanceof LeafPainter) && (transformer instanceof LeafTransformer)) {
-			return ((LeafTransformer)transformer).getBounds((LeafPainter)  p);
+		if (p instanceof LeafPainter) {
+			Rectangle2D rect = ((LeafPainter)p).bounds();
+			return new Dimension2D(rect.getWidth(), rect.getHeight());
 		}
 		
 		return CostedDimension.ZERO;

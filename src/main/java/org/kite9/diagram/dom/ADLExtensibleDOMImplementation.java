@@ -10,6 +10,7 @@ import org.apache.batik.css.engine.SVG12CSSEngine;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.ShorthandManager;
+import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.css.engine.value.ValueManager;
 import org.apache.batik.css.engine.value.svg.MarkerManager;
 import org.apache.batik.css.parser.ExtendedParser;
@@ -30,6 +31,7 @@ import org.kite9.diagram.dom.managers.LinkLengthManager;
 import org.kite9.diagram.dom.managers.OccupiesShorthandManager;
 import org.kite9.diagram.dom.managers.PaddingLengthManager;
 import org.kite9.diagram.dom.managers.SizeShorthandManager;
+import org.kite9.diagram.dom.managers.StringManager;
 import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
@@ -38,7 +40,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.HorizontalAlignment;
@@ -115,7 +116,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_USAGE_PROPERTY, RectangularElementUsage.class, RectangularElementUsage.REGULAR, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LAYOUT_PROPERTY, Layout.class, null, false));
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONTENT_TRANSFORM, ContentTransform.class, ContentTransform.DEFAULT, false));
+		registerCustomCSSValueManager(new StringManager(CSSConstants.CONTENT_TRANSFORM, ValueConstants.DEFAULT_VALUE, false));
 		
 		// GRIDS
 		registerCustomCSSValueManager(new IntegerRangeManager(CSSConstants.GRID_OCCUPIES_X_PROPERTY));

@@ -130,17 +130,16 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return out;
 	}
 
-	public XMLProcessor getXMLProcessor() {
+	public XMLProcessor getXMLPreProcessor() {
 		if (xmlProcessor == null) {
-			xmlProcessor = createXMLProcessor();
+			xmlProcessor = createXMLPreProcessor();
 		}
 		return xmlProcessor;
 	}
 
-	private XMLProcessor createXMLProcessor() {
+	protected XMLProcessor createXMLPreProcessor() {
 		XPathValueReplacer vr = new XPathValueReplacer((ADLDocument) getDocument());
 		return new BasicTemplater(vr, (Kite9DocumentLoader)  getDocumentLoader());
 	}
-
 	
 }

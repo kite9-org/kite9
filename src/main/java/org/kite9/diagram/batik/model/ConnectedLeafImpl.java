@@ -5,7 +5,6 @@ import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.style.ContentTransform;
 
 /**
  * A fixed-size element on the diagram that can contain SVG sub-elements for rendering.
@@ -15,7 +14,7 @@ import org.kite9.diagram.model.style.ContentTransform;
  */
 public class ConnectedLeafImpl extends AbstractConnected implements Leaf {
 	
-	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
-		super(el, parent, ctx, lo, t);
+	public ConnectedLeafImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo) {
+		super(el, parent, ctx, lo);
 	}
 }

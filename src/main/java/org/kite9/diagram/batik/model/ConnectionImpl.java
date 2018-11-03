@@ -2,9 +2,7 @@ package org.kite9.diagram.batik.model;
 
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -26,7 +24,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
-import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
@@ -36,8 +33,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	private String fromId;
 	private String toId;
 	
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
-		super(el, parent, ctx, p, t);
+	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p) {
+		super(el, parent, ctx, p);
 		this.fromId = getFromReference();
 		this.toId = getToReference();
 		addConnectionReference(fromId, this);
