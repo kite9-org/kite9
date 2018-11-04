@@ -61,13 +61,13 @@ public abstract class AbstractPainter implements Painter {
 			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
 			debug.append("layout: " + ((Container) r).getLayout() + "; ");
 		}
-		if (r instanceof Connected) {
-			Container p = (Container) r.getParent();
-			if ((p!= null) && (p.getLayout() == Layout.GRID)) {
-				debug.append("grid-x: "+((Connected) r).getRenderingInformation().gridXPosition()+"; ");
-				debug.append("grid-y: "+((Connected) r).getRenderingInformation().gridYPosition()+"; ");
-			}
-		}
+//		if (r instanceof Connected) {
+//			Container p = (Container) r.getParent();
+//			if ((p!= null) && (p.getLayout() == Layout.GRID)) {
+//				debug.append("grid-x: "+((Connected) r).getRenderingInformation().gridXPosition()+"; ");
+//				debug.append("grid-y: "+((Connected) r).getRenderingInformation().gridYPosition()+"; ");
+//			}
+//		}
 		
 		if (r instanceof Rectangular) {
 			RectangleRenderingInformation rri = ((Rectangular) r).getRenderingInformation();
