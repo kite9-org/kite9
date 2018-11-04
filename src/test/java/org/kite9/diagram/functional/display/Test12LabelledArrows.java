@@ -151,8 +151,8 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		Arrow i1 = new Arrow("i1", "i1");
 		Arrow i2 = new Arrow("i2", "i2");
 		
-		new TurnLink(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), null);
-		new TurnLink(i1, b, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), null);
+		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
+		new Link(i1, b, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), Direction.LEFT);
 		new TurnLink(i2, a, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side A"), null);
 		new TurnLink(i2, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side B"), null);
 		

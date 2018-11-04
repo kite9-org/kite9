@@ -41,7 +41,7 @@ public class TextLineWithSymbols extends AbstractMutableXMLElement {
 	
 	public TextLineWithSymbols(String id, String tag, String text, List<Symbol> symbols, ADLDocument doc) {
 		super(id, tag, doc);
-		replaceProperty("text", new TextLine(id+"-txt", "text", text, doc));
+		replaceProperty("k9-text", new TextLine(id+"-txt", "text", text, doc));
 		if (symbols != null) {
 			setSymbols(new ContainerProperty(id+"-symbols", "symbols", doc, symbols));
 		}

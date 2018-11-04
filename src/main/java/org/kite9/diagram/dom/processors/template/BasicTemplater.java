@@ -1,10 +1,12 @@
 package org.kite9.diagram.dom.processors.template;
 
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
@@ -42,8 +44,8 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		this.loader = loader;
 	}
 
-	public void handleTemplateElement(StyledKite9SVGElement transform) {
-		Value template = transform.getCSSStyleProperty(CSSConstants.TEMPLATE);
+	public void handleTemplateElement(CSSStylableElement transform) {
+		Value template = AbstractStyleableXMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
 			Element e = loadReferencedElement(template, transform);
 			if (e != null) { 
@@ -58,16 +60,15 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		
 	}
 
-	protected Element loadReferencedElement(Value v, StyledKite9SVGElement usedIn) {
+	protected Element loadReferencedElement(Value v, Element usedIn) {
 		return loader.loadElementFromUrl(v, usedIn);
 	}
 
 	@Override
 	public void processElement(Element e) {
-		if (e instanceof StyledKite9SVGElement) {
-			handleTemplateElement((StyledKite9SVGElement) e);
+		if (e instanceof CSSStylableElement) {
+			handleTemplateElement((CSSStylableElement) e);
 		}
-		
 		super.processElement(e);
 	}
 	

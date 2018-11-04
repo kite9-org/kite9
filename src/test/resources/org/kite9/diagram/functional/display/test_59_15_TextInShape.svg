@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="158.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="153.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="158.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="149.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [158.0,153.0]; " kite9-elem="diagram" id="The Diagram"
+  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [158.0,149.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [128.0,123.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [128.0,119.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.9922480620155039,0.9919354838709677)translate(0.5,0.5)"
+      <g debug="" kite9-elem="decal" transform="scale(0.9922480620155039,0.9916666666666667)translate(0.5,0.5)"
         >
-        <rect x="0" y="0" width="128.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="123.0"
+        <rect x="0" y="0" width="128.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="119.0"
           />
       </g
           >
-      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [15.0,15.0] [128.0,123.0]; " kite9-elem="text" transform="translate(-79.07335662841797,-47.896873474121094)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [128.0,119.0]; " kite9-elem="text" transform="translate(-79.07335662841797,-49.896873474121094)"
           ><g font-family="'Arial'"
             ><text x="100" xml:space="preserve" y="60.7602" stroke="none"
               ><tspan

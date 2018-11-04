@@ -129,7 +129,7 @@ symbol-text-line {
 
 key text-lines text-label,
 glyph text-lines text-label,
-symbol-text-line text {
+symbol-text-line k9-text {
 	kite9-horizontal-align: left;
 }
 
@@ -291,7 +291,7 @@ symbol.square {
 	kite9-template: url(template.svg#square);
 }
 
-text-line, text, boldText, bodyText {
+text-line, k9-text, boldText, bodyText {
 	kite9-type: container;
 	kite9-sizing: maximize;
 	kite9-padding-top: 2px;
@@ -303,7 +303,7 @@ text-line, text, boldText, bodyText {
 	kite9-connection-align: 50%;
 }
 
-text-line, text, bodyText {
+text-line, k9-text, bodyText {
 	kite9-horizontal-align: left;
 	kite9-template: url(template.svg#generic-text);
 }

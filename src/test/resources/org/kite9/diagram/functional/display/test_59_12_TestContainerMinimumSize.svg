@@ -20,7 +20,7 @@
           />
       </g
           >
-      <g debug="position: ; horiz: LEFT; vert: TOP; d-bounds: [25.0,25.0] [225.0,31.0]; " kite9-elem="text" transform="translate(8.35205078125,12.21484375)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,53.0] [225.0,28.0]; " kite9-elem="text" transform="translate(8.35205078125,38.21484375)"
           ><g font-family="'Arial'" font-size="25px"
             ><text x="0" xml:space="preserve" y="22.417" stroke="none"
               ><tspan
@@ -35,7 +35,7 @@
             ></g
           ></g
           >
-      <g debug="position: ; horiz: LEFT; vert: BOTTOM; d-bounds: [25.0,105.0] [42.0,20.0]; " kite9-elem="text" transform="translate(9.01123046875,92.12890625)"
+      <g debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [116.0,109.0] [43.0,16.0]; " kite9-elem="text" transform="translate(100.01123046875,94.12890625)"
           ><g font-family="'Arial'" font-size="15px"
             ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
               ><tspan

@@ -11,8 +11,6 @@ import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
 import org.kite9.framework.logging.Kite9Log;
@@ -42,7 +40,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	 * Returns a given element from a url(file#id) url-string in CSS.
 	 * Returns null if it can't be loaded for some reason 
 	 */
-	public Element loadElementFromUrl(Value v, StyledKite9SVGElement loadedBy) {
+	public Element loadElementFromUrl(Value v, Element loadedBy) {
 		if (v != ValueConstants.NONE_VALUE) {
 			Element out;
 			try {
@@ -88,7 +86,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		}
 	}
 
-	private SVGOMSVGElement getSVGTopElement(Kite9XMLElement in) {
+	private SVGOMSVGElement getSVGTopElement(Element in) {
 		return (SVGOMSVGElement) in.getOwnerDocument().getDocumentElement();
 	}
 	

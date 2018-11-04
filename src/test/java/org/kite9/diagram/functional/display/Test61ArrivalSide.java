@@ -2,6 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import java.util.Collections;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
@@ -18,6 +19,7 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 
     @SuppressWarnings("unchecked")
 	@Test
+	@Ignore
     public void test_61_1_LinkedDifferentDirection() throws Exception {
     	Context i1 = new Context("i1", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	Context i2 = new Context("i2", Collections.EMPTY_LIST, true, null, Layout.DOWN);

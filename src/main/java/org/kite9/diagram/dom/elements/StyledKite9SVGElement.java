@@ -7,6 +7,6 @@ import org.w3c.dom.svg.SVGTransformable;
 public interface StyledKite9SVGElement extends CSSStylableElement, Kite9XMLElement, SVGTransformable {
 
 	public Value getCSSStyleProperty(String prop);
+	
 }
-
 
