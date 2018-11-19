@@ -7,7 +7,6 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
 import org.kite9.framework.common.Kite9ProcessingException;

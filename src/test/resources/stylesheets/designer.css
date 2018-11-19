@@ -175,6 +175,10 @@ grid {
 	kite9-layout: grid;
 }
 
+grid.triangles {
+	kite9-template: url(template.svg#grid-triangles);
+}
+
 cell {
 	kite9-template: url(template.svg#cell);
 	kite9-padding: 0px;

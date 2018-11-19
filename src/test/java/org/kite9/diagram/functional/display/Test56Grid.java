@@ -141,4 +141,11 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 5 5;"); 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
+	
+	@Test
+	public void test_56_5_Triangles() throws Exception {
+		Grid ctx = createTwoLayerGridContext(null, null, null, null, 10, 10);
+		ctx.setAttribute("class", "triangles");
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+	}
 }
