@@ -88,7 +88,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	public void test_46_12_UnnecessaryDogleg() throws Exception {
 		generate("dogleg.xml");
 	}
-	
+
+	@Test
+	public void test_46_13_WonkyTable() throws Exception {
+		generate("wonky_table.xml");
+	}
 	
 	protected DiagramKite9XMLElement createDiagram() {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label", 

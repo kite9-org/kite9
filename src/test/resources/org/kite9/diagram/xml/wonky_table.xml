@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' zoomAndPan="magnify" preserveAspectRatio="xMidYMid" xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css"> @import url("risk.css");</svg:style>
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" id="diagram-157" name="SD Interface / Implementation">
+
+    <table>
+      <cell style="kite9-occupies: 0 0; ">
+        <context style="kite9-sizing: maximize;">
+          <risk id="p" class="protocol" />
+          <label id="id_16">
+            <text>Internal Model</text>
+            <symbols />
+          </label>
+        </context>
+      </cell>
+      <cell  style="kite9-occupies: 0 1; ">
+        <users id="id_1">User</users>
+        <interface id="id_0">Interface</interface>
+      </cell>
+
+      <cell  style="kite9-occupies: 1 0; ">
+        <context style="kite9-sizing: maximize;">
+          <risk id="c" class="complexity" />
+          <label id="id_16">
+            <text>Internal Model</text>
+            <symbols />
+          </label>
+        </context>
+      </cell>
+
+      <cell  style="kite9-occupies: 1 1; ">
+        <group id="g">
+          <back style='kite9-usage: decal; kite9-type: svg; '>
+            <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' style='fill: #EEEEEE; stroke: none ' />
+          </back>
+          <component id="id_2">Part</component>
+          <component id="id_3">Part</component>
+          <component id="id_11">Part</component>
+          <component id="id_4">Part</component>
+        </group>
+      </cell>
+
+
+
+    </table>
+
+
+
+
+
+    <link class="dotted" drawDirection="DOWN">
+      <from reference="p" />
+      <to reference="id_0" />
+    </link>
+
+    <link class="dotted" drawDirection="DOWN">
+      <from reference="c" />
+      <to reference="g" />
+    </link>
+
+    <link class="dotted" drawDirection="RIGHT">
+      <from reference="p" />
+      <to reference="c" />
+    </link>
+
+    <link id="id_16" shape="NORMAL" style="" drawDirection="RIGHT">
+      <from reference="id_1" />
+      <to reference="id_0" />
+    </link>
+    <link id="id_20" drawDirection="RIGHT">
+      <from reference="id_0" />
+      <to reference="id_3" />
+    </link>
+    <link id="id_21">
+      <from reference="id_0" />
+      <to reference="id_2" />
+    </link>
+    <link id="id_13">
+      <from reference="id_2" />
+      <to reference="id_11" />
+    </link>
+    <link id="id_8" drawDirection="DOWN">
+      <from reference="id_3" />
+      <to reference="id_2" />
+    </link>
+    <link id="id_7" drawDirection="RIGHT">
+      <from reference="id_2" />
+      <to reference="id_4" />
+    </link>
+    <link id="id_9">
+      <from reference="id_4" />
+      <to reference="id_3" />
+    </link>
+    <link id="id_12" drawDirection="LEFT">
+      <from reference="id_11" />
+      <to reference="id_3" />
+    </link>
+    <link>
+      <from reference="id_4" />
+      <to reference="id_11" />
+    </link>
+  </diagram>
+</svg:svg>

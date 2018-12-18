@@ -159,14 +159,25 @@ class VertexTurn {
 		}
 		
 		Set<Rectangular> rects = orig.getUnderlying().getRectangulars();
-		if (rects.size() != 1) {
-			throw new LogicException();
-		}
-		
-		Rectangular rect = rects.iterator().next();
-		
+		Rectangular rect = getTopmostRectangular(rects);
 		Slideable<Segment> out = ((SegmentSlackOptimisation) orig.getSlackOptimisation()).getSlideablesFor(rect).otherOne(orig);
 		return out;
+	}
+
+	public Rectangular getTopmostRectangular(Set<Rectangular> rects) {
+		if (rects.size() == 0) {
+			throw new LogicException("Couldn't determine underlying");
+		}
+		Rectangular rect = rects.stream().reduce((r1, r2) -> {
+				if (r1.getDepth() > r2.getDepth()) {
+					return r2;
+				} else if (r2.getDepth() > r1.getDepth()) {
+					return r1;
+				} else {
+					return r1;
+				} 
+			}).orElseThrow(() -> new LogicException("Couldn't determine underlying"));
+		return rect;
 	}
 
 	public boolean increasingDirection() {
