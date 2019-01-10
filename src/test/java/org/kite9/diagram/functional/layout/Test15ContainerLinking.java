@@ -8,11 +8,8 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.adl.Symbol;
-import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.TextLineWithSymbols;
+import org.kite9.diagram.model.position.Direction;
 
 public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 
@@ -26,7 +23,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);
 		Context con3 = new Context("con3", createList(a), true, new TextLine("c3"), null);
 		Context con4 = new Context("con4", null, true, new TextLine("c4"), null);
-		Context con5 = new Context("con5", null, true, new TextLineWithSymbols("c\n5", createList(new Symbol("BOB", 'c', SymbolShape.CIRCLE))), null);
+		Context con5 = new Context("con5", null, true, new TextLine("c\n5"), null);
 		new Link(con1, con2, null, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine("meets"));
 		new Link(g1, a, null, new TextLine("g1end"), null, new TextLine("aend"), null);
 

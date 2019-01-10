@@ -9,7 +9,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.TextLineWithSymbols;
 import org.kite9.diagram.functional.layout.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
@@ -81,7 +80,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	}
 	
 	Symbol s1, s4;
-	TextLineWithSymbols tls;
+	TextLine tls;
 	Glyph one, two, three;
 	
 	public void initTestDocument() {
@@ -89,8 +88,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		s1 = new Symbol("Some text", 'a', SymbolShape.CIRCLE);
 		s1.setID("s1");
 
-		tls = new TextLineWithSymbols("Here is line 1",
-				createList(s1));
+		tls = new TextLine("Here is line 1");
 
 		s4 = new Symbol("Some text", 'q', SymbolShape.DIAMOND);
 		s4.setID("s4");
@@ -100,14 +98,6 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 				createList(s4));
 		
 		two = new Glyph("two", "two", null, null);
-	}
-	
-	@Test
-	public void test_57_5_LinkTwoSymbols() throws Exception {
-		new Link(s1, s4);
-		
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
-		renderDiagram(d);
 	}
 
 }

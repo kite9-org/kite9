@@ -36,7 +36,7 @@ public class Key extends AbstractMutableXMLElement {
 		for (Symbol s : symbols) {
 			List<Symbol> sl = new ArrayList<Symbol>(1);
 			sl.add(s);
-			out.appendChild(new TextLineWithSymbols(null, "symbol-text-line", s.getText(), sl, (ADLDocument) ownerDocument));
+			out.appendChild(new TextLine(s.getText()));
 		}
 		return out;
 	}
@@ -55,11 +55,11 @@ public class Key extends AbstractMutableXMLElement {
 		super(id, "key", doc);
 		
 		if (boldText != null) {
-			setBoldText(new TextLineWithSymbols(null, "boldText", boldText, null, doc));
+			setBoldText(new TextLine(boldText));
 		}
 
 		if (bodyText != null) {
-			setBodyText(new TextLineWithSymbols(null, "bodyText", bodyText, null, doc));
+			setBodyText(new TextLine(bodyText));
 		}
 
 		if (symbols != null) {

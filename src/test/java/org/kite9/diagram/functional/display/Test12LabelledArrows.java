@@ -12,12 +12,12 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.KeyHelper;
-import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.adl.TextLineWithSymbols;
+import org.kite9.diagram.adl.TextLabel;
+import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.functional.layout.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.model.position.Direction;
@@ -68,12 +68,12 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		
 		Glyph a = new Glyph("stereo", "a", null, createList(kh.createSymbol("bob", 'b', SymbolShape.CIRCLE)));
-		Glyph b = new Glyph("", "Something\nWicked", createList(new TextLineWithSymbols("some line of data", createList(kh.createSymbol("bizbox")))), createList(kh.createSymbol("terv", 'b', SymbolShape.HEXAGON)));
+		Glyph b = new Glyph("", "Something\nWicked", createList(new TextLine("some line of data")), createList(kh.createSymbol("terv", 'b', SymbolShape.HEXAGON)));
 		
 		Arrow i1 = new Arrow("i1");
 
 		
-		new Link(i1, a, null, new TextLineWithSymbols("lines", createList(kh.createSymbol("Trevor"))), null, null, Direction.LEFT);
+		new Link(i1, a, null, new TextLine("lines"), null, null, Direction.LEFT);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		
 		Symbol s1 = kh.createSymbol("bob");

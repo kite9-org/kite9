@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="219.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="190.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="165.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="180.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [219.0,190.0]; " kite9-elem="diagram" id="The Diagram"
+  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [165.0,180.0]; " kite9-elem="diagram" id="The Diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="auto:7-one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [189.0,160.0]; " kite9-elem="glyph" transform="translate(15.0,15.0)"
+  <g id="auto:4-one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [135.0,150.0]; " kite9-elem="glyph" transform="translate(15.0,15.0)"
       >
-    <g debug="" kite9-elem="back" transform="scale(0.9947368421052631,0.9937888198757764)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9926470588235294,0.9933774834437086)translate(0.5,0.5)"
         >
-      <rect x="0" y="0" width="189.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="160.0"
+      <rect x="0" y="0" width="135.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="150.0"
           />
     </g
           >
     <g class="glyph"
           >
       
-    <g id="auto:7-one-symbols" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: HORIZONTAL; d-bounds: [102.0,21.0] [16.0,12.0]; " kite9-elem="symbols" transform="translate(87.0,6.0)"
+    <g id="auto:4-one-symbols" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: HORIZONTAL; d-bounds: [75.0,21.0] [16.0,12.0]; " kite9-elem="symbols" transform="translate(60.0,6.0)"
             >
-      <g id="auto:6" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [104.0,21.0] [12.0,12.0]; " kite9-elem="symbol" transform="translate(2.0,0.0)"
+      <g id="auto:3" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [77.0,21.0] [12.0,12.0]; " kite9-elem="symbol" transform="translate(2.0,0.0)"
               >
     <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
                 />
@@ -35,7 +35,7 @@
                 >
     </g
                 >
-    <g id="auto:7-one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,38.0] [169.0,27.0]; " kite9-elem="stereotype" transform="translate(10.0,23.0)"
+    <g id="auto:4-one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,38.0] [115.0,27.0]; " kite9-elem="stereotype" transform="translate(10.0,23.0)"
                 >
     <g debug="" kite9-elem="show-box"
                   >
@@ -47,7 +47,7 @@
                     >
     <g class="glyph-stereotype-text"
                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [91.0,38.0] [37.0,27.0]; " kite9-elem="text-label" transform="translate(-4915.1123046875,0.5455074310302734)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [64.0,38.0] [37.0,27.0]; " kite9-elem="text-label" transform="translate(-4942.1123046875,0.5455074310302734)"
                       ><g font-family="'opensans-bold-webfont'"
                         ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                           ><tspan
@@ -64,7 +64,7 @@
                       >
   </g
                       >
-    <g id="auto:7-one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [96.0,70.0] [27.0,17.0]; " kite9-elem="label" transform="translate(81.0,55.0)"
+    <g id="auto:4-one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [69.0,70.0] [27.0,17.0]; " kite9-elem="label" transform="translate(54.0,55.0)"
                       >
     <g debug="" kite9-elem="show-box"
                         >
@@ -76,7 +76,7 @@
                           >
     <g class="glyph-label-text"
                           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [96.0,70.0] [27.0,17.0]; " kite9-elem="text-label" transform="translate(-0.91796875,0.696533203125)"
+      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [69.0,70.0] [27.0,17.0]; " kite9-elem="text-label" transform="translate(-0.91796875,0.696533203125)"
                             ><g font-family="'opensans-regular-webfont'" font-size="15px"
                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                 ><tspan
@@ -91,9 +91,9 @@
                             >
   </g
                             >
-    <g id="auto:7-one-text-lines" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; d-bounds: [25.0,92.0] [169.0,77.0]; " kite9-elem="text-lines" transform="translate(10.0,77.0)"
+    <g id="auto:4-one-text-lines" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; d-bounds: [25.0,92.0] [115.0,67.0]; " kite9-elem="text-lines" transform="translate(10.0,77.0)"
                             >
-      <g debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,92.0] [169.0,15.0]; " kite9-elem="text-line" id="auto:0"
+      <g debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,92.0] [115.0,15.0]; " kite9-elem="text-line" id="auto:0"
                               >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
@@ -119,226 +119,191 @@
                                   >
   </g
                                   >
-      <g id="auto:4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [25.0,107.0] [169.0,47.0]; " kite9-elem="symbol-text-line" transform="translate(0.0,15.0)"
+      <g id="auto:1" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,107.0] [115.0,37.0]; " kite9-elem="text-line" transform="translate(0.0,15.0)"
                                   >
-        <g id="null-txt" debug="position: *,*; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,112.0] [120.0,37.0]; " kite9-elem="k9-text" transform="translate(0.0,5.0)"
+    <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
+    <g class="generic-text"
                                     >
-    <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
-    <g class="generic-text"
-                                      >
-      <g debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,114.0] [115.0,33.0]; " kite9-elem="text-label" transform="translate(-0.458984375,2.46435546875)"
-                                        ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,109.0] [115.0,33.0]; " kite9-elem="text-label" transform="translate(-0.458984375,2.46435546875)"
+                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                          ><tspan
+                                            >H</tspan
                                             ><tspan
-                                              >H</tspan
-                                              ><tspan
-                                              >ere </tspan
-                                              ><tspan
-                                              >is </tspan
-                                              ><tspan
-                                              >line </tspan
-                                              ><tspan
-                                              >2</tspan
-                                            ></text
-                                            ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
+                                            >ere </tspan
                                             ><tspan
-                                              >and </tspan
-                                              ><tspan
-                                              >it </tspan
-                                              ><tspan
-                                              >goes </tspan
-                                              ><tspan
-                                              >onto </tspan
-                                              ><tspan
-                                              >multiple</tspan
-                                            ></text
-                                            ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
-                                            >lines</text
-                                          ></g
+                                            >is </tspan
+                                            ><tspan
+                                            >line </tspan
+                                            ><tspan
+                                            >2</tspan
+                                          ></text
+                                          ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
+                                          ><tspan
+                                            >and </tspan
+                                            ><tspan
+                                            >it </tspan
+                                            ><tspan
+                                            >goes </tspan
+                                            ><tspan
+                                            >onto </tspan
+                                            ><tspan
+                                            >multiple</tspan
+                                          ></text
+                                          ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
+                                          >lines</text
                                         ></g
-                                        >
+                                      ></g
+                                      >
     </g
-                                        >
+                                      >
   </g
-                                        >
-        <g id="null-symbols" debug="position: 1-1,0-0; horiz: RIGHT; vert: CENTER; sizing: MAXIMIZE; layout: HORIZONTAL; d-bounds: [145.0,112.0] [44.0,37.0]; " kite9-elem="symbols" transform="translate(120.0,5.0)"
-                                        >
-          <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [147.0,124.0] [12.0,13.0]; " kite9-elem="symbol" transform="translate(2.0,12.0)"
-                                          >
-    <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
-                                            />
-    <text class="symbol-text" x="6" y="9"
-                                            >a</text
-                                            >
-  </g
-                                            >
-          <g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [161.0,124.0] [12.0,13.0]; " kite9-elem="symbol" transform="translate(16.0,12.0)"
-                                            >
-    <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
-                                              />
-    <text class="symbol-text" x="6" y="9"
-                                              >A</text
-                                              >
-  </g
-                                              >
-          <g id="auto:3" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [175.0,124.0] [12.0,13.0]; " kite9-elem="symbol" transform="translate(30.0,12.0)"
-                                              >
-    <polygon style="fill: #AA2030;  stroke: none" points="0,3 6,0 12,3 12,9 6,12 0,9"
-                                                />
-    <text class="symbol-text" x="6" y="9"
-                                                >A</text
-                                                >   
-  </g
-                                                >
-        </g
-                                                >
-      </g
-                                                >
-      <g id="auto:5" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,154.0] [169.0,15.0]; " kite9-elem="text-line" transform="translate(0.0,62.0)"
-                                                >
+                                      >
+      <g id="auto:2" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,144.0] [115.0,15.0]; " kite9-elem="text-line" transform="translate(0.0,52.0)"
+                                      >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
-                                                  >
-      <g debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,156.0] [58.0,11.0]; " kite9-elem="text-label" transform="translate(-0.9830729365348816,2.46435546875)"
-                                                    ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                        ><tspan
-                                                          >H</tspan
-                                                          ><tspan
-                                                          >ere </tspan
-                                                          ><tspan
-                                                          >is </tspan
-                                                          ><tspan
-                                                          >line </tspan
-                                                          ><tspan
-                                                          >3</tspan
-                                                        ></text
-                                                      ></g
-                                                    ></g
-                                                    >
+                                        >
+      <g debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,146.0] [58.0,11.0]; " kite9-elem="text-label" transform="translate(-0.9830729365348816,2.46435546875)"
+                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                              ><tspan
+                                                >H</tspan
+                                                ><tspan
+                                                >ere </tspan
+                                                ><tspan
+                                                >is </tspan
+                                                ><tspan
+                                                >line </tspan
+                                                ><tspan
+                                                >3</tspan
+                                              ></text
+                                            ></g
+                                          ></g
+                                          >
     </g
-                                                    >
+                                          >
   </g
-                                                    >
+                                          >
     </g
-                                                    >
+                                          >
   
     </g
-                                                    >
+                                          >
   </g
-                                                    >
+                                          >
 
     </g
-                                                    >
+                                          >
   </g
-                                                    >
+                                          >
 <defs
-                                                    >
+                                          >
     <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-                                                      >
+                                            >
       <stop stop-color="#FFF" offset="0%"
-                                                        />
+                                              />
       <stop stop-color="#DDD" offset="100%"
-                                                        />
+                                              />
     </linearGradient
-                                                        >
+                                              >
     
     <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        >
+                                              >
       <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                                                          /> 
+                                                /> 
       <feOffset dx="2pt" dy="2pt"
-                                                          /> 
+                                                /> 
       <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                                                          />
+                                                />
       <feMerge
-                                                          > 
+                                                > 
         <feMergeNode
-                                                            />
+                                                  />
         <feMergeNode in="SourceGraphic"
-                                                            /> 
+                                                  /> 
       </feMerge
-                                                            >
+                                                  >
     </filter
-                                                            >
+                                                  >
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
-                                                            >
+                                                  >
       <circle r="2" class="circle-marker" cx="3" cy="3"
+                                                    />
+    </marker
+                                                    >
+    
+    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                                                    >
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+                                                      />
+    </marker
+                                                      >
+    
+     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                                                      >
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+                                                        />
+    </marker
+                                                        >
+    
+    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                                                        >
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+                                                          />
+    </marker
+                                                          >
+    
+     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                                                          >
+      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+                                                            />
+    </marker
+                                                            >
+
+    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                                                            >
+      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                               />
     </marker
                                                               >
-    
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+
+    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                               >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                                 />
     </marker
                                                                 >
-    
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+ 
+    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                 >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                                                   />
     </marker
                                                                   >
-    
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+
+    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                   >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                                                     />
     </marker
                                                                     >
-    
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+  
+    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                     >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+      <polygon class="arrow-marker" points="2,4 6,2 6,6"
                                                                       />
     </marker
                                                                       >
 
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                      >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
-                                                                        />
-    </marker
-                                                                        >
-
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                        >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
-                                                                          />
-    </marker
-                                                                          >
- 
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                          >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
-                                                                            />
-    </marker
-                                                                            >
-
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                            >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
-                                                                              />
-    </marker
-                                                                              >
-  
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                              >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
-                                                                                />
-    </marker
-                                                                                >
-
     <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                                                >
+                                                                      >
        <polygon class="arrow-marker" points="6,4 2,2 2,6"
-                                                                                  />
+                                                                        />
    </marker
-                                                                                  >
+                                                                        >
     
   </defs
-                                                                                ></svg
-                                                                              >
+                                                                      ></svg
+                                                                    >
