@@ -104,18 +104,18 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			}
 			
 	//		System.out.println(p);
-			System.out.println("Can route to="+to+" edge = "+edge+" above="+pathAbove+" going="+g+" arriving="+arriving+ " direction= "+dd);
+	//		System.out.println("Can route to="+to+" edge = "+edge+" above="+pathAbove+" going="+g+" arriving="+arriving+ " direction= "+dd);
 
 			if (edge==null) {
 				boolean forwardSet = arriving ? g==Going.BACKWARDS : g==Going.FORWARDS;
 				edge = p.getFirstEdgeAfterPlanarizationLine(to, forwardSet, pathAbove);
 				boolean out = eo.canInsert(edge, dd, !clockwise, log);
-				System.out.println(out);
+	//			System.out.println(out);
 				return out;
 			} else {
 				boolean out = eo.canInsert(edge, dd, clockwise, log);
-				System.out.println(out);
-
+	//			System.out.println(out);
+				
 				return out;
 			}
 		}
