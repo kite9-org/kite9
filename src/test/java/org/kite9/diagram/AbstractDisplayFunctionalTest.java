@@ -119,7 +119,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			diff.addDifferenceListener(new ComparisonListener() {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
-					if (!comparison.getControlDetails().getXPath().contains("@import")) {
+					if (!comparison.getControlDetails().getValue().toString().contains("@import")) {
 						copyToErrors(output);	
 						Assert.fail("found a difference: " + comparison);
 					}
