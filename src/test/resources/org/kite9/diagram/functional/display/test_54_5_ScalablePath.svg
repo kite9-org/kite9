@@ -6,7 +6,7 @@
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
     ><g id="container1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [139.0,38.0]; " kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g id="adap" debug="" kite9-elem="someadaptive" transform="scale(0.9865458574947346,0.9164306547122645)translate(0.3956319987773895,1.5)"
+        ><g id="adap" debug="" kite9-elem="someadaptive" transform="scale(0.9865463917023357,0.916433015379908)translate(0.39555683732032776,1.5)"
           ><path d="M0 0 H 139.0 V 38.0z"
           /></g
           ><g id="someelement" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [119.0,18.0]; " kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"

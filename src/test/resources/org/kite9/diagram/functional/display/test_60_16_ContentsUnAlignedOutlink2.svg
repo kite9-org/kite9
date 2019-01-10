@@ -155,7 +155,7 @@
   <g id="c4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,225.0] [400.0,24.0]; " kite9-elem="context" transform="translate(15.0,225.0)"
                                               >
     
-    <g debug="" kite9-elem="back" transform="scale(0.9975043365700423,0.96)translate(0.5007687211036682,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9975062344139651,0.96)translate(0.5,0.5)"
                                                 >
       <rect x="0" y="0" width="400.0" rx="12" class="context-back" ry="12" height="24.0"
                                                   />

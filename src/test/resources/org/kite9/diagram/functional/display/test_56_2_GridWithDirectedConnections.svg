@@ -20,7 +20,7 @@
     </g
           >
     
-    <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-x: [0, 1 / 2]; grid-y: [0, 1]; d-bounds: [15.0,15.0] [76.0,142.0]; " kite9-elem="cell" id="l"
+    <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [15.0,15.0] [76.0,142.0]; " kite9-elem="cell" id="l"
           >
     <g debug="" kite9-elem="back" transform="scale(0.9967213114754099,0.9982425307557118)translate(0.25,0.25)"
             >
@@ -29,7 +29,7 @@
     </g
               >
     
-      <g debug="position: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-x: [0, 1]; grid-y: [0, 1 / 2]; d-bounds: [15.0,15.0] [76.0,142.0]; " kite9-elem="grid" id="lg"
+      <g debug="position: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [15.0,15.0] [76.0,142.0]; " kite9-elem="grid" id="lg"
               >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                 >
@@ -38,7 +38,7 @@
     </g
                   >
     
-        <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [0, 1 / 2]; d-bounds: [15.0,15.0] [76.0,93.0]; " kite9-elem="cell" id="tl"
+        <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [76.0,93.0]; " kite9-elem="cell" id="tl"
                   >
     <g debug="" kite9-elem="back" transform="scale(0.9967213114754099,0.9973190348525469)translate(0.25,0.25)"
                     >
@@ -93,7 +93,7 @@
         
   </g
                                   >
-        <g id="bl" debug="position: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [1 / 2, 1]; d-bounds: [15.0,108.0] [76.0,49.0]; " kite9-elem="cell" transform="translate(0.0,93.0)"
+        <g id="bl" debug="position: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,108.0] [76.0,49.0]; " kite9-elem="cell" transform="translate(0.0,93.0)"
                                   >
     <g debug="" kite9-elem="back" transform="scale(0.9967213114754099,0.9949238578680203)translate(0.25,0.25)"
                                     >
@@ -149,7 +149,7 @@
   </g
                                                   >
       
-    <g debug="" kite9-elem="back" transform="scale(0.987012987012987,0.993006993006993)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.987012987012987,0.9930069930069926)translate(0.5,0.5000000000000284)"
                                                   >
       <rect x="0" width="76.0" height="142.0" y="0" class="grid-frame"
                                                     />
@@ -160,7 +160,7 @@
     
   </g
                                                     >
-    <g id="r" debug="position: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-x: [1 / 2, 1]; grid-y: [0, 1]; d-bounds: [91.0,15.0] [71.0,142.0]; " kite9-elem="cell" transform="translate(76.0,0.0)"
+    <g id="r" debug="position: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [91.0,15.0] [71.0,142.0]; " kite9-elem="cell" transform="translate(76.0,0.0)"
                                                     >
     <g debug="" kite9-elem="back" transform="scale(0.9964912280701754,0.9982425307557118)translate(0.25,0.25)"
                                                       >
@@ -169,7 +169,7 @@
     </g
                                                         >
     
-      <g debug="position: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-x: [0, 1]; grid-y: [0, 1 / 2]; d-bounds: [91.0,15.0] [71.0,142.0]; " kite9-elem="grid" id="lg"
+      <g debug="position: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [91.0,15.0] [71.0,142.0]; " kite9-elem="grid" id="lg"
                                                         >
     <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                           >
@@ -178,7 +178,7 @@
     </g
                                                             >
     
-        <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [0, 1 / 2]; d-bounds: [91.0,15.0] [71.0,49.0]; " kite9-elem="cell" id="tr"
+        <g debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [91.0,15.0] [71.0,49.0]; " kite9-elem="cell" id="tr"
                                                             >
     <g debug="" kite9-elem="back" transform="scale(0.9964912280701754,0.9949238578680203)translate(0.25,0.25)"
                                                               >
@@ -233,7 +233,7 @@
         
   </g
                                                                             >
-        <g id="br" debug="position: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [1 / 2, 1]; d-bounds: [91.0,64.0] [71.0,93.0]; " kite9-elem="cell" transform="translate(0.0,49.0)"
+        <g id="br" debug="position: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [91.0,64.0] [71.0,93.0]; " kite9-elem="cell" transform="translate(0.0,49.0)"
                                                                             >
     <g debug="" kite9-elem="back" transform="scale(0.9964912280701754,0.9973190348525469)translate(0.25,0.25)"
                                                                               >
@@ -289,7 +289,7 @@
   </g
                                                                                             >
       
-    <g debug="" kite9-elem="back" transform="scale(0.9861111111111112,0.993006993006993)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9861111111111112,0.9930069930069926)translate(0.5,0.5000000000000284)"
                                                                                             >
       <rect x="0" width="71.0" height="142.0" y="0" class="grid-frame"
                                                                                               />
@@ -301,7 +301,7 @@
   </g
                                                                                               >
   
-    <g debug="" kite9-elem="back" transform="scale(0.9932432432432432,0.993006993006993)translate(0.5,0.5)"
+    <g debug="" kite9-elem="back" transform="scale(0.9932432432432432,0.9930069930069926)translate(0.5,0.5000000000000284)"
                                                                                               >
       <rect x="0" width="147.0" height="142.0" y="0" class="grid-frame"
                                                                                                 />

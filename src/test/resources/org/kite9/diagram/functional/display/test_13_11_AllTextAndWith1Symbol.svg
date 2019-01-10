@@ -61,7 +61,7 @@
       </g
                         >
       
-    <g id="auto:3" debug="position: 0-0,0-0; horiz: CENTER; vert: TOP; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [0, 1 / 3]; d-bounds: [33.0,69.0] [98.0,15.0]; " kite9-elem="boldText" transform="translate(12.0,12.0)"
+    <g id="auto:3" debug="position: 0-0,0-0; horiz: CENTER; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [33.0,69.0] [98.0,15.0]; " kite9-elem="boldText" transform="translate(12.0,12.0)"
                         >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="bold-text"
@@ -85,7 +85,7 @@
                             >
   </g
                             >
-    <g id="auto:4" debug="position: 0-0,1-1; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; grid-x: [0, 1]; grid-y: [1 / 3, 2 / 3]; d-bounds: [33.0,84.0] [98.0,26.0]; " kite9-elem="bodyText" transform="translate(12.0,27.0)"
+    <g id="auto:4" debug="position: 0-0,1-1; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [33.0,84.0] [98.0,26.0]; " kite9-elem="bodyText" transform="translate(12.0,27.0)"
                             >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
@@ -117,11 +117,11 @@
                                 >
   </g
                                 >
-    <g debug="position: 0-0,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; grid-x: [0, 1]; grid-y: [2 / 3, 1]; d-bounds: [33.0,110.0] [98.0,15.0]; " kite9-elem="text-lines" transform="translate(12.0,53.0)"
+    <g debug="position: 0-0,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; d-bounds: [33.0,110.0] [98.0,15.0]; " kite9-elem="text-lines" transform="translate(12.0,53.0)"
                                 >
       <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [33.0,110.0] [98.0,15.0]; " kite9-elem="symbol-text-line" id="auto:5"
                                   >
-        <g debug="position: *,*; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; grid-x: [0, 1 / 2]; grid-y: [0, 1]; d-bounds: [33.0,110.0] [82.0,15.0]; " kite9-elem="k9-text" id="null-txt"
+        <g debug="position: *,*; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [33.0,110.0] [82.0,15.0]; " kite9-elem="k9-text" id="null-txt"
                                     >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
@@ -143,9 +143,9 @@
                                         >
   </g
                                         >
-        <g id="null-symbols" debug="position: 1-1,0-0; horiz: RIGHT; vert: CENTER; sizing: MAXIMIZE; layout: HORIZONTAL; grid-x: [1 / 2, 1]; grid-y: [0, 1]; d-bounds: [115.0,110.0] [16.0,15.0]; " kite9-elem="symbols" transform="translate(82.0,0.0)"
+        <g id="null-symbols" debug="position: 1-1,0-0; horiz: RIGHT; vert: CENTER; sizing: MAXIMIZE; layout: HORIZONTAL; d-bounds: [115.0,110.0] [16.0,15.0]; " kite9-elem="symbols" transform="translate(82.0,0.0)"
                                         >
-          <g id="auto:1" debug="position: ; horiz: RIGHT; vert: CENTER; d-bounds: [117.0,111.0] [12.0,13.0]; " kite9-elem="symbol" transform="translate(2.0,1.0)"
+          <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [117.0,111.0] [12.0,13.0]; " kite9-elem="symbol" transform="translate(2.0,1.0)"
                                           >
     <circle r="6" style="fill: #00A070;  stroke: none" cx="6" cy="6"
                                             />
