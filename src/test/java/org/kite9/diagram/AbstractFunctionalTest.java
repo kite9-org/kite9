@@ -119,7 +119,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void setLogging() {
-		Kite9Log.setLogging(true);
+		Kite9Log.setLogging(false);
 		
 		// if we are running more than one test, then there's no point in logging.
 		if (firstRun) {
