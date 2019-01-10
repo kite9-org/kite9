@@ -14,7 +14,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 public class EmbeddingImpl implements Embedding {
 	
 	final List<DartFace> faces;
-	Set<Embedding> innerEmbeddings;
+	List<Embedding> innerEmbeddings;
 	private final int number;
 	private boolean topEmbedding;
 
@@ -28,7 +28,7 @@ public class EmbeddingImpl implements Embedding {
 		return "EmbeddingImpl [number=" + number +  ", innerEmbeddings=" + (innerEmbeddings == null ? 0 : innerEmbeddings.size()) + ", faces=" + (faces == null ? 0 : faces.size()) + "]";
 	}
 
-	public void setInnerEmbeddings(Set<Embedding> inside) {
+	public void setInnerEmbeddings(List<Embedding> inside) {
 		this.innerEmbeddings = inside;
 	}
 
@@ -38,7 +38,7 @@ public class EmbeddingImpl implements Embedding {
 	}
 
 	@Override
-	public Set<Embedding> getInnerEmbeddings() {
+	public List<Embedding> getInnerEmbeddings() {
 		return innerEmbeddings;
 	}
 	

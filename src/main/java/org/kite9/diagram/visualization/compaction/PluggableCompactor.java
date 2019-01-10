@@ -2,6 +2,8 @@ package org.kite9.diagram.visualization.compaction;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,7 +56,7 @@ public class PluggableCompactor implements Compactor {
 
 	
 	private Embedding generateEmbeddings(Orthogonalization o) {
-		Map<DartFace, EmbeddingImpl> done = new HashMap<>();
+		Map<DartFace, EmbeddingImpl> done = new LinkedHashMap<>();
 		int embeddingNumber = 0;
 		for (DartFace dartFace : o.getFaces()) {
 			if (!done.containsKey(dartFace)) {
@@ -65,11 +67,11 @@ public class PluggableCompactor implements Compactor {
 			}
 		}
 		
-		for (EmbeddingImpl e : new HashSet<>(done.values())) {
-			Set<DartFace> contained = e.getDartFaces().stream().flatMap(df -> df.getContainedFaces().stream()).collect(Collectors.toSet());
-			Set<Embedding> inside = contained.stream()
+		for (EmbeddingImpl e : new LinkedHashSet<>(done.values())) {
+			List<DartFace> contained = e.getDartFaces().stream().flatMap(df -> df.getContainedFaces().stream()).collect(Collectors.toList());
+			List<Embedding> inside = contained.stream()
 					.map(df -> done.get(df))
-					.collect(Collectors.toSet());
+					.collect(Collectors.toList());
 			e.setInnerEmbeddings(inside);
 		}
 		

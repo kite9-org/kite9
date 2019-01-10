@@ -30,7 +30,7 @@ public class Kite9Log {
 
 	static PrintStream logFile;
 	
-	public static final boolean OUTPUT_TO_LOG = false;
+	public static final boolean OUTPUT_TO_LOG = true;
 	
 	static {
 		if (OUTPUT_TO_LOG) {

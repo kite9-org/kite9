@@ -21,7 +21,7 @@ public interface Embedding {
 	 */
 	List<DartFace> getDartFaces();
 		
-	Set<Embedding> getInnerEmbeddings();
+	List<Embedding> getInnerEmbeddings();
 	
 	public Collection<Segment> getVerticalSegments(Compaction c);
 

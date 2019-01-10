@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -259,7 +260,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		Edge startEdge = ti.getFirstEdgeClockwiseEdgeOnASide();
 		int startPoint = startEdge != null ? processOrder.indexOf(startEdge) : 0;
 		
-		Map<Direction, List<PlanarizationEdge>> in = new HashMap<>();
+		Map<Direction, List<PlanarizationEdge>> in = new LinkedHashMap<>();
 		in.put(Direction.UP, new ArrayList<>());
 		in.put(Direction.DOWN, new ArrayList<>());
 		in.put(Direction.LEFT, new ArrayList<>());
