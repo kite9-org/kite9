@@ -110,17 +110,15 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 	}
 
 	public void setFrom(Kite9XMLElement v) {
-		Kite9XMLElement from = (Kite9XMLElement) ownerDocument.createElement("from");
+		GenericMutableXMLElement from = new GenericMutableXMLElement("from", (ADLDocument) ownerDocument);
 		from.setAttribute("reference", v.getID());
 		replaceProperty("from", from);
-		from = v;
 	}
 
 	public void setTo(Kite9XMLElement v) {
-		Kite9XMLElement to = (Kite9XMLElement) ownerDocument.createElement("to");
+		GenericMutableXMLElement to = new GenericMutableXMLElement("to", (ADLDocument) ownerDocument);
 		to.setAttribute("reference", v.getID());
 		replaceProperty("to", to);
-		to = v;
 	}
 
 	public void setDrawDirection(Direction d) {
