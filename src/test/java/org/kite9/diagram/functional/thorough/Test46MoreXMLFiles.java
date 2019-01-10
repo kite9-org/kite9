@@ -90,6 +90,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
+	@Ignore("Missing stylesheet")
 	public void test_46_13_WonkyTable() throws Exception {
 		generate("wonky_table.xml");
 	}
