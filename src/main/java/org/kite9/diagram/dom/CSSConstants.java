@@ -1,3 +1,4 @@
+
 package org.kite9.diagram.dom;
 
 public interface CSSConstants {

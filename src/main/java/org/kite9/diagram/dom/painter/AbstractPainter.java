@@ -60,10 +60,11 @@ public abstract class AbstractPainter implements Painter {
         for (int i = 0; i < attributes.getLength(); i++)
         {
             Attr node = (Attr) attributes.item(i);
-            
-            Attr copy = to.getOwnerDocument().createAttribute(node.getName());
-            copy.setNodeValue(node.getNodeValue());
-            to.setAttributeNode(copy);
+            if (!node.getName().equals("xmlns")) {
+	            Attr copy = to.getOwnerDocument().createAttribute(node.getName());
+	            copy.setNodeValue(node.getNodeValue());
+	            to.setAttributeNode(copy);
+            }
         }
     }
 
@@ -113,10 +114,17 @@ public abstract class AbstractPainter implements Painter {
 			return theElement;
 		}
 		
+		setupElementXML(theElement);
 		processor.processContents(theElement);
 		performedPreprocess = true;
 		
 		return theElement;
+	}
+
+	/**
+	 * Ensures that the element has the correct contents before the pre-processor is called.
+	 */
+	protected void setupElementXML(StyledKite9SVGElement e) {
 	}
 	
 }

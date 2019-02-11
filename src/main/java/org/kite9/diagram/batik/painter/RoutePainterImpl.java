@@ -18,9 +18,9 @@ import org.kite9.framework.logging.LogicException;
  * @author robmoffat
  * 
  */
-public class RoutePainter {
+public class RoutePainterImpl {
 	
-	public RoutePainter() {
+	public RoutePainterImpl() {
 		super();
 	}
 	

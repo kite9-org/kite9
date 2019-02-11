@@ -11,6 +11,8 @@ import org.apache.batik.anim.dom.SVGOMFlowParaElement;
 import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -18,6 +20,7 @@ import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,14 +36,18 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class TextLeafPainter extends AbstractGraphicsNodePainter implements LeafPainter {
+public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainter {
 	
 	public TextLeafPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
-		super(theElement, ctx);
+		super(theElement, ctx.getXMLProcessor());
+		this.ctx = ctx;
+		this.theElement = theElement;
 	}
 	
-	private StyledKite9SVGElement textContents;
+	private Kite9BridgeContext ctx;
 	private Rectangle2D bounds;
+	private GraphicsNode gn;
+	private StyledKite9SVGElement theElement;
 	
 	/**
 	 * Turn the text that's in the input element into a bunch of paragraphs in a SVG 1.2 flow.
@@ -53,43 +60,37 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 	 *   </flowDiv>
 	 * </flowRoot>
 	 */
-	public StyledKite9SVGElement getContents() {
-		if (textContents == null) {
-			initializeTextRuns();
+	@Override
+	protected void setupElementXML(StyledKite9SVGElement e) {
+		if (bounds == null) {
+			// convert the flow element into regular svg:text
+			Document d = e.getOwnerDocument();
+			SVGOMFlowRootElement flowRoot = createFlowRootElement(d, e);
+	
+			// remove old content
+			NodeList old = e.getChildNodes();
+			while (old.getLength() > 0) {
+				e.removeChild(old.item(0));
+			}
+			
+			// replace with new flowRoot
+			e.appendChild(flowRoot);
+			
+			// render the flow root
+			gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
+			bounds = gn.getBounds();
+			
+			// replace rendered flow root with regular svg text.
+			Element group = graphicsNodeToXML(d, gn);
+			e.removeChild(flowRoot);
+			
+			if (group != null) {
+				e.appendChild(group);
+			}
 		}
 		
-
-		return textContents;
-	}
-
-	public void initializeTextRuns() {
-		StyledKite9SVGElement theElement = super.getContents();
-		
-		Document d = theElement.getOwnerDocument();
-
-		// convert the flow element into regular svg:text
-		SVGOMFlowRootElement flowRoot = createFlowRootElement(d, theElement);
-
-		// remove old content
-		NodeList old = theElement.getChildNodes();
-		while (old.getLength() > 0) {
-			theElement.removeChild(old.item(0));
-		}
-		
-		theElement.appendChild(flowRoot);
-		GraphicsNode gn = LocalRenderingFlowRootElementBridge.getFlowNode(initGraphicsNode(flowRoot, ctx));
-		bounds = gn.getBounds();
-		Element group = graphicsNodeToXML(d, gn);
-		
-		theElement.removeChild(flowRoot);
-		
-		if (group != null) {
-			theElement.appendChild(group);
-		}
-		
-		textContents = theElement;
-	}
-
+	}	
+	
 	private Element graphicsNodeToXML(Document d, GraphicsNode node) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
@@ -156,10 +157,13 @@ public class TextLeafPainter extends AbstractGraphicsNodePainter implements Leaf
 	
 	@Override
 	public Rectangle2D bounds() {
-		if (bounds == null) {
-			initializeTextRuns();
-		}
-		
+		setupElementXML(theElement);
 		return bounds;
+	}
+
+	public static GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
+		GVTBuilder builder = ctx.getGVTBuilder();
+		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
+		return out;
 	}
 }

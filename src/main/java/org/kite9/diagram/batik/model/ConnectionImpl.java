@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.RoutePainter;
+import org.kite9.diagram.batik.painter.RoutePainterImpl;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.dom.CSSConstants;
@@ -261,16 +261,16 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		ensureInitialized();
 		if ("path".equals(name)) {
 			Map<String, String> out = new HashMap<>();
-			RoutePainter routePainter = new RoutePainter();
+			RoutePainterImpl routePainter = new RoutePainterImpl();
 			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
 					getPainter().getContents().getOwnerDocument());
 			double startReserve = fromDecoration.getMarkerReserve();
 			double endReserve = toDecoration.getMarkerReserve();
 			
 			GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
-					new RoutePainter.ReservedLengthEndDisplayer(startReserve), 
-					new RoutePainter.ReservedLengthEndDisplayer(endReserve),
-					new RoutePainter.CurvedCornerHopDisplayer((float) getCornerRadius()), false);
+					new RoutePainterImpl.ReservedLengthEndDisplayer(startReserve), 
+					new RoutePainterImpl.ReservedLengthEndDisplayer(endReserve),
+					new RoutePainterImpl.CurvedCornerHopDisplayer((float) getCornerRadius()), false);
 			String path = SVGPath.toSVGPathData(gp, ctx);
 			return path;
 		} else if ("markerstart".equals(name)) {
