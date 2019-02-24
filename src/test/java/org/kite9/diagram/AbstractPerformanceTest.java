@@ -19,7 +19,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.functional.layout.TestingEngine;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;

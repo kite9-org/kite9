@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.functional.layout.TestingEngine.Checks;
+import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.common.HelpMethods;

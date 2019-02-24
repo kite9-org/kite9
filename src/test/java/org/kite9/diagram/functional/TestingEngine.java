@@ -1,4 +1,4 @@
-package org.kite9.diagram.functional.layout;
+package org.kite9.diagram.functional;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

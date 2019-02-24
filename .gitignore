@@ -25,4 +25,4 @@ hs_err_pid*
 merges.txt
 plan.txt
 ssp.info
-
+*.log

@@ -16,10 +16,10 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.functional.layout.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
 
