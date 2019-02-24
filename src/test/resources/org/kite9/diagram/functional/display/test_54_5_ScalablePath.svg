@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" width="239.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="138.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [239.0,138.0]; " kite9-elem="diagram" id="one"
+><g id="one" style="kite9-type: diagram; kite9-padding: 50px;" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [239.0,138.0]; " class=" kite9-diagram" kite9-elem="diagram"
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g id="container1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [139.0,38.0]; " kite9-elem="container" transform="translate(50.0,50.0)"
+    ><g id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [139.0,38.0]; " class=" kite9-container" kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g id="adap" debug="" kite9-elem="someadaptive" transform="scale(0.9865463917023357,0.916433015379908)translate(0.39555683732032776,1.5)"
+        ><g id="adap" style="kite9-type: svg; kite9-usage: decal; " debug="" class=" kite9-someadaptive" kite9-elem="someadaptive" transform="scale(0.9865463917023357,0.916433015379908)translate(0.39555683732032776,1.5)"
           ><path d="M0 0 H 139.0 V 38.0z"
           /></g
-          ><g id="someelement" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [119.0,18.0]; " kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"
+          ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [119.0,18.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"
           ><text style="font-size: 25px; stroke: none; fill: orange; "
             >Some Text</text
           ></g

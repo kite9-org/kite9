@@ -6,14 +6,14 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [497.0,119.0]; " kite9-elem="diagram" id="auto:0"
+  ><g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [497.0,119.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="g1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [147.0,15.0] [80.0,50.0]; " kite9-elem="glyph" transform="translate(147.0,15.0)"
+  <g id="g1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [147.0,15.0] [80.0,50.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(147.0,15.0)" rank="0"
       >
-    <g debug="" kite9-elem="back" transform="scale(0.9876543209876543,0.9803921568627451)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9876543209876543,0.9803921568627451)translate(0.5,0.5)"
         >
       <rect x="0" y="0" width="80.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
           />
@@ -22,9 +22,9 @@
     <g class="glyph"
           >
       
-    <g id="g1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [181.0,21.0] [13.0,17.0]; " kite9-elem="label" transform="translate(34.0,6.0)"
+    <g id="g1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [181.0,21.0] [13.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(34.0,6.0)"
             >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [181.0,21.0] [13.0,17.0]; " kite9-elem="text-label" transform="translate(-0.2880859375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [181.0,21.0] [13.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.2880859375,0.696533203125)"
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       ><tspan
@@ -54,9 +54,9 @@
                   >
   </g
                   >
-  <g id="fan0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(15.0,75.0)"
+  <g id="fan0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,75.0)" rank="1"
                   >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                     >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                       />
@@ -65,9 +65,9 @@
     <g class="glyph"
                       >
       
-    <g id="fan0-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan0-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [25.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                         >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                           >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -77,7 +77,7 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                   ><tspan
@@ -97,9 +97,9 @@
                               >
   </g
                               >
-  <g id="fan1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [75.0,75.0] [47.0,29.0]; " kite9-elem="glyph" transform="translate(75.0,75.0)"
+  <g id="fan1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [75.0,75.0] [47.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(75.0,75.0)" rank="2"
                               >
-    <g debug="" kite9-elem="back" transform="scale(0.9791666666666666,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9791666666666666,0.9666666666666667)translate(0.5,0.5)"
                                 >
       <rect x="0" y="0" width="47.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                   />
@@ -108,9 +108,9 @@
     <g class="glyph"
                                   >
       
-    <g id="fan1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [85.0,81.0] [27.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan1-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [85.0,81.0] [27.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                     >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -120,7 +120,7 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [85.0,81.0] [27.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [85.0,81.0] [27.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
@@ -140,9 +140,9 @@
                                           >
   </g
                                           >
-  <g id="fan2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [132.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(132.0,75.0)"
+  <g id="fan2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [132.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(132.0,75.0)" rank="3"
                                           >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                             >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                               />
@@ -151,9 +151,9 @@
     <g class="glyph"
                                               >
       
-    <g id="fan2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [142.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan2-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [142.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                 >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -163,7 +163,7 @@
                                                     >
     <g class="glyph-label-text"
                                                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [142.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [142.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                       ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                         ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                           ><tspan
@@ -183,9 +183,9 @@
                                                       >
   </g
                                                       >
-  <g id="fan3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [192.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(192.0,75.0)"
+  <g id="fan3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [192.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(192.0,75.0)" rank="4"
                                                       >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                                         >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                           />
@@ -194,9 +194,9 @@
     <g class="glyph"
                                                           >
       
-    <g id="fan3-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [202.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan3-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [202.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                             >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -206,7 +206,7 @@
                                                                 >
     <g class="glyph-label-text"
                                                                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [202.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [202.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                       ><tspan
@@ -226,9 +226,9 @@
                                                                   >
   </g
                                                                   >
-  <g id="fan4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [252.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(252.0,75.0)"
+  <g id="fan4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [252.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(252.0,75.0)" rank="5"
                                                                   >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                                                     >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                       />
@@ -237,9 +237,9 @@
     <g class="glyph"
                                                                       >
       
-    <g id="fan4-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [262.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan4-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [262.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                                         >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                                           >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -249,7 +249,7 @@
                                                                             >
     <g class="glyph-label-text"
                                                                             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [262.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [262.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                   ><tspan
@@ -269,9 +269,9 @@
                                                                               >
   </g
                                                                               >
-  <g id="fan5" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [312.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(312.0,75.0)"
+  <g id="fan5" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [312.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(312.0,75.0)" rank="6"
                                                                               >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                                                                 >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                   />
@@ -280,9 +280,9 @@
     <g class="glyph"
                                                                                   >
       
-    <g id="fan5-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [322.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan5-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [322.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                                                     >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                                                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -292,7 +292,7 @@
                                                                                         >
     <g class="glyph-label-text"
                                                                                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [322.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [322.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                               ><tspan
@@ -312,9 +312,9 @@
                                                                                           >
   </g
                                                                                           >
-  <g id="fan6" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [372.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(372.0,75.0)"
+  <g id="fan6" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [372.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(372.0,75.0)" rank="7"
                                                                                           >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                                                                             >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                               />
@@ -323,9 +323,9 @@
     <g class="glyph"
                                                                                               >
       
-    <g id="fan6-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [382.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan6-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [382.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                                                                 >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                                                                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -335,7 +335,7 @@
                                                                                                     >
     <g class="glyph-label-text"
                                                                                                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [382.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [382.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                                                                       ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                                         ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                           ><tspan
@@ -355,9 +355,9 @@
                                                                                                       >
   </g
                                                                                                       >
-  <g id="fan7" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [432.0,75.0] [50.0,29.0]; " kite9-elem="glyph" transform="translate(432.0,75.0)"
+  <g id="fan7" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [432.0,75.0] [50.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(432.0,75.0)" rank="8"
                                                                                                       >
-    <g debug="" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9803921568627451,0.9666666666666667)translate(0.5,0.5)"
                                                                                                         >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                                           />
@@ -366,9 +366,9 @@
     <g class="glyph"
                                                                                                           >
       
-    <g id="fan7-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [442.0,81.0] [30.0,17.0]; " kite9-elem="label" transform="translate(10.0,6.0)"
+    <g id="fan7-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [442.0,81.0] [30.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,6.0)"
                                                                                                             >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                                                                                               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -378,7 +378,7 @@
                                                                                                                 >
     <g class="glyph-label-text"
                                                                                                                 >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [442.0,81.0] [30.0,17.0]; " kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [442.0,81.0] [30.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.21484375,0.696533203125)"
                                                                                                                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                                                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                                       ><tspan
@@ -398,23 +398,23 @@
                                                                                                                   >
   </g
                                                                                                                   >
-  <g debug="" kite9-elem="link" id="g1-fan0"
+  <g id="g1-fan0" debug="" class=" kite9-link" kite9-elem="link" rank="9"
                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [142.0,40.0] [10.0,10.0]; " kite9-elem="from" transform="translate(142.0,40.0)"
+    <g debug="position: ; d-bounds: [142.0,40.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(142.0,40.0)"
                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                       />
   </g
                                                                                                                       >
-    <g debug="position: ; d-bounds: [35.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(35.0,70.0)"
+    <g debug="position: ; d-bounds: [35.0,70.0] [10.0,10.0]; " reference="fan0" class=" kite9-to" kite9-elem="to" transform="translate(35.0,70.0)"
                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                         />
   </g
                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M147 45 L40 45 L40 75"
                                                                                                                           />
@@ -422,23 +422,23 @@
                                                                                                                           >
   </g
                                                                                                                           >
-  <g debug="" kite9-elem="link" id="g1-fan1"
+  <g id="g1-fan1" debug="" class=" kite9-link" kite9-elem="link" rank="10"
                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [142.0,50.0] [10.0,10.0]; " kite9-elem="from" transform="translate(142.0,50.0)"
+    <g debug="position: ; d-bounds: [142.0,50.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(142.0,50.0)"
                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                               />
   </g
                                                                                                                               >
-    <g debug="position: ; d-bounds: [94.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(94.0,70.0)"
+    <g debug="position: ; d-bounds: [94.0,70.0] [10.0,10.0]; " reference="fan1" class=" kite9-to" kite9-elem="to" transform="translate(94.0,70.0)"
                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                 />
   </g
                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M147 55 L99 55 L99 75"
                                                                                                                                   />
@@ -446,23 +446,23 @@
                                                                                                                                   >
   </g
                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="g1-fan2"
+  <g id="g1-fan2" drawDirection="DOWN" debug="" class=" kite9-link" kite9-elem="link" rank="11"
                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [152.0,60.0] [10.0,10.0]; " kite9-elem="from" transform="translate(152.0,60.0)"
+    <g debug="position: ; d-bounds: [152.0,60.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(152.0,60.0)"
                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                       />
   </g
                                                                                                                                       >
-    <g debug="position: ; d-bounds: [152.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(152.0,70.0)"
+    <g debug="position: ; d-bounds: [152.0,70.0] [10.0,10.0]; " reference="fan2" class=" kite9-to" kite9-elem="to" transform="translate(152.0,70.0)"
                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                         />
   </g
                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M157 65 L157 75"
                                                                                                                                           />
@@ -470,23 +470,23 @@
                                                                                                                                           >
   </g
                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="g1-fan3"
+  <g id="g1-fan3" drawDirection="DOWN" debug="" class=" kite9-link" kite9-elem="link" rank="12"
                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [212.0,60.0] [10.0,10.0]; " kite9-elem="from" transform="translate(212.0,60.0)"
+    <g debug="position: ; d-bounds: [212.0,60.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(212.0,60.0)"
                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                               />
   </g
                                                                                                                                               >
-    <g debug="position: ; d-bounds: [212.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(212.0,70.0)"
+    <g debug="position: ; d-bounds: [212.0,70.0] [10.0,10.0]; " reference="fan3" class=" kite9-to" kite9-elem="to" transform="translate(212.0,70.0)"
                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                 />
   </g
                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M217 65 L217 75"
                                                                                                                                                   />
@@ -494,23 +494,23 @@
                                                                                                                                                   >
   </g
                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="g1-fan4"
+  <g id="g1-fan4" debug="" class=" kite9-link" kite9-elem="link" rank="13"
                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [222.0,50.0] [10.0,10.0]; " kite9-elem="from" transform="translate(222.0,50.0)"
+    <g debug="position: ; d-bounds: [222.0,50.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(222.0,50.0)"
                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                       />
   </g
                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [272.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(272.0,70.0)"
+    <g debug="position: ; d-bounds: [272.0,70.0] [10.0,10.0]; " reference="fan4" class=" kite9-to" kite9-elem="to" transform="translate(272.0,70.0)"
                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                         />
   </g
                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M227 55 L277 55 L277 75"
                                                                                                                                                           />
@@ -518,23 +518,23 @@
                                                                                                                                                           >
   </g
                                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="g1-fan5"
+  <g id="g1-fan5" debug="" class=" kite9-link" kite9-elem="link" rank="14"
                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [222.0,40.0] [10.0,10.0]; " kite9-elem="from" transform="translate(222.0,40.0)"
+    <g debug="position: ; d-bounds: [222.0,40.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(222.0,40.0)"
                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                               />
   </g
                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [332.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(332.0,70.0)"
+    <g debug="position: ; d-bounds: [332.0,70.0] [10.0,10.0]; " reference="fan5" class=" kite9-to" kite9-elem="to" transform="translate(332.0,70.0)"
                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                 />
   </g
                                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M227 45 L337 45 L337 75"
                                                                                                                                                                   />
@@ -542,23 +542,23 @@
                                                                                                                                                                   >
   </g
                                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="g1-fan6"
+  <g id="g1-fan6" debug="" class=" kite9-link" kite9-elem="link" rank="15"
                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [222.0,30.0] [10.0,10.0]; " kite9-elem="from" transform="translate(222.0,30.0)"
+    <g debug="position: ; d-bounds: [222.0,30.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(222.0,30.0)"
                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                       />
   </g
                                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [392.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(392.0,70.0)"
+    <g debug="position: ; d-bounds: [392.0,70.0] [10.0,10.0]; " reference="fan6" class=" kite9-to" kite9-elem="to" transform="translate(392.0,70.0)"
                                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                         />
   </g
                                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M227 35 L397 35 L397 75"
                                                                                                                                                                           />
@@ -566,23 +566,23 @@
                                                                                                                                                                           >
   </g
                                                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="g1-fan7"
+  <g id="g1-fan7" debug="" class=" kite9-link" kite9-elem="link" rank="16"
                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [222.0,20.0] [10.0,10.0]; " kite9-elem="from" transform="translate(222.0,20.0)"
+    <g debug="position: ; d-bounds: [222.0,20.0] [10.0,10.0]; " reference="g1" class=" kite9-from" kite9-elem="from" transform="translate(222.0,20.0)"
                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                               />
   </g
                                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [452.0,70.0] [10.0,10.0]; " kite9-elem="to" transform="translate(452.0,70.0)"
+    <g debug="position: ; d-bounds: [452.0,70.0] [10.0,10.0]; " reference="fan7" class=" kite9-to" kite9-elem="to" transform="translate(452.0,70.0)"
                                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                 />
   </g
                                                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M227 25 L457 25 L457 75"
                                                                                                                                                                                   />
@@ -590,23 +590,23 @@
                                                                                                                                                                                   >
   </g
                                                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="fan0-fan1"
+  <g id="fan0-fan1" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="17"
                                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [60.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(60.0,84.0)"
+    <g debug="position: ; d-bounds: [60.0,84.0] [10.0,10.0]; " reference="fan0" class=" kite9-from" kite9-elem="from" transform="translate(60.0,84.0)"
                                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                       />
   </g
                                                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [70.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(70.0,84.0)"
+    <g debug="position: ; d-bounds: [70.0,84.0] [10.0,10.0]; " reference="fan1" class=" kite9-to" kite9-elem="to" transform="translate(70.0,84.0)"
                                                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                         />
   </g
                                                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M65 89 L75 89"
                                                                                                                                                                                           />
@@ -614,23 +614,23 @@
                                                                                                                                                                                           >
   </g
                                                                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="fan1-fan2"
+  <g id="fan1-fan2" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="18"
                                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [117.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(117.0,84.0)"
+    <g debug="position: ; d-bounds: [117.0,84.0] [10.0,10.0]; " reference="fan1" class=" kite9-from" kite9-elem="from" transform="translate(117.0,84.0)"
                                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                               />
   </g
                                                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [127.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(127.0,84.0)"
+    <g debug="position: ; d-bounds: [127.0,84.0] [10.0,10.0]; " reference="fan2" class=" kite9-to" kite9-elem="to" transform="translate(127.0,84.0)"
                                                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M122 89 L132 89"
                                                                                                                                                                                                   />
@@ -638,23 +638,23 @@
                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="fan2-fan3"
+  <g id="fan2-fan3" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="19"
                                                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [177.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(177.0,84.0)"
+    <g debug="position: ; d-bounds: [177.0,84.0] [10.0,10.0]; " reference="fan2" class=" kite9-from" kite9-elem="from" transform="translate(177.0,84.0)"
                                                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [187.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(187.0,84.0)"
+    <g debug="position: ; d-bounds: [187.0,84.0] [10.0,10.0]; " reference="fan3" class=" kite9-to" kite9-elem="to" transform="translate(187.0,84.0)"
                                                                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M182 89 L192 89"
                                                                                                                                                                                                           />
@@ -662,23 +662,23 @@
                                                                                                                                                                                                           >
   </g
                                                                                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="fan3-fan4"
+  <g id="fan3-fan4" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="20"
                                                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [237.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(237.0,84.0)"
+    <g debug="position: ; d-bounds: [237.0,84.0] [10.0,10.0]; " reference="fan3" class=" kite9-from" kite9-elem="from" transform="translate(237.0,84.0)"
                                                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [247.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(247.0,84.0)"
+    <g debug="position: ; d-bounds: [247.0,84.0] [10.0,10.0]; " reference="fan4" class=" kite9-to" kite9-elem="to" transform="translate(247.0,84.0)"
                                                                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M242 89 L252 89"
                                                                                                                                                                                                                   />
@@ -686,23 +686,23 @@
                                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="fan4-fan5"
+  <g id="fan4-fan5" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="21"
                                                                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [297.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(297.0,84.0)"
+    <g debug="position: ; d-bounds: [297.0,84.0] [10.0,10.0]; " reference="fan4" class=" kite9-from" kite9-elem="from" transform="translate(297.0,84.0)"
                                                                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [307.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(307.0,84.0)"
+    <g debug="position: ; d-bounds: [307.0,84.0] [10.0,10.0]; " reference="fan5" class=" kite9-to" kite9-elem="to" transform="translate(307.0,84.0)"
                                                                                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M302 89 L312 89"
                                                                                                                                                                                                                           />
@@ -710,23 +710,23 @@
                                                                                                                                                                                                                           >
   </g
                                                                                                                                                                                                                           >
-  <g debug="" kite9-elem="link" id="fan5-fan6"
+  <g id="fan5-fan6" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="22"
                                                                                                                                                                                                                           >
     
-    <g debug="position: ; d-bounds: [357.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(357.0,84.0)"
+    <g debug="position: ; d-bounds: [357.0,84.0] [10.0,10.0]; " reference="fan5" class=" kite9-from" kite9-elem="from" transform="translate(357.0,84.0)"
                                                                                                                                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                                               >
-    <g debug="position: ; d-bounds: [367.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(367.0,84.0)"
+    <g debug="position: ; d-bounds: [367.0,84.0] [10.0,10.0]; " reference="fan6" class=" kite9-to" kite9-elem="to" transform="translate(367.0,84.0)"
                                                                                                                                                                                                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M362 89 L372 89"
                                                                                                                                                                                                                                   />
@@ -734,23 +734,23 @@
                                                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                                                   >
-  <g debug="" kite9-elem="link" id="fan6-fan7"
+  <g id="fan6-fan7" drawDirection="RIGHT" debug="" class=" kite9-link" kite9-elem="link" rank="23"
                                                                                                                                                                                                                                   >
     
-    <g debug="position: ; d-bounds: [417.0,84.0] [10.0,10.0]; " kite9-elem="from" transform="translate(417.0,84.0)"
+    <g debug="position: ; d-bounds: [417.0,84.0] [10.0,10.0]; " reference="fan6" class=" kite9-from" kite9-elem="from" transform="translate(417.0,84.0)"
                                                                                                                                                                                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                                       >
-    <g debug="position: ; d-bounds: [427.0,84.0] [10.0,10.0]; " kite9-elem="to" transform="translate(427.0,84.0)"
+    <g debug="position: ; d-bounds: [427.0,84.0] [10.0,10.0]; " reference="fan7" class=" kite9-to" kite9-elem="to" transform="translate(427.0,84.0)"
                                                                                                                                                                                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g style="kite9-type: svg; kite9-usage: decal;" debug="" class=" kite9-link-body" kite9-elem="link-body"
                                                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M422 89 L432 89"
                                                                                                                                                                                                                                           />

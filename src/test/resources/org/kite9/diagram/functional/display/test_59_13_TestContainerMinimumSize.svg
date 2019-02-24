@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,150.0]; " kite9-elem="diagram" id="The Diagram"
+  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,150.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,120.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,120.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.9959349593495935,0.9917355371900827)translate(0.5,0.5)"
+      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal" transform="scale(0.9959349593495935,0.9917355371900827)translate(0.5,0.5)"
         >
         <rect x="0" y="0" width="245.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
           />
       </g
           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,53.0] [225.0,28.0]; " kite9-elem="text" transform="translate(8.35205078125,38.21484375)"
+      <g style="kite9-type: text; font-size: 25px;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,53.0] [225.0,28.0]; " class=" kite9-text" kite9-elem="text" transform="translate(8.35205078125,38.21484375)"
           ><g font-family="'Arial'" font-size="25px"
             ><text x="0" xml:space="preserve" y="22.417" stroke="none"
               ><tspan
@@ -35,7 +35,7 @@
             ></g
           ></g
           >
-      <g debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [116.0,109.0] [43.0,16.0]; " kite9-elem="text" transform="translate(100.01123046875,94.12890625)"
+      <g style="kite9-type: text; font-size: 15px; kite9-vertical-align: bottom;" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [116.0,109.0] [43.0,16.0]; " class=" kite9-text" kite9-elem="text" transform="translate(100.01123046875,94.12890625)"
           ><g font-family="'Arial'" font-size="15px"
             ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
               ><tspan

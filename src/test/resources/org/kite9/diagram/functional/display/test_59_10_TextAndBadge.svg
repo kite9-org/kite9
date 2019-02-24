@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [132.0,63.0]; " kite9-elem="diagram" id="The Diagram"
+  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [132.0,63.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [102.0,33.0]; " kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g style="kite9-type: container; kite9-padding: 10px; " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [102.0,33.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g debug="" kite9-elem="decal" transform="scale(0.9902912621359223,0.9705882352941176)translate(0.5,0.5)"
+      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal" transform="scale(0.9902912621359223,0.9705882352941176)translate(0.5,0.5)"
         >
         <rect x="0" y="0" width="102.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="33.0"
           />
       </g
           >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,25.0] [82.0,13.0]; " kite9-elem="text" transform="translate(9.208984375,10.103124618530273)"
+      <g style="kite9-type: text; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,25.0] [82.0,13.0]; " class=" kite9-text" kite9-elem="text" transform="translate(9.208984375,10.103124618530273)"
           ><g font-family="'Arial'"
             ><text x="0" xml:space="preserve" y="10.7602" stroke="none"
               ><tspan
@@ -33,7 +33,7 @@
             ></g
           ></g
           >
-      <g debug="" kite9-elem="badge"
+      <g style="kite9-usage: decal; kite9-type: svg; kite9-transform: none; " debug="" class=" kite9-badge" kite9-elem="badge"
           >
         <circle fill="red" r="15" cx="97" cy="5"
             /> 

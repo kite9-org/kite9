@@ -6,27 +6,27 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [129.0,63.0]; " kite9-elem="diagram" id="The Diagram"
+  ><g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [129.0,63.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
   <g id="One
-Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [57.0,33.0]; " kite9-elem="arrow" transform="translate(15.0,15.0)"
+Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [57.0,33.0]; " class=" kite9-arrow" kite9-elem="arrow" transform="translate(15.0,15.0)" rank="0"
       >
-    <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
         >
       <rect x="0" y="0" width="57.0" style="fill: black; " rx="4" ry="4" height="33.0"
           />
     </g
           >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,18.0] [47.0,27.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,18.0] [47.0,27.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
           >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
             >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,27.0]; " kite9-elem="text-label" transform="translate(-0.734375,0.5572261810302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,27.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.734375,0.5572261810302734)"
               ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                   ><tspan
@@ -46,21 +46,21 @@ Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; lay
   
   </g
               >
-  <g id="Two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [82.0,22.0] [32.0,20.0]; " kite9-elem="arrow" transform="translate(82.0,22.0)"
+  <g id="Two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [82.0,22.0] [32.0,20.0]; " class=" kite9-arrow" kite9-elem="arrow" transform="translate(82.0,22.0)" rank="1"
               >
-    <g debug="" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                 >
       <rect x="0" y="0" width="32.0" style="fill: black; " rx="4" ry="4" height="20.0"
                   />
     </g
                   >
     
-    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,25.0] [22.0,14.0]; " kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,25.0] [22.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                     >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,14.0]; " kite9-elem="text-label" transform="translate(-0.10546875,0.5572261810302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,14.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.10546875,0.5572261810302734)"
                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                           ><tspan

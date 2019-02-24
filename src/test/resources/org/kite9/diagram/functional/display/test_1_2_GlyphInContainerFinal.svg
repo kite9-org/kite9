@@ -6,17 +6,17 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [153.0,102.0]; " kite9-elem="diagram" id="The Diagram"
+  ><g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [153.0,102.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="Context" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [123.0,72.0]; " kite9-elem="context" transform="translate(15.0,15.0)"
+  <g transform="translate(15.0,15.0)" bordered="true" rank="0" class=" kite9-context" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [123.0,72.0]; " id="Context" kite9-elem="context"
       >
     
-    <g id="auto:0-rob's glyph" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [27.0,27.0] [99.0,48.0]; " kite9-elem="glyph" transform="translate(12.0,12.0)"
+    <g id="auto:0-rob's glyph" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [27.0,27.0] [99.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(12.0,12.0)"
         >
-    <g debug="" kite9-elem="back" transform="scale(0.99,0.9795918367346939)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.99,0.9795918367346939)translate(0.5,0.5)"
           >
       <rect x="0" y="0" width="99.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
             />
@@ -25,9 +25,9 @@
     <g class="glyph"
             >
       
-      <g id="auto:0-rob's glyph-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [37.0,33.0] [79.0,14.0]; " kite9-elem="stereotype" transform="translate(10.0,6.0)"
+      <g id="auto:0-rob's glyph-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [37.0,33.0] [79.0,14.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,6.0)"
               >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                 >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -37,7 +37,7 @@
                   >
     <g class="glyph-stereotype-text"
                   >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [58.0,33.0] [37.0,14.0]; " kite9-elem="text-label" transform="translate(-4960.1123046875,0.5455074310302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [58.0,33.0] [37.0,14.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-4960.1123046875,0.5455074310302734)"
                     ><g font-family="'opensans-bold-webfont'"
                       ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                         ><tspan
@@ -52,9 +52,9 @@
                     >
   </g
                     >
-      <g id="auto:0-rob's glyph-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [37.0,52.0] [79.0,17.0]; " kite9-elem="label" transform="translate(10.0,25.0)"
+      <g id="auto:0-rob's glyph-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [37.0,52.0] [79.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(10.0,25.0)"
                     >
-    <g debug="" kite9-elem="show-box"
+    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -64,7 +64,7 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [37.0,52.0] [79.0,17.0]; " kite9-elem="text-label" transform="translate(-1.474609375,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [37.0,52.0] [79.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-1.474609375,0.696533203125)"
                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
@@ -87,7 +87,7 @@
   </g
                           >
   
-    <g debug="" kite9-elem="back" transform="scale(0.9919354838709677,0.9863013698630136)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9919354838709677,0.9863013698630136)translate(0.5,0.5)"
                           >
       <rect x="0" y="0" width="123.0" rx="12" class="context-back" ry="12" height="72.0"
                             />

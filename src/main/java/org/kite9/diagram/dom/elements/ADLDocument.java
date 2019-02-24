@@ -48,6 +48,20 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware {
 		return ((ADLExtensibleDOMImplementation)implementation).createElementNS(this, XMLHelper.KITE9_NAMESPACE, name);
 	}
 	
+	public boolean elementIdExists(String id) {
+		return elementsById.containsKey(id);
+	}
+	
+	private transient int nextId = 1;
+	
+	public String createUniqueId() {
+		while (elementIdExists(""+(nextId))) {
+			nextId ++;
+		}
+		
+		return ""+nextId;
+	}
+	
 	 /**
      * Returns true if the given Attr node represents an 'id'
      * for this document.
