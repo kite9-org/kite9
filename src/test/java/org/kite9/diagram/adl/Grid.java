@@ -47,7 +47,7 @@ public class Grid extends AbstractXMLContainerElement {
 	}
 
 	public Grid(List<Kite9XMLElement> contents, Kite9XMLElement label) {
-		this(createID(), contents, label);
+		this(TESTING_DOCUMENT.createUniqueId(), contents, label);
 	}
 
 	@Override

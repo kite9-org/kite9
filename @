@@ -1,0 +1,103 @@
+Fixing IDs
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   src/main/java/org/kite9/diagram/dom/elements/ADLDocument.java
+#	modified:   src/test/java/org/kite9/diagram/AbstractFunctionalTest.java
+#	modified:   src/test/java/org/kite9/diagram/adl/AbstractMutableXMLElement.java
+#	modified:   src/test/java/org/kite9/diagram/adl/Cell.java
+#	modified:   src/test/java/org/kite9/diagram/adl/Context.java
+#	modified:   src/test/java/org/kite9/diagram/adl/DiagramKite9XMLElement.java
+#	modified:   src/test/java/org/kite9/diagram/adl/Glyph.java
+#	modified:   src/test/java/org/kite9/diagram/adl/Grid.java
+#	modified:   src/test/java/org/kite9/diagram/adl/TextLabel.java
+#	modified:   src/test/java/org/kite9/diagram/functional/display/Test58ScriptTag.java
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/testCardBasic.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_10_BlankLabels.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_1_LabelledLeftRight.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_2_LabelledUpDown.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_4_VeryLongLabels.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_5_MultiLineLongLabels.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_6_GlyphMultipleLabels.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_7_LabelsInside.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_8_TestLabelledBothEnds.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_12_9_ChainOfLabels.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_10_separateGlyphsWithKey2.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_11_AllTextAndWith1Symbol.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_12_TwoColumns.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_13_ThreeColumns.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_14_FourColumns.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_15_InvisibleContext.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_16_InvisibleContext.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_17_separateGlyphsWithKey3.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_1_SimpleKey.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_2_TextKey.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_3_With1Symbol.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_4_With2Symbols.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_5_WithLotsOfSymbols.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_6_WithLotsOfWidth.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_7_WithLotsOfLabelWidth.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_8_separateGlyphsWithKey.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_13_9_WonkyContextLabel.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_1_Glyph.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_2_GlyphInContainerFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_3_TwoGlyphsFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_4_GlyphSymbolsAndText.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_5_TwoArrowsFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_6_TwoGlyphsInContainerFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_7_TwoArrowsInContainerFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_1_8_EmptyGlyph.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_21_5_hiddenContext.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_29_1_MidSetEdge.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_29_2_ContainerSizes.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_29_3_LikeASequence.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_29_4_CornersInContainers.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_29_5_EmptyDiagram.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_2_2GlyphsArrowFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_3_2GlyphsHeadedArrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_4_2Glyphs2Arrows.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_5_3Glyphs2Arrows.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_6_1Glyph1Arrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_2_7_1Glyph1Arrow2.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_1_Basic2InABox.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_2_Basic3InABox.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_3_LotsInABox.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_4_RightFanFixedFirst.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_5_LeftFanFixedFirst.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_6_DownFanFixedMiddles.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_7_NoStepFan.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_31_8_NoFanTurn.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_1_3WayPointArrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_2_4WayPointArrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_3_5WayPointArrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_4_3WayNonPointArrow.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_5_3WayPointArrowWithBuffers.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_34_6_3WayPointArrowWithTerms.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_1_BalancedTwo.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_2_BalancedThree.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_3_BalancedFour.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_4_BalancedFourWithArrowTerminator.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_5_BalancedFourWithRoundTerminator.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_6_BalancedFourWithTwoTerminators.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_7_TerminatorsBasic.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_39_9_AllTheTerminators2012.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_56_2_GridWithDirectedConnections.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_56_3_GridWithDirectedConnections2.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_56_4_OddSupergrid.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_57_1_TextLineLink1.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_57_2_TextLineLink2.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_57_3_ExpandingArrow1.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_57_4_ExpandingArrow2.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_1_SimpleGlyphFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_2_TypedGlyphFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_3_GlyphWithTextFinal.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_4_GlyphWithSymbol.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_5_GlyphWithTextSymbol.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_6_GlyphWithSymbolOnly.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_5_7_GlyphWithMultilineTextSymbol.svg
+#	modified:   src/test/resources/org/kite9/diagram/functional/display/test_60_10_ContentsAlignedCentreDown.svg
+#

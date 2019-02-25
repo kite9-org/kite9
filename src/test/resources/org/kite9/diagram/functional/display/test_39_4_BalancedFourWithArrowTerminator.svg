@@ -6,7 +6,7 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [181.0,137.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  ><g id="3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [181.0,137.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
@@ -106,7 +106,7 @@
     </g
                                   >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [75.0,62.0] [33.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,8.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [75.0,62.0] [33.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,8.0)"
                                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -290,7 +290,7 @@
   <g id="g4-meets" debug="" class=" kite9-link" kite9-elem="link" rank="8"
                                                                                       >
     
-    <g id="auto:1" debug="position: ; d-bounds: [118.0,63.0] [13.0,10.0]; " kite9-elem="from" reference="g4" class="arrow kite9-from" transform="translate(118.0,63.0)"
+    <g id="2" debug="position: ; d-bounds: [118.0,63.0] [13.0,10.0]; " kite9-elem="from" reference="g4" class="arrow kite9-from" transform="translate(118.0,63.0)"
                                                                                         >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                           />

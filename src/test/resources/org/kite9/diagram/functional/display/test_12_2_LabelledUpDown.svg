@@ -98,7 +98,7 @@
     </g
                                   >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [25.0,89.0] [6.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [25.0,89.0] [6.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
                                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -136,7 +136,7 @@
                                             />
   </g
                                             >
-    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [28.0,54.0] [30.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(28.0,54.0)"
+    <g id="2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [28.0,54.0] [30.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(28.0,54.0)"
                                             >
     <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                               >
@@ -179,13 +179,13 @@
                                                         />
   </g
                                                         >
-    <g id="auto:3" debug="position: ; d-bounds: [23.0,138.0] [10.0,13.0]; " kite9-elem="to" reference="b" class="arrow kite9-to" transform="translate(23.0,138.0)"
+    <g id="4" debug="position: ; d-bounds: [23.0,138.0] [10.0,13.0]; " kite9-elem="to" reference="b" class="arrow kite9-to" transform="translate(23.0,138.0)"
                                                         >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                           />
   </g
                                                           >
-    <g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [28.0,116.0] [17.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(28.0,116.0)"
+    <g id="3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [28.0,116.0] [17.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(28.0,116.0)"
                                                           >
     <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                             >

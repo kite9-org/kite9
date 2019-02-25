@@ -45,11 +45,6 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 			
 		});
 	}
-	
-	@Before
-	public void resetCounter() {
-		AbstractMutableXMLElement.resetCounter();
-	}
 
 	protected void transcodePNG(String s) throws Exception {
 		TranscoderOutput out = getTranscoderOutputPNG();

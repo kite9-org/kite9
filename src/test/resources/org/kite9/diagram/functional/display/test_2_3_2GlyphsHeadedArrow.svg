@@ -11,7 +11,7 @@
     <g filter="url(#dropshadow)"
     >
       
-  <g id="auto:0-one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [57.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,15.0)" rank="0"
+  <g id="1-one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [57.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,15.0)" rank="0"
       >
     <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9827586206896551,0.9795918367346939)translate(0.5,0.5)"
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g id="auto:0-one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [37.0,14.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,6.0)"
+    <g id="1-one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,21.0] [37.0,14.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,6.0)"
             >
     <g debug="" class=" kite9-show-box" kite9-elem="show-box"
               >
@@ -49,7 +49,7 @@
                   >
   </g
                   >
-    <g id="auto:0-one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [30.0,40.0] [27.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(15.0,25.0)"
+    <g id="1-one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [30.0,40.0] [27.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(15.0,25.0)"
                   >
     <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                     >
@@ -81,7 +81,7 @@
                         >
   </g
                         >
-  <g id="auto:1-two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [142.0,15.0] [57.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(142.0,15.0)" rank="1"
+  <g id="1-two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [142.0,15.0] [57.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(142.0,15.0)" rank="1"
                         >
     <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9827586206896551,0.9795918367346939)translate(0.5,0.5)"
                           >
@@ -92,7 +92,7 @@
     <g class="glyph"
                             >
       
-    <g id="auto:1-two-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [152.0,21.0] [37.0,14.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,6.0)"
+    <g id="1-two-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [152.0,21.0] [37.0,14.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,6.0)"
                               >
     <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                 >
@@ -119,7 +119,7 @@
                                     >
   </g
                                     >
-    <g id="auto:1-two-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [157.0,40.0] [28.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(15.0,25.0)"
+    <g id="1-two-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [157.0,40.0] [28.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(15.0,25.0)"
                                     >
     <g debug="" class=" kite9-show-box" kite9-elem="show-box"
                                       >
@@ -160,7 +160,7 @@
     </g
                                               >
     
-    <g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,32.0] [33.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [87.0,32.0] [33.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
                                               >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -183,7 +183,7 @@
   
   </g
                                                   >
-  <g id="meets-auto:0-one" debug="" class=" kite9-link" kite9-elem="link" rank="3"
+  <g id="meets-1-one" debug="" class=" kite9-link" kite9-elem="link" rank="3"
                                                   >
     
     <g debug="position: ; d-bounds: [77.0,34.0] [10.0,10.0]; " reference="meets" class=" kite9-from" kite9-elem="from" transform="translate(77.0,34.0)"
@@ -192,7 +192,7 @@
                                                       />
   </g
                                                       >
-    <g debug="position: ; d-bounds: [67.0,34.0] [10.0,10.0]; " reference="auto:0-one" class=" kite9-to" kite9-elem="to" transform="translate(67.0,34.0)"
+    <g debug="position: ; d-bounds: [67.0,34.0] [10.0,10.0]; " reference="1-one" class=" kite9-to" kite9-elem="to" transform="translate(67.0,34.0)"
                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                         />
@@ -207,7 +207,7 @@
                                                           >
   </g
                                                           >
-  <g id="meets-auto:1-two" debug="" class=" kite9-link" kite9-elem="link" rank="4"
+  <g id="meets-1-two" debug="" class=" kite9-link" kite9-elem="link" rank="4"
                                                           >
     
     <g debug="position: ; d-bounds: [120.0,34.0] [10.0,10.0]; " reference="meets" class=" kite9-from" kite9-elem="from" transform="translate(120.0,34.0)"
@@ -216,7 +216,7 @@
                                                               />
   </g
                                                               >
-    <g id="auto:3" debug="position: ; d-bounds: [130.0,34.0] [13.0,10.0]; " kite9-elem="to" reference="auto:1-two" class="arrow kite9-to" transform="translate(130.0,34.0)"
+    <g id="2" debug="position: ; d-bounds: [130.0,34.0] [13.0,10.0]; " kite9-elem="to" reference="1-two" class="arrow kite9-to" transform="translate(130.0,34.0)"
                                                               >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                 />

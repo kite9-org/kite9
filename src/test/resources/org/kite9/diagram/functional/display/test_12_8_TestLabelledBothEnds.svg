@@ -59,7 +59,7 @@
     </g
                       >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,22.0] [6.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [20.0,22.0] [6.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
                       >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -97,7 +97,7 @@
                                 />
   </g
                                 >
-    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [41.0,29.0] [63.0,22.0]; " class=" kite9-fromLabel" kite9-elem="fromLabel" transform="translate(41.0,29.0)"
+    <g id="2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [41.0,29.0] [63.0,22.0]; " class=" kite9-fromLabel" kite9-elem="fromLabel" transform="translate(41.0,29.0)"
                                 >
     <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                   >
@@ -124,7 +124,7 @@
                                       >
   </g
                                       >
-    <g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [108.0,29.0] [72.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(108.0,29.0)"
+    <g id="3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [108.0,29.0] [72.0,22.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(108.0,29.0)"
                                       >
     <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                         >

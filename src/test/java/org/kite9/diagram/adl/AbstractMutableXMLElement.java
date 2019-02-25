@@ -15,22 +15,19 @@ public abstract class AbstractMutableXMLElement extends AbstractStyleableXMLElem
 	 */
 	public static ADLDocument TESTING_DOCUMENT = new ADLDocument();
 	
-
-	private static int counter = 0;
-
 	public AbstractMutableXMLElement(String id, String tag, ADLDocument doc) {
 		this(tag, doc);
 		
 		if ((id == null) || (id.length()==0)) {
-			id = createID();
+			id = doc.createUniqueId();
 		}
 		
 		setID(id);
 	}
 	
 
-	protected static synchronized String createID() {
-		return AUTO_GENERATED_ID_PREFIX+counter++;
+	protected synchronized String createID() {
+		return getOwnerDocument().createUniqueId();
 	}
 	
 
@@ -39,10 +36,6 @@ public abstract class AbstractMutableXMLElement extends AbstractStyleableXMLElem
 	}
 
 	public static final String AUTO_GENERATED_ID_PREFIX = "auto:";
-
-	public static void resetCounter() {
-		counter = 0;
-	}
 
 	public AbstractMutableXMLElement() {
 		super();

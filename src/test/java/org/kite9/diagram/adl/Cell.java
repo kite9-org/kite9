@@ -44,10 +44,6 @@ public class Cell extends AbstractXMLContainerElement {
 		this(id, contents, TESTING_DOCUMENT);
 	}
 
-	public Cell(List<Kite9XMLElement> contents) {
-		this(createID(), contents);
-	}
-
 	@Override
 	protected Node newNode() {
 		return new Cell();

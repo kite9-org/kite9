@@ -318,7 +318,7 @@
                                                                                                     />
   </g
                                                                                                     >
-    <g id="auto:0" debug="position: ; d-bounds: [75.0,35.0] [13.0,10.0]; " kite9-elem="to" reference="one" class="diamond kite9-to" transform="translate(75.0,35.0)"
+    <g id="1" debug="position: ; d-bounds: [75.0,35.0] [13.0,10.0]; " kite9-elem="to" reference="one" class="diamond kite9-to" transform="translate(75.0,35.0)"
                                                                                                     >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                       />
@@ -336,13 +336,13 @@
   <g id="three-one" drawDirection="UP" debug="" class=" kite9-link" kite9-elem="link" rank="2"
                                                                                                         >
     
-    <g id="auto:1" debug="position: ; d-bounds: [48.0,113.0] [10.0,10.0]; " kite9-elem="from" reference="three" class="circle kite9-from" transform="translate(48.0,113.0)"
+    <g id="2" debug="position: ; d-bounds: [48.0,113.0] [10.0,10.0]; " kite9-elem="from" reference="three" class="circle kite9-from" transform="translate(48.0,113.0)"
                                                                                                           >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                             />
   </g
                                                                                                             >
-    <g id="auto:2" debug="position: ; d-bounds: [48.0,93.0] [10.0,10.0]; " kite9-elem="to" reference="one" class="circle kite9-to" transform="translate(48.0,93.0)"
+    <g id="3" debug="position: ; d-bounds: [48.0,93.0] [10.0,10.0]; " kite9-elem="to" reference="one" class="circle kite9-to" transform="translate(48.0,93.0)"
                                                                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                               />
@@ -360,7 +360,7 @@
   <g id="four-one" drawDirection="LEFT" debug="" class=" kite9-link" kite9-elem="link" rank="3"
                                                                                                                 >
     
-    <g id="auto:3" debug="position: ; d-bounds: [91.0,83.0] [13.0,10.0]; " kite9-elem="from" reference="four" class="arrow kite9-from" transform="translate(91.0,83.0)"
+    <g id="4" debug="position: ; d-bounds: [91.0,83.0] [13.0,10.0]; " kite9-elem="from" reference="four" class="arrow kite9-from" transform="translate(91.0,83.0)"
                                                                                                                   >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                     />

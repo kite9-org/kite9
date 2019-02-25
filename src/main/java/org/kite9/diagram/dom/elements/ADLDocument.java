@@ -49,6 +49,9 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware {
 	}
 	
 	public boolean elementIdExists(String id) {
+		if (elementsById == null) {
+			return false;
+		}
 		return elementsById.containsKey(id);
 	}
 	

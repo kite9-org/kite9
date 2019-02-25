@@ -63,7 +63,7 @@
     </g
                       >
     
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [32.0,18.0] [40.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [32.0,18.0] [40.0,14.0]; " class=" kite9-label" kite9-elem="label" transform="translate(5.0,3.0)"
                       >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
@@ -95,7 +95,7 @@
                               />
   </g
                               >
-    <g id="auto:3" debug="position: ; d-bounds: [47.0,67.0] [10.0,13.0]; " kite9-elem="to" reference="g2" class="arrow kite9-to" transform="translate(47.0,67.0)"
+    <g id="2" debug="position: ; d-bounds: [47.0,67.0] [10.0,13.0]; " kite9-elem="to" reference="g2" class="arrow kite9-to" transform="translate(47.0,67.0)"
                               >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                 />

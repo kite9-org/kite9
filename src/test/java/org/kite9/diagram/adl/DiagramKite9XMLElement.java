@@ -27,7 +27,7 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 	}
 	
 	public DiagramKite9XMLElement(ADLDocument doc) {
-		this(createID(), doc);
+		this(doc.createUniqueId(), doc);
 	}
 	
 	public DiagramKite9XMLElement(String id, ADLDocument doc) {
@@ -84,7 +84,7 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 	}
 
 	public DiagramKite9XMLElement(List<Kite9XMLElement> contents, Kite9XMLElement k) {
-		this(createID(), contents, k);
+		this(TESTING_DOCUMENT.createUniqueId(), contents, k);
 	}
 
 	public Kite9XMLElement getKey() {

@@ -6,7 +6,7 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g id="auto:4" style="kite9-layout: right;" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: RIGHT; d-bounds: [0.0,0.0] [967.0,162.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  ><g id="5" style="kite9-layout: right;" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: RIGHT; d-bounds: [0.0,0.0] [967.0,162.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
@@ -63,7 +63,7 @@
                     >
   </g
                     >
-    <g id="auto:0" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [120.0,125.0] [16.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
+    <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [120.0,125.0] [16.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
                     >
     <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                       >
@@ -149,7 +149,7 @@
                                           >
   </g
                                           >
-    <g id="auto:1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [355.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
+    <g id="2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [355.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
                                           >
     <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                             >
@@ -284,7 +284,7 @@
                                                                             >
   </g
                                                                             >
-    <g id="auto:2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [592.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
+    <g id="3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [592.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
                                                                             >
     <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                               >
@@ -370,7 +370,7 @@
                                                                                                   >
   </g
                                                                                                   >
-    <g id="auto:3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [829.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
+    <g id="4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [829.0,125.0] [18.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(105.0,110.0)"
                                                                                                   >
     <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
                                                                                                     >

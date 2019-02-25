@@ -49,7 +49,7 @@ public class Glyph extends AbstractMutableXMLElement {
 	}
 	
 	public Glyph(String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {
-		this(createID()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
+		this(TESTING_DOCUMENT.createUniqueId()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
 	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {

@@ -50,7 +50,7 @@ public class Context extends AbstractXMLContainerElement {
 	}
 
 	public Context(List<Kite9XMLElement> contents, boolean b, Kite9XMLElement label, Layout l) {
-		this(createID(), contents, b, label, l);
+		this(TESTING_DOCUMENT.createUniqueId(), contents, b, label, l);
 	}
 
 	public boolean isBordered() {
