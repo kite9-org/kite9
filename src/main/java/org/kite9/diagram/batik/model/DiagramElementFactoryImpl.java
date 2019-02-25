@@ -84,7 +84,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			case LABEL:
 				return new LabelLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
 			case DECAL:
-				return new DecalLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.RESCALE);
+				return new DecalLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.POSITION);
 			case REGULAR:
 			default:
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);

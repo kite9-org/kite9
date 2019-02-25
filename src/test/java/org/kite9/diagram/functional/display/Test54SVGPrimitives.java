@@ -164,7 +164,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scaledOpen() {
-		return "<somescaled style='kite9-usage: decal; kite9-type: svg; '>"; 
+		return "<somescaled style='kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; '>"; 
 	}
 	
 	private String scaledClose() {

@@ -13,7 +13,7 @@
       
   <g id="1-a" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [203.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,15.0)" rank="0"
       >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9950980392156863,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
         >
       <rect x="0" y="0" width="203.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
           />
@@ -52,7 +52,7 @@
                   >
   <g id="i1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [17.0,111.0] [16.0,20.0]; " class=" kite9-arrow" kite9-elem="arrow" transform="translate(17.0,111.0)" rank="1"
                   >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back"
                     >
       <rect x="0" y="0" width="16.0" style="fill: black; " rx="4" ry="4" height="20.0"
                       />
@@ -84,7 +84,7 @@
                           >
   <g id="i2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [171.0,71.0] [18.0,20.0]; " class=" kite9-arrow" kite9-elem="arrow" transform="translate(171.0,71.0)" rank="2"
                           >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back"
                             >
       <rect x="0" y="0" width="18.0" style="fill: black; " rx="4" ry="4" height="20.0"
                               />
@@ -116,7 +116,7 @@
                                   >
   <g id="i3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [199.0,96.0] [18.0,20.0]; " class=" kite9-arrow" kite9-elem="arrow" transform="translate(199.0,96.0)" rank="3"
                                   >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class="arrow-back kite9-back" kite9-elem="back"
                                     >
       <rect x="0" y="0" width="18.0" style="fill: black; " rx="4" ry="4" height="20.0"
                                       />
@@ -163,7 +163,7 @@
                                                 >
     <g id="4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [25.0,54.0] [136.0,47.0]; " class=" kite9-toLabel" kite9-elem="toLabel" transform="translate(25.0,54.0)"
                                                 >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                   >
       <rect x="0" y="0" width="136.0" rx="4" class="connection-label-back" ry="4" height="47.0"
                                                     />

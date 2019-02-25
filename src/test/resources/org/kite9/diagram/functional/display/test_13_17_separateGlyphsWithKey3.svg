@@ -16,7 +16,7 @@
     
     <g id="c" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [27.0,27.0] [25.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(12.0,12.0)"
         >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9615384615384616,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
           >
       <rect x="0" y="0" width="25.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
             />
@@ -55,7 +55,7 @@
                     >
     <g id="1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [62.0,46.0] [158.0,22.0]; " class=" kite9-label" kite9-elem="label" transform="translate(47.0,31.0)"
                     >
-    <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg;" debug="" class=" kite9-back" kite9-elem="back"
                       >
       <rect x="0" y="0" width="158.0" rx="4" class="container-label-back" ry="4" height="22.0"
                         />
@@ -93,7 +93,7 @@
   </g
                           >
   
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9954128440366973,0.9814814814814815)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                           >
       <rect x="0" y="0" width="217.0" rx="12" class="context-back" ry="12" height="53.0"
                             />
@@ -103,7 +103,7 @@
                             >
   <g id="e" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [27.0,78.0] [26.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(27.0,78.0)" rank="1"
                             >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9629629629629629,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                               >
       <rect x="0" y="0" width="26.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                 />

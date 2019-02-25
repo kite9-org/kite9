@@ -6,12 +6,12 @@
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
     ><g id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [159.0,58.0]; " class=" kite9-container" kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(159.0,58.0)translate(-0.0,-0.0)"
+        ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(159.0,58.0)translate(-0.0,-0.0)"
           ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
           /></g
           ><g id="container2" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [60.0,60.0] [139.0,38.0]; " class=" kite9-container" kite9-elem="container" transform="translate(10.0,10.0)"
           ><g style="fill: yellow; "
-            ><g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(139.0,38.0)translate(-0.0,-0.0)"
+            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(139.0,38.0)translate(-0.0,-0.0)"
               ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
               /></g
               ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [70.0,70.0] [119.0,18.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"
@@ -24,12 +24,12 @@
       ></g
       ><g id="container3" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [219.0,59.0] [40.0,40.0]; " class=" kite9-container" kite9-elem="container" transform="translate(219.0,59.0)"
       ><g style="fill: green; "
-        ><g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(13.333333333333334,13.333333333333334)translate(-1.0,-1.0)"
+        ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(13.333333333333334,13.333333333333334)translate(-1.0,-1.0)"
           ><rect x="1" width="3" stroke-width="0" y="1" height="3" stroke="black"
           /></g
           ><g id="container4" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [229.0,69.0] [20.0,20.0]; " class=" kite9-container" kite9-elem="container" transform="translate(10.0,10.0)"
           ><g style="fill: blue; "
-            ><g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(0.6451612903225806,1.8181818181818181)translate(0.5,-29.5)"
+            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(0.6451612903225806,1.8181818181818181)translate(0.5,-29.5)"
               ><rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
               /></g
             ></g

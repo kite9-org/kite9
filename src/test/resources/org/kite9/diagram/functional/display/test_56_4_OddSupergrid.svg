@@ -13,7 +13,7 @@
       
   <g transform="translate(15.0,15.0)" style="kite9-layout: grid; kite9-grid-size: 5 5;" rank="0" class=" kite9-grid" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [15.0,15.0] [777.0,214.0]; " id="outer" kite9-elem="grid"
       >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,1.0)translate(-0.0,-0.0)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
         >
       <rect x="0" width="777.0" height="214.0" y="0" class="grid-back"
           />
@@ -22,7 +22,7 @@
     
     <g id="c0-0" style="kite9-occupies: 0 0 0 0;" debug="position: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [256.0,68.0]; " class=" kite9-cell" kite9-elem="cell"
           >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9990243902439024,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
             >
       <path class="cell-edge" d="M 0,68.0 L0,0 L256.0,0"
               />
@@ -31,7 +31,7 @@
     
       <g id="four" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [25.0,40.0] [236.0,29.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(10.0,25.0)"
               >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9957805907172996,0.9666666666666667)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                 >
       <rect x="0" y="0" width="236.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                   />
@@ -83,7 +83,7 @@
                           >
     <g id="c0-1" style="kite9-occupies: 0 0 1 1;" debug="position: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,83.0] [256.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(0.0,68.0)"
                           >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9990243902439024,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                             >
       <path class="cell-edge" d="M 0,68.0 L0,0 L256.0,0"
                               />
@@ -94,7 +94,7 @@
                               >
     <g id="c0-2" style="kite9-occupies: 0 0 2 2;" debug="position: 0-0,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,151.0] [256.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(0.0,136.0)"
                               >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                 >
       <path class="cell-edge" d="M 0,0.0 L0,0 L256.0,0"
                                   />
@@ -105,7 +105,7 @@
                                   >
     <g id="c0-3" style="kite9-occupies: 0 0 3 3;" debug="position: 0-0,3-3; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,151.0] [256.0,78.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(0.0,136.0)"
                                   >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9990243902439024,0.9968051118210862)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                     >
       <path class="cell-edge" d="M 0,78.0 L0,0 L256.0,0"
                                       />
@@ -116,7 +116,7 @@
                                       >
     <g id="c0-4" style="kite9-occupies: 0 0 4 4;" debug="position: 0-0,4-4; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,229.0] [256.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(0.0,214.0)"
                                       >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                         >
       <path class="cell-edge" d="M 0,0.0 L0,0 L256.0,0"
                                           />
@@ -127,7 +127,7 @@
                                           >
     <g id="c1-0" style="kite9-occupies: 1 1 0 0;" debug="position: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [271.0,15.0] [191.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(256.0,0.0)"
                                           >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                             >
       <path class="cell-edge" d="M 0,68.0 L0,0 L191.0,0"
                                               />
@@ -138,7 +138,7 @@
                                               >
     <g id="c1-1" style="kite9-occupies: 1 1 1 1;" debug="position: 1-1,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [271.0,83.0] [191.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(256.0,68.0)"
                                               >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                 >
       <path class="cell-edge" d="M 0,68.0 L0,0 L191.0,0"
                                                   />
@@ -149,7 +149,7 @@
                                                   >
     <g id="c1-2" style="kite9-occupies: 1 1 2 2;" debug="position: 1-1,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [271.0,151.0] [191.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(256.0,136.0)"
                                                   >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                     >
       <path class="cell-edge" d="M 0,0.0 L0,0 L191.0,0"
                                                       />
@@ -160,7 +160,7 @@
                                                       >
     <g id="c1-3" style="kite9-occupies: 1 1 3 3;" debug="position: 1-1,3-3; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [271.0,151.0] [191.0,78.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(256.0,136.0)"
                                                       >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9968051118210862)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                         >
       <path class="cell-edge" d="M 0,78.0 L0,0 L191.0,0"
                                                           />
@@ -169,7 +169,7 @@
     
       <g id="two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [281.0,161.0] [171.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(10.0,10.0)"
                                                           >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9941860465116279,0.9795918367346939)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                                                             >
       <rect x="0" y="0" width="171.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
                                                               />
@@ -246,7 +246,7 @@
                                                                             >
     <g id="c1-4" style="kite9-occupies: 1 1 4 4;" debug="position: 1-1,4-4; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [271.0,229.0] [191.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(256.0,214.0)"
                                                                             >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                               >
       <path class="cell-edge" d="M 0,0.0 L0,0 L191.0,0"
                                                                                 />
@@ -257,7 +257,7 @@
                                                                                 >
     <g id="c2-0" style="kite9-occupies: 2 2 0 0;" debug="position: 2-2,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [462.0,15.0] [139.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(447.0,0.0)"
                                                                                 >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9982046678635548,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                   >
       <path class="cell-edge" d="M 0,68.0 L0,0 L139.0,0"
                                                                                     />
@@ -268,7 +268,7 @@
                                                                                     >
     <g id="c2-1" style="kite9-occupies: 2 2 1 1;" debug="position: 2-2,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [462.0,83.0] [139.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(447.0,68.0)"
                                                                                     >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9982046678635548,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                       >
       <path class="cell-edge" d="M 0,68.0 L0,0 L139.0,0"
                                                                                         />
@@ -277,7 +277,7 @@
     
       <g id="one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [482.0,93.0] [99.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(20.0,10.0)"
                                                                                         >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.99,0.9795918367346939)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                                                                                           >
       <rect x="0" y="0" width="99.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
                                                                                             />
@@ -354,7 +354,7 @@
                                                                                                           >
     <g id="c2-2" style="kite9-occupies: 2 2 2 2;" debug="position: 2-2,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [462.0,151.0] [139.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(447.0,136.0)"
                                                                                                           >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                             >
       <path class="cell-edge" d="M 0,0.0 L0,0 L139.0,0"
                                                                                                               />
@@ -365,7 +365,7 @@
                                                                                                               >
     <g id="c2-3" style="kite9-occupies: 2 2 3 3;" debug="position: 2-2,3-3; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [462.0,151.0] [139.0,78.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(447.0,136.0)"
                                                                                                               >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9982046678635548,0.9968051118210862)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                 >
       <path class="cell-edge" d="M 0,78.0 L0,0 L139.0,0"
                                                                                                                   />
@@ -376,7 +376,7 @@
                                                                                                                   >
     <g id="c2-4" style="kite9-occupies: 2 2 4 4;" debug="position: 2-2,4-4; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [462.0,229.0] [139.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(447.0,214.0)"
                                                                                                                   >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                     >
       <path class="cell-edge" d="M 0,0.0 L0,0 L139.0,0"
                                                                                                                       />
@@ -387,7 +387,7 @@
                                                                                                                       >
     <g id="c3-0" style="kite9-occupies: 3 3 0 0;" debug="position: 3-3,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [601.0,15.0] [191.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(586.0,0.0)"
                                                                                                                       >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                         >
       <path class="cell-edge" d="M 0,68.0 L0,0 L191.0,0"
                                                                                                                           />
@@ -396,7 +396,7 @@
     
       <g id="three" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [611.0,25.0] [171.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(10.0,10.0)"
                                                                                                                           >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9941860465116279,0.9795918367346939)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                             >
       <rect x="0" y="0" width="171.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
                                                                                                                               />
@@ -473,7 +473,7 @@
                                                                                                                                             >
     <g id="c3-1" style="kite9-occupies: 3 3 1 1;" debug="position: 3-3,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [601.0,83.0] [191.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(586.0,68.0)"
                                                                                                                                             >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                               >
       <path class="cell-edge" d="M 0,68.0 L0,0 L191.0,0"
                                                                                                                                                 />
@@ -484,7 +484,7 @@
                                                                                                                                                 >
     <g id="c3-2" style="kite9-occupies: 3 3 2 2;" debug="position: 3-3,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [601.0,151.0] [191.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(586.0,136.0)"
                                                                                                                                                 >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                   >
       <path class="cell-edge" d="M 0,0.0 L0,0 L191.0,0"
                                                                                                                                                     />
@@ -495,7 +495,7 @@
                                                                                                                                                     >
     <g id="c3-3" style="kite9-occupies: 3 3 3 3;" debug="position: 3-3,3-3; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [601.0,151.0] [191.0,78.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(586.0,136.0)"
                                                                                                                                                     >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9986928104575163,0.9968051118210862)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                       >
       <path class="cell-edge" d="M 0,78.0 L0,0 L191.0,0"
                                                                                                                                                         />
@@ -506,7 +506,7 @@
                                                                                                                                                         >
     <g id="c3-4" style="kite9-occupies: 3 3 4 4;" debug="position: 3-3,4-4; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [601.0,229.0] [191.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(586.0,214.0)"
                                                                                                                                                         >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(1.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                           >
       <path class="cell-edge" d="M 0,0.0 L0,0 L191.0,0"
                                                                                                                                                             />
@@ -517,7 +517,7 @@
                                                                                                                                                             >
     <g id="c4-0" style="kite9-occupies: 4 4 0 0;" debug="position: 4-4,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [792.0,15.0] [0.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(777.0,0.0)"
                                                                                                                                                             >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.0,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                               >
       <path class="cell-edge" d="M 0,68.0 L0,0 L0.0,0"
                                                                                                                                                                 />
@@ -528,7 +528,7 @@
                                                                                                                                                                 >
     <g id="c4-1" style="kite9-occupies: 4 4 1 1;" debug="position: 4-4,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [792.0,83.0] [0.0,68.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(777.0,68.0)"
                                                                                                                                                                 >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.0,0.9963369963369964)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                                   >
       <path class="cell-edge" d="M 0,68.0 L0,0 L0.0,0"
                                                                                                                                                                     />
@@ -539,7 +539,7 @@
                                                                                                                                                                     >
     <g id="c4-2" style="kite9-occupies: 4 4 2 2;" debug="position: 4-4,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [792.0,151.0] [0.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(777.0,136.0)"
                                                                                                                                                                     >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                                       >
       <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
                                                                                                                                                                         />
@@ -550,7 +550,7 @@
                                                                                                                                                                         >
     <g id="c4-3" style="kite9-occupies: 4 4 3 3;" debug="position: 4-4,3-3; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [792.0,151.0] [0.0,78.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(777.0,136.0)"
                                                                                                                                                                         >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.0,0.9968051118210862)translate(0.25,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                                           >
       <path class="cell-edge" d="M 0,78.0 L0,0 L0.0,0"
                                                                                                                                                                             />
@@ -561,7 +561,7 @@
                                                                                                                                                                             >
     <g id="c4-4" style="kite9-occupies: 4 4 4 4;" debug="position: 4-4,4-4; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [792.0,229.0] [0.0,0.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(777.0,214.0)"
                                                                                                                                                                             >
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.0,0.0)translate(-0.0,0.25)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                                               >
       <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
                                                                                                                                                                                 />
@@ -571,7 +571,7 @@
   </g
                                                                                                                                                                                 >
   
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9987146529562982,0.9953488372093023)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                                                                                                                                                 >
       <rect x="0" width="777.0" height="214.0" y="0" class="grid-frame"
                                                                                                                                                                                   />

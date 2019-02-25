@@ -84,7 +84,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	 */
 	@Test
 	public void test_59_10_TextAndBadge() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello something", "")+badgeDecal(),"kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("hello something", "font-size: 33px;")+badgeDecal(),"kite9-padding: 10px;")));
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_59_15_TextInShape() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text(para(), "", textPath()),"")));
+		renderDiagram(basicDiagram(glyphContainer(text(para(), "font-size: 8px;  ", textPath()),"")));
 	}
 	
 	@Test
@@ -161,19 +161,20 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String text(String xml, String extraAtts) {
-		return    "      <text style=\"kite9-type: text; "+extraAtts+"\">\n" 
+		return    "      <text style=\"kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
 				+ "      </text>\n";
 	}
 	
 	private String scaledText(String xml, String extraAtts) {
-		return    "      <text transform=\"scale(3,3)\" style=\"kite9-type: text; "+extraAtts+"\">\n" 
+		return    "      <text transform=\"scale(3,3)\" style=\"kite9-type: text; font-family:  opensans-light-webfont; " + 
+				""+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
 				+ "      </text>\n";
 	}
 	
 	private String text(String xml, String extraAtts, String flowRegionShape) {
-		return    "      <text style=\"kite9-type: text; "+extraAtts+"\">\n" 
+		return    "      <text style=\"kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
 				+ "        <svg:flowRegion>"
 				+ "          "+flowRegionShape

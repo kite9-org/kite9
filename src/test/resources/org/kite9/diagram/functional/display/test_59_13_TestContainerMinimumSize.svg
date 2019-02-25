@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="275.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="150.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="277.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="150.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [275.0,150.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [277.0,150.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [245.0,120.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [247.0,120.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
       >
-      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal" transform="scale(0.9959349593495935,0.9917355371900827)translate(0.5,0.5)"
+      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal"
         >
-        <rect x="0" y="0" width="245.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
+        <rect x="0" y="0" width="247.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="120.0"
           />
       </g
           >
-      <g style="kite9-type: text; font-size: 25px;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,53.0] [225.0,28.0]; " class=" kite9-text" kite9-elem="text" transform="translate(8.35205078125,38.21484375)"
-          ><g font-family="'Arial'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="22.417" stroke="none"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,48.0] [227.0,34.0]; " class=" kite9-text" kite9-elem="text" transform="translate(7.7783203125,36.27270317077637)"
+          ><g font-family="'opensans-light-webfont'" font-size="25px"
+            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
               ><tspan
                 >h</tspan
                 ><tspan
@@ -35,9 +35,9 @@
             ></g
           ></g
           >
-      <g style="kite9-type: text; font-size: 15px; kite9-vertical-align: bottom;" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [116.0,109.0] [43.0,16.0]; " class=" kite9-text" kite9-elem="text" transform="translate(100.01123046875,94.12890625)"
-          ><g font-family="'Arial'" font-size="15px"
-            ><text x="0" xml:space="preserve" y="13.4502" stroke="none"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom;" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [117.0,105.0] [43.0,20.0]; " class=" kite9-text" kite9-elem="text" transform="translate(100.6669921875,91.963623046875)"
+          ><g font-family="'opensans-light-webfont'" font-size="15px"
+            ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
               ><tspan
                 >h</tspan
                 ><tspan

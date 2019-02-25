@@ -6,7 +6,7 @@
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
     ><g id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [139.0,38.0]; " class=" kite9-container" kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g id="adap" style="kite9-type: svg; kite9-usage: decal; " debug="" class=" kite9-someadaptive" kite9-elem="someadaptive" transform="scale(0.9865463917023357,0.916433015379908)translate(0.39555683732032776,1.5)"
+        ><g id="adap" style="kite9-type: svg; kite9-usage: decal; " debug="" class=" kite9-someadaptive" kite9-elem="someadaptive"
           ><path d="M0 0 H 139.0 V 38.0z"
           /></g
           ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [119.0,18.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(8.876953125,28.20068359375)"

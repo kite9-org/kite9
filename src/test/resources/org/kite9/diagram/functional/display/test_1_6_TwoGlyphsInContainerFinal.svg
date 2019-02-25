@@ -16,7 +16,7 @@
     
     <g id="1-rob's glyph" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [27.0,62.0] [99.0,48.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(12.0,47.0)"
         >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.99,0.9795918367346939)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
           >
       <rect x="0" y="0" width="99.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
             />
@@ -88,7 +88,7 @@
                           >
     <g id="3-two" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [136.0,27.0] [75.0,83.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(121.0,12.0)"
                           >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9868421052631579,0.9880952380952381)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
                             >
       <rect x="0" y="0" width="75.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="83.0"
                               />
@@ -205,7 +205,7 @@
   </g
                                                       >
   
-    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back" transform="scale(0.9952153110047847,0.9907407407407407)translate(0.5,0.5)"
+    <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                                                       >
       <rect x="0" y="0" width="208.0" rx="12" class="context-back" ry="12" height="107.0"
                                                         />
