@@ -18,7 +18,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_54_2_FixedGraphicsPrimitive() throws Exception {
-		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen()+svgText()+fixedSizeClose()+diagramClose() + svgClose();
+		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen()+svgSquiggle()+fixedSizeClose()+diagramClose() + svgClose();
 		transcodeSVG(someXML);
 	}
 
@@ -46,7 +46,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 								svgRect2() +
 							scaledClose()+ 
 							fixedSizeOpen()+
-								svgText()+
+								svgSquiggle()+
 							fixedSizeClose() +
 						containerClose() +
 					containerClose() +
@@ -75,7 +75,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 							scalablePath() +
 						adaptiveClose() +
 						fixedSizeOpen()+
-							svgText()+
+							svgSquiggle()+
 						fixedSizeClose() +
 					containerClose() +
 				diagramClose()+ 
@@ -188,8 +188,8 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		return "</svg:g></container>";
 	}
 	
-	private String svgText() {
-		return "<svg:text style='font-size: 25px; stroke: none; fill: orange; '>Some Text</svg:text>";
+	private String svgSquiggle() {
+		return "<svg:path d=\"M 100 100 L 300 100 L 200 300 z\" fill=\"red\" stroke=\"blue\" stroke-width=\"3\" />";
 	}
 	
 	private String svgRect2() {

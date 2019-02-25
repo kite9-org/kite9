@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="219.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="118.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g id="one" style="kite9-type: diagram; kite9-padding: 50px;" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [219.0,118.0]; " class=" kite9-diagram" kite9-elem="diagram"
+<svg contentScriptType="text/ecmascript" width="304.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="304.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><g id="one" style="kite9-type: diagram; kite9-padding: 50px;" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [304.0,304.0]; " class=" kite9-diagram" kite9-elem="diagram"
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [50.0,50.0] [119.0,18.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(48.876953125,68.20068359375)"
-      ><text style="font-size: 25px; stroke: none; fill: orange; "
-        >Some Text</text
-      ></g
+    ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [50.0,50.0] [204.0,204.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(-47.57295227050781,-48.5)"
+      ><path fill="red" d="M 100 100 L 300 100 L 200 300 z" stroke-width="3" stroke="blue"
+      /></g
     ></g
   ></g
 ></svg
