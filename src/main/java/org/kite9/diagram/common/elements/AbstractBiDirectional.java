@@ -40,16 +40,8 @@ public abstract class AbstractBiDirectional<X> implements BiDirectional<X> {
 		this.to = to;
 	}
 
-	private static int counter = 0; 
-
-	protected static synchronized String createID() {
-		return AUTO_GENERATED_ID_PREFIX+counter++;
-	}
-	
-	public static final String AUTO_GENERATED_ID_PREFIX = "auto:";
-
-	public AbstractBiDirectional(X from, X to, Direction drawDirection) {
-		this.id = createID();
+	public AbstractBiDirectional(String id, X from, X to, Direction drawDirection) {
+		this.id = id;
 		setFrom(from);
 		setTo(to);
 		setDrawDirection(drawDirection);

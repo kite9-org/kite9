@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> implements Connection, Temporary {
 	
 	public GeneratedLayoutConnection(Connected from, Connected to, Direction drawDirection) {
-		super(from, to, drawDirection);
+		super(from.getID()+"="+to.getID(), from, to, drawDirection);
 	}
 
 	@Override

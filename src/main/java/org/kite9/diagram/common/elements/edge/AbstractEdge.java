@@ -12,7 +12,7 @@ public abstract class AbstractEdge extends AbstractBiDirectional<Vertex> impleme
 	private int hashCode;
 
 	public AbstractEdge(Vertex from, Vertex to, Direction d) {
-		super(from, to, d);
+		super(from.getID()+"-"+to.getID(), from, to, d);
 		this.hashCode = from.hashCode() + to.hashCode();
 	}
 

@@ -23,7 +23,7 @@ public class OrderingTemporaryConnection extends AbstractBiDirectional<Connected
 	}
 
 	public OrderingTemporaryConnection(Connected from, Connected to, Direction drawDirection, Container c) {
-		super(from, to, drawDirection);
+		super(from.getID()+":"+to.getID(), from, to, drawDirection);
 		this.c = c;
 	}
 	
