@@ -55,7 +55,10 @@ This is achieved by adding a `<svg:flowRegion>` element within the Kite9 text el
     </rect>
   </diagram>
 </svg:svg>
+```
 
 You can put in whatever shape you like, and Kite9 will fill it with text, and render it back for the browser to show in regular (non 1.2) SVG.
 
 Also shown in the example above, you can use `<svg:flowDiv>` to break the text up into paragraphs to be flowed.  Again, this is optional.
+
+Again, as you can see, the `<rect>` surrounding all this text is correctly sized to the text itself (although arguably could do with some padding).

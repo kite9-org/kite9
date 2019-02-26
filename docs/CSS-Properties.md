@@ -2,22 +2,6 @@
 #
 
 	
-	// margin property
-	public static final String KITE9_CSS_MARGIN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"margin-";
-	public static final String MARGIN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"margin";
-	public static final String MARGIN_BOTTOM_PROPERTY = KITE9_CSS_MARGIN_PROPERTY_PREFIX+BOTTOM;
-	public static final String MARGIN_TOP_PROPERTY = KITE9_CSS_MARGIN_PROPERTY_PREFIX+TOP;
-	public static final String MARGIN_RIGHT_PROPERTY = KITE9_CSS_MARGIN_PROPERTY_PREFIX+RIGHT;
-	public static final String MARGIN_LEFT_PROPERTY = KITE9_CSS_MARGIN_PROPERTY_PREFIX+LEFT;
-	
-	// padding property
-	public static final String KITE9_CSS_PADDING_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"padding-";
-	public static final String PADDING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"padding";
-	public static final String PADDING_BOTTOM_PROPERTY = KITE9_CSS_PADDING_PROPERTY_PREFIX+BOTTOM;
-	public static final String PADDING_TOP_PROPERTY = KITE9_CSS_PADDING_PROPERTY_PREFIX+TOP;
-	public static final String PADDING_RIGHT_PROPERTY = KITE9_CSS_PADDING_PROPERTY_PREFIX+RIGHT;
-	public static final String PADDING_LEFT_PROPERTY = KITE9_CSS_PADDING_PROPERTY_PREFIX+LEFT;
-		
 	// deciding whether an edge can cross a container border.
 	public static final String KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"traversal-";
 	public static final String TRAVERSAL_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"traversal";
@@ -57,11 +41,5 @@
 	public static final String LINK_GUTTER = KITE9_CSS_PROPERTY_PREFIX+"link-gutter";
 	public static final String LINK_MINIMUM_LENGTH = KITE9_CSS_PROPERTY_PREFIX+"link-minimum-length";
 	public static final String LINK_CORNER_RADIUS = KITE9_CSS_PROPERTY_PREFIX+"link-corner-radius";
-	
-	// Rectangular Sizing 
-	public static final String RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX+"min-size";
-	public static final String RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX+"min-width";
-	public static final String RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX+"min-height";
-	
 	
 }
