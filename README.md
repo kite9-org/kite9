@@ -65,3 +65,11 @@ Take a look at [Risk First](riskfirst.org), which heavily uses Kite9 to lay out 
 ## Online
 
 tbc.
+
+## Usage
+
+Kite9 implements Batik's `Transcoder` interface, called `Kite9SVGTranscoder`.
+
+Instructions for using this [are here](https://xmlgraphics.apache.org/batik/using/transcoder.html)
+
+It transcodes XML into SVG, (rather than into JPEG as shown in the example).  You should modify the output filename accordingly.
