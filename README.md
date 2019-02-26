@@ -9,7 +9,7 @@ For examples, head over to the [Risk-First](riskfirst.org) website to see some e
 ## Basic Features
 
 - [Sizing Instructions](docs/Sizing.md) Such as `horizontal-align`, `min-width`, `padding` and `margin`.  These are used in HTML CSS, but are now available for use in SVG.
-- **Containment** It's possible to express XML elements as containing other elements, and have the positioning and sizing adjust according to this.
+- [Various Element Types](docs/Element-Types.md) such as links, text, containers, decals, and various ways to layout and transform them.
 - [Templating](docs/Templating.md).  Use the `kite9-template` CSS directive to specify an SVG template to use to render a piece of XML.
 - [Links](docs/links.md). You can link elements together to create graphs.
 - [Text Flow](docs/Text.md). You can intelligently size SVG elements according to the text they contain, and flow text within the element a la HTML.
@@ -26,7 +26,7 @@ This is a transform process.  The input to the transform in any XML document.  H
 For this reason, Kite9 defines plenty of it's own CSS directives, prefixed with `kite9`.  Have a look at the stylesheet example [here](https://github.com/robmoffat/kite9-visualization/blob/master/src/test/resources/stylesheets/designer.css) and it's related 
 [template.svg](https://raw.githubusercontent.com/robmoffat/kite9-visualization/master/src/test/resources/stylesheets/template.svg?token=AAitYUArM77qTGIoIE--3CCXRN7Fob1Gks5cfnnxwA%3D%3D)
 
-Generally, style information is included in the standard way for SVG, like so:
+A CSS stylesheet can be included in SVG using `<style>` and either in-line or `@import`ed, like so:
 
 ```xml
 <svg:svg xmlns:svg="http://www.w3.org/2000/svg">
