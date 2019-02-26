@@ -81,32 +81,57 @@ This determines how SVG content is placed within the `<g>` element.  Usually, th
 
 This can be:
 
- - `none`,
+ - `none`: No transform, just outputs the SVG.
+ - `position`: Positions the 0,0 point of the contained SVG at the top-left corner of the containing element.  This is the default for `kite9-type=text` contents.
+ - `crop`: Positions the top-leftmost point of the contained SVG at the top-left corner of the containing element.  This is the default for `kite9-type=svg` and most other things.
  - `rescale`:  This is useful for decals, and it sizes the decal the same as the containing element.
- - `position`, 
- - `crop`;
  
-## Putting It All Together...
+## Example 1
 
-The following input contains a diagram, which has a `<rect>` element as a container within it.  This further has two items of `<text>`.  
+This example draws an ellipse inside a light blue rounded rectangle.
+
+The following input contains a diagram, which has a `<rect>` element as a container for the `<shape>` element (which contains a circle).  In order to be able to "see" the container, we add the `<decal>` to it, which is able to display an SVG `<rect>` element, the same size as the circle.  [Templating](Templating.md) allows the `width="#{$width}" height="#{$height}"` settings to be resolved after the main circle is sized.
+
+Second, note how we are using "crop" for the ellipse.  Although it is scaled (with the `scale(3,3)` transform), it still completely occupies the `<rect>`.
+
 
 ```xml
-  <diagram id="The Diagram">
-    <rect style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px ">
-      <decal style='kite9-usage: decal; kite9-type: svg; '>
-        <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class="glyph-back" />
-      </decal>
-      <text style="kite9-type: text; font-size: 25px;">
-        hello something else
-      </text>
-      <text style="kite9-type: text; font-size: 15px; kite9-vertical-align: bottom;">
-        hello b
-      </text>
-    </rect>
+  <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg">
+   <diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram">
+      <rect style="kite9-type: container;  ">
+		<decal style="kite9-usage: decal; kite9-type: svg; ">
+		  <svg:rect x="0" y="0" width="#{$width}" height="#{$height}" rx="8" ry="8" style="fill: lightblue; " />
+		</decal>
+		<shape style="kite9-type: svg; ">
+			<svg:g transform="scale(3, 3)">
+				<svg:ellipse cx="20" cy="20" rx="20" ry="20" stroke="black" stroke-width="1"/>      
+			</svg:g>      
+		</shape>    
+      </rect>
   </diagram>
+</svg:svg>
 ```
 
 We can output:
 
+```xml
+<svg>
+  ...
+  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [153.0,153.0]; " class=" kite9-diagram" kite9-elem="diagram">
+    <g style="kite9-type: container;" class="kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)">
+      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal">
+        <rect x="0" y="0" width="123.0" style="fill: lightblue; " rx="8" class="glyph-back" ry="8" height="123.0"/>
+      </g>
+      <g style="kite9-type: svg; " class="kite9-shape" kite9-elem="shape" transform="translate(1.5,1.5)">
+        <g transform="scale(3, 3)">
+          <ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"/>      
+        </g>    
+      </g>   
+    </g>
+  </g>
+</svg>
+```
+
+![Resulting Image](images/ellipse.png)
 
  
