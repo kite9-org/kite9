@@ -97,19 +97,19 @@ Second, note how we are using "crop" for the ellipse.  Although it is scaled (wi
 
 ```xml
   <svg:svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg">
-   <diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram">
+    <diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram">
       <rect style="kite9-type: container;  ">
-		<decal style="kite9-usage: decal; kite9-type: svg; ">
-		  <svg:rect x="0" y="0" width="#{$width}" height="#{$height}" rx="8" ry="8" style="fill: lightblue; " />
-		</decal>
-		<shape style="kite9-type: svg; ">
-			<svg:g transform="scale(3, 3)">
-				<svg:ellipse cx="20" cy="20" rx="20" ry="20" stroke="black" stroke-width="1"/>      
-			</svg:g>      
-		</shape>    
+        <decal style="kite9-usage: decal; kite9-type: svg; ">
+          <svg:rect x="0" y="0" width="#{$width}" height="#{$height}" rx="8" ry="8" style="fill: lightblue; " />
+        </decal>
+        <shape style="kite9-type: svg; ">
+          <svg:g transform="scale(3, 3)">
+        	    <svg:ellipse cx="20" cy="20" rx="20" ry="20" stroke="black" stroke-width="1"/>      
+          </svg:g>      
+        </shape>    
       </rect>
-  </diagram>
-</svg:svg>
+    </diagram>
+  </svg:svg>
 ```
 
 We can output:
@@ -117,7 +117,7 @@ We can output:
 ```xml
 <svg>
   ...
-  <g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [153.0,153.0]; " class=" kite9-diagram" kite9-elem="diagram">
+  <g id="The Diagram" class=" kite9-diagram" kite9-elem="diagram">
     <g style="kite9-type: container;" class="kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)">
       <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal">
         <rect x="0" y="0" width="123.0" style="fill: lightblue; " rx="8" class="glyph-back" ry="8" height="123.0"/>
@@ -134,4 +134,87 @@ We can output:
 
 ![Resulting Image](images/ellipse.png)
 
- 
+### Notes:
+
+- Notice how the `translates` are set on the `<g>`s.  These are computed by analysing renderings of the elements. 
+- See how the `width` and `height` of the `<rect>` have been computed, based on the rendered size of the `<ellipse>`.
+
+## Example 2
+
+Here, we can size a rectangle using text elements.  In order for this to work, Kite9 needs to know exactly how big the rendered text elements will be.
+
+![Resulting Image](images/text.png)
+
+- The container `<rect>` has a `kite9-min-size` set, but because "Hello Something Else" is so long, it makes the container even bigger.
+- All of the items of text need to be sized correctly, so that they can be positioned within the shape.
+- Again, we use a rounded rectangle background to contain everything.
+
+```xml
+<svg:svg>
+  ...
+  <diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram">
+    <rect style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px ">
+      <decal style="kite9-usage: decal; kite9-type: svg; ">
+        <svg:rect x="0" y="0" width="#{$width}" height="#{$height}" rx="8" ry="8" style="fill: url(#glyph-background); " class="glyph-back"/>
+      </decal>
+      <text style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;">
+        hello something else
+      </text>
+      <text style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;">
+        hello 2
+      </text>
+      <text style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px;kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;">
+        bette
+middler
+      </text>
+      <text style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;">
+        hello
+ bottom
+      </text>
+    </rect>
+  </diagram>
+</svg:svg>
+``` 
+
+This is rendered like this:
+
+```xml
+<svg>
+  <g id="The Diagram"  class=" kite9-diagram" kite9-elem="diagram">
+    <g style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)">
+      <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal">
+        <rect x="0" y="0" width="247.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="160.0"/>
+      </g>
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" class=" kite9-text" kite9-elem="text" transform="translate(7.8,13.3)">
+        <g font-family="'opensans-light-webfont'" font-size="25px">
+          <text x="0" xml:space="preserve" y="23.4485" stroke="none">
+           <tspan>h</tspan><tspan>ello </tspan><tspan>something </tspan><tspan>else</tspan>
+          </text>
+        </g>
+      </g>
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" class=" kite9-text" kite9-elem="text" transform="translate(85.8,47.3)">
+        <g font-family="'opensans-light-webfont'" font-size="25px">
+          <text x="0" xml:space="preserve" y="23.4485" stroke="none">
+            <tspan>h</tspan><tspan>ello </tspan><tspan>2</tspan>
+          </text>
+        </g>
+      </g>
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;" class=" kite9-text" kite9-elem="text" transform="translate(-4877.4,80.0)">
+        <g font-family="'opensans-light-webfont'" font-size="15px">
+          <text x="4982.2793" xml:space="preserve" y="14.0691" stroke="none">
+            <tspan>b</tspan><tspan>ette</tspan></text><text x="4974.0244" xml:space="preserve" y="30.5691" stroke="none">middler
+          </text>
+        </g>
+      </g>
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;" class=" kite9-text" kite9-elem="text" transform="translate(-9761.5,116.0)">
+        <g font-family="'opensans-light-webfont'" font-size="15px">
+          <text x="9967.3486" xml:space="preserve" y="14.0691" stroke="none">
+            <tspan>h</tspan><tspan>ello</tspan>
+          </text>
+          <text x="9950.2031" xml:space="preserve" y="30.5691" stroke="none">bottom</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+```
