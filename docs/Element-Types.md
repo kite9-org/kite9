@@ -5,7 +5,7 @@
 Must be applied to all elements, otherwise an exception is thrown.  Legal values are:
 
  - `diagram`: indicates that the element is a whole diagram, all the content is processed in one go.
- - `text`: indicates that the text content of the element should be rendered as SVG `text`.
+ - `text`: indicates that the text content of the element should be rendered as SVG `text`.(see [Text](text.md))
  - `link`: indicates that the element should be rendered as a link between two other elements. (see [Links](links.md))
  - `link-end`: part of a link, that tells it where to join to.  (see [Links](links.md))
  - `none`: ignore this element from the transform
