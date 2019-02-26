@@ -23,11 +23,7 @@ Kite9 is written in Java, and heavily based on [Apache Batik SVG Toolkit](https:
 
 This is a transform process.  The input to the transform in any XML document.  However, in order for any transformation to take place, elements need to be styled using CSS to indicate to Kite9 how to display them.  
 
-For this reason, Kite9 defines plenty of it's own CSS directives, prefixed with `kite9`. 
-
-## Stylesheets
-
-Have a look at the stylesheet example [here](https://github.com/robmoffat/kite9-visualization/blob/master/src/test/resources/stylesheets/designer.css) and it's related 
+For this reason, Kite9 defines plenty of it's own CSS directives, prefixed with `kite9`.  Have a look at the stylesheet example [here](https://github.com/robmoffat/kite9-visualization/blob/master/src/test/resources/stylesheets/designer.css) and it's related 
 [template.svg](https://raw.githubusercontent.com/robmoffat/kite9-visualization/master/src/test/resources/stylesheets/template.svg?token=AAitYUArM77qTGIoIE--3CCXRN7Fob1Gks5cfnnxwA%3D%3D)
 
 Generally, style information is included in the standard way for SVG, like so:
