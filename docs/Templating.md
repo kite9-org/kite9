@@ -67,6 +67,7 @@ The templating engine also supports attribute replacement: Where `#{}` is used, 
 
  - `$width` / `$height` : the width/height of the containing element (only available to decals, since it isn't known until output).  In pixels
  - `$pt`, `$cm`,`$em`, `$in`, `$ex`,`$px`:  Various client-specific sizes, in pixels.  Therefore, `$px` = 1.  
+ - `$path`, `$markerstart`, `$markerend`:  on `link` elements, these are defined to allow you to render the link in the output.
  
 In combination, this allows us to create interesting container shapes like this:
 
@@ -83,7 +84,7 @@ In combination, this allows us to create interesting container shapes like this:
   </template>
 ``` 
 
-Note how the `<polygon>` is constructed, dependent not only on the size of the container it is in, but also on the `$pt` size.  (This creates a signpost kind of shape like the ones used [here](https://riskfirst.org/A-Simple-Scenario)).  
+Note how the `<polygon>` is constructed, dependent not only on the size of the container it is in, but also on the `$pt` size.  (This creates a signpost kind of shape like the ones used [here](https://riskfirst.org/A-Simple-Scenario)), shown below.  The signpost size is created according to the size of the text within it. 
 
 ![Signpost Shape](images/signpost.png)
  
