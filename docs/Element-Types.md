@@ -6,8 +6,8 @@ Must be applied to all elements, otherwise an exception is thrown.  Legal values
 
  - `diagram`: indicates that the element is a whole diagram, all the content is processed in one go.
  - `text`: indicates that the text content of the element should be rendered as SVG `text`.
- - `link`: indicates that the element should be rendered as a link between two other elements.
- - `link-end`: part of a link, that tells it where to join to.  
+ - `link`: indicates that the element should be rendered as a link between two other elements. (see [Links](links.md))
+ - `link-end`: part of a link, that tells it where to join to.  (see [Links](links.md))
  - `none`: ignore this element from the transform
  - `svg`: element contains SVG that should be output onto the diagram.  The size of the rendered element will be large enough to contain the SVG within it.
  - `container`: element is a container for other elements.  The size of the element will depend on it's contents (possibly other `text`, `svg` or `container` elements).
