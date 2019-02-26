@@ -2,7 +2,7 @@
 
 Kite9 is an SVG Visualization Library for converting XML into SVG, useful for creating diagrams and user interfaces.
 
-[Basic Kite9 Process](docs/images/process.png)
+![Basic Kite9 Process](docs/images/process.png)
 
 For examples, head over to the [Risk-First](riskfirst.org) website to see some example Kite9 diagrams.
 
@@ -53,7 +53,7 @@ Generally, style information is included in the standard way for SVG, like so:
 
 With the directives contained in the `designer.css` stylesheet, this SVG+XML can be rendered as:
 
-![Basic Glyph](images/basic.png)
+![Basic Glyph](docs/images/basic.png)
 
 Note a few features:
 
