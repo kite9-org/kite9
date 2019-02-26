@@ -34,7 +34,7 @@ Not implemented yet, but see below for workaround (just use a rect instead of a 
 
 Since batik supports SVG regions, we can use those to flow text like this:
 
-![Text Flow](images/flow.svg)
+![Text Flow](images/flow.png)
 
 This is achieved by adding a `<svg:flowRegion>` element within the Kite9 text element:
 
