@@ -15,7 +15,7 @@ glyph {
 }
 ```
 
-This says that when we render a `<glyph>` element in the output, we should use this part of the template:
+This says that when we render a `<glyph>` element in the output, we should use this part of the template from `template.svg`:
 
 ```xml
 <template id='glyph'>
@@ -85,5 +85,5 @@ In combination, this allows us to create interesting container shapes like this:
 
 Note how the `<polygon>` is constructed, dependent not only on the size of the container it is in, but also on the `$pt` size.  (This creates a signpost kind of shape like the ones used [here](https://riskfirst.org/A-Simple-Scenario)).  
 
-![Signpost Shape](signpost.png)
+![Signpost Shape](images/signpost.png)
  
