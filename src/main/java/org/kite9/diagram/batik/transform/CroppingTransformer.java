@@ -1,11 +1,11 @@
 package org.kite9.diagram.batik.transform;
 
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -24,6 +24,9 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 	public CroppingTransformer(Leaf l) {
 		this.owner = l;
 	}
+	
+	DecimalFormat oneDForm = new DecimalFormat("#.0");
+
 
 	@Override
 	public Element postProcess(Painter p, Document d) {
@@ -49,7 +52,7 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 				
 				
 				if ((position.x() != 0) || (position.y() != 0)) {
-					out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+					out.setAttribute("transform", "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")");
 				}
 			}
 		}

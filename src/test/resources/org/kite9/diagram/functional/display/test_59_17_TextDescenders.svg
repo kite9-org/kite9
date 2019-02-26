@@ -20,7 +20,7 @@
           />
       </g
           >
-    <g style="kite9-type: container; kite9-padding: 0px; kite9-layout: right; kite9-min-size: 150px 150px " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: RIGHT; d-bounds: [15.0,43.0] [150.0,150.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(0.0,28.0)"
+    <g style="kite9-type: container; kite9-padding: 0px; kite9-layout: right; kite9-min-size: 150px 150px " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: RIGHT; d-bounds: [15.0,43.0] [150.0,150.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(.0,28.0)"
           >
       <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal"
             >
@@ -28,7 +28,7 @@
               />
       </g
               >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [19.0,159.0] [67.0,34.0]; " class=" kite9-text" kite9-elem="text" transform="translate(1.7783203125,119.27270317077637)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [19.0,159.0] [67.0,34.0]; " class=" kite9-text" kite9-elem="text" transform="translate(1.8,119.3)"
               ><g font-family="'opensans-light-webfont'" font-size="25px"
                 ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                   ><tspan
@@ -41,7 +41,7 @@
                 ></g
               ></g
               >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [86.0,159.0] [75.0,34.0]; " class=" kite9-text" kite9-elem="text" transform="translate(68.7783203125,119.27270317077637)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [86.0,159.0] [75.0,34.0]; " class=" kite9-text" kite9-elem="text" transform="translate(68.8,119.3)"
               ><g font-family="'opensans-light-webfont'" font-size="25px"
                 ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                   ><tspan
@@ -55,7 +55,7 @@
               ></g
               >
     </g
-              >    <g style="kite9-type: container; kite9-padding: 0px; kite9-layout: down;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [165.0,15.0] [50.0,205.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(150.0,0.0)"
+              >    <g style="kite9-type: container; kite9-padding: 0px; kite9-layout: down;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [165.0,15.0] [50.0,205.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(150.0,.0)"
               >
       <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal"
                 >
@@ -63,7 +63,7 @@
                   />
       </g
                   >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [165.0,15.0] [50.0,116.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2216796875,3.272703170776367)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [165.0,15.0] [50.0,116.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2,3.3)"
                   ><g font-family="'opensans-light-webfont'" font-size="25px"
                     ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                       ><tspan
@@ -80,7 +80,7 @@
                     ></g
                   ></g
                   >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [165.0,131.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2216796875,119.27270317077637)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [165.0,131.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2,119.3)"
                   ><g font-family="'opensans-light-webfont'" font-size="25px"
                     ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                       ><tspan
@@ -104,7 +104,7 @@
                       />
       </g
                       >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [215.0,29.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2216796875,3.272703170776367)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [215.0,29.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2,3.3)"
                       ><g font-family="'opensans-light-webfont'" font-size="25px"
                         ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                           ><tspan
@@ -119,7 +119,7 @@
                         ></g
                       ></g
                       >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [215.0,118.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2216796875,92.27270317077637)"
+      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-vertical-align: bottom; kite9-padding: 0px" debug="position: ; horiz: CENTER; vert: BOTTOM; d-bounds: [215.0,118.0] [50.0,89.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-2.2,92.3)"
                       ><g font-family="'opensans-light-webfont'" font-size="25px"
                         ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
                           ><tspan

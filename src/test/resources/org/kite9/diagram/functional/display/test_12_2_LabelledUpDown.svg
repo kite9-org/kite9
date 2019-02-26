@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,21.0] [6.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.6884765625,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,21.0] [6.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.7,.7)"
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       >a</text
@@ -73,7 +73,7 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,156.0] [7.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-1.2890625,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,156.0] [7.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-1.3,.7)"
                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                   >b</text
@@ -103,7 +103,7 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                     >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,89.0] [6.0,14.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.94921875,0.5572261810302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [25.0,89.0] [6.0,14.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.9,.6)"
                                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                           ><tspan
@@ -146,7 +146,7 @@
                                                 >
     <g class="connection-label-front"
                                                 >
-      <g style="kite9-type: text; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,58.0] [22.0,14.0]; " class=" kite9-front" kite9-elem="front" transform="translate(3.8424479216337204,5.439990043640137)"
+      <g style="kite9-type: text; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,58.0] [22.0,14.0]; " class=" kite9-front" kite9-elem="front" transform="translate(3.8,5.4)"
                                                   ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                                     ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                       ><tspan
@@ -195,7 +195,7 @@
                                                               >
     <g class="connection-label-front"
                                                               >
-      <g style="kite9-type: text; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,120.0] [9.0,14.0]; " class=" kite9-front" kite9-elem="front" transform="translate(3.8639322966337204,5.439990043640137)"
+      <g style="kite9-type: text; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [32.0,120.0] [9.0,14.0]; " class=" kite9-front" kite9-elem="front" transform="translate(3.9,5.4)"
                                                                 ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                                                   ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                                     ><tspan

@@ -20,7 +20,7 @@
           />
       </g
           >
-      <g style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [41.0,41.0]; " class=" kite9-shape" kite9-elem="shape" transform="translate(0.5,0.5)"
+      <g style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [41.0,41.0]; " class=" kite9-shape" kite9-elem="shape" transform="translate(.5,.5)"
           >
       <ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"
             />      </g

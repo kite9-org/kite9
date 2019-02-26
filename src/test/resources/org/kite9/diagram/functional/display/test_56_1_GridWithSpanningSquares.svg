@@ -72,7 +72,7 @@
     
   </g
                             >
-    <g id="r" style="kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px" debug="position: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [35.0,15.0] [20.0,20.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(20.0,0.0)"
+    <g id="r" style="kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px" debug="position: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; d-bounds: [35.0,15.0] [20.0,20.0]; " class=" kite9-cell" kite9-elem="cell" transform="translate(20.0,.0)"
                             >
     <g style="kite9-usage: decal; kite9-type: svg;  " debug="" class=" kite9-back" kite9-elem="back"
                               >

@@ -9,7 +9,7 @@
         ><g id="adap" style="kite9-type: svg; kite9-usage: decal; " debug="" class=" kite9-someadaptive" kite9-elem="someadaptive"
           ><path d="M0 0 H 224.0 V 224.0z"
           /></g
-          ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [204.0,204.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(-87.57295227050781,-88.5)"
+          ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [60.0,60.0] [204.0,204.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(-87.6,-88.5)"
           ><path fill="red" d="M 100 100 L 300 100 L 200 300 z" stroke-width="3" stroke="blue"
           /></g
         ></g

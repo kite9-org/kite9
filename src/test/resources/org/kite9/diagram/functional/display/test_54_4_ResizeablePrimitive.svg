@@ -6,15 +6,15 @@
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
     ><g id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [50.0,50.0] [244.0,244.0]; " class=" kite9-container" kite9-elem="container" transform="translate(50.0,50.0)"
       ><g style="fill: red; "
-        ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(244.0,244.0)translate(-0.0,-0.0)"
+        ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(244.0,244.0)translate(-.0,-.0)"
           ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
           /></g
           ><g id="container2" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [60.0,60.0] [224.0,224.0]; " class=" kite9-container" kite9-elem="container" transform="translate(10.0,10.0)"
           ><g style="fill: yellow; "
-            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(224.0,224.0)translate(-0.0,-0.0)"
+            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(224.0,224.0)translate(-.0,-.0)"
               ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
               /></g
-              ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [70.0,70.0] [204.0,204.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(-87.57295227050781,-88.5)"
+              ><g id="someelement" style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [70.0,70.0] [204.0,204.0]; " class=" kite9-someelement" kite9-elem="someelement" transform="translate(-87.6,-88.5)"
               ><path fill="red" d="M 100 100 L 300 100 L 200 300 z" stroke-width="3" stroke="blue"
               /></g
             ></g
@@ -28,7 +28,7 @@
           /></g
           ><g id="container4" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [314.0,162.0] [20.0,20.0]; " class=" kite9-container" kite9-elem="container" transform="translate(10.0,10.0)"
           ><g style="fill: blue; "
-            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(0.6451612903225806,1.8181818181818181)translate(0.5,-29.5)"
+            ><g style="kite9-usage: decal; kite9-transform: rescale; kite9-type: svg; " debug="" class=" kite9-somescaled" kite9-elem="somescaled" transform="scale(0.6451612903225806,1.8181818181818181)translate(.5,-29.5)"
               ><rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
               /></g
             ></g

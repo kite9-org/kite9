@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.transform;
 
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
@@ -17,6 +18,8 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 	public RescalingTransformer(Leaf l) {
 		this.l = l;
 	}
+	
+	DecimalFormat oneDForm = new DecimalFormat("#.0");
 	
 	/**
 	 * Ensures the decal is the same size as it's parent (for scaled decals)
@@ -43,7 +46,7 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 				
 				out.setAttribute("transform", 
 						"scale("+xs+","+ys+")"+
-						"translate("+(-myBounds.getX())+","+(-myBounds.getY())+")"
+						"translate("+oneDForm.format(-myBounds.getX())+","+oneDForm.format(-myBounds.getY())+")"
 						);
 			}
 		}

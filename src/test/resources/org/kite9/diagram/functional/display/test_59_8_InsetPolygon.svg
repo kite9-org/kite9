@@ -12,7 +12,7 @@
     <g filter="url(#dropshadow)"
     >
       
-    <g style="kite9-type: container;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [90.0,200.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g style="kite9-type: container;  " debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [90.0,200.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15,15)"
       >
       <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-decal" kite9-elem="decal"
         >
@@ -20,7 +20,7 @@
           />
       </g
           >
-      <g style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [90.0,200.0]; " class=" kite9-shape" kite9-elem="shape" transform="translate(-160.0,-10.0)"
+      <g style="kite9-type: svg; " debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [90.0,200.0]; " class=" kite9-shape" kite9-elem="shape" transform="translate(-160,-10)"
           >
       <polygon style="fill:lime;stroke-width:0" points="200,10 250,190 160,210"
             />      </g

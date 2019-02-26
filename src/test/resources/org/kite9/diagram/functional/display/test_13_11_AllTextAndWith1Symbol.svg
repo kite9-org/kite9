@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [73.0,21.0] [6.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.6884765625,0.696533203125)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [73.0,21.0] [6.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.7,.7)"
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       >a</text
@@ -66,7 +66,7 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="bold-text"
                           >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [39.0,71.0] [74.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(5.55078125,2.45458984375)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [39.0,71.0] [74.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(5.6,2.5)"
                             ><g font-family="'opensans-bold-webfont'" font-size="10px"
                               ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
                                 ><tspan
@@ -90,7 +90,7 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                               >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [33.0,86.0] [86.0,22.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-0.517578125,2.46435546875)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [33.0,86.0] [86.0,22.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-.5,2.5)"
                                 ><g font-family="'opensans-regular-webfont'" font-size="10px"
                                   ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                     ><tspan
@@ -124,7 +124,7 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                     >
-      <g style="kite9-type: text;" debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [33.0,112.0] [82.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-0.517578125,2.46435546875)"
+      <g style="kite9-type: text;" debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [33.0,112.0] [82.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-.5,2.5)"
                                       ><g font-family="'opensans-regular-webfont'" font-size="10px"
                                         ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                           ><tspan

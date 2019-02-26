@@ -26,7 +26,7 @@ Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; lay
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
             >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,27.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.734375,0.5572261810302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [20.0,18.0] [47.0,27.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.7,.6)"
               ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                   ><tspan
@@ -60,7 +60,7 @@ Multiline" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; lay
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                     >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,14.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-0.10546875,0.5572261810302734)"
+      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [87.0,25.0] [22.0,14.0]; " class="arrow-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.1,.6)"
                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                           ><tspan

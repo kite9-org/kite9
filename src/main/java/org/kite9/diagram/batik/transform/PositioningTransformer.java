@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.transform;
 
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
@@ -23,6 +24,8 @@ public class PositioningTransformer extends AbstractRectangularTransformer imple
 		this.owner = r;
 	}
 	
+	DecimalFormat oneDForm = new DecimalFormat("#.0");
+	
 	@Override
 	public Element postProcess(Painter p, Document d) {	
 		// work out translation
@@ -30,7 +33,7 @@ public class PositioningTransformer extends AbstractRectangularTransformer imple
 		Element out = p.output(d);
 		
 		if ((position.x() != 0) || (position.y() != 0)) {
-			out.setAttribute("transform", "translate(" + position.x() + "," + position.y() + ")");
+			out.setAttribute("transform", "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")");
 		}
 		
 		return out;
