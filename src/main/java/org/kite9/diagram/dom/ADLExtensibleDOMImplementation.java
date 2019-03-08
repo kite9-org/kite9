@@ -30,7 +30,6 @@ import org.kite9.diagram.dom.managers.IntegerRangeManager;
 import org.kite9.diagram.dom.managers.LinkLengthManager;
 import org.kite9.diagram.dom.managers.OccupiesShorthandManager;
 import org.kite9.diagram.dom.managers.PaddingLengthManager;
-import org.kite9.diagram.dom.managers.ScriptManager;
 import org.kite9.diagram.dom.managers.SizeShorthandManager;
 import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
@@ -160,9 +159,6 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.RECT_MINIMUM_WIDTH, CSSConstants.RECT_MINIMUM_HEIGHT, CSSConstants.RECT_MINIMUM_SIZE));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_WIDTH, 0f));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_HEIGHT, 0f));
-		
-		// SCRIPT
-		registerCustomCSSValueManager(new ScriptManager());
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(
