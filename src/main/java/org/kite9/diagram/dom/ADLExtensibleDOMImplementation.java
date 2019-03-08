@@ -13,6 +13,7 @@ import org.apache.batik.css.engine.value.ShorthandManager;
 import org.apache.batik.css.engine.value.ValueManager;
 import org.apache.batik.css.engine.value.svg.MarkerManager;
 import org.apache.batik.css.parser.ExtendedParser;
+import org.apache.batik.css.parser.ExtendedParserWrapper;
 import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.dom.util.HashTable;
@@ -29,11 +30,15 @@ import org.kite9.diagram.dom.managers.IntegerRangeManager;
 import org.kite9.diagram.dom.managers.LinkLengthManager;
 import org.kite9.diagram.dom.managers.OccupiesShorthandManager;
 import org.kite9.diagram.dom.managers.PaddingLengthManager;
+import org.kite9.diagram.dom.managers.ScriptManager;
 import org.kite9.diagram.dom.managers.SizeShorthandManager;
 import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
+import org.kite9.diagram.dom.scripts.AtRuleParser;
+import org.kite9.diagram.dom.scripts.HasScripts;
+import org.kite9.diagram.dom.scripts.ScriptHandler;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
@@ -50,6 +55,7 @@ import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
 import org.w3c.css.sac.ErrorHandler;
 import org.w3c.css.sac.InputSource;
+import org.w3c.css.sac.SACMediaList;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -58,17 +64,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.css.ViewCSS;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSInput;
-import org.w3c.dom.ls.LSOutput;
-import org.w3c.dom.ls.LSParser;
-import org.w3c.dom.ls.LSSerializer;
 import org.w3c.dom.stylesheets.StyleSheet;
-
-import com.sun.org.apache.xerces.internal.dom.CoreDOMImplementationImpl;
-import com.sun.org.apache.xerces.internal.dom.DOMInputImpl;
-import com.sun.org.apache.xerces.internal.dom.DOMOutputImpl;
-import com.sun.org.apache.xml.internal.serialize.DOMSerializerImpl;
 
 /**
  * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
@@ -77,7 +73,7 @@ import com.sun.org.apache.xml.internal.serialize.DOMSerializerImpl;
  * @author robmoffat
  *
  */
-public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable, DOMImplementationLS {
+public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable {
 	
 	private final Kite9Log log = new Kite9Log(this);
 	
@@ -164,6 +160,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.RECT_MINIMUM_WIDTH, CSSConstants.RECT_MINIMUM_HEIGHT, CSSConstants.RECT_MINIMUM_SIZE));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_WIDTH, 0f));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_HEIGHT, 0f));
+		
+		// SCRIPT
+		registerCustomCSSValueManager(new ScriptManager());
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(
@@ -208,6 +207,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	}
 	
 	
+	
 	/**
 	 * Allows us to carry on in the face of invalid css - happens a lot with noun project files.
 	 */
@@ -217,6 +217,19 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		}
 		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
+		
+		ep = ExtendedParserWrapper.wrap(new AtRuleParser(new ScriptHandler() {
+
+			@Override
+			public void importScript(String uri, SACMediaList ml) {
+				if (doc instanceof HasScripts) {
+					((HasScripts)doc).getScripts().add(uri);
+				}
+			}
+			
+		}));
+		
+		
 		CSSEngine result = new SVG12CSSEngine(doc, durl, ep, vms, sms, ctx);
 		
 		ep.setErrorHandler(new ErrorHandler() {
@@ -276,27 +289,4 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	public boolean isLoggingEnabled() {
 		return true;
 	}
-	
-    public LSSerializer createLSSerializer() {
-        return new DOMSerializerImpl();
-    }
-    /**
-     * DOM Level 3 LS CR - Experimental.
-     * Create a new empty input source.
-     * @return  The newly created input object.
-     */
-    public LSInput createLSInput() {
-            return new DOMInputImpl();
-    }
-
-    public LSOutput createLSOutput() {
-        return new DOMOutputImpl();
-    }
-
-	@Override
-	public LSParser createLSParser(short arg0, String arg1) throws DOMException {
-		return ((DOMImplementationLS) CoreDOMImplementationImpl.getDOMImplementation()).createLSParser(arg0, arg1);
-	}
-    
-    
 }

@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.format;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
-import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;

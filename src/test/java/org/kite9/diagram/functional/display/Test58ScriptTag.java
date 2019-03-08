@@ -18,7 +18,7 @@ public class Test58ScriptTag extends AbstractDisplayFunctionalTest {
 
 	
 	@Test
-	@Ignore("Scripting hasn't been finalized yet")
+	//@Ignore("Scripting hasn't been finalized yet")
 	public void test_58_1_SimpleGlyphPlusScript() throws Exception {
 		Glyph one = new Glyph("", "Rob's Glyph", null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);

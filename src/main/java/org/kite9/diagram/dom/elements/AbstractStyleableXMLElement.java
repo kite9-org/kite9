@@ -1,10 +1,8 @@
 package org.kite9.diagram.dom.elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.batik.anim.dom.SVGGraphicsElement;
 import org.apache.batik.css.engine.CSSEngine;

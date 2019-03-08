@@ -86,5 +86,8 @@ public interface CSSConstants {
 	public static final String RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX+"min-width";
 	public static final String RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX+"min-height";
 	
+	// Scripting
+	public static final String SCRIPT = KITE9_CSS_PROPERTY_PREFIX+"script";
+	
 	
 }

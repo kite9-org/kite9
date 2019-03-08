@@ -34,6 +34,8 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
+import org.kite9.diagram.dom.scripts.HasScripts;
+import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
@@ -130,6 +132,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
 			copier.processContents(input.getDocumentElement());
+			transcodeScripts(input, this.outputDocument);
 		} catch (Exception e) {
 			ADLDocument d = (ADLDocument)input;
 			String s = new XMLHelper().toXML(d);
@@ -138,6 +141,19 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 	}
 		
+	protected void transcodeScripts(Document input, Document output) {
+		if (input instanceof HasScripts) {
+			ScriptList scripts = ((HasScripts)input).getScripts();
+			if (scripts.size() > 0) {
+				Element scriptElement = output.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "script");
+				scriptElement.setAttribute("type", "module");
+				scriptElement.setTextContent(scripts.formatImportList());
+				output.getDocumentElement().appendChild(scriptElement);
+			}
+			
+		}
+	}
+
 	private void copySVGAttributes(Element in, Element out) {
 		NamedNodeMap nnm = in.getAttributes();
 		

@@ -11,8 +11,8 @@ import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
 /**
- * A manager for determining the 'template' CSS element, which allows 
- * us to load in SVG from somewhere for our diagram.
+ * A manager for determining the 'kite9-script' CSS element, which allows 
+ * us to load in javascript from somewhere for our diagram.
  * 
  * @author robmoffat
  *
@@ -31,7 +31,7 @@ public class ScriptManager extends AbstractValueManager {
 
 	@Override
 	public boolean isAdditiveProperty() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ScriptManager extends AbstractValueManager {
 
 	@Override
 	public String getPropertyName() {
-		return CSSConstants.TEMPLATE;
+		return CSSConstants.SCRIPT;
 	}
 
 }
