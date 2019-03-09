@@ -43,7 +43,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			}
 		}
 		
-		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in, e);
+		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in+"#"+in.getID(), e);
 		
 	}
 

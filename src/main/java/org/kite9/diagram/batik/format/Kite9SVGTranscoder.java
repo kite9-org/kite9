@@ -144,13 +144,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	protected void transcodeScripts(Document input, Document output) {
 		if (input instanceof HasScripts) {
 			ScriptList scripts = ((HasScripts)input).getScripts();
-			if (scripts.size() > 0) {
-				Element scriptElement = output.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "script");
-				scriptElement.setAttribute("type", "module");
-				scriptElement.setTextContent(scripts.formatImportList());
-				output.getDocumentElement().appendChild(scriptElement);
-			}
-			
+			scripts.appendScriptTags(output);
 		}
 	}
 
