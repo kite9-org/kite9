@@ -122,10 +122,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
 		try {
 			input.setDocumentURI(uri);
-			
-			CSSEngine engine = domImpl.createCSSEngine((ADLDocument) input, createBridgeContext());
-			((ADLDocument) input).setCSSEngine(engine);
-			
+			ensureCSSEngine((ADLDocument) input);
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);
@@ -138,6 +135,13 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			String s = new XMLHelper().toXML(d);
 			log.error("Problem with XML: "+e);
 			throw new Kite9TranscoderException("Transcoder problem: "+e.getMessage(), e, s);
+		}
+	}
+
+	public void ensureCSSEngine(ADLDocument input) {
+		if (input.getCSSEngine() == null) {
+			CSSEngine engine = domImpl.createCSSEngine(input, createBridgeContext());
+			input.setCSSEngine(engine);
 		}
 	}
 		

@@ -12,7 +12,9 @@ import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  * Handles copying of XML from one document to another, and the CSS 'template' directive.
@@ -49,6 +51,7 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 			Element e = loadReferencedElement(template, transform);
 			if (e != null) { 
 				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
+				copyAttributes(e, transform);
 				c.processContents(e);
 
 				log.send("Templated: (" + template.getStringValue() + ")\n" + new XMLHelper().toXML(transform));
@@ -58,6 +61,17 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		}
 		
 	}
+	
+
+	protected void copyAttributes(Element from, Element to) {
+        NamedNodeMap attributes = from.getAttributes();
+        for (int i = 0; i < attributes.getLength(); i++) {
+            Attr node = (Attr) attributes.item(i);
+            if (!node.isId()) {
+            	to.setAttribute(node.getName(), node.getValue());
+            }
+        }
+    }
 
 	protected Element loadReferencedElement(Value v, Element usedIn) {
 		return loader.loadElementFromUrl(v, usedIn);
