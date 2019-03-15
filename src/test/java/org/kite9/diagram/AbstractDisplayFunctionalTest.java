@@ -119,6 +119,12 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			diff.addDifferenceListener(new ComparisonListener() {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
+		        	if (comparison.getType() == ComparisonType.ATTR_VALUE) {
+		        		if (comparison.getControlDetails().getXPath().endsWith("@debug")) {
+		        			// ignore the debug
+		        			return;
+		        		}
+		        	}
 					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
 						copyToErrors(output);	
 						Assert.fail("found a difference: " + comparison);
