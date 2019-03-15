@@ -35,4 +35,9 @@ public interface Terminator extends SizedRectangular {
 	 * Gives the side of the Connected element the terminator should be placed on.
 	 */
 	Direction getArrivalSide();
+	
+	/**
+	 * Returns the connection that this is a terminator for.
+	 */
+	Connection getConnection();
 }

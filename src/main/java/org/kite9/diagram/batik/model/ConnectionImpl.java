@@ -26,6 +26,7 @@ import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.LinkReferenceException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
@@ -112,6 +113,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		Kite9XMLElement theElement = getPainter().getContents();
 		Element fromEl = theElement.getProperty("from");
 		String reference = fromEl.getAttribute("reference");
+		
+		if (theElement.getOwnerDocument().getElementById(reference) == null) {
+			throw new LinkReferenceException(reference, getID());
+		}
+		
 		return reference;
 	}
 
@@ -126,6 +132,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		Kite9XMLElement theElement = getPainter().getContents();
 		Element toEl = theElement.getProperty("to");
 		String reference = toEl.getAttribute("reference");
+		
+		if (theElement.getOwnerDocument().getElementById(reference) == null) {
+			throw new LinkReferenceException(reference, getID());
+		}
+		
 		return reference;
 	}
 	

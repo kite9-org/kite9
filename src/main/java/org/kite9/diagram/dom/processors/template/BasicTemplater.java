@@ -61,7 +61,6 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		}
 		
 	}
-	
 
 	protected void copyAttributes(Element from, Element to) {
         NamedNodeMap attributes = from.getAttributes();

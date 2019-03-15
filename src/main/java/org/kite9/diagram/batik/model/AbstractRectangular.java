@@ -41,7 +41,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {
 		
 		public String toString() {
-			return "";
+			return "none";
 		}
 		
 	};

@@ -4,17 +4,18 @@ import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
-import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.css.Rect;
+
 
 /**
  * Base class for painter implementations
@@ -71,7 +72,7 @@ public abstract class AbstractPainter implements Painter {
 	private void addDebugAttributes(Element out) {
 		StringBuilder debug = new StringBuilder();
 		if (r instanceof SizedRectangular) {
-			debug.append("position: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
+			debug.append("positioning: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
 		} 
 		if (r instanceof AlignedRectangular) {
 			debug.append("horiz: "+ ((AlignedRectangular) r).getHorizontalAlignment()+"; ");
@@ -81,14 +82,24 @@ public abstract class AbstractPainter implements Painter {
 			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
 			debug.append("layout: " + ((Container) r).getLayout() + "; ");
 		}
-//		if (r instanceof Connected) {
-//			Container p = (Container) r.getParent();
-//			if ((p!= null) && (p.getLayout() == Layout.GRID)) {
-//				debug.append("grid-x: "+((Connected) r).getRenderingInformation().gridXPosition()+"; ");
-//				debug.append("grid-y: "+((Connected) r).getRenderingInformation().gridYPosition()+"; ");
-//			}
-//		}
+		if (r instanceof Terminator) {
+			Connection link = ((Terminator) r).getConnection();
+			boolean from = link.getDecorationForEnd(link.getFrom()) == r;
+			debug.append("terminates: "+link.getID()+"; ");
+			debug.append("terminates-at: "+(from ? link.getFrom().getID() : link.getTo().getID())+"; ");
+			debug.append("end: "+(from ? "from; " : "to; ")); 
+		}
 		
+		if (r instanceof Connection) {
+			Connection link = ((Connection) r);
+			debug.append("link: "+link.getFrom().getID()+" "+link.getTo().getID()+"; ");
+			debug.append("direction: "+((Connection)r).getDrawDirection()+"; ");
+		}
+		
+		if (r instanceof Connected) {
+			debug.append("connect: tbc; ");
+		}
+			
 		if (r instanceof Rectangular) {
 			RectangleRenderingInformation rri = ((Rectangular) r).getRenderingInformation();
 			debug.append("d-bounds: "+rri.getPosition()+" "+rri.getSize()+ "; "); 

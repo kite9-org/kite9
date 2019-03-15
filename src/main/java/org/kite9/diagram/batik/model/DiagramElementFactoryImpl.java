@@ -30,20 +30,15 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 	 * Produces the diagram element for the underlying XML.
 	 */
 	public DiagramElement createDiagramElement(Kite9XMLElement in, DiagramElement parent) {
-		Exception e = null;
 		if (in instanceof StyledKite9SVGElement) {
-			try {
-				StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
-				DiagramElementType lt = getElementType(in2);
-				RectangularElementUsage usage = getElementUsage(in2);
-				DiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
-				return out;
-			} catch (Exception e2) {
-				e = e2;
-			}
+			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
+			DiagramElementType lt = getElementType(in2);
+			RectangularElementUsage usage = getElementUsage(in2);
+			DiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
+			return out;
 		}
 		
-		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in+"#"+in.getID(), e);
+		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in+"#"+in.getID());
 		
 	}
 

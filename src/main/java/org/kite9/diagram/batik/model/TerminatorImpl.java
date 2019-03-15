@@ -122,5 +122,13 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		ensureInitialized();
 		return arrivalSide;
 	}
+
+	/**
+	 * This is currently true, but won't always be.
+	 */
+	@Override
+	public Connection getConnection() {
+		return (Connection) getParent();
+	}
 	
 }
