@@ -14,6 +14,7 @@ import org.apache.batik.dom.svg.SVGDocumentFactory;
 import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.apache.batik.util.MimeTypeConstants;
 import org.apache.batik.util.ParsedURL;
+import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -206,7 +207,7 @@ public class Kite9DocumentFactory
 
         try {
             doc = super.createDocument
-                (XMLHelper.KITE9_NAMESPACE, "diagram", uri, is);
+                (SVGConstants.SVG_NAMESPACE_URI, "svg", uri, is);
             if (uri != null) {
                 ((ADLDocument)doc).setParsedURL(new ParsedURL(uri));
             }

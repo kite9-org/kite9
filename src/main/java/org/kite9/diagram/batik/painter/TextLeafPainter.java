@@ -116,7 +116,7 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 				in.appendChild(toAdd.item(i));
 			}
 		} else {
-			String theText = theElement.getTextContent();
+			String theText = theElement.getTextContent().trim();
 			String[] lines = theText.split("\n");
 
 			// create one from text

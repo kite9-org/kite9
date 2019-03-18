@@ -6,6 +6,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -119,6 +120,11 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		Direction drawDirection = c.getDrawDirection();
 		DiagramElement from = c.getFrom();
 		DiagramElement to = c.getTo();
+		
+		if ((from instanceof Diagram) || (to instanceof Diagram)) {
+			setContradiction(c, true);
+			return;
+		}
 		
 		if (((Connected) from).getContainer().getLayout() == Layout.GRID) {
 			setContradiction(c, true);
