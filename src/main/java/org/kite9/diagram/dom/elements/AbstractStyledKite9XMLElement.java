@@ -11,12 +11,15 @@ import org.apache.batik.css.engine.StyleDeclarationProvider;
 import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
+import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -225,5 +228,10 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		return null;
 	}
 
+	@Override
+	public DiagramElementType getType() {
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_TYPE_PROPERTY);
+		return (DiagramElementType) ev.getTheValue();
+	}
 	
 }

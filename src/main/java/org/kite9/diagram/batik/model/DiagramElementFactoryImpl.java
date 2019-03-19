@@ -32,7 +32,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 	public DiagramElement createDiagramElement(Kite9XMLElement in, DiagramElement parent) {
 		if (in instanceof StyledKite9XMLElement) {
 			StyledKite9XMLElement in2 = (StyledKite9XMLElement) in;
-			DiagramElementType lt = getElementType(in2);
+			DiagramElementType lt = in2.getType();
 			RectangularElementUsage usage = getElementUsage(in2);
 			DiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
 			return out;
@@ -94,12 +94,6 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		default:
 			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage+" and parent "+parent);	
 		}
-	}
-
-	private static DiagramElementType getElementType(StyledKite9XMLElement in2) {
-		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_TYPE_PROPERTY);
-		DiagramElementType lt = (DiagramElementType) v.getTheValue();
-		return lt;
 	}
 	
 	private static RectangularElementUsage getElementUsage(StyledKite9XMLElement in2) {
