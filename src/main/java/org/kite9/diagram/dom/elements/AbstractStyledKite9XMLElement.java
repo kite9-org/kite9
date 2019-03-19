@@ -24,11 +24,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement implements StyledKite9SVGElement, XPathAware {
+public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement implements StyledKite9XMLElement, XPathAware {
 	
 	protected String tagName;
 
-	public AbstractStyleableXMLElement(String name, ADLDocument owner) {
+	public AbstractStyledKite9XMLElement(String name, ADLDocument owner) {
 		super(name, owner);
 		this.tagName = name;
 	}
@@ -93,7 +93,7 @@ public abstract class AbstractStyleableXMLElement extends SVGGraphicsElement imp
 
 	protected StyleMap sm;
 
-	public AbstractStyleableXMLElement() {
+	public AbstractStyledKite9XMLElement() {
 		super();
 	}
 

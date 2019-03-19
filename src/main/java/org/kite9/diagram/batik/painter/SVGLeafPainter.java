@@ -6,7 +6,7 @@ import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Element;
@@ -21,7 +21,7 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 	
 	private Kite9BridgeContext ctx;
 	
-	public SVGLeafPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+	public SVGLeafPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx.getXMLProcessor());
 		this.ctx = ctx;
 	}

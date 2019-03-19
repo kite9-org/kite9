@@ -10,7 +10,7 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.batik.transform.LeafTransformer;
 import org.kite9.diagram.dom.CSSConstants;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
@@ -50,7 +50,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	private Layout layout;
 	protected DiagramElementSizing sizing;	
 
-	public AbstractRectangular(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractRectangular(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 

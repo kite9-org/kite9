@@ -34,6 +34,7 @@ import org.kite9.diagram.dom.managers.SizeShorthandManager;
 import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
+import org.kite9.diagram.dom.managers.XPathManager;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.scripts.AtRuleParser;
 import org.kite9.diagram.dom.scripts.HasScripts;
@@ -150,6 +151,14 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_CORNER_RADIUS, 0f));
 		
+		// LINK DYNAMICS
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./adl:from/@reference", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_LABEL_XPATH, "./adl:fromLabel", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_END_XPATH, "./adl:from", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_XPATH, "./adl:to/@reference", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_LABEL_XPATH, "./adl:toLabel", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_END_XPATH, "./adl:to", true));
+		
 		// TERMINATORS
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_END_REFERENCE));
@@ -159,6 +168,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.RECT_MINIMUM_WIDTH, CSSConstants.RECT_MINIMUM_HEIGHT, CSSConstants.RECT_MINIMUM_SIZE));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_WIDTH, 0f));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_HEIGHT, 0f));
+		
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

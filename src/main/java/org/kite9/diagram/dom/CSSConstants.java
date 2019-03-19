@@ -89,5 +89,11 @@ public interface CSSConstants {
 	// Scripting
 	public static final String SCRIPT = KITE9_CSS_PROPERTY_PREFIX+"script";
 	
-	
+	// for link dynamics
+	public static final String LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-xpath";
+	public static final String LINK_TO_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-xpath";
+	public static final String LINK_FROM_LABEL_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-label-xpath";
+	public static final String LINK_TO_LABEL_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-label-xpath";
+	public static final String LINK_FROM_END_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-end-xpath";
+	public static final String LINK_TO_END_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-end-xpath";
 }

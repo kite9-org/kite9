@@ -32,6 +32,11 @@ public class EnumValue extends AbstractValue {
 	public String toString() {
 		return (this.theValue != null) ? this.theValue.toString() : "<null>";
 	}
+
+	@Override
+	public int hashCode() {
+		return theValue.hashCode();
+	}
 	
 	
 }

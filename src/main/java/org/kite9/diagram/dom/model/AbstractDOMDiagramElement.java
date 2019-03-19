@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -16,14 +16,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Encapsulates an {@link StyledKite9SVGElement} as a {@link DiagramElement}.
+ * Encapsulates an {@link StyledKite9XMLElement} as a {@link DiagramElement}.
  * 
  * @author robmoffat
  *
  */
 public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement implements Serializable, HasSVGRepresentation {
 	
-	private StyledKite9SVGElement theElement;
+	private StyledKite9XMLElement theElement;
 	
 	private boolean initialized = false;
 
@@ -41,7 +41,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	
 	public abstract Painter getPainter();
 
-	public AbstractDOMDiagramElement(StyledKite9SVGElement el, DiagramElement parent) {
+	public AbstractDOMDiagramElement(StyledKite9XMLElement el, DiagramElement parent) {
 		super(parent);
 		this.theElement = el;
 	}

@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.painter;
 
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
@@ -26,12 +26,12 @@ import org.w3c.dom.NamedNodeMap;
  */
 public abstract class AbstractPainter implements Painter {
 
-	private StyledKite9SVGElement theElement;
+	private StyledKite9XMLElement theElement;
 	protected DiagramElement r;
 	private boolean performedPreprocess = false;
 	private XMLProcessor processor;
 
-	public AbstractPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
+	public AbstractPainter(StyledKite9XMLElement theElement, XMLProcessor processor) {
 		super();
 		this.theElement = theElement;
 		this.processor = processor;
@@ -42,7 +42,7 @@ public abstract class AbstractPainter implements Painter {
 		this.r = de;
 	}
 
-	protected void addAttributes(StyledKite9SVGElement toUse, Element out) {
+	protected void addAttributes(StyledKite9XMLElement toUse, Element out) {
 		copyAttributes(toUse, out);
 		
 		String id = r.getID();
@@ -112,7 +112,7 @@ public abstract class AbstractPainter implements Painter {
 	/**
 	 * Use this method to decorate the contents before processing.
 	 */
-	public StyledKite9SVGElement getContents() {		
+	public StyledKite9XMLElement getContents() {		
 		if (theElement == null) {
 			throw new Kite9ProcessingException("Painter xml element not set");
 		}
@@ -135,7 +135,7 @@ public abstract class AbstractPainter implements Painter {
 	/**
 	 * Ensures that the element has the correct contents before the pre-processor is called.
 	 */
-	protected void setupElementXML(StyledKite9SVGElement e) {
+	protected void setupElementXML(StyledKite9XMLElement e) {
 	}
 	
 }

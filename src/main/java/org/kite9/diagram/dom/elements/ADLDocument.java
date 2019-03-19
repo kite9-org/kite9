@@ -112,7 +112,7 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 		this.diagramCreated = diagramCreated;
 	}
 
-	public void addConnection(StyledKite9SVGElement xmlElement) {
+	public void addConnection(StyledKite9XMLElement xmlElement) {
 		if (diagramCreated) {
 			throw new IllegalStateException("Diagram created already");
 		}

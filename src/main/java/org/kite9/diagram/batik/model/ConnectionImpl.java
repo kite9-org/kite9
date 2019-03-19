@@ -12,7 +12,8 @@ import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Connected;
@@ -28,17 +29,17 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.LinkReferenceException;
 import org.kite9.framework.logging.LogicException;
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
 
 	private String fromId;
 	private String toId;
 	
-	public ConnectionImpl(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
+	public ConnectionImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
 		super(el, parent, ctx, p, t);
-		this.fromId = getFromReference();
-		this.toId = getToReference();
+		this.fromId = getReference(CSSConstants.LINK_FROM_XPATH);
+		this.toId = getReference(CSSConstants.LINK_TO_XPATH);
 		addConnectionReference(fromId, this);
 		addConnectionReference(toId, this);
 	}
@@ -47,16 +48,18 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	protected void initialize() {
 		super.initialize();
 		
-		if (getFromElement() == null) {
+		Kite9XMLElement fromElement = getReferencedElement(this.fromId);
+		if (fromElement == null) {
 			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
 		}
 
-		if (getToElement() == null) {
+		Kite9XMLElement toElement = getReferencedElement(this.toId);
+		if (toElement == null) {
 			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
 		}
 
-		from = (Connected) getFromElement().getDiagramElement();
-		to = (Connected) getToElement().getDiagramElement();
+		from = (Connected) fromElement.getDiagramElement();
+		to = (Connected) toElement.getDiagramElement();
 		
 		if (from == null) {
 			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
@@ -70,15 +73,10 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		
 		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
 		
-		this.fromDecoration = getTerminator(theElement.getProperty("from"));
-		
-		this.toDecoration = getTerminator(theElement.getProperty("to"));
-		
-		Kite9XMLElement fromLabelEl = theElement.getProperty("fromLabel");
-		this.fromLabel = getLabel(fromLabelEl);
-		
-		Kite9XMLElement toLabelEl = theElement.getProperty("toLabel");
-		this.toLabel = getLabel(toLabelEl);
+		this.fromDecoration = getTerminator(getElement(CSSConstants.LINK_FROM_END_XPATH));
+		this.toDecoration = getTerminator(getElement(CSSConstants.LINK_TO_END_XPATH));
+		this.fromLabel = getLabel(getElement(CSSConstants.LINK_FROM_LABEL_XPATH));
+		this.toLabel = getLabel(getElement(CSSConstants.LINK_TO_LABEL_XPATH));
 		
 		String rank = theElement.getAttribute("rank");
 		if (!"".equals(rank)) {
@@ -90,29 +88,44 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 
-	private TerminatorImpl getTerminator(Kite9XMLElement el) {
-		return (TerminatorImpl) el.getDiagramElement();
+	private Terminator getTerminator(Kite9XMLElement el) {
+		if (el == null) {
+			return null;
+		}
+		
+		return (Terminator) el.getDiagramElement();
 	}
 	
 	private Label getLabel(Kite9XMLElement el) {
 		if (el == null) {
 			return null;
 		}
+		
 		return (Label) el.getDiagramElement();
 	}
 
 
-	private Kite9XMLElement getFromElement() {
+	private Kite9XMLElement getReferencedElement(String id) {
 		ADLDocument owner = getPainter().getContents().getOwnerDocument();
-		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, fromId);
+		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, id);
 		return from;
 	}
-
-
-	private String getFromReference() {
+	
+	private Kite9XMLElement getElement(String css) {
 		Kite9XMLElement theElement = getPainter().getContents();
-		Element fromEl = theElement.getProperty("from");
-		String reference = fromEl.getAttribute("reference");
+		Node n = ((ReferencingKite9XMLElement) theElement).getNode(css);
+		
+		if (n instanceof Kite9XMLElement) {
+			return (Kite9XMLElement) n;
+		} else {
+			return null;
+		}
+	} 
+
+
+	private String getReference(String css) {
+		Kite9XMLElement theElement = getPainter().getContents();
+		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(css);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
 			throw new LinkReferenceException(reference, getID());
@@ -130,8 +143,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	public String getToReference() {
 		Kite9XMLElement theElement = getPainter().getContents();
-		Element toEl = theElement.getProperty("to");
-		String reference = toEl.getAttribute("reference");
+		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(CSSConstants.LINK_TO_XPATH);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
 			throw new LinkReferenceException(reference, getID());
@@ -143,8 +155,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	private Connected from;
 	private Connected to;
 	private Direction drawDirection;
-	private TerminatorImpl fromDecoration;
-	private TerminatorImpl toDecoration;
+	private Terminator fromDecoration;
+	private Terminator toDecoration;
 	private Label fromLabel;
 	private Label toLabel;
 	private int rank;
@@ -271,7 +283,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	public String getXPathVariable(String name) {
 		ensureInitialized();
 		if ("path".equals(name)) {
-			Map<String, String> out = new HashMap<>();
 			RoutePainterImpl routePainter = new RoutePainterImpl();
 			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
 					getPainter().getContents().getOwnerDocument());
@@ -285,9 +296,13 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 			String path = SVGPath.toSVGPathData(gp, ctx);
 			return path;
 		} else if ("markerstart".equals(name)) {
-			return fromDecoration.getMarkerUrl();
+			if (fromDecoration instanceof TerminatorImpl) {
+				return ((TerminatorImpl) fromDecoration).getMarkerUrl();
+			}
 		} else if ("markerend".equals(name)) {
-			return toDecoration.getMarkerUrl();
+			if (toDecoration instanceof TerminatorImpl) {
+				return ((TerminatorImpl) toDecoration).getMarkerUrl();
+			}
 		} 
 		
 		return null;

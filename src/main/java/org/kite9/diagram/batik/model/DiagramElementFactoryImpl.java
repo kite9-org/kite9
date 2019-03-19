@@ -6,7 +6,7 @@ import org.kite9.diagram.batik.painter.SVGLeafPainter;
 import org.kite9.diagram.batik.painter.TextLeafPainter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
@@ -30,8 +30,8 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 	 * Produces the diagram element for the underlying XML.
 	 */
 	public DiagramElement createDiagramElement(Kite9XMLElement in, DiagramElement parent) {
-		if (in instanceof StyledKite9SVGElement) {
-			StyledKite9SVGElement in2 = (StyledKite9SVGElement) in;
+		if (in instanceof StyledKite9XMLElement) {
+			StyledKite9XMLElement in2 = (StyledKite9XMLElement) in;
 			DiagramElementType lt = getElementType(in2);
 			RectangularElementUsage usage = getElementUsage(in2);
 			DiagramElement out = instantiateDiagramElement(parent, in2, lt, usage);
@@ -42,7 +42,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		
 	}
 
-	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9SVGElement el, DiagramElementType lt, RectangularElementUsage usage) {
+	private AbstractDOMDiagramElement instantiateDiagramElement(DiagramElement parent, StyledKite9XMLElement el, DiagramElementType lt, RectangularElementUsage usage) {
 		if ((parent == null) && (lt != DiagramElementType.DIAGRAM)) {
 			// all elements apart from diagram must have a parent
 			return null;
@@ -96,13 +96,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		}
 	}
 
-	private static DiagramElementType getElementType(StyledKite9SVGElement in2) {
+	private static DiagramElementType getElementType(StyledKite9XMLElement in2) {
 		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_TYPE_PROPERTY);
 		DiagramElementType lt = (DiagramElementType) v.getTheValue();
 		return lt;
 	}
 	
-	private static RectangularElementUsage getElementUsage(StyledKite9SVGElement in2) {
+	private static RectangularElementUsage getElementUsage(StyledKite9XMLElement in2) {
 		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_USAGE_PROPERTY);
 		RectangularElementUsage reu = (RectangularElementUsage) v.getTheValue();
 		return reu;

@@ -5,7 +5,7 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.transform.SVGTransformer;
 import org.kite9.diagram.batik.transform.TransformFactory;
 import org.kite9.diagram.dom.CSSConstants;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElement {
 	
-	public AbstractBatikDiagramElement(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
+	public AbstractBatikDiagramElement(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
 		super(el, parent);
 		this.p = p;
 		this.p.setDiagramElement(this);

@@ -6,7 +6,7 @@ import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.AbstractStyleableXMLElement;
+import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -46,7 +46,7 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 	}
 
 	public void handleTemplateElement(CSSStylableElement transform) {
-		Value template = AbstractStyleableXMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
+		Value template = AbstractStyledKite9XMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
 			Element e = loadReferencedElement(template, transform);
 			if (e != null) { 

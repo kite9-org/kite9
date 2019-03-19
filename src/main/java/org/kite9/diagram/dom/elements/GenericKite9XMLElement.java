@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class GenericKite9XMLElement extends AbstractStyleableXMLElement {
+public class GenericKite9XMLElement extends AbstractReferencingKite9XMLElement {
 	
 	public GenericKite9XMLElement() {
 	}

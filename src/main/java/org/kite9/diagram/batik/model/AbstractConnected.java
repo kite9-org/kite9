@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.CSSConstants;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connected;
@@ -26,7 +26,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public abstract class AbstractConnected extends AbstractCompactedRectangular implements Connected {
 	
-	public AbstractConnected(StyledKite9SVGElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractConnected(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 	

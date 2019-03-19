@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.painter;
 
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,5 +30,5 @@ public interface Painter {
 	 * Returns the XML in the current document (i.e. original).
 	 * This will force any templating to be done.
 	 */
-	StyledKite9SVGElement getContents();
+	StyledKite9XMLElement getContents();
 }

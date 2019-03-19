@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -21,7 +21,7 @@ import org.kite9.diagram.model.style.ContentTransform;
  */
 public class DiagramImpl extends ConnectedContainerImpl implements Diagram {
 	
-	public DiagramImpl(StyledKite9SVGElement el, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public DiagramImpl(StyledKite9XMLElement el, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, null, ctx, rp, t);
 	}
 	

@@ -19,7 +19,7 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
@@ -38,7 +38,7 @@ import org.w3c.dom.NodeList;
  */
 public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainter {
 	
-	public TextLeafPainter(StyledKite9SVGElement theElement, Kite9BridgeContext ctx) {
+	public TextLeafPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx.getXMLProcessor());
 		this.ctx = ctx;
 		this.theElement = theElement;
@@ -47,7 +47,7 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 	private Kite9BridgeContext ctx;
 	private Rectangle2D bounds;
 	private GraphicsNode gn;
-	private StyledKite9SVGElement theElement;
+	private StyledKite9XMLElement theElement;
 	
 	/**
 	 * Turn the text that's in the input element into a bunch of paragraphs in a SVG 1.2 flow.
@@ -61,7 +61,7 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 	 * </flowRoot>
 	 */
 	@Override
-	protected void setupElementXML(StyledKite9SVGElement e) {
+	protected void setupElementXML(StyledKite9XMLElement e) {
 		if (bounds == null) {
 			// convert the flow element into regular svg:text
 			Document d = e.getOwnerDocument();
@@ -101,14 +101,14 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 	}
 
 
-	private SVGOMFlowRootElement createFlowRootElement(Document d, StyledKite9SVGElement theElement) {
+	private SVGOMFlowRootElement createFlowRootElement(Document d, StyledKite9XMLElement theElement) {
 		SVGOMFlowRootElement flowRoot = (SVGOMFlowRootElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_ROOT_TAG);
 		setupFlowRegions(d, theElement, flowRoot);
 		setupFlowDiv(d, theElement, flowRoot);
 		return flowRoot;
 	}
 
-	public void setupFlowDiv(Document d, StyledKite9SVGElement theElement, SVGOMFlowRootElement in) {
+	public void setupFlowDiv(Document d, StyledKite9XMLElement theElement, SVGOMFlowRootElement in) {
 		NodeList toAdd = theElement.getElementsByTagNameNS(SVG12OMDocument.SVG_NAMESPACE_URI,SVG12Constants.SVG_FLOW_DIV_TAG);
 		
 		if (toAdd.getLength() > 0) {
@@ -137,7 +137,7 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 	 * If a flowRegion exists within the input node, use that. Otherwise create
 	 * one with a really large bounding box.
 	 */
-	protected void setupFlowRegions(Document d, StyledKite9SVGElement theElement, SVGOMFlowRootElement in) {
+	protected void setupFlowRegions(Document d, StyledKite9XMLElement theElement, SVGOMFlowRootElement in) {
 		NodeList toAdd = theElement.getElementsByTagNameNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
 		boolean alreadyExist = false;
 		for (int i = 0; i < toAdd.getLength(); i++) {

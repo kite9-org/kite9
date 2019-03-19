@@ -1,7 +1,7 @@
 package org.kite9.diagram.dom.painter;
 
 import org.apache.batik.util.SVGConstants;
-import org.kite9.diagram.dom.elements.StyledKite9SVGElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
 import org.w3c.dom.Document;
@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
  */
 public class DirectSVGGroupPainter extends AbstractPainter {
 
-	public DirectSVGGroupPainter(StyledKite9SVGElement theElement, XMLProcessor processor) {
+	public DirectSVGGroupPainter(StyledKite9XMLElement theElement, XMLProcessor processor) {
 		super(theElement, processor);
 	}
 
@@ -22,7 +22,7 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	 * as the DiagramElement.  
 	 */
 	public final Element output(Document d) {
-		StyledKite9SVGElement toUse = getContents();
+		StyledKite9XMLElement toUse = getContents();
 		Element out = d.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_G_TAG);
 		processOutput(toUse, out, d);
 		addAttributes(toUse, out);
@@ -30,7 +30,7 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	}
 	
 
-	protected void processOutput(StyledKite9SVGElement in, Element out, @SuppressWarnings("unused") Document d) {
+	protected void processOutput(StyledKite9XMLElement in, Element out, @SuppressWarnings("unused") Document d) {
 		new Kite9ExpandingCopier("", out).processContents(in);
 	}
 }
