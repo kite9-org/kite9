@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -126,6 +127,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);
+			ensureCSSEngine((SVGOMDocument) this.outputDocument);
 			copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
 			copier.processContents(input.getDocumentElement());
@@ -138,7 +140,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 	}
 
-	public void ensureCSSEngine(ADLDocument input) {
+	public void ensureCSSEngine(SVGOMDocument input) {
 		if (input.getCSSEngine() == null) {
 			CSSEngine engine = domImpl.createCSSEngine(input, createBridgeContext());
 			input.setCSSEngine(engine);

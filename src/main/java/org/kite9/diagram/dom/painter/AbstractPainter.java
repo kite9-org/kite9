@@ -50,10 +50,10 @@ public abstract class AbstractPainter implements Painter {
 			out.setAttribute("id", id);
 		}
 		
-		out.setAttribute("kite9-elem", toUse.getTagName());
+		out.setAttribute("k9-elem", toUse.getTagName());
 		out.setAttribute("class", toUse.getAttribute("class")+" kite9-"+toUse.getTagName());
 
-		addDebugAttributes(out);
+		addInfoAttributes(out);
 	}
 	
 	public void copyAttributes(Element from, Element to) {
@@ -69,7 +69,7 @@ public abstract class AbstractPainter implements Painter {
         }
     }
 
-	private void addDebugAttributes(Element out) {
+	private void addInfoAttributes(Element out) {
 		StringBuilder debug = new StringBuilder();
 		if (r instanceof SizedRectangular) {
 			debug.append("positioning: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
@@ -106,7 +106,7 @@ public abstract class AbstractPainter implements Painter {
 		}
 		
 		
-		out.setAttribute("debug", debug.toString());
+		out.setAttribute("k9-info", debug.toString());
 	}
 
 	/**

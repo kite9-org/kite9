@@ -120,6 +120,11 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
 		        	if (comparison.getType() == ComparisonType.ATTR_VALUE) {
+		        		if (comparison.getControlDetails().getXPath().endsWith("@k9-info")) {
+		        			// ignore the info
+		        			return;
+		        		}
+		        		
 		        		if (comparison.getControlDetails().getXPath().endsWith("@debug")) {
 		        			// ignore the debug
 		        			return;
