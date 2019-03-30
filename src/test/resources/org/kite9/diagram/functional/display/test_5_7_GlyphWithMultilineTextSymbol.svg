@@ -6,14 +6,14 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g id="The Diagram" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [165.0,180.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  ><g id="The Diagram" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [165.0,180.0]; " class=" kite9-diagram" kite9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="5-one" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [135.0,150.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,15.0)" rank="0"
+  <g id="5-one" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; d-bounds: [15.0,15.0] [135.0,150.0]; " class=" kite9-glyph" kite9-elem="glyph" transform="translate(15.0,15.0)" rank="0"
       >
-    <g style="kite9-usage: decal; kite9-type: svg; " debug="" class=" kite9-back" kite9-elem="back"
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" class=" kite9-back" kite9-elem="back"
         >
       <rect x="0" y="0" width="135.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="150.0"
           />
@@ -22,9 +22,9 @@
     <g class="glyph"
           >
       
-    <g id="5-one-symbols" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: HORIZONTAL; d-bounds: [75.0,21.0] [16.0,12.0]; " class=" kite9-symbols" kite9-elem="symbols" transform="translate(60.0,6.0)"
+    <g id="5-one-symbols" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: HORIZONTAL; d-bounds: [75.0,21.0] [16.0,12.0]; " class=" kite9-symbols" kite9-elem="symbols" transform="translate(60.0,6.0)"
             >
-      <g transform="translate(2.0,.0)" shape="DIAMOND" class="diamond kite9-symbol" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [77.0,21.0] [12.0,12.0]; " id="4" theChar="q" kite9-elem="symbol"
+      <g transform="translate(2.0,.0)" shape="DIAMOND" class="diamond kite9-symbol" k9-info="position: ; horiz: CENTER; vert: CENTER; d-bounds: [77.0,21.0] [12.0,12.0]; " id="4" theChar="q" kite9-elem="symbol"
               >
     <polygon style="fill: #BB8040;  stroke: none" points="6,0 12,6 6,12 0,6"
                 />
@@ -35,9 +35,9 @@
                 >
     </g
                 >
-    <g id="5-one-stereo" debug="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,38.0] [115.0,27.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,23.0)"
+    <g id="5-one-stereo" k9-info="position: ; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,38.0] [115.0,27.0]; " class=" kite9-stereotype" kite9-elem="stereotype" transform="translate(10.0,23.0)"
                 >
-    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
+    <g k9-info="" class=" kite9-show-box" kite9-elem="show-box"
                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -47,7 +47,7 @@
                     >
     <g class="glyph-stereotype-text"
                     >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [64.0,38.0] [37.0,27.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-4942.1,.5)"
+      <g style="kite9-type: text;" k9-info="position: ; horiz: CENTER; vert: CENTER; d-bounds: [64.0,38.0] [37.0,27.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-4942.1,.5)"
                       ><g font-family="'opensans-bold-webfont'"
                         ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                           ><tspan
@@ -64,9 +64,9 @@
                       >
   </g
                       >
-    <g id="5-one-label" debug="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [69.0,70.0] [27.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(54.0,55.0)"
+    <g id="5-one-label" k9-info="position: ; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; d-bounds: [69.0,70.0] [27.0,17.0]; " class=" kite9-label" kite9-elem="label" transform="translate(54.0,55.0)"
                       >
-    <g debug="" class=" kite9-show-box" kite9-elem="show-box"
+    <g k9-info="" class=" kite9-show-box" kite9-elem="show-box"
                         >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -76,7 +76,7 @@
                           >
     <g class="glyph-label-text"
                           >
-      <g style="kite9-type: text;" debug="position: ; horiz: CENTER; vert: CENTER; d-bounds: [69.0,70.0] [27.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.9,.7)"
+      <g style="kite9-type: text;" k9-info="position: ; horiz: CENTER; vert: CENTER; d-bounds: [69.0,70.0] [27.0,17.0]; " class="glyph-label-text kite9-text-label" kite9-elem="text-label" transform="translate(-.9,.7)"
                             ><g font-family="'opensans-regular-webfont'" font-size="15px"
                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                 ><tspan
@@ -91,14 +91,14 @@
                             >
   </g
                             >
-    <g id="5-one-text-lines" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; d-bounds: [25.0,92.0] [115.0,67.0]; " class=" kite9-text-lines" kite9-elem="text-lines" transform="translate(10.0,77.0)"
+    <g id="5-one-text-lines" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; d-bounds: [25.0,92.0] [115.0,67.0]; " class=" kite9-text-lines" kite9-elem="text-lines" transform="translate(10.0,77.0)"
                             >
-      <g id="1" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,92.0] [115.0,15.0]; " class=" kite9-text-line" kite9-elem="text-line"
+      <g id="1" k9-info="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,92.0] [115.0,15.0]; " class=" kite9-text-line" kite9-elem="text-line"
                               >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                 >
-      <g style="kite9-type: text;" debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,94.0] [57.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-1.0,2.5)"
+      <g style="kite9-type: text;" k9-info="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,94.0] [57.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-1.0,2.5)"
                                   ><g font-family="'opensans-regular-webfont'" font-size="10px"
                                     ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                       ><tspan
@@ -119,12 +119,12 @@
                                   >
   </g
                                   >
-      <g id="2" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,107.0] [115.0,37.0]; " class=" kite9-text-line" kite9-elem="text-line" transform="translate(.0,15.0)"
+      <g id="2" k9-info="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,107.0] [115.0,37.0]; " class=" kite9-text-line" kite9-elem="text-line" transform="translate(.0,15.0)"
                                   >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                     >
-      <g style="kite9-type: text;" debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,109.0] [115.0,33.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-.5,2.5)"
+      <g style="kite9-type: text;" k9-info="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,109.0] [115.0,33.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-.5,2.5)"
                                       ><g font-family="'opensans-regular-webfont'" font-size="10px"
                                         ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                           ><tspan
@@ -159,12 +159,12 @@
                                       >
   </g
                                       >
-      <g id="3" debug="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,144.0] [115.0,15.0]; " class=" kite9-text-line" kite9-elem="text-line" transform="translate(.0,52.0)"
+      <g id="3" k9-info="position: ; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; d-bounds: [25.0,144.0] [115.0,15.0]; " class=" kite9-text-line" kite9-elem="text-line" transform="translate(.0,52.0)"
                                       >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                         >
-      <g style="kite9-type: text;" debug="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,146.0] [58.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-1.0,2.5)"
+      <g style="kite9-type: text;" k9-info="position: ; horiz: LEFT; vert: CENTER; d-bounds: [25.0,146.0] [58.0,11.0]; " class=" kite9-text-label" kite9-elem="text-label" transform="translate(-1.0,2.5)"
                                           ><g font-family="'opensans-regular-webfont'" font-size="10px"
                                             ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                               ><tspan

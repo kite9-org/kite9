@@ -124,11 +124,6 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        			// ignore the info
 		        			return;
 		        		}
-		        		
-		        		if (comparison.getControlDetails().getXPath().endsWith("@debug")) {
-		        			// ignore the debug
-		        			return;
-		        		}
 		        	}
 					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
 						copyToErrors(output);	

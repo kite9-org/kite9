@@ -1,7 +1,9 @@
 package org.kite9.diagram.dom.elements;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
@@ -84,7 +86,6 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
     public ScriptList getScripts() {
     	return scriptList;
     }
-
 
     /**
      * <b>DOM</b>: Implements

@@ -94,6 +94,9 @@ public abstract class AbstractPainter implements Painter {
 			Connection link = ((Connection) r);
 			debug.append("link: "+link.getFrom().getID()+" "+link.getTo().getID()+"; ");
 			debug.append("direction: "+((Connection)r).getDrawDirection()+"; ");
+			if (((Connection)r).getRenderingInformation().isContradicting()) {
+				debug.append("contradicting: yes; ");
+			}
 		}
 		
 		if (r instanceof Connected) {

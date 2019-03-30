@@ -6,18 +6,18 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g debug="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [194.0,88.0]; " kite9-elem="diagram" id="auto:2"
+  ><g k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [194.0,88.0]; " kite9-elem="diagram" id="auto:2"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g id="outer" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [164.0,58.0]; " kite9-elem="context" transform="translate(15.0,15.0)"
+  <g id="outer" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; d-bounds: [15.0,15.0] [164.0,58.0]; " kite9-elem="context" transform="translate(15.0,15.0)"
       >
     
-    <g id="i1" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [27.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(12.0,12.0)"
+    <g id="i1" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [27.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(12.0,12.0)"
         >
     
-    <g debug="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
+    <g k9-info="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
           >
       <rect x="0" y="0" width="24.0" rx="12" class="context-back" ry="12" height="34.0"
             />
@@ -25,10 +25,10 @@
             >
   </g
             >
-    <g id="i2" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [61.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(46.0,12.0)"
+    <g id="i2" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [61.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(46.0,12.0)"
             >
     
-    <g debug="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
+    <g k9-info="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
               >
       <rect x="0" y="0" width="24.0" rx="12" class="context-back" ry="12" height="34.0"
                 />
@@ -36,10 +36,10 @@
                 >
   </g
                 >
-    <g id="i3" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [109.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(94.0,12.0)"
+    <g id="i3" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [109.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(94.0,12.0)"
                 >
     
-    <g debug="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
+    <g k9-info="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
                   >
       <rect x="0" y="0" width="24.0" rx="12" class="context-back" ry="12" height="34.0"
                     />
@@ -47,10 +47,10 @@
                     >
   </g
                     >
-    <g id="i4" debug="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [143.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(128.0,12.0)"
+    <g id="i4" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: DOWN; d-bounds: [143.0,27.0] [24.0,34.0]; " kite9-elem="context" transform="translate(128.0,12.0)"
                     >
     
-    <g debug="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
+    <g k9-info="" kite9-elem="back" transform="scale(0.96,0.9714285714285714)translate(0.5,0.5)"
                       >
       <rect x="0" y="0" width="24.0" rx="12" class="context-back" ry="12" height="34.0"
                         />
@@ -59,7 +59,7 @@
   </g
                         >
   
-    <g debug="" kite9-elem="back" transform="scale(0.9939393939393939,0.9830508474576272)translate(0.5,0.5)"
+    <g k9-info="" kite9-elem="back" transform="scale(0.9939393939393939,0.9830508474576272)translate(0.5,0.5)"
                         >
       <rect x="0" y="0" width="164.0" rx="12" class="context-back" ry="12" height="58.0"
                           />
@@ -67,23 +67,23 @@
                           >
   </g
                           >
-  <g debug="" kite9-elem="link" id="i2-i3"
+  <g k9-info="" kite9-elem="link" id="i2-i3"
                           >
     
-    <g id="auto:0" debug="position: ; d-bounds: [84.0,44.0] [13.0,10.0]; " kite9-elem="from" transform="translate(84.0,44.0)"
+    <g id="auto:0" k9-info="position: ; d-bounds: [84.0,44.0] [13.0,10.0]; " kite9-elem="from" transform="translate(84.0,44.0)"
                             >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                               />
   </g
                               >
-    <g id="auto:1" debug="position: ; d-bounds: [97.0,44.0] [13.0,10.0]; " kite9-elem="to" transform="translate(97.0,44.0)"
+    <g id="auto:1" k9-info="position: ; d-bounds: [97.0,44.0] [13.0,10.0]; " kite9-elem="to" transform="translate(97.0,44.0)"
                               >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                 />
   </g
                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g k9-info="" kite9-elem="link-body"
                                 >
       <path style="marker-start: url(#arrow-start-marker); marker-end: url(#arrow-end-marker)" class="link" d="M85 49 L109 49"
                                   />
@@ -91,23 +91,23 @@
                                   >
   </g
                                   >
-  <g debug="" kite9-elem="link" id="i1-i2"
+  <g k9-info="" kite9-elem="link" id="i1-i2"
                                   >
     
-    <g debug="position: ; d-bounds: [46.0,39.0] [10.0,10.0]; " kite9-elem="from" transform="translate(46.0,39.0)"
+    <g k9-info="position: ; d-bounds: [46.0,39.0] [10.0,10.0]; " kite9-elem="from" transform="translate(46.0,39.0)"
                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                       />
   </g
                                       >
-    <g debug="position: ; d-bounds: [56.0,39.0] [10.0,10.0]; " kite9-elem="to" transform="translate(56.0,39.0)"
+    <g k9-info="position: ; d-bounds: [56.0,39.0] [10.0,10.0]; " kite9-elem="to" transform="translate(56.0,39.0)"
                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                         />
   </g
                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g k9-info="" kite9-elem="link-body"
                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M51 44 L61 44"
                                           />
@@ -115,23 +115,23 @@
                                           >
   </g
                                           >
-  <g debug="" kite9-elem="link" id="i2-i3"
+  <g k9-info="" kite9-elem="link" id="i2-i3"
                                           >
     
-    <g debug="position: ; d-bounds: [80.0,34.0] [10.0,10.0]; " kite9-elem="from" transform="translate(80.0,34.0)"
+    <g k9-info="position: ; d-bounds: [80.0,34.0] [10.0,10.0]; " kite9-elem="from" transform="translate(80.0,34.0)"
                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                               />
   </g
                                               >
-    <g debug="position: ; d-bounds: [104.0,34.0] [10.0,10.0]; " kite9-elem="to" transform="translate(104.0,34.0)"
+    <g k9-info="position: ; d-bounds: [104.0,34.0] [10.0,10.0]; " kite9-elem="to" transform="translate(104.0,34.0)"
                                               >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                 />
   </g
                                                 >
   
-    <g debug="" kite9-elem="link-body"
+    <g k9-info="" kite9-elem="link-body"
                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M85 39 L109 39"
                                                   />
@@ -139,23 +139,23 @@
                                                   >
   </g
                                                   >
-  <g debug="" kite9-elem="link" id="i3-i4"
+  <g k9-info="" kite9-elem="link" id="i3-i4"
                                                   >
     
-    <g debug="position: ; d-bounds: [128.0,39.0] [10.0,10.0]; " kite9-elem="from" transform="translate(128.0,39.0)"
+    <g k9-info="position: ; d-bounds: [128.0,39.0] [10.0,10.0]; " kite9-elem="from" transform="translate(128.0,39.0)"
                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                       />
   </g
                                                       >
-    <g debug="position: ; d-bounds: [138.0,39.0] [10.0,10.0]; " kite9-elem="to" transform="translate(138.0,39.0)"
+    <g k9-info="position: ; d-bounds: [138.0,39.0] [10.0,10.0]; " kite9-elem="to" transform="translate(138.0,39.0)"
                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                         />
   </g
                                                         >
   
-    <g debug="" kite9-elem="link-body"
+    <g k9-info="" kite9-elem="link-body"
                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M133 44 L143 44"
                                                           />

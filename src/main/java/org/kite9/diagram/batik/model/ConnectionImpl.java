@@ -29,7 +29,9 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.LinkReferenceException;
 import org.kite9.framework.logging.LogicException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
 
@@ -81,10 +83,23 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		String rank = theElement.getAttribute("rank");
 		if (!"".equals(rank)) {
 			this.rank = Integer.parseInt(rank);
+		} else {
+			// if rank isn't set, then connections are ranked in order from last to first..
+			this.rank = indexOf(theElement, theElement.getParentNode().getChildNodes());
 		}
 		
 		this.minimumLength = getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
 		this.cornerRadius = getCSSStyleProperty(CSSConstants.LINK_CORNER_RADIUS).getFloatValue();
+	}
+	
+	private int indexOf(Element e, NodeList within) {
+		for (int i = 0; i < within.getLength(); i++) {
+			if (within.item(i) == e) {
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 
 

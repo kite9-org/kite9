@@ -12,7 +12,7 @@ public class Test58ScriptTag extends AbstractDisplayFunctionalTest {
 	@Override
 	public String getDesignerStylesheetReference() {
 		URL u = this.getClass().getResource("/stylesheets/designer-with-script.css");
-		return "<svg:defs><svg:style type=\"text/css\"> @import url(\""+u+"\");</svg:style></svg:defs>";
+		return "<svg:defs><svg:style type=\"text/css\"> @import url(\""+u+"\"); @params{ a: b; c: 'dd';  e-g : \"f\"; }</svg:style></svg:defs>";
 	}
 
 	

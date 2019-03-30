@@ -232,6 +232,13 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 					((HasScripts)doc).getScripts().add(uri);
 				}
 			}
+
+			@Override
+			public void setParam(String name, String value) {
+				if (doc instanceof HasScripts) {
+					((HasScripts)doc).getScripts().set(name, value);
+				}
+			}
 			
 		}));
 		
