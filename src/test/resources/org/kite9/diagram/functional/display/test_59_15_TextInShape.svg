@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g id="The Diagram" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [146.0,93.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [146.0,93.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g style="kite9-type: container;  " k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [116.0,63.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g k9-elem="rect" style="kite9-type: container;  " class=" kite9-rect" transform="translate(15.0,15.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [15.0,15.0] [116.0,63.0]; "
       >
-      <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" class=" kite9-decal" kite9-elem="decal"
+      <g k9-elem="decal" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-decal" k9-info=""
         >
         <rect x="0" y="0" width="116.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="63.0"
           />
       </g
           >
-      <g style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " k9-info="position: ; horiz: CENTER; vert: CENTER; d-bounds: [15.0,15.0] [116.0,63.0]; " class=" kite9-text" kite9-elem="text" transform="translate(-89.6,-49.0)"
+      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " class=" kite9-text" transform="translate(-89.6,-49.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [15.0,15.0] [116.0,63.0]; "
           ><g font-family="'opensans-light-webfont'" font-size="8px"
             ><text x="100" xml:space="preserve" y="57.5035" stroke="none"
               ><tspan

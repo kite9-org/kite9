@@ -7,14 +7,14 @@
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g id="The Diagram" k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [0.0,0.0] [60.0,60.0]; " class=" kite9-diagram" kite9-elem="diagram"
+  <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [60.0,60.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g style="kite9-type: container; kite9-padding: 15px; " k9-info="position: ; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,15.0] [30.0,30.0]; " class=" kite9-rect" kite9-elem="rect" transform="translate(15.0,15.0)"
+    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 15px; " class=" kite9-rect" transform="translate(15.0,15.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [15.0,15.0] [30.0,30.0]; "
       >
-      <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" class=" kite9-decal" kite9-elem="decal"
+      <g k9-elem="decal" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-decal" k9-info=""
         >
         <rect x="0" y="0" width="30.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="30.0"
           />
