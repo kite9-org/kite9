@@ -7,6 +7,8 @@ import org.apache.batik.css.engine.value.IdentifierManager;
 import org.apache.batik.css.engine.value.StringMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.SVGTypes;
+import org.w3c.css.sac.LexicalUnit;
+import org.w3c.dom.DOMException;
 
 /**
  * Used for creating a CSS property that reflects an enum in Java.
@@ -65,6 +67,18 @@ public class EnumManager extends IdentifierManager {
 
 	public StringMap getIdentifiers() {
 		return values;
+	}
+	
+	/**
+	 * If the enum doesn't match something we know, just return the default.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		try {
+			return super.createValue(lu, engine);
+		} catch (DOMException de) {
+			return defaultValue;
+		}
 	}
 
 	@Override
