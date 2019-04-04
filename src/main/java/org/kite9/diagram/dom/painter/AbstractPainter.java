@@ -6,7 +6,10 @@ import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Decal;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
@@ -99,8 +102,9 @@ public abstract class AbstractPainter implements Painter {
 			}
 		}
 		
-		if (r instanceof Connected) {
-			debug.append("connect: tbc; ");
+		if (r instanceof Rectangular) {
+			String usage = getUsage((Rectangular) r);
+			debug.append("rectangular: "+usage+"; ");
 		}
 			
 		if (r instanceof Rectangular) {
@@ -110,6 +114,22 @@ public abstract class AbstractPainter implements Painter {
 		
 		
 		out.setAttribute("k9-info", debug.toString());
+	}
+
+	private String getUsage(Rectangular rect) {
+		if (rect instanceof Diagram) {			
+			return "diagram";
+		}else if (rect instanceof Decal) {
+			return "decal";
+		} else if (rect instanceof Connected) {
+			return "connected";
+		} else if (rect instanceof Label) {
+			return "label";
+		} else if (rect instanceof Terminator) {
+			return "terminator";
+		} else {
+			return "unknown";
+		}
 	}
 
 	/**

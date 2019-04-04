@@ -2,10 +2,14 @@ package org.kite9.diagram.batik.bridge;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.batik.anim.dom.SVGOMSVGElement;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.css.engine.value.ListValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.util.SVG12Constants;
@@ -91,6 +95,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	}
 	
 	public static String getIdentifierForElement(Value v) throws URISyntaxException {
+		v = v instanceof ListValue ? v.item(0) : v;
 		String uri = v.getStringValue();
 		URI u2 = new URI(uri);
 		String fragment = u2.getFragment();
@@ -98,6 +103,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	}
 
 	public static String getUrlForDocument(Value v) throws URISyntaxException {
+		v = v instanceof ListValue ? v.item(0) : v;
 		String uri = v.getStringValue();
 
 		// identify the fragment referenced in the other document
@@ -106,7 +112,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
 		return resource;
 	}
-
+ 
 	@Override
 	public String getPrefix() {
 		return "K9DL";

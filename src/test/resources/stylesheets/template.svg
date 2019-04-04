@@ -75,6 +75,19 @@
     </svg:g>
   </template>
   
+  <template id='glyph-parameterized'>
+    <back style='kite9-usage: decal; kite9-type: svg; '>
+      <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class="glyph-back" />
+    </back>
+    <svg:g class="glyph">
+      <svg:g class="glyph-label-text">
+        <text-label style="kite9-type: text;" class="glyph-label-text">
+      	  <contents xpath="$1" type="string" />
+        </text-label>
+      </svg:g>
+    </svg:g>
+  </template>
+  
   <template id='key'>
     <body>
       <back style='kite9-usage: decal; kite9-type: svg;'>
@@ -176,6 +189,7 @@
       </text-label>
     </svg:g>
   </template>
+  
 
   <template id="glyph-label-text">
     <show-box />

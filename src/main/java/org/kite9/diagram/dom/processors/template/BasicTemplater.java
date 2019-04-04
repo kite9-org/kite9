@@ -1,6 +1,11 @@
 package org.kite9.diagram.dom.processors.template;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.batik.css.engine.CSSStylableElement;
+import org.apache.batik.css.engine.value.ListValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
@@ -49,12 +54,13 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		Value template = AbstractStyledKite9XMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
 			Element e = loadReferencedElement(template, transform);
+			List<String> parameters = getParameters(template);
 			if (e != null) { 
-				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
+				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform, parameters);
 				copyAttributes(e, transform);
 				c.processContents(e);
 
-				log.send("Templated: (" + template.getStringValue() + ")\n" + new XMLHelper().toXML(transform));
+				//log.send("Templated: (" + template + ")\n" + new XMLHelper().toXML(transform));
 			} else {
 				throw new Kite9ProcessingException("Couldn't resolve template: " + template.getStringValue());
 			}
@@ -82,6 +88,19 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 			handleTemplateElement((CSSStylableElement) e);
 		}
 		super.processElement(e);
+	}
+	
+
+	public static List<String> getParameters(Value v) {
+		if (v instanceof ListValue) {
+			List<String> out = new ArrayList<>(v.getLength()-1);
+			for (int i = 1; i < v.getLength(); i++) {
+				out.add(v.item(i).getStringValue());
+			}
+			return out;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 	
 }

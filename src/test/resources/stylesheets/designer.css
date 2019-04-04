@@ -85,6 +85,10 @@ glyph {
 	kite9-connection-align: 50%;
 }
 
+glyph.hibaby {
+	kite9-template: url(template.svg#glyph-parameterized), "Hello Baby";
+}
+
 glyph symbols {
 	kite9-type: container;
 	kite9-sizing: minimize;
