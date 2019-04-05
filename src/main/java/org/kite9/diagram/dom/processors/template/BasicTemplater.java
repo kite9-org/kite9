@@ -54,9 +54,8 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		Value template = AbstractStyledKite9XMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
 		if (template != ValueConstants.NONE_VALUE) {
 			Element e = loadReferencedElement(template, transform);
-			List<String> parameters = getParameters(template);
 			if (e != null) { 
-				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform, parameters);
+				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
 				copyAttributes(e, transform);
 				c.processContents(e);
 

@@ -82,9 +82,14 @@
     <svg:g class="glyph">
       <svg:g class="glyph-label-text">
         <text-label style="kite9-type: text;" class="glyph-label-text">
-      	  <contents xpath="$1" type="string" />
+      	  <contents xpath="$template-1" type="string" />
         </text-label>
       </svg:g>
+      
+      <svg:g id="separator" />
+      
+      <contents xpath="adl:text-lines" />
+      
     </svg:g>
   </template>
   

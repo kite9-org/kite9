@@ -17,7 +17,6 @@ import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -27,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement implements StyledKite9XMLElement, XPathAware {
+public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement implements StyledKite9XMLElement {
 	
 	protected String tagName;
 
@@ -199,7 +198,6 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 
 	public Value getCSSStyleProperty(String name) {
 		Value out = getCSSStyleProperty(this, name);
-//		System.out.println("getting style for "+this+" "+name+ " "+ out);
 		return out;
 	}
 
@@ -217,15 +215,6 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		} else {
 			return null;
 		}
-	}
-
-	@Override
-	public String getXPathVariable(String key) {
-		if (getDiagramElement() instanceof XPathAware) {
-			return ((XPathAware) getDiagramElement()).getXPathVariable(key);
-		}
-		
-		return null;
 	}
 
 	@Override

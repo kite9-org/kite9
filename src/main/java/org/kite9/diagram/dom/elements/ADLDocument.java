@@ -139,6 +139,16 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	 */
 	@Override
 	public Object evaluate(String expression, Node contextNode, XPathNSResolver resolver, short type, Object result) throws XPathException, DOMException {
+		if (resolver == null) {
+			resolver = (prefix) -> {
+				if (prefix.equals("adl")) {
+					return XMLHelper.KITE9_NAMESPACE;
+				} else {
+					return contextNode.lookupNamespaceURI(prefix);
+				}
+			};
+		}
+		
 		XPathExpression xpath = createExpression(expression, resolver);
 		ADLXPathExpr expr = (ADLXPathExpr) xpath;
 		expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));

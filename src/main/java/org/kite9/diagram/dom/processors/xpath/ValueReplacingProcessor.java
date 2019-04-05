@@ -10,7 +10,7 @@ import org.w3c.dom.Text;
 
 /**
  * Performs value replacement, where the elements to be replaced contain 
- * placeholders in the form {blah}. e.g. {x0} {@name} etc.
+ * placeholders in the form #{blah}. e.g. #{$x0} #{@name} etc.
  * 
  * @author robmoffat
  *

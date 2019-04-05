@@ -1,14 +1,14 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
+import org.kite9.diagram.dom.elements.AbstractReferencingKite9XMLElement;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-public abstract class AbstractMutableXMLElement extends AbstractStyledKite9XMLElement {
+public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9XMLElement {
 
 	/**
 	 * Used only in test methods.

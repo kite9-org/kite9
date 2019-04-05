@@ -74,7 +74,8 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_5_8_TemplatedGlyphFinal() throws Exception {
-		Glyph one = new Glyph("", "Rob's Glyph", null, null);
+		Glyph one = new Glyph("", "Rob's Glyph", createList(
+				new TextLine("Proves XPath selector works")), null);
 		one.setAttribute("class", "hibaby");
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);

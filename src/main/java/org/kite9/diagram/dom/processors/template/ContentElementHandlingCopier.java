@@ -1,20 +1,19 @@
 package org.kite9.diagram.dom.processors.template;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathFactory;
-import javax.xml.xpath.XPathVariableResolver;
 
+import org.apache.batik.dom.util.ListNodeList;
+import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.BasicCopier;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.xpath.XPathResult;
 
 /**
  * Special implementation of the copier which, when it arrives at the <content>
@@ -28,16 +27,15 @@ public class ContentElementHandlingCopier extends BasicCopier {
 	XPathFactory xPathfactory = XPathFactory.newInstance();
 	
 	private Node copyOfOriginal;
-	private List<String> parameters;
 
 	/**
-	 * This empties out the original as it goes, moving all it's children into a copy (for now).
-	 * @param parameters 
+	 * As this is a copier, the original content will be entirely replaced by the new, copied content.  
+	 * However, for the Content Element to work, we must be able to reference the original content, so
+	 * move it all into "copyOfOriginal".
 	 */
-	public ContentElementHandlingCopier(Node original, List<String> parameters) {
+	public ContentElementHandlingCopier(Node original) {
 		super(original);
-		this.parameters = parameters;
-		this.copyOfOriginal = original.cloneNode(false);  //original.getOwnerDocument().createElement(original.getNodeName());
+		this.copyOfOriginal = original.cloneNode(false);
 		NodeList in = original.getChildNodes();
 		while (in.getLength() > 0) {
 			this.copyOfOriginal.appendChild(in.item(0));
@@ -50,31 +48,21 @@ public class ContentElementHandlingCopier extends BasicCopier {
 			ContentsElement contents = (ContentsElement) n;
 			if (contents.hasAttribute("xpath")) {
 				try {
-					XPath xpath = xPathfactory.newXPath();
-					xpath.setXPathVariableResolver(new XPathVariableResolver() {
-						
-						@Override
-						public Object resolveVariable(QName arg0) {
-							String local = arg0.getLocalPart();
-							try {
-								int arg = Integer.parseInt(local);
-								return parameters.get(arg-1);
-							} catch (Exception e) {
-								throw new Kite9ProcessingException("Couldn't resolve xpath parameter: "+arg0, e);
-							}
-						}
-					});
-					
-					XPathExpression expr = xpath.compile(contents.getAttribute("xpath"));
-					Object result = expr.evaluate(copyOfOriginal, getReturnType(contents));
-					if (result instanceof NodeList) {
-						NodeList subset = (NodeList) result;
-						copyContents(subset, inside);
-					} else {
-						String stringValue = result.toString();
+					ADLDocument doc =(ADLDocument) copyOfOriginal.getOwnerDocument();
+					String xpath = contents.getAttribute("xpath");
+					XPathResult result = (XPathResult) doc.evaluate(xpath, copyOfOriginal, null, getReturnType(contents), null);
+					if (result.getResultType() == XPathResult.STRING_TYPE) {
+						String stringValue = result.getStringValue();
 						inside.appendChild(copyOfOriginal.getOwnerDocument().createTextNode(stringValue));
+					} else {
+						List<Node> nodes = new ArrayList<Node>();
+						Node node;
+	                    while ((node = result.iterateNext()) != null) {
+	                        nodes.add(node);
+	                    }
+						copyContents(new ListNodeList(nodes), inside);
 					}
-				} catch (XPathExpressionException e) {
+				} catch (Exception e) {
 					throw new Kite9ProcessingException(e);
 				}
 			} else {
@@ -86,15 +74,15 @@ public class ContentElementHandlingCopier extends BasicCopier {
 		}
 	}
 
-	private QName getReturnType(ContentsElement contents) {
+	private static short getReturnType(ContentsElement contents) {
 		if (contents.hasAttribute("type")) {
 			String type = contents.getAttribute("type");
 			if ("string".equals(type.trim().toLowerCase())) {
-				return XPathConstants.STRING;
+				return XPathResult.STRING_TYPE;
 			}
 		} 
 		
 		// otherwise assume nodeset
-		return XPathConstants.NODESET;
+		return XPathResult.ANY_TYPE;
 	}
 }
