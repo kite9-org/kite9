@@ -3,7 +3,6 @@ package org.kite9.diagram.dom.processors.template;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.batik.dom.util.ListNodeList;

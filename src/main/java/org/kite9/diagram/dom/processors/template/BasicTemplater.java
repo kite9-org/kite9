@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.ListValue;
+import org.apache.batik.css.engine.value.URIValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
@@ -58,13 +58,19 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
 				copyAttributes(e, transform);
 				c.processContents(e);
-
-				//log.send("Templated: (" + template + ")\n" + new XMLHelper().toXML(transform));
 			} else {
-				throw new Kite9ProcessingException("Couldn't resolve template: " + template.getStringValue());
+				throw new Kite9ProcessingException("Couldn't resolve template: " + getTemplateName(template));
 			}
 		}
 		
+	}
+
+	private static String getTemplateName(Value t) {
+		if (t instanceof ListValue) {
+			return t.item(0).getStringValue();
+		} else {
+			return t.getStringValue();
+		}
 	}
 
 	protected void copyAttributes(Element from, Element to) {

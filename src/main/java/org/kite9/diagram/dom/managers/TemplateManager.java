@@ -58,7 +58,7 @@ public class TemplateManager extends AbstractValueManager {
 			String uri = resolveURI(engine.getCSSBaseURI(), lu.getStringValue());
 			template = new URIValue(lu.getStringValue(), uri);
 		} else {
-			throw createMalformedLexicalUnitDOMException();
+			throw new DOMException(lu.getLexicalUnitType(), "Was expecting URI: "+lu);
 		}
 		
 		lu = lu.getNextLexicalUnit();
@@ -69,11 +69,9 @@ public class TemplateManager extends AbstractValueManager {
 			ListValue list = new ListValue();
 			list.append(template);
 			while (lu != null) {
-				if (!(lu.getLexicalUnitType() == LexicalUnit.SAC_OPERATOR_COMMA)) {
-					throw createMalformedLexicalUnitDOMException();
+				if (lu.getLexicalUnitType() == LexicalUnit.SAC_OPERATOR_COMMA) {
+					lu = lu.getNextLexicalUnit();	
 				}
-				
-				lu = lu.getNextLexicalUnit();
 				
 				switch (lu.getLexicalUnitType()) {
 				case LexicalUnit.SAC_URI:
