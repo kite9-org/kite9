@@ -121,6 +121,10 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		DiagramElement from = c.getFrom();
 		DiagramElement to = c.getTo();
 		
+		if (from == to) {
+			setContradiction(c, true);
+		}
+		
 		if ((from instanceof Diagram) || (to instanceof Diagram)) {
 			setContradiction(c, true);
 			return;
@@ -238,8 +242,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		}
 	}
 
-	@Override
-	public void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
+	protected void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
 		Direction ld = GroupPhase.getDirectionForLayout(l, true); // TODO:
 																	// probably
 																	// need to
