@@ -17,6 +17,7 @@ import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
+import org.apache.batik.transcoder.ToSVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -177,6 +178,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	/** Writes the SVG content held by the svgGenerator to the
      * <code>TranscoderOutput</code>. This method does nothing if the output already
      * contains a Document.
+     * 
+     * (From {@link ToSVGAbstractTranscoder})
      */
     public void writeSVGToOutput(Document outputDocument,
         TranscoderOutput output) throws TranscoderException {

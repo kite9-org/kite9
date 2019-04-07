@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
@@ -18,7 +19,6 @@ import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -50,22 +50,24 @@ public class XMLHelper {
 	}
 
 	public String toXML(Node dxe) {
-		try {
+		StringWriter sw= new StringWriter();
+		toXML(dxe, sw);
+		return sw.toString();
+	}
+	
+	public void toXML(Node dxe, Writer w) {
+		try  {
 			 TransformerFactory transfac = TransformerFactory.newInstance();
 			 Transformer trans = transfac.newTransformer();
 			 trans.setOutputProperty(OutputKeys.INDENT, "yes");
 			 trans.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			 trans.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			 trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			 StringWriter sw= new StringWriter();
-			 Result result = new StreamResult(sw);
+			 Result result = new StreamResult(w);
 			 trans.transform(new DOMSource(dxe), result);
-			 sw.close();
-			 return sw.toString();
 		} catch (Exception e) {
 			throw new Kite9ProcessingException("Couldn't output xml: ",e);
 		}
-		
 	}
 
 	public ADLDocument fromXML(String s)  {
