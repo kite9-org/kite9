@@ -6,6 +6,6 @@ public interface ScriptHandler {
 
 	public void importScript(String uri, SACMediaList ml);
 	
-	public void setParam(String name, String value);
+	public void setParam(String name, Object value);
 
 }

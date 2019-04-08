@@ -4,10 +4,12 @@ import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.util.SVGConstants;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,10 +17,10 @@ import org.w3c.dom.NodeList;
 public class ScriptList {
 
 	private Set<String> uris = new LinkedHashSet<>();
-	private Map<String, String> params = new LinkedHashMap<>();
+	private Map<String, Object> params = new LinkedHashMap<>();
 
 	
-	public void set(String name, String value) {
+	public void set(String name, Object value) {
 		params.put(name, value);
 	}
 	
@@ -66,7 +68,22 @@ public class ScriptList {
 	
 	protected String getParameters() {
 		
-		return "document.params = { "+ params.entrySet().stream().map(e -> "'"+escape(e.getKey())+"' : '"+escape(e.getValue())+"'").reduce((a, b) -> a+", \n "+b).orElse("")+ "\n } \n";
+		return "document.params = { "+ params.entrySet().stream()
+				.map(e -> "'"+escape(e.getKey())+"' : "+format(e.getValue()))
+				.reduce((a, b) -> a+", \n "+b)
+				.orElse("")+ "\n } \n";
+	}
+	
+	private String format(Object value) {
+		if (value instanceof String) {
+			return "'" + escape((String) value) +"'";
+		} else if (value instanceof List<?>) {
+			return "[" + ((List<?>) value).stream()
+				.map(e -> format(e))
+				.reduce((a, b) -> a+", "+b).orElse("")+"] ";
+		} else {
+			throw new Kite9ProcessingException("Unsupported content in params: "+value);
+		}
 	}
 		
 	private String escape(String value) {

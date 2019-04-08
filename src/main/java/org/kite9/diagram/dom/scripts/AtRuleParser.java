@@ -1,5 +1,8 @@
 package org.kite9.diagram.dom.scripts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.batik.css.parser.CSSSACMediaList;
 import org.apache.batik.css.parser.LexicalUnits;
 import org.apache.batik.css.parser.Parser;
@@ -72,6 +75,7 @@ public class AtRuleParser extends Parser {
     protected void parseParamDeclaration()
         throws CSSException {
         for (;;) {
+        	
             switch (current) {
             case LexicalUnits.EOF:
                 throw createCSSParseException("eof");
@@ -93,25 +97,34 @@ public class AtRuleParser extends Parser {
             }
             nextIgnoreSpaces();
 
-            String value = null;
-            switch (current) {
-            default:
-                reportError("string");
-                return;
-            case LexicalUnits.STRING:
-            case LexicalUnits.IDENTIFIER:
-                value = scanner.getStringValue();
-                nextIgnoreSpaces();
-                break;
-            case LexicalUnits.URI: 
-            	value = new ParsedURL(new ParsedURL(documentURI), scanner.getStringValue()).toString();
-                nextIgnoreSpaces();
-            }
+            List<String> found = parseParamValues();
             
-            sh.setParam(name, value);
+            sh.setParam(name, found.size() == 1 ? found.get(0) : found);
         }
     }
 	
+
+	private List<String> parseParamValues() {
+		List<String> out = new ArrayList<>();
+    	
+        for (;;) {
+            switch (current) {
+            default:
+                reportError("string");
+                return out;
+            case LexicalUnits.SEMI_COLON:
+            	return out;
+            case LexicalUnits.STRING:
+            case LexicalUnits.IDENTIFIER:
+            	out.add(scanner.getStringValue());
+                nextIgnoreSpaces();
+                break;
+            case LexicalUnits.URI: 
+            	out.add(new ParsedURL(new ParsedURL(documentURI), scanner.getStringValue()).toString());
+                nextIgnoreSpaces();
+            }
+        }
+	}
 
 	protected void parseAtScriptRule() {
         String uri = null;
