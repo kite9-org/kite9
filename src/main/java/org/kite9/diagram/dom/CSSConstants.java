@@ -61,10 +61,11 @@ public interface CSSConstants {
 	public static final String CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connections";
 	public static final String ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX+"arrival-side";
 	
+	// direction a connection goes in
+	public static final String CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX+"-direction";
+	
 	// controls whether we try and align connections along the mid-point of the connected.
 	public static final String CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-align";
-//	public static final String CONNECTION_VERTICAL_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-vertical-align";
-//	public static final String CONNECTION_HORIZONTAL_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-horizontal-align";
 	public static final String CONNECTION_ALIGN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX+"connection-align-";
 	public static final String CONNECTION_ALIGN_BOTTOM_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+BOTTOM;
 	public static final String CONNECTION_ALIGN_TOP_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX+TOP;

@@ -10,6 +10,7 @@ import org.apache.batik.css.engine.SVG12CSSEngine;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.ShorthandManager;
+import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueManager;
 import org.apache.batik.css.engine.value.svg.MarkerManager;
 import org.apache.batik.css.parser.ExtendedParser;
@@ -145,6 +146,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY));
 		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY));
 		
+		// LINK DIRECTION
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTION_DIRECTION, Direction.class, null, true));
+
 		// LINK LENGTHS
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 0f));

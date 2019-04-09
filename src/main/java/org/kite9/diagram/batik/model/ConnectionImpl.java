@@ -1,8 +1,6 @@
 package org.kite9.diagram.batik.model;
 
 import java.awt.geom.GeneralPath;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -14,6 +12,7 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
+import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Connected;
@@ -73,7 +72,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		
 		Kite9XMLElement theElement = getPainter().getContents();
 		
-		drawDirection = Direction.getDirection(theElement.getAttribute("drawDirection"));
+		drawDirection = initDrawDirection();
 		
 		this.fromDecoration = getTerminator(getElement(CSSConstants.LINK_FROM_END_XPATH));
 		this.toDecoration = getTerminator(getElement(CSSConstants.LINK_TO_END_XPATH));
@@ -92,6 +91,22 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		this.cornerRadius = getCSSStyleProperty(CSSConstants.LINK_CORNER_RADIUS).getFloatValue();
 	}
 	
+	/**
+	 * Uses the new style-based way and the old-fashioned attribute way too.
+	 */
+	private Direction initDrawDirection() {
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONNECTION_DIRECTION);
+		if (ev != null) {
+			drawDirection = (Direction) ev.getTheValue();
+		}
+		
+		if (drawDirection == null) {
+			drawDirection = Direction.getDirection(getPainter().getContents().getAttribute("drawDirection"));
+		}
+		
+		return drawDirection;
+	}
+
 	private int indexOf(Element e, NodeList within) {
 		for (int i = 0; i < within.getLength(); i++) {
 			if (within.item(i) == e) {

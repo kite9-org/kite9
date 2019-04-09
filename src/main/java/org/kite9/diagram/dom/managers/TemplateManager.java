@@ -57,6 +57,9 @@ public class TemplateManager extends AbstractValueManager {
 		if (lu.getLexicalUnitType() == LexicalUnit.SAC_URI) {
 			String uri = resolveURI(engine.getCSSBaseURI(), lu.getStringValue());
 			template = new URIValue(lu.getStringValue(), uri);
+		} else if ((lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
+				&& (lu.getStringValue().toLowerCase().equals("none"))){
+			return getDefaultValue();
 		} else {
 			throw new DOMException(lu.getLexicalUnitType(), "Was expecting URI: "+lu);
 		}
