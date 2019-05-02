@@ -76,6 +76,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	public Kite9DocumentFactory getDocFactory() {
 		return docFactory;
 	}
+	
+	public Kite9DocumentLoader getDocLoader() {
+		return docLoader;
+	}
 
 	@Override
 	protected UserAgent createUserAgent() {

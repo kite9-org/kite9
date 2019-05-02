@@ -2,9 +2,6 @@ package org.kite9.diagram.batik.bridge;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import org.apache.batik.anim.dom.SVGOMSVGElement;
 import org.apache.batik.bridge.DocumentLoader;
