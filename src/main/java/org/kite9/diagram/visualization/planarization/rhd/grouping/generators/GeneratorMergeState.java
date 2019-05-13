@@ -33,7 +33,7 @@ public class GeneratorMergeState extends DirectedMergeState {
 	@Override
 	public void initialise(int capacity, int containers, Kite9Log log) {
 		super.initialise(capacity, containers, log);
-		toDo = new PriorityQueue<Group>(capacity, new Comparator<Group>() {
+		toDo = new PriorityQueue<Group>(capacity+1, new Comparator<Group>() {
 
 			@Override
 			public int compare(Group arg0, Group arg1) {

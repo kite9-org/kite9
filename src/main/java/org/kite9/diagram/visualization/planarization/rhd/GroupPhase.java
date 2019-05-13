@@ -201,7 +201,7 @@ public class GroupPhase {
 	}
 
 	private boolean needsLeafGroup(Connected ord) {
-		if ((ord instanceof Diagram) && (((Diagram)ord).getContents().size()==0)) {
+		if ((ord instanceof Diagram) && (!hasConnectedContents((Diagram)ord))) {
 			// we need at least one group in the GroupPhase, so if the diagram is empty, return a
 			// single leaf group.
 			return true;
