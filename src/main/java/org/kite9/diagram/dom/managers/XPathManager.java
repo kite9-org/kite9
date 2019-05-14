@@ -68,28 +68,28 @@ public class XPathManager extends AbstractValueManager {
             return ValueConstants.INHERIT_VALUE;
 
         case LexicalUnit.SAC_IDENT:
-            String s = lu.getStringValue().toLowerCase();            
+        case LexicalUnit.SAC_STRING_VALUE:
+            String s = lu.getStringValue();            
             return createStringValue(s);
-
         default:
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
         }
     }
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        
-    	if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        
-        return createStringValue(value);
-    }
+//    /**
+//     * Implements {@link
+//     * ValueManager#createStringValue(short,String,CSSEngine)}.
+//     */
+//    public Value createStringValue(short type, String value, CSSEngine engine)
+//        throws DOMException {
+//        
+//    	if (type != CSSPrimitiveValue.CSS_IDENT) {
+//            throw createInvalidStringTypeDOMException(type);
+//        }
+//        
+//        return createStringValue(value);
+//    }
 
 
 }

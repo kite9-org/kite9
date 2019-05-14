@@ -29,6 +29,9 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 		this.em = em;
 	}
 
+	/**
+	 * Adds labels to container edges, if the container has a label.
+	 */
 	@Override
 	public void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, Side s) {
 		if (d == Direction.LEFT) {

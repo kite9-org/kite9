@@ -46,12 +46,12 @@ public class AtRuleParser extends Parser {
 		}
 	}
 		
-	 /**
-     * Parses a font-face rule.
+	/**
+     * Parses a params rule.
      */
     protected void parseAtParamsRule() {
-        try {
-            documentHandler.startFontFace();
+//        try {
+//            documentHandler.startFontFace();
 
             if (current != LexicalUnits.LEFT_CURLY_BRACE) {
                 reportError("left.curly.brace");
@@ -64,9 +64,9 @@ public class AtRuleParser extends Parser {
                     reportError(e);
                 }
             }
-        } finally {
-            documentHandler.endFontFace();
-        }
+//        } finally {
+//            documentHandler.endFontFace();
+//        }
     }
 	
     /**

@@ -19,7 +19,7 @@ public abstract class AbstractLabel extends AbstractCompactedRectangular impleme
 	@Override 
 	public boolean isConnectionLabel() {
 		ensureInitialized();
-		return getParent() instanceof Connection;
+		return !(getParent() instanceof Container);
 	}
 
 	@Override
