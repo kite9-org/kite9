@@ -22,15 +22,19 @@ public class XPathAwareVariableStack extends VariableStack {
 		Node n = context;
 		String key = name.toNamespacedString();
 
-		while (n != null) {
-			if (n instanceof XPathAware) {
-				String out = ((XPathAware) n).getXPathVariable(key);
-				if (out != null) {
-					return XObject.create(out);
+		try {
+			while (n != null) {
+				if (n instanceof XPathAware) {
+					String out = ((XPathAware) n).getXPathVariable(key);
+					if (out != null) {
+						return XObject.create(out);
+					}
 				}
+				
+				n = n.getParentNode();
 			}
-			
-			n = n.getParentNode();
+		} catch (Exception e) {
+			throw new TransformerException("Couldn't resolve variable: "+name, e);
 		}
 		
 		return XObject.create("");

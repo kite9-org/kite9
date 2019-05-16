@@ -102,6 +102,10 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 	}
 		
 	private void setTerminatorPositionAndOrientation(Terminator t, Dimension2D pos, Dimension2D from) {
+		if (t == null) {
+			return;
+		}
+		
 		int r = getTerminatorRotation(pos, from);
 
 		double x1 = pos.x() - getRotatedSize(t,r,Direction.LEFT);
@@ -121,7 +125,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 			r --;
 		}
 	
-		return t.getPadding(d);
+		return (t == null) ? 0 : t.getPadding(d);
 	}
 
 	protected int getTerminatorRotation(Dimension2D pos, Dimension2D from) {

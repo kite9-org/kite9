@@ -313,8 +313,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 			RoutePainterImpl routePainter = new RoutePainterImpl();
 			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
 					getPainter().getContents().getOwnerDocument());
-			double startReserve = fromDecoration.getMarkerReserve();
-			double endReserve = toDecoration.getMarkerReserve();
+			double startReserve = fromDecoration == null ? 0 : fromDecoration.getMarkerReserve();
+			double endReserve = toDecoration == null ? 0 : toDecoration.getMarkerReserve();
 			
 			GeneralPath gp = routePainter.drawRouting(this.getRenderingInformation(), 
 					new RoutePainterImpl.ReservedLengthEndDisplayer(startReserve), 
