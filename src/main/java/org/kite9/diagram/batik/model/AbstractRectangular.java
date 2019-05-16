@@ -2,7 +2,6 @@ package org.kite9.diagram.batik.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 

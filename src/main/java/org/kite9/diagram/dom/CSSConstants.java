@@ -1,6 +1,8 @@
 
 package org.kite9.diagram.dom;
 
+import org.kite9.diagram.dom.model.DiagramElementFactory;
+
 public interface CSSConstants {
 	
 	public static final String LEFT = "left";
@@ -62,7 +64,7 @@ public interface CSSConstants {
 	public static final String ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX+"arrival-side";
 	
 	// direction a connection goes in
-	public static final String CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX+"-direction";
+	public static final String CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX+"direction";
 	
 	// controls whether we try and align connections along the mid-point of the connected.
 	public static final String CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"connection-align";
@@ -93,8 +95,6 @@ public interface CSSConstants {
 	// for link dynamics
 	public static final String LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-xpath";
 	public static final String LINK_TO_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-xpath";
-	public static final String LINK_FROM_LABEL_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-label-xpath";
-	public static final String LINK_TO_LABEL_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-label-xpath";
-	public static final String LINK_FROM_END_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-end-xpath";
-	public static final String LINK_TO_END_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-end-xpath";
+	public static final String LINK_END = KITE9_CSS_PROPERTY_PREFIX+"link-end";
+
 }

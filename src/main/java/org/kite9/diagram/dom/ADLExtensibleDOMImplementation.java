@@ -41,6 +41,7 @@ import org.kite9.diagram.dom.scripts.AtRuleParser;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptHandler;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
@@ -157,11 +158,8 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		
 		// LINK DYNAMICS
 		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./adl:from/@reference", true));
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_LABEL_XPATH, "./adl:fromLabel", true));
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_END_XPATH, "./adl:from", true));
 		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_XPATH, "./adl:to/@reference", true));
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_LABEL_XPATH, "./adl:toLabel", true));
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_END_XPATH, "./adl:to", true));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.LINK_END, End.class, null, false));
 		
 		// TERMINATORS
 		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));

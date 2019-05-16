@@ -1,6 +1,7 @@
 package org.kite9.diagram.model;
 
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 
 /**
@@ -40,4 +41,9 @@ public interface Terminator extends SizedRectangular {
 	 * Returns the connection that this is a terminator for.
 	 */
 	Connection getConnection();
+	
+	/**
+	 * Returns which end of the parent link this is for.
+	 */
+	End getEnd();
 }

@@ -16,6 +16,7 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
 
@@ -25,6 +26,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	private Value reference;
 	private double markerReserve;
 	private Direction arrivalSide;
+	private End end;
 
 	public TerminatorImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
@@ -32,9 +34,15 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 
 	@Override
 	protected void initialize() {
-		super.initialize();
+		super.initialize();		
 		
-		boolean from = ((Connection)parent).getFromDecoration() == this;
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE);
+		arrivalSide = (Direction) ev.getTheValue();
+		
+		ev = (EnumValue) getCSSStyleProperty(CSSConstants.LINK_END);
+		end = (End) ev.getTheValue();
+
+		boolean from = end == End.FROM;
 		
 		reference = from ? getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
 			getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
@@ -46,8 +54,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getPainter().getContents());
 		} 
 		
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE);
-		arrivalSide = (Direction) ev.getTheValue();
+		
 	}
 	
 	@Override
@@ -128,7 +135,14 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	 */
 	@Override
 	public Connection getConnection() {
+		ensureInitialized();
 		return (Connection) getParent();
+	}
+
+	@Override
+	public End getEnd() {
+		ensureInitialized();
+		return end;
 	}
 	
 }

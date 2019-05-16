@@ -14,9 +14,7 @@ import org.w3c.dom.Element;
 public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 	
 	public String getID();
-	
-	public int getChildXMLElementCount();
-	
+		
 	public DiagramElement getDiagramElement();
 	
 	public ADLDocument getOwnerDocument();

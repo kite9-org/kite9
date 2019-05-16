@@ -1,5 +1,7 @@
 package org.kite9.diagram.model;
 
+import org.kite9.diagram.model.position.End;
+
 /**
  * DiagramElement to contain a label for an edge, container or diagram.
  * Labels take up space on the diagram, so they have to be processed in the *orthogonalization* phase.
@@ -8,4 +10,9 @@ package org.kite9.diagram.model;
 public interface Label extends Rectangular {
 		
 	public boolean isConnectionLabel();
+	
+	/**
+	 * If this is a connection label, returns the end of the connection that it is for.
+	 */
+	public End getEnd();
 }

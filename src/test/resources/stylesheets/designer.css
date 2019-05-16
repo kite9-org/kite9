@@ -202,6 +202,16 @@ fromLabel {
 	kite9-margin: 4px;	
 }
 
+toLabel,
+to {
+	kite9-link-end: to;
+}
+
+fromLabel,
+from {
+	kite9-link-end: from;
+}
+
 text-label {
 	kite9-horizontal-align: center;
 	kite9-vertical-align: center;
@@ -210,6 +220,22 @@ text-label {
 link {
 	kite9-type: link;
 	kite9-template: url(template.svg#link);
+}
+
+[drawDirection=LEFT] {
+	kite9-direction: left;
+}
+
+[drawDirection=RIGHT] {
+	kite9-direction: right;
+}
+
+[drawDirection=UP] {
+	kite9-direction: up;
+}
+
+[drawDirection=DOWN] {
+	kite9-direction: down;
 }
 
 from,
