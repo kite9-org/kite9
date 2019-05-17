@@ -1,8 +1,6 @@
 
 package org.kite9.diagram.dom;
 
-import org.kite9.diagram.dom.model.DiagramElementFactory;
-
 public interface CSSConstants {
 	
 	public static final String LEFT = "left";

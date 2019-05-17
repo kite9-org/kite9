@@ -23,6 +23,13 @@ public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledK
 	public String getIDReference(String referenceName) {
 		return ((XPathResult) evaluate(referenceName, XPathResult.STRING_TYPE)).getStringValue();
 	}
+	
+	@Override
+	public void setIDReference(String referenceName, String value) {
+		XPathResult result = (XPathResult) evaluate(referenceName, XPathResult.ANY_UNORDERED_NODE_TYPE);
+		Node n = result.getSingleNodeValue();
+		n.setTextContent(value);
+	}
 
 	@Override
 	public Node getNode(String referenceName) {

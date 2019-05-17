@@ -11,4 +11,9 @@ public interface ReferencingKite9XMLElement extends StyledKite9XMLElement {
 	String getIDReference(String referenceName);
 	
 	Node getNode(String referenceName);
+	
+	/**
+	 * This allows us to modify the XML by XPath reference, as used in CopyLink.
+	 */
+	void setIDReference(String referenceName, String value);
 }

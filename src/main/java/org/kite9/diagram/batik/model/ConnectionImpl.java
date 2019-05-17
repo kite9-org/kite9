@@ -71,6 +71,10 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 					this.fromDecoration = this.fromDecoration == null ? (Terminator) de : this.fromDecoration;
 				} else if (e == End.TO) {
 					this.toDecoration = this.toDecoration == null ? (Terminator) de : this.toDecoration;
+				} else if (this.fromDecoration == null) {
+					this.fromDecoration = (Terminator) de;
+				} else if (this.toDecoration == null) {
+					this.toDecoration = (Terminator) de;
 				}
  				
 			} else if (de instanceof Label) { 
@@ -79,6 +83,10 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 					this.fromLabel = this.fromLabel == null ? (Label) de : this.fromLabel;
 				} else if (e == End.TO) {
 					this.toLabel = this.toLabel == null ? (Label) de : this.toLabel;
+				} else if (this.fromLabel == null) {
+					this.fromLabel = (Label) de;
+				} else if (this.toLabel == null) {
+					this.toLabel = (Label) de;
 				}
 				
 			} 
