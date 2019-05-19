@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.css.sac.CSSParseException;
-
 /**
  * Very simple abstraction class for all logging functions.  
  * 
@@ -30,7 +28,7 @@ public class Kite9Log {
 
 	static PrintStream logFile;
 	
-	public static final boolean OUTPUT_TO_LOG = true;
+	public static final boolean OUTPUT_TO_LOG = false;
 	
 	static {
 		if (OUTPUT_TO_LOG) {

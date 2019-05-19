@@ -1,12 +1,14 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
@@ -121,49 +123,49 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
 			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
-		gp.placeOnGrid(c, true);
+		DiagramElement[][] elementArray = gp.placeOnGrid(c, true);
+		List<DiagramElement> connectedElements = Arrays.stream(elementArray)
+				.flatMap(e -> Arrays.stream(e))
+				.collect(Collectors.toList());
+		
 
 		// set up vertices for each grid element
-		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Connected) {
-				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
-				createdVertices.addAll(cv.getVerticesAtThisLevel());
-			}
+		for (DiagramElement de : connectedElements) {
+			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
+			createdVertices.addAll(cv.getVerticesAtThisLevel());
 		}
 				
 		// link them together
-		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Connected) {
-				SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
-				
-				// having created all the vertices, join them to form faces
-				List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
+		for (DiagramElement de : connectedElements) {
+			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 
-				MultiCornerVertex prev = null, start = null;
-				Side s = new Side();
-				for (MultiCornerVertex current : perimeterVertices) {
-					if (prev != null) {
-						// create a dart between prev and current
-						Direction d = getDirection(prev, current);
-						Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-						ec.convertContainerEdge(underlyings, o, prev, current, d, s);
-					} else {
-						start = current;
-					}
-					
-					prev = current;
+			// having created all the vertices, join them to form faces
+			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
+
+			MultiCornerVertex prev = null, start = null;
+			Side s = new Side();
+			for (MultiCornerVertex current : perimeterVertices) {
+				if (prev != null) {
+					// create a dart between prev and current
+					Direction d = getDirection(prev, current);
+					Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
+					ec.convertContainerEdge(underlyings, o, prev, current, d, s);
+				} else {
+					start = current;
 				}
-				
-				Direction d = getDirection(prev, start);
-				Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-				ec.convertContainerEdge(underlyings, o, prev, start, d, s);
-				DartFace inner = createInnerFace(o, s.getDarts(), start, de);
-				
-				if (de instanceof Container) {
-					convertContainerContents(o, (Container) de, inner);
-				}
-				
+
+				prev = current;
 			}
+
+			Direction d = getDirection(prev, start);
+			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
+			ec.convertContainerEdge(underlyings, o, prev, start, d, s);
+			DartFace inner = createInnerFace(o, s.getDarts(), start, de);
+
+			if (de instanceof Container) {
+				convertContainerContents(o, (Container) de, inner);
+			}
+
 		}
 	}
 

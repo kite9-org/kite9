@@ -2,6 +2,7 @@ package org.kite9.diagram.common.elements.grid;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,8 +40,8 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	
 	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
 		// these are a minimum size, but contents can exceed them and push this out.
-		int xSize = (int) ord.getGridColumns();
-		int ySize = (int) ord.getGridRows();
+		int xSize = ord.getGridColumns();
+		int ySize = ord.getGridRows();
 		
 		
 		// fit as many elements as possible into the grid
@@ -83,10 +84,10 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		Dimension size = calculateGridSize(ord, allowSpanning);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
-		List<DiagramElement[]> out = new ArrayList<>();
+		List<List<DiagramElement>> out = new ArrayList<>();
 		
 		for (int x = 0; x < size.width; x++) {
-			DiagramElement[] ys = new DiagramElement[size.height];
+			List<DiagramElement> ys = initColumn(size.height);
 			out.add(ys);
 		}
 		
@@ -108,38 +109,32 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		}
 		
 		// add remaining/dummy elements elements, by adding extra rows if need be.
-		int xr = 0;
-		while ((overlaps.size() > 0) || (xr < out.size())) {
-			// add another (empty) column
-			if (xr == out.size()) {
-				DiagramElement[] ys = new DiagramElement[size.height];
-				out.add(ys);
-				size = new Dimension(size.width+1, size.height);
-			}
+		int cell = 0;
+		while ((overlaps.size() > 0) || (cell < size.width * size.height)) {
+			int row = Math.floorDiv(cell, size.width);
+			int col = cell % size.width;
+			List<DiagramElement> ys = out.get(col);
+			boolean isNotSet = ys.size() < row;
+			boolean isEmpty = !isNotSet && (ys.get(row) == null);
 			
-			DiagramElement[] ys = out.get(xr);
-			for (int y = 0; y < size.height; y++) {
-				if (ys[y] == null) {
-					if (!overlaps.isEmpty()) {
-						ys[y] = overlaps.remove(overlaps.size()-1);
-					} else {
-						ys[y] = new GridTemporaryConnected(ord, xr, y);
-						modifyContainerContents(ord, ys[y]);
-					}
-					storeCoordinates1((Connected) ys[y], xr, xr, y, y);
+			if (isEmpty || isNotSet) {
+				DiagramElement toPlace = overlaps.isEmpty() ?  new GridTemporaryConnected(ord, col, row) : overlaps.remove(0);
+			
+				if (isEmpty) {
+					ys.set(row, toPlace);
+				} else {
+					ys.add(toPlace);
 				}
+				storeCoordinates1((Connected) toPlace, col, col, row, row);
 			}
-		
-			xr++;
+			cell++;
 		}
 		
-		DiagramElement[][] done = (DiagramElement[][]) out.toArray(new DiagramElement[out.size()][]);
+		DiagramElement[][] done = out.stream()
+			.map(l -> l.stream().toArray(DiagramElement[]::new))
+			.toArray(DiagramElement[][]::new); 
 		
-		for (DiagramElement de : ord.getContents()) {
-			if (shoudAddToGrid(de)) {
-				scaleCoordinates((Connected) de, size);
-			}
-		}
+		Arrays.stream(done).forEach(a -> Arrays.stream(a).forEach(de -> scaleCoordinates((Connected) de, size)));
 		
 		if (isLoggingEnabled()) {
 			Table t = new Table();
@@ -153,6 +148,15 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		placed.put(ord, done);
 		return done;
+	}
+
+
+	protected List<DiagramElement> initColumn(int height) {
+		List<DiagramElement> ys = new ArrayList<>(height);
+		for (int y = 0; y < height; y++) {
+			ys.add(null);
+		}
+		return ys;
 	}
 
 
@@ -191,20 +195,20 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	 * or sets their value.
 	 * @param allowSpanning 
 	 */
-	private static boolean ensureGrid(List<DiagramElement[]> out, IntegerRange xpos, IntegerRange ypos, DiagramElement in, boolean allowSpanning) {
+	private static boolean ensureGrid(List<List<DiagramElement>> out, IntegerRange xpos, IntegerRange ypos, DiagramElement in, boolean allowSpanning) {
 		// ensure grid is large enough for the elements.
 		int xTo = allowSpanning ? xpos.getTo()+1 : xpos.getFrom()+1;
 		for (int x = xpos.getFrom(); x < xTo; x++) {
-			DiagramElement[] ys = out.get(x);
+			List<DiagramElement> ys = out.get(x);
 			
 			int yTo = allowSpanning ? ypos.getTo()+1: ypos.getFrom() + 1;
 			for (int y = ypos.getFrom(); y < yTo; y++) {
 				if (in == null) {
-					if (ys[y] != null) {
+					if (ys.get(y) != null) {
 						return false;
 					}
 				} else {
-					ys[y] = in;
+					ys.set(y, in);
 				}
 			}
 			

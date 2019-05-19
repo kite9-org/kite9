@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.model.Connected;
@@ -172,6 +173,9 @@ public class SubGraphInsertionCompactionStep extends AbstractCompactionStep impl
 						if (index != -1) {
 							out = Math.min(out, index);
 							outDir = getDirectionOfInsertion(c.getLayout());
+						} else if (de instanceof GridTemporaryConnected) {
+							out = 1;
+							outDir = Direction.DOWN;	// doesn't matter since there will only be one.
 						} else {
 							throw new LogicException("The contained object is not contained in the face or something?");
 						}

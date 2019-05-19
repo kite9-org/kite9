@@ -95,7 +95,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 //				new LoggingOptimisationStep(cd),
 				new MinimizeCompactionStep(getDisplayer()),
 				new DiagramSizeCompactionStep(cd), 
-//				new LoggingOptimisationStep(cd),
+				new LoggingOptimisationStep(cd),
 				new MaximizeCompactionStep(cd),
 //				new LoggingOptimisationStep(cd),
 				new AlignmentCompactionStep(cd, 
