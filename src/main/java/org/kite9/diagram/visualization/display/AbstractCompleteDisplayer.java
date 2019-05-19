@@ -175,8 +175,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	protected boolean isImmediateParent(DiagramElement a, DiagramElement parent) {
-		return (((Rectangular)a).getParent() == parent);
-				 // || (parent instanceof Container) && ((Container)parent).getContents().contains(a) || 
+		return ((Rectangular)a).getContainer() == parent;
+			//|| (parent instanceof Container) && ((Container)parent).getContents().contains(a);  // works for labels
 	}
 	
 	protected boolean isEventualParent(DiagramElement d, DiagramElement parent) {
