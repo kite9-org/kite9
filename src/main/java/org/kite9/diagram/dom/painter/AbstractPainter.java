@@ -1,5 +1,8 @@
 package org.kite9.diagram.dom.painter;
 
+import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.AlignedRectangular;
@@ -13,6 +16,7 @@ import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Attr;
@@ -84,7 +88,28 @@ public abstract class AbstractPainter implements Painter {
 		if (r instanceof Container) {
 			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
 			debug.append("layout: " + ((Container) r).getLayout() + "; ");
+			if (((Container)r).getLayout() == Layout.GRID) {
+				RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();
+				debug.append("grid-size: ["+rri.gridXSize()+", "+rri.gridYSize()+"]; ");
+			}
 		}
+		
+		if (r instanceof Connected) {
+			RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();
+			if (r.getParent() instanceof Container) {
+				Container parent = (Container) r.getParent();
+				RectangleRenderingInformation prri = parent.getRenderingInformation();
+				Layout l = parent.getLayout();
+				if (l == Layout.GRID) {
+					Pair<Integer> scaledX = scale(rri.gridXPosition(), prri.gridXSize());
+					Pair<Integer> scaledY = scale(rri.gridYPosition(), prri.gridYSize());
+					debug.append("grid-x: "+scaledX+"; "); 
+					debug.append("grid-y: "+scaledY+"; "); 
+				}
+			}
+		}
+		
+		
 		if (r instanceof Terminator) {
 			Connection link = ((Terminator) r).getConnection();
 			boolean from = link.getDecorationForEnd(link.getFrom()) == r;
@@ -95,7 +120,7 @@ public abstract class AbstractPainter implements Painter {
 		
 		if (r instanceof Connection) {
 			Connection link = ((Connection) r);
-			debug.append("link: "+link.getFrom().getID()+" "+link.getTo().getID()+"; ");
+			debug.append("link: ["+link.getFrom().getID()+","+link.getTo().getID()+"]; ");
 			debug.append("direction: "+((Connection)r).getDrawDirection()+"; ");
 			if (((Connection)r).getRenderingInformation().isContradicting()) {
 				debug.append("contradicting: yes; ");
@@ -109,11 +134,20 @@ public abstract class AbstractPainter implements Painter {
 			
 		if (r instanceof Rectangular) {
 			RectangleRenderingInformation rri = ((Rectangular) r).getRenderingInformation();
-			debug.append("d-bounds: "+rri.getPosition()+" "+rri.getSize()+ "; "); 
+			debug.append("rect-pos: "+rri.getPosition()+"; ");
+			debug.append("rect-size: "+rri.getSize()+ "; "); 
 		}
 		
 		
 		out.setAttribute("k9-info", debug.toString());
+	}
+
+	private Pair<Integer> scale(OPair<BigFraction> p, int s) {
+		BigFraction a = p.getA();
+		BigFraction as = a.multiply(s);
+		BigFraction b = p.getB();
+		BigFraction bs = b.multiply(s);
+		return new Pair<Integer>(as.intValue(), bs.intValue());
 	}
 
 	private String getUsage(Rectangular rect) {

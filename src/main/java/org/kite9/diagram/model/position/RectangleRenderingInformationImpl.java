@@ -6,6 +6,7 @@ import org.kite9.diagram.common.objects.OPair;
 public class RectangleRenderingInformationImpl extends AbstractRenderingInformationImpl implements RectangleRenderingInformation {
 	
 	private OPair<BigFraction> gx, gy;
+	private int sx, sy;
 	
 	public RectangleRenderingInformationImpl() {
 		super();
@@ -33,5 +34,25 @@ public class RectangleRenderingInformationImpl extends AbstractRenderingInformat
 	
 	public void setGridYPosition(OPair<BigFraction> gy) {
 		this.gy = gy;
+	}
+
+	@Override
+	public int gridXSize() {
+		return sx;
+	}
+
+	@Override
+	public int gridYSize() {
+		return sy;
+	}
+
+	@Override
+	public void setGridXSize(int x) {
+		this.sx = x;
+	}
+
+	@Override
+	public void setGridYSize(int y) {
+		this.sy = y;
 	}
 }

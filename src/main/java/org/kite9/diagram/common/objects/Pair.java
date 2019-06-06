@@ -38,7 +38,7 @@ public class Pair<X> {
 
 	@Override
 	public String toString() {
-		return "[PAIR: "+a+","+b+"]";
+		return "["+a+","+b+"]";
 	}
 
 	public Pair(X a, X b) {

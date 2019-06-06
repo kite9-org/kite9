@@ -17,6 +17,10 @@ public interface RectangleRenderingInformation extends RenderingInformation {
 	
 	public void setSize(Dimension2D size);
 	
+	public int gridXSize();
+	
+	public int gridYSize();
+	
 	public OPair<BigFraction> gridXPosition();
 	
 	public OPair<BigFraction> gridYPosition();
@@ -24,4 +28,9 @@ public interface RectangleRenderingInformation extends RenderingInformation {
 	public void setGridXPosition(OPair<BigFraction> gx);
 	
 	public void setGridYPosition(OPair<BigFraction> gy);
+	
+	public void setGridXSize(int x);
+	
+	public void setGridYSize(int y);
+		
 }

@@ -37,8 +37,10 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
 	
-	
-	private Dimension calculateGridSize(Container ord, boolean allowSpanning) {
+	/**
+	 * Works out the minimum possible size of the grid, before placing elements in it.
+	 */
+	private Dimension calculateInitialGridSize(Container ord, boolean allowSpanning) {
 		// these are a minimum size, but contents can exceed them and push this out.
 		int xSize = ord.getGridColumns();
 		int ySize = ord.getGridRows();
@@ -81,7 +83,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			return placed.get(ord);
 		}
 		
-		Dimension size = calculateGridSize(ord, allowSpanning);
+		Dimension size = calculateInitialGridSize(ord, allowSpanning);
 		
 		List<DiagramElement> overlaps = new ArrayList<>();
 		List<List<DiagramElement>> out = new ArrayList<>();
@@ -114,7 +116,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			int row = Math.floorDiv(cell, size.width);
 			int col = cell % size.width;
 			List<DiagramElement> ys = out.get(col);
-			boolean isNotSet = ys.size() < row;
+			boolean isNotSet = ys.size() <= row;
 			boolean isEmpty = !isNotSet && (ys.get(row) == null);
 			
 			if (isEmpty || isNotSet) {
@@ -124,6 +126,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 					ys.set(row, toPlace);
 				} else {
 					ys.add(toPlace);
+					size.height = ys.size();
 				}
 				storeCoordinates1((Connected) toPlace, col, col, row, row);
 			}
@@ -144,6 +147,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			log.send("Grid Positions (transposed axes): \n", t);			
 		}
 		
+		RectangleRenderingInformation crri = ord.getRenderingInformation();
+		crri.setGridXSize(size.width);
+		crri.setGridYSize(size.height);
 		
 		
 		placed.put(ord, done);
