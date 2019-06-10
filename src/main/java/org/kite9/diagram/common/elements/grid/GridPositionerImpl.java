@@ -120,8 +120,16 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			boolean isEmpty = !isNotSet && (ys.get(row) == null);
 			
 			if (isEmpty || isNotSet) {
-				DiagramElement toPlace = overlaps.isEmpty() ?  new GridTemporaryConnected(ord, col, row) : overlaps.remove(0);
-			
+				DiagramElement toPlace = null; 
+				
+				if (overlaps.isEmpty()) {
+					toPlace = new GridTemporaryConnected(ord, col, row);
+					modifyContainerContents(ord, toPlace);
+				} else {
+					toPlace = overlaps.remove(0);
+				}
+				
+				
 				if (isEmpty) {
 					ys.set(row, toPlace);
 				} else {

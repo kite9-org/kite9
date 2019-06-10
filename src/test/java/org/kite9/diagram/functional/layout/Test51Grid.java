@@ -427,4 +427,31 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
+	@Test
+	public void test_51_23_SingleCellGrid() throws Exception {
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Cell tl = new Cell("tl", Arrays.asList(g1));
+		
+		Grid ctx = new Grid("outer", Arrays.asList(tl), null);
+		ctx.setAttribute("style", "kite9-layout: grid;");
+		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
+
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
+	}
+	
+	@Test
+	public void test_51_24_BadlySizedGrid() throws Exception {
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Cell tl = new Cell("tl", Arrays.asList(g1));
+		
+		Grid ctx = new Grid("outer", Arrays.asList(tl), null);
+		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 4 4; ");
+		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
+
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
+	}
 }

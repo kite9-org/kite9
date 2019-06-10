@@ -40,7 +40,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four", null, null);
 		
-		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4, 0, 0); 
+		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4, 10, 10); 
 
 		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
 		new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, Direction.UP);
@@ -50,6 +50,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
+
 	
 	private Grid createSupergrid(boolean addLinks, boolean addContentLink, int size) {
 		List<Kite9XMLElement> contents = new ArrayList<>();
@@ -101,39 +102,23 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell bl = new Cell("bl", Arrays.asList(g3));
 		Cell br = new Cell("br", Arrays.asList(g4));
 		
-		tl.setAttribute("style", "kite9-occupies: 0 0;");
-		bl.setAttribute("style", "kite9-occupies: 0 1;");
+		tl.setAttribute("style", "kite9-occupies: 0 0; kite9-min-size: 100px 100px; ");
+		bl.setAttribute("style", "kite9-occupies: 0 1; kite9-min-size: 40px 40px; ");
 
-		tr.setAttribute("style", "kite9-occupies: 0 0;");
-		br.setAttribute("style", "kite9-occupies: 0 1;");
+		tr.setAttribute("style", "kite9-occupies: 0 0; kite9-min-size: 40px 40px; ");
+		br.setAttribute("style", "kite9-occupies: 0 1; kite9-min-size: 40px 10px; ");
 		Grid lg = new Grid("lg", Arrays.asList(tl, bl), null);
 		Grid rg = new Grid("lg", Arrays.asList(tr, br), null);
 
 		Cell l = new Cell("l", Arrays.asList(lg));
 		Cell r = new Cell("r", Arrays.asList(rg));
-		l.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: "+leftPad+"px"); 
-		r.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: "+rightPad+"px"); 
+		l.setAttribute("style", "kite9-occupies: 0 0; kite9-padding: "+leftPad+"px"); 
+		r.setAttribute("style", "kite9-occupies: 1 0; kite9-padding: "+rightPad+"px"); 
 		
 		Grid ctx = new Grid("outer", Arrays.asList(l, r), null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
 
 		return ctx;
-	}
-	
-	@Test
-	public void test_56_3_GridWithDirectedConnections2() throws Exception {
-		Glyph g1 = new Glyph("one", "","one", null, null);
-		Glyph g2 = new Glyph("two", "","two ", null, null);
-		Glyph g3 = new Glyph("three", "","three ", null, null);
-		Glyph g4 = new Glyph("four", "","four", null, null);
-		
-		Grid ctx = createTwoLayerGridContext(g1, g2, g3, g4, 10, 10); 
-
-		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
-		new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, Direction.UP);
-		new Link(g4, g1, "ARROW", null, null, null, Direction.LEFT);
-
-		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
 	@Test
