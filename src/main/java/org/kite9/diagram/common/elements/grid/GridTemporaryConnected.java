@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.dom.model.AbstractDiagramElement;
+import org.kite9.diagram.dom.model.HasSVGRepresentation;
+import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -21,6 +23,8 @@ import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -28,7 +32,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container {
+public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container, HasSVGRepresentation {
 
 	private final String id;
 	
@@ -134,4 +138,12 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	public ConnectionAlignment getConnectionAlignment(Direction side) {
 		return ConnectionAlignment.NONE;
 	}
+
+	@Override
+	public Element output(Document d) {
+		SVGRectPainter rectPainter = new SVGRectPainter("grid-temporary");
+		rectPainter.setDiagramElement(this);
+		return rectPainter.output(d);
+	}
+
 }

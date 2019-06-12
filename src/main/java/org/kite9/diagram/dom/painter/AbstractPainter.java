@@ -4,7 +4,7 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -15,11 +15,12 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
@@ -33,16 +34,7 @@ import org.w3c.dom.NamedNodeMap;
  */
 public abstract class AbstractPainter implements Painter {
 
-	private StyledKite9XMLElement theElement;
 	protected DiagramElement r;
-	private boolean performedPreprocess = false;
-	private XMLProcessor processor;
-
-	public AbstractPainter(StyledKite9XMLElement theElement, XMLProcessor processor) {
-		super();
-		this.theElement = theElement;
-		this.processor = processor;
-	}
 
 	@Override
 	public void setDiagramElement(DiagramElement de) {
@@ -76,7 +68,7 @@ public abstract class AbstractPainter implements Painter {
         }
     }
 
-	private void addInfoAttributes(Element out) {
+	protected void addInfoAttributes(Element out) {
 		StringBuilder debug = new StringBuilder();
 		if (r instanceof SizedRectangular) {
 			debug.append("positioning: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
@@ -167,32 +159,20 @@ public abstract class AbstractPainter implements Painter {
 	}
 
 	/**
-	 * Use this method to decorate the contents before processing.
+	 * Outputs any SVG-renderable temporary elements to the output.
 	 */
-	public StyledKite9XMLElement getContents() {		
-		if (theElement == null) {
-			throw new Kite9ProcessingException("Painter xml element not set");
+	protected void handleTemporaryElements(Element out, Document d) {
+		if (r instanceof Container) {
+			((Container) r).getContents().stream()
+				.filter(c -> c instanceof Temporary)
+				.filter(c -> c instanceof HasSVGRepresentation) 
+				.forEach(c -> {
+					Element e = ((HasSVGRepresentation)c).output(d);
+					if (e != null) {
+						out.appendChild(e);
+					}
+				});
 		}
-		
-		if (r == null) {
-			throw new Kite9ProcessingException("Painter diagram element not set");
-		}
-		
-		if (performedPreprocess) {
-			return theElement;
-		}
-		
-		setupElementXML(theElement);
-		processor.processContents(theElement);
-		performedPreprocess = true;
-		
-		return theElement;
-	}
-
-	/**
-	 * Ensures that the element has the correct contents before the pre-processor is called.
-	 */
-	protected void setupElementXML(StyledKite9XMLElement e) {
 	}
 	
 }

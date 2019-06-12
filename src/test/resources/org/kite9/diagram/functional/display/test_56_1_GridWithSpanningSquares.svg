@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="70.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="50.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="210.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="190.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [70.0,50.0]; "
+  ><g k9-elem="diagram" id="diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [210.0,190.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g transform="translate(15.0,15.0)" style="kite9-layout: grid; kite9-grid-size: 2 1;" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [15.0,15.0] [40.0,20.0]; " rank="0" class=" kite9-grid" id="outer" k9-elem="grid"
+  <g transform="translate(15.0,15.0)" style="kite9-layout: grid; kite9-grid-size: 2 1;" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [2, 1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [180.0,160.0]; " rank="0" class=" kite9-grid" id="outer" k9-elem="grid"
       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
         >
-      <rect x="0" width="40.0" height="20.0" y="0" class="grid-back"
+      <rect x="0" width="180.0" height="160.0" y="0" class="grid-back"
           />
     </g
           >
     
-    <g k9-elem="cell" id="l" style="kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 0 0; kite9-padding: 10px" class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [15.0,15.0] [20.0,20.0]; "
+    <g k9-elem="cell" id="l" style="kite9-occupies: 0 0; kite9-padding: 10px" class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [120.0,160.0]; "
           >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
             >
-      <path class="cell-edge" d="M 0,20.0 L0,0 L20.0,0"
+      <path class="cell-edge" d="M 0,160.0 L0,0 L120.0,0"
               />
     </g
               >
     
-      <g k9-elem="grid" id="lg" class=" kite9-grid" transform="translate(10.0,10.0)" k9-info="positioning: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [25.0,25.0] [0.0,0.0]; "
+      <g k9-elem="grid" id="lg" class=" kite9-grid" transform="translate(10.0,10.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [1, 2]; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [100.0,140.0]; "
               >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                 >
-      <rect x="0" width="0.0" height="0.0" y="0" class="grid-back"
+      <rect x="0" width="100.0" height="140.0" y="0" class="grid-back"
                   />
     </g
                   >
     
-        <g k9-elem="cell" id="tl" style="kite9-occupies: 0 0;" class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [25.0,25.0] [0.0,0.0]; "
+        <g k9-elem="cell" id="tl" style="kite9-occupies: 0 0; kite9-min-size: 100px 100px; " class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [100.0,100.0]; "
                   >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                     >
-      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+      <path class="cell-edge" d="M 0,100.0 L0,0 L100.0,0"
                       />
     </g
                       >
     
   </g
                       >
-        <g k9-elem="cell" id="bl" style="kite9-occupies: 0 1;" class=" kite9-cell" k9-info="positioning: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [25.0,25.0] [0.0,0.0]; "
+        <g k9-elem="cell" id="bl" style="kite9-occupies: 0 1; kite9-min-size: 40px 40px; " class=" kite9-cell" transform="translate(.0,100.0)" k9-info="positioning: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [25.0,125.0]; rect-size: [100.0,40.0]; "
                       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                         >
-      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+      <path class="cell-edge" d="M 0,40.0 L0,0 L100.0,0"
                           />
     </g
                           >
@@ -63,7 +63,7 @@
       
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                           >
-      <rect x="0" width="0.0" height="0.0" y="0" class="grid-frame"
+      <rect x="0" width="100.0" height="140.0" y="0" class="grid-frame"
                             />
     </g
                             >
@@ -72,40 +72,40 @@
     
   </g
                             >
-    <g k9-elem="cell" id="r" style="kite9-layout: grid; kite9-grid-size: 1 2; kite9-occupies: 1 0; kite9-padding: 10px" class=" kite9-cell" transform="translate(20.0,.0)" k9-info="positioning: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [35.0,15.0] [20.0,20.0]; "
+    <g k9-elem="cell" id="r" style="kite9-occupies: 1 0; kite9-padding: 10px" class=" kite9-cell" transform="translate(120.0,.0)" k9-info="positioning: 1-1,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: [135.0,15.0]; rect-size: [60.0,160.0]; "
                             >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                               >
-      <path class="cell-edge" d="M 0,20.0 L0,0 L20.0,0"
+      <path class="cell-edge" d="M 0,160.0 L0,0 L60.0,0"
                                 />
     </g
                                 >
     
-      <g k9-elem="grid" id="lg" class=" kite9-grid" transform="translate(10.0,10.0)" k9-info="positioning: *,*; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [45.0,25.0] [0.0,0.0]; "
+      <g k9-elem="grid" id="lg" class=" kite9-grid" transform="translate(10.0,10.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [1, 2]; rectangular: connected; rect-pos: [145.0,25.0]; rect-size: [40.0,140.0]; "
                                 >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                   >
-      <rect x="0" width="0.0" height="0.0" y="0" class="grid-back"
+      <rect x="0" width="40.0" height="140.0" y="0" class="grid-back"
                                     />
     </g
                                     >
     
-        <g k9-elem="cell" id="tr" style="kite9-occupies: 0 0;" class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [45.0,25.0] [0.0,0.0]; "
+        <g k9-elem="cell" id="tr" style="kite9-occupies: 0 0; kite9-min-size: 40px 40px; " class=" kite9-cell" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [145.0,25.0]; rect-size: [40.0,130.0]; "
                                     >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                       >
-      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+      <path class="cell-edge" d="M 0,130.0 L0,0 L40.0,0"
                                         />
     </g
                                         >
     
   </g
                                         >
-        <g k9-elem="cell" id="br" style="kite9-occupies: 0 1;" class=" kite9-cell" k9-info="positioning: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [45.0,25.0] [0.0,0.0]; "
+        <g k9-elem="cell" id="br" style="kite9-occupies: 0 1; kite9-min-size: 40px 10px; " class=" kite9-cell" transform="translate(.0,130.0)" k9-info="positioning: 0-0,1-1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [145.0,155.0]; rect-size: [40.0,10.0]; "
                                         >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                           >
-      <path class="cell-edge" d="M 0,0.0 L0,0 L0.0,0"
+      <path class="cell-edge" d="M 0,10.0 L0,0 L40.0,0"
                                             />
     </g
                                             >
@@ -115,7 +115,7 @@
       
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                             >
-      <rect x="0" width="0.0" height="0.0" y="0" class="grid-frame"
+      <rect x="0" width="40.0" height="140.0" y="0" class="grid-frame"
                                               />
     </g
                                               >
@@ -127,7 +127,7 @@
   
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                               >
-      <rect x="0" width="40.0" height="20.0" y="0" class="grid-frame"
+      <rect x="0" width="180.0" height="160.0" y="0" class="grid-frame"
                                                 />
     </g
                                                 >

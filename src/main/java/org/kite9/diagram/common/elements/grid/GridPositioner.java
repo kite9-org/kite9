@@ -2,10 +2,8 @@ package org.kite9.diagram.common.elements.grid;
 
 import java.util.List;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
-import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Layout;
