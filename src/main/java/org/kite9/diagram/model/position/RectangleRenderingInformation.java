@@ -32,5 +32,12 @@ public interface RectangleRenderingInformation extends RenderingInformation {
 	public void setGridXSize(int x);
 	
 	public void setGridYSize(int y);
+	
+	public double[] getCellXPositions();
+	
+	public double[] getCellYPositions();
 		
+	public void setCellXPositions(double[] xs);
+	
+	public void setCellYPositions(double[] ys);
 }

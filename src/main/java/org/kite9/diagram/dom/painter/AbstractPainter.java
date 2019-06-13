@@ -1,5 +1,7 @@
 package org.kite9.diagram.dom.painter;
 
+import java.util.Arrays;
+
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
@@ -83,6 +85,8 @@ public abstract class AbstractPainter implements Painter {
 			if (((Container)r).getLayout() == Layout.GRID) {
 				RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();
 				debug.append("grid-size: ["+rri.gridXSize()+", "+rri.gridYSize()+"]; ");
+				debug.append("cell-xs: ["+commaIntList(rri.getCellXPositions())+"]; ");
+				debug.append("cell-ys: ["+commaIntList(rri.getCellYPositions())+"]; ");
 			}
 		}
 		
@@ -132,6 +136,10 @@ public abstract class AbstractPainter implements Painter {
 		
 		
 		out.setAttribute("k9-info", debug.toString());
+	}
+
+	private String commaIntList(double[] p) {
+		return Arrays.stream(p).mapToObj(d -> "" + ((int) d)).reduce((a, b) -> a+", "+b).orElse("");
 	}
 
 	private Pair<Integer> scale(OPair<BigFraction> p, int s) {

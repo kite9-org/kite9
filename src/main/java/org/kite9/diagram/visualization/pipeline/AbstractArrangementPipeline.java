@@ -14,6 +14,7 @@ import org.kite9.diagram.visualization.compaction.align.ConnectionAlignmentCompa
 import org.kite9.diagram.visualization.compaction.align.LeftRightAligner;
 import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep;
+import org.kite9.diagram.visualization.compaction.position.GridCellPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer;
@@ -104,6 +105,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 				new ConnectionAlignmentCompactionStep(),
 				new ConnectionRouteCompactionStep(),
 				new RectangularPositionCompactionStep(cd),
+				new GridCellPositionCompactionStep(),
 				new LoggingOptimisationStep(cd)
 				};
 

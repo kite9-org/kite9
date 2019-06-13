@@ -7,6 +7,7 @@ public class RectangleRenderingInformationImpl extends AbstractRenderingInformat
 	
 	private OPair<BigFraction> gx, gy;
 	private int sx, sy;
+	private double[] xc, yc;
 	
 	public RectangleRenderingInformationImpl() {
 		super();
@@ -54,5 +55,25 @@ public class RectangleRenderingInformationImpl extends AbstractRenderingInformat
 	@Override
 	public void setGridYSize(int y) {
 		this.sy = y;
+	}
+
+	@Override
+	public double[] getCellXPositions() {
+		return xc;
+	}
+
+	@Override
+	public double[] getCellYPositions() {
+		return yc;
+	}
+
+	@Override
+	public void setCellXPositions(double[] xs) {
+		this.xc = xs;
+	}
+
+	@Override
+	public void setCellYPositions(double[] ys) {
+		this.yc = ys;
 	}
 }

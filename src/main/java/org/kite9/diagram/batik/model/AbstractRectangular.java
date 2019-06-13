@@ -1,10 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.batik.transform.LeafTransformer;
@@ -13,7 +8,6 @@ import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
@@ -121,8 +115,6 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		return (Container) getParent();
 	}
 	
-	private static Pattern GRID_MATCH = Pattern.compile("([x|y])([0-9]+)");
-
 	@Override
 	public String getXPathVariable(String name) {
 		if (("x0".equals(name) )|| ("y0".equals(name))) {
@@ -131,37 +123,26 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 			return ""+getRenderingInformation().getSize().getHeight();
 		} else if ("x1".equals(name) || "width".equals(name)) {
 			return ""+getRenderingInformation().getSize().getWidth();
-		} else if (getLayout() == Layout.GRID) {
-//			Matcher m = GRID_MATCH.matcher(name);
-//			if (m.matches()) {
-//				initializeGridPositionsForXPath();
-//				boolean horiz = m.group(1).equals("x");	
-//				int idx = Integer.parseInt(m.group(2));
-//				
-//				if ((horiz) && (idx < xPositions.size())) {
-//					return ""+xPositions.get(idx);
-//				} else if ((!horiz) && (idx < yPositions.size())) {
-//					return ""+yPositions.get(idx);
-//				}
-//			}
+		} else if ((getLayout() == Layout.GRID) && (this instanceof Container)) {
+			try {
+				boolean cellX = name.startsWith("cell-x-");
+				boolean cellY = name.startsWith("cell-y-");
+				int idx = Integer.parseInt(name.substring(7));
+				
+				if (cellX) {
+					return ""+ getRenderingInformation().getCellXPositions()[idx];
+				} else if (cellY) {
+					return ""+ getRenderingInformation().getCellYPositions()[idx];
+				}
+				
+			} catch (Exception e) {
+				return "!!!"+ e.getMessage();
+			}
 		}
 		
 		return null;
 	}
-	
-	protected void initializeGridPositionsForXPath(List<Connected> contents)  {
-		xPositions = contents.stream()
-				.map(c -> c.getRenderingInformation())
-				.map(r -> r.getPosition().x())
-				.sorted()
-				.distinct()
-				.collect(Collectors.toList());
-		yPositions = new ArrayList<>();
-		
-	}
 
-	private transient List<Double> xPositions;
-	private transient List<Double> yPositions;
 	
 	
 	public final CostedDimension getSize(Dimension2D within) {
