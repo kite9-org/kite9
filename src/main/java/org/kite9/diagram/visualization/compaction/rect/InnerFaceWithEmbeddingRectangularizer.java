@@ -33,7 +33,9 @@ public class InnerFaceWithEmbeddingRectangularizer extends AbstractRectangulariz
 	
 	@Override
 	protected List<DartFace> selectFacesToRectangularize(Compaction c, List<DartFace> faces) {
-		return faces.stream().filter(df -> df.getContainedFaces().size() > 0).collect(Collectors.toList());
+		return faces.stream()
+				.filter(df -> df.getContainedFaces().size() > 0)
+				.collect(Collectors.toList());
 	}
 
 	/**

@@ -38,9 +38,8 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	
 
 	protected void processOutput(StyledKite9XMLElement in, Element out, @SuppressWarnings("unused") Document d) {
-		handleTemporaryElements(out, d);
 		new Kite9ExpandingCopier("", out).processContents(in);
-		
+		handleTemporaryElements(out, d);
 	}
 	
 	/**

@@ -153,4 +153,23 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
 	}
+	
+	@Test
+	public void test_56_7_SingleColumnGrid() throws Exception {
+		Cell t1 = new Cell("1", Arrays.asList());
+		Cell t2 = new Cell("2", Arrays.asList());
+		Cell t3 = new Cell("3", Arrays.asList());
+		Cell t4 = new Cell("4", Arrays.asList());
+		
+		t1.setAttribute("style", "fill: green; kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "fill: red; kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "fill: blue; kite9-min-size: 50px 50px; ");
+		t4.setAttribute("style", "fill: yellow; kite9-min-size: 50px 50px; ");
+		
+		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4), null);
+		ctx.setAttribute("style", "kite9-layout: grid;");
+		
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+	}
+	
 }

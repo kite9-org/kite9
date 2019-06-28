@@ -57,6 +57,7 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 	
 	@Override
 	public Dimension2D getMinimumSize() {
+		ensureInitialized();
 		return this.minimumSize;
 	}
 

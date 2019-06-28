@@ -60,7 +60,7 @@ public class FracMapperImpl implements FracMapper {
 				Bounds bright = right.get(bf);
 				
 				if (bleft.getDistanceMax() > bright.getDistanceMin()) {
-					throw new LogicException("Overlapping bounds in grid");
+					throw new LogicException("Overlapping bounds in grid: "+bleft.getDistanceMax()+ " / "+bright.getDistanceMin());
 				}
 				
 				double midPoint = (bleft.getDistanceMax() + bright.getDistanceMin()) /2d;
@@ -77,7 +77,7 @@ public class FracMapperImpl implements FracMapper {
 				Bounds bdown = down.get(bf);
 				
 				if (bup.getDistanceMax() > bdown.getDistanceMin()) {
-					throw new LogicException("Overlapping bounds in grid");
+					throw new LogicException("Overlapping bounds in grid: "+bup.getDistanceMax()+ " / "+bdown.getDistanceMin());
 				}
 
 				

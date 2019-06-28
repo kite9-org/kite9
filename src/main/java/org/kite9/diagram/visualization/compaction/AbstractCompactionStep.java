@@ -67,7 +67,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 			// we're in a grid, look for common diagram elements
 			Set<Rectangular> combined = new HashSet<>(first.getRectangulars());
 			Set<Rectangular> secondRs = second.getRectangulars();
-			combined.removeAll(secondRs);
+			combined.retainAll(secondRs);
 		
 			if (combined.size() == 1) {
 				// ok, run just the single found combination

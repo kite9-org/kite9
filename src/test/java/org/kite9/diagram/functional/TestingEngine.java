@@ -141,7 +141,7 @@ public class TestingEngine extends TestingHelp {
 			if (c.checkOcclusion) {
 				checkOverlap((Diagram) d.getDiagramElement());
 			}
-
+	
 			// check the outputs. only going to check final diagrams now
 			boolean ok = false;
 			testConnectionPresence(d, c.everythingStraight, c.checkEdgeDirections, c.checkNoContradictions);

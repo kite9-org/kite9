@@ -116,7 +116,7 @@ public abstract class AbstractPainter implements Painter {
 		
 		if (r instanceof Connection) {
 			Connection link = ((Connection) r);
-			debug.append("link: ["+link.getFrom().getID()+","+link.getTo().getID()+"]; ");
+			debug.append("link: ['"+link.getFrom().getID()+"','"+link.getTo().getID()+"']; ");
 			debug.append("direction: "+((Connection)r).getDrawDirection()+"; ");
 			if (((Connection)r).getRenderingInformation().isContradicting()) {
 				debug.append("contradicting: yes; ");
@@ -177,6 +177,8 @@ public abstract class AbstractPainter implements Painter {
 				.forEach(c -> {
 					Element e = ((HasSVGRepresentation)c).output(d);
 					if (e != null) {
+						e.setAttribute("k9-elem", "--temporary");
+						e.setAttribute("id", c.getID());
 						out.appendChild(e);
 					}
 				});

@@ -440,6 +440,5 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
 	}
-	
 
 }

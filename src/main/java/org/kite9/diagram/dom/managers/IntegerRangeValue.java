@@ -10,7 +10,7 @@ import org.kite9.diagram.model.style.IntegerRange;
  * @author robmoffat
  *
  */
-class IntegerRangeValue extends AbstractValue implements IntegerRange {
+public class IntegerRangeValue extends AbstractValue implements IntegerRange {
 
 	private int from, to;
 	
@@ -31,7 +31,7 @@ class IntegerRangeValue extends AbstractValue implements IntegerRange {
 
 	@Override
 	public String getCssText() {
-		return null;
+		return from+" "+to;
 	}
 
 	public static boolean notSet(IntegerRangeValue in) {
@@ -42,7 +42,7 @@ class IntegerRangeValue extends AbstractValue implements IntegerRange {
 		if (from == -1) {
 			return "*";
 		} else {
-			return from+"-"+to;
+			return from+" "+to;
 		}
 	}
 }
