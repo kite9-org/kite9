@@ -50,6 +50,10 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	public HintMap getPositioningHints() {
 		return null;
 	}
+	
+	public String toString() {
+		return "[grid-temporary: "+id+"]";
+	}
 
 	private Collection<Connection> links = new ArrayList<>();
 

@@ -440,5 +440,29 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
 	}
+	
+	@Test
+	public void test_51_24_SparseGrid() throws Exception {
+		Glyph g2 = new Glyph("two", "","two ", null, null);
+		Glyph g3 = new Glyph("three", "","three ", null, null);
+
+		Glyph g1 = new Glyph("one", "","one", null, null);
+		Cell t1 = new Cell("1", Arrays.asList(g2));
+		Cell t2 = new Cell("2", Arrays.asList());
+		Cell t3 = new Cell("3", Arrays.asList(g3));
+		Cell t4 = new Cell("4", Arrays.asList());
+		
+		t1.setAttribute("style", "kite9-occupies: 6 6 2 2; kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "kite9-occupies: 6 6 0 0; kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "kite9-occupies: 3 3 3 3; kite9-min-size: 50px 50px; ");
+		t4.setAttribute("style", "kite9-occupies: 3 3 1 1; kite9-min-size: 50px 50px; ");
+		
+		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4), null);
+		ctx.setAttribute("style", "kite9-layout: grid;");
+		new Link(g2, g1, null, null, "DIAMOND", null, null);
+		new TurnLink(g2, g3, null, null, null, null, null);
+	
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g1), null));
+	}
 
 }

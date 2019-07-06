@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.objects.OPair;
+import org.kite9.diagram.common.objects.Pair;
+import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -36,37 +39,6 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	private Kite9Log log = new Kite9Log(this);
 
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
-	
-	/**
-	 * Works out the minimum possible size of the grid, before placing elements in it.
-	 */
-	private Dimension calculateInitialGridSize(Container ord, boolean allowSpanning) {
-		// these are a minimum size, but contents can exceed them and push this out.
-		int xSize = ord.getGridColumns();
-		int ySize = ord.getGridRows();
-		
-		
-		// fit as many elements as possible into the grid
-		for (DiagramElement diagramElement : ord.getContents()) {
-			if (shoudAddToGrid(diagramElement)) {
-				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
-				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);
-				
-				if ((xpos != null) && (ypos != null)) {
-					if (allowSpanning) {
-						xSize = Math.max(xpos.getTo()+1, xSize);
-						ySize = Math.max(ypos.getTo()+1, ySize);
-					} else {
-						xSize = Math.max(xpos.getFrom()+1, xSize);
-						ySize = Math.max(ypos.getFrom()+1, ySize);
-					}
-				}
-			}
-		}
-		
-		return new Dimension(xSize, ySize);
-	}
-
 
 	public static IntegerRange getYOccupies(Rectangular diagramElement) {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getY();
@@ -77,30 +49,23 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		return ((GridContainerPosition)diagramElement.getContainerPosition()).getX();
 	}
 	
-	
 	public DiagramElement[][] placeOnGrid(Container ord, boolean allowSpanning) {
 		if (placed.containsKey(ord)) {
 			return placed.get(ord);
 		}
 		
-		Dimension size = calculateInitialGridSize(ord, allowSpanning);
-		
 		List<DiagramElement> overlaps = new ArrayList<>();
 		List<List<DiagramElement>> out = new ArrayList<>();
 		
-		for (int x = 0; x < size.width; x++) {
-			List<DiagramElement> ys = initColumn(size.height);
-			out.add(ys);
-		}
-		
-		
+		// place elements in their correct positions, as far as possible.  
+		// move overlaps to array.
 		for (DiagramElement diagramElement : ord.getContents()) {
 			if (shoudAddToGrid(diagramElement)) {
 				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
 				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);	
 				
-				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, allowSpanning))) {
-					ensureGrid(out, xpos, ypos, diagramElement, allowSpanning);
+				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null) == null)) {
+					ensureGrid(out, xpos, ypos, diagramElement);
 					int xTo = allowSpanning ? xpos.getTo() : xpos.getFrom();
 					int yTo = allowSpanning ? ypos.getTo() : ypos.getFrom();
 					storeCoordinates1((Connected) diagramElement, xpos.getFrom(), xTo, ypos.getFrom(), yTo);
@@ -112,39 +77,51 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		// add remaining/dummy elements elements, by adding extra rows if need be.
 		int cell = 0;
-		while ((overlaps.size() > 0) || (cell < size.width * size.height)) {
-			int row = Math.floorDiv(cell, size.width);
-			int col = cell % size.width;
-			List<DiagramElement> ys = out.get(col);
-			boolean isNotSet = ys.size() <= row;
-			boolean isEmpty = !isNotSet && (ys.get(row) == null);
+		int ySize = out.size(); 
+		int xSize = (ySize > 0) ? out.get(0).size() : 0;
+		
+		if ((xSize == 0) && (overlaps.size() > 0)) {
+			xSize = 1;
+			ySize = 1;
+		}
+		
+		System.out.println("overlaps: "+overlaps);
+		
+		while ((overlaps.size() > 0) || (cell < xSize * ySize)) {
+			int row = Math.floorDiv(cell, xSize);
+			int col = cell % xSize;
 			
-			if (isEmpty || isNotSet) {
+			if (row >= ySize) {
+				ySize ++;
+			}
+
+			IntegerRangeValue xpos = new IntegerRangeValue(col, col);
+			IntegerRangeValue ypos = new IntegerRangeValue(row, row);
+			
+			DiagramElement d = ensureGrid(out, xpos, ypos, null); 
+			
+			if (d == null) {
 				DiagramElement toPlace = null; 
 				
-				if (overlaps.isEmpty()) {
-					toPlace = new GridTemporaryConnected(ord, col, row);
-					modifyContainerContents(ord, toPlace);
-				} else {
-					toPlace = overlaps.remove(0);
+				if (!overlaps.isEmpty()) {
+					ensureGrid(out, xpos, ypos, overlaps.remove(0)); 
 				}
-				
-				
-				if (isEmpty) {
-					ys.set(row, toPlace);
-				} else {
-					ys.add(toPlace);
-					size.height = ys.size();
-				}
-				storeCoordinates1((Connected) toPlace, col, col, row, row);
 			}
 			cell++;
 		}
 		
+		ySize = removeDuplicatesAndEmptyRows(out, ySize);
+		out = transpose(out);
+		xSize = removeDuplicatesAndEmptyRows(out, xSize);
+		out = transpose(out);
+		fillInTheBlanks(out, ord);
+		
+		// to array
 		DiagramElement[][] done = out.stream()
 			.map(l -> l.stream().toArray(DiagramElement[]::new))
 			.toArray(DiagramElement[][]::new); 
 		
+		Dimension size = new Dimension(xSize, ySize);
 		Arrays.stream(done).forEach(a -> Arrays.stream(a).forEach(de -> scaleCoordinates((Connected) de, size)));
 		
 		if (isLoggingEnabled()) {
@@ -152,7 +129,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			for (DiagramElement[] diagramElements : done) {
 				t.addObjectRow(diagramElements);
 			};
-			log.send("Grid Positions (transposed axes): \n", t);			
+			log.send("Grid Positions: \n", t);			
 		}
 		
 		RectangleRenderingInformation crri = ord.getRenderingInformation();
@@ -163,11 +140,62 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		placed.put(ord, done);
 		return done;
 	}
+	
+	private void fillInTheBlanks(List<List<DiagramElement>> in, Container ord) {
+		for (int y = 0; y < in.size(); y++) {
+			List<DiagramElement> row = in.get(y);
+			for (int x = 0; x < row.size(); x++) {
+				DiagramElement toPlace = null;
+				if (row.get(x) == null) {
+					toPlace = new GridTemporaryConnected(ord, x, y);
+					modifyContainerContents(ord, toPlace);
+					row.set(x, toPlace);
+				} else {
+					toPlace = row.get(x);
+				}
+
+			
+				storeCoordinates1((Connected) toPlace, x, x, y, y);
+			}
+		}
+	}
 
 
-	protected List<DiagramElement> initColumn(int height) {
-		List<DiagramElement> ys = new ArrayList<>(height);
-		for (int y = 0; y < height; y++) {
+	private List<List<DiagramElement>> transpose(List<List<DiagramElement>> in) {
+		List<List<DiagramElement>> out = new ArrayList<>();
+		for (int y = 0; y < in.size(); y++) {
+			List<DiagramElement> row = in.get(y);
+			for (int x = 0; x < row.size(); x++) {
+				if (out.size() <= x) {
+					out.add(new ArrayList<>());
+				}
+				out.get(x).add(row.get(x));
+			}
+		}
+		return out;
+	}
+
+	private int removeDuplicatesAndEmptyRows(List<List<DiagramElement>> out, int height) {
+		List<DiagramElement> last = null;
+		for (Iterator<List<DiagramElement>> lineIt = out.iterator(); lineIt.hasNext();) {
+			List<DiagramElement> line = (List<DiagramElement>) lineIt.next();
+			if ((last != null) && (last.equals(line))) {
+				lineIt.remove();
+				height --;
+			}
+			
+			if (line.stream().filter(x -> x != null).count() == 0) {
+				lineIt.remove();
+				height --;
+			}
+			
+		}
+		return height;
+	}
+
+	protected List<DiagramElement> init(int l) {
+		List<DiagramElement> ys = new ArrayList<>(l);
+		for (int y = 0; y < l; y++) {
 			ys.add(null);
 		}
 		return ys;
@@ -201,6 +229,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		yin = new OPair<BigFraction>(BigFraction.getReducedFraction(yin.getA().intValue(), size.height), BigFraction.getReducedFraction(yin.getB().intValue(), size.height));
 		ri.setGridXPosition(xin);
 		ri.setGridYPosition(yin);
+		System.out.println(de+" "+xin+" "+yin);
 	}
 
 
@@ -208,27 +237,44 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	 * Iterates over the grid squares occupied by the ranges and either checks that they are empty, 
 	 * or sets their value.
 	 * @param allowSpanning 
+	 * @param size 
 	 */
-	private static boolean ensureGrid(List<List<DiagramElement>> out, IntegerRange xpos, IntegerRange ypos, DiagramElement in, boolean allowSpanning) {
-		// ensure grid is large enough for the elements.
-		int xTo = allowSpanning ? xpos.getTo()+1 : xpos.getFrom()+1;
-		for (int x = xpos.getFrom(); x < xTo; x++) {
-			List<DiagramElement> ys = out.get(x);
-			
-			int yTo = allowSpanning ? ypos.getTo()+1: ypos.getFrom() + 1;
-			for (int y = ypos.getFrom(); y < yTo; y++) {
-				if (in == null) {
-					if (ys.get(y) != null) {
-						return false;
-					}
-				} else {
-					ys.set(y, in);
-				}
+	private static DiagramElement ensureGrid(List<List<DiagramElement>> out, IntegerRange xpos, IntegerRange ypos, DiagramElement in) {
+		// check grid is big enough to contain this element.
+		for (int y = 0; y <= ypos.getTo(); y++) {
+			if (out.size() <= y) {
+				out.add(new ArrayList<DiagramElement>());
 			}
 			
+			List<DiagramElement> xs = out.get(y);
+			while (xs.size() <= xpos.getTo()) {
+				xs.add(null);
+			}
 		}
 		
-		return true;
+		// check that the area to place in is empty
+		DiagramElement filled = null;
+		for (int x = xpos.getFrom(); x <= xpos.getTo(); x++) {
+			for (int y = ypos.getFrom(); y <= ypos.getTo(); y++) {
+				filled = filled == null ? out.get(y).get(x) : filled;
+			}
+		}
+		
+		if (filled != null) {
+			return filled;
+		}
+		
+		if (in != null) {
+			// place the element
+			for (int x = xpos.getFrom(); x <= xpos.getTo(); x++) {
+				for (int y = ypos.getFrom(); y <= ypos.getTo(); y++) {
+					out.get(y).set(x, in);
+				}
+			}
+			return in;
+		} else {
+			return null;
+		}
 	}
 
 	public List<MultiCornerVertex> getClockwiseOrderedContainerVertices(CornerVertices cvs) {

@@ -1,6 +1,7 @@
 package org.kite9.diagram.common.elements.grid;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.fraction.BigFraction;
@@ -34,6 +35,13 @@ public class FracMapperImpl implements FracMapper {
 		
 		// work out where this appears in relation to the neighbouring container's positions.
 		Iterable<MultiCornerVertex> allVertices = containerVertices.getAllDescendentVertices();
+		
+		((List<MultiCornerVertex>)allVertices).stream()
+			.flatMap(e -> e.getAnchors().stream())
+			.map(a -> a.getDe())
+			.distinct()
+			.forEach(e -> System.out.println(e.toString()+" "+rh.getPlacedPosition(e)));
+		
 		for (MultiCornerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
 				RoutingInfo place = rh.getPlacedPosition(a.getDe());

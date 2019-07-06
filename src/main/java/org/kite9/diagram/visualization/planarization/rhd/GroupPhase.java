@@ -125,11 +125,11 @@ public class GroupPhase {
 			if (l==Layout.GRID) {
 				// need to iterate in 2d
 				DiagramElement[][] grid = gp.placeOnGrid((Container) ord, false);
-				for (int x = 0; x < grid.length; x++) {
-					for (int y = 0; y < grid[0].length; y++) {
-						Connected prevx = (Connected) (x > 0 ? grid[x-1][y] : null);
-						Connected prevy = (Connected) (y > 0 ? grid[x][y-1] : null);
-						DiagramElement de = grid[x][y];
+				for (int y = 0; y < grid.length; y++) {
+					for (int x = 0; x < grid[0].length; x++) {
+						Connected prevy = (Connected) (y > 0 ? grid[y-1][x] : null);
+						Connected prevx = (Connected) (x > 0 ? grid[y][x-1] : null);
+						DiagramElement de = grid[y][x];
 						Connected c = (Connected) de;
 						if ((c != prevx) && (c != prevy)) {
 							createLeafGroup(c, prevx, prevy, pMap);

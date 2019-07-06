@@ -114,6 +114,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void setLogging() {
+		//Kite9Log.clearLog();
 		Kite9Log.setLogging(true);
 		
 		// if we are running more than one test, then there's no point in logging.
@@ -122,6 +123,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		} else {
 			Kite9Log.setLogging(false);
 		}
+		
 	}
 	
 
