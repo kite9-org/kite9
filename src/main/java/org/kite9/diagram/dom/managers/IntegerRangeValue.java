@@ -39,7 +39,7 @@ public class IntegerRangeValue extends AbstractValue implements IntegerRange {
 	}
 	
 	public String toString() {
-		if (from == -1) {
+		if (from > to) {
 			return "*";
 		} else {
 			return from+" "+to;

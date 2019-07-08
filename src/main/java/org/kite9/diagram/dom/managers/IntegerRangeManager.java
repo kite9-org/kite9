@@ -56,7 +56,7 @@ public class IntegerRangeManager extends AbstractValueManager {
 			if (lu.getNextLexicalUnit() != null) {
 				end = lu.getNextLexicalUnit().getIntegerValue();
 			}
-			if ((start<=end) && (start>=0)) {
+			if (start<=end) {
 				return new IntegerRangeValue(start, end);
 			} else {
 				return null;

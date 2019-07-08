@@ -7,6 +7,6 @@ public interface IntegerRange {
 	int getTo();
 
 	public static boolean notSet(IntegerRange in) {
-		return (in == null) || (in.getFrom() == -1);
+		return (in == null) || (in.getFrom() > in.getTo());
 	}
 }

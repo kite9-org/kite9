@@ -36,11 +36,11 @@ public class FracMapperImpl implements FracMapper {
 		// work out where this appears in relation to the neighbouring container's positions.
 		Iterable<MultiCornerVertex> allVertices = containerVertices.getAllDescendentVertices();
 		
-		((List<MultiCornerVertex>)allVertices).stream()
-			.flatMap(e -> e.getAnchors().stream())
-			.map(a -> a.getDe())
-			.distinct()
-			.forEach(e -> System.out.println(e.toString()+" "+rh.getPlacedPosition(e)));
+//		((List<MultiCornerVertex>)allVertices).stream()
+//			.flatMap(e -> e.getAnchors().stream())
+//			.map(a -> a.getDe())
+//			.distinct()
+//			.forEach(e -> System.out.println(e.toString()+" "+rh.getPlacedPosition(e)));
 		
 		for (MultiCornerVertex cv : allVertices) {
 			for (Anchor a : cv.getAnchors()) {
