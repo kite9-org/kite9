@@ -16,7 +16,6 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Layout;
@@ -72,8 +71,8 @@ public abstract class AbstractPainter implements Painter {
 
 	protected void addInfoAttributes(Element out) {
 		StringBuilder debug = new StringBuilder();
-		if (r instanceof SizedRectangular) {
-			debug.append("positioning: "+ ((SizedRectangular) r).getContainerPosition().toString()+"; ");
+		if (r instanceof Rectangular) {
+			debug.append("position: "+ ((Rectangular) r).getContainerPosition()+"; ");
 		} 
 		if (r instanceof AlignedRectangular) {
 			debug.append("horiz: "+ ((AlignedRectangular) r).getHorizontalAlignment()+"; ");

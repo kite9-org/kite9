@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.dom.model.AbstractDiagramElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
@@ -23,6 +24,7 @@ import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.GridContainerPosition;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -35,10 +37,12 @@ import org.w3c.dom.Element;
 public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container, HasSVGRepresentation {
 
 	private final String id;
+	private GridContainerPosition gcp;
 	
 	public GridTemporaryConnected(DiagramElement parent, int x, int y) {
 		super(parent);
 		this.id = parent.getID()+"-g-"+x+"-"+y;
+		this.gcp = new GridContainerPosition(new IntegerRangeValue(x, x), new IntegerRangeValue(y, y));
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 
 	@Override
 	public ContainerPosition getContainerPosition() {
-		return null;
+		return gcp;
 	}
 	
 	@Override

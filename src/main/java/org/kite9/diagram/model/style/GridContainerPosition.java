@@ -22,7 +22,7 @@ public class GridContainerPosition implements ContainerPosition {
 
 	@Override
 	public String toString() {
-		return x+","+y;
+		return "["+x.getFrom()+","+x.getTo()+","+y.getFrom()+","+y.getTo()+"]";
 	}
 	
 	

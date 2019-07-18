@@ -48,11 +48,11 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 	protected void convertContainerContents(Orthogonalization o, Container c, DartFace inner) {
 		if (c.getLayout() == Layout.GRID) {
-			if (c.getContents().size() > 0) {
-				DartFace outer = createGridFaceForContainerContents(o, c);
+			DartFace outer = createGridFaceForContainerContents(o, c);
+			if (outer != null) {
 				outer.setContainedBy(inner);
 				log.send("Created container contents outer face: "+outer);
-			}
+			}	
 		} else {
 			for (DiagramElement de : c.getContents()) {
 				if (de instanceof Connected) {
@@ -114,13 +114,17 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 	private DartFace createGridFaceForContainerContents(Orthogonalization o, Container c) {
 		Map<Direction, List<IncidentDart>> emptyMap = new HashMap<>();
 		Set<MultiCornerVertex> createdVertices = new LinkedHashSet<>();
-		placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
-		Vertex startVertex = getTopLeftVertex(createdVertices);
-		return convertToOuterFace(o, startVertex, c);
+		boolean stuffAdded = placeContainerContentsOntoGrid(o, c, emptyMap, createdVertices);
+		if (stuffAdded) {
+			Vertex startVertex = getTopLeftVertex(createdVertices);
+			return convertToOuterFace(o, startVertex, c);
+		} else {
+			return null;
+		}
 	}
 	
 
-	private void placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
+	private boolean placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
 			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
 		DiagramElement[][] elementArray = gp.placeOnGrid(c, true);
@@ -128,6 +132,9 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 				.flatMap(e -> Arrays.stream(e))
 				.collect(Collectors.toList());
 		
+		if (connectedElements.size() == 0) {
+			return false;
+		}
 
 		// set up vertices for each grid element
 		for (DiagramElement de : connectedElements) {
@@ -167,6 +174,8 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			}
 
 		}
+		
+		return true;
 	}
 
 

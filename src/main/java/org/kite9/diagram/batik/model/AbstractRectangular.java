@@ -124,23 +124,27 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		} else if ("x1".equals(name) || "width".equals(name)) {
 			return ""+getRenderingInformation().getSize().getWidth();
 		} else if ((getLayout() == Layout.GRID) && (this instanceof Container)) {
-			try {
-				boolean cellX = name.startsWith("cell-x-");
-				boolean cellY = name.startsWith("cell-y-");
-				int idx = Integer.parseInt(name.substring(7));
-				
-				if (cellX) {
-					return ""+ getRenderingInformation().getCellXPositions()[idx];
-				} else if (cellY) {
-					return ""+ getRenderingInformation().getCellYPositions()[idx];
-				}
-				
-			} catch (Exception e) {
-				return "!!!"+ e.getMessage();
+			boolean cellX = name.startsWith("cell-x-");
+			boolean cellY = name.startsWith("cell-y-");
+			
+			if (cellX) {
+				int idx = safeParseInt(name);
+				return idx > -1 ? ""+ getRenderingInformation().getCellXPositions()[idx] : null;
+			} else if (cellY) {
+				int idx = safeParseInt(name);
+				return idx > -1 ? ""+ getRenderingInformation().getCellYPositions()[idx]: null;
 			}
 		}
 		
 		return null;
+	}
+
+	protected int safeParseInt(String name) {
+		try {
+			return Integer.parseInt(name.substring(7));
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	

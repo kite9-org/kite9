@@ -6,12 +6,12 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [206.0,181.0]; "
+  ><g k9-elem="diagram" id="diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [206.0,181.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g transform="translate(15.0,15.0)" style="kite9-layout: grid;" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [3, 3]; cell-xs: [0, 55, 119, 176]; cell-ys: [0, 51, 101, 151]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [176.0,151.0]; " rank="0" class=" kite9-grid" id="outer" k9-elem="grid"
+  <g transform="translate(15.0,15.0)" style="kite9-layout: grid;" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [3, 3]; cell-xs: [0, 55, 119, 176]; cell-ys: [0, 51, 101, 151]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [176.0,151.0]; " rank="0" class=" kite9-grid" id="outer" k9-elem="grid"
       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
         >
@@ -20,7 +20,7 @@
     </g
           >
     
-    <g k9-elem="cell" id="1" style="kite9-occupies: -5 -4 -3 -2; kite9-min-size: 50px 50px; " class=" kite9-cell" k9-info="positioning: -5 -4,-3 -2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [55.0,51.0]; "
+    <g k9-elem="cell" id="1" style="kite9-occupies: -5 -4 -3 -2; kite9-min-size: 50px 50px; " class=" kite9-cell" k9-info="position: [-5,-4,-3,-2]; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [55.0,51.0]; "
           >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
             >
@@ -29,7 +29,7 @@
     </g
               >
     
-      <g k9-elem="glyph" id="TL" class=" kite9-glyph" transform="translate(10.0,10.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [35.0,29.0]; "
+      <g k9-elem="glyph" id="TL" class=" kite9-glyph" transform="translate(10.0,10.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [35.0,29.0]; "
               >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
                 >
@@ -40,7 +40,7 @@
     <g class="glyph"
                   >
       
-        <g k9-elem="label" id="TL-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [15.0,17.0]; "
+        <g k9-elem="label" id="TL-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [15.0,17.0]; "
                     >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
                       >
@@ -52,7 +52,7 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.1,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [15.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.1,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [15.0,17.0]; "
                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
@@ -75,7 +75,7 @@
     
   </g
                           >
-    <g k9-elem="cell" id="2" style="kite9-occupies: 0 0 1 1; kite9-min-size: 50px 50px; " class=" kite9-cell" transform="translate(55.0,51.0)" k9-info="positioning: 0 0,1 1; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [70.0,66.0]; rect-size: [64.0,50.0]; "
+    <g k9-elem="cell" id="2" style="kite9-occupies: 0 0 1 1; kite9-min-size: 50px 50px; " class=" kite9-cell" transform="translate(55.0,51.0)" k9-info="position: [0,0,1,1]; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [70.0,66.0]; rect-size: [64.0,50.0]; "
                           >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                             >
@@ -84,7 +84,7 @@
     </g
                               >
     
-      <g k9-elem="glyph" id="MM" class=" kite9-glyph" transform="translate(10.0,11.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [80.0,77.0]; rect-size: [44.0,29.0]; "
+      <g k9-elem="glyph" id="MM" class=" kite9-glyph" transform="translate(10.0,11.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [80.0,77.0]; rect-size: [44.0,29.0]; "
                               >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
                                 >
@@ -95,7 +95,7 @@
     <g class="glyph"
                                   >
       
-        <g k9-elem="label" id="MM-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [90.0,83.0]; rect-size: [24.0,17.0]; "
+        <g k9-elem="label" id="MM-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [90.0,83.0]; rect-size: [24.0,17.0]; "
                                     >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
                                       >
@@ -107,7 +107,7 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.5,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [90.0,83.0]; rect-size: [24.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.5,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [90.0,83.0]; rect-size: [24.0,17.0]; "
                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
@@ -130,7 +130,7 @@
     
   </g
                                           >
-    <g k9-elem="cell" id="3" style="kite9-occupies: 8 8 8 8; kite9-min-size: 50px 50px; " class=" kite9-cell" transform="translate(119.0,101.0)" k9-info="positioning: 8 8,8 8; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [2,3]; grid-y: [2,3]; rectangular: connected; rect-pos: [134.0,116.0]; rect-size: [57.0,50.0]; "
+    <g k9-elem="cell" id="3" style="kite9-occupies: 8 8 8 8; kite9-min-size: 50px 50px; " class=" kite9-cell" transform="translate(119.0,101.0)" k9-info="position: [8,8,8,8]; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; grid-x: [2,3]; grid-y: [2,3]; rectangular: connected; rect-pos: [134.0,116.0]; rect-size: [57.0,50.0]; "
                                           >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
                                             >
@@ -139,7 +139,7 @@
     </g
                                               >
     
-      <g k9-elem="glyph" id="BR" class=" kite9-glyph" transform="translate(10.0,11.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [144.0,127.0]; rect-size: [37.0,29.0]; "
+      <g k9-elem="glyph" id="BR" class=" kite9-glyph" transform="translate(10.0,11.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [144.0,127.0]; rect-size: [37.0,29.0]; "
                                               >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
                                                 >
@@ -150,7 +150,7 @@
     <g class="glyph"
                                                   >
       
-        <g k9-elem="label" id="BR-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [154.0,133.0]; rect-size: [17.0,17.0]; "
+        <g k9-elem="label" id="BR-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [154.0,133.0]; rect-size: [17.0,17.0]; "
                                                     >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
                                                       >
@@ -162,7 +162,7 @@
                                                         >
     <g class="glyph-label-text"
                                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.5,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [154.0,133.0]; rect-size: [17.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.5,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [154.0,133.0]; rect-size: [17.0,17.0]; "
                                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                               ><tspan
@@ -192,24 +192,24 @@
                                                             />
     </g
                                                             >
-  <rect x="55.0px" y="0.0px" width="64.0px" k9-info="sizing: null; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: [70.0,15.0]; rect-size: [64.0,51.0]; " class="grid-temporary" id="outer-g-1-0" height="51.0px" k9-elem="--temporary"
-                                                            /><rect x="119.0px" y="0.0px" width="57.0px" k9-info="sizing: null; layout: null; grid-x: [2,3]; grid-y: [0,1]; rectangular: connected; rect-pos: [134.0,15.0]; rect-size: [57.0,51.0]; " class="grid-temporary" id="outer-g-2-0" height="51.0px" k9-elem="--temporary"
-                                                            /><rect x="0.0px" y="51.0px" width="55.0px" k9-info="sizing: null; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [15.0,66.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g-0-1" height="50.0px" k9-elem="--temporary"
-                                                            /><rect x="119.0px" y="51.0px" width="57.0px" k9-info="sizing: null; layout: null; grid-x: [2,3]; grid-y: [1,2]; rectangular: connected; rect-pos: [134.0,66.0]; rect-size: [57.0,50.0]; " class="grid-temporary" id="outer-g-2-1" height="50.0px" k9-elem="--temporary"
-                                                            /><rect x="0.0px" y="101.0px" width="55.0px" k9-info="sizing: null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,116.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g-0-2" height="50.0px" k9-elem="--temporary"
-                                                            /><rect x="55.0px" y="101.0px" width="64.0px" k9-info="sizing: null; layout: null; grid-x: [1,2]; grid-y: [2,3]; rectangular: connected; rect-pos: [70.0,116.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-1-2" height="50.0px" k9-elem="--temporary"
+  <rect x="55.0px" y="0.0px" width="64.0px" k9-info="position: [0,0,-3,-3]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: [70.0,15.0]; rect-size: [64.0,51.0]; " class="grid-temporary" id="outer-g-0--3" height="51.0px" k9-elem="--temporary"
+                                                            /><rect x="119.0px" y="0.0px" width="57.0px" k9-info="position: [8,8,-3,-3]; sizing: null; layout: null; grid-x: [2,3]; grid-y: [0,1]; rectangular: connected; rect-pos: [134.0,15.0]; rect-size: [57.0,51.0]; " class="grid-temporary" id="outer-g-8--3" height="51.0px" k9-elem="--temporary"
+                                                            /><rect x="0.0px" y="51.0px" width="55.0px" k9-info="position: [-5,-5,1,1]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [15.0,66.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g--5-1" height="50.0px" k9-elem="--temporary"
+                                                            /><rect x="119.0px" y="51.0px" width="57.0px" k9-info="position: [8,8,1,1]; sizing: null; layout: null; grid-x: [2,3]; grid-y: [1,2]; rectangular: connected; rect-pos: [134.0,66.0]; rect-size: [57.0,50.0]; " class="grid-temporary" id="outer-g-8-1" height="50.0px" k9-elem="--temporary"
+                                                            /><rect x="0.0px" y="101.0px" width="55.0px" k9-info="position: [-5,-5,8,8]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,116.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g--5-8" height="50.0px" k9-elem="--temporary"
+                                                            /><rect x="55.0px" y="101.0px" width="64.0px" k9-info="position: [0,0,8,8]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [2,3]; rectangular: connected; rect-pos: [70.0,116.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-0-8" height="50.0px" k9-elem="--temporary"
                                                           /></g
                                                           >
   <g k9-elem="link" id="MM-TL" class=" kite9-link" k9-info="link: ['MM','TL']; direction: null; " rank="1"
                                                           >
     
-    <g k9-elem="from" reference="MM" class=" kite9-from" transform="translate(75.0,86.0)" k9-info="positioning: none; terminates: MM-TL; terminates-at: MM; end: from; rectangular: terminator; rect-pos: [75.0,86.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="MM" class=" kite9-from" transform="translate(75.0,86.0)" k9-info="position: none; terminates: MM-TL; terminates-at: MM; end: from; rectangular: terminator; rect-pos: [75.0,86.0]; rect-size: [10.0,10.0]; "
                                                             >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                               />
   </g
                                                               >
-    <g k9-elem="to" id="4" reference="TL" class="diamond kite9-to" transform="translate(38.0,53.0)" k9-info="positioning: none; terminates: MM-TL; terminates-at: TL; end: to; rectangular: terminator; rect-pos: [38.0,53.0]; rect-size: [10.0,13.0]; "
+    <g k9-elem="to" id="4" reference="TL" class="diamond kite9-to" transform="translate(38.0,53.0)" k9-info="position: none; terminates: MM-TL; terminates-at: TL; end: to; rectangular: terminator; rect-pos: [38.0,53.0]; rect-size: [10.0,13.0]; "
                                                               >
     <rect x="0" width="13.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                 />
@@ -227,13 +227,13 @@
   <g link-test="turn" k9-elem="link" id="MM-BR" class=" kite9-link" k9-info="link: ['MM','BR']; direction: null; " rank="2"
                                                                   >
     
-    <g k9-elem="from" reference="MM" class=" kite9-from" transform="translate(97.0,101.0)" k9-info="positioning: none; terminates: MM-BR; terminates-at: MM; end: from; rectangular: terminator; rect-pos: [97.0,101.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="MM" class=" kite9-from" transform="translate(97.0,101.0)" k9-info="position: none; terminates: MM-BR; terminates-at: MM; end: from; rectangular: terminator; rect-pos: [97.0,101.0]; rect-size: [10.0,10.0]; "
                                                                     >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                       />
   </g
                                                                       >
-    <g k9-elem="to" reference="BR" class=" kite9-to" transform="translate(139.0,136.0)" k9-info="positioning: none; terminates: MM-BR; terminates-at: BR; end: to; rectangular: terminator; rect-pos: [139.0,136.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="BR" class=" kite9-to" transform="translate(139.0,136.0)" k9-info="position: none; terminates: MM-BR; terminates-at: BR; end: to; rectangular: terminator; rect-pos: [139.0,136.0]; rect-size: [10.0,10.0]; "
                                                                       >
     <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                         />

@@ -125,7 +125,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 					.toArray(DiagramElement[]::new))
 			.toArray(DiagramElement[][]::new); 
 		
-		fillInTheBlanks(done, ord);
+		fillInTheBlanks(done, ord, new ArrayList<>(xOrdinals), new ArrayList<>(yOrdinals));
 
 		Dimension size = new Dimension(xSize, ySize);
 		scaleCoordinates(done, size);
@@ -148,13 +148,13 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 	}
 
 
-	private void fillInTheBlanks(DiagramElement[][] in, Container ord) {
+	private void fillInTheBlanks(DiagramElement[][] in, Container ord, List<Integer> xOrdinals, List<Integer> yOrdinals) {
 		for (int y = 0; y < in.length; y++) {
 			DiagramElement[] row = in[y];
 			for (int x = 0; x < row.length; x++) {
 				DiagramElement toPlace = null;
 				if (row[x] == null) {
-					toPlace = new GridTemporaryConnected(ord, x, y);
+					toPlace = new GridTemporaryConnected(ord, xOrdinals.get(x), yOrdinals.get(y));
 					modifyContainerContents(ord, toPlace);
 					row[x] = toPlace;
 				} else {
