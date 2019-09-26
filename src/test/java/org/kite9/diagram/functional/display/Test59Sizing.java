@@ -145,6 +145,13 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				"kite9-padding: 00px; kite9-layout: down;"), "kite9-vertical-align: top")));
 	}
 	
+	@Test
+	public void test_59_18_TestTextBoundedSize() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(
+				text("hello something else", "font-size: 25px; kite9-text-bounds: 150px 500px; ")
+				+text("hello b this could be a long bit of text", "font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
+	}
+	
 	private String para() {
 		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
 			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";

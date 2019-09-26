@@ -8,7 +8,6 @@ import org.apache.batik.anim.dom.SVGGraphicsElement;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.StyleDeclarationProvider;
-import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.CSSConstants;
@@ -93,7 +92,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		return getAttribute("id");
 	}
 
-	protected StyleMap sm;
+	//protected StyleMap sm;
 
 	public AbstractStyledKite9XMLElement() {
 		super();
@@ -178,14 +177,15 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		Kite9XMLElement p = getParentKite9Element();
 		return (p == null) ? null : p.getDiagramElement();
 	}
-	
-	public StyleMap getComputedStyleMap(String pseudoElement) {
-		return sm;
-	}
-
-	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
-		this.sm = sm;
-	}
+//	
+//	public StyleMap getComputedStyleMap(String pseudoElement) {
+//		super.getComputedStyleMap(pseudoElement)
+//		return sm;
+//	}
+//
+//	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
+//		this.sm = sm;
+//	}
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;

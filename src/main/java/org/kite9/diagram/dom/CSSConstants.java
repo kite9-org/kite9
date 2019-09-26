@@ -94,5 +94,11 @@ public interface CSSConstants {
 	public static final String LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-from-xpath";
 	public static final String LINK_TO_XPATH = KITE9_CSS_PROPERTY_PREFIX+"link-to-xpath";
 	public static final String LINK_END = KITE9_CSS_PROPERTY_PREFIX+"link-end";
+	
+	// text bounding
+	public static final String TEXT_BOUNDS_WIDTH =  KITE9_CSS_PROPERTY_PREFIX+"text-bounds-width";
+	public static final String TEXT_BOUNDS_HEIGHT =  KITE9_CSS_PROPERTY_PREFIX+"text-bounds-height";
+	public static final String TEXT_BOUNDS =  KITE9_CSS_PROPERTY_PREFIX+"text-bounds";
+	
 
 }

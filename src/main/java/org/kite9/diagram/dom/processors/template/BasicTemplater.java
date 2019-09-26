@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.ListValue;
-import org.apache.batik.css.engine.value.URIValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;

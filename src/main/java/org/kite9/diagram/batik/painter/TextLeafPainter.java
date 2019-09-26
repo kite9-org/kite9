@@ -19,12 +19,14 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
+import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.css.CSSCharsetRule;
 
 /**
  * Handles painting for {@link DiagramElementType.TEXT} using SVG1.2's flowRoot
@@ -146,11 +148,14 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 		}
 		
 		if (!alreadyExist) {
+			String width = theElement.getCSSStyleProperty(CSSConstants.TEXT_BOUNDS_WIDTH).getCssText();
+			String height = theElement.getCSSStyleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT).getCssText();
+			
 			SVGOMFlowRegionElement flowRegion = (SVGOMFlowRegionElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_FLOW_REGION_TAG);
 			SVGOMRectElement rect = (SVGOMRectElement) d.createElementNS(SVG12OMDocument.SVG_NAMESPACE_URI, SVG12Constants.SVG_RECT_TAG);
 			flowRegion.appendChild(rect);
-			rect.setAttribute("width", "10000");
-			rect.setAttribute("height", "10000");
+			rect.setAttribute("width", width);
+			rect.setAttribute("height", height);
 			in.appendChild(flowRegion);
 		}
 	}

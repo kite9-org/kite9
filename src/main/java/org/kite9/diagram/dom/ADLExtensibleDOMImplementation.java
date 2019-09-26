@@ -157,8 +157,8 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_CORNER_RADIUS, 0f));
 		
 		// LINK DYNAMICS
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./adl:from/@reference", true));
-		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_XPATH, "./adl:to/@reference", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./*[local-name()='from']/@reference", true));
+		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_XPATH, "./*[local-name()='to']/@reference", true));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LINK_END, End.class, null, false));
 		
 		// TERMINATORS
@@ -171,6 +171,10 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_WIDTH, 0f));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.RECT_MINIMUM_HEIGHT, 0f));
 		
+		// TEXT BOUNDS
+		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.TEXT_BOUNDS_WIDTH, CSSConstants.TEXT_BOUNDS_HEIGHT, CSSConstants.TEXT_BOUNDS));
+		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_WIDTH, 10000f));
+		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 10000f));
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(
