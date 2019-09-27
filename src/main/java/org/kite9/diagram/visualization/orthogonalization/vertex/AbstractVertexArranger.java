@@ -16,9 +16,9 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * This mainly handles returning DartDirection objects which form the Boundary of a vertex in the diagram.
@@ -86,7 +86,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 
 		}
 
-		throw new Kite9ProcessingException();
+		throw new LogicException();
 	}
 	
 	private static int antiClockwiseTurns(Direction from, Direction to) {
@@ -127,7 +127,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 	 */
 	private Dart getSingleExternalVertexDart(Vertex from) {
 		if (from.getEdgeCount() != 1) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		} 
 		
 		return (Dart) from.getEdges().iterator().next();

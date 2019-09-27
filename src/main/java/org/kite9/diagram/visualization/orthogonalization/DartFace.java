@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -79,11 +79,11 @@ public class DartFace implements Serializable {
 
 	public void setContainedBy(DartFace containedBy) {
 		if (!outerFace) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		if (this.containedBy != null) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		if (containedBy != null) {

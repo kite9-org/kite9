@@ -81,7 +81,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			out.add(new DartDirection(dart, d));
 			
 			if (dart == null) {
-				throw new Kite9ProcessingException("Can't follow perimeter !"+current);
+				throw new LogicException("Can't follow perimeter !"+current);
 			}
 
 			current = dart.otherEnd(current);
@@ -102,7 +102,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			}
 		}
 		
-		throw new Kite9ProcessingException();
+		throw new LogicException();
 	}
 
 	/**

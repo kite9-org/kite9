@@ -3,16 +3,15 @@ package org.kite9.diagram.visualization.display;
 import org.kite9.diagram.common.elements.mapping.GeneratedLayoutConnection;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSizer, Logable {
 	
@@ -66,7 +65,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((a instanceof Connection) && (b instanceof Rectangular)) {
 			length = getMinimumDistanceRectangularToConnection((Rectangular) b, bSide, (Connection) a, aSide, Direction.reverse(d), along);
 		} else {
-			throw new Kite9ProcessingException("Don't know how to calc min distance");
+			throw new LogicException("Don't know how to calc min distance");
 		}
 		
 		return length;
@@ -208,9 +207,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	private double getInternalDistance(DiagramElement a, Direction aSide, Direction bSide) {
 		if (a == null) {
-			throw new Kite9ProcessingException("Can't get internal distance for null");
+			throw new LogicException("Can't get internal distance for null");
 		} else if ((aSide == null) || (bSide == null)) {
-			throw new Kite9ProcessingException("Don't know sides");
+			throw new LogicException("Don't know sides");
 		} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
 			return size(a, CostedDimension.UNBOUNDED).getWidth();
 		} else {

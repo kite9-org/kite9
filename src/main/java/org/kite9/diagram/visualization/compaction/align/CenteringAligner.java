@@ -96,7 +96,7 @@ public class CenteringAligner implements Aligner, Logable {
 			right.setMinimumPosition(right.getMaximumPosition());
 			left.setMaximumPosition(left.getMinimumPosition());
 		} catch (Exception e) {
-			throw new Kite9ProcessingException("Could not set center align constraint: ", e);
+			throw new LogicException("Could not set center align constraint: ", e);
 		}
 	}
 	

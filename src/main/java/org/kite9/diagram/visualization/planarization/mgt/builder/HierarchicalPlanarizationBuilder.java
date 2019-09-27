@@ -346,7 +346,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 				}
 				
 				if (!(e instanceof BorderEdge)) {
-					throw new Kite9ProcessingException("What is this?");
+					throw new LogicException("What is this?");
 				}
 				
 				((BorderEdge)e).getDiagramElements().put(c, Direction.rotateAntiClockwise(d));

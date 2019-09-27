@@ -19,6 +19,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -52,7 +53,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 				if (found == null) {
 					found = (E) n;
 				} else {
-					throw new Kite9ProcessingException("Not a unique node name: "+name);
+					throw new Kite9XMLProcessingException("Not a unique node name: "+name, this);
 				}
 			}
 		}
@@ -151,7 +152,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 			DiagramElementFactory f = getOwnerDocument().getImplementation().getDiagramElementFactory();
 			
 			if (f == null) {
-				throw new Kite9ProcessingException("No configured DiagramElementFactory on DOMImplementation");
+				throw new Kite9XMLProcessingException("No configured DiagramElementFactory on DOMImplementation", this);
 			}
 			
 			cachedDiagramElement = f.createDiagramElement(this, getParentElement());

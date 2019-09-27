@@ -16,6 +16,7 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {
 
@@ -38,7 +39,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			return out;
 		}
 		
-		throw new Kite9ProcessingException("Don't know how to create diagram element from "+in+"#"+in.getID());
+		throw new Kite9XMLProcessingException("Don't know how to create diagram element from "+in+"#"+in.getID(), in);
 		
 	}
 
@@ -51,7 +52,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		switch (lt) {
 		case DIAGRAM:
 			if (parent != null) {
-				throw new Kite9ProcessingException("Can't nest type 'diagram' @ "+el.getID());
+				throw new Kite9XMLProcessingException("Can't nest type 'diagram' @ "+el.getID(), el);
 			}
 			return new DiagramImpl(el, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
 		case CONTAINER:
@@ -62,7 +63,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
 			case DECAL:
 			default:
-				throw new Kite9ProcessingException("Decal containers not supported yet: @"+el.getID());
+				throw new Kite9XMLProcessingException("Decal containers not supported yet: @"+el.getID(), el);
 			}
 		case TEXT:
 			switch (usage) {
@@ -92,7 +93,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			return null;
 		case UNSPECIFIED:
 		default:
-			throw new Kite9ProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage+" and parent "+parent);	
+			throw new Kite9XMLProcessingException("Don't know how to process element: "+el+"("+el.getTagName()+") with type "+lt+" and usage "+usage+" and parent "+parent, el);	
 		}
 	}
 	

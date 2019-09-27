@@ -24,7 +24,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
@@ -229,7 +228,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		int tovi = getVertexIndex(cross.getTo());
 		
 		if ((fromvi == -1) || (tovi == -1)) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		// remove one end
@@ -246,7 +245,7 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 				belowBackwardLinks.get(tovi).remove(cross);
 		
 		if (!found) { 
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 

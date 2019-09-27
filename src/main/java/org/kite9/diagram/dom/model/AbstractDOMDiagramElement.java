@@ -12,6 +12,7 @@ import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -104,5 +105,13 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		}
 		
 		return contents;
+	}
+	
+	protected Kite9XMLProcessingException contextualException(String reason, Throwable t) {
+		return new Kite9XMLProcessingException(reason, t, theElement);
+	}
+	
+	protected Kite9XMLProcessingException contextualException(String reason) {
+		return contextualException(reason, null);
 	}
 }

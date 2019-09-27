@@ -11,7 +11,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 public abstract class AbstractLabel extends AbstractCompactedRectangular implements Label {
 
@@ -59,7 +58,7 @@ public abstract class AbstractLabel extends AbstractCompactedRectangular impleme
 			} else if (this == c.getToLabel()) {
 				return c.getTo().getContainer();
 			} else {
-				throw new Kite9ProcessingException();
+				throw contextualException("Couldn't get container for label "+getID());
 			}
 		} else {
 			return super.getContainer();

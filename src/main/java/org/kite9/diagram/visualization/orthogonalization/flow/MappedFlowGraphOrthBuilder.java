@@ -270,7 +270,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			}
 		}
 		
-		throw new Kite9ProcessingException();
+		throw new LogicException();
 	}
 	
 	private void processFace(Face f, Planarization pln, OrthogonalizationImpl o, Direction processingEdgeStartDirection,
@@ -466,7 +466,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateAntiClockwise(nextDir));
 			return out;
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 

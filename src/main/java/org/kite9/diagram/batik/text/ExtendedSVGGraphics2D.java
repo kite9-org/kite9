@@ -1,7 +1,6 @@
 package org.kite9.diagram.batik.text;
 
 import java.awt.Font;
-import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Field;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
 
@@ -30,15 +29,12 @@ import org.w3c.dom.Element;
  */
 public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG, Logable {
 
-	private Element currentSubgroup;
 	private Kite9Log log = new Kite9Log(this);
 	private List<GVTFontFace> existingFontFaces = new ArrayList<>();
 	private StringBuilder styleInfo = new StringBuilder(1000);
-	private Rectangle2D textBounds = new Rectangle2D.Float(0, 0, 0, 0);
 
 	public ExtendedSVGGraphics2D(ExtendedSVGGeneratorContext ctx, Element currentSubgroup) {
 		super(ctx, false);
-		this.currentSubgroup = currentSubgroup;
 		getDOMTreeManager().setTopLevelGroup(currentSubgroup);
 		clearUnsupportedAttributes();
 	}
@@ -148,7 +144,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		try {
 			SOURCES = FontFace.class.getDeclaredField("srcs");
 		} catch (Exception e) {
-			throw new Kite9ProcessingException(e);
+			throw new LogicException(e);
 		}
 		SOURCES.setAccessible(true);
 	}
@@ -158,7 +154,7 @@ public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG,
 		try {
 			return (List<ParsedURL>) SOURCES.get(ff);
 		} catch (Exception e) {
-			throw new Kite9ProcessingException(e);
+			throw new LogicException(e);
 		}
 	}
 

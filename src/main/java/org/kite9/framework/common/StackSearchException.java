@@ -1,7 +1,7 @@
 package org.kite9.framework.common;
 
 
-public class StackSearchException extends Kite9ProcessingException {
+public class StackSearchException extends RuntimeException {
 
 	public StackSearchException(Class<?> ann) {
 		super("Could not find annotated method in stack: "+ann);

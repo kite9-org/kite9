@@ -13,7 +13,7 @@ import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
@@ -58,7 +58,7 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 				copyAttributes(e, transform);
 				c.processContents(e);
 			} else {
-				throw new Kite9ProcessingException("Couldn't resolve template: " + getTemplateName(template));
+				throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(template), transform);
 			}
 		}
 		

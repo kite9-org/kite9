@@ -178,7 +178,7 @@ public class SegmentBuilder implements Logable {
 			
 			return AlignStyle.CENTER;
 		} else {
-			throw new Kite9ProcessingException("No dimension on segment");
+			throw new LogicException("No dimension on segment");
 		}
 	}
 

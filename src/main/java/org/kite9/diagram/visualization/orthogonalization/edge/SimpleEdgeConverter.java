@@ -10,12 +10,11 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class SimpleEdgeConverter implements EdgeConverter {
 	
@@ -43,7 +42,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		} else if (e instanceof BiDirectionalPlanarizationEdge) {
 			return Collections.singletonMap(((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying(), null);
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 

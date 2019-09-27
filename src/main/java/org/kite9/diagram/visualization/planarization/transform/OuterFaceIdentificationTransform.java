@@ -56,7 +56,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 			}
 		} 
 		
-		throw new Kite9ProcessingException();
+		throw new LogicException("outer face not anti-clockwise");
 	}
 
 	private void handleOuterFace(Face outerFace, Face inside, Planarization pln, int level, Set<Face> done) {

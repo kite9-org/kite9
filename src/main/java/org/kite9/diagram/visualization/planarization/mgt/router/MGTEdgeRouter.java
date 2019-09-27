@@ -236,7 +236,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			for (int i = 0; i < index; i++) {
 				PlanarizationEdge around = list.get(i);
 				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
-				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
+				PlanarizationEdge[] parts = t.splitEdge(around, crossing, p);
 				insertVertices(vertexIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
 				

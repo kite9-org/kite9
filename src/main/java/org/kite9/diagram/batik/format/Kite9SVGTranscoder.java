@@ -38,6 +38,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptList;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
@@ -141,7 +142,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			ADLDocument d = (ADLDocument)input;
 			String s = new XMLHelper().toXML(d);
 			log.error("Problem with XML: "+e);
-			throw new Kite9TranscoderException("Transcoder problem: "+e.getMessage(), e, s);
+			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
 		}
 	}
 

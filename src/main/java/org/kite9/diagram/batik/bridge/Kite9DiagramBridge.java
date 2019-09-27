@@ -11,7 +11,7 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGAnimatedLength;
 
@@ -68,7 +68,7 @@ public class Kite9DiagramBridge implements GenericBridge {
             ensureSvgSize((SVGOMSVGElement) e.getOwnerDocument().getDocumentElement(), 
             		((Diagram) de).getRenderingInformation());
        	} else {
-       		throw new Kite9ProcessingException("Outermost element-type of kite9 element must be a diagram "+e.getTagName()+ " is a "+de.getClass());
+       		throw new Kite9XMLProcessingException("Outermost element-type of kite9 element must be a diagram "+e.getTagName()+ " is a "+de.getClass(), d);
        	}
 	}
 

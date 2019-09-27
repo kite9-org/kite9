@@ -278,7 +278,7 @@ public class Tools implements Logable {
 			a.setPartOf(b.getPartOf());
 		} else {
 			if ((b.getPartOf() != null) && ((b.getPartOf() != a.getPartOf()))) { 
-				throw new Kite9ProcessingException("PartOf set wrongly");
+				throw new LogicException("PartOf set wrongly");
 			}
 		} 
 
@@ -345,7 +345,7 @@ public class Tools implements Logable {
 			} else if (a.getTo() == toGo) {
 				((ConnectionEdge) a).setToConnected(otherEnd);
 			} else {
-				throw new Kite9ProcessingException();
+				throw new LogicException("Couldn't find end");
 			}
 		}
 

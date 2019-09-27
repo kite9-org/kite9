@@ -65,7 +65,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		
 		createInitialRectOptions(c, stacks, pq, onStack);
 		if (pq.size() > 0) {
-			throw new Kite9ProcessingException("Should have completed rectangularization - throwing options away");
+			throw new LogicException("Should have completed rectangularization - throwing options away");
 		}
 	}
 

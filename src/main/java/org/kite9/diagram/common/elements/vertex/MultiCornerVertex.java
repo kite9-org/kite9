@@ -10,7 +10,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Represents corners of diagrams, containers and any other rectangular content.
@@ -103,7 +103,7 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 			}
 		}
 		
-		throw new Kite9ProcessingException("No anchor found for container "+c);
+		throw new LogicException("No anchor found for container "+c);
 	}
 	
 	public HPos getHPosFor(DiagramElement c) {
@@ -113,7 +113,7 @@ public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiE
 			}
 		}
 		
-		throw new Kite9ProcessingException("No anchor found for container "+c);
+		throw new LogicException("No anchor found for container "+c);
 	}
 	
 	public boolean hasAnchorFor(DiagramElement c) {

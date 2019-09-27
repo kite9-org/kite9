@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Creates darts for edges arriving at corners or sides of a planarization.
@@ -76,7 +76,7 @@ public class MultiElementVertexArranger extends ConnectedVertexArranger {
 			Map<DiagramElement, Direction> bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getDiagramElements();
 			
 			if ((!aUnderlying.equals(bUnderlying)) || (aUnderlying == null)) {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 
 			List<IncidentDart> dartsToUse = map.get(sideDirection);
@@ -95,7 +95,7 @@ public class MultiElementVertexArranger extends ConnectedVertexArranger {
 			DiagramElement bUnderlying = ((BorderEdge) borders.getB().getDueTo()).getElementForSide(bSide);
 
 			if (aUnderlying != bUnderlying) {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 
 			Map<DiagramElement, Direction> aUnderlyings = ((BorderEdge) borders.getA().getDueTo()).getDiagramElements();
@@ -115,7 +115,7 @@ public class MultiElementVertexArranger extends ConnectedVertexArranger {
 		List<IncidentDart> borders = dartDirections.stream().filter(d -> d.getDueTo() instanceof BorderEdge).collect(Collectors.toList());
 		
 		if (borders.size() != 2) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		IncidentDart to = borders.get(0);
@@ -129,7 +129,7 @@ public class MultiElementVertexArranger extends ConnectedVertexArranger {
 		} else if ((idx1 == 0) && (idx2 == dartDirections.size()-1)) {
 			return new OPair<IncidentDart>(to, from);
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 	

@@ -136,11 +136,11 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 			} else if (r2.getParent() == r1) {
 				return r1;
 			} else {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 			
 		} else if (r.size() > 2) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		} else if (r.size() == 0) {
 			return null;
 		}

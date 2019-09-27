@@ -38,7 +38,7 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	public void ensureMinimumDistance(Slideable<X> left, Slideable<X> right, int minLength) {
 		if (left.getSlackOptimisation() != right.getSlackOptimisation()) {
-			throw new Kite9ProcessingException("Mixing dimensions");
+			throw new LogicException("Mixing dimensions");
 		}
 
 		try {
@@ -71,7 +71,7 @@ public abstract class AbstractSlackOptimisation<X> implements Logable {
 
 	public void ensureMaximumDistance(Slideable<X> left, Slideable<X> right, int maxLength) {
 		if (left.getSlackOptimisation() != right.getSlackOptimisation()) {
-			throw new Kite9ProcessingException("Mixing dimensions");
+			throw new LogicException("Mixing dimensions");
 		}
 		
 		try {

@@ -4,7 +4,7 @@ import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -47,11 +47,11 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	 */
 	public StyledKite9XMLElement getContents() {		
 		if (theElement == null) {
-			throw new Kite9ProcessingException("Painter xml element not set");
+			throw new LogicException("Painter xml element not set");
 		}
 		
 		if (r == null) {
-			throw new Kite9ProcessingException("Painter diagram element not set");
+			throw new LogicException("Painter diagram element not set");
 		}
 		
 		if (performedPreprocess) {

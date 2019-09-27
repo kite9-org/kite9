@@ -19,7 +19,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 
 /**
@@ -76,7 +76,7 @@ public class PluggableCompactor implements Compactor {
 		}
 		
 		// return just the top one
-		EmbeddingImpl topEmbedding = done.values().stream().filter(e -> isTopEmbedding(e)).findFirst().orElseThrow(() -> new Kite9ProcessingException("No top embedding"));
+		EmbeddingImpl topEmbedding = done.values().stream().filter(e -> isTopEmbedding(e)).findFirst().orElseThrow(() -> new LogicException("No top embedding"));
 		topEmbedding.setTopEmbedding(true);
 		return topEmbedding;
 	}

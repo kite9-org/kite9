@@ -11,7 +11,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
@@ -29,12 +29,9 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 
 	}
 
-	/**
-	 * Handle scaling before translation, otherwise everything goes whack.
-	 */
 	@Override
 	public void draw(DiagramElement element, RenderingInformation ri){
-		throw new Kite9ProcessingException("Unsupported operation");
+		throw new LogicException("Unsupported operation");
 	}
 
 	@Override

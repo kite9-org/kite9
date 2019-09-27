@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 
@@ -60,7 +60,7 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 			Dimension2D size = new Dimension2D(xMax - xMin, yMax - yMin);
 			
 			if ((size.getWidth() < 0) || (size.getHeight() < 0)) {
-				throw new Kite9ProcessingException("Slideable issue");
+				throw new LogicException("Slideable issue");
 			}
 			rri.setSize(size);
 		}

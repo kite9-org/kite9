@@ -1,8 +1,8 @@
 package org.kite9.diagram.common.algorithms.so;
 
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
-public class SlideableException extends Kite9ProcessingException {
+public class SlideableException extends LogicException {
 
 	public SlideableException(String s, Throwable arg0) {
 		super(s, arg0);

@@ -24,7 +24,6 @@ import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
@@ -131,7 +130,7 @@ public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 			// regular connection edge
 			return canCrossBidiEdge((BiDirectionalPlanarizationEdge) e2, goingDown);
 		} else {
-			throw new Kite9ProcessingException("Don't know edge type: "+e2.getClass());
+			throw new LogicException("Don't know edge type: "+e2.getClass());
 		}
 	}
 	

@@ -17,7 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -66,7 +66,7 @@ public class XMLHelper {
 			 Result result = new StreamResult(w);
 			 trans.transform(new DOMSource(dxe), result);
 		} catch (Exception e) {
-			throw new Kite9ProcessingException("Couldn't output xml: ",e);
+			throw new Kite9XMLProcessingException("Couldn't output xml: ",e);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class XMLHelper {
 			Document d = sdf.createDocument(null, s);
 			return (ADLDocument) d;		
 		} catch (IOException e) {
-			throw new Kite9ProcessingException("Couldn't parse xml: ", e);
+			throw new Kite9XMLProcessingException("Couldn't parse xml: ", e);
 		}
 
 	}

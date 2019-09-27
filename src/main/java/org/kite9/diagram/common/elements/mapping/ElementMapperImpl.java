@@ -23,7 +23,6 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 public class ElementMapperImpl implements ElementMapper {
@@ -135,7 +134,7 @@ public class ElementMapperImpl implements ElementMapper {
 				v = new ConnectedVertex(c.getID(), (Connected) c);
 				singleVertices.put(c, v);
 			} else {
-				throw new Kite9ProcessingException("Not sure how to create vertex for "+c);
+				throw new LogicException("Not sure how to create vertex for "+c);
 			}
 		}
 

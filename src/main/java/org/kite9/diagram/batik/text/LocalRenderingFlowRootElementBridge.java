@@ -28,6 +28,7 @@ import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
 /**
@@ -170,7 +171,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 			}
 		}
 
-		throw new Kite9ProcessingException("No Flow node!");
+		throw new LogicException("No Flow node!");
 	}
 
 }

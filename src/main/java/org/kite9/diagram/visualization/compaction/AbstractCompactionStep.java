@@ -59,7 +59,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		boolean horizontalDartSecond = second.getDimension() == Dimension.V;
 		
 		if (horizontalDartFirst != horizontalDartSecond) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		
@@ -281,7 +281,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 	private Slideable<Segment> getConnectionSegment(Slideable<Segment> s1, Compaction c) {
 		return s1.getUnderlying().getAdjoiningSegments(c).stream()
 			.filter(s -> s.getConnections().size() > 0)
-			.map(s -> s.getSlideable()).findFirst().orElseThrow(() -> new Kite9ProcessingException());
+			.map(s -> s.getSlideable()).findFirst().orElseThrow(() -> new LogicException());
 	}
 	
 }

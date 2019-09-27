@@ -244,7 +244,7 @@ class VertexTurn {
 			} else if (atEnd.s == endsWith) {
 				return isEndInnerFan();
 			} else {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 		}
 		

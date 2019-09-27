@@ -187,7 +187,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	private void ensureNoDartInDirection(Vertex from, Direction d) {
 		Dart existing = getDartInDirection(from, d );
 		if (existing != null) {
-			throw new Kite9ProcessingException("Already have a dart going "+d+" from "+from+": "+existing);
+			throw new LogicException("Already have a dart going "+d+" from "+from+": "+existing);
 		}
 	}
 	
@@ -305,7 +305,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			Set<Vertex> ends = vertexCounts.keySet().stream().filter(a -> vertexCounts.get(a) == 1).collect(Collectors.toSet());		
 					
 			if (ends.size() != 2) {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 			
 			
@@ -321,7 +321,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				start = two;
 				end = one;
 			} else {
-				throw new Kite9ProcessingException();
+				throw new LogicException();
 			}
 		
 			List<Vertex> out = new ArrayList<>(darts.size()+1);

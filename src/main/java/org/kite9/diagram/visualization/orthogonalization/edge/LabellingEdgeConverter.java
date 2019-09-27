@@ -19,6 +19,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeConverter {
 
@@ -147,7 +148,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 			labelToExternal = incident == Direction.UP ? cv.getBottomRight() : cv.getTopRight();
 			break;
 		default:
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 		
 		Map<DiagramElement, Direction> map = createMap(e);
@@ -176,7 +177,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 			Container cc = c.getTo().getContainer();
 			cc.getContents().add(l);
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 

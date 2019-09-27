@@ -28,6 +28,8 @@ import org.w3c.dom.xpath.XPathException;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathNSResolver;
 
+import com.sun.tools.javac.util.StringUtils;
+
 /**
  * Now, Kite9 elements are first-class members of SVG, and support SVG version 1.2.
  * 
@@ -141,7 +143,9 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	public Object evaluate(String expression, Node contextNode, XPathNSResolver resolver, short type, Object result) throws XPathException, DOMException {
 		if (resolver == null) {
 			resolver = (prefix) -> {
-				if (prefix.equals("adl")) {
+				if (prefix.equals("")) {
+					return contextNode.getOwnerDocument().getNamespaceURI();
+				} else if (prefix.equals("adl")) {
 					return XMLHelper.KITE9_NAMESPACE;
 				} else {
 					return contextNode.lookupNamespaceURI(prefix);

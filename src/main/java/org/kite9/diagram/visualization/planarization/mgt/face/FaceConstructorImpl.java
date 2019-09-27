@@ -20,9 +20,9 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * Turns the vertex-order planarization into a number of faces.  This is done by first joining everything in the diagram together, using temporary edges
@@ -150,7 +150,7 @@ public class FaceConstructorImpl implements FaceConstructor, Logable {
 					break;
 					
 				default:
-					throw new Kite9ProcessingException();
+					throw new LogicException();
 				}
 			}
 			
@@ -179,14 +179,14 @@ public class FaceConstructorImpl implements FaceConstructor, Logable {
 					break;
 					
 				default:
-					throw new Kite9ProcessingException();
+					throw new LogicException();
 				}
 			}
 			
 			leave.setAbove(out);
 			return out;
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 

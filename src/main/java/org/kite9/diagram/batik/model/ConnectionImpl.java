@@ -28,7 +28,6 @@ import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.LinkReferenceException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
@@ -114,23 +113,23 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	protected void initFromTo() {
 		Kite9XMLElement fromElement = getReferencedElement(this.fromId);
 		if (fromElement == null) {
-			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
+			throw contextualException("Couldn't resolve 'from' reference for "+this.getID());
 		}
 
 		Kite9XMLElement toElement = getReferencedElement(this.toId);
 		if (toElement == null) {
-			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
+			throw contextualException("Couldn't resolve 'to' reference for "+this.getID());
 		}
 
 		from = (Connected) fromElement.getDiagramElement();
 		to = (Connected) toElement.getDiagramElement();
 		
 		if (from == null) {
-			throw new Kite9ProcessingException("Couldn't resolve 'from' reference for "+this.getID());
+			throw contextualException("Couldn't resolve 'from' reference for "+this.getID());
 		}
 		
 		if (to == null) {
-			throw new Kite9ProcessingException("Couldn't resolve 'to' reference for "+this.getID());
+			throw contextualException("Couldn't resolve 'to' reference for "+this.getID());
 		}
 	}
 	
@@ -163,7 +162,8 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(css);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
-			throw new LinkReferenceException(reference, getID());
+			
+			throw new LinkReferenceException(reference, getID(), ctx.getDocument());
 		}
 		
 		return reference;
@@ -181,7 +181,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(CSSConstants.LINK_TO_XPATH);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
-			throw new LinkReferenceException(reference, getID());
+			throw new LinkReferenceException(reference, getID(), ctx.getDocument());
 		}
 		
 		return reference;
@@ -218,7 +218,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		} else if (end == getTo()) {
 			return getFrom();
 		} else {
-			throw new Kite9ProcessingException("otherEnd of neither from or to "+this+" "+end);
+			throw contextualException("otherEnd of neither from or to "+this+" "+end);
 		}
 	}
 
@@ -249,12 +249,12 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 	@Override
 	public void setDrawDirectionFrom(Direction d, Connected from) {
-		throw new Kite9ProcessingException("Should be immutable");
+		throw contextualException("Should be immutable");
 	}
 	
 	@Override
 	public void setDrawDirection(Direction d) {
-		throw new Kite9ProcessingException("Should be immutable");
+		throw contextualException("Should be immutable");
 	}
 
 	@Override

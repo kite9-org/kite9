@@ -10,6 +10,7 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.BasicCopier;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.xpath.XPathResult;
@@ -46,12 +47,20 @@ public class ContentElementHandlingCopier extends BasicCopier {
 		if (n instanceof ContentsElement) {
 			ContentsElement contents = (ContentsElement) n;
 			if (contents.hasAttribute("xpath")) {
+				String xpath = "";
 				try {
 					ADLDocument doc =(ADLDocument) copyOfOriginal.getOwnerDocument();
-					String xpath = contents.getAttribute("xpath");
+					xpath = contents.getAttribute("xpath");
 					XPathResult result = (XPathResult) doc.evaluate(xpath, copyOfOriginal, null, getReturnType(contents), null);
 					if (result.getResultType() == XPathResult.STRING_TYPE) {
 						String stringValue = result.getStringValue();
+						
+						if ("".equals(stringValue)) {
+							if (!isOptional(contents)) {
+								throw new Kite9XMLProcessingException("XPath returned no value: "+xpath, n);
+							}
+						}
+						
 						inside.appendChild(copyOfOriginal.getOwnerDocument().createTextNode(stringValue));
 					} else {
 						List<Node> nodes = new ArrayList<Node>();
@@ -59,10 +68,17 @@ public class ContentElementHandlingCopier extends BasicCopier {
 	                    while ((node = result.iterateNext()) != null) {
 	                        nodes.add(node);
 	                    }
+	                    
+	                    if (nodes.size() == 0) {
+	                    	if (!isOptional(contents)) {
+								throw new Kite9XMLProcessingException("XPath returned no value: "+xpath, n);
+							}
+	                    }
+	                    
 						copyContents(new ListNodeList(nodes), inside);
 					}
 				} catch (Exception e) {
-					throw new Kite9ProcessingException(e);
+					throw new Kite9XMLProcessingException("Couldn't process xpath: "+xpath, e, inside);
 				}
 			} else {
 				copyContents(copyOfOriginal, inside);
@@ -71,6 +87,17 @@ public class ContentElementHandlingCopier extends BasicCopier {
 		} else {
 			return super.copyChild(n, inside);
 		}
+	}
+	
+	private static boolean isOptional(ContentsElement contents) {
+		if (contents.hasAttribute("optional")) {
+			String type = contents.getAttribute("optional");
+			if ("true".equals(type.trim().toLowerCase())) {
+				return true;
+			}
+		} 
+		
+		return false;
 	}
 
 	private static short getReturnType(ContentsElement contents) {

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.util.SVGConstants;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -82,7 +82,7 @@ public class ScriptList {
 				.map(e -> format(e))
 				.reduce((a, b) -> a+", "+b).orElse("")+"] ";
 		} else {
-			throw new Kite9ProcessingException("Unsupported content in params: "+value);
+			throw new LogicException("Unsupported content in params: "+value);
 		}
 	}
 		

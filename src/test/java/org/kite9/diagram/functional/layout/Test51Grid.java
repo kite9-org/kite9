@@ -16,11 +16,11 @@ import org.kite9.diagram.adl.Grid;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.batik.format.Kite9TranscoderException;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 
 
 public class Test51Grid extends AbstractLayoutFunctionalTest {
@@ -198,7 +198,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	 * Labels cannot be rendered on gridded containers.
 	 * @throws Exception
 	 */
-	@Test(expected=Kite9TranscoderException.class)
+	@Test(expected=Kite9XMLProcessingException.class)
 	public void test_51_8_GridWithLabels() throws Exception {
 		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
 		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));

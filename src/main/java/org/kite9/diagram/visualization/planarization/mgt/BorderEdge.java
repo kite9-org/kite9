@@ -13,6 +13,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * This edge is used for the surrounding of a diagram element.
@@ -119,7 +120,7 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 		DiagramElement sidea = null, sideb = null;
 		
 		if ((forElements.size() != 2) && (forElements.size() != 1)){
-			throw new Kite9ProcessingException("An BorderEdge must be for 1 or 2 diagram elements");
+			throw new LogicException("An BorderEdge must be for 1 or 2 diagram elements");
 		}
 
 		Iterator<DiagramElement> els = forElements.keySet().iterator();	
@@ -131,7 +132,7 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 		} else if (from == sideb) {
 			return sidea;
 		} else { 
-			throw new Kite9ProcessingException(from+" is not mapped to a side");
+			throw new LogicException(from+" is not mapped to a side");
 		}
 	}
 

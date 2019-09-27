@@ -30,7 +30,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
-import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.FanningEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.orthogonalization.edge.Side;
@@ -38,6 +37,7 @@ import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.kite9.framework.logging.LogicException;
 
 /**
  * This converts a ConnectedVertex to a face, and darts, which can then be added to the Orthogonalization.
@@ -79,7 +79,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	 */
 	protected DartFace convertVertex(Orthogonalization o, Vertex v, TurnInformation ti) {
 		if (!(v instanceof ConnectedVertex)) 
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 	
 		Map<Direction, List<IncidentDart>> dartDirections = getDartsInDirection(v, o, ti);
 		Connected originalUnderlying = ((ConnectedVertex) v).getOriginalUnderlying();
@@ -107,7 +107,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	@Override
 	public List<DartDirection> returnAllDarts(Vertex v, Orthogonalization o) {
 		if (!(v instanceof ConnectedVertex)) 
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		
 		Connected c = ((ConnectedVertex) v).getOriginalUnderlying();
 		List<DartFace> faces = o.getDartFacesForRectangular(c);
@@ -115,7 +115,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		if (faces.size() == 1) {
 			return faces.get(0).getDartsInFace();
 		} else if (faces.size() > 1) {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		} else {
 			DartFace out = convertVertex(o, v, new TurnInformation() {
 				
@@ -223,7 +223,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	
 	@Override
 	public DartFace convertToOuterFace(Orthogonalization o, Vertex startVertex, Rectangular partOf) {
-		throw new Kite9ProcessingException("Not implemented");
+		throw new LogicException("Not implemented");
 	}
 
 	protected DartFace createInnerFace(Orthogonalization o, LinkedHashSet<Dart> allSideDarts, Vertex start, DiagramElement de) {

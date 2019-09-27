@@ -18,7 +18,6 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.framework.common.Kite9ProcessingException;
 
 public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	
@@ -65,7 +64,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		} else if (this == c.getToDecoration()) {
 			return c.getTo().getContainer();
 		} else {
-			throw new Kite9ProcessingException();
+			throw contextualException("Couldn't get container for terminator "+getID());
 		}
 	}
 

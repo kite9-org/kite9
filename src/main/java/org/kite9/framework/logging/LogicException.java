@@ -1,5 +1,12 @@
 package org.kite9.framework.logging;
 
+/**
+ * LogicExceptions are thrown to represent an underlying bug in 
+ * Kite9 Visualization (as opposed to user-error).
+ * 
+ * @author robmoffat
+ *
+ */
 @SuppressWarnings("serial")
 public class LogicException extends RuntimeException {
 
