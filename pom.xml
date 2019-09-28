@@ -4,7 +4,7 @@
 
 	<groupId>org.kite9</groupId>
 	<artifactId>kite9-visualization</artifactId>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Kite9 Diagram Visualization</name>
