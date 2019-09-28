@@ -42,13 +42,13 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 				Value v = el.getCSSStyleProperty(name);
 				
 				if (v != null) {
-					out.add(name+": "+v);
+					out.add("  "+name+": "+v+";");
 				}
 			}
 		}
 		
 		Collections.sort(out);
-		return out.stream().reduce("", (a, b) -> a+"\n"+b);
+		return "* {\n"+out.stream().reduce("", (a, b) -> a+"\n"+b)+"}";
 	}
 
 	public Kite9XMLProcessingException(String reason, Throwable arg1) {
