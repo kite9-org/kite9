@@ -674,7 +674,7 @@ public class TestingEngine extends TestingHelp {
 			
 			return out.orElseGet(() -> new Rectangle2D.Double(0,0,0,0));
 		} else {
-			throw new Kite9ProcessingException();
+			throw new LogicException();
 		}
 	}
 
