@@ -136,6 +136,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 			@Override
 			public Rectangle2D getBounds2D(TextNode node) {
 				Rectangle2D out = super.getBounds2D(node);
+				out = out == null ? new Rectangle2D.Float(0f, 0f, 0f, 0f): out;
 				double minY = out.getMinY();
 				double maxY = out.getMaxY();
 

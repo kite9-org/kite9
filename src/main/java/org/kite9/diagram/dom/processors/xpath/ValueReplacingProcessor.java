@@ -3,6 +3,8 @@ package org.kite9.diagram.dom.processors.xpath;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -59,9 +61,11 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 			String in = m.group(1).toLowerCase();
 			String replacement = valueReplacer.getReplacementValue(in, at);
 			
-			if (replacement != null) {
-				out.append(replacement);
+			if ((replacement == null) || replacement.isBlank()) {
+				throw new Kite9XMLProcessingException("Couldn't determine value of '"+input+"'", at);
 			}
+			
+			out.append(replacement);
 			
 			place = m.end();
 		}

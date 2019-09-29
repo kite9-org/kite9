@@ -17,6 +17,7 @@ import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptList;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -153,10 +154,14 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 			};
 		}
 		
-		XPathExpression xpath = createExpression(expression, resolver);
-		ADLXPathExpr expr = (ADLXPathExpr) xpath;
-		expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
-        return xpath.evaluate(contextNode, type, result);
+		try {
+			XPathExpression xpath = createExpression(expression, resolver);
+			ADLXPathExpr expr = (ADLXPathExpr) xpath;
+			expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
+			return xpath.evaluate(contextNode, type, result);
+		} catch (Exception e) {
+			throw new Kite9XMLProcessingException("XPath Evaluation failed with expression '"+expression+"'", e, contextNode);
+		}
 	}
 	
 	

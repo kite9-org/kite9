@@ -31,7 +31,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 		this(reason, arg1, toString(n), debugCss(n));
 	}
 	
-	private static String debugCss(Node n) {
+	public static String debugCss(Node n) {
 		List<String> out = new ArrayList<>();
 		if (n instanceof StyledKite9XMLElement) {
 			StyledKite9XMLElement el = (StyledKite9XMLElement) n;
@@ -61,7 +61,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 		this(reason, null, n);
 	}
 
-	protected static String toString(Node n) {
+	public static String toString(Node n) {
 		try {
 			return new XMLHelper().toXML(n);
 		} catch (Exception e) {
