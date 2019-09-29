@@ -8,7 +8,7 @@ package org.kite9.framework.common;
  * @author moffatr
  *
  */
-public abstract class Kite9ProcessingException extends RuntimeException {
+public class Kite9ProcessingException extends RuntimeException {
 
     private static final long serialVersionUID = -1338453592786354494L;
 
