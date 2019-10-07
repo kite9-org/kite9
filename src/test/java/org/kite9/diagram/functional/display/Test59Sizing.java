@@ -149,6 +149,14 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	public void test_59_18_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("hello something else", "font-size: 25px; kite9-text-bounds: 150px 500px; ")
+				+text("a b c d e f g h i j k l m n o p q r s t u v w x y z", "font-size: 25px; kite9-text-bounds: 150px 100px; ")
+				+text("hello b this could be a long bit of text", "font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
+	}
+	
+	@Test
+	public void test_59_19_TestTextBoundedSize() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(
+				text("hello something else", "font-size: 25px; kite9-text-bounds: 150px 500px; ")
 				+text("hello b this could be a long bit of text", "font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
 	}
 	

@@ -26,7 +26,6 @@ import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.css.CSSCharsetRule;
 
 /**
  * Handles painting for {@link DiagramElementType.TEXT} using SVG1.2's flowRoot

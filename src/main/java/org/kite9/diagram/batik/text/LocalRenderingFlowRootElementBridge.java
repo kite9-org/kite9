@@ -7,9 +7,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FlowGlyphLayout;
@@ -27,7 +25,6 @@ import org.apache.batik.gvt.font.GVTLineMetrics;
 import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Element;
 
@@ -147,9 +144,11 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 						// count lines
 						GVTLineMetrics glm = layout.getLineMetrics();
 						for (int i = 0; i < layout.getGlyphVector().getNumGlyphs(); i++) {
-							Point2D p = layout.getGlyphVector().getGlyphPosition(i);
-							minY = Math.min(minY, p.getY() - glm.getAscent());
-							maxY = Math.max(maxY, p.getY() + glm.getDescent());
+							if (layout.getGlyphVector().isGlyphVisible(i)) {
+								Point2D p = layout.getGlyphVector().getGlyphPosition(i);
+								minY = Math.min(minY, p.getY() - glm.getAscent());
+								maxY = Math.max(maxY, p.getY() + glm.getDescent());
+							}
 						}
 					}
 				}
@@ -157,9 +156,6 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 				out.add(new Point2D.Double(out.getMinX(), minY));
 				return out;
 			}
-			
-			
-
 		});
 	}
 

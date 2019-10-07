@@ -2,11 +2,14 @@ package org.kite9.diagram.batik.bridge;
 
 import java.util.List;
 
+import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.Bridge;
+import org.apache.batik.bridge.BridgeException;
 import org.apache.batik.bridge.BridgeExtension;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.SVGBridgeExtension;
+import org.apache.batik.bridge.URIResolver;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
@@ -20,9 +23,11 @@ import org.kite9.diagram.dom.processors.template.BasicTemplater;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathResult;
 
@@ -152,5 +157,38 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 		return new BasicTemplater(vr, (Kite9DocumentLoader)  getDocumentLoader());
 	}
 
+	/**
+     * This is a duplicate of the original method, but 
+     * contains better error-handling, so we don't swallow the exception.
+     */
+    public Node getReferencedNode(Element e, String uri) {
+        try {
+            SVGDocument document = (SVGDocument)e.getOwnerDocument();
+            URIResolver ur = createURIResolver(document, documentLoader);
+            Node ref = ur.getNode(uri, e);
+            if (ref == null) {
+                throw new BridgeException(this, e, ERR_URI_BAD_TARGET,
+                                          new Object[] {uri});
+            } else {
+                SVGOMDocument refDoc =
+                    (SVGOMDocument) (ref.getNodeType() == Node.DOCUMENT_NODE
+                                       ? ref
+                                       : ref.getOwnerDocument());
+                // This is new rather than attaching this BridgeContext
+                // with the new document we now create a whole new
+                // BridgeContext to go with the new document.
+                // This means that the new document has it's own
+                // world of stuff and it should avoid memory leaks
+                // since the new document isn't 'tied into' this
+                // bridge context.
+                if (refDoc != document) {
+                    createSubBridgeContext(refDoc);
+                }
+                return ref;
+            }
+        } catch (Exception ex) {
+            throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+        }
+    }
 	
 }

@@ -65,7 +65,7 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 				throw new Kite9XMLProcessingException("Couldn't determine value of '"+input+"'", at);
 			}
 			
-			out.append(replacement);
+			out.append(replacement.trim());
 			
 			place = m.end();
 		}
