@@ -9,7 +9,6 @@ import org.apache.batik.css.parser.Parser;
 import org.apache.batik.util.ParsedURL;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
-import org.w3c.css.sac.LexicalUnit;
 
 /**
  * Allows us to correctly parse at-rules, and in particular, the @script and @params ones.

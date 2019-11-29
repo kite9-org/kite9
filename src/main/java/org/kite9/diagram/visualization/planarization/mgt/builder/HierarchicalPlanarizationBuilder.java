@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.planarization.mgt.builder;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +33,6 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 
 /**

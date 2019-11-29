@@ -76,7 +76,7 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
         NamedNodeMap attributes = from.getAttributes();
         for (int i = 0; i < attributes.getLength(); i++) {
             Attr node = (Attr) attributes.item(i);
-            if (!node.isId()) {
+            if ((!node.isId()) && (to.getAttribute(node.getName()).length() == 0)) {
             	to.setAttribute(node.getName(), node.getValue());
             }
         }

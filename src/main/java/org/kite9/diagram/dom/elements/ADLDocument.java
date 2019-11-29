@@ -1,9 +1,7 @@
 package org.kite9.diagram.dom.elements;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
@@ -29,7 +27,6 @@ import org.w3c.dom.xpath.XPathException;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathNSResolver;
 
-import com.sun.tools.javac.util.StringUtils;
 
 /**
  * Now, Kite9 elements are first-class members of SVG, and support SVG version 1.2.

@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;

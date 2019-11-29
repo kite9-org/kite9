@@ -5,7 +5,6 @@ package org.kite9.diagram.common.algorithms.so;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import org.kite9.framework.logging.LogicException;
 

@@ -15,7 +15,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 
 public class DiagramElementFactoryImpl implements DiagramElementFactory {

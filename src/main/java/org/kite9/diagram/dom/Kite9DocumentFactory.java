@@ -278,7 +278,7 @@ public class Kite9DocumentFactory
                 if (dtdProps == null) {
                     dtdProps = new Properties();
                     try {
-                        Class cls = Kite9DocumentFactory.class;
+                        Class<Kite9DocumentFactory> cls = Kite9DocumentFactory.class;
                         InputStream is = cls.getResourceAsStream
                             ("resources/dtdids.properties");
                         dtdProps.load(is);

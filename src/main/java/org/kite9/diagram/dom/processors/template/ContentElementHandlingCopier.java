@@ -9,7 +9,6 @@ import org.apache.batik.dom.util.ListNodeList;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.BasicCopier;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

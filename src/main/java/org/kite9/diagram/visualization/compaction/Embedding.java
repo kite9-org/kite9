@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.compaction;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;

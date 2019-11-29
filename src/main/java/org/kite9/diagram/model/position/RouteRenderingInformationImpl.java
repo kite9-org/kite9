@@ -1,7 +1,6 @@
 package org.kite9.diagram.model.position;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RouteRenderingInformationImpl extends AbstractRenderingInformationImpl implements RouteRenderingInformation {
