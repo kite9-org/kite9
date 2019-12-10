@@ -92,7 +92,7 @@ public class Kite9DocumentFactory
      * @param parser The SAX2 parser classname.
      */
     public Kite9DocumentFactory(ADLExtensibleDOMImplementation domImpl, String parser) {
-        super(domImpl, parser);
+        super(domImpl, parser, true);
     }
 
     /**

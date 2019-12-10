@@ -14,15 +14,17 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 public class WidthHeightManager extends MarginLengthManager {
 	
 	private final float def;
+	private final boolean inherited;
 
-	public WidthHeightManager(String prop, float d) {
+	public WidthHeightManager(String prop, float d, boolean inherited) {
 		super(prop);
 		this.def = d;
+		this.inherited = inherited;
 	}
 
 	@Override
 	public boolean isInheritedProperty() {
-		return false;
+		return inherited;
 	}
 
 	@Override
