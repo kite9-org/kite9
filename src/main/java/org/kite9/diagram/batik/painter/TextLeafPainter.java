@@ -165,9 +165,10 @@ public class TextLeafPainter extends DirectSVGGroupPainter implements LeafPainte
 		return bounds;
 	}
 
-	public static GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
+	protected GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
 		GVTBuilder builder = ctx.getGVTBuilder();
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
 		return out;
 	}
+
 }

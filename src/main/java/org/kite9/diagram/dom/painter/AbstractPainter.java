@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.model.AlignedRectangular;
@@ -20,6 +21,8 @@ import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -184,4 +187,14 @@ public abstract class AbstractPainter implements Painter {
 		}
 	}
 	
+
+	protected void ensureNoChildKite9Elements(Element e) {
+		if (e instanceof Kite9XMLElement) {
+			if (((Kite9XMLElement) e).iterator().hasNext()) {
+				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
+			}
+		} else {
+			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
+		}
+	}
 }

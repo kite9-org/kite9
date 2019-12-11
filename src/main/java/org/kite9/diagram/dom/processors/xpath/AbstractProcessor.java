@@ -10,7 +10,7 @@ import org.w3c.dom.Text;
 public abstract class AbstractProcessor implements XMLProcessor {
 
 	@Override
-	public void processContents(Node n) {
+	public final void processContents(Node n) {
 		if (n instanceof Element) {
 			processElement((Element) n);
 		} else if (n instanceof Text) {

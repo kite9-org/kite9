@@ -45,7 +45,8 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 		return out;
 	}
 	
-	public static GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
+	protected GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
+		ensureNoChildKite9Elements(e);
 		GVTBuilder builder = ctx.getGVTBuilder();
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
 		return out;
