@@ -19,6 +19,7 @@ public class Kite9ExpandingCopier extends PrefixingCopier {
 	protected Node copyChild(Node n, Node to) {
 		Node copy = null;
 		if (n instanceof Kite9XMLElement) {
+			System.out.println("Kite9ExpandingCopier "+n.getLocalName());
 			copy = ((Kite9XMLElement) n).output(to.getOwnerDocument());
 			if (copy != null) {
 				to.appendChild(copy);

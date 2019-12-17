@@ -165,13 +165,13 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	public static final Set<String> UNITS = new HashSet<>();
 	
 	static {
-		for (String string : new String[] { "pt", "cm","em", "in", "ex","px" }) {
+		for (String string : new String[] { "pt", "cm", "em", "in", "ex", "px" }) {
 			UNITS.add(string);
 		}
 	}	
 
 	/**
-	 * Because our ADLDocument knows about the CSSContext, we can resolve units in the xpath expresions.
+	 * Because our ADLDocument knows about the CSSContext, we can resolve units in the xpath expressions.
 	 */
 	@Override
 	public String getXPathVariable(String name) {

@@ -53,6 +53,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	protected Element paintElementToDocument(Document d) {
+		System.out.println("Calling paintElementToDocument "+this.getID());
 		return transformer.postProcess(p, d);
 	}
 

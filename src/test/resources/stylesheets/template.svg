@@ -106,7 +106,7 @@
     <back style='kite9-usage: decal; kite9-type: svg; ' class="arrow-back">
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='4' ry='4' style='fill: black; ' />
     </back>
-    <contents />
+    <contents optional="true" />
   </template>
 
   <template id='connection-label'>
@@ -257,5 +257,6 @@
       <contents />
     </svg:g>
   </template>
+  
 
 </svg:svg>

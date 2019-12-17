@@ -15,4 +15,11 @@
   <template id="text-label">
     <svg:text id="label" style='font-size: 15px; stroke: black; font-face: sans-serif; '>{@text}</svg:text>
   </template>
+  
+  
+  <template id="simple" templateAtt="set">
+  	<svg:circle cx="10" cy="10" r="5" class="#{@item}" />
+  	<contents />
+  </template>
+  
 </svg:svg>

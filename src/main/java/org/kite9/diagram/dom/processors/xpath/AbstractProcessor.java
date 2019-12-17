@@ -22,6 +22,7 @@ public abstract class AbstractProcessor implements XMLProcessor {
 	}
 
 	protected void processElement(Element n) {
+		System.out.println("AbtractProcessor: "+n.getLocalName());
 		NodeList contents = n.getChildNodes();
 		mergeTextNodes(contents);
 		for (int i = 0; i < contents.getLength(); i++) {

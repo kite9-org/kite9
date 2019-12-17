@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.display;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.dom.XMLHelper;
@@ -132,6 +133,39 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String xml = out.toString();
 		transcodePNG(xml);
 		// no svg, as it won't render in any browser!
+	}
+	
+	@Test
+	public void test_54_12_GeneralTemplating() throws Exception {
+		String someXML = 
+			svgOpen() + 
+		 	diagramOpen() +
+				gTemplatedElement(svgRect1()) + 
+				gTemplatedElement(svgRect2())+
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
+	}
+	
+	@Test
+	public void test_54_13_Kite9Templating() throws Exception {
+		String someXML = 
+			svgOpen() + 
+			 	diagramOpen() +
+					//templateElement() +
+					myTemplatedElement(svgRect1()) + 
+					myTemplatedElement(svgRect2())+
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
+	}
+	
+	private String gTemplatedElement(String inside) {
+		return "<svg:g item=\"bob\" style=\"kite9-template: url(template.svg#simple); \">"+inside+"</svg:g>";
+	}
+	
+	private String myTemplatedElement(String inside) {
+		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#simple); kite9-type: svg; \">"+inside+"</my>";
 	}
 	
 	private String scalablePath() {

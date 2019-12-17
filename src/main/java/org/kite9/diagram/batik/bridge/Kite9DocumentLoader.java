@@ -14,6 +14,7 @@ import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Element;
@@ -57,6 +58,9 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 					out = templateDoc.getRootElement();
 				}
 
+				if (out == null) {
+					throw new Kite9XMLProcessingException("Couldn't find ID: "+fragment, loadedBy);
+				}
 				
 				if (importDefsForThisDoc) {
 					SVGSVGElement top = getSVGTopElement(loadedBy);

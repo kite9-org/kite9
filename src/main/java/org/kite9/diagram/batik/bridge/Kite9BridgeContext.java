@@ -20,6 +20,8 @@ import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.template.BasicTemplater;
+import org.kite9.diagram.dom.processors.xpath.DocumentValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -144,16 +146,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	}
 
 	private XMLProcessor createXMLProcessor() {
-		ValueReplacer vr = new ValueReplacer() {
-			
-			@Override
-			public String getReplacementValue(String xpath, Node at) {
-				XPathResult out = (XPathResult) ((XPathEvaluator) getDocument()).evaluate(xpath, at, null, XPathResult.STRING_TYPE, null);
-				return out.getStringValue();
-			}
-			
-		};
-		
+		DocumentValueReplacer vr = new DocumentValueReplacer(this.document);
 		return new BasicTemplater(vr, (Kite9DocumentLoader)  getDocumentLoader());
 	}
 

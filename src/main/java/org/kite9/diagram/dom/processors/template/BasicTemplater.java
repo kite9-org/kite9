@@ -12,13 +12,16 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
+import org.kite9.diagram.dom.processors.copier.BasicCopier;
+import org.kite9.diagram.dom.processors.xpath.ContentElementProcessor;
+import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 
 /**
  * Handles copying of XML from one document to another, and the CSS 'template' directive.
@@ -28,7 +31,7 @@ import org.w3c.dom.NamedNodeMap;
  * @author robmoffat
  *
  */
-public class BasicTemplater extends ValueReplacingProcessor implements XMLProcessor, Logable {
+public class BasicTemplater extends ContentElementProcessor implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -43,25 +46,59 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 	}
 
 	protected Kite9DocumentLoader loader;
+	protected boolean ignoreElement = false;
 
 	public BasicTemplater(ValueReplacer vr, Kite9DocumentLoader  loader) {
 		super(vr);
 		this.loader = loader;
 	}
+	
+	protected XMLProcessor subInstance(ValueReplacer vr) {
+		BasicTemplater out = new BasicTemplater(vr, loader);
+		out.ignoreElement = true;	// prevents templating the same element over and over again.
+		return out;
+	}
 
-	public void handleTemplateElement(CSSStylableElement transform) {
-		Value template = AbstractStyledKite9XMLElement.getCSSStyleProperty(transform, CSSConstants.TEMPLATE);
-		if (template != ValueConstants.NONE_VALUE) {
-			Element e = loadReferencedElement(template, transform);
-			if (e != null) { 
-				ContentElementHandlingCopier c = new ContentElementHandlingCopier(transform);
-				copyAttributes(e, transform);
-				c.processContents(e);
-			} else {
-				throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(template), transform);
-			}
+	public void handleTemplateElement(CSSStylableElement transform, Value v) {
+		Element e = loadReferencedElement(v, transform);
+		if (e != null) { 
+			System.out.println("BasicTemplater: "+transform.getLocalName());
+			// we need to create a copy of this element, in the same document.
+			Element copy = copyNodeAndMoveContents(transform);
+			NodeValueReplacer nvr = new NodeValueReplacer(copy);
+			
+			// move the new contents in
+			BasicCopier bc = new BasicCopier(transform);
+			bc.processContents(e);
+			
+			XMLProcessor subProcessor = subInstance(nvr);
+			copyAttributes(e, transform);
+			subProcessor.processContents(transform);
+			System.out.println("finished BasicTemplater: "+transform.getLocalName());
+		} else {
+			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}
+	}
 		
+	private Element copyNodeAndMoveContents(CSSStylableElement original) {
+		
+		Element out = (Element) original.cloneNode(false);
+		copyAttributes(original, out);
+		
+		NodeList in = original.getChildNodes();
+		while (in.getLength() > 0) {
+			out.appendChild(in.item(0));
+		}		
+		return out;
+	}
+
+	private Value getTemplateValue(Element e) {
+		if (e instanceof CSSStylableElement) {
+			Value template = AbstractStyledKite9XMLElement.getCSSStyleProperty((CSSStylableElement) e, CSSConstants.TEMPLATE);
+			return template;
+		} else {
+			return ValueConstants.NONE_VALUE;
+		}
 	}
 
 	private static String getTemplateName(Value t) {
@@ -88,9 +125,11 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 
 	@Override
 	public void processElement(Element e) {
-		if (e instanceof CSSStylableElement) {
-			handleTemplateElement((CSSStylableElement) e);
+		Value v = getTemplateValue(e);
+		if ((v != ValueConstants.NONE_VALUE) && (!ignoreElement)) {
+			handleTemplateElement((CSSStylableElement) e, v);
 		}
+		ignoreElement = false;
 		super.processElement(e);
 	}
 	

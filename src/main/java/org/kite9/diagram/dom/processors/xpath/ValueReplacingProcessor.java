@@ -3,11 +3,11 @@ package org.kite9.diagram.dom.processors.xpath;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+import org.w3c.dom.xpath.XPathResult;
 
 /**
  * Performs value replacement, where the elements to be replaced contain 
@@ -20,18 +20,20 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 	
 	public interface ValueReplacer {
 		
-		public String getReplacementValue(String in, Node context);	
+		public String getReplacementStringValue(String in, Node position);	
+		
+		public XPathResult getReplacementXML(String in, short type, Node position);
 		
 	}
 
-	private ValueReplacer valueReplacer;
+	protected ValueReplacer valueReplacer;
 	
 	public ValueReplacingProcessor(ValueReplacer vr) {
 		this.valueReplacer = vr;
 	}
 
 	@Override
-	public void processElement(Element from) {
+	protected void processElement(Element from) {
 		performReplaceOnAttributes(from);
 		super.processElement(from);
 	}
@@ -58,7 +60,7 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 			out.append(input.substring(place, m.start()));
 			
 			String in = m.group(1).toLowerCase();
-			String replacement = valueReplacer.getReplacementValue(in, at);
+			String replacement = valueReplacer.getReplacementStringValue(in, at);
 			
 			if ((replacement == null) || (replacement.trim().length() == 0)) {
 				//
