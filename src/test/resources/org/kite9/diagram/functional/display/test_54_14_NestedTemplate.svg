@@ -4,19 +4,18 @@
 <svg contentScriptType="text/ecmascript" width="100.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="100.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><g k9-elem="diagram" id="one" style="kite9-type: diagram; kite9-padding: 50px;" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [100.0,100.0]; "
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g style="kite9-template: url(template.svg#simple) 'template-arg'; " templateAtt="set" item="bob"
+    ><g transform="translate(50.0,50.0)" templateAtt="set" style="kite9-template: url(template.svg#double) 'template-arg'; kite9-type: container; " k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [0.0,0.0]; " class=" kite9-my" item="bob" k9-elem="my"
       >
-  	<circle r="5" class="bob template-arg" cx="10" cy="10"
+  	<circle r="5" class="bob" cx="10" cy="10"
         />
-  	<rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
-        />
-  </g
-        ><g style="kite9-template: url(template.svg#simple) 'template-arg'; " templateAtt="set" item="bob"
+  	<g k9-elem="container" style="kite9-type: container;  " class=" kite9-container" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [0.0,0.0]; "
         >
-  	<circle r="5" class="bob template-arg" cx="10" cy="10"
+  		<circle r="5" class="bob template-arg" cx="40" cy="40"
           />
-  	<rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
+  		<rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
           />
+  	</g
+          >
   </g
         ></g
       ></g

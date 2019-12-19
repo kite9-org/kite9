@@ -9,6 +9,7 @@ import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -30,12 +31,14 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 	protected abstract void initialize();
 	
+	
 	protected void ensureInitialized() {
 		if (!initialized) {
 			if (parent instanceof AbstractDOMDiagramElement) {
 				((AbstractDOMDiagramElement)parent).ensureInitialized();
 			}
 			this.initialized = true;
+			initializeDOMElement(this.theElement);
 			initialize();
 		}
 	}
@@ -48,7 +51,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	}
 
 	public Value getCSSStyleProperty(String prop) {
-		return theElement.getCSSStyleProperty(prop);
+		return getDOMElement().getCSSStyleProperty(prop);
 	}
 	
 	@Override
@@ -89,13 +92,27 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 	protected abstract Element paintElementToDocument(Document d);
 
+	protected void initializeDOMElement(StyledKite9XMLElement e) {
+		if (e instanceof HasPreprocessor) {
+			((HasPreprocessor)e).getPreprocessor().processContents(e);
+		}
+	}
+	
+	/**
+	 * For elements which are not decals, this needs to be done before accessing properties
+	 * or children.
+	 */
+	public StyledKite9XMLElement getDOMElement() {
+		ensureInitialized();
+		return theElement;
+	}
 
 	/**
 	 * For elements which are containers, call this method as part of initialize.
 	 */
 	protected List<DiagramElement> initContents() {
 		List<DiagramElement> contents = new ArrayList<>();
-		for (Kite9XMLElement xmlElement : getPainter().getContents()) {
+		for (Kite9XMLElement xmlElement : getDOMElement()) {
 			DiagramElement de = xmlElement.getDiagramElement();			
 			if (de instanceof Connection) {
 				// doesn't get added.

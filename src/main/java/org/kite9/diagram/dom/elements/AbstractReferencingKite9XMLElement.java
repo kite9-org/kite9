@@ -1,15 +1,15 @@
 package org.kite9.diagram.dom.elements;
 
-import org.apache.batik.css.engine.value.ListValue;
 import org.apache.batik.css.engine.value.StringValue;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.css.engine.value.ValueConstants;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathResult;
 
-public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledKite9XMLElement implements ReferencingKite9XMLElement, XPathAware {
+public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledKite9XMLElement implements ReferencingKite9XMLElement, XPathAware, HasPreprocessor {
 
 	public AbstractReferencingKite9XMLElement() {
 		super();
@@ -53,36 +53,38 @@ public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledK
 	 */
 	@Override
 	public String getXPathVariable(String key) {
-		if (key.matches("^template-[0-9]+$")) {
-			Node current = this;
-			int arg = Integer.parseInt(key.substring(9));
-			ListValue found = null;
-			while ((found == null) && (current != null)) {
-				if (current instanceof StyledKite9XMLElement) {
-					Value v = getCSSStyleProperty((StyledKite9XMLElement) current, CSSConstants.TEMPLATE);
-					if (v instanceof ListValue) {
-						found = (ListValue) v;
-					} else if (v == ValueConstants.NONE_VALUE) {
-						// continue searching
-					} else {
-						// unparameterized template
-						return null;
-					}
-				}
-				
-				current = current.getParentNode();
-			}
-			
-			if ((found != null) && (found.getLength() > arg)) {
-				return found.item(arg).getStringValue();
-			} else {
-				return null;
-			}
-		} else if (getDiagramElement() instanceof XPathAware) {
+		if (getDiagramElement() instanceof XPathAware) {
 			String out = ((XPathAware) getDiagramElement()).getXPathVariable(key);
 			return out;
 		} else {
 			return null;
 		}
 	}
+	
+	private XMLProcessor templater;
+	
+	@Override
+	public void setPreprocessor(XMLProcessor p) {
+		this.templater = p;
+	}
+
+	@Override
+	public XMLProcessor getPreprocessor() {
+		if (templater != null) {
+			return templater;
+		}
+		
+		Node parent = this.getParentNode();
+		
+		while (parent != null) {
+			if (parent instanceof HasPreprocessor) {
+				return ((HasPreprocessor) parent).getPreprocessor();
+			}
+			
+			parent = parent.getParentNode();
+		}
+		
+		throw new Kite9XMLProcessingException("No preprocessor set for xml element "+getTagName(), this);
+	}
+	
 }

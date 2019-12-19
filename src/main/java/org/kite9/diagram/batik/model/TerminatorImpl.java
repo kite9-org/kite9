@@ -9,6 +9,7 @@ import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -50,7 +51,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		
 		if (reference != ValueConstants.NONE_VALUE) {
 			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
-			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getPainter().getContents());
+			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getDOMElement());
 		} 
 		
 		
@@ -100,9 +101,11 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		}
 	}
 	
+	
+	
 	private static boolean attributesMatch(String name, TerminatorImpl a, TerminatorImpl b) {
-		return a.getPainter().getContents().getAttribute(name).equals(
-				b.getPainter().getContents().getAttribute(name));
+		return a.getDOMElement().getAttribute(name).equals(
+				b.getDOMElement().getAttribute(name));
 	}
 
 	@Override
@@ -143,5 +146,5 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		ensureInitialized();
 		return end;
 	}
-	
+
 }

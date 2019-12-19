@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.model;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
 import org.kite9.diagram.batik.painter.SVGLeafPainter;
-import org.kite9.diagram.batik.painter.TextLeafPainter;
+import org.kite9.diagram.batik.text.TextLeafPainter;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
@@ -85,9 +85,9 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
 			}
 		case LINK:
-			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()), ContentTransform.POSITION);
+			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el), ContentTransform.POSITION);
 		case LINK_END:
-			return new TerminatorImpl(el, parent, context, new DirectSVGGroupPainter(el, context.getXMLProcessor()), ContentTransform.POSITION);
+			return new TerminatorImpl(el, parent, context, new DirectSVGGroupPainter(el), ContentTransform.POSITION);
 		case NONE:
 			return null;
 		case UNSPECIFIED:
@@ -96,13 +96,13 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 		}
 	}
 	
-	private static RectangularElementUsage getElementUsage(StyledKite9XMLElement in2) {
+	public static RectangularElementUsage getElementUsage(StyledKite9XMLElement in2) {
 		EnumValue v = (EnumValue) in2.getCSSStyleProperty(CSSConstants.ELEMENT_USAGE_PROPERTY);
 		RectangularElementUsage reu = (RectangularElementUsage) v.getTheValue();
 		return reu;
 	}
 
-	private static DiagramElementType getElementType(StyledKite9XMLElement in2) {
+	public static DiagramElementType getElementType(StyledKite9XMLElement in2) {
 		return in2.getType();
 	}
 

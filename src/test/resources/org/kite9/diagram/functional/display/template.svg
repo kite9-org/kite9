@@ -18,8 +18,16 @@
   
   
   <template id="simple" templateAtt="set">
-  	<svg:circle cx="10" cy="10" r="5" class="#{@item}" />
+  	<svg:circle cx="10" cy="10" r="5" class="#{@item} #{$template-1}" />
   	<contents />
+  </template>
+  
+  <template id="double" templateAtt="set">
+  	<svg:circle cx="10" cy="10" r="5" class="#{@item}" />
+  	<container style="kite9-type: container;  ">
+  		<svg:circle cx="40" cy="40" r="5" class="#{@item} #{$template-1}" />
+  		<contents />
+  	</container>
   </template>
   
 </svg:svg>

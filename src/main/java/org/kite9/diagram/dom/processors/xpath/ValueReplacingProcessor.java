@@ -7,7 +7,6 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
-import org.w3c.dom.xpath.XPathResult;
 
 /**
  * Performs value replacement, where the elements to be replaced contain 
@@ -18,16 +17,12 @@ import org.w3c.dom.xpath.XPathResult;
  */
 public class ValueReplacingProcessor extends AbstractProcessor {
 	
-	public interface ValueReplacer {
-		
-		public String getReplacementStringValue(String in, Node position);	
-		
-		public XPathResult getReplacementXML(String in, short type, Node position);
-		
+	protected final ValueReplacer valueReplacer;
+	
+	public ValueReplacer getValueReplacer() {
+		return valueReplacer;
 	}
 
-	protected ValueReplacer valueReplacer;
-	
 	public ValueReplacingProcessor(ValueReplacer vr) {
 		this.valueReplacer = vr;
 	}
@@ -60,7 +55,7 @@ public class ValueReplacingProcessor extends AbstractProcessor {
 			out.append(input.substring(place, m.start()));
 			
 			String in = m.group(1).toLowerCase();
-			String replacement = valueReplacer.getReplacementStringValue(in, at);
+			String replacement = valueReplacer.getReplacementStringValue(in);
 			
 			if ((replacement == null) || (replacement.trim().length() == 0)) {
 				//

@@ -22,7 +22,7 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 	private Kite9BridgeContext ctx;
 	
 	public SVGLeafPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
-		super(theElement, ctx.getXMLProcessor());
+		super(theElement);
 		this.ctx = ctx;
 	}
 	
@@ -37,7 +37,7 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 	protected GraphicsNode getGraphicsNode() {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(getContents(), ctx);
+			out = initGraphicsNode(theElement, ctx);
 			graphicsNodeCache = out;
 			return out;
 		}

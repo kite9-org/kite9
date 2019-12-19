@@ -39,7 +39,7 @@ public class ContentElementProcessor extends ValueReplacingProcessor {
 		}
 
 		short returnType = getReturnType(contents);
-		XPathResult result = valueReplacer.getReplacementXML(xpath, returnType, contents);
+		XPathResult result = valueReplacer.getReplacementXML(xpath, returnType);
 		Node parent = contents.getParentNode();
 
 		if (result.getResultType() == XPathResult.STRING_TYPE) {

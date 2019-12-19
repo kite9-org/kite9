@@ -177,20 +177,10 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		Kite9XMLElement p = getParentKite9Element();
 		return (p == null) ? null : p.getDiagramElement();
 	}
-//	
-//	public StyleMap getComputedStyleMap(String pseudoElement) {
-//		super.getComputedStyleMap(pseudoElement)
-//		return sm;
-//	}
-//
-//	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
-//		this.sm = sm;
-//	}
 
 	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
 		return null;
 	}
-
 
 	public boolean isPseudoInstanceOf(String pseudoClass) {
 		return false;
@@ -222,5 +212,8 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_TYPE_PROPERTY);
 		return (DiagramElementType) ev.getTheValue();
 	}
+
+
+
 	
 }

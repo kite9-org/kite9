@@ -19,4 +19,6 @@ public class LabelLeafImpl extends AbstractLabel implements Label, Leaf {
 	public LabelLeafImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
 		super(el, parent, ctx, lo, t);
 	}
+	
+	
 }

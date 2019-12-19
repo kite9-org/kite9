@@ -16,6 +16,7 @@ import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -61,7 +62,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	 */
 	protected List<DiagramElement> initContents() {
 		List<DiagramElement> contents = new ArrayList<>();
-		for (Kite9XMLElement xmlElement : getPainter().getContents()) {
+		for (Kite9XMLElement xmlElement : getDOMElement()) {
 			DiagramElement de = xmlElement.getDiagramElement();			
 			if (de instanceof Terminator) {
 				End e = ((Terminator) de).getEnd();
@@ -100,7 +101,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	protected void initRank() {
-		Kite9XMLElement theElement = getPainter().getContents();
+		Kite9XMLElement theElement = getDOMElement();
 		String rank = theElement.getAttribute("rank");
 		if (!"".equals(rank)) {
 			this.rank = Integer.parseInt(rank);
@@ -152,13 +153,13 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 
 
 	private Kite9XMLElement getReferencedElement(String id) {
-		ADLDocument owner = getPainter().getContents().getOwnerDocument();
+		ADLDocument owner = getDOMElement().getOwnerDocument();
 		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, id);
 		return from;
 	}
 	
 	private String getReference(String css) {
-		Kite9XMLElement theElement = getPainter().getContents();
+		Kite9XMLElement theElement = getDOMElement();
 		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(css);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
@@ -170,14 +171,14 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	public Kite9XMLElement getToElement() {
-		ADLDocument owner = getPainter().getContents().getOwnerDocument();
+		ADLDocument owner = getDOMElement().getOwnerDocument();
 		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, toId);
 		return to;
 	}
 
 
 	public String getToReference() {
-		Kite9XMLElement theElement = getPainter().getContents();
+		Kite9XMLElement theElement = getDOMElement();
 		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(CSSConstants.LINK_TO_XPATH);
 		
 		if (theElement.getOwnerDocument().getElementById(reference) == null) {
@@ -320,7 +321,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		if ("path".equals(name)) {
 			RoutePainterImpl routePainter = new RoutePainterImpl();
 			ExtendedSVGGeneratorContext ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
-					getPainter().getContents().getOwnerDocument());
+					getDOMElement().getOwnerDocument());
 			double startReserve = fromDecoration == null ? 0 : fromDecoration.getMarkerReserve();
 			double endReserve = toDecoration == null ? 0 : toDecoration.getMarkerReserve();
 			
@@ -390,6 +391,5 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		
 		return drawDirection;
 	}
-	
 	
 }

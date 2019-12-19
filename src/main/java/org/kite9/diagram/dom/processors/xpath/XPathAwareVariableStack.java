@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
 
 public class XPathAwareVariableStack extends VariableStack {
 	
-	private Node context;
+	protected Node context;
 
 	public XPathAwareVariableStack(int initStackSize, Node context) {
 		super(initStackSize);

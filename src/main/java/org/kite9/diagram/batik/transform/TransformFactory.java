@@ -4,6 +4,7 @@ import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.ContentTransform;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 
 public class TransformFactory {
@@ -35,7 +36,7 @@ public class TransformFactory {
 			return new NoopTransformer();
 		case DEFAULT:
 		default:
-			throw new Kite9XMLProcessingException("No transform defined", diagramElement.getPainter().getContents());
+			throw new Kite9ProcessingException("No transform defined for "+diagramElement);
 		}
 	}
 }

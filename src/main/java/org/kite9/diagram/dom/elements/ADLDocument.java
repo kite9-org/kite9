@@ -11,8 +11,10 @@ import org.apache.batik.util.XMLConstants;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
+import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.framework.common.Kite9XMLProcessingException;
@@ -34,7 +36,7 @@ import org.w3c.dom.xpath.XPathNSResolver;
  * @author robmoffat
  *
  */
-public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScripts {
+public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScripts, HasPreprocessor {
 
 	public ADLDocument() {
 		this(new ADLExtensibleDOMImplementation());
@@ -60,6 +62,7 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	}
 	
 	private transient int nextId = 1;
+	private transient XMLProcessor preProcessor;
 	
 	public String createUniqueId() {
 		while (elementIdExists(""+(nextId))) {
@@ -154,7 +157,7 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 		try {
 			XPathExpression xpath = createExpression(expression, resolver);
 			ADLXPathExpr expr = (ADLXPathExpr) xpath;
-			expr.getContext().setVarStack(new XPathAwareVariableStack(10, contextNode));
+			expr.getContext().setVarStack(new TemplateAwareVariableStack(10, contextNode));
 			return xpath.evaluate(contextNode, type, result);
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("XPath Evaluation failed with expression '"+expression+"'", e, contextNode);
@@ -218,5 +221,18 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	public XPathExpression createExpression(String expression, XPathNSResolver resolver) throws DOMException, XPathException {
 		 return new ADLXPathExpr(expression, resolver);
 	}
+
+	
+	
+	@Override
+	public void setPreprocessor(XMLProcessor p) {
+		this.preProcessor = p;
+	}
+
+	@Override
+	public XMLProcessor getPreprocessor() {
+		return this.preProcessor;
+	}
+	
 	
 }

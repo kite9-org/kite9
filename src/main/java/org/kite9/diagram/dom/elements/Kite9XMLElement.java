@@ -17,6 +17,9 @@ public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 		
 	public DiagramElement getDiagramElement();
 	
+	/**
+	 * Type-safe override
+	 */
 	public ADLDocument getOwnerDocument();
 
 	public <E extends Element> E getProperty(String name);

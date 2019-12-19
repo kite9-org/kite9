@@ -18,11 +18,6 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.template.BasicTemplater;
-import org.kite9.diagram.dom.processors.xpath.DocumentValueReplacer;
-import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor.ValueReplacer;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9ProcessingException;
@@ -30,8 +25,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.xpath.XPathEvaluator;
-import org.w3c.dom.xpath.XPathResult;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -60,8 +53,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	private Kite9Bridge gBridge = new Kite9Bridge();
 	private Kite9DiagramBridge dBridge = new Kite9DiagramBridge();
-	
-	private XMLProcessor xmlProcessor;
 	
 	@Override
 	public void registerSVGBridges() {
@@ -136,18 +127,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 			}
 		}
 		return out;
-	}
-
-	public XMLProcessor getXMLProcessor() {
-		if (xmlProcessor == null) {
-			xmlProcessor = createXMLProcessor();
-		}
-		return xmlProcessor;
-	}
-
-	private XMLProcessor createXMLProcessor() {
-		DocumentValueReplacer vr = new DocumentValueReplacer(this.document);
-		return new BasicTemplater(vr, (Kite9DocumentLoader)  getDocumentLoader());
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package org.kite9.diagram.dom.painter;
 
 import org.apache.batik.util.SVGConstants;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -41,11 +40,6 @@ public class SVGRectPainter extends AbstractPainter {
 		} else {
 			return null;
 		}
-	}
-
-	@Override
-	public StyledKite9XMLElement getContents() {
-		return null;
 	}
 
 }

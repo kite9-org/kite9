@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.processors.template;
+package org.kite9.diagram.dom.processors.pre;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.BasicCopier;
 import org.kite9.diagram.dom.processors.xpath.ContentElementProcessor;
 import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -125,10 +126,17 @@ public class BasicTemplater extends ContentElementProcessor implements XMLProces
 
 	@Override
 	public void processElement(Element e) {
-		Value v = getTemplateValue(e);
-		if ((v != ValueConstants.NONE_VALUE) && (!ignoreElement)) {
-			handleTemplateElement((CSSStylableElement) e, v);
+		if (e instanceof HasPreprocessor) {
+			((HasPreprocessor)e).setPreprocessor(this);
 		}
+
+		if (!ignoreElement) {
+			Value v = getTemplateValue(e);
+			if (v != ValueConstants.NONE_VALUE) {
+				handleTemplateElement((CSSStylableElement) e, v);
+			}
+		}
+
 		ignoreElement = false;
 		super.processElement(e);
 	}

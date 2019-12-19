@@ -141,7 +141,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			svgOpen() + 
 		 	diagramOpen() +
 				gTemplatedElement(svgRect1()) + 
-				gTemplatedElement(svgRect2())+
+				gTemplatedElement(svgRect1())+
 				diagramClose() +
 			svgClose();
 		transcodeSVG(someXML);
@@ -154,18 +154,33 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			 	diagramOpen() +
 					//templateElement() +
 					myTemplatedElement(svgRect1()) + 
-					myTemplatedElement(svgRect2())+
+					myTemplatedElement(svgRect1())+
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
+	}
+	
+	@Test
+	public void test_54_14_NestedTemplate() throws Exception {
+		String someXML = 
+			svgOpen() + 
+			 	diagramOpen() +
+			 		nestedTemplatedElement(svgRect2())+
 				diagramClose() +
 			svgClose();
 		transcodeSVG(someXML);
 	}
 	
 	private String gTemplatedElement(String inside) {
-		return "<svg:g item=\"bob\" style=\"kite9-template: url(template.svg#simple); \">"+inside+"</svg:g>";
+		return "<svg:g item=\"bob\" style=\"kite9-template: url(template.svg#simple) 'template-arg'; \">"+inside+"</svg:g>";
 	}
 	
 	private String myTemplatedElement(String inside) {
-		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#simple); kite9-type: svg; \">"+inside+"</my>";
+		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#simple) 'template-arg'; kite9-type: svg; \">"+inside+"</my>";
+	}
+	
+	private String nestedTemplatedElement(String inside) {
+		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#double) 'template-arg'; kite9-type: container; \">"+inside+"</my>";
 	}
 	
 	private String scalablePath() {

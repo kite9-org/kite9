@@ -7,7 +7,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +19,6 @@ import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.adl.ContradictingLink;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
@@ -62,7 +60,6 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
 
@@ -382,11 +379,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isContradictingLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
+				return ((AbstractDOMDiagramElement)c).getDOMElement().getAttribute(Link.LINK_TEST).equals(ContradictingLink.CONTRADICTING);
 			}
 
 			private boolean isTurnLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
+				return ((AbstractDOMDiagramElement)c).getDOMElement().getAttribute(Link.LINK_TEST).equals(TurnLink.TURN);
 			}
 
 		};
@@ -408,7 +405,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isHopLink(Connection c) {
-				return ((AbstractDOMDiagramElement)c).getPainter().getContents().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
+				return ((AbstractDOMDiagramElement)c).getDOMElement().getAttribute(Link.LINK_TEST).equals(HopLink.HOP);
 			}
 		});
 	}

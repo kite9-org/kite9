@@ -36,6 +36,8 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
+import org.kite9.diagram.dom.processors.pre.BasicTemplater;
+import org.kite9.diagram.dom.processors.xpath.DocumentValueReplacer;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.framework.common.Kite9XMLProcessingException;
@@ -132,8 +134,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
 		try {
+			
+			// this bit positions all the diagram elements
 			input.setDocumentURI(uri);
 			ensureCSSEngine((ADLDocument) input);
+			((ADLDocument) input).setPreprocessor(new BasicTemplater(new DocumentValueReplacer(input), this.docLoader));
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);

@@ -16,7 +16,7 @@ import org.kite9.diagram.model.style.DiagramElementType;
 public class SVGContainerRectangularPainter extends DirectSVGGroupPainter {
 
 	public SVGContainerRectangularPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
-		super(theElement, ctx.getXMLProcessor());
+		super(theElement);
 	}
 
 }
