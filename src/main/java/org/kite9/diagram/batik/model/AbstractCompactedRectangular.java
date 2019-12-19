@@ -7,7 +7,6 @@ import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
@@ -66,12 +65,10 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 
 	@Override
 	protected void initializeDOMElement(StyledKite9XMLElement e) {
+		super.initializeDOMElement(e);
 		if (p instanceof TextLeafPainter) {
 			TextDOMInitializer.setupElementXML(e);
-		} else {
-			super.initializeDOMElement(e);
-		}
-		
+		} 
 	}
 	
 	

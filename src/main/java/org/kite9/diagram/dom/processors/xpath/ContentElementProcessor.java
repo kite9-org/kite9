@@ -7,6 +7,7 @@ import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.xpath.XPathResult;
 
@@ -23,17 +24,19 @@ public class ContentElementProcessor extends ValueReplacingProcessor {
 		super(vr);
 	}
 
-	@Override
-	public void processElement(Element e) {
-		if (e instanceof ContentsElement) {
-			processContentsElement((ContentsElement) e);
-		} else {
-			super.processElement(e);
+	protected void processElement(Element n) {
+		NodeList contents = n.getChildNodes();
+		for (int i = 0; i < contents.getLength(); i++) {
+			Node item = contents.item(i);
+			if (item instanceof ContentsElement) {
+				processContentsElement((ContentsElement) item);
+			} 
 		}
+		super.processElement(n);
 	}
-
+	
 	protected void processContentsElement(ContentsElement contents) {
-		String xpath = "*";
+		String xpath = "child::node()";
 		if (contents.hasAttribute("xpath")) {
 			xpath = contents.getAttribute("xpath");
 		}
@@ -51,7 +54,6 @@ public class ContentElementProcessor extends ValueReplacingProcessor {
 			List<Node> nodes = extractNodeList(contents, xpath, result);
 			for (Node node : nodes) {
 				parent.insertBefore(node, contents);
-				processContents(node);
 			}	
 		}
 		

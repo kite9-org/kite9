@@ -49,8 +49,11 @@ public abstract class AbstractDiagramElement implements DiagramElement {
 		return depth;
 	}
 	
-	protected void addConnectionReference(String connected, Connection de) {
-		((AbstractDiagramElement) getParent()).addConnectionReference(connected, de);
+	/**
+	 * Used to keep track of any connections we find in the diagram during initialisation
+=	 */
+	protected void registerConnection(Connection de) {
+		((AbstractDiagramElement) getParent()).registerConnection(de);
 	} 
 
 }

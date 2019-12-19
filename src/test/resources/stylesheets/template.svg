@@ -131,8 +131,9 @@
     </svg:g>
   </template>
   
+  <!-- would be better to use a decal here, and make it the same size as the defined terminator -->
   <template id='empty-terminator'>
-    <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' style='fill: none; stroke: none ' />
+      <svg:rect x='0' y='0' width='10.0' height='10.0' style='fill: none; stroke: none ' />
   </template>
 
   <template id='context'>

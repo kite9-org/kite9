@@ -74,7 +74,7 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 	public Collection<Connection> getLinks() {
 		ensureInitialized();
 		if (links == null) {
-			links = getDiagram().getConnectionsFor(getID());
+			links = getDiagram().getConnectionsFor(this);
 		}
 		return links;
 	}

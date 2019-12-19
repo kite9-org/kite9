@@ -63,7 +63,7 @@ public class BasicTemplater extends ContentElementProcessor implements XMLProces
 	public void handleTemplateElement(CSSStylableElement transform, Value v) {
 		Element e = loadReferencedElement(v, transform);
 		if (e != null) { 
-			System.out.println("BasicTemplater: "+transform.getLocalName());
+			//System.out.println("BasicTemplater: "+transform.getLocalName());
 			// we need to create a copy of this element, in the same document.
 			Element copy = copyNodeAndMoveContents(transform);
 			NodeValueReplacer nvr = new NodeValueReplacer(copy);
@@ -75,7 +75,7 @@ public class BasicTemplater extends ContentElementProcessor implements XMLProces
 			XMLProcessor subProcessor = subInstance(nvr);
 			copyAttributes(e, transform);
 			subProcessor.processContents(transform);
-			System.out.println("finished BasicTemplater: "+transform.getLocalName());
+			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}

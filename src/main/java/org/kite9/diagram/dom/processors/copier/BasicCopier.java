@@ -29,7 +29,6 @@ public class BasicCopier implements XMLProcessor {
 	}
 	
 	protected void copyContents(Node from, Node to) {
-		System.out.println("BasicCopier: "+from.getLocalName()+" "+to.getLocalName());
 		NodeList nl = from.getChildNodes();
 		copyContents(nl, to);
 	}

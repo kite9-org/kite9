@@ -35,7 +35,7 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.copier.Kite9ExpandingCopier;
+import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
 import org.kite9.diagram.dom.processors.xpath.DocumentValueReplacer;
 import org.kite9.diagram.dom.scripts.HasScripts;

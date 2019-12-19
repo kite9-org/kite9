@@ -114,7 +114,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			in1 = streamToDom(is1);
 			
 			DOMDifferenceEngine diff = new DOMDifferenceEngine();
-			
+		
 			
 			diff.addDifferenceListener(new ComparisonListener() {
 				
@@ -124,6 +124,14 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        			// ignore the info
 		        			return;
 		        		}
+		        	}
+		        	if (comparison.getType() == ComparisonType.TEXT_VALUE) {
+		        		String c1 = comparison.getControlDetails().getValue().toString().trim();
+		        		String c2 = comparison.getTestDetails().getValue().toString().trim();
+		        		if (c1.equals(c2)) {
+		        			return;
+		        		}
+		        		
 		        	}
 					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
 						copyToErrors(output);	

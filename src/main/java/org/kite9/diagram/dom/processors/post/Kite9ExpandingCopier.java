@@ -1,6 +1,7 @@
-package org.kite9.diagram.dom.processors.copier;
+package org.kite9.diagram.dom.processors.post;
 
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
 import org.w3c.dom.Node;
 
 /**
@@ -19,7 +20,6 @@ public class Kite9ExpandingCopier extends PrefixingCopier {
 	protected Node copyChild(Node n, Node to) {
 		Node copy = null;
 		if (n instanceof Kite9XMLElement) {
-			System.out.println("Kite9ExpandingCopier "+n.getLocalName());
 			copy = ((Kite9XMLElement) n).output(to.getOwnerDocument());
 			if (copy != null) {
 				to.appendChild(copy);

@@ -16,7 +16,6 @@ import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -41,15 +40,12 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	
 	public ConnectionImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
 		super(el, parent, ctx, p, t);
-		this.fromId = getReference(CSSConstants.LINK_FROM_XPATH);
-		this.toId = getReference(CSSConstants.LINK_TO_XPATH);
-		addConnectionReference(fromId, this);
-		addConnectionReference(toId, this);
 	}
 
 	@Override
 	protected void initialize() {
 		super.initialize();
+		initReferences();
 		initFromTo();
 		initContents();
 		initDrawDirection();
@@ -57,6 +53,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		initSize();
 	}
 	
+	private void initReferences() {
+		this.fromId = getReference(CSSConstants.LINK_FROM_XPATH);
+		this.toId = getReference(CSSConstants.LINK_TO_XPATH);
+	}
+
 	/**
 	 * For elements which are containers, call this method as part of initialize.
 	 */

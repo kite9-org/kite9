@@ -9,7 +9,6 @@ import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -146,5 +145,5 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		ensureInitialized();
 		return end;
 	}
-
+	
 }

@@ -160,15 +160,30 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 	}
 
 	public static FlowTextNode getFlowNode(GraphicsNode n) {
-		CompositeGraphicsNode cgn = (CompositeGraphicsNode) n;
+		FlowTextNode out = getFlowNodeInner(n);
 
-		for (GraphicsNode gn : (List<GraphicsNode>) cgn.getChildren()) {
-			if (gn instanceof FlowTextNode) {
-				return (FlowTextNode) gn;
+		if (out == null) {			
+			throw new LogicException("No Flow node!");
+		}
+		
+		return out;
+	}
+
+	private static FlowTextNode getFlowNodeInner(GraphicsNode gn) {
+		if (gn instanceof FlowTextNode) {
+			return (FlowTextNode) gn;
+		} else if (gn instanceof CompositeGraphicsNode) {
+			CompositeGraphicsNode cgn = (CompositeGraphicsNode) gn;
+
+			for (GraphicsNode sgn : (List<GraphicsNode>) cgn.getChildren()) {
+				FlowTextNode ftn = getFlowNodeInner(sgn);
+				if (ftn != null) {
+					return ftn;
+				}
 			}
 		}
-
-		throw new LogicException("No Flow node!");
+		
+		return null;
 	}
 
 }

@@ -115,7 +115,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		for (Kite9XMLElement xmlElement : getDOMElement()) {
 			DiagramElement de = xmlElement.getDiagramElement();			
 			if (de instanceof Connection) {
-				// doesn't get added.
+				registerConnection((Connection) de);
 			} else if (de != null) { 
 				contents.add(de);
 			} 

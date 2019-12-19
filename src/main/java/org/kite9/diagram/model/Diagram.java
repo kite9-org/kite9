@@ -11,6 +11,6 @@ import java.util.Collection;
  */
 public interface Diagram extends Container {
 
-	public Collection<Connection> getConnectionsFor(String id);
+	public Collection<Connection> getConnectionsFor(Connected c);
 	
 }
