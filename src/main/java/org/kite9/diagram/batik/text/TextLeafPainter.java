@@ -10,6 +10,7 @@ import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Handles painting for {@link DiagramElementType.TEXT} using SVG1.2's flowRoot
@@ -39,7 +40,10 @@ public class TextLeafPainter extends SVGLeafPainter {
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
 		getGraphicsNode().paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
-		out.appendChild(groupElem.getFirstChild());
+		Node firstChild = groupElem.getFirstChild();
+		if (firstChild != null) {
+			out.appendChild(firstChild);
+		}
 	}
 	
 	
