@@ -40,7 +40,7 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		toLabel.setID("toLabel");
 		
 //		new Link(i1, a, null, null, null, from, Direction.LEFT);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, toLabel, Direction.DOWN);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, toLabel, Direction.RIGHT);
 						
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(b, i1), null);
 		renderDiagram(d);
