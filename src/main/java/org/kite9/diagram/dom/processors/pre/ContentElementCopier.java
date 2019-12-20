@@ -1,79 +1,71 @@
-package org.kite9.diagram.dom.processors.xpath;
+package org.kite9.diagram.dom.processors.pre;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ContentsElement;
+import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
+import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.xpath.XPathResult;
 
-/**
- * Special implementation of the copier which, when it arrives at the <content>
- * element, adds something else in.
- * 
- * @author robmoffat
- *
- */
-public class ContentElementProcessor extends AbstractProcessor {
+public class ContentElementCopier extends ValueReplacingCopier {
 
-	protected final ValueReplacer valueReplacer;
-	
-	public ContentElementProcessor(ValueReplacer vr) {
-		this.valueReplacer = vr;
+	public ContentElementCopier(Node destination, ValueReplacer vr) {
+		super(destination, vr);
 	}
 
-	protected void processElementContents(NodeList contents) {
+	@Override
+	protected void processElementContents(NodeList contents, Node inside) {
 		for (int i = 0; i < contents.getLength(); i++) {
-			Node item = contents.item(i);
-			if (item instanceof ContentsElement) {
-				processContentsElement((ContentsElement) item);
-			} 
+			Node n = contents.item(i);
+			if (n instanceof ContentsElement) {
+				processContentsElement((ContentsElement) n, inside);
+			} else {
+				processContents(n, inside);
+			}
 		}
-		super.processElementContents(contents);
 	}
 	
-	protected void processContentsElement(ContentsElement contents) {
+	protected void processContentsElement(ContentsElement contents, Node i) {
 		String xpath = "child::node()";
 		if (contents.hasAttribute("xpath")) {
 			xpath = contents.getAttribute("xpath");
 		}
 
 		short returnType = getReturnType(contents);
-		XPathResult result = valueReplacer.getReplacementXML(xpath, returnType);
+		XPathResult result = vr.getReplacementXML(xpath, returnType, contents);
 		Node parent = contents.getParentNode();
 
 		if (result.getResultType() == XPathResult.STRING_TYPE) {
 			doOptionalCheck(contents, contents, xpath, result.getStringValue());
 			Text t = contents.getOwnerDocument().createTextNode(result.getStringValue());
 			parent.insertBefore(t, contents);
-			processContents(t);
+			processContents(t, i);
 		} else {
-			List<Node> nodes = extractNodeList(contents, xpath, result);
-			for (Node node : nodes) {
-				parent.insertBefore(node, contents);
-			}	
+			copyNodeList(xpath, result, i, contents, isOptional(contents));
 		}
 		
 		parent.removeChild(contents);
 	}
 
-	private List<Node> extractNodeList(ContentsElement contents, String xpath, XPathResult result) {
-		List<Node> nodes = new ArrayList<Node>();
+	private void copyNodeList(String xpath, XPathResult result, Node inside, Node source, boolean optional) {
+		int nodes = 0;
+		
 		Node node;
 		while ((node = result.iterateNext()) != null) {
-			nodes.add(node);
+			processContents(node, inside);
+			nodes++;
 		}
 
-		if (nodes.size() == 0) {
-			if (!isOptional(contents)) {
-				throw new Kite9XMLProcessingException("XPath returned no value: " + xpath, contents);
-			}
+		System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);
+
+		if ((nodes==0) && (!optional)) {
+			throw new Kite9XMLProcessingException("XPath returned no value: " + xpath, source);
 		}
-		return nodes;
 	}
 
 	private void doOptionalCheck(Element n, ContentsElement contents, String xpath, String stringValue) {
@@ -106,4 +98,15 @@ public class ContentElementProcessor extends AbstractProcessor {
 		// otherwise assume nodeset
 		return XPathResult.ANY_TYPE;
 	}
+
+	@Override
+	protected boolean canValueReplace(Node n) {
+		if ((n instanceof Attr) && (n.getNamespaceURI() == XMLHelper.KITE9_NAMESPACE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 }

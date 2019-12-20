@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.elements;
 
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
@@ -24,7 +25,7 @@ public interface Kite9XMLElement extends Element, Iterable<Kite9XMLElement> {
 
 	public <E extends Element> E getProperty(String name);
 	
-	public Element output(Document d);
+	public Element output(Document d, XMLProcessor processor);
 	
 	public DiagramElementType getType();
 }

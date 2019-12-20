@@ -6,7 +6,7 @@ import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
-import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
+import org.kite9.diagram.dom.processors.pre.NodeValueReplacer;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;

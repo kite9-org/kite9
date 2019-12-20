@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.processors.xpath;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,36 +8,36 @@ import org.w3c.dom.Text;
 
 public abstract class AbstractProcessor implements XMLProcessor {
 
-	@Override
-	public final void processContents(Node n) {
+	public AbstractProcessor() {
+		super();
+	}
+
+	public void processContents(Node n, Node inside) {
 		if (n instanceof Element) {
-			processTag((Element) n);
+			Element out = processTag((Element) n);
+			
+			if (inside != null) {
+				inside.appendChild(out);
+			}
+			
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);
-			processElementContents(contents);
+			processElementContents(contents, out);
 		} else if (n instanceof Text) {
-			processText((Text) n);
-		}
-	}
-
-	protected void processTag(Element n) {
-	}
-
-	protected void processText(Text n) {
-	}
-
-	protected void processElementContents(NodeList contents) {
-		for (int i = 0; i < contents.getLength(); i++) {
-			Node item = contents.item(i);
-			if (item instanceof Kite9XMLElement) {
-				// leave elements to process their own content
-			} else {
-				processContents(item);
+			Text out = processText((Text) n);
+			if (inside != null) {
+				inside.appendChild(out);
 			}
 		}
 	}
+	
+	protected abstract Element processTag(Element n);
 
-	private void mergeTextNodes(NodeList nodeList) {
+	protected abstract Text processText(Text n);
+
+	protected abstract void processElementContents(NodeList contents, Node to);
+
+	protected void mergeTextNodes(NodeList nodeList) {
 		Text lastTextNode = null;
 		int i = 0;
 		while (i < nodeList.getLength()) {

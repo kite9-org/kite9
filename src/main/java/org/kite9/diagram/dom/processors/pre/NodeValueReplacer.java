@@ -1,11 +1,18 @@
-package org.kite9.diagram.dom.processors.xpath;
+package org.kite9.diagram.dom.processors.pre;
 
+import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathResult;
 
-public class NodeValueReplacer implements ValueReplacer {
+/**
+ * Resolves replacement according to the template element.
+ * 
+ * @author robmoffat
+ *
+ */
+public class NodeValueReplacer extends ValueReplacer {
 	
 	Node from;
 	Document d;
@@ -17,13 +24,13 @@ public class NodeValueReplacer implements ValueReplacer {
 	}
 
 	@Override
-	public String getReplacementStringValue(String xpath) {
+	public String getReplacementStringValue(String xpath, Node at) {
 		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, from, null, XPathResult.STRING_TYPE, null);
 		return out.getStringValue();
 	}
 
 	@Override
-	public XPathResult getReplacementXML(String xpath, short type) {
+	public XPathResult getReplacementXML(String xpath, short type, Node at) {
 		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, from, null, type, null);
 		return out;
 	}
@@ -32,4 +39,10 @@ public class NodeValueReplacer implements ValueReplacer {
 	public Node getLocation() {
 		return from;
 	}
+
+	@Override
+	public String toString() {
+		return "NodeValueReplacer [from=" + from + "]";
+	}
+	
 }

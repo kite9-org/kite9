@@ -5,13 +5,14 @@ import javax.xml.XMLConstants;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.xpath.AbstractProcessor;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * Contains basic functionality for copying the contents of one XML node 
@@ -20,48 +21,52 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class BasicCopier implements XMLProcessor {
+public class BasicCopier extends AbstractProcessor {
 	
-	private Node destination;
+	Node destination;
 	
 	public BasicCopier(Node destination) {
 		this.destination = destination;
 	}
-	
-	protected void copyContents(Node from, Node to) {
-		NodeList nl = from.getChildNodes();
-		copyContents(nl, to);
-	}
-
-	protected void copyContents(NodeList nl, Node to) {
-		for (int i = 0; i < nl.getLength(); i++) {
-			Node n = nl.item(i);
-			copyChild(n, to);
-		 }
-	}
 
 	@Override
 	public void processContents(Node from) {
-		copyContents(from, destination);
+		processContents(from, destination);
 	}
 
-	protected Node copyChild(Node n, Node inside) {
+	@Override
+	protected void processElementContents(NodeList contents, Node inside) {
+		for (int i = 0; i < contents.getLength(); i++) {
+			Node n = contents.item(i);
+			processContents(n, inside);
+		}
+	}
+
+	@Override
+	protected Element processTag(Element n) {
+		return (Element) processNode(n);
+	}
+	
+	@Override
+	protected Text processText(Text n) {
+		return (Text) processNode(n);
+	}
+
+
+	private Node processNode(Node n) {
 		Node copy = n.cloneNode(false);
-		
 		removeExtraneousNamespaces(copy);
 		
-		Document ownerDocument = inside.getOwnerDocument();
+		Document ownerDocument = destination.getOwnerDocument();
 		ownerDocument.adoptNode(copy);
 		
 		if (copy instanceof Element) {
 			checkIDElement((Element) copy);
 		}
 		
-		inside.appendChild(copy);
-		
-		copyContents(n, copy);
 		return copy;
 	}
+	
 
 	private void removeExtraneousNamespaces(Node copy) {
 		NamedNodeMap nnm = copy.getAttributes();
@@ -97,5 +102,7 @@ public class BasicCopier implements XMLProcessor {
 			((SVGOMDocument) copy.getOwnerDocument()).updateIdEntry(copy, null, id);
 		}
 	}
+
+
 
 }

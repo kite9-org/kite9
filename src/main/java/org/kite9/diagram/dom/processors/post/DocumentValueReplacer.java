@@ -1,11 +1,18 @@
-package org.kite9.diagram.dom.processors.xpath;
+package org.kite9.diagram.dom.processors.post;
 
+import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathResult;
 
-public class DocumentValueReplacer implements ValueReplacer {
+/**
+ * Resolves replacement according to the current element.
+ * 
+ * @author robmoffat
+ *
+ */
+public class DocumentValueReplacer extends ValueReplacer {
 	
 	Document d;
 
@@ -15,13 +22,13 @@ public class DocumentValueReplacer implements ValueReplacer {
 	}
 
 	@Override
-	public String getReplacementStringValue(String xpath) {
+	public String getReplacementStringValue(String xpath, Node at) {
 		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, d, null, XPathResult.STRING_TYPE, null);
 		return out.getStringValue();
 	}
 
 	@Override
-	public XPathResult getReplacementXML(String xpath, short type) {
+	public XPathResult getReplacementXML(String xpath, short type, Node at) {
 		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, d, null, type, null);
 		return out;
 	}

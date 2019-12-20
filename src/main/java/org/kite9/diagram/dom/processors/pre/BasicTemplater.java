@@ -12,11 +12,7 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.copier.BasicCopier;
-import org.kite9.diagram.dom.processors.xpath.ContentElementProcessor;
-import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
+import org.kite9.diagram.dom.processors.xpath.AbstractInlineProcessor;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -33,7 +29,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class BasicTemplater extends ValueReplacingProcessor implements XMLProcessor, Logable {
+public class BasicTemplater extends AbstractInlineProcessor implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -50,17 +46,23 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 	protected Kite9DocumentLoader loader;
 	protected boolean ignoreElement = false;
 
-	public BasicTemplater(ValueReplacer vr, Kite9DocumentLoader  loader) {
-		super(vr);
+	public BasicTemplater(Kite9DocumentLoader  loader) {
+		super();
 		this.loader = loader;
 	}
 	
-	protected XMLProcessor subInstance(ValueReplacer vr) {
-		BasicTemplater out = new BasicTemplater(vr, loader);
-		out.ignoreElement = true;	// prevents templating the same element over and over again.
-		return out;
-	}
+	@Override
+	public Element processTag(Element e) {
+		super.processTag(e);
 
+		Value v = getTemplateValue(e);
+		if (v != ValueConstants.NONE_VALUE) {
+			handleTemplateElement((CSSStylableElement) e, v);
+		}
+		
+		return e;
+	}
+	
 	public void handleTemplateElement(CSSStylableElement transform, Value v) {
 		Element e = loadReferencedElement(v, transform);
 		if (e != null) { 
@@ -70,12 +72,8 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 			NodeValueReplacer nvr = new NodeValueReplacer(copy);
 			
 			// move the new contents in
-			BasicCopier bc = new BasicCopier(transform);
+			ContentElementCopier bc = new ContentElementCopier(transform, nvr);
 			bc.processContents(e);
-			
-			XMLProcessor subProcessor = subInstance(nvr);
-			copyAttributes(e, transform);
-			subProcessor.processContents(transform);
 			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
@@ -125,24 +123,6 @@ public class BasicTemplater extends ValueReplacingProcessor implements XMLProces
 		return loader.loadElementFromUrl(v, usedIn);
 	}
 
-	@Override
-	public void processTag(Element e) {
-		super.processTag(e);
-
-		if (e instanceof HasPreprocessor) {
-			((HasPreprocessor)e).setPreprocessor(this);
-		}
-
-		if (!ignoreElement) {
-			Value v = getTemplateValue(e);
-			if (v != ValueConstants.NONE_VALUE) {
-				handleTemplateElement((CSSStylableElement) e, v);
-			}
-		}
-
-		ignoreElement = false;
-	}
-	
 
 	public static List<String> getParameters(Value v) {
 		if (v instanceof ListValue) {
