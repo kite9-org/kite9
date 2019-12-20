@@ -16,6 +16,7 @@ import org.kite9.diagram.dom.processors.copier.BasicCopier;
 import org.kite9.diagram.dom.processors.xpath.ContentElementProcessor;
 import org.kite9.diagram.dom.processors.xpath.NodeValueReplacer;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.ValueReplacingProcessor;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -32,7 +33,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class BasicTemplater extends ContentElementProcessor implements XMLProcessor, Logable {
+public class BasicTemplater extends ValueReplacingProcessor implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -125,7 +126,9 @@ public class BasicTemplater extends ContentElementProcessor implements XMLProces
 	}
 
 	@Override
-	public void processElement(Element e) {
+	public void processTag(Element e) {
+		super.processTag(e);
+
 		if (e instanceof HasPreprocessor) {
 			((HasPreprocessor)e).setPreprocessor(this);
 		}
@@ -138,7 +141,6 @@ public class BasicTemplater extends ContentElementProcessor implements XMLProces
 		}
 
 		ignoreElement = false;
-		super.processElement(e);
 	}
 	
 

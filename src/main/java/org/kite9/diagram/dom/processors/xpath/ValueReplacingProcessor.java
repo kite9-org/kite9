@@ -15,22 +15,20 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public class ValueReplacingProcessor extends AbstractProcessor {
-	
-	protected final ValueReplacer valueReplacer;
-	
+public class ValueReplacingProcessor extends ContentElementProcessor {
+		
 	public ValueReplacer getValueReplacer() {
 		return valueReplacer;
 	}
 
 	public ValueReplacingProcessor(ValueReplacer vr) {
-		this.valueReplacer = vr;
+		super(vr);
 	}
 
 	@Override
-	protected void processElement(Element from) {
+	protected void processTag(Element from) {
 		performReplaceOnAttributes(from);
-		super.processElement(from);
+		super.processTag(from);
 	}
 
 	private void performReplaceOnAttributes(Element n) {

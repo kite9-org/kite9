@@ -83,7 +83,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 				return out;
 
 			} catch (Exception e) {
-				log.error("Couldn't load element: "+v.getStringValue(), e);
+				log.error("Couldn't load element: "+v, e);
 				return null;
 			}
 		} else {

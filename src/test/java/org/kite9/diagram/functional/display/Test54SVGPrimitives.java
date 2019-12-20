@@ -3,7 +3,6 @@ package org.kite9.diagram.functional.display;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.dom.XMLHelper;
@@ -165,7 +164,31 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String someXML = 
 			svgOpen() + 
 			 	diagramOpen() +
-			 		nestedTemplatedElement(svgRect2())+
+			 		nestedTemplatedElement(svgRect1())+
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
+	}
+	
+	@Test
+	public void test_54_15_DecalTemplate1() throws Exception {
+		String someXML = 
+			svgOpen() + 
+			 	diagramOpen() +
+			 		containerOpen("container1", "red")+
+				 		templatedDecalElement(svgRect1())+
+				 	containerClose() +
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
+	}
+	
+	@Test
+	public void test_54_16_DecalTemplate2() throws Exception {
+		String someXML = 
+			svgOpen() + 
+			 	diagramOpen() +
+			 		"<templated-thing style=\"kite9-template: url(template.svg#arg-problem) 'abc' 'red'; kite9-type: container;\">Hello</templated-thing>" +
 				diagramClose() +
 			svgClose();
 		transcodeSVG(someXML);
@@ -181,6 +204,10 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	private String nestedTemplatedElement(String inside) {
 		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#double) 'template-arg'; kite9-type: container; \">"+inside+"</my>";
+	}
+	
+	private String templatedDecalElement(String inside) {
+		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#templated-decal) 'template-arg'; kite9-type: container; \">"+inside+"</my>";
 	}
 	
 	private String scalablePath() {

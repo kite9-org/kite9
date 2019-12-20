@@ -18,21 +18,22 @@ import org.w3c.dom.xpath.XPathResult;
  * @author robmoffat
  *
  */
-public class ContentElementProcessor extends ValueReplacingProcessor {
+public class ContentElementProcessor extends AbstractProcessor {
 
+	protected final ValueReplacer valueReplacer;
+	
 	public ContentElementProcessor(ValueReplacer vr) {
-		super(vr);
+		this.valueReplacer = vr;
 	}
 
-	protected void processElement(Element n) {
-		NodeList contents = n.getChildNodes();
+	protected void processElementContents(NodeList contents) {
 		for (int i = 0; i < contents.getLength(); i++) {
 			Node item = contents.item(i);
 			if (item instanceof ContentsElement) {
 				processContentsElement((ContentsElement) item);
 			} 
 		}
-		super.processElement(n);
+		super.processElementContents(contents);
 	}
 	
 	protected void processContentsElement(ContentsElement contents) {

@@ -12,18 +12,22 @@ public abstract class AbstractProcessor implements XMLProcessor {
 	@Override
 	public final void processContents(Node n) {
 		if (n instanceof Element) {
-			processElement((Element) n);
+			processTag((Element) n);
+			NodeList contents = n.getChildNodes();
+			mergeTextNodes(contents);
+			processElementContents(contents);
 		} else if (n instanceof Text) {
 			processText((Text) n);
 		}
 	}
 
+	protected void processTag(Element n) {
+	}
+
 	protected void processText(Text n) {
 	}
 
-	protected void processElement(Element n) {
-		NodeList contents = n.getChildNodes();
-		mergeTextNodes(contents);
+	protected void processElementContents(NodeList contents) {
 		for (int i = 0; i < contents.getLength(); i++) {
 			Node item = contents.item(i);
 			if (item instanceof Kite9XMLElement) {
