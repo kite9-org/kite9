@@ -2,14 +2,11 @@ package org.kite9.diagram.dom.elements;
 
 import org.apache.batik.css.engine.value.StringValue;
 import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathResult;
 
-public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledKite9XMLElement implements ReferencingKite9XMLElement, XPathAware, HasPreprocessor {
+public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledKite9XMLElement implements ReferencingKite9XMLElement, XPathAware {
 
 	public AbstractReferencingKite9XMLElement() {
 		super();
@@ -60,31 +57,4 @@ public abstract class AbstractReferencingKite9XMLElement extends AbstractStyledK
 			return null;
 		}
 	}
-	
-	private XMLProcessor templater;
-	
-	@Override
-	public void setPreprocessor(XMLProcessor p) {
-		this.templater = p;
-	}
-
-	@Override
-	public XMLProcessor getPreprocessor() {
-		if (templater != null) {
-			return templater;
-		}
-		
-		Node parent = this.getParentNode();
-		
-		while (parent != null) {
-			if (parent instanceof HasPreprocessor) {
-				return ((HasPreprocessor) parent).getPreprocessor();
-			}
-			
-			parent = parent.getParentNode();
-		}
-		
-		throw new Kite9XMLProcessingException("No preprocessor set for xml element "+getTagName(), this);
-	}
-	
 }

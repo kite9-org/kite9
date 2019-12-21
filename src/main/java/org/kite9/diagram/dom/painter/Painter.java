@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.painter;
 
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,7 +22,7 @@ public interface Painter {
 	 * Paints the XML to a new document (i.e. copy).  This forces the conversion from 
 	 * Kite9 ADL document into SVG.
 	 */
-	Element output(Document d);
+	Element output(Document d, XMLProcessor postProcessor);
 	
 	void setDiagramElement(DiagramElement de);
 	

@@ -7,6 +7,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.SVGLeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,7 +35,7 @@ public class TextLeafPainter extends SVGLeafPainter {
 	}
 
 	@Override
-	protected void processOutput(StyledKite9XMLElement in, Element out, Document d) {
+	protected void processOutput(StyledKite9XMLElement in, Element out, Document d, XMLProcessor postProcessor) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);

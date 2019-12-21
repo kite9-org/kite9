@@ -4,6 +4,6 @@ import org.w3c.dom.Node;
 
 public interface XMLProcessor {
 
-	void processContents(Node from);
+	Node processContents(Node from);
 
 }

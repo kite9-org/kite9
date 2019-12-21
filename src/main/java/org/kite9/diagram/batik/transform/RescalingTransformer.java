@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -25,9 +26,9 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 	 * Ensures the decal is the same size as it's parent (for scaled decals)
 	 */
 	@Override
-	public Element postProcess(Painter p, Document d) {	
+	public Element postProcess(Painter p, Document d, XMLProcessor postProcessor) {	
 		Dimension2D size = getRectangularRenderedSize(l);
-		Element out = p.output(d);
+		Element out = p.output(d, postProcessor);
 		
 		if (size == null) {
 			// not a rectangular transform.

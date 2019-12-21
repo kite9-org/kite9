@@ -9,7 +9,7 @@ import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -38,7 +38,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 				((AbstractDOMDiagramElement)parent).ensureInitialized();
 			}
 			this.initialized = true;
-			initializeDOMElement(this.theElement);
+			//initializeDOMElement(this.theElement);
 			initialize();
 		}
 	}
@@ -80,23 +80,23 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	}
 
 	@Override
-	public Element output(Document d) {
+	public Element output(Document d, XMLProcessor p) {
 		if (getRenderingInformation().isRendered()) {
 			ensureInitialized();
-			Element out = paintElementToDocument(d);
+			Element out = paintElementToDocument(d, p);
 			return out;
 		} else {
 			return null;
 		}
 	}
 
-	protected abstract Element paintElementToDocument(Document d);
+	protected abstract Element paintElementToDocument(Document d, XMLProcessor postProcessor);
 
-	protected void initializeDOMElement(StyledKite9XMLElement e) {
-		if (e instanceof HasPreprocessor) {
-			((HasPreprocessor)e).getPreprocessor().processContents(e);
-		}
-	}
+//	protected void initializeDOMElement(StyledKite9XMLElement e) {
+//		if (e instanceof HasPreprocessor) {
+//			((HasPreprocessor)e).getPreprocessor().processContents(e);
+//		}
+//	}
 	
 	/**
 	 * For elements which are not decals, this needs to be done before accessing properties

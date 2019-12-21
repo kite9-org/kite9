@@ -23,23 +23,15 @@ import org.w3c.dom.Text;
  */
 public class BasicCopier extends AbstractProcessor {
 	
-	Node destination;
+	protected Node destination;
 	
 	public BasicCopier(Node destination) {
 		this.destination = destination;
 	}
 
 	@Override
-	public void processContents(Node from) {
-		processContents(from, destination);
-	}
-
-	@Override
-	protected void processElementContents(NodeList contents, Node inside) {
-		for (int i = 0; i < contents.getLength(); i++) {
-			Node n = contents.item(i);
-			processContents(n, inside);
-		}
+	public Node processContents(Node from) {
+		return processContents(from, destination);
 	}
 
 	@Override
@@ -57,7 +49,7 @@ public class BasicCopier extends AbstractProcessor {
 		Node copy = n.cloneNode(false);
 		removeExtraneousNamespaces(copy);
 		
-		Document ownerDocument = destination.getOwnerDocument();
+		Document ownerDocument = getDestinationDocument();
 		ownerDocument.adoptNode(copy);
 		
 		if (copy instanceof Element) {
@@ -66,7 +58,10 @@ public class BasicCopier extends AbstractProcessor {
 		
 		return copy;
 	}
-	
+
+	protected Document getDestinationDocument() {
+		return destination instanceof Document ? (Document) destination : destination.getOwnerDocument();
+	}
 
 	private void removeExtraneousNamespaces(Node copy) {
 		NamedNodeMap nnm = copy.getAttributes();

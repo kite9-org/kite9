@@ -35,7 +35,6 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
 import org.kite9.diagram.dom.scripts.HasScripts;
@@ -48,6 +47,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.xml.sax.XMLFilter;
 
 /**
@@ -122,7 +122,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		Document doc;
 		if (output.getDocument() == null) {
 			DOMImplementation domImpl = SVGDOMImplementation.getDOMImplementation();
-			doc = domImpl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, SVGConstants.SVG_SVG_TAG, null);
+			doc = domImpl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, null, null);
 		} else {
 			doc = output.getDocument();
 		}
@@ -138,14 +138,15 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			// this bit positions all the diagram elements
 			input.setDocumentURI(uri);
 			ensureCSSEngine((ADLDocument) input);
-			((ADLDocument) input).setPreprocessor(new BasicTemplater(new DocumentValueReplacer(input), this.docLoader));
+			new BasicTemplater(this.docLoader).processContents(input);
 			super.transcode(input, uri, output);
 			
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
-			copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
-			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument.getDocumentElement());
-			copier.processContents(input.getDocumentElement());
+			//copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
+			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument);
+			Node outputNode = copier.processContents(input.getDocumentElement());
+			this.outputDocument.appendChild(outputNode);
 			transcodeScripts(input, this.outputDocument);
 		} catch (Exception e) {
 			ADLDocument d = (ADLDocument)input;

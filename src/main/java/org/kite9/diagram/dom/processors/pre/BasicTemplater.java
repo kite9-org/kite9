@@ -70,9 +70,10 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			// we need to create a copy of this element, in the same document.
 			Element copy = copyNodeAndMoveContents(transform);
 			NodeValueReplacer nvr = new NodeValueReplacer(copy);
+			String prefix = transform.getOwnerDocument().getDocumentElement().getPrefix();
 			
 			// move the new contents in
-			ContentElementCopier bc = new ContentElementCopier(transform, nvr);
+			ContentElementCopier bc = new ContentElementCopier(transform, prefix, nvr);
 			bc.processContents(e);
 			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {

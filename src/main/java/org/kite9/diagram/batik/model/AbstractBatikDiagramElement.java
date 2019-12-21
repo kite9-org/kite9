@@ -9,6 +9,7 @@ import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Direction;
@@ -52,8 +53,8 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		return v.getFloatValue();
 	}
 
-	protected Element paintElementToDocument(Document d) {
-		return transformer.postProcess(p, d);
+	protected Element paintElementToDocument(Document d, XMLProcessor postProcessor) {
+		return transformer.postProcess(p, d, postProcessor);
 	}
 
 	private void initTransform() {

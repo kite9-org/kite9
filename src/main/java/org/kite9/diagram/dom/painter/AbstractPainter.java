@@ -8,6 +8,7 @@ import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -170,13 +171,13 @@ public abstract class AbstractPainter implements Painter {
 	/**
 	 * Outputs any SVG-renderable temporary elements to the output.
 	 */
-	protected void handleTemporaryElements(Element out, Document d) {
+	protected void handleTemporaryElements(Element out, Document d, XMLProcessor postProcessor) {
 		if (r instanceof Container) {
 			((Container) r).getContents().stream()
 				.filter(c -> c instanceof Temporary)
 				.filter(c -> c instanceof HasSVGRepresentation) 
 				.forEach(c -> {
-					Element e = ((HasSVGRepresentation)c).output(d);
+					Element e = ((HasSVGRepresentation)c).output(d, postProcessor);
 					if (e != null) {
 						e.setAttribute("k9-elem", "--temporary");
 						e.setAttribute("id", c.getID());

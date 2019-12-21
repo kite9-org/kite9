@@ -13,12 +13,12 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public abstract class ValueReplacingCopier extends BasicCopier {
+public abstract class ValueReplacingCopier extends PrefixingCopier {
 	
 	protected ValueReplacer vr;
 
-	public ValueReplacingCopier(Node destination, ValueReplacer vr) {
-		super(destination);
+	public ValueReplacingCopier(Node destination, String prefix, ValueReplacer vr) {
+		super(destination, prefix);
 		this.vr = vr;
 	}
 

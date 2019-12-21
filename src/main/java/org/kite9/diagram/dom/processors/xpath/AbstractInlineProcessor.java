@@ -2,7 +2,6 @@ package org.kite9.diagram.dom.processors.xpath;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -14,12 +13,8 @@ import org.w3c.dom.Text;
 public abstract class AbstractInlineProcessor extends AbstractProcessor {
 
 	@Override
-	public final void processContents(Node n) {
-		processContents(n, null);
-	}
-
-	protected void processElementContents(NodeList contents, Node to) {
-		processElementContents(contents, null);
+	public final Node processContents(Node n) {
+		return processContents(n, null);
 	}
 
 	@Override

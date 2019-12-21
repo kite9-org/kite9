@@ -14,12 +14,12 @@ import org.w3c.dom.xpath.XPathResult;
 
 public class ContentElementCopier extends ValueReplacingCopier {
 
-	public ContentElementCopier(Node destination, ValueReplacer vr) {
-		super(destination, vr);
+	public ContentElementCopier(Node destination, String prefix, ValueReplacer vr) {
+		super(destination, prefix, vr);
 	}
 
 	@Override
-	protected void processElementContents(NodeList contents, Node inside) {
+	protected void processContents(NodeList contents, Node inside) {
 		for (int i = 0; i < contents.getLength(); i++) {
 			Node n = contents.item(i);
 			if (n instanceof ContentsElement) {
@@ -107,6 +107,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 			return false;
 		}
 	}
+	
 	
 	
 }

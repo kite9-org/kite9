@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.CostedDimension;
@@ -29,11 +30,11 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 
 
 	@Override
-	public Element postProcess(Painter p, Document d) {
+	public Element postProcess(Painter p, Document d, XMLProcessor postProcessor) {
 		// work out translation
 		Dimension2D position = getRenderedRelativePosition(owner);
 
-		Element out = p.output(d);
+		Element out = p.output(d, postProcessor);
 
 		if (position == null) {
 			return out;

@@ -12,22 +12,29 @@ public abstract class AbstractProcessor implements XMLProcessor {
 		super();
 	}
 
-	public void processContents(Node n, Node inside) {
+	public Node processContents(Node n, Node inside) {
 		if (n instanceof Element) {
 			Element out = processTag((Element) n);
 			
 			if (inside != null) {
+				System.out.println("Appending "+n);
 				inside.appendChild(out);
 			}
 			
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);
-			processElementContents(contents, out);
+			processContents(contents, out);
+			return out;
 		} else if (n instanceof Text) {
 			Text out = processText((Text) n);
 			if (inside != null) {
 				inside.appendChild(out);
 			}
+			return out;
+		} else {
+			NodeList contents = n.getChildNodes();
+			processContents(contents, inside);
+			return inside;
 		}
 	}
 	
@@ -35,8 +42,13 @@ public abstract class AbstractProcessor implements XMLProcessor {
 
 	protected abstract Text processText(Text n);
 
-	protected abstract void processElementContents(NodeList contents, Node to);
-
+	protected void processContents(NodeList contents, Node inside) {
+		for (int i = 0; i < contents.getLength(); i++) {
+			Node n = contents.item(i);
+			processContents(n, inside);
+		}
+	}
+	
 	protected void mergeTextNodes(NodeList nodeList) {
 		Text lastTextNode = null;
 		int i = 0;

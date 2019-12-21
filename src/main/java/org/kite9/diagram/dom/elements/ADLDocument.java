@@ -12,7 +12,6 @@ import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.pre.HasPreprocessor;
 import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.dom.scripts.HasScripts;
@@ -36,7 +35,7 @@ import org.w3c.dom.xpath.XPathNSResolver;
  * @author robmoffat
  *
  */
-public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScripts, HasPreprocessor {
+public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScripts {
 
 	public ADLDocument() {
 		this(new ADLExtensibleDOMImplementation());
@@ -221,18 +220,4 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	public XPathExpression createExpression(String expression, XPathNSResolver resolver) throws DOMException, XPathException {
 		 return new ADLXPathExpr(expression, resolver);
 	}
-
-	
-	
-	@Override
-	public void setPreprocessor(XMLProcessor p) {
-		this.preProcessor = p;
-	}
-
-	@Override
-	public XMLProcessor getPreprocessor() {
-		return this.preProcessor;
-	}
-	
-	
 }

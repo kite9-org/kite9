@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.processors.copier;
 
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -10,12 +9,12 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class PrefixingCopier extends ValueReplacingCopier {
+public class PrefixingCopier extends BasicCopier {
 	
 	private String newPrefix;
 	
-	public PrefixingCopier(Node destination, ValueReplacer vr, String prefix) {
-		super(destination, vr);
+	public PrefixingCopier(Node destination, String prefix) {
+		super(destination);
 		this.newPrefix = prefix;
 	}
 
@@ -26,9 +25,4 @@ public class PrefixingCopier extends ValueReplacingCopier {
 		return n;
 	}
 
-	@Override
-	protected boolean canValueReplace(Node n) {
-		return true;
-	}
-	
 }

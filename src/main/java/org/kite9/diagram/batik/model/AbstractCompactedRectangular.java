@@ -62,14 +62,5 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 		ensureInitialized();
 		return this.minimumSize;
 	}
-
-	@Override
-	protected void initializeDOMElement(StyledKite9XMLElement e) {
-		super.initializeDOMElement(e);
-		if (p instanceof TextLeafPainter) {
-			TextDOMInitializer.setupElementXML(e);
-		} 
-	}
-	
 	
 }

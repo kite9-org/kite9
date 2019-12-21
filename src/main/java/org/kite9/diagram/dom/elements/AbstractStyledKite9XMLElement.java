@@ -112,7 +112,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		new XMLProcessor() {
 
 			@Override
-			public void processContents(Node from) {
+			public Node processContents(Node from) {
 				if (from instanceof Element) {
 					NodeList nl = from.getChildNodes();
 					for (int i = 0; i < nl.getLength(); i++) {
@@ -123,7 +123,9 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 							processContents(item);
 						}
 					}
-				}
+				} 
+				
+				return null;
 			}
 		}.processContents(this);
 		
@@ -198,10 +200,10 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 	}
 
 	@Override
-	public Element output(Document d) {
+	public Element output(Document d, XMLProcessor p) {
 		DiagramElement de = getDiagramElement();
 		if (de instanceof HasSVGRepresentation) {
-			return ((HasSVGRepresentation) de).output(d);
+			return ((HasSVGRepresentation) de).output(d, p);
 		} else {
 			return null;
 		}

@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom.painter;
 
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -16,7 +17,7 @@ public class SVGRectPainter extends AbstractPainter {
 	}
 
 	@Override
-	public Element output(Document d) {
+	public Element output(Document d, XMLProcessor postProcessor) {
 		RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();
 		Dimension2D size = rri.getSize();
 

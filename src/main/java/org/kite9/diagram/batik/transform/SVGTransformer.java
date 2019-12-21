@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.transform;
 
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -14,6 +15,6 @@ import org.w3c.dom.Element;
  */
 public interface SVGTransformer {
 
-	public Element postProcess(Painter p, Document d);
+	public Element postProcess(Painter p, Document d, XMLProcessor postProcessor);
 		
 }

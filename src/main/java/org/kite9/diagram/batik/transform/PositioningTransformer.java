@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
@@ -27,10 +28,10 @@ public class PositioningTransformer extends AbstractRectangularTransformer imple
 	DecimalFormat oneDForm = new DecimalFormat("#.0");
 	
 	@Override
-	public Element postProcess(Painter p, Document d) {	
+	public Element postProcess(Painter p, Document d, XMLProcessor postProcessor) {	
 		// work out translation
 		Dimension2D position = getRenderedRelativePosition(owner);
-		Element out = p.output(d);
+		Element out = p.output(d, postProcessor);
 		
 		if ((position.x() != 0) || (position.y() != 0)) {
 			out.setAttribute("transform", "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")");
