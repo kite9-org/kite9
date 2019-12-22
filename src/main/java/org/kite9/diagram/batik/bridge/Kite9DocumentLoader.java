@@ -65,6 +65,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 				if (importDefsForThisDoc) {
 					SVGSVGElement top = getSVGTopElement(loadedBy);
 					String prefix = top.getPrefix();
+					String namespace = top.getNamespaceURI();
 					ADLDocument topDoc = (ADLDocument) top.getDocument();
 
 					Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
@@ -75,7 +76,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 					NodeList defs = out.getOwnerDocument().getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
 					for (int i = 0; i < defs.getLength(); i++) {
 						Element def = (Element) defs.item(i);
-						XMLProcessor c = new PrefixingCopier(newDefs, prefix);
+						XMLProcessor c = new PrefixingCopier(newDefs, prefix, namespace);
 						c.processContents(def);
 					}
 				}

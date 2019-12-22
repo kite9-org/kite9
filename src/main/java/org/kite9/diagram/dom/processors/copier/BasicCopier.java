@@ -11,7 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -47,12 +46,12 @@ public class BasicCopier extends AbstractProcessor {
 
 	private Node processNode(Node n) {
 		Node copy = n.cloneNode(false);
-		removeExtraneousNamespaces(copy);
 		
 		Document ownerDocument = getDestinationDocument();
 		ownerDocument.adoptNode(copy);
 		
 		if (copy instanceof Element) {
+			removeExtraneousNamespaces((Element) copy);
 			checkIDElement((Element) copy);
 		}
 		
@@ -63,7 +62,7 @@ public class BasicCopier extends AbstractProcessor {
 		return destination instanceof Document ? (Document) destination : destination.getOwnerDocument();
 	}
 
-	private void removeExtraneousNamespaces(Node copy) {
+	private void removeExtraneousNamespaces(Element copy) {
 		NamedNodeMap nnm = copy.getAttributes();
 		
 		if (nnm == null) {
@@ -75,17 +74,21 @@ public class BasicCopier extends AbstractProcessor {
 			Attr a = (Attr) nnm.item(i);
 			String ns = a.getNamespaceURI();
 			
-			if ((ns != null) && (!ns.equals("")) 
-					&& (!ns.equals(SVGConstants.SVG_NAMESPACE_URI)) 
-					&& (!ns.equals(XMLHelper.KITE9_NAMESPACE))
-					&& (!ns.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
-					&& (!ns.equals(SVGConstants.XLINK_NAMESPACE_URI))
-					&& (!ns.equals(XMLConstants.XML_NS_URI))) {
+			if (shouldRemoveNamespace(ns)) {
 				nnm.removeNamedItemNS(ns, a.getLocalName());
 			} else {
 				i++;
 			}
 		}
+	}
+
+	protected boolean shouldRemoveNamespace(String ns) {
+		return (ns != null) && (!ns.equals("")) 
+				&& (!ns.equals(SVGConstants.SVG_NAMESPACE_URI)) 
+				&& (!ns.equals(XMLHelper.KITE9_NAMESPACE))
+				&& (!ns.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
+				&& (!ns.equals(SVGConstants.XLINK_NAMESPACE_URI))
+				&& (!ns.equals(XMLConstants.XML_NS_URI));
 	}
 
 	/**

@@ -35,7 +35,7 @@ public class TextLeafPainter extends SVGLeafPainter {
 	}
 
 	@Override
-	protected void processOutput(StyledKite9XMLElement in, Element out, Document d, XMLProcessor postProcessor) {
+	protected Element processOutput(StyledKite9XMLElement in, Element out, Document d, XMLProcessor postProcessor) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);

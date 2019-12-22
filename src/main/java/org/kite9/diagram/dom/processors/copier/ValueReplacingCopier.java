@@ -17,8 +17,8 @@ public abstract class ValueReplacingCopier extends PrefixingCopier {
 	
 	protected ValueReplacer vr;
 
-	public ValueReplacingCopier(Node destination, String prefix, ValueReplacer vr) {
-		super(destination, prefix);
+	public ValueReplacingCopier(Node destination, String prefix, String namespace, ValueReplacer vr) {
+		super(destination, prefix, namespace);
 		this.vr = vr;
 	}
 

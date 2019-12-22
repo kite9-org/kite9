@@ -14,8 +14,8 @@ import org.w3c.dom.xpath.XPathResult;
 
 public class ContentElementCopier extends ValueReplacingCopier {
 
-	public ContentElementCopier(Node destination, String prefix, ValueReplacer vr) {
-		super(destination, prefix, vr);
+	public ContentElementCopier(Node destination, String prefix, String namespace, ValueReplacer vr) {
+		super(destination, prefix, namespace, vr);
 	}
 
 	@Override

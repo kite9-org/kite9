@@ -12,7 +12,7 @@ public abstract class AbstractProcessor implements XMLProcessor {
 		super();
 	}
 
-	public Node processContents(Node n, Node inside) {
+	public final Node processContents(Node n, Node inside) {
 		if (n instanceof Element) {
 			Element out = processTag((Element) n);
 			
