@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.processors.copier;
 
+import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -11,13 +12,13 @@ import org.w3c.dom.Node;
  * @author robmoffat
  *
  */
-public class PrefixingCopier extends BasicCopier {
+public class PrefixingCopier extends ValueReplacingCopier {
 	
 	private String newPrefix;
 	private String namespace;
 	
-	public PrefixingCopier(Node destination, String prefix, String namespace) {
-		super(destination);
+	public PrefixingCopier(Node destination, ValueReplacer vr, String prefix, String namespace) {
+		super(destination, vr);
 		this.newPrefix = prefix;
 		this.namespace = namespace;
 	}
@@ -25,7 +26,10 @@ public class PrefixingCopier extends BasicCopier {
 	@Override
 	protected Element processTag(Element n) {
 		n = super.processTag(n);
-		n.setPrefix(newPrefix);
+		
+		if (namespace.equals(n.getNamespaceURI())) {
+			n.setPrefix(newPrefix);
+		}
 		
 		NamedNodeMap map = n.getAttributes();
 		
@@ -45,10 +49,14 @@ public class PrefixingCopier extends BasicCopier {
 		return n;
 	}
 
-//	protected boolean shouldRemoveNamespace(String ns) {
-//		boolean out = super.shouldRemoveNamespace(ns);
-//		boolean local = (ns != null) && (!ns.equals("")) && (!ns.equals(namespace));
-//		return local || out;
-//	}
-//	
+	@Override
+	protected boolean canValueReplace(Node n) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Node processContents(Node from) {
+		return processContents(from, null);
+	}
 }

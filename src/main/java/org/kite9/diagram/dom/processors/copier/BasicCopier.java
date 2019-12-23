@@ -20,17 +20,12 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public class BasicCopier extends AbstractProcessor {
+public abstract class BasicCopier extends AbstractProcessor {
 	
 	protected Node destination;
 	
 	public BasicCopier(Node destination) {
 		this.destination = destination;
-	}
-
-	@Override
-	public Node processContents(Node from) {
-		return processContents(from, destination);
 	}
 
 	@Override
@@ -59,9 +54,13 @@ public class BasicCopier extends AbstractProcessor {
 	}
 
 	protected Document getDestinationDocument() {
-		return destination instanceof Document ? (Document) destination : destination.getOwnerDocument();
+		return getDocument(destination);
 	}
 
+	public static Document getDocument(Node n) {
+		return  n instanceof Document ? (Document) n : n.getOwnerDocument();
+	}
+	
 	private void removeExtraneousNamespaces(Element copy) {
 		NamedNodeMap nnm = copy.getAttributes();
 		

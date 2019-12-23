@@ -2,7 +2,7 @@ package org.kite9.diagram.dom.processors.post;
 
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
+import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -13,15 +13,11 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class Kite9ExpandingCopier extends ValueReplacingCopier {
+public class Kite9ExpandingCopier extends PrefixingCopier {
 
 	public Kite9ExpandingCopier(String newPrefix, Node destination) {
-		super(destination, newPrefix, SVGConstants.SVG_NAMESPACE_URI, new DocumentValueReplacer(destination.getOwnerDocument()));
-	}
-	
-	@Override
-	public Node processContents(Node from) {
-		return processContents(from, null);
+		super(destination, new DocumentValueReplacer(getDocument(destination)),
+			"", SVGConstants.SVG_NAMESPACE_URI);
 	}
 	
 	@Override

@@ -17,6 +17,7 @@ import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -70,11 +71,11 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			// we need to create a copy of this element, in the same document.
 			Element copy = copyNodeAndMoveContents(transform);
 			NodeValueReplacer nvr = new NodeValueReplacer(copy);
-			String prefix = transform.getOwnerDocument().getDocumentElement().getPrefix();
-			String namespace = transform.getOwnerDocument().getDocumentElement().getNamespaceURI();
-			
+//			String prefix = transform.getOwnerDocument().getDocumentElement().getPrefix();
+//			String namespace = transform.getOwnerDocument().getDocumentElement().getNamespaceURI();
+//			
 			// move the new contents in
-			ContentElementCopier bc = new ContentElementCopier(transform, prefix, namespace, nvr);
+			ContentElementCopier bc = new ContentElementCopier(transform, nvr);
 			bc.processContents(e);
 			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {

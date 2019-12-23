@@ -14,8 +14,8 @@ import org.w3c.dom.xpath.XPathResult;
 
 public class ContentElementCopier extends ValueReplacingCopier {
 
-	public ContentElementCopier(Node destination, String prefix, String namespace, ValueReplacer vr) {
-		super(destination, prefix, namespace, vr);
+	public ContentElementCopier(Node destination, ValueReplacer vr) {
+		super(destination, vr);
 	}
 
 	@Override
@@ -108,6 +108,14 @@ public class ContentElementCopier extends ValueReplacingCopier {
 		}
 	}
 	
-	
+
+	@Override
+	public Node processContents(Node n) {
+		NodeList contents = n.getChildNodes();
+		mergeTextNodes(contents);
+		processContents(contents, destination);
+		return null;
+	}
+
 	
 }

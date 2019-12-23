@@ -29,7 +29,7 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	}
 	
 
-	protected Element processOutput(StyledKite9XMLElement in, @SuppressWarnings("unused") Document d, XMLProcessor postProcessor) {
+	protected Element processOutput(StyledKite9XMLElement in, Document d, XMLProcessor postProcessor) {
 		Element out = (Element) postProcessor.processContents(in);
 		handleTemporaryElements(out, d, postProcessor);
 		return out;

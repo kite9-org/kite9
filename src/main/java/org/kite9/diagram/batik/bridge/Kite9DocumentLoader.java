@@ -14,6 +14,7 @@ import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
+import org.kite9.diagram.dom.processors.xpath.NullValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -76,7 +77,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 					NodeList defs = out.getOwnerDocument().getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
 					for (int i = 0; i < defs.getLength(); i++) {
 						Element def = (Element) defs.item(i);
-						XMLProcessor c = new PrefixingCopier(newDefs, prefix, namespace);
+						XMLProcessor c = new PrefixingCopier(newDefs, new NullValueReplacer(), prefix, namespace);
 						c.processContents(def);
 					}
 				}
