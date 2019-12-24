@@ -35,6 +35,7 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
 import org.kite9.diagram.dom.scripts.HasScripts;
@@ -144,7 +145,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
 			//copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
-			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument);
+			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
+			System.out.println("OUTPUTTING");
 			Node outputNode = copier.processContents(input.getDocumentElement());
 			this.outputDocument.appendChild(outputNode);
 			transcodeScripts(input, this.outputDocument);

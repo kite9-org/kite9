@@ -12,7 +12,6 @@ import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
 import org.kite9.diagram.dom.scripts.HasScripts;

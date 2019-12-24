@@ -17,8 +17,8 @@ public class PrefixingCopier extends ValueReplacingCopier {
 	private String newPrefix;
 	private String namespace;
 	
-	public PrefixingCopier(Node destination, ValueReplacer vr, String prefix, String namespace) {
-		super(destination, vr);
+	public PrefixingCopier(Node destination, boolean copyTop, ValueReplacer vr, String prefix, String namespace) {
+		super(destination, copyTop, vr);
 		this.newPrefix = prefix;
 		this.namespace = namespace;
 	}
@@ -55,8 +55,4 @@ public class PrefixingCopier extends ValueReplacingCopier {
 		return false;
 	}
 
-	@Override
-	public Node processContents(Node from) {
-		return processContents(from, null);
-	}
 }

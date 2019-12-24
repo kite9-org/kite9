@@ -17,8 +17,8 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 	
 	protected ValueReplacer vr;
 
-	public ValueReplacingCopier(Node destination, ValueReplacer vr) {
-		super(destination);
+	public ValueReplacingCopier(Node destination, boolean copyTop, ValueReplacer vr) {
+		super(destination, copyTop);
 		this.vr = vr;
 	}
 

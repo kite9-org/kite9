@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -23,9 +24,11 @@ import org.w3c.dom.Text;
 public abstract class BasicCopier extends AbstractProcessor {
 	
 	protected Node destination;
+	protected boolean copyTop;
 	
-	public BasicCopier(Node destination) {
+	public BasicCopier(Node destination, boolean copyTop) {
 		this.destination = destination;
+		this.copyTop = copyTop;
 	}
 
 	@Override
@@ -100,6 +103,22 @@ public abstract class BasicCopier extends AbstractProcessor {
 		}
 	}
 
+	@Override
+	public Node processContents(Node n) {
+		if (copyTop) {
+			return super.processContents(n, destination);
+		} else {
+			NodeList contents = n.getChildNodes();
+			mergeTextNodes(contents);
+			processContents(contents, destination);
+			return null;
+		}
+	}
+	
+	@Override
+	protected boolean isAppending() {
+		return true;
+	}
 
 
 }

@@ -72,12 +72,12 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 					Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
 					newDefs.setPrefix(prefix);
 					top.insertBefore(newDefs, null);
-					top.setAttribute("id", "defs-" + resource);
+					//top.setAttribute("id", "defs-" + resource);
 
 					NodeList defs = out.getOwnerDocument().getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
 					for (int i = 0; i < defs.getLength(); i++) {
 						Element def = (Element) defs.item(i);
-						XMLProcessor c = new PrefixingCopier(newDefs, new NullValueReplacer(), prefix, namespace);
+						XMLProcessor c = new PrefixingCopier(newDefs, false, new NullValueReplacer(), prefix, namespace);
 						c.processContents(def);
 					}
 				}

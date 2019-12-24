@@ -11,12 +11,15 @@ public abstract class AbstractProcessor implements XMLProcessor {
 	public AbstractProcessor() {
 		super();
 	}
+	
+	protected abstract boolean isAppending();
 
 	public final Node processContents(Node n, Node inside) {
+		System.out.println("Process Contents : "+this.getClass()+ "    "+n.getLocalName()+"  inside "+inside);
 		if (n instanceof Element) {
 			Element out = processTag((Element) n);
 			
-			if (inside != null) {
+			if (isAppending() && (inside!=null)) {
 				System.out.println("Appending "+n);
 				inside.appendChild(out);
 			}

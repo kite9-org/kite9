@@ -139,8 +139,8 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String someXML = 
 			svgOpen() + 
 		 	diagramOpen() +
-				gTemplatedElement(svgRect1()) + 
-				gTemplatedElement(svgRect1())+
+				gTemplatedElement("1", svgRect1())+
+				gTemplatedElement("2", svgRect1())+
 				diagramClose() +
 			svgClose();
 		transcodeSVG(someXML);
@@ -194,8 +194,8 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodeSVG(someXML);
 	}
 	
-	private String gTemplatedElement(String inside) {
-		return "<svg:g item=\"bob\" style=\"kite9-template: url(template.svg#simple) 'template-arg'; \">"+inside+"</svg:g>";
+	private String gTemplatedElement(String id, String inside) {
+		return "<svg:g id=\""+id+"\" item=\"bob\" style=\"kite9-template: url(template.svg#simple) 'template-arg'; \">"+inside+"</svg:g>";
 	}
 	
 	private String myTemplatedElement(String inside) {

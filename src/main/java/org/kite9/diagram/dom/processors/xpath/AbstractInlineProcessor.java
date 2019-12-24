@@ -26,6 +26,12 @@ public abstract class AbstractInlineProcessor extends AbstractProcessor {
 	protected Text processText(Text n) {
 		return n;
 	}
+
+	@Override
+	protected boolean isAppending() {
+		return false;
+	}
+	
 	
 	
 }

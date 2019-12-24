@@ -15,7 +15,7 @@ import org.w3c.dom.xpath.XPathResult;
 public class ContentElementCopier extends ValueReplacingCopier {
 
 	public ContentElementCopier(Node destination, ValueReplacer vr) {
-		super(destination, vr);
+		super(destination, false, vr);
 	}
 
 	@Override
@@ -38,18 +38,14 @@ public class ContentElementCopier extends ValueReplacingCopier {
 
 		short returnType = getReturnType(contents);
 		XPathResult result = vr.getReplacementXML(xpath, returnType, contents);
-		Node parent = contents.getParentNode();
 
 		if (result.getResultType() == XPathResult.STRING_TYPE) {
 			doOptionalCheck(contents, contents, xpath, result.getStringValue());
 			Text t = contents.getOwnerDocument().createTextNode(result.getStringValue());
-			parent.insertBefore(t, contents);
 			processContents(t, i);
 		} else {
 			copyNodeList(xpath, result, i, contents, isOptional(contents));
 		}
-		
-		parent.removeChild(contents);
 	}
 
 	private void copyNodeList(String xpath, XPathResult result, Node inside, Node source, boolean optional) {
@@ -109,13 +105,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 	}
 	
 
-	@Override
-	public Node processContents(Node n) {
-		NodeList contents = n.getChildNodes();
-		mergeTextNodes(contents);
-		processContents(contents, destination);
-		return null;
-	}
+	
 
 	
 }
