@@ -88,6 +88,7 @@ public abstract class BasicCopier extends AbstractProcessor {
 		return (ns != null) && (!ns.equals("")) 
 				&& (!ns.equals(SVGConstants.SVG_NAMESPACE_URI)) 
 				&& (!ns.equals(XMLHelper.KITE9_NAMESPACE))
+				&& (!ns.equals(XMLHelper.PREPROCESSOR_NAMESPACE))
 				&& (!ns.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
 				&& (!ns.equals(SVGConstants.XLINK_NAMESPACE_URI))
 				&& (!ns.equals(XMLConstants.XML_NS_URI));

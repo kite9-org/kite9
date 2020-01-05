@@ -97,11 +97,18 @@ public class ContentElementCopier extends ValueReplacingCopier {
 
 	@Override
 	protected boolean canValueReplace(Node n) {
-		if ((n instanceof Attr) && (n.getNamespaceURI() == XMLHelper.KITE9_NAMESPACE)) {
-			return true;
+		if (n instanceof Attr) {
+			return XMLHelper.PREPROCESSOR_NAMESPACE.equals(n.getNamespaceURI());
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	protected void updateAttribute(Element n, Attr a, String newValue) {
+		String localName = a.getLocalName();
+		n.removeAttributeNode(a);
+		n.setAttribute(localName, newValue);
 	}
 	
 

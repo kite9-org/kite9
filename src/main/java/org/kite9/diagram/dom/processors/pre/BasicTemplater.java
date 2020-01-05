@@ -20,6 +20,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -69,30 +70,36 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 		if (e != null) { 
 			//System.out.println("BasicTemplater: "+transform.getLocalName());
 			// we need to create a copy of this element, in the same document.
-			Element copy = copyNodeAndMoveContents(transform);
-			NodeValueReplacer nvr = new NodeValueReplacer(copy);
+			//Element copy = copyNodeAndMoveContents(transform);
+			NodeValueReplacer nvr = new NodeValueReplacer(transform);
 //			String prefix = transform.getOwnerDocument().getDocumentElement().getPrefix();
 //			String namespace = transform.getOwnerDocument().getDocumentElement().getNamespaceURI();
 //			
 			// move the new contents in
-			ContentElementCopier bc = new ContentElementCopier(transform, nvr);
+			Element temp = transform.getOwnerDocument().createElement("temp");
+			ContentElementCopier bc = new ContentElementCopier(temp, nvr);
 			bc.processContents(e);
+			
+			// remove the original contents
+			NodeList childNodes = transform.getChildNodes();
+			while (childNodes.getLength() > 0) {
+				transform.removeChild(childNodes.item(0));
+			}
+			
+			copyAttributes(temp, transform);
+			moveContents(temp, transform);
+			
 			System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}
 	}
 		
-	private Element copyNodeAndMoveContents(CSSStylableElement original) {
-		
-		Element out = (Element) original.cloneNode(false);
-		copyAttributes(original, out);
-		
-		NodeList in = original.getChildNodes();
+	private void moveContents(Element from, Element to) {
+		NodeList in = from.getChildNodes();
 		while (in.getLength() > 0) {
-			out.appendChild(in.item(0));
+			to.appendChild(in.item(0));
 		}		
-		return out;
 	}
 
 	private Value getTemplateValue(Element e) {

@@ -33,11 +33,21 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 		for (int j = 0; j < n.getAttributes().getLength(); j++) {
 			Attr a = (Attr) n.getAttributes().item(j);
 			if (canValueReplace(a)) {
-				a.setValue(vr.performValueReplace(a.getValue(), n));
+				String oldValue = a.getValue();
+				String newValue = vr.performValueReplace(oldValue, n);
+
+				if (!oldValue.equals(newValue)) {
+					updateAttribute(n, a, newValue);
+				}
+				
 			}
 		}
 	}
 	
+	protected void updateAttribute(Element n, Attr a, String newValue) {
+		a.setValue(newValue);
+	}
+
 	protected abstract boolean canValueReplace(Node n);
 
 	protected Text processText(Text n) {
