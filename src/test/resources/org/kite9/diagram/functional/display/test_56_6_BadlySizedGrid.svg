@@ -52,15 +52,13 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.8,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [25.0,17.0]; "
-                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,31.0]; rect-size: [25.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                            ><tspan
+                              >o</tspan
                               ><tspan
-                                >o</tspan
-                                ><tspan
-                                >ne</tspan
-                              ></text
-                            ></g
+                              >ne</tspan
+                            ></text
                           ></g
                           >
     </g
@@ -120,15 +118,13 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.2,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,31.0]; rect-size: [24.0,17.0]; "
-                                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,31.0]; rect-size: [24.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                            ><tspan
+                                              >t</tspan
                                               ><tspan
-                                                >t</tspan
-                                                ><tspan
-                                                >wo</tspan
-                                              ></text
-                                            ></g
+                                              >wo</tspan
+                                            ></text
                                           ></g
                                           >
     </g

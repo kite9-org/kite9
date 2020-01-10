@@ -4,14 +4,14 @@
 <svg contentScriptType="text/ecmascript" width="140.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="98.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [140.0,98.0]; "
+  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [140.0,98.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="one" class=" kite9-glyph" transform="translate(15.0,25.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; connect: tbc; d-bounds: [15.0,25.0] [57.0,48.0]; " rank="0"
+  <g k9-elem="glyph" id="one" class=" kite9-glyph" transform="translate(15.0,25.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,25.0]; rect-size: [57.0,48.0]; " rank="0"
       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g k9-elem="stereotype" id="one-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [25.0,31.0] [37.0,14.0]; "
+    <g k9-elem="stereotype" id="one-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,31.0]; rect-size: [37.0,14.0]; "
             >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
               >
@@ -34,22 +34,20 @@
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-4981.1,.5)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [25.0,31.0] [37.0,14.0]; "
-                  ><g font-family="'opensans-bold-webfont'"
-                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
+      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" font-family="'opensans-bold-webfont'" transform="translate(-4981.1,.5)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,31.0]; rect-size: [37.0,14.0]; "
+                  ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
+                    ><tspan
+                      >S</tspan
                       ><tspan
-                        >S</tspan
-                        ><tspan
-                        >tereo</tspan
-                      ></text
-                    ></g
+                      >tereo</tspan
+                    ></text
                   ></g
                   >
     </g
                   >
   </g
                   >
-    <g k9-elem="label" id="one-label" class=" kite9-label" transform="translate(15.0,25.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [30.0,50.0] [27.0,17.0]; "
+    <g k9-elem="label" id="one-label" class=" kite9-label" transform="translate(15.0,25.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [30.0,50.0]; rect-size: [27.0,17.0]; "
                   >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
                     >
@@ -61,15 +59,13 @@
                       >
     <g class="glyph-label-text"
                       >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.9,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [30.0,50.0] [27.0,17.0]; "
-                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.9,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [30.0,50.0]; rect-size: [27.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                          ><tspan
+                            >O</tspan
                             ><tspan
-                              >O</tspan
-                              ><tspan
-                              >ne</tspan
-                            ></text
-                          ></g
+                            >ne</tspan
+                          ></text
                         ></g
                         >
     </g
@@ -81,7 +77,7 @@
                         >
   </g
                         >
-  <g k9-elem="arrow" id="meets" class=" kite9-arrow" transform="translate(82.0,39.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [82.0,39.0] [43.0,20.0]; " rank="1"
+  <g k9-elem="arrow" id="meets" class=" kite9-arrow" transform="translate(82.0,39.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [82.0,39.0]; rect-size: [43.0,20.0]; " rank="1"
                         >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back kite9-back" k9-info=""
                           >
@@ -90,20 +86,18 @@
     </g
                             >
     
-    <g k9-elem="label" id="1" class=" kite9-label" transform="translate(5.0,3.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [87.0,42.0] [33.0,14.0]; "
+    <g k9-elem="label" id="1" class=" kite9-label" transform="translate(5.0,3.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [87.0,42.0]; rect-size: [33.0,14.0]; "
                             >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                               >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-1.0,.6)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [87.0,42.0] [33.0,14.0]; "
-                                ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                                  ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-1.0,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [87.0,42.0]; rect-size: [33.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                                ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                  ><tspan
+                                    >m</tspan
                                     ><tspan
-                                      >m</tspan
-                                      ><tspan
-                                      >eets</tspan
-                                    ></text
-                                  ></g
+                                    >eets</tspan
+                                  ></text
                                 ></g
                                 >
     </g
@@ -113,18 +107,18 @@
   
   </g
                                 >
-  <g link-test="turn" k9-elem="link" id="tl1" class=" kite9-link" k9-info="link: meets one; direction: null; " rank="2"
+  <g link-test="turn" k9-elem="link" id="tl1" class=" kite9-link" k9-info="link: ['meets','one']; direction: null; " rank="2"
                                 >
     
-    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(98.0,34.0)" k9-info="positioning: none; terminates: tl1; terminates-at: meets; end: from; d-bounds: [98.0,34.0] [10.0,10.0]; "
+    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(98.0,34.0)" k9-info="position: none; terminates: tl1; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [98.0,34.0]; rect-size: [10.0,10.0]; "
                                   >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                     />
   </g
                                     >
-    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(39.0,20.0)" k9-info="positioning: none; terminates: tl1; terminates-at: one; end: to; d-bounds: [39.0,20.0] [10.0,10.0]; "
+    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(39.0,20.0)" k9-info="position: none; terminates: tl1; terminates-at: one; end: to; rectangular: terminator; rect-pos: [39.0,20.0]; rect-size: [10.0,10.0]; "
                                     >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                       />
   </g
                                       >
@@ -137,18 +131,18 @@
                                         >
   </g
                                         >
-  <g link-test="turn" k9-elem="link" id="tl2" class=" kite9-link" k9-info="link: meets one; direction: null; " rank="3"
+  <g link-test="turn" k9-elem="link" id="tl2" class=" kite9-link" k9-info="link: ['meets','one']; direction: null; " rank="3"
                                         >
     
-    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(98.0,54.0)" k9-info="positioning: none; terminates: tl2; terminates-at: meets; end: from; d-bounds: [98.0,54.0] [10.0,10.0]; "
+    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(98.0,54.0)" k9-info="position: none; terminates: tl2; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [98.0,54.0]; rect-size: [10.0,10.0]; "
                                           >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                             />
   </g
                                             >
-    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(39.0,68.0)" k9-info="positioning: none; terminates: tl2; terminates-at: one; end: to; d-bounds: [39.0,68.0] [10.0,10.0]; "
+    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(39.0,68.0)" k9-info="position: none; terminates: tl2; terminates-at: one; end: to; rectangular: terminator; rect-pos: [39.0,68.0]; rect-size: [10.0,10.0]; "
                                             >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                               />
   </g
                                               >
@@ -161,18 +155,18 @@
                                                 >
   </g
                                                 >
-  <g link-test="turn" k9-elem="link" id="tl3" class=" kite9-link" k9-info="link: meets one; direction: null; " rank="4"
+  <g link-test="turn" k9-elem="link" id="tl3" class=" kite9-link" k9-info="link: ['meets','one']; direction: null; " rank="4"
                                                 >
     
-    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(77.0,44.0)" k9-info="positioning: none; terminates: tl3; terminates-at: meets; end: from; d-bounds: [77.0,44.0] [10.0,10.0]; "
+    <g k9-elem="from" reference="meets" class=" kite9-from" transform="translate(77.0,44.0)" k9-info="position: none; terminates: tl3; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [77.0,44.0]; rect-size: [10.0,10.0]; "
                                                   >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                     />
   </g
                                                     >
-    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(67.0,44.0)" k9-info="positioning: none; terminates: tl3; terminates-at: one; end: to; d-bounds: [67.0,44.0] [10.0,10.0]; "
+    <g k9-elem="to" reference="one" class=" kite9-to" transform="translate(67.0,44.0)" k9-info="position: none; terminates: tl3; terminates-at: one; end: to; rectangular: terminator; rect-pos: [67.0,44.0]; rect-size: [10.0,10.0]; "
                                                     >
-    <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
+      <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                       />
   </g
                                                       >

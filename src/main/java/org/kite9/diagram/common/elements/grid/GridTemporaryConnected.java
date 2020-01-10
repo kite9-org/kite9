@@ -10,6 +10,7 @@ import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.dom.model.AbstractDiagramElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
+import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -148,10 +149,12 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public Element output(Document d) {
+	public Element output(Document d, XMLProcessor p) {
 		SVGRectPainter rectPainter = new SVGRectPainter("grid-temporary");
 		rectPainter.setDiagramElement(this);
-		return rectPainter.output(d);
+		return rectPainter.output(d, p);
 	}
+	
+	
 
 }

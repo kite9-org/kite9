@@ -34,11 +34,9 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.7,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [114.0,21.0]; rect-size: [6.0,17.0]; "
-                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                      >a</text
-                    ></g
+      <g font-size="15px" transform="translate(-.7,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [114.0,21.0]; rect-size: [6.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                    >a</text
                   ></g
                   >
     </g
@@ -64,15 +62,13 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-.9,.6)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [22.0,114.0]; rect-size: [6.0,14.0]; "
-                          ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-.9,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [22.0,114.0]; rect-size: [6.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                            ><tspan
+                              >i</tspan
                               ><tspan
-                                >i</tspan
-                                ><tspan
-                                >1</tspan
-                              ></text
-                            ></g
+                              >1</tspan
+                            ></text
                           ></g
                           >
     </g
@@ -96,15 +92,13 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-.9,.6)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [176.0,74.0]; rect-size: [8.0,14.0]; "
-                                  ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-.9,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [176.0,74.0]; rect-size: [8.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                                  ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                    ><tspan
+                                      >i</tspan
                                       ><tspan
-                                        >i</tspan
-                                        ><tspan
-                                        >2</tspan
-                                      ></text
-                                    ></g
+                                      >2</tspan
+                                    ></text
                                   ></g
                                   >
     </g
@@ -128,15 +122,13 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-.9,.6)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [204.0,99.0]; rect-size: [8.0,14.0]; "
-                                          ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-.9,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [204.0,99.0]; rect-size: [8.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                            ><tspan
+                                              >i</tspan
                                               ><tspan
-                                                >i</tspan
-                                                ><tspan
-                                                >3</tspan
-                                              ></text
-                                            ></g
+                                              >3</tspan
+                                            ></text
                                           ></g
                                           >
     </g
@@ -171,41 +163,39 @@
                                                     >
     <g class="connection-label-front"
                                                     >
-      <g k9-elem="front" style="kite9-type: text; " class=" kite9-front" transform="translate(3.8,5.4)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [29.0,58.0]; rect-size: [128.0,39.0]; "
-                                                      ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
-                                                        ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
+      <g font-size="11px" transform="translate(3.8,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [29.0,58.0]; rect-size: [128.0,39.0]; " class=" kite9-front" stroke="white" k9-elem="front"
+                                                      ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
+                                                        ><tspan
+                                                          >f</tspan
                                                           ><tspan
-                                                            >f</tspan
-                                                            ><tspan
-                                                            >rom </tspan
-                                                            ><tspan
-                                                            >the </tspan
-                                                            ><tspan
-                                                            >wild </tspan
-                                                            ><tspan
-                                                            >side</tspan
-                                                          ></text
-                                                          ><text x="0" xml:space="preserve" y="22.4173" stroke="none"
+                                                          >rom </tspan
                                                           ><tspan
-                                                            >going </tspan
-                                                            ><tspan
-                                                            >east </tspan
-                                                            ><tspan
-                                                            >on </tspan
-                                                            ><tspan
-                                                            >the </tspan
-                                                            ><tspan
-                                                            >highway</tspan
-                                                          ></text
-                                                          ><text x="0" xml:space="preserve" y="34.5173" stroke="none"
+                                                          >the </tspan
                                                           ><tspan
-                                                            >with </tspan
-                                                            ><tspan
-                                                            >a </tspan
-                                                            ><tspan
-                                                            >frog</tspan
-                                                          ></text
-                                                        ></g
+                                                          >wild </tspan
+                                                          ><tspan
+                                                          >side</tspan
+                                                        ></text
+                                                        ><text x="0" xml:space="preserve" y="22.4173" stroke="none"
+                                                        ><tspan
+                                                          >going </tspan
+                                                          ><tspan
+                                                          >east </tspan
+                                                          ><tspan
+                                                          >on </tspan
+                                                          ><tspan
+                                                          >the </tspan
+                                                          ><tspan
+                                                          >highway</tspan
+                                                        ></text
+                                                        ><text x="0" xml:space="preserve" y="34.5173" stroke="none"
+                                                        ><tspan
+                                                          >with </tspan
+                                                          ><tspan
+                                                          >a </tspan
+                                                          ><tspan
+                                                          >frog</tspan
+                                                        ></text
                                                       ></g
                                                       >
     </g

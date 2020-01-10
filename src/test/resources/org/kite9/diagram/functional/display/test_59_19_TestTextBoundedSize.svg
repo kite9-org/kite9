@@ -20,52 +20,48 @@
           />
       </g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 500px; " class=" kite9-text" transform="translate(9.0,13.3)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [117.0,89.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+      <g font-size="25px" transform="translate(9.0,13.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 500px; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [117.0,89.0]; " class=" kite9-text" k9-elem="text"
+          ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+            ><tspan
+              >h</tspan
               ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-              >something </text
-              ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-              >else</text
-            ></g
+              >ello </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
+            >something </text
+            ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
+            >else</text
           ></g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;" class=" kite9-text" transform="translate(20.1,101.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: [36.0,114.0]; rect-size: [95.0,53.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="15px"
-            ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
+      <g font-size="15px" transform="translate(20.1,101.0)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: [36.0,114.0]; rect-size: [95.0,53.0]; " class=" kite9-text" k9-elem="text"
+          ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
+            ><tspan
+              >h</tspan
               ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-                ><tspan
-                >b </tspan
-                ><tspan
-                >this </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="30.5691" stroke="none"
+              >ello </tspan
               ><tspan
-                >could </tspan
-                ><tspan
-                >be </tspan
-                ><tspan
-                >a </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="47.0691" stroke="none"
+              >b </tspan
               ><tspan
-                >long </tspan
-                ><tspan
-                >bit </tspan
-                ><tspan
-                >of </tspan
-                ><tspan
-                >text</tspan
-              ></text
-            ></g
+              >this </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="30.5691" stroke="none"
+            ><tspan
+              >could </tspan
+              ><tspan
+              >be </tspan
+              ><tspan
+              >a </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="47.0691" stroke="none"
+            ><tspan
+              >long </tspan
+              ><tspan
+              >bit </tspan
+              ><tspan
+              >of </tspan
+              ><tspan
+              >text</tspan
+            ></text
           ></g
           >
     </g

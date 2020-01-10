@@ -4,7 +4,7 @@
 <svg contentScriptType="text/ecmascript" width="196.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="281.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
   <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [196.0,281.0]; "
@@ -20,113 +20,107 @@
           />
       </g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 500px; " class=" kite9-text" transform="translate(23.0,13.3)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [39.0,25.0]; rect-size: [118.0,89.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+      <g font-size="25px" transform="translate(23.0,13.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 500px; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [39.0,25.0]; rect-size: [118.0,89.0]; " class=" kite9-text" k9-elem="text"
+          ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+            ><tspan
+              >h</tspan
               ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-              >something </text
-              ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-              >else</text
-            ></g
+              >ello </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
+            >something </text
+            ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
+            >else</text
           ></g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 100px; " class=" kite9-text" transform="translate(8.8,102.3)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,114.0]; rect-size: [146.0,89.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+      <g font-size="25px" transform="translate(8.8,102.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; kite9-text-bounds: 150px 100px; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,114.0]; rect-size: [146.0,89.0]; " class=" kite9-text" k9-elem="text"
+          ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
+            ><tspan
+              >a</tspan
               ><tspan
-                >a</tspan
-                ><tspan
-                > </tspan
-                ><tspan
-                >b </tspan
-                ><tspan
-                >c </tspan
-                ><tspan
-                >d </tspan
-                ><tspan
-                >e </tspan
-                ><tspan
-                >f </tspan
-                ><tspan
-                >g </tspan
-                ><tspan
-                >h </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
+              > </tspan
               ><tspan
-                >i </tspan
-                ><tspan
-                >j </tspan
-                ><tspan
-                >k </tspan
-                ><tspan
-                >l </tspan
-                ><tspan
-                >m </tspan
-                ><tspan
-                >n </tspan
-                ><tspan
-                >o </tspan
-                ><tspan
-                >p </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
+              >b </tspan
               ><tspan
-                >q </tspan
-                ><tspan
-                >r </tspan
-                ><tspan
-                >s </tspan
-                ><tspan
-                >t </tspan
-                ><tspan
-                >u </tspan
-                ><tspan
-                >v </tspan
-                ><tspan
-                >w </tspan
-                ><tspan
-                >x </tspan
-              ></text
-            ></g
+              >c </tspan
+              ><tspan
+              >d </tspan
+              ><tspan
+              >e </tspan
+              ><tspan
+              >f </tspan
+              ><tspan
+              >g </tspan
+              ><tspan
+              >h </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
+            ><tspan
+              >i </tspan
+              ><tspan
+              >j </tspan
+              ><tspan
+              >k </tspan
+              ><tspan
+              >l </tspan
+              ><tspan
+              >m </tspan
+              ><tspan
+              >n </tspan
+              ><tspan
+              >o </tspan
+              ><tspan
+              >p </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
+            ><tspan
+              >q </tspan
+              ><tspan
+              >r </tspan
+              ><tspan
+              >s </tspan
+              ><tspan
+              >t </tspan
+              ><tspan
+              >u </tspan
+              ><tspan
+              >v </tspan
+              ><tspan
+              >w </tspan
+              ><tspan
+              >x </tspan
+            ></text
           ></g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;" class=" kite9-text" transform="translate(34.1,190.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: [50.0,203.0]; rect-size: [96.0,53.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="15px"
-            ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
+      <g font-size="15px" transform="translate(34.1,190.0)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: [50.0,203.0]; rect-size: [96.0,53.0]; " class=" kite9-text" k9-elem="text"
+          ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
+            ><tspan
+              >h</tspan
               ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-                ><tspan
-                >b </tspan
-                ><tspan
-                >this </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="30.5691" stroke="none"
+              >ello </tspan
               ><tspan
-                >could </tspan
-                ><tspan
-                >be </tspan
-                ><tspan
-                >a </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="47.0691" stroke="none"
+              >b </tspan
               ><tspan
-                >long </tspan
-                ><tspan
-                >bit </tspan
-                ><tspan
-                >of </tspan
-                ><tspan
-                >text</tspan
-              ></text
-            ></g
+              >this </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="30.5691" stroke="none"
+            ><tspan
+              >could </tspan
+              ><tspan
+              >be </tspan
+              ><tspan
+              >a </tspan
+            ></text
+            ><text x="0" xml:space="preserve" y="47.0691" stroke="none"
+            ><tspan
+              >long </tspan
+              ><tspan
+              >bit </tspan
+              ><tspan
+              >of </tspan
+              ><tspan
+              >text</tspan
+            ></text
           ></g
           >
     </g

@@ -4,15 +4,15 @@
 <svg contentScriptType="text/ecmascript" width="335.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="108.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [335.0,108.0]; "
+  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [335.0,108.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
   <g k9-elem="glyph" id="1-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2" class=" kite9-glyph" transform="translate(15.0,15.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; connect: tbc; d-bounds: [15.0,15.0] [305.0,78.0]; " rank="0"
+line 2" class=" kite9-glyph" transform="translate(15.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [305.0,78.0]; " rank="0"
       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
         >
@@ -24,7 +24,7 @@ line 2" class=" kite9-glyph" transform="translate(15.0,15.0)" k9-info="positioni
           >
       
     <g k9-elem="stereotype" id="1-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [25.0,21.0] [285.0,27.0]; "
+line 2-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [285.0,27.0]; "
             >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
               >
@@ -36,17 +36,15 @@ line 2-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-4857.1,.5)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [149.0,21.0] [37.0,27.0]; "
-                  ><g font-family="'opensans-bold-webfont'"
-                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
+      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" font-family="'opensans-bold-webfont'" transform="translate(-4857.1,.5)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [149.0,21.0]; rect-size: [37.0,27.0]; "
+                  ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
+                    ><tspan
+                      >S</tspan
                       ><tspan
-                        >S</tspan
-                        ><tspan
-                        >tereo</tspan
-                      ></text
-                      ><text x="4985.2461" xml:space="preserve" y="23.8283" stroke="none"
-                      >Mike</text
-                    ></g
+                      >tereo</tspan
+                    ></text
+                    ><text x="4985.2461" xml:space="preserve" y="23.8283" stroke="none"
+                    >Mike</text
                   ></g
                   >
     </g
@@ -54,7 +52,7 @@ line 2-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info
   </g
                   >
     <g k9-elem="label" id="1-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2-label" class=" kite9-label" transform="translate(10.0,38.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [25.0,53.0] [285.0,34.0]; "
+line 2-label" class=" kite9-label" transform="translate(10.0,38.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,53.0]; rect-size: [285.0,34.0]; "
                   >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
                     >
@@ -66,33 +64,31 @@ line 2-label" class=" kite9-label" transform="translate(10.0,38.0)" k9-info="pos
                       >
     <g class="glyph-label-text"
                       >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.5,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [25.0,53.0] [285.0,34.0]; "
-                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,53.0]; rect-size: [285.0,34.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                          ><tspan
+                            >R</tspan
                             ><tspan
-                              >R</tspan
-                              ><tspan
-                              >ob's </tspan
-                              ><tspan
-                              >Glyph </tspan
-                              ><tspan
-                              >df </tspan
-                              ><tspan
-                              >sfsdfs </tspan
-                              ><tspan
-                              >weferw </tspan
-                              ><tspan
-                              >asfsdf </tspan
-                              ><tspan
-                              >sdfsd</tspan
-                            ></text
-                            ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
+                            >ob's </tspan
                             ><tspan
-                              >Line </tspan
-                              ><tspan
-                              >2</tspan
-                            ></text
-                          ></g
+                            >Glyph </tspan
+                            ><tspan
+                            >df </tspan
+                            ><tspan
+                            >sfsdfs </tspan
+                            ><tspan
+                            >weferw </tspan
+                            ><tspan
+                            >asfsdf </tspan
+                            ><tspan
+                            >sdfsd</tspan
+                          ></text
+                          ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
+                          ><tspan
+                            >Line </tspan
+                            ><tspan
+                            >2</tspan
+                          ></text
                         ></g
                         >
     </g

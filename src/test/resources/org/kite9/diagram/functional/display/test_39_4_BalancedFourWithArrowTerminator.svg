@@ -34,15 +34,13 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.3,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [26.0,21.0]; rect-size: [13.0,17.0]; "
-                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [26.0,21.0]; rect-size: [13.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                    ><tspan
+                      >g</tspan
                       ><tspan
-                        >g</tspan
-                        ><tspan
-                        >1</tspan
-                      ></text
-                    ></g
+                      >1</tspan
+                    ></text
                   ></g
                   >
     </g
@@ -77,15 +75,13 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.3,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [26.0,99.0]; rect-size: [13.0,17.0]; "
-                              ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [26.0,99.0]; rect-size: [13.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                ><tspan
+                                  >g</tspan
                                   ><tspan
-                                    >g</tspan
-                                    ><tspan
-                                    >1</tspan
-                                  ></text
-                                ></g
+                                  >1</tspan
+                                ></text
                               ></g
                               >
     </g
@@ -111,15 +107,13 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-1.0,.6)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [75.0,62.0]; rect-size: [33.0,14.0]; "
-                                      ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                                        ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-1.0,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [75.0,62.0]; rect-size: [33.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                                      ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                        ><tspan
+                                          >m</tspan
                                           ><tspan
-                                            >m</tspan
-                                            ><tspan
-                                            >eets</tspan
-                                          ></text
-                                        ></g
+                                          >eets</tspan
+                                        ></text
                                       ></g
                                       >
     </g
@@ -152,15 +146,13 @@
                                                 >
     <g class="glyph-label-text"
                                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.3,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,60.0]; rect-size: [15.0,17.0]; "
-                                                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,60.0]; rect-size: [15.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                                                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                    ><tspan
+                                                      >g</tspan
                                                       ><tspan
-                                                        >g</tspan
-                                                        ><tspan
-                                                        >3</tspan
-                                                      ></text
-                                                    ></g
+                                                      >3</tspan
+                                                    ></text
                                                   ></g
                                                   >
     </g
@@ -195,15 +187,13 @@
                                                             >
     <g class="glyph-label-text"
                                                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.3,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [140.0,60.0]; rect-size: [16.0,17.0]; "
-                                                              ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                                                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [140.0,60.0]; rect-size: [16.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                                ><tspan
+                                                                  >g</tspan
                                                                   ><tspan
-                                                                    >g</tspan
-                                                                    ><tspan
-                                                                    >4</tspan
-                                                                  ></text
-                                                                ></g
+                                                                  >4</tspan
+                                                                ></text
                                                               ></g
                                                               >
     </g

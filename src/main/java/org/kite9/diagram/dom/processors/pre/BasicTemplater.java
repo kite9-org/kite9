@@ -81,7 +81,7 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			copyAttributes(e, transform);
 			moveContents(temp, transform);
 			
-			System.out.println("finished BasicTemplater: "+transform.getLocalName());
+			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
 		} else {
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}

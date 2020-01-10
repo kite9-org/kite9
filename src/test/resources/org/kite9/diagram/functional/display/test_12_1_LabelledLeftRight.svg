@@ -34,15 +34,13 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-1.3,.7)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [183.0,21.0]; rect-size: [55.0,17.0]; "
-                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+      <g font-size="15px" transform="translate(-1.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [183.0,21.0]; rect-size: [55.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                    ><tspan
+                      >b</tspan
                       ><tspan
-                        >b</tspan
-                        ><tspan
-                        >sadsad</tspan
-                      ></text
-                    ></g
+                      >sadsad</tspan
+                    ></text
                   ></g
                   >
     </g
@@ -68,15 +66,13 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text kite9-text-label" transform="translate(-.9,.6)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; "
-                          ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
-                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+      <g transform="translate(-.9,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                            ><tspan
+                              >i</tspan
                               ><tspan
-                                >i</tspan
-                                ><tspan
-                                >1asdas</tspan
-                              ></text
-                            ></g
+                              >1asdas</tspan
+                            ></text
                           ></g
                           >
     </g
@@ -111,23 +107,21 @@
                                     >
     <g class="connection-label-front"
                                     >
-      <g k9-elem="front" style="kite9-type: text; " class=" kite9-front" transform="translate(3.9,5.4)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [79.0,33.0]; rect-size: [78.0,14.0]; "
-                                      ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
-                                        ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
+      <g font-size="11px" transform="translate(3.9,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [79.0,33.0]; rect-size: [78.0,14.0]; " class=" kite9-front" stroke="white" k9-elem="front"
+                                      ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
+                                        ><tspan
+                                          >t</tspan
                                           ><tspan
-                                            >t</tspan
-                                            ><tspan
-                                            >o </tspan
-                                            ><tspan
-                                            >dsdsfds </tspan
-                                            ><tspan
-                                            >f </tspan
-                                            ><tspan
-                                            >ds </tspan
-                                            ><tspan
-                                            >f</tspan
-                                          ></text
-                                        ></g
+                                          >o </tspan
+                                          ><tspan
+                                          >dsdsfds </tspan
+                                          ><tspan
+                                          >f </tspan
+                                          ><tspan
+                                          >ds </tspan
+                                          ><tspan
+                                          >f</tspan
+                                        ></text
                                       ></g
                                       >
     </g

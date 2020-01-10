@@ -24,7 +24,9 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	 */
 	public Element output(Document d, XMLProcessor postProcessor) {
 		Element out = processOutput(theElement, d, postProcessor);
-		addAttributes(theElement, out);
+		if (out != null) {
+			addAttributes(theElement, out);
+		}
 		return out;
 	}
 	

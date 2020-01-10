@@ -4,14 +4,14 @@
 <svg contentScriptType="text/ecmascript" width="536.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="215.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/adl-projects/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [0.0,0.0] [536.0,215.0]; "
+  ><g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [536.0,215.0]; "
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="1-a" class=" kite9-glyph" transform="translate(255.0,15.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; connect: tbc; d-bounds: [255.0,15.0] [26.0,29.0]; " rank="0"
+  <g k9-elem="glyph" id="1-a" class=" kite9-glyph" transform="translate(255.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [255.0,15.0]; rect-size: [26.0,29.0]; " rank="0"
       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g k9-elem="label" id="1-a-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="positioning: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; connect: tbc; d-bounds: [265.0,21.0] [6.0,17.0]; "
+    <g k9-elem="label" id="1-a-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [265.0,21.0]; rect-size: [6.0,17.0]; "
             >
     <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
               >
@@ -34,11 +34,9 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text kite9-text-label" transform="translate(-.7,.7)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [265.0,21.0] [6.0,17.0]; "
-                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                      >a</text
-                    ></g
+      <g font-size="15px" transform="translate(-.7,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [265.0,21.0]; rect-size: [6.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                    >a</text
                   ></g
                   >
     </g
@@ -50,9 +48,9 @@
                   >
   </g
                   >
-  <g k9-elem="key" id="6" class=" kite9-key" transform="translate(15.0,54.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; d-bounds: [15.0,54.0] [506.0,161.0]; " rank="1"
+  <g k9-elem="key" id="6" class=" kite9-key" transform="translate(15.0,54.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [15.0,54.0]; rect-size: [506.0,161.0]; " rank="1"
                   >
-    <g k9-elem="body" class=" kite9-body" transform="translate(6.0,3.0)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; connect: tbc; d-bounds: [21.0,57.0] [494.0,155.0]; "
+    <g k9-elem="body" class=" kite9-body" transform="translate(6.0,3.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: GRID; grid-size: [1, 2]; cell-xs: [12, 482]; cell-ys: [12, 27, 143]; rectangular: connected; rect-pos: [21.0,57.0]; rect-size: [494.0,155.0]; "
                     >
       <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;" class=" kite9-back" k9-info=""
                       >
@@ -61,204 +59,188 @@
       </g
                         >
       
-    <g k9-elem="boldText" id="7" class=" kite9-boldText" transform="translate(12.0,12.0)" k9-info="positioning: 0-0,0-0; horiz: CENTER; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,69.0] [470.0,15.0]; "
+    <g k9-elem="boldText" id="7" class=" kite9-boldText" transform="translate(12.0,12.0)" k9-info="position: [0,0,0,0]; horiz: CENTER; vert: TOP; sizing: MAXIMIZE; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [33.0,69.0]; rect-size: [470.0,15.0]; "
                         >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="bold-text"
                           >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.4,2.5)" k9-info="positioning: none; horiz: CENTER; vert: CENTER; connect: tbc; d-bounds: [33.0,71.0] [470.0,11.0]; "
-                            ><g font-family="'opensans-bold-webfont'" font-size="10px"
-                              ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
+      <g font-size="10px" transform="translate(-.4,2.5)" style="kite9-type: text;" font-family="'opensans-bold-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [33.0,71.0]; rect-size: [470.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                            ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
+                              ><tspan
+                                >s</tspan
                                 ><tspan
-                                  >s</tspan
-                                  ><tspan
-                                  >ome </tspan
-                                  ><tspan
-                                  >bold </tspan
-                                  ><tspan
-                                  >text </tspan
-                                  ><tspan
-                                  >taking </tspan
-                                  ><tspan
-                                  >lots </tspan
-                                  ><tspan
-                                  >of </tspan
-                                  ><tspan
-                                  >space </tspan
-                                  ><tspan
-                                  >dsjhksdjfhjkdskj </tspan
-                                  ><tspan
-                                  >d </tspan
-                                  ><tspan
-                                  >dcdshf </tspan
-                                  ><tspan
-                                  >kdskjfhjdsf </tspan
-                                  ><tspan
-                                  >jkhdskjf </tspan
-                                  ><tspan
-                                  >skdjhfjkds </tspan
-                                  ><tspan
-                                  >j </tspan
-                                  ><tspan
-                                  >s</tspan
-                                ></text
-                              ></g
+                                >ome </tspan
+                                ><tspan
+                                >bold </tspan
+                                ><tspan
+                                >text </tspan
+                                ><tspan
+                                >taking </tspan
+                                ><tspan
+                                >lots </tspan
+                                ><tspan
+                                >of </tspan
+                                ><tspan
+                                >space </tspan
+                                ><tspan
+                                >dsjhksdjfhjkdskj </tspan
+                                ><tspan
+                                >d </tspan
+                                ><tspan
+                                >dcdshf </tspan
+                                ><tspan
+                                >kdskjfhjdsf </tspan
+                                ><tspan
+                                >jkhdskjf </tspan
+                                ><tspan
+                                >skdjhfjkds </tspan
+                                ><tspan
+                                >j </tspan
+                                ><tspan
+                                >s</tspan
+                              ></text
                             ></g
                             >
     </g
                             >
   </g
                             >
-    <g k9-elem="text-lines" class=" kite9-text-lines" transform="translate(12.0,27.0)" k9-info="positioning: 0-0,2-2; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; connect: tbc; d-bounds: [33.0,84.0] [470.0,116.0]; "
+    <g k9-elem="text-lines" class=" kite9-text-lines" transform="translate(12.0,27.0)" k9-info="position: [0,0,2,2]; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: VERTICAL; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [33.0,84.0]; rect-size: [470.0,116.0]; "
                             >
-      <g k9-elem="text-line" id="8" class=" kite9-text-line" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,84.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="8" class=" kite9-text-line" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,84.0]; rect-size: [470.0,15.0]; "
                               >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.5,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,86.0] [82.0,11.0]; "
-                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-.5,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,86.0]; rect-size: [82.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                    ><tspan
+                                      >S</tspan
                                       ><tspan
-                                        >S</tspan
-                                        ><tspan
-                                        >ome </tspan
-                                        ><tspan
-                                        >information</tspan
-                                      ></text
-                                    ></g
+                                      >ome </tspan
+                                      ><tspan
+                                      >information</tspan
+                                    ></text
                                   ></g
                                   >
     </g
                                   >
   </g
                                   >
-      <g k9-elem="text-line" id="9" class=" kite9-text-line" transform="translate(.0,15.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,99.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="9" class=" kite9-text-line" transform="translate(.0,15.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,99.0]; rect-size: [470.0,15.0]; "
                                   >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-1.0,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,101.0] [41.0,11.0]; "
-                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-1.0,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,101.0]; rect-size: [41.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                        ><tspan
+                                          >P</tspan
                                           ><tspan
-                                            >P</tspan
-                                            ><tspan
-                                            >artridge</tspan
-                                          ></text
-                                        ></g
+                                          >artridge</tspan
+                                        ></text
                                       ></g
                                       >
     </g
                                       >
   </g
                                       >
-      <g k9-elem="text-line" id="10" class=" kite9-text-line" transform="translate(.0,30.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,114.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="10" class=" kite9-text-line" transform="translate(.0,30.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,114.0]; rect-size: [470.0,15.0]; "
                                       >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.6,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,116.0] [70.0,11.0]; "
-                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-.6,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,116.0]; rect-size: [70.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                            ><tspan
+                                              >G</tspan
                                               ><tspan
-                                                >G</tspan
-                                                ><tspan
-                                                >emstone </tspan
-                                                ><tspan
-                                                >Beta</tspan
-                                              ></text
-                                            ></g
+                                              >emstone </tspan
+                                              ><tspan
+                                              >Beta</tspan
+                                            ></text
                                           ></g
                                           >
     </g
                                           >
   </g
                                           >
-      <g k9-elem="text-line" id="11" class=" kite9-text-line" transform="translate(.0,45.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,129.0] [470.0,26.0]; "
+      <g k9-elem="text-line" id="11" class=" kite9-text-line" transform="translate(.0,45.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,129.0]; rect-size: [470.0,26.0]; "
                                           >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.2,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,131.0] [40.0,22.0]; "
-                                              ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-.2,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,131.0]; rect-size: [40.0,22.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                              ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                                ><tspan
+                                                  >P</tspan
                                                   ><tspan
-                                                    >P</tspan
-                                                    ><tspan
-                                                    >ar</tspan
-                                                  ></text
-                                                  ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
+                                                  >ar</tspan
+                                                ></text
+                                                ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
+                                                ><tspan
+                                                  >two </tspan
                                                   ><tspan
-                                                    >two </tspan
-                                                    ><tspan
-                                                    >lines</tspan
-                                                  ></text
-                                                ></g
+                                                  >lines</tspan
+                                                ></text
                                               ></g
                                               >
     </g
                                               >
   </g
                                               >
-      <g k9-elem="text-line" id="12" class=" kite9-text-line" transform="translate(.0,71.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,155.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="12" class=" kite9-text-line" transform="translate(.0,71.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,155.0]; rect-size: [470.0,15.0]; "
                                               >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.5,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,157.0] [82.0,11.0]; "
-                                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-.5,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,157.0]; rect-size: [82.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                                    ><tspan
+                                                      >S</tspan
                                                       ><tspan
-                                                        >S</tspan
-                                                        ><tspan
-                                                        >ome </tspan
-                                                        ><tspan
-                                                        >information</tspan
-                                                      ></text
-                                                    ></g
+                                                      >ome </tspan
+                                                      ><tspan
+                                                      >information</tspan
+                                                    ></text
                                                   ></g
                                                   >
     </g
                                                   >
   </g
                                                   >
-      <g k9-elem="text-line" id="13" class=" kite9-text-line" transform="translate(.0,86.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,170.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="13" class=" kite9-text-line" transform="translate(.0,86.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,170.0]; rect-size: [470.0,15.0]; "
                                                   >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-1.0,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,172.0] [41.0,11.0]; "
-                                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-1.0,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,172.0]; rect-size: [41.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                                        ><tspan
+                                                          >P</tspan
                                                           ><tspan
-                                                            >P</tspan
-                                                            ><tspan
-                                                            >artridge</tspan
-                                                          ></text
-                                                        ></g
+                                                          >artridge</tspan
+                                                        ></text
                                                       ></g
                                                       >
     </g
                                                       >
   </g
                                                       >
-      <g k9-elem="text-line" id="14" class=" kite9-text-line" transform="translate(.0,101.0)" k9-info="positioning: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; connect: tbc; d-bounds: [33.0,185.0] [470.0,15.0]; "
+      <g k9-elem="text-line" id="14" class=" kite9-text-line" transform="translate(.0,101.0)" k9-info="position: none; horiz: LEFT; vert: TOP; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [33.0,185.0]; rect-size: [470.0,15.0]; "
                                                       >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" transform="translate(-.6,2.5)" k9-info="positioning: none; horiz: LEFT; vert: CENTER; connect: tbc; d-bounds: [33.0,187.0] [70.0,11.0]; "
-                                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
-                                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+      <g font-size="10px" transform="translate(-.6,2.5)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,187.0]; rect-size: [70.0,11.0]; " class=" kite9-text-label" k9-elem="text-label"
+                                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
+                                                            ><tspan
+                                                              >G</tspan
                                                               ><tspan
-                                                                >G</tspan
-                                                                ><tspan
-                                                                >emstone </tspan
-                                                                ><tspan
-                                                                >Beta</tspan
-                                                              ></text
-                                                            ></g
+                                                              >emstone </tspan
+                                                              ><tspan
+                                                              >Beta</tspan
+                                                            ></text
                                                           ></g
                                                           >
     </g
