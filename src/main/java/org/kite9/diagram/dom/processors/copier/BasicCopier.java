@@ -7,6 +7,7 @@ import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.processors.xpath.AbstractProcessor;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -41,6 +42,10 @@ public abstract class BasicCopier extends AbstractProcessor {
 		return (Text) processNode(n);
 	}
 
+	@Override
+	protected Comment processComment(Comment c) {
+		return (Comment) processNode(c);
+	}
 
 	private Node processNode(Node n) {
 		Node copy = n.cloneNode(false);

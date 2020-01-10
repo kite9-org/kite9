@@ -37,22 +37,5 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 		TranscoderInput inter2 = new TranscoderInput(svg);
 		png.transcode(inter2, output);
 	}
-	
-	/**
-	 * Since we're converting to PNG, we can use Batik's support of SVG1.2
-	 */
-	protected Document createDocument(TranscoderOutput output) {
-		// Use SVGGraphics2D to generate SVG content
-		Document doc;
-		if (output.getDocument() == null) {
-			DOMImplementation domImpl = SVG12DOMImplementation.getDOMImplementation();
-			doc = domImpl.createDocument(SVG12DOMImplementation.SVG_NAMESPACE_URI, SVGConstants.SVG_SVG_TAG, null);
-		} else {
-			doc = output.getDocument();
-		}
-
-		return doc;
-	}
-	
 }
 

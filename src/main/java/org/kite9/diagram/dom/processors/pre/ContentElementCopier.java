@@ -57,7 +57,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 			nodes++;
 		}
 
-		System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);
+		//System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);
 
 		if ((nodes==0) && (!optional)) {
 			throw new Kite9XMLProcessingException("XPath returned no value: " + xpath, source);

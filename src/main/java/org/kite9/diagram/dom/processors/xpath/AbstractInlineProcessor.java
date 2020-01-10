@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.processors.xpath;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -30,6 +31,11 @@ public abstract class AbstractInlineProcessor extends AbstractProcessor {
 	@Override
 	protected boolean isAppending() {
 		return false;
+	}
+
+	@Override
+	protected Comment processComment(Comment c) {
+		return c;
 	}
 	
 	

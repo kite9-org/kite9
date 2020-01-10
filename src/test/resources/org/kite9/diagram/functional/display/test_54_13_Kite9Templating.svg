@@ -6,14 +6,14 @@
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
     ><g transform="translate(50.5,46.5)" templateAtt="set" style="kite9-template: url(template.svg#simple) 'template-arg'; kite9-type: svg; " k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [31.0,37.0]; " class=" kite9-my" item="bob" k9-elem="my"
       >
-  	<circle r="5" class="bob template-arg" cx="10" cy="10"
+  	<circle r="5" cx="10" class="bob template-arg" cy="10"
         />
   	<rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
         />
   </g
         ><g transform="translate(81.5,46.5)" templateAtt="set" style="kite9-template: url(template.svg#simple) 'template-arg'; kite9-type: svg; " k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [81.0,50.0]; rect-size: [31.0,37.0]; " class=" kite9-my" item="bob" k9-elem="my"
         >
-  	<circle r="5" class="bob template-arg" cx="10" cy="10"
+  	<circle r="5" cx="10" class="bob template-arg" cy="10"
           />
   	<rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
           />

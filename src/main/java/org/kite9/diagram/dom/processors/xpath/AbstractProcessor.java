@@ -1,6 +1,8 @@
 package org.kite9.diagram.dom.processors.xpath;
 
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -15,14 +17,10 @@ public abstract class AbstractProcessor implements XMLProcessor {
 	protected abstract boolean isAppending();
 
 	public final Node processContents(Node n, Node inside) {
-		System.out.println("Process Contents : "+this.getClass()+ "    "+n.getLocalName()+"  inside "+inside);
+		//System.out.println("Process Contents : "+this.getClass()+ "    "+n.getLocalName()+"  inside "+inside);
 		if (n instanceof Element) {
 			Element out = processTag((Element) n);
-			
-			if (isAppending() && (inside!=null)) {
-				System.out.println("Appending "+n);
-				inside.appendChild(out);
-			}
+			checkDoAppend(inside, out);
 			
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);
@@ -30,20 +28,33 @@ public abstract class AbstractProcessor implements XMLProcessor {
 			return out;
 		} else if (n instanceof Text) {
 			Text out = processText((Text) n);
-			if (inside != null) {
-				inside.appendChild(out);
-			}
+			checkDoAppend(inside, out);
 			return out;
-		} else {
+		} else if (n instanceof Document){
 			NodeList contents = n.getChildNodes();
 			processContents(contents, inside);
 			return inside;
+		} else if (n instanceof Comment) {
+			Comment out = processComment((Comment) n);
+			checkDoAppend(inside, out);
+			return out;
+		} else {
+			throw new UnsupportedOperationException("Don't know how to handle "+n);
+		}
+	}
+
+	private void checkDoAppend(Node inside, Node out) {
+		if (isAppending() && (inside!=null) && (out != null)) {
+			//System.out.println("Appending "+n);
+			inside.appendChild(out);
 		}
 	}
 	
 	protected abstract Element processTag(Element n);
 
 	protected abstract Text processText(Text n);
+	
+	protected abstract Comment processComment(Comment c);
 
 	protected void processContents(NodeList contents, Node inside) {
 		for (int i = 0; i < contents.getLength(); i++) {

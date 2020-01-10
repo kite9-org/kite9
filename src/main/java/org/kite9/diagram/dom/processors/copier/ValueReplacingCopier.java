@@ -25,16 +25,16 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 	@Override
 	protected Element processTag(Element from) {
 		Element out = super.processTag(from);
-		performReplaceOnAttributes(out);
+		performReplaceOnAttributes(out, from);
 		return out;
 	}
 
-	private void performReplaceOnAttributes(Element n) {
+	private void performReplaceOnAttributes(Element n, Element context) {
 		for (int j = 0; j < n.getAttributes().getLength(); j++) {
 			Attr a = (Attr) n.getAttributes().item(j);
 			if (canValueReplace(a)) {
 				String oldValue = a.getValue();
-				String newValue = vr.performValueReplace(oldValue, n);
+				String newValue = vr.performValueReplace(oldValue, context);
 
 				if (!oldValue.equals(newValue)) {
 					updateAttribute(n, a, newValue);
@@ -55,7 +55,7 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 		if (canValueReplace(out)) {
 			out.setData(vr.performValueReplace(out.getData(), n));
 		}
-		return out;
+		return out;		
 	}
 
 	

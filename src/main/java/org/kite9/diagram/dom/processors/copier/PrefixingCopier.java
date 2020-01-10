@@ -37,7 +37,7 @@ public class PrefixingCopier extends ValueReplacingCopier {
 		int i = 0;
 		while (i < map.getLength()) {
 			Attr a = (Attr) map.item(i);
-			System.out.println(a.getName());
+			//System.out.println(a.getName());
 			if ((a.getName().startsWith("xmlns:")) && (a.getValue().equals(namespace))) {
 				 map.removeNamedItemNS(a.getNamespaceURI(), a.getLocalName());
 			} else {

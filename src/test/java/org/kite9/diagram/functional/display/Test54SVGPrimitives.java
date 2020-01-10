@@ -151,7 +151,6 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String someXML = 
 			svgOpen() + 
 			 	diagramOpen() +
-					//templateElement() +
 					myTemplatedElement(svgRect1()) + 
 					myTemplatedElement(svgRect1())+
 				diagramClose() +

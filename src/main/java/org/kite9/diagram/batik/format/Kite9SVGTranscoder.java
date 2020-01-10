@@ -144,9 +144,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
-			//copySVGAttributes(input.getDocumentElement(), outputDocument.getDocumentElement());
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
-			System.out.println("OUTPUTTING");
+			//System.out.println("OUTPUTTING");
 			Node outputNode = copier.processContents(input.getDocumentElement());
 			this.outputDocument.appendChild(outputNode);
 			transcodeScripts(input, this.outputDocument);

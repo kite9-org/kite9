@@ -17,10 +17,8 @@ import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -68,14 +66,8 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 	public void handleTemplateElement(CSSStylableElement transform, Value v) {
 		Element e = loadReferencedElement(v, transform);
 		if (e != null) { 
-			//System.out.println("BasicTemplater: "+transform.getLocalName());
-			// we need to create a copy of this element, in the same document.
-			//Element copy = copyNodeAndMoveContents(transform);
+			// template into a temporary element
 			NodeValueReplacer nvr = new NodeValueReplacer(transform);
-//			String prefix = transform.getOwnerDocument().getDocumentElement().getPrefix();
-//			String namespace = transform.getOwnerDocument().getDocumentElement().getNamespaceURI();
-//			
-			// move the new contents in
 			Element temp = transform.getOwnerDocument().createElement("temp");
 			ContentElementCopier bc = new ContentElementCopier(temp, nvr);
 			bc.processContents(e);
@@ -86,7 +78,7 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 				transform.removeChild(childNodes.item(0));
 			}
 			
-			copyAttributes(temp, transform);
+			copyAttributes(e, transform);
 			moveContents(temp, transform);
 			
 			System.out.println("finished BasicTemplater: "+transform.getLocalName());
@@ -94,7 +86,7 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}
 	}
-		
+	
 	private void moveContents(Element from, Element to) {
 		NodeList in = from.getChildNodes();
 		while (in.getLength() > 0) {
@@ -123,7 +115,8 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
         NamedNodeMap attributes = from.getAttributes();
         for (int i = 0; i < attributes.getLength(); i++) {
             Attr node = (Attr) attributes.item(i);
-            if ((!node.isId()) && (to.getAttribute(node.getName()).length() == 0)) {
+            if ((to.getAttribute(node.getName()).length() == 0) && (!node.getName().equals("id"))) {
+            	System.out.println("Copying attribute: "+node.getName());
             	to.setAttribute(node.getName(), node.getValue());
             }
         }

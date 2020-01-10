@@ -23,13 +23,13 @@ public class DocumentValueReplacer extends ValueReplacer {
 
 	@Override
 	public String getReplacementStringValue(String xpath, Node at) {
-		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, d, null, XPathResult.STRING_TYPE, null);
+		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, at, null, XPathResult.STRING_TYPE, null);
 		return out.getStringValue();
 	}
 
 	@Override
 	public XPathResult getReplacementXML(String xpath, short type, Node at) {
-		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, d, null, type, null);
+		XPathResult out = (XPathResult) ((XPathEvaluator) d).evaluate(xpath, at, null, type, null);
 		return out;
 	}
 

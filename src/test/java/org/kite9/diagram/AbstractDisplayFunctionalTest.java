@@ -26,6 +26,9 @@ import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonListener;
@@ -133,11 +136,33 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        		}
 		        		
 		        	}
+		        	if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH) {
+		        		if (countNonWSChildren(comparison.getControlDetails().getTarget()) == 
+		        			countNonWSChildren(comparison.getTestDetails().getTarget())) {
+		        			return;
+		        		}
+		        		
+		        	}
+		        	
 					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
 						copyToErrors(output);	
 						Assert.fail("found a difference: " + comparison);
 					}
 		        }
+
+				private Object countNonWSChildren(Node target) {
+					NodeList nl = target.getChildNodes();
+					int count = 0;
+					for (int i = 0; i < nl.getLength(); i++) {
+						if ((nl.item(i) instanceof Text) && (((Text)nl.item(i)).getTextContent().trim().length()==0)) {
+							// whitespace text, ignore
+						} else {
+							count++;
+						}
+					}
+					
+					return count;
+				}
 		    });
 			
 			diff.compare(in1, in2);

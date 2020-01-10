@@ -31,20 +31,19 @@ public class TextLeafPainter extends SVGLeafPainter {
 	
 	@Override
 	protected GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
+		TextDOMInitializer.setupElementXML((StyledKite9XMLElement) e); 
 		return LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode(e, ctx));
 	}
 
 	@Override
-	protected Element processOutput(StyledKite9XMLElement in, Element out, Document d, XMLProcessor postProcessor) {
+	protected Element processOutput(StyledKite9XMLElement in, Document d, XMLProcessor postProcessor) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
 		getGraphicsNode().paint(g2d);
 		groupElem = g2d.getTopLevelGroup(true);
 		Node firstChild = groupElem.getFirstChild();
-		if (firstChild != null) {
-			out.appendChild(firstChild);
-		}
+		return (Element) firstChild;
 	}
 	
 	
