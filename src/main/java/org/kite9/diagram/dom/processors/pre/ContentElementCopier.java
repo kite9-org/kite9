@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.processors.pre;
 
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
@@ -12,6 +11,14 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.xpath.XPathResult;
 
+/**
+ * Handles content-element copying, and also value replacement (stuff inside #{}).
+ * However, value-replacement is only done on values beginning with pre:, as usually
+ * this is needed in a post-processor scenario.
+ * 
+ * @author robmoffat
+ *
+ */
 public class ContentElementCopier extends ValueReplacingCopier {
 
 	public ContentElementCopier(Node destination, ValueReplacer vr) {
@@ -44,11 +51,11 @@ public class ContentElementCopier extends ValueReplacingCopier {
 			Text t = contents.getOwnerDocument().createTextNode(result.getStringValue());
 			processContents(t, i);
 		} else {
-			copyNodeList(xpath, result, i, contents, isOptional(contents));
+			copyNodeList(result, i, contents, isOptional(contents));
 		}
 	}
 
-	private void copyNodeList(String xpath, XPathResult result, Node inside, Node source, boolean optional) {
+	private void copyNodeList(XPathResult result, Node inside, Node source, boolean optional) {
 		int nodes = 0;
 		
 		Node node;
@@ -60,7 +67,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 		//System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);
 
 		if ((nodes==0) && (!optional)) {
-			throw new Kite9XMLProcessingException("XPath returned no value: " + xpath, source);
+			throw new Kite9XMLProcessingException("XPath returned no value.  Try setting optional='true': ", source);
 		}
 	}
 
@@ -98,7 +105,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 	@Override
 	protected boolean canValueReplace(Node n) {
 		if (n instanceof Attr) {
-			return XMLHelper.PREPROCESSOR_NAMESPACE.equals(n.getNamespaceURI());
+			return (((Attr) n).getValue().startsWith("pre:")); 
 		} else {
 			return false;
 		}
@@ -106,13 +113,8 @@ public class ContentElementCopier extends ValueReplacingCopier {
 
 	@Override
 	protected void updateAttribute(Element n, Attr a, String newValue) {
-		String localName = a.getLocalName();
-		n.removeAttributeNode(a);
-		n.setAttribute(localName, newValue);
+		newValue = newValue.substring(4);
+		a.setNodeValue(newValue);
 	}
-	
 
-	
-
-	
 }

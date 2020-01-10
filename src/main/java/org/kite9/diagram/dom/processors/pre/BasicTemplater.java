@@ -116,7 +116,6 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
         for (int i = 0; i < attributes.getLength(); i++) {
             Attr node = (Attr) attributes.item(i);
             if ((to.getAttribute(node.getName()).length() == 0) && (!node.getName().equals("id"))) {
-            	System.out.println("Copying attribute: "+node.getName());
             	to.setAttribute(node.getName(), node.getValue());
             }
         }
