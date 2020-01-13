@@ -1,4 +1,4 @@
-<svg:svg xmlns:pre="http://www.kite9.org/preprocessor" xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl'>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl'>
   <svg:defs>
     <svg:linearGradient id='gg' x1='0%' x2='0%' y1='0%' y2='100%'>
       <svg:stop offset='0%' stop-color='#FFF' />
@@ -18,28 +18,28 @@
   
   
   <template id="simple" templateAtt="set">
-  	<svg:circle cx="10" cy="10" r="5" pre:class="#{@item} #{$template-1}" />
+  	<svg:circle cx="10" cy="10" r="5" class="pre:#{@item} #{$template-1}" />
   	<contents />
   </template>
   
   <template id="double" templateAtt="set">
-  	<svg:circle cx="10" cy="10" r="5" pre:class="#{@item}" />
+  	<svg:circle cx="10" cy="10" r="5" class="pre:#{@item}" />
   	<container style="kite9-type: container;  ">
-  		<svg:circle cx="40" cy="40" r="5" pre:class="#{@item} #{$template-1}" />
+  		<svg:circle cx="40" cy="40" r="5" class="pre:#{@item} #{$template-1}" />
   		<contents />
   	</container>
   </template>
   
   <template id="templated-decal">
   	<back style="kite9-usage: decal; kite9-type: svg">
-  		<svg:rect x="0" y="0" width="#{$width}" height="#{$height}" pre:class="#{$template-1}" />
+  		<svg:rect x="0" y="0" width="#{$width}" height="#{$height}" class="pre:#{$template-1}" />
   	</back>
   	<contents />
   </template>
   
   <template id="arg-problem">
       <elem style="kite9-usage: decal; kite9-type: svg; kite9-template: url(template.svg#arg-problem-inner); ">
-      	<svg:rect x="0" y="0" width="50px" height="50px" pre:color="#{$template-2}" />
+      	<svg:rect x="0" y="0" width="50px" height="50px" color="pre:#{$template-2}" />
       </elem>
       <title style="kite9-type: text; ">
         <contents />
