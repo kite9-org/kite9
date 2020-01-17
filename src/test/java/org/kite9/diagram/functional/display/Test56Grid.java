@@ -217,4 +217,28 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 	
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
+	
+	@Test
+	public void test_56_10_MissingOrdinals() throws Exception {
+		Glyph g1 = new Glyph("1", "","1", null, null);
+		Glyph g2 = new Glyph("2", "","2 ", null, null);
+		Glyph g3 = new Glyph("3", "","3 ", null, null);
+		Glyph g4 = new Glyph("4", "","4 ", null, null);
+		Glyph g5 = new Glyph("A", "","A ", null, null);
+
+		Cell t1 = new Cell("c1", Arrays.asList(g1));
+		Cell t2 = new Cell("c2", Arrays.asList(g2));
+		Cell t3 = new Cell("c3", Arrays.asList(g3));
+		Cell t4 = new Cell("c4", Arrays.asList(g4));
+		Cell t5 = new Cell("c5", Arrays.asList(g5));
+		
+		t5.setAttribute("style", "kite9-occupies: 2 2 2 2; ");
+		
+		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4, t5), null);
+		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-columns: 3; ");
+		new Link(g2, g1, null, null, "DIAMOND", null, null);
+		new TurnLink(g2, g3, null, null, null, null, null);
+	
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+	}
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
@@ -77,16 +78,15 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		// add remaining/dummy elements elements, by adding extra rows if need be.
 		int cell = 0;
-		int ySize = yOrdinals.size(); 
-		int xSize = xOrdinals.size();
 		
-		if ((xSize == 0) && (overlaps.size() > 0)) {
-			xSize = 1;
-			ySize = 1;
-			xOrdinals.add(0);
-			yOrdinals.add(0);
+		if (overlaps.size() > 0) {
+			padOrdinal(xOrdinals, Math.max(1, ord.getGridColumns()));
+			padOrdinal(yOrdinals, Math.max(1, ord.getGridRows()));
 		}
-				
+		
+		int xSize = xOrdinals.size();
+		int ySize = yOrdinals.size();
+
 		while (overlaps.size() > 0) {
 			int row = Math.floorDiv(cell, xSize);
 			int col = cell % xSize;
@@ -145,6 +145,16 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		
 		placed.put(ord, done);
 		return done;
+	}
+
+
+	private void padOrdinal(Set<Integer> ordinals, int s) {
+		Integer max = ordinals.size() == 0 ? 0 : Collections.max(ordinals);
+
+		while (ordinals.size() < s) {
+			max = max == null ? 0 : max+1;
+			ordinals.add(max);
+		}
 	}
 
 
