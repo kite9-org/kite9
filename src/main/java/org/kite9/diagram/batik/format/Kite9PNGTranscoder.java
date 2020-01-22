@@ -1,12 +1,10 @@
 package org.kite9.diagram.batik.format;
 
-import org.apache.batik.anim.dom.SVG12DOMImplementation;
+import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
-import org.apache.batik.util.SVGConstants;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
 /**
@@ -32,7 +30,15 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 		super.transcode(input, inter1);
 		Document svg = inter1.getDocument();
 		svg.setDocumentURI(input.getURI());
-		PNGTranscoder png = new PNGTranscoder();
+		UserAgent localUserAgent = userAgent;
+		PNGTranscoder png = new PNGTranscoder() {
+
+			@Override
+			protected UserAgent createUserAgent() {
+				return localUserAgent;
+			}
+			
+		};
 		png.setTranscodingHints(this.getTranscodingHints());
 		TranscoderInput inter2 = new TranscoderInput(svg);
 		png.transcode(inter2, output);

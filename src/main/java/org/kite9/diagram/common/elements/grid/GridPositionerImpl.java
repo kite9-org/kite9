@@ -207,13 +207,16 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			Integer x = xIt.next();
 			
 			List<DiagramElement> line = yOrdinals.stream().map(y -> out.get(y).get(x)).collect(Collectors.toList());
-			
+			boolean remove = false;
 			if ((last != null) && (last.equals(line))) {
-				xIt.remove();
-				width --;
+				remove = true;
 			}
 			
 			if (line.stream().filter(e -> e != null).count() == 0) {
+				remove = true;
+			}
+			
+			if (remove) {
 				xIt.remove();
 				width --;
 			}

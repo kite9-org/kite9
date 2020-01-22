@@ -4,6 +4,7 @@ import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPAT
 import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -40,6 +41,7 @@ import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptList;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -49,6 +51,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.XMLFilter;
 
 /**
@@ -104,6 +107,18 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 				// TODO Auto-generated method stub
 				super.checkLoadExternalResource(resourceURL, docURL);
 			}
+
+			@Override
+			public SVGDocument getBrokenLinkDocument(Element e, String url, String message) {
+				try {
+					InputStream broken = Kite9SVGTranscoder.class.getResourceAsStream("/broken.svg");
+					return (SVGDocument) docLoader.loadDocument(url, broken);
+				} catch (IOException e1) {
+					throw new Kite9ProcessingException("Couldn't load broken.svg", e1);
+				}
+			}
+			
+			
 			
 		};
 	}

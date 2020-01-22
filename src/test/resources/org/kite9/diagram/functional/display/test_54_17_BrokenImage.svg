@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg contentScriptType="text/ecmascript" width="700" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="660" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+>
+  <defs
+  >
+    <pattern width="75" xmlns:xlink="http://www.w3.org/1999/xlink" patternUnits="userSpaceOnUse" xlink:type="simple" xlink:actuate="onLoad" id="image" height="75" preserveAspectRatio="xMidYMid meet" xlink:show="other"
+    >
+      <image x="0" y="0" width="75" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="brokencat.png" xlink:type="simple" xlink:actuate="onLoad" height="75" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+      />
+    </pattern
+      >
+    
+    <linearGradient xlink:actuate="onLoad" xlink:type="simple" id="Gradient1" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+      <stop stop-color="white" offset="5%"
+        />
+      <stop stop-color="blue" offset="95%"
+        />
+    </linearGradient
+        >
+    
+    <pattern x="0" y="0" width=".25" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="squares" height=".25" preserveAspectRatio="xMidYMid meet" xlink:show="other"
+        >
+      <rect fill="skyblue" x="0" width="50" y="0" height="50"
+          />
+      <rect fill="blue" x="0" width="25" y="0" height="25"
+          />
+      <circle fill="url(#Gradient1)" fill-opacity="0.5" r="20" cx="25" cy="25"
+          />
+    </pattern
+          >
+    
+  </defs
+          >
+  <circle fill="url(#squares)" r="100" id="top" cx="300" cy="150"
+          />
+  
+  <circle fill="url(#image)" r="100" id="t2" cx="150" cy="150"
+          />
+  
+  <image x="300" y="75" width="150px" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="brokencat.png" xlink:type="simple" xlink:actuate="onLoad" height="150px" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+          />
+</svg
+        >

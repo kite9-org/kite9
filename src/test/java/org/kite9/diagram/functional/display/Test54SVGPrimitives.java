@@ -193,6 +193,19 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodeSVG(someXML);
 	}
 	
+	/**
+	 * Important thing in this test is that it doesn't crash in the presence of a broken image
+	 */
+	@Test
+	public void test_54_17_BrokenImage() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image_broken.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodePNG(xml);
+		transcodeSVG(xml);
+	}
+	
 	private String gTemplatedElement(String id, String inside) {
 		return "<svg:g id=\""+id+"\" item=\"bob\" style=\"kite9-template: url(template.svg#simple) 'template-arg'; \">"+inside+"</svg:g>";
 	}
