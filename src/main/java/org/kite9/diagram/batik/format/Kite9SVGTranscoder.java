@@ -165,8 +165,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			this.outputDocument.appendChild(outputNode);
 			transcodeScripts(input, this.outputDocument);
 		} catch (Exception e) {
-			ADLDocument d = (ADLDocument)input;
-			String s = new XMLHelper().toXML(d);
+			String s = new XMLHelper().toXML(input);
 			log.error("Problem with XML: "+e);
 			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
 		}
