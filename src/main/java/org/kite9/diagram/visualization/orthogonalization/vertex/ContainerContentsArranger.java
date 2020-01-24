@@ -128,6 +128,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 		DiagramElement[][] elementArray = gp.placeOnGrid(c, true);
 		List<DiagramElement> connectedElements = Arrays.stream(elementArray)
 				.flatMap(e -> Arrays.stream(e))
+				.distinct()
 				.collect(Collectors.toList());
 		
 		if (connectedElements.size() == 0) {

@@ -485,11 +485,12 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_51_26_GridWithContainerLabel() throws Exception {
-		Cell t1 = new Cell("1", Arrays.asList());
-		Context c1 = new Context("c1", Collections.emptyList(), true, new TextLabel("Some label"), Layout.RIGHT);
+		Cell t1 = new Cell("cell1", Arrays.asList());
+		t1.setAttribute("style","kite9-min-size: 100px 100px");
+		Context c1 = new Context("ctx1", Collections.emptyList(), true, new TextLabel("Some label"), Layout.RIGHT);
 		c1.setAttribute("style", "kite9-sizing: maximize;");
-		Cell t2 = new Cell("2", Arrays.asList(c1));
-		t2.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right;");
+		Cell t2 = new Cell("cell2", Arrays.asList(c1));
+		t2.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
 		
 		Grid g = new Grid("table", Arrays.asList(t1, t2), null);
 		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
