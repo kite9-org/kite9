@@ -14,6 +14,7 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Grid;
 import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
@@ -480,5 +481,18 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		new TurnLink(g1, g2, null, null, null, null, null);
 	
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g1), null));
+	}
+	
+	@Test
+	public void test_51_26_GridWithContainerLabel() throws Exception {
+		Cell t1 = new Cell("1", Arrays.asList());
+		Context c1 = new Context("c1", Collections.emptyList(), true, new TextLabel("Some label"), Layout.RIGHT);
+		c1.setAttribute("style", "kite9-sizing: maximize;");
+		Cell t2 = new Cell("2", Arrays.asList(c1));
+		t2.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right;");
+		
+		Grid g = new Grid("table", Arrays.asList(t1, t2), null);
+		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(g), null));
 	}
 }

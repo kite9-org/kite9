@@ -181,14 +181,17 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		for (Iterator<Integer> yIt = yOrdinals.iterator(); yIt.hasNext();) {
 			Integer y = yIt.next();
 			
-			List<DiagramElement> line = xOrdinals.stream().map(x -> out.get(y).get(x)).collect(Collectors.toList());
+			List<DiagramElement> line = xOrdinals.stream()
+				.map(x -> {
+					Map<Integer,DiagramElement> row = out.get(y);
+					return row == null ? null : row.get(x);
+				})
+				.collect(Collectors.toList());
 			
 			if ((last != null) && (last.equals(line))) {
 				yIt.remove();
 				height --;
-			}
-			
-			if (line.stream().filter(e -> e != null).count() == 0) {
+			} else if (line.stream().filter(e -> e != null).count() == 0) {
 				yIt.remove();
 				height --;
 			}
@@ -206,7 +209,13 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 		for (Iterator<Integer> xIt = xOrdinals.iterator(); xIt.hasNext();) {
 			Integer x = xIt.next();
 			
-			List<DiagramElement> line = yOrdinals.stream().map(y -> out.get(y).get(x)).collect(Collectors.toList());
+			List<DiagramElement> line = yOrdinals.stream()
+					.map(y -> {
+						Map<Integer,DiagramElement> row = out.get(y);
+						return row == null ? null : row.get(x);
+					})
+					.collect(Collectors.toList());
+			
 			boolean remove = false;
 			if ((last != null) && (last.equals(line))) {
 				remove = true;

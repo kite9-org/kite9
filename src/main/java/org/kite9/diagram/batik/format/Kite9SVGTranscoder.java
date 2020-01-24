@@ -122,6 +122,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			
 		};
 	}
+	
+	public UserAgent getUserAgent() {
+		return userAgent;
+	}
 
 	@Override
 	protected Kite9BridgeContext createBridgeContext(String version) {

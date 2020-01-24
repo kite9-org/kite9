@@ -21,4 +21,6 @@
   <circle id="t2" cx="150" cy="150" r="100" fill="url(#image)"/>
   
   <image xlink:href="cat.png" x="300" y="75" height="150px" width="150px"/>
+  
+  <image xlink:href="shape.svg" x="500" y="75" height="150px" width="150px" />
 </svg>

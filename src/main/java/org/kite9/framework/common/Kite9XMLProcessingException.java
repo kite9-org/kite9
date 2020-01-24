@@ -38,11 +38,15 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 			ADLDocument doc = el.getOwnerDocument();
 			CSSEngine e = doc.getCSSEngine();
 			for (int i = 0; i < e.getNumberOfProperties(); i++) {
-				String name = e.getPropertyName(i);
-				Value v = el.getCSSStyleProperty(name);
-				
-				if (v != null) {
-					out.add("  "+name+": "+v+";");
+				try {
+					String name = e.getPropertyName(i);
+					Value v = el.getCSSStyleProperty(name);
+					
+					if (v != null) {
+						out.add("  "+name+": "+v+";");
+					}
+				} catch (Exception e1) {
+					// we'll absorb this exception, since it's just debug anyway.
 				}
 			}
 		}

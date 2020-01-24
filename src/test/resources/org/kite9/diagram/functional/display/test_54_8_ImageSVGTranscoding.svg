@@ -42,5 +42,8 @@
   
   <image x="300" y="75" width="150px" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="cat.png" xlink:type="simple" xlink:actuate="onLoad" height="150px" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
           />
+  
+  <image x="500" y="75" width="150px" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="shape.svg" xlink:type="simple" xlink:actuate="onLoad" height="150px" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+          />
 </svg
         >
