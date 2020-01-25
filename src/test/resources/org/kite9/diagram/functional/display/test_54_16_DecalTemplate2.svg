@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="128.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="113.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g k9-elem="diagram" id="one" style="kite9-type: diagram; kite9-padding: 50px;" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [128.0,113.0]; "
+<svg contentScriptType="text/ecmascript" width="100.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="100.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><g k9-elem="diagram" id="one" style="kite9-type: diagram; kite9-padding: 50px;" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [100.0,100.0]; "
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g k9-elem="templated-thing" style="kite9-template: url(template.svg#arg-problem) 'abc' 'red'; kite9-type: container;" class=" kite9-templated-thing" transform="translate(50.0,50.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [28.0,13.0]; "
+    ><g k9-elem="templated-thing" style="kite9-template: url(template.svg#arg-problem) 'abc' 'red'; kite9-type: container;" class=" kite9-templated-thing" transform="translate(50.0,50.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [0.0,0.0]; "
       >
       <g k9-elem="elem" style="kite9-usage: decal; kite9-type: svg; kite9-template: url(template.svg#arg-problem-inner); " class=" kite9-elem" k9-info=""
         >
   	<g
           >
   		
-      	<rect x="0" width="50px" y="0" height="50px" color="red"
+      	<rect x="0" width="50px" y="0" height="50px" stroke="red"
             />
       
   	</g
             >
   </g
             >
-      <g transform="translate(.5,.1)" fill="white" style="kite9-type: text; " font-family="'Arial'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [28.0,13.0]; " class=" kite9-title" stroke="white" k9-elem="title"
-            ><text x="0" xml:space="preserve" y="10.7602" stroke="none"
-              ><tspan
-                >H</tspan
-                ><tspan
-                >ello</tspan
-              ></text
-            ></g
+      <g id="special"
             >
+        <circle r="5" cx="40" cy="40" stroke="green"
+              />
+      </g
+              >
   </g
+            ></g
           ></g
-        ></g
-        ><defs
-        >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="gg" xlink:show="other"
+          ><defs
           >
-      <stop stop-color="#FFF" offset="0%"
-            />
-      <stop stop-color="#DDD" offset="100%"
-            />
-    </linearGradient
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="gg" xlink:show="other"
             >
+      <stop stop-color="#FFF" offset="0%"
+              />
+      <stop stop-color="#DDD" offset="100%"
+              />
+    </linearGradient
+              >
   </defs
-          ></svg
-        >
+            ></svg
+          >

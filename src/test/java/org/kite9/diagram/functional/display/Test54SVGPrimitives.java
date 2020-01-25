@@ -187,7 +187,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String someXML = 
 			svgOpen() + 
 			 	diagramOpen() +
-			 		"<templated-thing style=\"kite9-template: url(template.svg#arg-problem) 'abc' 'red'; kite9-type: container;\">Hello</templated-thing>" +
+			 		"<templated-thing style=\"kite9-template: url(template.svg#arg-problem) 'abc' 'red'; kite9-type: container;\"><svg:circle cx=\"40\" cy=\"40\" r=\"5\" stroke=\"green\" /></templated-thing>" +
 				diagramClose() +
 			svgClose();
 		transcodeSVG(someXML);

@@ -39,11 +39,11 @@
   
   <template id="arg-problem">
       <elem style="kite9-usage: decal; kite9-type: svg; kite9-template: url(template.svg#arg-problem-inner); ">
-      	<svg:rect x="0" y="0" width="50px" height="50px" color="pre:#{$template-2}" />
+      	<svg:rect x="0" y="0" width="50px" height="50px" stroke="pre:#{$template-2}" />
       </elem>
-      <title style="kite9-type: text; ">
+      <svg:g id="special">
         <contents />
-      </title>
+      </svg:g>
   </template>
   
   <template id="arg-problem-inner">
