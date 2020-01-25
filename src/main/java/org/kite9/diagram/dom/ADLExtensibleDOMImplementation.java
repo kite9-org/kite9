@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom;
 
 import java.net.URL;
+import java.util.HashMap;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.css.dom.CSSOMSVGViewCSS;
@@ -16,7 +17,6 @@ import org.apache.batik.css.parser.ExtendedParser;
 import org.apache.batik.css.parser.ExtendedParserWrapper;
 import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
-import org.apache.batik.dom.util.HashTable;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
@@ -213,7 +213,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 	}
 	
 
-	public StyleSheet createStyleSheet(Node node, HashTable pseudoAttrs) {
+	public StyleSheet createStyleSheet(Node node, HashMap<String, String> attrs) {
         throw new UnsupportedOperationException("StyleSheetFactory.createStyleSheet is not implemented"); // XXX
 	}
 	

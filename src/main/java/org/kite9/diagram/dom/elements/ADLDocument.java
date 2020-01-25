@@ -7,11 +7,9 @@ import java.util.Set;
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.bridge.UnitProcessor;
 import org.apache.batik.css.engine.CSSContext;
-import org.apache.batik.util.XMLConstants;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.dom.scripts.HasScripts;
@@ -61,7 +59,6 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 	}
 	
 	private transient int nextId = 1;
-	private transient XMLProcessor preProcessor;
 	
 	public String createUniqueId() {
 		while (elementIdExists(""+(nextId))) {
@@ -76,7 +73,7 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
      * for this document.
      */
     public boolean isId(Attr node) {
-        return XMLConstants.XML_ID_ATTRIBUTE.equals(node.getNodeName());
+        return "id".equals(node.getNodeName());
     }
 
     public StyleSheetList getStyleSheets() {
