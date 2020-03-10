@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -19,18 +20,17 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
-			</plugin>
-     
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.6</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -43,7 +43,7 @@
 					</sourceIncludes>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.11</version>
@@ -51,13 +51,14 @@
 					<includes>
 						<include>**/Test*.java</include>
 					</includes>
-					<!-- <testFailureIgnore>true</testFailureIgnore>  -->	
-			        <forkMode>pertest</forkMode>
-                    <printSummary>true</printSummary>
-  			        <argLine>-Xms500M -Xmx500M -Dkite9.logging=off -Djava.awt.headless=true -DignoreNotAddressed=true</argLine>
+					<!-- <testFailureIgnore>true</testFailureIgnore> -->
+					<forkMode>pertest</forkMode>
+					<printSummary>true</printSummary>
+					<argLine>-Xms500M -Xmx500M -Dkite9.logging=off
+						-Djava.awt.headless=true -DignoreNotAddressed=true</argLine>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>
@@ -71,30 +72,30 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>generate-code-coverage-report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-	 </plugins>		
-	
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.9</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>generate-code-coverage-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
 	</build>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -105,31 +106,31 @@
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.7</version>
-          	</plugin>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.7.9</version>
-              <configuration>
-              <executions>
-                    <execution>
-                        <id>jacoco-initialize</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-              </configuration>
-            </plugin>
-			
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.9</version>
+				<configuration>
+					<executions>
+						<execution>
+							<id>jacoco-initialize</id>
+							<phase>initialize</phase>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>jacoco-site</id>
+							<phase>site</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</reporting>
 
@@ -150,7 +151,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>2.1</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-svggen</artifactId>
@@ -160,13 +161,7 @@
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-bridge</artifactId>
 			<version>${batik.version}</version>
-			<exclusions>
-		        <exclusion>
-		            <groupId>xml-apis</groupId>
-		            <artifactId>xml-apis</artifactId>
-		        </exclusion>
-		    </exclusions>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-ext</artifactId>
@@ -181,7 +176,7 @@
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-rasterizer</artifactId>
 			<version>${batik.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-codec</artifactId>
@@ -189,12 +184,12 @@
 		</dependency>
 	</dependencies>
 
-    <distributionManagement>
-      	<repository>
-      		<id>bintray-kite9-org-maven</id>
-      		<name>kite9-org-maven</name>
-      		<url>https://api.bintray.com/maven/kite9-org/maven/kite9-visualization/</url>
-      	</repository>
-    </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<id>bintray-kite9-org-maven</id>
+			<name>kite9-org-maven</name>
+			<url>https://api.bintray.com/maven/kite9-org/maven/kite9-visualization/</url>
+		</repository>
+	</distributionManagement>
 
 </project>
