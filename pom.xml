@@ -29,7 +29,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<release>8</release>
 				</configuration>
 			</plugin>
 
@@ -55,7 +55,7 @@
 					<forkMode>pertest</forkMode>
 					<printSummary>true</printSummary>
 					<argLine>-Xms500M -Xmx500M -Dkite9.logging=off
-						-Djava.awt.headless=true -DignoreNotAddressed=true</argLine>
+						-Djava.awt.headless=true -DignoreNotAddressed=true --illegal-access-permit</argLine>
 				</configuration>
 			</plugin>
 
