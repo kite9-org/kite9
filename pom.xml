@@ -4,7 +4,7 @@
 
 	<groupId>org.kite9</groupId>
 	<artifactId>kite9-visualization</artifactId>
-	<version>0.3</version>
+	<version>0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Kite9 Diagram Visualization</name>
@@ -22,8 +22,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
      
@@ -160,6 +160,12 @@
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-bridge</artifactId>
 			<version>${batik.version}</version>
+			<exclusions>
+		        <exclusion>
+		            <groupId>xml-apis</groupId>
+		            <artifactId>xml-apis</artifactId>
+		        </exclusion>
+		    </exclusions>
 		</dependency>		
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
