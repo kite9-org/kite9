@@ -33,7 +33,7 @@ public class PositioningTransformer extends AbstractRectangularTransformer imple
 		Dimension2D position = getRenderedRelativePosition(owner);
 		Element out = p.output(d, postProcessor);
 		
-		if ((position.x() != 0) || (position.y() != 0)) {
+		if (((position.x() != 0) || (position.y() != 0)) && (out != null)) {
 			out.setAttribute("transform", "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")");
 		}
 		

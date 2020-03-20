@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.batik.util.SVGConstants;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,7 +28,18 @@ public class ScriptList {
 	public void add(String uri) {
 		uris.add(uri);
 	}
-		
+	
+	@SuppressWarnings("unchecked")
+	public void add(String name, List<String> additionalValues) {
+		Object p = params.get(name);
+		if (p == null) {
+			params.put(name, additionalValues);
+		} else if (p instanceof List) {
+			((List<String>) p).addAll(additionalValues);
+		} else {
+			throw new Kite9ProcessingException("Can't add to param "+name+" as it is a single value "+p);
+		}
+	}		
 	
 	/**
 	 * Scripts need to be embedded inside a <defs> tag in safari, afaict.
@@ -93,4 +105,5 @@ public class ScriptList {
 	protected String getScriptImports() {
 		return uris.stream().map(s -> "import \""+s+"\";\n").reduce("\n", String::concat);
 	}
+
 }

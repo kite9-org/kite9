@@ -98,7 +98,11 @@ public class AtRuleParser extends Parser {
 
             List<String> found = parseParamValues();
             
-            sh.setParam(name, found.size() == 1 ? found.get(0) : found);
+            if (found.size() == 1) {
+            	sh.setParam(name, found.get(0)); 
+            } else if (found.size() > 1) {
+            	sh.addParams(name, found);
+            }
         }
     }
 	

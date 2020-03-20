@@ -38,7 +38,7 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 		double width = size.getWidth();
 		double height = size.getHeight();
 		
-		if (p instanceof LeafPainter) {
+		if ((p instanceof LeafPainter) && (out != null)) {
 			Rectangle2D myBounds = ((LeafPainter) p).bounds();
 			
 			if (myBounds != null) {

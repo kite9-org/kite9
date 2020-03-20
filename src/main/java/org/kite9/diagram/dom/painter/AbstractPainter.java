@@ -18,8 +18,10 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.framework.common.Kite9XMLProcessingException;
@@ -77,6 +79,14 @@ public abstract class AbstractPainter implements Painter {
 		if (r instanceof Rectangular) {
 			debug.append("position: "+ ((Rectangular) r).getContainerPosition()+"; ");
 		} 
+		if (r instanceof SizedRectangular) {
+			SizedRectangular sr = (SizedRectangular) r;
+			debug.append("margin: "+sr.getMargin(Direction.UP)+" "+sr.getMargin(Direction.RIGHT)+" "
+					+sr.getMargin(Direction.DOWN)+" "+sr.getMargin(Direction.LEFT)+"; ");
+			debug.append("padding: "+sr.getPadding(Direction.UP)+" "+sr.getPadding(Direction.RIGHT)+" "
+					+sr.getPadding(Direction.DOWN)+" "+sr.getPadding(Direction.LEFT)+"; ");
+			
+		}
 		if (r instanceof AlignedRectangular) {
 			debug.append("horiz: "+ ((AlignedRectangular) r).getHorizontalAlignment()+"; ");
 			debug.append("vert: "+ ((AlignedRectangular) r).getVerticalAlignment()+"; ");

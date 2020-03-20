@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.painter;
 
-import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.w3c.dom.Document;

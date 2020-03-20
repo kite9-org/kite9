@@ -2,6 +2,7 @@ package org.kite9.diagram.dom;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.css.dom.CSSOMSVGViewCSS;
@@ -39,6 +40,7 @@ import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.scripts.AtRuleParser;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptHandler;
+import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
@@ -239,9 +241,16 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 			}
 
 			@Override
-			public void setParam(String name, Object value) {
+			public void setParam(String name, String value) {
 				if (doc instanceof HasScripts) {
 					((HasScripts)doc).getScripts().set(name, value);
+				}
+			}
+
+			@Override
+			public void addParams(String name, List<String> additionalValues) {
+				if (doc instanceof HasScripts) {
+					((HasScripts)doc).getScripts().add(name, additionalValues);
 				}
 			}
 			
