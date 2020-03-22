@@ -277,7 +277,7 @@ public class Face implements Deterministic {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.id.equals(((Face)obj).id);
+		return (obj instanceof Face) ? this.id.equals(((Face)obj).id) : false;
 	}
 
 	/**
