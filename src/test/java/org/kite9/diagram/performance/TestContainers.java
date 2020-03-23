@@ -30,7 +30,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			for (int j = minConnection; j <= maxConnection; j += step2) {
 				Metrics m = new Metrics("c+" + containers + "r" + i + "x" + j);
-				System.out.println("Generating Metrics: " + m);
+				//System.out.println("Generating Metrics: " + m);
 				m.connecteds = i;
 				m.connections = j;
 				String d = generateDiagram(m, containers, l);
@@ -45,7 +45,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
 		Random r = new Random(m.name.hashCode());
 
-		System.out.println("Generating diagram for " + m);
+		//System.out.println("Generating diagram for " + m);
 
 		Glyph[] items = new Glyph[m.connecteds];
 

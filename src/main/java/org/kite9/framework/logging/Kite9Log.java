@@ -19,51 +19,32 @@ import java.util.Set;
  *
  */
 public class Kite9Log {
+
+	public enum Destination { OFF, STREAM, FILE };
 	
 	private static String INDENT = new String(new char[100]).replace('\0', ' ');
 
 	Logable logFor;
 	
-	static boolean logging = isLoggingOn();
-
 	static PrintStream logFile;
-	
-	public static final boolean OUTPUT_TO_LOG = true;
-	
-	static {
-		if (OUTPUT_TO_LOG) {
+
+	public static void setLogging(Destination state) {
+		if (state == Destination.FILE) {
 			try {
 				logFile = new PrintStream(new FileOutputStream(new File("kite9.log")));
 			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 				logFile = System.out;
 			}
-		} else {
+		} else if (state == Destination.STREAM) {
 			logFile = System.out;
-		}
-
-	}
-	
-	private static boolean isLoggingOn() {
-		String propVal = System.getProperty("kite9.logging");
-		if (propVal==null) {
-			return true;
-		}
-		
-		propVal=propVal.toLowerCase().trim();
-		
-		if ("on".equals(propVal) || "true".equals(propVal) || "yes".equals(propVal)) {
-			return true;
 		} else {
-			return false;
+			logFile = null;
 		}
-	}
-	
-	public static void setLogging(boolean state) {
-		logging = state;
 	}
 	
 	public boolean go() {
-		return !logging;
+		return logFile != null;
 	}
 
 	public Kite9Log(Logable o) {
@@ -71,19 +52,19 @@ public class Kite9Log {
 	}
 
 	public void send(String string) {
-		if (logFor.isLoggingEnabled() && logging)
+		if (logFor.isLoggingEnabled() && (logFile != null))
 			logFile.println(logFor.getPrefix() + " " + string);
 	}
 	
 	public void send(int indent, String string) {
-		if (logFor.isLoggingEnabled() && logging)
+		if (logFor.isLoggingEnabled() && (logFile != null))
 			logFile.print(logFor.getPrefix());
 			logFile.write(INDENT.getBytes(), 0, 1+indent);
 			logFile.println(string);
 	}
 
 	public void send(String prefix, Collection<?> items) {
-		if (logFor.isLoggingEnabled() && logging) {
+		if (logFor.isLoggingEnabled() && (logFile != null)) {
 			logFile.println(logFor.getPrefix() + " " + prefix);
 
 			StringBuffer sb = new StringBuffer();
@@ -99,7 +80,7 @@ public class Kite9Log {
 	}
 
 	public void send(String prefix, Table t) {
-		if (logFor.isLoggingEnabled() && logging) {
+		if (logFor.isLoggingEnabled() && (logFile != null)) {
 			StringBuffer sb = new StringBuffer(1000);
 			t.display(sb);
 			send(prefix + sb.toString());
@@ -107,7 +88,7 @@ public class Kite9Log {
 	}
 
 	public void send(String prefix, Map<?, ?> items) {
-		if (logFor.isLoggingEnabled() && logging) {
+		if (logFor.isLoggingEnabled() && (logFile != null)) {
 			logFile.println(logFor.getPrefix() + " " + prefix);
 			Table t = new Table();
 			Set<?> keys = items.keySet();
@@ -148,7 +129,7 @@ public class Kite9Log {
 	}
 
 	public void send(String prefix, Exception arg0) {
-	    System.out.println(logFor.getPrefix()+" "+prefix);
+	    logFile.println(logFor.getPrefix()+" "+prefix);
 	    arg0.printStackTrace(System.out);
 	}
 }

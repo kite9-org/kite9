@@ -38,6 +38,7 @@ import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Table;
+import org.kite9.framework.logging.Kite9Log.Destination;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
@@ -46,7 +47,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	public void render(Map<Metrics, String> diagrams) throws IOException {
 		if (diagrams.size()>2) {
-			Kite9Log.setLogging(false);
+			Kite9Log.setLogging(Destination.OFF);
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
@@ -95,7 +96,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 		StringBuffer out = new StringBuffer(200);
 		t.display(out);
-		System.out.println(out);
+		//System.out.println(out);
 
 		System.gc();
 		
@@ -119,7 +120,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	private void renderDiagram(String xml, Class<?> theTest, String subtest, boolean watermark, Metrics m)
 			throws Exception {
 		try {
-			System.out.println("Beginning: "+m);
+			//System.out.println("Beginning: "+m);
 			currentMetrics = m;
 			
 			transcodeSVG(xml);

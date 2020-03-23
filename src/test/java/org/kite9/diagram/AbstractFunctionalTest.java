@@ -24,6 +24,7 @@ import org.kite9.framework.common.HelpMethods;
 import org.kite9.framework.common.RepositoryHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Kite9Log.Destination;
 import org.w3c.dom.Element;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
@@ -114,16 +115,17 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void setLogging() {
-		//Kite9Log.clearLog();
-		Kite9Log.setLogging(true);
-		
-		// if we are running more than one test, then there's no point in logging.
-		if (firstRun) {
-			firstRun = false;
+		if ("off".equals(System.getProperty("kite9.logging"))) {
+			Kite9Log.setLogging(Destination.OFF);
 		} else {
-			Kite9Log.setLogging(false);
+			Kite9Log.setLogging(Destination.STREAM);
+			// if we are running more than one test, then there's no point in logging.
+			if (firstRun) {
+				firstRun = false;
+			} else {
+				Kite9Log.setLogging(Destination.OFF);
+			}	
 		}
-		
 	}
 	
 

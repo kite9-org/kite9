@@ -17,6 +17,7 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Kite9Log.Destination;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -110,7 +111,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_25_10_30Glyphs3LinkedContainersPartialRightHV() throws Exception {
-		Kite9Log.setLogging(false);
+		Kite9Log.setLogging(Destination.OFF);
 		Random r = new Random(101);
 		int n = 30;
 		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();

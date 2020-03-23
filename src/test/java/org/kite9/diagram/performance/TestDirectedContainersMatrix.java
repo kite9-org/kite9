@@ -50,7 +50,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 	@SuppressWarnings("rawtypes")
 	private String generateDiagram(Metrics m, int size) {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
-		System.out.println("Starting"+size+" "+m.connecteds);
+		//System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
 
 		Kite9XMLElement[][] space = new Kite9XMLElement[size][];
@@ -142,8 +142,8 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 				for (Kite9XMLElement connected : contents) {
 					c.appendChild(connected);
 					items.remove(connected);
-					System.out.println("Context "+c+" contains "+contents);
-					System.out.println("Context size: "+x1+", "+y1+" - "+x2+", "+y2);
+					//System.out.println("Context "+c+" contains "+contents);
+					//System.out.println("Context size: "+x1+", "+y1+" - "+x2+", "+y2);
 					
 				}
 				
