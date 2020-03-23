@@ -55,7 +55,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 			try {
 				String resource = getUrlForDocument(v);
 				String fragment = getIdentifierForElement(v);
-				boolean importDefsForThisDoc = this.importDefs && (checkCache(resource) == null);
+				boolean importDefsForThisDoc = this.importDefs && (checkLocalCache(resource) == null);
 
 				ADLDocument templateDoc = (ADLDocument) loadDocument(resource);
 				
@@ -133,6 +133,10 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	@Override
 	public boolean isLoggingEnabled() {
 		return true;
+	}
+	
+	private Document checkLocalCache(String uri) {
+		return super.checkCache(uri);
 	}
 
 	@Override
