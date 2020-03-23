@@ -7,7 +7,7 @@ import org.apache.batik.anim.dom.SVGOMFlowRegionElement;
 import org.apache.batik.anim.dom.SVGOMFlowRootElement;
 import org.apache.batik.anim.dom.SVGOMRectElement;
 import org.apache.batik.util.SVG12Constants;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;

@@ -8,7 +8,6 @@ import org.apache.batik.anim.dom.SVG12DOMImplementation;
 import org.apache.batik.css.dom.CSSOMSVGViewCSS;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
-import org.apache.batik.css.engine.SVG12CSSEngine;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.ShorthandManager;
@@ -19,6 +18,9 @@ import org.apache.batik.css.parser.ExtendedParserWrapper;
 import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
+import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.css.CSSConstants;
+import org.kite9.diagram.dom.css.CachingCSSEngine;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
@@ -40,7 +42,6 @@ import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.scripts.AtRuleParser;
 import org.kite9.diagram.dom.scripts.HasScripts;
 import org.kite9.diagram.dom.scripts.ScriptHandler;
-import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
@@ -79,11 +80,17 @@ import org.w3c.dom.stylesheets.StyleSheet;
 public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation implements Logable {
 	
 	private final Kite9Log log = new Kite9Log(this);
+	private final Cache cache;
 	
 	public static final boolean USE_GENERIC_XML_ELEMENT = true;
 
 	public ADLExtensibleDOMImplementation() {
+		this(Cache.NO_CACHE);
+	}
+	
+	public ADLExtensibleDOMImplementation(Cache cache) {
 		super();
+		this.cache = cache;
 		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.CONTENTS_ELEMENT, new ElementFactory() {
 			 
 			public Element create(String prefix, Document doc) {
@@ -257,7 +264,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		}));
 		
 		
-		CSSEngine result = new SVG12CSSEngine(doc, durl, ep, vms, sms, ctx);
+		CSSEngine result = new CachingCSSEngine(doc, durl, ep, vms, sms, ctx, cache);
 		
 		ep.setErrorHandler(new ErrorHandler() {
 			

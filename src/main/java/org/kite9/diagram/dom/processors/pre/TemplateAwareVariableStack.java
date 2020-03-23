@@ -8,7 +8,7 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.xml.utils.QName;
 import org.apache.xpath.XPathContext;
 import org.apache.xpath.objects.XObject;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
 import org.kite9.framework.common.Kite9XMLProcessingException;

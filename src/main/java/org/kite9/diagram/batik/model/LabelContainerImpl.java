@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.model;
 import java.util.List;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Container;

@@ -2,7 +2,7 @@ package org.kite9.diagram.dom.managers;
 
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.value.ShorthandManager;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 

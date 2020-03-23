@@ -1,5 +1,5 @@
 
-package org.kite9.diagram.dom;
+package org.kite9.diagram.dom.css;
 
 public interface CSSConstants {
 	

@@ -1,5 +1,7 @@
 package org.kite9.diagram.batik.bridge;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -11,6 +13,7 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
+import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
@@ -18,6 +21,7 @@ import org.kite9.diagram.dom.processors.xpath.NullValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGSVGElement;
@@ -31,12 +35,14 @@ import org.w3c.dom.svg.SVGSVGElement;
 public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	
 	private final boolean importDefs;
+	private final Cache cache;
 	private final Kite9Log log = new Kite9Log(this);
 
-	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, boolean importDefs) {
+	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, boolean importDefs, Cache cache) {
 		super(userAgent);
 		this.documentFactory = dbf;
 		this.importDefs = importDefs;
+		this.cache = cache;
 	}
 
 	/**
@@ -125,5 +131,33 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	public boolean isLoggingEnabled() {
 		return true;
 	}
+
+	@Override
+	public Document checkCache(String uri) {
+		Document d = super.checkCache(uri);
+		if (d == null) {
+			return d;
+		} else {
+			d = (Document) cache.get(uri);
+		}
+		
+		return d;
+	}
+
+	@Override
+	public Document loadDocument(String uri) throws IOException {
+		Document out = super.loadDocument(uri);
+		cache.set(uri, out);
+		return out;
+	}
+
+	@Override
+	public Document loadDocument(String uri, InputStream is) throws IOException {
+		Document out = super.loadDocument(uri, is);
+		cache.set(uri, out);
+		return out;
+	}
+	
+	
 	
 }

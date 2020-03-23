@@ -33,6 +33,7 @@ import org.kite9.diagram.batik.model.DiagramElementFactoryImpl;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
@@ -64,12 +65,18 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentFactory docFactory;
 	private final Kite9DocumentLoader docLoader;
 	private final Kite9BridgeContext bridgeContext;
+	private final Cache cache;
 	
 	public Kite9SVGTranscoder() {
+		this(Cache.NO_CACHE);
+	}
+	
+	public Kite9SVGTranscoder(Cache c) {
 		super();
-		domImpl = new ADLExtensibleDOMImplementation();
+		cache = c;
+		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
-	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true);
+	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true, cache);
 		bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
 		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
 		domImpl.setDiagramElementFactory(def);

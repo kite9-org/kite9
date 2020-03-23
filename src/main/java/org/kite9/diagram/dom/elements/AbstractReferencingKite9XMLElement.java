@@ -5,7 +5,7 @@ import org.apache.batik.css.engine.value.ListValue;
 import org.apache.batik.css.engine.value.StringValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.xpath.objects.XObject;
-import org.kite9.diagram.dom.CSSConstants;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
