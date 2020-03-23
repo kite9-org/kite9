@@ -15,6 +15,11 @@ public interface Cache {
 	
 	public void set(String key, Object value);
 	
+	/**
+	 * Means this is something we could store in the cache.
+	 */
+	boolean isValid(String key);
+
 	public static Cache NO_CACHE = new Cache() {
 		
 		@Override
@@ -24,6 +29,11 @@ public interface Cache {
 		@Override
 		public Object get(String key) {
 			return null;
+		}
+
+		@Override
+		public boolean isValid(String key) {
+			return false;
 		}
 	};
 }

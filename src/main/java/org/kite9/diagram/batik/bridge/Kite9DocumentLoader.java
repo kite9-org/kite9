@@ -161,7 +161,6 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	@Override
 	public Document loadDocument(String uri, InputStream is) throws IOException {
 		Document out = super.loadDocument(uri, is);
-		cache.set(uri, out);
 		return out;
 	}
 	

@@ -26,14 +26,21 @@ public class CachingCSSEngine extends SVG12CSSEngine {
 	public CachingCSSEngine(Document doc, ParsedURL uri, ExtendedParser p, ValueManager[] vms, ShorthandManager[] sms,
 			CSSContext ctx, Cache cache) {
 		super(doc, uri, p, vms, sms, ctx);
+		this.cache = cache;
 	}
 
 	@Override
 	protected void parseStyleSheet(StyleSheet ss, InputSource is, ParsedURL uri) throws IOException {
-		// TODO Auto-generated method stub
-		super.parseStyleSheet(ss, is, uri);
+		String cssUri = is.getURI();
+		StyleSheet existing = (StyleSheet) cache.get(cssUri);
+		if (existing != null) {
+			for (int i = 0; i < existing.getSize(); i++) {
+				ss.append(existing.getRule(i));
+			}
+		} else {
+			super.parseStyleSheet(ss, is, uri);
+			cache.set(cssUri, ss);
+		}
 	}
-
-
 
 }
