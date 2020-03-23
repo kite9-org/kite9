@@ -74,18 +74,21 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 					String prefix = top.getPrefix();
 					String namespace = top.getNamespaceURI();
 					ADLDocument topDoc = (ADLDocument) top.getDocument();
-
-					Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
-					newDefs.setPrefix(prefix);
-					top.insertBefore(newDefs, null);
-					//top.setAttribute("id", "defs-" + resource);
-
 					NodeList defs = out.getOwnerDocument().getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
-					for (int i = 0; i < defs.getLength(); i++) {
-						Element def = (Element) defs.item(i);
-						XMLProcessor c = new PrefixingCopier(newDefs, false, new NullValueReplacer(), prefix, namespace);
-						c.processContents(def);
+					
+					if (defs.getLength() > 0) {
+						Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
+						newDefs.setPrefix(prefix);
+						top.insertBefore(newDefs, null);
+						//top.setAttribute("id", "defs-" + resource);
+
+						for (int i = 0; i < defs.getLength(); i++) {
+							Element def = (Element) defs.item(i);
+							XMLProcessor c = new PrefixingCopier(newDefs, false, new NullValueReplacer(), prefix, namespace);
+							c.processContents(def);
+						}
 					}
+					
 				}
 
 				return out;
@@ -135,7 +138,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	@Override
 	public Document checkCache(String uri) {
 		Document d = super.checkCache(uri);
-		if (d == null) {
+		if (d != null) {
 			return d;
 		} else {
 			d = (Document) cache.get(uri);
