@@ -2,11 +2,15 @@ package org.kite9.diagram.dom.elements;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.bridge.UnitProcessor;
 import org.apache.batik.css.engine.CSSContext;
+import org.apache.batik.css.engine.CSSStyleSheetNode;
+import org.apache.batik.css.engine.StyleSheet;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
@@ -21,7 +25,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.DocumentCSS;
-import org.w3c.dom.stylesheets.StyleSheetList;
 import org.w3c.dom.xpath.XPathException;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathNSResolver;
@@ -76,13 +79,23 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
         return "id".equals(node.getNodeName());
     }
 
-    public StyleSheetList getStyleSheets() {
-        throw new RuntimeException(" !!! Not implemented");
-    }
-    
-    private ScriptList scriptList = new ScriptList();
+//    public StyleSheetList getStyleSheets() {
+//        throw new RuntimeException(" !!! Not implemented");
+//    }
+//    
+    private ScriptList scriptList;
     
     public ScriptList getScripts() {
+    	if (scriptList == null) {
+    		@SuppressWarnings("unchecked")
+			List<CSSStyleSheetNode> nodes = (List<CSSStyleSheetNode>) getCSSEngine().getStyleSheetNodes();
+			List<StyleSheet> list = nodes.stream()
+    			.map(o -> ((CSSStyleSheetNode)o).getCSSStyleSheet())
+    			.collect(Collectors.toList());
+    		
+    		scriptList = new ScriptList(list);
+     	} 
+    	
     	return scriptList;
     }
 

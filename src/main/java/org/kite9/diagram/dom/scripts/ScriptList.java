@@ -8,7 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.batik.css.engine.ImportRule;
+import org.apache.batik.css.engine.Rule;
+import org.apache.batik.css.engine.StyleSheet;
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.dom.css.AtParamsRule;
+import org.kite9.diagram.dom.css.AtScriptRule;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
@@ -19,7 +24,36 @@ public class ScriptList {
 
 	private Set<String> uris = new LinkedHashSet<>();
 	private Map<String, Object> params = new LinkedHashMap<>();
+	
+	public ScriptList(List<StyleSheet> list) {
+		this();
+   		list.forEach(ss -> loadScripts(ss));
+	}
 
+	@SuppressWarnings("unchecked")
+	private void loadScripts(StyleSheet sheet) {
+		for (int j = 0; j < sheet.getSize(); j++) {
+			Rule r = sheet.getRule(j); 
+			if (r instanceof AtParamsRule) {
+				AtParamsRule atParamsRule = (AtParamsRule) r;
+				Object value = atParamsRule.getValue();
+				String name = atParamsRule.getName();
+				if (value instanceof String) {
+					set(name, value);
+				} else if (value instanceof List) {
+					add(name, (List<String>) value); 
+				}
+			} else if (r instanceof AtScriptRule) {
+				AtScriptRule atScriptRule = (AtScriptRule) r;
+				uris.add(atScriptRule.getUri());
+			} else if (r instanceof ImportRule) {
+				loadScripts((ImportRule) r); 
+			}
+		}
+	}
+
+	public ScriptList() {
+	}
 	
 	public void set(String name, Object value) {
 		params.put(name, value);
@@ -106,4 +140,5 @@ public class ScriptList {
 		return uris.stream().map(s -> "import \""+s+"\";\n").reduce("\n", String::concat);
 	}
 
+	
 }

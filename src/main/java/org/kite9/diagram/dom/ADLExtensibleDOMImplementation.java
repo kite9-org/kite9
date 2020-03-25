@@ -19,8 +19,10 @@ import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.css.AtRuleParser;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.css.CachingCSSEngine;
+import org.kite9.diagram.dom.css.ScriptHandler;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
@@ -39,9 +41,7 @@ import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
 import org.kite9.diagram.dom.managers.XPathManager;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
-import org.kite9.diagram.dom.scripts.AtRuleParser;
 import org.kite9.diagram.dom.scripts.HasScripts;
-import org.kite9.diagram.dom.scripts.ScriptHandler;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
@@ -238,31 +238,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
 		
-		ep = ExtendedParserWrapper.wrap(new AtRuleParser(new ScriptHandler() {
-
-			@Override
-			public void importScript(String uri, SACMediaList ml) {
-				if (doc instanceof HasScripts) {
-					((HasScripts)doc).getScripts().add(uri);
-				}
-			}
-
-			@Override
-			public void setParam(String name, String value) {
-				if (doc instanceof HasScripts) {
-					((HasScripts)doc).getScripts().set(name, value);
-				}
-			}
-
-			@Override
-			public void addParams(String name, List<String> additionalValues) {
-				if (doc instanceof HasScripts) {
-					((HasScripts)doc).getScripts().add(name, additionalValues);
-				}
-			}
-			
-		}));
-		
+		ep = ExtendedParserWrapper.wrap(new AtRuleParser());
 		
 		CSSEngine result = new CachingCSSEngine(doc, durl, ep, vms, sms, ctx, cache);
 		
@@ -274,17 +250,17 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 			
 			@Override
 			public void warning(CSSParseException arg0) throws CSSException {
-				log.send("Warning: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
+				log.send("Warning: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
 			}
 			
 			@Override
 			public void fatalError(CSSParseException arg0) throws CSSException {
-				log.send("Fatal: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
+				log.send("Fatal: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
 			}
 			
 			@Override
 			public void error(CSSParseException arg0) throws CSSException {
-				log.send("Error: "+getLocation(arg0)+" "+arg0.getLocalizedMessage());
+				log.send("Error: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
 			}
 		});
 

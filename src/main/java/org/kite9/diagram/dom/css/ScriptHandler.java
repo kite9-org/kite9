@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.scripts;
+package org.kite9.diagram.dom.css;
 
 import java.util.List;
 

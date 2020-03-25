@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.scripts;
+package org.kite9.diagram.dom.css;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +9,32 @@ import org.apache.batik.css.parser.Parser;
 import org.apache.batik.util.ParsedURL;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
+import org.w3c.css.sac.DocumentHandler;
 
 /**
- * Allows us to correctly parse at-rules, and in particular, the @script and @params ones.
+ * Allows us to correctly parse new kite9 at-rules the @script and @params ones.
  * 
  * @author robmoffat
  *
  */
 public class AtRuleParser extends Parser {
 	
-	public AtRuleParser(ScriptHandler sh) {
-		this.sh = sh;
+	public AtRuleParser() {
 	}
 
 	private ScriptHandler sh;
 	private String atKeyword;
 	
+	
+	
+	@Override
+	public void setDocumentHandler(DocumentHandler handler) {
+		super.setDocumentHandler(handler);
+		if (handler instanceof ScriptHandler) {
+			sh = (ScriptHandler) handler;
+		}
+	}
+
 	@Override
 	protected int nextIgnoreSpaces() {
 		if (current == LexicalUnits.AT_KEYWORD) {
