@@ -34,9 +34,14 @@ public abstract class BasicCopier extends AbstractProcessor {
 
 	@Override
 	protected Element processTag(Element n) {
-		return (Element) processNode(n);
+		Element out = (Element) processNode(n);
+		processAttributes(out, n);
+		return out;
 	}
 	
+	protected void processAttributes(Element out, Element original) {
+	}
+
 	@Override
 	protected Text processText(Text n) {
 		return (Text) processNode(n);
@@ -113,6 +118,9 @@ public abstract class BasicCopier extends AbstractProcessor {
 		if (copyTop) {
 			return super.processContents(n, destination);
 		} else {
+			if (n instanceof Element) {
+				processAttributes((Element) n, (Element) n);
+			}
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);
 			processContents(contents, destination);

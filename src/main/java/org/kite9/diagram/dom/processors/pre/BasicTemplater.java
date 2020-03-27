@@ -44,7 +44,6 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 	}
 
 	protected Kite9DocumentLoader loader;
-	protected boolean ignoreElement = false;
 
 	public BasicTemplater(Kite9DocumentLoader  loader) {
 		super();

@@ -23,13 +23,8 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 	}
 
 	@Override
-	protected Element processTag(Element from) {
-		Element out = super.processTag(from);
-		performReplaceOnAttributes(out, from);
-		return out;
-	}
-
-	private void performReplaceOnAttributes(Element n, Element context) {
+	protected void processAttributes(Element n, Element context) {
+		super.processAttributes(n, context);
 		for (int j = 0; j < n.getAttributes().getLength(); j++) {
 			Attr a = (Attr) n.getAttributes().item(j);
 			if (canValueReplace(a)) {

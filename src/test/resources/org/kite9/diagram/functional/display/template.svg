@@ -17,7 +17,7 @@
   </template>
   
   
-  <template id="simple" templateAtt="set">
+  <template id="simple" templateAtt="set" preprocessedAt="pre:#{local-name()}">
   	<svg:circle cx="10" cy="10" r="5" class="pre:#{@item} #{$template-1}" />
   	<contents />
   </template>
