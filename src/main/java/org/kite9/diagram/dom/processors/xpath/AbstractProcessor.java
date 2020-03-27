@@ -73,6 +73,7 @@ public abstract class AbstractProcessor implements XMLProcessor {
 					lastTextNode.setData(lastTextNode.getData() + ((Text)n).getData());
 					n.getParentNode().removeChild(n);
 				} else {
+					lastTextNode = (Text) n;
 					i++;
 				}
 			} else {

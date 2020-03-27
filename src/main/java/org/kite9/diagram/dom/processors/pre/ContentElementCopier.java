@@ -1,5 +1,8 @@
 package org.kite9.diagram.dom.processors.pre;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
@@ -56,17 +59,22 @@ public class ContentElementCopier extends ValueReplacingCopier {
 	}
 
 	private void copyNodeList(XPathResult result, Node inside, Node source, boolean optional) {
-		int nodes = 0;
 		
 		Node node;
+		List<Node> toAdd = new ArrayList<>();
 		while ((node = result.iterateNext()) != null) {
-			processContents(node, inside);
-			nodes++;
+			toAdd.add(node);
 		}
+		
+		for (Node n : toAdd) {
+			processContents(n, inside);
+		}
+		
+		mergeTextNodes(inside.getChildNodes());
 
 		//System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);
 
-		if ((nodes==0) && (!optional)) {
+		if ((toAdd.isEmpty()) && (!optional)) {
 			throw new Kite9XMLProcessingException("XPath returned no value.  Try setting optional='true': ", source);
 		}
 	}

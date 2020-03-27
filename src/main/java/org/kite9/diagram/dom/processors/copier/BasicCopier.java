@@ -119,7 +119,7 @@ public abstract class BasicCopier extends AbstractProcessor {
 			return super.processContents(n, destination);
 		} else {
 			if (n instanceof Element) {
-				processAttributes((Element) n, (Element) n);
+				processAttributes((Element) destination, (Element) n);
 			}
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);

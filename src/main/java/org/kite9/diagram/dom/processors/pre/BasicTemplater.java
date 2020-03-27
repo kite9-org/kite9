@@ -68,6 +68,7 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			// template into a temporary element
 			NodeValueReplacer nvr = new NodeValueReplacer(transform);
 			Element temp = transform.getOwnerDocument().createElement("temp");
+			copyAttributes(e, temp);
 			ContentElementCopier bc = new ContentElementCopier(temp, nvr);
 			bc.processContents(e);
 			
@@ -77,7 +78,7 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 				transform.removeChild(childNodes.item(0));
 			}
 			
-			copyAttributes(e, transform);
+			copyAttributes(temp, transform);
 			moveContents(temp, transform);
 			
 			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
