@@ -250,17 +250,23 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 			
 			@Override
 			public void warning(CSSParseException arg0) throws CSSException {
-				log.send("Warning: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
+				sendLogMessage("Warning:", arg0);
+			}
+
+			protected void sendLogMessage(String prefix, CSSParseException arg0) {
+				String out = prefix+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI();
+				log.send(out);
+				System.err.println(out);
 			}
 			
 			@Override
 			public void fatalError(CSSParseException arg0) throws CSSException {
-				log.send("Fatal: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
+				sendLogMessage("Fatal:", arg0);
 			}
 			
 			@Override
 			public void error(CSSParseException arg0) throws CSSException {
-				log.send("Error: "+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI());
+				sendLogMessage("Error: ", arg0);
 			}
 		});
 
