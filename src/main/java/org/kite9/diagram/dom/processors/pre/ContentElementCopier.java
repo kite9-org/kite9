@@ -3,6 +3,7 @@ package org.kite9.diagram.dom.processors.pre;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
@@ -121,8 +122,13 @@ public class ContentElementCopier extends ValueReplacingCopier {
 
 	@Override
 	protected void updateAttribute(Element n, Attr a, String newValue) {
+		String oldValue = a.getValue();
 		newValue = newValue.substring(4);
 		a.setNodeValue(newValue);
+		if (a.isId()) {
+			((ADLDocument) n.getOwnerDocument()).addIdEntry(n, newValue);
+			((ADLDocument) n.getOwnerDocument()).removeIdEntry(n, oldValue);
+		}
 	}
 
 }

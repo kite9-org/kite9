@@ -54,10 +54,7 @@ public abstract class AbstractPainter implements Painter {
 		if (id.length() > 0) {
 			out.setAttribute("id", id);
 		}
-		
-		out.setAttribute("k9-elem", toUse.getTagName());
-		out.setAttribute("class", toUse.getAttribute("class")+" kite9-"+toUse.getTagName());
-
+	
 		addInfoAttributes(out);
 	}
 	

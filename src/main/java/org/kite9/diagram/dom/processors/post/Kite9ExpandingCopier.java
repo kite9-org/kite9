@@ -25,6 +25,9 @@ public class Kite9ExpandingCopier extends PrefixingCopier {
 	protected Element processTag(Element from) {
 		if (from instanceof Kite9XMLElement) {
 			Element out = getDestinationDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_G_TAG);
+			if (!out.hasAttribute("k9-elem")) {
+				out.setAttribute("k9-elem", from.getTagName());
+			}
 			return out;
 		} else {
 			return super.processTag(from);

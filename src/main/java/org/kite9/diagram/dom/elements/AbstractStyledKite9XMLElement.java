@@ -19,8 +19,10 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
@@ -215,7 +217,30 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 		return (DiagramElementType) ev.getTheValue();
 	}
 
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
+	protected void initializeLiveAttributes() {
+		NamedNodeMap attrs = getAttributes();
+		for (int i = 0; i < attrs.getLength(); i++) {
+			Attr a = (Attr) attrs.item(i);
+			if (a.getNamespaceURI() != null) {
+				createLiveAnimatedString(a.getNamespaceURI(), a.getLocalName());
+			} else {
+				String name = a.getName();
+				if ((!"style".equals(name)) && (liveAttributeValues.get(null, name) == null)){
+					makeLiveAttribute(name);
+				}
+			}
+		}
+	}
 
+	@Override
+	public void makeLiveAttribute(String name) {
+		createLiveAnimatedString(null, name);
+	}
 	
 }

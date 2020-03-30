@@ -168,6 +168,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			new BasicTemplater(this.docLoader).processContents(input);
 			super.transcode(input, uri, output);
 			
+			if (log.go()) {
+				log.send(new XMLHelper().toXML(input));
+			}
+			
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
 			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));

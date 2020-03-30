@@ -9,6 +9,7 @@ public interface StyledKite9XMLElement extends CSSStylableElement, Kite9XMLEleme
 
 	public Value getCSSStyleProperty(String prop);
 
+	public void makeLiveAttribute(String name);
 
 }
 

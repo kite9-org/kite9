@@ -12,7 +12,6 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.xpath.AbstractInlineProcessor;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
@@ -29,7 +28,7 @@ import org.w3c.dom.NodeList;
  * @author robmoffat
  *
  */
-public class BasicTemplater extends AbstractInlineProcessor implements XMLProcessor, Logable {
+public class BasicTemplater extends K9ElemTaggingProcessor implements XMLProcessor, Logable {
 	
 	protected Kite9Log log = new Kite9Log(this);
 	
@@ -51,11 +50,12 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 	}
 	
 	@Override
-	public Element processTag(Element e) {
-		super.processTag(e);
+	public Element processTagInner(Element e) {
+		super.processTagInner(e);
 
 		Value v = getTemplateValue(e);
 		if (v != ValueConstants.NONE_VALUE) {
+			System.out.println("templating "+e.getTagName()+" with "+v.getCssText());
 			handleTemplateElement((CSSStylableElement) e, v);
 		}
 		
@@ -81,7 +81,8 @@ public class BasicTemplater extends AbstractInlineProcessor implements XMLProces
 			copyAttributes(temp, transform);
 			moveContents(temp, transform);
 			
-			//System.out.println("finished BasicTemplater: "+transform.getLocalName());
+			// templating alters the styles, so clear them
+			transform.setComputedStyleMap(null, null);
 		} else {
 			throw new Kite9XMLProcessingException("Couldn't resolve template: " + getTemplateName(v), transform);
 		}
