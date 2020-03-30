@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [283.0,94.0]; "
+  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [283.0,94.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 10px; " class=" kite9-rect" transform="translate(15.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [253.0,64.0]; "
+    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 10px; " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [253.0,64.0]; "
       >
-      <g k9-elem="decal" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-decal" k9-info=""
+      <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="decal"
         >
         <rect x="0" y="0" width="253.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="64.0"
           />
       </g
           >
-      <g font-size="33px" transform="translate(7.1,14.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 33px;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [233.0,44.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="33px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 33px;" font-family="'opensans-light-webfont'" transform="translate(7.1,14.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [233.0,44.0]; "
           ><text x="0" xml:space="preserve" y="30.952" stroke="none"
             ><tspan
               >h</tspan
@@ -31,7 +31,7 @@
             ></text
           ></g
           >
-      <g k9-elem="badge" style="kite9-usage: decal; kite9-type: svg; kite9-transform: none; " class=" kite9-badge" k9-info=""
+      <g style="kite9-usage: decal; kite9-type: svg; kite9-transform: none; " k9-info="" k9-elem="badge"
           >
         <circle fill="red" r="15" cx="248" cy="5"
             /> 

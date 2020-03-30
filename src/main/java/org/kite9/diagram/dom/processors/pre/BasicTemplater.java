@@ -55,7 +55,7 @@ public class BasicTemplater extends K9ElemTaggingProcessor implements XMLProcess
 
 		Value v = getTemplateValue(e);
 		if (v != ValueConstants.NONE_VALUE) {
-			System.out.println("templating "+e.getTagName()+" with "+v.getCssText());
+			//System.out.println("templating "+e.getTagName()+" with "+v.getCssText());
 			handleTemplateElement((CSSStylableElement) e, v);
 		}
 		

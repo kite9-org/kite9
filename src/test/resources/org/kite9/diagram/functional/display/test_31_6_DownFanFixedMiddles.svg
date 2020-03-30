@@ -6,14 +6,14 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="1" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [497.0,119.0]; "
+  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [497.0,119.0]; " id="1" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="g1" class=" kite9-glyph" transform="translate(147.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [147.0,15.0]; rect-size: [80.0,50.0]; " rank="0"
+  <g k9-elem="glyph" id="g1" transform="translate(147.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [147.0,15.0]; rect-size: [80.0,50.0]; " rank="0"
       >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
         >
       <rect x="0" y="0" width="80.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="50.0"
           />
@@ -22,9 +22,9 @@
     <g class="glyph"
           >
       
-    <g k9-elem="label" id="g1-label" class=" kite9-label" transform="translate(34.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
+    <g k9-elem="label" id="g1-label" transform="translate(34.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
             >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                   ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                     ><tspan
                       >g</tspan
@@ -52,9 +52,9 @@
                   >
   </g
                   >
-  <g k9-elem="glyph" id="fan0" class=" kite9-glyph" transform="translate(15.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,75.0]; rect-size: [50.0,29.0]; " rank="1"
+  <g k9-elem="glyph" id="fan0" transform="translate(15.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,75.0]; rect-size: [50.0,29.0]; " rank="1"
                   >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                     >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                       />
@@ -63,9 +63,9 @@
     <g class="glyph"
                       >
       
-    <g k9-elem="label" id="fan0-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan0-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
                         >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                           >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -75,7 +75,7 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                 ><tspan
                                   >f</tspan
@@ -93,9 +93,9 @@
                               >
   </g
                               >
-  <g k9-elem="glyph" id="fan1" class=" kite9-glyph" transform="translate(75.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [75.0,75.0]; rect-size: [47.0,29.0]; " rank="2"
+  <g k9-elem="glyph" id="fan1" transform="translate(75.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [75.0,75.0]; rect-size: [47.0,29.0]; " rank="2"
                               >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                 >
       <rect x="0" y="0" width="47.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                   />
@@ -104,9 +104,9 @@
     <g class="glyph"
                                   >
       
-    <g k9-elem="label" id="fan1-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
+    <g k9-elem="label" id="fan1-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
                                     >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -116,7 +116,7 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                             ><tspan
                                               >f</tspan
@@ -134,9 +134,9 @@
                                           >
   </g
                                           >
-  <g k9-elem="glyph" id="fan2" class=" kite9-glyph" transform="translate(132.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [132.0,75.0]; rect-size: [50.0,29.0]; " rank="3"
+  <g k9-elem="glyph" id="fan2" transform="translate(132.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [132.0,75.0]; rect-size: [50.0,29.0]; " rank="3"
                                           >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                             >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                               />
@@ -145,9 +145,9 @@
     <g class="glyph"
                                               >
       
-    <g k9-elem="label" id="fan2-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
                                                 >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -157,7 +157,7 @@
                                                     >
     <g class="glyph-label-text"
                                                     >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                       ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                         ><tspan
                                                           >f</tspan
@@ -175,9 +175,9 @@
                                                       >
   </g
                                                       >
-  <g k9-elem="glyph" id="fan3" class=" kite9-glyph" transform="translate(192.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [192.0,75.0]; rect-size: [50.0,29.0]; " rank="4"
+  <g k9-elem="glyph" id="fan3" transform="translate(192.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [192.0,75.0]; rect-size: [50.0,29.0]; " rank="4"
                                                       >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                         >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                           />
@@ -186,9 +186,9 @@
     <g class="glyph"
                                                           >
       
-    <g k9-elem="label" id="fan3-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan3-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
                                                             >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -198,7 +198,7 @@
                                                                 >
     <g class="glyph-label-text"
                                                                 >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                                   ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                     ><tspan
                                                                       >f</tspan
@@ -216,9 +216,9 @@
                                                                   >
   </g
                                                                   >
-  <g k9-elem="glyph" id="fan4" class=" kite9-glyph" transform="translate(252.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [252.0,75.0]; rect-size: [50.0,29.0]; " rank="5"
+  <g k9-elem="glyph" id="fan4" transform="translate(252.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [252.0,75.0]; rect-size: [50.0,29.0]; " rank="5"
                                                                   >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                     >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                       />
@@ -227,9 +227,9 @@
     <g class="glyph"
                                                                       >
       
-    <g k9-elem="label" id="fan4-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan4-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
                                                                         >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                                           >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -239,7 +239,7 @@
                                                                             >
     <g class="glyph-label-text"
                                                                             >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                                               ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                 ><tspan
                                                                                   >f</tspan
@@ -257,9 +257,9 @@
                                                                               >
   </g
                                                                               >
-  <g k9-elem="glyph" id="fan5" class=" kite9-glyph" transform="translate(312.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [312.0,75.0]; rect-size: [50.0,29.0]; " rank="6"
+  <g k9-elem="glyph" id="fan5" transform="translate(312.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [312.0,75.0]; rect-size: [50.0,29.0]; " rank="6"
                                                                               >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                 >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                   />
@@ -268,9 +268,9 @@
     <g class="glyph"
                                                                                   >
       
-    <g k9-elem="label" id="fan5-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan5-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                     >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                                                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -280,7 +280,7 @@
                                                                                         >
     <g class="glyph-label-text"
                                                                                         >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                                                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                             ><tspan
                                                                                               >f</tspan
@@ -298,9 +298,9 @@
                                                                                           >
   </g
                                                                                           >
-  <g k9-elem="glyph" id="fan6" class=" kite9-glyph" transform="translate(372.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [372.0,75.0]; rect-size: [50.0,29.0]; " rank="7"
+  <g k9-elem="glyph" id="fan6" transform="translate(372.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [372.0,75.0]; rect-size: [50.0,29.0]; " rank="7"
                                                                                           >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                             >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                               />
@@ -309,9 +309,9 @@
     <g class="glyph"
                                                                                               >
       
-    <g k9-elem="label" id="fan6-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan6-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                 >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                                                                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -321,7 +321,7 @@
                                                                                                     >
     <g class="glyph-label-text"
                                                                                                     >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                                                                       ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                         ><tspan
                                                                                                           >f</tspan
@@ -339,9 +339,9 @@
                                                                                                       >
   </g
                                                                                                       >
-  <g k9-elem="glyph" id="fan7" class=" kite9-glyph" transform="translate(432.0,75.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [432.0,75.0]; rect-size: [50.0,29.0]; " rank="8"
+  <g k9-elem="glyph" id="fan7" transform="translate(432.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [432.0,75.0]; rect-size: [50.0,29.0]; " rank="8"
                                                                                                       >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                                         >
       <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="29.0"
                                                                                                           />
@@ -350,9 +350,9 @@
     <g class="glyph"
                                                                                                           >
       
-    <g k9-elem="label" id="fan7-label" class=" kite9-label" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan7-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                             >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                                                                                               >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -362,7 +362,7 @@
                                                                                                                 >
     <g class="glyph-label-text"
                                                                                                                 >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                                                                                                   ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                                     ><tspan
                                                                                                                       >f</tspan
@@ -380,23 +380,23 @@
                                                                                                                   >
   </g
                                                                                                                   >
-  <g k9-elem="link" id="g1-fan0" class=" kite9-link" k9-info="link: ['g1','fan0']; direction: null; " rank="9"
+  <g k9-elem="link" id="g1-fan0" k9-info="link: ['g1','fan0']; direction: null; " rank="9"
                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(142.0,40.0)" k9-info="position: none; terminates: g1-fan0; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,40.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(142.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan0; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,40.0]; rect-size: [10.0,10.0]; "
                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                       />
   </g
                                                                                                                       >
-    <g k9-elem="to" reference="fan0" class=" kite9-to" transform="translate(35.0,70.0)" k9-info="position: none; terminates: g1-fan0; terminates-at: fan0; end: to; rectangular: terminator; rect-pos: [35.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan0" transform="translate(35.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan0; terminates-at: fan0; end: to; rectangular: terminator; rect-pos: [35.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                         />
   </g
                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M147 45 L40 45 L40 75"
                                                                                                                           />
@@ -404,23 +404,23 @@
                                                                                                                           >
   </g
                                                                                                                           >
-  <g k9-elem="link" id="g1-fan1" class=" kite9-link" k9-info="link: ['g1','fan1']; direction: null; " rank="10"
+  <g k9-elem="link" id="g1-fan1" k9-info="link: ['g1','fan1']; direction: null; " rank="10"
                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(142.0,50.0)" k9-info="position: none; terminates: g1-fan1; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,50.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(142.0,50.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan1; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,50.0]; rect-size: [10.0,10.0]; "
                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                               />
   </g
                                                                                                                               >
-    <g k9-elem="to" reference="fan1" class=" kite9-to" transform="translate(94.0,70.0)" k9-info="position: none; terminates: g1-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [94.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan1" transform="translate(94.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [94.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                 />
   </g
                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M147 55 L99 55 L99 75"
                                                                                                                                   />
@@ -428,23 +428,23 @@
                                                                                                                                   >
   </g
                                                                                                                                   >
-  <g k9-elem="link" id="g1-fan2" drawDirection="DOWN" class=" kite9-link" k9-info="link: ['g1','fan2']; direction: DOWN; " rank="11"
+  <g k9-elem="link" id="g1-fan2" drawDirection="DOWN" k9-info="link: ['g1','fan2']; direction: DOWN; " rank="11"
                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(152.0,60.0)" k9-info="position: none; terminates: g1-fan2; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [152.0,60.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(152.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan2; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [152.0,60.0]; rect-size: [10.0,10.0]; "
                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                       />
   </g
                                                                                                                                       >
-    <g k9-elem="to" reference="fan2" class=" kite9-to" transform="translate(152.0,70.0)" k9-info="position: none; terminates: g1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [152.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan2" transform="translate(152.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [152.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                         />
   </g
                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M157 65 L157 75"
                                                                                                                                           />
@@ -452,23 +452,23 @@
                                                                                                                                           >
   </g
                                                                                                                                           >
-  <g k9-elem="link" id="g1-fan3" drawDirection="DOWN" class=" kite9-link" k9-info="link: ['g1','fan3']; direction: DOWN; " rank="12"
+  <g k9-elem="link" id="g1-fan3" drawDirection="DOWN" k9-info="link: ['g1','fan3']; direction: DOWN; " rank="12"
                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(212.0,60.0)" k9-info="position: none; terminates: g1-fan3; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [212.0,60.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(212.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan3; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [212.0,60.0]; rect-size: [10.0,10.0]; "
                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                               />
   </g
                                                                                                                                               >
-    <g k9-elem="to" reference="fan3" class=" kite9-to" transform="translate(212.0,70.0)" k9-info="position: none; terminates: g1-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [212.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan3" transform="translate(212.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [212.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                 />
   </g
                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M217 65 L217 75"
                                                                                                                                                   />
@@ -476,23 +476,23 @@
                                                                                                                                                   >
   </g
                                                                                                                                                   >
-  <g k9-elem="link" id="g1-fan4" class=" kite9-link" k9-info="link: ['g1','fan4']; direction: null; " rank="13"
+  <g k9-elem="link" id="g1-fan4" k9-info="link: ['g1','fan4']; direction: null; " rank="13"
                                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(222.0,50.0)" k9-info="position: none; terminates: g1-fan4; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,50.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(222.0,50.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan4; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,50.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                       />
   </g
                                                                                                                                                       >
-    <g k9-elem="to" reference="fan4" class=" kite9-to" transform="translate(272.0,70.0)" k9-info="position: none; terminates: g1-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [272.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan4" transform="translate(272.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [272.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                         />
   </g
                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M227 55 L277 55 L277 75"
                                                                                                                                                           />
@@ -500,23 +500,23 @@
                                                                                                                                                           >
   </g
                                                                                                                                                           >
-  <g k9-elem="link" id="g1-fan5" class=" kite9-link" k9-info="link: ['g1','fan5']; direction: null; " rank="14"
+  <g k9-elem="link" id="g1-fan5" k9-info="link: ['g1','fan5']; direction: null; " rank="14"
                                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(222.0,40.0)" k9-info="position: none; terminates: g1-fan5; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,40.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(222.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan5; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,40.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                               />
   </g
                                                                                                                                                               >
-    <g k9-elem="to" reference="fan5" class=" kite9-to" transform="translate(332.0,70.0)" k9-info="position: none; terminates: g1-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [332.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan5" transform="translate(332.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [332.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                 />
   </g
                                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M227 45 L337 45 L337 75"
                                                                                                                                                                   />
@@ -524,23 +524,23 @@
                                                                                                                                                                   >
   </g
                                                                                                                                                                   >
-  <g k9-elem="link" id="g1-fan6" class=" kite9-link" k9-info="link: ['g1','fan6']; direction: null; " rank="15"
+  <g k9-elem="link" id="g1-fan6" k9-info="link: ['g1','fan6']; direction: null; " rank="15"
                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(222.0,30.0)" k9-info="position: none; terminates: g1-fan6; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,30.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(222.0,30.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan6; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,30.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                       />
   </g
                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan6" class=" kite9-to" transform="translate(392.0,70.0)" k9-info="position: none; terminates: g1-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [392.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan6" transform="translate(392.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [392.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                         />
   </g
                                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M227 35 L397 35 L397 75"
                                                                                                                                                                           />
@@ -548,23 +548,23 @@
                                                                                                                                                                           >
   </g
                                                                                                                                                                           >
-  <g k9-elem="link" id="g1-fan7" class=" kite9-link" k9-info="link: ['g1','fan7']; direction: null; " rank="16"
+  <g k9-elem="link" id="g1-fan7" k9-info="link: ['g1','fan7']; direction: null; " rank="16"
                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" class=" kite9-from" transform="translate(222.0,20.0)" k9-info="position: none; terminates: g1-fan7; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,20.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(222.0,20.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan7; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,20.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                               />
   </g
                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan7" class=" kite9-to" transform="translate(452.0,70.0)" k9-info="position: none; terminates: g1-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [452.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan7" transform="translate(452.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [452.0,70.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                 />
   </g
                                                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M227 25 L457 25 L457 75"
                                                                                                                                                                                   />
@@ -572,23 +572,23 @@
                                                                                                                                                                                   >
   </g
                                                                                                                                                                                   >
-  <g k9-elem="link" id="fan0-fan1" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan0','fan1']; direction: RIGHT; " rank="17"
+  <g k9-elem="link" id="fan0-fan1" drawDirection="RIGHT" k9-info="link: ['fan0','fan1']; direction: RIGHT; " rank="17"
                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan0" class=" kite9-from" transform="translate(60.0,84.0)" k9-info="position: none; terminates: fan0-fan1; terminates-at: fan0; end: from; rectangular: terminator; rect-pos: [60.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan0" transform="translate(60.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan0-fan1; terminates-at: fan0; end: from; rectangular: terminator; rect-pos: [60.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                       />
   </g
                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan1" class=" kite9-to" transform="translate(70.0,84.0)" k9-info="position: none; terminates: fan0-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [70.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan1" transform="translate(70.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan0-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [70.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                         />
   </g
                                                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M65 89 L75 89"
                                                                                                                                                                                           />
@@ -596,23 +596,23 @@
                                                                                                                                                                                           >
   </g
                                                                                                                                                                                           >
-  <g k9-elem="link" id="fan1-fan2" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan1','fan2']; direction: RIGHT; " rank="18"
+  <g k9-elem="link" id="fan1-fan2" drawDirection="RIGHT" k9-info="link: ['fan1','fan2']; direction: RIGHT; " rank="18"
                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan1" class=" kite9-from" transform="translate(117.0,84.0)" k9-info="position: none; terminates: fan1-fan2; terminates-at: fan1; end: from; rectangular: terminator; rect-pos: [117.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan1" transform="translate(117.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan1-fan2; terminates-at: fan1; end: from; rectangular: terminator; rect-pos: [117.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                               />
   </g
                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan2" class=" kite9-to" transform="translate(127.0,84.0)" k9-info="position: none; terminates: fan1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [127.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan2" transform="translate(127.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [127.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M122 89 L132 89"
                                                                                                                                                                                                   />
@@ -620,23 +620,23 @@
                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                   >
-  <g k9-elem="link" id="fan2-fan3" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan2','fan3']; direction: RIGHT; " rank="19"
+  <g k9-elem="link" id="fan2-fan3" drawDirection="RIGHT" k9-info="link: ['fan2','fan3']; direction: RIGHT; " rank="19"
                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan2" class=" kite9-from" transform="translate(177.0,84.0)" k9-info="position: none; terminates: fan2-fan3; terminates-at: fan2; end: from; rectangular: terminator; rect-pos: [177.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan2" transform="translate(177.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan2-fan3; terminates-at: fan2; end: from; rectangular: terminator; rect-pos: [177.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan3" class=" kite9-to" transform="translate(187.0,84.0)" k9-info="position: none; terminates: fan2-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [187.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan3" transform="translate(187.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan2-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [187.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M182 89 L192 89"
                                                                                                                                                                                                           />
@@ -644,23 +644,23 @@
                                                                                                                                                                                                           >
   </g
                                                                                                                                                                                                           >
-  <g k9-elem="link" id="fan3-fan4" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan3','fan4']; direction: RIGHT; " rank="20"
+  <g k9-elem="link" id="fan3-fan4" drawDirection="RIGHT" k9-info="link: ['fan3','fan4']; direction: RIGHT; " rank="20"
                                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan3" class=" kite9-from" transform="translate(237.0,84.0)" k9-info="position: none; terminates: fan3-fan4; terminates-at: fan3; end: from; rectangular: terminator; rect-pos: [237.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan3" transform="translate(237.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan3-fan4; terminates-at: fan3; end: from; rectangular: terminator; rect-pos: [237.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan4" class=" kite9-to" transform="translate(247.0,84.0)" k9-info="position: none; terminates: fan3-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [247.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan4" transform="translate(247.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan3-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [247.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M242 89 L252 89"
                                                                                                                                                                                                                   />
@@ -668,23 +668,23 @@
                                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                                   >
-  <g k9-elem="link" id="fan4-fan5" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan4','fan5']; direction: RIGHT; " rank="21"
+  <g k9-elem="link" id="fan4-fan5" drawDirection="RIGHT" k9-info="link: ['fan4','fan5']; direction: RIGHT; " rank="21"
                                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan4" class=" kite9-from" transform="translate(297.0,84.0)" k9-info="position: none; terminates: fan4-fan5; terminates-at: fan4; end: from; rectangular: terminator; rect-pos: [297.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan4" transform="translate(297.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan4-fan5; terminates-at: fan4; end: from; rectangular: terminator; rect-pos: [297.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan5" class=" kite9-to" transform="translate(307.0,84.0)" k9-info="position: none; terminates: fan4-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [307.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan5" transform="translate(307.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan4-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [307.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M302 89 L312 89"
                                                                                                                                                                                                                           />
@@ -692,23 +692,23 @@
                                                                                                                                                                                                                           >
   </g
                                                                                                                                                                                                                           >
-  <g k9-elem="link" id="fan5-fan6" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan5','fan6']; direction: RIGHT; " rank="22"
+  <g k9-elem="link" id="fan5-fan6" drawDirection="RIGHT" k9-info="link: ['fan5','fan6']; direction: RIGHT; " rank="22"
                                                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan5" class=" kite9-from" transform="translate(357.0,84.0)" k9-info="position: none; terminates: fan5-fan6; terminates-at: fan5; end: from; rectangular: terminator; rect-pos: [357.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan5" transform="translate(357.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan5-fan6; terminates-at: fan5; end: from; rectangular: terminator; rect-pos: [357.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan6" class=" kite9-to" transform="translate(367.0,84.0)" k9-info="position: none; terminates: fan5-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [367.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan6" transform="translate(367.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan5-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [367.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                 />
   </g
                                                                                                                                                                                                                                 >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                                 >
       <path style="marker-start: ; marker-end: " class="link" d="M362 89 L372 89"
                                                                                                                                                                                                                                   />
@@ -716,23 +716,23 @@
                                                                                                                                                                                                                                   >
   </g
                                                                                                                                                                                                                                   >
-  <g k9-elem="link" id="fan6-fan7" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['fan6','fan7']; direction: RIGHT; " rank="23"
+  <g k9-elem="link" id="fan6-fan7" drawDirection="RIGHT" k9-info="link: ['fan6','fan7']; direction: RIGHT; " rank="23"
                                                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan6" class=" kite9-from" transform="translate(417.0,84.0)" k9-info="position: none; terminates: fan6-fan7; terminates-at: fan6; end: from; rectangular: terminator; rect-pos: [417.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan6" transform="translate(417.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan6-fan7; terminates-at: fan6; end: from; rectangular: terminator; rect-pos: [417.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan7" class=" kite9-to" transform="translate(427.0,84.0)" k9-info="position: none; terminates: fan6-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [427.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan7" transform="translate(427.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan6-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [427.0,84.0]; rect-size: [10.0,10.0]; "
                                                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                         />
   </g
                                                                                                                                                                                                                                         >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                                         >
       <path style="marker-start: ; marker-end: " class="link" d="M422 89 L432 89"
                                                                                                                                                                                                                                           />

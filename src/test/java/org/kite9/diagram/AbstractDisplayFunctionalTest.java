@@ -123,7 +123,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 				
 		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
 		        	if (comparison.getType() == ComparisonType.ATTR_VALUE) {
-		        		if (comparison.getControlDetails().getXPath().endsWith("@k9-info")) {
+		        		if (comparison.getControlDetails().getXPath().contains("@k9-")) {
 		        			// ignore the info
 		        			return;
 		        		}

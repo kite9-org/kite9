@@ -2,10 +2,8 @@ package org.kite9.diagram.batik.transform;
 
 import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.common.Kite9XMLProcessingException;
 
 public class TransformFactory {
 
@@ -28,10 +26,7 @@ public class TransformFactory {
 			}
 			//$FALL-THROUGH$
 		case POSITION:
-			if (diagramElement instanceof Rectangular) {
-				return new PositioningTransformer((Rectangular) diagramElement);
-			}
-			//$FALL-THROUGH$
+			return new PositioningTransformer(diagramElement);
 		case NONE:
 			return new NoopTransformer();
 		case DEFAULT:

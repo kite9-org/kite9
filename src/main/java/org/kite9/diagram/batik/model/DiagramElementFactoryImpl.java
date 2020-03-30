@@ -83,7 +83,7 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 			case REGULAR:
 			default:
 				return new ConnectedLeafImpl(el, parent, context, new SVGLeafPainter(el, context), ContentTransform.CROP);
-			}
+			} 
 		case LINK:
 			return new ConnectionImpl(el, parent, context, new DirectSVGGroupPainter(el), ContentTransform.POSITION);
 		case LINK_END:

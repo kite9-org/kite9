@@ -6,17 +6,17 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-elem="diagram" id="my_diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [364.0,122.0]; "
+  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [364.0,122.0]; " id="my_diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g transform="translate(15.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [334.0,92.0]; " bordered="true" rank="0" class=" kite9-context" id="bladerunner" k9-elem="context"
+  <g k9-elem="context" bordered="true" id="bladerunner" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; horiz: CENTER; vert: CENTER; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [334.0,92.0]; " rank="0"
       >
     
-    <g k9-elem="glyph" id="harrison_ford" class=" kite9-glyph" transform="translate(208.0,12.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [223.0,27.0]; rect-size: [114.0,48.0]; "
+    <g k9-elem="glyph" id="harrison_ford" transform="translate(208.0,12.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [223.0,27.0]; rect-size: [114.0,48.0]; "
         >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
           >
       <rect x="0" y="0" width="114.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
             />
@@ -25,9 +25,9 @@
     <g class="glyph"
             >
       
-      <g k9-elem="stereotype" id="harrison_ford-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [233.0,33.0]; rect-size: [94.0,14.0]; "
+      <g k9-elem="stereotype" id="harrison_ford-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [233.0,33.0]; rect-size: [94.0,14.0]; "
               >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                 >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -37,7 +37,7 @@
                   >
     <g class="glyph-stereotype-text"
                   >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" font-family="'opensans-bold-webfont'" transform="translate(-4952.7,.5)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [264.0,33.0]; rect-size: [32.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4952.7,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [264.0,33.0]; rect-size: [32.0,14.0]; "
                     ><text x="4983.7314" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
                         >A</tspan
@@ -50,9 +50,9 @@
                     >
   </g
                     >
-      <g k9-elem="label" id="harrison_ford-label" class=" kite9-label" transform="translate(10.0,25.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; "
+      <g k9-elem="label" id="harrison_ford-label" transform="translate(10.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; "
                     >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                       >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -62,7 +62,7 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
                               >H</tspan
@@ -82,9 +82,9 @@
                           >
   </g
                           >
-    <g k9-elem="glyph" id="ridley_scott" class=" kite9-glyph" transform="translate(12.0,12.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [27.0,27.0]; rect-size: [99.0,48.0]; "
+    <g k9-elem="glyph" id="ridley_scott" transform="translate(12.0,12.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [27.0,27.0]; rect-size: [99.0,48.0]; "
                           >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                             >
       <rect x="0" y="0" width="99.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="48.0"
                               />
@@ -93,9 +93,9 @@
     <g class="glyph"
                               >
       
-      <g k9-elem="stereotype" id="ridley_scott-stereo" class=" kite9-stereotype" transform="translate(10.0,6.0)" k9-info="position: none; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [37.0,33.0]; rect-size: [79.0,14.0]; "
+      <g k9-elem="stereotype" id="ridley_scott-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [37.0,33.0]; rect-size: [79.0,14.0]; "
                                 >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                   >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -105,7 +105,7 @@
                                     >
     <g class="glyph-stereotype-text"
                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class=" kite9-text-label" font-family="'opensans-bold-webfont'" transform="translate(-4961.4,.5)" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [52.0,33.0]; rect-size: [49.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4961.4,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [52.0,33.0]; rect-size: [49.0,14.0]; "
                                       ><text x="4975.3291" xml:space="preserve" y="10.6283" stroke="none"
                                         ><tspan
                                           >D</tspan
@@ -118,9 +118,9 @@
                                       >
   </g
                                       >
-      <g k9-elem="label" id="ridley_scott-label" class=" kite9-label" transform="translate(10.0,25.0)" k9-info="position: none; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; "
+      <g k9-elem="label" id="ridley_scott-label" transform="translate(10.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; "
                                       >
-    <g class=" kite9-show-box" k9-info="" k9-elem="show-box"
+    <g k9-info="" k9-elem="show-box"
                                         >
     <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
@@ -130,7 +130,7 @@
                                           >
     <g class="glyph-label-text"
                                           >
-      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; " class="glyph-label-text kite9-text-label" k9-elem="text-label"
+      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
                                                 >R</tspan
@@ -150,21 +150,21 @@
                                             >
   </g
                                             >
-    <g k9-elem="arrow" id="worked_with" class=" kite9-arrow" transform="translate(121.0,26.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [136.0,41.0]; rect-size: [77.0,20.0]; "
+    <g k9-elem="arrow" id="worked_with" transform="translate(121.0,26.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [136.0,41.0]; rect-size: [77.0,20.0]; "
                                             >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back kite9-back" k9-info=""
+    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                                               >
       <rect x="0" y="0" width="77.0" style="fill: black; " rx="4" ry="4" height="20.0"
                                                 />
     </g
                                                 >
     
-      <g k9-elem="label" id="1" class=" kite9-label" transform="translate(5.0,3.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; "
+      <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; "
                                                 >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                   >
-      <g transform="translate(-.1,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; " class="arrow-label-text kite9-text-label" stroke="white" k9-elem="text-label"
+      <g transform="translate(-.1,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
                                                     ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                       ><tspan
                                                         >w</tspan
@@ -182,9 +182,9 @@
     
   </g
                                                     >
-    <g k9-elem="label" id="2" class=" kite9-label" transform="translate(133.0,70.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [148.0,85.0]; rect-size: [68.0,22.0]; "
+    <g k9-elem="label" id="2" transform="translate(133.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [148.0,85.0]; rect-size: [68.0,22.0]; "
                                                     >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;" class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
                                                       >
       <rect x="0" y="0" width="68.0" rx="4" class="container-label-back" ry="4" height="22.0"
                                                         />
@@ -192,7 +192,7 @@
                                                         >
     <g class="container-label-front"
                                                         >
-      <g font-size="11px" transform="translate(2.9,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,89.0]; rect-size: [60.0,14.0]; " class=" kite9-front" stroke="white" k9-elem="front"
+      <g font-size="11px" transform="translate(2.9,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,89.0]; rect-size: [60.0,14.0]; " stroke="white" k9-elem="front"
                                                           ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                             ><tspan
                                                               >B</tspan
@@ -206,7 +206,7 @@
   </g
                                                           >
   
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg;  " class=" kite9-back" k9-info=""
+    <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                                           >
       <rect x="0" y="0" width="334.0" rx="12" class="context-back" ry="12" height="92.0"
                                                             />
@@ -214,23 +214,23 @@
                                                             >
   </g
                                                             >
-  <g k9-elem="link" id="worked_with-harrison_ford" drawDirection="RIGHT" class=" kite9-link" k9-info="link: ['worked_with','harrison_ford']; direction: RIGHT; " rank="1"
+  <g k9-elem="link" id="worked_with-harrison_ford" drawDirection="RIGHT" k9-info="link: ['worked_with','harrison_ford']; direction: RIGHT; " rank="1"
                                                             >
     
-    <g k9-elem="from" reference="worked_with" class=" kite9-from" transform="translate(208.0,46.0)" k9-info="position: none; terminates: worked_with-harrison_ford; terminates-at: worked_with; end: from; rectangular: terminator; rect-pos: [208.0,46.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="worked_with" transform="translate(208.0,46.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: worked_with-harrison_ford; terminates-at: worked_with; end: from; rectangular: terminator; rect-pos: [208.0,46.0]; rect-size: [10.0,10.0]; "
                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                 />
   </g
                                                                 >
-    <g k9-elem="to" reference="harrison_ford" class=" kite9-to" transform="translate(218.0,46.0)" k9-info="position: none; terminates: worked_with-harrison_ford; terminates-at: harrison_ford; end: to; rectangular: terminator; rect-pos: [218.0,46.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="harrison_ford" transform="translate(218.0,46.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: worked_with-harrison_ford; terminates-at: harrison_ford; end: to; rectangular: terminator; rect-pos: [218.0,46.0]; rect-size: [10.0,10.0]; "
                                                                 >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                   />
   </g
                                                                   >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                   >
       <path style="marker-start: ; marker-end: " class="link" d="M213 51 L223 51"
                                                                     />
@@ -238,23 +238,23 @@
                                                                     >
   </g
                                                                     >
-  <g k9-elem="link" id="worked_with-ridley_scott" class=" kite9-link" k9-info="link: ['worked_with','ridley_scott']; direction: null; " rank="2"
+  <g k9-elem="link" id="worked_with-ridley_scott" k9-info="link: ['worked_with','ridley_scott']; direction: null; " rank="2"
                                                                     >
     
-    <g k9-elem="from" reference="worked_with" class=" kite9-from" transform="translate(131.0,46.0)" k9-info="position: none; terminates: worked_with-ridley_scott; terminates-at: worked_with; end: from; rectangular: terminator; rect-pos: [131.0,46.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="worked_with" transform="translate(131.0,46.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: worked_with-ridley_scott; terminates-at: worked_with; end: from; rectangular: terminator; rect-pos: [131.0,46.0]; rect-size: [10.0,10.0]; "
                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                         />
   </g
                                                                         >
-    <g k9-elem="to" reference="ridley_scott" class=" kite9-to" transform="translate(121.0,46.0)" k9-info="position: none; terminates: worked_with-ridley_scott; terminates-at: ridley_scott; end: to; rectangular: terminator; rect-pos: [121.0,46.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="ridley_scott" transform="translate(121.0,46.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: worked_with-ridley_scott; terminates-at: ridley_scott; end: to; rectangular: terminator; rect-pos: [121.0,46.0]; rect-size: [10.0,10.0]; "
                                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                           />
   </g
                                                                           >
   
-    <g k9-elem="link-body" style="kite9-type: svg; kite9-usage: decal;" class=" kite9-link-body" k9-info=""
+    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                           >
       <path style="marker-start: ; marker-end: " class="link" d="M136 51 L126 51"
                                                                             />

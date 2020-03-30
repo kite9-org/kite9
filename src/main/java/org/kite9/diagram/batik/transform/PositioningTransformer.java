@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,9 +19,9 @@ import org.w3c.dom.Element;
  */
 public class PositioningTransformer extends AbstractRectangularTransformer implements LeafTransformer {
 
-	private Rectangular owner;
+	private DiagramElement owner;
 	
-	public PositioningTransformer(Rectangular r) {
+	public PositioningTransformer(DiagramElement r) {
 		this.owner = r;
 	}
 	

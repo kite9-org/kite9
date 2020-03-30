@@ -1,5 +1,6 @@
 package org.kite9.diagram.batik.transform;
 
+import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.CostedDimension;
@@ -24,14 +25,16 @@ public abstract class AbstractRectangularTransformer {
 	 * translate.
 	 */
 	protected Dimension2D getRenderedRelativePosition(DiagramElement de) {
-		if (de instanceof Rectangular) {
-			Dimension2D position = getOrigin(de);
-			Dimension2D parentPosition = getParentOrigin(de);
-			Dimension2D out = position.minus(parentPosition);
-			return out;
-		} else {
-			return null;
-		}
+		Dimension2D position = CostedDimension.ZERO;
+		if (de instanceof Decal) {
+			return position;
+		} else if (de instanceof Rectangular) {
+			position = getOrigin(de);
+		} 
+		
+		Dimension2D parentPosition = getParentOrigin(de);
+		Dimension2D out = position.minus(parentPosition);
+		return out;
 	}
 
 	public Dimension2D getOrigin(DiagramElement de) {

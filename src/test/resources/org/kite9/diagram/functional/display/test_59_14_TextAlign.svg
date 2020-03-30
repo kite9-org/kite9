@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [277.0,190.0]; "
+  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [277.0,190.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px " class=" kite9-rect" transform="translate(15.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [247.0,160.0]; "
+    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 10px; kite9-layout: down; kite9-min-size: 150px 150px " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [247.0,160.0]; "
       >
-      <g k9-elem="decal" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-decal" k9-info=""
+      <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="decal"
         >
         <rect x="0" y="0" width="247.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="160.0"
           />
       </g
           >
-      <g font-size="25px" transform="translate(7.8,13.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [227.0,34.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="25px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" font-family="'opensans-light-webfont'" transform="translate(7.8,13.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [227.0,34.0]; "
           ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
             ><tspan
               >h</tspan
@@ -33,7 +33,7 @@
             ></text
           ></g
           >
-      <g font-size="25px" transform="translate(85.8,47.3)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [103.0,59.0]; rect-size: [71.0,34.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="25px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" font-family="'opensans-light-webfont'" transform="translate(85.8,47.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [103.0,59.0]; rect-size: [71.0,34.0]; "
           ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
             ><tspan
               >h</tspan
@@ -44,7 +44,7 @@
             ></text
           ></g
           >
-      <g font-size="15px" transform="translate(-4877.4,80.0)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px;kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [113.0,93.0]; rect-size: [51.0,36.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="15px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px;kite9-vertical-align: center; kite9-horizontal-align: center; text-align: middle;" font-family="'opensans-light-webfont'" transform="translate(-4877.4,80.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [113.0,93.0]; rect-size: [51.0,36.0]; "
           ><text x="4982.2793" xml:space="preserve" y="14.0691" stroke="none"
             ><tspan
               >b</tspan
@@ -55,7 +55,7 @@
             >middler</text
           ></g
           >
-      <g font-size="15px" transform="translate(-9761.5,116.0)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;" font-family="'opensans-light-webfont'" k9-info="position: none; horiz: RIGHT; vert: BOTTOM; rectangular: connected; rect-pos: [205.0,129.0]; rect-size: [47.0,36.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="15px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; kite9-vertical-align: bottom; kite9-horizontal-align: right; text-align: end;" font-family="'opensans-light-webfont'" transform="translate(-9761.5,116.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: RIGHT; vert: BOTTOM; rectangular: connected; rect-pos: [205.0,129.0]; rect-size: [47.0,36.0]; "
           ><text x="9967.3486" xml:space="preserve" y="14.0691" stroke="none"
             ><tspan
               >h</tspan

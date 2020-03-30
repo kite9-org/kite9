@@ -7,20 +7,20 @@
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g k9-elem="diagram" id="The Diagram" class=" kite9-diagram" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [146.0,93.0]; "
+  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [146.0,93.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g k9-elem="rect" style="kite9-type: container;  " class=" kite9-rect" transform="translate(15.0,15.0)" k9-info="position: none; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; "
+    <g k9-elem="rect" style="kite9-type: container;  " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; "
       >
-      <g k9-elem="decal" style="kite9-usage: decal; kite9-type: svg; " class=" kite9-decal" k9-info=""
+      <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="decal"
         >
         <rect x="0" y="0" width="116.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="63.0"
           />
       </g
           >
-      <g font-size="8px" transform="translate(-89.6,-49.0)" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " font-family="'opensans-light-webfont'" k9-info="position: none; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; " class=" kite9-text" k9-elem="text"
+      <g k9-elem="text" font-size="8px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " font-family="'opensans-light-webfont'" transform="translate(-89.6,-49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; "
           ><text x="100" xml:space="preserve" y="57.5035" stroke="none"
             ><tspan
               >S</tspan
