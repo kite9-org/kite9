@@ -166,11 +166,14 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			input.setDocumentURI(uri);
 			ensureCSSEngine((ADLDocument) input);
 			new BasicTemplater(this.docLoader).processContents(input);
-			super.transcode(input, uri, output);
-			
+
 			if (log.go()) {
 				log.send(new XMLHelper().toXML(input));
 			}
+
+			
+			super.transcode(input, uri, output);
+			
 			
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
