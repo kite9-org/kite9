@@ -98,9 +98,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 
 	private double incorporateAlongMinimumLength(DiagramElement along, Direction d, double in, DiagramElement a, Direction aSide, DiagramElement b, Direction bSide) {
 		if (along instanceof Connection) {
-			if ((in == 0) && passingThrough((Connection) along, a, b)) {
+			if (passingThrough((Connection) along, a, b)) {
 				// in this special case, the link can pass 
-				return 0;
+				return in;
 			}
 			
 			double alongDist = getAlongMinimumLength((Connection) along, d, a, aSide, b, bSide);

@@ -141,7 +141,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 
 	@Override
 	public Document checkCache(String uri) {
-		Document d = super.checkCache(uri);
+		Document d = uri == null ? null : super.checkCache(uri);
 		if (d != null) {
 			return d;
 		} else {
