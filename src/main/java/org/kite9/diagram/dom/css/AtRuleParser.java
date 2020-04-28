@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.css;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,6 +169,18 @@ public class AtRuleParser extends Parser {
         }
 	}
 
+
+	/**
+	 * This allows proper error reporting within style declarations.
+	 */
+	@Override
+	public void parseStyleDeclaration(String source) throws CSSException, IOException {
+		this.documentURI = source;
+		super.parseStyleDeclaration(source);
+	}
+
+	
+	
 	
 }
 

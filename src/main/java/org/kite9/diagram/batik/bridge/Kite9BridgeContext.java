@@ -13,6 +13,7 @@ import org.apache.batik.bridge.URIResolver;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
+import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
@@ -134,10 +135,12 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
      * contains better error-handling, so we don't swallow the exception.
      */
     public Node getReferencedNode(Element e, String uri) {
+        SVGDocument document = (SVGDocument)e.getOwnerDocument();
+        URIResolver ur = createURIResolver(document, documentLoader);
+        Node ref;
+        
         try {
-            SVGDocument document = (SVGDocument)e.getOwnerDocument();
-            URIResolver ur = createURIResolver(document, documentLoader);
-            Node ref = ur.getNode(uri, e);
+            ref = ur.getNode(uri, e);
             if (ref == null) {
                 throw new BridgeException(this, e, ERR_URI_BAD_TARGET,
                                           new Object[] {uri});
@@ -158,9 +161,21 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
                 }
                 return ref;
             }
+        } catch (SAXIOException ex) {
+        	// to be consistent with safari and chome, if an element reference is on a stylesheet, then 
+        	// we should take the reference from the current document.
+        	try {
+        		ParsedURL pUrl = new ParsedURL(uri);
+        		String fragment = pUrl.getRef();
+        		ref = ur.getNode("#" + fragment, e);
+        		return ref;
+        	} catch (Exception ex2) {
+        		// throw the original exception
+        		throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+        	}
         } catch (Exception ex) {
             throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
         }
     }
-	
+
 }

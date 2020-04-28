@@ -186,7 +186,7 @@ public abstract class AbstractPainter implements Painter {
 				.forEach(c -> {
 					Element e = ((HasSVGRepresentation)c).output(d, postProcessor);
 					if (e != null) {
-						e.setAttribute("k9-elem", "--temporary");
+						e.setAttribute("k9-elem", "_temporary");
 						e.setAttribute("id", c.getID());
 						out.appendChild(e);
 					}

@@ -203,27 +203,14 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 	}
 
-	private void copySVGAttributes(Element in, Element out) {
-		NamedNodeMap nnm = in.getAttributes();
-		
-		for (int i = 0; i < nnm.getLength(); i++) {
-			Attr a = (Attr) nnm.item(i);
-			
-			if ((a.getNamespaceURI() == null) || (a.getNamespaceURI().equals(SVGConstants.SVG_NAMESPACE_URI))) {
-				if(!a.getName().equals("id")) {
-					out.setAttributeNS(a.getNamespaceURI(), a.getName(), a.getValue());
-				}
-			}
-		}
-	}
-
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
 		writeSVGToOutput(outputDocument, output);
 	}
 
-	/** Writes the SVG content held by the svgGenerator to the
+	/** 
+	 * Writes the SVG content held by the svgGenerator to the
      * <code>TranscoderOutput</code>. This method does nothing if the output already
      * contains a Document.
      * 
