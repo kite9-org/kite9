@@ -34,13 +34,15 @@
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4961.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [70.0,21.0]; rect-size: [38.0,14.0]; "
-                  ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
-                    ><tspan
-                      >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4961.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [70.0,21.0]; rect-size: [38.0,14.0]; "
+                  ><g font-family="'opensans-bold-webfont'"
+                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
-                      >tereo</tspan
-                    ></text
+                        >S</tspan
+                        ><tspan
+                        >tereo</tspan
+                      ></text
+                    ></g
                   ></g
                   >
     </g
@@ -59,13 +61,15 @@
                       >
     <g class="glyph-label-text"
                       >
-      <g font-size="15px" transform="translate(-.9,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [76.0,40.0]; rect-size: [27.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                          ><tspan
-                            >O</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.9,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [76.0,40.0]; rect-size: [27.0,17.0]; "
+                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
-                            >ne</tspan
-                          ></text
+                              >O</tspan
+                              ><tspan
+                              >ne</tspan
+                            ></text
+                          ></g
                         ></g
                         >
     </g
@@ -79,15 +83,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                             >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,4.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [55.0,66.0]; rect-size: [45.0,12.0]; "
-                              ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                ><tspan
-                                  >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,4.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [55.0,66.0]; rect-size: [45.0,12.0]; "
+                              ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                   ><tspan
-                                  >ome </tspan
-                                  ><tspan
-                                  >row</tspan
-                                ></text
+                                    >s</tspan
+                                    ><tspan
+                                    >ome </tspan
+                                    ><tspan
+                                    >row</tspan
+                                  ></text
+                                ></g
                               ></g
                               >
     </g
@@ -99,17 +105,19 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,4.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [50.0,86.0]; rect-size: [73.0,12.0]; "
-                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                    ><tspan
-                                      >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,4.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [50.0,86.0]; rect-size: [73.0,12.0]; "
+                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                       ><tspan
-                                      >ome </tspan
-                                      ><tspan
-                                      >other </tspan
-                                      ><tspan
-                                      >row</tspan
-                                    ></text
+                                        >s</tspan
+                                        ><tspan
+                                        >ome </tspan
+                                        ><tspan
+                                        >other </tspan
+                                        ><tspan
+                                        >row</tspan
+                                      ></text
+                                    ></g
                                   ></g
                                   >
     </g
@@ -137,9 +145,11 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                         >
-      <g transform="translate(-.6,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,65.0]; rect-size: [5.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                                            >a</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.6,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,65.0]; rect-size: [5.0,14.0]; "
+                                          ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                              >a</text
+                                            ></g
                                           ></g
                                           >
     </g
@@ -163,9 +173,11 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                 >
-      <g transform="translate(-1.0,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [153.0,85.0]; rect-size: [5.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                                                  ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                                                    >b</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-1.0,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [153.0,85.0]; rect-size: [5.0,14.0]; "
+                                                  ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
+                                                      >b</text
+                                                    ></g
                                                   ></g
                                                   >
     </g

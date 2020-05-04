@@ -52,13 +52,15 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [111.0,132.0]; rect-size: [24.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                            ><tspan
-                              >t</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [111.0,132.0]; rect-size: [24.0,17.0]; "
+                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
-                              >wo</tspan
-                            ></text
+                                >t</tspan
+                                ><tspan
+                                >wo</tspan
+                              ></text
+                            ></g
                           ></g
                           >
     </g
@@ -116,13 +118,15 @@
                                             >
     <g class="glyph-label-text"
                                             >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,182.0]; rect-size: [36.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                ><tspan
-                                                  >t</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,182.0]; rect-size: [36.0,17.0]; "
+                                              ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                   ><tspan
-                                                  >hree</tspan
-                                                ></text
+                                                    >t</tspan
+                                                    ><tspan
+                                                    >hree</tspan
+                                                  ></text
+                                                ></g
                                               ></g
                                               >
     </g
@@ -155,10 +159,10 @@
                                                     />
     </g
                                                     >
-  <rect x="0.0px" y="0.0px" width="76.0px" k9-info="position: [3,3,0,0]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-0" height="50.0px" k9-elem="--temporary"
-                                                    /><rect x="76.0px" y="50.0px" width="64.0px" k9-info="position: [6,6,1,1]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [91.0,65.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-1" height="50.0px" k9-elem="--temporary"
-                                                    /><rect x="0.0px" y="100.0px" width="76.0px" k9-info="position: [3,3,2,2]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,115.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-2" height="50.0px" k9-elem="--temporary"
-                                                    /><rect x="76.0px" y="150.0px" width="64.0px" k9-info="position: [6,6,3,3]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [3,4]; rectangular: connected; rect-pos: [91.0,165.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-3" height="50.0px" k9-elem="--temporary"
+  <rect x="0.0px" y="0.0px" width="76.0px" k9-info="position: [3,3,0,0]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-0" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="76.0px" y="50.0px" width="64.0px" k9-info="position: [6,6,1,1]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [91.0,65.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-1" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="0.0px" y="100.0px" width="76.0px" k9-info="position: [3,3,2,2]; sizing: null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,115.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-2" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="76.0px" y="150.0px" width="64.0px" k9-info="position: [6,6,3,3]; sizing: null; layout: null; grid-x: [1,2]; grid-y: [3,4]; rectangular: connected; rect-pos: [91.0,165.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-3" height="50.0px" k9-elem="_temporary"
                                                   /></g
                                                   >
   <g k9-elem="glyph" id="one" transform="translate(167.0,126.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [167.0,126.0]; rect-size: [45.0,29.0]; " rank="1"
@@ -184,13 +188,15 @@
                                                             >
     <g class="glyph-label-text"
                                                             >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [177.0,132.0]; rect-size: [25.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                ><tspan
-                                                                  >o</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [177.0,132.0]; rect-size: [25.0,17.0]; "
+                                                              ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                   ><tspan
-                                                                  >ne</tspan
-                                                                ></text
+                                                                    >o</tspan
+                                                                    ><tspan
+                                                                    >ne</tspan
+                                                                  ></text
+                                                                ></g
                                                               ></g
                                                               >
     </g

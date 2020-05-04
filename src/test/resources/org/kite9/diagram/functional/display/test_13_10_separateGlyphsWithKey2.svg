@@ -37,9 +37,11 @@
                   >
     <g class="glyph-label-text"
                   >
-      <g font-size="15px" transform="translate(-.7,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,95.0]; rect-size: [6.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                      >a</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.7,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,95.0]; rect-size: [6.0,17.0]; "
+                    ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                        >a</text
+                      ></g
                     ></g
                     >
     </g
@@ -74,9 +76,11 @@
                               >
     <g class="glyph-label-text"
                               >
-      <g font-size="15px" transform="translate(-1.3,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [73.0,95.0]; rect-size: [7.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                  >b</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [73.0,95.0]; rect-size: [7.0,17.0]; "
+                                ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                    >b</text
+                                  ></g
                                 ></g
                                 >
     </g
@@ -111,9 +115,11 @@
                                           >
     <g class="glyph-label-text"
                                           >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [120.0,72.0]; rect-size: [5.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                              >c</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [120.0,72.0]; rect-size: [5.0,17.0]; "
+                                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                >c</text
+                                              ></g
                                             ></g
                                             >
     </g
@@ -127,15 +133,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [110.0,96.0]; rect-size: [24.0,22.0]; "
-                                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                    ><tspan
-                                                      >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [110.0,96.0]; rect-size: [24.0,22.0]; "
+                                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                       ><tspan
-                                                      >ome</tspan
-                                                    ></text
-                                                    ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                    >stuff</text
+                                                        >s</tspan
+                                                        ><tspan
+                                                        >ome</tspan
+                                                      ></text
+                                                      ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
+                                                      >stuff</text
+                                                    ></g
                                                   ></g
                                                   >
     </g
@@ -147,13 +155,15 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                     >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.9,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [110.0,122.0]; rect-size: [20.0,11.0]; "
-                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                        ><tspan
-                                                          >h</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.9,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [110.0,122.0]; rect-size: [20.0,11.0]; "
+                                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                           ><tspan
-                                                          >ere</tspan
-                                                        ></text
+                                                            >h</tspan
+                                                            ><tspan
+                                                            >ere</tspan
+                                                          ></text
+                                                        ></g
                                                       ></g
                                                       >
     </g
@@ -183,15 +193,17 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="bold-text"
                                                               >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(16.1,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [189.0,99.0]; rect-size: [52.0,11.0]; "
-                                                                ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
-                                                                  ><tspan
-                                                                    >B</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(16.1,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [189.0,99.0]; rect-size: [52.0,11.0]; "
+                                                                ><g font-family="'opensans-bold-webfont'" font-size="10px"
+                                                                  ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
                                                                     ><tspan
-                                                                    >ig </tspan
-                                                                    ><tspan
-                                                                    >Movies</tspan
-                                                                  ></text
+                                                                      >B</tspan
+                                                                      ><tspan
+                                                                      >ig </tspan
+                                                                      ><tspan
+                                                                      >Movies</tspan
+                                                                    ></text
+                                                                  ></g
                                                                 ></g
                                                                 >
     </g
@@ -203,25 +215,27 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                   >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [172.0,114.0]; rect-size: [86.0,22.0]; "
-                                                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                                      ><tspan
-                                                                        >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [172.0,114.0]; rect-size: [86.0,22.0]; "
+                                                                    ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                         ><tspan
-                                                                        >ome </tspan
+                                                                          >s</tspan
+                                                                          ><tspan
+                                                                          >ome </tspan
+                                                                          ><tspan
+                                                                          >text</tspan
+                                                                        ></text
+                                                                        ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                                                         ><tspan
-                                                                        >text</tspan
-                                                                      ></text
-                                                                      ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                                      ><tspan
-                                                                        >here </tspan
-                                                                        ><tspan
-                                                                        >blah </tspan
-                                                                        ><tspan
-                                                                        >blah </tspan
-                                                                        ><tspan
-                                                                        >bah</tspan
-                                                                      ></text
+                                                                          >here </tspan
+                                                                          ><tspan
+                                                                          >blah </tspan
+                                                                          ><tspan
+                                                                          >blah </tspan
+                                                                          ><tspan
+                                                                          >bah</tspan
+                                                                        ></text
+                                                                      ></g
                                                                     ></g
                                                                     >
     </g
@@ -265,9 +279,11 @@
                                                                                 >
     <g class="glyph-label-text"
                                                                                 >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [119.0,21.0]; rect-size: [7.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                                                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                                    >d</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [119.0,21.0]; rect-size: [7.0,17.0]; "
+                                                                                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                                                      >d</text
+                                                                                    ></g
                                                                                   ></g
                                                                                   >
     </g
@@ -302,9 +318,11 @@
                                                                                             >
     <g class="glyph-label-text"
                                                                                             >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [119.0,169.0]; rect-size: [6.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                                                >e</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [119.0,169.0]; rect-size: [6.0,17.0]; "
+                                                                                              ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                                                ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                                                                                  >e</text
+                                                                                                ></g
                                                                                               ></g
                                                                                               >
     </g

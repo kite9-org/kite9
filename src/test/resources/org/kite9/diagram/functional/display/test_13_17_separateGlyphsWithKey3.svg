@@ -37,9 +37,11 @@
                   >
     <g class="glyph-label-text"
                   >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,33.0]; rect-size: [5.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                      >c</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,33.0]; rect-size: [5.0,17.0]; "
+                    ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                      ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                        >c</text
+                      ></g
                     ></g
                     >
     </g
@@ -61,27 +63,29 @@
                         >
     <g class="container-label-front"
                         >
-      <g font-size="11px" transform="translate(3.5,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [66.0,50.0]; rect-size: [150.0,14.0]; " stroke="white" k9-elem="front"
-                          ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
-                            ><tspan
-                              >s</tspan
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.5,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [66.0,50.0]; rect-size: [150.0,14.0]; "
+                          ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
+                            ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                               ><tspan
-                              >sdvd </tspan
-                              ><tspan
-                              >ds </tspan
-                              ><tspan
-                              >fsdfs </tspan
-                              ><tspan
-                              >ds </tspan
-                              ><tspan
-                              >dsf </tspan
-                              ><tspan
-                              >dsf </tspan
-                              ><tspan
-                              >dsf </tspan
-                              ><tspan
-                              >ds</tspan
-                            ></text
+                                >s</tspan
+                                ><tspan
+                                >sdvd </tspan
+                                ><tspan
+                                >ds </tspan
+                                ><tspan
+                                >fsdfs </tspan
+                                ><tspan
+                                >ds </tspan
+                                ><tspan
+                                >dsf </tspan
+                                ><tspan
+                                >dsf </tspan
+                                ><tspan
+                                >dsf </tspan
+                                ><tspan
+                                >ds</tspan
+                              ></text
+                            ></g
                           ></g
                           >
     </g
@@ -120,9 +124,11 @@
                                       >
     <g class="glyph-label-text"
                                       >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,84.0]; rect-size: [6.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                          >e</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,84.0]; rect-size: [6.0,17.0]; "
+                                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                                            >e</text
+                                          ></g
                                         ></g
                                         >
     </g

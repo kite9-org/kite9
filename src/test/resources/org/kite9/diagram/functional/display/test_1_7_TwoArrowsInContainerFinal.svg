@@ -28,13 +28,15 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
               >
-      <g transform="translate(-.7,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [32.0,30.0]; rect-size: [22.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                  ><tspan
-                    >O</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.7,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [32.0,30.0]; rect-size: [22.0,14.0]; "
+                ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                  ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                     ><tspan
-                    >ne</tspan
-                  ></text
+                      >O</tspan
+                      ><tspan
+                      >ne</tspan
+                    ></text
+                  ></g
                 ></g
                 >
     </g
@@ -58,13 +60,15 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                       >
-      <g transform="translate(-.1,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [74.0,30.0]; rect-size: [22.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                        ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                          ><tspan
-                            >T</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.1,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [74.0,30.0]; rect-size: [22.0,14.0]; "
+                        ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                             ><tspan
-                            >wo</tspan
-                          ></text
+                              >T</tspan
+                              ><tspan
+                              >wo</tspan
+                            ></text
+                          ></g
                         ></g
                         >
     </g

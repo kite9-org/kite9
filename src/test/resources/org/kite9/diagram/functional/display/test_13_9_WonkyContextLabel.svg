@@ -37,13 +37,15 @@
                   >
     <g class="glyph-stereotype-text"
                   >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4952.7,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [264.0,33.0]; rect-size: [32.0,14.0]; "
-                    ><text x="4983.7314" xml:space="preserve" y="10.6283" stroke="none"
-                      ><tspan
-                        >A</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4952.7,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [264.0,33.0]; rect-size: [32.0,14.0]; "
+                    ><g font-family="'opensans-bold-webfont'"
+                      ><text x="4983.7314" xml:space="preserve" y="10.6283" stroke="none"
                         ><tspan
-                        >ctor</tspan
-                      ></text
+                          >A</tspan
+                          ><tspan
+                          >ctor</tspan
+                        ></text
+                      ></g
                     ></g
                     >
     </g
@@ -62,15 +64,17 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                            ><tspan
-                              >H</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.5,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [233.0,52.0]; rect-size: [94.0,17.0]; "
+                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
-                              >arrison </tspan
-                              ><tspan
-                              >Ford</tspan
-                            ></text
+                                >H</tspan
+                                ><tspan
+                                >arrison </tspan
+                                ><tspan
+                                >Ford</tspan
+                              ></text
+                            ></g
                           ></g
                           >
     </g
@@ -105,13 +109,15 @@
                                     >
     <g class="glyph-stereotype-text"
                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4961.4,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [52.0,33.0]; rect-size: [49.0,14.0]; "
-                                      ><text x="4975.3291" xml:space="preserve" y="10.6283" stroke="none"
-                                        ><tspan
-                                          >D</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4961.4,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [52.0,33.0]; rect-size: [49.0,14.0]; "
+                                      ><g font-family="'opensans-bold-webfont'"
+                                        ><text x="4975.3291" xml:space="preserve" y="10.6283" stroke="none"
                                           ><tspan
-                                          >irector</tspan
-                                        ></text
+                                            >D</tspan
+                                            ><tspan
+                                            >irector</tspan
+                                          ></text
+                                        ></g
                                       ></g
                                       >
     </g
@@ -130,15 +136,17 @@
                                           >
     <g class="glyph-label-text"
                                           >
-      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                              ><tspan
-                                                >R</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.5,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [37.0,52.0]; rect-size: [79.0,17.0]; "
+                                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                 ><tspan
-                                                >idley </tspan
-                                                ><tspan
-                                                >Scott</tspan
-                                              ></text
+                                                  >R</tspan
+                                                  ><tspan
+                                                  >idley </tspan
+                                                  ><tspan
+                                                  >Scott</tspan
+                                                ></text
+                                              ></g
                                             ></g
                                             >
     </g
@@ -164,15 +172,17 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                   >
-      <g transform="translate(-.1,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                                                      ><tspan
-                                                        >w</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.1,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [141.0,44.0]; rect-size: [67.0,14.0]; "
+                                                    ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                                                      ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                         ><tspan
-                                                        >orked </tspan
-                                                        ><tspan
-                                                        >with</tspan
-                                                      ></text
+                                                          >w</tspan
+                                                          ><tspan
+                                                          >orked </tspan
+                                                          ><tspan
+                                                          >with</tspan
+                                                        ></text
+                                                      ></g
                                                     ></g
                                                     >
     </g
@@ -192,13 +202,15 @@
                                                         >
     <g class="container-label-front"
                                                         >
-      <g font-size="11px" transform="translate(2.9,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,89.0]; rect-size: [60.0,14.0]; " stroke="white" k9-elem="front"
-                                                          ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
-                                                            ><tspan
-                                                              >B</tspan
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(2.9,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,89.0]; rect-size: [60.0,14.0]; "
+                                                          ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
+                                                            ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                               ><tspan
-                                                              >laderunner</tspan
-                                                            ></text
+                                                                >B</tspan
+                                                                ><tspan
+                                                                >laderunner</tspan
+                                                              ></text
+                                                            ></g
                                                           ></g
                                                           >
     </g

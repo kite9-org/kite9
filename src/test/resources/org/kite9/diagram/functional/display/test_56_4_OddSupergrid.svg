@@ -52,19 +52,21 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g font-size="15px" transform="translate(-.2,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,46.0]; rect-size: [216.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                            ><tspan
-                              >f</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,46.0]; rect-size: [216.0,17.0]; "
+                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
-                              >our </tspan
-                              ><tspan
-                              >ster </tspan
-                              ><tspan
-                              >sdlfkjsdlkfsdlkfk </tspan
-                              ><tspan
-                              >lksdjf</tspan
-                            ></text
+                                >f</tspan
+                                ><tspan
+                                >our </tspan
+                                ><tspan
+                                >ster </tspan
+                                ><tspan
+                                >sdlfkjsdlkfsdlkfk </tspan
+                                ><tspan
+                                >lksdjf</tspan
+                              ></text
+                            ></g
                           ></g
                           >
     </g
@@ -188,15 +190,17 @@
                                                                     >
     <g class="glyph-stereotype-text"
                                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4924.0,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [342.0,167.0]; rect-size: [49.0,14.0]; "
-                                                                      ><text x="4974.7578" xml:space="preserve" y="10.6283" stroke="none"
-                                                                        ><tspan
-                                                                          >t</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4924.0,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [342.0,167.0]; rect-size: [49.0,14.0]; "
+                                                                      ><g font-family="'opensans-bold-webfont'"
+                                                                        ><text x="4974.7578" xml:space="preserve" y="10.6283" stroke="none"
                                                                           ><tspan
-                                                                          >wo-</tspan
-                                                                          ><tspan
-                                                                          >ster</tspan
-                                                                        ></text
+                                                                            >t</tspan
+                                                                            ><tspan
+                                                                            >wo-</tspan
+                                                                            ><tspan
+                                                                            >ster</tspan
+                                                                          ></text
+                                                                        ></g
                                                                       ></g
                                                                       >
     </g
@@ -215,15 +219,17 @@
                                                                           >
     <g class="glyph-label-text"
                                                                           >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [291.0,186.0]; rect-size: [151.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                              ><tspan
-                                                                                >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [291.0,186.0]; rect-size: [151.0,17.0]; "
+                                                                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                 ><tspan
-                                                                                >dlfkjsdlkfsdlkfk </tspan
-                                                                                ><tspan
-                                                                                >lksdjf</tspan
-                                                                              ></text
+                                                                                  >s</tspan
+                                                                                  ><tspan
+                                                                                  >dlfkjsdlkfsdlkfk </tspan
+                                                                                  ><tspan
+                                                                                  >lksdjf</tspan
+                                                                                ></text
+                                                                              ></g
                                                                             ></g
                                                                             >
     </g
@@ -292,15 +298,17 @@
                                                                                                   >
     <g class="glyph-stereotype-text"
                                                                                                   >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4960.5,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [507.0,99.0]; rect-size: [49.0,14.0]; "
-                                                                                                    ><text x="4975.0098" xml:space="preserve" y="10.6283" stroke="none"
-                                                                                                      ><tspan
-                                                                                                        >o</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4960.5,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [507.0,99.0]; rect-size: [49.0,14.0]; "
+                                                                                                    ><g font-family="'opensans-bold-webfont'"
+                                                                                                      ><text x="4975.0098" xml:space="preserve" y="10.6283" stroke="none"
                                                                                                         ><tspan
-                                                                                                        >ne-</tspan
-                                                                                                        ><tspan
-                                                                                                        >ster</tspan
-                                                                                                      ></text
+                                                                                                          >o</tspan
+                                                                                                          ><tspan
+                                                                                                          >ne-</tspan
+                                                                                                          ><tspan
+                                                                                                          >ster</tspan
+                                                                                                        ></text
+                                                                                                      ></g
                                                                                                     ></g
                                                                                                     >
     </g
@@ -319,15 +327,17 @@
                                                                                                         >
     <g class="glyph-label-text"
                                                                                                         >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [492.0,118.0]; rect-size: [79.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                                                                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                                                            ><tspan
-                                                                                                              >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [492.0,118.0]; rect-size: [79.0,17.0]; "
+                                                                                                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                               ><tspan
-                                                                                                              >ome </tspan
-                                                                                                              ><tspan
-                                                                                                              >gylph</tspan
-                                                                                                            ></text
+                                                                                                                >S</tspan
+                                                                                                                ><tspan
+                                                                                                                >ome </tspan
+                                                                                                                ><tspan
+                                                                                                                >gylph</tspan
+                                                                                                              ></text
+                                                                                                            ></g
                                                                                                           ></g
                                                                                                           >
     </g
@@ -407,15 +417,17 @@
                                                                                                                                     >
     <g class="glyph-stereotype-text"
                                                                                                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4924.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [667.0,31.0]; rect-size: [59.0,14.0]; "
-                                                                                                                                      ><text x="4969.8506" xml:space="preserve" y="10.6283" stroke="none"
-                                                                                                                                        ><tspan
-                                                                                                                                          >t</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4924.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [667.0,31.0]; rect-size: [59.0,14.0]; "
+                                                                                                                                      ><g font-family="'opensans-bold-webfont'"
+                                                                                                                                        ><text x="4969.8506" xml:space="preserve" y="10.6283" stroke="none"
                                                                                                                                           ><tspan
-                                                                                                                                          >hree-</tspan
-                                                                                                                                          ><tspan
-                                                                                                                                          >ster</tspan
-                                                                                                                                        ></text
+                                                                                                                                            >t</tspan
+                                                                                                                                            ><tspan
+                                                                                                                                            >hree-</tspan
+                                                                                                                                            ><tspan
+                                                                                                                                            >ster</tspan
+                                                                                                                                          ></text
+                                                                                                                                        ></g
                                                                                                                                       ></g
                                                                                                                                       >
     </g
@@ -434,15 +446,17 @@
                                                                                                                                           >
     <g class="glyph-label-text"
                                                                                                                                           >
-      <g font-size="15px" transform="translate(-.8,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [621.0,50.0]; rect-size: [151.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                                                                                                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                                                                                                                              ><tspan
-                                                                                                                                                >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.8,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [621.0,50.0]; rect-size: [151.0,17.0]; "
+                                                                                                                                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                                                                                                                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                                                                 ><tspan
-                                                                                                                                                >dlfkjsdlkfsdlkfk </tspan
-                                                                                                                                                ><tspan
-                                                                                                                                                >lksdjf</tspan
-                                                                                                                                              ></text
+                                                                                                                                                  >s</tspan
+                                                                                                                                                  ><tspan
+                                                                                                                                                  >dlfkjsdlkfsdlkfk </tspan
+                                                                                                                                                  ><tspan
+                                                                                                                                                  >lksdjf</tspan
+                                                                                                                                                ></text
+                                                                                                                                              ></g
                                                                                                                                             ></g
                                                                                                                                             >
     </g

@@ -34,9 +34,11 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g font-size="15px" transform="translate(-.7,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [200.0,21.0]; rect-size: [6.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                    >a</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.7,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [200.0,21.0]; rect-size: [6.0,17.0]; "
+                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                      >a</text
+                    ></g
                   ></g
                   >
     </g
@@ -62,13 +64,15 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                         >
-      <g transform="translate(-.9,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [6.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                          ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                            ><tspan
-                              >i</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [6.0,14.0]; "
+                          ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                            ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                               ><tspan
-                              >1</tspan
-                            ></text
+                                >i</tspan
+                                ><tspan
+                                >1</tspan
+                              ></text
+                            ></g
                           ></g
                           >
     </g
@@ -103,15 +107,17 @@
                                     >
     <g class="connection-label-front"
                                     >
-      <g font-size="11px" transform="translate(3.5,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [45.0,33.0]; rect-size: [55.0,14.0]; " stroke="white" k9-elem="front"
-                                      ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
-                                        ><tspan
-                                          >a</tspan
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.5,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [45.0,33.0]; rect-size: [55.0,14.0]; "
+                                      ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
+                                        ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                           ><tspan
-                                          >rrow-</tspan
-                                          ><tspan
-                                          >hello</tspan
-                                        ></text
+                                            >a</tspan
+                                            ><tspan
+                                            >rrow-</tspan
+                                            ><tspan
+                                            >hello</tspan
+                                          ></text
+                                        ></g
                                       ></g
                                       >
     </g
@@ -128,15 +134,17 @@
                                           >
     <g class="connection-label-front"
                                           >
-      <g font-size="11px" transform="translate(3.8,5.4)" fill="white" style="kite9-type: text; " font-family="'opensans-light-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [112.0,33.0]; rect-size: [64.0,14.0]; " stroke="white" k9-elem="front"
-                                            ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
-                                              ><tspan
-                                                >g</tspan
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.8,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [112.0,33.0]; rect-size: [64.0,14.0]; "
+                                            ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
+                                              ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                                 ><tspan
-                                                >lyph-</tspan
-                                                ><tspan
-                                                >gopher</tspan
-                                              ></text
+                                                  >g</tspan
+                                                  ><tspan
+                                                  >lyph-</tspan
+                                                  ><tspan
+                                                  >gopher</tspan
+                                                ></text
+                                              ></g
                                             ></g
                                             >
     </g

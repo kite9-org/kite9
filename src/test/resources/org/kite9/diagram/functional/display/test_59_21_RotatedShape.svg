@@ -1,45 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="283.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="94.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+<svg contentScriptType="text/ecmascript" width="118.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="113.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
   >
-  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [283.0,94.0]; " id="The Diagram" k9-elem="diagram"
+  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [118.0,113.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-    <g k9-elem="rect" style="kite9-type: container; kite9-padding: 10px; " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [253.0,64.0]; "
+    <g k9-elem="rect" style="kite9-type: container;  " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [88.0,83.0]; "
       >
       <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="decal"
         >
-        <rect x="0" y="0" width="253.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="64.0"
+        <rect x="0" y="0" width="88.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="83.0"
           />
       </g
           >
-      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 33px;" transform="translate(7.1,14.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [233.0,44.0]; "
-          ><g font-family="'opensans-light-webfont'" font-size="33px"
-            ><text x="0" xml:space="preserve" y="30.952" stroke="none"
-              ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-                ><tspan
-                >something</tspan
-              ></text
-            ></g
-          ></g
+      <g k9-elem="shape" style="kite9-type: svg; " transform="translate(26.4,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [88.0,83.0]; "
           >
-      <g style="kite9-usage: decal; kite9-type: svg; kite9-transform: none; " k9-info="" k9-elem="badge"
-          >
-        <circle fill="red" r="15" cx="248" cy="5"
-            /> 
-      </g
-            >
-    </g
+      <ellipse transform="rotate(40)" rx="40" cx="40" ry="20" cy="20" stroke="black" stroke-width="1"
+            />      </g
+            >    </g
             >
   
     </g

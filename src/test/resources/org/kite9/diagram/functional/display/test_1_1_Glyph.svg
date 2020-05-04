@@ -36,15 +36,17 @@ line 2-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4857.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [149.0,21.0]; rect-size: [37.0,27.0]; "
-                  ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
-                    ><tspan
-                      >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4857.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [149.0,21.0]; rect-size: [37.0,27.0]; "
+                  ><g font-family="'opensans-bold-webfont'"
+                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
-                      >tereo</tspan
-                    ></text
-                    ><text x="4985.2461" xml:space="preserve" y="23.8283" stroke="none"
-                    >Mike</text
+                        >S</tspan
+                        ><tspan
+                        >tereo</tspan
+                      ></text
+                      ><text x="4985.2461" xml:space="preserve" y="23.8283" stroke="none"
+                      >Mike</text
+                    ></g
                   ></g
                   >
     </g
@@ -64,31 +66,33 @@ line 2-label" transform="translate(10.0,38.0)" k9-info="position: none; margin: 
                       >
     <g class="glyph-label-text"
                       >
-      <g font-size="15px" transform="translate(-1.5,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,53.0]; rect-size: [285.0,34.0]; " class="glyph-label-text" k9-elem="text-label"
-                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                          ><tspan
-                            >R</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.5,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,53.0]; rect-size: [285.0,34.0]; "
+                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
-                            >ob's </tspan
+                              >R</tspan
+                              ><tspan
+                              >ob's </tspan
+                              ><tspan
+                              >Glyph </tspan
+                              ><tspan
+                              >df </tspan
+                              ><tspan
+                              >sfsdfs </tspan
+                              ><tspan
+                              >weferw </tspan
+                              ><tspan
+                              >asfsdf </tspan
+                              ><tspan
+                              >sdfsd</tspan
+                            ></text
+                            ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
                             ><tspan
-                            >Glyph </tspan
-                            ><tspan
-                            >df </tspan
-                            ><tspan
-                            >sfsdfs </tspan
-                            ><tspan
-                            >weferw </tspan
-                            ><tspan
-                            >asfsdf </tspan
-                            ><tspan
-                            >sdfsd</tspan
-                          ></text
-                          ><text x="0" xml:space="preserve" y="29.7708" stroke="none"
-                          ><tspan
-                            >Line </tspan
-                            ><tspan
-                            >2</tspan
-                          ></text
+                              >Line </tspan
+                              ><tspan
+                              >2</tspan
+                            ></text
+                          ></g
                         ></g
                         >
     </g

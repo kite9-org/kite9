@@ -20,17 +20,19 @@
           />
       </g
           >
-      <g k9-elem="text" font-size="25px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" font-family="'opensans-light-webfont'" transform="translate(7.8,13.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [227.0,34.0]; "
-          ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-            ><tspan
-              >h</tspan
+      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" transform="translate(7.8,13.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,25.0]; rect-size: [227.0,34.0]; "
+          ><g font-family="'opensans-light-webfont'" font-size="25px"
+            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
               ><tspan
-              >ello </tspan
-              ><tspan
-              >something </tspan
-              ><tspan
-              >else</tspan
-            ></text
+                >h</tspan
+                ><tspan
+                >ello </tspan
+                ><tspan
+                >something </tspan
+                ><tspan
+                >else</tspan
+              ></text
+            ></g
           ></g
           >
       <g k9-elem="bg" style="kite9-usage: decal; kite9-type: svg; kite9-transform: rescale;" transform="scale(2.7444444444444445,0.27)translate(-160.0,-10.0)" k9-info=""

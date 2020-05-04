@@ -20,67 +20,69 @@
           />
       </g
           >
-      <g k9-elem="text" font-size="8px" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " font-family="'opensans-light-webfont'" transform="translate(-89.6,-49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; "
-          ><text x="100" xml:space="preserve" y="57.5035" stroke="none"
-            ><tspan
-              >S</tspan
+      <g k9-elem="text" style="kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;  " transform="translate(-89.6,-49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [116.0,63.0]; "
+          ><g font-family="'opensans-light-webfont'" font-size="8px"
+            ><text x="100" xml:space="preserve" y="57.5035" stroke="none"
               ><tspan
-              >earch </tspan
+                >S</tspan
+                ><tspan
+                >earch </tspan
+                ><tspan
+                >the </tspan
+                ><tspan
+                >world's </tspan
+              ></text
+              ><text x="98.24" xml:space="preserve" y="66.3035" stroke="none"
               ><tspan
-              >the </tspan
+                >information, </tspan
+                ><tspan
+                >including </tspan
+              ></text
+              ><text x="96.48" xml:space="preserve" y="75.1035" stroke="none"
               ><tspan
-              >world's </tspan
-            ></text
-            ><text x="98.24" xml:space="preserve" y="66.3035" stroke="none"
-            ><tspan
-              >information, </tspan
+                >webpages, </tspan
+                ><tspan
+                >images, </tspan
+                ><tspan
+                >videos </tspan
+              ></text
+              ><text x="94.72" xml:space="preserve" y="83.9035" stroke="none"
               ><tspan
-              >including </tspan
-            ></text
-            ><text x="96.48" xml:space="preserve" y="75.1035" stroke="none"
-            ><tspan
-              >webpages, </tspan
+                >and </tspan
+                ><tspan
+                >more.</tspan
+              ></text
+              ><text x="92.96" xml:space="preserve" y="92.7035" stroke="none"
               ><tspan
-              >images, </tspan
+                >Google </tspan
+                ><tspan
+                >has </tspan
+                ><tspan
+                >many </tspan
+                ><tspan
+                >special </tspan
+              ></text
+              ><text x="91.2" xml:space="preserve" y="101.5035" stroke="none"
               ><tspan
-              >videos </tspan
-            ></text
-            ><text x="94.72" xml:space="preserve" y="83.9035" stroke="none"
-            ><tspan
-              >and </tspan
+                >features </tspan
+                ><tspan
+                >to </tspan
+                ><tspan
+                >help </tspan
+                ><tspan
+                >you </tspan
+                ><tspan
+                >find </tspan
+                ><tspan
+                >exactly </tspan
+              ></text
+              ><text x="89.44" xml:space="preserve" y="110.3035" stroke="none"
               ><tspan
-              >more.</tspan
-            ></text
-            ><text x="92.96" xml:space="preserve" y="92.7035" stroke="none"
-            ><tspan
-              >Google </tspan
-              ><tspan
-              >has </tspan
-              ><tspan
-              >many </tspan
-              ><tspan
-              >special </tspan
-            ></text
-            ><text x="91.2" xml:space="preserve" y="101.5035" stroke="none"
-            ><tspan
-              >features </tspan
-              ><tspan
-              >to </tspan
-              ><tspan
-              >help </tspan
-              ><tspan
-              >you </tspan
-              ><tspan
-              >find </tspan
-              ><tspan
-              >exactly </tspan
-            ></text
-            ><text x="89.44" xml:space="preserve" y="110.3035" stroke="none"
-            ><tspan
-              >what </tspan
-              ><tspan
-              >you.</tspan
-            ></text
+                >what </tspan
+                ><tspan
+                >you.</tspan
+              ></text
+            ></g
           ></g
           >
     </g

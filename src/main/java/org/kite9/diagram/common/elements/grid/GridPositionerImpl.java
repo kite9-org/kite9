@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;

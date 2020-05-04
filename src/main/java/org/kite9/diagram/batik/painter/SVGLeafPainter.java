@@ -1,5 +1,6 @@
 package org.kite9.diagram.batik.painter;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.apache.batik.bridge.GVTBuilder;
@@ -20,7 +21,8 @@ import org.w3c.dom.Element;
 public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter {
 	
 	private Kite9BridgeContext ctx;
-	
+	protected AffineTransform transform;
+
 	public SVGLeafPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
 		super(theElement);
 		this.ctx = ctx;
@@ -29,7 +31,14 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 	@Override
 	public Rectangle2D bounds() {
 		GraphicsNode gn = getGraphicsNode();
-		return gn.getBounds();
+		if (transform != null) {
+			Rectangle2D out = gn.getTransformedBounds(transform);
+			System.err.println(out);
+			return out;
+		} else {
+			return gn.getBounds();	
+		}
+		
 	}
 
 	private GraphicsNode graphicsNodeCache;

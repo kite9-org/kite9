@@ -160,6 +160,28 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				+text("hello b this could be a long bit of text", "font-size: 15px; kite9-vertical-align: bottom; kite9-text-bounds: 100px 500px;"),"kite9-padding: 10px; kite9-layout: down; kite9-min-height: 120px")));
 	}
 	
+	@Test
+	public void test_59_20_AngledText() throws Exception {
+		renderDiagram(basicDiagram(
+				glyphContainer(
+						textWithTransform(para(), "font-size: 8px;", "scale(4)"),"") + 
+				glyphContainer(
+						textWithTransform(para(), "font-size: 16px;", "rotate(55)"),"")+
+				glyphContainer(
+						textWithTransform(para(), "font-size: 8px;", "skewX(-45) scale(1.5)"),"")
+				
+				));
+	}
+	
+	/**
+	 * Uses contents to set the size of the decal
+	 */
+	@Test
+	public void test_59_21_RotatedShape() throws Exception {
+		renderDiagram(basicDiagram(glyphContainer(svgLeaf(longEllipse(), "", ""),"")));
+	}
+	
+	
 	private String para() {
 		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
 			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";
@@ -175,15 +197,20 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				+ "      </shape>";
 	}
 	
-	private String text(String xml, String extraAtts) {
-		return    "      <text style=\"kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n" 
+	private String svgLeaf(String xml, String extraAtts, String transform) {
+		return    "      <shape transform=\""+transform+"\" style=\"kite9-type: svg; "+extraAtts+"\">\n" 
+				+ xml 
+				+ "      </shape>";
+	}
+	
+	private String textWithTransform(String xml, String extraAtts, String transform) {
+		return    "      <text transform=\""+transform+"\" style=\"kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
 				+ "      </text>\n";
 	}
 	
-	private String scaledText(String xml, String extraAtts) {
-		return    "      <text transform=\"scale(3,3)\" style=\"kite9-type: text; font-family:  opensans-light-webfont; " + 
-				""+extraAtts+"\">\n" 
+	private String text(String xml, String extraAtts) {
+		return    "      <text style=\"kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n" 
 				+ "        "+xml+"\n"
 				+ "      </text>\n";
 	}
@@ -231,6 +258,11 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String ellipse() {
 		return "      <svg:ellipse cx=\"20\" cy=\"20\" rx=\"20\" ry=\"20\" stroke=\"black\" stroke-width=\"1\" />";
 	}
+	
+	private String longEllipse() {
+		return "      <svg:ellipse cx=\"40\" cy=\"20\" rx=\"40\" ry=\"20\" stroke=\"black\" stroke-width=\"1\" transform=\"rotate(40)\" />";
+	}
+
 
 	private String redRect() {
 		return "      <svg:rect x=\"0\" cy=\"0\" width=\"20\" height=\"20\" fill=\"red\" stroke-width=\"0\" />";

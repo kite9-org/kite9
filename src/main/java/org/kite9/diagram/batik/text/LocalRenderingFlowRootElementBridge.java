@@ -165,7 +165,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 		if (out == null) {			
 			throw new LogicException("No Flow node!");
 		}
-		
+
 		return out;
 	}
 

@@ -167,7 +167,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
         	try {
         		ParsedURL pUrl = new ParsedURL(uri);
         		String fragment = pUrl.getRef();
-        		ref = ur.getNode("#" + fragment, e);
+        		ref = ur.getNode("#"+ fragment, e);
         		return ref;
         	} catch (Exception ex2) {
         		// throw the original exception

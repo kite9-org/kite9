@@ -3,6 +3,9 @@ package org.kite9.diagram.batik.text;
 import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
+import java.awt.geom.AffineTransform;
+
+import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.SVGLeafPainter;
@@ -29,10 +32,14 @@ public class TextLeafPainter extends SVGLeafPainter {
 		super(theElement, ctx);
 	}
 	
+	
 	@Override
 	protected GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
 		TextDOMInitializer.setupElementXML((StyledKite9XMLElement) e); 
-		return LocalRenderingFlowRootElementBridge.getFlowNode(super.initGraphicsNode(e, ctx));
+		GraphicsNode c = super.initGraphicsNode(e, ctx);
+		transform = c.getTransform();
+		FlowTextNode out = LocalRenderingFlowRootElementBridge.getFlowNode(c);
+		return out;
 	}
 
 	@Override
@@ -40,10 +47,16 @@ public class TextLeafPainter extends SVGLeafPainter {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
-		getGraphicsNode().paint(g2d);
+		GraphicsNode gn = getGraphicsNode();
+		
+		// here we set the transform from the original element.  This allows us to support
+		// transformed text nicely.  
+		gn.setTransform(transform);
+		gn.paint(g2d);
+		gn.setTransform(new AffineTransform());
+		
 		groupElem = g2d.getTopLevelGroup(true);
-		Node firstChild = groupElem.getFirstChild();
-		return (Element) firstChild;
+		return (Element) groupElem;
 	}
 	
 	

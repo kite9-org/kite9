@@ -47,15 +47,17 @@
                     >
     <g class="glyph-stereotype-text"
                     >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4942.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [64.0,38.0]; rect-size: [37.0,27.0]; "
-                      ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
-                        ><tspan
-                          >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4942.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [64.0,38.0]; rect-size: [37.0,27.0]; "
+                      ><g font-family="'opensans-bold-webfont'"
+                        ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                           ><tspan
-                          >tereo</tspan
-                        ></text
-                        ><text x="4982.2754" xml:space="preserve" y="23.8283" stroke="none"
-                        >twoer</text
+                            >S</tspan
+                            ><tspan
+                            >tereo</tspan
+                          ></text
+                          ><text x="4982.2754" xml:space="preserve" y="23.8283" stroke="none"
+                          >twoer</text
+                        ></g
                       ></g
                       >
     </g
@@ -74,13 +76,15 @@
                           >
     <g class="glyph-label-text"
                           >
-      <g font-size="15px" transform="translate(-.9,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [69.0,70.0]; rect-size: [27.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                              ><tspan
-                                >O</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.9,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [69.0,70.0]; rect-size: [27.0,17.0]; "
+                            ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                              ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                 ><tspan
-                                >ne</tspan
-                              ></text
+                                  >O</tspan
+                                  ><tspan
+                                  >ne</tspan
+                                ></text
+                              ></g
                             ></g
                             >
     </g
@@ -94,19 +98,21 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,94.0]; rect-size: [57.0,11.0]; "
-                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                    ><tspan
-                                      >H</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,94.0]; rect-size: [57.0,11.0]; "
+                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                       ><tspan
-                                      >ere </tspan
-                                      ><tspan
-                                      >is </tspan
-                                      ><tspan
-                                      >line </tspan
-                                      ><tspan
-                                      >1</tspan
-                                    ></text
+                                        >H</tspan
+                                        ><tspan
+                                        >ere </tspan
+                                        ><tspan
+                                        >is </tspan
+                                        ><tspan
+                                        >line </tspan
+                                        ><tspan
+                                        >1</tspan
+                                      ></text
+                                    ></g
                                   ></g
                                   >
     </g
@@ -118,33 +124,35 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                     >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,109.0]; rect-size: [115.0,33.0]; "
-                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                        ><tspan
-                                          >H</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,109.0]; rect-size: [115.0,33.0]; "
+                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                           ><tspan
-                                          >ere </tspan
+                                            >H</tspan
+                                            ><tspan
+                                            >ere </tspan
+                                            ><tspan
+                                            >is </tspan
+                                            ><tspan
+                                            >line </tspan
+                                            ><tspan
+                                            >2</tspan
+                                          ></text
+                                          ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                           ><tspan
-                                          >is </tspan
-                                          ><tspan
-                                          >line </tspan
-                                          ><tspan
-                                          >2</tspan
-                                        ></text
-                                        ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                        ><tspan
-                                          >and </tspan
-                                          ><tspan
-                                          >it </tspan
-                                          ><tspan
-                                          >goes </tspan
-                                          ><tspan
-                                          >onto </tspan
-                                          ><tspan
-                                          >multiple</tspan
-                                        ></text
-                                        ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
-                                        >lines</text
+                                            >and </tspan
+                                            ><tspan
+                                            >it </tspan
+                                            ><tspan
+                                            >goes </tspan
+                                            ><tspan
+                                            >onto </tspan
+                                            ><tspan
+                                            >multiple</tspan
+                                          ></text
+                                          ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
+                                          >lines</text
+                                        ></g
                                       ></g
                                       >
     </g
@@ -156,19 +164,21 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                         >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,146.0]; rect-size: [58.0,11.0]; "
-                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                            ><tspan
-                                              >H</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [25.0,146.0]; rect-size: [58.0,11.0]; "
+                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                               ><tspan
-                                              >ere </tspan
-                                              ><tspan
-                                              >is </tspan
-                                              ><tspan
-                                              >line </tspan
-                                              ><tspan
-                                              >3</tspan
-                                            ></text
+                                                >H</tspan
+                                                ><tspan
+                                                >ere </tspan
+                                                ><tspan
+                                                >is </tspan
+                                                ><tspan
+                                                >line </tspan
+                                                ><tspan
+                                                >3</tspan
+                                              ></text
+                                            ></g
                                           ></g
                                           >
     </g

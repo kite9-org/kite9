@@ -34,9 +34,11 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g font-size="15px" transform="translate(-.7,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [101.0,21.0]; rect-size: [6.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                  ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                    >a</text
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.7,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [101.0,21.0]; rect-size: [6.0,17.0]; "
+                  ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                    ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
+                      >a</text
+                    ></g
                   ></g
                   >
     </g
@@ -64,17 +66,19 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="bold-text"
                           >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(33.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [67.0,71.0]; rect-size: [73.0,11.0]; "
-                            ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
-                              ><tspan
-                                >s</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(33.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [67.0,71.0]; rect-size: [73.0,11.0]; "
+                            ><g font-family="'opensans-bold-webfont'" font-size="10px"
+                              ><text x="0" xml:space="preserve" y="8.8569" stroke="none"
                                 ><tspan
-                                >ome </tspan
-                                ><tspan
-                                >bold </tspan
-                                ><tspan
-                                >text</tspan
-                              ></text
+                                  >s</tspan
+                                  ><tspan
+                                  >ome </tspan
+                                  ><tspan
+                                  >bold </tspan
+                                  ><tspan
+                                  >text</tspan
+                                ></text
+                              ></g
                             ></g
                             >
     </g
@@ -88,15 +92,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,86.0]; rect-size: [82.0,11.0]; "
-                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                    ><tspan
-                                      >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,86.0]; rect-size: [82.0,11.0]; "
+                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                       ><tspan
-                                      >ome </tspan
-                                      ><tspan
-                                      >information</tspan
-                                    ></text
+                                        >S</tspan
+                                        ><tspan
+                                        >ome </tspan
+                                        ><tspan
+                                        >information</tspan
+                                      ></text
+                                    ></g
                                   ></g
                                   >
     </g
@@ -108,13 +114,15 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                     >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,101.0]; rect-size: [41.0,11.0]; "
-                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                        ><tspan
-                                          >P</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,101.0]; rect-size: [41.0,11.0]; "
+                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                           ><tspan
-                                          >artridge</tspan
-                                        ></text
+                                            >P</tspan
+                                            ><tspan
+                                            >artridge</tspan
+                                          ></text
+                                        ></g
                                       ></g
                                       >
     </g
@@ -126,15 +134,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                         >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,116.0]; rect-size: [70.0,11.0]; "
-                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                            ><tspan
-                                              >G</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,116.0]; rect-size: [70.0,11.0]; "
+                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                               ><tspan
-                                              >emstone </tspan
-                                              ><tspan
-                                              >Beta</tspan
-                                            ></text
+                                                >G</tspan
+                                                ><tspan
+                                                >emstone </tspan
+                                                ><tspan
+                                                >Beta</tspan
+                                              ></text
+                                            ></g
                                           ></g
                                           >
     </g
@@ -146,31 +156,33 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                             >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,131.0]; rect-size: [141.0,33.0]; "
-                                              ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                ><tspan
-                                                  >M</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,131.0]; rect-size: [141.0,33.0]; "
+                                              ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                   ><tspan
-                                                  >ultiline </tspan
+                                                    >M</tspan
+                                                    ><tspan
+                                                    >ultiline </tspan
+                                                    ><tspan
+                                                    >and </tspan
+                                                    ><tspan
+                                                    >very </tspan
+                                                    ><tspan
+                                                    >complicated</tspan
+                                                  ></text
+                                                  ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                                   ><tspan
-                                                  >and </tspan
-                                                  ><tspan
-                                                  >very </tspan
-                                                  ><tspan
-                                                  >complicated</tspan
-                                                ></text
-                                                ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                ><tspan
-                                                  >description </tspan
-                                                  ><tspan
-                                                  >of </tspan
-                                                  ><tspan
-                                                  >the </tspan
-                                                  ><tspan
-                                                  >symbol</tspan
-                                                ></text
-                                                ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
-                                                >itself</text
+                                                    >description </tspan
+                                                    ><tspan
+                                                    >of </tspan
+                                                    ><tspan
+                                                    >the </tspan
+                                                    ><tspan
+                                                    >symbol</tspan
+                                                  ></text
+                                                  ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
+                                                  >itself</text
+                                                ></g
                                               ></g
                                               >
     </g
@@ -182,19 +194,21 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.2,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,168.0]; rect-size: [40.0,22.0]; "
-                                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                    ><tspan
-                                                      >P</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.2,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,168.0]; rect-size: [40.0,22.0]; "
+                                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                       ><tspan
-                                                      >ar</tspan
-                                                    ></text
-                                                    ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                    ><tspan
-                                                      >two </tspan
+                                                        >P</tspan
+                                                        ><tspan
+                                                        >ar</tspan
+                                                      ></text
+                                                      ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                                       ><tspan
-                                                      >lines</tspan
-                                                    ></text
+                                                        >two </tspan
+                                                        ><tspan
+                                                        >lines</tspan
+                                                      ></text
+                                                    ></g
                                                   ></g
                                                   >
     </g
@@ -206,15 +220,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                     >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,194.0]; rect-size: [82.0,11.0]; "
-                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                        ><tspan
-                                                          >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.5,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,194.0]; rect-size: [82.0,11.0]; "
+                                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                           ><tspan
-                                                          >ome </tspan
-                                                          ><tspan
-                                                          >information</tspan
-                                                        ></text
+                                                            >S</tspan
+                                                            ><tspan
+                                                            >ome </tspan
+                                                            ><tspan
+                                                            >information</tspan
+                                                          ></text
+                                                        ></g
                                                       ></g
                                                       >
     </g
@@ -226,13 +242,15 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                         >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,209.0]; rect-size: [41.0,11.0]; "
-                                                          ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                            ><tspan
-                                                              >P</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-1.0,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,209.0]; rect-size: [41.0,11.0]; "
+                                                          ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                            ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                               ><tspan
-                                                              >artridge</tspan
-                                                            ></text
+                                                                >P</tspan
+                                                                ><tspan
+                                                                >artridge</tspan
+                                                              ></text
+                                                            ></g
                                                           ></g
                                                           >
     </g
@@ -244,15 +262,17 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                             >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,224.0]; rect-size: [70.0,11.0]; "
-                                                              ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                                ><tspan
-                                                                  >G</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,224.0]; rect-size: [70.0,11.0]; "
+                                                              ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                                ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                   ><tspan
-                                                                  >emstone </tspan
-                                                                  ><tspan
-                                                                  >Beta</tspan
-                                                                ></text
+                                                                    >G</tspan
+                                                                    ><tspan
+                                                                    >emstone </tspan
+                                                                    ><tspan
+                                                                    >Beta</tspan
+                                                                  ></text
+                                                                ></g
                                                               ></g
                                                               >
     </g
@@ -264,31 +284,33 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                 >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,239.0]; rect-size: [141.0,33.0]; "
-                                                                  ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                                    ><tspan
-                                                                      >M</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.6,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,239.0]; rect-size: [141.0,33.0]; "
+                                                                  ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                                    ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                       ><tspan
-                                                                      >ultiline </tspan
+                                                                        >M</tspan
+                                                                        ><tspan
+                                                                        >ultiline </tspan
+                                                                        ><tspan
+                                                                        >and </tspan
+                                                                        ><tspan
+                                                                        >very </tspan
+                                                                        ><tspan
+                                                                        >complicated</tspan
+                                                                      ></text
+                                                                      ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                                                       ><tspan
-                                                                      >and </tspan
-                                                                      ><tspan
-                                                                      >very </tspan
-                                                                      ><tspan
-                                                                      >complicated</tspan
-                                                                    ></text
-                                                                    ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                                    ><tspan
-                                                                      >description </tspan
-                                                                      ><tspan
-                                                                      >of </tspan
-                                                                      ><tspan
-                                                                      >the </tspan
-                                                                      ><tspan
-                                                                      >symbol</tspan
-                                                                    ></text
-                                                                    ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
-                                                                    >itself</text
+                                                                        >description </tspan
+                                                                        ><tspan
+                                                                        >of </tspan
+                                                                        ><tspan
+                                                                        >the </tspan
+                                                                        ><tspan
+                                                                        >symbol</tspan
+                                                                      ></text
+                                                                      ><text x="0" xml:space="preserve" y="30.8472" stroke="none"
+                                                                      >itself</text
+                                                                    ></g
                                                                   ></g
                                                                   >
     </g
@@ -300,19 +322,21 @@
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                                     >
-      <g k9-elem="text-label" font-size="10px" style="kite9-type: text;" font-family="'opensans-regular-webfont'" transform="translate(-.2,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,276.0]; rect-size: [40.0,22.0]; "
-                                                                      ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
-                                                                        ><tspan
-                                                                          >P</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-.2,2.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: [33.0,276.0]; rect-size: [40.0,22.0]; "
+                                                                      ><g font-family="'opensans-regular-webfont'" font-size="10px"
+                                                                        ><text x="0" xml:space="preserve" y="8.8472" stroke="none"
                                                                           ><tspan
-                                                                          >ar</tspan
-                                                                        ></text
-                                                                        ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
-                                                                        ><tspan
-                                                                          >two </tspan
+                                                                            >P</tspan
+                                                                            ><tspan
+                                                                            >ar</tspan
+                                                                          ></text
+                                                                          ><text x="0" xml:space="preserve" y="19.8472" stroke="none"
                                                                           ><tspan
-                                                                          >lines</tspan
-                                                                        ></text
+                                                                            >two </tspan
+                                                                            ><tspan
+                                                                            >lines</tspan
+                                                                          ></text
+                                                                        ></g
                                                                       ></g
                                                                       >
     </g

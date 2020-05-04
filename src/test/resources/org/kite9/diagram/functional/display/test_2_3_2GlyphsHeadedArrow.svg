@@ -34,13 +34,15 @@
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
-                  ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
-                    ><tspan
-                      >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
+                  ><g font-family="'opensans-bold-webfont'"
+                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
-                      >tereo</tspan
-                    ></text
+                        >S</tspan
+                        ><tspan
+                        >tereo</tspan
+                      ></text
+                    ></g
                   ></g
                   >
     </g
@@ -59,13 +61,15 @@
                       >
     <g class="glyph-label-text"
                       >
-      <g font-size="15px" transform="translate(-.9,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                        ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                          ><tspan
-                            >O</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.9,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; "
+                        ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
-                            >ne</tspan
-                          ></text
+                              >O</tspan
+                              ><tspan
+                              >ne</tspan
+                            ></text
+                          ></g
                         ></g
                         >
     </g
@@ -100,13 +104,15 @@
                                   >
     <g class="glyph-stereotype-text"
                                   >
-      <g k9-elem="text-label" style="kite9-type: text;" font-family="'opensans-bold-webfont'" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,21.0]; rect-size: [37.0,14.0]; "
-                                    ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
-                                      ><tspan
-                                        >S</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [152.0,21.0]; rect-size: [37.0,14.0]; "
+                                    ><g font-family="'opensans-bold-webfont'"
+                                      ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                                         ><tspan
-                                        >tereo</tspan
-                                      ></text
+                                          >S</tspan
+                                          ><tspan
+                                          >tereo</tspan
+                                        ></text
+                                      ></g
                                     ></g
                                     >
     </g
@@ -125,13 +131,15 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g font-size="15px" transform="translate(-.1,.7)" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [157.0,40.0]; rect-size: [28.0,17.0]; " class="glyph-label-text" k9-elem="text-label"
-                                          ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
-                                            ><tspan
-                                              >T</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.1,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [157.0,40.0]; rect-size: [28.0,17.0]; "
+                                          ><g font-family="'opensans-regular-webfont'" font-size="15px"
+                                            ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
-                                              >wo</tspan
-                                            ></text
+                                                >T</tspan
+                                                ><tspan
+                                                >wo</tspan
+                                              ></text
+                                            ></g
                                           ></g
                                           >
     </g
@@ -157,13 +165,15 @@
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                 >
-      <g transform="translate(-1.0,.6)" fill="white" style="kite9-type: text;" font-family="'opensans-regular-webfont'" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; " class="arrow-label-text" stroke="white" k9-elem="text-label"
-                                                  ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
-                                                    ><tspan
-                                                      >m</tspan
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-1.0,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; "
+                                                  ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
+                                                    ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                       ><tspan
-                                                      >eets</tspan
-                                                    ></text
+                                                        >m</tspan
+                                                        ><tspan
+                                                        >eets</tspan
+                                                      ></text
+                                                    ></g
                                                   ></g
                                                   >
     </g
