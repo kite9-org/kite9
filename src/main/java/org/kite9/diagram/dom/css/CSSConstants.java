@@ -17,6 +17,8 @@ public interface CSSConstants {
 	
 	public static final String LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"layout";			// for containers, to decide how to layout their contents
 	
+	public static final String LABEL_PLACEMENT = KITE9_CSS_PROPERTY_PREFIX + "label-placement";
+	
 	// grid property
 	public static final String GRID_OCCUPIES_X_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies-x";			// for containers, to decide how to layout their contents
 	public static final String GRID_OCCUPIES_Y_PROPERTY = KITE9_CSS_PROPERTY_PREFIX+"occupies-y";			// for containers, to decide how to layout their contents

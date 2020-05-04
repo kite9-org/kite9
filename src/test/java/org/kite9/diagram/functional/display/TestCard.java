@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.common.HelpMethods;
@@ -54,9 +55,9 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 		
 		
 
-		Context occContext = new Context(HelpMethods.listOf(simple, withStereo), true, new TextLine("Multiline label\nfor this context"), null);
+		Context occContext = new Context(HelpMethods.listOf(simple, withStereo), true, new TextLabel("Multiline label\nfor this context"), null);
 		
-		Context emptyContext = new Context(null, true, new TextLine("Simple Label"), null);
+		Context emptyContext = new Context(null, true, new TextLabel("Simple Label"), null);
 		
 		Context otherContext = new Context(HelpMethods.listOf(a1, fullGlyph, occContext), true, null, null);
 		
@@ -64,12 +65,12 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 		
 		new Link(simple, a1);
 		new Link(withSymbols, a1, 
-				LinkEndStyle.ARROW, new TextLine("From Label"), 
+				LinkEndStyle.ARROW, new TextLabel("From Label"), 
 				null, null, null);
 		
 		new Link(occContext, fullGlyph,
-				LinkEndStyle.ARROW, new TextLine("From Label"), 
-				LinkEndStyle.ARROW, new TextLine("To\n Label\nwith\n line\nbreaks\n\n\nflip"), null);
+				LinkEndStyle.ARROW, new TextLabel("From Label"), 
+				LinkEndStyle.ARROW, new TextLabel("To\n Label\nwith\n line\nbreaks\n\n\nflip"), null);
 		
 		new Link(occContext, fullGlyph);
 		

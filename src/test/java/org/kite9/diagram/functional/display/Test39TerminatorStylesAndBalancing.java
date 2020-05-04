@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.css.CSSConstants;
@@ -144,10 +145,10 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Context c1 = new Context(null, true, new TextLine("c1"), null);
-		Context c2 = new Context(null, true, new TextLine("c1"), null);
-		Context c3 = new Context(null, true, new TextLine("c1"), null);
-		Context c4 = new Context(null, true, new TextLine("c1"), null);
+		Context c1 = new Context(null, true, new TextLabel("c1"), null);
+		Context c2 = new Context(null, true, new TextLabel("c1"), null);
+		Context c3 = new Context(null, true, new TextLabel("c1"), null);
+		Context c4 = new Context(null, true, new TextLabel("c1"), null);
 	
 		new Link(g1, c1, LinkEndStyle.CIRCLE, null, LinkEndStyle.CIRCLE, null, Direction.RIGHT);	
 		new Link(g2, c2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null, Direction.RIGHT);	

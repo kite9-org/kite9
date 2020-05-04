@@ -39,7 +39,7 @@ public class Grid extends AbstractXMLContainerElement {
 			}
 		}
 		
-		setLabel(label);
+		addLabel(label);
 	}
 
 	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label) {

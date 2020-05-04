@@ -11,10 +11,12 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ContentTransform;
+import org.kite9.diagram.model.style.LabelPlacement;
 
 public abstract class AbstractLabel extends AbstractCompactedRectangular implements Label {
 
 	private End end;
+	private LabelPlacement labelPlacement;
 	
 	public AbstractLabel(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
@@ -26,6 +28,9 @@ public abstract class AbstractLabel extends AbstractCompactedRectangular impleme
 		
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LINK_END);
 		end = (End) ev.getTheValue();
+		
+		EnumValue ev2 = (EnumValue) getCSSStyleProperty(CSSConstants.LABEL_PLACEMENT);
+		labelPlacement = (LabelPlacement) ev2.getTheValue();
 	}
 
 	@Override 
@@ -69,6 +74,12 @@ public abstract class AbstractLabel extends AbstractCompactedRectangular impleme
 	public End getEnd() {
 		ensureInitialized();
 		return end;
+	}
+
+	@Override
+	public LabelPlacement getLabelPlacement() {
+		ensureInitialized();
+		return labelPlacement;
 	}
 	
 }

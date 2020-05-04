@@ -51,6 +51,7 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.HorizontalAlignment;
+import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.framework.logging.Kite9Log;
@@ -163,6 +164,9 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_CORNER_RADIUS, 0f));
+		
+		// LABELS
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.LABEL_PLACEMENT, LabelPlacement.class, LabelPlacement.BOTTOM_RIGHT, false));
 		
 		// LINK DYNAMICS
 		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./*[local-name()='from']/@reference", true));

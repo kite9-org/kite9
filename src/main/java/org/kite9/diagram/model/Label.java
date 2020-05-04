@@ -1,6 +1,7 @@
 package org.kite9.diagram.model;
 
 import org.kite9.diagram.model.position.End;
+import org.kite9.diagram.model.style.LabelPlacement;
 
 /**
  * DiagramElement to contain a label for an edge, container or diagram.
@@ -15,4 +16,6 @@ public interface Label extends Rectangular {
 	 * If this is a connection label, returns the end of the connection that it is for.
 	 */
 	public End getEnd();
+	
+	public LabelPlacement getLabelPlacement();
 }

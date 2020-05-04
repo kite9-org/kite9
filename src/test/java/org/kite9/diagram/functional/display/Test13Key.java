@@ -13,6 +13,7 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
@@ -166,7 +167,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 			new Link(ww, hf, null, null, null, null, Direction.RIGHT);
 			new Link(ww, rs);
 
-			Context bladerunner = new Context("bladerunner", listOf(hf, rs, ww), true, new TextLine("Bladerunner"), null);
+			Context bladerunner = new Context("bladerunner", listOf(hf, rs, ww), true, new TextLabel("Bladerunner"), null);
 
 			
 			DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(bladerunner), null);
@@ -270,7 +271,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		Glyph c = new Glyph("c", "", "c", null, null);
 		Glyph e = new Glyph("e", "", "e", null, null);
 		new Link(c, e, null, null, null, null, Direction.DOWN);
-		Context ctx = new Context("ctx", listOf( c), true, new TextLine("ssdvd ds fsdfs ds dsf dsf dsf ds"), null);
+		Context ctx = new Context("ctx", listOf( c), true, new TextLabel("ssdvd ds fsdfs ds dsf dsf dsf ds"), null);
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(ctx, e), null);
 		renderDiagram(d1);
 	}

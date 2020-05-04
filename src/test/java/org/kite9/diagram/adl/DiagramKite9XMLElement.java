@@ -115,11 +115,6 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 	protected Node newNode() {
 		return new DiagramKite9XMLElement();
 	}
-
-	@Override
-	public Kite9XMLElement getLabel() {
-		return getKey();
-	}
 	
 	public Diagram getDiagramElement() {
 		return (Diagram) super.getDiagramElement();
