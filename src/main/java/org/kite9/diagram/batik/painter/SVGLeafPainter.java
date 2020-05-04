@@ -33,7 +33,6 @@ public class SVGLeafPainter extends DirectSVGGroupPainter implements LeafPainter
 		GraphicsNode gn = getGraphicsNode();
 		if (transform != null) {
 			Rectangle2D out = gn.getTransformedBounds(transform);
-			System.err.println(out);
 			return out;
 		} else {
 			return gn.getBounds();	

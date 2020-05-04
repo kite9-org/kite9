@@ -130,7 +130,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 			return;
 		}
 		
-		/*if (((Connected) from).getContainer().getLayout() == Layout.GRID) {
+		if (((Connected) from).getContainer().getLayout() == Layout.GRID) {
 			setContradiction(c, true);
 			return;
 		}
@@ -138,7 +138,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 		if (((Connected) to).getContainer().getLayout() == Layout.GRID) {
 			setContradiction(c, true);
 			return;
-		}*/
+		}
 		
 
 		while (true) {
