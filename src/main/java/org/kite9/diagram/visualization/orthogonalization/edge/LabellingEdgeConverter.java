@@ -2,8 +2,10 @@ package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
@@ -45,7 +47,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 			// figure out label positioning in this case yet.
 			Container parentContainer = ((Container) de).getContainer();
 			Label l = findUnprocessedLabel((Container) de, sideDirection);
-			if (l != null) { 
+			while (l != null) { 
 				if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
 					CornerVertices cv = em.getOuterCornerVertices(l);
 					cc.convertDiagramElementToInnerFace(l, o);
@@ -55,13 +57,12 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 					Dart d2 = o.createDart(waypoints[0], waypoints[1], Collections.emptyMap(), Direction.rotateClockwise(d));
 					Dart d3 = o.createDart(waypoints[1], waypoints[2], Collections.emptyMap(), d);
 					Dart d4 = o.createDart(waypoints[2], waypoints[3], Collections.emptyMap(), Direction.rotateAntiClockwise(d));
-					Dart d5 = o.createDart(waypoints[3], end2, underlyings, d);
 					s.newEdgeDarts.add(d1);
 					s.newEdgeDarts.add(d2);
 					s.newEdgeDarts.add(d3);
 					s.newEdgeDarts.add(d4);
-					s.newEdgeDarts.add(d5);
-					return;
+					end1=waypoints[3];
+					l = findUnprocessedLabel((Container) de, sideDirection); 
 				} else {
 					l.getRenderingInformation().setRendered(false);
 				}

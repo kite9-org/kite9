@@ -593,23 +593,34 @@ public class TestingEngine extends TestingHelp {
 					double downDist = disp.getPadding(outer, Direction.DOWN);
 					
 					if (innerRect.getMaxX() + rightDist > outerRect.getMaxX()) {
-						throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
+						if (!isLabelOn(Direction.RIGHT, inner)) {
+							throw new LogicException(createExceptionText(outer, "RIGHT", inner, rightDist, outerRect, innerRect));
+						}
 					}
 
 					if (innerRect.getMinX() - leftDist < outerRect.getMinX()) {
-						throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
+						if (!isLabelOn(Direction.LEFT, inner)) {
+							throw new LogicException(createExceptionText(outer, "LEFT", inner, leftDist, outerRect, innerRect));
+						}
 					}
 					
-					if (!(inner instanceof Label)) {
-						if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+					if (innerRect.getMaxY() + downDist > outerRect.getMaxY()) {
+						if (!isLabelOn(Direction.DOWN, inner)) {
 							throw new LogicException(createExceptionText(outer, "DOWN", inner, downDist, outerRect, innerRect));
 						}
 					}
 
 					if (innerRect.getMinY() - upDist < outerRect.getMinY()) {
-						throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
+						if (!isLabelOn(Direction.UP, inner)) {
+							throw new LogicException(createExceptionText(outer, "UP", inner, upDist, outerRect, innerRect));
+						}
 					}
 				}
+			}
+
+
+			private boolean isLabelOn(Direction d, DiagramElement inner) {
+				return (inner instanceof Label) && (((Label)inner).getLabelPlacement().matches(d));
 			}
 
 

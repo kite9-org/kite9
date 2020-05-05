@@ -76,16 +76,16 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 						new TextLabel("Bottom", LabelPlacement.BOTTOM)), true, null, null);
 
 		
-//		Context con3 = new Context("b3", 
-//				createList(new TextLabel("Top 1", LabelPlacement.TOP),
-//						new TextLabel("Top 2", LabelPlacement.TOP),
-//						new TextLabel("Left 1", LabelPlacement.LEFT),
-//						new TextLabel("Left 2", LabelPlacement.LEFT)), true, null, null);
+		Context con3 = new Context("b3", 
+				createList(new TextLabel("Top 1", LabelPlacement.TOP),
+						new TextLabel("Top 2", LabelPlacement.TOP),
+						new TextLabel("Left 1", LabelPlacement.LEFT),
+						new TextLabel("Left 2", LabelPlacement.LEFT)), true, null, null);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(
 			//	con1, 
-				con2 
-			//	con3
+				con2, 
+				con3
 				), null);
 		renderDiagram(d);
 	}
