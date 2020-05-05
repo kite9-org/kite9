@@ -5,8 +5,10 @@ import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.style.LabelPlacement;
 
 public class Test4Containers extends AbstractLayoutFunctionalTest {
 
@@ -58,9 +60,29 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_4_4_LabelledContainers() throws Exception {
 		Glyph one = new Glyph("Stereo", "one", null, null);
-		Context con1 = new Context("b1", createList(one), true, new TextLine("Here is my label"), null);
+		Glyph two = new Glyph("Stereo", "two", null, null);
+		Context con1 = new Context("b1", 
+			createList(one, 
+					new TextLabel("Top Left", LabelPlacement.TOP_LEFT),
+					new TextLabel("Top Right", LabelPlacement.TOP_RIGHT),
+					new TextLabel("Bottom Left", LabelPlacement.BOTTOM_LEFT),
+					new TextLabel("Bottom Right", LabelPlacement.BOTTOM_RIGHT)), true, null, null);
 
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1), null);
+		Context con2 = new Context("b2", 
+				createList(two, 
+						new TextLabel("Top", LabelPlacement.TOP),
+						new TextLabel("Right", LabelPlacement.RIGHT),
+						new TextLabel("Left", LabelPlacement.LEFT),
+						new TextLabel("Bottom", LabelPlacement.BOTTOM)), true, null, null);
+
+		
+		Context con3 = new Context("b3", 
+				createList(new TextLabel("Top 1", LabelPlacement.TOP),
+						new TextLabel("Top 2", LabelPlacement.TOP),
+						new TextLabel("Left 1", LabelPlacement.LEFT),
+						new TextLabel("Left 2", LabelPlacement.LEFT)), true, null, null);
+		
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, con2, con3), null);
 		renderDiagram(d);
 	}
 	
