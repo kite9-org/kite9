@@ -1,6 +1,8 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
@@ -34,36 +36,61 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 	 */
 	@Override
 	public void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, Side s) {
-		if (d == Direction.LEFT) {
-			DiagramElement de = underlyings.entrySet().stream().filter(e -> e.getValue() == Direction.DOWN).map(e -> e.getKey()).findFirst().orElse(null);
+		Direction sideDirection = Direction.rotateAntiClockwise(d);
+	
+		DiagramElement de = getDiagramElementInside(underlyings, sideDirection);
 
-			if (de instanceof Container) {
-				// only label non-grid elements.  This is because grid edges can be shared between containers, and we don't know how to 
-				// figure out label positioning in this case yet.
-				Container parentContainer = ((Container) de).getContainer();
-				Label l = findUnprocessedLabel((Container) de);
-				if (l != null) { 
-					if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
-						CornerVertices cv = em.getOuterCornerVertices(l);
-						cc.convertDiagramElementToInnerFace(l, o);
-						Dart d1 = o.createDart(end1, cv.getBottomRight(), underlyings, d);
-						Dart d2 = o.createDart(cv.getBottomRight(), cv.getTopRight(), Collections.emptyMap(), Direction.UP);
-						Dart d3 = o.createDart(cv.getTopRight(), cv.getTopLeft(), Collections.emptyMap(), d);
-						Dart d4 = o.createDart(cv.getTopLeft(), cv.getBottomLeft(), Collections.emptyMap(), Direction.DOWN);
-						Dart d5 = o.createDart(cv.getBottomLeft(), end2, underlyings, d);
-						s.newEdgeDarts.add(d1);
-						s.newEdgeDarts.add(d2);
-						s.newEdgeDarts.add(d3);
-						s.newEdgeDarts.add(d4);
-						s.newEdgeDarts.add(d5);
-						return;
-					} else {
-						l.getRenderingInformation().setRendered(false);
-					}
-				} 
-			}
+		if (de instanceof Container) {
+			// only label non-grid elements.  This is because grid edges can be shared between containers, and we don't know how to 
+			// figure out label positioning in this case yet.
+			Container parentContainer = ((Container) de).getContainer();
+			Label l = findUnprocessedLabel((Container) de, sideDirection);
+			if (l != null) { 
+				if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
+					CornerVertices cv = em.getOuterCornerVertices(l);
+					cc.convertDiagramElementToInnerFace(l, o);
+					Vertex[] waypoints = rotateWaypointsCorrectly(cv, d);
+					
+					Dart d1 = o.createDart(end1, waypoints[0], underlyings, d);
+					Dart d2 = o.createDart(waypoints[0], waypoints[1], Collections.emptyMap(), Direction.rotateClockwise(d));
+					Dart d3 = o.createDart(waypoints[1], waypoints[2], Collections.emptyMap(), d);
+					Dart d4 = o.createDart(waypoints[2], waypoints[3], Collections.emptyMap(), Direction.rotateAntiClockwise(d));
+					Dart d5 = o.createDart(waypoints[3], end2, underlyings, d);
+					s.newEdgeDarts.add(d1);
+					s.newEdgeDarts.add(d2);
+					s.newEdgeDarts.add(d3);
+					s.newEdgeDarts.add(d4);
+					s.newEdgeDarts.add(d5);
+					return;
+				} else {
+					l.getRenderingInformation().setRendered(false);
+				}
+			} 
 		}
+		
 		super.convertContainerEdge(underlyings, o, end1, end2, d, s);
+	}
+
+	/**
+	 * Waypoints is ordered if d is left (i.e. the label is at the bottom)
+	 * However, it could be in any direction.
+	 */
+	private Vertex[] rotateWaypointsCorrectly(CornerVertices cv, Direction d) {
+		List<Vertex> wp = Arrays.asList(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft());
+		while (d != Direction.LEFT) {
+			Collections.rotate(wp, -1);
+			d = Direction.rotateClockwise(d);
+		}
+		
+		return (Vertex[]) wp.toArray(new Vertex[wp.size()]);
+	}
+
+	protected DiagramElement getDiagramElementInside(Map<DiagramElement, Direction> underlyings, Direction sideDirection) {
+		return underlyings.entrySet().stream()
+			.filter(e -> e.getValue() == sideDirection)
+			.map(e -> e.getKey())
+			.findFirst()
+			.orElse(null);
 	}
 	
 	@Override
@@ -95,7 +122,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 		} else if (e instanceof BorderEdge) {
 			DiagramElement de = ((BorderEdge) e).getElementForSide(Direction.DOWN);
 			if (de instanceof Container) {
-				l = findUnprocessedLabel((Container) de);
+				l = findUnprocessedLabel((Container) de, Direction.DOWN);
 				labelSide = Direction.DOWN;
 			}
 		}
@@ -108,9 +135,9 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				
 	}
 
-	private Label findUnprocessedLabel(Container c) {
+	private Label findUnprocessedLabel(Container c, Direction d) {
 		for (DiagramElement de : c.getContents()) {
-			if (de instanceof Label) {
+			if ((de instanceof Label) && (((Label)de).getLabelPlacement().matches(d))) {
 				if (!em.hasOuterCornerVertices(de)) {
 					return (Label) de;
 				}
