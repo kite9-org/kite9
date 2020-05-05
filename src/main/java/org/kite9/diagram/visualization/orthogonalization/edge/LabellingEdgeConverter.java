@@ -2,10 +2,8 @@ package org.kite9.diagram.visualization.orthogonalization.edge;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
@@ -18,6 +16,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
+import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
@@ -96,7 +95,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 	
 	@Override
 	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fan) {
-		Direction labelSide = (incident == Direction.UP) || (incident == Direction.DOWN) ? Direction.LEFT : Direction.UP;
 		Label l = null;
 
 		if (e instanceof ConnectionEdge) {
@@ -120,15 +118,17 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				// middle bit of an edge
 				l = null;
 			}
-		} else if (e instanceof BorderEdge) {
-			DiagramElement de = ((BorderEdge) e).getElementForSide(Direction.DOWN);
-			if (de instanceof Container) {
-				l = findUnprocessedLabel((Container) de, Direction.DOWN);
-				labelSide = Direction.DOWN;
-			}
-		}
+		} 
+//		else if (e instanceof BorderEdge) {
+//			DiagramElement de = ((BorderEdge) e).getElementForSide(Direction.DOWN);
+//			if (de instanceof Container) {
+//				l = findUnprocessedLabel((Container) de, Direction.DOWN);
+//			}
+//		}
 		
 		if (l != null) {
+			LabelPlacement lp = l.getLabelPlacement();
+			Direction labelSide = lp.connectionLabelPlacementDirection(incident);
 			return convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l);
 		} else {
 			return super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan);
@@ -138,7 +138,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 
 	private Label findUnprocessedLabel(Container c, Direction d) {
 		for (DiagramElement de : c.getContents()) {
-			if ((de instanceof Label) && (((Label)de).getLabelPlacement().matches(d))) {
+			if ((de instanceof Label) && (((Label)de).getLabelPlacement().containerLabelPlacement(d))) {
 				if (!em.hasOuterCornerVertices(de)) {
 					return (Label) de;
 				}

@@ -620,7 +620,7 @@ public class TestingEngine extends TestingHelp {
 
 
 			private boolean isLabelOn(Direction d, DiagramElement inner) {
-				return (inner instanceof Label) && (((Label)inner).getLabelPlacement().matches(d));
+				return (inner instanceof Label) && (((Label)inner).getLabelPlacement().containerLabelPlacement(d));
 			}
 
 
