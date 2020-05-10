@@ -479,7 +479,7 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private void checkOverlap(final Diagram d) {
-		BatikDisplayer disp = new BatikDisplayer(false, 0);
+		BatikDisplayer disp = new BatikDisplayer(false);
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override

@@ -13,6 +13,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -175,7 +176,7 @@ public abstract class AbstractCompactionStep implements CompactionStep, Logable 
 		SegmentSlackOptimisation vsso = c.getVerticalSegmentSlackOptimisation();
 		OPair<Slideable<Segment>> vs = vsso.getSlideablesFor(r);
 		
-		boolean minimizing = (r instanceof Container) ? ((Container)r).getSizing() == DiagramElementSizing.MINIMIZE : true;
+		boolean minimizing = (r instanceof SizedRectangular) ? ((SizedRectangular)r).getSizing(horizontal) == DiagramElementSizing.MINIMIZE : true;
 		
 		if (horizontal) {
 			return alignSingleConnections(c, hs, vs, withCheck, minimizing);

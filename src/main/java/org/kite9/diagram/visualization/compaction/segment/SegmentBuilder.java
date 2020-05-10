@@ -17,6 +17,7 @@ import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.HorizontalAlignment;
@@ -95,7 +96,7 @@ public class SegmentBuilder implements Logable {
 	}
 	
 	private AlignStyle decideRectangularAlignStyle(Segment s, AlignedRectangular de) {
-		DiagramElementSizing des = de instanceof Container ? ((Container)de).getSizing() : null;
+		DiagramElementSizing des = de instanceof SizedRectangular ? ((SizedRectangular)de).getSizing(s.getDimension() == Dimension.H) : null;
 		
 		if ((des == DiagramElementSizing.MINIMIZE) || (des == null)) {
 			if (s.getDimension() == Dimension.H) {

@@ -15,7 +15,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 
 public class ConnectedContainerImpl extends AbstractConnected implements Container {
 	
@@ -32,13 +31,6 @@ public class ConnectedContainerImpl extends AbstractConnected implements Contain
 		super(el, parent, ctx, rp, t);
 	}
 	
-	
-	@Override
-	public DiagramElementSizing getSizing() {
-		ensureInitialized();
-		return this.sizing;
-	}
-
 	private List<DiagramElement> contents;
 	
 	@Override
@@ -47,15 +39,6 @@ public class ConnectedContainerImpl extends AbstractConnected implements Contain
 		initLayout();
 		initSizing();
 		this.contents = initContents();
-	}
-
-	@Override
-	protected void initSizing() {
-		super.initSizing();
-		// only MAXIMIZE and MINIMIZE are allowed, MINIMIZE is the default.
-		if (this.sizing != DiagramElementSizing.MAXIMIZE) {
-			this.sizing = DiagramElementSizing.MINIMIZE;
-		}
 	}
 
 	public BorderTraversal getTraversalRule(Direction d) {

@@ -82,6 +82,7 @@ public abstract class AbstractPainter implements Painter {
 					+sr.getMargin(Direction.DOWN)+" "+sr.getMargin(Direction.LEFT)+"; ");
 			debug.append("padding: "+sr.getPadding(Direction.UP)+" "+sr.getPadding(Direction.RIGHT)+" "
 					+sr.getPadding(Direction.DOWN)+" "+sr.getPadding(Direction.LEFT)+"; ");
+			debug.append("sizing: " + ((SizedRectangular) r).getSizing(false) + " " + ((SizedRectangular) r).getSizing(true) + "; ");
 			
 		}
 		if (r instanceof AlignedRectangular) {
@@ -89,7 +90,6 @@ public abstract class AbstractPainter implements Painter {
 			debug.append("vert: "+ ((AlignedRectangular) r).getVerticalAlignment()+"; ");
 		}
 		if (r instanceof Container) {
-			debug.append("sizing: " + ((Container) r).getSizing() + "; ");
 			debug.append("layout: " + ((Container) r).getLayout() + "; ");
 			if (((Container)r).getLayout() == Layout.GRID) {
 				RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();

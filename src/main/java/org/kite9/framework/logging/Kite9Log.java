@@ -44,7 +44,7 @@ public class Kite9Log {
 	}
 	
 	public boolean go() {
-		return logFile != null;
+		return logFile == null;
 	}
 
 	public Kite9Log(Logable o) {

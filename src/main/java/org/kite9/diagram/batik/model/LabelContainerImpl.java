@@ -13,7 +13,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.diagram.model.style.DiagramElementSizing;
 
 /**
  * Container and link-end labels. (TEMPORARY)
@@ -49,21 +48,6 @@ public class LabelContainerImpl extends AbstractLabel implements Label, Containe
 		}
 	}
 
-	@Override
-	public DiagramElementSizing getSizing() {
-		ensureInitialized();
-		return this.sizing;
-	}
-
-	@Override
-	protected void initSizing() {
-		super.initSizing();
-		// only MAXIMIZE and MINIMIZE are allowed, MINIMIZE is the default.
-		if (this.sizing != DiagramElementSizing.MAXIMIZE) {
-			this.sizing = DiagramElementSizing.MINIMIZE;
-		}
-	} 
-	
 	private List<DiagramElement> contents;
 	
 	@Override

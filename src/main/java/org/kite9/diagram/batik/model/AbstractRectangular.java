@@ -41,7 +41,9 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	
 	private RectangleRenderingInformation ri;
 	private Layout layout;
-	protected DiagramElementSizing sizing;	
+	protected DiagramElementSizing sizingHoriz;	
+	protected DiagramElementSizing sizingVert;	
+	
 
 	public AbstractRectangular(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
@@ -81,8 +83,10 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	} 
 	
 	protected void initSizing() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_SIZING_PROPERTY);
-		this.sizing = (DiagramElementSizing) ev.getTheValue();
+		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY);
+		this.sizingHoriz = (DiagramElementSizing) ev.getTheValue();
+		ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY);
+		this.sizingVert = (DiagramElementSizing) ev.getTheValue();
 	}
 	
 	protected void initContainerPosition() {

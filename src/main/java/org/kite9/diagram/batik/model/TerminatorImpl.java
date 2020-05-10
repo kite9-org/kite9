@@ -18,6 +18,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.ContentTransform;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 
 public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	
@@ -144,6 +145,11 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	public End getEnd() {
 		ensureInitialized();
 		return end;
+	}
+
+	@Override
+	public DiagramElementSizing getSizing(boolean horiz) {
+		return DiagramElementSizing.MINIMIZE;
 	}
 	
 }

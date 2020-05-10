@@ -27,13 +27,13 @@ public abstract class AbstractSizingCompactionStep extends AbstractCompactionSte
 			.map(ui -> ui.getDiagramElement())
 			.filter(de -> de instanceof Rectangular)
 			.map(de -> (Rectangular) de)
-			.filter(r -> filter(r))
+			.filter(r -> filter(r, horizontal))
 			.distinct()
 			.sorted((a, b) -> compare(a,b,c, horizontal))
 			.forEach(r -> performSizing(r, c, horizontal));
 	}
 
-	public abstract boolean filter(Rectangular r);
+	public abstract boolean filter(Rectangular r, boolean horizontal);
 
 	public abstract int compare(Rectangular a, Rectangular b, Compaction c, boolean horizontal);
 

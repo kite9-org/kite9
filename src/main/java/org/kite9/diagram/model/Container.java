@@ -30,6 +30,4 @@ public interface Container extends Rectangular {
 	
 	public int getGridRows();
 	
-	public DiagramElementSizing getSizing();
-	
 }

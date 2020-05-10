@@ -15,7 +15,10 @@ import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Temporary;
+import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -35,7 +38,7 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container, HasSVGRepresentation {
+public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container, HasSVGRepresentation, SizedRectangular {
 
 	private final String id;
 	private GridContainerPosition gcp;
@@ -94,7 +97,7 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 	
 	@Override
-	public DiagramElementSizing getSizing() {
+	public DiagramElementSizing getSizing(boolean horiz) {
 		return null;	// no preference
 	}
 
@@ -154,7 +157,25 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 		rectPainter.setDiagramElement(this);
 		return rectPainter.output(d, p);
 	}
-	
-	
+
+	@Override
+	public double getMargin(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public double getPadding(Direction d) {
+		return 0;
+	}
+
+	@Override
+	public CostedDimension getSize(Dimension2D within) {
+		return CostedDimension.ZERO;
+	}
+
+	@Override
+	public Dimension2D getMinimumSize() {
+		return CostedDimension.ZERO;
+	}
 
 }

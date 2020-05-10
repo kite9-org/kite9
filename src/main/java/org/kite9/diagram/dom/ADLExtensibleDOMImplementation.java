@@ -36,6 +36,7 @@ import org.kite9.diagram.dom.managers.LinkLengthManager;
 import org.kite9.diagram.dom.managers.OccupiesShorthandManager;
 import org.kite9.diagram.dom.managers.PaddingLengthManager;
 import org.kite9.diagram.dom.managers.SizeShorthandManager;
+import org.kite9.diagram.dom.managers.SizingShorthandManager;
 import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
@@ -117,12 +118,16 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.MARGIN_BOTTOM_PROPERTY));
 		
 		
-		// ELEMENT TYPE / SIZING / LAYOUT CONTROL
+		// ELEMENT TYPE / LAYOUT CONTROL
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_TYPE_PROPERTY, DiagramElementType.class, DiagramElementType.UNSPECIFIED, false));
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_USAGE_PROPERTY, RectangularElementUsage.class, RectangularElementUsage.REGULAR, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LAYOUT_PROPERTY, Layout.class, null, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONTENT_TRANSFORM, ContentTransform.class, ContentTransform.DEFAULT, false));
+		
+		// SIZING
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
+		registerCustomCSSShorthandManager(new SizingShorthandManager());
 		
 		// GRIDS
 		registerCustomCSSValueManager(new IntegerRangeManager(CSSConstants.GRID_OCCUPIES_X_PROPERTY));

@@ -68,13 +68,24 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 					new TextLabel("Top Right", LabelPlacement.TOP_RIGHT),
 					new TextLabel("Bottom Left", LabelPlacement.BOTTOM_LEFT),
 					new TextLabel("Bottom Right", LabelPlacement.BOTTOM_RIGHT)), true, null, null);
-
+		
+		TextLabel top = new TextLabel("Top", LabelPlacement.TOP);
+		TextLabel right = new TextLabel("Right", LabelPlacement.RIGHT);
+		TextLabel tall = new TextLabel("Tall", LabelPlacement.RIGHT);
+		TextLabel down = new TextLabel("Bottom", LabelPlacement.BOTTOM);
+		
+		top.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: top;");
+		right.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: right;");
+		
+		tall.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-label-placement: right;");
+		down.setAttribute("style", "kite9-horizontal-sizing: minimize; kite9-label-placement: bottom;");
+		
 		Context con2 = new Context("b2", 
 				createList(two, 
-						new TextLabel("Top", LabelPlacement.TOP),
-						new TextLabel("Right", LabelPlacement.RIGHT),
-						new TextLabel("Left", LabelPlacement.LEFT),
-						new TextLabel("Bottom", LabelPlacement.BOTTOM)), true, null, null);
+						top,
+						right,
+						tall,
+						down), true, null, null);
 
 		
 		Context con3 = new Context("b3", 

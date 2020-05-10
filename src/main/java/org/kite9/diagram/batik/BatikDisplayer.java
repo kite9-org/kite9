@@ -15,8 +15,8 @@ import org.kite9.framework.logging.LogicException;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 	
-	public BatikDisplayer(boolean buffer, int gridSize) {
-		super(buffer, gridSize);
+	public BatikDisplayer(boolean buffer) {
+		super(buffer);
 	}
 
 	protected CostedDimension size(DiagramElement element, Dimension2D within) {

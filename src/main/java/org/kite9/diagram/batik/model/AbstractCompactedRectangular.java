@@ -12,6 +12,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.style.ContentTransform;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 
@@ -62,5 +63,11 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 		ensureInitialized();
 		return this.minimumSize;
 	}
-	
+
+	@Override
+	public DiagramElementSizing getSizing(boolean horiz) {
+		ensureInitialized();
+		return horiz ? this.sizingHoriz : this.sizingVert;
+	}
+
 }

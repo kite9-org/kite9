@@ -28,7 +28,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 	}
 
 	private BatikArrangementPipeline createPipeline() {
-		return new BatikArrangementPipeline(new BatikDisplayer(false, 20));
+		return new BatikArrangementPipeline(new BatikDisplayer(false));
 	}
     
     public static BatikArrangementPipeline lastPipeline;

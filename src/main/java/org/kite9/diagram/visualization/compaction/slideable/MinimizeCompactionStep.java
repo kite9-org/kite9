@@ -6,8 +6,8 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -30,8 +30,8 @@ public class MinimizeCompactionStep extends AbstractSizingCompactionStep {
 	}
 
 	@Override
-	public boolean filter(Rectangular r) {
-		return (r instanceof Container) && (((Container) r).getSizing() == DiagramElementSizing.MINIMIZE) ;
+	public boolean filter(Rectangular r, boolean horizontal) {
+		return (r instanceof SizedRectangular) && (((SizedRectangular) r).getSizing(horizontal) == DiagramElementSizing.MINIMIZE) ;
 	}
 
 	public void performSizing(Rectangular r, Compaction c, boolean horizontal) {

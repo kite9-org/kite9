@@ -15,8 +15,6 @@ import org.kite9.framework.logging.LogicException;
 
 public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, DiagramSizer, Logable {
 	
-	private int gridSize = 12;
-
 	double buffer;
 	protected Kite9Log log = new Kite9Log(this);
 
@@ -24,9 +22,8 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	/**
 	 * Set buffer > 0 to ensure gaps even around invisible attr.  0 should be used for correct rendering
 	 */
-	public AbstractCompleteDisplayer(boolean buffer, int gridSize) {
-		this.buffer = buffer ? gridSize : 0;
-		this.gridSize = gridSize;
+	public AbstractCompleteDisplayer(boolean buffer) {
+		this.buffer = buffer ? 12 : 0;
 	}
 
 	public boolean isVisibleElement(DiagramElement de) {
@@ -42,7 +39,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	public double getMinimumDistanceBetween(DiagramElement a, Direction aSide, DiagramElement b, Direction bSide, Direction d, DiagramElement along, boolean concave) {
 		double distance = getMinimumDistanceInner(a,aSide,  b, bSide, d, along, concave);
 		log.send(log.go() ? null : "Minimum distances between  " + a + "  " + aSide+ " "+ b + " "+ bSide +" in " + d + " is " + distance);
-		return distance;
+		return Math.max(distance, buffer);
 
 	}
 
@@ -246,7 +243,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	public boolean isLoggingEnabled() {
-		return false;
+		return true;
 	}
 	
 

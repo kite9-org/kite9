@@ -3,6 +3,7 @@ package org.kite9.diagram.model;
 import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 
 /**
  * Interface for rectangular elements that can affect their own sizes.  i.e. not `Decal`s, which
@@ -29,5 +30,10 @@ public interface SizedRectangular extends Rectangular {
 	 * getSize() method.
 	 */
 	public Dimension2D getMinimumSize();
+	
+	/**
+	 * Allows you to influence the layout:  does this element want to be big or small?
+	 */
+	public DiagramElementSizing getSizing(boolean horiz);
 
 }
