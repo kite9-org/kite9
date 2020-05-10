@@ -16,6 +16,7 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -48,12 +49,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	public Planarization getPlanarization() {
 		return pln;
 	}
-
-	/**
-	 * The list of darts for each vertex should be ordered clockwise from the top 
-	 * left corner
-	 */
-	protected Map<Vertex, List<Dart>> dartOrdering = new HashMap<Vertex, List<Dart>>();
 
 	/**
 	 * Stores the list of darts for a diagram element
@@ -100,10 +95,6 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			sb.append(sep);
 		}
 		return sb.toString();
-	}
-
-	public Map<Vertex, List<Dart>> getDartOrdering() {
-		return dartOrdering;
 	}
 
 	public Set<Dart> getAllDarts() {
@@ -213,6 +204,12 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			wpDarts.add(out);
 		}
 	}
+	
+	private void removeFromWaypointMap(Dart d) {
+		for (DiagramElement de : d.getDiagramElements().keySet()) {
+			waypointMap.get(de).remove(d);
+		}
+	}
 
 	void unlinkDartFromMap(Dart d) {
 		Vertex from = d.getFrom();
@@ -249,7 +246,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				
 		Set<Dart> theSet = secMap.get(second);
 		if (theSet==null) {
-			theSet = new UnorderedSet<Dart>();
+			theSet = new LinkedHashSet<Dart>();
 			secMap.put(second, theSet);
 		}
 		
@@ -361,5 +358,37 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	@Override
 	public List<DartFace> getDartFacesForDart(Dart d) {
 		return dartDartFacesMap.get(d);
+	}
+
+	@Override
+	public Pair<Dart> splitDart(Dart dart, Vertex splitWithVertex) {
+		if (getDartFacesForDart(dart) != null) {
+			throw new LogicException("Can't split darts in faces");
+		}
+		
+		if (allVertices.contains(splitWithVertex)) {
+			throw new LogicException("Can't split with "+splitWithVertex+" it's already in the Orth");
+		}
+		
+		Dart dart1 = new DartImpl(dart.getFrom(), splitWithVertex, dart.getDiagramElements(), dart.getDrawDirection(), dart.getID()+"-1", this);
+		Dart dart2 = new DartImpl(splitWithVertex, dart.getTo(), dart.getDiagramElements(), dart.getDrawDirection(), dart.getID()+"-1", this);
+		
+		allDarts.remove(dart);
+		allDarts.add(dart1);
+		allDarts.add(dart2);
+		
+		unlinkDartFromMap(dart);
+		relinkDartInMap(dart1);
+		relinkDartInMap(dart2);
+		
+		removeFromWaypointMap(dart);
+		addToWaypointMap(dart1, dart1.getDiagramElements().keySet());
+		addToWaypointMap(dart2, dart2.getDiagramElements().keySet());
+		
+		
+		dart.getFrom().removeEdge(dart);
+		dart.getTo().removeEdge(dart);
+
+		return new Pair<Dart>(dart1, dart2);
 	}
 }

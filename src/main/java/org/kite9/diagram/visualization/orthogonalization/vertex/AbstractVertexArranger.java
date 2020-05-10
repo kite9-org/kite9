@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
+import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -29,9 +30,14 @@ import org.kite9.framework.logging.LogicException;
  */
 public abstract class AbstractVertexArranger implements VertexArranger, Logable, ContentsConverter {
 	
-
+	protected ElementMapper em;
+	
 	protected Kite9Log log = new Kite9Log(this);
 
+	public AbstractVertexArranger(ElementMapper em) {
+		super();
+		this.em = em;
+	}
 	
 	/**
 	 * Contains part of the overall vertex construction, between one incoming vertex and the next.
@@ -181,5 +187,4 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 	}
 
 	
-
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
@@ -63,4 +64,6 @@ public interface Orthogonalization extends Serializable {
 	public List<DartFace> getDartFacesForRectangular(Rectangular r);
 
 	public List<DartFace> getDartFacesForDart(Dart d);
+
+	public Pair<Dart> splitDart(Dart dart, Vertex splitWithVertex);
 }

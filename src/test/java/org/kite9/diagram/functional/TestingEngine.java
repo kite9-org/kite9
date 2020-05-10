@@ -514,8 +514,7 @@ public class TestingEngine extends TestingHelp {
 	
 						if (isChildOf(inner, outer)) {
 							checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
-	 
-						} else if (inner instanceof Rectangular) {
+	 					} else if (inner instanceof Rectangular) {
 							checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
 						}
 					}

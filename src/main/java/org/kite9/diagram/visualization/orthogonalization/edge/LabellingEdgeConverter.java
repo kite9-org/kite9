@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
@@ -15,12 +12,9 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.LabelPlacement;
-import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
 public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeConverter {
@@ -32,67 +26,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 		this.em = em;
 	}
 
-	/**
-	 * Adds labels to container edges, if the container has a label.
-	 */
-	@Override
-	public void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, Side s) {
-		Direction sideDirection = Direction.rotateAntiClockwise(d);
-	
-		DiagramElement de = getDiagramElementInside(underlyings, sideDirection);
-
-		if (de instanceof Container) {
-			// only label non-grid elements.  This is because grid edges can be shared between containers, and we don't know how to 
-			// figure out label positioning in this case yet.
-			Container parentContainer = ((Container) de).getContainer();
-			Label l = findUnprocessedLabel((Container) de, sideDirection);
-			while (l != null) { 
-				if ((parentContainer != null) && (parentContainer.getLayout() != Layout.GRID)) {
-					CornerVertices cv = em.getOuterCornerVertices(l);
-					cc.convertDiagramElementToInnerFace(l, o);
-					Vertex[] waypoints = rotateWaypointsCorrectly(cv, d);
-					
-					Dart d1 = o.createDart(end1, waypoints[0], underlyings, d);
-					Dart d2 = o.createDart(waypoints[0], waypoints[1], Collections.emptyMap(), Direction.rotateClockwise(d));
-					Dart d3 = o.createDart(waypoints[1], waypoints[2], Collections.emptyMap(), d);
-					Dart d4 = o.createDart(waypoints[2], waypoints[3], Collections.emptyMap(), Direction.rotateAntiClockwise(d));
-					s.newEdgeDarts.add(d1);
-					s.newEdgeDarts.add(d2);
-					s.newEdgeDarts.add(d3);
-					s.newEdgeDarts.add(d4);
-					end1=waypoints[3];
-					l = findUnprocessedLabel((Container) de, sideDirection); 
-				} else {
-					l.getRenderingInformation().setRendered(false);
-				}
-			} 
-		}
-		
-		super.convertContainerEdge(underlyings, o, end1, end2, d, s);
-	}
-
-	/**
-	 * Waypoints is ordered if d is left (i.e. the label is at the bottom)
-	 * However, it could be in any direction.
-	 */
-	private Vertex[] rotateWaypointsCorrectly(CornerVertices cv, Direction d) {
-		List<Vertex> wp = Arrays.asList(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft());
-		while (d != Direction.LEFT) {
-			Collections.rotate(wp, -1);
-			d = Direction.rotateClockwise(d);
-		}
-		
-		return (Vertex[]) wp.toArray(new Vertex[wp.size()]);
-	}
-
-	protected DiagramElement getDiagramElementInside(Map<DiagramElement, Direction> underlyings, Direction sideDirection) {
-		return underlyings.entrySet().stream()
-			.filter(e -> e.getValue() == sideDirection)
-			.map(e -> e.getKey())
-			.findFirst()
-			.orElse(null);
-	}
-	
 	@Override
 	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fan) {
 		Label l = null;
@@ -119,12 +52,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				l = null;
 			}
 		} 
-//		else if (e instanceof BorderEdge) {
-//			DiagramElement de = ((BorderEdge) e).getElementForSide(Direction.DOWN);
-//			if (de instanceof Container) {
-//				l = findUnprocessedLabel((Container) de, Direction.DOWN);
-//			}
-//		}
+
 		
 		if (l != null) {
 			LabelPlacement lp = l.getLabelPlacement();
@@ -134,18 +62,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 			return super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan);
 		}
 				
-	}
-
-	private Label findUnprocessedLabel(Container c, Direction d) {
-		for (DiagramElement de : c.getContents()) {
-			if ((de instanceof Label) && (((Label)de).getLabelPlacement().containerLabelPlacement(d))) {
-				if (!em.hasOuterCornerVertices(de)) {
-					return (Label) de;
-				}
-			}
-		}
-		
-		return null;
 	}
 
 	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex externalVertex, Vertex sideVertex, Label l) {

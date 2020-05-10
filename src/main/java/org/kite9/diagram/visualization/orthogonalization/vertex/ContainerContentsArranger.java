@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
-import org.kite9.diagram.visualization.orthogonalization.edge.Side;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.framework.logging.LogicException;
 
@@ -140,6 +140,9 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
 			createdVertices.addAll(cv.getVerticesAtThisLevel());
 		}
+		
+		Map<DiagramElement, List<Dart>> sides = new LinkedHashMap<>();
+		Map<DiagramElement, MultiCornerVertex> startVertices = new LinkedHashMap<>();
 				
 		// link them together
 		for (DiagramElement de : connectedElements) {
@@ -149,7 +152,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 
 			MultiCornerVertex prev = null, start = null;
-			Side s = new Side();
+			List<Dart> s = new ArrayList<Dart>();
 			for (MultiCornerVertex current : perimeterVertices) {
 				if (prev != null) {
 					// create a dart between prev and current
@@ -158,20 +161,33 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 					ec.convertContainerEdge(underlyings, o, prev, current, d, s);
 				} else {
 					start = current;
+					startVertices.put(de, start);
 				}
 
 				prev = current;
 			}
+			
 
 			Direction d = getDirection(prev, start);
 			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
 			ec.convertContainerEdge(underlyings, o, prev, start, d, s);
-			DartFace inner = createInnerFace(o, s.getDarts(), start, de);
+			sides.put(de, s);
+		}
+		
+		// add labels
+		for (Map.Entry<DiagramElement, List<Dart>> e : sides.entrySet()) {
+			addLabelsToContainerDart(o, e.getKey(), sides);
+		}
+		
+		// recurse
+		for (Map.Entry<DiagramElement, List<Dart>> e : sides.entrySet()) {
+			List<Dart> s = e.getValue();
+			Vertex start = startVertices.get(e.getKey());
+			DartFace inner = createInnerFace(o, s, start, e.getKey());
 
-			if (de instanceof Container) {
-				convertContainerContents(o, (Container) de, inner);
+			if (e.getKey() instanceof Container) {
+				convertContainerContents(o, (Container) e.getKey(), inner);
 			}
-
 		}
 		
 		return true;

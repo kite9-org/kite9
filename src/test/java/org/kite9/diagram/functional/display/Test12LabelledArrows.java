@@ -21,6 +21,7 @@ import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
+import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.framework.common.HelpMethods;
 
 
@@ -30,17 +31,17 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 	public void test_12_1_LabelledLeftRight() throws Exception {
 		
 //		Glyph a = new Glyph("g1", "", "aasdsad", null, null);
-		Glyph b = new Glyph("g2", "", "bsadsad", null, null);
+		Glyph b = new Glyph("g2", "", "b", null, null);
 		
 		Arrow i1 = new Arrow("arrow1", "i1asdas ");
 		
-		TextLabel from = new TextLabel("from");
-		from.setID("fromLabel");
-		TextLabel toLabel = new TextLabel("to dsdsfds f ds f");
-		toLabel.setID("toLabel");
+		TextLabel fromLabel = new TextLabel("from (down)", LabelPlacement.BOTTOM);
+		fromLabel.setID("fromLabel");
+//		TextLabel toLabel = new TextLabel("to dsdsfds f ds f (up)", LabelPlacement.TOP);
+//		toLabel.setID("toLabel");
 		
 //		new Link(i1, a, null, null, null, from, Direction.LEFT);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, toLabel, Direction.RIGHT);
+		new Link(i1, b, null, fromLabel, LinkEndStyle.ARROW, null, Direction.RIGHT);
 						
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(b, i1), null);
 		renderDiagram(d);
@@ -54,8 +55,8 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		
 		Arrow i1 = new Arrow("i1", "i1");
 		
-		new Link(i1, a, null, null, null, new TextLabel("from"), Direction.UP);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to"), Direction.DOWN);
+		new Link(i1, a, null, null, null, new TextLabel("from (right)", LabelPlacement.RIGHT), Direction.UP);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to (left)", LabelPlacement.LEFT), Direction.DOWN);
 						
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);

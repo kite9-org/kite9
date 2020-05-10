@@ -27,17 +27,17 @@ public enum LabelPlacement {
 	public Direction connectionLabelPlacementDirection(Direction d) {
 		if ((d == Direction.UP) || (d ==Direction.DOWN)) {
 			switch (this) {
-			default:
-			case TOP:
-			case BOTTOM:
 			case LEFT:
 			case TOP_LEFT:
 			case BOTTOM_LEFT:
-				return Direction.LEFT;
+				return Direction.RIGHT;
+			default:
+			case TOP:
+			case BOTTOM:
 			case BOTTOM_RIGHT:
 			case TOP_RIGHT:
 			case RIGHT:
-				return Direction.RIGHT;
+				return Direction.LEFT;
 			}
 		} else {
 			switch (this) {
@@ -46,12 +46,12 @@ public enum LabelPlacement {
 			case BOTTOM:
 			case LEFT:
 			case BOTTOM_LEFT:
-				return Direction.DOWN;
+				return Direction.UP;
 			case BOTTOM_RIGHT:
 			case TOP:
 			case TOP_LEFT:
 			case TOP_RIGHT:
-				return Direction.UP;
+				return Direction.DOWN;
 			}			
 		}
 	}

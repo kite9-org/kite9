@@ -196,11 +196,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		return contexts;
 	}
 
-	/**
-	 * Labels cannot be rendered on gridded containers.
-	 * @throws Exception
-	 */
-	@Test(expected=Kite9XMLProcessingException.class)
+	@Test
 	public void test_51_8_GridWithLabels() throws Exception {
 		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
 		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));
@@ -500,19 +496,18 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_51_27_GridWithCellLabel() throws Exception {
-		Context c1 = new Context("ctx1", Collections.emptyList(), true, new TextLabel("Some label"), Layout.RIGHT);
-		c1.setAttribute("style", "kite9-sizing: maximize;");
 		
-		Cell t0 = new Cell("cell0", Arrays.asList(new TextLabel("Cell Label TR", LabelPlacement.TOP_RIGHT)));
-		t0.setAttribute("style","kite9-min-size: 100px 100px");
+		Cell t0 = new Cell("cell2", Arrays.asList(new TextLabel("Cell Label Left", LabelPlacement.LEFT)));
+		t0.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
+
+		Cell t1 = new Cell("cell0", Arrays.asList(new TextLabel("Cell Label TR", LabelPlacement.BOTTOM)));
+		t1.setAttribute("style","kite9-min-size: 100px 100px");
 
 		
-		Cell t1 = new Cell("cell1", Arrays.asList(new TextLabel("Cell Label B", LabelPlacement.BOTTOM)));
-		t1.setAttribute("style","kite9-min-size: 100px 100px");
+		Cell t2 = new Cell("cell1", Arrays.asList(new TextLabel("Cell Label B", LabelPlacement.TOP), new TextLabel("Cell Label B", LabelPlacement.LEFT)));
+		t2.setAttribute("style","kite9-min-size: 100px 100px");
 		
 		
-		Cell t2 = new Cell("cell2", Arrays.asList(c1, new TextLabel("Cell Label L", LabelPlacement.LEFT)));
-		t2.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
 		
 		Grid g = new Grid("table", Arrays.asList(t0, t1, t2), null);
 		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");

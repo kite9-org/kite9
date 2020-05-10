@@ -186,7 +186,7 @@
                                                           />
   </g
                                                           >
-    <g k9-elem="toLabel" id="5" transform="translate(93.0,37.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [93.0,37.0]; rect-size: [8.0,10.0]; "
+    <g k9-elem="toLabel" id="5" transform="translate(93.0,27.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [93.0,27.0]; rect-size: [8.0,10.0]; "
                                                           >
     <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                                             >
@@ -196,7 +196,7 @@
                                                               >
     <g class="connection-label-front"
                                                               >
-      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [97.0,42.0]; rect-size: [0.0,0.0]; " k9-elem="front"
+      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [97.0,32.0]; rect-size: [0.0,0.0]; " k9-elem="front"
                                                                 />
     </g
                                                                 >
@@ -226,7 +226,7 @@
                                                                         />
   </g
                                                                         >
-    <g k9-elem="toLabel" id="6" transform="translate(92.0,67.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [92.0,67.0]; rect-size: [8.0,10.0]; "
+    <g k9-elem="toLabel" id="6" transform="translate(92.0,57.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [92.0,57.0]; rect-size: [8.0,10.0]; "
                                                                         >
     <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                                                           >
@@ -236,7 +236,7 @@
                                                                             >
     <g class="connection-label-front"
                                                                             >
-      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [96.0,72.0]; rect-size: [0.0,0.0]; " k9-elem="front"
+      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [96.0,62.0]; rect-size: [0.0,0.0]; " k9-elem="front"
                                                                               />
     </g
                                                                               >
