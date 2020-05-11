@@ -14,7 +14,6 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.model.position.Direction;
 
@@ -210,6 +209,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj ds" , null , createNarrowSymbolList(7));
+		k.setAttribute("style", "kite9-label-placement: right; ");
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
 		renderDiagram(d);

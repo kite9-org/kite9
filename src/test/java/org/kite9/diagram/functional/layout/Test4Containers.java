@@ -62,6 +62,8 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 	public void test_4_4_LabelledContainers() throws Exception {
 		Glyph one = new Glyph("Stereo", "one", null, null);
 		Glyph two = new Glyph("Stereo", "two", null, null);
+		Glyph three = new Glyph("Stereo", "some annoyingly long glyph 3", null, null);
+		Glyph four = new Glyph("Stereo", "some annoyingly long glyph 4", null, null);
 		Context con1 = new Context("b1", 
 			createList(one, 
 					new TextLabel("Top Left", LabelPlacement.TOP_LEFT),
@@ -89,16 +91,23 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 
 		
 		Context con3 = new Context("b3", 
-				createList(new TextLabel("Top \n1", LabelPlacement.TOP),
+				createList(three, new TextLabel("Top \n1", LabelPlacement.TOP),
 						new TextLabel("Top 2", LabelPlacement.TOP),
 						new TextLabel("Left 1", LabelPlacement.LEFT),
 						new TextLabel("Left \n2", LabelPlacement.LEFT)), true, null, null);
+		
+		TextLabel left = new TextLabel("Left Left \n1", LabelPlacement.LEFT);
+		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: left;");
+		
+		Context con4 = new Context("b4", 
+				createList(four, left), true, null, null);
 		
 		new Link(one, two);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(
 				con1, 
 				con2, 
-				con3
+				con3, 
+				con4
 				), null);
 		
 		renderDiagram(d);

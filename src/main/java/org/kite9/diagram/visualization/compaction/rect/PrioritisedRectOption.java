@@ -28,7 +28,7 @@ public class PrioritisedRectOption extends RectOption {
 	static enum TurnType {
 		
 		CONNECTION_FAN(-100000, TurnPriority.CONNECTION, GrowthRisk.ZERO),
-		CONTAINER_LABEL(-20000, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
+		CONTAINER_LABEL_MAXIMIZE(-30000, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 		EXTEND_PREFERRED(0, TurnPriority.MAXIMIZE_RECTANGULAR, GrowthRisk.ZERO),
 
 		MINIMIZE_RECT_SIDE_PART_G(20000, TurnPriority.MINIMIZE_RECTANGULAR, GrowthRisk.LOW),    // lines up connecteds joining to a connection
@@ -142,8 +142,8 @@ public class PrioritisedRectOption extends RectOption {
 		}
 		
 		if ((meets.getTurnPriority() == TurnPriority.MAXIMIZE_RECTANGULAR) || (inside(par, meets))) {
-			if (par.isHorizontalContainerLabel()) {
-				return TurnType.CONTAINER_LABEL;
+			if (par.isContainerLabelOnSide(extender.getDirection())) {
+				return TurnType.CONTAINER_LABEL_MAXIMIZE;
 			} else {
 				return TurnType.EXTEND_PREFERRED;
 			}

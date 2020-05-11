@@ -23,6 +23,23 @@ public enum LabelPlacement {
 			return d == Direction.DOWN;
 		}
 	}
+	
+	public boolean sameAxis(Direction d) {
+		switch (this) {
+		case TOP:
+		case TOP_LEFT:
+		case TOP_RIGHT:
+		case BOTTOM_LEFT:
+		case BOTTOM_RIGHT:
+		case BOTTOM:
+		default:
+			return Direction.isHorizontal(d);
+		case LEFT:
+		case RIGHT:
+			return Direction.isVertical(d);
+		}
+	
+	}
 
 	public Direction connectionLabelPlacementDirection(Direction d) {
 		if ((d == Direction.UP) || (d ==Direction.DOWN)) {
@@ -54,5 +71,10 @@ public enum LabelPlacement {
 				return Direction.DOWN;
 			}			
 		}
+	}
+
+	Object isVertical() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -289,14 +289,13 @@ class VertexTurn {
 		return (start instanceof FanVertex) && ((FanVertex)start).isInner();
 	}
 	
-	public boolean isHorizontalContainerLabel() {
-		if (s.getUnderlying().getDimension() == Dimension.V) {
-			long labels = getUnderlyingsOfType(s, Label.class)
-					.filter(l -> !l.isConnectionLabel()).count();
-			return (labels > 0);			
-		} else {
-			return false;
-		}
+	public boolean isContainerLabelOnSide(Direction d) {
+		long labels = getUnderlyingsOfType(s, Label.class)
+				.filter(l -> !l.isConnectionLabel())
+				.filter(l -> ((Label) l).getLabelPlacement().sameAxis(d))
+				.count();;
+				
+		return (labels > 0);				
 	}
 	
 	public boolean isMinimizeRectangleBounded() {

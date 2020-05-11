@@ -48,7 +48,10 @@ key {
 	kite9-type: container;
 	kite9-usage: label;
 	kite9-padding: 3px 6px 3px 6px; 
-	kite9-template: url(template.svg#key)
+	kite9-template: url(template.svg#key);
+	kite9-horizontal-sizing: maximize;
+	kite9-vertical-sizing: minimize;
+  kite9-label-placement: bottom;
 }
 
 key body {
@@ -167,6 +170,7 @@ context > label {
 	kite9-sizing: minimize;
 	kite9-template: url(template.svg#container-label);
 	kite9-padding: 4px;
+  kite9-label-placement: bottom;
 }
 
 grid {
