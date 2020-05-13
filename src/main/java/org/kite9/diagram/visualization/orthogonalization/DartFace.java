@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.framework.logging.LogicException;
 
@@ -54,10 +55,11 @@ public class DartFace implements Serializable {
 		return "DartFace: "+id+"-"+(outerFace ? "outer, inside "+containedByStr : "inner") +": "+dartsInFace.toString();
 	}
 	
-	public DartFace(int i, boolean outerFace, List<DartDirection> dartsInFace) {
+	public DartFace(int i, boolean outerFace, List<DartDirection> dartsInFace, Rectangular partOf) {
 		this.id = i;
 		this.outerFace = outerFace;
 		this.dartsInFace = dartsInFace;
+		this.partOf = partOf;
 	}
 	
 	private final int id;
@@ -72,6 +74,8 @@ public class DartFace implements Serializable {
 	
 	private DartFace containedBy;
 	private Set<DartFace> containing = new HashSet<>();
+	
+	private final Rectangular partOf;
 	
 	public DartFace getContainedBy() {
 		return containedBy;
@@ -132,6 +136,10 @@ public class DartFace implements Serializable {
 		if (outerFace != other.outerFace)
 			return false;
 		return true;
+	}
+
+	public Rectangular getPartOf() {
+		return partOf;
 	}
 	
 	

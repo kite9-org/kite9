@@ -172,7 +172,7 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 				Segment next = uniqueSegments.get((i+1) % us);
 				Direction d = uniqueDirections.get(i);
 				
-				VertexTurn t = new VertexTurn(i, c, current.getSlideable(), d, last.getSlideable(), next.getSlideable());
+				VertexTurn t = new VertexTurn(i, c, current.getSlideable(), d, last.getSlideable(), next.getSlideable(), df.getPartOf());
 				theStack.add(t);
 			}
 		

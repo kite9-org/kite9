@@ -1,17 +1,18 @@
-package org.kite9.diagram.functional.layout;
+package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
+import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.LabelPlacement;
 
-public class Test4Containers extends AbstractLayoutFunctionalTest {
+public class Test4Containers extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_4_1_ContainerNestingFinal() throws Exception {
@@ -97,12 +98,15 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 						new TextLabel("Left \n2", LabelPlacement.LEFT)), true, null, null);
 		
 		TextLabel left = new TextLabel("Left Left \n1", LabelPlacement.LEFT);
-		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: left;");
+		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
 		
 		Context con4 = new Context("b4", 
 				createList(four, left), true, null, null);
 		
+		con4.setAttribute("style", "kite9-sizing: minimize;");
+		
 		new Link(one, two);
+		new Link(three, four);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(
 				con1, 
 				con2, 
@@ -110,6 +114,28 @@ public class Test4Containers extends AbstractLayoutFunctionalTest {
 				con4
 				), null);
 		
+		renderDiagram(d);
+	}
+	
+	@Test
+	public void test_4_5_TurnsInsideContainers() throws Exception {
+		Glyph one = new Glyph("one", "Stereo", "one", null, null);
+		Glyph two = new Glyph("two", "Stereo", "two", null, null);
+		Glyph three = new Glyph("three", "Stereo", "three", null, null);
+		Glyph four = new Glyph("four", "Stereo", "four", null, null);
+		Glyph five = new Glyph("five", "Stereo", "five", null, null);
+		
+		Context con1 = new Context("b1", createList(one), true, null, Layout.RIGHT);
+		Context con2 = new Context("b2", createList(two), true, null, Layout.RIGHT);
+	
+		new Link(one, three, null,null,null,null,Direction.DOWN);
+		new Link(two, five, null,null,null,null,Direction.DOWN);
+		new Link(three, four, null,null,null,null,Direction.RIGHT);
+		new Link(four, five, null,null,null,null,Direction.RIGHT);
+		new TurnLink(one, four);
+		new TurnLink(two, four);
+		
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, con2, three, four, five), null);
 		renderDiagram(d);
 	}
 	

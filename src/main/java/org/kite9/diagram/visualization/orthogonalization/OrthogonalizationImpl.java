@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.kite9.diagram.common.algorithms.det.UnorderedSet;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.CompactionHelperVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -256,7 +255,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 	private int faceNo = 0;
 	
 	public DartFace createDartFace(Rectangular partOf, boolean outerFace, List<DartDirection> darts) {
-		DartFace df = new DartFace(faceNo++, outerFace, darts);
+		DartFace df = new DartFace(faceNo++, outerFace, darts, partOf);
 		faces.add(df);
 		List<DartFace> frl = facesRectangularMap.get(partOf);
 		if (frl == null) {

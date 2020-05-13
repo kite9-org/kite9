@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
-import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.FanVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
@@ -42,11 +41,12 @@ class VertexTurn {
 	
 	}
 	
-	public VertexTurn(int number, Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith) {
+	public VertexTurn(int number, Compaction c, Slideable<Segment> s, Direction d, Slideable<Segment> startsWith, Slideable<Segment> endsWith, Rectangular partOf) {
 		this.d = d;
 		this.s = s;
 		this.startsWith = startsWith;
 		this.endsWith = endsWith;
+		this.partOf = partOf;
 		this.start = commonVertex(s.getUnderlying(), startsWith.getUnderlying());
 		this.end = commonVertex(s.getUnderlying(), endsWith.getUnderlying());
 		this.number = number;
@@ -82,6 +82,7 @@ class VertexTurn {
 	private TurnPriority turnPriority;
 	private double length;
 	private boolean fixedLength;
+	private final Rectangular partOf;
 
 	/**
 	 * Returns true if the turn in question cannot be expanded due to a rectangle getting bigger
@@ -298,35 +299,12 @@ class VertexTurn {
 		return (labels > 0);				
 	}
 	
-	public boolean isMinimizeRectangleBounded() {
-		long rectsAtBothEnds = getUnderlyingsOfType(startsWith, Rectangular.class)
-				.filter(de -> endsWith.getUnderlying().hasUnderlying(de))
-				.filter(minimize(Direction.isHorizontal(d))).count();
-		return rectsAtBothEnds > 0;
+	private Predicate<? super Rectangular> minimize(boolean horiz) {
+		return r -> (r instanceof SizedRectangular) && (((SizedRectangular) r).getSizing(horiz) == DiagramElementSizing.MINIMIZE) && (r != partOf);
 	}
 	
-	public boolean isConnectionBounded() {
-		long startsWithConnections = getUnderlyingsOfType(startsWith, Connection.class).count();
-		long endsWithConnections = getUnderlyingsOfType(endsWith, Connection.class).count();
-		
-		return (startsWithConnections > 0) && (endsWithConnections > 0);
-	}
-	
-	public boolean isMinimizeRectangleCorner() {
-		long rects = getUnderlyingsOfType(s, Rectangular.class)
-			.filter(de -> endsWith.getUnderlying().hasUnderlying(de) || startsWith.getUnderlying().hasUnderlying(de))
-			.filter(minimize(Direction.isHorizontal(d))).count();
-		
-	
-		return rects > 0;
-	}
-
-	private static Predicate<? super Rectangular> minimize(boolean horiz) {
-		return r -> (r instanceof SizedRectangular) && (((SizedRectangular) r).getSizing(horiz) == DiagramElementSizing.MINIMIZE);
-	}
-	
-	private static Predicate<? super Rectangular> maximize(boolean horiz) {
-		return r ->(r instanceof SizedRectangular) && (((SizedRectangular) r).getSizing(horiz) == DiagramElementSizing.MAXIMIZE);
+	private Predicate<? super Rectangular> maximize(boolean horiz) {
+		return r -> ((r instanceof SizedRectangular) && (((SizedRectangular) r).getSizing(horiz) == DiagramElementSizing.MAXIMIZE)) || (r == partOf);
 	}
 
 	public static boolean isConnection(Slideable<Segment> s) {
@@ -335,12 +313,14 @@ class VertexTurn {
 	}
 	
 	public boolean isMinimizeRectangular(Slideable<Segment> s) {
-		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(minimize(Direction.isHorizontal(d))).count();
+		long rects = getUnderlyingsOfType(s, Rectangular.class)
+			.filter(minimize(Direction.isHorizontal(d))).count();
 		return rects > 0;
 	}
 	
 	public boolean isMaximizeRectangular(Slideable<Segment> s) {
-		long rects = getUnderlyingsOfType(s, Rectangular.class).filter(maximize(Direction.isHorizontal(d))).count();
+		long rects = getUnderlyingsOfType(s, Rectangular.class)
+			.filter(maximize(Direction.isHorizontal(d))).count();
 		return rects > 0;
 	}
 	
@@ -356,6 +336,11 @@ class VertexTurn {
 			
 		return leavingConnections;
 	}
+
+	public Rectangular getPartOf() {
+		return partOf;
+	}
+	
 	
 
 }
