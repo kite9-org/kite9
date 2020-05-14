@@ -32,7 +32,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 	} 
 	
 	@Override
-	public void buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, List<Dart> s) {
+	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d) {
 		List<Dart> start = new ArrayList<Dart>();
 		List<Dart> end = new ArrayList<Dart>();
 		
@@ -68,7 +68,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		
 		Collections.reverse(end);
 		start.addAll(end);
-		s.addAll(start);
+		return start;
 	}
 
 	private Dart getDartGoing(Vertex end1, Direction d) {

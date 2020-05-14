@@ -158,7 +158,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 					// create a dart between prev and current
 					Direction d = getDirection(prev, current);
 					Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-					ec.buildDartsBetweenVertices(underlyings, o, prev, current, d, s);
+					s.addAll(ec.buildDartsBetweenVertices(underlyings, o, prev, current, d));
 				} else {
 					start = current;
 					startVertices.put(de, start);
@@ -170,13 +170,8 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 			Direction d = getDirection(prev, start);
 			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-			ec.buildDartsBetweenVertices(underlyings, o, prev, start, d, s);
+			s.addAll(ec.buildDartsBetweenVertices(underlyings, o, prev, start, d));
 			sides.put(de, s);
-		}
-		
-		// add labels
-		for (Map.Entry<DiagramElement, List<Dart>> e : sides.entrySet()) {
-			addLabelsToContainerDart(o, e.getKey(), sides);
 		}
 		
 		// recurse
@@ -208,7 +203,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 		}
 	}
 
-	private Dart getDartInDirection(Vertex current, Direction d) {
+	public static Dart getDartInDirection(Vertex current, Direction d) {
 		for (Edge e : current.getEdges()) {
 			if ((e instanceof Dart) && (e.getDrawDirectionFrom(current) == d)) {
 				return (Dart) e;

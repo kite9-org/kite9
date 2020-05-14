@@ -69,15 +69,15 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 
 		Context con1 = new Context("b1", 
 			createList(one, 
-					new TextLabel("Top Left", LabelPlacement.TOP_LEFT),
-					new TextLabel("Top Right", LabelPlacement.TOP_RIGHT),
-					new TextLabel("Bottom Left", LabelPlacement.BOTTOM_LEFT),
-					new TextLabel("Bottom Right", LabelPlacement.BOTTOM_RIGHT)), true, null, null);
+					new TextLabel("1. Top Left", LabelPlacement.TOP_LEFT),
+					new TextLabel("2. Top Right", LabelPlacement.TOP_RIGHT),
+					new TextLabel("3. Bottom Left", LabelPlacement.BOTTOM_LEFT),
+					new TextLabel("4. Bottom Right", LabelPlacement.BOTTOM_RIGHT)), true, null, null);
 		
-		TextLabel top = new TextLabel("Top", LabelPlacement.TOP);
-		TextLabel right = new TextLabel("Right", LabelPlacement.RIGHT);
-		TextLabel tall = new TextLabel("Tall", LabelPlacement.RIGHT);
-		TextLabel down = new TextLabel("Bottom", LabelPlacement.BOTTOM);
+		TextLabel top = new TextLabel("5. Top", LabelPlacement.TOP);
+		TextLabel right = new TextLabel("6. Right", LabelPlacement.RIGHT);
+		TextLabel tall = new TextLabel("7. Tall", LabelPlacement.RIGHT);
+		TextLabel down = new TextLabel("8. Bottom", LabelPlacement.BOTTOM);
 		
 		top.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: top;");
 		right.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: right;");
@@ -94,12 +94,12 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 
 		
 		Context con3 = new Context("b3", 
-				createList(three, new TextLabel("Top \n1", LabelPlacement.TOP),
-						new TextLabel("Top 2", LabelPlacement.TOP),
-						new TextLabel("Left 1", LabelPlacement.LEFT),
-						new TextLabel("Left \n2", LabelPlacement.LEFT)), true, null, null);
+				createList(three, new TextLabel("9. Top \n1", LabelPlacement.TOP),
+						new TextLabel("10. Top 2", LabelPlacement.TOP),
+						new TextLabel("11. Left 1", LabelPlacement.LEFT),
+						new TextLabel("12. Left \n2", LabelPlacement.LEFT)), true, null, null);
 		
-		TextLabel topl = new TextLabel("Top TOp \n1", LabelPlacement.LEFT);
+		TextLabel topl = new TextLabel("13. Top \n1", LabelPlacement.LEFT);
 		topl.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
 		
 		Context con4 = new Context("b4", 
@@ -107,7 +107,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		
 		con4.setAttribute("style", "kite9-sizing: minimize;");
 		
-		TextLabel left = new TextLabel("Left Left \n1", LabelPlacement.LEFT);
+		TextLabel left = new TextLabel("14. Left Left \n1", LabelPlacement.LEFT);
 		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: left;");
 		
 		

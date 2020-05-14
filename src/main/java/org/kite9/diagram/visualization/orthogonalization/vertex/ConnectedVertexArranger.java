@@ -1,12 +1,10 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,14 +19,11 @@ import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
@@ -198,8 +193,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			Direction outwardsDirection = Direction.rotateAntiClockwise(sideDirection);
 			List<IncidentDart> leavers = dartDirections.get(outwardsDirection);
 			leavers = leavers == null ? Collections.emptyList() : leavers;
-			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(originalUnderlying, outwardsDirection);
-			List<Dart> s = createSide(fromv, tov, leavers, o, sideDirection, underlyings);
+			List<Dart> s = createSide(fromv, tov, leavers, o, sideDirection, Collections.singletonMap(originalUnderlying, outwardsDirection));
 			allSideDarts.addAll(s);
 			done ++;
 			sideDirection = Direction.rotateClockwise(sideDirection);
@@ -332,26 +326,18 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		List<Dart> out = new ArrayList<Dart>();
 		Vertex last = from;
 		IncidentDart incidentDart = null;
-		if (underlyings.size() > 1) {
-			throw new LogicException("Doesn't support multiple underlyings");
-		}
-
-		DiagramElement singleUnderlying = underlyings.keySet().iterator().next();
-		Map<DiagramElement, List<Dart>> singletonMap = Collections.singletonMap(singleUnderlying, out);
 		
 		if (onSide != null) {
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
-				ec.buildDartsBetweenVertices(underlyings, o, last, vsv, goingIn, out);
-				addLabelsToContainerDart(o, singleUnderlying, singletonMap);
+				out.addAll(ec.buildDartsBetweenVertices(underlyings, o, last, vsv, goingIn));
 				last = vsv;
 			}
 		}
 
 		// finally, join to corner
-		ec.buildDartsBetweenVertices(underlyings, o, last, to, goingIn, out);
-		addLabelsToContainerDart(o, singleUnderlying, singletonMap);
+		out.addAll(ec.buildDartsBetweenVertices(underlyings, o, last, to, goingIn));
 		return out;
 	}
 
@@ -364,121 +350,4 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 
 	
-	/**
-	 * Adds labels to container edges, if the container has a label.
-	 * We add the label by splitting the first dart we find.
-	 */
-	public void addLabelsToContainerDart(Orthogonalization o, DiagramElement de, Map<DiagramElement, List<Dart>> sides) {
-		List<Dart> originals = new ArrayList<Dart>(sides.get(de));
-		for (Dart dart : originals) {
-			Direction sideDirection = dart.getDiagramElements().get(de);
-			
-			if (sideDirection != null) {
-				List<Dart> s = sides.get(de);
-				
-				// clockwise direction around container
-				Direction d = Direction.rotateClockwise(sideDirection);
-				Vertex end1 = dart.getDrawDirection() == d ? dart.getFrom() : dart.getTo();
-				Vertex end2 = dart.getDrawDirection() == d ? dart.getTo() : dart.getFrom();
-	
-				// only label non-grid elements. This is because grid edges can be shared
-				// between containers, and we don't know how to
-				// figure out label positioning in this case yet.
-				Label l = findUnprocessedLabel(de, sideDirection);
-				while (l != null) {
-					CornerVertices cv = em.getOuterCornerVertices(l);
-					Vertex[] waypoints = rotateWaypointsCorrectly(cv, d);
-					
-					Pair<Dart> p1 = o.splitDart(dart, waypoints[0]);
-					Dart p1keep = p1.getA().meets(end1) ? p1.getA() : p1.getB();
-					Dart p1change = p1.getA().meets(end1) ? p1.getB() : p1.getA();
-					Pair<Dart> p2 = o.splitDart(p1change, waypoints[3]);
-					Dart p2keep = p2.getA().meets(end2) ? p2.getA() : p2.getB();
-										
-					DartFace df = convertDiagramElementToInnerFace(l, o);
-					
-					// now we need to modify the dart face to skirt around this new label
-					List<Dart> newElements = clockwiseElementsBetween(df, waypoints[0], waypoints[3]);
-					List<Dart> otherSideElements = clockwiseElementsBetween(df, waypoints[3], waypoints[0]);
-					newElements.add(0, p1keep);
-					newElements.add(p2keep);
-					
-					int idx = s.indexOf(dart);
-					s.addAll(idx, newElements);
-					s.remove(dart);
-					
-					// check for dart in other sides.  Only gets called for grid.
-					for (List<Dart> otherSide : sides.values()) {
-						if ((otherSide != s) && (otherSide.contains(dart))) {
-							otherSideElements.add(0, p2keep);
-							otherSideElements.add(p1keep);
-							idx = otherSide.indexOf(dart);
-							otherSide.addAll(idx, otherSideElements);
-							otherSide.remove(dart);
-						}
-					}
-					
-					l = findUnprocessedLabel((Container) de, sideDirection);
-					dart = p1keep;
-				}
-			}
-		}
-
-	}
-
-	private List<Dart> clockwiseElementsBetween(DartFace df, Vertex from, Vertex to) {
-		int startIndex = 0;
-		int endIndex = 0;
-		List<Dart> out = new ArrayList<Dart>();
-	
-		for (int i = 0; i < df.getDartsInFace().size(); i++) {
-			DartDirection dd = df.getDartsInFace().get(i);
-			Vertex ddTo = dd.getDirection() == dd.getDart().getDrawDirection() ? dd.getDart().getTo() : dd.getDart().getFrom();
-			if (ddTo == from) {
-				startIndex = i;
-			} 
-			
-			if (ddTo == to) {
-				endIndex = i;
-			}
-		}
-		
-		int i = startIndex;
-		
-		while (i != endIndex) {
-			out.add(df.getDartsInFace().get(i).getDart());
-			i = i == 0 ? df.getDartsInFace().size() - 1 : i - 1;
-		}
-		
-		return out;
-	}
-
-	/**
-	 * Waypoints is ordered if d is left (i.e. the label is at the bottom) However,
-	 * it could be in any direction.
-	 */
-	private Vertex[] rotateWaypointsCorrectly(CornerVertices cv, Direction d) {
-		List<Vertex> wp = Arrays.asList(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft());
-		while (d != Direction.LEFT) {
-			Collections.rotate(wp, -1);
-			d = Direction.rotateClockwise(d);
-		}
-
-		return (Vertex[]) wp.toArray(new Vertex[wp.size()]);
-	}
-
-	private Label findUnprocessedLabel(DiagramElement c, Direction d) {
-		if (c instanceof Container) {
-			for (DiagramElement de : ((Container) c).getContents()) {
-				if ((de instanceof Label) && (((Label) de).getLabelPlacement().containerLabelPlacement(d))) {
-					if (!em.hasOuterCornerVertices(de)) {
-						return (Label) de;
-					}
-				}
-			}
-		}
-
-		return null;
-	}
-
 }

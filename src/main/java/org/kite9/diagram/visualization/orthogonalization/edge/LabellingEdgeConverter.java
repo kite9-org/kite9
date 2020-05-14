@@ -1,20 +1,29 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
+import org.kite9.diagram.visualization.orthogonalization.Dart;
+import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
+import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContentsArranger;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
@@ -29,7 +38,6 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 
 	@Override
 	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fan) {
-		System.err.println("Border edge "+e);
 		Label l = null;
 		Direction labelSide = null;
 
@@ -86,6 +94,8 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		
 		return null;
 	}
+	
+	
 
 	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex externalVertex, Vertex sideVertex, Label l) {
 		Direction side = Direction.reverse(incident);
@@ -145,6 +155,98 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 		} else {
 			throw new LogicException();
 		}
+	}
+
+
+	/**
+	 * Adds labels to container edges, if the container has a label. We add the
+	 * label by splitting the first dart we find.
+	 */
+	public void addLabelsToContainerDart(Orthogonalization o, List<Dart> darts, Vertex from, Vertex to, Direction going) {
+		boolean changed = false;
+
+		for (Dart dart : darts) {
+			for (DiagramElement de : dart.getDiagramElements().keySet()) {
+				if (de instanceof Container) {
+					Direction sideDirection = dart.getDiagramElements().get(de);
+
+					// clockwise direction around container
+					Direction d = Direction.rotateClockwise(sideDirection);
+					Vertex end1 = dart.getDrawDirection() == d ? dart.getFrom() : dart.getTo();
+					Vertex end2 = dart.getDrawDirection() == d ? dart.getTo() : dart.getFrom();
+
+					// greedily collect all possible labels
+					Map<Label, CornerVertices> toProcess = new LinkedHashMap<>();
+					Label l = findUnprocessedLabel((Container) de, sideDirection);
+					while (l != null) {
+						toProcess.put(l, em.getOuterCornerVertices(l));
+						changed = true;
+						l = findUnprocessedLabel((Container) de, sideDirection);
+					}
+					
+					for(Entry<Label, CornerVertices> e : toProcess.entrySet()) {
+						Vertex[] waypoints = rotateWaypointsCorrectly(e.getValue(), d);
+
+						Pair<Dart> p1 = o.splitDart(dart, waypoints[0]);
+						Dart p1keep = p1.getA().meets(end1) ? p1.getA() : p1.getB();
+						Dart p1change = p1.getA().meets(end1) ? p1.getB() : p1.getA();
+						Pair<Dart> p2 = o.splitDart(p1change, waypoints[3]);
+						Dart p2keep = p2.getA().meets(end2) ? p2.getA() : p2.getB();
+
+						DartFace df = cc.convertDiagramElementToInnerFace(e.getKey(), o);
+
+						// now we need to modify the dart face to skirt around this new label
+//						List<Dart> newElements = clockwiseElementsBetween(df, waypoints[0], waypoints[3]);
+//						List<Dart> otherSideElements = clockwiseElementsBetween(df, waypoints[3], waypoints[0]);
+//						newElements.add(0, p1keep);
+//						newElements.add(p2keep);
+
+						
+						dart = p1keep;
+					}
+				}
+			}
+		}
+		
+		if (changed) {
+			darts.clear();
+			Dart d = ContainerContentsArranger.getDartInDirection(from, going);
+			darts.add(d);
+			while (!d.meets(to)) {
+				going = d.getDrawDirectionFrom(from);
+				from = d.otherEnd(from);
+				d = ContainerContentsArranger.getDartInDirection(from, Direction.rotateClockwise(going));
+				d = d != null ? d : ContainerContentsArranger.getDartInDirection(from, going);
+				d = d != null ? d : ContainerContentsArranger.getDartInDirection(from, Direction.rotateAntiClockwise(going));
+				
+				if (d == null) {
+					throw new LogicException();
+				}
+				darts.add(d);
+			}
+		}
+	}
+
+	/**
+	 * Waypoints is ordered if d is left (i.e. the label is at the bottom) However,
+	 * it could be in any direction.
+	 */
+	private Vertex[] rotateWaypointsCorrectly(CornerVertices cv, Direction d) {
+		List<Vertex> wp = Arrays.asList(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft());
+		while (d != Direction.LEFT) {
+			Collections.rotate(wp, -1);
+			d = Direction.rotateClockwise(d);
+		}
+
+		return (Vertex[]) wp.toArray(new Vertex[wp.size()]);
+	}
+
+	@Override
+	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1,
+			Vertex end2, Direction d) {
+		List<Dart> s = super.buildDartsBetweenVertices(underlyings, o, end1, end2, d);
+		addLabelsToContainerDart(o, s, end1, end2, d);
+		return s;		
 	}
 
 }

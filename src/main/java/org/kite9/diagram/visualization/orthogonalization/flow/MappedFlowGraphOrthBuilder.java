@@ -11,10 +11,8 @@ import java.util.Map;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.RoutingInfo;
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.TwoElementPlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -23,8 +21,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
-import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
+import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.OrthogonalizationImpl;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
@@ -440,12 +438,11 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 		List<DartDirection> out = new ArrayList<DartDirection>();
 
-		DiagramElement thisSideDiagramElement = getThisSideDiagramElement(e, nextDir);
 		
 		for (int i = 0; i < waypoints.size() - 1; i++) {
 			Vertex start = waypoints.get(i);
 			Vertex end = waypoints.get(i + 1);
-			createEdgePart(o, nextDir, start, end,  thisSideDiagramElement,Direction.rotateAntiClockwise(nextDir), out);
+			createEdgePart(o, nextDir, start, end,  e.getDiagramElements(), out);
 			if (i < (wpCount - 1)) {
 				// rotate ready for next dart.
 				nextDir = rotate90(nextDir, arcCost);
@@ -459,27 +456,13 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		return out;
 	}
 	
-	private void createEdgePart(Orthogonalization o, Direction direction, Vertex start, Vertex end, DiagramElement forDe, Direction forDeSide, List<DartDirection> out) {
-		Map<DiagramElement, Direction> underlyings = new HashMap<>();
-		underlyings.put(forDe, forDeSide);
-		List<Dart> darts = new ArrayList<>();
-		clc.buildDartsBetweenVertices(underlyings, o, start, end, direction, darts);
+	private void createEdgePart(Orthogonalization o, Direction direction, Vertex start, Vertex end, Map<DiagramElement, Direction> underlyings, List<DartDirection> out) {
+		 List<Dart> darts = clc.buildDartsBetweenVertices(underlyings, o, start, end, direction);
 
 		// convert to dart directions
 		for (Dart d : darts) {
 			out.add(new DartDirection(d, d.getDrawDirectionFrom(start)));
 			start = d.otherEnd(start);
-		}
-	}
-
-	private DiagramElement getThisSideDiagramElement(PlanarizationEdge e, Direction nextDir) {
-		if (e instanceof BiDirectionalPlanarizationEdge) {
-			return ((BiDirectionalPlanarizationEdge) e).getOriginalUnderlying();
-		} else if (e instanceof TwoElementPlanarizationEdge) {
-			DiagramElement out = ((TwoElementPlanarizationEdge) e).getElementForSide(Direction.rotateAntiClockwise(nextDir));
-			return out;
-		} else {
-			throw new LogicException();
 		}
 	}
 

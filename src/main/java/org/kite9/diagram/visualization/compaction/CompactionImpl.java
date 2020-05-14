@@ -107,7 +107,8 @@ public class CompactionImpl implements Compaction {
 
 	@Override
 	public Segment getSegmentForDart(Dart r) {
-		return dartToSegmentMap.get(r);
+		Segment out = dartToSegmentMap.get(r);
+		return out;
 	}
 
 	@Override

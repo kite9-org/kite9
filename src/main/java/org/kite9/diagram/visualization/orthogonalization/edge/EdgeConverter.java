@@ -26,6 +26,6 @@ public interface EdgeConverter {
 	/**
 	 * This is used for creating darts to represent the 2d shape of a vertex, which was a point in the planarization.
 	 */
-	void buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, List<Dart> s);
+	List<Dart> buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d);
 	
 }
