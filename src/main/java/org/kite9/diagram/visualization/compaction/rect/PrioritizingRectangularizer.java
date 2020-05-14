@@ -77,7 +77,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		}
 	}
 
-	private void performChange(Compaction c, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack, RectOption ro, List<VertexTurn> theStack) {
+	protected void performChange(Compaction c, PriorityQueue<RectOption> pq, Set<VertexTurn> onStack, RectOption ro, List<VertexTurn> theStack) {
 		// log.send(log.go() ? null : "Queue Currently: ",pq);
 		log.send(log.go() ? null : "Change: " + ro);
 		if (ro.getMatch() == Match.A) {

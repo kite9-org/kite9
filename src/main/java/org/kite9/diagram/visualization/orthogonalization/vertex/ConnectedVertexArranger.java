@@ -343,14 +343,14 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 			for (int j = 0; j < onSide.size(); j++) {
 				incidentDart = onSide.get(j);
 				Vertex vsv = incidentDart.getInternal();
-				ec.convertContainerEdge(underlyings, o, last, vsv, goingIn, out);
+				ec.buildDartsBetweenVertices(underlyings, o, last, vsv, goingIn, out);
 				addLabelsToContainerDart(o, singleUnderlying, singletonMap);
 				last = vsv;
 			}
 		}
 
 		// finally, join to corner
-		ec.convertContainerEdge(underlyings, o, last, to, goingIn, out);
+		ec.buildDartsBetweenVertices(underlyings, o, last, to, goingIn, out);
 		addLabelsToContainerDart(o, singleUnderlying, singletonMap);
 		return out;
 	}

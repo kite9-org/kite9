@@ -65,6 +65,8 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		Glyph two = new Glyph("Stereo", "two", null, null);
 		Glyph three = new Glyph("Stereo", "some annoyingly long glyph 3", null, null);
 		Glyph four = new Glyph("Stereo", "some annoyingly long glyph 4", null, null);
+		Glyph five = new Glyph("Stereo", "5", null, null);
+
 		Context con1 = new Context("b1", 
 			createList(one, 
 					new TextLabel("Top Left", LabelPlacement.TOP_LEFT),
@@ -97,21 +99,32 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 						new TextLabel("Left 1", LabelPlacement.LEFT),
 						new TextLabel("Left \n2", LabelPlacement.LEFT)), true, null, null);
 		
-		TextLabel left = new TextLabel("Left Left \n1", LabelPlacement.LEFT);
-		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
+		TextLabel topl = new TextLabel("Top TOp \n1", LabelPlacement.LEFT);
+		topl.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
 		
 		Context con4 = new Context("b4", 
-				createList(four, left), true, null, null);
+				createList(four, topl), true, null, null);
 		
 		con4.setAttribute("style", "kite9-sizing: minimize;");
 		
+		TextLabel left = new TextLabel("Left Left \n1", LabelPlacement.LEFT);
+		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: left;");
+		
+		
+		Context con5 = new Context("b5", 
+				createList(five, left), true, null, null);
+		
+		con5.setAttribute("style", "kite9-sizing: minimize;");
+		
 		new Link(one, two);
 		new Link(three, four);
+		new Link(four, five);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(
 				con1, 
 				con2, 
 				con3, 
-				con4
+				con4,
+				con5
 				), null);
 		
 		renderDiagram(d);
@@ -127,7 +140,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		
 		Context con1 = new Context("b1", createList(one), true, null, Layout.RIGHT);
 		Context con2 = new Context("b2", createList(two), true, null, Layout.RIGHT);
-	
+
 		new Link(one, three, null,null,null,null,Direction.DOWN);
 		new Link(two, five, null,null,null,null,Direction.DOWN);
 		new Link(three, four, null,null,null,null,Direction.RIGHT);
@@ -139,7 +152,20 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 	
-	// top-to-bottom and left-to-right ordering
+	@Test
+	public void test_4_6_PushOutRectangularization() throws Exception {
+		Glyph one = new Glyph("one", "Stereo", "one", null, null);
+		Glyph two = new Glyph("two", "Stereo", "two", null, null);
+		
+		Context con1 = new Context("b1", createList(one), true, null, Layout.RIGHT);
+		con1.setAttribute("style", "kite9-sizing: minimize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
+		
+		new Link(one, two, null,null,null,null,Direction.DOWN);
+	
+		
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
+		renderDiagram(d);
+	}
+	
 
-	// invisible containers
 }

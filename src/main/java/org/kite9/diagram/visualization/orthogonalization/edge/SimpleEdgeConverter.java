@@ -12,7 +12,6 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
-import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
@@ -33,7 +32,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 	} 
 	
 	@Override
-	public void convertContainerEdge(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, List<Dart> s) {
+	public void buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d, List<Dart> s) {
 		List<Dart> start = new ArrayList<Dart>();
 		List<Dart> end = new ArrayList<Dart>();
 		
@@ -90,12 +89,5 @@ public class SimpleEdgeConverter implements EdgeConverter {
 		} else {
 			throw new LogicException();
 		}
-	}
-
-	@Override
-	public void createEdgePart(Orthogonalization o, Direction direction, Vertex start, Vertex end, DiagramElement forDe, Direction forDeSide, List<DartDirection> out) {
-		Dart dart = o.createDart(start, end, forDe, direction, forDeSide);
-		DartDirection dd = new DartDirection(dart, direction);
-		out.add(dd);
 	}
 }

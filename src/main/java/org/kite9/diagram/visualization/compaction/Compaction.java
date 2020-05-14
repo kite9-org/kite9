@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction;
 import java.util.List;
 import java.util.Map;
 
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Rectangle;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
@@ -46,5 +47,7 @@ public interface Compaction {
 	public Segment getSegmentForDart(Dart d);
 	
 	public Embedding getTopEmbedding();
+	
+	public Segment newSegment(Dimension d);
 
 }

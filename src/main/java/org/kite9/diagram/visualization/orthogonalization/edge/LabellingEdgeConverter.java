@@ -15,9 +15,10 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.framework.logging.LogicException;
 
-public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeConverter {
+public class LabellingEdgeConverter extends SimpleEdgeConverter {
 
 	private ElementMapper em;
 	
@@ -28,7 +29,9 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 
 	@Override
 	public IncidentDart convertPlanarizationEdge(PlanarizationEdge e, Orthogonalization o, Direction incident, Vertex externalVertex, Vertex sideVertex, Vertex planVertex, Direction fan) {
+		System.err.println("Border edge "+e);
 		Label l = null;
+		Direction labelSide = null;
 
 		if (e instanceof ConnectionEdge) {
 			
@@ -51,17 +54,37 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter implements EdgeC
 				// middle bit of an edge
 				l = null;
 			}
-		} 
+		} else if (e instanceof BorderEdge) {
+			labelSide = Direction.rotateAntiClockwise(incident);
+			DiagramElement de = ((BorderEdge) e).getElementForSide(labelSide);
+			if (de instanceof Container) {
+				l = findUnprocessedLabel((Container) de, labelSide);
+			}
+		}
 
 		
 		if (l != null) {
 			LabelPlacement lp = l.getLabelPlacement();
-			Direction labelSide = lp.connectionLabelPlacementDirection(incident);
+			labelSide = labelSide != null ? labelSide : lp.connectionLabelPlacementDirection(incident);
 			return convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l);
 		} else {
 			return super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan);
 		}
 				
+	}
+	
+	private Label findUnprocessedLabel(Container c, Direction side) {
+		for (DiagramElement de : c.getContents()) {
+			if (de instanceof Label) {
+				if (((Label)de).getLabelPlacement().containerLabelPlacement(side)) {
+					if (!em.hasOuterCornerVertices(de)) {
+						return (Label) de;
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 
 	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex externalVertex, Vertex sideVertex, Label l) {

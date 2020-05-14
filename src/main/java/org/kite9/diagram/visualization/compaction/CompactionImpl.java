@@ -92,7 +92,6 @@ public class CompactionImpl implements Compaction {
 		faceSpaces.put(df, DONE);
 	}
 
-
 	public Segment newSegment(Dimension direction) {
 		Segment snew = null;
 		if (direction==Dimension.V) {

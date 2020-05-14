@@ -48,7 +48,8 @@ public class CenteringAligner implements Aligner, Logable {
 			List<Slideable<Segment>> matches = findRelevantSlideables(des, sso);
 			
 			if (matches.size() != des.size() * 2) {
-				throw new LogicException("Elements missing");
+				return;
+				//throw new LogicException("Elements missing");
 			}
 			
 			log.send("Slideables to Align: ", matches);
