@@ -1,5 +1,6 @@
 package org.kite9.diagram.functional.display;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.Context;
@@ -153,6 +154,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 	}
 	
 	@Test
+	@Ignore("Should be a test about where corners go")
 	public void test_4_6_PushOutRectangularization() throws Exception {
 		Glyph one = new Glyph("one", "Stereo", "one", null, null);
 		Glyph two = new Glyph("two", "Stereo", "two", null, null);

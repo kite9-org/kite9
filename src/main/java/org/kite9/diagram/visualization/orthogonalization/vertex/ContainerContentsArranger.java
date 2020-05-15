@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -141,8 +142,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			createdVertices.addAll(cv.getVerticesAtThisLevel());
 		}
 		
-		Map<DiagramElement, List<Dart>> sides = new LinkedHashMap<>();
-		Map<DiagramElement, MultiCornerVertex> startVertices = new LinkedHashMap<>();
+		Map<DiagramElement, MultiCornerVertex> topLeftVertices = new LinkedHashMap<>();
 				
 		// link them together
 		for (DiagramElement de : connectedElements) {
@@ -152,16 +152,15 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
 
 			MultiCornerVertex prev = null, start = null;
-			List<Dart> s = new ArrayList<Dart>();
 			for (MultiCornerVertex current : perimeterVertices) {
 				if (prev != null) {
 					// create a dart between prev and current
 					Direction d = getDirection(prev, current);
 					Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-					s.addAll(ec.buildDartsBetweenVertices(underlyings, o, prev, current, d));
+					ec.buildDartsBetweenVertices(underlyings, o, prev, current, d);
 				} else {
 					start = current;
-					startVertices.put(de, start);
+					topLeftVertices.put(de, start);
 				}
 
 				prev = current;
@@ -170,15 +169,14 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 			Direction d = getDirection(prev, start);
 			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-			s.addAll(ec.buildDartsBetweenVertices(underlyings, o, prev, start, d));
-			sides.put(de, s);
+			ec.buildDartsBetweenVertices(underlyings, o, prev, start, d);
 		}
 		
 		// recurse
-		for (Map.Entry<DiagramElement, List<Dart>> e : sides.entrySet()) {
-			List<Dart> s = e.getValue();
-			Vertex start = startVertices.get(e.getKey());
-			DartFace inner = createInnerFace(o, s, start, e.getKey());
+		for (Entry<DiagramElement, MultiCornerVertex> e : topLeftVertices.entrySet()) {
+			List<Dart> s = new ArrayList<Dart>();
+			populateInnerFaceDarts(s, e.getValue(), e.getValue(), Direction.RIGHT);
+			DartFace inner = createInnerFace(o, s, e.getValue(), e.getKey());
 
 			if (e.getKey() instanceof Container) {
 				convertContainerContents(o, (Container) e.getKey(), inner);
@@ -200,6 +198,24 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			return vert == -1 ? Direction.DOWN : Direction.UP;
 		} else {
 			return horiz == -1 ? Direction.RIGHT : Direction.LEFT;
+		}
+	}
+
+	public static void populateInnerFaceDarts(List<Dart> darts, Vertex from, Vertex to, Direction going) {
+		Dart d = getDartInDirection(from, going);
+		int minDarts = from == to ? 2 : 1;
+		darts.add(d);
+		while ((!d.meets(to)) || (darts.size() < minDarts)) {
+			going = d.getDrawDirectionFrom(from);
+			from = d.otherEnd(from);
+			d = getDartInDirection(from, Direction.rotateClockwise(going));
+			d = d != null ? d : getDartInDirection(from, going);
+			d = d != null ? d : getDartInDirection(from, Direction.rotateAntiClockwise(going));
+			
+			if (d == null) {
+				throw new LogicException();
+			}
+			darts.add(d);
 		}
 	}
 

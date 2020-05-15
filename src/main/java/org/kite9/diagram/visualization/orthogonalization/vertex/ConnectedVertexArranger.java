@@ -59,7 +59,6 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 		super(em);
 		this.gp = em.getGridPositioner();
 		FanningEdgeConverter ec = new FanningEdgeConverter(this, em);
-//		LabellingEdgeConverter ec = new LabellingEdgeConverter(this, em);  
 		this.ec = ec;
 		this.clc = ec;
 	}
@@ -220,12 +219,12 @@ public class ConnectedVertexArranger extends AbstractVertexArranger implements L
 	}
 
 	protected DartFace createInnerFace(Orthogonalization o, List<Dart> allSideDarts, Vertex start, DiagramElement de) {
-		List<DartDirection>  dd = dartsToDartFace(allSideDarts, start, false);
+		List<DartDirection>  dd = dartsToDartDirections(allSideDarts, start, false);
 		DartFace inner = o.createDartFace((Rectangular) de, false, dd);
 		return inner;
 	}
 	
-	private List<DartDirection> dartsToDartFace(List<Dart> allDarts, Vertex vs, boolean reverse) {
+	private List<DartDirection> dartsToDartDirections(List<Dart> allDarts, Vertex vs, boolean reverse) {
 		List<DartDirection> dartsInFace = new ArrayList<DartDirection>(allDarts.size());
 		
 		for (Dart dart : allDarts) {

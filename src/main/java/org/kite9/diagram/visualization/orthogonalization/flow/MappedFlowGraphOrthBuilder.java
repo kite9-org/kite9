@@ -16,7 +16,10 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.ConnectionEdgeBendVertex;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
@@ -450,7 +453,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		}
 
 		Direction opposite = Direction.reverse(nextDir);
-		Face outerFace = getOuterFace(e, f, pln);
+		Face outerFace = getOppositeFace(e, f, pln);
 		processFace(outerFace, pln, o, opposite, doneFaces, endPlanVertex, e, doneEdges);
 
 		return out;
@@ -523,7 +526,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	}
 
 
-	public static Face getOuterFace(Edge e, Face f, Planarization pln) {
+	public static Face getOppositeFace(Edge e, Face f, Planarization pln) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
 		if (faces.size() != 2) {
 			throw new LogicException("Edge should only have 2 faces");
