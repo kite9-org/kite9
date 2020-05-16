@@ -96,7 +96,7 @@ public class GroupPhase {
 	 * @param prev2 Previous element in the container (y-order if in grid, otherwise unused)
 	 * @param pMap Map of Connected to LeafGroups (created)
 	 */
-	private Group createLeafGroup(Connected ord, Connected prev1, Map<Connected, LeafGroup> pMap) {
+	private LeafGroup createLeafGroup(Connected ord, Connected prev1, Map<Connected, LeafGroup> pMap) {
 		if (pMap.get(ord) != null) {
 			throw new LogicException("Diagram Element " + ord + " appears multiple times in the diagram definition");
 		}
@@ -124,12 +124,15 @@ public class GroupPhase {
 				DiagramElement[][] grid = gp.placeOnGrid((Container) ord, false);
 
 				// create unconnected groups
-				Map<DiagramElement, Group> gridGroups = new LinkedHashMap<>();
+				Map<DiagramElement, LeafGroup> gridGroups = new LinkedHashMap<>();
 				for (int y = 0; y < grid.length; y++) {
 					for (int x = 0; x < grid[0].length; x++) {
 						DiagramElement de = grid[y][x];
 						if (!gridGroups.containsKey(de)) {
-							Group gg = createLeafGroup((Connected) de, null, pMap);
+							LeafGroup gg = createLeafGroup((Connected) de, null, pMap);
+							if (gg == null) {
+								gg = getConnectionEnd((Connected) de);
+							}
 							gridGroups.put(de, gg);
 						}
 					}
@@ -143,11 +146,21 @@ public class GroupPhase {
 						Connected c = (Connected) grid[y][x];
 
 						if ((c != prevx) && (prevx != null)) {
-							addContainerOrderingInfo(c, prevx, cnr, Dimension.H);
+							OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prevx, c, Direction.RIGHT, cnr);
+							LeafGroup from = gridGroups.get(prevx);
+							LeafGroup to = gridGroups.get(c);
+							
+							from.sortLink(Direction.RIGHT, to, LINK_WEIGHT, true, Integer.MAX_VALUE, single(tc));
+							to.sortLink(Direction.LEFT, from, LINK_WEIGHT, true, Integer.MAX_VALUE, single(tc));
 						}
 
 						if ((c != prevy) && (prevy != null)) {
-							addContainerOrderingInfo(c, prevy, cnr, Dimension.V);
+							OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prevy, c, Direction.DOWN, cnr);
+							LeafGroup from = gridGroups.get(prevy);
+							LeafGroup to = gridGroups.get(c);
+							
+							from.sortLink(Direction.DOWN, to, LINK_WEIGHT, true, Integer.MAX_VALUE, single(tc));
+							to.sortLink(Direction.UP, from, LINK_WEIGHT, true, Integer.MAX_VALUE, single(tc));
 						}
 					}
 				}
