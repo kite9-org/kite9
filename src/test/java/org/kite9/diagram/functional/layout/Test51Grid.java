@@ -460,10 +460,10 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell t2 = new Cell("2", Arrays.asList());
 		Cell t3 = new Cell("3", Arrays.asList());
 		Cell t4 = new Cell("4", Arrays.asList());
-		Cell t5 = new Cell("4", Arrays.asList());
-		Cell t6 = new Cell("4", Arrays.asList());
-		Cell t7 = new Cell("4", Arrays.asList());
-		Cell t8 = new Cell("4", Arrays.asList());
+		Cell t5 = new Cell("5", Arrays.asList());
+		Cell t6 = new Cell("6", Arrays.asList());
+		Cell t7 = new Cell("7", Arrays.asList());
+		Cell t8 = new Cell("8", Arrays.asList());
 		
 		t1.setAttribute("style", "kite9-occupies: 0 0 2 2; kite9-min-size: 50px 50px; ");
 		t2.setAttribute("style", "kite9-occupies: 0 0 3 3; kite9-min-size: 50px 50px; ");

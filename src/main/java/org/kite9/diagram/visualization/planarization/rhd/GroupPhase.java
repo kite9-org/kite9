@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.Deterministic;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.grid.GridPositioner;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.hints.PositioningHints;
@@ -76,7 +77,7 @@ public class GroupPhase {
 		this.em = em;
 		this.hashCodeGenerator = new Random(elements);
 		
-		createLeafGroup((Connected) top, null, null, pMap);
+		createLeafGroup((Connected) top, null, pMap);
 		setupLinks(top);
 		
 		for (LeafGroup group : allGroups) {
@@ -95,57 +96,74 @@ public class GroupPhase {
 	 * @param prev2 Previous element in the container (y-order if in grid, otherwise unused)
 	 * @param pMap Map of Connected to LeafGroups (created)
 	 */
-	private void createLeafGroup(Connected ord, Connected prev1, Connected prev2, Map<Connected, LeafGroup> pMap) {
+	private Group createLeafGroup(Connected ord, Connected prev1, Map<Connected, LeafGroup> pMap) {
 		if (pMap.get(ord) != null) {
-			throw new LogicException("Diagram Element "+ord+" appears multiple times in the diagram definition");
+			throw new LogicException("Diagram Element " + ord + " appears multiple times in the diagram definition");
 		}
 
 		Container cnr = ord.getContainer();
 
 		boolean leaf = needsLeafGroup(ord);
-		
+		LeafGroup g = null;
+
 		if (leaf) {
-			LeafGroup g = new LeafGroup(ord, cnr, ab.createAxis(), ab.createLinkManager());
+			g = new LeafGroup(ord, cnr, ab.createAxis(), ab.createLinkManager());
 			pMap.put(ord, g);
 			allGroups.add(g);
 		}
-		
+
 		if ((prev1 != null) && (prev1 != ord)) {
-			addContainerOrderingInfo(ord, prev1, cnr, true);
+			addContainerOrderingInfo(ord, prev1, cnr, null);
 		}
-		
-		if ((prev2 != null) && (prev2 != ord)) {
-			addContainerOrderingInfo(ord, prev2, cnr, false);
-		}
-		
 
 		if (!leaf) {
 			Layout l = ((Container) ord).getLayout();
-			
-			if (l==Layout.GRID) {
+
+			if (l == Layout.GRID) {
 				// need to iterate in 2d
 				DiagramElement[][] grid = gp.placeOnGrid((Container) ord, false);
+
+				// create unconnected groups
+				Map<DiagramElement, Group> gridGroups = new LinkedHashMap<>();
 				for (int y = 0; y < grid.length; y++) {
 					for (int x = 0; x < grid[0].length; x++) {
-						Connected prevy = (Connected) (y > 0 ? grid[y-1][x] : null);
-						Connected prevx = (Connected) (x > 0 ? grid[y][x-1] : null);
 						DiagramElement de = grid[y][x];
-						Connected c = (Connected) de;
-						if ((c != prevx) && (c != prevy)) {
-							createLeafGroup(c, prevx, prevy, pMap);
+						if (!gridGroups.containsKey(de)) {
+							Group gg = createLeafGroup((Connected) de, null, pMap);
+							gridGroups.put(de, gg);
+						}
+					}
+				}
+
+				// link them up
+				for (int y = 0; y < grid.length; y++) {
+					for (int x = 0; x < grid[0].length; x++) {
+						Connected prevy = (Connected) (y > 0 ? grid[y - 1][x] : null);
+						Connected prevx = (Connected) (x > 0 ? grid[y][x - 1] : null);
+						Connected c = (Connected) grid[y][x];
+
+						if ((c != prevx) && (prevx != null)) {
+							addContainerOrderingInfo(c, prevx, cnr, Dimension.H);
+						}
+
+						if ((c != prevy) && (prevy != null)) {
+							addContainerOrderingInfo(c, prevy, cnr, Dimension.V);
 						}
 					}
 				}
 			} else {
 				Connected prev = null;
-				for (DiagramElement c : ((Container)ord).getContents()) {
+				for (DiagramElement c : ((Container) ord).getContents()) {
 					if (c instanceof Connected) {
-						createLeafGroup((Connected) c, prev, null, pMap);	
+						createLeafGroup((Connected) c, prev, pMap);
 						prev = (Connected) c;
 					}
 				}
 			}
 		}
+
+		return g;
+
 	}
 	
 
@@ -220,16 +238,23 @@ public class GroupPhase {
 		return false;
 	}
 
-	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN, Layout.GRID);
+	private static final Set<Layout> TEMPORARY_NEEDED = EnumSet.of(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN);
 	
-	private void addContainerOrderingInfo(Connected current, Connected prev, Container cnr, boolean primary) {
+	private void addContainerOrderingInfo(Connected current, Connected prev, Container cnr, Dimension gridDimension) {
 		if (prev == null)
 			return;
 
 
 		Layout l = cnr.getLayout();
+		Direction d = null;
+		
 		if (TEMPORARY_NEEDED.contains(l)) {
-			Direction d = getDirectionForLayout(l, primary);
+			d = getDirectionForLayout(l);
+		} else if (gridDimension != null) {
+			d = gridDimension == Dimension.H ? Direction.RIGHT : Direction.DOWN;
+		}
+		
+		if (d != null) {
 			OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prev, current, d, cnr);
 			LeafGroup from = getConnectionEnd(prev);
 			LeafGroup to = getConnectionEnd(current);
@@ -601,7 +626,7 @@ public class GroupPhase {
 		}
 	}
 	
-	public static Direction getDirectionForLayout(Layout currentDirection, boolean primary) {
+	public static Direction getDirectionForLayout(Layout currentDirection) {
 		switch (currentDirection) {
 		case RIGHT:
 			return Direction.RIGHT;
@@ -611,9 +636,6 @@ public class GroupPhase {
 			return Direction.DOWN;
 		case UP:
 			return Direction.UP;
-		case GRID:
-			return primary ? Direction.RIGHT : Direction.DOWN;
-
 		case VERTICAL:
 		case HORIZONTAL:
 		default:

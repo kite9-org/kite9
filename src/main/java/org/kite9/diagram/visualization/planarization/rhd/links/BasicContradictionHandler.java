@@ -243,11 +243,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	protected void checkOrdinalContradiction(Layout l, Direction d, Connected from, Connected to, Container fromC, Connection c) {
-		Direction ld = GroupPhase.getDirectionForLayout(l, true); // TODO:
-																	// probably
-																	// need to
-																	// fix
-																	// later.
+		Direction ld = GroupPhase.getDirectionForLayout(l);
 		if (GroupPhase.isHorizontalDirection(ld) != GroupPhase.isHorizontalDirection(d)) {
 			setContradiction(c, false);
 			return;
