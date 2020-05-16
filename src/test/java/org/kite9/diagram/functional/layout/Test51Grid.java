@@ -23,6 +23,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.framework.logging.Kite9Log;
+import org.kite9.framework.logging.Kite9Log.Destination;
 
 
 public class Test51Grid extends AbstractLayoutFunctionalTest {
@@ -543,5 +545,48 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Grid g = new Grid("table", Arrays.asList(t0, t1, t2), null);
 		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(g), null));
+	}
+	
+	@Test
+	public void test_51_29_MassiveGridNoLinks() throws Exception {
+		Kite9Log.setLogging(Destination.OFF);
+		List<Glyph> glyphs = new ArrayList<Glyph>();
+		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
+		
+		for (int i = 0; i < 100; i++) {
+			Glyph g = new Glyph("g"+i,"", ""+i, null, null);
+			Cell c = new Cell("c"+i, Arrays.asList(g));
+			glyphs.add(g);
+			cells.add(c);
+		}
+		
+		Grid ctx = new Grid("outer", cells, null);
+		ctx.setAttribute("style", "kite9-grid-size: 10 10;");
+	
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+		
+	}
+	
+	@Test
+	public void test_51_30_MassiveGridAndLink() throws Exception {
+		Kite9Log.setLogging(Destination.STREAM);
+		List<Glyph> glyphs = new ArrayList<Glyph>();
+		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
+		
+		for (int i = 0; i < 36; i++) {
+			Glyph g = new Glyph("g"+i,"", ""+i, null, null);
+			Cell c = new Cell("c"+i, Arrays.asList(g));
+			glyphs.add(g);
+			cells.add(c);
+		}
+		
+		Grid ctx = new Grid("outer", cells, null);
+		ctx.setAttribute("style", "kite9-grid-size: 6 6;");
+//		new TurnLink(glyphs.get(15), glyphs.get(21));
+//		new TurnLink(glyphs.get(11), glyphs.get(22));
+		new TurnLink(glyphs.get(4), glyphs.get(23));
+	
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+		
 	}
 }

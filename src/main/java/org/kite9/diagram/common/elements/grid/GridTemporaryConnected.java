@@ -1,18 +1,14 @@
 package org.kite9.diagram.common.elements.grid;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
-import org.kite9.diagram.dom.model.AbstractDiagramElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
@@ -38,9 +34,8 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary, Container, HasSVGRepresentation, SizedRectangular {
+public class GridTemporaryConnected extends AbstractTemporaryConnected implements Container, HasSVGRepresentation, SizedRectangular {
 
-	private final String id;
 	private GridContainerPosition gcp;
 	
 	public GridTemporaryConnected(DiagramElement parent, int x, int y) {
@@ -50,38 +45,12 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	}
 
 	@Override
-	public String getID() {
-		return id;
-	}
-
-	@Override
 	public HintMap getPositioningHints() {
 		return null;
 	}
 	
 	public String toString() {
 		return "[grid-temporary: "+id+"]";
-	}
-
-	private Collection<Connection> links = new ArrayList<>();
-
-	@Override
-	public Collection<Connection> getLinks() {
-		return links;
-	}
-
-	public Connection getConnectionTo(Connected c) {
-		for (Connection link : getLinks()) {
-			if (link.meets(c)) {
-				return link;
-			}
-		}
-
-		return null;
-	}
-
-	public boolean isConnectedDirectlyTo(Connected c) {
-		return getConnectionTo(c) != null;
 	}
 
 	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, false);
@@ -99,11 +68,6 @@ public class GridTemporaryConnected extends AbstractDiagramElement implements Co
 	@Override
 	public DiagramElementSizing getSizing(boolean horiz) {
 		return null;	// no preference
-	}
-
-	@Override
-	public Container getContainer() {
-		return (Container) getParent();
 	}
 
 	@Override

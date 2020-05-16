@@ -1,5 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.elements.RoutingInfo;
@@ -172,6 +178,14 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 				sortedContainerContents = new HashMap<Container, List<Connected>>(gp.containerCount * 2);
 				instantiateContainerVertices(c);
 				buildVertexList(null, c, null, out, sortedContainerContents);
+
+				try {
+					ImageIO.write(rh.drawPositions(out), "PNG", ImageIO.createImageOutputStream(new File("positions.png")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				sortContents(out, rh.getTopLevelBounds(true), rh.getTopLevelBounds(false));
 				run = PlanarizationRun.DONE;
 			}

@@ -23,7 +23,7 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.common.elements.grid.GridTemporaryConnected;
+import org.kite9.diagram.common.elements.grid.AbstractTemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
@@ -475,7 +475,7 @@ public class TestingEngine extends TestingHelp {
 	 */
 	@Deprecated()
 	private static boolean checkTemporary(Rectangular cc) {
-		return cc instanceof GridTemporaryConnected;
+		return cc instanceof AbstractTemporaryConnected;
 	}
 
 	private void checkOverlap(final Diagram d) {

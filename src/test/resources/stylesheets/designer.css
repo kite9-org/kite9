@@ -206,6 +206,10 @@ fromLabel {
 	kite9-margin: 4px;	
 }
 
+[k9-elem=_temporary] {
+	fill: none;
+}
+
 toLabel,
 to {
 	kite9-link-end: to;
