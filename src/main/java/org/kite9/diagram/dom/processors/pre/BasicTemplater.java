@@ -116,7 +116,7 @@ public class BasicTemplater extends K9ElemTaggingProcessor implements XMLProcess
         NamedNodeMap attributes = from.getAttributes();
         for (int i = 0; i < attributes.getLength(); i++) {
             Attr node = (Attr) attributes.item(i);
-            if ((to.getAttribute(node.getName()).length() == 0) && (!node.getName().equals("id"))) {
+            if ((!to.hasAttribute(node.getName())) && (!node.getName().equals("id"))) {
             	to.setAttribute(node.getName(), node.getValue());
             }
         }

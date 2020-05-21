@@ -36,7 +36,7 @@ public class CachingCSSEngine extends SVG12CSSEngine {
 		}
 
 		@Override
-		public void addParams(String name, List<String> additionalValues) {
+		public void setParam(String name, List<String> additionalValues) {
 			styleSheet.append(new AtParamsRule(name, additionalValues));
 		}
 	}

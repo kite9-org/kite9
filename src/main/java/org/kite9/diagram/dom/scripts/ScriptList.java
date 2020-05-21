@@ -63,16 +63,8 @@ public class ScriptList {
 		uris.add(uri);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void add(String name, List<String> additionalValues) {
-		Object p = params.get(name);
-		if (p == null) {
-			params.put(name, additionalValues);
-		} else if (p instanceof List) {
-			((List<String>) p).addAll(additionalValues);
-		} else {
-			throw new Kite9ProcessingException("Can't add to param "+name+" as it is a single value "+p);
-		}
+		params.put(name, additionalValues);
 	}		
 	
 	/**

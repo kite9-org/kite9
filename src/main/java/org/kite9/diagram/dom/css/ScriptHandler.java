@@ -10,6 +10,6 @@ public interface ScriptHandler {
 	
 	public void setParam(String name, String value);
 	
-	public void addParams(String name, List<String> additionalValues);
+	public void setParam(String name, List<String> additionalValues);
 
 }

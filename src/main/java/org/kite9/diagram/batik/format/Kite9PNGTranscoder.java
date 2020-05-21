@@ -31,7 +31,7 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 		Document svg = inter1.getDocument();
 		svg.setDocumentURI(input.getURI());
 		UserAgent localUserAgent = userAgent;
-		PNGTranscoder png = new PNGTranscoder() {
+		PNGTranscoder png = new ADLEmbeddingPNGTranscoder(getDocLoader(), "") {
 
 			@Override
 			protected UserAgent createUserAgent() {
@@ -41,6 +41,7 @@ public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 		};
 		png.setTranscodingHints(this.getTranscodingHints());
 		TranscoderInput inter2 = new TranscoderInput(svg);
+		inter2.setURI(input.getURI());
 		png.transcode(inter2, output);
 	}
 }

@@ -112,7 +112,7 @@ public class AtRuleParser extends Parser {
             if (found.size() == 1) {
             	sh.setParam(name, found.get(0)); 
             } else if (found.size() > 1) {
-            	sh.addParams(name, found);
+            	sh.setParam(name, found);
             }
         }
     }
