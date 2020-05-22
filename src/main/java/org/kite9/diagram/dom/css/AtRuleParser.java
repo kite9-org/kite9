@@ -11,9 +11,11 @@ import org.apache.batik.util.ParsedURL;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
 import org.w3c.css.sac.DocumentHandler;
+import org.w3c.css.sac.LexicalUnit;
 
 /**
  * Allows us to correctly parse new kite9 at-rules the @script and @params ones.
+ * Also allows regular attributes to begin with "-", which is common in browser-specific extensions.
  * 
  * @author robmoffat
  *
@@ -180,7 +182,68 @@ public class AtRuleParser extends Parser {
 	}
 
 	
-	
+	/**
+     * Overrides the style declaration parser to allow a dash-prefix on styles.
+     */
+    protected void parseStyleDeclaration(boolean inSheet)
+        throws CSSException {
+    	
+        for (;;) {
+        	String name = "";
+            switch (current) {
+            case LexicalUnits.EOF:
+                if (inSheet) {
+                    throw createCSSParseException("eof");
+                }
+                return;
+            case LexicalUnits.RIGHT_CURLY_BRACE:
+                if (!inSheet) {
+                    throw createCSSParseException("eof.expected");
+                }
+                nextIgnoreSpaces();
+                return;
+            case LexicalUnits.SEMI_COLON:
+                nextIgnoreSpaces();
+                continue;
+            default:
+                throw createCSSParseException("identifier");
+            case LexicalUnits.MINUS:
+            	current = scanner.next();
+            	
+            	if (current != LexicalUnits.IDENTIFIER) {
+                    throw createCSSParseException("identifier");
+            	}
+            	
+            	name = "-";
+            	// drop through
+            case LexicalUnits.IDENTIFIER:
+            }
+
+            name = name + scanner.getStringValue();
+
+            if (nextIgnoreSpaces() != LexicalUnits.COLON) {
+                throw createCSSParseException("colon");
+            }
+            nextIgnoreSpaces();
+
+            LexicalUnit exp = null;
+
+            try {
+                exp = parseExpression(false);
+            } catch (CSSParseException e) {
+                reportError(e);
+            }
+
+            if (exp != null) {
+                boolean important = false;
+                if (current == LexicalUnits.IMPORTANT_SYMBOL) {
+                    important = true;
+                    nextIgnoreSpaces();
+                }
+                documentHandler.property(name, exp, important);
+            }
+        }
+    }
 	
 }
 
