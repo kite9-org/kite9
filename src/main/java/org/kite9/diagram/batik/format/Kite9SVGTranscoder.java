@@ -25,7 +25,6 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.ParsedURL;
-import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
@@ -34,23 +33,21 @@ import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.defs.DefList;
+import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
-import org.kite9.diagram.dom.scripts.HasScripts;
-import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
-import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.XMLFilter;
@@ -76,7 +73,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		cache = c;
 		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
-	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, true, cache);
+	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
 		bridgeContext = new Kite9BridgeContext(userAgent, docLoader);
 		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
 		domImpl.setDiagramElementFactory(def);
@@ -197,9 +194,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 		
 	protected void transcodeScripts(Document input, Document output) {
-		if (input instanceof HasScripts) {
-			ScriptList scripts = ((HasScripts)input).getScripts();
-			scripts.appendScriptTags(output);
+		if (input instanceof HasDefs) {
+			DefList scripts = ((HasDefs)input).getImportList();
+			scripts.appendDefsAndScripts(output, docLoader);
 		}
 	}
 

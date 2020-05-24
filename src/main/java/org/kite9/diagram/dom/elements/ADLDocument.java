@@ -14,10 +14,10 @@ import org.apache.batik.css.engine.StyleSheet;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.defs.HasDefs;
+import org.kite9.diagram.dom.defs.DefList;
 import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.dom.scripts.HasScripts;
-import org.kite9.diagram.dom.scripts.ScriptList;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -36,7 +36,7 @@ import org.w3c.dom.xpath.XPathNSResolver;
  * @author robmoffat
  *
  */
-public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScripts {
+public class ADLDocument extends SVG12OMDocument implements XPathAware, HasDefs {
 
 	public ADLDocument() {
 		this(new ADLExtensibleDOMImplementation());
@@ -83,9 +83,9 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
 //        throw new RuntimeException(" !!! Not implemented");
 //    }
 //    
-    private ScriptList scriptList;
+    private DefList scriptList;
     
-    public ScriptList getScripts() {
+    public DefList getImportList() {
     	if (scriptList == null) {
     		@SuppressWarnings("unchecked")
 			List<CSSStyleSheetNode> nodes = (List<CSSStyleSheetNode>) getCSSEngine().getStyleSheetNodes();
@@ -93,7 +93,7 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasScrip
     			.map(o -> ((CSSStyleSheetNode)o).getCSSStyleSheet())
     			.collect(Collectors.toList());
     		
-    		scriptList = new ScriptList(list);
+    		scriptList = new DefList(list);
      	} 
     	
     	return scriptList;

@@ -1,7 +1,8 @@
-package org.kite9.diagram.dom.scripts;
+package org.kite9.diagram.dom.defs;
 
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,21 +12,29 @@ import java.util.Set;
 import org.apache.batik.css.engine.ImportRule;
 import org.apache.batik.css.engine.Rule;
 import org.apache.batik.css.engine.StyleSheet;
+import org.apache.batik.util.SVG12Constants;
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
+import org.kite9.diagram.dom.css.AtDefsRule;
 import org.kite9.diagram.dom.css.AtParamsRule;
 import org.kite9.diagram.dom.css.AtScriptRule;
+import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
+import org.kite9.diagram.dom.processors.xpath.NullValueReplacer;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.svg.SVGSVGElement;
 
-public class ScriptList {
+public class DefList {
 
-	private Set<String> uris = new LinkedHashSet<>();
+	private Set<String> defsUris = new LinkedHashSet<String>();
+	private Set<String> scriptUris = new LinkedHashSet<>();
 	private Map<String, Object> params = new LinkedHashMap<>();
 	
-	public ScriptList(List<StyleSheet> list) {
+	public DefList(List<StyleSheet> list) {
 		this();
    		list.forEach(ss -> loadScripts(ss));
 	}
@@ -45,14 +54,17 @@ public class ScriptList {
 				}
 			} else if (r instanceof AtScriptRule) {
 				AtScriptRule atScriptRule = (AtScriptRule) r;
-				uris.add(atScriptRule.getUri());
+				scriptUris.add(atScriptRule.getUri());
+			} else if (r instanceof AtDefsRule) {
+				AtDefsRule atDefsRule = (AtDefsRule) r;
+				defsUris.add(atDefsRule.getUri());
 			} else if (r instanceof ImportRule) {
 				loadScripts((ImportRule) r); 
 			}
 		}
 	}
 
-	public ScriptList() {
+	public DefList() {
 	}
 	
 	public void set(String name, Object value) {
@@ -60,7 +72,7 @@ public class ScriptList {
 	}
 	
 	public void add(String uri) {
-		uris.add(uri);
+		scriptUris.add(uri);
 	}
 	
 	public void add(String name, List<String> additionalValues) {
@@ -69,10 +81,13 @@ public class ScriptList {
 	
 	/**
 	 * Scripts need to be embedded inside a <defs> tag in safari, afaict.
-	 * @param d
 	 */
-	public void appendScriptTags(Document d) {
-		if ((uris.size() >0) || (params.size() > 0)) {
+	public void appendDefsAndScripts(Document d, Kite9DocumentLoader docLoader) {
+		for (String uri : defsUris) {
+			importDefs(d, uri, docLoader);
+		}
+		
+		if ((scriptUris.size() >0) || (params.size() > 0)) {
 			Element svg = d.getDocumentElement();
 			NodeList nl = d.getElementsByTagNameNS(SVG_NAMESPACE_URI, "defs");
 			Element defs = null;
@@ -88,13 +103,35 @@ public class ScriptList {
 				scriptTag.setTextContent(getParameters());
 			}
 			
-			if (uris.size() > 0) {
+			if (scriptUris.size() > 0) {
 				Element scriptTag = createScriptTag(d, defs, true);
 				scriptTag.setTextContent(getScriptImports());
 			}			
 		}
 	}
-
+	
+	public void importDefs(Document toDocument, String uriFrom, Kite9DocumentLoader docLoader) {
+		try {
+			SVGSVGElement top = (SVGSVGElement) toDocument.getDocumentElement();
+			String prefix = top.getPrefix();
+			String namespace = top.getNamespaceURI();
+	
+			Document source = docLoader.loadDocument(uriFrom);
+			NodeList defs = source.getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
+			
+			for (int i = 0; i < defs.getLength(); i++) {
+				Element def = (Element) defs.item(i);
+				Element newDef = toDocument.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
+				newDef.setPrefix(prefix);
+				top.insertBefore(newDef, null);
+				XMLProcessor c = new PrefixingCopier(newDef, false, new NullValueReplacer(), prefix, namespace);
+				c.processContents(def);
+			}
+		} catch (IOException e) {
+			throw new Kite9ProcessingException("Error collecting defs from uri:  "+uriFrom, e);
+		}
+	}
+	
 	public Element createScriptTag(Document d, Element defs, boolean module) {
 		Element scriptTag = d.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "script");
 		if (module) {
@@ -129,7 +166,7 @@ public class ScriptList {
 	}
 
 	protected String getScriptImports() {
-		return uris.stream().map(s -> "import \""+s+"\";\n").reduce("\n", String::concat);
+		return scriptUris.stream().map(s -> "import \""+s+"\";\n").reduce("\n", String::concat);
 	}
 
 	

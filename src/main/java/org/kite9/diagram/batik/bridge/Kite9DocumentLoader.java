@@ -5,43 +5,34 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.batik.anim.dom.SVGOMSVGElement;
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.value.ListValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.css.engine.value.ValueConstants;
-import org.apache.batik.util.SVG12Constants;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
-import org.kite9.diagram.dom.processors.xpath.NullValueReplacer;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Logable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
- * This contains functionality to load in <defs> from any referenced documents.
+ * This contains functionality to load in elements referenced in templates.
  * 
  * @author robmoffat
  *
  */
 public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	
-	private final boolean importDefs;
 	private final Cache cache;
 	private final Kite9Log log = new Kite9Log(this);
 
-	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, boolean importDefs, Cache cache) {
+	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, Cache cache) {
 		super(userAgent);
 		this.documentFactory = dbf;
-		this.importDefs = importDefs;
 		this.cache = cache;
 	}
 
@@ -51,12 +42,11 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	 */
 	public Element loadElementFromUrl(Value v, Element loadedBy) {
 		if (v != ValueConstants.NONE_VALUE) {
-			Element out;
 			try {
 				String resource = getUrlForDocument(v);
 				String fragment = getIdentifierForElement(v);
-				boolean importDefsForThisDoc = this.importDefs && (checkLocalCache(resource) == null);
-
+				
+				Element out;
 				ADLDocument templateDoc = (ADLDocument) loadDocument(resource);
 				
 				if (fragment != null) {
@@ -67,28 +57,6 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 
 				if (out == null) {
 					throw new Kite9XMLProcessingException("Couldn't find ID: "+fragment, loadedBy);
-				}
-				
-				if (importDefsForThisDoc) {
-					SVGSVGElement top = getSVGTopElement(loadedBy);
-					String prefix = top.getPrefix();
-					String namespace = top.getNamespaceURI();
-					ADLDocument topDoc = (ADLDocument) top.getDocument();
-					NodeList defs = out.getOwnerDocument().getElementsByTagNameNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
-					
-					if (defs.getLength() > 0) {
-						Element newDefs = topDoc.createElementNS(SVG12Constants.SVG_NAMESPACE_URI, SVG12Constants.SVG_DEFS_TAG);
-						newDefs.setPrefix(prefix);
-						top.insertBefore(newDefs, null);
-						//top.setAttribute("id", "defs-" + resource);
-
-						for (int i = 0; i < defs.getLength(); i++) {
-							Element def = (Element) defs.item(i);
-							XMLProcessor c = new PrefixingCopier(newDefs, false, new NullValueReplacer(), prefix, namespace);
-							c.processContents(def);
-						}
-					}
-					
 				}
 
 				return out;
@@ -102,10 +70,6 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		}
 	}
 
-	private SVGOMSVGElement getSVGTopElement(Element in) {
-		return (SVGOMSVGElement) in.getOwnerDocument().getDocumentElement();
-	}
-	
 	public static String getIdentifierForElement(Value v) throws URISyntaxException {
 		v = v instanceof ListValue ? v.item(0) : v;
 		String uri = v.getStringValue();
@@ -133,10 +97,6 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	@Override
 	public boolean isLoggingEnabled() {
 		return true;
-	}
-	
-	private Document checkLocalCache(String uri) {
-		return super.checkCache(uri);
 	}
 
 	@Override

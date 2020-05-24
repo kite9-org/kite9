@@ -11,5 +11,7 @@ public interface ScriptHandler {
 	public void setParam(String name, String value);
 	
 	public void setParam(String name, List<String> additionalValues);
+	
+	public void importDefs(String uri, SACMediaList ml);
 
 }

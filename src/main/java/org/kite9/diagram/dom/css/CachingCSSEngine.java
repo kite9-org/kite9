@@ -39,6 +39,11 @@ public class CachingCSSEngine extends SVG12CSSEngine {
 		public void setParam(String name, List<String> additionalValues) {
 			styleSheet.append(new AtParamsRule(name, additionalValues));
 		}
+
+		@Override
+		public void importDefs(String uri, SACMediaList ml) {
+			styleSheet.append(new AtDefsRule(uri));
+		}
 	}
 
 	private Cache cache;

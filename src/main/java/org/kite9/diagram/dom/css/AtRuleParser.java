@@ -14,7 +14,8 @@ import org.w3c.css.sac.DocumentHandler;
 import org.w3c.css.sac.LexicalUnit;
 
 /**
- * Allows us to correctly parse new kite9 at-rules the @script and @params ones.
+ * Allows us to correctly parse new kite9 at-rules the @script, @params and @defs ones.
+ * 
  * Also allows regular attributes to begin with "-", which is common in browser-specific extensions.
  * 
  * @author robmoffat
@@ -27,8 +28,6 @@ public class AtRuleParser extends Parser {
 
 	private ScriptHandler sh;
 	private String atKeyword;
-	
-	
 	
 	@Override
 	public void setDocumentHandler(DocumentHandler handler) {
@@ -53,6 +52,8 @@ public class AtRuleParser extends Parser {
 			parseAtScriptRule();
 		} else if (atKeyword.equals("params")){
 			parseAtParamsRule();
+		} else if (atKeyword.equals("defs")) {
+			parseAtDefsRule();
 		} else {
 			super.parseAtRule();
 		}
@@ -62,23 +63,17 @@ public class AtRuleParser extends Parser {
      * Parses a params rule.
      */
     protected void parseAtParamsRule() {
-//        try {
-//            documentHandler.startFontFace();
+        if (current != LexicalUnits.LEFT_CURLY_BRACE) {
+            reportError("left.curly.brace");
+        } else {
+            nextIgnoreSpaces();
 
-            if (current != LexicalUnits.LEFT_CURLY_BRACE) {
-                reportError("left.curly.brace");
-            } else {
-                nextIgnoreSpaces();
-
-                try {
-                    parseParamDeclaration();
-                } catch (CSSParseException e) {
-                    reportError(e);
-                }
+            try {
+                parseParamDeclaration();
+            } catch (CSSParseException e) {
+                reportError(e);
             }
-//        } finally {
-//            documentHandler.endFontFace();
-//        }
+        }
     }
 	
     /**
@@ -163,6 +158,35 @@ public class AtRuleParser extends Parser {
         }
 
         sh.importScript(new ParsedURL(new ParsedURL(documentURI), uri).toString(), ml);
+
+        if (current != LexicalUnits.SEMI_COLON) {
+            reportError("semicolon");
+        } else {
+            next();
+        }
+	}
+	
+	protected void parseAtDefsRule() {
+        String uri = null;
+        switch (current) {
+        default:
+            reportError("string.or.uri");
+            return;
+        case LexicalUnits.STRING:
+        case LexicalUnits.URI:
+            uri = scanner.getStringValue();
+            nextIgnoreSpaces();
+        }
+
+        CSSSACMediaList ml;
+        if (current != LexicalUnits.IDENTIFIER) {
+            ml = new CSSSACMediaList();
+            ml.append("all");
+        } else {
+            ml = parseMediaList();
+        }
+
+        sh.importDefs(new ParsedURL(new ParsedURL(documentURI), uri).toString(), ml);
 
         if (current != LexicalUnits.SEMI_COLON) {
             reportError("semicolon");
