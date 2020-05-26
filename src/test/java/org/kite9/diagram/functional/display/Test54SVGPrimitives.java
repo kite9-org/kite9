@@ -12,13 +12,13 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_54_1_EmptyDiagram() throws Exception {
-		String someXML = svgOpen() + diagramOpen() + diagramClose()+  svgClose();
+		String someXML = svgOpen() + diagramOpen() + diagramClose() + svgClose();
 		transcodeSVG(someXML);
 	}
 
 	@Test
 	public void test_54_2_FixedGraphicsPrimitive() throws Exception {
-		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen()+svgSquiggle()+fixedSizeClose()+diagramClose() + svgClose();
+		String someXML = svgOpen() + diagramOpen() + fixedSizeOpen() + svgSquiggle() + fixedSizeClose() + diagramClose() + svgClose();
 		transcodeSVG(someXML);
 	}
 
