@@ -189,6 +189,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	public void ensureCSSEngine(SVGOMDocument input) {
 		if (input.getCSSEngine() == null) {
 			CSSEngine engine = domImpl.createCSSEngine(input, createBridgeContext());
+			if (getTranscodingHints().get(KEY_MEDIA) != null) {
+				engine.setMedia(getTranscodingHints().get(KEY_MEDIA).toString());
+			}
 			input.setCSSEngine(engine);
 		}
 	}

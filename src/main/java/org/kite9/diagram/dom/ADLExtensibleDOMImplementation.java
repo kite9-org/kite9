@@ -19,7 +19,7 @@ import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
-import org.kite9.diagram.dom.css.AtRuleParser;
+import org.kite9.diagram.dom.css.Kite9CSSParser;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.css.CachingCSSEngine;
 import org.kite9.diagram.dom.css.ScriptHandler;
@@ -247,7 +247,7 @@ public class ADLExtensibleDOMImplementation extends SVG12DOMImplementation imple
 		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
 		
-		ep = ExtendedParserWrapper.wrap(new AtRuleParser());
+		ep = ExtendedParserWrapper.wrap(new Kite9CSSParser());
 		
 		CSSEngine result = new CachingCSSEngine(doc, durl, ep, vms, sms, ctx, cache);
 		

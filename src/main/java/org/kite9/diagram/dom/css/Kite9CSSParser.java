@@ -21,9 +21,9 @@ import org.w3c.css.sac.LexicalUnit;
  * @author robmoffat
  *
  */
-public class AtRuleParser extends Parser {
+public class Kite9CSSParser extends Parser {
 	
-	public AtRuleParser() {
+	public Kite9CSSParser() {
 	}
 
 	private ScriptHandler sh;
