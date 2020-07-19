@@ -27,26 +27,33 @@ public class PrefixingCopier extends ValueReplacingCopier {
 	protected Element processTag(Element n) {
 		n = super.processTag(n);
 		
+		String oldNs = xmlnsAttr(n.getPrefix());
+		String newNs = xmlnsAttr(newPrefix);
+		
 		if (namespace.equals(n.getNamespaceURI())) {
 			n.setPrefix(newPrefix);
 		}
 		
 		NamedNodeMap map = n.getAttributes();
 		
-		
 		int i = 0;
 		while (i < map.getLength()) {
 			Attr a = (Attr) map.item(i);
-			//System.out.println(a.getName());
-			if ((a.getName().startsWith("xmlns:")) && (a.getValue().equals(namespace))) {
+			if (oldNs.equals(a.getName())) {
 				 map.removeNamedItemNS(a.getNamespaceURI(), a.getLocalName());
+			} else if (newNs.equals(a.getName())) {
+				a.setValue(this.namespace);
+				i++;
 			} else {
 				i++;
 			}
-			
 		}
 		
 		return n;
+	}
+	
+	private static String xmlnsAttr(String prefix) {
+		return ((prefix == null) || (prefix.length() == 0)) ? "xmlns" : "xmlns:" + prefix;
 	}
 
 	@Override

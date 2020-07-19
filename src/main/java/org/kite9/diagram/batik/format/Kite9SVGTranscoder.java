@@ -14,6 +14,7 @@ import java.net.URLConnection;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -132,8 +133,13 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 
 	@Override
-	protected Kite9BridgeContext createBridgeContext(String version) {
+	public Kite9BridgeContext createBridgeContext(String version) {
 		return bridgeContext;
+	}
+
+	@Override
+	public BridgeContext createBridgeContext() {
+		return super.createBridgeContext();
 	}
 	
 	@Override
@@ -286,6 +292,5 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	public boolean isLoggingEnabled() {
 		return true;
 	}
-    
 
 }

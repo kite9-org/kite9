@@ -105,10 +105,13 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		if (d != null) {
 			return d;
 		} else {
-			d = (Document) cache.get(uri);
+			Object o = cache.get(uri);
+			if (o instanceof Document) {
+				return (Document) o;
+			}
 		}
 		
-		return d;
+		return null;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
+import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -196,9 +197,13 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 	}
 
 	public static Value getCSSStyleProperty(CSSStylableElement el, String name) {
-		CSSEngine e = ((ADLDocument) el.getOwnerDocument()).getCSSEngine();
-		int pi = e.getPropertyIndex(name);
-		return e.getComputedStyle(el, null, pi);
+		try {
+			CSSEngine e = ((ADLDocument) el.getOwnerDocument()).getCSSEngine();
+			int pi = e.getPropertyIndex(name);
+			return e.getComputedStyle(el, null, pi);
+		} catch (Exception e) {
+			throw new Kite9ProcessingException("Can't resolve style: "+name, e);
+		}
 	}
 
 	@Override
