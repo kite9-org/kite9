@@ -108,10 +108,10 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		
 		int r = getTerminatorRotation(pos, from);
 
-		double x1 = pos.x() - getRotatedSize(t,r,Direction.LEFT);
-		double y1 = pos.y() - getRotatedSize(t,r,Direction.UP);
-		double x2 = pos.x() + getRotatedSize(t,r,Direction.RIGHT);
-		double y2 = pos.y() + getRotatedSize(t,r,Direction.DOWN);
+		double x1 = pos.x(); // - getRotatedSize(t,r,Direction.LEFT);
+		double y1 = pos.y(); // - getRotatedSize(t,r,Direction.UP);
+		double x2 = pos.x(); // + getRotatedSize(t,r,Direction.RIGHT);
+		double y2 = pos.y(); // + getRotatedSize(t,r,Direction.DOWN);
 
 		RectangleRenderingInformation rri = t.getRenderingInformation();
 		

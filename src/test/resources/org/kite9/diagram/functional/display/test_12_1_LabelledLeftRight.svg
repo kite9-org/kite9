@@ -6,12 +6,12 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [196.0,66.0]; " id="The Diagram" k9-elem="diagram"
+  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [196.0,66.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="g2" transform="translate(154.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [154.0,15.0]; rect-size: [27.0,29.0]; " rank="0"
+  <g k9-elem="glyph" id="g2" transform="translate(154.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [154.0,15.0]; rect-size: [27.0,29.0]; " rank="0"
       >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g k9-elem="label" id="g2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [164.0,21.0]; rect-size: [7.0,17.0]; "
+    <g k9-elem="label" id="g2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [164.0,21.0]; rect-size: [7.0,17.0]; "
             >
     <g k9-info="" k9-elem="show-box"
               >
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [164.0,21.0]; rect-size: [7.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [164.0,21.0]; rect-size: [7.0,17.0]; "
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       >b</text
@@ -50,7 +50,7 @@
                   >
   </g
                   >
-  <g k9-elem="arrow" id="arrow1" transform="translate(15.0,19.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [15.0,19.0]; rect-size: [50.0,20.0]; " rank="1"
+  <g k9-elem="arrow" id="arrow1" transform="translate(15.0,19.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [15.0,19.0]; rect-size: [50.0,20.0]; " rank="1"
                   >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                     >
@@ -59,12 +59,12 @@
     </g
                       >
     
-    <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; "
+    <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; "
                       >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [20.0,22.0]; rect-size: [40.0,14.0]; "
                           ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                             ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                               ><tspan
@@ -85,19 +85,19 @@
   <g k9-elem="link" id="arrow1-g2" drawDirection="RIGHT" k9-info="link: ['arrow1','g2']; direction: RIGHT; " rank="2"
                           >
     
-    <g k9-elem="from" reference="arrow1" transform="translate(60.0,24.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: arrow1-g2; terminates-at: arrow1; end: from; rectangular: terminator; rect-pos: [60.0,24.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="arrow1" transform="translate(65.0,29.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: arrow1-g2; terminates-at: arrow1; end: from; rectangular: terminator; rect-pos: [65.0,29.0]; rect-size: [0.0,0.0]; "
                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                               />
   </g
                               >
-    <g k9-elem="to" id="2" reference="g2" class="arrow" transform="translate(142.0,24.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; terminates: arrow1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [142.0,24.0]; rect-size: [13.0,10.0]; "
+    <g k9-elem="to" id="2" reference="g2" class="arrow" transform="translate(154.0,29.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; sizing: MINIMIZE MINIMIZE; terminates: arrow1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [154.0,29.0]; rect-size: [0.0,0.0]; "
                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                 />
   </g
                                 >
-    <g k9-elem="fromLabel" id="fromLabel" style="kite9-label-placement: bottom" transform="translate(75.0,29.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: label; rect-pos: [75.0,29.0]; rect-size: [67.0,22.0]; "
+    <g k9-elem="fromLabel" id="fromLabel" style="kite9-label-placement: bottom" transform="translate(75.0,29.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [75.0,29.0]; rect-size: [67.0,22.0]; "
                                 >
     <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                   >
@@ -107,7 +107,7 @@
                                     >
     <g class="connection-label-front"
                                     >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.8,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [79.0,33.0]; rect-size: [59.0,14.0]; "
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.8,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [79.0,33.0]; rect-size: [59.0,14.0]; "
                                       ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                         ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                           ><tspan
@@ -170,75 +170,75 @@
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
                                                 >
-      <circle r="2" class="circle-marker" cx="3" cy="3"
+      <circle r="2" cx="3" class="circle-marker" cy="3"
                                                   />
     </marker
                                                   >
     
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                   >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                     />
     </marker
                                                     >
     
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                     >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                       />
     </marker
                                                       >
     
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                       >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                         />
     </marker
                                                         >
     
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                         >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                           />
     </marker
                                                           >
 
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                           >
       <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                             />
     </marker
                                                             >
 
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                             >
       <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                               />
     </marker
                                                               >
  
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                               >
       <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                                                 />
     </marker
                                                                 >
 
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                 >
       <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                                                   />
     </marker
                                                                   >
   
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                   >
       <polygon class="arrow-marker" points="2,4 6,2 6,6"
                                                                     />
     </marker
                                                                     >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                     >
        <polygon class="arrow-marker" points="6,4 2,2 2,6"
                                                                       />

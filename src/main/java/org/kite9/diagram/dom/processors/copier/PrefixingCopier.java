@@ -40,7 +40,12 @@ public class PrefixingCopier extends ValueReplacingCopier {
 		while (i < map.getLength()) {
 			Attr a = (Attr) map.item(i);
 			if (oldNs.equals(a.getName())) {
+				int atts = map.getLength();
 				 map.removeNamedItemNS(a.getNamespaceURI(), a.getLocalName());
+				 if (map.getLength() == atts) {
+					 // can't remove since it's a default attribute.
+					 i++;
+				 }
 			} else if (newNs.equals(a.getName())) {
 				a.setValue(this.namespace);
 				i++;

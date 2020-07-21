@@ -6,12 +6,12 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [318.0,78.0]; " id="The Diagram" k9-elem="diagram"
+  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [318.0,78.0]; " id="The Diagram" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="one" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [57.0,48.0]; " rank="0"
+  <g k9-elem="glyph" id="one" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [57.0,48.0]; " rank="0"
       >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g k9-elem="stereotype" id="one-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
+    <g k9-elem="stereotype" id="one-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: BOTTOM; layout: null; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
             >
     <g k9-info="" k9-elem="show-box"
               >
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-stereotype-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,21.0]; rect-size: [37.0,14.0]; "
                   ><g font-family="'opensans-bold-webfont'"
                     ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                       ><tspan
@@ -49,7 +49,7 @@
                   >
   </g
                   >
-    <g k9-elem="label" id="one-label" transform="translate(15.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; "
+    <g k9-elem="label" id="one-label" transform="translate(15.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; "
                   >
     <g k9-info="" k9-elem="show-box"
                     >
@@ -61,7 +61,7 @@
                       >
     <g class="glyph-label-text"
                       >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.9,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.9,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [30.0,40.0]; rect-size: [27.0,17.0]; "
                         ><g font-family="'opensans-regular-webfont'" font-size="15px"
                           ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                             ><tspan
@@ -81,7 +81,7 @@
                         >
   </g
                         >
-  <g k9-elem="glyph" id="two" transform="translate(135.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [135.0,15.0]; rect-size: [57.0,48.0]; " rank="1"
+  <g k9-elem="glyph" id="two" transform="translate(135.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [135.0,15.0]; rect-size: [57.0,48.0]; " rank="1"
                         >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                           >
@@ -92,7 +92,7 @@
     <g class="glyph"
                             >
       
-    <g k9-elem="stereotype" id="two-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: BOTTOM; sizing: MAXIMIZE; layout: null; rectangular: connected; rect-pos: [145.0,21.0]; rect-size: [37.0,14.0]; "
+    <g k9-elem="stereotype" id="two-stereo" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: BOTTOM; layout: null; rectangular: connected; rect-pos: [145.0,21.0]; rect-size: [37.0,14.0]; "
                               >
     <g k9-info="" k9-elem="show-box"
                                 >
@@ -104,7 +104,7 @@
                                   >
     <g class="glyph-stereotype-text"
                                   >
-      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [145.0,21.0]; rect-size: [37.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" transform="translate(-4981.1,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [145.0,21.0]; rect-size: [37.0,14.0]; "
                                     ><g font-family="'opensans-bold-webfont'"
                                       ><text x="4980.5615" xml:space="preserve" y="10.6283" stroke="none"
                                         ><tspan
@@ -119,7 +119,7 @@
                                     >
   </g
                                     >
-    <g k9-elem="label" id="two-label" transform="translate(15.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [150.0,40.0]; rect-size: [28.0,17.0]; "
+    <g k9-elem="label" id="two-label" transform="translate(15.0,25.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [150.0,40.0]; rect-size: [28.0,17.0]; "
                                     >
     <g k9-info="" k9-elem="show-box"
                                       >
@@ -131,7 +131,7 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.1,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [150.0,40.0]; rect-size: [28.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.1,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [150.0,40.0]; rect-size: [28.0,17.0]; "
                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
@@ -151,7 +151,7 @@
                                           >
   </g
                                           >
-  <g k9-elem="glyph" id="three" transform="translate(244.0,25.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [244.0,25.0]; rect-size: [59.0,29.0]; " rank="2"
+  <g k9-elem="glyph" id="three" transform="translate(244.0,25.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [244.0,25.0]; rect-size: [59.0,29.0]; " rank="2"
                                           >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                             >
@@ -162,7 +162,7 @@
     <g class="glyph"
                                               >
       
-    <g k9-elem="label" id="three-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [254.0,31.0]; rect-size: [39.0,17.0]; "
+    <g k9-elem="label" id="three-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [254.0,31.0]; rect-size: [39.0,17.0]; "
                                                 >
     <g k9-info="" k9-elem="show-box"
                                                   >
@@ -174,7 +174,7 @@
                                                     >
     <g class="glyph-label-text"
                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.1,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [254.0,31.0]; rect-size: [39.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.1,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [254.0,31.0]; rect-size: [39.0,17.0]; "
                                                       ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                         ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                           ><tspan
@@ -194,7 +194,7 @@
                                                       >
   </g
                                                       >
-  <g k9-elem="arrow" id="meets" transform="translate(82.0,29.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [82.0,29.0]; rect-size: [43.0,20.0]; " rank="3"
+  <g k9-elem="arrow" id="meets" transform="translate(82.0,29.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [82.0,29.0]; rect-size: [43.0,20.0]; " rank="3"
                                                       >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                                                         >
@@ -203,12 +203,12 @@
     </g
                                                           >
     
-    <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; "
+    <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; "
                                                           >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-1.0,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-1.0,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [87.0,32.0]; rect-size: [33.0,14.0]; "
                                                               ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                                                 ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                                   ><tspan
@@ -226,7 +226,7 @@
   
   </g
                                                               >
-  <g k9-elem="arrow" id="eats" transform="translate(202.0,29.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [202.0,29.0]; rect-size: [32.0,20.0]; " rank="4"
+  <g k9-elem="arrow" id="eats" transform="translate(202.0,29.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [202.0,29.0]; rect-size: [32.0,20.0]; " rank="4"
                                                               >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                                                                 >
@@ -235,12 +235,12 @@
     </g
                                                                   >
     
-    <g k9-elem="label" id="2" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [207.0,32.0]; rect-size: [22.0,14.0]; "
+    <g k9-elem="label" id="2" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [207.0,32.0]; rect-size: [22.0,14.0]; "
                                                                   >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.7,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [207.0,32.0]; rect-size: [22.0,14.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.7,.6)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [207.0,32.0]; rect-size: [22.0,14.0]; "
                                                                       ><g fill="white" font-family="'opensans-regular-webfont'" stroke="white"
                                                                         ><text x="0" xml:space="preserve" y="10.6166" stroke="none"
                                                                           ><tspan
@@ -261,13 +261,13 @@
   <g k9-elem="link" id="meets-one" k9-info="link: ['meets','one']; direction: null; " rank="5"
                                                                       >
     
-    <g k9-elem="from" reference="meets" transform="translate(77.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: meets-one; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [77.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="meets" transform="translate(82.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-one; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [82.0,39.0]; rect-size: [0.0,0.0]; "
                                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                           />
   </g
                                                                           >
-    <g k9-elem="to" reference="one" transform="translate(67.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: meets-one; terminates-at: one; end: to; rectangular: terminator; rect-pos: [67.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="one" transform="translate(72.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-one; terminates-at: one; end: to; rectangular: terminator; rect-pos: [72.0,39.0]; rect-size: [0.0,0.0]; "
                                                                           >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                             />
@@ -285,13 +285,13 @@
   <g k9-elem="link" id="meets-two" k9-info="link: ['meets','two']; direction: null; " rank="6"
                                                                               >
     
-    <g k9-elem="from" reference="meets" transform="translate(120.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: meets-two; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [120.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="meets" transform="translate(125.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-two; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [125.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                 >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                   />
   </g
                                                                                   >
-    <g k9-elem="to" reference="two" transform="translate(130.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: meets-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [130.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="two" transform="translate(135.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [135.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                     />
@@ -309,13 +309,13 @@
   <g k9-elem="link" id="eats-three" k9-info="link: ['eats','three']; direction: null; " rank="7"
                                                                                       >
     
-    <g k9-elem="from" reference="eats" transform="translate(229.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: eats-three; terminates-at: eats; end: from; rectangular: terminator; rect-pos: [229.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="eats" transform="translate(234.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: eats-three; terminates-at: eats; end: from; rectangular: terminator; rect-pos: [234.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                           />
   </g
                                                                                           >
-    <g k9-elem="to" reference="three" transform="translate(239.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: eats-three; terminates-at: three; end: to; rectangular: terminator; rect-pos: [239.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="three" transform="translate(244.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: eats-three; terminates-at: three; end: to; rectangular: terminator; rect-pos: [244.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                           >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                             />
@@ -333,13 +333,13 @@
   <g k9-elem="link" id="eats-two" k9-info="link: ['eats','two']; direction: null; " rank="8"
                                                                                               >
     
-    <g k9-elem="from" reference="eats" transform="translate(197.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: eats-two; terminates-at: eats; end: from; rectangular: terminator; rect-pos: [197.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="eats" transform="translate(202.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: eats-two; terminates-at: eats; end: from; rectangular: terminator; rect-pos: [202.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                                 >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                   />
   </g
                                                                                                   >
-    <g k9-elem="to" reference="two" transform="translate(187.0,34.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: eats-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [187.0,34.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="two" transform="translate(192.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: eats-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [192.0,39.0]; rect-size: [0.0,0.0]; "
                                                                                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                     />
@@ -391,75 +391,75 @@
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
                                                                                                               >
-      <circle r="2" class="circle-marker" cx="3" cy="3"
+      <circle r="2" cx="3" class="circle-marker" cy="3"
                                                                                                                 />
     </marker
                                                                                                                 >
     
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                 >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                   />
     </marker
                                                                                                                   >
     
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                   >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                     />
     </marker
                                                                                                                     >
     
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                     >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                       />
     </marker
                                                                                                                       >
     
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                       >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                         />
     </marker
                                                                                                                         >
 
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                         >
       <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                                                                                           />
     </marker
                                                                                                                           >
 
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                           >
       <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                                                                                             />
     </marker
                                                                                                                             >
  
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                             >
       <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                                                                                                               />
     </marker
                                                                                                                               >
 
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                               >
       <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                 />
     </marker
                                                                                                                                 >
   
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                 >
       <polygon class="arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                   />
     </marker
                                                                                                                                   >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                   >
        <polygon class="arrow-marker" points="6,4 2,2 2,6"
                                                                                                                                     />

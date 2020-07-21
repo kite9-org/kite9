@@ -91,12 +91,6 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	}
 
 	protected abstract Element paintElementToDocument(Document d, XMLProcessor postProcessor);
-
-//	protected void initializeDOMElement(StyledKite9XMLElement e) {
-//		if (e instanceof HasPreprocessor) {
-//			((HasPreprocessor)e).getPreprocessor().processContents(e);
-//		}
-//	}
 	
 	/**
 	 * For elements which are not decals, this needs to be done before accessing properties

@@ -6,12 +6,12 @@
   ><style type="text/css" xml:space="preserve"
     > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
   ></defs
-  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [497.0,119.0]; " id="1" k9-elem="diagram"
+  ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [497.0,119.0]; " id="1" k9-elem="diagram"
   >
     <g filter="url(#dropshadow)"
     >
       
-  <g k9-elem="glyph" id="g1" transform="translate(147.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [147.0,15.0]; rect-size: [80.0,50.0]; " rank="0"
+  <g k9-elem="glyph" id="g1" transform="translate(147.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [147.0,15.0]; rect-size: [80.0,50.0]; " rank="0"
       >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
         >
@@ -22,7 +22,7 @@
     <g class="glyph"
           >
       
-    <g k9-elem="label" id="g1-label" transform="translate(34.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
+    <g k9-elem="label" id="g1-label" transform="translate(34.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
             >
     <g k9-info="" k9-elem="show-box"
               >
@@ -34,7 +34,7 @@
                 >
     <g class="glyph-label-text"
                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [181.0,21.0]; rect-size: [13.0,17.0]; "
                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                       ><tspan
@@ -54,7 +54,7 @@
                   >
   </g
                   >
-  <g k9-elem="glyph" id="fan0" transform="translate(15.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [15.0,75.0]; rect-size: [50.0,29.0]; " rank="1"
+  <g k9-elem="glyph" id="fan0" transform="translate(15.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [15.0,75.0]; rect-size: [50.0,29.0]; " rank="1"
                   >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                     >
@@ -65,7 +65,7 @@
     <g class="glyph"
                       >
       
-    <g k9-elem="label" id="fan0-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan0-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
                         >
     <g k9-info="" k9-elem="show-box"
                           >
@@ -77,7 +77,7 @@
                             >
     <g class="glyph-label-text"
                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [25.0,81.0]; rect-size: [30.0,17.0]; "
                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                   ><tspan
@@ -97,7 +97,7 @@
                               >
   </g
                               >
-  <g k9-elem="glyph" id="fan1" transform="translate(75.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [75.0,75.0]; rect-size: [47.0,29.0]; " rank="2"
+  <g k9-elem="glyph" id="fan1" transform="translate(75.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [75.0,75.0]; rect-size: [47.0,29.0]; " rank="2"
                               >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                 >
@@ -108,7 +108,7 @@
     <g class="glyph"
                                   >
       
-    <g k9-elem="label" id="fan1-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
+    <g k9-elem="label" id="fan1-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
                                     >
     <g k9-info="" k9-elem="show-box"
                                       >
@@ -120,7 +120,7 @@
                                         >
     <g class="glyph-label-text"
                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [85.0,81.0]; rect-size: [27.0,17.0]; "
                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                               ><tspan
@@ -140,7 +140,7 @@
                                           >
   </g
                                           >
-  <g k9-elem="glyph" id="fan2" transform="translate(132.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [132.0,75.0]; rect-size: [50.0,29.0]; " rank="3"
+  <g k9-elem="glyph" id="fan2" transform="translate(132.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [132.0,75.0]; rect-size: [50.0,29.0]; " rank="3"
                                           >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                             >
@@ -151,7 +151,7 @@
     <g class="glyph"
                                               >
       
-    <g k9-elem="label" id="fan2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
                                                 >
     <g k9-info="" k9-elem="show-box"
                                                   >
@@ -163,7 +163,7 @@
                                                     >
     <g class="glyph-label-text"
                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [142.0,81.0]; rect-size: [30.0,17.0]; "
                                                       ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                         ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                           ><tspan
@@ -183,7 +183,7 @@
                                                       >
   </g
                                                       >
-  <g k9-elem="glyph" id="fan3" transform="translate(192.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [192.0,75.0]; rect-size: [50.0,29.0]; " rank="4"
+  <g k9-elem="glyph" id="fan3" transform="translate(192.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [192.0,75.0]; rect-size: [50.0,29.0]; " rank="4"
                                                       >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                         >
@@ -194,7 +194,7 @@
     <g class="glyph"
                                                           >
       
-    <g k9-elem="label" id="fan3-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan3-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
                                                             >
     <g k9-info="" k9-elem="show-box"
                                                               >
@@ -206,7 +206,7 @@
                                                                 >
     <g class="glyph-label-text"
                                                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [202.0,81.0]; rect-size: [30.0,17.0]; "
                                                                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                       ><tspan
@@ -226,7 +226,7 @@
                                                                   >
   </g
                                                                   >
-  <g k9-elem="glyph" id="fan4" transform="translate(252.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [252.0,75.0]; rect-size: [50.0,29.0]; " rank="5"
+  <g k9-elem="glyph" id="fan4" transform="translate(252.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [252.0,75.0]; rect-size: [50.0,29.0]; " rank="5"
                                                                   >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                     >
@@ -237,7 +237,7 @@
     <g class="glyph"
                                                                       >
       
-    <g k9-elem="label" id="fan4-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan4-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
                                                                         >
     <g k9-info="" k9-elem="show-box"
                                                                           >
@@ -249,7 +249,7 @@
                                                                             >
     <g class="glyph-label-text"
                                                                             >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [262.0,81.0]; rect-size: [30.0,17.0]; "
                                                                               ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                 ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                   ><tspan
@@ -269,7 +269,7 @@
                                                                               >
   </g
                                                                               >
-  <g k9-elem="glyph" id="fan5" transform="translate(312.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [312.0,75.0]; rect-size: [50.0,29.0]; " rank="6"
+  <g k9-elem="glyph" id="fan5" transform="translate(312.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [312.0,75.0]; rect-size: [50.0,29.0]; " rank="6"
                                                                               >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                 >
@@ -280,7 +280,7 @@
     <g class="glyph"
                                                                                   >
       
-    <g k9-elem="label" id="fan5-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan5-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                     >
     <g k9-info="" k9-elem="show-box"
                                                                                       >
@@ -292,7 +292,7 @@
                                                                                         >
     <g class="glyph-label-text"
                                                                                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [322.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                               ><tspan
@@ -312,7 +312,7 @@
                                                                                           >
   </g
                                                                                           >
-  <g k9-elem="glyph" id="fan6" transform="translate(372.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [372.0,75.0]; rect-size: [50.0,29.0]; " rank="7"
+  <g k9-elem="glyph" id="fan6" transform="translate(372.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [372.0,75.0]; rect-size: [50.0,29.0]; " rank="7"
                                                                                           >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                             >
@@ -323,7 +323,7 @@
     <g class="glyph"
                                                                                               >
       
-    <g k9-elem="label" id="fan6-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan6-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                 >
     <g k9-info="" k9-elem="show-box"
                                                                                                   >
@@ -335,7 +335,7 @@
                                                                                                     >
     <g class="glyph-label-text"
                                                                                                     >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [382.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                       ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                                         ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                           ><tspan
@@ -355,7 +355,7 @@
                                                                                                       >
   </g
                                                                                                       >
-  <g k9-elem="glyph" id="fan7" transform="translate(432.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: DOWN; rectangular: connected; rect-pos: [432.0,75.0]; rect-size: [50.0,29.0]; " rank="8"
+  <g k9-elem="glyph" id="fan7" transform="translate(432.0,75.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [432.0,75.0]; rect-size: [50.0,29.0]; " rank="8"
                                                                                                       >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                                                                                                         >
@@ -366,7 +366,7 @@
     <g class="glyph"
                                                                                                           >
       
-    <g k9-elem="label" id="fan7-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: TOP; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
+    <g k9-elem="label" id="fan7-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                             >
     <g k9-info="" k9-elem="show-box"
                                                                                                               >
@@ -378,7 +378,7 @@
                                                                                                                 >
     <g class="glyph-label-text"
                                                                                                                 >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [442.0,81.0]; rect-size: [30.0,17.0]; "
                                                                                                                   ><g font-family="'opensans-regular-webfont'" font-size="15px"
                                                                                                                     ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                                                                                                                       ><tspan
@@ -401,13 +401,13 @@
   <g k9-elem="link" id="g1-fan0" k9-info="link: ['g1','fan0']; direction: null; " rank="9"
                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" transform="translate(142.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan0; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,40.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(147.0,45.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan0; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [147.0,45.0]; rect-size: [0.0,0.0]; "
                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                       />
   </g
                                                                                                                       >
-    <g k9-elem="to" reference="fan0" transform="translate(35.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan0; terminates-at: fan0; end: to; rectangular: terminator; rect-pos: [35.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan0" transform="translate(40.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan0; terminates-at: fan0; end: to; rectangular: terminator; rect-pos: [40.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                         />
@@ -425,13 +425,13 @@
   <g k9-elem="link" id="g1-fan1" k9-info="link: ['g1','fan1']; direction: null; " rank="10"
                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" transform="translate(142.0,50.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan1; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [142.0,50.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(147.0,55.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan1; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [147.0,55.0]; rect-size: [0.0,0.0]; "
                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                               />
   </g
                                                                                                                               >
-    <g k9-elem="to" reference="fan1" transform="translate(94.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [94.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan1" transform="translate(99.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [99.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                 />
@@ -449,13 +449,13 @@
   <g k9-elem="link" id="g1-fan2" drawDirection="DOWN" k9-info="link: ['g1','fan2']; direction: DOWN; " rank="11"
                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" transform="translate(152.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan2; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [152.0,60.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(157.0,65.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan2; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [157.0,65.0]; rect-size: [0.0,0.0]; "
                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                       />
   </g
                                                                                                                                       >
-    <g k9-elem="to" reference="fan2" transform="translate(152.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [152.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan2" transform="translate(157.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [157.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                         />
@@ -473,13 +473,13 @@
   <g k9-elem="link" id="g1-fan3" drawDirection="DOWN" k9-info="link: ['g1','fan3']; direction: DOWN; " rank="12"
                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" transform="translate(212.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan3; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [212.0,60.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(217.0,65.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan3; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [217.0,65.0]; rect-size: [0.0,0.0]; "
                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                               />
   </g
                                                                                                                                               >
-    <g k9-elem="to" reference="fan3" transform="translate(212.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [212.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan3" transform="translate(217.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [217.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                 />
@@ -497,13 +497,13 @@
   <g k9-elem="link" id="g1-fan4" k9-info="link: ['g1','fan4']; direction: null; " rank="13"
                                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" transform="translate(222.0,50.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan4; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,50.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(227.0,55.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan4; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [227.0,55.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                       />
   </g
                                                                                                                                                       >
-    <g k9-elem="to" reference="fan4" transform="translate(272.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [272.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan4" transform="translate(277.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [277.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                         />
@@ -521,13 +521,13 @@
   <g k9-elem="link" id="g1-fan5" k9-info="link: ['g1','fan5']; direction: null; " rank="14"
                                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" transform="translate(222.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan5; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,40.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(227.0,45.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan5; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [227.0,45.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                               />
   </g
                                                                                                                                                               >
-    <g k9-elem="to" reference="fan5" transform="translate(332.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [332.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan5" transform="translate(337.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [337.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                 />
@@ -545,13 +545,13 @@
   <g k9-elem="link" id="g1-fan6" k9-info="link: ['g1','fan6']; direction: null; " rank="15"
                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="g1" transform="translate(222.0,30.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan6; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,30.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(227.0,35.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan6; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [227.0,35.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                       />
   </g
                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan6" transform="translate(392.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [392.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan6" transform="translate(397.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [397.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                         />
@@ -569,13 +569,13 @@
   <g k9-elem="link" id="g1-fan7" k9-info="link: ['g1','fan7']; direction: null; " rank="16"
                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="g1" transform="translate(222.0,20.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan7; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [222.0,20.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="g1" transform="translate(227.0,25.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan7; terminates-at: g1; end: from; rectangular: terminator; rect-pos: [227.0,25.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                               />
   </g
                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan7" transform="translate(452.0,70.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: g1-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [452.0,70.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan7" transform="translate(457.0,75.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [457.0,75.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                 />
@@ -593,13 +593,13 @@
   <g k9-elem="link" id="fan0-fan1" drawDirection="RIGHT" k9-info="link: ['fan0','fan1']; direction: RIGHT; " rank="17"
                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan0" transform="translate(60.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan0-fan1; terminates-at: fan0; end: from; rectangular: terminator; rect-pos: [60.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan0" transform="translate(65.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan0-fan1; terminates-at: fan0; end: from; rectangular: terminator; rect-pos: [65.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                       />
   </g
                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan1" transform="translate(70.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan0-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [70.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan1" transform="translate(75.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan0-fan1; terminates-at: fan1; end: to; rectangular: terminator; rect-pos: [75.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                         />
@@ -617,13 +617,13 @@
   <g k9-elem="link" id="fan1-fan2" drawDirection="RIGHT" k9-info="link: ['fan1','fan2']; direction: RIGHT; " rank="18"
                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan1" transform="translate(117.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan1-fan2; terminates-at: fan1; end: from; rectangular: terminator; rect-pos: [117.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan1" transform="translate(122.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan1-fan2; terminates-at: fan1; end: from; rectangular: terminator; rect-pos: [122.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                               />
   </g
                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan2" transform="translate(127.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [127.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan2" transform="translate(132.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan1-fan2; terminates-at: fan2; end: to; rectangular: terminator; rect-pos: [132.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                 />
@@ -641,13 +641,13 @@
   <g k9-elem="link" id="fan2-fan3" drawDirection="RIGHT" k9-info="link: ['fan2','fan3']; direction: RIGHT; " rank="19"
                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan2" transform="translate(177.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan2-fan3; terminates-at: fan2; end: from; rectangular: terminator; rect-pos: [177.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan2" transform="translate(182.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan2-fan3; terminates-at: fan2; end: from; rectangular: terminator; rect-pos: [182.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan3" transform="translate(187.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan2-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [187.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan3" transform="translate(192.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan2-fan3; terminates-at: fan3; end: to; rectangular: terminator; rect-pos: [192.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                         />
@@ -665,13 +665,13 @@
   <g k9-elem="link" id="fan3-fan4" drawDirection="RIGHT" k9-info="link: ['fan3','fan4']; direction: RIGHT; " rank="20"
                                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan3" transform="translate(237.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan3-fan4; terminates-at: fan3; end: from; rectangular: terminator; rect-pos: [237.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan3" transform="translate(242.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan3-fan4; terminates-at: fan3; end: from; rectangular: terminator; rect-pos: [242.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan4" transform="translate(247.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan3-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [247.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan4" transform="translate(252.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan3-fan4; terminates-at: fan4; end: to; rectangular: terminator; rect-pos: [252.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                 />
@@ -689,13 +689,13 @@
   <g k9-elem="link" id="fan4-fan5" drawDirection="RIGHT" k9-info="link: ['fan4','fan5']; direction: RIGHT; " rank="21"
                                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan4" transform="translate(297.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan4-fan5; terminates-at: fan4; end: from; rectangular: terminator; rect-pos: [297.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan4" transform="translate(302.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan4-fan5; terminates-at: fan4; end: from; rectangular: terminator; rect-pos: [302.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan5" transform="translate(307.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan4-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [307.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan5" transform="translate(312.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan4-fan5; terminates-at: fan5; end: to; rectangular: terminator; rect-pos: [312.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                         />
@@ -713,13 +713,13 @@
   <g k9-elem="link" id="fan5-fan6" drawDirection="RIGHT" k9-info="link: ['fan5','fan6']; direction: RIGHT; " rank="22"
                                                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="fan5" transform="translate(357.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan5-fan6; terminates-at: fan5; end: from; rectangular: terminator; rect-pos: [357.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan5" transform="translate(362.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan5-fan6; terminates-at: fan5; end: from; rectangular: terminator; rect-pos: [362.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                                               >
-    <g k9-elem="to" reference="fan6" transform="translate(367.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan5-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [367.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan6" transform="translate(372.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan5-fan6; terminates-at: fan6; end: to; rectangular: terminator; rect-pos: [372.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                 />
@@ -737,13 +737,13 @@
   <g k9-elem="link" id="fan6-fan7" drawDirection="RIGHT" k9-info="link: ['fan6','fan7']; direction: RIGHT; " rank="23"
                                                                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="fan6" transform="translate(417.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan6-fan7; terminates-at: fan6; end: from; rectangular: terminator; rect-pos: [417.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="fan6" transform="translate(422.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan6-fan7; terminates-at: fan6; end: from; rectangular: terminator; rect-pos: [422.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="fan7" transform="translate(427.0,84.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; terminates: fan6-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [427.0,84.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="fan7" transform="translate(432.0,89.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: fan6-fan7; terminates-at: fan7; end: to; rectangular: terminator; rect-pos: [432.0,89.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                                         />
@@ -795,75 +795,75 @@
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
                                                                                                                                                                                                                                                   >
-      <circle r="2" class="circle-marker" cx="3" cy="3"
+      <circle r="2" cx="3" class="circle-marker" cy="3"
                                                                                                                                                                                                                                                     />
     </marker
                                                                                                                                                                                                                                                     >
     
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                                                                                                                                                     >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                                                                                                                                                       />
     </marker
                                                                                                                                                                                                                                                       >
     
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                                                                                                                                                       >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                                                                                                                                                         />
     </marker
                                                                                                                                                                                                                                                         >
     
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                                                                                                                                                         >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                                                                                                                                                           />
     </marker
                                                                                                                                                                                                                                                           >
     
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                                                                                                                                                           >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                                                                                                                                                             />
     </marker
                                                                                                                                                                                                                                                             >
 
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                             >
       <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                                                                                                                                                                                                                               />
     </marker
                                                                                                                                                                                                                                                               >
 
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                               >
       <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                                                                                                                                                                                                                                 />
     </marker
                                                                                                                                                                                                                                                                 >
  
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                                 >
       <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                                                                                                                                                                                                                                                   />
     </marker
                                                                                                                                                                                                                                                                   >
 
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                                   >
       <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                                                                                                                                                     />
     </marker
                                                                                                                                                                                                                                                                     >
   
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                                     >
       <polygon class="arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                                                                                                                                                       />
     </marker
                                                                                                                                                                                                                                                                       >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                                                                                                                                                       >
        <polygon class="arrow-marker" points="6,4 2,2 2,6"
                                                                                                                                                                                                                                                                         />

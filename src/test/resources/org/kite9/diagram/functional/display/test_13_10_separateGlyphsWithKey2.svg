@@ -177,7 +177,7 @@
                                                       >
   </g
                                                       >
-    <g k9-elem="key" id="key" transform="translate(139.0,28.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [154.0,82.0]; rect-size: [122.0,71.0]; "
+    <g k9-elem="key" id="key" transform="translate(139.0,28.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [154.0,82.0]; rect-size: [122.0,71.0]; "
                                                       >
     <g k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 2]; cell-xs: [12, 98]; cell-ys: [12, 27, 53]; rectangular: connected; rect-pos: [160.0,85.0]; rect-size: [110.0,65.0]; " k9-elem="body" transform="translate(6.0,3.0)"
                                                         >
@@ -337,13 +337,13 @@
   <g k9-elem="link" id="c-d" drawDirection="UP" k9-info="link: ['c','d']; direction: UP; " rank="3"
                                                                                               >
     
-    <g k9-elem="from" reference="c" transform="translate(117.0,61.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-d; terminates-at: c; end: from; rectangular: terminator; rect-pos: [117.0,61.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="c" transform="translate(122.0,66.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-d; terminates-at: c; end: from; rectangular: terminator; rect-pos: [122.0,66.0]; rect-size: [0.0,0.0]; "
                                                                                                 >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                   />
   </g
                                                                                                   >
-    <g k9-elem="to" reference="d" transform="translate(117.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-d; terminates-at: d; end: to; rectangular: terminator; rect-pos: [117.0,39.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="d" transform="translate(122.0,44.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-d; terminates-at: d; end: to; rectangular: terminator; rect-pos: [122.0,44.0]; rect-size: [0.0,0.0]; "
                                                                                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                     />
@@ -361,13 +361,13 @@
   <g k9-elem="link" id="c-e" k9-info="link: ['c','e']; direction: null; " rank="4"
                                                                                                       >
     
-    <g k9-elem="from" reference="c" transform="translate(117.0,136.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-e; terminates-at: c; end: from; rectangular: terminator; rect-pos: [117.0,136.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="from" reference="c" transform="translate(122.0,141.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-e; terminates-at: c; end: from; rectangular: terminator; rect-pos: [122.0,141.0]; rect-size: [0.0,0.0]; "
                                                                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                           />
   </g
                                                                                                           >
-    <g k9-elem="to" reference="e" transform="translate(117.0,158.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-e; terminates-at: e; end: to; rectangular: terminator; rect-pos: [117.0,158.0]; rect-size: [10.0,10.0]; "
+    <g k9-elem="to" reference="e" transform="translate(122.0,163.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c-e; terminates-at: e; end: to; rectangular: terminator; rect-pos: [122.0,163.0]; rect-size: [0.0,0.0]; "
                                                                                                           >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                             />
@@ -419,75 +419,75 @@
 
     <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
                                                                                                                       >
-      <circle r="2" class="circle-marker" cx="3" cy="3"
+      <circle r="2" cx="3" class="circle-marker" cy="3"
                                                                                                                         />
     </marker
                                                                                                                         >
     
-    <marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                         >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                           />
     </marker
                                                                                                                           >
     
-     <marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                           >
       <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                             />
     </marker
                                                                                                                             >
     
-    <marker refX="1" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                             >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                               />
     </marker
                                                                                                                               >
     
-     <marker refX="7" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
                                                                                                                               >
       <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
                                                                                                                                 />
     </marker
                                                                                                                                 >
 
-    <marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                 >
       <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
                                                                                                                                   />
     </marker
                                                                                                                                   >
 
-    <marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                   >
       <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
                                                                                                                                     />
     </marker
                                                                                                                                     >
  
-    <marker refX="6" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                     >
       <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
                                                                                                                                       />
     </marker
                                                                                                                                       >
 
-    <marker refX="2" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                       >
       <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                         />
     </marker
                                                                                                                                         >
   
-    <marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                         >
       <polygon class="arrow-marker" points="2,4 6,2 6,6"
                                                                                                                                           />
     </marker
                                                                                                                                           >
 
-    <marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
                                                                                                                                           >
        <polygon class="arrow-marker" points="6,4 2,2 2,6"
                                                                                                                                             />
