@@ -143,6 +143,9 @@ public abstract class AbstractPainter implements Painter {
 			debug.append("rect-size: "+rri.getSize()+ "; "); 
 		}
 		
+		if (r instanceof Temporary) {
+			debug.append("temporary: true; ");
+		}
 		
 		out.setAttribute("k9-info", debug.toString());
 	}
