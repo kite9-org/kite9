@@ -3,6 +3,7 @@ package org.kite9.diagram.functional.display;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.dom.XMLHelper;
@@ -192,7 +193,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			svgClose();
 		transcodeSVG(someXML);
 	}
-	
+
 	/**
 	 * Important thing in this test is that it doesn't crash in the presence of a broken image
 	 */
@@ -204,6 +205,23 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
+	}
+	
+	@Ignore("Decal containers not yet supported")
+	@Test
+	public void test_54_18_DecalTemplate3() throws Exception {
+		String someXML = 
+			svgOpen() + 
+			 	diagramOpen() +
+			 		containerOpen("container1", "red")+
+			 			fixedSizeOpen() +
+			 				svgSquiggle() +
+			 			fixedSizeClose() +
+			 			containerDecalElement(svgRect1() + svgRect1())+
+				 	containerClose() +
+				diagramClose() +
+			svgClose();
+		transcodeSVG(someXML);
 	}
 	
 	private String gTemplatedElement(String id, String inside) {
@@ -220,6 +238,10 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 	private String templatedDecalElement(String inside) {
 		return "<my item=\"bob\" style=\"kite9-template: url(template.svg#templated-decal) 'template-arg'; kite9-type: container; \">"+inside+"</my>";
+	}
+	
+	private String containerDecalElement(String inside) {
+		return "<my item=\"bob\" style=\"kite9-usage: decal; kite9-type: container; \">"+inside+"</my>";
 	}
 	
 	private String scalablePath() {

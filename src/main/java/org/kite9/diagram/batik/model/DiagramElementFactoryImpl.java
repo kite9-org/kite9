@@ -62,6 +62,8 @@ public class DiagramElementFactoryImpl implements DiagramElementFactory {
 				return new ConnectedContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
 			case DECAL:
 			default:
+				// need to extend slideables to handle this
+				// return new DecalContainerImpl(el, parent, context, new SVGContainerRectangularPainter(el, context), ContentTransform.POSITION);
 				throw new Kite9XMLProcessingException("Decal containers not supported yet: @"+el.getID(), el);
 			}
 		case TEXT:

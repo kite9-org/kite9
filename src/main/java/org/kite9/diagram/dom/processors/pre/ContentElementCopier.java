@@ -115,6 +115,8 @@ public class ContentElementCopier extends ValueReplacingCopier {
 	protected boolean canValueReplace(Node n) {
 		if (n instanceof Attr) {
 			return (((Attr) n).getValue().startsWith("pre:")); 
+		} else if (n instanceof Text) {
+			return true;
 		} else {
 			return false;
 		}
