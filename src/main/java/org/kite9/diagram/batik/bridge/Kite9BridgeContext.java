@@ -116,7 +116,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	/**
 	 * Adding support for SVG1.2, whether version is specified or not.
 	 */
-	@SuppressWarnings({"unchecked", "cast", "rawtypes"})
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public List getBridgeExtensions(Document doc) {
 		List<BridgeExtension> out = (List<BridgeExtension>) super.getBridgeExtensions(doc);

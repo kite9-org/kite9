@@ -132,6 +132,7 @@ public class Kite9DocumentFactory
 
     /**
      * Creates a SVG Document instance.
+     * 
      * This method supports gzipped sources.
      * @param uri The document URI.
      * @exception IOException if an error occured while reading the document.

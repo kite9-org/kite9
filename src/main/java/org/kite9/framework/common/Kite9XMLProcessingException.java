@@ -10,6 +10,7 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.w3c.dom.Node;
+import org.w3c.dom.Document;
 
 /**
  * Allows the context to be passed as a specific piece of XML.
@@ -23,10 +24,26 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 
 	public Kite9XMLProcessingException(String reason, Throwable arg1, String xml, String css) {
 		super(reason, arg1);
-		this.xml = xml;
-		this.css = css;
+		this.xml = correctXml(arg1, xml);
+		this.css = correctCss(arg1, css);
 	}
 	
+	private static String correctCss(Throwable arg1, String css2) {
+		if (arg1 instanceof Kite9XMLProcessingException) {
+			return ((Kite9XMLProcessingException) arg1).getCss();
+		} else {
+			return css2;
+		}
+	}
+
+	private static String correctXml(Throwable arg1, String xml2) {
+		if (arg1 instanceof Kite9XMLProcessingException) {
+			return ((Kite9XMLProcessingException) arg1).getContext();
+		} else {
+			return xml2;
+		}
+	}
+
 	public Kite9XMLProcessingException(String reason, Throwable arg1, Node n) {
 		this(reason, arg1, toString(n), debugCss(n));
 	}
@@ -57,8 +74,8 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 
 	public Kite9XMLProcessingException(String reason, Throwable arg1) {
 		super(reason, arg1);
-		this.xml = null;
-		this.css = null;
+		this.xml = correctXml(arg1, null);
+		this.css = correctCss(arg1, null);
 	}
 
 	public Kite9XMLProcessingException(String reason, Node n) {
@@ -67,10 +84,19 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 
 	public static String toString(Node n) {
 		try {
-			return new XMLHelper().toXML(n);
+			return getPath(n)+ "\n" + new XMLHelper().toXML(n);
 		} catch (Exception e) {
 			return "Couldn't create XML representation: "+e.getMessage();
 		}
+	}
+	
+	public static String getPath(Node n) {
+		if (n instanceof Document) {
+			return "";
+		} else {
+			return getPath(n.getParentNode())+ " > " + n.toString();
+		}
+		
 	}
 	
 	public String getContext() {

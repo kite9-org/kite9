@@ -15,7 +15,6 @@ public class Table {
 
 	List<String[]> rows = new ArrayList<String[]>();
 
-	@SuppressWarnings("cast")
 	public void addRow(Object... items) {
 		List<String> longRow = new ArrayList<String>();
 

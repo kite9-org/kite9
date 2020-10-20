@@ -31,8 +31,11 @@ public class SizeShorthandManager implements ShorthandManager {
 	public void setValues(CSSEngine eng, PropertyHandler ph, LexicalUnit first, boolean imp) throws DOMException {
 		int count = countLexicalUnits(first);
 		
-		if (count == 2) {
+		if (count > 0) {
 			ph.property(xProp, first, false);
+		}
+		
+		if (count > 1) {
 			ph.property(yProp, first.getNextLexicalUnit(), false);
 		} 
 	}
