@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/robmoffat/kite9-visualization.png)](https://travis-ci.com/robmoffat/kite9-visualization)
+![Java CI](https://github.com/robmoffat/kite9-visualization/workflows/Java%20CI/badge.svg)
 
 Kite9 is an SVG Visualization Library for converting XML into SVG, useful for creating diagrams and user interfaces.
 
