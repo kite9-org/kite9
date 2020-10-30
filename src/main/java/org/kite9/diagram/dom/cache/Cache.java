@@ -10,10 +10,25 @@ import org.w3c.dom.Document;
  *
  */
 public interface Cache {
-
-	public Object get(String key);
 	
-	public void set(String key, Object value);
+	public static final String STYLESHEET = "stylesheet";
+	public static final String DOCUMENT = "document";
+	
+	public Object get(String key, String type);
+
+	public default Document getDocument(String key) {
+		return (Document) get(key, DOCUMENT);
+	}
+	
+	public default StyleSheet getStylesheet(String key) {
+		return (StyleSheet) get(key, STYLESHEET);
+	}
+	
+	public default byte[] getBytes(String key, String type) {
+		return (byte[]) get(key, type);
+	}
+		
+	public void set(String key, String type, Object value);
 	
 	/**
 	 * Means this is something we could store in the cache.
@@ -23,17 +38,27 @@ public interface Cache {
 	public static Cache NO_CACHE = new Cache() {
 		
 		@Override
-		public void set(String key, Object value) {
+		public void set(String key, String type, Object value) {
 		}
 		
 		@Override
-		public Object get(String key) {
+		public Object get(String key, String type) {
 			return null;
 		}
 
 		@Override
 		public boolean isValid(String key) {
 			return false;
+		}
+
+		@Override
+		public Document getDocument(String key) {
+			return null;
+		}
+
+		@Override
+		public StyleSheet getStylesheet(String key) {
+			return null;
 		}
 	};
 }

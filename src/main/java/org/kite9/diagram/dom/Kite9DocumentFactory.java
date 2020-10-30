@@ -219,6 +219,8 @@ public class Kite9DocumentFactory
             d.setXmlVersion(xmlVersion);
         } catch (MalformedURLException e) {
             throw new IOException(e.getMessage());
+        } catch (IOException e) {
+        	throw e;
         }
         return doc;
     }

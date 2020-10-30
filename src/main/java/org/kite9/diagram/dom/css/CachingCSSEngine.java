@@ -58,14 +58,14 @@ public class CachingCSSEngine extends SVG12CSSEngine {
 	@Override
 	protected void parseStyleSheet(StyleSheet ss, InputSource is, ParsedURL uri) throws IOException {
 		String cssUri = is.getURI();
-		StyleSheet existing = (StyleSheet) cache.get(cssUri);
+		StyleSheet existing = cache.getStylesheet(cssUri);
 		if (existing != null) {
 			for (int i = 0; i < existing.getSize(); i++) {
 				ss.append(existing.getRule(i));
 			}
 		} else {
 			super.parseStyleSheet(ss, is, uri);
-			cache.set(cssUri, ss);
+			cache.set(cssUri, Cache.STYLESHEET, ss);
 		}
 	}
 	
