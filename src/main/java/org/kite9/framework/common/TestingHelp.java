@@ -2,6 +2,7 @@ package org.kite9.framework.common;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.SortedSet;
@@ -49,10 +50,10 @@ public class TestingHelp {
 		return f3;
 	}
 
-	public static void writeOutput(Class<?> theTest, String subtest, String item, String contents) {
+	public static void writeOutput(Class<?> theTest, String subtest, String item, byte[] contents) {
 		File f = prepareFileName(theTest, subtest, item);
 		try {
-			FileWriter fw = new FileWriter(f);
+			FileOutputStream fw = new FileOutputStream(f);
 			fw.write(contents);
 			fw.close();
 		} catch (IOException e) {

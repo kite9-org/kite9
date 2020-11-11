@@ -17,7 +17,7 @@ import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
-import org.kite9.diagram.batik.text.LocalRenderingFlowRootElementBridge;
+import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -37,8 +37,12 @@ import org.w3c.dom.svg.SVGDocument;
  */
 public class Kite9BridgeContext extends SVG12BridgeContext {
 	
-	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader) {
+	
+	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
 		super(userAgent, loader);
+		if (!textAsGlyphs) {
+			setTextPainter(new LocalRenderingFlowTextPainter());
+		}
 	}
 	
 	/**
@@ -59,7 +63,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
 		putBridge(new Kite9DiagramBridge());
-		putBridge(new LocalRenderingFlowRootElementBridge());
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {

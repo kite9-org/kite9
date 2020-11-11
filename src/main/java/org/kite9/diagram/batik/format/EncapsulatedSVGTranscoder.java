@@ -16,7 +16,9 @@ import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.css.engine.CSSEngine;
+import org.apache.batik.gvt.RootGraphicsNode;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.ToSVGAbstractTranscoder;
@@ -26,11 +28,10 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.util.ParsedURL;
+import org.apache.batik.util.SVGConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
-import org.kite9.diagram.batik.model.DiagramElementFactoryImpl;
-import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.XMLHelper;
@@ -38,7 +39,6 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.defs.DefList;
 import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
@@ -55,30 +55,28 @@ import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.XMLFilter;
 
 /**
- * Please note - this transcoder is single-use.
+ * Produces SVG where all the resources are held in the one file.  That is, 
+ * fonts are turned into strokes, images are encoded as data: urls, css styles are expanded.
  */
-public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
+public class EncapsulatedSVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
-	private final ADLExtensibleDOMImplementation domImpl;
-	private final Kite9Log log = new Kite9Log(this);
+	private final CachingSVGDOMImplementation domImpl;
 	private final Kite9DocumentFactory docFactory;
 	private final Kite9DocumentLoader docLoader;
-	private final Kite9BridgeContext bridgeContext;
+	private final BridgeContext bridgeContext;
 	private final Cache cache;
 	
-	public Kite9SVGTranscoder() {
+	public EncapsulatedSVGTranscoder() {
 		this(Cache.NO_CACHE);
 	}
 	
-	public Kite9SVGTranscoder(Cache c) {
+	public EncapsulatedSVGTranscoder(Cache c) {
 		super();
 		cache = c;
-		domImpl = new ADLExtensibleDOMImplementation(c);
+		domImpl = new CachingSVGDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
-		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, false);
-		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
-		domImpl.setDiagramElementFactory(def);
+		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, true);
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
@@ -94,7 +92,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return docLoader;
 	}
 	
-	public ADLExtensibleDOMImplementation getDomImplementation() {
+	public CachingSVGDOMImplementation getDomImplementation() {
 		return domImpl;
 	}
 
@@ -117,7 +115,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			@Override
 			public SVGDocument getBrokenLinkDocument(Element e, String url, String message) {
 				try {
-					InputStream broken = Kite9SVGTranscoder.class.getResourceAsStream("/broken.svg");
+					InputStream broken = EncapsulatedSVGTranscoder.class.getResourceAsStream("/broken.svg");
 					return (SVGDocument) docLoader.loadDocument(url, broken);
 				} catch (IOException e1) {
 					throw new Kite9ProcessingException("Couldn't load broken.svg", e1);
@@ -134,7 +132,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 
 	@Override
-	public Kite9BridgeContext createBridgeContext(String version) {
+	public BridgeContext createBridgeContext(String version) {
 		return bridgeContext;
 	}
 
@@ -153,7 +151,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		Document doc;
 		if (output.getDocument() == null) {
 			DOMImplementation domImpl = SVGDOMImplementation.getDOMImplementation();
-			doc = domImpl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, null, null);
+			doc = domImpl.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, SVGConstants.SVG_SVG_TAG, null);
 		} else {
 			doc = output.getDocument();
 		}
@@ -161,62 +159,23 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return doc;
 	}
 
-	private Document outputDocument;
+	@Override
+	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
+		// TODO Auto-generated method stub
+		document.setDocumentURI(uri);
+		super.transcode(document, uri, output);
+	}
 	
-	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
-		try {
-			
-			// this bit positions all the diagram elements
-			input.setDocumentURI(uri);
-			ensureCSSEngine((ADLDocument) input);
-			new BasicTemplater(this.docLoader).processContents(input);
-
-			if (log.go()) {
-				log.send(new XMLHelper().toXML(input));
-			}
-
-			
-			super.transcode(input, uri, output);
-			
-			
-			this.outputDocument = createDocument(output);
-			ensureCSSEngine((SVGOMDocument) this.outputDocument);
-			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
-			//System.out.println("OUTPUTTING");
-			Node outputNode = copier.processContents(input.getDocumentElement());
-			this.outputDocument.appendChild(outputNode);
-			transcodeScripts(input, this.outputDocument);
-		} catch (Exception e) {
-			String s = new XMLHelper().toXML(input);
-			log.error("Problem with XML: "+e);
-			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
-		}
-	}
-
-	public void ensureCSSEngine(SVGOMDocument input) {
-		if (input.getCSSEngine() == null) {
-			CSSEngine engine = domImpl.createCSSEngine(input, createBridgeContext());
-			if (getTranscodingHints().get(KEY_MEDIA) != null) {
-				engine.setMedia(getTranscodingHints().get(KEY_MEDIA).toString());
-			} else {
-				engine.setMedia("screen");
-			}
-			input.setCSSEngine(engine);
-		}
-	}
-		
-	protected void transcodeScripts(Document input, Document output) {
-		if (input instanceof HasDefs) {
-			DefList scripts = ((HasDefs)input).getImportList();
-			scripts.appendDefsAndScripts(output, docLoader);
-		}
-	}
-
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
 		super.transcode(input, output);
-		writeSVGToOutput(outputDocument, output);
-	}
+		Document outputDocument = createDocument(output);
+        SVGGraphics2D g2 = new SVGGraphics2D(outputDocument);
+        ((RootGraphicsNode) this.root).paint(g2);
+        Element groupElem = g2.getTopLevelGroup(true);
+        outputDocument.getDocumentElement().appendChild(groupElem);
+        writeSVGToOutput(outputDocument, output);
+	} 
 
 	/** 
 	 * Writes the SVG content held by the svgGenerator to the
@@ -225,8 +184,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
      * 
      * (From {@link ToSVGAbstractTranscoder})
      */
-    public void writeSVGToOutput(Document outputDocument,
-        TranscoderOutput output) throws TranscoderException {
+    public void writeSVGToOutput(Document outputDocument, TranscoderOutput output) throws TranscoderException {
 
         Document doc = output.getDocument();
 
@@ -293,5 +251,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	public boolean isLoggingEnabled() {
 		return true;
 	}
+
 
 }

@@ -91,7 +91,7 @@ public class Kite9DocumentFactory
      * Creates a new SVGDocumentFactory object.
      * @param parser The SAX2 parser classname.
      */
-    public Kite9DocumentFactory(ADLExtensibleDOMImplementation domImpl, String parser) {
+    public Kite9DocumentFactory(DOMImplementation domImpl, String parser) {
         super(domImpl, parser, true);
     }
 
@@ -100,7 +100,7 @@ public class Kite9DocumentFactory
      * @param parser The SAX2 parser classname.
      * @param dd Whether a document descriptor must be generated.
      */
-    public Kite9DocumentFactory(ADLExtensibleDOMImplementation domImpl, String parser, boolean dd) {
+    public Kite9DocumentFactory(DOMImplementation domImpl, String parser, boolean dd) {
         super(domImpl, parser, dd);
     }
 

@@ -91,12 +91,12 @@ public class TestingEngine extends TestingHelp {
 			Planarization pln = null;
 			try {
 				// write the outputs
-				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d));
+				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d).getBytes());
 				if (HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
-					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG);
+					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG.getBytes());
 				}
 				if (AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG != null) {
-					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG);
+					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG.getBytes());
 				}
 				if (RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
 					TestingEngine.drawPositions(RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG , RHDPlanarization.class, "positions", "vertex.png");
@@ -288,7 +288,7 @@ public class TestingEngine extends TestingHelp {
 			sb.append("\n");
 		}
 
-		writeOutput(theTest, subtest, item, sb.toString());
+		writeOutput(theTest, subtest, item, sb.toString().getBytes());
 	}
 
 	public static void drawPositions(Collection<Vertex> out, Class<?> theTest, String subtest, String item) {

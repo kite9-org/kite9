@@ -8,7 +8,6 @@ import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.BridgeException;
 import org.apache.batik.bridge.URIResolver;
-import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.ext.awt.image.codec.png.PNGEncodeParam;
 import org.apache.batik.ext.awt.image.codec.png.PNGImageEncoder;

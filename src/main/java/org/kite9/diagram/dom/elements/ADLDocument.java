@@ -13,6 +13,7 @@ import org.apache.batik.css.engine.CSSStyleSheetNode;
 import org.apache.batik.css.engine.StyleSheet;
 import org.apache.xpath.XPathContext;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
+import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.defs.DefList;
@@ -47,11 +48,11 @@ public class ADLDocument extends SVG12OMDocument implements XPathAware, HasDefs 
 	}
 
 	public Element createElementNS(String namespaceURI, String qualifiedName) throws DOMException {
-		return ((ADLExtensibleDOMImplementation)implementation).createElementNS(this, namespaceURI, qualifiedName);
+		return ((CachingSVGDOMImplementation)implementation).createElementNS(this, namespaceURI, qualifiedName);
 	}
 
 	public Element createElement(String name) throws DOMException {
-		return ((ADLExtensibleDOMImplementation)implementation).createElementNS(this, XMLHelper.KITE9_NAMESPACE, name);
+		return ((CachingSVGDOMImplementation)implementation).createElementNS(this, XMLHelper.KITE9_NAMESPACE, name);
 	}
 	
 	public boolean elementIdExists(String id) {

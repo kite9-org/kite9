@@ -9,7 +9,6 @@ import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
 
-import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.FlowGlyphLayout;
 import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.bridge.FlowTextPainter;
@@ -26,7 +25,6 @@ import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
 import org.kite9.framework.logging.LogicException;
-import org.w3c.dom.Element;
 
 /**
  * Overrides the regular text bridge to allow SVG to be written as text, rather
@@ -35,7 +33,44 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridge {
+public class LocalRenderingFlowTextPainter extends FlowTextPainter {
+	@Override
+	protected TextLayoutFactory getTextLayoutFactory() {
+		return CUSTOM_TEXT_LAYOUT;
+	}
+
+	/**
+	 * Since the flowRoot will always render considering ascent and descent, 
+	 * we should use that here.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Rectangle2D getBounds2D(TextNode node) {
+		Rectangle2D out = super.getBounds2D(node);
+		out = out == null ? new Rectangle2D.Float(0f, 0f, 0f, 0f): out;
+		double minY = out.getMinY();
+		double maxY = out.getMaxY();
+
+		List<TextRun> textRuns = node.getTextRuns();
+		for (TextRun textRun : textRuns) {
+			TextSpanLayout layout = textRun.getLayout();
+			if ((!layout.isOnATextPath()) && (!layout.isVertical())) {
+				// count lines
+				GVTLineMetrics glm = layout.getLineMetrics();
+				for (int i = 0; i < layout.getGlyphVector().getNumGlyphs(); i++) {
+					if (layout.getGlyphVector().isGlyphVisible(i)) {
+						Point2D p = layout.getGlyphVector().getGlyphPosition(i);
+						minY = Math.min(minY, p.getY() - glm.getAscent());
+						maxY = Math.max(maxY, p.getY() + glm.getDescent());
+					}
+				}
+			}
+		}
+		out.add(new Point2D.Double(out.getMinX(), maxY));
+		out.add(new Point2D.Double(out.getMinX(), minY));
+		return out;
+	}
+	
 
 	static final TextLayoutFactory CUSTOM_TEXT_LAYOUT = new TextLayoutFactory() {
 
@@ -93,7 +128,7 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 				private void outputTextSpan(AttributedCharacterIterator aci, Graphics2D g2d, ExtendedSVGGraphics2D eSVG, double x, double y) {
 					TextPaintInfo tpi = (TextPaintInfo) aci.getAttribute(GVTAttributedCharacterIterator.TextAttribute.PAINT_INFO);
 					@SuppressWarnings("unchecked")
-					List<GVTFontFamily> gvtFontFamilies = (List<GVTFontFamily>) aci.getAttribute(GVT_FONT_FAMILIES);
+					List<GVTFontFamily> gvtFontFamilies = (List<GVTFontFamily>) aci.getAttribute(SVGFlowRootElementBridge.GVT_FONT_FAMILIES);
 
 					if (tpi == null)
 						return;
@@ -112,52 +147,6 @@ public class LocalRenderingFlowRootElementBridge extends SVGFlowRootElementBridg
 			};
 		}
 	};
-
-	@Override
-	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
-		super.buildGraphicsNode(ctx, e, node);
-		FlowTextNode fn = getFlowNode(node);
-
-		fn.setTextPainter(new FlowTextPainter() {
-
-			@Override
-			protected TextLayoutFactory getTextLayoutFactory() {
-				return CUSTOM_TEXT_LAYOUT;
-			}
-
-			/**
-			 * Since the flowRoot will always render considering ascent and descent, 
-			 * we should use that here.
-			 */
-			@SuppressWarnings("unchecked")
-			@Override
-			public Rectangle2D getBounds2D(TextNode node) {
-				Rectangle2D out = super.getBounds2D(node);
-				out = out == null ? new Rectangle2D.Float(0f, 0f, 0f, 0f): out;
-				double minY = out.getMinY();
-				double maxY = out.getMaxY();
-
-				List<TextRun> textRuns = node.getTextRuns();
-				for (TextRun textRun : textRuns) {
-					TextSpanLayout layout = textRun.getLayout();
-					if ((!layout.isOnATextPath()) && (!layout.isVertical())) {
-						// count lines
-						GVTLineMetrics glm = layout.getLineMetrics();
-						for (int i = 0; i < layout.getGlyphVector().getNumGlyphs(); i++) {
-							if (layout.getGlyphVector().isGlyphVisible(i)) {
-								Point2D p = layout.getGlyphVector().getGlyphPosition(i);
-								minY = Math.min(minY, p.getY() - glm.getAscent());
-								maxY = Math.max(maxY, p.getY() + glm.getDescent());
-							}
-						}
-					}
-				}
-				out.add(new Point2D.Double(out.getMinX(), maxY));
-				out.add(new Point2D.Double(out.getMinX(), minY));
-				return out;
-			}
-		});
-	}
 
 	public static FlowTextNode getFlowNode(GraphicsNode n) {
 		FlowTextNode out = getFlowNodeInner(n);

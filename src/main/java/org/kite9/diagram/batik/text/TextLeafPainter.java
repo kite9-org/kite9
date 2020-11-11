@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
  * Handles painting for {@link DiagramElementType.TEXT} using SVG1.2's flowRoot
  * (supported by Batik, but not implemented in most browsers). 
  * 
- * With the help of {@link LocalRenderingFlowRootElementBridge} we convert this into 
+ * With the help of {@link LocalRenderingFlowTextPainter} we convert this into 
  * regular svg text elements.
  * 
  * @author robmoffat
@@ -38,7 +38,7 @@ public class TextLeafPainter extends SVGLeafPainter {
 		TextDOMInitializer.setupElementXML((StyledKite9XMLElement) e); 
 		GraphicsNode c = super.initGraphicsNode(e, ctx);
 		transform = c.getTransform();
-		FlowTextNode out = LocalRenderingFlowRootElementBridge.getFlowNode(c);
+		FlowTextNode out = LocalRenderingFlowTextPainter.getFlowNode(c);
 		return out;
 	}
 
