@@ -1,8 +1,13 @@
 package org.kite9.diagram.functional.display;
 
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.batik.transcoder.Transcoder;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.NotAddressed;
@@ -16,16 +21,52 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder.Type;
+import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.framework.common.HelpMethods;
+import org.kite9.framework.common.RepositoryHelp;
 
 
-public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
+public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalTest {
+
+	
+	protected void transcodeSVG(String s) throws Exception {
+		try {
+			TranscoderOutput out = getTranscoderOutputSVG();
+			TranscoderInput in = getTranscoderInput(s);
+			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE, Type.ENCAPSULATED);
+			transcoder.transcode(in, out);
+			
+			Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+			if (lastDiagram != null) {
+				AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+				writeTemplateExpandedSVG(lastDiagram);
+				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
+			}
+			if (checkXML()) {
+				checkIdenticalXML();
+			}
+		} finally {
+			try {
+				copyTo(getOutputFile(".svg"), "svg-output");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 
 	@Test
 	public void test_12_1_LabelledLeftRight() throws Exception {
@@ -215,6 +256,25 @@ public class Test12LabelledArrows extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(c, c2), new Key(null,"", new ArrayList<Symbol>()));
 		renderDiagram(d);
 		
+	}
+	
+
+	@Test
+	public void test_12_11_ImageSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodeSVG(xml);
+	}
+	
+	@Test
+	public void test_12_12_BrokenImageSVGTranscoding() throws Exception {
+		StringWriter out = new StringWriter();
+		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image_broken.svg"));
+		RepositoryHelp.streamCopy(in, out, true);
+		String xml = out.toString();
+		transcodeSVG(xml);
 	}
 	
 }

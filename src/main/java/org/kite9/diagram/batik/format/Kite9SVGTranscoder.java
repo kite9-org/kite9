@@ -42,6 +42,7 @@ import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
+import org.kite9.diagram.dom.processors.post.Kite9InliningCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
 import org.kite9.framework.common.Kite9ProcessingException;
 import org.kite9.framework.common.Kite9XMLProcessingException;
@@ -59,24 +60,40 @@ import org.xml.sax.XMLFilter;
  */
 public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
+	public enum Type { 	/** 
+		This means that all external resources are included in the document.  
+		All fonts are in-lined into glyphs.  
+		All css is included. All remote images are added.
+		Best if we are loading multiple versions.
+		 */
+		ENCAPSULATED,
+		
+		/**
+		 * This means that text is left as strings, css is left as references etc.
+		 * Generally, this won't load into an <img> tag properly, as you're not allowed any external
+		 * references in sv images.
+		 */
+		REFERENCING };
+	
 	private final ADLExtensibleDOMImplementation domImpl;
 	private final Kite9Log log = new Kite9Log(this);
 	private final Kite9DocumentFactory docFactory;
 	private final Kite9DocumentLoader docLoader;
 	private final Kite9BridgeContext bridgeContext;
 	private final Cache cache;
+	private final Type type;
 	
 	public Kite9SVGTranscoder() {
-		this(Cache.NO_CACHE);
+		this(Cache.NO_CACHE, Type.REFERENCING);
 	}
 	
-	public Kite9SVGTranscoder(Cache c) {
+	public Kite9SVGTranscoder(Cache c, Type t) {
 		super();
 		cache = c;
 		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
-		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, false);
+		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, t == Type.ENCAPSULATED);
 		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
 		domImpl.setDiagramElementFactory(def);
 		TranscodingHints hints = new TranscodingHints();
@@ -84,6 +101,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
+		this.type = t;
 	}
 
 	public Kite9DocumentFactory getDocFactory() {
@@ -174,15 +192,12 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			if (log.go()) {
 				log.send(new XMLHelper().toXML(input));
 			}
-
 			
 			super.transcode(input, uri, output);
 			
-			
 			this.outputDocument = createDocument(output);
 			ensureCSSEngine((SVGOMDocument) this.outputDocument);
-			XMLProcessor copier = new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
-			//System.out.println("OUTPUTTING");
+			XMLProcessor copier = buildOutputProcessor(input);
 			Node outputNode = copier.processContents(input.getDocumentElement());
 			this.outputDocument.appendChild(outputNode);
 			transcodeScripts(input, this.outputDocument);
@@ -190,6 +205,14 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			String s = new XMLHelper().toXML(input);
 			log.error("Problem with XML: "+e);
 			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
+		}
+	}
+
+	protected XMLProcessor buildOutputProcessor(Document input) {
+		if (type == Type.ENCAPSULATED) {
+			return new Kite9InliningCopier("", outputDocument, new DocumentValueReplacer(input), getUserAgent());
+		} else {
+			return new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
 		}
 	}
 
