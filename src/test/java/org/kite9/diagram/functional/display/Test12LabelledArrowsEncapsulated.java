@@ -21,16 +21,15 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
+import org.kite9.diagram.adl.TextLabel;
+import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
-import org.kite9.diagram.batik.format.Kite9SVGTranscoder.Type;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
-import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
@@ -45,7 +44,8 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		try {
 			TranscoderOutput out = getTranscoderOutputSVG();
 			TranscoderInput in = getTranscoderInput(s);
-			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE, Type.ENCAPSULATED);
+			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE);
+			transcoder.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
 			transcoder.transcode(in, out);
 			
 			Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;

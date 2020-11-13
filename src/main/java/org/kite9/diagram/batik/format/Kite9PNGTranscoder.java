@@ -9,6 +9,8 @@ import org.w3c.dom.Document;
 
 /**
  * This is a massive, horrible hack - we end up creating the doc twice.  Isn't there a better way?
+ * 
+ * Only used for testing.
  */
 public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 

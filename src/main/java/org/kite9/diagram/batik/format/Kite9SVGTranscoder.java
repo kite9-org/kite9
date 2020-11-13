@@ -25,6 +25,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.apache.batik.transcoder.XMLAbstractTranscoder;
+import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -60,20 +61,12 @@ import org.xml.sax.XMLFilter;
  */
 public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
 	
-	public enum Type { 	/** 
-		This means that all external resources are included in the document.  
-		All fonts are in-lined into glyphs.  
-		All css is included. All remote images are added.
-		Best if we are loading multiple versions.
-		 */
-		ENCAPSULATED,
-		
-		/**
-		 * This means that text is left as strings, css is left as references etc.
-		 * Generally, this won't load into an <img> tag properly, as you're not allowed any external
-		 * references in sv images.
-		 */
-		REFERENCING };
+	/**
+	 * If the Encapsulating hint is set, then the SVG will not reference external files for images, fonts,
+	 * style sheets, etc.  Everything will be in-lined.  This is how SVG is normally formatted, but is
+	 * not the usual way for editable diagrams, so is false by default.
+	 */
+	public static final TranscodingHints.Key KEY_ENCAPSULATING = new BooleanKey();
 	
 	private final ADLExtensibleDOMImplementation domImpl;
 	private final Kite9Log log = new Kite9Log(this);
@@ -81,23 +74,19 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Kite9BridgeContext bridgeContext;
 	private final Cache cache;
-	private Type type;
 	
 	public Kite9SVGTranscoder() {
 		this(Cache.NO_CACHE);
 	}
 	
 	public Kite9SVGTranscoder(Cache c) {
-		this(c, Type.REFERENCING);
-	}
-	
-	public Kite9SVGTranscoder(Cache c, Type t) {
 		super();
+		hints.put(KEY_ENCAPSULATING, false);
 		cache = c;
 		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
-		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, t == Type.ENCAPSULATED);
+		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, false);
 		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
 		domImpl.setDiagramElementFactory(def);
 		TranscodingHints hints = new TranscodingHints();
@@ -105,7 +94,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		setTranscodingHints(hints);
-		this.type = t;
 	}
 	
 	
@@ -192,6 +180,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			
 			// this bit positions all the diagram elements
 			input.setDocumentURI(uri);
+			setupBridgeContext();
 			ensureCSSEngine((ADLDocument) input);
 			new BasicTemplater(this.docLoader).processContents(input);
 
@@ -215,10 +204,20 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 
 	protected XMLProcessor buildOutputProcessor(Document input) {
-		if (type == Type.ENCAPSULATED) {
+		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
+			this.bridgeContext.setTextAsGlyphs(true);
 			return new Kite9InliningCopier("", outputDocument, new DocumentValueReplacer(input), getUserAgent());
 		} else {
+			this.bridgeContext.setTextAsGlyphs(false);
 			return new Kite9ExpandingCopier("", outputDocument, new DocumentValueReplacer(input));
+		}
+	}
+	
+	protected void setupBridgeContext() {
+		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
+			this.bridgeContext.setTextAsGlyphs(true);
+		} else {
+			this.bridgeContext.setTextAsGlyphs(false);
 		}
 	}
 
@@ -321,15 +320,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	@Override
 	public boolean isLoggingEnabled() {
 		return true;
-	}
-
-	public Type getType() {
-		return type;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-		this.bridgeContext.setTextAsGlyphs(type == Type.ENCAPSULATED);
 	}
 
 }
