@@ -40,8 +40,14 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
 		super(userAgent, loader);
+		setTextAsGlyphs(textAsGlyphs);
+	}
+	
+	public void setTextAsGlyphs(boolean textAsGlyphs) {
 		if (!textAsGlyphs) {
 			setTextPainter(new LocalRenderingFlowTextPainter());
+		} else {
+			setTextPainter(null);
 		}
 	}
 	

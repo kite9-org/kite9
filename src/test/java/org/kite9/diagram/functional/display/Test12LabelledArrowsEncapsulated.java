@@ -35,7 +35,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 
 
 public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalTest {
@@ -263,7 +263,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	public void test_12_11_ImageSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodeSVG(xml);
 	}
@@ -272,7 +272,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	public void test_12_12_BrokenImageSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image_broken.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodeSVG(xml);
 	}

@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 import org.kite9.framework.common.TestingHelp;
 
 

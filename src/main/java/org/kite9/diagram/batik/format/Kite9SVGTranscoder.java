@@ -81,10 +81,14 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Kite9BridgeContext bridgeContext;
 	private final Cache cache;
-	private final Type type;
+	private Type type;
 	
 	public Kite9SVGTranscoder() {
-		this(Cache.NO_CACHE, Type.REFERENCING);
+		this(Cache.NO_CACHE);
+	}
+	
+	public Kite9SVGTranscoder(Cache c) {
+		this(c, Type.REFERENCING);
 	}
 	
 	public Kite9SVGTranscoder(Cache c, Type t) {
@@ -103,6 +107,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		setTranscodingHints(hints);
 		this.type = t;
 	}
+	
+	
 
 	public Kite9DocumentFactory getDocFactory() {
 		return docFactory;
@@ -315,6 +321,15 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	@Override
 	public boolean isLoggingEnabled() {
 		return true;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+		this.bridgeContext.setTextAsGlyphs(type == Type.ENCAPSULATED);
 	}
 
 }

@@ -19,10 +19,9 @@ import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGImageElement;
 
 /**
@@ -95,7 +94,7 @@ public class Kite9InliningCopier extends Kite9ExpandingCopier {
 	protected String encodeContents(String mediaType, InputStream is) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Base64EncoderStream b64e = new Base64EncoderStream(baos);
-		RepositoryHelp.streamCopy(is, b64e, true);
+		StreamHelp.streamCopy(is, b64e, true);
 		return "data:"+mediaType+";base64,"+new String(baos.toByteArray());
 	}
 

@@ -22,7 +22,7 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.w3c.dom.Document;
@@ -101,7 +101,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			
 			// copy input file to output dir for ease of comparison
 			File expectedOut = getOutputFile("-expected.svg");
-			RepositoryHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
+			StreamHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
 			is2 = getExpectedInputStream(".svg");
 			
 			in2 = streamToDom(is2);

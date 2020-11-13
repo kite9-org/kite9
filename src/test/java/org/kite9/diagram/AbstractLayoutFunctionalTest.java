@@ -23,7 +23,7 @@ import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.LogicException;
@@ -158,7 +158,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/"+name);
 		InputStreamReader isr = new InputStreamReader(is);
 		StringWriter sw = new StringWriter();
-		RepositoryHelp.streamCopy(isr, sw, true);
+		StreamHelp.streamCopy(isr, sw, true);
 		String s = sw.toString();
 		s = addSVGFurniture(s);
 		XMLHelper xmlHelper = new XMLHelper();

@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
@@ -27,7 +27,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_3_TestTranscoderOnRandomSVGFile() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simple.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
@@ -89,7 +89,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_7_FontSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_fontexample.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
@@ -99,7 +99,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_8_ImageSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
@@ -109,7 +109,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_9_GradientSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_gradient.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
@@ -119,7 +119,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_10_ShadowSVGTranscoding() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_dropshadow.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);
@@ -129,7 +129,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_11_FlowingText() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_simpleflow.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		// no svg, as it won't render in any browser!
@@ -201,7 +201,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	public void test_54_17_BrokenImage() throws Exception {
 		StringWriter out = new StringWriter();
 		InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("test_54_image_broken.svg"));
-		RepositoryHelp.streamCopy(in, out, true);
+		StreamHelp.streamCopy(in, out, true);
 		String xml = out.toString();
 		transcodePNG(xml);
 		transcodeSVG(xml);

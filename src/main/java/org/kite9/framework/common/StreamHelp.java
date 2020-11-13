@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public class RepositoryHelp {
+public class StreamHelp {
 	
 	public static String stream(InputStream is) throws IOException {
 		Reader r = new InputStreamReader(is);
@@ -42,6 +42,7 @@ public class RepositoryHelp {
 				fos.write(buffer, 0, amt);
 				amt = zis.read(buffer);
 			}
+			fos.flush();
 		} finally {
 			try {
 				if (closeOs)

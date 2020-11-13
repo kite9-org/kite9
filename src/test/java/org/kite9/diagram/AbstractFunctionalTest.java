@@ -21,7 +21,7 @@ import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.RepositoryHelp;
+import org.kite9.framework.common.StreamHelp;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.logging.Kite9Log;
 import org.kite9.framework.logging.Kite9Log.Destination;
@@ -78,7 +78,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	protected TranscoderInput getTranscoderInput(String s) throws IOException {
 		File f = getOutputFile("-input.svg");
-		RepositoryHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
+		StreamHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
 		TranscoderInput out = new TranscoderInput(new StringReader(s));
 		out.setURI(getInputURI(f));
 		return out;
@@ -141,7 +141,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 			errors.mkdir();
 			String name = output.getName();
 			File newFile = new File(errors, name);
-			RepositoryHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
+			StreamHelp.streamCopy(new FileInputStream(output), new FileOutputStream(newFile), true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
