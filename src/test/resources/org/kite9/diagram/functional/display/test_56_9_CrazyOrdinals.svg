@@ -192,12 +192,12 @@
                                                             />
     </g
                                                             >
-  <rect x="55.0px" y="0.0px" width="64.0px" k9-info="position: [0,0,-3,-3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: [70.0,15.0]; rect-size: [64.0,51.0]; " class="grid-temporary" id="outer-g-0--3" height="51.0px" k9-elem="_temporary"
-                                                            /><rect x="119.0px" y="0.0px" width="57.0px" k9-info="position: [8,8,-3,-3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [2,3]; grid-y: [0,1]; rectangular: connected; rect-pos: [134.0,15.0]; rect-size: [57.0,51.0]; " class="grid-temporary" id="outer-g-8--3" height="51.0px" k9-elem="_temporary"
-                                                            /><rect x="0.0px" y="51.0px" width="55.0px" k9-info="position: [-5,-5,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [15.0,66.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g--5-1" height="50.0px" k9-elem="_temporary"
-                                                            /><rect x="119.0px" y="51.0px" width="57.0px" k9-info="position: [8,8,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [2,3]; grid-y: [1,2]; rectangular: connected; rect-pos: [134.0,66.0]; rect-size: [57.0,50.0]; " class="grid-temporary" id="outer-g-8-1" height="50.0px" k9-elem="_temporary"
-                                                            /><rect x="0.0px" y="101.0px" width="55.0px" k9-info="position: [-5,-5,8,8]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,116.0]; rect-size: [55.0,50.0]; " class="grid-temporary" id="outer-g--5-8" height="50.0px" k9-elem="_temporary"
-                                                            /><rect x="55.0px" y="101.0px" width="64.0px" k9-info="position: [0,0,8,8]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [2,3]; rectangular: connected; rect-pos: [70.0,116.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-0-8" height="50.0px" k9-elem="_temporary"
+  <rect x="55.0px" y="0.0px" width="64.0px" k9-info="position: [0,0,-3,-3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: [70.0,15.0]; rect-size: [64.0,51.0]; temporary: true; " class="grid-temporary" id="outer-g-0--3" height="51.0px" k9-elem="_temporary"
+                                                            /><rect x="119.0px" y="0.0px" width="57.0px" k9-info="position: [8,8,-3,-3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [2,3]; grid-y: [0,1]; rectangular: connected; rect-pos: [134.0,15.0]; rect-size: [57.0,51.0]; temporary: true; " class="grid-temporary" id="outer-g-8--3" height="51.0px" k9-elem="_temporary"
+                                                            /><rect x="0.0px" y="51.0px" width="55.0px" k9-info="position: [-5,-5,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [15.0,66.0]; rect-size: [55.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g--5-1" height="50.0px" k9-elem="_temporary"
+                                                            /><rect x="119.0px" y="51.0px" width="57.0px" k9-info="position: [8,8,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [2,3]; grid-y: [1,2]; rectangular: connected; rect-pos: [134.0,66.0]; rect-size: [57.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-8-1" height="50.0px" k9-elem="_temporary"
+                                                            /><rect x="0.0px" y="101.0px" width="55.0px" k9-info="position: [-5,-5,8,8]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,116.0]; rect-size: [55.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g--5-8" height="50.0px" k9-elem="_temporary"
+                                                            /><rect x="55.0px" y="101.0px" width="64.0px" k9-info="position: [0,0,8,8]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [2,3]; rectangular: connected; rect-pos: [70.0,116.0]; rect-size: [64.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-0-8" height="50.0px" k9-elem="_temporary"
                                                           /></g
                                                           >
   <g k9-elem="link" id="MM-TL" k9-info="link: ['MM','TL']; direction: null; " rank="1"
@@ -218,7 +218,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                 >
-      <path style="marker-start: ; marker-end: url(#diamond-end-marker)" class="link" d="M80 91 L43 91 L43 54"
+      <path marker-start="url(#-start-marker)" d="M80 91 L43 91 L43 54" marker-end="url(#diamond-end-marker)" class="link"
                                                                   />
     </g
                                                                   >
@@ -242,7 +242,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M102 106 L102 141 L144 141"
+      <path marker-start="url(#-start-marker)" d="M102 106 L102 141 L144 141" marker-end="url(#-end-marker)" class="link"
                                                                           />
     </g
                                                                           >

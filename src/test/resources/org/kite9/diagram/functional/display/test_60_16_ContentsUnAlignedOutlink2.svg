@@ -181,7 +181,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M100 129 L100 140 L315 140 L315 130"
+      <path marker-start="url(#-start-marker)" d="M100 129 L100 140 L315 140 L315 130" marker-end="url(#-end-marker)" class="link"
                                                           />
     </g
                                                           >
@@ -205,7 +205,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M205 100 L205 90 L353 90 L353 225"
+      <path marker-start="url(#-start-marker)" d="M205 100 L205 90 L353 90 L353 225" marker-end="url(#-end-marker)" class="link"
                                                                   />
     </g
                                                                   >

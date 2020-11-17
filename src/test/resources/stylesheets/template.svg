@@ -249,7 +249,9 @@
   <template id="link">
     <contents />
     <link-body style="kite9-type: svg; kite9-usage: decal;">
-      <svg:path d="#{$path}" class="link" style="marker-start: #{$markerstart}; marker-end: #{$markerend}"/>
+      <svg:path d="#{$path}" class="link" 
+        marker-start="pre:url(##{concat(adl:from/@class,'-start-marker')})"
+        marker-end="pre:url(##{concat(adl:to/@class,'-end-marker')})" />
     </link-body>
   </template>
   

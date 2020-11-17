@@ -347,6 +347,6 @@ public class Kite9DocumentFactory
 		// TODO Auto-generated method stub
 		super.warning(ex);
 	}
-    
+
     
 }

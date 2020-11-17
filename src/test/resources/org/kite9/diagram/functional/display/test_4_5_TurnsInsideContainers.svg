@@ -403,7 +403,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                               >
-      <path style="marker-start: ; marker-end: " class="link" d="M55 75 L55 97"
+      <path marker-start="url(#-start-marker)" d="M55 75 L55 97" marker-end="url(#-end-marker)" class="link"
                                                                                                                 />
     </g
                                                                                                                 >
@@ -427,7 +427,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                       >
-      <path style="marker-start: ; marker-end: " class="link" d="M188 75 L188 97"
+      <path marker-start="url(#-start-marker)" d="M188 75 L188 97" marker-end="url(#-end-marker)" class="link"
                                                                                                                         />
     </g
                                                                                                                         >
@@ -451,7 +451,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                               >
-      <path style="marker-start: ; marker-end: " class="link" d="M83 121 L93 121"
+      <path marker-start="url(#-start-marker)" d="M83 121 L93 121" marker-end="url(#-end-marker)" class="link"
                                                                                                                                 />
     </g
                                                                                                                                 >
@@ -475,7 +475,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                       >
-      <path style="marker-start: ; marker-end: " class="link" d="M150 121 L160 121"
+      <path marker-start="url(#-start-marker)" d="M150 121 L160 121" marker-end="url(#-end-marker)" class="link"
                                                                                                                                         />
     </g
                                                                                                                                         >
@@ -499,7 +499,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                               >
-      <path style="marker-start: ; marker-end: " class="link" d="M84 51 L127 51 L127 97"
+      <path marker-start="url(#-start-marker)" d="M84 51 L127 51 L127 97" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                 />
     </g
                                                                                                                                                 >
@@ -523,7 +523,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                       >
-      <path style="marker-start: ; marker-end: " class="link" d="M159 51 L137 51 L137 97"
+      <path marker-start="url(#-start-marker)" d="M159 51 L137 51 L137 97" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                         />
     </g
                                                                                                                                                         >

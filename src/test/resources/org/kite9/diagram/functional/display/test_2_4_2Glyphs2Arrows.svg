@@ -233,7 +233,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M82 49 L72 49"
+      <path marker-start="url(#-start-marker)" d="M82 49 L72 49" marker-end="url(#-end-marker)" class="link"
                                                                   />
     </g
                                                                   >
@@ -257,7 +257,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M125 49 L135 49"
+      <path marker-start="url(#-start-marker)" d="M125 49 L135 49" marker-end="url(#-end-marker)" class="link"
                                                                           />
     </g
                                                                           >
@@ -281,7 +281,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M218 39 L218 15 L44 15 L44 25"
+      <path marker-start="url(#-start-marker)" d="M218 39 L218 15 L44 15 L44 25" marker-end="url(#-end-marker)" class="link"
                                                                                   />
     </g
                                                                                   >
@@ -305,7 +305,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M218 59 L218 83 L164 83 L164 73"
+      <path marker-start="url(#-start-marker)" d="M218 59 L218 83 L164 83 L164 73" marker-end="url(#-end-marker)" class="link"
                                                                                           />
     </g
                                                                                           >

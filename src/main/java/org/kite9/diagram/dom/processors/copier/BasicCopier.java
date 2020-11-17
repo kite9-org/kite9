@@ -22,7 +22,7 @@ import org.w3c.dom.Text;
  * @author robmoffat
  *
  */
-public abstract class BasicCopier extends AbstractProcessor {
+public class BasicCopier extends AbstractProcessor {
 	
 	protected Node destination;
 	protected boolean copyTop;

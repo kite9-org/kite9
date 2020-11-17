@@ -159,10 +159,10 @@
                                                     />
     </g
                                                     >
-  <rect x="0.0px" y="0.0px" width="76.0px" k9-info="position: [3,3,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-0" height="50.0px" k9-elem="_temporary"
-                                                    /><rect x="76.0px" y="50.0px" width="64.0px" k9-info="position: [6,6,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [91.0,65.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-1" height="50.0px" k9-elem="_temporary"
-                                                    /><rect x="0.0px" y="100.0px" width="76.0px" k9-info="position: [3,3,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,115.0]; rect-size: [76.0,50.0]; " class="grid-temporary" id="outer-g-3-2" height="50.0px" k9-elem="_temporary"
-                                                    /><rect x="76.0px" y="150.0px" width="64.0px" k9-info="position: [6,6,3,3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [3,4]; rectangular: connected; rect-pos: [91.0,165.0]; rect-size: [64.0,50.0]; " class="grid-temporary" id="outer-g-6-3" height="50.0px" k9-elem="_temporary"
+  <rect x="0.0px" y="0.0px" width="76.0px" k9-info="position: [3,3,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [76.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-3-0" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="76.0px" y="50.0px" width="64.0px" k9-info="position: [6,6,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: [91.0,65.0]; rect-size: [64.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-6-1" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="0.0px" y="100.0px" width="76.0px" k9-info="position: [3,3,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: [15.0,115.0]; rect-size: [76.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-3-2" height="50.0px" k9-elem="_temporary"
+                                                    /><rect x="76.0px" y="150.0px" width="64.0px" k9-info="position: [6,6,3,3]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: null null; layout: null; grid-x: [1,2]; grid-y: [3,4]; rectangular: connected; rect-pos: [91.0,165.0]; rect-size: [64.0,50.0]; temporary: true; " class="grid-temporary" id="outer-g-6-3" height="50.0px" k9-elem="_temporary"
                                                   /></g
                                                   >
   <g k9-elem="glyph" id="one" transform="translate(167.0,126.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [167.0,126.0]; rect-size: [45.0,29.0]; " rank="1"
@@ -226,7 +226,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                     >
-      <path style="marker-start: ; marker-end: url(#diamond-end-marker)" class="link" d="M145 140 L167 140"
+      <path marker-start="url(#-start-marker)" d="M145 140 L167 140" marker-end="url(#diamond-end-marker)" class="link"
                                                                       />
     </g
                                                                       >
@@ -250,7 +250,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                             >
-      <path style="marker-start: ; marker-end: " class="link" d="M123 155 L123 190 L81 190"
+      <path marker-start="url(#-start-marker)" d="M123 155 L123 190 L81 190" marker-end="url(#-end-marker)" class="link"
                                                                               />
     </g
                                                                               >

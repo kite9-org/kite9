@@ -181,7 +181,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M328 106 L328 96 L107 96 L107 106"
+      <path marker-start="url(#-start-marker)" d="M328 106 L328 96 L107 96 L107 106" marker-end="url(#-end-marker)" class="link"
                                                           />
     </g
                                                           >

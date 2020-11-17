@@ -549,7 +549,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_51_29_MassiveGridNoLinks() throws Exception {
-		Kite9Log.setLogging(Destination.OFF);
+		//Kite9Log.setLogging(Destination.OFF);
 		List<Glyph> glyphs = new ArrayList<Glyph>();
 		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
 		
@@ -569,7 +569,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_51_30_MassiveGridAndLink() throws Exception {
-		Kite9Log.setLogging(Destination.STREAM);
+		//Kite9Log.setLogging(Destination.STREAM);
 		List<Glyph> glyphs = new ArrayList<Glyph>();
 		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
 		

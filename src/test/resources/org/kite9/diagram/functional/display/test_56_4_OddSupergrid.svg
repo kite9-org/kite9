@@ -597,7 +597,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M581 117 L591 117 L591 219 L367 219 L367 209"
+      <path marker-start="url(#-start-marker)" d="M581 117 L591 117 L591 219 L367 219 L367 209" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                           />
     </g
                                                                                                                                                                                           >
@@ -621,7 +621,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M531 141 L531 185 L452 185"
+      <path marker-start="url(#-start-marker)" d="M531 141 L531 185 L452 185" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                   >
@@ -645,7 +645,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M532 93 L532 49 L611 49"
+      <path marker-start="url(#-start-marker)" d="M532 93 L532 49 L611 49" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                           >
@@ -669,7 +669,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                 >
-      <path style="marker-start: ; marker-end: " class="link" d="M482 117 L472 117 L472 45 L261 45"
+      <path marker-start="url(#-start-marker)" d="M482 117 L472 117 L472 45 L261 45" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                   >
@@ -693,7 +693,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                         >
-      <path style="marker-start: ; marker-end: " class="link" d="M366 161 L366 71 L143 71 L143 59"
+      <path marker-start="url(#-start-marker)" d="M366 161 L366 71 L143 71 L143 59" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                                           >
