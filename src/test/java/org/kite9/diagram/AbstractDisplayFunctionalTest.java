@@ -127,6 +127,16 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        			// ignore the info
 		        			return;
 		        		}
+		        		
+		        		if (comparison.getControlDetails().getXPath().endsWith("@d")) {
+		        			if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&
+		        					(((String) comparison.getTestDetails().getValue()).length() > 20)) {
+								// in this case, we are likely looking at fonts being rendered into paths.
+								// these never seem to be consistent between machines.
+		        				return;
+		        			}
+		        		}
+		        		
 		        	}
 		        	if (comparison.getType() == ComparisonType.TEXT_VALUE) {
 		        		String c1 = comparison.getControlDetails().getValue().toString().trim();
