@@ -17,6 +17,7 @@ import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
@@ -84,10 +85,10 @@ public class ADLEmbeddingPNGTranscoder extends PNGTranscoder {
 		        		return ref;
 		        	} catch (Exception ex2) {
 		        		// throw the original exception
-		        		throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+		        		throw new Kite9XMLProcessingException("Problem with getting URL:"+uri, ex, e);
 		        	}
 		        } catch (Exception ex) {
-		            throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+		            throw new Kite9XMLProcessingException("Problem with getting URL:"+uri, ex, e);
 		        }
 		    }
 

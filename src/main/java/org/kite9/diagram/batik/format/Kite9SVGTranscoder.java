@@ -132,7 +132,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 					InputStream broken = Kite9SVGTranscoder.class.getResourceAsStream("/broken.svg");
 					return (SVGDocument) docLoader.loadDocument(url, broken);
 				} catch (IOException e1) {
-					throw new Kite9ProcessingException("Couldn't load broken.svg", e1);
+					throw new Kite9XMLProcessingException("Couldn't load broken.svg", e1, e);
 				}
 			}
 			
@@ -198,7 +198,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			transcodeScripts(input, this.outputDocument);
 		} catch (Exception e) {
 			String s = new XMLHelper().toXML(input);
-			log.error("Problem with XML: "+e);
+			log.error("Problem with XML: ",e);
 			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
 		}
 	}

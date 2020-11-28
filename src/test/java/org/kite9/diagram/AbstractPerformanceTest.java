@@ -33,12 +33,12 @@ import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.common.StackHelp;
 import org.kite9.framework.common.TestingHelp;
 import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Table;
 import org.kite9.framework.logging.Kite9Log.Destination;
+import org.kite9.framework.logging.Table;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
@@ -101,7 +101,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		System.gc();
 		
 		if (fail != null) {
-			throw new Kite9ProcessingException("Could not run all tests. Last error: " ,fail);
+			throw new Kite9XMLProcessingException("Could not run all tests. Last error: " ,fail, null);
 		}
 	}
 	

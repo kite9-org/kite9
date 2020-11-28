@@ -21,7 +21,7 @@ import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -180,10 +180,10 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
         		return ref;
         	} catch (Exception ex2) {
         		// throw the original exception
-        		throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+        		throw new Kite9XMLProcessingException("Problem with getting URL:"+uri, ex, e);
         	}
         } catch (Exception ex) {
-            throw new Kite9ProcessingException("Problem with getting URL:"+uri, ex);
+            throw new Kite9XMLProcessingException("Problem with getting URL:"+uri, ex, e);
         }
     }
 

@@ -202,7 +202,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 			int pi = e.getPropertyIndex(name);
 			return e.getComputedStyle(el, null, pi);
 		} catch (Exception e) {
-			throw new Kite9ProcessingException("Can't resolve style: "+name, e);
+			throw new Kite9XMLProcessingException("Can't resolve style: "+name, e, el);
 		}
 	}
 

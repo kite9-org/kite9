@@ -22,6 +22,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.copier.PrefixingCopier;
 import org.kite9.diagram.dom.processors.xpath.NullValueReplacer;
 import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.framework.common.Kite9XMLProcessingException;
 import org.kite9.framework.logging.LogicException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -128,7 +129,7 @@ public class DefList {
 				c.processContents(def);
 			}
 		} catch (IOException e) {
-			throw new Kite9ProcessingException("Error collecting defs from uri:  "+uriFrom, e);
+			throw new Kite9XMLProcessingException("Error collecting defs from uri:  "+uriFrom, e, toDocument);
 		}
 	}
 	

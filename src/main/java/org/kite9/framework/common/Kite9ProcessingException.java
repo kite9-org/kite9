@@ -21,16 +21,12 @@ public class Kite9ProcessingException extends RuntimeException {
 		return arg1 instanceof Kite9ProcessingException ? arg1.getCause() : arg1;
 	}
     
-    public Kite9ProcessingException(String arg0, Throwable arg1) {
+    protected Kite9ProcessingException(String arg0, Throwable arg1) {
     	super(correctMessage(arg0, arg1), correctThrowable(arg1));
     }
 
     public Kite9ProcessingException(String arg0) {
     	super(arg0);
-    }
-
-    public Kite9ProcessingException(Throwable arg0) {
-    	super(correctThrowable(arg0));
     }
     
 }
