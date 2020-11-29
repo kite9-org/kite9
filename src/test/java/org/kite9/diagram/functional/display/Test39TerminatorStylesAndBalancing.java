@@ -12,7 +12,6 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;

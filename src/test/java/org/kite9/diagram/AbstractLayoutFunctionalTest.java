@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;

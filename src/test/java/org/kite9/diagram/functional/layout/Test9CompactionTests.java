@@ -2,7 +2,6 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
@@ -20,7 +19,6 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.model.visitors.DiagramElementVisitor;
 import org.kite9.diagram.model.visitors.VisitorAction;
-import org.kite9.framework.logging.LogicException;
 
 public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 
