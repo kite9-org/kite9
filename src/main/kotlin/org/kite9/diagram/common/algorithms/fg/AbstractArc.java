@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.algorithms.fg;
 
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 abstract class AbstractArc implements Arc {
 

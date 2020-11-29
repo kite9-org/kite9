@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public abstract class AbstractBiDirectional<X> implements BiDirectional<X> {
 

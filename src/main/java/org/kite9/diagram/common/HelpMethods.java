@@ -1,4 +1,4 @@
-package org.kite9.framework.common;
+package org.kite9.diagram.common;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,14 +20,6 @@ public class HelpMethods {
     public static List<Kite9XMLElement> listOf(Kite9XMLElement... d1) {
     	ArrayList<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
     	for (Kite9XMLElement x : d1) {
-    		out.add(x);
-    	}
-    	return out;
-    }
-
-    public static <X> Set<X> createSet(X... d1) {
-    	HashSet<X> out = new HashSet<X>();
-    	for (X x : d1) {
     		out.add(x);
     	}
     	return out;

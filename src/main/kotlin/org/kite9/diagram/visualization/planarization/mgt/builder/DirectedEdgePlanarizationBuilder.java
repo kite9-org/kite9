@@ -20,7 +20,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.EdgeRouter;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This supplies extra logic to insert edges into the planarization. These are

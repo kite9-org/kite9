@@ -33,7 +33,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType;
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This handles the creation of edges for a diagram element border, and the

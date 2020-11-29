@@ -13,8 +13,8 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.logging.Table;
 
 
 /**

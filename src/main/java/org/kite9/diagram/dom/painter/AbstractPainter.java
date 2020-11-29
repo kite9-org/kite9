@@ -24,7 +24,7 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

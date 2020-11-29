@@ -9,8 +9,8 @@ import org.kite9.diagram.model.position.CostedDimension;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 
 /**

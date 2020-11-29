@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Holds a bunch of {@link Slideable}s and can return them in position order, which is not exact, because

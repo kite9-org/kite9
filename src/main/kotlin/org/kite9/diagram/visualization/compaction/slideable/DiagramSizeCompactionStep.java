@@ -8,7 +8,7 @@ import org.kite9.diagram.visualization.compaction.Compactor;
 import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.framework.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log;
 
 /**
  * Ensures that the overall diagram width is minimal.

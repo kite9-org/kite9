@@ -16,7 +16,7 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.common.HelpMethods;
+import org.kite9.diagram.common.HelpMethods;
 
 public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctionalTest {
 

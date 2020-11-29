@@ -19,9 +19,9 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Implementation of the {@link RoutableReader} functionality, but using 2D RoutableHandler Bounds as the underlying storage.

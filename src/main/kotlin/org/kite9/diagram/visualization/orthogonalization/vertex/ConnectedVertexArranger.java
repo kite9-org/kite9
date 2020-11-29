@@ -32,9 +32,9 @@ import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.FanningEdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This converts a ConnectedVertex to a face, and darts, which can then be added to the Orthogonalization.

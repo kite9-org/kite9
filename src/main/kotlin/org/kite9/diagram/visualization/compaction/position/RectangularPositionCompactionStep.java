@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.compaction.Embedding;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 

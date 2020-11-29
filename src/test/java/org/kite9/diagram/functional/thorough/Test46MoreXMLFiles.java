@@ -10,7 +10,7 @@ import org.kite9.diagram.adl.Key;
 import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLine;
-import org.kite9.framework.common.HelpMethods;
+import org.kite9.diagram.common.HelpMethods;
 
 public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 

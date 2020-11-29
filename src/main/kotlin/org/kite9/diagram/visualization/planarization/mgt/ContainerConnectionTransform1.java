@@ -16,8 +16,8 @@ import org.kite9.diagram.visualization.planarization.EdgeMapping;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 /**
  * Edges connecting to a container either connect to either a container vertex,

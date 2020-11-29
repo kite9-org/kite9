@@ -16,8 +16,8 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

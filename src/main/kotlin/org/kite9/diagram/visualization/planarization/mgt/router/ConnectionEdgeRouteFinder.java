@@ -21,7 +21,7 @@ import org.kite9.diagram.model.style.BorderTraversal;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class ConnectionEdgeRouteFinder extends AbstractBiDiEdgeRouteFinder {
 

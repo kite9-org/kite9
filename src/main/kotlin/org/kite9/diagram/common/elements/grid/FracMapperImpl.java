@@ -14,7 +14,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.VPos;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class FracMapperImpl implements FracMapper {
 

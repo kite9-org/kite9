@@ -1,4 +1,4 @@
-package org.kite9.framework.common;
+package org.kite9.diagram.logging;
 
 /**
  * Thrown whenever there is a problem creating the kite9 item.

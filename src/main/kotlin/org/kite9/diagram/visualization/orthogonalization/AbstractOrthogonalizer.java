@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.orthogonalization;
 
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 /**
  * Contains some utility methods that can be used by Orthogonalizers.

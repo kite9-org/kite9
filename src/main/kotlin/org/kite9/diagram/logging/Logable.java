@@ -1,4 +1,4 @@
-package org.kite9.framework.logging;
+package org.kite9.diagram.logging;
 
 public interface Logable {
 

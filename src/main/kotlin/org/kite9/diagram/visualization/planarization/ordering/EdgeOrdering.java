@@ -7,7 +7,7 @@ import java.util.Set;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.framework.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log;
 
 /**
  * Tracks directed and undirected edges arriving at a vertex or container, and the directions they arrive at.

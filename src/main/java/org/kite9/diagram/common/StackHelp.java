@@ -1,4 +1,4 @@
-package org.kite9.framework.common;
+package org.kite9.diagram.common;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

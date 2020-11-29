@@ -10,9 +10,9 @@ import java.util.List;
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP;
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException;
 import org.kite9.diagram.common.algorithms.ssp.State;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This algorithm uses a Dijkstra-style shortest path in order to maximise flow

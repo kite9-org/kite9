@@ -21,9 +21,9 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOpt
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 
 /**

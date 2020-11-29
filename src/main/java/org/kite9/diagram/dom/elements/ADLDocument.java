@@ -19,7 +19,7 @@ import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.defs.DefList;
 import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;

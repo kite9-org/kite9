@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.apache.commons.math.fraction.BigFraction;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class BasicBounds implements Bounds {
 	

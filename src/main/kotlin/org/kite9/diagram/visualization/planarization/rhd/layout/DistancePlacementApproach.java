@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
-import org.kite9.framework.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log;
 
 /**
  * Score of the placement is based on the length of connections.

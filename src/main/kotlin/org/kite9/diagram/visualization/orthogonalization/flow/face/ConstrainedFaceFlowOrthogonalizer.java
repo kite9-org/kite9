@@ -22,7 +22,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.vertex.Constrained
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Handles the creation of edges and faces in the flow graph.  

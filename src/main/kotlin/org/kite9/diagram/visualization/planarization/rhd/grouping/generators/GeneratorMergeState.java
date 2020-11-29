@@ -9,7 +9,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOpt
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.PriorityRule;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
-import org.kite9.framework.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log;
 
 /**
  * Extends the merge state for the generator based grouping strategy. Keeps a

@@ -8,7 +8,7 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.planarization.Face;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * A portion models a part of a face that must contain a certain number of corners. The number of corners is allocated

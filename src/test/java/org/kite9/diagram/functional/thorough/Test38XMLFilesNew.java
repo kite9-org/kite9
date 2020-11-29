@@ -1,16 +1,10 @@
 package org.kite9.diagram.functional.thorough;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.framework.common.StreamHelp;
-import org.kite9.framework.common.TestingHelp;
 
 
 public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {

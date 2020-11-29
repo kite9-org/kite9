@@ -16,7 +16,7 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.compaction.segment.Side;
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Logable;
 
 /**
  * Augments SlackOptimisation to keep track of segments underlying the slideables.

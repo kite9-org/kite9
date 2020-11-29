@@ -8,7 +8,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.rect.PrioritizingRectangularizer.Match;
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class PrioritisedRectOption extends RectOption {
 	

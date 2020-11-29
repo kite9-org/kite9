@@ -11,7 +11,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.visualization.display.AbstractCompleteDisplayer;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class BatikDisplayer extends AbstractCompleteDisplayer {
 	

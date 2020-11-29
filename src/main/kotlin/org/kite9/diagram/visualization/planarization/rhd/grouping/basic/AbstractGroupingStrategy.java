@@ -18,8 +18,8 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrate
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 /**
  * Merges groups together into a hierarchical structure for routing layout.

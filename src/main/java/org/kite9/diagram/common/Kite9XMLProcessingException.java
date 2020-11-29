@@ -1,4 +1,4 @@
-package org.kite9.framework.common;
+package org.kite9.diagram.common;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,7 @@ import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
+import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 

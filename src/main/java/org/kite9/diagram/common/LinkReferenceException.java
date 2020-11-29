@@ -1,4 +1,4 @@
-package org.kite9.framework.common;
+package org.kite9.diagram.common;
 
 import org.w3c.dom.Document;
 

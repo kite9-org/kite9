@@ -16,9 +16,9 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.Table;
 
 /**
  * This follows the general GT approach to producing a maximal planar subgraph

@@ -13,7 +13,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

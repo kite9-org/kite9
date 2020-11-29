@@ -18,8 +18,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 
 /**
@@ -39,9 +38,17 @@ public class PluggableCompactor implements Compactor {
 	protected SegmentBuilder sb = new SegmentBuilder();
 	protected CompactionStep[] steps;
 
-	public static final Set<Direction> VERTICAL = HelpMethods.createSet(Direction.UP, Direction.DOWN);
-	public static final Set<Direction> HORIZONTAL = HelpMethods.createSet(Direction.LEFT, Direction.RIGHT);
-	
+	public static final Set<Direction> VERTICAL = createSet(Direction.UP, Direction.DOWN);
+	public static final Set<Direction> HORIZONTAL = createSet(Direction.LEFT, Direction.RIGHT);
+
+	public static <X> Set<X> createSet(X... d1) {
+		HashSet<X> out = new HashSet<X>();
+		for (X x : d1) {
+			out.add(x);
+		}
+		return out;
+	}
+
 	public Compaction compactDiagram(Orthogonalization o) {
 		List<Segment> horizontal = buildSegmentList(o, HORIZONTAL);
 		List<Segment> vertical = buildSegmentList(o, VERTICAL);

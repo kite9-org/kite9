@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Options that are not in live containers wait until the containers are live

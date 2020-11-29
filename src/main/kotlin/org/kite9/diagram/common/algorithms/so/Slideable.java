@@ -6,7 +6,7 @@ package org.kite9.diagram.common.algorithms.so;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class Slideable<X> implements PositionChangeNotifiable {
 	

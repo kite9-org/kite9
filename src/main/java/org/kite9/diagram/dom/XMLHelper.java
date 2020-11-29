@@ -17,7 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.batik.dom.util.SAXDocumentFactory;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 

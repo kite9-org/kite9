@@ -33,8 +33,8 @@ import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.StreamHelp;
+import org.kite9.diagram.common.HelpMethods;
+import org.kite9.diagram.common.StreamHelp;
 
 
 public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalTest {

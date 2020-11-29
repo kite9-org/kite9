@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.planarization;
 
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class PlanarizationException extends LogicException {
 

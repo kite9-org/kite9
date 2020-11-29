@@ -24,7 +24,7 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPlanarization {
 

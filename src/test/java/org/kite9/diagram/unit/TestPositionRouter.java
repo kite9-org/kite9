@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.Corner;
 import org.kite9.diagram.visualization.planarization.rhd.position.LinePositionRoutingInfo;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.framework.common.HelpMethods;
+import org.kite9.diagram.common.HelpMethods;
 
 import junit.framework.Assert;
 

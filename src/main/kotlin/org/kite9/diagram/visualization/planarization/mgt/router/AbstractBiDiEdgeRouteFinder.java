@@ -24,7 +24,7 @@ import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public abstract class AbstractBiDiEdgeRouteFinder extends AbstractRouteFinder {
 

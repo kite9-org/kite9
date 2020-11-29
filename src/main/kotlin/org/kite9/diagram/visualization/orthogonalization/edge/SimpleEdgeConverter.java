@@ -15,7 +15,7 @@ import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class SimpleEdgeConverter implements EdgeConverter {
 	

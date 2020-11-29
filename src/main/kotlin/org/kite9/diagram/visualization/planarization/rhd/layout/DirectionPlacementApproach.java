@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.Direc
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
-import org.kite9.framework.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log;
 
 /**
  * A placement approach arranges the two groups within a compound group, based on compass directions.

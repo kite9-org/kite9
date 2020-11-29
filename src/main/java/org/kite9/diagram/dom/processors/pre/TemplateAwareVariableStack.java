@@ -11,7 +11,7 @@ import org.apache.xpath.objects.XObject;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.xpath.XPathAwareVariableStack;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Node;
 
 public class TemplateAwareVariableStack extends XPathAwareVariableStack {

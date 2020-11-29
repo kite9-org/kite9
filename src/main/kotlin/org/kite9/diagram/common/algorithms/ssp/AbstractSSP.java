@@ -2,7 +2,7 @@ package org.kite9.diagram.common.algorithms.ssp;
 
 import java.util.NoSuchElementException;
 
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Logable;
 
 /**
  * Abstract implementation of the Dijkstra Successive Shortest Path algorithm.

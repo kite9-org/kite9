@@ -23,9 +23,9 @@ import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.kite9.diagram.model.style.VerticalAlignment;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 
 /**

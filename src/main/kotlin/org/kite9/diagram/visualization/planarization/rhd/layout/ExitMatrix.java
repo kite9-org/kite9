@@ -11,7 +11,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * The exit matrix keeps track of links leaving a group in order that we can perform 

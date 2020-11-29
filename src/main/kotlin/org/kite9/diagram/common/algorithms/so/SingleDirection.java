@@ -3,7 +3,7 @@ package org.kite9.diagram.common.algorithms.so;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Handles the constraints for a {@link Slideable} in a single direction (e.g. 

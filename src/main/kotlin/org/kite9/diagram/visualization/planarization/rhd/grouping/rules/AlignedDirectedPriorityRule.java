@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.Direc
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.PriorityRule;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class AlignedDirectedPriorityRule implements PriorityRule {
 	

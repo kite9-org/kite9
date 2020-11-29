@@ -21,7 +21,7 @@ import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

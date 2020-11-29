@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;
 import org.kite9.diagram.visualization.orthogonalization.DartFace;
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This class is responsible for 'completing' a dart diagram by ensuring that

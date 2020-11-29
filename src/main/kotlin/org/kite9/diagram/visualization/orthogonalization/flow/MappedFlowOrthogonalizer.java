@@ -7,7 +7,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Uses a flow algorithm to convert from a Planarization to an Orthogonalization.

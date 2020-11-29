@@ -7,7 +7,7 @@ import java.util.List;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Used for modelling faces and parts of faces.  A subdivision node represents a corner constraint in the following ways:

@@ -60,8 +60,8 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.common.TestingHelp;
+import org.kite9.diagram.logging.LogicException;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;

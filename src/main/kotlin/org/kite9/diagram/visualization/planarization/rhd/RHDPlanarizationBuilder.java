@@ -48,9 +48,9 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos;
 import org.kite9.diagram.visualization.planarization.rhd.position.VertexPositioner;
 import org.kite9.diagram.visualization.planarization.rhd.position.VertexPositionerImpl;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Rob's Hierarchical Decomposition Planarization Builder is a 4-phase process:

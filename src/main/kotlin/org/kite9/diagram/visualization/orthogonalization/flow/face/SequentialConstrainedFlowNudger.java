@@ -10,8 +10,8 @@ import org.kite9.diagram.common.algorithms.fg.StateStorage;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.planarization.Face;
-import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.logging.Table;
 
 /**
  * Handles nudges one-at-a-time, making the assumption that corners are fixed.

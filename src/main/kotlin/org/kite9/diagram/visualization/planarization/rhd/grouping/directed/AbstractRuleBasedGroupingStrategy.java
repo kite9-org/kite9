@@ -9,7 +9,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.Abstract
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This class encapsulates the rules about directional merging.

@@ -25,9 +25,9 @@ import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.model.style.IntegerRange;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.Table;
 
 /**
  * Tools for helping create Grid structure.  

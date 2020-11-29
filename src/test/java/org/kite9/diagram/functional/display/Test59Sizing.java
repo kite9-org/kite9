@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 
 public class Test59Sizing extends AbstractDisplayFunctionalTest {
 

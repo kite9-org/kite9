@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.objects;
 
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Pair, where values are ordered.  I.e. a tuple of length 2

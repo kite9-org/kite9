@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class DirectedLinkManager implements LinkManager {
 	

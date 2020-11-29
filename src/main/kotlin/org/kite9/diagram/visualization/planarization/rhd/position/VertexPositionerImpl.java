@@ -24,8 +24,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 public class VertexPositionerImpl implements Logable, VertexPositioner {
 

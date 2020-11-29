@@ -11,7 +11,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 public class FaceMappedFlowGraph extends MappedFlowGraph {
 

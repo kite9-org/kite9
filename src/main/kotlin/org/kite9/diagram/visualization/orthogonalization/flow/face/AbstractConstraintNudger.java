@@ -23,10 +23,10 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer;
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph;
 import org.kite9.diagram.visualization.planarization.Face;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.logging.Table;
 
 /**
  * Contains the basic code for testing nudges out, splitting the flow graph into halves, logging the results of a nudge and working out

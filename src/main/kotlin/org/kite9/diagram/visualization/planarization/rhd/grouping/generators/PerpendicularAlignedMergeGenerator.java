@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.Direc
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedLinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Looks for perpendicular aligned merges, where an aligned merge is a pair of groups sharing

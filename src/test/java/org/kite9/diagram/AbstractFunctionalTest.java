@@ -19,12 +19,11 @@ import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
-import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.StreamHelp;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Kite9Log.Destination;
+import org.kite9.diagram.common.HelpMethods;
+import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.w3c.dom.Element;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {

@@ -10,7 +10,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Represents corners of diagrams, containers and any other rectangular content.

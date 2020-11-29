@@ -33,12 +33,12 @@ import org.kite9.diagram.model.visitors.VisitorAction;
 import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.framework.common.Kite9XMLProcessingException;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Kite9Log.Destination;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.common.TestingHelp;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Table;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	

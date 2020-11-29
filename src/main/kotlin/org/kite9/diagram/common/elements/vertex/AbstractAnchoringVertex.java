@@ -5,7 +5,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.HPos;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.VPos;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Provides the Anchor class, which can be used to set the position for a number of

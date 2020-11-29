@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This class knows how to render anything with a

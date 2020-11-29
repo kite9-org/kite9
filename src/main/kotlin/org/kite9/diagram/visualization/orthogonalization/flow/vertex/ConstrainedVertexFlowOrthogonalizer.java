@@ -27,7 +27,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger;
 import org.kite9.diagram.visualization.planarization.Face;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * This handles the creation of vertex nodes in the flow graph.  Where a vertex has > 1 directed edges entering or leaving, and
