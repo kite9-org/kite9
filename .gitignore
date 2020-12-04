@@ -6,6 +6,11 @@
 target
 .settings
 
+# IntelliJ
+.idea/# IntelliJ
+.idea/# IntelliJ
+.idea/
+
 # Mac Nonsense
 *.DS_Store
 
