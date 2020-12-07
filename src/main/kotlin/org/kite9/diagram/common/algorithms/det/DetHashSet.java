@@ -17,5 +17,5 @@ public class DetHashSet<K extends Deterministic> extends HashSet<K>{
 		super(initialCapacity);
 	}
 
-	
+
 }
