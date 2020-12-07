@@ -82,11 +82,11 @@ class Kite9Log(var logFor: Logable) {
         }
     }
 
-    fun error(string: String) {
+    fun error(string: String?) {
         System.err.println(logFor.prefix + " " + string)
     }
 
-    fun error(string: String, e: Throwable) {
+    fun error(string: String?, e: Throwable) {
         System.err.println(logFor.prefix + " " + string)
         e.printStackTrace()
     }
