@@ -12,6 +12,7 @@ import org.kite9.diagram.common.objects.Bounds;
  * to proceed along lines already established by a previous rendering.
  * 
  * @author robmoffat
+ * @deprecated
  *
  */
 public class PositioningHints {

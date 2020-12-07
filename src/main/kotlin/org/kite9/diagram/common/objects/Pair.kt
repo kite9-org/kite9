@@ -1,11 +1,10 @@
 package org.kite9.diagram.common.objects
 
-open class Pair<X>(var a: X, var b: X) {
+open class Pair<X>(val a: X, val b: X) {
     override fun equals(obj: Any?): Boolean {
         return if (obj is Pair<*>) {
-            val p = obj
-            safeEquals(p.a, a) && safeEquals(p.b, b) ||
-                    safeEquals(p.b, a) && safeEquals(p.a, b)
+            safeEquals(obj.a, a) && safeEquals(obj.b, b) ||
+                    safeEquals(obj.b, a) && safeEquals(obj.a, b)
         } else {
             false
         }
@@ -20,7 +19,7 @@ open class Pair<X>(var a: X, var b: X) {
         } else elementEquals(a2, a3)
     }
 
-    protected open fun elementEquals(a2: Any, a3: Any): Boolean {
+    open fun elementEquals(a2: Any, a3: Any): Boolean {
         return a2 == a3
     }
 

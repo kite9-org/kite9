@@ -10,7 +10,7 @@ public class TerminatorPair extends Pair<Terminator>{
 	}
 
 	@Override
-	protected boolean elementEquals(Object a2, Object a3) {
+	public boolean elementEquals(Object a2, Object a3) {
 		return ((Terminator)a2).styleMatches((Terminator)a3);
 	}
 

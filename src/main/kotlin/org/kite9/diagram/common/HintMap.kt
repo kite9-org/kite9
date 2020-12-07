@@ -2,6 +2,9 @@ package org.kite9.diagram.common
 
 import java.util.HashMap
 
+/**
+ * @deprecated
+ */
 class HintMap : HashMap<String?, Float?> {
     constructor() : super() {}
     constructor(initialCapacity: Int, loadFactor: Float) : super(initialCapacity, loadFactor) {}
