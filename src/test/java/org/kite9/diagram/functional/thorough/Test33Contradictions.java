@@ -28,7 +28,7 @@ import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.kite9.diagram.logging.LogicException;
 import org.w3c.dom.Element;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
@@ -451,7 +451,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_33_28_ADLHierarchyStrict() throws Exception {
-		Kite9Log.setLogging(Destination.OFF);
+		Kite9Log.Companion.setLogging(Destination.OFF);
 		generate("ContradictingADLClassHierarchy.xml");
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.common.objects.BasicBounds;
@@ -17,8 +18,6 @@ import org.kite9.diagram.visualization.planarization.rhd.position.LinePositionRo
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 import org.kite9.diagram.common.HelpMethods;
-
-import junit.framework.Assert;
 
 
 public class TestPositionRouter {
@@ -352,7 +351,7 @@ public class TestPositionRouter {
 					if (total == null) {
 						total=ttt;
 					} else {
-						Assert.assertEquals("Not rotationally invariant", total, ttt);
+						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt);
 					}
 
 					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -389,7 +388,7 @@ public class TestPositionRouter {
 			lri = prh.move(lri, to, null);
 			double ttt = lri.getRunningCost();
 			if (total != null) {
-				Assert.assertEquals("Not rotationally invariant", total, ttt);
+				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt);
 			}
 
 			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -427,7 +426,7 @@ public class TestPositionRouter {
 					if (total == null) {
 						total=ttt;
 					} else {
-						Assert.assertEquals("Not rotationally invariant", total, ttt);
+						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt);
 					}
 
 					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -466,7 +465,7 @@ public class TestPositionRouter {
 			if (total == null) {
 				total=ttt;
 			} else {
-				Assert.assertEquals("Not rotationally invariant", total, ttt);
+				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt);
 			}
 
 			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());

@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kite9-visualization" target="8" />
+      <module name="kite9-visualization" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

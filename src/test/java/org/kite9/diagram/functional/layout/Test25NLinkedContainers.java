@@ -111,7 +111,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_25_10_30Glyphs3LinkedContainersPartialRightHV() throws Exception {
-		Kite9Log.setLogging(Destination.OFF);
+		Kite9Log.Companion.setLogging(Destination.OFF);
 		Random r = new Random(101);
 		int n = 30;
 		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();

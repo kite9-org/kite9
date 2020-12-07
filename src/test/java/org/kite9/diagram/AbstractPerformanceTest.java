@@ -47,7 +47,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	public void render(Map<Metrics, String> diagrams) throws IOException {
 		if (diagrams.size()>2) {
-			Kite9Log.setLogging(Destination.OFF);
+			Kite9Log.Companion.setLogging(Destination.OFF);
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();

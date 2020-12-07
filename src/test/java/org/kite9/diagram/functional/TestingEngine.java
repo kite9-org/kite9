@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.math.fraction.BigFraction;
+import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
@@ -63,8 +64,6 @@ import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutin
 import org.kite9.diagram.common.TestingHelp;
 import org.kite9.diagram.logging.LogicException;
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 
 /**
  * Responsible for running tests which check edges, hops, lines are straight etc.\
@@ -154,7 +153,7 @@ public class TestingEngine extends TestingHelp {
 			} else {
 				System.err.println("Not Addressed: "+afe.getMessage());
 			}
-		} catch (AssertionFailedError afe) {
+		} catch (AssertionError afe) {
 			throw afe;
 		}
 	}

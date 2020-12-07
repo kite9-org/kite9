@@ -1,7 +1,6 @@
 package org.kite9.diagram.unit;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;

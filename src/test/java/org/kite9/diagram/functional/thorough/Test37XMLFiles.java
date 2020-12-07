@@ -1,10 +1,9 @@
 package org.kite9.diagram.functional.thorough;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-
-import junit.framework.Assert;
 
 
 public class Test37XMLFiles extends AbstractLayoutFunctionalTest {
