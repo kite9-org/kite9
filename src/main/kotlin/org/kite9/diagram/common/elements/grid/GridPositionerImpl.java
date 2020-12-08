@@ -19,7 +19,7 @@ import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.common.range.IntegerRangeValue;
+import org.kite9.diagram.common.range.BasicIntegerRange;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -74,7 +74,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 				IntegerRange xpos = getXOccupies((Rectangular) diagramElement);
 				IntegerRange ypos = getYOccupies((Rectangular) diagramElement);	
 				
-				if ((!IntegerRange.notSet(xpos)) && (!IntegerRange.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, xOrdinals, yOrdinals) == null)) {
+				if ((!IntegerRange.Companion.notSet(xpos)) && (!IntegerRange.Companion.notSet(ypos)) && (ensureGrid(out, xpos, ypos, null, xOrdinals, yOrdinals) == null)) {
 					ensureGrid(out, xpos, ypos, diagramElement, xOrdinals, yOrdinals);
 				} else {
 					overlaps.add(diagramElement);
@@ -108,8 +108,8 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			int co = xOrder.get(col);
 			int ro = yOrder.get(row);
 
-			IntegerRangeValue xpos = new IntegerRangeValue(co, co);
-			IntegerRangeValue ypos = new IntegerRangeValue(ro, ro);
+			BasicIntegerRange xpos = new BasicIntegerRange(co, co);
+			BasicIntegerRange ypos = new BasicIntegerRange(ro, ro);
 			
 			DiagramElement d = ensureGrid(out, xpos, ypos, null, xOrdinals, yOrdinals); 
 			
@@ -172,7 +172,7 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 				if (row[x] == null) {
 					toPlace = factory.createTemporaryConnected(ord, x+"-"+y);
 					((TemporaryConnected) toPlace).setContainerPosition(
-							new GridContainerPosition(new IntegerRangeValue(x, x), new IntegerRangeValue(y, y)));
+							new GridContainerPosition(new BasicIntegerRange(x, x), new BasicIntegerRange(y, y)));
 					modifyContainerContents(ord, toPlace);
 					row[x] = toPlace;
 				} else {

@@ -2,7 +2,6 @@ package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.AbstractTemporaryConnected;
-import org.kite9.diagram.common.range.IntegerRangeValue;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.dom.processors.XMLProcessor;

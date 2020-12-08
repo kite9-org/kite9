@@ -6,7 +6,6 @@ import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.css.engine.value.AbstractValueManager;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.util.SVGTypes;
-import org.kite9.diagram.common.range.IntegerRangeValue;
 import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
