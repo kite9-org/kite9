@@ -17,6 +17,6 @@ public class DecalLeafImpl extends AbstractBatikDiagramElement implements Decal,
 
 	@Override
 	public RenderingInformation getRenderingInformation() {
-		return parent.getRenderingInformation();
+		return getParent().getRenderingInformation();
 	}
 }

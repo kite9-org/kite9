@@ -93,7 +93,6 @@ public class GroupPhase {
 	 * Creates leaf groups and any ordering between them, recursively.
 	 * @param ord  The object to create the group for
 	 * @param prev1 Previous element in the container
-	 * @param prev2 Previous element in the container (y-order if in grid, otherwise unused)
 	 * @param pMap Map of Connected to LeafGroups (created)
 	 */
 	private LeafGroup createLeafGroup(Connected ord, Connected prev1, Map<Connected, LeafGroup> pMap) {
@@ -603,10 +602,10 @@ public class GroupPhase {
 		}
 		
 		public Map<String, Float> getHints() {
-			Map<String, Float> positioningHints = o != null ? o.getPositioningHints() : null;
-			if (positioningHints!= null){
-				return positioningHints;
-			}
+//			Map<String, Float> positioningHints = o != null ? o.getPositioningHints() : null;
+//			if (positioningHints!= null){
+//				return positioningHints;
+//			}
 			
 			return Collections.emptyMap();
 		}

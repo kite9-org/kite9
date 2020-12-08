@@ -35,8 +35,8 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	
 	protected void ensureInitialized() {
 		if (!initialized) {
-			if (parent instanceof AbstractDOMDiagramElement) {
-				((AbstractDOMDiagramElement)parent).ensureInitialized();
+			if (getParent() instanceof AbstractDOMDiagramElement) {
+				((AbstractDOMDiagramElement)getParent()).ensureInitialized();
 			}
 			this.initialized = true;
 			//initializeDOMElement(this.theElement);
@@ -73,11 +73,6 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 		String className = this.getClass().getName();
 		className = className.substring(className.lastIndexOf(".")+1);
 		return "["+theElement.getTagName()+":'"+getID()+"':"+className+"]";
-	}
-
-	@Override
-	public HintMap getPositioningHints() {
-		return null;
 	}
 
 	@Override

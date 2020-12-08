@@ -62,11 +62,6 @@ public class GeneratedLayoutConnection extends AbstractBiDirectional<Connected> 
 	}
 
 	@Override
-	public HintMap getPositioningHints() {
-		return null;
-	}
-
-	@Override
 	public int getDepth() {
 		return 1;
 	}

@@ -1,7 +1,7 @@
 package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.common.elements.AbstractTemporaryConnected;
+import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnected;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
@@ -27,17 +27,11 @@ public class TemporaryConnectedImpl extends AbstractTemporaryConnected implement
 	private ContainerPosition gcp;
 	
 	public TemporaryConnectedImpl(DiagramElement parent, String id) {
-		super(parent);
-		this.id = parent.getID()+"-g-"+id;
+		super(parent.getID()+"-g-"+id, parent);
 	}
 
-	@Override
-	public HintMap getPositioningHints() {
-		return null;
-	}
-	
 	public String toString() {
-		return "[grid-temporary: "+id+"]";
+		return "[grid-temporary: "+getID()+"]";
 	}
 
 	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, false);
