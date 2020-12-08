@@ -19,6 +19,7 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
@@ -38,9 +39,12 @@ import org.w3c.dom.svg.SVGDocument;
 public class Kite9BridgeContext extends SVG12BridgeContext {
 	
 	
-	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
+	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, XMLDiagramElementFactory factory, boolean textAsGlyphs) {
 		super(userAgent, loader);
+		this.factory = factory;
+		factory.setBridgeContext(this);
 		setTextAsGlyphs(textAsGlyphs);
+		dBridge = new Kite9DiagramBridge(factory);
 	}
 	
 	public void setTextAsGlyphs(boolean textAsGlyphs) {
@@ -61,14 +65,15 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 	public boolean isDynamic() {
 		return false;
 	}
-	
-	private Kite9Bridge gBridge = new Kite9Bridge();
-	private Kite9DiagramBridge dBridge = new Kite9DiagramBridge();
+
+	private final XMLDiagramElementFactory factory;
+	private final Kite9Bridge gBridge = new Kite9Bridge();
+	private final Kite9DiagramBridge dBridge;
 	
 	@Override
 	public void registerSVGBridges() {
 		super.registerSVGBridges();
-		putBridge(new Kite9DiagramBridge());
+		putBridge(dBridge);
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {

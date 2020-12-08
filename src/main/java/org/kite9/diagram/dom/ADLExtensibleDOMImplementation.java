@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom;
 
+import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.svg.MarkerManager;
@@ -24,7 +25,6 @@ import org.kite9.diagram.dom.managers.TemplateManager;
 import org.kite9.diagram.dom.managers.TraversalShorthandManager;
 import org.kite9.diagram.dom.managers.WidthHeightManager;
 import org.kite9.diagram.dom.managers.XPathManager;
-import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
@@ -53,7 +53,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation {
 	
 	public static final boolean USE_GENERIC_XML_ELEMENT = true;	
-    private DiagramElementFactory diagramElementFactory;
+    private XMLDiagramElementFactory diagramElementFactory;
     
 
 	public ADLExtensibleDOMImplementation() {
@@ -163,11 +163,11 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 10000f, true));
 	}
 
-	public DiagramElementFactory getDiagramElementFactory() {
+	public XMLDiagramElementFactory getDiagramElementFactory() {
 		return diagramElementFactory;
 	}
 
-	public void setDiagramElementFactory(DiagramElementFactory diagramElementFactory) {
+	public void setDiagramElementFactory(XMLDiagramElementFactory diagramElementFactory) {
 		this.diagramElementFactory = diagramElementFactory;
 	}
 

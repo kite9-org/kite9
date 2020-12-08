@@ -1,4 +1,4 @@
-package org.kite9.diagram.model.style;
+package org.kite9.diagram.common.range;
 
 public interface IntegerRange {
 

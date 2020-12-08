@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.HPos;
@@ -20,33 +20,33 @@ import org.kite9.diagram.logging.LogicException;
 public class MultiCornerVertex extends AbstractAnchoringVertex implements MultiElementVertex {
 	
 	public static final boolean isMin(BigFraction b) {
-		return b.equals(BigFraction.ZERO);
+		return b.equals(BigFraction.Companion.getZERO());
 	}
 	
 	public static final boolean isMax(BigFraction b) {
-		return b.equals(BigFraction.ONE);
+		return b.equals(BigFraction.Companion.getONE());
 	}
 	
 	
 	public static BigFraction getOrdForXDirection(Direction d) {
 		switch (d) {
 		case LEFT:
-			return BigFraction.ZERO;
+			return BigFraction.Companion.getZERO();
 		case RIGHT:
-			return BigFraction.ONE;
+			return BigFraction.Companion.getONE();
 		default:
-			return BigFraction.ONE_HALF;
+			return BigFraction.Companion.getONE_HALF();
 		}
 	}
 	
 	public static BigFraction getOrdForYDirection(Direction d) {
 		switch (d) {
 		case UP:
-			return BigFraction.ZERO;
+			return BigFraction.Companion.getZERO();
 		case DOWN:
-			return BigFraction.ONE;
+			return BigFraction.Companion.getONE();
 		default:
-			return BigFraction.ONE_HALF;
+			return BigFraction.Companion.getONE_HALF();
 		}
 	}
 	

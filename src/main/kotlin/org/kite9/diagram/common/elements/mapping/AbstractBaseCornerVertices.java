@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
 public abstract class AbstractBaseCornerVertices extends AbstractCornerVertices {
 
-	public static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.ZERO, BigFraction.ONE);
+	public static final OPair<BigFraction> FULL_RANGE = new OPair<>(BigFraction.Companion.getZERO(), BigFraction.Companion.getONE());
 	
 	private final Map<OPair<BigFraction>, MultiCornerVertex> elements = new HashMap<>();
 	

@@ -3,11 +3,11 @@ package org.kite9.diagram.common.elements.grid;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.mapping.BaseGridCornerVertices;
 import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex.Anchor;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
@@ -97,12 +97,12 @@ public class FracMapperImpl implements FracMapper {
 		out = new OPair<Map<BigFraction,Double>>(xOut, yOut);
 		
 		// add half for connecting vertices, in case needed
-		if (!xOut.containsKey(BigFraction.ONE_HALF)) {
-			xOut.put(BigFraction.ONE_HALF,.5d);
+		if (!xOut.containsKey(BigFraction.Companion.getONE_HALF())) {
+			xOut.put(BigFraction.Companion.getONE_HALF(), .5d);
 		}
 		
-		if (!yOut.containsKey(BigFraction.ONE_HALF)) {
-			yOut.put(BigFraction.ONE_HALF, .5d);
+		if (!yOut.containsKey(BigFraction.Companion.getONE_HALF())) {
+			yOut.put(BigFraction.Companion.getONE_HALF(), .5d);
 		}
 		
 		fracMaps.put(c, out);
@@ -111,8 +111,8 @@ public class FracMapperImpl implements FracMapper {
 
 	static Map<BigFraction, Double> createNullFracMap() {
 		Map<BigFraction, Double> xOut = new HashMap<>();
-		xOut.put(BigFraction.ZERO, 0d);
-		xOut.put(BigFraction.ONE, 1d);
+		xOut.put(BigFraction.Companion.getZERO(), 0d);
+		xOut.put(BigFraction.Companion.getONE(), 1d);
 		return xOut;
 	}
 

@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.pipeline;
 
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory;
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.ElementMapperImpl;
@@ -49,6 +50,7 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	Orthogonalization orth;
 	Compaction c;
 	ElementMapper em;
+	DiagramElementFactory<?> factory;
 
 	protected Planarization createPlanarization(Diagram d) {
 		return createPlanarizer().planarize(d);
@@ -64,10 +66,11 @@ public abstract class AbstractArrangementPipeline implements ArrangementPipeline
 	}
 
 	public abstract CompleteDisplayer getDisplayer();
+	public abstract DiagramElementFactory getDiagramElementFactory();
 	
 	public ElementMapper getElementMapper() {
 		if (em == null) {
-			em = new ElementMapperImpl(new GridPositionerImpl());
+			em = new ElementMapperImpl(new GridPositionerImpl(getDiagramElementFactory()));
 		}
 		
 		return em;

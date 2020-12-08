@@ -1,10 +1,6 @@
 package org.kite9.diagram.common.objects
 
-import org.kite9.diagram.common.objects.Bounds
-import org.kite9.diagram.common.objects.BasicBounds
-import org.apache.commons.math.fraction.BigFraction
-import java.text.NumberFormat
-import java.text.DecimalFormat
+import org.kite9.diagram.common.fraction.BigFraction
 import org.kite9.diagram.logging.LogicException
 
 data class BasicBounds(override val distanceMin: Double, override val distanceMax: Double) : Bounds {
@@ -41,10 +37,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         get() = (distanceMax + distanceMin) / 2.0
 
     override fun toString(): String {
-        return "(bb, g=" +
-                nf.format(distanceMin) +
-                "-" +
-                nf.format(distanceMax) + ")"
+        return "(bb, g=%.2f - %.2f)".format(distanceMin, distanceMax);
     }
 
     /**
@@ -63,7 +56,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
 
     override fun keep(buffer: Double, width: Double, atFraction: BigFraction): Bounds {
         val span = distanceMax - distanceMin - buffer * 2.0
-        val pos = atFraction.toDouble() * span
+        val pos = atFraction.doubleValue() * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
         lower = Math.max(distanceMin + buffer, lower)
@@ -81,32 +74,6 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         return BasicBounds(lower, upper)
     }
 
-    //	@Override
-    //	public Bounds keepMax(double lb, double ub) {
-    //		if ((lb == 0) && (ub == 0)) {
-    //			return this;
-    //		}
-    //		return new BasicBounds(this.max - ub, this.max - lb);
-    //	}
-    //
-    //
-    //	@Override
-    //	public Bounds keepMin(double lb, double ub) {
-    //		if ((lb == 0) && (ub == 0)) {
-    //			return this;
-    //		}
-    //		return new BasicBounds(this.min+lb ,this.min+ub);
-    //	}
-    //	
-    //
-    //	@Override
-    //	public Bounds keepMid(double w) {
-    //		double mid = (this.min + this.max) / 2d;
-    //		if ((mid <0) || (mid > 1)) {
-    //			return BasicBounds.EMPTY_BOUNDS;
-    //		}
-    //		return new BasicBounds(mid-(w/2),mid+(w/2));
-    //	}
     override fun narrow(vertexTrim: Double): Bounds {
         return BasicBounds(distanceMin + vertexTrim, distanceMax - vertexTrim)
     }
@@ -114,7 +81,6 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
     companion object {
         @JvmField
 		val EMPTY_BOUNDS = BasicBounds(-1.0, -1.0)
-        val nf: NumberFormat = DecimalFormat(".0000")
     }
 
     init {

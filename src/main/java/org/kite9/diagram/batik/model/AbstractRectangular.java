@@ -26,7 +26,7 @@ import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.logging.LogicException;
 
 public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {

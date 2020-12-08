@@ -1,30 +1,21 @@
-package org.kite9.diagram.common.elements.grid;
-
-import java.util.Collections;
-import java.util.List;
+package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.common.HintMap;
-import org.kite9.diagram.dom.managers.IntegerRangeValue;
+import org.kite9.diagram.common.elements.AbstractTemporaryConnected;
+import org.kite9.diagram.common.range.IntegerRangeValue;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
-import org.kite9.diagram.model.position.CostedDimension;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
-import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.diagram.model.style.ConnectionAlignment;
-import org.kite9.diagram.model.style.ConnectionsSeparation;
-import org.kite9.diagram.model.style.ContainerPosition;
-import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.GridContainerPosition;
+import org.kite9.diagram.model.position.*;
+import org.kite9.diagram.model.style.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A placeholder for spaces in a grid layout which are unoccupied.
@@ -32,14 +23,13 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class GridTemporaryConnected extends AbstractTemporaryConnected implements Container, HasSVGRepresentation, SizedRectangular {
+public class TemporaryConnectedImpl extends AbstractTemporaryConnected implements Container, HasSVGRepresentation, SizedRectangular {
 
-	private GridContainerPosition gcp;
+	private ContainerPosition gcp;
 	
-	public GridTemporaryConnected(DiagramElement parent, int x, int y) {
+	public TemporaryConnectedImpl(DiagramElement parent, String id) {
 		super(parent);
-		this.id = parent.getID()+"-g-"+x+"-"+y;
-		this.gcp = new GridContainerPosition(new IntegerRangeValue(x, x), new IntegerRangeValue(y, y));
+		this.id = parent.getID()+"-g-"+id;
 	}
 
 	@Override
@@ -62,7 +52,11 @@ public class GridTemporaryConnected extends AbstractTemporaryConnected implement
 	public ContainerPosition getContainerPosition() {
 		return gcp;
 	}
-	
+
+	public void setContainerPosition(ContainerPosition cp) {
+		this.gcp = cp;
+	}
+
 	@Override
 	public DiagramElementSizing getSizing(boolean horiz) {
 		return null;	// no preference

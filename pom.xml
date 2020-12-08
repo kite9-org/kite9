@@ -102,6 +102,7 @@
 					<execution>
 						<id>compile</id>
 						<goals>
+						<!--	<goal>js</goal> -->
 							<goal>compile</goal>
 						</goals>
 						<configuration>
@@ -201,11 +202,11 @@
 			<version>2.1.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>2.1</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-svggen</artifactId>

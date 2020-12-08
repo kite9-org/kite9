@@ -1,6 +1,6 @@
 package org.kite9.diagram.model.position;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 
 public class RectangleRenderingInformationImpl extends AbstractRenderingInformationImpl implements RectangleRenderingInformation {

@@ -1,4 +1,4 @@
-package org.kite9.diagram.dom.model;
+package org.kite9.diagram.common.elements.factory;
 
 import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.model.Connection;

@@ -2,7 +2,7 @@ package org.kite9.diagram.dom.painter;
 
 import java.util.Arrays;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
@@ -36,7 +36,6 @@ import org.w3c.dom.NamedNodeMap;
  * 
  * @author robmoffat
  *
- * @param <X>
  */
 public abstract class AbstractPainter implements Painter {
 

@@ -1,5 +1,7 @@
 package org.kite9.diagram.model.style;
 
+import org.kite9.diagram.common.range.IntegerRange;
+
 public class GridContainerPosition implements ContainerPosition {
 
 	private final IntegerRange x;

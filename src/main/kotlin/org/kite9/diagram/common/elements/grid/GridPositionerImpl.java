@@ -13,18 +13,20 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory;
+import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
-import org.kite9.diagram.dom.managers.IntegerRangeValue;
+import org.kite9.diagram.common.range.IntegerRangeValue;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.logging.Table;
@@ -38,6 +40,11 @@ import org.kite9.diagram.logging.Table;
 public class GridPositionerImpl implements GridPositioner, Logable {
 	
 	private Kite9Log log = new Kite9Log(this);
+	private DiagramElementFactory<?> factory;
+
+	public GridPositionerImpl(DiagramElementFactory<?> factory) {
+		this.factory = factory;
+	}
 
 	Map<Container, DiagramElement[][]> placed = new HashMap<>();
 
@@ -163,7 +170,9 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			for (int x = 0; x < row.length; x++) {
 				DiagramElement toPlace = null;
 				if (row[x] == null) {
-					toPlace = new GridTemporaryConnected(ord, xOrdinals.get(x), yOrdinals.get(y));
+					toPlace = factory.createTemporaryConnected(ord, x+"-"+y);
+					((TemporaryConnected) toPlace).setContainerPosition(
+							new GridContainerPosition(new IntegerRangeValue(x, x), new IntegerRangeValue(y, y)));
 					modifyContainerContents(ord, toPlace);
 					row[x] = toPlace;
 				} else {
@@ -282,8 +291,8 @@ public class GridPositionerImpl implements GridPositioner, Logable {
 			RectangleRenderingInformation ri = (RectangleRenderingInformation) de.getRenderingInformation();
 			OPair<Integer> xr = xp.get(de);
 			OPair<Integer> yr = yp.get(de);
-			OPair<BigFraction> xin = new OPair<BigFraction>(BigFraction.getReducedFraction(xr.getA(), size.width), BigFraction.getReducedFraction(xr.getB().intValue(), size.width));
-			OPair<BigFraction> yin = new OPair<BigFraction>(BigFraction.getReducedFraction(yr.getA(), size.height), BigFraction.getReducedFraction(yr.getB().intValue(), size.height));
+			OPair<BigFraction> xin = new OPair<BigFraction>(BigFraction.Companion.getReducedFraction(xr.getA(), size.width), BigFraction.Companion.getReducedFraction(xr.getB().intValue(), size.width));
+			OPair<BigFraction> yin = new OPair<BigFraction>(BigFraction.Companion.getReducedFraction(yr.getA(), size.height), BigFraction.Companion.getReducedFraction(yr.getB().intValue(), size.height));
 			ri.setGridXPosition(xin);
 			ri.setGridYPosition(yin);
 			

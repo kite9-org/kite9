@@ -8,6 +8,7 @@ import org.kite9.diagram.batik.BatikArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
@@ -22,13 +23,16 @@ import org.w3c.dom.svg.SVGAnimatedLength;
  *
  */
 public class Kite9DiagramBridge implements GenericBridge {
-	
-	public Kite9DiagramBridge() {
+
+	private XMLDiagramElementFactory factory;
+
+	public Kite9DiagramBridge(XMLDiagramElementFactory factory) {
 		super();
+		this.factory = factory;
 	}
 
 	private BatikArrangementPipeline createPipeline() {
-		return new BatikArrangementPipeline(new BatikDisplayer(false));
+		return new BatikArrangementPipeline(factory, new BatikDisplayer(false));
 	}
     
     public static BatikArrangementPipeline lastPipeline;
@@ -47,7 +51,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 
 	@Override
 	public Bridge getInstance() {
-		return new Kite9DiagramBridge();
+		return new Kite9DiagramBridge(factory);
 	}
 
 	@Override

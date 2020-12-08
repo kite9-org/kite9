@@ -10,7 +10,7 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.visualization.planarization.Tools;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;

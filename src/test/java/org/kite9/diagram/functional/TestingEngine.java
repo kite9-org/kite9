@@ -1,48 +1,23 @@
 package org.kite9.diagram.functional;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.apache.commons.math.fraction.BigFraction;
 import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.common.elements.grid.AbstractTemporaryConnected;
+import org.kite9.diagram.common.TestingHelp;
+import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Decal;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.*;
+import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.visitors.DiagramChecker;
 import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
@@ -61,8 +36,15 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.diagram.common.TestingHelp;
-import org.kite9.diagram.logging.LogicException;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.*;
 
 
 /**
@@ -309,12 +291,12 @@ public class TestingEngine extends TestingHelp {
 			int xoffset = 0;
 			int yoffset = 0;
 			if (vertex instanceof MultiCornerVertex) {
-				if (((MultiCornerVertex) vertex).getXOrdinal().equals(BigFraction.ONE)) {
+				if (((MultiCornerVertex) vertex).getXOrdinal().equals(BigFraction.Companion.getONE())) {
 					xoffset = -20;
 				} else {
 					yoffset = 5;
 				}
-				if (((MultiCornerVertex) vertex).getYOrdinal().equals(BigFraction.ONE)) {
+				if (((MultiCornerVertex) vertex).getYOrdinal().equals(BigFraction.Companion.getONE())) {
 					yoffset = -20;
 				} else {
 					yoffset = 5;
@@ -474,7 +456,7 @@ public class TestingEngine extends TestingHelp {
 	 */
 	@Deprecated()
 	private static boolean checkTemporary(Rectangular cc) {
-		return cc instanceof AbstractTemporaryConnected;
+		return cc instanceof TemporaryConnected;
 	}
 
 	private void checkOverlap(final Diagram d) {

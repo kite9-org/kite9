@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.objects
 
-import org.apache.commons.math.fraction.BigFraction
+import org.kite9.diagram.common.fraction.BigFraction
 
 interface Bounds : Comparable<Bounds> {
     val distanceMin: Double
@@ -20,9 +20,4 @@ interface Bounds : Comparable<Bounds> {
     fun keep(buffer: Double, width: Double, atFraction: Double): Bounds
     fun narrow(trim: Double): Bounds
 
-    //	public Bounds keepMax(double lb, double ub);
-    //	
-    //	public Bounds keepMin(double ub, double lb);
-    //	
-    //	public Bounds keepMid(double w);
 }

@@ -1,25 +1,19 @@
 package org.kite9.diagram.dom.elements;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.bridge.UnitProcessor;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSStyleSheetNode;
 import org.apache.batik.css.engine.StyleSheet;
 import org.apache.xpath.XPathContext;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.defs.DefList;
+import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.processors.pre.TemplateAwareVariableStack;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -29,6 +23,12 @@ import org.w3c.dom.css.DocumentCSS;
 import org.w3c.dom.xpath.XPathException;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathNSResolver;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**

@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.HPos;
@@ -31,10 +31,10 @@ public abstract class AbstractCornerVertices implements CornerVertices {
 	}
 
 	protected void createInitialVertices(DiagramElement c) {
-		tl = createVertex(BigFraction.ZERO, BigFraction.ZERO);
-		tr = createVertex(BigFraction.ONE, BigFraction.ZERO);
-		br = createVertex(BigFraction.ONE, BigFraction.ONE);
-		bl = createVertex(BigFraction.ZERO, BigFraction.ONE);
+		tl = createVertex(BigFraction.Companion.getZERO(), BigFraction.Companion.getZERO());
+		tr = createVertex(BigFraction.Companion.getONE(), BigFraction.Companion.getZERO());
+		br = createVertex(BigFraction.Companion.getONE(), BigFraction.Companion.getONE());
+		bl = createVertex(BigFraction.Companion.getZERO(), BigFraction.Companion.getONE());
 		
 		if (c != null) {
 			tl.addAnchor(HPos.LEFT, VPos.UP, c);

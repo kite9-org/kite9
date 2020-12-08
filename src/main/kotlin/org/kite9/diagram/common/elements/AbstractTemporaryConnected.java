@@ -1,16 +1,13 @@
-package org.kite9.diagram.common.elements.grid;
+package org.kite9.diagram.common.elements;
+
+import org.kite9.diagram.common.elements.factory.AbstractDiagramElement;
+import org.kite9.diagram.common.elements.factory.TemporaryConnected;
+import org.kite9.diagram.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.kite9.diagram.dom.model.AbstractDiagramElement;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Temporary;
-
-public abstract class AbstractTemporaryConnected extends AbstractDiagramElement implements Connected, Temporary {
+public abstract class AbstractTemporaryConnected extends AbstractDiagramElement implements TemporaryConnected {
 
 	protected String id;
 	private Collection<Connection> links = new ArrayList<>();

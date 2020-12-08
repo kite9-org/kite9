@@ -1,7 +1,7 @@
-package org.kite9.diagram.dom.managers;
+package org.kite9.diagram.common.range;
 
 import org.apache.batik.css.engine.value.AbstractValue;
-import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.diagram.common.range.IntegerRange;
 
 /**
  * An integer range, from and to.  

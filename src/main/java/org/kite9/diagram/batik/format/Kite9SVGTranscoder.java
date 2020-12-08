@@ -1,36 +1,19 @@
 package org.kite9.diagram.batik.format;
 
-import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
-import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.transcoder.SVGAbstractTranscoder;
-import org.apache.batik.transcoder.ToSVGAbstractTranscoder;
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.TranscodingHints;
-import org.apache.batik.transcoder.XMLAbstractTranscoder;
+import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.model.DiagramElementFactoryImpl;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
@@ -39,13 +22,12 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.defs.DefList;
 import org.kite9.diagram.dom.defs.HasDefs;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.model.DiagramElementFactory;
+import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
 import org.kite9.diagram.dom.processors.post.Kite9ExpandingCopier;
 import org.kite9.diagram.dom.processors.post.Kite9InliningCopier;
 import org.kite9.diagram.dom.processors.pre.BasicTemplater;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.DOMImplementation;
@@ -54,6 +36,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.XMLFilter;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
+import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
 
 /**
  * Please note - this transcoder is single-use.
@@ -85,9 +75,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
-		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, false);
-		DiagramElementFactory def = new DiagramElementFactoryImpl(bridgeContext);
+		XMLDiagramElementFactory def = new DiagramElementFactoryImpl();
 		domImpl.setDiagramElementFactory(def);
+		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, def, false);
 		TranscodingHints hints = new TranscodingHints();
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);

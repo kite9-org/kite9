@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math.fraction.BigFraction;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.grid.FracMapper;
 import org.kite9.diagram.common.elements.grid.FracMapperImpl;
@@ -13,6 +12,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.fraction.BigFraction;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.common.objects.OPair;
@@ -67,7 +67,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			case UP:
 			case DOWN:
 				final BigFraction yOrd = MultiCornerVertex.getOrdForYDirection(d);
-				cvNew = cvs.createVertex(BigFraction.ONE_HALF, yOrd);	
+				cvNew = cvs.createVertex(BigFraction.Companion.getONE_HALF(), yOrd);
 				
 				MultiCornerVertex left = d == Direction.UP ? cvs.getTopLeft() : cvs.getBottomLeft();
 				MultiCornerVertex right = d == Direction.UP ? cvs.getTopRight() : cvs.getBottomRight();
@@ -87,7 +87,7 @@ public class VertexPositionerImpl implements Logable, VertexPositioner {
 			case RIGHT:
 
 				final BigFraction xOrd = MultiCornerVertex.getOrdForXDirection(d);
-				cvNew = cvs.createVertex(xOrd, BigFraction.ONE_HALF);	
+				cvNew = cvs.createVertex(xOrd, BigFraction.Companion.getONE_HALF());
 				
 				MultiCornerVertex up = d == Direction.LEFT ? cvs.getTopLeft() : cvs.getTopRight();
 				MultiCornerVertex down = d == Direction.LEFT ? cvs.getBottomLeft() : cvs.getBottomRight();

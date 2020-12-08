@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.common.elements.factory.AbstractDiagramElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
