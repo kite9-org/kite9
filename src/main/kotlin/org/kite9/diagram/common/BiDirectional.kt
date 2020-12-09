@@ -11,8 +11,9 @@ import org.kite9.diagram.model.position.Direction
  * @param <X>
 </X> */
 interface BiDirectional<X> {
-    val from: X
-    val to: X
+
+    fun getFrom(): X
+    fun getTo(): X
 
     /**
      * Returns from, if to is the argument, or to if from is the argument.
@@ -27,7 +28,12 @@ interface BiDirectional<X> {
      * Indicates the layout of from/to for the bi-directional item.  If this is non-null, then it is describing
      * the single direction it needs to flow in for the diagram.
      */
-    var drawDirection: Direction?
+    fun getDrawDirection(): Direction?
     fun getDrawDirectionFrom(from: X): Direction?
-    fun setDrawDirectionFrom(d: Direction?, from: X)
+
+    /**
+     * Every BiDirectional should have a unique ID.
+     */
+    fun getID(): String
+
 }

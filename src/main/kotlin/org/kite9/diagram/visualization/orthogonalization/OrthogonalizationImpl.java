@@ -154,7 +154,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 				}
 				
 				// add some new underlyings
-				((DartImpl)dart).underlyings.putAll(partOf);
+				((DartImpl)dart).getUnderlyings().putAll(partOf);
 				addToWaypointMap(dart, partOf.keySet());
 				return dart;
 			}
@@ -163,7 +163,7 @@ public class OrthogonalizationImpl implements Orthogonalization {
 		// need to create the dart
 		ensureNoDartInDirection(from, d);
 		ensureNoDartInDirection(to, Direction.reverse(d));
-		Dart out = new DartImpl(from, to, partOf, d, "d"+nextDart++, this);
+		Dart out = new DartImpl(from, to, new HashMap<>(partOf), d, "d"+nextDart++, this);
 		addToWaypointMap(out, partOf.keySet());
 		existing.add(out);
 		allDarts.add(out);
@@ -369,8 +369,8 @@ public class OrthogonalizationImpl implements Orthogonalization {
 			throw new LogicException("Can't split with "+splitWithVertex+" it's already in the Orth");
 		}
 		
-		Dart dart1 = new DartImpl(dart.getFrom(), splitWithVertex, dart.getDiagramElements(), dart.getDrawDirection(), dart.getID()+"-1", this);
-		Dart dart2 = new DartImpl(splitWithVertex, dart.getTo(), dart.getDiagramElements(), dart.getDrawDirection(), dart.getID()+"-1", this);
+		Dart dart1 = new DartImpl(dart.getFrom(), splitWithVertex, new HashMap<>(dart.getDiagramElements()), dart.getDrawDirection(), dart.getID()+"-1", this);
+		Dart dart2 = new DartImpl(splitWithVertex, dart.getTo(), new HashMap<>(dart.getDiagramElements()), dart.getDrawDirection(), dart.getID()+"-1", this);
 		
 		allDarts.remove(dart);
 		allDarts.add(dart1);

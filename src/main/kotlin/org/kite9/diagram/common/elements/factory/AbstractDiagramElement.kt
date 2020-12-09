@@ -6,8 +6,8 @@ import org.kite9.diagram.model.DiagramElement
 
 abstract class AbstractDiagramElement(private val p: DiagramElement?) : DiagramElement {
 
-    override fun compareTo(o: DiagramElement?): Int {
-        return getID().compareTo(o!!.getID())
+    override fun compareTo(other: DiagramElement): Int {
+        return getID().compareTo(other.getID())
     }
 
     override fun hashCode(): Int {

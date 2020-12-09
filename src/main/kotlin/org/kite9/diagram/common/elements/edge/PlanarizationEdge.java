@@ -77,5 +77,6 @@ public interface PlanarizationEdge extends Edge {
 	 */
 	public Direction getToArrivalSide();
 
+	public void setDrawDirectionFrom(Direction d, Vertex e);
 
 }

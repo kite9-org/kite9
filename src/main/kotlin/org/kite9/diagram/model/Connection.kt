@@ -12,12 +12,12 @@ interface Connection : DiagramElement, BiDirectional<Connected> {
     /**
      * The shape of the end of the edge at the from end
      */
-    fun getFromDecoration(): Terminator
+    fun getFromDecoration(): Terminator?
 
     /**
      * The shape of the end of the edge at the to end
      */
-    fun getToDecoration(): Terminator
+    fun getToDecoration(): Terminator?
     fun getDecorationForEnd(end: DiagramElement): Terminator?
 
     /**
@@ -30,7 +30,7 @@ interface Connection : DiagramElement, BiDirectional<Connected> {
      */
     fun getToLabel(): Label?
 
-    fun getRenderingInformation(): RouteRenderingInformation
+    override fun getRenderingInformation(): RouteRenderingInformation
 
     /**
      * Returns the rank of the connection from the ordering of all the connections on the diagram.

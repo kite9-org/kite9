@@ -71,8 +71,8 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 	@Override
 	public PlanarizationEdge[] split(Vertex toIntroduce) {
 		PlanarizationEdge[] out = new PlanarizationEdge[2];
-		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", drawDirection, forElements);
-		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", drawDirection, forElements);
+		out[0] = new BorderEdge(getFrom(), toIntroduce, label+"_1", getDrawDirection(), forElements);
+		out[1] = new BorderEdge(toIntroduce, getTo(), label+"_2", getDrawDirection(), forElements);
 		
 		if (toIntroduce instanceof EdgeCrossingVertex) {
 			// track the containers that we are involved in

@@ -250,16 +250,6 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	@Override
-	public void setDrawDirectionFrom(Direction d, Connected from) {
-		throw contextualException("Should be immutable");
-	}
-	
-	@Override
-	public void setDrawDirection(Direction d) {
-		throw contextualException("Should be immutable");
-	}
-
-	@Override
 	public Terminator getFromDecoration() {
 		ensureInitialized();
 		return fromDecoration;

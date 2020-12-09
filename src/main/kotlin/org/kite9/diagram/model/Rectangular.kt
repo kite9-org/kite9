@@ -11,7 +11,7 @@ import org.kite9.diagram.model.style.ContainerPosition
  */
 interface Rectangular : DiagramElement {
 
-    fun getRenderingInformation(): RectangleRenderingInformation?
+    override fun getRenderingInformation(): RectangleRenderingInformation
 
     /**
      * Returns the container that this rectangular is in.

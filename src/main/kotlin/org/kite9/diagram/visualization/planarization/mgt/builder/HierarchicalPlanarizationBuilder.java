@@ -243,7 +243,7 @@ public class HierarchicalPlanarizationBuilder extends DirectedEdgePlanarizationB
 		}
 		
 		log.send("Setting "+e+" "+d);
-		e.setDrawDirectionFrom(d, from);
+		((PlanarizationEdge) e).setDrawDirectionFrom(d, from);
 		return true;
 	}
 

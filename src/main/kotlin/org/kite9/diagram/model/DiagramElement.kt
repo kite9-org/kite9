@@ -5,7 +5,7 @@ import org.kite9.diagram.model.position.RenderingInformation
 /**
  * Parent class for all elements of the diagram.
  */
-interface DiagramElement : Comparable<DiagramElement?> {
+interface DiagramElement : Comparable<DiagramElement> {
 
     /**
      * Returns the parent element, or null if there is no parent.
@@ -24,7 +24,7 @@ interface DiagramElement : Comparable<DiagramElement?> {
      */
     fun getID(): String
 
-    val renderingInformation: RenderingInformation
+    fun getRenderingInformation(): RenderingInformation
 
     /**
      * Returns the number of levels deep which this element is embedded in the diagram hierarchy, with zero the top level.
