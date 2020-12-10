@@ -28,7 +28,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHand
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor;
-import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryConnection;
+import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryBiDirectional;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.logging.LogicException;
@@ -145,7 +145,7 @@ public class GroupPhase {
 						Connected c = (Connected) grid[y][x];
 
 						if ((c != prevx) && (prevx != null)) {
-							OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prevx, c, Direction.RIGHT, cnr);
+							OrderingTemporaryBiDirectional tc = new OrderingTemporaryBiDirectional(prevx, c, Direction.RIGHT, cnr);
 							LeafGroup from = gridGroups.get(prevx);
 							LeafGroup to = gridGroups.get(c);
 							
@@ -154,7 +154,7 @@ public class GroupPhase {
 						}
 
 						if ((c != prevy) && (prevy != null)) {
-							OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prevy, c, Direction.DOWN, cnr);
+							OrderingTemporaryBiDirectional tc = new OrderingTemporaryBiDirectional(prevy, c, Direction.DOWN, cnr);
 							LeafGroup from = gridGroups.get(prevy);
 							LeafGroup to = gridGroups.get(c);
 							
@@ -196,7 +196,7 @@ public class GroupPhase {
 								d = null;
 							}
 							
-							boolean ordering = c instanceof OrderingTemporaryConnection;
+							boolean ordering = false; ///c instanceof OrderingTemporaryBiDirectional;
 							from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
 							to.sortLink(Direction.reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c));
 						}
@@ -213,9 +213,11 @@ public class GroupPhase {
 	}
 	
 	private int getLinkRank(Connection c) {
-		if (c instanceof OrderingTemporaryConnection) {
-			return Integer.MAX_VALUE;
-		} else if (c.getDrawDirection() != null) {
+//		if (c instanceof OrderingTemporaryBiDirectional) {
+//			return Integer.MAX_VALUE;
+//		} else
+
+		if (c.getDrawDirection() != null) {
 			return c.getRank();
 		} else {
 			return 0;
@@ -267,7 +269,7 @@ public class GroupPhase {
 		}
 		
 		if (d != null) {
-			OrderingTemporaryConnection tc = new OrderingTemporaryConnection(prev, current, d, cnr);
+			OrderingTemporaryBiDirectional tc = new OrderingTemporaryBiDirectional(prev, current, d, cnr);
 			LeafGroup from = getConnectionEnd(prev);
 			LeafGroup to = getConnectionEnd(current);
 			
@@ -468,7 +470,7 @@ public class GroupPhase {
 		}
 
 		/**
-		 * This will process {@link OrderingTemporaryConnection}s first, so that if there is 
+		 * This will process {@link OrderingTemporaryBiDirectional}s first, so that if there is
 		 * a contradiction in the links, it will occur on one of the Link - Connections.
 		 */
 		private void fileLinks(final Group linksGroup, final Group toGroup) {

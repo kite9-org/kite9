@@ -12,13 +12,13 @@ interface Connection : DiagramElement, BiDirectional<Connected> {
     /**
      * The shape of the end of the edge at the from end
      */
-    fun getFromDecoration(): Terminator?
+    fun getFromDecoration(): Terminator
 
     /**
      * The shape of the end of the edge at the to end
      */
-    fun getToDecoration(): Terminator?
-    fun getDecorationForEnd(end: DiagramElement): Terminator?
+    fun getToDecoration(): Terminator
+    fun getDecorationForEnd(end: DiagramElement): Terminator
 
     /**
      * The text written on the from end

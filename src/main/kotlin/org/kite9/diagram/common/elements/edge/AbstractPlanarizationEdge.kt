@@ -18,7 +18,7 @@ abstract class AbstractPlanarizationEdge(private var f: Vertex, private var t: V
         return 1
     }
 
-    private val id: String
+    private val id = f.getID() + "-" + t.getID()
 
     override fun toString(): String {
         return "[" + getID() + "/" + f + "-" + t + "]"
@@ -66,7 +66,6 @@ abstract class AbstractPlanarizationEdge(private var f: Vertex, private var t: V
 	}
 
     init {
-        id = f.id + "-" + t.id
         f.addEdge(this)
         t.addEdge(this)
     }

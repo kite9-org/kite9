@@ -21,15 +21,15 @@ import org.kite9.diagram.model.position.Direction;
  */
 public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
 	
-	final GeneratedLayoutConnection underlying;
+	final GeneratedLayoutBiDirectional underlying;
 	final Connected fromUnderlying;
 	final Connected toUnderlying;
 	
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
-		this(from, to, d, true, new GeneratedLayoutConnection(fromElement, toElement, d), fromElement, toElement);
+		this(from, to, d, true, new GeneratedLayoutBiDirectional(fromElement, toElement, d), fromElement, toElement);
 	}
 	
-	private ContainerLayoutEdge(Vertex from, Vertex to, Direction drawDirection, boolean straight, GeneratedLayoutConnection underlying, Connected fromC, Connected toC) {
+	private ContainerLayoutEdge(Vertex from, Vertex to, Direction drawDirection, boolean straight, GeneratedLayoutBiDirectional underlying, Connected fromC, Connected toC) {
 		super(from, to, drawDirection);
 		this.straight = straight;
 		this.underlying = underlying;
