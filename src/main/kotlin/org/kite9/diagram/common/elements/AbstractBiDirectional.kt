@@ -39,19 +39,6 @@ abstract class AbstractBiDirectional<X> : BiDirectional<X> {
         )
     }
 
- /*   override fun setDrawDirectionFrom(d: Direction?, end: X) {
-        drawDirection = if (end == getFrom()) {
-            d
-        } else if (end == getTo()) {
-            reverse(d)
-        } else {
-            throw RuntimeException(
-                "Trying to set direction from an end that's not set: " + end
-                        + " in " + this
-            )
-        }
-    }*/
-
     override fun hashCode(): Int {
         return getID().hashCode();
     }

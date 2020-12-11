@@ -13,7 +13,7 @@ import org.kite9.diagram.model.position.RouteRenderingInformationImpl
  * Also, with [BorderEdge], when two containers border each other.
  */
 class GeneratedLayoutBiDirectional(private val f: Connected, private val t: Connected, private val dd: Direction) :
-    AbstractBiDirectional<Connected>(), Temporary {
+    AbstractBiDirectional<Connected>(), DiagramElement, Temporary {
 
     override fun toString(): String {
         return "glc-" + getID()
