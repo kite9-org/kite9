@@ -99,7 +99,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		log.send(log.go() ? null : "V: "+v+" Between Edge "+before+" and "+after+": "+side);
 		
 		Arc portionArc = createBalancedPortionArc(fn, hn, side);
-		Arc vertexArc = new LinearArc(TRACE, 4, 0, vn, hn, vn.getId() + "-" + hn.getId());
+		Arc vertexArc = new LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID());
 		addIfNotNull(fg, portionArc);
 		addIfNotNull(fg, vertexArc);
 	}
@@ -109,7 +109,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 			
 		case OPPOSITE_SIDE_PREFERRED:
 			// this arc has a high cost if you try and put anything into it
-			Arc a4 = new AbsoluteArc(side.getCost(), 2, fn, hn, fn.getId() + "-" + hn.getId());
+			Arc a4 = new AbsoluteArc(side.getCost(), 2, fn, hn, fn.getID() + "-" + hn.getID());
 			return a4;
 
 		case DIFFERENT_SIDE_PREFFERED_LAYOUT:
@@ -118,7 +118,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 			// this arc is very happy with you pushing -1, 0 or 1 edge from the
 			// face. You can push 2 or -2, but this would
 			// mean that you end up with edges on the same side of the vertex.
-			Arc a5 = new StepCostArc(TRACE, 2, fn, hn, fn.getId() + "-" + hn.getId(), 1, side.getCost());
+			Arc a5 = new StepCostArc(TRACE, 2, fn, hn, fn.getID() + "-" + hn.getID(), 1, side.getCost());
 			return a5;
 
 		case SAME_SIDE_PREFERRED:
@@ -126,7 +126,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 
 			// this arc is minimal cost so you can push 2 into it and have edges
 			// on the same side as each other
-			Arc a6 = new AbsoluteArc(TRACE, 2, fn, hn, fn.getId() + "-" + hn.getId());
+			Arc a6 = new AbsoluteArc(TRACE, 2, fn, hn, fn.getID() + "-" + hn.getID());
 			return a6;
 
 		}

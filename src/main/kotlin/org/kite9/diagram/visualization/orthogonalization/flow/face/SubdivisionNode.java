@@ -53,7 +53,7 @@ class SubdivisionNode extends SimpleNode {
 		int aflow = 0;
 		int bflow = 0;
 		
-		SubdivisionNode nodeb = new SubdivisionNode(getId()+":"+constraintNo, 0);
+		SubdivisionNode nodeb = new SubdivisionNode(getID()+":"+constraintNo, 0);
 	
 		for (Iterator<Arc> iterator = this.getArcs().iterator(); iterator.hasNext();) {
 			Arc	a = iterator.next();

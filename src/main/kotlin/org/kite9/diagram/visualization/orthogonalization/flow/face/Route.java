@@ -55,9 +55,9 @@ class Route {
 
 	public String toString() {
 		if (rest == null) {
-			return face.getBoundary(out).toString()+"-"+face.getId()+"-"+face.getBoundary(in).toString();
+			return face.getBoundary(out).toString()+"-"+face.getID()+"-"+face.getBoundary(in).toString();
 		} else {
-			return face.getBoundary(out).toString()+"-"+face.getId()+"-"+rest.toString();
+			return face.getBoundary(out).toString()+"-"+face.getID()+"-"+rest.toString();
 		}
 	}
 	

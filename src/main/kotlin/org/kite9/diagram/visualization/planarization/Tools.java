@@ -196,7 +196,7 @@ public class Tools implements Logable {
 		
 		newFace.setPartOf(original.getPartOf());
 		
-		log.send(log.go() ? null : "Removed" + toRemove + " splitting into " + original.getId() + " and " + newFace.getId());
+		log.send(log.go() ? null : "Removed" + toRemove + " splitting into " + original.getID() + " and " + newFace.getID());
 		log.send(log.go() ? null : "Original:" + original);
 		log.send(log.go() ? null : "NewFace:" + newFace);
 		
@@ -304,7 +304,7 @@ public class Tools implements Logable {
 
 		// just tidying up, shouldn't be needed
 		pln.removeEdge(toRemove);
-		log.send(log.go() ? null : "Removed " + toRemove + " merging " + a.getId() + " and " + b.getId() + " gives " + a.getId()
+		log.send(log.go() ? null : "Removed " + toRemove + " merging " + a.getID() + " and " + b.getID() + " gives " + a.getID()
 				+ " with " + a.cornerIterator() + " \n " + a.edgeIterator());
 		
 		// tidy up face hierarchy

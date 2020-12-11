@@ -46,7 +46,7 @@ public class SimpleNode implements Node {
 		return id+"("+flow+"/"+supply+")";
 	}
 
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 	

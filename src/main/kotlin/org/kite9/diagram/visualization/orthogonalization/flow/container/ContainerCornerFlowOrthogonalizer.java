@@ -69,7 +69,7 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 		log.send(log.go() ? null : "V: "+v+" Between Edge "+before+" and "+after+": "+side);
 		
 		Arc portionArc = createBalancedPortionArc(fn, hn, side);
-		Arc vertexArc = new LinearArc(TRACE, 4, 0, vn, hn, vn.getId() + "-" + hn.getId());
+		Arc vertexArc = new LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID());
 		addIfNotNull(fg, portionArc);
 		addIfNotNull(fg, vertexArc);
 	}

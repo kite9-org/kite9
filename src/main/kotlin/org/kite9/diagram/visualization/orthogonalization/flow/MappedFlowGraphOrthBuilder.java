@@ -279,7 +279,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 		}
 
 
-		log.send(log.go() ? null : "Processing face: " + f.getId());
+		log.send(log.go() ? null : "Processing face: " + f.getID());
 
 		doneFaces.put(f, null);
 		List<DartDirection> dartsInFace = new ArrayList<>();
@@ -333,13 +333,13 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 			// set for next round
 			processingEdgeStartDirection = Direction.reverse(ti.getIncidentDartDirection(nextEdge));
 			
-			log.send("Face  "+f.getId()+" darts so far: "+dartsInFace);
+			log.send("Face  "+f.getID()+" darts so far: "+dartsInFace);
 		} 
 
 		DartFace df = o.createDartFace(f.getPartOf(), f.isOuterFace(), dartsInFace);
 		doneFaces.put(f, df);
 
-		log.send(log.go() ? null : "Done face: " + f.getId() + " " + df.getDartsInFace());
+		log.send(log.go() ? null : "Done face: " + f.getID() + " " + df.getDartsInFace());
 	}
 
 	private Direction turn(Direction d, int edgeBends) {
@@ -518,7 +518,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 		int arcCost = arcConcaveCost - arcConvexCost;
 
-		log.send(log.go() ? null : e + " " + f.getId() + (f.isOuterFace() ? "outer" : "inner") + " cost " + arcCost);
+		log.send(log.go() ? null : e + " " + f.getID() + (f.isOuterFace() ? "outer" : "inner") + " cost " + arcCost);
 		return arcCost;
 	}
 

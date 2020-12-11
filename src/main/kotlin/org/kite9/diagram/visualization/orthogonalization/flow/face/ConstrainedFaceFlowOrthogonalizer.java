@@ -71,7 +71,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 
 		int supply = f.isOuterFace() ? -4 : 4;
 
-		fn = new SubdivisionNode("f[" + f.getId() + (f.isOuterFace() ? "x" : "") + "]", supply);
+		fn = new SubdivisionNode("f[" + f.getID() + (f.isOuterFace() ? "x" : "") + "]", supply);
 		fg.setNodeFor(f, fn);
 		faceNodes.add(fn);
 		return fn;
@@ -162,7 +162,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 	 * Create arc from face node to portion node.  (A face is made up of several portions)
 	 */
 	protected Arc createFaceToPortionArc(MappedFlowGraph fg, Node fn, Node pn) {
-		AbsoluteArc aa = new AbsoluteArc(TRACE, Integer.MAX_VALUE, fn, pn, fn.getId() + "-" + pn.getId());
+		AbsoluteArc aa = new AbsoluteArc(TRACE, Integer.MAX_VALUE, fn, pn, fn.getID() + "-" + pn.getID());
 		fg.getAllArcs().add(aa);
 		return aa;
 	}
@@ -178,7 +178,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		List<Arc> l = new LinkedList<Arc>();
 		int weightCost = weightCost(e);
 		Arc aa;
-		aa = new AbsoluteArc(weightCost, Integer.MAX_VALUE, fn, en, fn.getId() + "-" + e.toString());
+		aa = new AbsoluteArc(weightCost, Integer.MAX_VALUE, fn, en, fn.getID() + "-" + e.toString());
 		log.send(log.go() ? null : "Edge Arc: "+e+" cost: "+weightCost+" (part of "+((PlanarizationEdge)e).getDiagramElements().keySet()+")");
 		l.add(aa);
 		return l;
@@ -187,7 +187,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 	
 	
 	private List<PortionNode> createFacePortionNodes(Face f, ConstraintGroup constraints, Planarization pln) {
-		log.send(log.go() ? null : "Creating portions for "+(f.isOuterFace() ? "outer":"inner")+" face "+f.getId()+": "+f.cornerIterator());
+		log.send(log.go() ? null : "Creating portions for "+(f.isOuterFace() ? "outer":"inner")+" face "+f.getID()+": "+f.cornerIterator());
 		
 		List<Integer> constrainedEdgesForFace = getConstraintsForFace(constraints, f);
 		
@@ -207,14 +207,14 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 	private List<PortionNode> createPortions(List<Integer> constraintEdges, Face f) {
 		
 		if ((constraintEdges==null) || (constraintEdges.size() < 2)) {
-			return Collections.singletonList(new PortionNode("p["+f.getId()+"p0"+(f.isOuterFace()?"x":"")+"]", 0, f, -1, -1));
+			return Collections.singletonList(new PortionNode("p["+f.getID()+"p0"+(f.isOuterFace()?"x":"")+"]", 0, f, -1, -1));
 		}
 		
 		List<PortionNode> portions = new ArrayList<PortionNode>(constraintEdges.size());
 		for (int i = 0; i < constraintEdges.size(); i++) {
 			int prev = i == 0 ? constraintEdges.get(constraintEdges.size()-1) : constraintEdges.get(i-1);
 			int current = constraintEdges.get(i);
-			PortionNode toAdd = new PortionNode("p["+f.getId()+"p"+(portions.size())+(f.isOuterFace()?"x":"")+"]", 0, f, prev, current);
+			PortionNode toAdd = new PortionNode("p["+f.getID()+"p"+(portions.size())+(f.isOuterFace()?"x":"")+"]", 0, f, prev, current);
 			log.send("Created portion: "+toAdd+" starts at="+toAdd.getConstrainedEdgeStart()+" ends at="+toAdd.getConstrainedEdgeEnd()+" se="+toAdd.getEdgeStartPosition()+" ee="+toAdd.getEdgeEndPosition());
 			portions.add(toAdd);
 		}

@@ -327,10 +327,10 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		boolean canCorner = canCorner(v, before, after);
 		log.send(log.go() ? null : "Dimensionless Vertex: "+v+" before: "+before+" after: "+after+" corners: "+1);
 		if (canCorner) {
-			LinearArc a4 = new LinearArc(TRACE, 1, -1, fn, hn, fn.getId() + "-" + hn.getId());
+			LinearArc a4 = new LinearArc(TRACE, 1, -1, fn, hn, fn.getID() + "-" + hn.getID());
 			addIfNotNull(fg, a4);
 		}
-		LinearArc a2 = new LinearArc(TRACE, 4, 0, vn, hn, vn.getId() + "-" + hn.getId());
+		LinearArc a2 = new LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID());
 		addIfNotNull(fg, a2);
 	}
 
@@ -341,8 +341,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 */
 	protected void createDimensionedVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, Edge before,
 			Edge after, Node hn, Node vn, Planarization pln) {
-		LinearArc a4 = new LinearArc(TRACE, 2, -2, fn, hn, fn.getId() + "-" + hn.getId());
-		LinearArc a2 = new LinearArc(TRACE, 4, 0, vn, hn, vn.getId() + "-" + hn.getId());
+		LinearArc a4 = new LinearArc(TRACE, 2, -2, fn, hn, fn.getID() + "-" + hn.getID());
+		LinearArc a2 = new LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID());
 		addIfNotNull(fg, a4);
 		addIfNotNull(fg, a2);
 	}

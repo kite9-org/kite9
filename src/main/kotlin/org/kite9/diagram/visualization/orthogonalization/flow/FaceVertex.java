@@ -27,7 +27,7 @@ public class FaceVertex {
 	}
 
 	public String toString() {
-		return face.getId() + "-" + vertex.getID() + "-" + prior + getUnderlying(prior) + "-" + after + getUnderlying(after);
+		return face.getID() + "-" + vertex.getID() + "-" + prior + getUnderlying(prior) + "-" + after + getUnderlying(after);
 	}
 
 	private String getUnderlying(Edge e) {

@@ -98,12 +98,12 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 
 	public static void createSourceArc(Node source, MappedFlowGraph fg, Node c) {
 		LinearArc a = new LinearArc(AbstractFlowOrthogonalizer.TRACE, Integer.MAX_VALUE, 0, source, c, source
-				.getId()
-				+ "-" + c.getId());
+				.getID()
+				+ "-" + c.getID());
 		fg.getAllArcs().add(a);
 	
-		a = new LinearArc(AbstractFlowOrthogonalizer.TRACE, Integer.MAX_VALUE, 0, c, source, c.getId() + "-"
-				+ source.getId());
+		a = new LinearArc(AbstractFlowOrthogonalizer.TRACE, Integer.MAX_VALUE, 0, c, source, c.getID() + "-"
+				+ source.getID());
 		fg.getAllArcs().add(a);
 	}
 
@@ -222,7 +222,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 				sns = "\n";
 			}
 			
-			sns += "\t\t"+subdivisionNode.getId()+" --- ";
+			sns += "\t\t"+subdivisionNode.getID()+" --- ";
 			Set<Node> to = new DetHashSet<Node>();
 			for (Arc a : subdivisionNode.getArcs()) {
 				Node otherEnd = a.otherEnd(subdivisionNode);
@@ -324,8 +324,8 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 		int antiChange = -clockChange;
 	
 		if (logs) {
-			log.send(log.go() ? null : ni.id + " starts " + startFace.getId() + "/" + startEdge + "/" + firstEdge + " ends "
-					+ endFace.getId() + "/" + endEdge + "/" + lastEdge + ", requires portions: " + ni.portionsClockwise
+			log.send(log.go() ? null : ni.id + " starts " + startFace.getID() + "/" + startEdge + "/" + firstEdge + " ends "
+					+ endFace.getID() + "/" + endEdge + "/" + lastEdge + ", requires portions: " + ni.portionsClockwise
 					+ " corners " + clockChange + " ( currently : " + actualClockwise + ", needed: " + cornersClockwise
 					+ " )");
 			log.send(log.go() ? null : "Opposite route requires portions: " + ni.portionsAntiClockwise + " corners " + antiChange);

@@ -449,7 +449,8 @@ public class Face implements Deterministic {
 		return out;
 	}
 
-	public String getId() {
+	@Override
+	public String getID() {
 		return id;
 	}
 	

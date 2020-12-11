@@ -19,7 +19,7 @@ public interface Node extends Deterministic {
 	
 	public String getType();
 	
-	public String getId();
+	public String getID();
 	
 	public Set<Arc> getArcs();
 

@@ -75,7 +75,7 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 		// output detail in log
 		Collection<String> nodes = new TreeSet<String>();
 		for (Node n : fg.getAllNodes()) {
-			nodes.add(n.getId() + " has " + n.getArcs().size() + " arcs: " + n.getArcs());
+			nodes.add(n.getID() + " has " + n.getArcs().size() + " arcs: " + n.getArcs());
 		}
 		log.send(log.go() ? null : "Node details: ", nodes);
 

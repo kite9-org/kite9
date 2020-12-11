@@ -289,9 +289,18 @@ public class GroupPhase {
 			this.axis.setGroup(this);
 			this.lm = lm;
 			this.lm.setGroup(this);
+
 		}
 		
 		private String leafList;
+
+		/**
+		 * TODO: use the group number for hashcode in a more normal way.
+		 */
+		@Override
+		public String getID() {
+			return "g"+groupNumber;
+		}
 		
 		/**
 		 * Returns the leaf group number (or numbers for compound group) 

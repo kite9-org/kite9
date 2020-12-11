@@ -102,7 +102,7 @@ public class FlowGraphSPP<X extends FlowGraph> extends AbstractSSP<Path> impleme
 					}
 				}
 			}
-			lines.add("Flow on: " + n.getId() + " = " + n.getFlow() + ", requires " + n.getSupply() + ", due to "
+			lines.add("Flow on: " + n.getID() + " = " + n.getFlow() + ", requires " + n.getSupply() + ", due to "
 					+ arcInfo);
 		}
 		Collections.sort(lines);

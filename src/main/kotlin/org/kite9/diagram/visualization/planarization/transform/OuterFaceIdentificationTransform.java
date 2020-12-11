@@ -64,7 +64,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 		}
 		
 		done.add(outerFace);
-		log.send(level(level)+"Outer face: "+outerFace.getId());
+		log.send(level(level)+"Outer face: "+outerFace.getID());
 		outerFace.setOuterFace(true);
 		outerFace.setContainedBy(inside);
 		outerFace.getContainedFaces().clear();
@@ -99,7 +99,7 @@ public class OuterFaceIdentificationTransform implements PlanarizationTransform,
 		}
 		
 		done.add(innerFace);
-		log.send(level(level)+"Inner face: "+innerFace.getId());
+		log.send(level(level)+"Inner face: "+innerFace.getID());
 		for (Face f : innerFace.getContainedFaces()) {
 			handleOuterFace(f, innerFace, pln, level+1, done);
 		}

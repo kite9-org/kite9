@@ -37,7 +37,7 @@ public class FaceMappedFlowGraph extends MappedFlowGraph {
 		}
 
 		if (out.size() == 0)
-			throw new LogicException("Could not find portion for face " + f.getId() + " edge " + e + " start "
+			throw new LogicException("Could not find portion for face " + f.getID() + " edge " + e + " start "
 					+ startVertex + " at pos " + pos);
 
 		if (out.size() > 2) {

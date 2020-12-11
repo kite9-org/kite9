@@ -1,5 +1,6 @@
 package org.kite9.diagram.common
 
+import org.kite9.diagram.common.algorithms.det.Deterministic
 import org.kite9.diagram.model.position.Direction
 
 /**
@@ -10,7 +11,7 @@ import org.kite9.diagram.model.position.Direction
  *
  * @param <X>
 </X> */
-interface BiDirectional<X> {
+interface BiDirectional<X> : Deterministic {
 
     fun getFrom(): X
     fun getTo(): X
@@ -30,10 +31,5 @@ interface BiDirectional<X> {
      */
     fun getDrawDirection(): Direction?
     fun getDrawDirectionFrom(from: X): Direction?
-
-    /**
-     * Every BiDirectional should have a unique ID.
-     */
-    fun getID(): String
 
 }
