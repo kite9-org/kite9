@@ -30,9 +30,11 @@ class Kite9Log(var logFor: Logable) {
     }
 
     fun send(indent: Int, string: String?) {
-        if (logFor.isLoggingEnabled && logFile != null) logFile!!.print(logFor.prefix)
-        logFile!!.write(INDENT.toByteArray(), 0, 1 + indent)
-        logFile!!.println(string)
+        if (logFor.isLoggingEnabled && logFile != null) {
+            logFile!!.print(logFor.prefix)
+            logFile!!.write(INDENT.toByteArray(), 0, 1 + indent)
+            logFile!!.println(string)
+        }
     }
 
     fun send(prefix: String?, items: Collection<*>) {
