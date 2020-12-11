@@ -113,28 +113,7 @@ public class BorderEdge extends AbstractPlanarizationEdge implements TwoElementP
 	public boolean isPartOf(DiagramElement de) {
 		return forElements.containsKey(de);
 	}
-
-	@Override
-	public DiagramElement getOtherSide(DiagramElement from) {
-		DiagramElement sidea = null, sideb = null;
-		
-		if ((forElements.size() != 2) && (forElements.size() != 1)){
-			throw new LogicException("An BorderEdge must be for 1 or 2 diagram elements");
-		}
-
-		Iterator<DiagramElement> els = forElements.keySet().iterator();	
-		sidea = els.next();
-		sideb = els.hasNext() ? els.next() : sidea.getParent();
-		
-		if (from == sidea) {
-			return sideb;
-		} else if (from == sideb) {
-			return sidea;
-		} else { 
-			throw new LogicException(from+" is not mapped to a side");
-		}
-	}
-
+	
 	@Override
 	public DiagramElement getElementForSide(Direction d) {
 		for (DiagramElement de : forElements.keySet()) {

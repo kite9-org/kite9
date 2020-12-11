@@ -84,6 +84,9 @@ abstract class AbstractArc implements Arc {
 		return blocked;
 	}
 	
-	
+	@Override
+	public String getID() {
+		return label;
+	}
 
 }
