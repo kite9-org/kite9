@@ -7,5 +7,6 @@ package org.kite9.diagram.common.elements
  * @author robmoffat
  */
 interface Routable {
-    var routingInfo: RoutingInfo
+
+    var routingInfo: RoutingInfo?
 }

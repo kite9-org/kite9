@@ -15,11 +15,11 @@ import org.kite9.diagram.model.DiagramElement
  *
  * @param <E>
 </E> */
-interface Vertex : Comparable<Vertex?>, ConstructionElement, Positioned, Routable, Deterministic {
+interface Vertex : Comparable<Vertex>, ConstructionElement, Positioned, Routable, Deterministic {
     /**
      * True if this vertex is connected by an edge to v.
      */
-    fun isLinkedDirectlyTo(v: Vertex?): Boolean
+    fun isLinkedDirectlyTo(v: Vertex): Boolean
 
     /**
      * Return true if the vertex has length and breadth.  False if it is a point vertex.
