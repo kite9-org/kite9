@@ -27,8 +27,8 @@ abstract class AbstractVertex(private val id: String) : Vertex {
         return edges;
     }
 
-    override operator fun compareTo(o: Vertex): Int {
-        return this.toString().compareTo(o.toString())
+    override operator fun compareTo(other: Vertex): Int {
+        return getID().compareTo(other.getID())
     }
 
     override fun getEdgeCount(): Int {

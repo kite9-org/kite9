@@ -12,7 +12,7 @@ import org.kite9.diagram.common.elements.vertex.MultiElementVertex
  */
 class DartJunctionVertex(id: String, val underlyings: Set<DiagramElement>) :
     AbstractVertex(id), MultiElementVertex {
-    
+
     override fun getDiagramElements(): Set<DiagramElement> {
         return underlyings
     }

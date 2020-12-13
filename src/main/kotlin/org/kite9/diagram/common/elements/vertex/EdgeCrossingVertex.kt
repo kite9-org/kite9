@@ -11,7 +11,7 @@ import java.util.HashSet
  *
  * @author robmoffat
  */
-class EdgeCrossingVertex(val id: String, var underlyings: MutableSet<DiagramElement>) : AbstractVertex(id), MultiElementVertex {
+class EdgeCrossingVertex(val id: String, val underlyings: MutableSet<DiagramElement>) : AbstractVertex(id), MultiElementVertex {
 
     override fun hasDimension(): Boolean {
         return false
