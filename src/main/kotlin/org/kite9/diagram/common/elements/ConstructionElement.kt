@@ -9,6 +9,6 @@ import org.kite9.diagram.model.DiagramElement
  */
 interface ConstructionElement {
 
-    fun isPartOf(de: DiagramElement): Boolean
+    fun isPartOf(de: DiagramElement?): Boolean
 
 }

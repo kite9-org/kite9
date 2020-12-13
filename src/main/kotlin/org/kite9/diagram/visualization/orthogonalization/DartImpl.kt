@@ -42,7 +42,7 @@ internal data class DartImpl(
         return id
     }
 
-    override fun isPartOf(de: DiagramElement): Boolean {
+    override fun isPartOf(de: DiagramElement?): Boolean {
         return underlyings.containsKey(de)
     }
 
