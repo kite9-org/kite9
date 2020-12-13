@@ -1,0 +1,163 @@
+package org.kite9.diagram.common.elements.mapping
+
+import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
+import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE
+import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
+import org.kite9.diagram.common.objects.OPair
+import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.position.HPos
+import org.kite9.diagram.model.position.VPos
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
+
+abstract class AbstractCornerVertices(
+    val rootContainer: DiagramElement,
+    val xRange: OPair<BigFraction>,
+    val yRange: OPair<BigFraction>,
+    private val depth: Int
+) : CornerVertices {
+
+    val children: MutableCollection<CornerVertices> = ArrayList(5)
+    private var tl: MultiCornerVertex? = null
+    private var tr: MultiCornerVertex? = null
+    private var bl: MultiCornerVertex? = null
+    private var br: MultiCornerVertex? = null
+
+    protected fun createInitialVertices(c: DiagramElement?) {
+        tl = createVertex(ZERO, ZERO)
+        tr = createVertex(ONE, ZERO)
+        bl = createVertex(ZERO, ONE)
+        br = createVertex(ONE, ONE)
+        if (c != null) {
+            tl!!.addAnchor(HPos.LEFT, VPos.UP, c)
+            tr!!.addAnchor(HPos.RIGHT, VPos.UP, c)
+            bl!!.addAnchor(HPos.LEFT, VPos.DOWN, c)
+            br!!.addAnchor(HPos.RIGHT, VPos.DOWN, c)
+        }
+    }
+
+    abstract override fun createVertex(x: BigFraction, y: BigFraction): MultiCornerVertex
+
+    protected fun createVertexHere(
+        x: BigFraction,
+        y: BigFraction,
+        elements: MutableMap<OPair<BigFraction>, MultiCornerVertex>
+    ): MultiCornerVertex {
+        val d = OPair(x, y)
+        var cv = elements[d]
+        if (cv == null) {
+            cv = MultiCornerVertex(getVertexIDStem(), x, y)
+            elements[d] = cv
+        }
+        return cv
+    }
+
+    protected open fun getVertexIDStem(): String {
+        return rootContainer.getID()
+    }
+
+    private var perimeterVertices: Collection<MultiCornerVertex> = emptySet()
+
+    override fun getPerimeterVertices(): Collection<MultiCornerVertex> {
+        return perimeterVertices
+    }
+
+    override fun identifyPerimeterVertices() {
+        val minx = tl!!.xOrdinal
+        val maxx = br!!.xOrdinal
+        val miny = tl!!.yOrdinal
+        val maxy = br!!.yOrdinal
+        val pset = HashSet<MultiCornerVertex>(10)
+        collect(minx, maxx, miny, miny, pset)
+        collect(maxx, maxx, miny, maxy, pset)
+        collect(minx, maxx, maxy, maxy, pset)
+        collect(minx, minx, miny, maxy, pset)
+        perimeterVertices = pset
+    }
+
+    private fun afterEq(`in`: BigFraction?, with: BigFraction): Boolean {
+        if (`in` == null) {
+            return true
+        }
+        val c = `in`.compareTo(with)
+        return c > -1
+    }
+
+    private fun beforeEq(`in`: BigFraction?, with: BigFraction): Boolean {
+        if (`in` == null) {
+            return true
+        }
+        val c = `in`.compareTo(with)
+        return c < 1
+    }
+
+    private fun collect(
+        minx: BigFraction,
+        maxx: BigFraction,
+        miny: BigFraction,
+        maxy: BigFraction,
+        out: MutableCollection<MultiCornerVertex>
+    ) {
+        for (cv in getTopContainerVertices().getAllDescendentVertices()) {
+            val x = cv.xOrdinal
+            val y = cv.yOrdinal
+            if (afterEq(x, minx) && beforeEq(x, maxx) && afterEq(y, miny) && beforeEq(y, maxy)) {
+                out.add(cv)
+            }
+        }
+    }
+
+    override fun getAllDescendentVertices(): MutableCollection<MultiCornerVertex> {
+        val out: MutableCollection<MultiCornerVertex> = ArrayList()
+        for (child in children) {
+            out.addAll(child.getAllDescendentVertices())
+        }
+        return out
+    }
+
+    abstract fun getTopContainerVertices(): AbstractCornerVertices
+    fun findOverlappingVertex(cv: MultiCornerVertex, rh: RoutableHandler2D): MultiCornerVertex? {
+        val cvRoutingInfo = cv.routingInfo!!
+        for (cv2 in getAllDescendentVertices()) {
+            if (cv2 != cv) {
+                val cv2routingInfo = cv2.routingInfo
+                if (cv2routingInfo != null) {
+                    if (rh.overlaps(cvRoutingInfo, cv2routingInfo)) {
+                        return cv2
+                    }
+                }
+            }
+        }
+        return null
+    }
+
+    override fun getTopLeft(): MultiCornerVertex {
+        return tl!!
+    }
+
+    override fun getTopRight(): MultiCornerVertex {
+        return tr!!
+    }
+
+    override fun getBottomLeft(): MultiCornerVertex {
+        return bl!!
+    }
+
+    override fun getBottomRight(): MultiCornerVertex {
+        return br!!
+    }
+
+    override fun getContainerDepth(): Int {
+        return depth
+    }
+
+    companion object {
+        fun scale(yy: BigFraction, range: OPair<BigFraction>): BigFraction {
+            var y = yy
+            val size = range.b.subtract(range.a)
+            y = y.multiply(size)
+            y = y.add(range.a)
+            return y
+        }
+    }
+}

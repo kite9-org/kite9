@@ -13,22 +13,22 @@ import org.kite9.diagram.model.position.Direction;
 
 /**
  * This edge is used to enforce a particular layout within a container.
- * 
+ *
  * It is used between the sibling contents of the container.
- * 
+ *
  * @author robmoffat
  *
  */
 public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements BiDirectionalPlanarizationEdge {
-	
+
 	final GeneratedLayoutBiDirectional underlying;
 	final Connected fromUnderlying;
 	final Connected toUnderlying;
-	
+
 	public ContainerLayoutEdge(Vertex from, Vertex to, Direction d, Connected fromElement, Connected toElement) {
 		this(from, to, d, true, new GeneratedLayoutBiDirectional(fromElement, toElement, d), fromElement, toElement);
 	}
-	
+
 	private ContainerLayoutEdge(Vertex from, Vertex to, Direction drawDirection, boolean straight, GeneratedLayoutBiDirectional underlying, Connected fromC, Connected toC) {
 		super(from, to, drawDirection);
 		this.straight = straight;
@@ -49,7 +49,7 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Bi
 	@Override
 	public RemovalType removeBeforeOrthogonalization() {
 		// can be removed if there is another edge to do the same job
-		return RemovalType.TRY;	
+		return RemovalType.TRY;
 	}
 
 	public boolean isLayoutEnforcing() {
@@ -68,7 +68,7 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Bi
 
 		return out;
 	}
-	
+
 	@Override
 	public boolean isPartOf(DiagramElement de) {
 		return getOriginalUnderlying() == de;
@@ -78,11 +78,11 @@ public class ContainerLayoutEdge extends AbstractPlanarizationEdge implements Bi
 	public Map<DiagramElement, Direction> getDiagramElements() {
 		return Collections.singletonMap(getOriginalUnderlying(), null);
 	}
-	
+
 	public Connected getFromConnected() {
 		return fromUnderlying;
 	}
-	
+
 	public Connected getToConnected() {
 		return toUnderlying;
 	}

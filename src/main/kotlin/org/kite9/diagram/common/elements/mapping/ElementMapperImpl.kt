@@ -13,10 +13,11 @@ import org.kite9.diagram.model.style.BorderTraversal
 
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
 
-    var singleVertices: MutableMap<DiagramElement, Vertex> = HashMap()
-    var cornerVertices: MutableMap<DiagramElement, CornerVertices> = HashMap()
-    var baseGrids: MutableMap<DiagramElement?, BaseGridCornerVertices> = HashMap()
-    var edges: MutableMap<BiDirectional<Connected>, PlanarizationEdge> = HashMap()
+    private var singleVertices: MutableMap<DiagramElement, Vertex> = HashMap()
+    private var cornerVertices: MutableMap<DiagramElement, CornerVertices> = HashMap()
+    private var baseGrids: MutableMap<DiagramElement?, BaseGridCornerVertices> = HashMap()
+    private var edges: MutableMap<BiDirectional<Connected>, PlanarizationEdge> = HashMap()
+    private var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
 
     override fun hasOuterCornerVertices(d: DiagramElement): Boolean {
         return cornerVertices.containsKey(d)
@@ -50,7 +51,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     private fun getBaseGridCornerVertices(c: Container?): BaseGridCornerVertices {
         var bgcv = baseGrids[c]
         if (bgcv == null) {
-            bgcv = BaseGridCornerVertices(c, c!!.getDepth() + 1)
+            bgcv = BaseGridCornerVertices(c!!, c!!.getDepth() + 1)
             baseGrids[c] = bgcv
         }
         return bgcv
@@ -111,10 +112,6 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         return v
     }
 
-    fun hasCreated(element: Connection?): Boolean {
-        return edges.get(element) != null
-    }
-
     /**
      * Debug only - very slow
      */
@@ -152,6 +149,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
             return l == Layout.GRID
         }
+
         return false
     }
 
@@ -168,7 +166,6 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         } else false
     }
 
-    var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
     fun hasNestedConnections(c: DiagramElement?): Boolean {
         if (hasConnections.containsKey(c)) {
             return hasConnections[c]!!

@@ -117,4 +117,5 @@ class MultiCornerVertex(id: String, val xOrdinal: BigFraction, val yOrdinal: Big
             }
         }
     }
+
 }

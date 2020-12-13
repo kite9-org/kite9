@@ -31,12 +31,12 @@ interface CornerVertices {
     /**
      * Returns all vertices in the container, and in any parent containers (if a gridded container).
      */
-    fun getAllAscendentVertices(): Collection<MultiCornerVertex>
+    fun getAllAscendentVertices(): MutableCollection<MultiCornerVertex>
 
     /**
      * Returns all vertices in the container, and in any child containers (if a gridded container).
      */
-    fun getAllDescendentVertices(): Collection<MultiCornerVertex>
+    fun getAllDescendentVertices(): MutableCollection<MultiCornerVertex>
 
     /**
      * Returns vertices uniquely declared by this later of the container vertices.
@@ -52,7 +52,7 @@ interface CornerVertices {
      * This is potentially a costly operation, as we have to check every vertex.
      *
      */
-    fun mergeDuplicates(cv: MultiCornerVertex, rh: RoutableHandler2D): MultiCornerVertex
+    fun mergeDuplicates(cv: MultiCornerVertex, rh: RoutableHandler2D): MultiCornerVertex?
 
     fun getTopLeft(): MultiCornerVertex
     fun getTopRight(): MultiCornerVertex
