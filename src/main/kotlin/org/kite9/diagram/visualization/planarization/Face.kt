@@ -82,17 +82,17 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
             return true
         }
         if (corners.size != boundary.size) {
-            throw LogicException("Face: " + id + ": Faces need same numbers of edges and corners")
+            throw LogicException("Face: $id: Faces need same numbers of edges and corners")
         }
         for (i in corners.indices) {
             val corner = corners[i]
             val otherEnd = corners[(i + 1) % corners.size]
             val e: Edge = boundary[i]
             if (!e.meets(corner)) {
-                throw LogicException("Face: " + id + ": Edge should always meet the corner with same index: " + i + " " + corner + " " + e)
+                throw LogicException("Face: $id: Edge should always meet the corner with same index: $i $corner $e")
             }
             if (otherEnd !== e.otherEnd(corner)) {
-                throw LogicException("Face: " + id + ": Edge doesn't meet the other end expected: " + i + " " + corner + " " + e + " expected: " + otherEnd)
+                throw LogicException("Face: $id: Edge doesn't meet the other end expected: $i $corner $e expected: $otherEnd")
             }
         }
         return true
@@ -146,8 +146,8 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         return boundary.size
     }
 
-    fun getCorner(i: Int): Vertex {
-        var i = i
+    fun getCorner(ii: Int): Vertex {
+        var i = ii
         i = normalize(i)
         return corners[i]
     }
@@ -164,8 +164,8 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         }
     }
 
-    fun getBoundary(i: Int): PlanarizationEdge {
-        var i = i
+    fun getBoundary(ii: Int): PlanarizationEdge {
+        var i = ii
         i = normalize(i)
         return boundary[i]
     }
@@ -190,8 +190,8 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         reset(boundary, vList)
     }
 
-    private fun createVertexList(from: Vertex, boundary: List<PlanarizationEdge>): MutableList<Vertex>? {
-        var from = from
+    private fun createVertexList(fromV: Vertex, boundary: List<PlanarizationEdge>): MutableList<Vertex>? {
+        var from = fromV
         val out = ArrayList<Vertex>(boundary.size)
         var b = 0
         do {
@@ -207,34 +207,12 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         return out
     }
 
-    /**
-     * For two edges that follow each other on a face boundary, returns true
-     * if to follows from in the order of the face.
-     */
-    fun toAfterFrom(from: Edge, to: Edge, first: Vertex): Boolean {
-        if (!(from.meets(first) && to.meets(first))) {
-            // this ensures the calling code has got the right common vertex
-            throw LogicException("logic Error")
-        }
-        val ind = indexOf(first, to)
-        if (ind == -1) return false
-        val before: Edge = getBoundary(ind - 1)
-        val after: Edge = getBoundary(ind + 1)
-        return if (before === from) {
-            true
-        } else if (after === from) {
-            false
-        } else {
-            false
-        }
-    }
-
     override fun hashCode(): Int {
         return id.hashCode()
     }
 
-    override fun equals(obj: Any?): Boolean {
-        return if (obj is Face) id == obj.id else false
+    override fun equals(other: Any?): Boolean {
+        return if (other is Face) id == other.id else false
     }
 
     /**
@@ -277,32 +255,6 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         for (i in corners.indices) {
             if (corners[i] === v) {
                 out.add(i)
-            }
-        }
-        return out
-    }
-
-    /**
-     * Return the number of times vertex v is visited by the face.
-     */
-    fun occurrences(v: Vertex): Int {
-        var out = 0
-        for (c in corners) {
-            if (c === v) {
-                out++
-            }
-        }
-        return out
-    }
-
-    /**
-     * Return the number of times edge e is visited by the face.
-     */
-    fun occurrences(e: Edge): Int {
-        var out = 0
-        for (ee in boundary) {
-            if (ee === e) {
-                out++
             }
         }
         return out
@@ -377,39 +329,27 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
 
     val containedFaces: Set<Face> = DetHashSet()
     var containedBy: Face? = null
-    fun setCorner(i: Int, newVertex: Vertex) {
-        corners[i] = newVertex
-    }
 
     fun size(): Int {
         return boundary.size
     }
 
     companion object {
-        fun getCommonVertex(thisDart: Edge, nextDart: Edge): Vertex {
-            return if (thisDart.meets(nextDart.getFrom())) {
-                nextDart.getFrom()
-            } else if (thisDart.meets(nextDart.getTo())) {
-                nextDart.getTo()
-            } else {
-                throw LogicException("Logic Error")
-            }
-        }
 
         /**
          * if from==to, you get nothing back
          * includes from, excludes to
          */
-        fun <X> getRotatingSubset(l: List<X>, from: Int, to: Int, inclusive: Boolean): MutableList<X> {
-            var from = from
-            var to = to
+        fun <X> getRotatingSubset(l: List<X>, fromi: Int, toi: Int, inclusive: Boolean): MutableList<X> {
+            var from = fromi
+            var to = toi
             from = (from + l.size) % l.size
             to = (to + l.size) % l.size
             val out: MutableList<X> = ArrayList()
             var i = from
             while (i != to) {
                 out.add(l[i])
-                i = i + 1
+                i += 1
                 if (i == l.size) {
                     i = 0
                 }
