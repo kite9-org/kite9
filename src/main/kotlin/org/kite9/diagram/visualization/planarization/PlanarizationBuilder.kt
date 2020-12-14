@@ -11,5 +11,5 @@ interface PlanarizationBuilder {
     /**
      * Planarization of a hierarchically contained arrangement of [Connected]s
      */
-    fun planarize(c: Diagram?): Planarization?
+    fun planarize(c: Diagram): Planarization
 }

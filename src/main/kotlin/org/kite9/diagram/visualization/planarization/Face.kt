@@ -327,7 +327,7 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         return id
     }
 
-    val containedFaces: Set<Face> = DetHashSet()
+    val containedFaces: MutableSet<Face> = DetHashSet()
     var containedBy: Face? = null
 
     fun size(): Int {
