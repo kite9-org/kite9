@@ -71,18 +71,6 @@ abstract class AbstractArc implements Arc {
 	public int hashCode() {
 		return label.hashCode();
 	}
-
-	private boolean blocked = false;
-	
-	@Override
-	public void setBlocked(boolean blocked) {
-		this.blocked = blocked;
-	}
-
-	@Override
-	public boolean isBlocked() {
-		return blocked;
-	}
 	
 	@Override
 	public String getID() {

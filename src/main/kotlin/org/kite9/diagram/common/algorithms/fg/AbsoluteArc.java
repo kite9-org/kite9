@@ -34,9 +34,6 @@ public class AbsoluteArc extends AbstractArc {
 	}
 
 	public boolean hasCapacity(boolean reversed) {
-		if (isBlocked()) {
-			return false;
-		}
 		if (!reversed) {
 			return flow < capacity;
 		} else {

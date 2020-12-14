@@ -7,7 +7,7 @@ package org.kite9.diagram.common.algorithms.fg;
  * @author Rob Moffat
  *
  */
-public class LinearArc extends AbstractArc implements Arc {
+public class LinearArc extends AbstractArc {
 
 	protected int cost;
 	
@@ -32,10 +32,6 @@ public class LinearArc extends AbstractArc implements Arc {
 	}
 
 	public boolean hasCapacity(boolean reversed) {
-		if (isBlocked()) {
-			return false;
-		}
-		
 		if (!reversed) {
 			return flow < capacity;
 		} else {
