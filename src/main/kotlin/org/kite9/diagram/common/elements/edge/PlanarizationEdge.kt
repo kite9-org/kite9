@@ -1,6 +1,7 @@
 package org.kite9.diagram.common.elements.edge
 
 import org.kite9.diagram.common.elements.vertex.Vertex
+import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 
@@ -47,13 +48,13 @@ interface PlanarizationEdge : Edge {
     /**
      * Performs a split on the current edge.  Returns 2 edge attr.  The original edge should then be discarded.
      */
-    fun split(toIntroduce: Vertex?): Array<PlanarizationEdge>
+    fun split(toIntroduce: Vertex): Pair<PlanarizationEdge>
 
     /**
      * Gives you information about the elements surrounding this one, and (potentially) which side
      * they are on.
      */
-    fun getDiagramElements(): Map<DiagramElement, Direction>
+    fun getDiagramElements(): Map<DiagramElement, Direction?>
     fun setFrom(v: Vertex)
     fun setTo(v: Vertex)
 

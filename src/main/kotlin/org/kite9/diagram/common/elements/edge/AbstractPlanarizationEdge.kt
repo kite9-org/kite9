@@ -11,7 +11,8 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
  *
  * @author robmoffat
  */
-abstract class AbstractPlanarizationEdge(private var f: Vertex, private var t: Vertex, private var d: Direction?) :
+abstract class AbstractPlanarizationEdge(
+    private var f: Vertex, private var t: Vertex, private var d: Direction?) :
     AbstractBiDirectional<Vertex>(), PlanarizationEdge {
 
     override fun getBendCost(): Int {
@@ -32,15 +33,14 @@ abstract class AbstractPlanarizationEdge(private var f: Vertex, private var t: V
     abstract override fun removeBeforeOrthogonalization(): RemovalType
     abstract override fun getCrossCost(): Int
 
-    @JvmField
-	protected var straight = true
+	protected var _straight = true
 
     override fun isStraightInPlanarization(): Boolean {
-        return straight
+        return _straight
     }
 
     fun setStraight(straight: Boolean) {
-        this.straight = straight
+        this._straight = straight
     }
 
     override fun getFromArrivalSide(): Direction? {

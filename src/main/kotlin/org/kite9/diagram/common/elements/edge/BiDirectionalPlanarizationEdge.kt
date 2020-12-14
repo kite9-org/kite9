@@ -6,6 +6,6 @@ import org.kite9.diagram.model.DiagramElement
 interface BiDirectionalPlanarizationEdge : PlanarizationEdge {
 
     fun getOriginalUnderlying(): DiagramElement
-    fun getFromConnected(): Connected
-    fun getToConnected(): Connected
+    fun getFromConnected(): Connected?
+    fun getToConnected(): Connected?
 }

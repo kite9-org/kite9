@@ -77,7 +77,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             e = if (element is Connection) {
                 ConnectionEdge(vfrom, vto, element, dd)
             } else if (element is GeneratedLayoutBiDirectional) {
-                ContainerLayoutEdge(vfrom, vto, dd, from, to)
+                ContainerLayoutEdge(vfrom, vto, dd!!, from, to)
             } else {
                 throw LogicException("Unknown BiDirectional type: $element")
             }

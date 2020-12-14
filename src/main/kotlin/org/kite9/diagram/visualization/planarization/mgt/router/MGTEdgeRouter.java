@@ -14,6 +14,7 @@ import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.EdgeCrossingVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.Tools;
@@ -83,7 +84,7 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 				PlanarizationEdge crossedEdge = ec.getCrossing();
 
 				Vertex crossingVertex = createCrossingVertex(crossedEdge, ci);
-				PlanarizationEdge[] brokenCross = t.splitEdge((PlanarizationEdge) crossedEdge, crossingVertex, p);
+				Pair<PlanarizationEdge> brokenCross = t.splitEdge((PlanarizationEdge) crossedEdge, crossingVertex, p);
 				int vertexTo = p.getVertexIndex(lastVertexTemp);
 				int crossToPosition= p.getVertexIndex(crossedEdge.getTo());
 				int crossFromPosition = p.getVertexIndex(crossedEdge.getFrom());
@@ -114,36 +115,36 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 							ep.getGoing() == Going.FORWARDS, p, crossingSideAbove);
 				}
 				
-				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) ci, crossingVertex, p);
+				Pair<PlanarizationEdge> parts = t.splitEdge((PlanarizationEdge) ci, crossingVertex, p);
 				insertVertices(place, ep.prev, p, crossingVertex);
-				ci = parts[0];
+				ci = parts.getA();
 				
 				removeEdge(crossedEdge, p, crossingSideAbove);
 
 				
 				if (crossingSideAbove) {
-					insertEdge(true, brokenCross[0], p, null);
-					insertEdge(true, brokenCross[1], p, null);
+					insertEdge(true, brokenCross.getA(), p, null);
+					insertEdge(true, brokenCross.getB(), p, null);
 				} else {
-					insertEdge(false, brokenCross[0], p, null);
-					insertEdge(false, brokenCross[1], p, null);
+					insertEdge(false, brokenCross.getA(), p, null);
+					insertEdge(false, brokenCross.getB(), p, null);
 				}
 
-				insertEdge(currentAbove, parts[1], p, crossToPosition > vertexTo ? brokenCross[1] : null);
+				insertEdge(currentAbove, parts.getB(), p, crossToPosition > vertexTo ? brokenCross.getB() : null);
 
-				replaceReferences(crossedEdge, brokenCross[0], brokenCross[1], best);
+				replaceReferences(crossedEdge, brokenCross.getA(), brokenCross.getB(), best);
 
 				currentAbove = crossingSideAbove;
 				lastVertexTemp = crossingVertex;
 			} else if (ep instanceof PlanarizationCrossPath) {
 				Vertex crossing = ((PlanarizationCrossPath)ep).getCrossingPoint();
 				// side cross
-				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) ci, crossing, p);
-				ci = parts[0];
+				Pair<PlanarizationEdge> parts = t.splitEdge((PlanarizationEdge) ci, crossing, p);
+				ci = parts.getA();
 				if (currentAbove) {
-					insertEdge(true, parts[1], p, null);
+					insertEdge(true, parts.getB(), p, null);
 				} else {
-					insertEdge(false, parts[1], p, null);
+					insertEdge(false, parts.getB(), p, null);
 				}
 				lastVertexTemp = crossing;
 				
@@ -236,25 +237,23 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			for (int i = 0; i < index; i++) {
 				PlanarizationEdge around = list.get(i);
 				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
-				PlanarizationEdge[] parts = t.splitEdge(around, crossing, p);
+				Pair<PlanarizationEdge> parts = t.splitEdge(around, crossing, p);
 				insertVertices(vertexIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
 				
 				// make sure parts is ordered in same direction as planarization
 				if (p.getVertexIndex(around.getFrom()) > p.getVertexIndex(around.getTo())) {
-					PlanarizationEdge p1 = parts[0];
-					parts[0] = parts[1];
-					parts[1] = p1;
+					parts = new Pair(parts.getB(), parts.getA());
 				}
 				
-				replaceReferences(around, parts[1], parts[0], ep);
+				replaceReferences(around, parts.getB(), parts.getA(), ep);
 
 				if (aboveEdges) {
-					insertEdge(false, parts[0], p, null);
-					insertEdge(true, parts[1], p, null);
+					insertEdge(false, parts.getA(), p, null);
+					insertEdge(true, parts.getB(), p, null);
 				} else {
-					insertEdge(true, parts[0], p, null);
-					insertEdge(false, parts[1], p, null);
+					insertEdge(true, parts.getA(), p, null);
+					insertEdge(false, parts.getB(), p, null);
 				}
 				i = i - 1;
 				index--;
@@ -279,25 +278,23 @@ public class MGTEdgeRouter implements EdgeRouter, Logable {
 			for (int i = 0; i < index; i++) {
 				PlanarizationEdge around = list.get(i);
 				Vertex crossing = new PlanarizationCrossingVertex("x" + vertexIntro++);
-				PlanarizationEdge[] parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
+				Pair<PlanarizationEdge> parts = t.splitEdge((PlanarizationEdge) around, crossing, p);
 				
 				// make sure parts is ordered in same direction as planarization
 				if (p.getVertexIndex(around.getFrom()) > p.getVertexIndex(around.getTo())) {
-					PlanarizationEdge p1 = parts[0];
-					parts[0] = parts[1];
-					parts[1] = p1;
+					parts = new Pair(parts.getB(), parts.getA());
 				}
 				
 				
 				insertVertices(outIndex, ep.prev, p, crossing);
 				removeEdge(around, p, aboveEdges);
-				replaceReferences(around, parts[0], parts[1], ep);
+				replaceReferences(around, parts.getA(), parts.getB(), ep);
 				if (aboveEdges) {
-					insertEdge(true, parts[0], p, null);
-					insertEdge(false, parts[1], p, null);
+					insertEdge(true, parts.getA(), p, null);
+					insertEdge(false, parts.getB(), p, null);
 				} else {
-					insertEdge(false, parts[0], p, null);
-					insertEdge(true, parts[1], p, null);
+					insertEdge(false, parts.getA(), p, null);
+					insertEdge(true, parts.getB(), p, null);
 				}
 				i = i - 1; // removing the edge means we should go back a
 				// place in the array

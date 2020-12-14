@@ -12,6 +12,7 @@ import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
@@ -45,7 +46,6 @@ public class Tools implements Logable {
 
 	/**
 	 * This inserts the new EdgeCrossingVertex into an edge to break it in two
-	 * @param underlying if provided, it is assumed we are breaking the container boundary.
 	 */
 	public Vertex breakEdge(PlanarizationEdge e, Planarization pln, Vertex split) {
 		List<Face> faces = pln.getEdgeFaceMap().get(e);
@@ -58,12 +58,12 @@ public class Tools implements Logable {
 		log.send(log.go() ? null : "Original edge order around " + to + " = " + toEdgeOrdering);
 
 		// split the existing edge to create two edges		
-		PlanarizationEdge[] newEdges = splitEdge(e, split, pln);
+		Pair<PlanarizationEdge> newEdges = splitEdge(e, split, pln);
 
 		// new edges will have same faces
 		pln.getEdgeFaceMap().remove(e);
-		pln.getEdgeFaceMap().put(newEdges[0], new ArrayList<Face>(faces));
-		pln.getEdgeFaceMap().put(newEdges[1], new ArrayList<Face>(faces));
+		pln.getEdgeFaceMap().put(newEdges.getA(), new ArrayList<Face>(faces));
+		pln.getEdgeFaceMap().put(newEdges.getB(), new ArrayList<Face>(faces));
 		
 		// new vertex will have same faces as edge
 		pln.getVertexFaceMap().put(split, new LinkedList<Face>(faces));
@@ -71,14 +71,14 @@ public class Tools implements Logable {
 		// add to the edge ordering map. since there are only 2 edges, order not
 		// important yet.
 		List<PlanarizationEdge> edges = new ArrayList<PlanarizationEdge>();
-		edges.add(newEdges[0]);
-		edges.add(newEdges[1]);
+		edges.add(newEdges.getA());
+		edges.add(newEdges.getB());
 		BasicVertexEdgeOrdering splitEdgeOrdering = new BasicVertexEdgeOrdering(edges, split);
 		pln.getEdgeOrderings().put(split, splitEdgeOrdering);
 
 		// update the from/to edge ordering
-		fromEdgeOrdering.replace(e, newEdges[0].meets(from) ? newEdges[0] : newEdges[1]);
-		toEdgeOrdering.replace(e, newEdges[1].meets(to) ? newEdges[1] : newEdges[0]);
+		fromEdgeOrdering.replace(e, newEdges.getA().meets(from) ? newEdges.getA() : newEdges.getB());
+		toEdgeOrdering.replace(e, newEdges.getB().meets(to) ? newEdges.getB() : newEdges.getA());
 		log.send(log.go() ? null : "New edge order around " + from + " = " + fromEdgeOrdering);
 		log.send(log.go() ? null : "New edge order around " + to + " = " + toEdgeOrdering);
 		log.send(log.go() ? null : "New edge order around " + split + " = " + splitEdgeOrdering);
@@ -91,12 +91,12 @@ public class Tools implements Logable {
 				int i = indexes.get(0);
 				if ((face.getCorner(i) == from) && (face.getCorner(i + 1) == to)) {
 					face.remove(i);
-					face.add(i, from, newEdges[0]);
-					face.add(i + 1, split, newEdges[1]);
+					face.add(i, from, newEdges.getA());
+					face.add(i + 1, split, newEdges.getB());
 				} else if ((face.getCorner(i) == to) && (face.getCorner(i + 1) == from)) {
 					face.remove(i);
-					face.add(i, to, newEdges[1]);
-					face.add(i + 1, split, newEdges[0]);
+					face.add(i, to, newEdges.getB());
+					face.add(i + 1, split, newEdges.getA());
 				} else {
 					throw new LogicException("Should be one way around or the other");
 				}
@@ -401,14 +401,14 @@ public class Tools implements Logable {
 	 * Splits an edge into two parts, preserving the original intact. First edge
 	 * in the array is the from end, second is to end
 	 */
-	public PlanarizationEdge[] splitEdge(PlanarizationEdge parent, Vertex toIntroduce, Planarization pln) {
+	public Pair<PlanarizationEdge> splitEdge(PlanarizationEdge parent, Vertex toIntroduce, Planarization pln) {
 		log.send(log.go() ? null : "Splitting: "+parent);
-		PlanarizationEdge[] out = parent.split(toIntroduce);
+		Pair<PlanarizationEdge> out = parent.split(toIntroduce);
 		
 		for (DiagramElement de : parent.getDiagramElements().keySet()) {
 			EdgeMapping list = pln.getEdgeMappings().get(de);
 			if (list != null) {
-				list.replace(parent, out[0], out[1]);
+				list.replace(parent, out.getA(), out.getB());
 			}
 		}
 		
@@ -416,7 +416,7 @@ public class Tools implements Logable {
 		parent.getFrom().removeEdge(parent);
 		parent.getTo().removeEdge(parent);
 		pln.getEdgeFaceMap().remove(parent);
-		log.send(log.go() ? null : "Made: \n\t"+out[0]+"\n\t"+out[1]);
+		log.send(log.go() ? null : "Made: \n\t"+out.getA()+"\n\t"+out.getB());
 
 		return out;
 	}
