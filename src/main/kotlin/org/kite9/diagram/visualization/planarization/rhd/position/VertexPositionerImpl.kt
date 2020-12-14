@@ -25,9 +25,9 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.VPos
 
 class VertexPositionerImpl(
-    protected val em: ElementMapper,
-    protected val rh: RoutableHandler2D,
-    protected val cmp: Comparator<DiagramElement>
+    private val em: ElementMapper,
+    private val rh: RoutableHandler2D,
+    private val cmp: Comparator<DiagramElement>
 ) : Logable, VertexPositioner {
 
     private val fracMapper: FracMapper = FracMapperImpl()
