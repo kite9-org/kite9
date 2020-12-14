@@ -15,7 +15,7 @@ interface Node : Deterministic {
     fun ensureEulersEquilibrium(): Boolean
 
     var type: String
-    var arcs: Set<Arc>
+    var arcs: MutableSet<Arc>
     fun isLinkedTo(n: SimpleNode): Boolean
     var supply: Int
     var flow: Int

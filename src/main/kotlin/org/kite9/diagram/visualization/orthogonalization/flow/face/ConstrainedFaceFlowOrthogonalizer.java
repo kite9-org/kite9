@@ -131,7 +131,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 			int start = current.getEdgeStartPosition();
 			int count = current.getEdgeEndPosition() - current.getEdgeStartPosition();
 			if (count <= 0) {
-				count += current.face.edgeCount();
+				count += current.getFace().edgeCount();
 			}
 			if (start == -1) {
 				start = 0;
@@ -139,10 +139,10 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 
 			int c = 0;
 			while (c < count) {
-				int i = (c + start) % current.face.edgeCount();
-				Edge in = current.face.getBoundary(i);
-				Edge out = current.face.getBoundary(i + 1);
-				Vertex v = current.face.getCorner(i + 1);
+				int i = (c + start) % current.getFace().edgeCount();
+				Edge in = current.getFace().getBoundary(i);
+				Edge out = current.getFace().getBoundary(i + 1);
+				Vertex v = current.getFace().getCorner(i + 1);
 				vertexHandler.processVertex(in, out, v, current);
 				c++;
 			}

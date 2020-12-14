@@ -14,7 +14,7 @@ open class SimpleNode(
 
     override var type: String = "UNDEFINED"
     override var flow = 0
-    override var arcs: Set<Arc> = DetHashSet()
+    override var arcs: MutableSet<Arc> = DetHashSet()
 
     override fun toString(): String {
         return "$id($flow/$supply)"
