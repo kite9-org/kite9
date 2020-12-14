@@ -376,7 +376,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 		if (cgType.state == MergePlane.X_FIRST_MERGE) {
 			aType.vertParentGroup = cg;
 			if ((aType.state == MergePlane.X_FIRST_MERGE) || (aType.state == MergePlane.Y_FIRST_MERGE)) {
-				aType.active = false;
+				aType.setActive(false);
 				if (aType.horizParentGroup == null) {
 					aType.horizParentGroup = cg;
 				}
@@ -387,7 +387,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 		} else if (cgType.state == MergePlane.Y_FIRST_MERGE) {
 			aType.horizParentGroup = cg;
 			if ((aType.state == MergePlane.X_FIRST_MERGE) || (aType.state == MergePlane.Y_FIRST_MERGE)) {
-				aType.active = false;
+				aType.setActive(false);
 				if (aType.vertParentGroup == null) {
 					aType.vertParentGroup = cg;
 				}
@@ -400,7 +400,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 			setBothParents(cg, aType);
 		}
 
-		if (aType.active == false) {
+		if (!aType.isActive()) {
 			ms.removeLiveGroup(a);
 		} else {
 			// group is being kept, so we need to make sure it's in the group
@@ -413,7 +413,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 	private void setBothParents(CompoundGroup cg, DirectedGroupAxis aType) {
 		aType.horizParentGroup = cg;
 		aType.vertParentGroup = cg;
-		aType.active = false;
+		aType.setActive(false);
 	}
 
 	private void axisChanged(Group a) {
