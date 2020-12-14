@@ -8,8 +8,9 @@ package org.kite9.diagram.common.algorithms.fg
 open class AbsoluteArc(var cost: Int, protected var capacity: Int, from: Node, to: Node, label: String) :
     AbstractArc(from, to, label, 0) {
 
-    open val flowCost: Int
-        get() = Math.abs(flow) * cost
+    open fun getFlowCost(): Int {
+        return Math.abs(flow) * cost
+    }
 
     override fun getIncrementalCost(flow: Int): Int {
         val origCost = Math.abs(this.flow) * cost

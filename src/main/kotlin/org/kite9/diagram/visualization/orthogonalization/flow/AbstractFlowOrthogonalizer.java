@@ -185,9 +185,6 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 			Node otherEnd = a.getFrom() == n ? a.getTo() : a.getFrom();
 			otherEnd.getArcs().remove(a);
 
-			/*a.setFrom(null);
-			a.setTo(null); */
-
 			fg.getAllArcs().remove(a);
 		}
 		
