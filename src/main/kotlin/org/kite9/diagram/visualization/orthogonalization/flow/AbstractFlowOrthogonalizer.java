@@ -114,7 +114,7 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 		int supply = -2;
 
 		FaceVertex ff = createFaceVertex(f, v, before, after);
-		Node hn = new SimpleNode("h" + (nodeNo++) + "[" + v.getID() + "/" + f.id + "]", supply, ff);
+		Node hn = new SimpleNode("h" + (nodeNo++) + "[" + v.getID() + "/" + f.getID() + "]", supply, ff);
 		fg.setNodeFor(ff, hn);
 		hn.setType(HELPER_NODE);
 		return hn;

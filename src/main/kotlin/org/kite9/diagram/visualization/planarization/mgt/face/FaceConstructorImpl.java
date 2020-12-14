@@ -83,7 +83,7 @@ public class FaceConstructorImpl implements FaceConstructor, Logable {
 				if (f.getPartOf() == null) {
 					Rectangular r = determineInsideElementFromTemporaryEdge(f, temporaryEdge, pl);
 					if (r != null) {
-						log.send("1. Face  " + f.id +" "+ f.cornerIterator()+ " is part of " + r);
+						log.send("1. Face  " + f.getID() +" "+ f.cornerIterator()+ " is part of " + r);
 						f.setPartOf(r);
 					}
 				}
@@ -108,7 +108,7 @@ public class FaceConstructorImpl implements FaceConstructor, Logable {
 					for (Face face2 : faces) {
 						if (!visited.contains(face2)) {
 							Rectangular r = identifyRectangular(face2, visited, pl);
-							log.send("2. Face " + f.id +" "+ f.cornerIterator()+ " is part of " + r);
+							log.send("2. Face " + f.getID() +" "+ f.cornerIterator()+ " is part of " + r);
 							f.setPartOf(r);
 							return r;
 						}

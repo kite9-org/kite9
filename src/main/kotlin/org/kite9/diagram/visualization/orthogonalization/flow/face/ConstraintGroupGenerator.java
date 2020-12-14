@@ -59,7 +59,7 @@ public class ConstraintGroupGenerator implements Logable {
 	 */
 	private boolean visitFace(Face face, int in, Set<Face> visitedFaces, ConstraintGroup theGroup, Route openRoute, Set<Edge> constrainedEdges, Planarization pln, int depth, boolean constraintFound) {
 
-		log.send(pad(depth)+"Visiting Face: "+face.id+" start at "+in);
+		log.send(pad(depth)+"Visiting Face: "+face.getID()+" start at "+in);
 		
 		visitedFaces.add(face);
 		int start = in;
@@ -99,13 +99,13 @@ public class ConstraintGroupGenerator implements Logable {
 				boolean found = visitFace(otherFace, otherFace.indexOf(currentEdge).iterator().next(), visitedFaces, theGroup, toUse, constrainedEdges, pln, depth+1, out == in);
 				if (found && !constraintFound) {
 					// you can only visit one new face unless you find another constraint
-					log.send(pad(depth)+"Finished Face: "+face.id);
+					log.send(pad(depth)+"Finished Face: "+face.getID());
 					return found;
 				}
 			}
 		}
 		
-		log.send(pad(depth)+"Finished Face: "+face.id);
+		log.send(pad(depth)+"Finished Face: "+face.getID());
 		
 		return constraintFound;
 	}

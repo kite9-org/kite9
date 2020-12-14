@@ -19,61 +19,61 @@ interface Planarization {
     /**
      * Returns the ordering of vertices within the Planarization
      */
-    val allVertices: Collection<Vertex?>?
+    val allVertices: Collection<Vertex>
 
     /**
      * Returns the list of faces within the Planarization
      */
-    val faces: List<Face?>?
+    val faces: List<Face>
 
     /**
      * Each edge connects to one face, or two faces after the temporary directed edge are inserted.
      */
-    val edgeFaceMap: Map<Edge?, List<Face?>?>?
+    val edgeFaceMap: Map<Edge, List<Face>>
 
     /**
      * Gets the details of which vertices belong to which faces.
      */
-    val vertexFaceMap: Map<Vertex?, List<Face?>?>?
+    val vertexFaceMap: Map<Vertex, List<Face>>
 
     /**
      * Needs to return the clockwise ordering of edges meeting a vertex or a container.
      */
-    val edgeOrderings: Map<Vertex?, EdgeOrdering?>?
+    val edgeOrderings: Map<Vertex, EdgeOrdering>
 
     /**
      * Returns all edges in the planarization.
      */
-    val allEdges: List<Edge?>?
+    val allEdges: List<Edge>
 
     /**
      * Any connections or layout that haven't yet, or can't be introduced into the planar embedding.
      */
-    val uninsertedConnections: Collection<BiDirectional<Connected?>?>?
+    val uninsertedConnections: Collection<BiDirectional<Connected>>
 
     /**
      * Simply removes the edge from a planarization, without respect for any
      * data structures.
      */
-    fun removeEdge(e: Edge?)
+    fun removeEdge(e: Edge)
 
     /**
      * Manages the mapping of edges to diagram attr.
      */
-    val edgeMappings: Map<DiagramElement?, EdgeMapping?>?
+    val edgeMappings: Map<DiagramElement, EdgeMapping>
 
     /**
      * Returns the diagram itself
      */
-    val diagram: Diagram?
+    val diagram: Diagram
 
     /**
      * Creates an empty face in the planarization
      */
-    fun createFace(): Face?
+    fun createFace(): Face
 
     /**
      * Returns details about where the attr in the diagram have been placed for routing purposes
      */
-    fun getPlacedPosition(de: DiagramElement?): RoutingInfo?
+    fun getPlacedPosition(de: DiagramElement): RoutingInfo
 }

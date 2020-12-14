@@ -193,7 +193,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		
 		// first, divide up the faces into portions, bounded by constrained edges
 		List<PortionNode> portions = createPortions(constrainedEdgesForFace, f);
-		log.send("Portions for "+f.id, portions);
+		log.send("Portions for "+f.getID(), portions);
 		return portions;
 	}
 

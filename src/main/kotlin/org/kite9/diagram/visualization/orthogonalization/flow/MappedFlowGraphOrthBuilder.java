@@ -84,7 +84,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 
 		@Override
 		public String toString() {
-			return "f="+f.id+",t="+type+",s="+tolerance+",d="+d;
+			return "f="+f.getID()+",t="+type+",s="+tolerance+",d="+d;
 		}				
 	}
 	
