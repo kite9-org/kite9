@@ -20,13 +20,13 @@ public class NonZeroArc extends AbsoluteArc {
 
 	@Override
 	public int getFlowCost() {
-		return Math.abs(flow-zeroAt) * cost;
+		return Math.abs(getFlow()-zeroAt) * getCost();
 	}
 
 	@Override
 	public int getIncrementalCost(int flow) {
-		int origCost = Math.abs(this.flow-zeroAt)*cost;
-		int newCost = Math.abs(this.flow+flow-zeroAt) *cost;
+		int origCost = Math.abs(this.getFlow()-zeroAt)*getCost();
+		int newCost = Math.abs(this.getFlow()+flow-zeroAt) * getCost();
 		return newCost - origCost;
 	}
 

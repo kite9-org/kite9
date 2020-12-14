@@ -40,7 +40,7 @@ public class StepCostArc extends AbsoluteArc {
 	public int getFlowCost() {
 		int regularCost = super.getFlowCost();
 		
-		int increment = Math.max(0, Math.abs(flow) - stepAt);
+		int increment = Math.max(0, Math.abs(getFlow()) - stepAt);
 		int extraCost = increment * stepCost;
 		
 		return regularCost+extraCost;
@@ -50,8 +50,8 @@ public class StepCostArc extends AbsoluteArc {
 	public int getIncrementalCost(int flow) {
 		int cost = super.getIncrementalCost(flow);
 		
-		int origStepCost = Math.max(0, Math.abs(this.flow)-stepAt)*stepCost;
-		int newStepCost = Math.max(0, Math.abs(this.flow + flow)-stepAt)*stepCost;
+		int origStepCost = Math.max(0, Math.abs(this.getFlow())-stepAt)*stepCost;
+		int newStepCost = Math.max(0, Math.abs(this.getFlow() + flow)-stepAt)*stepCost;
 		int stepCost = newStepCost - origStepCost;
 		return cost + stepCost;
 	}

@@ -77,7 +77,7 @@ import org.kite9.diagram.logging.LogicException;
  * @author moffatr
  * 
  */
-public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, Logable, Comparator<DiagramElement> {
+public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, Logable {
 
 
 	private Kite9Log log = new Kite9Log(this);
@@ -129,7 +129,7 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 			
 			while (run != PlanarizationRun.DONE) {
 				rh =  new PositionRoutableHandler2D();
-				vp = new VertexPositionerImpl(em, rh, this);
+				vp = new VertexPositionerImpl(em, rh, (a, b) -> compareDiagramElements(a, b));
 				ContradictionHandler ch = new BasicContradictionHandler(em);
 				GroupingStrategy strategy = new GeneratorBasedGroupingStrategyImpl(ch);
 				
@@ -640,10 +640,5 @@ public abstract class RHDPlanarizationBuilder implements PlanarizationBuilder, L
 		return (Container) from;
 	}
 
-	@Override
-	public int compare(DiagramElement o1, DiagramElement o2) {
-		return compareDiagramElements(o1, o2);
-	}
-	
 	
 }
