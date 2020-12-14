@@ -24,22 +24,22 @@ interface Planarization {
     /**
      * Returns the list of faces within the Planarization
      */
-    val faces: List<Face>
+    val faces: MutableList<Face>
 
     /**
      * Each edge connects to one face, or two faces after the temporary directed edge are inserted.
      */
-    val edgeFaceMap: Map<Edge, List<Face>>
+    val edgeFaceMap: MutableMap<Edge, MutableList<Face>>
 
     /**
      * Gets the details of which vertices belong to which faces.
      */
-    val vertexFaceMap: Map<Vertex, List<Face>>
+    val vertexFaceMap: MutableMap<Vertex, MutableList<Face>>
 
     /**
      * Needs to return the clockwise ordering of edges meeting a vertex or a container.
      */
-    val edgeOrderings: Map<Vertex, EdgeOrdering>
+    val edgeOrderings: MutableMap<Vertex, EdgeOrdering>
 
     /**
      * Returns all edges in the planarization.

@@ -87,9 +87,9 @@ abstract class AbstractPlanarization(override val diagram: Diagram) : Planarizat
     }
 
     override val faces: MutableList<Face> = ArrayList()
-    override var edgeFaceMap: Map<Edge, List<Face>> = HashMap()
-    override var edgeOrderings: Map<Vertex, EdgeOrdering> = HashMap()
-    override var vertexFaceMap: Map<Vertex, List<Face>> = HashMap()
+    override var edgeFaceMap: MutableMap<Edge, MutableList<Face>> = HashMap()
+    override var edgeOrderings: MutableMap<Vertex, EdgeOrdering> = HashMap()
+    override var vertexFaceMap: MutableMap<Vertex, MutableList<Face>> = HashMap()
 
     var nextFaceId = 0
 
