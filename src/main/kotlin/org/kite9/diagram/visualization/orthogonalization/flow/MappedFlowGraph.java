@@ -49,7 +49,7 @@ public abstract class MappedFlowGraph extends FlowGraph {
 
 	public Set<Arc> getValueArcs() {
 		Set<Arc> out = new UnorderedSet<Arc>();
-		for (Arc arc : allArcs) {
+		for (Arc arc : getAllArcs()) {
 			if (arc.getFlow() == 0) {
 				// ignore
 			} else {
@@ -78,8 +78,8 @@ public abstract class MappedFlowGraph extends FlowGraph {
 	
 	public void setNodeFor(Object o, Node n) {
 		map.put(o, n);
-		allNodes.add(n);
-		allArcs.addAll(n.getArcs());
+		getAllNodes().add(n);
+		getAllArcs().addAll(n.getArcs());
 	}
 	
 	public abstract Collection<Node> getNodesForEdgePart(Face f, Edge e, Vertex startVertex);

@@ -18,7 +18,7 @@ import org.kite9.diagram.logging.LogicException
  *
  * @author robmoffat
  */
-internal class SubdivisionNode(id: String, supply: Int) : SimpleNode(id, supply, null) {
+class SubdivisionNode(id: String, supply: Int) : SimpleNode(id, supply, null) {
 
     var subdivision = ""
 
