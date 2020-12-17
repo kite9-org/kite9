@@ -1,10 +1,8 @@
 package org.kite9.diagram.common.algorithms.ssp
 
-import java.util.*
-
 open class State<P : PathLocation<P>>(private val ssp: AbstractSSP<P>) {
 
-	var pq = PriorityQueue<P>()
+	var pq = PriorityQueue<P>(10000)
     private val locationToPathMap: MutableMap<Any?, P> = HashMap(2000)
 	private var adds: Long = 0
 	private var maxStack: Long = 0
@@ -13,7 +11,7 @@ open class State<P : PathLocation<P>>(private val ssp: AbstractSSP<P>) {
         return try {
             adds++
             val location = ssp.getLocation(path)
-            val existing = if (location == null) null else locationToPathMap[location]
+            val existing = locationToPathMap[location]
             val newBetter = existing == null || existing.compareTo(path) > 0
             if (newBetter) {
                 existing?.setActive(false)

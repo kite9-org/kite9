@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;

@@ -2,11 +2,11 @@ package org.kite9.diagram.visualization.planarization.rhd.links;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;

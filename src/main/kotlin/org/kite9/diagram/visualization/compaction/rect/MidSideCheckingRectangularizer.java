@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.compaction.rect;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;

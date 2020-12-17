@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;

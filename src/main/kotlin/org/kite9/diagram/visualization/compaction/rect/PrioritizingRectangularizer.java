@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.display.CompleteDisplayer;

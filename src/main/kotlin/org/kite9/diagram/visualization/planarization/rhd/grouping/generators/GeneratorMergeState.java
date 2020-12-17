@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 
+import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedMergeState;
