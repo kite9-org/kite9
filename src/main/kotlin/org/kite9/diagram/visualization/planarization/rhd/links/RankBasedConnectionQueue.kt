@@ -58,7 +58,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
 
         x.sortWith(comp)
         y.sortWith(comp)
-        u.sortWith(comp)
+       // u.sortWith(comp)
 
         return object : MutableIterator<BiDirectional<Connected>> {
 

@@ -84,7 +84,7 @@
                           >
   </g
                           >
-    <g k9-elem="label" id="1" style="kite9-label-placement: top-left" transform="translate(42.0,.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [57.0,15.0]; rect-size: [58.0,22.0]; "
+    <g k9-elem="label" id="1" style="kite9-label-placement: top-left" transform="translate(105.0,.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [120.0,15.0]; rect-size: [58.0,22.0]; "
                           >
     <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
                             >
@@ -94,7 +94,7 @@
                               >
     <g class="container-label-front"
                               >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(2.9,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [61.0,19.0]; rect-size: [50.0,14.0]; "
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(2.9,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [124.0,19.0]; rect-size: [50.0,14.0]; "
                                 ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                   ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                     ><tspan
@@ -113,7 +113,7 @@
                                 >
   </g
                                 >
-    <g k9-elem="label" id="2" style="kite9-label-placement: top-right" transform="translate(104.0,.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [119.0,15.0]; rect-size: [65.0,22.0]; "
+    <g k9-elem="label" id="2" style="kite9-label-placement: top-right" transform="translate(35.0,.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [50.0,15.0]; rect-size: [65.0,22.0]; "
                                 >
     <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
                                   >
@@ -123,7 +123,7 @@
                                     >
     <g class="container-label-front"
                                     >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.4,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [123.0,19.0]; rect-size: [57.0,14.0]; "
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.4,5.4)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [54.0,19.0]; rect-size: [57.0,14.0]; "
                                       ><g fill="white" font-size="11px" font-family="'opensans-light-webfont'" stroke="white"
                                         ><text x="0" xml:space="preserve" y="10.3173" stroke="none"
                                           ><tspan

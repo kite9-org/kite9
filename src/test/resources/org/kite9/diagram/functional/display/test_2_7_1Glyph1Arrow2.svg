@@ -116,13 +116,13 @@
   <g link-test="turn" k9-elem="link" id="tl1" k9-info="link: ['meets','one']; direction: null; " rank="2"
                                 >
     
-    <g k9-elem="from" reference="meets" transform="translate(82.0,49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl1; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [82.0,49.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="meets" transform="translate(103.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl1; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [103.0,39.0]; rect-size: [0.0,0.0]; "
                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                     />
   </g
                                     >
-    <g k9-elem="to" reference="one" transform="translate(72.0,49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl1; terminates-at: one; end: to; rectangular: terminator; rect-pos: [72.0,49.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="one" transform="translate(44.0,25.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl1; terminates-at: one; end: to; rectangular: terminator; rect-pos: [44.0,25.0]; rect-size: [0.0,0.0]; "
                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                       />
@@ -131,7 +131,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                       >
-      <path marker-start="url(#-start-marker)" d="M82 49 L72 49" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M103 39 L103 15 L44 15 L44 25" marker-end="url(#-end-marker)" class="link"
                                         />
     </g
                                         >
@@ -164,13 +164,13 @@
   <g link-test="turn" k9-elem="link" id="tl3" k9-info="link: ['meets','one']; direction: null; " rank="4"
                                                 >
     
-    <g k9-elem="from" reference="meets" transform="translate(103.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl3; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [103.0,39.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="meets" transform="translate(82.0,49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl3; terminates-at: meets; end: from; rectangular: terminator; rect-pos: [82.0,49.0]; rect-size: [0.0,0.0]; "
                                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                     />
   </g
                                                     >
-    <g k9-elem="to" reference="one" transform="translate(44.0,25.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl3; terminates-at: one; end: to; rectangular: terminator; rect-pos: [44.0,25.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="one" transform="translate(72.0,49.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: tl3; terminates-at: one; end: to; rectangular: terminator; rect-pos: [72.0,49.0]; rect-size: [0.0,0.0]; "
                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                       />
@@ -179,7 +179,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                       >
-      <path marker-start="url(#-start-marker)" d="M103 39 L103 15 L44 15 L44 25" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M82 49 L72 49" marker-end="url(#-end-marker)" class="link"
                                                         />
     </g
                                                         >

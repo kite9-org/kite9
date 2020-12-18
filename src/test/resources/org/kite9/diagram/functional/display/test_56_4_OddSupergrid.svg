@@ -29,7 +29,7 @@
     </g
               >
     
-      <g k9-elem="glyph" id="four" transform="translate(10.0,25.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [25.0,40.0]; rect-size: [236.0,29.0]; "
+      <g k9-elem="glyph" id="four" transform="translate(10.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [25.0,30.0]; rect-size: [236.0,29.0]; "
               >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
                 >
@@ -40,7 +40,7 @@
     <g class="glyph"
                   >
       
-        <g k9-elem="label" id="four-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [35.0,46.0]; rect-size: [216.0,17.0]; "
+        <g k9-elem="label" id="four-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [35.0,36.0]; rect-size: [216.0,17.0]; "
                     >
     <g k9-info="" k9-elem="show-box"
                       >
@@ -52,7 +52,7 @@
                         >
     <g class="glyph-label-text"
                         >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,46.0]; rect-size: [216.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.2,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [35.0,36.0]; rect-size: [216.0,17.0]; "
                           ><g font-family="'opensans-regular-webfont'" font-size="15px"
                             ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                               ><tspan
@@ -582,13 +582,13 @@
   <g link-test="turn" k9-elem="link" id="one-two" k9-info="link: ['one','two']; direction: null; " rank="1"
                                                                                                                                                                                   >
     
-    <g k9-elem="from" reference="one" transform="translate(482.0,117.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: one; end: from; rectangular: terminator; rect-pos: [482.0,117.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="one" transform="translate(531.0,141.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: one; end: from; rectangular: terminator; rect-pos: [531.0,141.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                       />
   </g
                                                                                                                                                                                       >
-    <g k9-elem="to" reference="two" transform="translate(452.0,185.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [452.0,185.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="two" transform="translate(367.0,209.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [367.0,209.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                         />
@@ -597,7 +597,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                         >
-      <path marker-start="url(#-start-marker)" d="M482 117 L472 117 L472 185 L452 185" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M531 141 L531 219 L367 219 L367 209" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                           />
     </g
                                                                                                                                                                                           >
@@ -606,13 +606,13 @@
   <g link-test="turn" k9-elem="link" id="one-two" k9-info="link: ['one','two']; direction: null; " rank="2"
                                                                                                                                                                                           >
     
-    <g k9-elem="from" reference="one" transform="translate(531.0,141.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: one; end: from; rectangular: terminator; rect-pos: [531.0,141.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="one" transform="translate(482.0,117.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: one; end: from; rectangular: terminator; rect-pos: [482.0,117.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                             >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                               />
   </g
                                                                                                                                                                                               >
-    <g k9-elem="to" reference="two" transform="translate(367.0,209.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [367.0,209.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="two" transform="translate(452.0,185.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-two; terminates-at: two; end: to; rectangular: terminator; rect-pos: [452.0,185.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                 />
@@ -621,7 +621,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                 >
-      <path marker-start="url(#-start-marker)" d="M531 141 L531 219 L367 219 L367 209" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M482 117 L472 117 L472 185 L452 185" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                   >
@@ -660,7 +660,7 @@
                                                                                                                                                                                                               />
   </g
                                                                                                                                                                                                               >
-    <g k9-elem="to" reference="four" transform="translate(143.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-four; terminates-at: four; end: to; rectangular: terminator; rect-pos: [143.0,40.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="four" transform="translate(261.0,45.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: one-four; terminates-at: four; end: to; rectangular: terminator; rect-pos: [261.0,45.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                               >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                 />
@@ -669,7 +669,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                 >
-      <path marker-start="url(#-start-marker)" d="M531 93 L531 30 L143 30 L143 40" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M531 93 L531 45 L261 45" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                                   />
     </g
                                                                                                                                                                                                                   >
@@ -684,7 +684,7 @@
                                                                                                                                                                                                                       />
   </g
                                                                                                                                                                                                                       >
-    <g k9-elem="to" reference="four" transform="translate(261.0,55.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: two-four; terminates-at: four; end: to; rectangular: terminator; rect-pos: [261.0,55.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="four" transform="translate(143.0,59.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: two-four; terminates-at: four; end: to; rectangular: terminator; rect-pos: [143.0,59.0]; rect-size: [0.0,0.0]; "
                                                                                                                                                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                                                                                                                                                         />
@@ -693,7 +693,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                                                                                                                                                         >
-      <path marker-start="url(#-start-marker)" d="M366 161 L366 55 L261 55" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M366 161 L366 71 L143 71 L143 59" marker-end="url(#-end-marker)" class="link"
                                                                                                                                                                                                                           />
     </g
                                                                                                                                                                                                                           >
