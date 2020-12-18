@@ -34,7 +34,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 
 	@Override
 	protected void performFaceRectangularization(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
-		PriorityQueue<RectOption> pq = new PriorityQueue<RectOption>(500);
+		PriorityQueue<RectOption> pq = new PriorityQueue<>(500, null);
 		Set<VertexTurn> onStack = new UnorderedSet<VertexTurn>();
 
 		createInitialRectOptions(c, stacks, pq, onStack);

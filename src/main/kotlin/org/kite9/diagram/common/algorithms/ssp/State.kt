@@ -11,26 +11,26 @@ open class State<P : PathLocation<P>>(private val ssp: AbstractSSP<P>) {
         return try {
             adds++
             val location = ssp.getLocation(path)
-            val existing = locationToPathMap[location]
+            val existing =  locationToPathMap[location]
             val newBetter = existing == null || existing.compareTo(path) > 0
             if (newBetter) {
                 existing?.setActive(false)
                 //System.out.println("Replacing: \n\t "+existing+"\n\t"+path+"\n\t"+location);
                 pq.add(path)
                 locationToPathMap[location] = path
-                maxStack = Math.max(pq.size.toLong(), maxStack)
+                maxStack = Math.max(pq.size().toLong(), maxStack)
                 true
             } else {
                 //System.out.println("Not Adding: "+path);
                 false
             }
         } catch (e: OutOfMemoryError) {
-            throw SSPTooLargeException("SSP too large: queue=" + pq.size + " map=" + locationToPathMap.size)
+            throw SSPTooLargeException("SSP too large: queue=" + pq.size() + " map=" + locationToPathMap.size)
         }
     }
 
     open fun remove(): P {
-        return pq.remove()
+        return pq.remove()!!
     }
 
     fun getAdds() : Long {

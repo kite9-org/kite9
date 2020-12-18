@@ -63,7 +63,7 @@ public class GeneratorMergeState extends DirectedMergeState {
 	}
 
 	public Group nextLiveGroup() {
-		return toDo.poll();
+		return toDo.remove();
 	}
 
 	public MergeOption getTopMerge() {

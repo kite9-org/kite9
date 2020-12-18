@@ -138,7 +138,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 	@Override
 	public Group poll() {
 		while (todo.size() > 0) {
-			NetworkedItem nw = todo.poll();
+			NetworkedItem nw = todo.remove();
 			Group out = nw.getGroup();
 			networkSizes.remove(out);
 			if (!completedGroups.contains(out)) {

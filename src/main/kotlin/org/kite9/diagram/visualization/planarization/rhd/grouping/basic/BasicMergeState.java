@@ -67,7 +67,7 @@ public class BasicMergeState extends GroupResult {
 	}
 	
 	public void initialise(int capacity, int containers, Kite9Log log) {
-		optionQueue = new PriorityQueue<MergeOption>(capacity * 5+1);
+		optionQueue = new PriorityQueue<MergeOption>((capacity * 5)+1, null);
 		bestOptions = new HashMap<MergeKey, MergeOption>(capacity * 5);
 		containerStates = new HashMap<Container, ContainerStateInfo>(containers * 2);
 		groupContainers = new HashMap<Group, Map<Container, GroupContainerState>>(capacity);

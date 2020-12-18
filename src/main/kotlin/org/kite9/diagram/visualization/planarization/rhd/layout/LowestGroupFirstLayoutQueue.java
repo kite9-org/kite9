@@ -44,7 +44,7 @@ public class LowestGroupFirstLayoutQueue implements LayoutQueue {
 
 	public void offer(Group item) {
 		if (item.getAxis().isReadyToPosition(completedGroups)) {
-			todo.offer(item);
+			todo.add(item);
 		}
 	}
 
@@ -53,11 +53,7 @@ public class LowestGroupFirstLayoutQueue implements LayoutQueue {
 
 	@Override
 	public Group poll() {
-		if (todo.size() == 0) {
-			return null;
-		}
-
-		return todo.poll();
+		return todo.remove();
 	}
 
 	@Override
