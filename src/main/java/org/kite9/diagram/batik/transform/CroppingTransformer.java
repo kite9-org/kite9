@@ -8,7 +8,8 @@ import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.SizedRectangular;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.BasicDimension2D;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.w3c.dom.Document;
@@ -43,12 +44,12 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 		if ((p instanceof LeafPainter) && (out != null)) {
 			Rectangle2D content = ((LeafPainter) p).bounds();
 			if (content != null) {
-				position = position.minus(new Dimension2D(content.getX(), content.getY()));
+				position = position.minus(new BasicDimension2D(content.getX(), content.getY()));
 
 				if (owner instanceof SizedRectangular) {
 					double left = ((SizedRectangular) owner).getPadding(Direction.LEFT);
 					double top = ((SizedRectangular) owner).getPadding(Direction.UP);
-					position = position.add(new Dimension2D(left, top));
+					position = position.add(new BasicDimension2D(left, top));
 				}
 				
 				
@@ -65,8 +66,8 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 	public Dimension2D getBounds(LeafPainter p) {
 		Rectangle2D r = p.bounds();
 		if (r == null) {
-			return CostedDimension.Companion.getZERO();
+			return CostedDimension2D.Companion.getZERO();
 		}
-		return new Dimension2D(r.getWidth(), r.getHeight());
+		return new BasicDimension2D(r.getWidth(), r.getHeight());
 	}	
 }

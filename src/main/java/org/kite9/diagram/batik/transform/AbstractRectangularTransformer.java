@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.transform;
 import org.kite9.diagram.model.Decal;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
@@ -25,7 +25,7 @@ public abstract class AbstractRectangularTransformer {
 	 * translate.
 	 */
 	protected Dimension2D getRenderedRelativePosition(DiagramElement de) {
-		Dimension2D position = CostedDimension.Companion.getZERO();
+		Dimension2D position = CostedDimension2D.Companion.getZERO();
 		if (de instanceof Decal) {
 			return position;
 		} else if (de instanceof Rectangular) {
@@ -42,7 +42,7 @@ public abstract class AbstractRectangularTransformer {
 		Dimension2D position = rri.getPosition();
 		
 		if (position == null) {
-			return CostedDimension.Companion.getZERO();
+			return CostedDimension2D.Companion.getZERO();
 		} else {
 			return position;
 		}
@@ -61,6 +61,6 @@ public abstract class AbstractRectangularTransformer {
 			}
 		}
 		
-		return CostedDimension.Companion.getZERO();
+		return CostedDimension2D.Companion.getZERO();
 	}
 }

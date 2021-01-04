@@ -13,7 +13,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
@@ -110,7 +110,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 
 	@Override
 	public Dimension2D getMinimumSize() {
-		return CostedDimension.Companion.getZERO();
+		return CostedDimension2D.Companion.getZERO();
 	}
 
 	@Override

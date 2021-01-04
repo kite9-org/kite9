@@ -6,7 +6,7 @@ import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.logging.Kite9Log;
@@ -208,9 +208,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((aSide == null) || (bSide == null)) {
 			throw new LogicException("Don't know sides");
 		} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
-			return size(a, CostedDimension.Companion.getUNBOUNDED()).getWidth();
+			return size(a, CostedDimension2D.Companion.getUNBOUNDED()).getWidth();
 		} else {
-			return size(a, CostedDimension.Companion.getUNBOUNDED()).getHeight();
+			return size(a, CostedDimension2D.Companion.getUNBOUNDED()).getHeight();
 		}
 
 	}
@@ -219,7 +219,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	
 	public abstract double getMargin(DiagramElement element, Direction d);
 	
-	protected abstract CostedDimension size(DiagramElement a, Dimension2D s);
+	protected abstract CostedDimension2D size(DiagramElement a, Dimension2D s);
 	
 	/**
 	 * The smallest possible length of element, when the element is starting or ending in the length being considered.

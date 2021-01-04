@@ -7,6 +7,7 @@ import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Rectangular;
+import org.kite9.diagram.model.position.BasicDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
@@ -56,8 +57,8 @@ public class RectangularPositionCompactionStep extends AbstractCompactionStep {
 			double yMax = y.getB().getMinimumPosition();
 			
 			RectangleRenderingInformation rri = r.getRenderingInformation();
-			rri.setPosition(new Dimension2D(xMin, yMin));
-			Dimension2D size = new Dimension2D(xMax - xMin, yMax - yMin);
+			rri.setPosition(new BasicDimension2D(xMin, yMin));
+			Dimension2D size = new BasicDimension2D(xMax - xMin, yMax - yMin);
 			
 			if ((size.getWidth() < 0) || (size.getHeight() < 0)) {
 				throw new LogicException("Slideable issue");

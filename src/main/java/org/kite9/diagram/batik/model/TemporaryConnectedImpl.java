@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import org.kite9.diagram.common.HintMap;
 import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnected;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
@@ -118,13 +117,13 @@ public class TemporaryConnectedImpl extends AbstractTemporaryConnected implement
 	}
 
 	@Override
-	public CostedDimension getSize(Dimension2D within) {
-		return CostedDimension.Companion.getZERO();
+	public CostedDimension2D getSize(Dimension2D within) {
+		return CostedDimension2D.Companion.getZERO();
 	}
 
 	@Override
 	public Dimension2D getMinimumSize() {
-		return CostedDimension.Companion.getZERO();
+		return CostedDimension2D.Companion.getZERO();
 	}
 
 }

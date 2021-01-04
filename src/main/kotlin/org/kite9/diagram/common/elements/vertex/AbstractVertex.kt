@@ -2,6 +2,7 @@ package org.kite9.diagram.common.elements.vertex
 
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.elements.edge.Edge
+import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 
 /**
@@ -56,17 +57,17 @@ abstract class AbstractVertex(private val id: String) : Vertex {
         }
     }
 
-    override var position = Dimension2D()
+    override var position : Dimension2D = CostedDimension2D.Companion.ZERO
         protected set
     override var x: Double
         get() = position.x()
         set(x) {
-            position = Dimension2D.setX(position, x)
+            position = position.setX(x)
         }
     override var y: Double
         get() = position.y()
         set(y) {
-            position = Dimension2D.setY(position, y)
+            position = position.setY(y)
         }
 
     override fun hashCode(): Int {

@@ -9,10 +9,7 @@ import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.CompactionStep;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -88,7 +85,7 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 		double x2 = vertSeg == null ? prev.x() : vertSeg.getMinimumPosition();
 		double y2 = horizSeg == null ? prev.y() : horizSeg.getMinimumPosition();
 		
-		Dimension2D p1 = new Dimension2D(x2,y2);
+		Dimension2D p1 = new BasicDimension2D(x2,y2);
 		//boolean hop = false;  // should be based on v.
 		
 		if (prev != null) {
@@ -115,8 +112,8 @@ public class ConnectionRouteCompactionStep implements CompactionStep {
 
 		RectangleRenderingInformation rri = t.getRenderingInformation();
 		
-		rri.setPosition(new Dimension2D(x1, y1));
-		rri.setSize(new Dimension2D(x2-x1, y2-y1));
+		rri.setPosition(new BasicDimension2D(x1, y1));
+		rri.setSize(new BasicDimension2D(x2-x1, y2-y1));
 	}
 
 	private double getRotatedSize(Terminator t, int r, Direction d) {

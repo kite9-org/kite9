@@ -7,6 +7,7 @@ import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.BasicDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,6 +44,6 @@ public class PositioningTransformer extends AbstractRectangularTransformer imple
 	@Override
 	public Dimension2D getBounds(LeafPainter p) {
 		Rectangle2D r = p.bounds();
-		return new Dimension2D(r.getMaxX(), r.getMaxY());
+		return new BasicDimension2D(r.getMaxX(), r.getMaxY());
 	}	
 }

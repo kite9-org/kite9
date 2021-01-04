@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.compaction;
 
-import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.model.position.Dimension2D;
 
 public class Tools implements Logable {
 

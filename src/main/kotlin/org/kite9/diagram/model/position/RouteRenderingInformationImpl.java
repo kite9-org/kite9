@@ -63,8 +63,8 @@ public class RouteRenderingInformationImpl extends AbstractRenderingInformationI
 			maxy = Math.max(d.y(), maxy);
 		}
 		
-		this.setPosition(new Dimension2D(minx, miny));
-		this.setSize(new Dimension2D(maxx - minx, maxy -miny));
+		this.setPosition(new BasicDimension2D(minx, miny));
+		this.setSize(new BasicDimension2D(maxx - minx, maxy -miny));
 	}
 
 	@Override
