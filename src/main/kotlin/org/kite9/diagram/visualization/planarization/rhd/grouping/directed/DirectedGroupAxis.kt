@@ -213,7 +213,7 @@ class DirectedGroupAxis(private val log: Kite9Log) : GroupAxis {
             return if (cg.b === g) {
                 cg.layout
             } else if (cg.a === g) {
-                Layout.reverse(cg.layout)
+                Layout.reverse(cg.layout)!!
             } else {
                 throw LogicException()
             }
