@@ -33,7 +33,7 @@ public class TemporaryConnectedImpl extends AbstractTemporaryConnected implement
 		return "[grid-temporary: "+getID()+"]";
 	}
 
-	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, null, false);
+	private RectangleRenderingInformation rri = new RectangleRenderingInformationImpl(null, null, false);
 	
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {

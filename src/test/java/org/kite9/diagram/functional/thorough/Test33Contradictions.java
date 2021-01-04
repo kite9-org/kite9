@@ -567,7 +567,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
 		renderDiagram(d);
 
-		Assert.assertFalse("rendered, shouldn't be", getOriginalElement(l).getRenderingInformation().isRendered());
+		Assert.assertFalse("rendered, shouldn't be", getOriginalElement(l).getRenderingInformation().getRendered());
 
 	}
 

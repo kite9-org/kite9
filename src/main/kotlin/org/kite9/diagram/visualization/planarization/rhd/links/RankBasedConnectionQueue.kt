@@ -83,7 +83,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
                     out = ui.next()
                     current = 2
                 } else {
-                    throw NoSuchElementException()
+                    throw LogicException("No such element")
                 }
                 return out
             }
@@ -120,7 +120,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
             if (internalLinks != null) {
                 for (l in internalLinks.connections) {
                     if (l is Connection) {
-                        l.getRenderingInformation().isRendered = false
+                        l.getRenderingInformation().rendered = false
                     } else {
                         throw LogicException("Not sure what this is: $l")
                     }

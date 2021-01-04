@@ -43,7 +43,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     ): SubGridCornerVertices {
         val xspan = (c as Rectangular).getRenderingInformation().gridXPosition()
         val yspan = c.getRenderingInformation().gridYPosition()
-        val v = SubGridCornerVertices(c, xspan, yspan, parentCV, c.getDepth())
+        val v = SubGridCornerVertices(c, xspan!!, yspan!!, parentCV, c.getDepth())
         cornerVertices[c] = v
         return v
     }

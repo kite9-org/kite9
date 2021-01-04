@@ -27,7 +27,7 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 	}
 
 	public boolean isVisibleElement(DiagramElement de) {
-		return (de.getRenderingInformation().isRendered());
+		return (de.getRenderingInformation().getRendered());
 	}
 	
 	public static final double MINIMUM_GLYPH_SIZE = 2;

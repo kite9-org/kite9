@@ -77,7 +77,7 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 
 	@Override
 	public Element output(Document d, XMLProcessor p) {
-		if (getRenderingInformation().isRendered()) {
+		if (getRenderingInformation().getRendered()) {
 			ensureInitialized();
 			Element out = paintElementToDocument(d, p);
 			return out;

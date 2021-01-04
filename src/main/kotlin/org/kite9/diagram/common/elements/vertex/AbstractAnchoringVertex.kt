@@ -25,10 +25,14 @@ abstract class AbstractAnchoringVertex(id: String) : AbstractVertex(id) {
                     return
                 }
                 val ri = rI
-                var l: Double = if (ri.position == null) 0.0 else ri.position.x()
-                var r = if (ri.size == null) l else l + ri.size.width()
-                val u: Double = if (ri.position == null) 0.0 else ri.position.y()
-                val d = if (ri.size == null) u else u + ri.size.height()
+                val position = ri.position
+                val size = ri.size
+
+                var l: Double = if (position == null) 0.0 else position.x()
+                var r = if (size == null) l else l + size.width()
+                val u: Double = if (position == null) 0.0 else position.y()
+                val d = if (size == null) u else u + size.height()
+
                 if (lr == HPos.LEFT) {
                     l = x
                 } else if (lr == HPos.RIGHT) {
@@ -47,12 +51,17 @@ abstract class AbstractAnchoringVertex(id: String) : AbstractVertex(id) {
                     return
                 }
                 val ri = rI
-                val l: Double = if (ri.position == null) 0.0 else ri.position.x()
-                val r = if (ri.size == null) l else l + ri.size.width()
-                var u: Double = if (ri.position == null) 0.0 else ri.position.y()
-                var d = if (ri.size == null) u else u + ri.size.height()
+                val position = ri.position
+                val size = ri.size
+
+                val l: Double = if (position == null) 0.0 else position.x()
+                val r = if (size == null) l else l + size.width()
+                var u: Double = if (position == null) 0.0 else position.y()
+                var d = if (size == null) u else u + size.height()
+
                 if (ud == VPos.UP) {
                     u = y
+
                 } else if (ud == VPos.DOWN) {
                     d = y
                 }

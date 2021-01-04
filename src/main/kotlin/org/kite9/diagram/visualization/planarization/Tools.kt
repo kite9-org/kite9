@@ -424,7 +424,7 @@ class Tools : Logable {
         @JvmStatic
 		fun isConnectionRendered(c: Connection): Boolean {
             val rri = c.getRenderingInformation()
-            return rri.isRendered
+            return rri.rendered
         }
 
         @JvmStatic
@@ -433,7 +433,7 @@ class Tools : Logable {
             if (c.getDrawDirection() != null) {
                 rri.isContradicting = contradicting
             }
-            rri.isRendered = rendering
+            rri.rendered = rendering
         }
     }
 }
