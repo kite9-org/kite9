@@ -1,4 +1,4 @@
-package org.kite9.diagram.model.visitors;
+package org.kite9.diagram.visitors;
 
 import org.kite9.diagram.model.DiagramElement;
 

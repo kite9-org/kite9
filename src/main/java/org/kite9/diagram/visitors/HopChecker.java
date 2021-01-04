@@ -1,11 +1,11 @@
-package org.kite9.diagram.model.visitors;
+package org.kite9.diagram.visitors;
 
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
+import org.kite9.diagram.visitors.DiagramChecker.ExpectedLayoutException;
 
 public class HopChecker {
 	
