@@ -1,5 +1,6 @@
 package org.kite9.diagram.logging
 
+import org.kite9.diagram.model.DiagramElement
 import java.lang.StringBuffer
 import java.util.ArrayList
 
@@ -49,7 +50,7 @@ class Table {
         }
     }
 
-    fun addObjectRow(row: Array<Any>) {
+    fun <T> addObjectRow(row: Array<T>) {
         val items = arrayOfNulls<String>(row.size)
         for (i in items.indices) {
             items[i] = row[i].toString()
