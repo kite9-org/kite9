@@ -91,7 +91,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		double right = getPadding(Direction.RIGHT);
 		double up = getPadding(Direction.UP);
 		double down = getPadding(Direction.DOWN);
-		return new CostedDimension(left + right, up + down, CostedDimension.UNBOUNDED);
+		return new CostedDimension(left + right, up + down, CostedDimension.Companion.getUNBOUNDED());
 	}
 	
 }

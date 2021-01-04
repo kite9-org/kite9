@@ -65,7 +65,7 @@ public class CroppingTransformer extends AbstractRectangularTransformer implemen
 	public Dimension2D getBounds(LeafPainter p) {
 		Rectangle2D r = p.bounds();
 		if (r == null) {
-			return CostedDimension.ZERO;
+			return CostedDimension.Companion.getZERO();
 		}
 		return new Dimension2D(r.getWidth(), r.getHeight());
 	}	

@@ -25,7 +25,7 @@ public class BatikDisplayer extends AbstractCompleteDisplayer {
 		}
 
 		// not a CompactedRectangular
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 
 	}
 

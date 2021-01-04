@@ -1,4 +1,4 @@
-package org.kite9.diagram.common;
+package org.kite9.diagram;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -58,7 +58,7 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 
 	@Override
 	public Dimension2D getBounds(LeafPainter p) {
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 
 }

@@ -25,7 +25,7 @@ public abstract class AbstractRectangularTransformer {
 	 * translate.
 	 */
 	protected Dimension2D getRenderedRelativePosition(DiagramElement de) {
-		Dimension2D position = CostedDimension.ZERO;
+		Dimension2D position = CostedDimension.Companion.getZERO();
 		if (de instanceof Decal) {
 			return position;
 		} else if (de instanceof Rectangular) {
@@ -42,7 +42,7 @@ public abstract class AbstractRectangularTransformer {
 		Dimension2D position = rri.getPosition();
 		
 		if (position == null) {
-			return CostedDimension.ZERO;
+			return CostedDimension.Companion.getZERO();
 		} else {
 			return position;
 		}
@@ -61,6 +61,6 @@ public abstract class AbstractRectangularTransformer {
 			}
 		}
 		
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 }

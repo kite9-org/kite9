@@ -173,7 +173,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	}
 	
 	private CostedDimension ensureMinimumSize(Dimension2D c, Dimension2D within) {
-		Dimension2D min = CostedDimension.ZERO;
+		Dimension2D min = CostedDimension.Companion.getZERO();
 		if (this instanceof SizedRectangular) {
 			min = ((SizedRectangular)this).getMinimumSize();
 		}
@@ -189,7 +189,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 			return ((LeafTransformer)transformer).getBounds((LeafPainter)  p);
 		}
 		
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 
 }

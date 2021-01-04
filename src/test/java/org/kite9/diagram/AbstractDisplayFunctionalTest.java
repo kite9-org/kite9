@@ -25,7 +25,6 @@ import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.common.StackHelp;
-import org.kite9.diagram.common.TestingHelp;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

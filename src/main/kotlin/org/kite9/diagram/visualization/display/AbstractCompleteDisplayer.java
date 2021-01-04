@@ -208,9 +208,9 @@ public abstract class AbstractCompleteDisplayer implements CompleteDisplayer, Di
 		} else if ((aSide == null) || (bSide == null)) {
 			throw new LogicException("Don't know sides");
 		} else if ((aSide == Direction.LEFT) || (aSide == Direction.RIGHT)) {
-			return size(a, CostedDimension.UNBOUNDED).getWidth();
+			return size(a, CostedDimension.Companion.getUNBOUNDED()).getWidth();
 		} else {
-			return size(a, CostedDimension.UNBOUNDED).getHeight();
+			return size(a, CostedDimension.Companion.getUNBOUNDED()).getHeight();
 		}
 
 	}

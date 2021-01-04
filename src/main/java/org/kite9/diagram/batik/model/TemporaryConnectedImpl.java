@@ -119,12 +119,12 @@ public class TemporaryConnectedImpl extends AbstractTemporaryConnected implement
 
 	@Override
 	public CostedDimension getSize(Dimension2D within) {
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 
 	@Override
 	public Dimension2D getMinimumSize() {
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 
 }

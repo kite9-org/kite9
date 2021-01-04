@@ -110,7 +110,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 
 	@Override
 	public Dimension2D getMinimumSize() {
-		return CostedDimension.ZERO;
+		return CostedDimension.Companion.getZERO();
 	}
 
 	@Override
