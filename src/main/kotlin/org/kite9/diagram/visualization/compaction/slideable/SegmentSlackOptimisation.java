@@ -41,11 +41,11 @@ public class SegmentSlackOptimisation extends AbstractSlackOptimisation<Segment>
 		for (Segment s : segments) {
 			Slideable<Segment> sli = new Slideable<Segment>(this, s);
 			s.setSlideable(sli);
-			log.send(log.go() ? null : "Created slideable: " + sli);
+			getLog().send(getLog().go() ? null : "Created slideable: " + sli);
 			slideables.add(sli);
 		}
 
-		pushCount = 0;
+		setPushCount(0);
 		addSlideables(slideables);
 
 		initialiseSlackOptimisation();
