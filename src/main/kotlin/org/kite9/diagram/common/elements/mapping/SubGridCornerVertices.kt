@@ -5,7 +5,6 @@ import org.kite9.diagram.common.fraction.BigFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
-import java.util.*
 
 /**
  * Adds vertices to the parent container vertices, and operates in a narrower range.

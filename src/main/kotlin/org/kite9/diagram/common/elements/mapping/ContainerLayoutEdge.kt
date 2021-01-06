@@ -9,7 +9,6 @@ import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
-import java.util.*
 
 /**
  * This edge is used to enforce a particular layout within a container.

@@ -9,8 +9,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.VPos
-import java.util.*
-import java.util.stream.Collectors
 
 /**
  * Represents corners of diagrams, containers and any other rectangular content.
@@ -84,8 +82,9 @@ class MultiCornerVertex(id: String, val xOrdinal: BigFraction, val yOrdinal: Big
     }
 
     override fun getDiagramElements(): Set<DiagramElement> {
-        return anchors.stream().map { a: Anchor -> a.de }
-            .collect(Collectors.toSet())
+        return anchors
+            .map { a: Anchor -> a.de }
+            .toSet()
     }
 
     companion object {

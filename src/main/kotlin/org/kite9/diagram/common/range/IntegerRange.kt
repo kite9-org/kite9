@@ -1,7 +1,5 @@
 package org.kite9.diagram.common.range
 
-import java.util.*
-
 interface IntegerRange {
     val from: Int
     val to: Int

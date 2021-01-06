@@ -1,9 +1,6 @@
 package org.kite9.diagram.common.elements.vertex
 
-import org.kite9.diagram.common.elements.vertex.AbstractVertex
-import org.kite9.diagram.common.elements.vertex.MultiElementVertex
 import org.kite9.diagram.model.DiagramElement
-import java.util.HashSet
 
 /**
  * This is used where two edges are required to cross each other.  This vertex is added at the crossing

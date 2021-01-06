@@ -7,7 +7,6 @@ import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
-import java.util.*
 
 abstract class AbstractBaseCornerVertices(
     rootContainer: DiagramElement,

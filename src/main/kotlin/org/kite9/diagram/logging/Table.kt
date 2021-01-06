@@ -1,9 +1,5 @@
 package org.kite9.diagram.logging
 
-import org.kite9.diagram.model.DiagramElement
-import java.lang.StringBuffer
-import java.util.ArrayList
-
 /**
  * Tabular displayer
  *

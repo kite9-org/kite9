@@ -2,7 +2,6 @@ package org.kite9.diagram.common.hints
 
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
-import java.util.*
 
 /**
  * Hints are attached to [PositionableDiagramElement]s.  These allow the grouping and layout

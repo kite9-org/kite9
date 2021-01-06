@@ -1,15 +1,9 @@
 package org.kite9.diagram.logging
 
-import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.Kite9Log
 import java.io.File
-import java.lang.StringBuffer
-import java.util.Collections
-import java.io.PrintStream
-import java.io.FileOutputStream
 import java.io.FileNotFoundException
-import java.lang.Exception
-import java.util.ArrayList
+import java.io.FileOutputStream
+import java.io.PrintStream
 
 /**
  * Very simple abstraction class for all logging functions.
@@ -64,7 +58,7 @@ class Kite9Log(var logFor: Logable) {
             val t = Table()
             val keys = items.keys
             val keyList: ArrayList<Any?> = ArrayList(keys)
-            Collections.sort(keyList) { o1, o2 ->
+            keyList.sortWith { o1, o2 ->
                 if (o1 == null) {
                     -1
                 } else if (o2 == null) {
