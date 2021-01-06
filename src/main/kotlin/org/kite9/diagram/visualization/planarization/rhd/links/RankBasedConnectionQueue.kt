@@ -12,30 +12,26 @@ import org.kite9.diagram.visualization.planarization.Tools
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
-import java.util.function.Predicate
 
 class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logable {
 
-    class LinkComparator : Comparator<BiDirectional<Connected>> {
-        override fun compare(arg0: BiDirectional<Connected>, arg1: BiDirectional<Connected>): Int {
-            val r0 = getRankFor(arg0)
-            val r1 = getRankFor(arg1)
-            return r1.compareTo(r0)
-        }
-
-        fun getRankFor(arg0: BiDirectional<Connected>): Int {
-            return if (arg0 is Connection) {
-                arg0.getRank()
-            } else {
-                0
-            }
+    fun getRankFor(arg0: BiDirectional<Connected>): Int {
+        return if (arg0 is Connection) {
+            arg0.getRank()
+        } else {
+            0
         }
     }
 
     private val alreadyAdded: MutableSet<BiDirectional<Connected>> = UnorderedSet(1000)
     var log = Kite9Log(this)
     var hasContradictions = false
-    val comp : Comparator<BiDirectional<Connected>> = LinkComparator()
+
+    val comp  = { arg0: BiDirectional<Connected>, arg1: BiDirectional<Connected> ->
+        val r0 = getRankFor(arg0)
+        val r1 = getRankFor(arg1)
+        r1.compareTo(r0)
+    }
 
     val x: ArrayList<BiDirectional<Connected>> = ArrayList(1000)
     val y: ArrayList<BiDirectional<Connected>> = ArrayList(1000)
@@ -202,9 +198,6 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         throw UnsupportedOperationException()
     }
 
-    override fun removeIf(filter: Predicate<in BiDirectional<Connected>>): Boolean {
-        throw UnsupportedOperationException()
-    }
 
     override val size: Int
         get() =  x.size + y.size + u.size

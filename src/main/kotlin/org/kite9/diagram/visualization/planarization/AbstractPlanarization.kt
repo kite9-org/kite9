@@ -6,7 +6,6 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
-import java.util.*
 
 /**
  * Contains methods for:
@@ -46,9 +45,8 @@ abstract class AbstractPlanarization(override val diagram: Diagram) : Planarizat
 
         fun ensureRow(i: Int) {
             if (b[i] != null) return
-            val row = CharArray(length)
+            val row = CharArray(length) { ' ' }
             b[i] = row
-            Arrays.fill(row, ' ')
             minExtent = Math.min(minExtent, i)
             maxExtent = Math.max(maxExtent, i)
         }

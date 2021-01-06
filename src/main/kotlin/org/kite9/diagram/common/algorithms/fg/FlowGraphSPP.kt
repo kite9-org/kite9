@@ -9,7 +9,6 @@ import org.kite9.diagram.logging.LogicException
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
-import java.util.*
 
 /**
  * This algorithm uses a Dijkstra-style shortest path in order to maximise flow

@@ -4,7 +4,6 @@ import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.Tools
-import java.util.*
 
 /**
  * This performs the following transformations:

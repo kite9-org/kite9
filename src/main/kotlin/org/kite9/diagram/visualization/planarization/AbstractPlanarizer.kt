@@ -13,7 +13,6 @@ import org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemov
 import org.kite9.diagram.visualization.planarization.transform.LayoutSimplificationTransform
 import org.kite9.diagram.visualization.planarization.transform.OuterFaceIdentificationTransform
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform
-import java.util.*
 
 /**
  * This class defines the basic process of planarization, which is then extended

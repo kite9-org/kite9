@@ -1,9 +1,5 @@
 package org.kite9.diagram.common.algorithms.ssp
 
-import org.kite9.diagram.logging.LogicException
-import java.util.*
-import kotlin.collections.ArrayDeque
-
 
 /**
  * Taken from Java standard Library and turned into Kotlin.
