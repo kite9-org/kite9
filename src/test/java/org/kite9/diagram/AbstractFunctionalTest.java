@@ -109,9 +109,9 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 	@Before
 	public void setLogging() {
-//		if ("off".equals(System.getProperty("kite9.logging"))) {
-//			Kite9Log.Companion.setLogging(Destination.OFF);
-//		} else {
+		if ("off".equals(System.getProperty("kite9.logging"))) {
+			Kite9Log.Companion.setLogging(Destination.OFF);
+		} else {
 			Kite9Log.Companion.setLogging(Destination.STREAM);
 			// if we are running more than one test, then there's no point in logging.
 			if (firstRun) {
@@ -119,7 +119,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 			} else {
 				Kite9Log.Companion.setLogging(Destination.OFF);
 			}
-//		}
+		}
 	}
 	
 
