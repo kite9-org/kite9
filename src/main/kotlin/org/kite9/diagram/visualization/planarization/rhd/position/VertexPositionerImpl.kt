@@ -27,7 +27,7 @@ import org.kite9.diagram.model.position.VPos
 class VertexPositionerImpl(
     private val em: ElementMapper,
     private val rh: RoutableHandler2D,
-    private val cmp: Comparator<DiagramElement>
+    private val cmp: (DiagramElement, DiagramElement) -> Int
 ) : Logable, VertexPositioner {
 
     private val fracMapper: FracMapper = FracMapperImpl()
@@ -206,14 +206,14 @@ class VertexPositionerImpl(
             if (l != null) {
                 when (l) {
                     Layout.UP, Layout.DOWN, Layout.VERTICAL -> {
-                        val d1 = if (before != null && cmp.compare(c, before) == 1) Direction.UP else Direction.DOWN
-                        val d2 = if (after != null && cmp.compare(c, after) == 1) Direction.UP else Direction.DOWN
+                        val d1 = if (before != null && cmp(c, before) == 1) Direction.UP else Direction.DOWN
+                        val d2 = if (after != null && cmp(c, after) == 1) Direction.UP else Direction.DOWN
                         addExtraSideVertex(c, d1, before, cvs, bx, by, out, trim)
                         addExtraSideVertex(c, d2, after, cvs, bx, by, out, trim)
                     }
                     Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> {
-                        val d1 = if (before != null && cmp.compare(c, before) == 1) Direction.LEFT else Direction.RIGHT
-                        val d2 = if (after != null && cmp.compare(c, after) == 1) Direction.LEFT else Direction.RIGHT
+                        val d1 = if (before != null && cmp(c, before) == 1) Direction.LEFT else Direction.RIGHT
+                        val d2 = if (after != null && cmp(c, after) == 1) Direction.LEFT else Direction.RIGHT
                         addExtraSideVertex(c, d1, before, cvs, bx, by, out, trim)
                         addExtraSideVertex(c, d2, after, cvs, bx, by, out, trim)
                     }

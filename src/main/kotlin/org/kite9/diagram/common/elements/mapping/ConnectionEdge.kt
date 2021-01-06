@@ -95,7 +95,7 @@ class ConnectionEdge(
         return getOriginalUnderlying() === de
     }
 
-    override fun getDiagramElements(): Map<DiagramElement, Direction?> {
+    override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return mutableMapOf(kotlin.Pair(getOriginalUnderlying(), null))
     }
 

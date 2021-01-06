@@ -30,14 +30,14 @@ class BorderEdge(
     to: Vertex,
     var label: String,
     d: Direction,
-    private val forElements: Map<DiagramElement, Direction>
+    private val forElements: MutableMap<DiagramElement, Direction?>
 ) : AbstractPlanarizationEdge(
     from, to, d
 ), TwoElementPlanarizationEdge {
     /**
      * For a given diagram element, shows what side of that element this edge is on.
      */
-    override fun getDiagramElements(): Map<DiagramElement, Direction> {
+    override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return forElements
     }
 

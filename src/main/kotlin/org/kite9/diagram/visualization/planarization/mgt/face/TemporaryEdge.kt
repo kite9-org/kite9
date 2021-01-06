@@ -56,7 +56,7 @@ class TemporaryEdge(from: Vertex, to: Vertex) : AbstractPlanarizationEdge(
         return false
     }
 
-    override fun getDiagramElements(): Map<DiagramElement, Direction> {
+    override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return mutableMapOf()
     }
 }

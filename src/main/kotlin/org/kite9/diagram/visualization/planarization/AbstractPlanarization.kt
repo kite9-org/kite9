@@ -112,7 +112,8 @@ abstract class AbstractPlanarization(override val diagram: Diagram) : Planarizat
         return out.toString()
     }
 
-    override val edgeMappings: Map<DiagramElement, EdgeMapping> = HashMap()
-    override val allVertices: Collection<Vertex>
+    override val edgeMappings: MutableMap<DiagramElement, EdgeMapping> = HashMap()
+
+    override val allVertices: MutableCollection<Vertex>
         get() = vertexFaceMap.keys
 }

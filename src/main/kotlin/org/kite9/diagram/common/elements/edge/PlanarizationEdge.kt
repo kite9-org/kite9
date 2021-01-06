@@ -54,7 +54,7 @@ interface PlanarizationEdge : Edge {
      * Gives you information about the elements surrounding this one, and (potentially) which side
      * they are on.
      */
-    fun getDiagramElements(): Map<DiagramElement, Direction?>
+    fun getDiagramElements(): MutableMap<DiagramElement, Direction?>
     fun setFrom(v: Vertex)
     fun setTo(v: Vertex)
 

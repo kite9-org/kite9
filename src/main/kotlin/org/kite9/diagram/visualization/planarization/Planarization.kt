@@ -19,7 +19,7 @@ interface Planarization {
     /**
      * Returns the ordering of vertices within the Planarization
      */
-    val allVertices: Collection<Vertex>
+    val allVertices: MutableCollection<Vertex>
 
     /**
      * Returns the list of faces within the Planarization
@@ -44,12 +44,12 @@ interface Planarization {
     /**
      * Returns all edges in the planarization.
      */
-    val allEdges: List<Edge>
+    val allEdges: MutableList<Edge>
 
     /**
      * Any connections or layout that haven't yet, or can't be introduced into the planar embedding.
      */
-    val uninsertedConnections: Collection<BiDirectional<Connected>>
+    val uninsertedConnections: MutableCollection<BiDirectional<Connected>>
 
     /**
      * Simply removes the edge from a planarization, without respect for any
@@ -60,7 +60,7 @@ interface Planarization {
     /**
      * Manages the mapping of edges to diagram attr.
      */
-    val edgeMappings: Map<DiagramElement, EdgeMapping>
+    val edgeMappings: MutableMap<DiagramElement, EdgeMapping>
 
     /**
      * Returns the diagram itself
