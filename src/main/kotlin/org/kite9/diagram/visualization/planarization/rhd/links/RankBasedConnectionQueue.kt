@@ -102,8 +102,9 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
     override fun handleLinks(g: GroupPhase.Group) {
         if (g is CompoundGroup) {
             val cg = g
-            if (cg.internalLinkA != null) {
-                for (c in cg.internalLinkA.connections) {
+            val internalLinkA = cg.internalLinkA
+            if (internalLinkA != null) {
+                for (c in internalLinkA.connections) {
                     if (considerThis(c, cg)) {
                         //checkForPositionContradiction(c);
                         add(c)
@@ -129,8 +130,8 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         return if (c is Connection) {
             val d = c.getDrawDirection()
             (d == null && !u!!.contains(c)
-                    || (d === Direction.LEFT || d === Direction.RIGHT) && cg.axis.isHorizontal
-                    || (d === Direction.UP || d === Direction.DOWN) && cg.axis.isVertical)
+                    || (d === Direction.LEFT || d === Direction.RIGHT) && cg.type.isHorizontal
+                    || (d === Direction.UP || d === Direction.DOWN) && cg.type.isVertical)
         } else {
             false
         }

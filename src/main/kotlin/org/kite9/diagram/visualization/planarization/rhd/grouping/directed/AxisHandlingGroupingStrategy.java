@@ -97,7 +97,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 		identifyGroupDirection(out, gp,
 				ms);
 		log.send(log.go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
-				+ out.getB() + "\n\t" + out.getLayout() + "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).links);
+				+ out.getB() + "\n\t" + out.getLayout() + "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).getLinks());
 		writeGroup(out, mo);
 		return out;
 	}
@@ -296,7 +296,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 				LinkManager lm = createLinkManager();
 				CompoundGroup out = gp.new CompoundGroup(a, b, type, lm, true);
 				log.send(log.go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
-						+ out.getB() + "\n\t" +" NON-LAYOUT "+ "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).links);
+						+ out.getB() + "\n\t" +" NON-LAYOUT "+ "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).getLinks());
 
 				out.setSize(a.getSize());
 				setBothParents(out, (DirectedGroupAxis) a.getAxis());

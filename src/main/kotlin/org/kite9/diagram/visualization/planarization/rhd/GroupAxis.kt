@@ -40,7 +40,7 @@ interface GroupAxis {
     /**
      * Returns false if the group no longer needs combining into CompoundGroups
      */
-    val isActive: Boolean
+    var active: Boolean
 
     /**
      * Returns true if this group's parents are all positioned, and we can choose the position of this one.

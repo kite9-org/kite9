@@ -1,13 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet;
-import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
@@ -56,7 +51,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 		super();
 		networkSizes = new HashMap<Group, Integer>(size*2);
 		completedGroups = new UnorderedSet<Group>(size*2);
-		todo = new PriorityQueue<NetworkedItem>(size, new Comparator<NetworkedItem>() {
+		todo = new PriorityQueue<>(size, new Comparator<NetworkedItem>() {
 
 			/**
 			 * Although priority is top down, within a given level, do groups in the same order than they were merged
@@ -105,7 +100,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 	}
 
 	private boolean canLayout(Group item) {
-		return item.getAxis().isReadyToPosition(completedGroups);
+		return item.getType().isReadyToPosition(completedGroups);
 	}
 
 	private int countLinkNetworkSize(final LinkDetail ld) {
@@ -158,7 +153,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 		completedGroups.add(item);
 		Group a = item.getA();
 		Group b = item.getB();
-		boolean horiz = item.getAxis().isHorizontal();
+		boolean horiz = item.getType().isHorizontal();
 		Collection<LinkDetail> links = item.getLinkManager().subset(item.getLinkManager().allMask());
 		for (LinkDetail ld : links) {
 			Group group = ld.getGroup();
@@ -196,7 +191,7 @@ public class MostNetworkedFirstLayoutQueue implements LayoutQueue, Logable {
 				return null;
 			}
 			
-			group = group.getAxis().getParentGroup(horiz);
+			group = group.getType().getParentGroup(horiz);
 		}
 		
 		return group;

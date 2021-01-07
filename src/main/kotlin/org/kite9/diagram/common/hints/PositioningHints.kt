@@ -23,14 +23,15 @@ object PositioningHints {
     var POSITION_HINTS: MutableMap<String, Approach> = HashMap()
     var ALL_HINTS: MutableMap<String, Approach> = HashMap()
     @JvmStatic
-	fun merge(a: Map<String?, Float?>, b: Map<String?, Float?>): Map<String, Float?> {
+
+	fun merge(a: Map<String, Float?>, b: Map<String, Float?>): Map<String, Float?> {
         if (a.size == 0 && b.size == 0) {
-            return emptyMap<String, Float>()
+            return emptyMap()
         }
         val out: MutableMap<String, Float?> = HashMap()
-        for (k in ALL_HINTS.keys) {
-            val v = ALL_HINTS[k]
-            out[k] = v!!.merge(a[k], b[k])
+        for (k : String  in ALL_HINTS.keys) {
+            val v : Approach = ALL_HINTS[k]!!
+            out[k] = v.merge(a[k], b[k])
         }
         return out
     }

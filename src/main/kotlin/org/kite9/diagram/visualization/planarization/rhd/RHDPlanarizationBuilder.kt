@@ -22,7 +22,6 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGrou
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getType
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
 import org.kite9.diagram.visualization.planarization.rhd.layout.LayoutStrategy
@@ -207,12 +206,12 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         for (i in 0 until spc) {
             sb.append(" ")
         }
-        val axis: DirectedGroupAxis = getType(g)
-        val l: Layout? = g.getLayout()
+        val axis = g.type as DirectedGroupAxis
+        val l: Layout? = g.layout
         log.send(
-            (sb.toString() + g.getGroupNumber() +
+            (sb.toString() + g.groupNumber +
                     " " + (if ((g is LeafGroup)) g.toString() else axis)
-                    + "   " + routableReader!!.getPlacedPosition(g) + "  " + l + " " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + "   " + routableReader!!.getPlacedPosition(g) + "  " + l + " " + (if (g.type.isLayoutRequired) "LR " else " ")
                     + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
         )
         if (g is CompoundGroup) {
@@ -226,13 +225,13 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         }
     }
 
-    fun explain(g: GroupPhase.Group?, spc: Int) {
+    fun explain(g: GroupPhase.Group, spc: Int) {
         val sb: StringBuilder = StringBuilder(spc)
         for (i in 0 until spc) {
             sb.append(" ")
         }
-        val axis: DirectedGroupAxis = getType((g)!!)
-        log.send(sb.toString() + g!!.getGroupNumber() + "   " + routableReader!!.getPlacedPosition(g))
+        val axis = g.type as DirectedGroupAxis
+        log.send(sb.toString() + g!!.groupNumber + "   " + routableReader!!.getPlacedPosition(g))
         val hParent: GroupPhase.Group? = axis.horizParentGroup
         val vParent: GroupPhase.Group? = axis.vertParentGroup
         if (vParent !== hParent) {
@@ -240,9 +239,9 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 log.send(
                     (sb.toString()
                             + "horiz: "
-                            + (if ((g === (hParent as CompoundGroup).b)) hParent.getLayout() else reverse(
+                            + (if ((g === (hParent as CompoundGroup).b)) hParent.layout else reverse(
                         hParent
-                            .getLayout()
+                            .layout
                     )))
                 )
                 explain(hParent, spc + 1)
@@ -251,24 +250,25 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 log.send(
                     (sb.toString()
                             + "vert: "
-                            + (if ((g === (vParent as CompoundGroup).b)) vParent.getLayout() else reverse(
+                            + (if ((g === (vParent as CompoundGroup).b)) vParent.layout else reverse(
                         vParent
-                            .getLayout()
+                            .layout
                     )))
                 )
                 explain(vParent, spc + 1)
             }
         } else {
+            // vParent == hParent
             if (vParent != null) {
                 log.send(
                     (sb.toString()
                             + "pos: "
-                            + (if ((g === (vParent as CompoundGroup).b)) vParent.getLayout() else reverse(
+                            + (if ((g === (vParent as CompoundGroup).b)) vParent.layout else reverse(
                         vParent
-                            .getLayout()
+                            .layout
                     )))
                 )
-                explain(hParent, spc + 1)
+                explain(vParent, spc + 1)
             }
         }
     }
@@ -276,7 +276,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     private fun buildPositionMap(start: GroupPhase.Group, connections: ConnectionManager) {
         if (start is CompoundGroup) {
             val cg: CompoundGroup = start
-            log.send("Processing Group: " + start.getGroupNumber())
+            log.send("Processing Group: " + start.groupNumber)
             buildPositionMap(cg.a, connections)
             buildPositionMap(cg.b, connections)
             connections.handleLinks(cg)
@@ -288,7 +288,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val c: Container? = lg.container
 
             // sizing
-            val ri: RoutingInfo = lg.axis.getPosition((routableReader)!!, false)
+            val ri: RoutingInfo = lg.type.getPosition((routableReader)!!, false)
             vp!!.checkMinimumGridSizes(ri)
             if (l != null) {
                 routableReader!!.setPlacedPosition(l, ri)

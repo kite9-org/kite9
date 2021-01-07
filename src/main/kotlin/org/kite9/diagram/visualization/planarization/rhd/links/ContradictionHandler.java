@@ -9,7 +9,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 
 /**
  * Contains code for managing/checking for contradictions in links.
- * 
+ *
  * @author robmoffat
  *
  */

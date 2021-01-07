@@ -1,20 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed;
 
-import java.util.AbstractCollection;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
@@ -23,7 +10,9 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
-import org.kite9.diagram.logging.LogicException;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DirectedLinkManager implements LinkManager {
 	
@@ -54,6 +43,10 @@ public class DirectedLinkManager implements LinkManager {
 	
 	protected LinkedHashMap<Group, AbstractLinkDetail> links;
 	private Group g;
+
+	public LinkedHashMap<Group, AbstractLinkDetail> getLinks() {
+		return links;
+	}
 	
 	private Set<Direction> yFirstNearestNeighbours = EnumSet.noneOf(Direction.class);
 	private Set<Direction> xFirstNearestNeighbours = EnumSet.noneOf(Direction.class);
@@ -593,9 +586,9 @@ public class DirectedLinkManager implements LinkManager {
 		}
 	}
 
-	public void sortLink(Direction d, Group otherGroup, float linkValue, boolean ordering, int linkRank, Iterable<BiDirectional<Connected>> c) {
+	public void sortLink(Direction d, Group otherGroup, float linkValue, boolean ordering, int linkRank, Iterable<? extends BiDirectional<Connected>> c) {
 		if (keepLinkTo(otherGroup)) {
-			checkAddLinkDetail(d, otherGroup, linkValue, ordering, linkRank, c);
+			checkAddLinkDetail(d, otherGroup, linkValue, ordering, linkRank, (Iterable<BiDirectional<Connected>>) c);
 		}
 	}
 	
