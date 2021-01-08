@@ -46,7 +46,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
 
     override fun processCorrectDirectedConnections(p: MGTPlanarization): Int {
         // does the container layout edges, which will also be directed.
-        val containerLayoutEdges: MutableList<PlanarizationEdge?> = LinkedList()
+        val containerLayoutEdges: MutableList<PlanarizationEdge> = LinkedList()
         addContainerLayoutEdges(p.diagram, p, containerLayoutEdges)
         log.send("Layout edges:", containerLayoutEdges)
         for (edge in containerLayoutEdges) {
@@ -297,7 +297,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         if (newEdge != null) {
             edgeRouter.addPlanarizationEdge(
                 p,
-                newEdge as PlanarizationEdge?,
+                newEdge as PlanarizationEdge,
                 newEdge.getDrawDirection(),
                 CrossingType.STRICT,
                 GeographyType.STRICT
@@ -361,7 +361,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         return null
     }
 
-    protected fun addContainerLayoutEdges(c: Container, p: MGTPlanarization, toAdd: MutableList<PlanarizationEdge?>) {
+    protected fun addContainerLayoutEdges(c: Container, p: MGTPlanarization, toAdd: MutableList<PlanarizationEdge>) {
         val contents: List<Connected>?
         val layingOut = c.getLayout() != null
         contents = if (layingOut) {
@@ -387,7 +387,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
     private fun checkAddLayoutEdge(
         p: MGTPlanarization,
         c: Container,
-        newEdges: MutableList<PlanarizationEdge?>,
+        newEdges: MutableList<PlanarizationEdge>,
         prev: DiagramElement,
         current: DiagramElement
     ) {

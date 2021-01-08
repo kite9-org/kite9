@@ -75,5 +75,5 @@ interface Planarization {
     /**
      * Returns details about where the attr in the diagram have been placed for routing purposes
      */
-    fun getPlacedPosition(de: DiagramElement): RoutingInfo
+    fun getPlacedPosition(de: DiagramElement): RoutingInfo?
 }

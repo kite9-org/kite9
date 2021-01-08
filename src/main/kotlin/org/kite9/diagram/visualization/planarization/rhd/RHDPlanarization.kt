@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.Planarization
  */
 interface RHDPlanarization : Planarization {
 
-    override fun getPlacedPosition(de: DiagramElement): RoutingInfo
+    override fun getPlacedPosition(de: DiagramElement): RoutingInfo?
 
     val containerOrderingMap: Map<Container, List<Connected>>
 }

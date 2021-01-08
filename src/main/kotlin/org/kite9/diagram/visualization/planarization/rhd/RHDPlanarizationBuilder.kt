@@ -196,9 +196,9 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     }
 
     private fun overlaps(a: DiagramElement, b: DiagramElement): Boolean {
-        val ria: RoutingInfo = routableReader!!.getPlacedPosition(a)
-        val rib: RoutingInfo = routableReader!!.getPlacedPosition(b)
-        return (routableReader!!.overlaps(ria, rib))
+        val ria: RoutingInfo? = routableReader.getPlacedPosition(a)
+        val rib: RoutingInfo? = routableReader.getPlacedPosition(b)
+        return (routableReader.overlaps(ria!!, rib!!))
     }
 
     fun outputGroupInfo(g: GroupPhase.Group, spc: Int) {
@@ -309,7 +309,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             if (cri == null) {
                 cri = routableReader.emptyBounds()
             }
-            val cri2: RoutingInfo = routableReader.increaseBounds(cri, ri)
+            val cri2: RoutingInfo = routableReader.increaseBounds(cri!!, ri)
             if (!(cri2 == cri)) {
                 log.send("Increased bounds of $c to $cri2 due to $lg")
             }
@@ -331,7 +331,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     ) {
         if (em.hasOuterCornerVertices(c)) {
             val cvs: CornerVertices = em.getOuterCornerVertices(c)
-            val bounds: RoutingInfo = routableReader.getPlacedPosition(c)
+            val bounds: RoutingInfo? = routableReader.getPlacedPosition(c)
             log.send("Placed position of container: $c is $bounds")
             vp.setPerimeterVertexPositions(before, c, after, cvs, out)
             if (c is Container) {

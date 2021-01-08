@@ -15,7 +15,7 @@ abstract class RHDPlanarizationImpl(
         d
     ), RHDPlanarization {
 
-    override fun getPlacedPosition(de: DiagramElement): RoutingInfo {
+    override fun getPlacedPosition(de: DiagramElement): RoutingInfo? {
         return rr!!.getPlacedPosition(de)
     }
 
