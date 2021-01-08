@@ -33,7 +33,7 @@ public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer im
 		try {
 			MappedFlowGraph fg = createOptimisedFlowGraph(pln);
 			OrthBuilder fb = new MappedFlowGraphOrthBuilder(va, fg, clc);
-			OrthogonalizationImpl orth = fb.build(pln);			
+			Orthogonalization orth = fb.build(pln);
 			return orth;
 		} catch (LogicException le) {
 			log.send("Plan: "+pln);
