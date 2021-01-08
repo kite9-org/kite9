@@ -168,14 +168,14 @@ class VertexPositionerImpl(
         val fracMapY: Map<BigFraction, Double>
         if (cvs is SubGridCornerVertices) {
             val container = cvs.getGridContainer()
-            bounds = rh.getPlacedPosition(container)
+            bounds = rh.getPlacedPosition(container)!!
             bx = rh.getBoundsOf(bounds, true)
             by = rh.getBoundsOf(bounds, false)
             val (a, b) = fracMapper.getFracMapForGrid(c, rh, cvs.baseGrid, bounds)
             fracMapX = a
             fracMapY = b
         } else {
-            bounds = rh.getPlacedPosition(c)
+            bounds = rh.getPlacedPosition(c)!!
             bx = rh.getBoundsOf(bounds, true)
             by = rh.getBoundsOf(bounds, false)
             fracMapX = FracMapper.NULL_FRAC_MAP
