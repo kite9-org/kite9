@@ -1,21 +1,21 @@
 package org.kite9.diagram.visualization.orthogonalization.edge;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.orthogonalization.Dart;
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization;
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter;
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge;
-import org.kite9.diagram.logging.LogicException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class SimpleEdgeConverter implements EdgeConverter {
 	
@@ -32,7 +32,7 @@ public class SimpleEdgeConverter implements EdgeConverter {
 	} 
 	
 	@Override
-	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d) {
+	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, ? extends Direction> underlyings, Orthogonalization o, Vertex end1, Vertex end2, Direction d) {
 		List<Dart> start = new ArrayList<Dart>();
 		List<Dart> end = new ArrayList<Dart>();
 		

@@ -13,6 +13,7 @@ import org.kite9.diagram.common.elements.mapping.CornerVertices;
 import org.kite9.diagram.common.elements.mapping.ElementMapper;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.objects.Pair;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -224,7 +225,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 	}
 
 	@Override
-	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, Direction> underlyings, Orthogonalization o, Vertex end1,
+	public List<Dart> buildDartsBetweenVertices(Map<DiagramElement, ? extends Direction> underlyings, Orthogonalization o, Vertex end1,
 			Vertex end2, Direction d) {
 		List<Dart> s = super.buildDartsBetweenVertices(underlyings, o, end1, end2, d);
 		addLabelsToContainerDart(o, s, end1, end2, d);

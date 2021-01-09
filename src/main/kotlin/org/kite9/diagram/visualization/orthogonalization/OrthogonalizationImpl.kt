@@ -98,7 +98,7 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         return createDart(from, to, next, d)
     }
 
-    override fun createDart(from: Vertex, to: Vertex, partOf: Map<DiagramElement, Direction>, d: Direction): Dart {
+    override fun createDart(from: Vertex, to: Vertex, partOf: Map<DiagramElement, Direction?>, d: Direction): Dart {
         val first = if (from.compareTo(to) > 0) from else to
         val second = if (first === from) to else from
         //partOf.remove(null)

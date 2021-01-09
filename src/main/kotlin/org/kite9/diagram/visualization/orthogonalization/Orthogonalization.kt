@@ -41,7 +41,7 @@ interface Orthogonalization {
         partOfSide: Direction
     ): Dart
 
-    fun createDart(from: Vertex, to: Vertex, partOf: Map<DiagramElement, Direction>, d: Direction): Dart
+    fun createDart(from: Vertex, to: Vertex, partOf: Map<DiagramElement, Direction?>, d: Direction): Dart
 
     /**
      * In the same way as a [Face] is a clockwise ordering of edges, a [DartFace] is a clockwise

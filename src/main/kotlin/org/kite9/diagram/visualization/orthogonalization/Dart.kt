@@ -12,7 +12,7 @@ import org.kite9.diagram.model.position.Direction
  */
 interface Dart : Edge {
 
-    fun getDiagramElements(): MutableMap<DiagramElement, Direction>
+    fun getDiagramElements(): MutableMap<DiagramElement, Direction?>
 
     /**
      * Darts always have a direction

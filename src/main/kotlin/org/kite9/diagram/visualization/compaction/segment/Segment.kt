@@ -55,7 +55,7 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
     var singleSide: Side? = null
         get() {
             if (field == null) {
-                field = underlyingInfo!!.stream()
+                field = underlyingInfo.stream()
                     .map { ui: UnderlyingInfo -> ui.side }
                     .reduce(null) { a: Side?, b: Side? -> sideReduce(a, b) }
             }
@@ -97,7 +97,7 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
     }
 
     private fun convertUnderlyingToUnderlyingInfo(d: Dart): Iterable<UnderlyingInfo> {
-        val diagramElements: Map<DiagramElement, Direction> = d.getDiagramElements()
+        val diagramElements: Map<DiagramElement, Direction?> = d.getDiagramElements()
         return diagramElements.keys.map { toUnderlyingInfo(
             it,
             diagramElements[it])

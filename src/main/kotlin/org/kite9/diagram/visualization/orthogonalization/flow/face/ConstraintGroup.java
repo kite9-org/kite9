@@ -13,7 +13,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet;
 import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.visualization.planarization.Face;
 
-class ConstraintGroup {
+public class ConstraintGroup {
 
 	private final Set<Edge> fixedConstraints;
 

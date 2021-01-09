@@ -22,7 +22,7 @@ import org.kite9.diagram.model.position.Direction
 internal data class DartImpl(
     val f: Vertex,
     val t: Vertex,
-    val underlyings: MutableMap<DiagramElement, Direction>,
+    val underlyings: MutableMap<DiagramElement, Direction?>,
     val d: Direction,
     val id: String,
     val o: OrthogonalizationImpl
@@ -34,7 +34,7 @@ internal data class DartImpl(
         return "[" + getFrom() + "-" + getTo() + "-" + d + "]"
     }
 
-    override fun getDiagramElements(): MutableMap<DiagramElement, Direction> {
+    override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return underlyings
     }
 

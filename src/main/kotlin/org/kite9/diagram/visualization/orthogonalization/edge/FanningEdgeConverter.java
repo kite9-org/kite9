@@ -43,7 +43,7 @@ public class FanningEdgeConverter extends LabellingEdgeConverter {
 				o.createDart(fanOuter, fanInner, map, Direction.reverse(fan));
 
 				IncidentDart out = super.convertPlanarizationEdge(e, o, incident, fanInner, sideVertex, planVertex, fan);
-				out.external = externalVertex;
+				out.setExternal(externalVertex);
 				return out;
 			}
 		}
