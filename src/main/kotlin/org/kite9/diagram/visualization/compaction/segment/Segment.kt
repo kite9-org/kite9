@@ -208,7 +208,7 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
             // find segments that meet this one
             leavingSegments = getVerticesInSegment()
                 .map {
-                    if (isHorizontal) c.verticalVertexSegmentMap[it] else c.horizontalVertexSegmentMap[it]
+                    if (isHorizontal) c.getVerticalVertexSegmentMap()[it] else c.getHorizontalVertexSegmentMap()[it]
                 }
                 .filterNotNull()
                 .toSet()
