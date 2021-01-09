@@ -21,7 +21,7 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 public class LeftRightAligner implements Aligner {
 
 	@Override
-	public void alignFor(Container co, Set<Rectangular> des, Compaction c, boolean horizontal) {
+	public void alignFor(Container co, Set<? extends Rectangular> des, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation sso = horizontal ? c.getVerticalSegmentSlackOptimisation() : c.getHorizontalSegmentSlackOptimisation();
 
 		for (Rectangular r : des) {

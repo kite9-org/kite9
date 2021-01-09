@@ -32,7 +32,7 @@ public class CenteringAligner implements Aligner, Logable {
 	protected Kite9Log log = new Kite9Log(this);
 	
 	@Override
-	public void alignFor(Container co, Set<Rectangular> des, Compaction c, boolean horizontal) {
+	public void alignFor(Container co, Set<? extends Rectangular> des, Compaction c, boolean horizontal) {
 		SegmentSlackOptimisation sso = horizontal ?  c.getVerticalSegmentSlackOptimisation() : c.getHorizontalSegmentSlackOptimisation();
 		log.send("Center Align: "+(horizontal ? "horiz" : "vert"), des);
 		
@@ -68,7 +68,7 @@ public class CenteringAligner implements Aligner, Logable {
 		}
 	}
 
-	public List<Slideable<Segment>> findRelevantSlideables(Set<Rectangular> des, SegmentSlackOptimisation sso) {
+	public List<Slideable<Segment>> findRelevantSlideables(Set<? extends Rectangular> des, SegmentSlackOptimisation sso) {
 		return sso.getAllSlideables().stream()
 			.filter(s -> s.getUnderlying().hasUnderlying(des))
 			.sorted((a, b) -> Integer.compare(a.getMinimumPosition(), b.getMinimumPosition()))

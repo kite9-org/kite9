@@ -22,20 +22,20 @@ public class ConnectionAligner implements Aligner {
 	
 
 	@Override
-	public void alignFor(Container co, Set<Rectangular> de, Compaction c, boolean horizontal) {
+	public void alignFor(Container co, Set<? extends Rectangular> de, Compaction c, boolean horizontal) {
 		List<Segment> segs = horizontal ?  c.getHorizontalSegments() : c.getVerticalSegments();
 		alignConnections(segs, de);
 		
 	}
 
-	private void alignConnections(List<Segment> horizontalSegments, Set<Rectangular> de) {
+	private void alignConnections(List<Segment> horizontalSegments, Set<? extends Rectangular> de) {
 		horizontalSegments.stream()
 			.filter(s -> s.getConnections().size() > 0)
 			.filter(s -> hasConnectionMeeting(s, de))
 			.forEach(s -> alignSegment(s));
 	}
 	
-	private boolean hasConnectionMeeting(Segment s, Set<Rectangular> de) {
+	private boolean hasConnectionMeeting(Segment s, Set<? extends Rectangular> de) {
 		for (Connection c : s.getConnections()) {
 			if (de.contains(c.getFrom()) || (de.contains(c.getTo()))) {
 				return true;
