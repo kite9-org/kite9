@@ -75,7 +75,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 			return INVALID_MERGE;
 		}
 		
-		int p = canGroupsMerge(mk.a, mk.b, ms, mo.alignedGroup, mo.alignedDirection);
+		int p = canGroupsMerge(mk.getA(), mk.getB(), ms, mo.alignedGroup, mo.alignedDirection);
 		
 		if (p != AbstractGroupingStrategy.INVALID_MERGE) {
 			mo.resetPriority(ms, p);
@@ -123,7 +123,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 				Change c = updateMergeOption(mo, ms);
 				
 				if ((c == Change.CHANGED) || (c==Change.NO_CHANGE)) {
-					int p = canGroupsMerge(mo.mk.a, mo.mk.b, ms, mo.alignedGroup, mo.alignedDirection);
+					int p = canGroupsMerge(mo.mk.getA(), mo.mk.getB(), ms, mo.alignedGroup, mo.alignedDirection);
 					if (p!= AbstractGroupingStrategy.INVALID_MERGE) {
 						if ((p != mo.getPriority()) || (c == Change.CHANGED)) {
 							// poke it back in to use in desperation
@@ -156,11 +156,11 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 	 * been merged.
 	 */
 	private Change updateMergeOption(MergeOption mo, BasicMergeState ms) {
-		Group a = getWorkingGroup(mo.mk.a, ms);
-		Group b = getWorkingGroup(mo.mk.b, ms);
+		Group a = getWorkingGroup(mo.mk.getA(), ms);
+		Group b = getWorkingGroup(mo.mk.getB(), ms);
 		Group alignedGroup = getWorkingGroup(mo.alignedGroup, ms);
 		if ((a!=b) && (a!=alignedGroup) && (b!=alignedGroup)) {
-			if ((a != mo.mk.a) || (b != mo.mk.b) || (alignedGroup!=mo.alignedGroup)) {
+			if ((a != mo.mk.getA()) || (b != mo.mk.getB()) || (alignedGroup!=mo.alignedGroup)) {
 				MergeKey newKey = new MergeKey(a, b);
 				mo.mk = newKey;
 				mo.alignedGroup = alignedGroup;

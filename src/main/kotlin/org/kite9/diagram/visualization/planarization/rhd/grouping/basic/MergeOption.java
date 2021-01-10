@@ -72,7 +72,7 @@ public class MergeOption implements Comparable<MergeOption> {
 	
 	public MergeOption(Group a, Group b, int number, int p, Group alignedGroup, Direction alignedSide, BasicMergeState ms) {
 		this.mk = new MergeKey(a, b);
-		this.size = mk.a.getSize() + mk.b.getSize();
+		this.size = mk.getA().getSize() + mk.getB().getSize();
 		this.number = number;
 		this.priority = p;
 		this.alignedDirection = alignedSide;
@@ -192,7 +192,7 @@ public class MergeOption implements Comparable<MergeOption> {
 	}
 
 	public String toString() {
-		return "[MO: " +number+" " + mk.a.getGroupNumber() + " (" + mk.a.getSize() + ")  " + mk.b.getGroupNumber() + "(" + mk.b.getSize() + "): t= "+getMergeType()+" i=" + linksIncluded + " a="
+		return "[MO: " +number+" " + mk.getA().getGroupNumber() + " (" + mk.getA().getSize() + ")  " + mk.getB().getGroupNumber() + "(" + mk.getB().getSize() + "): t= "+getMergeType()+" i=" + linksIncluded + " a="
 				+ linksAligned + " t=" + totalLinks + "ags="+alignmentGroupSize+" od="+ordinalDistance+", p="+priority+" a="+alignedGroup+" ad="+alignedDirection+" lr="+linkRank+"]";
 
 	}
@@ -206,8 +206,8 @@ public class MergeOption implements Comparable<MergeOption> {
 		this.linksIncluded = 0;
 		this.linkRank = 0;
 
-		Group a = this.mk.a;
-		Group b = this.mk.b;
+		Group a = this.mk.getA();
+		Group b = this.mk.getB();
 		linkCount(a, b, this, ms);
 		linkCount(b, a, this, ms);
 
