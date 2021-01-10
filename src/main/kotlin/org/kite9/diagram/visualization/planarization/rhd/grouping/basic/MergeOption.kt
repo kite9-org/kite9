@@ -11,33 +11,29 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
  * the object is in the queue.
  */
 class MergeOption(
-    a: GroupPhase.Group?,
-    b: GroupPhase.Group?,
-    number: Int,
-    p: Int,
-    alignedGroup: GroupPhase.Group?,
-    alignedSide: Direction?
+    a: GroupPhase.Group,
+    b: GroupPhase.Group,
+    val number: Int,
+    var p: Int,
+    var alignedGroup: GroupPhase.Group?,
+    var alignedDirection: Direction?
 ) : Comparable<MergeOption> {
-    var mk: MergeKey
+    var mk = MergeKey(a, b)
+
+    private var alignmentGroupSize = alignedGroup?.size ?: Int.MAX_VALUE
+    private var totalLinks = 0f
+    private var ordinalDistance = Int.MAX_VALUE
     private var linkRank = 0
     private var linksIncluded = 0f
     private var linksAligned = 0f
     private var planarDistance: Float? = null
     private var renderedDistance: Float? = null
-    var alignmentGroupSize = Int.MAX_VALUE
-    var ordinalDistance = Int.MAX_VALUE
-    var alignedGroup: GroupPhase.Group?
-    val alignedDirection: Direction?
-    var totalLinks = 0f
-    private var size // size of the groups, in terms of contained items subsumed
-            : Int
-    val number // merge option number
-            : Int
+    private var size = mk.a.size + mk.b.size // size of the groups, in terms of contained items subsumed
 
     /**
      * Higher numbers indicate worse priority.  100 or more is illegal.
      */
-    var priority = 0
+    var priority = p
         private set
 
     /**
@@ -188,15 +184,4 @@ class MergeOption(
         }
     }
 
-    init {
-        mk = MergeKey(a!!, b!!)
-        size = mk.a.size + mk.b.size
-        this.number = number
-        priority = p
-        alignedDirection = alignedSide
-        this.alignedGroup = alignedGroup
-        if (alignedGroup != null) {
-            alignmentGroupSize = alignedGroup.size
-        }
-    }
 }
