@@ -14,11 +14,11 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
  * A "live" group is one which is able to be merged (as opposed to already merged).
  */
 public abstract class GroupResult {
-	
+
 	public GroupResult() {
 		super();
 	}
-	
+
 	protected Map<Container, ContainerStateInfo> containerStates;
 
 	public abstract Collection<Group> groups();
@@ -26,21 +26,21 @@ public abstract class GroupResult {
 	public ContainerStateInfo getStateFor(Container c) {
 		return containerStates.get(c);
 	}
-	
+
 	public class ContainerStateInfo {
 
 		public Set<Group> contents;
-		
+
 		public Set<Container> incompleteSubcontainers;
-		
+
 		public boolean done = false;
-		
+
 		public ContainerStateInfo(Container c) {
 			contents = new LinkedHashSet<Group>(c.getContents().size() * 2);
 			incompleteSubcontainers = new UnorderedSet<Container>(4);
 			containerStates.put(c, this);
 		}
-		
+
 	}
 
 }

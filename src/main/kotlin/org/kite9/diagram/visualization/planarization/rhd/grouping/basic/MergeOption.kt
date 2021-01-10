@@ -40,7 +40,7 @@ class MergeOption(
      * WARNING:  this should only be called if the merge option has been removed from the merge
      * state.
      */
-    fun resetPriority(ms: BasicMergeState?, p: Int) {
+    fun resetPriority(p: Int) {
         priority = p
     }
 
@@ -53,63 +53,63 @@ class MergeOption(
             MergeType.NEIGHBOUR
         }
 
-    override fun compareTo(arg0: MergeOption): Int {
+    override fun compareTo(other: MergeOption): Int {
         // order by priority first
-        if (priority != arg0.priority) {
-            return priority.compareTo(arg0.priority)
+        if (priority != other.priority) {
+            return priority.compareTo(other.priority)
         }
 
         // order by merge type first
-        if (mergeType !== arg0.mergeType) {
-            return mergeType.ordinal.compareTo(arg0.mergeType.ordinal)
+        if (mergeType !== other.mergeType) {
+            return mergeType.ordinal.compareTo(other.mergeType.ordinal)
         }
         when (mergeType) {
             MergeType.LINKED -> {
                 // respect highest ranked links first.
-                if (arg0.linkRank != linkRank) {
-                    return -linkRank.compareTo(arg0.linkRank)
+                if (other.linkRank != linkRank) {
+                    return -linkRank.compareTo(other.linkRank)
                 }
 
                 // we need t combine lowest-level stuff first
-                if (arg0.size != size) {
-                    return size.compareTo(arg0.size)
+                if (other.size != size) {
+                    return size.compareTo(other.size)
                 }
 
                 // most value is from reducing total external links because they become internal
-                if (arg0.linksIncluded != linksIncluded) {
-                    return -linksIncluded.compareTo(arg0.linksIncluded)
+                if (other.linksIncluded != linksIncluded) {
+                    return -linksIncluded.compareTo(other.linksIncluded)
                 }
 
                 // finally, try to avoid merging two "hub" neighbour attr together
-                if (totalLinks != arg0.totalLinks) {
-                    return totalLinks.compareTo(arg0.totalLinks)
+                if (totalLinks != other.totalLinks) {
+                    return totalLinks.compareTo(other.totalLinks)
                 }
             }
             MergeType.ALIGNED -> {
                 // join groups with smallest alignment group size (i.e. the group they both link to is smallest)
-                if (alignmentGroupSize != arg0.alignmentGroupSize) {
-                    return alignmentGroupSize.compareTo(arg0.alignmentGroupSize)
+                if (alignmentGroupSize != other.alignmentGroupSize) {
+                    return alignmentGroupSize.compareTo(other.alignmentGroupSize)
                 }
 
                 // aligning links also reduces complexity of the overall graph, but not as much
-                if (linksAligned != arg0.linksAligned) {
-                    return -linksAligned.compareTo(arg0.linksAligned)
+                if (linksAligned != other.linksAligned) {
+                    return -linksAligned.compareTo(other.linksAligned)
                 }
 
                 // leave group with least non-aligned links
-                if (totalLinks - linksAligned != arg0.totalLinks - linksAligned) {
-                    return (totalLinks - linksAligned).compareTo(arg0.totalLinks - arg0.linksAligned)
+                if (totalLinks - linksAligned != other.totalLinks - linksAligned) {
+                    return (totalLinks - linksAligned).compareTo(other.totalLinks - other.linksAligned)
                 }
 
                 // we need to combine lowest-level stuff first
-                if (arg0.size != size) {
-                    return size.compareTo(arg0.size)
+                if (other.size != size) {
+                    return size.compareTo(other.size)
                 }
             }
             else -> {
                 // merge together neighbours with least chance of being moved from the outside
                 val thistl = Math.round(totalLinks)
-                val arg0tl = Math.round(arg0.totalLinks)
+                val arg0tl = Math.round(other.totalLinks)
                 if (thistl != arg0tl) {
                     return thistl.compareTo(arg0tl)
                 }
@@ -117,21 +117,21 @@ class MergeOption(
 
                 // merge closest neighbours first, to respect the ordering in the 
                 // xml
-                if (ordinalDistance != arg0.ordinalDistance) {
-                    return ordinalDistance.compareTo(arg0.ordinalDistance)
+                if (ordinalDistance != other.ordinalDistance) {
+                    return ordinalDistance.compareTo(other.ordinalDistance)
                 }
 
                 // try and merge smallest first, to achieve b-tree
                 // and also to allow for more buddy merging
-                if (arg0.size != size) {
-                    return size.compareTo(arg0.size)
+                if (other.size != size) {
+                    return size.compareTo(other.size)
                 }
             }
         }
-        val dc = distanceCompare(this, arg0)
+        val dc = distanceCompare(this, other)
         return if (dc != 0) {
             dc
-        } else number.compareTo(arg0.number)
+        } else number.compareTo(other.number)
     }
 
     private fun distanceCompare(a: MergeOption, b: MergeOption): Int {
@@ -159,15 +159,15 @@ class MergeOption(
         linkRank = 0
         val a = mk.a
         val b = mk.b
-        linkCount(a, b, this, ms)
-        linkCount(b, a, this, ms)
+        linkCount(a, b)
+        linkCount(b, a)
         size = a.size + b.size
         ordinalDistance = Math.abs(a.groupOrdinal - b.groupOrdinal)
         planarDistance = planarizationDistance(a.hints, b.hints)
         renderedDistance = positionDistance(a.hints, b.hints)
     }
 
-    private fun linkCount(group: GroupPhase.Group, cand: GroupPhase.Group, mo: MergeOption, ms: BasicMergeState) {
+    private fun linkCount(group: GroupPhase.Group, cand: GroupPhase.Group) {
         val ldC = group.getLink(cand)
         if (ldC != null) {
             linksIncluded += ldC.numberOfLinks / 2f

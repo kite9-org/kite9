@@ -78,7 +78,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 		int p = canGroupsMerge(mk.getA(), mk.getB(), ms, mo.getAlignedGroup(), mo.getAlignedDirection());
 		
 		if (p != AbstractGroupingStrategy.INVALID_MERGE) {
-			mo.resetPriority(ms, p);
+			mo.resetPriority(p);
 			mo.calculateMergeOptionMetrics(ms);
 			boolean added = ms.addOption(mo);
 			if (added) {
@@ -125,7 +125,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 					if (p!= AbstractGroupingStrategy.INVALID_MERGE) {
 						if ((p != mo.getPriority()) || (c == Change.CHANGED)) {
 							// poke it back in to use in desperation
-							mo.resetPriority(ms, p);
+							mo.resetPriority(p);
 							mo.calculateMergeOptionMetrics(ms);
 							ms.addOption(mo);
 						} else {

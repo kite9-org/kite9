@@ -21,11 +21,11 @@ import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.LogicException;
 
 public class BasicMergeState extends GroupResult {
-	
+
 	public enum GroupContainerState { HAS_CONTENT(true, false), COMPLETE_WITH_CONTENT(true, true), NO_CONTENT(false, false), COMPLETE_NO_CONTENT(false, true);
-		
+
 		boolean complete;
-		
+
 		public boolean isComplete() {
 			return complete;
 		}
@@ -35,7 +35,7 @@ public class BasicMergeState extends GroupResult {
 		}
 
 		boolean hasContent;
-		
+
 		private GroupContainerState(boolean hasContent, boolean isComplete) {
 			this.complete = isComplete;
 			this.hasContent = hasContent;
@@ -50,7 +50,7 @@ public class BasicMergeState extends GroupResult {
 			}
 		}
 	}
-	
+
 	protected Set<Group> liveGroups;
 	protected PriorityQueue<MergeOption> optionQueue; // options in processing order
 	protected Map<MergeKey, MergeOption> bestOptions; // contains all considered
@@ -65,7 +65,7 @@ public class BasicMergeState extends GroupResult {
 	public BasicMergeState(ContradictionHandler ch) {
 		this.ch = ch;
 	}
-	
+
 	public void initialise(int capacity, int containers, Kite9Log log) {
 		optionQueue = new PriorityQueue<MergeOption>((capacity * 5)+1, null);
 		bestOptions = new HashMap<MergeKey, MergeOption>(capacity * 5);
@@ -80,14 +80,14 @@ public class BasicMergeState extends GroupResult {
 		log.send("Completed group: " + a);
 		a.setLive(false);
 		liveGroups.remove(a);
-		
+
 		for (Container c : groupContainers.get(a).keySet()) {
 			ContainerStateInfo csi = containerStates.get(c);
 			csi.contents.remove(a);
 		}
-		
+
 	}
-	
+
 	public void removeLiveContainer(Container c) {
 		liveContainers.remove(c);
 	}
@@ -101,7 +101,7 @@ public class BasicMergeState extends GroupResult {
 			//log.send("New Merge Option: " + mo);
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -121,7 +121,7 @@ public class BasicMergeState extends GroupResult {
 		liveGroups.add(group);
 		group.setLive(true);
 	}
-	
+
 	public void addGroupContainerMapping(Group toAdd, Container c2, GroupContainerState newState) {
 		Map<Container, GroupContainerState> within = groupContainers.get(toAdd);
 		if (within == null) {
@@ -130,18 +130,18 @@ public class BasicMergeState extends GroupResult {
 		}
 
 		log.send("Mapping "+toAdd.getGroupNumber()+" into container "+c2+" state= "+newState);
-		
+
 		within.put(c2, newState);
 		ContainerStateInfo csi = getStateFor(c2);
 		csi.contents.add(toAdd);
 	}
-	
+
 	public ContainerStateInfo getStateFor(Container c2) {
 		ContainerStateInfo csi = super.getStateFor(c2);
 		if (csi == null) {
 			csi = new ContainerStateInfo(c2);
 			super.containerStates.put(c2, csi);
-			
+
 			for (DiagramElement c : c2.getContents()) {
 				if ((c instanceof Container) && (c instanceof Connected)) {
 					ContainerStateInfo csi2 = getStateFor((Container) c);
@@ -150,12 +150,12 @@ public class BasicMergeState extends GroupResult {
 					}
 				}
 			}
-			
+
 		}
 		return csi;
 	}
 
-	
+
 	public void addLiveContainer(Container c) {
 		log.send("Making container live:"+c);
 		liveContainers.add(c);
@@ -173,7 +173,7 @@ public class BasicMergeState extends GroupResult {
 		//log.send("Merge options:", optionQueue);
 		MergeOption mo = optionQueue.remove();
 		bestOptions.remove(mo.getMk());
-		
+
 		return mo;
 	}
 
@@ -181,11 +181,11 @@ public class BasicMergeState extends GroupResult {
 		if (!via.isActive()) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
-	
+
 	public Collection<Container> getContainers() {
 		return containerStates.keySet();
 	}
@@ -213,7 +213,7 @@ public class BasicMergeState extends GroupResult {
 	public boolean isContainerLive(Container container) {
 		return liveContainers.contains(container);
 	}
-	
+
 	@Override
 	public Collection<Group> groups() {
 		return liveGroups;
