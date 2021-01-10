@@ -87,17 +87,17 @@ public abstract class AbstractRectangularizer extends AbstractCompactionStep {
 		for (DartFace df : orderedFaces) {
 			List<VertexTurn> theStack = stacks.get(df);
 			if (theStack != null) {
-				if (!df.outerFace) {
+				if (!df.getOuterFace()) {
 					if (theStack.size() != 4) {
 						throw new LogicException("Rectangularization did not complete properly - stack > 4, face = "+df);
 					}
 				}
 	
 				for (int i = 0; i < theStack.size(); i++) {
-					fixSize(c, getIthElementRotating(theStack, i), 0, !df.outerFace, false);
+					fixSize(c, getIthElementRotating(theStack, i), 0, !df.getOuterFace(), false);
 				}
 				
-				setSlideableFaceRectangle(c, df, theStack, df.outerFace);
+				setSlideableFaceRectangle(c, df, theStack, df.getOuterFace());
 			}
 		}
 

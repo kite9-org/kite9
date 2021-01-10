@@ -89,7 +89,7 @@ public class PluggableCompactor implements Compactor {
 	}
 
 	private boolean isTopEmbedding(Embedding e) {
-		return e.getDartFaces().stream().anyMatch(df -> df.outerFace && df.getContainedBy() == null);
+		return e.getDartFaces().stream().anyMatch(df -> df.getOuterFace() && df.getContainedBy() == null);
 	}
 
 

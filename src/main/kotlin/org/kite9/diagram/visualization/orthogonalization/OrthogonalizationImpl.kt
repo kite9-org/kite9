@@ -13,8 +13,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
 import org.kite9.diagram.visualization.planarization.Planarization
 import java.util.*
 import java.util.function.Consumer
-import java.util.stream.Collectors
-import java.util.stream.Stream
 
 /**
  * This class manages the relationships of the [Dart]s to the [Edge]s, and keeps track of
@@ -104,7 +102,7 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         //partOf.remove(null)
 
         // first, check if dart already exists, or one has been created for this purpose already.
-        var existing: MutableSet<Dart>? = null
+        var existing: MutableSet<Dart>?
         var secMap = existingDarts[first]
         if (secMap == null) {
             secMap = HashMap()
@@ -135,8 +133,8 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         addToWaypointMap(out, partOf.keys)
         existing.add(out)
         allDarts.add(out)
-        allVertices!!.add(from)
-        allVertices!!.add(to)
+        allVertices.add(from)
+        allVertices.add(to)
         return out
     }
 
@@ -180,7 +178,7 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         val to = d.getTo()
         val first = if (from.compareTo(to) > 0) from else to
         val second = if (first === from) to else from
-        var existing: MutableSet<Dart>? = null
+        var existing: MutableSet<Dart>?
         val secMap: Map<Vertex, MutableSet<Dart>>? = existingDarts[first]
         if (secMap == null) {
             throw LogicException("Dart is not in map: $d")
@@ -222,10 +220,10 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
             facesRectangularMap[partOf] = frl
         }
         for (dd in darts) {
-            var faces = dartDartFacesMap[dd.getDart()]
+            var faces = dartDartFacesMap[dd.dart]
             if (faces == null) {
                 faces = ArrayList(2)
-                dartDartFacesMap[dd.getDart()] = faces
+                dartDartFacesMap[dd.dart] = faces
             }
             faces.add(df)
         }
@@ -236,15 +234,15 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
     private var helper = 0
     fun createHelperVertex(): Vertex {
         val out: Vertex = CompactionHelperVertex("x" + helper++)
-        allVertices!!.add(out)
+        allVertices.add(out)
         return out
     }
 
     /**
      * The list of vertices must be returned in the same order as the connection represented.
      */
-    override fun getWaypointsForBiDirectional(e: Connection): List<Vertex>? {
-        val darts = getDartsForEdge(e)
+    override fun getWaypointsForBiDirectional(c: Connection): List<Vertex>? {
+        val darts = getDartsForEdge(c)
         if (darts == null) {
             return null
         } else {
@@ -261,10 +259,10 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
             val two = it.next()
             var start: Vertex
             val end: Vertex
-            if (one.getDiagramElements().contains(e.getFrom()) && two.getDiagramElements().contains(e.getTo())) {
+            if (one.getDiagramElements().contains(c.getFrom()) && two.getDiagramElements().contains(c.getTo())) {
                 start = one
                 end = two
-            } else if (one.getDiagramElements().contains(e.getTo()) && two.getDiagramElements().contains(e.getFrom())) {
+            } else if (one.getDiagramElements().contains(c.getTo()) && two.getDiagramElements().contains(c.getFrom())) {
                 start = two
                 end = one
             } else {
@@ -308,7 +306,7 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         if (getDartFacesForDart(dart) != null) {
             throw LogicException("Can't split darts in faces")
         }
-        if (allVertices!!.contains(splitWithVertex)) {
+        if (allVertices.contains(splitWithVertex)) {
             throw LogicException("Can't split with $splitWithVertex it's already in the Orth")
         }
         val dart1: Dart = DartImpl(
