@@ -133,10 +133,7 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 	}
 	
 	public static EdgeVertex createEdgeVertex(Edge e, Vertex to) {
-		EdgeVertex ff = new EdgeVertex();
-		ff.edge = e;
-		if (to != null)
-			ff.vertex = to;
+		EdgeVertex ff = to == null ? new EdgeVertex(e) : new EdgeVertex(e, to);
 		return ff;
 	}
 
