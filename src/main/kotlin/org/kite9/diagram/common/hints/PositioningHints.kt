@@ -81,7 +81,7 @@ object PositioningHints {
     }
 
     @JvmStatic
-	fun planarizationDistance(a: Map<String, Float>, b: Map<String, Float>): Float? {
+	fun planarizationDistance(a: Map<String, Float?>, b: Map<String, Float?>): Float? {
         val xD = scalarDistance(a, b, "px1", "px2")
         val yD = scalarDistance(a, b, "py1", "py2")
         return if (xD == null || yD == null) {
@@ -90,7 +90,7 @@ object PositioningHints {
     }
 
     @JvmStatic
-	fun positionDistance(a: Map<String, Float>, b: Map<String, Float>): Float? {
+	fun positionDistance(a: Map<String, Float?>, b: Map<String, Float?>): Float? {
         val xD = scalarDistance(a, b, "x1", "x2")
         val yD = scalarDistance(a, b, "y1", "y2")
         return if (xD == null || yD == null) {
@@ -98,7 +98,7 @@ object PositioningHints {
         } else xD + yD
     }
 
-    fun scalarDistance(a: Map<String, Float>, b: Map<String, Float>, b1: String, b2: String): Float? {
+    fun scalarDistance(a: Map<String, Float?>, b: Map<String, Float?>, b1: String, b2: String): Float? {
         val aBounds = createBounds(a, b1, b2)
         val bBounds = createBounds(b, b1, b2)
         return boundsDistance(aBounds, bBounds)
@@ -117,7 +117,7 @@ object PositioningHints {
         }
     }
 
-    private fun createBounds(a: Map<String, Float>, b1: String, b2: String): Bounds? {
+    private fun createBounds(a: Map<String, Float?>, b1: String, b2: String?): Bounds? {
         val min = a[b1]
         val max = a[b2]
         return if (min == null || max == null) {

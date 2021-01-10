@@ -87,7 +87,7 @@ public abstract class AbstractWaitingContainerMergeGenerator extends AbstractMer
 				}
 				
 				int p = getMyBestPriority();
-				MergeOption mo = new MergeOption(g1, g2, ms.nextMergeOptionNumber(), p, alignedGroup, alignedSide, ms);
+				MergeOption mo = new MergeOption(g1, g2, ms.nextMergeOptionNumber(), p, alignedGroup, alignedSide);
 				waitList.add(mo); 
 			}
 		} else {

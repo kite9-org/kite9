@@ -91,9 +91,9 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 	}
 
 	protected CompoundGroup createCompoundGroup(GroupPhase gp, BasicMergeState ms, MergeOption mo) {
-		DirectedGroupAxis used = buildCompoundAxis(mo.mk.getA(), mo.mk.getB(), mo.alignedDirection);
+		DirectedGroupAxis used = buildCompoundAxis(mo.getMk().getA(), mo.getMk().getB(), mo.getAlignedDirection());
 		LinkManager lm = createLinkManager();
-		CompoundGroup out = gp.new CompoundGroup(mo.mk.getA(), mo.mk.getB(), used, lm, false);
+		CompoundGroup out = gp.new CompoundGroup(mo.getMk().getA(), mo.getMk().getB(), used, lm, false);
 		identifyGroupDirection(out, gp,
 				ms);
 		log.send(log.go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"

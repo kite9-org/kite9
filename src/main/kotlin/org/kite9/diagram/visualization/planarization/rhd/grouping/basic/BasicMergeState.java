@@ -93,11 +93,11 @@ public class BasicMergeState extends GroupResult {
 	}
 
 	public boolean addOption(MergeOption mo) {
-		MergeOption existing = bestOptions.get(mo.mk);
+		MergeOption existing = bestOptions.get(mo.getMk());
 		if ((existing == null) || (mo.compareTo(existing) == -1)) {
 			// this option is better than existing
 			optionQueue.add(mo);
-			bestOptions.put(mo.mk, mo);
+			bestOptions.put(mo.getMk(), mo);
 			//log.send("New Merge Option: " + mo);
 			return true;
 		}
@@ -172,7 +172,7 @@ public class BasicMergeState extends GroupResult {
 	public MergeOption nextMergeOption() {
 		//log.send("Merge options:", optionQueue);
 		MergeOption mo = optionQueue.remove();
-		bestOptions.remove(mo.mk);
+		bestOptions.remove(mo.getMk());
 		
 		return mo;
 	}
