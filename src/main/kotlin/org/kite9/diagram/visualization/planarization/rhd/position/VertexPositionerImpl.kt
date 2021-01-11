@@ -41,8 +41,8 @@ class VertexPositionerImpl(
     override fun checkMinimumGridSizes(ri: RoutingInfo) {
         if (ri is PositionRoutingInfo) {
             val pri = ri
-            borderTrimAreaX = Math.min(borderTrimAreaX, pri.width / 4.0)
-            borderTrimAreaY = Math.min(borderTrimAreaY, pri.height / 4.0)
+            borderTrimAreaX = Math.min(borderTrimAreaX, pri.getWidth() / 4.0)
+            borderTrimAreaY = Math.min(borderTrimAreaY, pri.getHeight() / 4.0)
         }
     }
 

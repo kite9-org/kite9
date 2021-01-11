@@ -218,9 +218,9 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	public Bounds getBoundsOf(RoutingInfo ri, boolean horiz) {
 		BoundsBasedPositionRoutingInfo pri = (BoundsBasedPositionRoutingInfo) ri;
 		if (horiz) {
-			return pri.x;
+			return pri.getX();
 		} else {
-			return pri.y;			
+			return pri.getY();
 		}
 	}
 
@@ -228,11 +228,11 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	public DPos compare(Object a, Object b, boolean horiz) {
 		Bounds ab, bb;
 		if (horiz) {
-			ab = a instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)a).x : placedx.get(a);
-			bb = b instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)b).x : placedx.get(b);
+			ab = a instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)a).getX() : placedx.get(a);
+			bb = b instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)b).getX() : placedx.get(b);
 		} else {
-			ab = a instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)a).y : placedy.get(a);
-			bb = b instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)b).y : placedy.get(b);
+			ab = a instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)a).getY() : placedy.get(a);
+			bb = b instanceof BoundsBasedPositionRoutingInfo ? ((BoundsBasedPositionRoutingInfo)b).getY() : placedy.get(b);
 		}
 		
 		return compareBounds(ab, bb);
@@ -279,10 +279,10 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 
 	@Override
 	public int order(RoutingInfo a, RoutingInfo b) {
-		Bounds ax = ((BoundsBasedPositionRoutingInfo)a).x;
-		Bounds bx = ((BoundsBasedPositionRoutingInfo)b).x;
-		Bounds ay = ((BoundsBasedPositionRoutingInfo)a).y;
-		Bounds by = ((BoundsBasedPositionRoutingInfo)b).y;
+		Bounds ax = ((BoundsBasedPositionRoutingInfo)a).getX();
+		Bounds bx = ((BoundsBasedPositionRoutingInfo)b).getX();
+		Bounds ay = ((BoundsBasedPositionRoutingInfo)a).getY();
+		Bounds by = ((BoundsBasedPositionRoutingInfo)b).getY();
 		
 		int cx = ax.compareTo(bx);
 		int cy = ay.compareTo(by);
@@ -329,14 +329,14 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 
 	@Override
 	public boolean isWithin(RoutingInfo area, RoutingInfo pos) {
-		Bounds areax = ((BoundsBasedPositionRoutingInfo)area).x;
-		Bounds posx = ((BoundsBasedPositionRoutingInfo)pos).x;
+		Bounds areax = ((BoundsBasedPositionRoutingInfo)area).getX();
+		Bounds posx = ((BoundsBasedPositionRoutingInfo)pos).getX();
 		if (!Tools.contains(posx.getDistanceMin(), posx.getDistanceMin(), areax.getDistanceMin(), areax.getDistanceMax())) {
 			return false;
 		}
 		
-		Bounds areay = ((BoundsBasedPositionRoutingInfo)area).y;
-		Bounds posy = ((BoundsBasedPositionRoutingInfo)pos).y;
+		Bounds areay = ((BoundsBasedPositionRoutingInfo)area).getY();
+		Bounds posy = ((BoundsBasedPositionRoutingInfo)pos).getY();
 		return Tools.contains(posy.getDistanceMin(), posy.getDistanceMax(), areay.getDistanceMin(), areay.getDistanceMax());
 	}
 
@@ -351,7 +351,7 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 		BoundsBasedPositionRoutingInfo ba = (BoundsBasedPositionRoutingInfo) a;
 		BoundsBasedPositionRoutingInfo bb = (BoundsBasedPositionRoutingInfo) b;
 		
-		return new BoundsBasedPositionRoutingInfo(ba.x.expand(bb.x), ba.y.expand(bb.y));
+		return new BoundsBasedPositionRoutingInfo(ba.getX().expand(bb.getX()), ba.getY().expand(bb.getY()));
 	}
 
 	@Override
@@ -442,13 +442,13 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 			return null;
 		} else if (overlaps(a, b)) {
 			return OVERLAP;
-		} else if (meq(b.x.getDistanceMin(),a.x.getDistanceMax())) {
+		} else if (meq(b.getX().getDistanceMin(),a.getX().getDistanceMax())) {
 			return Direction.RIGHT;
-		} else if (meq(b.y.getDistanceMin(),a.y.getDistanceMax())) {
+		} else if (meq(b.getY().getDistanceMin(),a.getY().getDistanceMax())) {
 			return Direction.DOWN;
-		} else if (meq(a.x.getDistanceMin(),b.x.getDistanceMax())) {
+		} else if (meq(a.getX().getDistanceMin(),b.getX().getDistanceMax())) {
 			return Direction.LEFT;
-		} else if (meq(a.y.getDistanceMin(),b.y.getDistanceMax())) {
+		} else if (meq(a.getY().getDistanceMin(),b.getY().getDistanceMax())) {
 			return Direction.UP;
 		} else if (isSamePoint(a, b)) {
 			return null;
@@ -458,7 +458,7 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	}
 
 	private boolean isSamePoint(BoundsBasedPositionRoutingInfo a, BoundsBasedPositionRoutingInfo b) {
-		return isSamePointBounds(a.x, b.x) && isSamePointBounds(a.y, b.y);
+		return isSamePointBounds(a.getX(), b.getX()) && isSamePointBounds(a.getY(), b.getY());
 	}
 
 	private boolean isSamePointBounds(Bounds b1, Bounds b2) {
@@ -489,7 +489,7 @@ public class PositionRoutableHandler2D extends AbstractPositionRoutableReader im
 	@Override
 	public RoutingInfo narrow(RoutingInfo bounds, double vertexTrimX, double vertexTrimY) {
 		BoundsBasedPositionRoutingInfo pri = (BoundsBasedPositionRoutingInfo) bounds;
-		return new BoundsBasedPositionRoutingInfo(pri.x.narrow(vertexTrimX), pri.y.narrow(vertexTrimY));
+		return new BoundsBasedPositionRoutingInfo(pri.getX().narrow(vertexTrimX), pri.getY().narrow(vertexTrimY));
 	}
 
 	

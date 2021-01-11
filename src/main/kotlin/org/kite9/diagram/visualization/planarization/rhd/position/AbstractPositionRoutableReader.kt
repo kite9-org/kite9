@@ -31,8 +31,8 @@ abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2
     override fun cost(from: RoutingInfo, to: RoutingInfo): Double {
         val fd = from as PositionRoutingInfo
         val td = to as PositionRoutingInfo
-        return (minDist(fd.minX, fd.maxX, td.minX, td.maxX)
-                + minDist(fd.minY, fd.maxY, td.minY, td.maxY))
+        return (minDist(fd.getMinX(), fd.getMaxX(), td.getMinX(), td.getMaxX())
+                + minDist(fd.getMinY(), fd.getMaxY(), td.getMinY(), td.getMaxY()))
     }
 
     private fun narrow(a1: Double, a2: Double, b1: Double, b2: Double): DoubleArray {
@@ -70,14 +70,14 @@ abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2
         pto: PositionRoutingInfo,
         pfrom: PositionRoutingInfo
     ): Boolean {
-        return narrow(pto.minX, pto.maxX, pfrom.minX, pfrom.maxX)[2] == 0.0
+        return narrow(pto.getMinX(), pto.getMaxX(), pfrom.getMinX(), pfrom.getMaxX())[2] == 0.0
     }
 
     private fun checkVertical(
         pto: PositionRoutingInfo,
         pfrom: PositionRoutingInfo
     ): Boolean {
-        return narrow(pto.minY, pto.maxY, pfrom.minY, pfrom.maxY)[2] == 0.0
+        return narrow(pto.getMinY(), pto.getMaxY(), pfrom.getMinY(), pfrom.getMaxY())[2] == 0.0
     }
 
     companion object {
@@ -86,29 +86,37 @@ abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2
                 return 0.0
             }
 
+            override fun getMinX(): Double {
+                return 0.0
+            }
+
+            override fun getMaxX(): Double {
+                return 0.0
+            }
+
+            override fun getMinY(): Double {
+                return 0.0
+            }
+
+            override fun getMaxY(): Double {
+                return 0.0
+            }
+
+            override fun getWidth(): Double {
+                return 0.0
+            }
+
+            override fun getHeight(): Double {
+                return 0.0
+            }
+
             override fun centerX(): Double {
                 return 0.0
             }
 
-            override val width: Double
-                get() = 0.0
-            override val minY: Double
-                get() = 0.0
-            override val minX: Double
-                get() = 0.0
-            override val maxY: Double
-                get() = 0.0
-            override val maxX: Double
-                get() = 0.0
-            override val height: Double
-                get() = 0.0
-
             override fun compareTo(arg0: RoutingInfo): Int {
                 throw UnsupportedOperationException("Can't compare empty bounds")
             }
-
-            override val isBreakingOrder: Boolean
-                get() = false
 
             override fun compareX(with: RoutingInfo): Int {
                 throw UnsupportedOperationException("Can't compare empty bounds")

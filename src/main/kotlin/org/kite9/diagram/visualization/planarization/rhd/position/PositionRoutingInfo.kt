@@ -4,20 +4,19 @@ import org.kite9.diagram.common.elements.RoutingInfo
 
 abstract class PositionRoutingInfo : RoutingInfo {
 
-    abstract val minX: Double
-    abstract val maxX: Double
-    abstract val minY: Double
-    abstract val maxY: Double
-    abstract val width: Double
-    abstract val height: Double
-    abstract val isBreakingOrder: Boolean
+    abstract fun getMinX(): Double
+    abstract fun getMaxX(): Double
+    abstract fun getMinY(): Double
+    abstract fun getMaxY(): Double
+    abstract fun getWidth(): Double
+    abstract fun getHeight(): Double
 
     override fun outputX(): String {
-        return "${minX}-${maxX}"
+        return "${getMinX()}-${getMaxX()}"
     }
 
     override fun outputY(): String {
-        return "${minY}-${maxY}"
+        return "${getMinY()}-${getMaxY()}"
     }
 
     override fun toString(): String {

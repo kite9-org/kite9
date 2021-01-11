@@ -20,7 +20,7 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
     ): Corner {
         val c = Corner.FINISH
         return if (r != null) {
-            ob.avoidanceCorners[r]!!
+            ob.avoidanceCorners?.get(r)!!
         } else c
     }
 
@@ -40,12 +40,12 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
         return "[x=${positionForTesting.x}, y=${positionForTesting.y}, c=${getRunningCost()} ]"
     }
 
-    private fun xCost(a: BoundsBasedPositionRoutingInfo?, b: BoundsBasedPositionRoutingInfo?): Double {
-        return cost(a!!.minX, a.maxX, b!!.minX, b.maxX)
+    private fun xCost(a: BoundsBasedPositionRoutingInfo, b: BoundsBasedPositionRoutingInfo): Double {
+        return cost(a.getMinX(), a.getMaxX(), b.getMinX(), b.getMaxX())
     }
 
-    private fun yCost(a: BoundsBasedPositionRoutingInfo?, b: BoundsBasedPositionRoutingInfo?): Double {
-        return cost(a!!.minY, a.maxY, b!!.minY, b.maxY)
+    private fun yCost(a: BoundsBasedPositionRoutingInfo, b: BoundsBasedPositionRoutingInfo): Double {
+        return cost(a.getMinY(), a.getMaxY(), b.getMinY(), b.getMaxY())
     }
 
     private fun cost(ps: Double, pe: Double, das: Double, ae: Double): Double {
@@ -71,8 +71,8 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
             val frr = _positionForTesting
             val c = getCorner(r, obstacle, next)
             _positionForTesting = c.operate(frr!!, obstacle)
-            _horizontalRunningCost += xCost(frr, _positionForTesting)
-            _verticalRunningCost += yCost(frr, _positionForTesting)
+            _horizontalRunningCost += xCost(frr, _positionForTesting!!)
+            _verticalRunningCost += yCost(frr, _positionForTesting!!)
         }
 
         if (from == null) {
