@@ -37,9 +37,7 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
     }
 
     override fun toString(): String {
-        return "[x=" + positionForTesting!!.x + ", y=" + positionForTesting!!.y + ", c=" + PositionRoutingInfo.nf.format(
-            getRunningCost()
-        ) + "]"
+        return "[x=${positionForTesting.x}, y=${positionForTesting.y}, c=${getRunningCost()} ]"
     }
 
     private fun xCost(a: BoundsBasedPositionRoutingInfo?, b: BoundsBasedPositionRoutingInfo?): Double {
