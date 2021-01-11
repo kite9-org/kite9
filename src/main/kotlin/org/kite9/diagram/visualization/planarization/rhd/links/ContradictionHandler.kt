@@ -17,15 +17,24 @@ interface ContradictionHandler {
     fun checkForContainerContradiction(c: Connection)
 
     fun checkContradiction(
-        ad: Direction, aOrdering: Boolean,
-        aRank: Int, ac: Iterable<BiDirectional<Connected>>, bd: Direction, bOrdering: Boolean, bRank: Int,
-        bc: Iterable<BiDirectional<Connected>>, containerLayout: Layout
-    ): Direction
+        ad: Direction?,
+        aOrdering: Boolean,
+        aRank: Int,
+        ac: Iterable<BiDirectional<Connected>>,
+
+        bd: Direction?,
+        bOrdering: Boolean,
+        bRank: Int,
+        bc: Iterable<BiDirectional<Connected>>,
+
+        containerLayout: Layout?
+    ): Direction?
 
     fun checkContradiction(
-        ld1: LinkDetail, ld2: LinkDetail,
-        containerLayout: Layout
-    ): Direction
+        ld1: LinkDetail?,
+        ld2: LinkDetail?,
+        containerLayout: Layout?
+    ): Direction?
 
     fun setContradiction(bic: BiDirectional<Connected>, dontRender: Boolean)
     fun setContradicting(connections: Iterable<BiDirectional<Connected>>, dontRender: Boolean)
