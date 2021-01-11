@@ -28,7 +28,7 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	@Override
-	public void setContradicting(Iterable<BiDirectional<Connected>> connections, boolean dontRender) {
+	public void setContradicting(Iterable<? extends BiDirectional<Connected>> connections, boolean dontRender) {
 		for (BiDirectional<Connected> bic : connections) {
 			setContradiction(bic, dontRender);
 		}
@@ -59,8 +59,8 @@ public class BasicContradictionHandler implements Logable, ContradictionHandler 
 	}
 
 	@Override
-	public Direction checkContradiction(Direction ad, boolean aOrdering, int aRank, Iterable<BiDirectional<Connected>> ac, Direction bd, boolean bOrdering, int bRank,
-			Iterable<BiDirectional<Connected>> bc, Layout containerLayout) {
+	public Direction checkContradiction(Direction ad, boolean aOrdering, int aRank, Iterable<? extends BiDirectional<Connected>> ac, Direction bd, boolean bOrdering, int bRank,
+			Iterable<? extends BiDirectional<Connected>> bc, Layout containerLayout) {
 
 		if (containerLayout != null) {
 			switch (containerLayout) {
