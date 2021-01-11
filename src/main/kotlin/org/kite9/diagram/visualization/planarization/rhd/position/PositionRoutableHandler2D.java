@@ -32,8 +32,6 @@ import org.kite9.diagram.logging.LogicException;
 public class PositionRoutableHandler2D extends AbstractPositionRoutableReader implements RoutableHandler2D, Logable {
 
 	public static final BasicBounds TOP = new BasicBounds(0, 1);
-
-	
 	
 	protected Map<Object, Bounds> tempx = new HashMap<Object, Bounds>(1000);
 	protected Map<Object, Bounds> placedx = new HashMap<Object, Bounds>(1000);
