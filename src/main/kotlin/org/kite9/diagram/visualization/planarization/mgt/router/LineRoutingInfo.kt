@@ -5,8 +5,8 @@ package org.kite9.diagram.visualization.planarization.mgt.router
  */
 interface LineRoutingInfo {
 
-    val horizontalRunningCost: Double
-    val verticalRunningCost: Double
-    val runningCost: Double
+    fun getHorizontalRunningCost(): Double
+    fun getVerticalRunningCost(): Double
+    fun getRunningCost(): Double
 
 }

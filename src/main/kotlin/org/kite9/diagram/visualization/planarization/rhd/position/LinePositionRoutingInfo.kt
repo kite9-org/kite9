@@ -7,24 +7,11 @@ import kotlin.math.abs
 class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPositionRoutingInfo, r: Routing?) :
     LineRoutingInfo {
 
-    override var horizontalRunningCost = 0.0
-        private set
-    override var verticalRunningCost = 0.0
-        private set
-
-    var positionForTesting: BoundsBasedPositionRoutingInfo? = null
-
-    var obstacle: BoundsBasedPositionRoutingInfo? = null
-
-    var r: Routing? = null
-
-    private fun avoid(r: Routing?, obstacle: BoundsBasedPositionRoutingInfo, next: BoundsBasedPositionRoutingInfo?) {
-        val frr = positionForTesting
-        val c = getCorner(r, obstacle, next)
-        positionForTesting = c!!.operate(frr!!, obstacle!!)
-        horizontalRunningCost += xCost(frr, positionForTesting)
-        verticalRunningCost += yCost(frr, positionForTesting)
-    }
+    private val horizontalRunningCost : Double
+    private val verticalRunningCost : Double
+    val positionForTesting: BoundsBasedPositionRoutingInfo
+    private val obstacle: BoundsBasedPositionRoutingInfo?
+    private val r: Routing?
 
     private fun getCorner(
         r: Routing?,
@@ -37,12 +24,21 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
         } else c
     }
 
-    override val runningCost: Double
-        get() = horizontalRunningCost + verticalRunningCost
+    override fun getHorizontalRunningCost(): Double {
+        return horizontalRunningCost
+    }
+
+    override fun getVerticalRunningCost(): Double {
+        return verticalRunningCost
+    }
+
+    override fun getRunningCost(): Double {
+        return horizontalRunningCost + verticalRunningCost
+    }
 
     override fun toString(): String {
         return "[x=" + positionForTesting!!.x + ", y=" + positionForTesting!!.y + ", c=" + PositionRoutingInfo.nf.format(
-            runningCost
+            getRunningCost()
         ) + "]"
     }
 
@@ -64,13 +60,29 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
         }
     }
 
+
+
     init {
+        var _positionForTesting : BoundsBasedPositionRoutingInfo? = null
+        var _horizontalRunningCost : Double = 0.0
+        var _verticalRunningCost: Double = 0.0
+        var _obstacle : BoundsBasedPositionRoutingInfo? = null
+        var _r : Routing? = null
+
+        fun avoid(r: Routing?, obstacle: BoundsBasedPositionRoutingInfo, next: BoundsBasedPositionRoutingInfo?) {
+            val frr = _positionForTesting
+            val c = getCorner(r, obstacle, next)
+            _positionForTesting = c.operate(frr!!, obstacle)
+            _horizontalRunningCost += xCost(frr, _positionForTesting)
+            _verticalRunningCost += yCost(frr, _positionForTesting)
+        }
+
         if (from == null) {
-            positionForTesting = pri
+            _positionForTesting = pri
         } else {
-            horizontalRunningCost = from.horizontalRunningCost
-            verticalRunningCost = from.verticalRunningCost
-            positionForTesting = from.positionForTesting
+            _horizontalRunningCost = from.horizontalRunningCost
+            _verticalRunningCost = from.verticalRunningCost
+            _positionForTesting = from.positionForTesting
             val ob = from.obstacle
             if (ob != null) {
                 avoid(from.r, ob, pri)
@@ -78,9 +90,15 @@ class LinePositionRoutingInfo(from: LinePositionRoutingInfo?, pri: BoundsBasedPo
             if (r == null) {
                 avoid(r, pri, null)
             } else {
-                obstacle = pri
-                this.r = r
+               _obstacle = pri
+                _r = r
             }
         }
+
+        horizontalRunningCost = _horizontalRunningCost
+        verticalRunningCost = _verticalRunningCost
+        positionForTesting = _positionForTesting!!
+        obstacle = _obstacle
+        this.r = _r
     }
 }
