@@ -21,7 +21,7 @@ interface RoutableReader
      * linePosition can be provided null, in which case we are setting up a new route starting at past.
      * If r is null, we are arriving at a destination.
      */
-    fun move(current: LineRoutingInfo, past: RoutingInfo, r: Routing): LineRoutingInfo
+    fun move(current: LineRoutingInfo?, past: RoutingInfo, r: Routing?): LineRoutingInfo
     fun isWithin(area: RoutingInfo, pos: RoutingInfo): Boolean
 
     /**

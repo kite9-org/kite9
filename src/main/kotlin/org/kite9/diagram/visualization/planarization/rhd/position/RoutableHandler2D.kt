@@ -1,12 +1,10 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
 import org.kite9.diagram.common.HintMap
-import org.kite9.diagram.common.elements.Routable
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
-import java.awt.image.BufferedImage
 
 /**
  * Manages the position of objects in 2D space by considering 2D position individually.
@@ -21,10 +19,10 @@ interface RoutableHandler2D : RoutableReader {
         BEFORE, OVERLAP, AFTER
     }
 
-    fun getPosition(r: Any, horiz: Boolean): Bounds
-    fun getTempPosition(r: Any, horiz: Boolean): Bounds
-    fun setPlacedPosition(r: Any, ri: Bounds, horiz: Boolean)
-    fun setTempPosition(r: Any, ri: Bounds, horiz: Boolean)
+    fun getPosition(r: Any, horiz: Boolean): Bounds?
+    fun getTempPosition(r: Any, horiz: Boolean): Bounds?
+    fun setPlacedPosition(r: Any?, ri: Bounds, horiz: Boolean)
+    fun setTempPosition(r: Any?, ri: Bounds, horiz: Boolean)
     fun clearTempPositions(horiz: Boolean)
     fun getTopLevelBounds(horiz: Boolean): Bounds
     fun narrow(layout: Layout?, b: Bounds, horiz: Boolean, applyGutters: Boolean): Bounds
@@ -66,7 +64,7 @@ interface RoutableHandler2D : RoutableReader {
     /**
      * Useful debug method.
      */
-    fun drawPositions(out: Collection<Routable>): BufferedImage
+    //fun drawPositions(out: Collection<Routable>): BufferedImage
 
     /**
      * Reports the bounds into the hintmap object for future renderings
