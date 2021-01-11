@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.position
 import java.awt.geom.Rectangle2D
 
 object Tools {
-    
+
     private fun pointIntersect(v: Double, min: Double, max: Double): Boolean {
         return min <= v && max >= v
     }

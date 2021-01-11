@@ -1,0 +1,122 @@
+package org.kite9.diagram.visualization.planarization.rhd.position
+
+import org.kite9.diagram.common.elements.RoutingInfo
+import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
+
+/**
+ *
+ * A simple manhattan distance metric is used to identify the cost of the arrangement,
+ * so each RoutingInfo is based on position.  This class handles pretty much all of the cost arrangements and
+ * distance calculations.
+ *
+ */
+abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2D {
+
+    private fun minDist(min1: Double, max1: Double, min2: Double, max2: Double): Double {
+        return if (min2 > min1) {
+            if (min2 < max1) {
+                0.0
+            } else {
+                min2 - max1
+            }
+        } else {
+            if (max2 > min1) {
+                0.0
+            } else {
+                min1 - max2
+            }
+        }
+    }
+
+    override fun cost(from: RoutingInfo, to: RoutingInfo): Double {
+        val fd = from as PositionRoutingInfo
+        val td = to as PositionRoutingInfo
+        return (minDist(fd.minX, fd.maxX, td.minX, td.maxX)
+                + minDist(fd.minY, fd.maxY, td.minY, td.maxY))
+    }
+
+    private fun narrow(a1: Double, a2: Double, b1: Double, b2: Double): DoubleArray {
+        return if (a2 < b1) {
+            doubleArrayOf(b1, b1, b1 - a2)
+        } else if (a1 > b2) {
+            doubleArrayOf(b2, b2, a1 - b2)
+        } else {
+            doubleArrayOf(Math.max(a1, b1), Math.min(a2, b2), 0.0)
+        }
+    }
+
+    override fun emptyBounds(): RoutingInfo {
+        return EMPTY_BOUNDS
+    }
+
+    override fun isEmptyBounds(bounds: RoutingInfo): Boolean {
+        return bounds === EMPTY_BOUNDS
+    }
+
+    override fun isInPlane(
+        to: RoutingInfo, from: RoutingInfo,
+        horiz: Boolean
+    ): Boolean {
+        val pto = to as PositionRoutingInfo
+        val pfrom = from as PositionRoutingInfo
+        return if (!horiz) {
+            checkHorizontal(pto, pfrom)
+        } else {
+            checkVertical(pto, pfrom)
+        }
+    }
+
+    private fun checkHorizontal(
+        pto: PositionRoutingInfo,
+        pfrom: PositionRoutingInfo
+    ): Boolean {
+        return narrow(pto.minX, pto.maxX, pfrom.minX, pfrom.maxX)[2] == 0.0
+    }
+
+    private fun checkVertical(
+        pto: PositionRoutingInfo,
+        pfrom: PositionRoutingInfo
+    ): Boolean {
+        return narrow(pto.minY, pto.maxY, pfrom.minY, pfrom.maxY)[2] == 0.0
+    }
+
+    companion object {
+        val EMPTY_BOUNDS: PositionRoutingInfo = object : PositionRoutingInfo() {
+            override fun centerY(): Double {
+                return 0.0
+            }
+
+            override fun centerX(): Double {
+                return 0.0
+            }
+
+            override val width: Double
+                get() = 0.0
+            override val minY: Double
+                get() = 0.0
+            override val minX: Double
+                get() = 0.0
+            override val maxY: Double
+                get() = 0.0
+            override val maxX: Double
+                get() = 0.0
+            override val height: Double
+                get() = 0.0
+
+            override fun compareTo(arg0: RoutingInfo): Int {
+                throw UnsupportedOperationException("Can't compare empty bounds")
+            }
+
+            override val isBreakingOrder: Boolean
+                get() = false
+
+            override fun compareX(with: RoutingInfo): Int {
+                throw UnsupportedOperationException("Can't compare empty bounds")
+            }
+
+            override fun compareY(with: RoutingInfo): Int {
+                throw UnsupportedOperationException("Can't compare empty bounds")
+            }
+        }
+    }
+}
