@@ -10,7 +10,7 @@ interface Bounds : Comparable<Bounds> {
     /**
      * Returns a new bounds large enough to take both this and other.
      */
-    fun expand(other: Bounds): Bounds?
+    fun expand(other: Bounds): Bounds
 
     /**
      * Returns a new bounds with just the common distance inside
