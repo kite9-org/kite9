@@ -1,0 +1,51 @@
+/**
+ *
+ */
+package org.kite9.diagram.visualization.planarization.rhd.position
+
+import org.kite9.diagram.common.objects.BasicBounds
+import org.kite9.diagram.common.objects.Bounds
+
+enum class Corner {
+
+    TOP_RIGHT, BOTTOM_LEFT, FINISH;
+
+    fun operate(
+        from: BoundsBasedPositionRoutingInfo,
+        ob: BoundsBasedPositionRoutingInfo
+    ): BoundsBasedPositionRoutingInfo {
+        return when (this) {
+            TOP_RIGHT -> BoundsBasedPositionRoutingInfo(
+                max(from.x, ob.x),
+                min(from.y, ob.y)
+            )
+            BOTTOM_LEFT -> BoundsBasedPositionRoutingInfo(
+                min(from.x, ob.x),
+                max(from.y, ob.y)
+            )
+            FINISH -> BoundsBasedPositionRoutingInfo(
+                narrow(from.x, ob.x),
+                narrow(from.y, ob.y)
+            )
+            else -> from
+        }
+    }
+
+    private fun max(a: Bounds, b: Bounds): Bounds {
+        return BasicBounds(Math.max(a.distanceMin, b.distanceMax), Math.max(a.distanceMax, b.distanceMax))
+    }
+
+    private fun min(a: Bounds, b: Bounds): Bounds {
+        return BasicBounds(Math.min(a.distanceMin, b.distanceMin), Math.min(a.distanceMax, b.distanceMin))
+    }
+
+    private fun narrow(a: Bounds, b: Bounds): Bounds {
+        return if (a.distanceMax < b.distanceMin) {
+            BasicBounds(b.distanceMin, b.distanceMin)
+        } else if (a.distanceMin > b.distanceMax) {
+            BasicBounds(b.distanceMax, b.distanceMax)
+        } else {
+            BasicBounds(Math.max(a.distanceMin, b.distanceMin), Math.min(a.distanceMax, b.distanceMax))
+        }
+    }
+}
