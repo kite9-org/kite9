@@ -96,7 +96,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 		CompoundGroup out = gp.new CompoundGroup(mo.getMk().getA(), mo.getMk().getB(), used, lm, false);
 		identifyGroupDirection(out, gp,
 				ms);
-		log.send(log.go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
+		getLog().send(getLog().go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
 				+ out.getB() + "\n\t" + out.getLayout() + "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).getLinks());
 		writeGroup(out, mo);
 		return out;
@@ -295,7 +295,7 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 				type.state = MergePlane.UNKNOWN;
 				LinkManager lm = createLinkManager();
 				CompoundGroup out = gp.new CompoundGroup(a, b, type, lm, true);
-				log.send(log.go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
+				getLog().send(getLog().go() ? null : "Compound Group " + out.getGroupNumber() + " created: \n\t" + out.getA() + "\n\t"
 						+ out.getB() + "\n\t" +" NON-LAYOUT "+ "\n\taxis:" + out.getAxis() + "\n\tlinks:", ((DirectedLinkManager)lm).getLinks());
 
 				out.setSize(a.getSize());

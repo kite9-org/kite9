@@ -5,6 +5,7 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.AbstractGroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.*
 
 class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
@@ -52,7 +53,7 @@ class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
                 }
                 return if (isCompatibleSubgroup(b, a, bGroups, aGroups, mp, reverse(d))) {
                     getPriority(a, b, ms, false)
-                } else AbstractRuleBasedGroupingStrategy.INVALID_MERGE
+                } else AbstractGroupingStrategy.INVALID_MERGE
             }
         }
         return PriorityRule.UNDECIDED

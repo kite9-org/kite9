@@ -56,7 +56,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 			mo.calculateMergeOptionMetrics(ms);
 			boolean added = ms.addOption(mo);
 			if (added) {
-				log.send(log.go() ? null: "Added Merge Option: " + mo);
+				getLog().send(getLog().go() ? null: "Added Merge Option: " + mo);
 			}
 		} 
 	}
@@ -82,7 +82,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 			mo.calculateMergeOptionMetrics(ms);
 			boolean added = ms.addOption(mo);
 			if (added) {
-				log.send(log.go() ? null: "Added Merge Option: " + mo);
+				getLog().send(getLog().go() ? null: "Added Merge Option: " + mo);
 			}
 		} 
 		
@@ -96,7 +96,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 		GeneratorMergeState gms = (GeneratorMergeState) ms;
 		Group next = gms.nextLiveGroup();
 		while (next != null) {
-			log.send("Merge options for:"+next);
+			getLog().send("Merge options for:"+next);
 			for (MergeGenerator strat : gms.generators) {
 				strat.generate(next);
 			}	
@@ -107,7 +107,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 	public GroupResult group(GroupPhase gp) {
 		int capacity = gp.groupCount;
 		int containers = gp.containerCount;
-		ms.initialise(capacity, containers, log);
+		ms.initialise(capacity, containers, getLog());
 		setupMergeState(ms, gp);
 
 		preMergeInitialisation(gp, ms);
@@ -130,7 +130,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 							ms.addOption(mo);
 						} else {
 							if (p == ILLEGAL_PRIORITY) {
-								log.error("Inserting with Illegal: "+mo);
+								getLog().error("Inserting with Illegal: "+mo);
 							}
 							
 							performMerge(gp, ms, mo);
@@ -139,7 +139,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 				}
 				
 			} catch (RuntimeException e) {
-				log.send("Groups:", ms.groups());
+				getLog().send("Groups:", ms.groups());
 				throw e;
 			}
 		}
@@ -172,7 +172,7 @@ public class GeneratorBasedGroupingStrategyImpl extends AxisHandlingGroupingStra
 	}
 
 	protected void introduceCombinedGroup(GroupPhase gp, BasicMergeState ms, CompoundGroup combined) {
-		combined.log(log);
+		combined.log(getLog());
 		ms.addLiveGroup(combined);
 	}
 
