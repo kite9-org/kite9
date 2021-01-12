@@ -188,9 +188,9 @@ public abstract class AbstractTopDownLayoutStrategy implements LayoutStrategy, L
 			} else if (best.getScore() >= newpl.getScore() + TOLERANCE) {
 				return newpl;
 			} else {
-				if (best.isNatural()) {
+				if (best.getNatural()) {
 					return best;
-				} else if (newpl.isNatural()) {
+				} else if (newpl.getNatural()) {
 					return newpl;
 				} else {
 					return best;

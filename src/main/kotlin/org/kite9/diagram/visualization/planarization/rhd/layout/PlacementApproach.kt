@@ -9,11 +9,11 @@ package org.kite9.diagram.visualization.planarization.rhd.layout
 interface PlacementApproach {
 
     fun evaluate()
-    fun getScore(): Double
+    val score: Double
     fun choose()
 
     /**
      * Means that the placement order is the same as the numerical ordering of the group ordinals
      */
-    fun isNatural(): Boolean
+    val natural: Boolean
 }
