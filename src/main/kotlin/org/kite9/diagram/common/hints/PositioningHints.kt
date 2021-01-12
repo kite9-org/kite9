@@ -46,18 +46,18 @@ object PositioningHints {
     }
 
     @JvmStatic
-	fun compareEitherXBounds(from: Map<String, Float>, to: Map<String, Float>): Int? {
+	fun compareEitherXBounds(from: Map<String, Float?>, to: Map<String, Float?>): Int? {
         return compareEitherBounds(from, to, PLAN_MIN_X, PLAN_MAX_X, MIN_X, MAX_X)
     }
 
     @JvmStatic
-	fun compareEitherYBounds(from: Map<String, Float>, to: Map<String, Float>): Int? {
+	fun compareEitherYBounds(from: Map<String, Float?>, to: Map<String, Float?>): Int? {
         return compareEitherBounds(from, to, PLAN_MIN_Y, PLAN_MAX_Y, MIN_Y, MAX_Y)
     }
 
     private fun compareEitherBounds(
-        from: Map<String, Float>,
-        to: Map<String, Float>,
+        from: Map<String, Float?>,
+        to: Map<String, Float?>,
         p1: String,
         p2: String,
         a1: String,
@@ -70,7 +70,7 @@ object PositioningHints {
         return bc
     }
 
-    private fun compareBounds(from: Map<String, Float>, to: Map<String, Float>, p1: String, p2: String): Int? {
+    private fun compareBounds(from: Map<String, Float?>, to: Map<String, Float?>, p1: String, p2: String): Int? {
         val fb = createBounds(from, p1, p2)
         val tb = createBounds(to, p1, p2)
         return if (fb == null || tb == null) {
