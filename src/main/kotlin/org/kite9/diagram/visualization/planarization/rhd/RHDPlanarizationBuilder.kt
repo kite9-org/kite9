@@ -148,7 +148,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             LAST_PLANARIZATION_DEBUG = out
         }
         val planOut: Planarization = buildPlanarization(c, out, connections!!, sortedContainerContents)
-        (planOut as RHDPlanarizationImpl).setRoutableReader((routableReader)!!)
+        (planOut as RHDPlanarizationImpl).setRoutableReader((routableReader))
         return planOut
     }
 
@@ -211,7 +211,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         log.send(
             (sb.toString() + g.groupNumber +
                     " " + (if ((g is LeafGroup)) g.toString() else axis)
-                    + "   " + routableReader!!.getPlacedPosition(g) + "  " + l + " " + (if (g.type.isLayoutRequired) "LR " else " ")
+                    + "   " + routableReader.getPlacedPosition(g) + "  " + l + " " + (if (g.type.isLayoutRequired) "LR " else " ")
                     + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
         )
         if (g is CompoundGroup) {
@@ -231,7 +231,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             sb.append(" ")
         }
         val axis = g.type as DirectedGroupAxis
-        log.send(sb.toString() + g!!.groupNumber + "   " + routableReader!!.getPlacedPosition(g))
+        log.send(sb.toString() + g.groupNumber + "   " + routableReader.getPlacedPosition(g))
         val hParent: GroupPhase.Group? = axis.horizParentGroup
         val vParent: GroupPhase.Group? = axis.vertParentGroup
         if (vParent !== hParent) {
@@ -288,10 +288,10 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val c: Container? = lg.container
 
             // sizing
-            val ri: RoutingInfo = lg.type.getPosition((routableReader)!!, false)
-            vp!!.checkMinimumGridSizes(ri)
+            val ri: RoutingInfo = lg.type.getPosition((routableReader), false)
+            vp.checkMinimumGridSizes(ri)
             if (l != null) {
-                routableReader!!.setPlacedPosition(l, ri)
+                routableReader.setPlacedPosition(l, ri)
             }
             ensureContainerBoundsAreLargeEnough(ri, c, lg)
 
@@ -309,7 +309,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             if (cri == null) {
                 cri = routableReader.emptyBounds()
             }
-            val cri2: RoutingInfo = routableReader.increaseBounds(cri!!, ri)
+            val cri2: RoutingInfo = routableReader.increaseBounds(cri, ri)
             if (!(cri2 == cri)) {
                 log.send("Increased bounds of $c to $cri2 due to $lg")
             }
@@ -359,7 +359,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         if (contents.size == 0) {
             return
         }
-        var conBefore: Connected? = null
+        var conBefore: Connected?
         var current: Connected? = null
         var conAfter: Connected? = null
         var start: Boolean = true
@@ -396,10 +396,10 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     private fun sortContents(`in`: MutableList<Vertex>, x: Bounds, y: Bounds) {
         if (`in`.size > 1) {
             log.send("Sorting: $`in`")
-            val left: Bounds = routableReader!!.narrow(Layout.LEFT, x, true, false)
-            val right: Bounds = routableReader!!.narrow(Layout.RIGHT, x, true, false)
-            val top: Bounds = routableReader!!.narrow(Layout.UP, y, false, false)
-            val bottom: Bounds = routableReader!!.narrow(Layout.DOWN, y, false, false)
+            val left: Bounds = routableReader.narrow(Layout.LEFT, x, true, false)
+            val right: Bounds = routableReader.narrow(Layout.RIGHT, x, true, false)
+            val top: Bounds = routableReader.narrow(Layout.UP, y, false, false)
+            val bottom: Bounds = routableReader.narrow(Layout.DOWN, y, false, false)
             val topRight: MutableList<Vertex> = ArrayList(`in`.size / 2)
             val topLeft: MutableList<Vertex> = ArrayList(`in`.size / 2)
             val bottomRight: MutableList<Vertex> = ArrayList(`in`.size / 2)
@@ -408,12 +408,12 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             var mergeLeftAndRight: Boolean = false
             for (vertex: Vertex in `in`) {
                 val vri: RoutingInfo? = vertex.routingInfo
-                val vx: Bounds = routableReader!!.getBoundsOf(vri, true)
-                val vy: Bounds = routableReader!!.getBoundsOf(vri, false)
-                val inLeft: Boolean = routableReader!!.compareBounds(vx, left) == DPos.OVERLAP
-                val inRight: Boolean = routableReader!!.compareBounds(vx, right) == DPos.OVERLAP
-                val inTop: Boolean = routableReader!!.compareBounds(vy, top) == DPos.OVERLAP
-                val inBottom: Boolean = routableReader!!.compareBounds(vy, bottom) == DPos.OVERLAP
+                val vx: Bounds = routableReader.getBoundsOf(vri, true)
+                val vy: Bounds = routableReader.getBoundsOf(vri, false)
+                val inLeft: Boolean = routableReader.compareBounds(vx, left) == DPos.OVERLAP
+                val inRight: Boolean = routableReader.compareBounds(vx, right) == DPos.OVERLAP
+                val inTop: Boolean = routableReader.compareBounds(vy, top) == DPos.OVERLAP
+                val inBottom: Boolean = routableReader.compareBounds(vy, bottom) == DPos.OVERLAP
                 if (inTop && inBottom) {
                     mergeTopAndBottom = true
                 }
@@ -526,11 +526,11 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         } else {
             var dp: DPos? = null
             when (l) {
-                Layout.UP, Layout.DOWN, Layout.VERTICAL -> dp = routableReader!!.compare(a, b, false)
-                Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> dp = routableReader!!.compare(a, b, true)
+                Layout.UP, Layout.DOWN, Layout.VERTICAL -> dp = routableReader.compare(a, b, false)
+                Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> dp = routableReader.compare(a, b, true)
                 Layout.GRID -> {
-                    dp = routableReader!!.compare(a, b, false)
-                    dp = if ((dp == DPos.OVERLAP)) routableReader!!.compare(a, b, true) else dp
+                    dp = routableReader.compare(a, b, false)
+                    dp = if ((dp == DPos.OVERLAP)) routableReader.compare(a, b, true) else dp
                 }
             }
             if (dp == DPos.BEFORE) {

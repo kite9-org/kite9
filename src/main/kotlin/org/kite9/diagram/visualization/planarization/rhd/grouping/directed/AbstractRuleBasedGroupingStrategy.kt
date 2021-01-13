@@ -46,7 +46,7 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
     ): Int {
         //log.send("Testing merge: \n\t"+a+"\n\t"+b+"\n\t"+alignedGroup+"\n\t"+alignedSide);
         var alignedGroup = alignedGroup
-        alignedGroup = alignedGroup?.let { getWorkingGroup(it, ms) }
+        alignedGroup = alignedGroup?.let { getWorkingGroup(it) }
         val out = super.canGroupsMerge(a, b, ms, alignedGroup, alignedSide)
         if (out == INVALID_MERGE) {
             return out
@@ -92,7 +92,7 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
 
     protected abstract fun getRules(ms: DirectedMergeState): List<PriorityRule>
 
-    fun getWorkingGroup(group: GroupPhase.Group?, ms: BasicMergeState?): GroupPhase.Group? {
+    fun getWorkingGroup(group: GroupPhase.Group?): GroupPhase.Group? {
         var group: GroupPhase.Group? = group ?: return null
         var axis: DirectedGroupAxis? = null
         var parent: GroupPhase.Group? = null

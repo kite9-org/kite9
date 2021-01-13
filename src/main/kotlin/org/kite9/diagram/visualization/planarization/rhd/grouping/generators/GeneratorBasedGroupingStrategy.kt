@@ -34,5 +34,5 @@ interface GeneratorBasedGroupingStrategy : GroupingStrategy {
     /**
      * Given a group, which may have been merged, return the currently active version of it.
      */
-    fun getWorkingGroup(group: GroupPhase.Group, ms: BasicMergeState): GroupPhase.Group
+    fun getWorkingGroup(group: GroupPhase.Group?): GroupPhase.Group?
 }
