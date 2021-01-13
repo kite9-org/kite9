@@ -14,7 +14,6 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
  * This is based on a count of the number of groups that are already placed that the candidate groups link to.
  */
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
-
     var log = Kite9Log(this)
 
     data class NetworkedItem(val group: GroupPhase.Group, val size: Int) {
@@ -40,7 +39,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     }
 
     private fun canLayout(item: GroupPhase.Group?): Boolean {
-        return item!!.type.isReadyToPosition(completedGroups)
+        return item!!.getAxis().isReadyToPosition(completedGroups)
     }
 
     private fun countLinkNetworkSize(ld: LinkDetail): Int {
@@ -71,18 +70,19 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
          * in. This means that we do "hub" groups before "edge" ones.
          */
 
+
         // most networked first
         var a0d = arg0.size
         var a1d = arg1.size
         if (a0d != a1d) {
-            -a0d.compareTo(a1d)
+            return@Comparator -a0d.compareTo(a1d)
         }
 
         // largest first
         a0d = arg0.group.size
         a1d = arg1.group.size
         if (a0d != a1d) {
-            -a0d.compareTo(a1d)
+            return@Comparator -a0d.compareTo(a1d)
         }
 
         // lowest number first
@@ -92,7 +92,6 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     })
     var networkSizes: MutableMap<GroupPhase.Group, Int> = HashMap(size * 2)
     var completedGroups: MutableSet<GroupPhase.Group> = UnorderedSet(size * 2)
-
     override fun poll(): GroupPhase.Group? {
         while (todo.size > 0) {
             val nw = todo.remove()!!
@@ -113,7 +112,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         completedGroups.add(item)
         val a = item.a
         val b = item.b
-        val horiz = item.type.isHorizontal
+        val horiz = item.getAxis().isHorizontal
         val links = item.linkManager.subset(item.linkManager.allMask())
         for (ld in links) {
             val group = ld.group
@@ -160,7 +159,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
             if (completedGroups.contains(group)) {
                 return null
             }
-            group = group!!.type.getParentGroup(horiz)
+            group = group!!.getAxis().getParentGroup(horiz)
         }
         return group
     }
@@ -171,7 +170,6 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
 
     override val prefix: String
         get() = "MNFQ"
-
     override val isLoggingEnabled: Boolean
         get() = true
 
