@@ -69,7 +69,6 @@ public class BasicMergeState extends GroupResult {
 	public void initialise(int capacity, int containers, Kite9Log log) {
 		optionQueue = new PriorityQueue<MergeOption>((capacity * 5)+1, null);
 		bestOptions = new HashMap<MergeKey, MergeOption>(capacity * 5);
-		containerStates = new HashMap<Container, ContainerStateInfo>(containers * 2);
 		groupContainers = new HashMap<Group, Map<Container, GroupContainerState>>(capacity);
 		liveContainers = new UnorderedSet<Container>(containers * 2);
 		liveGroups = new DetHashSet<Group>(capacity * 2);
@@ -82,8 +81,8 @@ public class BasicMergeState extends GroupResult {
 		liveGroups.remove(a);
 
 		for (Container c : groupContainers.get(a).keySet()) {
-			ContainerStateInfo csi = containerStates.get(c);
-			csi.contents.remove(a);
+			ContainerStateInfo csi = getContainerStates().get(c);
+			csi.getContents().remove(a);
 		}
 
 	}
@@ -133,20 +132,20 @@ public class BasicMergeState extends GroupResult {
 
 		within.put(c2, newState);
 		ContainerStateInfo csi = getStateFor(c2);
-		csi.contents.add(toAdd);
+		csi.getContents().add(toAdd);
 	}
 
 	public ContainerStateInfo getStateFor(Container c2) {
 		ContainerStateInfo csi = super.getStateFor(c2);
 		if (csi == null) {
 			csi = new ContainerStateInfo(c2);
-			super.containerStates.put(c2, csi);
+			super.getContainerStates().put(c2, csi);
 
 			for (DiagramElement c : c2.getContents()) {
 				if ((c instanceof Container) && (c instanceof Connected)) {
 					ContainerStateInfo csi2 = getStateFor((Container) c);
 					if (csi2 != null) {
-						csi.incompleteSubcontainers.add((Container) c);
+						csi.getIncompleteSubcontainers().add((Container) c);
 					}
 				}
 			}
@@ -187,7 +186,7 @@ public class BasicMergeState extends GroupResult {
 
 
 	public Collection<Container> getContainers() {
-		return containerStates.keySet();
+		return getContainerStates().keySet();
 	}
 
 	public Map<Container, GroupContainerState> getContainersFor(Group a) {

@@ -114,7 +114,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
      * If the provided group doesn't need any more merging, remove it from the merge state, and potentially, promote
      * it's container.
      */
-    protected fun checkGroupsContainersAreComplete(group: GroupPhase.Group?, gp: GroupPhase?, ms: BasicMergeState) {
+    protected fun checkGroupsContainersAreComplete(group: GroupPhase.Group, gp: GroupPhase, ms: BasicMergeState) {
         val containerMap = ms.getContainersFor(group)
         val containers: Set<Container> = containerMap.keys
         val containers2 = ArrayList(containers)
@@ -128,8 +128,8 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         }
     }
 
-    protected fun isContainerComplete(c: Container?, ms: BasicMergeState): Boolean {
-        val csi = ms.getStateFor(c)
+    protected fun isContainerComplete(c: Container, ms: BasicMergeState): Boolean {
+        val csi = ms.getStateFor(c)!!
         if (csi.done) return true
         if (csi.incompleteSubcontainers.size > 0) {
             return false
@@ -138,22 +138,23 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         return csi.done
     }
 
-    protected abstract fun isContainerCompleteInner(c: Container?, ms: BasicMergeState?): Boolean
-    protected fun isContainerMergeable(c: Container?, ms: BasicMergeState): Boolean {
-        val csi = ms.getStateFor(c)
+    protected abstract fun isContainerCompleteInner(c: Container, ms: BasicMergeState): Boolean
+
+    protected fun isContainerMergeable(c: Container, ms: BasicMergeState): Boolean {
+        val csi = ms.getStateFor(c)!!
         return csi.incompleteSubcontainers.size == 0
     }
 
-    protected fun completeContainer(gp: GroupPhase?, ms: BasicMergeState, c: Container) {
+    protected fun completeContainer(gp: GroupPhase, ms: BasicMergeState, c: Container) {
         // ok, no need to merge this one - it needs removing from the list
         log.send(if (log.go()) null else "Completed container: $c")
-        val csiChild = ms.getStateFor(c)
+        val csiChild = ms.getStateFor(c)!!
         csiChild.done = true
         ms.removeLiveContainer(c)
         val cc = c.getContainer()
         if (cc != null) {
             // push groups from this container into parent
-            val csiParent = ms.getStateFor(cc)
+            val csiParent = ms.getStateFor(cc)!!
             csiParent.incompleteSubcontainers.remove(c)
             val toIterate: List<GroupPhase.Group> = ArrayList(csiChild.contents)
             var promotionOK = true
@@ -171,9 +172,9 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         }
     }
 
-    protected open fun startContainerMerge(ms: BasicMergeState, c: Container?) {
+    protected open fun startContainerMerge(ms: BasicMergeState, c: Container) {
         ms.addLiveContainer(c)
-        val csi = ms.getStateFor(c)
+        val csi = ms.getStateFor(c)!!
         for (g in csi.contents) {
             ms.addLiveGroup(g)
             groupChangedContainer(ms, g)

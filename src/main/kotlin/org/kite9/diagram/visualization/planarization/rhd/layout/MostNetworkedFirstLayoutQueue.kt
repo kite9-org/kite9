@@ -69,8 +69,6 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
          * Although priority is top down, within a given level, do groups in the same order than they were merged
          * in. This means that we do "hub" groups before "edge" ones.
          */
-
-
         // most networked first
         var a0d = arg0.size
         var a1d = arg1.size

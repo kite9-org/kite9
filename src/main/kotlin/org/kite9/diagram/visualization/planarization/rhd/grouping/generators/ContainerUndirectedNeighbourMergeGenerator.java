@@ -47,12 +47,12 @@ public class ContainerUndirectedNeighbourMergeGenerator extends AbstractMergeGen
 		log.send(log.go() ? null : "Generating "+getCode()+" options for "+c+" in axis "+mp);
 		ContainerStateInfo csi = ms.getStateFor(c);
 
-		int contentCount = csi.contents.size();
+		int contentCount = csi.getContents().size();
 		Set<Group> myDontDo = dontDo.get(c);
 		
 		List<Group> orderedItems = new ArrayList<Group>(contentCount);
 				
-		for (Group group : csi.contents) {
+		for (Group group : csi.getContents()) {
 			if (mp.matches(DirectedGroupAxis.getState(group))) {
 				myDontDo.add(group);
 

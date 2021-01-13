@@ -424,17 +424,17 @@ public abstract class AxisHandlingGroupingStrategy extends AbstractRuleBasedGrou
 	protected boolean isContainerCompleteInner(Container c, BasicMergeState ms) {
 		ContainerStateInfo csi = ms.getStateFor(c);
 		
-		if (csi.contents.size()<2) {
-			csi.done = true;
+		if (csi.getContents().size()<2) {
+			csi.setDone(true);
 			return true;
 		}
 		
-		if (csi.contents.size() > 2) {
+		if (csi.getContents().size() > 2) {
 			return false;
 		}
 		
 		// test one of each axis
-		Iterator<Group> groups = csi.contents.iterator();
+		Iterator<Group> groups = csi.getContents().iterator();
 		Group first = groups.next();
 		Group second = groups.next();
 		
