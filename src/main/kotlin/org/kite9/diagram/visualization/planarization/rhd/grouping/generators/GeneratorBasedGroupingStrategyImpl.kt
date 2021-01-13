@@ -63,7 +63,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
             // we already have this option with at least as good a priority.
             return best.priority
         }
-        val c = updateMergeOption(mo, ms)
+        val c = updateMergeOption(mo)
         if (c == Change.DISCARD) {
             return INVALID_MERGE
         }
@@ -105,7 +105,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
             var mo: MergeOption
             try {
                 mo = ms.nextMergeOption()
-                val c = updateMergeOption(mo, ms)
+                val c = updateMergeOption(mo)
                 if (c == Change.CHANGED || c == Change.NO_CHANGE) {
                     val p = canGroupsMerge(mo.mk.a, mo.mk.b, ms, mo.alignedGroup, mo.alignedDirection)
                     if (p != INVALID_MERGE) {
@@ -138,7 +138,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
      * This is called when a merge option changes because groups within it have already
      * been merged.
      */
-    private fun updateMergeOption(mo: MergeOption, ms: BasicMergeState): Change {
+    private fun updateMergeOption(mo: MergeOption): Change {
         val a = getWorkingGroup(mo.mk.a)
         val b = getWorkingGroup(mo.mk.b)
         val alignedGroup = getWorkingGroup(mo.alignedGroup)

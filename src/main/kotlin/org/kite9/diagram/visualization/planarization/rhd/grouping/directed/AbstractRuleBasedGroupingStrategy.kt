@@ -58,7 +58,7 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
         }
 
         // if there is a contradiction, record it and quit
-        val hasContradiction = checkContradiction(a, b, plane, ms)
+        val hasContradiction = checkContradiction(a, b, plane)
         if (hasContradiction) {
             return ILLEGAL_PRIORITY
         }
@@ -94,12 +94,11 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
 
     fun getWorkingGroup(group: GroupPhase.Group?): GroupPhase.Group? {
         var group: GroupPhase.Group? = group ?: return null
-        var axis: DirectedGroupAxis? = null
+        var axis: DirectedGroupAxis?
         var parent: GroupPhase.Group? = null
         do {
             if (parent != null) {
                 group = parent
-                parent = null
             }
             axis = group!!.getAxis() as DirectedGroupAxis
             parent = when (axis.state) {
@@ -119,8 +118,7 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
     private fun checkContradiction(
         a: GroupPhase.Group,
         b: GroupPhase.Group,
-        axis: MergePlane,
-        ms: BasicMergeState
+        axis: MergePlane
     ): Boolean {
         val directedEdgesOnly = DirectedLinkManager.createMask(
             axis,
