@@ -108,7 +108,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
     /**
      * Checks the groups that were part of the merge and removes them.
      */
-    protected abstract fun removeOldGroups(gp: GroupPhase?, ms: BasicMergeState?, combined: CompoundGroup?)
+    protected abstract fun removeOldGroups(gp: GroupPhase, ms: BasicMergeState, combined: CompoundGroup)
 
     /**
      * If the provided group doesn't need any more merging, remove it from the merge state, and potentially, promote

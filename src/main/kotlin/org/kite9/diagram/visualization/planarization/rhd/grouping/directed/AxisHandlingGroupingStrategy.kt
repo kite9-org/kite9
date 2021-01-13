@@ -182,7 +182,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         // unless there is a contradiction.
         val layoutNeeded = c != null
         if (!layoutNeeded && out.layout == null) {
-            DirectedGroupAxis.getType(out).setLayoutRequired(false)
+            DirectedGroupAxis.getType(out).isLayoutRequired = false
         } else if (out.layout == null) {
             out.layout = layoutDirection
         } else if (out.layout === Layout.UP || out.layout === Layout.DOWN) {
@@ -254,8 +254,8 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
             if (b != null && b !== a) {
                 // perform the merge in a fairly normal way.
                 val type = createAxis()
-                type.setHorizontal(false)
-                type.setVertical(false)
+                type.isHorizontal = false
+                type.isVertical = false
                 type.state = MergePlane.UNKNOWN
                 val lm = createLinkManager()
                 val out = gp.CompoundGroup(a, b, type, lm, true)
@@ -308,18 +308,18 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         when (axis) {
             MergePlane.X_FIRST_MERGE -> {
                 used.state = MergePlane.X_FIRST_MERGE
-                used.setHorizontal(false)
-                used.setVertical(true)
+                used.isHorizontal = false
+                used.isVertical = true
             }
             MergePlane.Y_FIRST_MERGE -> {
                 used.state = MergePlane.Y_FIRST_MERGE
-                used.setHorizontal(true)
-                used.setVertical(false)
+                used.isHorizontal = true
+                used.isVertical = false
             }
             MergePlane.UNKNOWN -> {
                 used.state = MergePlane.UNKNOWN
-                used.setVertical(true)
-                used.setHorizontal(true)
+                used.isVertical = true
+                used.isHorizontal = true
             }
         }
         return used
@@ -330,12 +330,12 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
      * the underlying groups are not removed necessarily - they are kept around
      * so that they can be merged in the other direction.
      */
-    override fun removeOldGroups(gp: GroupPhase?, ms: BasicMergeState?, combined: CompoundGroup?) {
-        checkRemoveGroup(gp, combined!!.a, combined, ms)
+    override fun removeOldGroups(gp: GroupPhase, ms: BasicMergeState, combined: CompoundGroup) {
+        checkRemoveGroup(gp, combined.a, combined, ms)
         checkRemoveGroup(gp, combined.b, combined, ms)
     }
 
-    private fun checkRemoveGroup(gp: GroupPhase?, a: GroupPhase.Group, cg: CompoundGroup?, ms: BasicMergeState?) {
+    private fun checkRemoveGroup(gp: GroupPhase, a: GroupPhase.Group, cg: CompoundGroup, ms: BasicMergeState) {
         val aType = DirectedGroupAxis.getType(a)
         val cgType = DirectedGroupAxis.getType(cg)
         if (cgType.state === MergePlane.X_FIRST_MERGE) {
@@ -364,7 +364,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
             // undirected / single axis merge
             setBothParents(cg, aType)
         }
-        if (!aType.isActive) {
+        if (!aType.active) {
             ms!!.removeLiveGroup(a)
         } else {
             // group is being kept, so we need to make sure it's in the group
