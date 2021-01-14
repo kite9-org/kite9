@@ -48,15 +48,15 @@ public abstract class AbstractWaitingContainerMergeGenerator extends AbstractMer
 			Collection<MergeOption> waitList = waitingOptions.remove(c);
 			if (waitList!=null) {
 				for (MergeOption mo : waitList) {
-					grouper.addMergeOption(mo, getMyBestPriority(), ms);
+					getGrouper().addMergeOption(mo, getMyBestPriority(), getMs());
 				}
 			}
 		} 
 	}
 	
 	public Container getCommonContainer(Group a, Group b) {
-		Map<Container, GroupContainerState> ac = ms.getContainersFor(a);
-		Map<Container, GroupContainerState> bc = ms.getContainersFor(b);
+		Map<Container, GroupContainerState> ac = getMs().getContainersFor(a);
+		Map<Container, GroupContainerState> bc = getMs().getContainersFor(b);
 		
 
 		if ((ac == null) || (bc == null))
@@ -76,7 +76,7 @@ public abstract class AbstractWaitingContainerMergeGenerator extends AbstractMer
 	public void addMergeOption(Group g1, Group g2, Group alignedGroup, Direction alignedSide) {
 		if (isLiveOnly()) {
 			Container c = getCommonContainer(g1, g2);
-			if (ms.isContainerLive(c)) {
+			if (getMs().isContainerLive(c)) {
 				super.addMergeOption(g1, g2, alignedGroup, alignedSide);
 			} else {
 				// add to the wait-list
@@ -87,7 +87,7 @@ public abstract class AbstractWaitingContainerMergeGenerator extends AbstractMer
 				}
 				
 				int p = getMyBestPriority();
-				MergeOption mo = new MergeOption(g1, g2, ms.nextMergeOptionNumber(), p, alignedGroup, alignedSide);
+				MergeOption mo = new MergeOption(g1, g2, getMs().nextMergeOptionNumber(), p, alignedGroup, alignedSide);
 				waitList.add(mo); 
 			}
 		} else {

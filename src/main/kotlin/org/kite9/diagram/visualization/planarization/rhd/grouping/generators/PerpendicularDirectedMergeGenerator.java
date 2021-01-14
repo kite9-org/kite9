@@ -28,12 +28,12 @@ public class PerpendicularDirectedMergeGenerator extends AbstractMergeGenerator 
 		MergePlane state = DirectedGroupAxis.getState(poll);
 		if ((state == MergePlane.X_FIRST_MERGE) || (state==MergePlane.UNKNOWN)) {
 			// horizontal merges
-			generateMergesInDirection(poll, ms, false, MergePlane.X_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), false, MergePlane.X_FIRST_MERGE);
 		}
 		
 		if ((state == MergePlane.Y_FIRST_MERGE) || (state==MergePlane.UNKNOWN)) {
 			// vertical merges
-			generateMergesInDirection(poll, ms, true, MergePlane.Y_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), true, MergePlane.Y_FIRST_MERGE);
 		}
 	}
 

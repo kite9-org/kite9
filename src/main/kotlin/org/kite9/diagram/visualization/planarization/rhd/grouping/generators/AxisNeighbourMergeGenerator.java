@@ -29,15 +29,15 @@ public class AxisNeighbourMergeGenerator extends AbstractMergeGenerator {
 		MergePlane state = DirectedGroupAxis.getState(poll);
 		if ((state == MergePlane.X_FIRST_MERGE) || (state==MergePlane.UNKNOWN)) {
 			// horizontal merges
-			generateMergesInDirection(poll, ms, Direction.RIGHT, MergePlane.X_FIRST_MERGE);
-			generateMergesInDirection(poll, ms, Direction.LEFT, MergePlane.X_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), Direction.RIGHT, MergePlane.X_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), Direction.LEFT, MergePlane.X_FIRST_MERGE);
 			
 		}
 		
 		if ((state == MergePlane.Y_FIRST_MERGE) || (state==MergePlane.UNKNOWN)) {
 			// vertical merges
-			generateMergesInDirection(poll, ms, Direction.DOWN, MergePlane.Y_FIRST_MERGE);
-			generateMergesInDirection(poll, ms, Direction.UP, MergePlane.Y_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), Direction.DOWN, MergePlane.Y_FIRST_MERGE);
+			generateMergesInDirection(poll, getMs(), Direction.UP, MergePlane.Y_FIRST_MERGE);
 		}
 	}
 

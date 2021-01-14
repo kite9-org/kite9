@@ -72,7 +72,7 @@ public class ContainerUndirectedNeighbourMergeGenerator extends AbstractMergeGen
 		});
 		
 		
-		createNeighbourMergeOptions(gp, ms, orderedItems, grouper, c);
+		createNeighbourMergeOptions(getGp(), ms, orderedItems, grouper, c);
 	}
 
 	private void createNeighbourMergeOptions(GroupPhase gp, BasicMergeState ms, List<Group> orderedItems, GeneratorBasedGroupingStrategy grouper, Container c) {
@@ -96,23 +96,23 @@ public class ContainerUndirectedNeighbourMergeGenerator extends AbstractMergeGen
 
 	@Override
 	public void generate(Group poll) {
-		for (Container c : ms.getContainersFor(poll).keySet()) {
-			if ((ms.isContainerLive(c))) {
+		for (Container c : getMs().getContainersFor(poll).keySet()) {
+			if ((getMs().isContainerLive(c))) {
 				if (dontDo.get(c).contains(poll)) {
 					return;
 				}
 				MergePlane state = DirectedGroupAxis.getState(poll);
 				switch (state) {
 				case UNKNOWN :
-					generateNeighboursForContainer(c, ms, grouper, MergePlane.X_FIRST_MERGE);
-					generateNeighboursForContainer(c, ms, grouper, MergePlane.Y_FIRST_MERGE);	
+					generateNeighboursForContainer(c, getMs(), getGrouper(), MergePlane.X_FIRST_MERGE);
+					generateNeighboursForContainer(c, getMs(), getGrouper(), MergePlane.Y_FIRST_MERGE);
 					break;
 				case X_FIRST_MERGE:
-					generateNeighboursForContainer(c, ms, grouper, MergePlane.X_FIRST_MERGE);
+					generateNeighboursForContainer(c, getMs(), getGrouper(), MergePlane.X_FIRST_MERGE);
 					break;
 			
 				case Y_FIRST_MERGE:
-					generateNeighboursForContainer(c, ms, grouper, MergePlane.Y_FIRST_MERGE);
+					generateNeighboursForContainer(c, getMs(), getGrouper(), MergePlane.Y_FIRST_MERGE);
 					break;
 				}				
 			} else if (dontDo.containsKey(c)) {

@@ -33,8 +33,8 @@ public abstract class AbstractAlignedMergeGenerator extends AbstractWaitingConta
 		log.send(log.go() ? null : "Generating "+getCode()+" options for "+poll);
 		Set<Direction> alignmentDirections = getAlignmentDirections(poll);
 		for (Direction d : alignmentDirections) {
-			generateFromAlignedGroup(gp, poll, d, ms);
-			generateFromG1Group(gp, poll, d, ms);
+			generateFromAlignedGroup(getGp(), poll, d, getMs());
+			generateFromG1Group(getGp(), poll, d, getMs());
 		}
 	}
 
@@ -49,7 +49,7 @@ public abstract class AbstractAlignedMergeGenerator extends AbstractWaitingConta
 
 			@Override
 			public void process(Group originatingGroup, final Group g1w, LinkDetail ld) {
-				final Group g1 = grouper.getWorkingGroup(g1w);
+				final Group g1 = getGrouper().getWorkingGroup(g1w);
 				final MergePlane g1state = DirectedGroupAxis.getState(g1);
 				
 				if (ms.isLiveGroup(g1) && mp.matches(g1state)) {
@@ -79,7 +79,7 @@ public abstract class AbstractAlignedMergeGenerator extends AbstractWaitingConta
 
 			@Override
 			public void process(Group originatingGroup, final Group alignedGroupw, LinkDetail ld) {
-				final Group alignedGroup = grouper.getWorkingGroup(alignedGroupw);
+				final Group alignedGroup = getGrouper().getWorkingGroup(alignedGroupw);
 				final Direction rd = Direction.reverse(d);
 				
 			//	if (ms.isLiveGroup(alignedGroup) && mp.matches(mp)) {
@@ -97,9 +97,9 @@ public abstract class AbstractAlignedMergeGenerator extends AbstractWaitingConta
 	}
 	
 	protected void testAndAddAlignedTrio(Group g1, Group g2, Group alignedGroup, Direction alignedSide, MergePlane mp) {
-		g2 = grouper.getWorkingGroup(g2);
+		g2 = getGrouper().getWorkingGroup(g2);
 		MergePlane g2state = DirectedGroupAxis.getState(g2);
-		if ((g2 != g1) && (ms.isLiveGroup(g2)) && (mp.matches(g2state))) {
+		if ((g2 != g1) && (getMs().isLiveGroup(g2)) && (mp.matches(g2state))) {
 			addMergeOption(g1, g2, alignedGroup, alignedSide);
 		}
 	}
