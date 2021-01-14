@@ -70,13 +70,13 @@ class DirectionPlacementApproach(
                 ld: LinkDetail
             ) {
                 if (ld !== ignore) {
-                    ld.processLowestLevel(object : LinkProcessor {
+                    ld!!.processLowestLevel(object : LinkProcessor {
                         override fun process(
                             originatingGroup: GroupPhase.Group,
                             destinationGroup: GroupPhase.Group,
                             ld: LinkDetail
                         ) {
-                            out.addLink(originatingGroup, destinationGroup, ld, rh)
+                            out.addLink(originatingGroup, destinationGroup, ld!!, rh)
                         }
                     })
                 }

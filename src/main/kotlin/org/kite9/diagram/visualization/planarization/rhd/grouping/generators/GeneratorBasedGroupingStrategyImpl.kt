@@ -163,7 +163,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
         return DirectedGroupAxis.compatibleNeighbour(a, b)
     }
 
-    protected fun setupMergeState(bms: BasicMergeState, gp: GroupPhase?) {
+    protected fun setupMergeState(bms: BasicMergeState, gp: GroupPhase) {
         val ms = bms as GeneratorMergeState
         val generators: MutableList<MergeGenerator> = ArrayList()
 

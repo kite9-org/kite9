@@ -38,7 +38,7 @@ public class PerpendicularAlignedMergeGenerator extends AbstractAlignedMergeGene
 	}
 
 	@Override
-	protected String getCode() {
+	public String getCode() {
 		return "ContainerPerpAligned";
 	}
 

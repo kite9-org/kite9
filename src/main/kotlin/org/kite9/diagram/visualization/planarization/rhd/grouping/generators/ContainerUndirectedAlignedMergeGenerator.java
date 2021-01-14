@@ -34,7 +34,7 @@ public class ContainerUndirectedAlignedMergeGenerator extends AbstractAlignedMer
 	}
 
 	@Override
-	protected String getCode() {
+	public String getCode() {
 		return "ContainerUndirectedAligned";
 	}
 

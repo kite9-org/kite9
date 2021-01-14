@@ -22,25 +22,25 @@ abstract class AbstractAlignedMergeGenerator(
     liveOnly: Boolean
 ) : AbstractWaitingContainerMergeGenerator(gp, ms, grouper, liveOnly) {
 
-    protected abstract fun getAlignmentDirections(g1: GroupPhase.Group?): Set<Direction>
-    protected abstract fun processPossibleAligningGroups(g1: GroupPhase.Group?, d: Direction?, lp: LinkProcessor?)
+    protected abstract fun getAlignmentDirections(g1: GroupPhase.Group): Set<Direction?>
+
+    protected abstract fun processPossibleAligningGroups(g1: GroupPhase.Group, d: Direction, lp: LinkProcessor)
+
     override fun generate(poll: GroupPhase.Group) {
         log.send(if (log.go()) null else "Generating " + getCode() + " options for " + poll)
         val alignmentDirections = getAlignmentDirections(poll)
         for (d in alignmentDirections) {
-            generateFromAlignedGroup(gp, poll, d, ms)
-            generateFromG1Group(gp, poll, d, ms)
+            generateFromAlignedGroup(poll, d, ms)
+            generateFromG1Group(poll, d, ms)
         }
     }
 
     protected fun generateFromAlignedGroup(
-        gp: GroupPhase?,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: GroupPhase.Group,
         d: Direction?,
         ms: BasicMergeState
     ) {
-//		if (alignedGroup.getLinkCount() < 2)
-//			return;
+
         val axis = getType(alignedGroup!!)
         val mp = getState(alignedGroup)
         processAlignedGroupsInAxis(alignedGroup, ms, axis, mp, d, object : LinkProcessor {
@@ -60,17 +60,14 @@ abstract class AbstractAlignedMergeGenerator(
         })
     }
 
-    protected fun generateFromG1Group(gp: GroupPhase?, g1: GroupPhase.Group?, d: Direction?, ms: BasicMergeState?) {
-//		if (alignedGroup.getLinkCount() < 2)
-//			return;
-        val axis = getType(g1!!)
+    protected fun generateFromG1Group(g1: GroupPhase.Group, d: Direction?, ms: BasicMergeState) {
+        val axis = getType(g1)
         val mp = getState(g1)
         processAlignedGroupsInAxis(g1, ms, axis, mp, d, object : LinkProcessor {
             override fun process(originatingGroup: GroupPhase.Group, alignedGroupw: GroupPhase.Group, ld: LinkDetail) {
-                val alignedGroup = grouper.getWorkingGroup(alignedGroupw)
+                val alignedGroup = grouper.getWorkingGroup(alignedGroupw)!!
                 val rd = reverse(d)
 
-                //	if (ms.isLiveGroup(alignedGroup) && mp.matches(mp)) {
                 processAlignedGroupsInAxis(alignedGroup, ms, axis, mp, rd, object : LinkProcessor {
                     override fun process(originatingGroup: GroupPhase.Group, g2: GroupPhase.Group, ld: LinkDetail) {
                         testAndAddAlignedTrio(g1, g2, alignedGroup, rd, mp)
@@ -82,22 +79,21 @@ abstract class AbstractAlignedMergeGenerator(
     }
 
     protected fun testAndAddAlignedTrio(
-        g1: GroupPhase.Group?,
-        g2: GroupPhase.Group?,
-        alignedGroup: GroupPhase.Group?,
+        g1: GroupPhase.Group,
+        g2: GroupPhase.Group,
+        alignedGroup: GroupPhase.Group,
         alignedSide: Direction?,
         mp: MergePlane
     ) {
-        var g2 = g2
-        g2 = grouper.getWorkingGroup(g2)
-        val g2state = getState(g2!!)
-        if (g2 !== g1 && ms.isLiveGroup(g2) && mp.matches(g2state)) {
-            addMergeOption(g1!!, g2, alignedGroup, alignedSide)
+        var g2w = grouper.getWorkingGroup(g2)
+        val g2state = getState(g2w!!)
+        if (g2w !== g1 && ms.isLiveGroup(g2w) && mp.matches(g2state)) {
+            addMergeOption(g1, g2w, alignedGroup, alignedSide)
         }
     }
 
     protected abstract fun processAlignedGroupsInAxis(
-        alignedGroup: GroupPhase.Group?, ms: BasicMergeState?,
-        axis: DirectedGroupAxis?, mp: MergePlane?, d: Direction?, lp: LinkProcessor?
+        alignedGroup: GroupPhase.Group, ms: BasicMergeState,
+        axis: DirectedGroupAxis, mp: MergePlane, d: Direction?, lp: LinkProcessor
     )
 }

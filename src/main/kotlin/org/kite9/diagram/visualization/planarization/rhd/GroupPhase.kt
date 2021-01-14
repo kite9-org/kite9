@@ -339,7 +339,7 @@ class GroupPhase(
         private fun fileLink(from: Group, to: Group, merging: Group, ld: LinkDetail) {
             val internal = merging.contains(to)
             if (!internal) {
-                linkManager.sortLink(ld)
+                linkManager.sortLink(ld!!)
             } else {
                 if (merging === to) {
                     if (from === a) {

@@ -53,7 +53,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
                     destinationGroup: GroupPhase.Group,
                     ld2: LinkDetail
                 ) {
-                    out[0] += countLinkNetworkSize(ld2)
+                    out[0] += countLinkNetworkSize(ld2!!)
                 }
             }, 1)
             out[0]
@@ -135,7 +135,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
                         destinationGroup: GroupPhase.Group,
                         ld2: LinkDetail
                     ) {
-                        checkAndIncrementGroup(destinationGroup, a, b, ld2, horiz)
+                        checkAndIncrementGroup(destinationGroup, a, b, ld2!!, horiz)
                     }
                 }, 1)
             }

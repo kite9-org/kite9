@@ -64,7 +64,7 @@ object ExitMatrixEvaluator {
             override fun process(from: GroupPhase.Group, to: GroupPhase.Group, ld: LinkDetail) {
                 val aRI = from.getAxis().getPosition(rh, true)
                 val bRI = to.getAxis().getPosition(rh, true)
-                val cost = rh.cost(aRI, bRI) * ld.numberOfLinks
+                val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
                 out[0] += cost
                 //				log.send("Evaluating: "+cost+
 //						"\n\tfrom "+((LeafGroup)from).getContained()+" at "+aRI+

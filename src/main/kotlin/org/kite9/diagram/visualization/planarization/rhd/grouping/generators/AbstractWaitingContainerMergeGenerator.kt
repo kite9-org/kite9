@@ -22,7 +22,7 @@ abstract class AbstractWaitingContainerMergeGenerator(
     gp, ms, grouper
 ) {
 
-    private var waitingOptions: MutableMap<Container, MutableCollection<MergeOption>> = hashMapOf()
+    private var waitingOptions: MutableMap<Container?, MutableCollection<MergeOption>> = hashMapOf()
 
     override fun containerIsLive(c: Container) {
         if (liveOnly) {
@@ -35,7 +35,7 @@ abstract class AbstractWaitingContainerMergeGenerator(
         }
     }
 
-    fun getCommonContainer(a: GroupPhase.Group, b: GroupPhase.Group): Container {
+    fun getCommonContainer(a: GroupPhase.Group, b: GroupPhase.Group): Container? {
         val ac = ms.getContainersFor(a)
         val bc = ms.getContainersFor(b)
         if (ac == null || bc == null) throw LogicException("Group has no containers?")
@@ -44,7 +44,7 @@ abstract class AbstractWaitingContainerMergeGenerator(
         for (container in itc) {
             if (inc.contains(container)) return container
         }
-        throw LogicException("Couldn't find common container")
+        return null
     }
 
     override fun addMergeOption(
