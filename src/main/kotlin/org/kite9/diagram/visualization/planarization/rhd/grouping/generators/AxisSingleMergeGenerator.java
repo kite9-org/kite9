@@ -56,7 +56,7 @@ public class AxisSingleMergeGenerator extends AbstractMergeGenerator {
 	}
 
 	@Override
-	protected String getCode() {
+	public String getCode() {
 		return "AxisSingle";
 	}
 

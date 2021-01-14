@@ -12,7 +12,7 @@ interface MergeGenerator {
     /**
      * With the given strategy, generate some merge options for the given group.
      */
-    fun generate(g: GroupPhase.Group)
+    fun generate(poll: GroupPhase.Group)
 
     /**
      * Signals that a container has become live.

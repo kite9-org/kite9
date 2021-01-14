@@ -124,7 +124,7 @@ public class ContainerUndirectedNeighbourMergeGenerator extends AbstractMergeGen
 
 
 	@Override
-	protected String getCode() {
+	public String getCode() {
 		return "ContainerNeighbour";
 	}
 	

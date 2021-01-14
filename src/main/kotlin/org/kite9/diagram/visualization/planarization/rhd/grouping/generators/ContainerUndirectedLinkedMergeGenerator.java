@@ -36,7 +36,7 @@ public class ContainerUndirectedLinkedMergeGenerator extends AbstractMergeGenera
 	}
 	
 	@Override
-	protected String getCode() {
+	public String getCode() {
 		return "ContainerUndirected";
 	}
 }
