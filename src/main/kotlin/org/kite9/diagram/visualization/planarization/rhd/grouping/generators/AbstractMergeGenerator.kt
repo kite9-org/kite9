@@ -22,7 +22,7 @@ abstract class AbstractMergeGenerator(
         alignedGroup: GroupPhase.Group?,
         alignedSide: Direction?
     ) {
-        grouper.addMergeOption(g1, g2, alignedGroup, alignedSide, myBestPriority, ms)
+        grouper.addMergeOption(g1, g2, alignedGroup, alignedSide, getMyBestPriority(), ms)
     }
 
     override val prefix: String
@@ -31,10 +31,10 @@ abstract class AbstractMergeGenerator(
     override val isLoggingEnabled: Boolean
         get() = true
 
-    protected abstract val myBestPriority: Int
+    protected abstract fun getMyBestPriority(): Int
 
     override fun containerIsLive(c: Container) {}
 
-    protected abstract val code: String?
+    abstract fun getCode(): String
 
 }
