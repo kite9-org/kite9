@@ -669,9 +669,8 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         private fun containersFor(
             a: Group?,
             ms: BasicMergeState
-        ): Set<Container?>? {
-            val cf =
-                ms.getContainersFor(a)
+        ): Set<Container>? {
+            val cf = ms.getContainersFor(a)
             return cf?.keys
         }
 
