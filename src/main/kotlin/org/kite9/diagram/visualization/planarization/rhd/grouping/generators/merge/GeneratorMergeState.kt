@@ -18,24 +18,20 @@ import java.util.*
  */
 class GeneratorMergeState(ch: ContradictionHandler, elements: Int) : DirectedMergeState(ch) {
 
-    var generators: List<MergeGenerator>? = null
-    var rules: List<PriorityRule>? = null
-    var toDo: PriorityQueue<Group>? = null
+    val generators: MutableList<MergeGenerator> = mutableListOf()
+    val rules: MutableList<PriorityRule> = mutableListOf()
+    val toDo: PriorityQueue<Group> = PriorityQueue(elements + 1, Comparator<Group> { arg0, arg1 ->
+        if (arg0.size != arg1.size) {
+            arg0.size.compareTo(arg1.size)
+        } else {
+            arg0.linkManager.linkCount
+                .compareTo(arg1.linkManager.linkCount)
+        }
+    })
 
-    init {
-
-    }
 
     override fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
         super.initialise(capacity, containers, log)
-        toDo = PriorityQueue(capacity + 1, Comparator<Group> { arg0, arg1 ->
-            if (arg0.size != arg1.size) {
-                arg0.size.compareTo(arg1.size)
-            } else {
-                arg0.linkManager.linkCount
-                    .compareTo(arg1.linkManager.linkCount)
-            }
-        })
     }
 
     override fun addLiveGroup(group: Group) {

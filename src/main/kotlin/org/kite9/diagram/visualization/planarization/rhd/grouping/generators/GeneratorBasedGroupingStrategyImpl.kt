@@ -178,38 +178,34 @@ class GeneratorBasedGroupingStrategyImpl(
 
     protected fun setupMergeState(bms: BasicMergeState) {
         val ms = bms as GeneratorMergeState
-        val generators: MutableList<MergeGenerator> = ArrayList()
 
         // axis merges take priority over everything else
-        generators.add(AxisSingleMergeGenerator(this, ms, this))
-        generators.add(AxisAlignedMergeGenerator(this, ms, this))
-        generators.add(AxisNeighbourMergeGenerator(this, ms, this))
+        ms.generators.add(AxisSingleMergeGenerator(this, ms, this))
+        ms.generators.add(AxisAlignedMergeGenerator(this, ms, this))
+        ms.generators.add(AxisNeighbourMergeGenerator(this, ms, this))
 
         // perpendicular, undirected, in-container merges
-        generators.add(ContainerUndirectedLinkedMergeGenerator(this, ms, this))
-        generators.add(ContainerUndirectedAlignedMergeGenerator(this, ms, this))
-        generators.add(ContainerUndirectedNeighbourMergeGenerator(this, ms, this))
+        ms.generators.add(ContainerUndirectedLinkedMergeGenerator(this, ms, this))
+        ms.generators.add(ContainerUndirectedAlignedMergeGenerator(this, ms, this))
+        ms.generators.add(ContainerUndirectedNeighbourMergeGenerator(this, ms, this))
 
         // perpendicular, directed, in & out of container merges
-        generators.add(PerpendicularAlignedMergeGenerator(this, ms, this))
-        generators.add(PerpendicularDirectedMergeGenerator(this, ms, this))
-        ms.generators = generators
+        ms.generators.add(PerpendicularAlignedMergeGenerator(this, ms, this))
+        ms.generators.add(PerpendicularDirectedMergeGenerator(this, ms, this))
 
 
         // order is significant
-        val rules: MutableList<PriorityRule> = ArrayList()
 
         // axis merges first
-        rules.add(NeighbourDirectedPriorityRule(true))
-        rules.add(AlignedDirectedPriorityRule(true))
+        ms.rules.add(NeighbourDirectedPriorityRule(true))
+        ms.rules.add(AlignedDirectedPriorityRule(true))
 
         // undirected merges
-        rules.add(UndirectedPriorityRule())
+        ms.rules.add(UndirectedPriorityRule())
 
         // perpendicular merges
-        rules.add(NeighbourDirectedPriorityRule(false))
-        rules.add(AlignedDirectedPriorityRule(false))
-        ms.rules = rules
+        ms.rules.add(NeighbourDirectedPriorityRule(false))
+        ms.rules.add(AlignedDirectedPriorityRule(false))
     }
 
     override fun getRules(ms: DirectedMergeState): List<PriorityRule> {
