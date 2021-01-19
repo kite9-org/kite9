@@ -119,7 +119,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     }
 
     private fun checkAndIncrementGroup(
-        group: Group,
+        group: Group?,
         a: Group,
         b: Group,
         ld: LinkDetail,

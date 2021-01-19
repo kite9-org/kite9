@@ -146,7 +146,7 @@ abstract class AbstractRuleBasedGroupingStrategy(
         val blm = b.linkManager
         val subset = a.linkManager.subset(directedEdgesOnly)
         for (gald in subset) {
-            val gbld = blm[gald.group]
+            val gbld = blm[gald.group!!]
             if (gbld != null && gbld.direction != null && gbld.direction !== gald.direction) {
                 return true
             }

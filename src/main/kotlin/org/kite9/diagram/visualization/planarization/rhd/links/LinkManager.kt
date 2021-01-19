@@ -34,7 +34,7 @@ interface LinkManager {
         val direction: Direction?
         val numberOfLinks: Float
         val connections: Iterable<BiDirectional<Connected>>
-        val group: Group
+        val group: Group?
         fun processToLevel(lp: LinkProcessor, l: Int)
         fun processLowestLevel(lp: LinkProcessor)
 
