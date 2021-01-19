@@ -40,7 +40,7 @@ class GeneratorBasedGroupingStrategyImpl(
     em: ElementMapper) :
     AxisHandlingGroupingStrategy(top, elements, ch, gp, em,
         GeneratorMergeState(
-            ch
+            ch, elements
         )
     ), GeneratorBasedGroupingStrategy {
 

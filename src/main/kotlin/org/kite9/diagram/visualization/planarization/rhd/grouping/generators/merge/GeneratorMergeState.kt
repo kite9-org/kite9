@@ -16,11 +16,15 @@ import java.util.*
  *
  * @author robmoffat
  */
-class GeneratorMergeState(ch: ContradictionHandler?) : DirectedMergeState(ch!!) {
+class GeneratorMergeState(ch: ContradictionHandler, elements: Int) : DirectedMergeState(ch) {
 
     var generators: List<MergeGenerator>? = null
     var rules: List<PriorityRule>? = null
     var toDo: PriorityQueue<Group>? = null
+
+    init {
+
+    }
 
     override fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
         super.initialise(capacity, containers, log)

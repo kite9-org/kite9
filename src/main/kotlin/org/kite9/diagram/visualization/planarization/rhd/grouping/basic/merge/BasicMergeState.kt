@@ -4,6 +4,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
@@ -13,7 +14,10 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 
-open class BasicMergeState(var contradictionHandler: ContradictionHandler) : GroupResult() {
+open class BasicMergeState(var contradictionHandler: ContradictionHandler) : GroupResult(), Logable {
+
+    val log = Kite9Log(this)
+
     enum class GroupContainerState(var hasContent: Boolean, var isComplete: Boolean) {
         HAS_CONTENT(true, false), COMPLETE_WITH_CONTENT(true, true), NO_CONTENT(
             false,
@@ -51,14 +55,12 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler) : Gro
     private var groupContainers: MutableMap<Group, MutableMap<Container, GroupContainerState>>? = null
     protected var liveContainers: MutableSet<Container>? = null
     protected var nextMergeNumber = 0
-    protected var log: Kite9Log? = null
     open fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
         optionQueue = PriorityQueue(capacity * 5 + 1, null)
         bestOptions = HashMap(capacity * 5)
         groupContainers = HashMap(capacity)
         liveContainers = UnorderedSet(containers * 2)
         liveGroups = DetHashSet(capacity * 2)
-        this.log = log
     }
 
     open fun removeLiveGroup(a: Group) {
@@ -184,4 +186,10 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler) : Gro
     override fun groups(): Collection<Group> {
         return liveGroups!!
     }
+
+    override val prefix: String?
+        get() = "MS  "
+
+    override val isLoggingEnabled: Boolean
+        get() = true
 }
