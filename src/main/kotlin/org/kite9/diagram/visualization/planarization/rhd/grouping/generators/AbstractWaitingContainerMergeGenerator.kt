@@ -4,8 +4,9 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
 
 /**
  * Options that are not in live containers wait until the containers are live
@@ -35,7 +36,7 @@ abstract class AbstractWaitingContainerMergeGenerator(
         }
     }
 
-    fun getCommonContainer(a: GroupPhase.Group, b: GroupPhase.Group): Container? {
+    fun getCommonContainer(a: Group, b: Group): Container? {
         val ac = ms.getContainersFor(a)
         val bc = ms.getContainersFor(b)
         if (ac == null || bc == null) throw LogicException("Group has no containers?")
@@ -48,9 +49,9 @@ abstract class AbstractWaitingContainerMergeGenerator(
     }
 
     override fun addMergeOption(
-        g1: GroupPhase.Group,
-        g2: GroupPhase.Group,
-        alignedGroup: GroupPhase.Group?,
+        g1: Group,
+        g2: Group,
+        alignedGroup: Group?,
         alignedSide: Direction?
     ) {
         if (liveOnly) {

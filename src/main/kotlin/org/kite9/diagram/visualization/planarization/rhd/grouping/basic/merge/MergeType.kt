@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping.basic
+package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge
 
 /**
  * There are basically 3 types of merge.

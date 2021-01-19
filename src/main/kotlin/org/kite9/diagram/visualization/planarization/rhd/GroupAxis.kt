@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd
 
 import org.kite9.diagram.common.elements.RoutingInfo
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
@@ -33,11 +35,6 @@ interface GroupAxis {
     fun getPosition(rh: RoutableHandler2D, temp: Boolean): RoutingInfo
 
     /**
-     * Tells the axis what group it is for.
-     */
-    fun setGroup(g: GroupPhase.Group)
-
-    /**
      * Returns false if the group no longer needs combining into CompoundGroups
      */
     var active: Boolean
@@ -45,7 +42,7 @@ interface GroupAxis {
     /**
      * Returns true if this group's parents are all positioned, and we can choose the position of this one.
      */
-    fun isReadyToPosition(completedGroups: Set<GroupPhase.Group>): Boolean
+    fun isReadyToPosition(completedGroups: Set<Group>): Boolean
 
     /**
      * Potentially, groups can have 2 parents, a horizontal and a vertical one.

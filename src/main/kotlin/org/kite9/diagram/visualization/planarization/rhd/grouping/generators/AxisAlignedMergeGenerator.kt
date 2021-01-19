@@ -3,11 +3,12 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AbstractRuleBasedGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -27,12 +28,12 @@ class AxisAlignedMergeGenerator(gp: GroupPhase, ms: BasicMergeState, grouper: Ge
         return "InAxisBuddy"
     }
 
-    override fun processPossibleAligningGroups(g1: GroupPhase.Group, d: Direction, lp: LinkProcessor) {
+    override fun processPossibleAligningGroups(g1: Group, d: Direction, lp: LinkProcessor) {
         val mask = DirectedLinkManager.createMask(null, false, false, d)
         g1.linkManager.processAllLeavingLinks(true, mask, lp)
     }
 
-    override fun getAlignmentDirections(g1: GroupPhase.Group): Set<Direction> {
+    override fun getAlignmentDirections(g1: Group): Set<Direction> {
         val state = getState(g1)
         return when (state) {
             MergePlane.UNKNOWN -> ALL
@@ -43,7 +44,7 @@ class AxisAlignedMergeGenerator(gp: GroupPhase, ms: BasicMergeState, grouper: Ge
     }
 
     override fun processAlignedGroupsInAxis(
-        alignedGroup: GroupPhase.Group, ms: BasicMergeState, axis: DirectedGroupAxis,
+        alignedGroup: Group, ms: BasicMergeState, axis: DirectedGroupAxis,
         mp: MergePlane, d: Direction?, lp: LinkProcessor
     ) {
         val alignedGroups = getAlignedGroups(alignedGroup, axis, mp, d)
@@ -53,11 +54,11 @@ class AxisAlignedMergeGenerator(gp: GroupPhase, ms: BasicMergeState, grouper: Ge
     }
 
     protected fun getAlignedGroups(
-        g: GroupPhase.Group,
+        g: Group,
         axis: DirectedGroupAxis?,
         mp: MergePlane?,
         d: Direction?
-    ): Collection<GroupPhase.Group> {
+    ): Collection<Group> {
         val mask = DirectedLinkManager.createMask(mp, true, false, d)
         return g.linkManager.subsetGroup(mask)
     }

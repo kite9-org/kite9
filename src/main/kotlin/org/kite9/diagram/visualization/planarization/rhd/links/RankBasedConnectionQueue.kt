@@ -9,8 +9,8 @@ import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.Tools
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logable {
@@ -37,7 +37,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
     val y: ArrayList<BiDirectional<Connected>> = ArrayList(1000)
     val u: ArrayList<BiDirectional<Connected>> = ArrayList(1000)
 
-    fun considerThis(c: BiDirectional<Connected>, cg: CompoundGroup): Boolean {
+    fun considerThis(c: BiDirectional<Connected>, cg: AbstractCompoundGroup): Boolean {
         if (alreadyAdded.contains(c)) {
             return false
         }
@@ -99,8 +99,8 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
 
 
 
-    override fun handleLinks(g: GroupPhase.Group) {
-        if (g is CompoundGroup) {
+    override fun handleLinks(g: Group) {
+        if (g is AbstractCompoundGroup) {
             val cg = g
             val internalLinkA = cg.internalLinkA
             if (internalLinkA != null) {
@@ -126,12 +126,12 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         }
     }
 
-    fun considerThisB(c: BiDirectional<Connected>, cg: CompoundGroup): Boolean {
+    fun considerThisB(c: BiDirectional<Connected>, cg: AbstractCompoundGroup): Boolean {
         return if (c is Connection) {
             val d = c.getDrawDirection()
             (d == null && !u!!.contains(c)
-                    || (d === Direction.LEFT || d === Direction.RIGHT) && cg.type.isHorizontal
-                    || (d === Direction.UP || d === Direction.DOWN) && cg.type.isVertical)
+                    || (d === Direction.LEFT || d === Direction.RIGHT) && cg.axis.isHorizontal
+                    || (d === Direction.UP || d === Direction.DOWN) && cg.axis.isVertical)
         } else {
             false
         }

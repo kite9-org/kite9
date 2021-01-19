@@ -1,14 +1,15 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping.directed;
+package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group;
 
 import org.kite9.diagram.common.BiDirectional;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState.GroupContainerState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager;
 
 import java.util.*;
@@ -18,9 +19,10 @@ public class DirectedLinkManager implements LinkManager {
 	
 	private BasicMergeState ms;
 	
-	public DirectedLinkManager(BasicMergeState ms) {
+	public DirectedLinkManager(BasicMergeState ms, Group g) {
 		super();
 		this.ms = ms;
+		this.g = g;
 	}
 
 	public static final int MASK_X_FIRST = 1;
@@ -28,12 +30,6 @@ public class DirectedLinkManager implements LinkManager {
 
 	public static final int MASK_NEAREST_NEIGHBOUR = 4;
 	public static final int MASK_IN_CONTAINER = 8;
-	
-	@Override
-	public void setGroup(Group g) {
-		this.g = g;
-		links = new LinkedHashMap<Group, AbstractLinkDetail>();
-	}
 
 	public static final int MASK_UP = 16;
 	public static final int MASK_DOWN = 32;
@@ -41,7 +37,7 @@ public class DirectedLinkManager implements LinkManager {
 	public static final int MASK_RIGHT = 128;
 	public static final int MASK_NO_DIRECTION = 256;
 	
-	protected LinkedHashMap<Group, AbstractLinkDetail> links;
+	protected LinkedHashMap<Group, AbstractLinkDetail> links = new LinkedHashMap<>();
 	private Group g;
 
 	public LinkedHashMap<Group, AbstractLinkDetail> getLinks() {

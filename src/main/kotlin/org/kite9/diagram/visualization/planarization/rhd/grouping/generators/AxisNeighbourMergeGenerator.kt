@@ -2,10 +2,11 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AbstractRuleBasedGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 
 /**
@@ -21,7 +22,7 @@ class AxisNeighbourMergeGenerator(
     gp, ms, grouper
 ) {
 
-    override fun generate(poll: GroupPhase.Group) {
+    override fun generate(poll: Group) {
         log.send(if (log.go()) null else "Generating " + getCode() + " options for " + poll)
         val state = getState(poll)
         if (state === MergePlane.X_FIRST_MERGE || state === MergePlane.UNKNOWN) {
@@ -36,7 +37,7 @@ class AxisNeighbourMergeGenerator(
         }
     }
 
-    private fun generateMergesInDirection(poll: GroupPhase.Group, ms: BasicMergeState, d: Direction, mp: MergePlane) {
+    private fun generateMergesInDirection(poll: Group, ms: BasicMergeState, d: Direction, mp: MergePlane) {
         val dlm = poll.linkManager as DirectedLinkManager
         val right = dlm.getSingleDirectedMergeOption(d, mp, ms, false)
         if (right == null) {

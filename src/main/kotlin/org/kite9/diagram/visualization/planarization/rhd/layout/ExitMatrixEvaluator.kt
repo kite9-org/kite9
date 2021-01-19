@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.layout
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrix.RelativeSide
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
@@ -61,9 +61,9 @@ object ExitMatrixEvaluator {
         if (internal == null) return 0.0
         val out = doubleArrayOf(0.0)
         internal.processLowestLevel(object : LinkProcessor {
-            override fun process(from: GroupPhase.Group, to: GroupPhase.Group, ld: LinkDetail) {
-                val aRI = from.getAxis().getPosition(rh, true)
-                val bRI = to.getAxis().getPosition(rh, true)
+            override fun process(from: Group, to: Group, ld: LinkDetail) {
+                val aRI = from.axis.getPosition(rh, true)
+                val bRI = to.axis.getPosition(rh, true)
                 val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
                 out[0] += cost
                 //				log.send("Evaluating: "+cost+

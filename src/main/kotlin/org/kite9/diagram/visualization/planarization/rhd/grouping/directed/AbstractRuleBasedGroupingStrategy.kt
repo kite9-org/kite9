@@ -1,10 +1,18 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
+import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.AbstractGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
+import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 
 /**
  * This class encapsulates the rules about directional merging.
@@ -35,13 +43,19 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMer
  *
  * @author robmoffat
  */
-abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
+abstract class AbstractRuleBasedGroupingStrategy(
+    top: DiagramElement,
+    elements: Int,
+    ch: ContradictionHandler,
+    gp: GridPositioner,
+    em: ElementMapper
+) : AbstractGroupingStrategy(top, elements, ch, gp, em) {
 
     override fun canGroupsMerge(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: BasicMergeState,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: Group?,
         alignedSide: Direction?
     ): Int {
         //log.send("Testing merge: \n\t"+a+"\n\t"+b+"\n\t"+alignedGroup+"\n\t"+alignedSide);
@@ -80,11 +94,11 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
         return ILLEGAL_PRIORITY
     }
 
-    private fun alreadyMerged(b: GroupPhase.Group, plane: MergePlane): Boolean {
+    private fun alreadyMerged(b: Group, plane: MergePlane): Boolean {
         return if (plane === MergePlane.X_FIRST_MERGE) {
-            b.getAxis().getParentGroup(false) != null
+            b.axis.getParentGroup(false) != null
         } else if (plane === MergePlane.Y_FIRST_MERGE) {
-            b.getAxis().getParentGroup(true) != null
+            b.axis.getParentGroup(true) != null
         } else {
             false
         }
@@ -92,15 +106,15 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
 
     protected abstract fun getRules(ms: DirectedMergeState): List<PriorityRule>
 
-    fun getWorkingGroup(group: GroupPhase.Group?): GroupPhase.Group? {
-        var group: GroupPhase.Group? = group ?: return null
+    fun getWorkingGroup(group: Group?): Group? {
+        var group: Group? = group ?: return null
         var axis: DirectedGroupAxis?
-        var parent: GroupPhase.Group? = null
+        var parent: Group? = null
         do {
             if (parent != null) {
                 group = parent
             }
-            axis = group!!.getAxis() as DirectedGroupAxis
+            axis = group!!.axis as DirectedGroupAxis
             parent = when (axis.state) {
                 MergePlane.X_FIRST_MERGE -> axis.vertParentGroup
                 MergePlane.Y_FIRST_MERGE -> axis.horizParentGroup
@@ -116,8 +130,8 @@ abstract class AbstractRuleBasedGroupingStrategy : AbstractGroupingStrategy() {
     }
 
     private fun checkContradiction(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         axis: MergePlane
     ): Boolean {
         val directedEdgesOnly = DirectedLinkManager.createMask(

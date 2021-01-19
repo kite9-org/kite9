@@ -4,17 +4,19 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.AbstractGroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
 class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
 
     override fun getMergePriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: DirectedMergeState,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: Group?,
         alignedSide: Direction?,
         mp: MergePlane,
         horizontalMergesFirst: Boolean
@@ -60,10 +62,10 @@ class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun isCompatibleSubgroup(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
-        aGroupsBack: Collection<GroupPhase.Group>,
-        siblingsOfA: Collection<GroupPhase.Group>,
+        a: Group,
+        b: Group,
+        aGroupsBack: Collection<Group>,
+        siblingsOfA: Collection<Group>,
         mp: MergePlane,
         d: Direction?
     ): Boolean {
@@ -87,7 +89,7 @@ class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun getPerpSize(
-        a: GroupPhase.Group, mp: MergePlane,
+        a: Group, mp: MergePlane,
         d: Direction
     ): Int {
         val perpMask = DirectedLinkManager.createMask(mp, false, true, d)
@@ -96,8 +98,8 @@ class NeighbourDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun getPriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: DirectedMergeState,
         singleDirected: Boolean
     ): Int {

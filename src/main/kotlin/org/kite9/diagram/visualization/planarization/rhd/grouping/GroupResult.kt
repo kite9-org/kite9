@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
  * Returns details of the state of the merge, and the grouping of each container.
@@ -12,14 +12,14 @@ abstract class GroupResult {
 
 	protected val containerStates: MutableMap<Container, ContainerStateInfo> = mutableMapOf()
 
-    abstract fun groups(): Collection<GroupPhase.Group>
+    abstract fun groups(): Collection<Group>
 
     open fun getStateFor(c: Container): ContainerStateInfo? {
         return containerStates[c]
     }
 
     inner class ContainerStateInfo(c: Container) {
-		val contents: MutableSet<GroupPhase.Group>
+		val contents: MutableSet<Group>
 		val incompleteSubcontainers: MutableSet<Container>
 		var done = false
 

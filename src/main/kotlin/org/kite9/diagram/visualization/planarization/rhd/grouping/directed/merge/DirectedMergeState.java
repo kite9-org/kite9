@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping.directed;
+package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,9 +7,12 @@ import java.util.Set;
 
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.ContainerMergeType;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.logging.Kite9Log;
@@ -118,7 +121,7 @@ public class DirectedMergeState extends BasicMergeState {
 	@Override
 	public void initialise(int capacity, int containers, Kite9Log log) {
 		super.initialise(capacity, containers, log);
-		noDirectedMergeNeeded = new HashMap<ShapeIndex, GroupPhase.Group>(capacity);
+		noDirectedMergeNeeded = new HashMap<ShapeIndex, Group>(capacity);
 	}
 
 	@Override

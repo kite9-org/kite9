@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedMergeState;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.PriorityRule;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.logging.Kite9Log;

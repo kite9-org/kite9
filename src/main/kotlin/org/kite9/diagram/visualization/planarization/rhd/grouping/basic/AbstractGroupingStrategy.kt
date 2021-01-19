@@ -1,14 +1,19 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic
 
-import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState.GroupContainerState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState.GroupContainerState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
+import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -19,43 +24,40 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
  *
  * @author robmoffat
  */
-abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
-
-	val log = Kite9Log(this)
-
-    override val prefix: String
-        get() = "GS  "
-
-    override val isLoggingEnabled: Boolean
-        get() = true
+abstract class AbstractGroupingStrategy(
+    top: DiagramElement,
+    elements: Int,
+    ch: ContradictionHandler,
+    gp: GridPositioner,
+    em: ElementMapper
+) : GroupPhase(top, elements, ch, gp, em), GroupingStrategy {
 
     /**
      * Actually does the merge suggested by the merge option, replacing the individual groups with a compound group.
      */
-    protected fun performMerge(gp: GroupPhase, ms: BasicMergeState, mo: MergeOption) {
+    protected fun performMerge(ms: BasicMergeState, mo: MergeOption) {
         if (mo.priority >= ILLEGAL_PRIORITY) {
             log.error(if (log.go()) null else "Merging: $mo")
         } else {
             log.send(if (log.go()) null else "Merging: $mo")
         }
-        val combined = createCompoundGroup(gp, ms, mo)
+        val combined = createCompoundGroup(ms, mo)
         if (combined != null) {
-            doCompoundGroupInsertion(gp, ms, combined, false)
+            doCompoundGroupInsertion(ms, combined, false)
         }
     }
 
     protected open fun doCompoundGroupInsertion(
-        gp: GroupPhase,
         ms: BasicMergeState,
         combined: CompoundGroup,
         skipContainerCompletionCheck: Boolean
     ) {
         updateContainers(combined, ms)
-        removeOldGroups(gp, ms, combined)
+        removeOldGroups(ms, combined)
         handleReferences(combined)
-        introduceCombinedGroup(gp, ms, combined)
+        introduceCombinedGroup(ms, combined)
         if (!skipContainerCompletionCheck) {
-            checkGroupsContainersAreComplete(combined, gp, ms)
+            checkGroupsContainersAreComplete(combined, ms)
         }
     }
 
@@ -65,7 +67,8 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
      */
     private fun updateContainers(
         group: CompoundGroup,
-        ms: BasicMergeState) {
+        ms: BasicMergeState
+    ) {
         val containersA = ms.getContainersFor(group.a)
         val containersB = ms.getContainersFor(group.b)
         val combined: MutableSet<Container> = LinkedHashSet(containersA.keys)
@@ -87,8 +90,15 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
     /**
      * Performs the functions needed to add the new compound group to the merge state
      */
-    protected abstract fun introduceCombinedGroup(gp: GroupPhase?, ms: BasicMergeState?, combined: CompoundGroup?)
-    protected abstract fun createCompoundGroup(gp: GroupPhase?, ms: BasicMergeState?, mo: MergeOption?): CompoundGroup?
+    protected abstract fun introduceCombinedGroup(
+        ms: BasicMergeState,
+        combined: CompoundGroup
+    )
+
+    protected abstract fun createCompoundGroup(
+        ms: BasicMergeState,
+        mo: MergeOption
+    ): CompoundGroup
 
     /**
      * This works out how to handle references going to the components of a new compound group.
@@ -97,9 +107,9 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         val a = group.a
         val b = group.b
         group.processAllLeavingLinks(true, group.linkManager.allMask(), object : LinkProcessor {
-            override fun process(originatingGroup: GroupPhase.Group, to: GroupPhase.Group, ld: LinkDetail) {
-                if (to.isActive) {
-                    to.linkManager.notifyMerge(group, a.isActive, b.isActive)
+            override fun process(originatingGroup: Group, to: Group, ld: LinkDetail) {
+                if (to.isActive()) {
+                    to.linkManager.notifyMerge(group, a.isActive(), b.isActive())
                 }
             }
         })
@@ -108,13 +118,13 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
     /**
      * Checks the groups that were part of the merge and removes them.
      */
-    protected abstract fun removeOldGroups(gp: GroupPhase, ms: BasicMergeState, combined: CompoundGroup)
+    protected abstract fun removeOldGroups(ms: BasicMergeState, combined: CompoundGroup)
 
     /**
      * If the provided group doesn't need any more merging, remove it from the merge state, and potentially, promote
      * it's container.
      */
-    protected fun checkGroupsContainersAreComplete(group: GroupPhase.Group, gp: GroupPhase, ms: BasicMergeState) {
+    protected fun checkGroupsContainersAreComplete(group: Group, ms: BasicMergeState) {
         val containerMap = ms.getContainersFor(group)
         val containers: Set<Container> = containerMap.keys
         val containers2 = ArrayList(containers)
@@ -122,7 +132,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
             val state = containerMap[container]
             if (state != null && !state.isComplete) {
                 if (isContainerComplete(container, ms)) {
-                    completeContainer(gp, ms, container)
+                    completeContainer(ms, container)
                 }
             }
         }
@@ -145,7 +155,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         return csi.incompleteSubcontainers.size == 0
     }
 
-    protected fun completeContainer(gp: GroupPhase, ms: BasicMergeState, c: Container) {
+    protected fun completeContainer(ms: BasicMergeState, c: Container) {
         // ok, no need to merge this one - it needs removing from the list
         log.send(if (log.go()) null else "Completed container: $c")
         val csiChild = ms.getStateFor(c)!!
@@ -156,7 +166,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
             // push groups from this container into parent
             val csiParent = ms.getStateFor(cc)!!
             csiParent.incompleteSubcontainers.remove(c)
-            val toIterate: List<GroupPhase.Group> = ArrayList(csiChild.contents)
+            val toIterate: List<Group> = ArrayList(csiChild.contents)
             var promotionOK = true
             for (g in toIterate) {
                 promotionOK = checkGroupChangeContainer(ms, c, cc, g) && promotionOK
@@ -166,7 +176,7 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
                     startContainerMerge(ms, cc)
                 }
                 if (isContainerComplete(cc, ms)) {
-                    completeContainer(gp, ms, cc)
+                    completeContainer(ms, cc)
                 }
             }
         }
@@ -185,18 +195,17 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         ms: BasicMergeState,
         c: Container,
         cc: Container,
-        g: GroupPhase.Group
+        g: Group
     ): Boolean {
-        log.send("Moving group: " + g.groupNumber + " from " + c + " to " + cc)
+        log.send("Moving group: " + g.groupOrdinal + " from " + c + " to " + cc)
         ms.removeGroupContainerMapping(g, c)
         ms.addGroupContainerMapping(g, cc, GroupContainerState.HAS_CONTENT)
         return true
     }
 
-    protected abstract fun groupChangedContainer(ms: BasicMergeState, g: GroupPhase.Group)
+    protected abstract fun groupChangedContainer(ms: BasicMergeState, g: Group)
 
     protected fun initContained(
-        gp: GroupPhase,
         ms: BasicMergeState,
         leaves: MutableList<LeafGroup>,
         toAdd: LeafGroup
@@ -223,10 +232,10 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
      * Extra parameters about aligned group are added to simplify the process for
      */
     open fun canGroupsMerge(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: BasicMergeState,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: Group?,
         d: Direction?
     ): Int {
         // not a real merge
@@ -235,9 +244,9 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
         } else 0
     }
 
-    protected fun preMergeInitialisation(gp: GroupPhase, ms: BasicMergeState) {
-        for (g in gp.allGroups) {
-            initContained(gp, ms, mutableListOf(), g)
+    protected fun preMergeInitialisation(ms: BasicMergeState) {
+        for (g in allGroups) {
+            initContained(ms, mutableListOf(), g as LeafGroup)
         }
         val bottomLevelContainers: List<Container> = ArrayList(ms.containers)
         if (bottomLevelContainers.size > 0) {
@@ -246,11 +255,11 @@ abstract class AbstractGroupingStrategy : GroupingStrategy, Logable {
                     startContainerMerge(ms, c)
                 }
                 if (isContainerComplete(c, ms)) {
-                    completeContainer(gp, ms, c)
+                    completeContainer(ms, c)
                 }
             }
-        } else if (gp.allGroups.size == 1) {
-            ms.addLiveGroup(gp.allGroups.iterator().next())
+        } else if (allGroups.size == 1) {
+            ms.addLiveGroup(allGroups.iterator().next())
         }
     }
 

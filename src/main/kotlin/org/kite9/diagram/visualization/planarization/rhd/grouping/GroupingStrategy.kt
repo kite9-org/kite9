@@ -8,7 +8,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
  *
  * @author robmoffat
  */
-interface GroupingStrategy : GroupBuilder {
+interface GroupingStrategy {
 
-    fun group(gp: GroupPhase): GroupResult
+    fun group(): GroupResult
 }

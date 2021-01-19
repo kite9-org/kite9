@@ -1,16 +1,21 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
+import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeKey
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeKey
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.PriorityRule
 import org.kite9.diagram.visualization.planarization.rhd.grouping.rules.AlignedDirectedPriorityRule
 import org.kite9.diagram.visualization.planarization.rhd.grouping.rules.NeighbourDirectedPriorityRule
@@ -28,13 +33,18 @@ import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHand
  *
  * @author robmoffat
  */
-class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
-    AxisHandlingGroupingStrategy(GeneratorMergeState(ch)), GeneratorBasedGroupingStrategy {
+class GeneratorBasedGroupingStrategyImpl(
+    top: DiagramElement,
+    elements: Int,
+    ch: ContradictionHandler,
+    gp: GridPositioner,
+    em: ElementMapper) :
+    AxisHandlingGroupingStrategy(top, elements, ch, gp, em, GeneratorMergeState(ch)), GeneratorBasedGroupingStrategy {
 
     override fun addMergeOption(
-        g1: GroupPhase.Group,
-        g2: GroupPhase.Group,
-        alignedGroup: GroupPhase.Group?,
+        g1: Group,
+        g2: Group,
+        alignedGroup: Group?,
         alignedSide: Direction?,
         bestPriority: Int,
         ms: BasicMergeState
@@ -82,7 +92,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
     /**
      * Add MergeOptions to the queue for a given group.
      */
-    fun createMergeOptions(gp: GroupPhase?, ms: BasicMergeState) {
+    fun createMergeOptions(ms: BasicMergeState) {
         val gms = ms as GeneratorMergeState
         var next = gms.nextLiveGroup()
         while (next != null) {
@@ -94,14 +104,14 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
         }
     }
 
-    override fun group(gp: GroupPhase): GroupResult {
-        val capacity = gp.groupCount
-        val containers = gp.containerCount
+    override fun group(): GroupResult {
+        val capacity = groupCount
+        val containers = containerCount
         ms.initialise(capacity, containers, log)
-        setupMergeState(ms, gp)
-        preMergeInitialisation(gp, ms)
+        setupMergeState(ms)
+        preMergeInitialisation(ms)
         while (ms.groupsCount() > 1) {
-            createMergeOptions(gp, ms)
+            createMergeOptions(ms)
             var mo: MergeOption
             try {
                 mo = ms.nextMergeOption()
@@ -118,7 +128,7 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
                             if (p == ILLEGAL_PRIORITY) {
                                 log.error("Inserting with Illegal: $mo")
                             }
-                            performMerge(gp, ms, mo)
+                            performMerge(ms, mo)
                         }
                     }
                 }
@@ -154,32 +164,32 @@ class GeneratorBasedGroupingStrategyImpl(ch: ContradictionHandler) :
         } else Change.DISCARD
     }
 
-    override fun introduceCombinedGroup(gp: GroupPhase?, ms: BasicMergeState?, combined: CompoundGroup?) {
-        combined!!.log(log)
-        ms!!.addLiveGroup(combined)
+    override fun introduceCombinedGroup(ms: BasicMergeState, combined: CompoundGroup) {
+        combined.log(log)
+        ms.addLiveGroup(combined)
     }
 
-    override fun compatibleMerge(a: GroupPhase.Group, b: GroupPhase.Group): Boolean {
+    override fun compatibleMerge(a: Group, b: Group): Boolean {
         return DirectedGroupAxis.compatibleNeighbour(a, b)
     }
 
-    protected fun setupMergeState(bms: BasicMergeState, gp: GroupPhase) {
+    protected fun setupMergeState(bms: BasicMergeState) {
         val ms = bms as GeneratorMergeState
         val generators: MutableList<MergeGenerator> = ArrayList()
 
         // axis merges take priority over everything else
-        generators.add(AxisSingleMergeGenerator(gp, ms, this))
-        generators.add(AxisAlignedMergeGenerator(gp, ms, this))
-        generators.add(AxisNeighbourMergeGenerator(gp, ms, this))
+        generators.add(AxisSingleMergeGenerator(this, ms, this))
+        generators.add(AxisAlignedMergeGenerator(this, ms, this))
+        generators.add(AxisNeighbourMergeGenerator(this, ms, this))
 
         // perpendicular, undirected, in-container merges
-        generators.add(ContainerUndirectedLinkedMergeGenerator(gp, ms, this))
-        generators.add(ContainerUndirectedAlignedMergeGenerator(gp, ms, this))
-        generators.add(ContainerUndirectedNeighbourMergeGenerator(gp, ms, this))
+        generators.add(ContainerUndirectedLinkedMergeGenerator(this, ms, this))
+        generators.add(ContainerUndirectedAlignedMergeGenerator(this, ms, this))
+        generators.add(ContainerUndirectedNeighbourMergeGenerator(this, ms, this))
 
         // perpendicular, directed, in & out of container merges
-        generators.add(PerpendicularAlignedMergeGenerator(gp, ms, this))
-        generators.add(PerpendicularDirectedMergeGenerator(gp, ms, this))
+        generators.add(PerpendicularAlignedMergeGenerator(this, ms, this))
+        generators.add(PerpendicularDirectedMergeGenerator(this, ms, this))
         ms.generators = generators
 
 

@@ -3,9 +3,10 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AbstractRuleBasedGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 
 /**
@@ -29,7 +30,7 @@ class ContainerUndirectedNeighbourMergeGenerator(
     }
 
     // keeps track of groups we've already done
-    var dontDo: MutableMap<Container, MutableSet<GroupPhase.Group>> = HashMap()
+    var dontDo: MutableMap<Container, MutableSet<Group>> = HashMap()
 
     private fun generateNeighboursForContainer(
         c: Container, ms: BasicMergeState,
@@ -39,7 +40,7 @@ class ContainerUndirectedNeighbourMergeGenerator(
         val csi = ms.getStateFor(c)
         val contentCount = csi!!.contents.size
         val myDontDo = dontDo[c]!!
-        val orderedItems: MutableList<GroupPhase.Group> = ArrayList(contentCount)
+        val orderedItems: MutableList<Group> = ArrayList(contentCount)
         for (group in csi.contents) {
             if (mp.matches(getState(group))) {
                 myDontDo.add(group)
@@ -50,8 +51,8 @@ class ContainerUndirectedNeighbourMergeGenerator(
         createNeighbourMergeOptions(orderedItems)
     }
 
-    private fun createNeighbourMergeOptions(orderedItems: List<GroupPhase.Group>) {
-        var prev: GroupPhase.Group? = null
+    private fun createNeighbourMergeOptions(orderedItems: List<Group>) {
+        var prev: Group? = null
         for (i in orderedItems.indices) {
             val current = orderedItems[i]
             if (current != null) {
@@ -67,7 +68,7 @@ class ContainerUndirectedNeighbourMergeGenerator(
         return AbstractRuleBasedGroupingStrategy.UNCONNECTED_NEIGHBOUR
     }
 
-    override fun generate(poll: GroupPhase.Group) {
+    override fun generate(poll: Group) {
         for (c in ms.getContainersFor(poll).keys) {
             if (ms.isContainerLive(c)) {
                 if (dontDo[c]!!.contains(poll)) {

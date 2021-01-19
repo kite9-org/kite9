@@ -1,14 +1,14 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 interface LayoutQueue {
 
     /**
      * Adds another group to the work queue
      */
-    fun offer(item: GroupPhase.Group)
+    fun offer(item: Group)
 
     /**
      * Informs the queue that you have completed work on item.
@@ -18,5 +18,5 @@ interface LayoutQueue {
     /**
      * Retrieves the next group to do, or null if we're finished
      */
-    fun poll(): GroupPhase.Group?
+    fun poll(): Group?
 }

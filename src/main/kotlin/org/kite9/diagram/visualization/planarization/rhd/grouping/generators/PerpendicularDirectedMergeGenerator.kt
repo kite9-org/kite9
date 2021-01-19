@@ -2,10 +2,11 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AbstractRuleBasedGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 
 /**
@@ -21,7 +22,7 @@ class PerpendicularDirectedMergeGenerator(
     gp, ms, grouper
 ) {
 
-    override fun generate(poll: GroupPhase.Group) {
+    override fun generate(poll: Group) {
         val state = getState(poll)
         if (state === MergePlane.X_FIRST_MERGE || state === MergePlane.UNKNOWN) {
             // horizontal merges
@@ -34,7 +35,7 @@ class PerpendicularDirectedMergeGenerator(
     }
 
     private fun generateMergesInDirection(
-        poll: GroupPhase.Group,
+        poll: Group,
         horizontal: Boolean,
         mp: MergePlane
     ) {

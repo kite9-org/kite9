@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
+package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
@@ -11,18 +11,13 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
-class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
-
-    var g: GroupPhase.Group? = null
-
-    override fun setGroup(g: GroupPhase.Group) {
-        this.g = g
-    }
+class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
     override var isLayoutRequired = true
 
@@ -58,14 +53,14 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
         return if (ri == null) {
             // ok, calculate via parent groups.  
             var out: Bounds? = null
-            val parent: GroupPhase.Group? =
+            val parent: Group? =
                 if (horiz) horizParentGroup else vertParentGroup
             out = if (parent != null) {
-                if (parent.getAxis().isLayoutRequired) {
+                if (parent.axis.isLayoutRequired) {
                     val l = getLayoutFor(parent, g)
-                    rh.narrow(l, (parent.getAxis() as DirectedGroupAxis).getPosition1D(rh, temp, horiz)!!, horiz, true)
+                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)!!, horiz, true)
                 } else {
-                    (parent.getAxis() as DirectedGroupAxis).getPosition1D(rh, temp, horiz)
+                    (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)
                 }
             } else {
                 // no parent group = top
@@ -92,10 +87,10 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
     override fun getPosition(rh: RoutableHandler2D, temp: Boolean): RoutingInfo {
         val xBounds = getPosition1D(rh, temp, true)
         val yBounds = getPosition1D(rh, temp, false)
-        return rh.createRouting(xBounds!!, yBounds!!)
+        return rh.createRouting(xBounds, yBounds)
     }
 
-    override fun isReadyToPosition(completedGroups: Set<GroupPhase.Group>): Boolean {
+    override fun isReadyToPosition(completedGroups: Set<Group>): Boolean {
         val hready = horizParentGroup == null || completedGroups.contains(horizParentGroup)
         val vready = vertParentGroup == null || completedGroups.contains(vertParentGroup)
         return hready && vready
@@ -108,7 +103,7 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
          * the merge isn't allowed.
          */
 		@JvmStatic
-		fun getMergePlane(a: GroupPhase.Group, b: GroupPhase.Group): MergePlane? {
+		fun getMergePlane(a: Group, b: Group): MergePlane? {
             return when (getState(a)) {
                 MergePlane.X_FIRST_MERGE -> {
                     return when (getState(b)) {
@@ -176,11 +171,11 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
          * Only allows the merge if the neighbour is in the right state
          */
 		@JvmStatic
-		fun compatibleNeighbour(originatingGroup: GroupPhase.Group, destinationGroup: GroupPhase.Group): Boolean {
+		fun compatibleNeighbour(originatingGroup: Group, destinationGroup: Group): Boolean {
             return getMergePlane(originatingGroup, destinationGroup) != null
         }
 
-        fun inState(group: GroupPhase.Group, vararg okStates: Any): Boolean {
+        fun inState(group: Group, vararg okStates: Any): Boolean {
             for (i in 0 until okStates.size) {
                 if (getState(group) === okStates[i]) {
                     return true
@@ -190,11 +185,11 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
         }
 
         @JvmStatic
-		fun getState(group: GroupPhase.Group): MergePlane {
-            return (group.type as DirectedGroupAxis).state
+		fun getState(group: Group): MergePlane {
+            return (group.axis as DirectedGroupAxis).state
         }
 
-        fun getLayoutFor(`in`: GroupPhase.Group, g: GroupPhase.Group?): Layout? {
+        fun getLayoutFor(`in`: Group, g: Group?): Layout? {
             val ax = getType(`in`)
             return if (`in`.layout == null) {
                 null
@@ -212,7 +207,7 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
             }
         }
 
-        private fun layoutSide(`in`: GroupPhase.Group, g: GroupPhase.Group?): Layout? {
+        private fun layoutSide(`in`: Group, g: Group?): Layout? {
             val cg = `in` as CompoundGroup
             return if (cg.b === g) {
                 cg.layout
@@ -224,8 +219,8 @@ class DirectedGroupAxis(val log: Kite9Log) : GroupAxis {
         }
 
         @JvmStatic
-		fun getType(g: GroupPhase.Group): DirectedGroupAxis {
-            return g.getAxis() as DirectedGroupAxis
+		fun getType(g: Group): DirectedGroupAxis {
+            return g.axis as DirectedGroupAxis
         }
     }
 }

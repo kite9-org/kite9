@@ -1,23 +1,26 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.getLayoutForDirection
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.isHorizontalDirection
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.isVerticalDirection
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.MergeOption
-import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
+import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -29,21 +32,21 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
  *
  * @author robmoffat
  */
-abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleBasedGroupingStrategy() {
-    protected var ms: BasicMergeState
-    var hack = Kite9Log(object : Logable {
-        override val isLoggingEnabled: Boolean
-            get() = true
-        override val prefix: String
-            get() = "DGA "
-    })
+abstract class AxisHandlingGroupingStrategy(
+    top: DiagramElement,
+    elements: Int,
+    ch: ContradictionHandler,
+    gp: GridPositioner,
+    em: ElementMapper,
+    val ms: DirectedMergeState
+) : AbstractRuleBasedGroupingStrategy(top, elements, ch, gp, em) {
 
-    override fun groupChangedContainer(ms: BasicMergeState, g: GroupPhase.Group) {
+    override fun groupChangedContainer(ms: BasicMergeState, g: Group) {
         g.linkManager.notifyContainerChange()
         g.processAllLeavingLinks(true, g.linkManager.allMask(), object : LinkProcessor {
             override fun process(
-                originatingGroup: GroupPhase.Group,
-                destinationGroup: GroupPhase.Group,
+                originatingGroup: Group,
+                destinationGroup: Group,
                 ld: LinkDetail
             ) {
                 destinationGroup.linkManager.notifyContainerChange(g)
@@ -51,31 +54,20 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         })
     }
 
-    protected fun initLeafGroupAxis(toAdd: LeafGroup?) {}
-    override fun createAxis(): DirectedGroupAxis {
-        return DirectedGroupAxis(hack)
-    }
 
-    override fun createLinkManager(): LinkManager {
-        return DirectedLinkManager(ms)
-    }
+    override fun createCompoundGroup(ms: BasicMergeState, mo: MergeOption): CompoundGroup {
+        val out = createCompoundGroup(mo.mk.a, mo.mk.b, false, mo)
+        identifyGroupDirection(out, ms)
 
-    override fun createCompoundGroup(gp: GroupPhase?, ms: BasicMergeState?, mo: MergeOption?): CompoundGroup? {
-        val used = buildCompoundAxis(mo!!.mk.a, mo.mk.b, mo.alignedDirection)
-        val lm = createLinkManager()
-        val out = gp!!.CompoundGroup(mo.mk.a, mo.mk.b, used, lm, false)
-        identifyGroupDirection(
-            out, gp,
-            ms
-        )
         log.send(
             if (log.go()) null else """Compound Group ${out.groupNumber} created: 
 	${out.a}
 	${out.b}
 	${out.layout}
-	axis:${out.getAxis()}
-	links:""", (lm as DirectedLinkManager).getLinks()
+	axis:${out.axis}
+	links:""", (out.linkManager as DirectedLinkManager).links
         )
+
         writeGroup(out, mo)
         return out
     }
@@ -84,7 +76,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         out: CompoundGroup,
         ld1: LinkDetail?,
         ld2: LinkDetail?,
-        ms: BasicMergeState?
+        ms: BasicMergeState
     ) {
         if (ld1 == null && ld2 == null) {
             return
@@ -95,7 +87,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
 
         // check that internals don't contradict the axis of the group
         if (isLinkAgainstAxis(out, ld)) {
-            val aContainerMap = ms!!.getContainersFor(out.a)
+            val aContainerMap = ms.getContainersFor(out.a)
             val bContainerMap = ms.getContainersFor(out.b)
             val expandingContainers: MutableSet<Container?> = UnorderedSet(aContainerMap.keys)
             expandingContainers.retainAll(bContainerMap.keys)
@@ -104,8 +96,8 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
                  * The aim of this test is to make sure we don't allow a container to be non-square
                  */
                 override fun process(
-                    originatingGroup: GroupPhase.Group,
-                    destinationGroup: GroupPhase.Group,
+                    originatingGroup: Group,
+                    destinationGroup: Group,
                     ld: LinkDetail
                 ) {
                     if (isLinkAgainstAxis(out, ld)) {
@@ -150,12 +142,12 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         }
     }
 
-    private fun isLinkAgainstAxis(out: CompoundGroup, ld: LinkDetail?): Boolean {
-        return DirectedGroupAxis.getState(out) === MergePlane.X_FIRST_MERGE && isVerticalDirection(ld!!.direction) ||
-                DirectedGroupAxis.getState(out) === MergePlane.Y_FIRST_MERGE && isHorizontalDirection(ld!!.direction)
+    private fun isLinkAgainstAxis(out: CompoundGroup, ld: LinkDetail): Boolean {
+        return DirectedGroupAxis.getState(out) === MergePlane.X_FIRST_MERGE && isVerticalDirection(ld.direction) ||
+                DirectedGroupAxis.getState(out) === MergePlane.Y_FIRST_MERGE && isHorizontalDirection(ld.direction)
     }
 
-    fun identifyGroupDirection(out: CompoundGroup, gp: GroupPhase?, ms: BasicMergeState?) {
+    fun identifyGroupDirection(out: CompoundGroup, ms: BasicMergeState) {
         val c = getCommonContainer(out)
         val layoutDirection = getAxisLayoutForContainer(c)
         val lda = out.internalLinkA
@@ -163,7 +155,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         checkForInternalContradictions(out, out.internalLinkA, out.internalLinkB, ms)
         if (lda != null && ldb != null) {
             val layout = getLayoutForDirection(
-                ms!!.contradictionHandler.checkContradiction(
+                ms.contradictionHandler.checkContradiction(
                     lda.direction, lda.isOrderingLink, lda.linkRank, lda.connections,
                     reverse(ldb.direction), ldb.isOrderingLink, ldb.linkRank, ldb.connections,
                     layoutDirection
@@ -226,7 +218,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
             if (value.hasContent() && ms.isContainerLive(container)) {
                 val bContained = commonContainers[container]
                 if (bContained != null && bContained.hasContent()) {
-                    if (common == null || common.getLayout() == null) {
+                    if (common?.getLayout() == null) {
                         common = container
                     }
                 }
@@ -235,10 +227,10 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         return common
     }
 
-    private fun writeGroup(g: CompoundGroup, mo: MergeOption?) {
-        if (!hack.go()) {
+    private fun writeGroup(g: CompoundGroup, mo: MergeOption) {
+        if (!log.go()) {
             LAST_MERGE_DEBUG =
-                """$LAST_MERGE_DEBUG${g.groupNumber}	${g.a}	${g.b}	${g.getAxis()}	${mo!!.priority}
+                """$LAST_MERGE_DEBUG${g.groupNumber}	${g.a}	${g.b}	${g.axis}	${mo.priority}
 """
         }
     }
@@ -247,95 +239,58 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
      * Once all the directed merges have been completed for a group, (say X_FIRST) it should
      * be merged with the group going the other way (Y_FIRST) if possible.
      */
-    protected fun checkForCompleteAxisMerges(gp: GroupPhase, ms: BasicMergeState, a: GroupPhase.Group) {
+    protected fun checkForCompleteAxisMerges(ms: BasicMergeState, a: Group) {
         val dms = ms as DirectedMergeState
         if (dms.completedDirectionalMerge(a)) {
             val b = dms.getCompoundGroupWithSameContents(a)
             if (b != null && b !== a) {
                 // perform the merge in a fairly normal way.
-                val type = createAxis()
-                type.isHorizontal = false
-                type.isVertical = false
-                type.state = MergePlane.UNKNOWN
-                val lm = createLinkManager()
-                val out = gp.CompoundGroup(a, b, type, lm, true)
+                val out = createCompoundGroup(a, b, true, null, a.size)
+                val axis = out.axis as DirectedGroupAxis
+                val lm = out.linkManager as DirectedLinkManager
+                axis.isHorizontal = false
+                axis.isVertical = false
+                axis.state = MergePlane.UNKNOWN
+
                 log.send(
                     if (log.go()) null else """Compound Group ${out.groupNumber} created: 
 	${out.a}
 	${out.b}
 	 NON-LAYOUT 
-	axis:${out.getAxis()}
-	links:""", (lm as DirectedLinkManager).getLinks()
+	axis:${out.axis}
+	links:""", lm.links
                 )
-                out.size = a.size
-                setBothParents(out, a.getAxis() as DirectedGroupAxis)
-                setBothParents(out, b.getAxis() as DirectedGroupAxis)
-                doCompoundGroupInsertion(gp, ms, out, true)
+
+                setBothParents(out, a.axis as DirectedGroupAxis)
+                setBothParents(out, b.axis as DirectedGroupAxis)
+                doCompoundGroupInsertion(ms, out, true)
             }
         }
     }
 
     override fun doCompoundGroupInsertion(
-        gp: GroupPhase,
         ms: BasicMergeState,
         combined: CompoundGroup,
         skipContainerCompletionCheck: Boolean
     ) {
-        super.doCompoundGroupInsertion(gp, ms, combined, skipContainerCompletionCheck)
+        super.doCompoundGroupInsertion(ms, combined, skipContainerCompletionCheck)
         if (!skipContainerCompletionCheck) {
-            checkForCompleteAxisMerges(gp, ms, combined)
+            checkForCompleteAxisMerges(ms, combined)
         }
     }
 
-    private fun buildCompoundAxis(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
-        alignedDirection: Direction?
-    ): DirectedGroupAxis {
-        val used = createAxis()
-        var axis = DirectedGroupAxis.getMergePlane(a, b)
-        if (axis === MergePlane.UNKNOWN) {
-            if (alignedDirection != null) {
-                axis = when (alignedDirection) {
-                    Direction.UP, Direction.DOWN -> MergePlane.Y_FIRST_MERGE
-                    Direction.LEFT, Direction.RIGHT -> MergePlane.X_FIRST_MERGE
-                }
-            }
-        }
-        if (axis == null) {
-            throw LogicException("Illegal merge")
-        }
-        when (axis) {
-            MergePlane.X_FIRST_MERGE -> {
-                used.state = MergePlane.X_FIRST_MERGE
-                used.isHorizontal = false
-                used.isVertical = true
-            }
-            MergePlane.Y_FIRST_MERGE -> {
-                used.state = MergePlane.Y_FIRST_MERGE
-                used.isHorizontal = true
-                used.isVertical = false
-            }
-            MergePlane.UNKNOWN -> {
-                used.state = MergePlane.UNKNOWN
-                used.isVertical = true
-                used.isHorizontal = true
-            }
-        }
-        return used
-    }
 
     /**
      * When a merge option creates a horizontal or vertical combined group, then
      * the underlying groups are not removed necessarily - they are kept around
      * so that they can be merged in the other direction.
      */
-    override fun removeOldGroups(gp: GroupPhase, ms: BasicMergeState, combined: CompoundGroup) {
-        checkRemoveGroup(gp, combined.a, combined, ms)
-        checkRemoveGroup(gp, combined.b, combined, ms)
+    override fun removeOldGroups(ms: BasicMergeState, combined: CompoundGroup) {
+        checkRemoveGroup(combined.a, combined, ms)
+        checkRemoveGroup(combined.b, combined, ms)
     }
 
-    private fun checkRemoveGroup(gp: GroupPhase, a: GroupPhase.Group, cg: CompoundGroup, ms: BasicMergeState) {
+    private fun checkRemoveGroup(a: Group, cg: CompoundGroup, ms: BasicMergeState) {
         val aType = DirectedGroupAxis.getType(a)
         val cgType = DirectedGroupAxis.getType(cg)
         if (cgType.state === MergePlane.X_FIRST_MERGE) {
@@ -365,22 +320,46 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
             setBothParents(cg, aType)
         }
         if (!aType.active) {
-            ms!!.removeLiveGroup(a)
+            ms.removeLiveGroup(a)
         } else {
             // group is being kept, so we need to make sure it's in the group
             // lists
-            ms!!.addLiveGroup(a)
+            ms.addLiveGroup(a)
         }
     }
 
-    private fun setBothParents(cg: CompoundGroup?, aType: DirectedGroupAxis) {
+    private fun setBothParents(cg: CompoundGroup, aType: DirectedGroupAxis) {
         aType.horizParentGroup = cg
         aType.vertParentGroup = cg
         aType.active = false
     }
 
-    private fun axisChanged(a: GroupPhase.Group) {
+    private fun axisChanged(a: Group) {
         a.linkManager.notifyAxisChange()
+    }
+
+    override fun createLeafGroup(ord: Connected?, cnr: Container?): LeafGroup {
+        if (ord is Container) {
+            containerCount++
+        }
+        val out = DirectedLeafGroup(ord, cnr, groupCount, hashCodeGenerator.nextInt(), log, ms)
+        groupCount++
+        val layout = cnr?.getLayout()
+        out.layout = layout
+        return out
+    }
+
+    override fun createCompoundGroup(a: Group, b: Group, treatAsLeaf: Boolean, mo: MergeOption?, size: Int): CompoundGroup {
+        val hashCode = if (!treatAsLeaf) {
+            // this is done so that a different compound group containing the same leaves can
+            // occupy the same position in a hashmap
+            a.hashCode() + b.hashCode()
+        } else {
+            hashCodeGenerator.nextInt()
+        }
+        val out = DirectedCompoundGroup(a, b, treatAsLeaf, groupCount, size, hashCode, ms, log, mo?.alignedDirection)
+        groupCount++
+        return out
     }
 
     override fun isContainerCompleteInner(c: Container, ms: BasicMergeState): Boolean {
@@ -394,7 +373,7 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
         }
 
         // test one of each axis
-        val groups: Iterator<GroupPhase.Group> =
+        val groups: Iterator<Group> =
             csi.contents.iterator()
         val first = groups.next()
         val second = groups.next()
@@ -410,11 +389,10 @@ abstract class AxisHandlingGroupingStrategy(ms: BasicMergeState) : AbstractRuleB
     }
 
     init {
-        if (!hack.go()) {
+        if (!log.go()) {
             LAST_MERGE_DEBUG = ""
         } else {
             LAST_MERGE_DEBUG = null
         }
-        this.ms = ms
     }
 }

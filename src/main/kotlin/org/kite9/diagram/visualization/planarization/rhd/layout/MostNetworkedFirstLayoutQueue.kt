@@ -4,8 +4,8 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -16,13 +16,13 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var log = Kite9Log(this)
 
-    data class NetworkedItem(val group: GroupPhase.Group, val size: Int) {
+    data class NetworkedItem(val group: Group, val size: Int) {
         override fun toString(): String {
             return "NI: " + group.groupNumber + " size = " + size
         }
     }
 
-    override fun offer(item: GroupPhase.Group) {
+    override fun offer(item: Group) {
         if (canLayout(item)) {
             var liveGroupLinkCount = 0
             val lm = item.linkManager
@@ -38,8 +38,8 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         }
     }
 
-    private fun canLayout(item: GroupPhase.Group?): Boolean {
-        return item!!.getAxis().isReadyToPosition(completedGroups)
+    private fun canLayout(item: Group): Boolean {
+        return item.axis.isReadyToPosition(completedGroups)
     }
 
     private fun countLinkNetworkSize(ld: LinkDetail): Int {
@@ -49,8 +49,8 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
             val out = intArrayOf(0)
             ld.processToLevel(object : LinkProcessor {
                 override fun process(
-                    originatingGroup: GroupPhase.Group,
-                    destinationGroup: GroupPhase.Group,
+                    originatingGroup: Group,
+                    destinationGroup: Group,
                     ld2: LinkDetail
                 ) {
                     out[0] += countLinkNetworkSize(ld2!!)
@@ -88,9 +88,9 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         val a1n = arg1.group.groupNumber
         a0n.compareTo(a1n)
     })
-    var networkSizes: MutableMap<GroupPhase.Group, Int> = HashMap(size * 2)
-    var completedGroups: MutableSet<GroupPhase.Group> = UnorderedSet(size * 2)
-    override fun poll(): GroupPhase.Group? {
+    var networkSizes: MutableMap<Group, Int> = HashMap(size * 2)
+    var completedGroups: MutableSet<Group> = UnorderedSet(size * 2)
+    override fun poll(): Group? {
         while (todo.size > 0) {
             val nw = todo.remove()!!
             val out = nw.group
@@ -110,7 +110,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         completedGroups.add(item)
         val a = item.a
         val b = item.b
-        val horiz = item.getAxis().isHorizontal
+        val horiz = item.axis.isHorizontal
         val links = item.linkManager.subset(item.linkManager.allMask())
         for (ld in links) {
             val group = ld.group
@@ -119,20 +119,20 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     }
 
     private fun checkAndIncrementGroup(
-        group: GroupPhase.Group,
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        group: Group,
+        a: Group,
+        b: Group,
         ld: LinkDetail,
         horiz: Boolean
     ) {
-        var group: GroupPhase.Group? = group
+        var group: Group? = group
         if (completedGroups.contains(group)) {
             if (group is CompoundGroup) {
                 // need to work our way down to incomplete ones, no point updating complete groups
                 ld.processToLevel(object : LinkProcessor {
                     override fun process(
-                        originatingGroup: GroupPhase.Group,
-                        destinationGroup: GroupPhase.Group,
+                        originatingGroup: Group,
+                        destinationGroup: Group,
                         ld2: LinkDetail
                     ) {
                         checkAndIncrementGroup(destinationGroup, a, b, ld2!!, horiz)
@@ -140,7 +140,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
                 }, 1)
             }
         } else {
-            group = getGroupBeingLaidOut(group, horiz)
+            group = getGroupBeingLaidOut(group!!, horiz)
             if (group != null && ld.from(a) && ld.from(b)) {
                 val existingLinks = safeGet(group)
                 networkSizes[group] = existingLinks + 1
@@ -151,18 +151,18 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         }
     }
 
-    private fun getGroupBeingLaidOut(group: GroupPhase.Group?, horiz: Boolean): GroupPhase.Group? {
+    private fun getGroupBeingLaidOut(group: Group, horiz: Boolean): Group? {
         var group = group
         while (!canLayout(group)) {
             if (completedGroups.contains(group)) {
                 return null
             }
-            group = group!!.getAxis().getParentGroup(horiz)
+            group = group.axis.getParentGroup(horiz)!!
         }
         return group
     }
 
-    private fun safeGet(group: GroupPhase.Group): Int {
+    private fun safeGet(group: Group): Int {
         return networkSizes[group] ?: return 0
     }
 

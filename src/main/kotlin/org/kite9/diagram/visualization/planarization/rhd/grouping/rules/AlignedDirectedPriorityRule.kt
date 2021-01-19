@@ -7,18 +7,19 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.*
-import java.util.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
 class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
 
     override fun getMergePriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: DirectedMergeState,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: Group?,
         alignedSide: Direction?,
         mp: MergePlane,
         horizontalMergesFirst: Boolean
@@ -26,7 +27,7 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         return alignedGroup?.let { canBuddyMerge(a, b, mp, it, alignedSide, axis, ms) } ?: PriorityRule.UNDECIDED
     }
 
-    private fun getPriority(a: GroupPhase.Group, b: GroupPhase.Group, ms: DirectedMergeState, bt: BuddyType): Int {
+    private fun getPriority(a: Group, b: Group, ms: DirectedMergeState, bt: BuddyType): Int {
         val mt = ms.getContainerMergeType(a, b)
         return if (axis) {
             when (bt) {
@@ -43,10 +44,10 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun canBuddyMerge(
-        group: GroupPhase.Group,
-        buddy: GroupPhase.Group,
+        group: Group,
+        buddy: Group,
         axis: MergePlane,
-        alignedGroup: GroupPhase.Group,
+        alignedGroup: Group,
         alignedSide: Direction?,
         withAxis: Boolean,
         ms: BasicMergeState
@@ -107,8 +108,8 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
      * This makes sure that if you are doing a buddy merge, that the container will support it.
      */
     private fun checkContainerLayoutSupportsAlignedMerge(
-        a: GroupPhase.Group, b: GroupPhase.Group,
-        aligned: GroupPhase.Group, ms: BasicMergeState, alignedSide: Direction?
+        a: Group, b: Group,
+        aligned: Group, ms: BasicMergeState, alignedSide: Direction?
     ): Boolean {
         val ac: Set<Container> = ms.getContainersFor(a).keys
         val bc: Set<Container> = ms.getContainersFor(b).keys
@@ -152,11 +153,11 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun nearestNeighbours(
-        alignedGroup: GroupPhase.Group,
+        alignedGroup: Group,
         axis: MergePlane,
         alignedSide: Direction,
-        group: GroupPhase.Group,
-        buddy: GroupPhase.Group,
+        group: Group,
+        buddy: Group,
         ms: BasicMergeState
     ): Boolean {
         val neighboursGroup = getNearestNeighbours(group, reverse(alignedSide), axis, ms)
@@ -167,11 +168,11 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun getNearestNeighbours(
-        p: GroupPhase.Group,
+        p: Group,
         d: Direction?,
         mp: MergePlane,
         ms: BasicMergeState
-    ): Collection<GroupPhase.Group> {
+    ): Collection<Group> {
         val mask = DirectedLinkManager.createMask(mp, true, !axis, d)
         return p.linkManager.subsetGroup(mask)
     }
@@ -181,8 +182,8 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun areNearestNeighboursOrHaveNoNeighboursPerpendicular(
-        group: GroupPhase.Group,
-        buddy: GroupPhase.Group,
+        group: Group,
+        buddy: Group,
         horizontal: Boolean,
         mp: MergePlane,
     ): BuddyType {
@@ -190,13 +191,13 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         val d2 = if (horizontal) Direction.RIGHT else Direction.DOWN
         val maskd1 = DirectedLinkManager.createMask(mp, true, false, d1)
         val maskd2 = DirectedLinkManager.createMask(mp, true, false, d2)
-        val nng1: Collection<GroupPhase.Group> = group.linkManager.subsetGroup(maskd1)
-        val nng2: Collection<GroupPhase.Group> = group.linkManager.subsetGroup(maskd2)
+        val nng1: Collection<Group> = group.linkManager.subsetGroup(maskd1)
+        val nng2: Collection<Group> = group.linkManager.subsetGroup(maskd2)
         if (nng1.contains(buddy) || nng2.contains(buddy)) {
             return BuddyType.PERFECT_BUDDY
         }
-        val nnb1: Collection<GroupPhase.Group> = buddy.linkManager.subsetGroup(maskd1)
-        val nnb2: Collection<GroupPhase.Group> = buddy.linkManager.subsetGroup(maskd2)
+        val nnb1: Collection<Group> = buddy.linkManager.subsetGroup(maskd1)
+        val nnb2: Collection<Group> = buddy.linkManager.subsetGroup(maskd2)
         if (nng2.size + nnb2.size == 0) {
             // no way these can be joined on the d2 side
             return BuddyType.PERFECT_BUDDY
@@ -219,15 +220,15 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     }
 
     private fun noCommonNeighbours(
-        a: Collection<GroupPhase.Group>,
-        b: Collection<GroupPhase.Group>
+        a: Collection<Group>,
+        b: Collection<Group>
     ): Boolean {
         return a.intersect(b).isEmpty()
     }
 
     private fun sameNeighbours(
-        a: Collection<GroupPhase.Group>,
-        b: Collection<GroupPhase.Group>
+        a: Collection<Group>,
+        b: Collection<Group>
     ): Boolean {
         return a.size == b.size && a.containsAll(b)
     }

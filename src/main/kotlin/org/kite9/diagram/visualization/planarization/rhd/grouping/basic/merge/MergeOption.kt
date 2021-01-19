@@ -1,9 +1,10 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping.basic
+package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge
 
 import org.kite9.diagram.common.hints.PositioningHints.planarizationDistance
 import org.kite9.diagram.common.hints.PositioningHints.positionDistance
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
  * Holds details about a potential merge. Best merges are done first.
@@ -11,11 +12,11 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
  * the object is in the queue.
  */
 class MergeOption(
-    a: GroupPhase.Group,
-    b: GroupPhase.Group,
+    a: Group,
+    b: Group,
     val number: Int,
     var p: Int,
-    var alignedGroup: GroupPhase.Group?,
+    var alignedGroup: Group?,
     var alignedDirection: Direction?
 ) : Comparable<MergeOption> {
     var mk = MergeKey(a, b)
@@ -167,7 +168,7 @@ class MergeOption(
         renderedDistance = positionDistance(a.hints, b.hints)
     }
 
-    private fun linkCount(group: GroupPhase.Group, cand: GroupPhase.Group) {
+    private fun linkCount(group: Group, cand: Group) {
         val ldC = group.getLink(cand)
         if (ldC != null) {
             linksIncluded += ldC.numberOfLinks / 2f

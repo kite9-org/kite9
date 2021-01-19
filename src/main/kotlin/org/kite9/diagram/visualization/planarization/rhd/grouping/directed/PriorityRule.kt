@@ -1,7 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
 /**
  * Checks to see if the particular combination of groups is allowed in the system in a given formation
@@ -9,10 +10,10 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 interface PriorityRule {
 
     fun getMergePriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: DirectedMergeState,
-        alignedGroup: GroupPhase.Group?, alignedSide: Direction?,
+        alignedGroup: Group?, alignedSide: Direction?,
         mp: MergePlane,
         horizontalMergesFirst: Boolean
     ): Int

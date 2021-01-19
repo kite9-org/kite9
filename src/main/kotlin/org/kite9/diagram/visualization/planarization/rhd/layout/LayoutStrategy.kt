@@ -10,5 +10,5 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
  */
 interface LayoutStrategy {
 
-    fun layout(gp: GroupPhase, mr: GroupResult, emptyQueue: LayoutQueue)
+    fun layout(mr: GroupResult, emptyQueue: LayoutQueue)
 }

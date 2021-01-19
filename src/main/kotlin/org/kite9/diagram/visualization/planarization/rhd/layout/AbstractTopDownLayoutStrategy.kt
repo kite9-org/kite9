@@ -11,10 +11,10 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.model.position.Layout.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Layout.Companion.rotateClockwise
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
@@ -28,10 +28,10 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     @JvmField
 	var log = Kite9Log(this)
 
-    private fun chooseBestCompoundGroupPlacement(gp: GroupPhase, gg: CompoundGroup) {
+    private fun chooseBestCompoundGroupPlacement(gg: CompoundGroup) {
         rh.clearTempPositions(true)
         rh.clearTempPositions(false)
-        val gt = gg.getAxis()
+        val gt = gg.axis
         val ld = gg.layout
         val canBeHoriz = gt.isHorizontal && gt.isLayoutRequired
         val canBeVert = gt.isVertical && gt.isLayoutRequired
@@ -47,7 +47,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                 val hintedLayout = getHintedLayout(gg, canBeHoriz, canBeVert, ld)
                 var best: PlacementApproach? = null
                 best = tryPlacement(
-                    gp,
                     gg,
                     best,
                     filterLayout(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
@@ -56,7 +55,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                     true
                 )
                 best = tryPlacement(
-                    gp,
                     gg,
                     best,
                     filterLayout(reverse(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
@@ -65,7 +63,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                     false
                 )
                 best = tryPlacement(
-                    gp,
                     gg,
                     best,
                     filterLayout(rotateClockwise(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
@@ -74,7 +71,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                     false
                 )
                 best = tryPlacement(
-                    gp,
                     gg,
                     best,
                     filterLayout(rotateAntiClockwise(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
@@ -85,7 +81,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                 best?.choose()
             }
         } else {
-            val pa = createPlacementApproach(gp, gg, ld, canBeHoriz, canBeVert, true)
+            val pa = createPlacementApproach(gg, ld, canBeHoriz, canBeVert, true)
             pa.choose()
             log.send("Group layout = $ld")
         }
@@ -143,17 +139,17 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         return out
     }
 
-    private fun getHorizontalOrdinalLayout(a: GroupPhase.Group, b: GroupPhase.Group): Layout {
+    private fun getHorizontalOrdinalLayout(a: Group, b: Group): Layout {
         return if (a.groupOrdinal < b.groupOrdinal) Layout.RIGHT else Layout.LEFT
     }
 
-    private fun getVerticalOrdinalLayout(a: GroupPhase.Group, b: GroupPhase.Group): Layout {
+    private fun getVerticalOrdinalLayout(a: Group, b: Group): Layout {
         return if (a.groupOrdinal < b.groupOrdinal) Layout.DOWN else Layout.UP
     }
 
     private fun groupsNeedLayout(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         horizLayoutUnknown: Boolean,
         vertLayoutUnknown: Boolean,
         l: Layout?
@@ -171,7 +167,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         } else false
     }
 
-    private fun groupsHaveStraightEdges(a: GroupPhase.Group, b: GroupPhase.Group, horiz: Boolean): Boolean {
+    private fun groupsHaveStraightEdges(a: Group, b: Group, horiz: Boolean): Boolean {
         val mask = DirectedLinkManager.createMask(
             null,
             false,
@@ -184,14 +180,13 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         return aHasLinks || bHasLinks
     }
 
-    private fun groupsOverlap(a: GroupPhase.Group, b: GroupPhase.Group): Boolean {
-        val ari = a.getAxis().getPosition(rh, true)
-        val bri = b.getAxis().getPosition(rh, true)
+    private fun groupsOverlap(a: Group, b: Group): Boolean {
+        val ari = a.axis.getPosition(rh, true)
+        val bri = b.axis.getPosition(rh, true)
         return rh.overlaps(ari, bri)
     }
 
     private fun tryPlacement(
-        gp: GroupPhase,
         gg: CompoundGroup,
         best: PlacementApproach?,
         d: Layout?,
@@ -200,7 +195,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         natural: Boolean
     ): PlacementApproach? {
         if (d != null && (best == null || best.score > 0)) {
-            val newpl = createPlacementApproach(gp, gg, d, setHoriz, setVert, natural)
+            val newpl = createPlacementApproach(gg, d, setHoriz, setVert, natural)
             newpl.evaluate()
             log.send(if (log.go()) null else "${gg.groupNumber} going $d  score: ${newpl.score}")
             return if (best == null) {
@@ -223,20 +218,20 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     protected abstract fun createPlacementApproach(
-        gp: GroupPhase, gg: CompoundGroup, ld: Layout?,
+        gg: CompoundGroup, ld: Layout?,
         setHoriz: Boolean, setVert: Boolean, natural: Boolean
     ): PlacementApproach
 
-    private fun chooseBestPlacement(gp: GroupPhase, lq: LayoutQueue) {
+    private fun chooseBestPlacement(lq: LayoutQueue) {
         var g = lq.poll()
         while (g != null) {
-            g.getAxis().getPosition(rh, false)
+            g.axis.getPosition(rh, false)
             log.send(if (log.go()) null else "Ordering " + g.groupNumber + " size=" + g.size + " links=" + g.linkManager.linkCount)
             val out = StringBuilder(1000)
             log.send(out.toString())
             if (g is CompoundGroup) {
                 val cg = g
-                chooseBestCompoundGroupPlacement(gp, cg)
+                chooseBestCompoundGroupPlacement(cg)
                 lq.complete(cg)
                 lq.offer(cg.a)
                 lq.offer(cg.b)
@@ -250,11 +245,10 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     override val isLoggingEnabled: Boolean
         get() = true
 
-    override fun layout(gp: GroupPhase, mr: GroupResult, lq: LayoutQueue) {
+    override fun layout(mr: GroupResult, lq: LayoutQueue) {
         val g = mr.groups().iterator().next()
         lq.offer(g)
-        chooseBestPlacement(gp, lq)
-        //rh.outputSettings();
+        chooseBestPlacement(lq)
     }
 
     companion object {

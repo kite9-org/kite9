@@ -5,7 +5,8 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 
 abstract class AbstractMergeGenerator(
     val gp: GroupPhase,
@@ -17,9 +18,9 @@ abstract class AbstractMergeGenerator(
 	protected var log = Kite9Log(this)
 
     open fun addMergeOption(
-        g1: GroupPhase.Group,
-        g2: GroupPhase.Group,
-        alignedGroup: GroupPhase.Group?,
+        g1: Group,
+        g2: Group,
+        alignedGroup: Group?,
         alignedSide: Direction?
     ) {
         grouper.addMergeOption(g1, g2, alignedGroup, alignedSide, getMyBestPriority(), ms)

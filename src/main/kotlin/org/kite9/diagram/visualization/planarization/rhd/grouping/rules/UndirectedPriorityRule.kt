@@ -1,17 +1,19 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.rules
 
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
 class UndirectedPriorityRule : PriorityRule {
 
     override fun getMergePriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
+        a: Group,
+        b: Group,
         ms: DirectedMergeState,
-        alignedGroup: GroupPhase.Group?,
+        alignedGroup: Group?,
         alignedSide: Direction?,
         axis: MergePlane,
         horizontalMergesFirst: Boolean
@@ -24,7 +26,7 @@ class UndirectedPriorityRule : PriorityRule {
     }
 
     private fun hasDirectedLeaversInContainer(
-        a: GroupPhase.Group,
+        a: Group,
         axis: MergePlane,
         ms: BasicMergeState
     ): Boolean {
@@ -36,9 +38,9 @@ class UndirectedPriorityRule : PriorityRule {
     }
 
     private fun getPriority(
-        a: GroupPhase.Group,
-        b: GroupPhase.Group,
-        alignedGroup: GroupPhase.Group?,
+        a: Group,
+        b: Group,
+        alignedGroup: Group?,
         ms: DirectedMergeState
     ): Int {
         val mt = ms.getContainerMergeType(a, b)

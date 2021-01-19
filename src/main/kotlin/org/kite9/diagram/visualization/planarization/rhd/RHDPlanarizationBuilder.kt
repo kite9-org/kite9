@@ -18,10 +18,11 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
 import org.kite9.diagram.visualization.planarization.rhd.layout.LayoutStrategy
@@ -101,25 +102,23 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 routableReader = PositionRoutableHandler2D()
                 vp = newVertexPositioner()
                 val ch: ContradictionHandler = BasicContradictionHandler(em)
-                val strategy: GroupingStrategy = GeneratorBasedGroupingStrategyImpl(ch)
-
-                // Grouping
-                val gp = GroupPhase(log, c, elements, strategy, ch, gridHelp, em)
-                val mr = strategy.group(gp)
+                val strategy = GeneratorBasedGroupingStrategyImpl(c, elements, ch, gridHelp, em)
+                strategy.buildInitialGroups()
+                val mr = strategy.group()
                 if (!log.go()) {
                     log.send("Created Groups:", mr.groups())
                 }
                 if (mr.groups().size > 1) {
                     throw LogicException("Should end up with a single group")
                 }
-                val topGroup: GroupPhase.Group = mr.groups().iterator().next()
+                val topGroup: Group = mr.groups().iterator().next()
                 if (!log.go()) {
                     outputGroupInfo(topGroup, 0)
                 }
 
                 // Layout
                 val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
-                layout.layout(gp, mr, MostNetworkedFirstLayoutQueue(gp.groupCount))
+                layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
 
                 // positioning
                 connections = RankBasedConnectionQueue(routableReader)
@@ -138,7 +137,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 }
 
                 // vertex ordering
-                sortedContainerContents = HashMap(gp.containerCount * 2)
+                sortedContainerContents = HashMap(topGroup.groupNumber * 2)
                 instantiateContainerVertices(c)
                 buildVertexList(null, c, null, out, sortedContainerContents)
                 sortContents(out, routableReader.getTopLevelBounds(true), routableReader.getTopLevelBounds(false))
@@ -201,20 +200,20 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         return (routableReader.overlaps(ria!!, rib!!))
     }
 
-    fun outputGroupInfo(g: GroupPhase.Group, spc: Int) {
+    fun outputGroupInfo(g: Group, spc: Int) {
         val sb: StringBuilder = StringBuilder(spc)
         for (i in 0 until spc) {
             sb.append(" ")
         }
-        val axis = g.type as DirectedGroupAxis
+        val axis = g.axis as DirectedGroupAxis
         val l: Layout? = g.layout
         log.send(
             (sb.toString() + g.groupNumber +
-                    " " + (if ((g is LeafGroup)) g.toString() else axis)
-                    + "   " + routableReader.getPlacedPosition(g) + "  " + l + " " + (if (g.type.isLayoutRequired) "LR " else " ")
-                    + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
+                    " " + (if ((g is AbstractLeafGroup)) g.toString() else axis)
+                    + "   " + routableReader.getPlacedPosition(g) + "  " + l + " " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + (if ((g is AbstractCompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
         )
-        if (g is CompoundGroup) {
+        if (g is AbstractCompoundGroup) {
 //			if ((l==Layout.UP) || (l==Layout.LEFT)) {
 //				outputGroupInfo(((CompoundGroup) g).getB(), spc+1);
 //				outputGroupInfo(((CompoundGroup) g).getA(), spc+1);
@@ -225,21 +224,21 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         }
     }
 
-    fun explain(g: GroupPhase.Group, spc: Int) {
+    fun explain(g: Group, spc: Int) {
         val sb: StringBuilder = StringBuilder(spc)
         for (i in 0 until spc) {
             sb.append(" ")
         }
-        val axis = g.type as DirectedGroupAxis
+        val axis = g.axis as DirectedGroupAxis
         log.send(sb.toString() + g.groupNumber + "   " + routableReader.getPlacedPosition(g))
-        val hParent: GroupPhase.Group? = axis.horizParentGroup
-        val vParent: GroupPhase.Group? = axis.vertParentGroup
+        val hParent: Group? = axis.horizParentGroup
+        val vParent: Group? = axis.vertParentGroup
         if (vParent !== hParent) {
             if (hParent != null) {
                 log.send(
                     (sb.toString()
                             + "horiz: "
-                            + (if ((g === (hParent as CompoundGroup).b)) hParent.layout else reverse(
+                            + (if ((g === (hParent as AbstractCompoundGroup).b)) hParent.layout else reverse(
                         hParent
                             .layout
                     )))
@@ -250,7 +249,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 log.send(
                     (sb.toString()
                             + "vert: "
-                            + (if ((g === (vParent as CompoundGroup).b)) vParent.layout else reverse(
+                            + (if ((g === (vParent as AbstractCompoundGroup).b)) vParent.layout else reverse(
                         vParent
                             .layout
                     )))
@@ -263,7 +262,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 log.send(
                     (sb.toString()
                             + "pos: "
-                            + (if ((g === (vParent as CompoundGroup).b)) vParent.layout else reverse(
+                            + (if ((g === (vParent as AbstractCompoundGroup).b)) vParent.layout else reverse(
                         vParent
                             .layout
                     )))
@@ -273,22 +272,22 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         }
     }
 
-    private fun buildPositionMap(start: GroupPhase.Group, connections: ConnectionManager) {
-        if (start is CompoundGroup) {
-            val cg: CompoundGroup = start
+    private fun buildPositionMap(start: Group, connections: ConnectionManager) {
+        if (start is AbstractCompoundGroup) {
+            val cg: AbstractCompoundGroup = start
             log.send("Processing Group: " + start.groupNumber)
             buildPositionMap(cg.a, connections)
             buildPositionMap(cg.b, connections)
             connections.handleLinks(cg)
         } else {
-            val lg: LeafGroup = start as LeafGroup
+            val lg: AbstractLeafGroup = start as AbstractLeafGroup
             log.send("Processing Group: $lg")
             // g is a leaf group.  can we place it?
             val l: Connected? = lg.contained
             val c: Container? = lg.container
 
             // sizing
-            val ri: RoutingInfo = lg.type.getPosition((routableReader), false)
+            val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
             vp.checkMinimumGridSizes(ri)
             if (l != null) {
                 routableReader.setPlacedPosition(l, ri)
@@ -300,7 +299,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         }
     }
 
-    private fun ensureContainerBoundsAreLargeEnough(ri: RoutingInfo, c: Container?, lg: LeafGroup) {
+    private fun ensureContainerBoundsAreLargeEnough(ri: RoutingInfo, c: Container?, lg: AbstractLeafGroup) {
         var c: Container? = c
         var l: Connected
         while (c != null) {

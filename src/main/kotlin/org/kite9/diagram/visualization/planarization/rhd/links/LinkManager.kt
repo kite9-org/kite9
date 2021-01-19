@@ -3,8 +3,8 @@ package org.kite9.diagram.visualization.planarization.rhd.links
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
  * Handles the links from one group to others.
@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGrou
 interface LinkManager {
 
     interface LinkProcessor {
-        fun process(originatingGroup: GroupPhase.Group, destinationGroup: GroupPhase.Group, ld: LinkDetail)
+        fun process(originatingGroup: Group, destinationGroup: Group, ld: LinkDetail)
     }
 
     /**
@@ -34,14 +34,14 @@ interface LinkManager {
         val direction: Direction?
         val numberOfLinks: Float
         val connections: Iterable<BiDirectional<Connected>>
-        val group: GroupPhase.Group
+        val group: Group
         fun processToLevel(lp: LinkProcessor, l: Int)
         fun processLowestLevel(lp: LinkProcessor)
 
         /**
          * Returns true if the linkdetail leaves a given group.
          */
-        fun from(b: GroupPhase.Group): Boolean
+        fun from(b: Group): Boolean
     }
 
     /**
@@ -52,7 +52,7 @@ interface LinkManager {
     /**
      * Called when a group (linked to this LM) changes container, because a container gets completed.
      */
-    fun notifyContainerChange(g: GroupPhase.Group)
+    fun notifyContainerChange(g: Group)
 
     /**
      * Called when this group changes container.
@@ -64,21 +64,16 @@ interface LinkManager {
      */
     fun notifyAxisChange()
     fun subset(mask: Int): Collection<LinkDetail>
-    fun subsetGroup(mask: Int): Collection<GroupPhase.Group>
+    fun subsetGroup(mask: Int): Collection<Group>
     fun allMask(): Int
 
-    operator fun get(g: GroupPhase.Group): LinkDetail?
-
-    /**
-     * Tells the lm what group it is for.
-     */
-    fun setGroup(g: GroupPhase.Group)
+    operator fun get(g: Group): LinkDetail?
 
     /**
      * Adds links to the link manager.
      */
     fun sortLink(
-        d: Direction?, otherGroup: GroupPhase.Group, linkValue: Float, ordering: Boolean, linkRank: Int,
+        d: Direction?, otherGroup: Group, linkValue: Float, ordering: Boolean, linkRank: Int,
         c: Iterable<BiDirectional<Connected>>
     )
 
@@ -87,5 +82,5 @@ interface LinkManager {
      */
     fun sortLink(ld: LinkDetail)
     var linkCount: Int
-    fun forLogging(): Map<GroupPhase.Group, LinkDetail>
+    fun forLogging(): Map<Group, LinkDetail>
 }

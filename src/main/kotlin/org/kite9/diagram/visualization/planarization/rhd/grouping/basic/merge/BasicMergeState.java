@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping.basic;
+package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -12,9 +12,9 @@ import org.kite9.diagram.common.algorithms.ssp.PriorityQueue;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler;
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail;
 import org.kite9.diagram.logging.Kite9Log;
@@ -113,7 +113,7 @@ public class BasicMergeState extends GroupResult {
 	}
 
 	public boolean isLiveGroup(Group group) {
-		return group.isLive();
+		return group.getLive();
 	}
 
 	public void addLiveGroup(Group group) {
@@ -191,8 +191,8 @@ public class BasicMergeState extends GroupResult {
 
 	public Map<Container, GroupContainerState> getContainersFor(Group a) {
 		if (groupContainers == null) {
-			if (a instanceof LeafGroup) {
-				return Collections.singletonMap(((LeafGroup)a).getContainer(), GroupContainerState.HAS_CONTENT);
+			if (a instanceof AbstractLeafGroup) {
+				return Collections.singletonMap(((AbstractLeafGroup)a).getContainer(), GroupContainerState.HAS_CONTENT);
 			} else {
 				throw new LogicException("Group Containers should have been initialised");
 			}

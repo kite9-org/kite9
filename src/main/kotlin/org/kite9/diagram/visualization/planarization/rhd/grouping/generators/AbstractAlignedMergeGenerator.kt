@@ -3,10 +3,11 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getState
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.DirectedGroupAxis.Companion.getType
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getType
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
@@ -22,11 +23,11 @@ abstract class AbstractAlignedMergeGenerator(
     liveOnly: Boolean
 ) : AbstractWaitingContainerMergeGenerator(gp, ms, grouper, liveOnly) {
 
-    protected abstract fun getAlignmentDirections(g1: GroupPhase.Group): Set<Direction?>
+    protected abstract fun getAlignmentDirections(g1: Group): Set<Direction?>
 
-    protected abstract fun processPossibleAligningGroups(g1: GroupPhase.Group, d: Direction, lp: LinkProcessor)
+    protected abstract fun processPossibleAligningGroups(g1: Group, d: Direction, lp: LinkProcessor)
 
-    override fun generate(poll: GroupPhase.Group) {
+    override fun generate(poll: Group) {
         log.send(if (log.go()) null else "Generating " + getCode() + " options for " + poll)
         val alignmentDirections = getAlignmentDirections(poll)
         for (d in alignmentDirections) {
@@ -36,7 +37,7 @@ abstract class AbstractAlignedMergeGenerator(
     }
 
     protected fun generateFromAlignedGroup(
-        alignedGroup: GroupPhase.Group,
+        alignedGroup: Group,
         d: Direction?,
         ms: BasicMergeState
     ) {
@@ -44,12 +45,12 @@ abstract class AbstractAlignedMergeGenerator(
         val axis = getType(alignedGroup!!)
         val mp = getState(alignedGroup)
         processAlignedGroupsInAxis(alignedGroup, ms, axis, mp, d, object : LinkProcessor {
-            override fun process(originatingGroup: GroupPhase.Group, g1w: GroupPhase.Group, ld: LinkDetail) {
+            override fun process(originatingGroup: Group, g1w: Group, ld: LinkDetail) {
                 val g1 = grouper.getWorkingGroup(g1w)
                 val g1state = getState(g1!!)
                 if (ms.isLiveGroup(g1) && mp.matches(g1state)) {
                     processAlignedGroupsInAxis(alignedGroup, ms, axis, mp, d, object : LinkProcessor {
-                        override fun process(originatingGroup: GroupPhase.Group, g2: GroupPhase.Group, ld: LinkDetail) {
+                        override fun process(originatingGroup: Group, g2: Group, ld: LinkDetail) {
                             if (g2.groupNumber > g1.groupNumber) {
                                 testAndAddAlignedTrio(g1, g2, alignedGroup, d, mp)
                             }
@@ -60,16 +61,16 @@ abstract class AbstractAlignedMergeGenerator(
         })
     }
 
-    protected fun generateFromG1Group(g1: GroupPhase.Group, d: Direction?, ms: BasicMergeState) {
+    protected fun generateFromG1Group(g1: Group, d: Direction?, ms: BasicMergeState) {
         val axis = getType(g1)
         val mp = getState(g1)
         processAlignedGroupsInAxis(g1, ms, axis, mp, d, object : LinkProcessor {
-            override fun process(originatingGroup: GroupPhase.Group, alignedGroupw: GroupPhase.Group, ld: LinkDetail) {
+            override fun process(originatingGroup: Group, alignedGroupw: Group, ld: LinkDetail) {
                 val alignedGroup = grouper.getWorkingGroup(alignedGroupw)!!
                 val rd = reverse(d)
 
                 processAlignedGroupsInAxis(alignedGroup, ms, axis, mp, rd, object : LinkProcessor {
-                    override fun process(originatingGroup: GroupPhase.Group, g2: GroupPhase.Group, ld: LinkDetail) {
+                    override fun process(originatingGroup: Group, g2: Group, ld: LinkDetail) {
                         testAndAddAlignedTrio(g1, g2, alignedGroup, rd, mp)
                     }
                 })
@@ -79,9 +80,9 @@ abstract class AbstractAlignedMergeGenerator(
     }
 
     protected fun testAndAddAlignedTrio(
-        g1: GroupPhase.Group,
-        g2: GroupPhase.Group,
-        alignedGroup: GroupPhase.Group,
+        g1: Group,
+        g2: Group,
+        alignedGroup: Group,
         alignedSide: Direction?,
         mp: MergePlane
     ) {
@@ -93,7 +94,7 @@ abstract class AbstractAlignedMergeGenerator(
     }
 
     protected abstract fun processAlignedGroupsInAxis(
-        alignedGroup: GroupPhase.Group, ms: BasicMergeState,
+        alignedGroup: Group, ms: BasicMergeState,
         axis: DirectedGroupAxis, mp: MergePlane, d: Direction?, lp: LinkProcessor
     )
 }

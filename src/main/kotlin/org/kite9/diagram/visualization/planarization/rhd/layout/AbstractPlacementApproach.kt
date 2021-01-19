@@ -2,13 +2,11 @@ package org.kite9.diagram.visualization.planarization.rhd.layout
 
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 abstract class AbstractPlacementApproach(
     val log: Kite9Log,
-    val gp: GroupPhase,
     val aDirection: Layout?,
     var overall: CompoundGroup,
     val rh: RoutableHandler2D,

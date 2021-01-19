@@ -6,7 +6,7 @@ import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
@@ -92,14 +92,14 @@ class ExitMatrix {
     }
 
     fun addLink(
-        originatingGroup: GroupPhase.Group,
-        destinationGroup: GroupPhase.Group,
+        originatingGroup: Group,
+        destinationGroup: Group,
         ld: LinkDetail,
         rh: RoutableHandler2D
     ) {
         //System.out.println("Adding link from "+originatingGroup+ " to "+destinationGroup);
-        val oPos = originatingGroup.getAxis().getPosition(rh, true)
-        val dPos = destinationGroup.getAxis().getPosition(rh, true)
+        val oPos = originatingGroup.axis.getPosition(rh, true)
+        val dPos = destinationGroup.axis.getPosition(rh, true)
         val xCompare = rh.compareBounds(rh.getBoundsOf(dPos, true), rh.getBoundsOf(oPos, true))
         val yCompare = rh.compareBounds(rh.getBoundsOf(dPos, false), rh.getBoundsOf(oPos, false))
         incrCount(xCompare, yCompare, ld.numberOfLinks)
