@@ -8,12 +8,10 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState.GroupContainerState
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
-import java.util.*
 
 open class BasicMergeState(var contradictionHandler: ContradictionHandler) : GroupResult() {
     enum class GroupContainerState(var hasContent: Boolean, var isComplete: Boolean) {
@@ -166,8 +164,8 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler) : Gro
 
     fun getContainersFor(a: Group?): Map<Container, GroupContainerState>? {
         return if (groupContainers == null) {
-            if (a is AbstractLeafGroup) {
-                Collections.singletonMap(a.container, GroupContainerState.HAS_CONTENT)
+            if (a is LeafGroup) {
+                mapOf(a.container!! to GroupContainerState.HAS_CONTENT)
             } else {
                 throw LogicException("Group Containers should have been initialised")
             }
