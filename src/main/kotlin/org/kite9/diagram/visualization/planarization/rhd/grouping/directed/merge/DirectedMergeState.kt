@@ -89,19 +89,14 @@ open class DirectedMergeState(ch: ContradictionHandler, elements: Int) : BasicMe
         }
     }
 
-    private var noDirectedMergeNeeded // live groups based on a key of which leaf groups they contain
-            : MutableMap<ShapeIndex, Group>? = null
+    private val noDirectedMergeNeeded // live groups based on a key of which leaf groups they contain
+            : MutableMap<ShapeIndex, Group>  = HashMap(elements)
 
     fun completedDirectionalMerge(combined: Group): Boolean {
         val mp = getState(combined)
         val mask = createMask(mp, false, false, Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
         val incomplete = combined.linkManager.subset(mask)
         return incomplete.size == 0
-    }
-
-    override fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
-        super.initialise(capacity, containers, log)
-        noDirectedMergeNeeded = HashMap(capacity)
     }
 
     override fun removeLiveGroup(a: Group) {

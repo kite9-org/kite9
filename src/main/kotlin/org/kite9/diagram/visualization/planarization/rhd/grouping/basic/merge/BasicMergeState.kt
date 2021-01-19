@@ -52,35 +52,30 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
 
     // merge options, legal ones
     // outrank illegal ones
-    private var groupContainers: MutableMap<Group, MutableMap<Container, GroupContainerState>>? = null
-    protected var liveContainers: MutableSet<Container>? = null
-    protected var nextMergeNumber = 0
-
-    open fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
-        groupContainers = HashMap(capacity)
-        liveContainers = UnorderedSet(containers * 2)
-    }
+    private val groupContainers: MutableMap<Group, MutableMap<Container, GroupContainerState>> = HashMap(elements)
+    private val liveContainers: MutableSet<Container> = UnorderedSet(elements * 2)
+    private var nextMergeNumber = 0
 
     open fun removeLiveGroup(a: Group) {
-        log!!.send("Completed group: $a")
+        log.send("Completed group: $a")
         a.live = false
-        liveGroups!!.remove(a)
-        for (c in groupContainers!![a]!!.keys) {
+        liveGroups.remove(a)
+        for (c in groupContainers[a]!!.keys) {
             val csi = containerStates[c]
             csi!!.contents.remove(a)
         }
     }
 
     fun removeLiveContainer(c: Container) {
-        liveContainers!!.remove(c)
+        liveContainers.remove(c)
     }
 
     fun addOption(mo: MergeOption): Boolean {
-        val existing = bestOptions!![mo.mk]
+        val existing = bestOptions[mo.mk]
         if (existing == null || mo.compareTo(existing) == -1) {
             // this option is better than existing
-            optionQueue!!.add(mo)
-            bestOptions!![mo.mk] = mo
+            optionQueue.add(mo)
+            bestOptions[mo.mk] = mo
             //log.send("New Merge Option: " + mo);
             return true
         }
@@ -88,7 +83,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
     }
 
     fun getBestOption(mk: MergeKey): MergeOption? {
-        return bestOptions!![mk]
+        return bestOptions[mk]
     }
 
     fun nextMergeOptionNumber(): Int {
@@ -100,17 +95,17 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
     }
 
     open fun addLiveGroup(group: Group) {
-        liveGroups!!.add(group)
+        liveGroups.add(group)
         group.live = true
     }
 
     fun addGroupContainerMapping(toAdd: Group, c2: Container, newState: GroupContainerState) {
-        var within = groupContainers!![toAdd]
+        var within = groupContainers[toAdd]
         if (within == null) {
             within = HashMap(5)
-            groupContainers!![toAdd] = within
+            groupContainers[toAdd] = within
         }
-        log!!.send("Mapping " + toAdd.groupNumber + " into container " + c2 + " state= " + newState)
+        log.send("Mapping " + toAdd.groupNumber + " into container " + c2 + " state= " + newState)
         within[c2] = newState
         val csi = getStateFor(c2)
         csi!!.contents.add(toAdd)
@@ -163,13 +158,11 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         get() = containerStates.keys
 
     fun getContainersFor(a: Group?): Map<Container, GroupContainerState>? {
-        return if (groupContainers == null) {
-            if (a is LeafGroup) {
-                mapOf(a.container!! to GroupContainerState.HAS_CONTENT)
-            } else {
-                throw LogicException("Group Containers should have been initialised")
-            }
-        } else groupContainers!![a]
+        if (a is LeafGroup) {
+             return groupContainers.getOrPut(a, { mutableMapOf(a.container!! to GroupContainerState.HAS_CONTENT) } )
+        } else {
+            return groupContainers!![a]
+        }
     }
 
     fun removeGroupContainerMapping(g: Group, c: Container): GroupContainerState? {

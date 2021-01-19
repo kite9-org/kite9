@@ -108,9 +108,6 @@ class GeneratorBasedGroupingStrategyImpl(
     }
 
     override fun group(): GroupResult {
-        val capacity = groupCount
-        val containers = containerCount
-        ms.initialise(capacity, containers, log)
         setupMergeState(ms)
         preMergeInitialisation(ms)
         while (ms.groupsCount() > 1) {
