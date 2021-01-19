@@ -16,7 +16,7 @@ import java.util.*
  *
  * @author robmoffat
  */
-class GeneratorMergeState(ch: ContradictionHandler, elements: Int) : DirectedMergeState(ch) {
+class GeneratorMergeState(ch: ContradictionHandler, elements: Int) : DirectedMergeState(ch, elements) {
 
     val generators: MutableList<MergeGenerator> = mutableListOf()
     val rules: MutableList<PriorityRule> = mutableListOf()
@@ -29,18 +29,13 @@ class GeneratorMergeState(ch: ContradictionHandler, elements: Int) : DirectedMer
         }
     })
 
-
-    override fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
-        super.initialise(capacity, containers, log)
-    }
-
     override fun addLiveGroup(group: Group) {
         super.addLiveGroup(group)
-        toDo!!.add(group)
+        toDo.add(group)
     }
 
     fun nextLiveGroup(): Group? {
-        return toDo!!.remove()
+        return toDo.remove()
     }
 
 }

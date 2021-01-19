@@ -14,7 +14,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 
-open class BasicMergeState(var contradictionHandler: ContradictionHandler) : GroupResult(), Logable {
+open class BasicMergeState(var contradictionHandler: ContradictionHandler, elements: Int) : GroupResult(), Logable {
 
     val log = Kite9Log(this)
 
@@ -43,24 +43,22 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler) : Gro
         }
     }
 
-    protected var liveGroups: MutableSet<Group>? = null
+    protected val liveGroups: MutableSet<Group> = DetHashSet(elements * 2)
     @JvmField
-	protected var optionQueue // options in processing order
-            : PriorityQueue<MergeOption>? = null
-    protected var bestOptions // contains all considered
-            : MutableMap<MergeKey, MergeOption>? = null
+	protected val optionQueue // options in processing order
+	    : PriorityQueue<MergeOption> = PriorityQueue(elements * 5 + 1, null)
+    protected val bestOptions // contains all considered
+            : MutableMap<MergeKey, MergeOption> = HashMap(elements * 5)
 
     // merge options, legal ones
     // outrank illegal ones
     private var groupContainers: MutableMap<Group, MutableMap<Container, GroupContainerState>>? = null
     protected var liveContainers: MutableSet<Container>? = null
     protected var nextMergeNumber = 0
+
     open fun initialise(capacity: Int, containers: Int, log: Kite9Log?) {
-        optionQueue = PriorityQueue(capacity * 5 + 1, null)
-        bestOptions = HashMap(capacity * 5)
         groupContainers = HashMap(capacity)
         liveContainers = UnorderedSet(containers * 2)
-        liveGroups = DetHashSet(capacity * 2)
     }
 
     open fun removeLiveGroup(a: Group) {

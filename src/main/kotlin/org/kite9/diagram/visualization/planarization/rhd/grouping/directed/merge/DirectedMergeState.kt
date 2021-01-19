@@ -13,7 +13,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHand
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import java.util.*
 
-open class DirectedMergeState(ch: ContradictionHandler) : BasicMergeState(ch) {
+open class DirectedMergeState(ch: ContradictionHandler, elements: Int) : BasicMergeState(ch, elements) {
 
     override fun isLinkCounted(from: Group?, to: Group?, via: Group, ld: LinkDetail?): Boolean {
         return if (compatibleNeighbour(from!!, via)) {
