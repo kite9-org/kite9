@@ -23,7 +23,7 @@ open class DirectedMergeState(ch: ContradictionHandler) : BasicMergeState(ch) {
         }
     }
 
-    fun getContainerMergeType(a: Group?, b: Group?): ContainerMergeType {
+    fun getContainerMergeType(a: Group, b: Group): ContainerMergeType {
         val common = hasCommonLiveContainer(a, b)
         val increases = increasesContainers(a, b)
         return if (common) {
@@ -33,7 +33,7 @@ open class DirectedMergeState(ch: ContradictionHandler) : BasicMergeState(ch) {
         }
     }
 
-    fun hasCommonLiveContainer(a: Group?, b: Group?): Boolean {
+    private fun hasCommonLiveContainer(a: Group, b: Group): Boolean {
         val ac = getContainersFor(a)!!.keys
         val bc = getContainersFor(b)!!.keys
         val itc = if (ac.size < bc.size) ac else bc

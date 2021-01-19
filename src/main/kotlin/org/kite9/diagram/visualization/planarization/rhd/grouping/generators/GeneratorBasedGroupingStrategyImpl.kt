@@ -5,8 +5,6 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -17,6 +15,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisH
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.PriorityRule
+import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.merge.GeneratorMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.rules.AlignedDirectedPriorityRule
 import org.kite9.diagram.visualization.planarization.rhd.grouping.rules.NeighbourDirectedPriorityRule
 import org.kite9.diagram.visualization.planarization.rhd.grouping.rules.UndirectedPriorityRule
@@ -39,7 +38,11 @@ class GeneratorBasedGroupingStrategyImpl(
     ch: ContradictionHandler,
     gp: GridPositioner,
     em: ElementMapper) :
-    AxisHandlingGroupingStrategy(top, elements, ch, gp, em, GeneratorMergeState(ch)), GeneratorBasedGroupingStrategy {
+    AxisHandlingGroupingStrategy(top, elements, ch, gp, em,
+        GeneratorMergeState(
+            ch
+        )
+    ), GeneratorBasedGroupingStrategy {
 
     override fun addMergeOption(
         g1: Group,
@@ -97,7 +100,7 @@ class GeneratorBasedGroupingStrategyImpl(
         var next = gms.nextLiveGroup()
         while (next != null) {
             log.send("Merge options for:$next")
-            for (strat in gms.generators) {
+            for (strat in gms.generators!!) {
                 strat.generate(next)
             }
             next = gms.nextLiveGroup()
@@ -210,12 +213,12 @@ class GeneratorBasedGroupingStrategyImpl(
     }
 
     override fun getRules(ms: DirectedMergeState): List<PriorityRule> {
-        return (ms as GeneratorMergeState).rules
+        return (ms as GeneratorMergeState).rules!!
     }
 
     override fun startContainerMerge(ms: BasicMergeState, c: Container) {
         super.startContainerMerge(ms, c)
-        for (gen in (ms as GeneratorMergeState).generators) {
+        for (gen in (ms as GeneratorMergeState).generators!!) {
             gen.containerIsLive(c)
         }
     }
