@@ -129,21 +129,21 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
     }
 
     fun addLiveContainer(c: Container) {
-        log!!.send("Making container live:$c")
-        liveContainers!!.add(c)
+        log.send("Making container live:$c")
+        liveContainers.add(c)
     }
 
     fun groupsCount(): Int {
-        return liveGroups!!.size
+        return liveGroups.size
     }
 
     fun hasRemainingMergeOptions(): Boolean {
-        return optionQueue!!.size() > 0
+        return optionQueue.size() > 0
     }
 
     fun nextMergeOption(): MergeOption? {
         //log.send("Merge options:", optionQueue);
-        val mo = optionQueue!!.remove()
+        val mo = optionQueue.remove()
         bestOptions!!.remove(mo!!.mk)
         return mo
     }
@@ -161,24 +161,24 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         if (a is LeafGroup) {
              return groupContainers.getOrPut(a, { mutableMapOf(a.container!! to GroupContainerState.HAS_CONTENT) } )
         } else {
-            return groupContainers!![a]
+            return groupContainers[a]
         }
     }
 
     fun removeGroupContainerMapping(g: Group, c: Container): GroupContainerState? {
-        val within = groupContainers!![g] ?: throw LogicException("Group not present in an existing container$g")
+        val within = groupContainers[g] ?: throw LogicException("Group not present in an existing container$g")
         return within.remove(c)
     }
 
     fun isContainerLive(container: Container?): Boolean {
-        return liveContainers!!.contains(container)
+        return liveContainers.contains(container)
     }
 
     override fun groups(): Collection<Group> {
-        return liveGroups!!
+        return liveGroups
     }
 
-    override val prefix: String?
+    override val prefix: String
         get() = "MS  "
 
     override val isLoggingEnabled: Boolean

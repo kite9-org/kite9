@@ -103,25 +103,25 @@ open class DirectedMergeState(ch: ContradictionHandler, elements: Int) : BasicMe
         super.removeLiveGroup(a)
         if (completedDirectionalMerge(a)) {
             val i = ShapeIndex(a)
-            val b = noDirectedMergeNeeded!![i]
+            val b = noDirectedMergeNeeded[i]
             if (b === a) {
-                noDirectedMergeNeeded!!.remove(i)
+                noDirectedMergeNeeded.remove(i)
             }
         }
     }
 
     fun getCompoundGroupWithSameContents(g: Group): Group? {
         val toMatch = ShapeIndex(g)
-        return noDirectedMergeNeeded!![toMatch]
+        return noDirectedMergeNeeded[toMatch]
     }
 
     override fun addLiveGroup(group: Group) {
         super.addLiveGroup(group)
         if (completedDirectionalMerge(group)) {
             val i = ShapeIndex(group)
-            val existing = noDirectedMergeNeeded!![i]
+            val existing = noDirectedMergeNeeded[i]
             if (existing == null) {
-                noDirectedMergeNeeded!![i] = group
+                noDirectedMergeNeeded[i] = group
             }
         }
     }
