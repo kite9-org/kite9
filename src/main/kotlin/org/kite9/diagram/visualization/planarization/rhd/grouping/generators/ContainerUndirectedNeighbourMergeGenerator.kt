@@ -69,7 +69,7 @@ class ContainerUndirectedNeighbourMergeGenerator(
     }
 
     override fun generate(poll: Group) {
-        for (c in ms.getContainersFor(poll).keys) {
+        for (c in ms.getContainersFor(poll)!!.keys) {
             if (ms.isContainerLive(c)) {
                 if (dontDo[c]!!.contains(poll)) {
                     return

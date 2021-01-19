@@ -87,8 +87,8 @@ abstract class AxisHandlingGroupingStrategy(
 
         // check that internals don't contradict the axis of the group
         if (isLinkAgainstAxis(out, ld)) {
-            val aContainerMap = ms.getContainersFor(out.a)
-            val bContainerMap = ms.getContainersFor(out.b)
+            val aContainerMap = ms.getContainersFor(out.a)!!
+            val bContainerMap = ms.getContainersFor(out.b)!!
             val expandingContainers: MutableSet<Container?> = UnorderedSet(aContainerMap.keys)
             expandingContainers.retainAll(bContainerMap.keys)
             val axisChecker: LinkProcessor = object : LinkProcessor {
@@ -211,8 +211,8 @@ abstract class AxisHandlingGroupingStrategy(
      * If there is no common content, then it returns false.
      */
     private fun getCommonContainer(out: CompoundGroup): Container? {
-        val a2cs = ms.getContainersFor(out.a)
-        val commonContainers = ms.getContainersFor(out.b)
+        val a2cs = ms.getContainersFor(out.a)!!
+        val commonContainers = ms.getContainersFor(out.b)!!
         var common: Container? = null
         for ((container, value) in a2cs) {
             if (value.hasContent() && ms.isContainerLive(container)) {

@@ -111,9 +111,9 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         a: Group, b: Group,
         aligned: Group, ms: BasicMergeState, alignedSide: Direction?
     ): Boolean {
-        val ac: Set<Container> = ms.getContainersFor(a).keys
-        val bc: Set<Container> = ms.getContainersFor(b).keys
-        val alignedc: Set<Container> = ms.getContainersFor(aligned).keys
+        val ac: Set<Container> = ms.getContainersFor(a)!!.keys
+        val bc: Set<Container> = ms.getContainersFor(b)!!.keys
+        val alignedc: Set<Container> = ms.getContainersFor(aligned)!!.keys
         for (con in alignedc) {
             if (ms.isContainerLive(con)) {
                 // a and b sharing a container with alignedGroup will fail if con has a layout

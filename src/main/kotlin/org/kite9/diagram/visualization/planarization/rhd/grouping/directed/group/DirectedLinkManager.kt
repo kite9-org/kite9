@@ -664,6 +664,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
             override val linkRank: Int
                 get() = 0
         }
+
         private val NONE = Any()
         private fun containersFor(
             a: Group?,

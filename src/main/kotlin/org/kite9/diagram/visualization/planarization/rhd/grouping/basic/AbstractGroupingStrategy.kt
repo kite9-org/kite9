@@ -69,8 +69,8 @@ abstract class AbstractGroupingStrategy(
         group: CompoundGroup,
         ms: BasicMergeState
     ) {
-        val containersA = ms.getContainersFor(group.a)
-        val containersB = ms.getContainersFor(group.b)
+        val containersA = ms.getContainersFor(group.a)!!
+        val containersB = ms.getContainersFor(group.b)!!
         val combined: MutableSet<Container> = LinkedHashSet(containersA.keys)
         combined.addAll(containersB.keys)
         val iterator: Iterator<Container> = combined.iterator()
@@ -125,7 +125,7 @@ abstract class AbstractGroupingStrategy(
      * it's container.
      */
     protected fun checkGroupsContainersAreComplete(group: Group, ms: BasicMergeState) {
-        val containerMap = ms.getContainersFor(group)
+        val containerMap = ms.getContainersFor(group)!!
         val containers: Set<Container> = containerMap.keys
         val containers2 = ArrayList(containers)
         for (container in containers2) {

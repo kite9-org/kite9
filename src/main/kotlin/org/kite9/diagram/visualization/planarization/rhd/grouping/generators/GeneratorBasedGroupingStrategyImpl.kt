@@ -114,7 +114,7 @@ class GeneratorBasedGroupingStrategyImpl(
             createMergeOptions(ms)
             var mo: MergeOption
             try {
-                mo = ms.nextMergeOption()
+                mo = ms.nextMergeOption()!!
                 val c = updateMergeOption(mo)
                 if (c == Change.CHANGED || c == Change.NO_CHANGE) {
                     val p = canGroupsMerge(mo.mk.a, mo.mk.b, ms, mo.alignedGroup, mo.alignedDirection)
