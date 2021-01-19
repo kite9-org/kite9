@@ -110,44 +110,13 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
                         MergePlane.X_FIRST_MERGE, MergePlane.UNKNOWN -> MergePlane.X_FIRST_MERGE
                         MergePlane.Y_FIRST_MERGE -> null
                     }
-                    return when (getState(b)) {
-                        MergePlane.Y_FIRST_MERGE, MergePlane.UNKNOWN -> MergePlane.Y_FIRST_MERGE
-                        MergePlane.X_FIRST_MERGE -> null
-                    }
-                    when (getState(b)) {
-                        MergePlane.X_FIRST_MERGE -> MergePlane.X_FIRST_MERGE
-                        MergePlane.Y_FIRST_MERGE -> MergePlane.Y_FIRST_MERGE
-                        MergePlane.UNKNOWN -> {
-                            val ld = a.getLink(b)
-                            if (ld != null && ld.direction != null) {
-                                when (ld.direction) {
-                                    Direction.UP, Direction.DOWN -> return MergePlane.Y_FIRST_MERGE
-                                    Direction.LEFT, Direction.RIGHT -> return MergePlane.X_FIRST_MERGE
-                                }
-                            }
-                            MergePlane.UNKNOWN
-                        }
-                    }
                 }
                 MergePlane.Y_FIRST_MERGE -> {
                     return when (getState(b)) {
                         MergePlane.Y_FIRST_MERGE, MergePlane.UNKNOWN -> MergePlane.Y_FIRST_MERGE
                         MergePlane.X_FIRST_MERGE -> null
                     }
-                    when (getState(b)) {
-                        MergePlane.X_FIRST_MERGE -> MergePlane.X_FIRST_MERGE
-                        MergePlane.Y_FIRST_MERGE -> MergePlane.Y_FIRST_MERGE
-                        MergePlane.UNKNOWN -> {
-                            val ld = a.getLink(b)
-                            if (ld != null && ld.direction != null) {
-                                when (ld.direction) {
-                                    Direction.UP, Direction.DOWN -> return MergePlane.Y_FIRST_MERGE
-                                    Direction.LEFT, Direction.RIGHT -> return MergePlane.X_FIRST_MERGE
-                                }
-                            }
-                            MergePlane.UNKNOWN
-                        }
-                    }
+
                 }
                 MergePlane.UNKNOWN -> when (getState(b)) {
                     MergePlane.X_FIRST_MERGE -> MergePlane.X_FIRST_MERGE
@@ -164,7 +133,6 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
                     }
                 }
             }
-            throw LogicException("Eventuality not considered: " + getType(a) + " " + getType(b))
         }
 
         /**
