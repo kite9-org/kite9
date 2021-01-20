@@ -131,8 +131,8 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
                 // can't be linked
                 return true
             }
-            val vSet = vOrd.underlyingLeavers
-            for (e in prevOrd.edgesAsList) {
+            val vSet = vOrd.getUnderlyingLeavers()
+            for (e in prevOrd.getEdgesAsList()) {
                 if (e is BiDirectionalPlanarizationEdge) {
                     val eUnd = e.getOriginalUnderlying()
                     if (eUnd != null && vSet.contains(eUnd)) {

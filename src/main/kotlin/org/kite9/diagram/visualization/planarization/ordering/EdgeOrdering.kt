@@ -14,14 +14,14 @@ interface EdgeOrdering {
     /**
      * Returns either a [Direction], or the object MULTIPLE_DIRECTIONS
      */
-    val edgeDirections: Any
+    fun getEdgeDirections(): Any?
 
     fun size(): Int
 
     fun getIterator(
         clockwise: Boolean,
         startingAt: PlanarizationEdge,
-        finish: PlanarizationEdge,
+        finish: PlanarizationEdge?,
         directedOnly: Boolean
     ): Iterator<PlanarizationEdge>
 
@@ -41,12 +41,12 @@ interface EdgeOrdering {
     /**
      * Returns an unmodifiable list of leaving edges in clockwise order.
      */
-    val edgesAsList: List<PlanarizationEdge>
+    fun getEdgesAsList(): List<PlanarizationEdge>
 
     /**
      * Returns set of underlying diagram element leavers
      */
-    val underlyingLeavers: Set<DiagramElement>
+    fun getUnderlyingLeavers(): Set<DiagramElement>
 
     companion object {
         @kotlin.jvm.JvmField
