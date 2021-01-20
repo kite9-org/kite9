@@ -77,8 +77,8 @@ class MGTVertexEdgeOrdering(val pl: MGTPlanarization, val v: Vertex) : AbstractC
         }
     }
 
-    override fun getInterceptDirection(e: Edge?): Direction {
-        return e!!.getDrawDirectionFrom(v)!!
+    override fun getInterceptDirection(e: Edge): Direction {
+        return e.getDrawDirectionFrom(v)!!
     }
 
 }

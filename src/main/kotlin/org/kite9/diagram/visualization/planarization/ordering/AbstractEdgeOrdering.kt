@@ -33,7 +33,7 @@ abstract class AbstractEdgeOrdering : EdgeOrdering {
         }
     }
 
-    protected abstract fun getInterceptDirection(e: Edge?): Direction
+    protected abstract fun getInterceptDirection(e: Edge): Direction
 
     override fun canInsert(before: PlanarizationEdge, d: Direction?, clockwise: Boolean, log: Kite9Log): Boolean {
         var before = before
