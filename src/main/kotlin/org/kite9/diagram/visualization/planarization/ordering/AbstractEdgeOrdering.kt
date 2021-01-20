@@ -14,6 +14,7 @@ abstract class AbstractEdgeOrdering : EdgeOrdering {
 
     @JvmField
 	protected var directions: Any? = null
+
     override fun getEdgeDirections(): Any? {
         return directions
     }
@@ -85,7 +86,7 @@ abstract class AbstractEdgeOrdering : EdgeOrdering {
         startingAt: PlanarizationEdge?,
         finish: PlanarizationEdge?,
         directedOnly: Boolean
-    ) : MutableIterator<PlanarizationEdge?> {
+    ) : MutableIterator<PlanarizationEdge> {
         private val finish: PlanarizationEdge?
         private var next: PlanarizationEdge? = null
         private val directed: Boolean
@@ -111,15 +112,16 @@ abstract class AbstractEdgeOrdering : EdgeOrdering {
         }
 
         abstract fun getNext(): PlanarizationEdge?
+
         override fun hasNext(): Boolean {
             return next != null
         }
 
-        override fun next(): PlanarizationEdge? {
+        override fun next(): PlanarizationEdge {
             val out = next
             next = getNext()
             checkEdge(false)
-            return out
+            return out!!
         }
 
         override fun remove() {
@@ -139,19 +141,9 @@ abstract class AbstractEdgeOrdering : EdgeOrdering {
     }
 
     private var underlyingCache: Set<DiagramElement>? = null
+
     override fun getUnderlyingLeavers(): Set<DiagramElement> {
         throw UnsupportedOperationException()
-        //		if (underlyingCache==null) {
-//			List<PlanarizationEdge> edges = getEdgesAsList();
-//			underlyingCache = new UnorderedSet<DiagramElement>(edges.size() * 2);
-//			for (Edge e : edges) {
-//				if (e instanceof BiDirectionalPlanarizationEdge)
-//				DiagramElement und = e.getOriginalUnderlying();
-//				if (und != null) {
-//					underlyingCache.add(und);
-//				}
-//			}
-//		}
-//		return underlyingCache;
+
     }
 }
