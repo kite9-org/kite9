@@ -10,7 +10,7 @@ import org.kite9.diagram.model.position.Direction
  */
 interface VertexEdgeOrdering : EdgeOrdering {
 
-    fun addEdgeDirection(d: Direction, isContradicting: Boolean)
+    fun addEdgeDirection(d: Direction?, isContradicting: Boolean)
     fun remove(toRemove: PlanarizationEdge)
     fun replace(b: PlanarizationEdge, a: PlanarizationEdge)
 }

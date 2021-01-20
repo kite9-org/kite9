@@ -28,10 +28,10 @@ interface MGTPlanarization : RHDPlanarization {
      * For a given vertex, returns edges leaving vertex above the line of the planarization
      * going forwards, in inside-most to outside-most order.
      */
-    fun getAboveForwardLinks(v: Vertex): List<PlanarizationEdge>
-    fun getAboveBackwardLinks(v: Vertex): List<PlanarizationEdge>
-    fun getBelowForwardLinks(v: Vertex): List<PlanarizationEdge>
-    fun getBelowBackwardLinks(v: Vertex): List<PlanarizationEdge>
+    fun getAboveForwardLinks(v: Vertex): MutableList<PlanarizationEdge>
+    fun getAboveBackwardLinks(v: Vertex): MutableList<PlanarizationEdge>
+    fun getBelowForwardLinks(v: Vertex): MutableList<PlanarizationEdge>
+    fun getBelowBackwardLinks(v: Vertex): MutableList<PlanarizationEdge>
     val aboveLineEdges: Set<PlanarizationEdge>
     val belowLineEdges: Set<PlanarizationEdge>
     fun getFirstEdgeAfterPlanarizationLine(from: Vertex, forwardSet: Boolean, aboveSet: Boolean): PlanarizationEdge

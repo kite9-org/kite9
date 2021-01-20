@@ -8,7 +8,7 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge
  * @author robmoffat
  */
 abstract class AbstractListBasedEdgeOrdering : AbstractEdgeOrdering() {
-    
+
     override fun size(): Int {
         return getEdgesAsList().size
     }
