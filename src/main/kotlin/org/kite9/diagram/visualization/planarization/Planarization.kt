@@ -44,7 +44,7 @@ interface Planarization {
     /**
      * Returns all edges in the planarization.
      */
-    val allEdges: MutableList<Edge>
+    val allEdges: List<Edge>
 
     /**
      * Any connections or layout that haven't yet, or can't be introduced into the planar embedding.

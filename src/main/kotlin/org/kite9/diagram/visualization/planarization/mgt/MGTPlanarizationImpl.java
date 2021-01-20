@@ -226,25 +226,25 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		boolean found = aboveSet.remove(cross) || belowSet.remove(cross);
 		int fromvi = getVertexIndex(cross.getFrom());
 		int tovi = getVertexIndex(cross.getTo());
-		
+
 		if ((fromvi == -1) || (tovi == -1)) {
 			throw new LogicException();
 		}
-		
+
 		// remove one end
-		boolean found1 = 
+		boolean found1 =
 		aboveForwardLinks.get(fromvi).remove(cross) ||
 		belowForwardLinks.get(fromvi).remove(cross) ||
 		aboveBackwardLinks.get(fromvi).remove(cross) ||
 		belowBackwardLinks.get(fromvi).remove(cross);
-		
-		boolean found2 = 
+
+		boolean found2 =
 				aboveForwardLinks.get(tovi).remove(cross) ||
 				belowForwardLinks.get(tovi).remove(cross) ||
 				aboveBackwardLinks.get(tovi).remove(cross) ||
 				belowBackwardLinks.get(tovi).remove(cross);
-		
-		if (!found) { 
+
+		if (!found) {
 			throw new LogicException();
 		}
 	}
@@ -366,8 +366,8 @@ public class MGTPlanarizationImpl extends RHDPlanarizationImpl implements MGTPla
 		}
 	}
 
-	private void checkOrderingAround(Vertex from) { 
-		List<Edge> byQuad = new ArrayList<Edge>(); 
+	private void checkOrderingAround(Vertex from) {
+		List<Edge> byQuad = new ArrayList<Edge>();
 		List<PlanarizationEdge> af = getAboveForwardLinks(from);
 		List<PlanarizationEdge> bf = getBelowForwardLinks(from);
 		List<PlanarizationEdge> bb = getBelowBackwardLinks(from);

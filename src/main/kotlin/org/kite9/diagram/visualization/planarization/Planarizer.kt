@@ -8,5 +8,5 @@ import org.kite9.diagram.model.Diagram
  * @author robmoffat
  */
 interface Planarizer {
-    fun planarize(d: Diagram?): Planarization?
+    fun planarize(d: Diagram): Planarization
 }

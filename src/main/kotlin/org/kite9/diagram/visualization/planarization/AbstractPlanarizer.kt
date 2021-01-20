@@ -20,14 +20,14 @@ import org.kite9.diagram.visualization.planarization.transform.PlanarizationTran
  *
  * @author moffatr
  */
-abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable {
+abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, Planarizer {
 
     protected val log = Kite9Log(this)
 
     val gridPositioner: GridPositioner
         get() = elementMapper.getGridPositioner()
 
-    fun planarize(c: Diagram): Planarization {
+    override fun planarize(c: Diagram): Planarization {
         val pln = buildPlanarization(c)
         return try {
             for (pt in planarizationTransforms) {
