@@ -243,7 +243,7 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
         return out
     }
 
-    val edgesCopy: List<PlanarizationEdge>
+    val edgesCopy: MutableList<PlanarizationEdge>
         get() = ArrayList(boundary)
 
     /**

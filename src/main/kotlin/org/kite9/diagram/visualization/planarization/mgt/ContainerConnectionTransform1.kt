@@ -26,7 +26,8 @@ import org.kite9.diagram.visualization.planarization.transform.PlanarizationTran
  *
  * @author robmoffat
  */
-class ContainerConnectionTransform1(elementMapper: ElementMapper?) : PlanarizationTransform, Logable {
+class ContainerConnectionTransform1(elementMapper: ElementMapper) : PlanarizationTransform, Logable {
+
     private val log = Kite9Log(this)
     override fun transform(pln: Planarization) {
         modifyInternalEdges(pln)

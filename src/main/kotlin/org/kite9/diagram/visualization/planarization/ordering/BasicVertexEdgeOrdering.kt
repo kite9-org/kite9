@@ -32,7 +32,7 @@ class BasicVertexEdgeOrdering(val underlying: MutableList<PlanarizationEdge>, va
         changed()
     }
 
-    override fun getEdgesAsList(): List<PlanarizationEdge> {
+    override fun getEdgesAsList(): MutableList<PlanarizationEdge> {
         return underlying
     }
 
