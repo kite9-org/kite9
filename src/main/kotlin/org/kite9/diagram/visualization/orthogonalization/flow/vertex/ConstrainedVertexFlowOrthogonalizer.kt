@@ -42,7 +42,7 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     inner class VertexDivision {
         var from: PlanarizationEdge? = null
         var to: PlanarizationEdge? = null
-        var containing: MutableList<PlanarizationEdge> = LinkedList()
+        var containing: MutableList<PlanarizationEdge> = mutableListOf()
         var corners = 0
         var id = nextId++
 

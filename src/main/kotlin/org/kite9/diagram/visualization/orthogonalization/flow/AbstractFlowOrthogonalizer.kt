@@ -65,7 +65,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
         pln: Planarization?
     )
 
-    protected fun createFlowGraphForFace(pln: Planarization?, fg: MappedFlowGraph?, f: Face?) {
+    protected fun createFlowGraphForFace(pln: Planarization, fg: MappedFlowGraph, f: Face) {
         createFaceNodes(fg, f, pln, object : VertexHandler {
             override fun processVertex(`in`: PlanarizationEdge?, out: PlanarizationEdge?, v: Vertex?, current: Node?) {
                 createFlowGraphForVertex(fg, f, current, v, `in`, out, pln)
@@ -74,10 +74,10 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
     }
 
     protected abstract fun createFaceNodes(
-        fg: MappedFlowGraph?,
-        f: Face?,
-        pln: Planarization?,
-        vertexHandler: VertexHandler?
+        fg: MappedFlowGraph,
+        f: Face,
+        pln: Planarization,
+        vertexHandler: VertexHandler
     )
 
     protected fun addIfNotNull(fg: MappedFlowGraph, a: Arc?) {
