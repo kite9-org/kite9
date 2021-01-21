@@ -28,7 +28,7 @@ interface Terminator : SizedRectangular {
      * This is used for making like-terminators collect around elements which have
      * [ConnectionsSeparation]
      */
-    fun styleMatches(t2: Terminator): Boolean
+    fun styleMatches(t2: Terminator?): Boolean
 
     /**
      * Gives the side of the Connected element the terminator should be placed on.
