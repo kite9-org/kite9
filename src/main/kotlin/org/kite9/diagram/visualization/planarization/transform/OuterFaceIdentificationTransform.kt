@@ -75,7 +75,7 @@ class OuterFaceIdentificationTransform : PlanarizationTransform, Logable {
             val faces = pln.edgeFaceMap[e]
             for (f in faces!!) {
                 if (f !== face) {
-                    handleInnerFace(f, pln, level, done)
+                    handleInnerFace(f!!, pln, level, done)
                 }
             }
         }

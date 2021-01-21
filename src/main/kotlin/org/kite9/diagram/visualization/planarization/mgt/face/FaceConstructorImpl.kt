@@ -1,60 +1,22 @@
 package org.kite9.diagram.visualization.planarization.mgt.face
 
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization.vertexOrder
-import org.kite9.diagram.visualization.planarization.Planarization.edgeFaceMap
-import org.kite9.diagram.common.BiDirectional.getFrom
-import org.kite9.diagram.common.BiDirectional.getTo
-import org.kite9.diagram.visualization.planarization.Planarization.faces
-import org.kite9.diagram.visualization.planarization.Face.checkFaceIntegrity
-import org.kite9.diagram.visualization.planarization.Face.partOf
-import org.kite9.diagram.logging.Kite9Log.send
-import org.kite9.diagram.visualization.planarization.Face.getID
-import org.kite9.diagram.visualization.planarization.Face.cornerIterator
-import org.kite9.diagram.visualization.planarization.Face.edgeIterator
-import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge.getFrom
-import org.kite9.diagram.common.elements.edge.AbstractPlanarizationEdge.getTo
-import org.kite9.diagram.visualization.planarization.Face.indexOf
-import org.kite9.diagram.visualization.planarization.Face.getBoundary
-import org.kite9.diagram.common.BiDirectional.getDrawDirectionFrom
-import org.kite9.diagram.visualization.planarization.mgt.face.TemporaryEdge.below
-import org.kite9.diagram.visualization.planarization.mgt.face.TemporaryEdge.above
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge.getElementForSide
-import org.kite9.diagram.model.position.Direction.Companion.reverse
-import org.kite9.diagram.model.DiagramElement.getParent
-import org.kite9.diagram.common.elements.vertex.Vertex.isLinkedDirectlyTo
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization.addEdge
-import org.kite9.diagram.visualization.planarization.Planarization.createFace
-import org.kite9.diagram.visualization.planarization.Face.add
-import org.kite9.diagram.common.BiDirectional.otherEnd
-import org.kite9.diagram.visualization.planarization.Planarization.vertexFaceMap
-import org.kite9.diagram.visualization.planarization.Planarization.edgeOrderings
-import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering.getEdgesAsList
-import org.kite9.diagram.common.BiDirectional.getDrawDirection
-import org.kite9.diagram.visualization.planarization.Tools.removeEdge
-import org.kite9.diagram.common.elements.vertex.Vertex.getEdges
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge.removeBeforeOrthogonalization
-import org.kite9.diagram.visualization.planarization.mgt.face.FaceConstructor
-import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
-import org.kite9.diagram.visualization.planarization.mgt.face.TemporaryEdge
-import org.kite9.diagram.common.elements.edge.PlanarizationEdge
-import org.kite9.diagram.visualization.planarization.Face
-import org.kite9.diagram.model.Rectangular
-import java.util.HashSet
-import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
-import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.visualization.planarization.Planarization
-import java.util.LinkedList
 import org.kite9.diagram.common.algorithms.det.DetHashSet
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
 import org.kite9.diagram.common.elements.edge.Edge
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType
 import org.kite9.diagram.common.elements.vertex.Vertex
+import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.Direction.Companion.reverse
+import org.kite9.diagram.visualization.planarization.Face
+import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.Tools
-import java.util.ArrayList
+import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
+import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
 
 /**
  * Turns the vertex-order planarization into a number of faces.  This is done by first joining everything in the diagram together, using temporary edges
@@ -68,6 +30,7 @@ import java.util.ArrayList
  */
 class FaceConstructorImpl : FaceConstructor, Logable {
     private val log = Kite9Log(this)
+
     override fun createFaces(pl: MGTPlanarization) {
         val temps = introduceTemporaryEdges(pl)
         traceFaces(pl)
@@ -84,7 +47,7 @@ class FaceConstructorImpl : FaceConstructor, Logable {
                 // although they can contribute to the same face twice
                 val map: List<Face?>? = pl.edgeFaceMap.get(e)
                 if (map == null) {
-                    tracePath(v, e, pl)
+                    tracePath(v, e!!, pl)
                 } else if (map[0] == null) {
                     tracePath(e!!.getFrom(), e, pl)
                 } else if (map[1] == null) {
@@ -104,10 +67,10 @@ class FaceConstructorImpl : FaceConstructor, Logable {
      */
     private fun assignRectangulars1(temps: List<TemporaryEdge>, pl: MGTPlanarization) {
         for (temporaryEdge in temps) {
-            val faces: List<Face>? = pl.edgeFaceMap[temporaryEdge]
+            val faces: List<Face?>? = pl.edgeFaceMap[temporaryEdge]
             for (f in faces!!) {
-                if (f.partOf == null) {
-                    val r = determineInsideElementFromTemporaryEdge(f, temporaryEdge, pl)
+                if (f!!.partOf == null) {
+                    val r = determineInsideElementFromTemporaryEdge(f!!, temporaryEdge, pl)
                     if (r != null) {
                         log.send("1. Face  " + f.getID() + " " + f.cornerIterator() + " is part of " + r)
                         f.partOf = r
@@ -129,10 +92,10 @@ class FaceConstructorImpl : FaceConstructor, Logable {
             for (e in f.edgeIterator()) {
                 if (e is BiDirectionalPlanarizationEdge) {
                     // the rectangular is the same on both sides
-                    val faces: List<Face> = pl.edgeFaceMap[e]!!
+                    val faces: List<Face?> = pl.edgeFaceMap[e]!!
                     for (face2 in faces) {
                         if (!visited.contains(face2)) {
-                            val r = identifyRectangular(face2, visited, pl)
+                            val r = identifyRectangular(face2!!, visited, pl)
                             log.send("2. Face " + f.getID() + " " + f.cornerIterator() + " is part of " + r)
                             f.partOf = r
                             return r
@@ -245,15 +208,15 @@ class FaceConstructorImpl : FaceConstructor, Logable {
         return e
     }
 
-    private fun tracePath(v: Vertex, e: PlanarizationEdge?, pl: Planarization): Face {
+    private fun tracePath(v: Vertex, e: PlanarizationEdge, pl: Planarization): Face {
         var v = v
-        var e = e
+        var e : PlanarizationEdge? = e
         val f = pl.createFace()
         //System.out.println("Creating face "+f);
         val startEdge = e
         val startVertex = v
         do {
-            addToFaceMap(v, e, f, pl)
+            addToFaceMap(v, e!!, f, pl)
             f.add(v, e!!)
             //System.out.println("adding " + e);
             v = e.otherEnd(v)
@@ -262,28 +225,28 @@ class FaceConstructorImpl : FaceConstructor, Logable {
         return f
     }
 
-    private fun addToFaceMap(from: Vertex, e: Edge?, f: Face, pln: Planarization) {
+    private fun addToFaceMap(from: Vertex, e: Edge, f: Face, pln: Planarization) {
         // edge face map
         var faces: MutableList<Face?>? = pln.edgeFaceMap.get(e)
         if (faces == null) {
             faces = ArrayList(2)
-            pln.edgeFaceMap[e!!] = faces
+            pln.edgeFaceMap[e] = faces
             faces.add(null)
             faces.add(null)
         }
-        if (from === e!!.getFrom()) {
+        if (from === e.getFrom()) {
             faces[0] = f
-        } else if (from === e!!.getTo()) {
+        } else if (from === e.getTo()) {
             faces[1] = f
         }
 
         // vertex face map
-        faces = pln.vertexFaceMap[from]
-        if (faces == null) {
-            faces = LinkedList()
-            pln.vertexFaceMap[from] = faces
+        var faces2 = pln.vertexFaceMap[from]
+        if (faces2 == null) {
+            faces2 = mutableListOf()
+            pln.vertexFaceMap[from] = faces2
         }
-        faces.add(f)
+        faces2.add(f)
     }
 
     private fun getLeftEdge(incident: PlanarizationEdge?, v: Vertex, pl: Planarization): PlanarizationEdge? {
@@ -303,7 +266,7 @@ class FaceConstructorImpl : FaceConstructor, Logable {
     private fun getEdgeOrdering(
         v: Vertex,
         pl: Planarization
-    ): List<PlanarizationEdge?> {
+    ): List<PlanarizationEdge> {
         return pl.edgeOrderings[v]!!.getEdgesAsList()
     }
 

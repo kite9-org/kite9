@@ -56,7 +56,7 @@ abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, P
     private fun checkIntegrity(pln: Planarization) {
         for ((key, value) in pln.edgeFaceMap) {
             for (f in value) {
-                if (!f.contains(key)) {
+                if (!f!!.contains(key)) {
                     throw LogicException("Face doesn't contain edge that map says it does: $key $f")
                 }
             }

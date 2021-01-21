@@ -29,7 +29,7 @@ interface Planarization {
     /**
      * Each edge connects to one face, or two faces after the temporary directed edge are inserted.
      */
-    val edgeFaceMap: MutableMap<Edge, MutableList<Face>>
+    val edgeFaceMap: MutableMap<Edge, MutableList<Face?>>
 
     /**
      * Gets the details of which vertices belong to which faces.

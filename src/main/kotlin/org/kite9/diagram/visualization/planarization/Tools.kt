@@ -69,7 +69,7 @@ class Tools : Logable {
 
         // now repair the face. there are two edges instead of the original one
         for (face in faces!!) {
-            face.checkFaceIntegrity()
+            face!!.checkFaceIntegrity()
             var indexes = face.indexOf(e)
             while (indexes.size > 0) {
                 val i = indexes[0]
@@ -106,7 +106,7 @@ class Tools : Logable {
     ) {
         for (edge in movedFace) {
             if (edge !== part) {
-                val faces: MutableList<Face>? = pln.edgeFaceMap[edge]
+                val faces: MutableList<Face?>? = pln.edgeFaceMap[edge]
                 faces!!.remove(f)
                 faces.add(f2)
                 if (faces.size != 2) {
@@ -153,7 +153,7 @@ class Tools : Logable {
      */
     private fun splitFaces(toRemove: PlanarizationEdge, pln: Planarization) {
         val faces = pln.edgeFaceMap[toRemove]
-        val original = faces!![0]
+        val original = faces!![0]!!
         val newFace = original.split(toRemove)
         val from = toRemove.getFrom()
         val to = toRemove.getTo()
@@ -218,10 +218,10 @@ class Tools : Logable {
         val newBoundary: MutableList<PlanarizationEdge> = ArrayList()
         var face = 0
         // this is the number of vertices that should be in the merged face
-        val vertexCount = faces!![0].vertexCount() + faces[1].vertexCount() - 2
+        val vertexCount = faces!![0]!!.vertexCount() + faces[1]!!.vertexCount() - 2
         var vertexNo = 0
         do {
-            var currentFace = faces[face]
+            var currentFace = faces[face]!!
             val currentVertex = currentFace.getCorner(vertexNo)
             val boundEdge = currentFace.getBoundary(vertexNo)
             if (boundEdge !== toRemove) {
@@ -230,13 +230,13 @@ class Tools : Logable {
             } else {
                 // move onto the other face
                 face = if (face == 0) 1 else 0
-                currentFace = faces[face]
+                currentFace = faces[face]!!
                 vertexNo = currentFace.indexOf(toRemove.otherEnd(currentVertex), toRemove)
             }
             vertexNo = (vertexNo + 1) % currentFace.vertexCount()
         } while (newCorners.size < vertexCount)
-        val a = faces[0]
-        val b = faces[1] // removing this one
+        val a = faces[0]!!
+        val b = faces[1]!! // removing this one
         a.reset(newBoundary, newCorners)
         pln.faces.remove(b)
         if (a.partOf == null) {
