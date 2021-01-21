@@ -16,7 +16,7 @@ abstract class AbstractOrthogonalizer : Orthogonalizer, Logable {
 
     override val prefix: String
         get() = "ORTH"
-    
+
     override val isLoggingEnabled: Boolean
         get() = false
 }

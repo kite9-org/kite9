@@ -46,19 +46,19 @@ public class ConstraintGroup {
 			constrainedFaces = new HashMap<Face, List<Integer>>(faceCount * 2);
 			for (Route r : requiredRoutes) {
 				while (r!=null) {
-					Face ff = r.face;
+					Face ff = r.getFace();
 					List<Integer> constraintsForFace = constrainedFaces.get(ff);
 					if (constraintsForFace == null) {
 						constraintsForFace = new LinkedList<Integer>();
 						constrainedFaces.put(ff, constraintsForFace);
 					}
 					
-					if (!constraintsForFace.contains(r.in)) {
-						constraintsForFace.add(r.in);
+					if (!constraintsForFace.contains(r.get_in())) {
+						constraintsForFace.add(r.get_in());
 					}
 					
-					if (!constraintsForFace.contains(r.out)) {
-						constraintsForFace.add(r.out);
+					if (!constraintsForFace.contains(r.get_out())) {
+						constraintsForFace.add(r.get_out());
 					}
 					
 					Edge e1 = r.getInEdge();
@@ -71,7 +71,7 @@ public class ConstraintGroup {
 						floatingConstraints.add(e2);
 					}
 					
-					r = r.rest;
+					r = r.getRest();
 				}
 			}
 			

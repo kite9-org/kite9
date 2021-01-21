@@ -391,8 +391,8 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 		List<PortionNode> portionsInvolved = new ArrayList<PortionNode>();
 	
 		while (r != null) {
-			int in = r.getIn();
-			int out = r.getOut();
+			int in = r.get_in();
+			int out = r.get_out();
 			Face f = r.getFace();
 			List<PortionNode> p = getMatchingPortions(facePortionMap.get(f), out, in, f.isOuterFace());
 			portionsInvolved.addAll(p);
@@ -439,10 +439,6 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 
 	/**
 	 * Returns the direction of an edge wrt a face.
-	 * 
-	 * @param constrainedEdge
-	 * @param f
-	 * @return
 	 */
 	private Direction getClockwiseDirection(int index, Face f) {
 		Edge constrainedEdge = f.getBoundary(index);
