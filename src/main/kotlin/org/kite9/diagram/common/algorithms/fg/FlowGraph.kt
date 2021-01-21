@@ -10,7 +10,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet
  */
 open class FlowGraph(var allNodes: List<Node>) {
 
-    var allArcs: Set<Arc> = DetHashSet()
+    var allArcs: MutableSet<Arc> = DetHashSet()
         protected set
 
     override fun toString(): String {
