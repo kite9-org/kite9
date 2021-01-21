@@ -8,7 +8,6 @@ import org.kite9.diagram.common.algorithms.fg.FlowGraphSPP;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.RapidFlowGraphSSP;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
@@ -83,18 +82,18 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 	
 	public interface VertexHandler {
 		
-		public void processVertex(Edge in, Edge out, Vertex v, Node face);
+		public void processVertex(PlanarizationEdge in, PlanarizationEdge out, Vertex v, Node face);
 		
 	}
 	
 
-	protected abstract void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node p, Vertex v, Edge before, Edge after, Planarization pln);
+	protected abstract void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node p, Vertex v, PlanarizationEdge before, PlanarizationEdge after, Planarization pln);
 	
 	protected void createFlowGraphForFace(final Planarization pln, final MappedFlowGraph fg, final Face f) {
 		createFaceNodes(fg, f, pln, new VertexHandler() {
 
 			@Override
-			public void processVertex(Edge in, Edge out, Vertex v, Node current) {
+			public void processVertex(PlanarizationEdge in, PlanarizationEdge out, Vertex v, Node current) {
 				createFlowGraphForVertex(fg, f, current, v, in, out, pln);
 			}
 		});
@@ -108,7 +107,7 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 			fg.getAllArcs().add(a);
 	}
 
-	protected Node createHelperNode(MappedFlowGraph fg, Face f, Vertex v, Node vn, Edge before, Edge after) {
+	protected Node createHelperNode(MappedFlowGraph fg, Face f, Vertex v, Node vn, PlanarizationEdge before, PlanarizationEdge after) {
 		// this is the number of corners the vertex can take from the face
 		// between these two edges
 		int supply = -2;
@@ -120,25 +119,21 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 		return hn;
 	}
 	
-	public static FaceVertex createFaceVertex(Face from, Vertex to, Edge before, Edge after) {
-		FaceVertex ff = new FaceVertex();
-		ff.face = from;
-		ff.vertex = to;
-		ff.prior = before;
-		ff.after = after;
+	public static FaceVertex createFaceVertex(Face from, Vertex to, PlanarizationEdge before, PlanarizationEdge after) {
+		FaceVertex ff = new FaceVertex(from, to, before, after);
 		if ((!before.meets(to)) || (!after.meets(to))) {
 			throw new LogicException("Edges must meet the vertex in the face " + ff);
 		}
 		return ff;
 	}
 	
-	public static EdgeVertex createEdgeVertex(Edge e, Vertex to) {
+	public static EdgeVertex createEdgeVertex(PlanarizationEdge e, Vertex to) {
 		EdgeVertex ff = to == null ? new EdgeVertex(e) : new EdgeVertex(e, to);
 		return ff;
 	}
 
-	protected int weightCost(Edge e) {
-		return CORNER * ((PlanarizationEdge) e).getBendCost() + TRACE;
+	protected int weightCost(PlanarizationEdge e) {
+		return CORNER * e.getBendCost() + TRACE;
 	}
 
 	public String getPrefix() {
@@ -188,7 +183,7 @@ public abstract class AbstractFlowOrthogonalizer extends MappedFlowOrthogonalize
 		n.getArcs().clear();
 	}
 	
-	public static boolean isConstrained(Edge e) {
+	public static boolean isConstrained(PlanarizationEdge e) {
 		return (e.getDrawDirection()!=null) && (!Tools.isUnderlyingContradicting(e));
 	}
 }

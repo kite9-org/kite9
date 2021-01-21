@@ -12,7 +12,6 @@ import org.kite9.diagram.common.algorithms.fg.AbsoluteArc;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
@@ -77,7 +76,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		return fn;
 	}
 
-	protected Node checkCreateEdgeNode(MappedFlowGraph fg, Edge e, Vertex near, String id) {
+	protected Node checkCreateEdgeNode(MappedFlowGraph fg, PlanarizationEdge e, Vertex near, String id) {
 		EdgeVertex ev = createEdgeVertex(e, near);
 		Node en = fg.getNodeFor(ev);
 		if (en != null) {
@@ -90,7 +89,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		return en;
 	}
 
-	protected void createFlowGraphForEdge(MappedFlowGraph fg, Edge e, Node fn, int i) {
+	protected void createFlowGraphForEdge(MappedFlowGraph fg, PlanarizationEdge e, Node fn, int i) {
 		PortionNode current = (PortionNode) fn;
 		if (isConstrained(constraints, e)) {
 			// when the edge is constrained by more than 2
@@ -112,7 +111,7 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 	}
 	
 
-	protected boolean isConstrained(ConstraintGroup constraints, Edge e) {
+	protected boolean isConstrained(ConstraintGroup constraints, PlanarizationEdge e) {
 		return constraints.isConstrained(e);
 	}
 
@@ -140,15 +139,15 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 			int c = 0;
 			while (c < count) {
 				int i = (c + start) % current.getFace().edgeCount();
-				Edge in = current.getFace().getBoundary(i);
-				Edge out = current.getFace().getBoundary(i + 1);
+				PlanarizationEdge in = current.getFace().getBoundary(i);
+				PlanarizationEdge out = current.getFace().getBoundary(i + 1);
 				Vertex v = current.getFace().getCorner(i + 1);
 				vertexHandler.processVertex(in, out, v, current);
 				c++;
 			}
 
 			for (int i = 0; i <= count; i++) {
-				Edge e = current.getEdge(i);
+				PlanarizationEdge e = (PlanarizationEdge) current.getEdge(i);
 				if (!isConstrained(e)) {
 					createFlowGraphForEdge(fg, e, current, i);
 				}
@@ -167,14 +166,14 @@ public class ConstrainedFaceFlowOrthogonalizer extends ConstrainedVertexFlowOrth
 		return aa;
 	}
 	
-	protected void createPortionEdgeLink(Edge e, PortionNode portion, Vertex end, MappedFlowGraph fg, String suffix, int i) {
+	protected void createPortionEdgeLink(PlanarizationEdge e, PortionNode portion, Vertex end, MappedFlowGraph fg, String suffix, int i) {
 		Node en = checkCreateEdgeNode(fg, e, end, e.toString()+suffix);
 		List<Arc> arcs = createPortionEdgeArcs(portion, e, en);
 		fg.getAllArcs().addAll(arcs);
 	}
 	
 
-	protected List<Arc> createPortionEdgeArcs(Node fn, Edge e, Node en) {
+	protected List<Arc> createPortionEdgeArcs(Node fn, PlanarizationEdge e, Node en) {
 		List<Arc> l = new LinkedList<Arc>();
 		int weightCost = weightCost(e);
 		Arc aa;

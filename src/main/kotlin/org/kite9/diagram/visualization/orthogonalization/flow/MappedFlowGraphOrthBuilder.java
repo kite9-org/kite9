@@ -139,7 +139,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 				sp.v = f.getCorner(index);
 				sp.d = sp.e.getDrawDirectionFrom(sp.v);
 				
-				if (AbstractFlowOrthogonalizer.isConstrained(sp.e)) {
+				if (AbstractFlowOrthogonalizer.isConstrained((PlanarizationEdge) sp.e)) {
 					sp.type = StartPointType.DIRECTED;
 				} else {
 					sp.d = Direction.RIGHT;  // in case nothing else gets set
@@ -370,7 +370,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	}
 
 	public Node getFaceToVertexNode(MappedFlowGraph fg, Face from, Vertex to, Edge before, Edge after) {
-		return fg.getNodeFor(AbstractFlowOrthogonalizer.createFaceVertex(from, to, before, after));
+		return fg.getNodeFor(AbstractFlowOrthogonalizer.createFaceVertex(from, to, (PlanarizationEdge) before, (PlanarizationEdge) after));
 	}
 
 	/**
@@ -467,7 +467,7 @@ public class MappedFlowGraphOrthBuilder implements Logable, OrthBuilder {
 	}
 
 	public Node getEdgeVertexNode(MappedFlowGraph fg, Edge e, Vertex v) {
-		return fg.getNodeFor(AbstractFlowOrthogonalizer.createEdgeVertex(e, v));
+		return fg.getNodeFor(AbstractFlowOrthogonalizer.createEdgeVertex((PlanarizationEdge) e, v));
 	}
 
 	

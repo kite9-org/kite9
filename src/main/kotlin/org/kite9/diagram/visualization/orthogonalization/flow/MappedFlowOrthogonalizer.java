@@ -16,7 +16,7 @@ import org.kite9.diagram.logging.LogicException;
  *
  * @param <X>
  */
-public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer implements Orthogonalizer {
+public abstract class MappedFlowOrthogonalizer extends AbstractOrthogonalizer {
 	
 	VertexArranger va;
 	EdgeConverter clc;

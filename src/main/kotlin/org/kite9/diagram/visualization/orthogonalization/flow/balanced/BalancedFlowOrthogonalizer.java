@@ -7,7 +7,6 @@ import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
@@ -80,8 +79,8 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	 * receive corners.
 	 */
 	@Override
-	protected void createDimensionedVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, Edge before,
-			Edge after, Node hn, Node vn, Planarization pln) {
+	protected void createDimensionedVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, PlanarizationEdge before,
+													 PlanarizationEdge after, Node hn, Node vn, Planarization pln) {
 		
 		if (before==after) {
 			super.createDimensionedVertexHelperArcs(fg, p, v, fn, before, after, hn, vn, pln);
@@ -132,7 +131,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		}
 	}
 
-	private boolean opposite(Edge a, Edge b) {
+	private boolean opposite(PlanarizationEdge a, PlanarizationEdge b) {
 		Pair<Terminator> aStyle = getEdgeStyle(a);
 		Pair<Terminator> bStyle = getEdgeStyle(b);
 
@@ -143,7 +142,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return true;
 	}
 
-	protected BalanceChoice decideSide(Vertex v, Node fn, Edge before, Edge after, Node hn, List<? extends Edge> listOfEdges) {
+	protected BalanceChoice decideSide(Vertex v, Node fn, PlanarizationEdge before, PlanarizationEdge after, Node hn, List<? extends PlanarizationEdge> listOfEdges) {
 		// where only 2 edges, make the arrow ends come out opposite, preferably		
 		if (((PlanarizationEdge)before).isLayoutEnforcing() || ((PlanarizationEdge)after).isLayoutEnforcing())  {
 			return BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT;
@@ -180,11 +179,11 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return BalanceChoice.SAME_SIDE_PREFERRED;
 	}
 
-	private boolean isStraight(Edge before) {
+	private boolean isStraight(PlanarizationEdge before) {
 		return before.getDrawDirection() != null && (!Tools.isUnderlyingContradicting(before));
 	}
 
-	private TerminatorPair getEdgeStyle(Edge en) {
+	private TerminatorPair getEdgeStyle(PlanarizationEdge en) {
 		if (en instanceof BiDirectionalPlanarizationEdge) {
 			DiagramElement und = ((BiDirectionalPlanarizationEdge) en).getOriginalUnderlying();
 			if (und instanceof Connection) {
@@ -196,7 +195,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 	}
 
 	@Override
-	protected int weightCost(Edge e) {
+	protected int weightCost(PlanarizationEdge e) {
 		if (e instanceof ConnectionEdge) {
 			// this tries to keep corners inside containers
 			return getDepthBasedWeight(e);
@@ -205,7 +204,7 @@ public class BalancedFlowOrthogonalizer extends ConstrainedFaceFlowOrthogonalize
 		return super.weightCost(e);
 	}
 
-	private int getDepthBasedWeight(Edge e) {
+	private int getDepthBasedWeight(PlanarizationEdge e) {
 		int depthFrom = getVertexMaxDepth(e.getFrom());
 		int depthTo = getVertexMaxDepth(e.getTo());
 		int depth = Math.max(depthFrom, depthTo);

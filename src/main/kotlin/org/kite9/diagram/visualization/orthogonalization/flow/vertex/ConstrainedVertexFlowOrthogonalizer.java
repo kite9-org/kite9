@@ -14,7 +14,6 @@ import org.kite9.diagram.common.algorithms.fg.Node;
 import org.kite9.diagram.common.algorithms.fg.SimpleNode;
 import org.kite9.diagram.common.elements.RoutingInfo;
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge;
-import org.kite9.diagram.common.elements.edge.Edge;
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.ConnectedVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
@@ -47,12 +46,12 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	int nextId = 0;
 	
 	class VertexDivision {
-		Edge from, to;
-		List<Edge> containing = new LinkedList<Edge>();
+		PlanarizationEdge from, to;
+		List<PlanarizationEdge> containing = new LinkedList<PlanarizationEdge>();
 		int corners;
 		int id = nextId++;
 		
-		public boolean useFor(Edge from, Edge to){
+		public boolean useFor(PlanarizationEdge from, PlanarizationEdge to){
 			return ((this.from == from) || (containing.contains(from))) &&
 				((this.to == to) || (containing.contains(to)));
 		}
@@ -68,7 +67,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	private Map<Vertex, List<VertexDivision>> vertexDivisions = new HashMap<Vertex, List<VertexDivision>>();
 
 	@Override
-	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, Edge before, Edge after, Planarization pln) {
+	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, PlanarizationEdge before, PlanarizationEdge after, Planarization pln) {
 		Node vn = checkCreateVertexNode(pln, fg, v, before, after);
 		Node hn = createHelperNode(fg, f, v, vn, before, after);
 		log.send("Creating vertex "+v+" in portion "+fn);
@@ -83,7 +82,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 	
 
-	protected Node checkCreateVertexNode(Planarization pln, MappedFlowGraph fg, Vertex v, Edge before, Edge after) {
+	protected Node checkCreateVertexNode(Planarization pln, MappedFlowGraph fg, Vertex v, PlanarizationEdge before, PlanarizationEdge after) {
 		List<VertexDivision> divs = checkCreateVertexDivisions(pln, fg, v);
 		Object memento = null;
 		String id;
@@ -111,7 +110,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		return vn;
 	}
 
-	private Integer countAntiClockwiseTurns(Vertex v, Edge before, Edge after, Planarization pln) {
+	private Integer countAntiClockwiseTurns(Vertex v, PlanarizationEdge before, PlanarizationEdge after, Planarization pln) {
 		Direction d1 = before.getDrawDirectionFrom(v);
 		Direction d2 = after.getDrawDirectionFrom(v);	
 		EdgeOrdering eo = pln.getEdgeOrderings().get(v);
@@ -137,8 +136,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 * Returns either zero or 4 turns, or null if the order can't be ascertained.
 	 */
 	
-	private Integer countAntiClockwiseTurnsByPlanarizationPosition(Direction d1, Planarization pln, Edge before,
-			Edge after, Vertex v) {
+	private Integer countAntiClockwiseTurnsByPlanarizationPosition(Direction d1, Planarization pln, PlanarizationEdge before,
+																   PlanarizationEdge after, Vertex v) {
 		
 		if (notStraight(before) || notStraight(after)) {
 			log.send("Not Setting Turns between "+before+" and "+after+" as edges aren't straight");
@@ -208,7 +207,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 
 
-	private boolean notStraight(Edge before) {
+	private boolean notStraight(PlanarizationEdge before) {
 		if (before instanceof PlanarizationEdge) {
 			return !((PlanarizationEdge)before).isStraightInPlanarization();
 		}
@@ -217,7 +216,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 
 
-	private VertexDivision getDivStartEdge(Planarization pln, List<VertexDivision> divs, Edge before, Edge after, Vertex v) {
+	private VertexDivision getDivStartEdge(Planarization pln, List<VertexDivision> divs, PlanarizationEdge before, PlanarizationEdge after, Vertex v) {
 		for (VertexDivision vertexDivision : divs) {
 			if (vertexDivision.useFor(after, before)) {
 				return vertexDivision;
@@ -281,8 +280,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 		for (int current = 0; current < edgeOrdering.size(); current++) {
 			int now = (current+offset+edgeOrdering.size()) % edgeOrdering.size();
 			int next = (current+offset+1+edgeOrdering.size()) % edgeOrdering.size();
-			Edge currentEdge = edgesAsList.get(now);
-			Edge nextEdge = edgesAsList.get(next);
+			PlanarizationEdge currentEdge = edgesAsList.get(now);
+			PlanarizationEdge nextEdge = edgesAsList.get(next);
 			if (isConstrained(currentEdge)) {
 				open = new VertexDivision();
 				open.from = currentEdge;
@@ -322,8 +321,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 * corners can be pushed in or out, meaning that all edges entering the
 	 * vertex must be on separate sides.
 	 */
-	protected void createDimensionlessVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, Edge before,
-			Edge after, Node hn, Node vn, Planarization pln) {
+	protected void createDimensionlessVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, PlanarizationEdge before,
+													   PlanarizationEdge after, Node hn, Node vn, Planarization pln) {
 		boolean canCorner = canCorner(v, before, after);
 		log.send(log.go() ? null : "Dimensionless Vertex: "+v+" before: "+before+" after: "+after+" corners: "+1);
 		if (canCorner) {
@@ -339,8 +338,8 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	 * @param vn 
 	 * @param a2 
 	 */
-	protected void createDimensionedVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, Edge before,
-			Edge after, Node hn, Node vn, Planarization pln) {
+	protected void createDimensionedVertexHelperArcs(MappedFlowGraph fg, Node p, Vertex v, Node fn, PlanarizationEdge before,
+													 PlanarizationEdge after, Node hn, Node vn, Planarization pln) {
 		LinearArc a4 = new LinearArc(TRACE, 2, -2, fn, hn, fn.getID() + "-" + hn.getID());
 		LinearArc a2 = new LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID());
 		addIfNotNull(fg, a4);
@@ -350,7 +349,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	/**
 	 * Decide side for container edges and edge crossing vertexes
 	 */
-	private boolean canCorner(Vertex v, Edge before, Edge after) {
+	private boolean canCorner(Vertex v, PlanarizationEdge before, PlanarizationEdge after) {
 		if (hasSameUnderlying(before, after)) {
 			if (before.getDrawDirectionFrom(v) != Direction.reverse(after.getDrawDirectionFrom(v))) {
 				return true;
@@ -362,7 +361,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	}
 
 
-	private boolean hasSameUnderlying(Edge before, Edge after) {
+	private boolean hasSameUnderlying(PlanarizationEdge before, PlanarizationEdge after) {
 		return ((PlanarizationEdge) before).getDiagramElements().keySet()
 				.equals(((PlanarizationEdge)after).getDiagramElements().keySet());
 	} 

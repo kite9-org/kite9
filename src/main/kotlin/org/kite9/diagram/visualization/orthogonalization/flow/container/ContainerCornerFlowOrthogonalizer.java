@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.orthogonalization.flow.container;
 import org.kite9.diagram.common.algorithms.fg.Arc;
 import org.kite9.diagram.common.algorithms.fg.LinearArc;
 import org.kite9.diagram.common.algorithms.fg.Node;
-import org.kite9.diagram.common.elements.edge.Edge;
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter;
@@ -31,8 +31,8 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 
 
 	@Override
-	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, Edge before, Edge after,
-			Planarization pln) {
+	protected void createFlowGraphForVertex(MappedFlowGraph fg, Face f, Node fn, Vertex v, PlanarizationEdge before, PlanarizationEdge after,
+											Planarization pln) {
 		if (v instanceof MultiCornerVertex) {
 			Node vn = checkCreateVertexNode(pln, fg, v, before, after);
 			Node hn = createHelperNode(fg, f, v, vn, before, after);
@@ -49,8 +49,8 @@ public class ContainerCornerFlowOrthogonalizer extends BalancedFlowOrthogonalize
 	}
 
 
-	protected void createContainerCornerVertexHelperArcs(MappedFlowGraph fg, Node p, MultiCornerVertex v, Node fn, Edge before,
-			Edge after, Node hn, Node vn, Planarization pln) {
+	protected void createContainerCornerVertexHelperArcs(MappedFlowGraph fg, Node p, MultiCornerVertex v, Node fn, PlanarizationEdge before,
+														 PlanarizationEdge after, Node hn, Node vn, Planarization pln) {
 		
 		if (before==after) {
 			super.createDimensionedVertexHelperArcs(fg, p, v, fn, before, after, hn, vn, pln);

@@ -125,7 +125,7 @@ public class ConstraintGroupGenerator implements Logable {
 		Set<Edge> constrainedEdges = new DetHashSet<Edge>();
 		for (Face f : pln.getFaces()) {
 			for (Edge edge : f.edgeIterator()) {
-				if (AbstractFlowOrthogonalizer.isConstrained(edge) && (!constrainedEdges.contains(edge))) {
+				if (AbstractFlowOrthogonalizer.isConstrained((PlanarizationEdge) edge) && (!constrainedEdges.contains(edge))) {
 					constrainedEdges.add(edge);
 				}
 			}
