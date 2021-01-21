@@ -21,11 +21,12 @@ import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
 abstract class AbstractPlanarization(override val diagram: Diagram) : Planarization {
 
     class TextualRepresentation {
-        var positions: Map<Vertex, Dimension2D> = HashMap()
-        var b: MutableMap<Int, CharArray?> = HashMap()
+        val positions: MutableMap<Vertex, Dimension2D> = HashMap()
+        val b: MutableMap<Int, CharArray?> = HashMap()
         var length = 0
         var minExtent = Int.MAX_VALUE
         var maxExtent = Int.MIN_VALUE
+
         fun hLine(row: Int, cols: Int, coll: Int, highlight: Boolean) {
             ensureRow(row)
             val increment = if (cols > coll) -1 else 1

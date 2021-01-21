@@ -12,6 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization
  * @author moffatr
  */
 interface MGTPlanarization : RHDPlanarization {
+
     fun isAdjacency(edge: Edge): Boolean
     fun crosses(edge: Edge, above: Boolean): Boolean
     fun crosses(i1: Float, i2: Float, above: Boolean): Boolean
