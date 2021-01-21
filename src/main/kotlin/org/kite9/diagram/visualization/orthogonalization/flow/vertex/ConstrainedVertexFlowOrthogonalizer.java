@@ -45,7 +45,7 @@ public abstract class ConstrainedVertexFlowOrthogonalizer extends AbstractFlowOr
 	
 	int nextId = 0;
 	
-	class VertexDivision {
+	public class VertexDivision {
 		PlanarizationEdge from, to;
 		List<PlanarizationEdge> containing = new LinkedList<PlanarizationEdge>();
 		int corners;
