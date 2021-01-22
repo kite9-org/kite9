@@ -31,7 +31,7 @@ class ContainerCornerFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) 
     ) {
         if (v is MultiCornerVertex) {
             val vn = checkCreateVertexNode(pln, fg, v, before, after)
-            val hn = createHelperNode(fg!!, f!!, v, vn, before!!, after!!)
+            val hn = createHelperNode(fg, f, v, vn, before, after)
             log.send("Creating container vertex $v in portion $fn")
             if (hn != null) {
                 createContainerCornerVertexHelperArcs(fg, fn, v, fn, before, after, hn, vn, pln)
@@ -42,8 +42,8 @@ class ContainerCornerFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) 
     }
 
     protected fun createContainerCornerVertexHelperArcs(
-        fg: MappedFlowGraph?, p: Node?, v: MultiCornerVertex, fn: Node?, before: PlanarizationEdge?,
-        after: PlanarizationEdge?, hn: Node, vn: Node, pln: Planarization?
+        fg: MappedFlowGraph, p: Node, v: MultiCornerVertex, fn: Node, before: PlanarizationEdge,
+        after: PlanarizationEdge, hn: Node, vn: Node, pln: Planarization
     ) {
         if (before === after) {
             super.createDimensionedVertexHelperArcs(fg, p, v, fn, before, after, hn, vn, pln)
@@ -54,12 +54,12 @@ class ContainerCornerFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) 
             // different side is always true if we are dealing with an edge of the container
             BalanceChoice.DIFFERENT_SIDE_PREFFERED_LAYOUT
         } else {
-            decideSide(v, fn, before, after, hn, fg!!.planarization.edgeOrderings[v]!!.getEdgesAsList())
+            decideSide(v, fn, before, after, hn, fg.planarization.edgeOrderings[v]!!.getEdgesAsList())
         }
         log.send(if (log.go()) null else "V: $v Between Edge $before and $after: $side")
         val portionArc = createBalancedPortionArc(fn, hn, side)
         val vertexArc: Arc = LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID())
-        addIfNotNull(fg!!, portionArc)
+        addIfNotNull(fg, portionArc)
         addIfNotNull(fg, vertexArc)
     }
 }
