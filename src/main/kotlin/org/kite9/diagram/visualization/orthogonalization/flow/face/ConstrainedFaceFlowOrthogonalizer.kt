@@ -72,7 +72,7 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
 
     protected fun createFlowGraphForEdge(fg: MappedFlowGraph, e: PlanarizationEdge, fn: Node, i: Int) {
         val current = fn as PortionNode
-        if (isConstrained(constraints, e)) {
+        if (isConstrained(constraints!!, e)) {
             // when the edge is constrained by more than 2
             // portions, we need
             // to stop corners bleeding into portions they
@@ -93,8 +93,8 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
         }
     }
 
-    protected fun isConstrained(constraints: ConstraintGroup?, e: PlanarizationEdge?): Boolean {
-        return constraints!!.isConstrained(e)
+    protected fun isConstrained(constraints: ConstraintGroup, e: PlanarizationEdge): Boolean {
+        return constraints.isConstrained(e)
     }
 
     override fun createFaceNodes(fg: MappedFlowGraph, f: Face, pln: Planarization, vertexHandler: VertexHandler) {

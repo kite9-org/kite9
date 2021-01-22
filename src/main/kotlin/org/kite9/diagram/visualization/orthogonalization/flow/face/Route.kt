@@ -11,7 +11,7 @@ import org.kite9.diagram.visualization.planarization.Face
  *
  * @author robmoffat
  */
-internal data class Route(val face: Face, val _in: Int, val _out: Int, var rest: Route?) {
+data class Route(val face: Face, val _in: Int, val _out: Int, var rest: Route?) {
 
     fun size(): Int {
         return if (rest == null) {
