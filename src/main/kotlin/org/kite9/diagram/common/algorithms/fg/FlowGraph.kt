@@ -8,7 +8,7 @@ import org.kite9.diagram.common.algorithms.det.DetHashSet
  *
  * @author robmoffat
  */
-open class FlowGraph(var allNodes: List<Node>) {
+open class FlowGraph(val allNodes: MutableList<Node>) {
 
     var allArcs: MutableSet<Arc> = DetHashSet()
         protected set

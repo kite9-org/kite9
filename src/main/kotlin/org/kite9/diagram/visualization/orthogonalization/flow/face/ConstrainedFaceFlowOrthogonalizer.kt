@@ -125,7 +125,7 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
                     createFlowGraphForEdge(fg, e, current, i)
                 }
             }
-            fg.setNodeFor(null, current)
+           // fg.setNodeFor(null, current)
         }
     }
 
