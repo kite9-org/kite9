@@ -78,7 +78,7 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
             // to stop corners bleeding into portions they
             // are diagonally separated from
             // so we create multiple edge nodes
-            if (current!!.containsVertexForEdge(e, e.getFrom())) {
+            if (current.containsVertexForEdge(e, e.getFrom())) {
                 createPortionEdgeLink(e, current, e.getFrom(), fg, "-A", i)
             } else if (current.containsVertexForEdge(e, e.getTo())) {
                 createPortionEdgeLink(e, current, e.getTo(), fg, "-B", i)
@@ -116,7 +116,7 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
                 val `in` = current.face.getBoundary(i)
                 val out = current.face.getBoundary(i + 1)
                 val v = current.face.getCorner(i + 1)
-                vertexHandler!!.processVertex(`in`, out, v, current)
+                vertexHandler.processVertex(`in`, out, v, current)
                 c++
             }
             for (i in 0..count) {

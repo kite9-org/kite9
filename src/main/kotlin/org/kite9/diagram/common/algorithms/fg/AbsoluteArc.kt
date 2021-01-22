@@ -5,7 +5,7 @@ package org.kite9.diagram.common.algorithms.fg
  * but any flow in either direction has a constant cost.
  * @author Rob Moffat
  */
-open class AbsoluteArc(var cost: Int, protected var capacity: Int, from: Node, to: Node, label: String) :
+open class AbsoluteArc(val cost: Int, protected val capacity: Int, from: Node, to: Node, label: String) :
     AbstractArc(from, to, label, 0) {
 
     open fun getFlowCost(): Int {

@@ -21,7 +21,7 @@ abstract class AbstractArc(override var from: Node, override var to: Node, val l
     }
 
     override fun toString(): String {
-        return label!!
+        return label
     }
 
     override fun otherEnd(n: Node): Node {

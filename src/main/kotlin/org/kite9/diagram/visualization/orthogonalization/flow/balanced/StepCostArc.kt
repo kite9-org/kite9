@@ -14,8 +14,8 @@ class StepCostArc(
     from: Node,
     to: Node,
     label: String,
-    var stepAt: Int,
-    var stepCost: Int
+    val stepAt: Int,
+    val stepCost: Int
 ) : AbsoluteArc(regularCost, capacity, from, to, label) {
 
     override fun getFlowCost(): Int {
