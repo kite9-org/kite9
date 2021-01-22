@@ -3,8 +3,6 @@ package org.kite9.diagram.visualization.orthogonalization.flow
 import org.kite9.diagram.common.algorithms.fg.*
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.vertex.Vertex
-import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger
@@ -52,23 +50,23 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
     }
 
     interface VertexHandler {
-        fun processVertex(`in`: PlanarizationEdge?, out: PlanarizationEdge?, v: Vertex?, face: Node?)
+        fun processVertex(i: PlanarizationEdge, o: PlanarizationEdge, v: Vertex, face: Node)
     }
 
     protected abstract fun createFlowGraphForVertex(
-        fg: MappedFlowGraph?,
-        f: Face?,
-        p: Node?,
-        v: Vertex?,
-        before: PlanarizationEdge?,
-        after: PlanarizationEdge?,
-        pln: Planarization?
+        fg: MappedFlowGraph,
+        f: Face,
+        p: Node,
+        v: Vertex,
+        before: PlanarizationEdge,
+        after: PlanarizationEdge,
+        pln: Planarization
     )
 
     protected fun createFlowGraphForFace(pln: Planarization, fg: MappedFlowGraph, f: Face) {
         createFaceNodes(fg, f, pln, object : VertexHandler {
-            override fun processVertex(`in`: PlanarizationEdge?, out: PlanarizationEdge?, v: Vertex?, current: Node?) {
-                createFlowGraphForVertex(fg, f, current, v, `in`, out, pln)
+            override fun processVertex(i: PlanarizationEdge, out: PlanarizationEdge, v: Vertex, current: Node) {
+                createFlowGraphForVertex(fg, f, current, v, i, out, pln)
             }
         })
     }

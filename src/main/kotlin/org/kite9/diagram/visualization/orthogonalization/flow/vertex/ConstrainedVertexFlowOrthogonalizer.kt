@@ -40,8 +40,8 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     var nextId = 0
 
     data class VertexDivision(
-        val from: PlanarizationEdge?,
-        val to: PlanarizationEdge?,
+        val from: PlanarizationEdge,
+        val to: PlanarizationEdge,
         val containing: List<PlanarizationEdge>,
         val corners: Int,
         val id: Int) {
@@ -56,18 +56,19 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
         }
     }
 
-    private val vertexDivisions: MutableMap<Vertex?, List<VertexDivision?>?> = HashMap()
+    private val vertexDivisions: MutableMap<Vertex, List<VertexDivision>> = HashMap()
+
     override fun createFlowGraphForVertex(
-        fg: MappedFlowGraph?,
-        f: Face?,
-        fn: Node?,
-        v: Vertex?,
-        before: PlanarizationEdge?,
-        after: PlanarizationEdge?,
-        pln: Planarization?
+        fg: MappedFlowGraph,
+        f: Face,
+        fn: Node,
+        v: Vertex,
+        before: PlanarizationEdge,
+        after: PlanarizationEdge,
+        pln: Planarization
     ) {
         val vn = checkCreateVertexNode(pln, fg, v, before, after)
-        val hn = createHelperNode(fg!!, f!!, v!!, vn, before!!, after!!)
+        val hn = createHelperNode(fg, f, v, vn, before, after)
         log.send("Creating vertex $v in portion $fn")
         if (hn != null) {
             if (v.hasDimension()) {
@@ -79,11 +80,11 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     }
 
     protected fun checkCreateVertexNode(
-        pln: Planarization?,
-        fg: MappedFlowGraph?,
-        v: Vertex?,
-        before: PlanarizationEdge?,
-        after: PlanarizationEdge?
+        pln: Planarization,
+        fg: MappedFlowGraph,
+        v: Vertex,
+        before: PlanarizationEdge,
+        after: PlanarizationEdge
     ): Node {
         val divs = checkCreateVertexDivisions(pln, fg, v)
         var memento: Any? = null
@@ -181,14 +182,14 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     }
 
     private fun getDivStartEdge(
-        pln: Planarization?,
-        divs: List<VertexDivision?>?,
-        before: PlanarizationEdge?,
-        after: PlanarizationEdge?,
-        v: Vertex?
-    ): VertexDivision? {
-        for (vertexDivision in divs!!) {
-            if (vertexDivision!!.useFor(after, before)) {
+        pln: Planarization,
+        divs: List<VertexDivision>,
+        before: PlanarizationEdge,
+        after: PlanarizationEdge,
+        v: Vertex
+    ): VertexDivision {
+        for (vertexDivision in divs) {
+            if (vertexDivision.useFor(after, before)) {
                 return vertexDivision
             }
         }
@@ -196,17 +197,17 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     }
 
     private fun checkCreateVertexDivisions(
-        pln: Planarization?,
-        fg: MappedFlowGraph?,
-        v: Vertex?
-    ): List<VertexDivision?>? {
+        pln: Planarization,
+        fg: MappedFlowGraph,
+        v: Vertex
+    ): List<VertexDivision>? {
         var divs = vertexDivisions[v]
         if (divs == null) {
 
             // first, get only directed edges
-            val edgeOrdering = pln!!.edgeOrderings[v]
-            if (edgeOrdering!!.getEdgeDirections() != null) {
-                divs = createDirectedMap(v!!, edgeOrdering, pln)
+            val edgeOrdering = pln.edgeOrderings[v]!!
+            if (edgeOrdering.getEdgeDirections() != null) {
+                divs = createDirectedMap(v, edgeOrdering, pln)
                 if (divs.size > 0) {
                     assertFourTurns(divs)
                 }
@@ -235,7 +236,7 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
     /**
      * Means we get one vertex between each directed edge leaving it
      */
-    private fun createDirectedMap(v: Vertex, edgeOrdering: EdgeOrdering?, pln: Planarization?): List<VertexDivision?> {
+    private fun createDirectedMap(v: Vertex, edgeOrdering: EdgeOrdering?, pln: Planarization): List<VertexDivision> {
         val out: MutableList<VertexDivision> = mutableListOf()
         val basic = createDirectedList(edgeOrdering)
         if (basic.size < 2) {
@@ -259,7 +260,7 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
             if (isConstrained(edgesAsList[next])) {
                 nextEdge = edgesAsList[next]
                 val turns = countAntiClockwiseTurns(v, nextEdge, currentEdge, pln) ?: return emptyList()
-                val open = VertexDivision(currentEdge, nextEdge, containing, turns, nextId++)
+                val open = VertexDivision(currentEdge!!, nextEdge, containing, turns, nextId++)
                 out.add(open)
             } else {
                 containing.add(edgesAsList[next])
