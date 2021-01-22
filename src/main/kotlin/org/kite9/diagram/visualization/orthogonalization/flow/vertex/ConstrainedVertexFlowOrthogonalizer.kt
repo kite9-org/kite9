@@ -39,12 +39,12 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
 
     var nextId = 0
 
-    inner class VertexDivision {
-        var from: PlanarizationEdge? = null
-        var to: PlanarizationEdge? = null
-        var containing: MutableList<PlanarizationEdge> = mutableListOf()
-        var corners = 0
-        var id = nextId++
+    data class VertexDivision(
+        val from: PlanarizationEdge?,
+        val to: PlanarizationEdge?,
+        val containing: List<PlanarizationEdge>,
+        val corners: Int,
+        val id: Int) {
 
         fun useFor(from: PlanarizationEdge?, to: PlanarizationEdge?): Boolean {
             return (this.from === from || containing.contains(from)) &&
@@ -243,24 +243,26 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
         }
         val edgesAsList = edgeOrdering!!.getEdgesAsList()
         val offset = edgesAsList.indexOf(basic[0])
-        var open: VertexDivision? = null
+
+        var currentEdge : PlanarizationEdge? = null
+        var nextEdge : PlanarizationEdge? = null
+        var containing : MutableList<PlanarizationEdge> = mutableListOf()
+
         for (current in 0 until edgeOrdering.size()) {
             val now = (current + offset + edgeOrdering.size()) % edgeOrdering.size()
             val next = (current + offset + 1 + edgeOrdering.size()) % edgeOrdering.size()
-            val currentEdge = edgesAsList[now]
-            val nextEdge = edgesAsList[next]
-            if (isConstrained(currentEdge)) {
-                open = VertexDivision()
-                open.from = currentEdge
+
+            if (isConstrained(edgesAsList[now])) {
+                currentEdge = edgesAsList[now]
+                containing = mutableListOf()
             }
-            if (isConstrained(nextEdge)) {
-                open!!.to = nextEdge
-                val turns = countAntiClockwiseTurns(v, open.to, open.from, pln) ?: return emptyList()
-                open.corners = turns
+            if (isConstrained(edgesAsList[next])) {
+                nextEdge = edgesAsList[next]
+                val turns = countAntiClockwiseTurns(v, nextEdge, currentEdge, pln) ?: return emptyList()
+                val open = VertexDivision(currentEdge, nextEdge, containing, turns, nextId++)
                 out.add(open)
-                open = null
             } else {
-                open!!.containing.add(nextEdge)
+                containing.add(edgesAsList[next])
             }
         }
         return out
