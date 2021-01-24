@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.planarization.Planarization
 </X> */
 abstract class MappedFlowOrthogonalizer(val va: VertexArranger, val clc: EdgeConverter) : AbstractOrthogonalizer() {
 
-    abstract fun createOptimisedFlowGraph(pln: Planarization?): MappedFlowGraph
+    abstract fun createOptimisedFlowGraph(pln: Planarization): MappedFlowGraph
 
     override fun createOrthogonalization(pln: Planarization): Orthogonalization {
         return try {

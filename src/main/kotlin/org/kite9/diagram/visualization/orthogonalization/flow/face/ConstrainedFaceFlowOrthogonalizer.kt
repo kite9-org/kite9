@@ -28,19 +28,26 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
     var facePortionMap: MutableMap<Face, List<PortionNode>> = HashMap()
     var faceNodes: MutableCollection<SubdivisionNode> = mutableListOf()
 
-    override fun createOptimisedFlowGraph(pln: Planarization?): MappedFlowGraph {
+    override fun createOptimisedFlowGraph(pln: Planarization): MappedFlowGraph {
         val sffr = ConstraintGroupGenerator()
         val constraints = sffr.getAllFloatingAndFixedConstraints(pln)
         this.constraints = constraints
+
         // create portions and their nodes.
-        for (f in pln!!.faces) {
+        for (f in pln.faces) {
             if (faceRequiresFlowGraph(f)) {
                 val portions = createFacePortionNodes(f, constraints, pln)
                 facePortionMap[f] = portions
             }
         }
-        val fg = super.createOptimisedFlowGraph(pln) as FaceMappedFlowGraph
+
+        // repository for any generated constraints
+        val fg = FaceMappedFlowGraph(pln);
         fg.setFacePortionMap(facePortionMap)
+
+        // create constraints which will subdivide the faces
+        initFlowGraph(pln, fg)
+        maximiseFlow(fg)
 
         // nudge the graph so that face constraints are met.
         val cn: ConstraintNudger = SequentialConstrainedFlowNudger(facePortionMap)
@@ -202,10 +209,6 @@ open class ConstrainedFaceFlowOrthogonalizer(va: VertexArranger, clc: EdgeConver
         }
         log.send(if (log.go()) null else "Portion $portions")
         return portions
-    }
-
-    override fun createFlowGraphObject(pln: Planarization?): MappedFlowGraph {
-        return FaceMappedFlowGraph(pln)
     }
 
     companion object {

@@ -29,7 +29,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
 
     var nodeNo = 0
 
-    private fun createFlowGraph(pln: Planarization?, fg: MappedFlowGraph) {
+    protected fun initFlowGraph(pln: Planarization, fg: MappedFlowGraph) {
         log.send(if (log.go()) null else "Planarization to convert:$pln")
         log.send(if (log.go()) null else pln!!.faces.toString())
 
@@ -113,16 +113,6 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
         return f.edgeCount() > 0
     }
 
-    override fun createOptimisedFlowGraph(pln: Planarization?): MappedFlowGraph {
-        // repository for any generated constraints
-        val fg = createFlowGraphObject(pln)
-
-        // create constraints which will subdivide the faces
-        createFlowGraph(pln, fg)
-        maximiseFlow(fg)
-        return fg
-    }
-
     /**
      * first stage - maximise the flows to get an approximate solution
      */
@@ -133,7 +123,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
         checkFlows(fg)
     }
 
-    protected abstract fun createFlowGraphObject(pln: Planarization?): MappedFlowGraph
+//    protected abstract fun createFlowGraphObject(pln: Planarization?): MappedFlowGraph
 
     companion object {
         const val VERTEX_NODE = "vn"
