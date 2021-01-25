@@ -41,7 +41,7 @@ class ContainerCornerFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) 
         }
     }
 
-    protected fun createContainerCornerVertexHelperArcs(
+    private fun createContainerCornerVertexHelperArcs(
         fg: MappedFlowGraph, p: Node, v: MultiCornerVertex, fn: Node, before: PlanarizationEdge,
         after: PlanarizationEdge, hn: Node, vn: Node, pln: Planarization
     ) {

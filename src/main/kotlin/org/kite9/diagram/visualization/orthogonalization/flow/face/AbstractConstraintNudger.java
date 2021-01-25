@@ -51,7 +51,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 			this.constraintNumber = constraintNumber;
 			this.subdivisions = subdivisions;
 			this.ssp = ssp;
-			this.note = constraintNumber + " nudge = " + ni.id + " corners: " + corners;
+			this.note = constraintNumber + " nudge = " + ni.getId() + " corners: " + corners;
 		}
 
 		Map<Object, Integer> stateBefore;
@@ -71,7 +71,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 					cost = 0;
 				} else {
 					StateStorage.restoreState(fg, stateBefore);
-					cost = introduceConstraints(fg, ni, constraintNumber, corners, note, ni.source, ni.sink, subdivisions,
+					cost = introduceConstraints(fg, ni, constraintNumber, corners, note, ni.getSource(), ni.sink, subdivisions,
 							ssp);
 					stateAfter = StateStorage.storeState(fg);
 				}
@@ -125,7 +125,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 				if (o1.type!=o2.type) {
 					return o1.type.compareTo(o2.type);
 				} else {
-					return ((Integer)o1.id).compareTo(o2.id);
+					return ((Integer)o1.getId()).compareTo(o2.getId());
 				}
 			}
 		});
@@ -134,11 +134,8 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 		int id = 0;
 		for (Route r : constraintGroup.getRequiredRoutes()) {
 			try {
-				NudgeItem ni = new NudgeItem(id++, r);
-				ni.faceCount = r.size();
-				ni.portionsClockwise = getPortionsForConstraint(fg, r);
-				ni.portionsAntiClockwise = getOppositePortions(fg, ni.portionsClockwise, r);
-				ni.calculateType();
+				List<PortionNode> pc = getPortionsForConstraint(fg, r);
+				NudgeItem ni = new NudgeItem(id++, r, r.size(), pc, getOppositePortions(fg, pc, r));
 				out.add(ni);
 			} catch (Exception e) {
 				throw new LogicException("Could not convert route to nudge item: "+r, e);
@@ -191,7 +188,7 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 				try {
 					int cost = 0;
 					if (corners != 0) {
-						addSourceAndSink(ni.portionsClockwise, source, ni.portionsAntiClockwise, sink, fg, subs);
+						addSourceAndSink(ni.getPortionsClockwise(), source, ni.getPortionsAntiClockwise(), sink, fg, subs);
 						
 						getReachable(source, sink);
 						log.send(log.go() ? null : "Nudge Number: " + note);
@@ -303,32 +300,32 @@ public abstract class AbstractConstraintNudger implements Logable, ConstraintNud
 	protected int calculateCornersRequired(NudgeItem ni, boolean bestDirection, boolean logs) {
 	
 		Face startFace = ni.getFirstFace();
-		int startEdge = (ni.portionsClockwise.get(0)).getEdgeStartPosition();
+		int startEdge = (ni.getPortionsClockwise().get(0)).getEdgeStartPosition();
 	
 		Face endFace = ni.getLastFace();
-		int endEdge = (ni.portionsClockwise.get(ni.portionsClockwise.size() - 1)).getEdgeEndPosition();
+		int endEdge = (ni.getPortionsClockwise().get(ni.getPortionsClockwise().size() - 1)).getEdgeEndPosition();
 	
 		Direction firstEdge = getClockwiseDirection(startEdge, startFace);
 		Direction lastEdge = getClockwiseDirection(endEdge, endFace);
 		int cornersClockwise = countRequiredCorners(firstEdge, lastEdge, true);
 	
 		// add on face-crossing costs
-		int faceCost = (ni.faceCount - 1) * 2;
+		int faceCost = (ni.getFaceCount() - 1) * 2;
 		cornersClockwise += faceCost;
 	
 		// work out what the corner count is
-		int actualClockwise = countActualCorners(ni.portionsClockwise);
+		int actualClockwise = countActualCorners(ni.getPortionsClockwise());
 	
 		// work out how we require it to change to meet the constraint
 		int clockChange = cornerChange(cornersClockwise, actualClockwise, bestDirection);
 		int antiChange = -clockChange;
 	
 		if (logs) {
-			log.send(log.go() ? null : ni.id + " starts " + startFace.getID() + "/" + startEdge + "/" + firstEdge + " ends "
-					+ endFace.getID() + "/" + endEdge + "/" + lastEdge + ", requires portions: " + ni.portionsClockwise
+			log.send(log.go() ? null : ni.getId() + " starts " + startFace.getID() + "/" + startEdge + "/" + firstEdge + " ends "
+					+ endFace.getID() + "/" + endEdge + "/" + lastEdge + ", requires portions: " + ni.getPortionsClockwise()
 					+ " corners " + clockChange + " ( currently : " + actualClockwise + ", needed: " + cornersClockwise
 					+ " )");
-			log.send(log.go() ? null : "Opposite route requires portions: " + ni.portionsAntiClockwise + " corners " + antiChange);
+			log.send(log.go() ? null : "Opposite route requires portions: " + ni.getPortionsAntiClockwise() + " corners " + antiChange);
 		}
 	
 		return clockChange;

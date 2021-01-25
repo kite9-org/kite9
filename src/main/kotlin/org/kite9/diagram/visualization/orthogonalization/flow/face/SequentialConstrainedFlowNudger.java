@@ -68,7 +68,7 @@ public class SequentialConstrainedFlowNudger extends AbstractConstraintNudger {
 			Collection<Node> logNodes) {
 		
 		NudgeItem ni = getNextNudgeItem(routes);
-		int constraintNumber = ni.id;
+		int constraintNumber = ni.getId();
 		
 //		if (constraintNumber==9) {
 //			return false;
@@ -77,14 +77,14 @@ public class SequentialConstrainedFlowNudger extends AbstractConstraintNudger {
 		// contains the details of how the faces are divided up
 		List<Pair<SubdivisionNode>> splits = new ArrayList<Pair<SubdivisionNode>>();
 		log.send(log.go() ? null : "Current nudge: "+ ni);
-		subdivideNodes(subdivisions, ni.portionsClockwise, ni.portionsAntiClockwise, splits, constraintNumber, fg);
+		subdivideNodes(subdivisions, ni.getPortionsClockwise(), ni.getPortionsAntiClockwise(), splits, constraintNumber, fg);
 		log.send(log.go() ? null : "Current subdivisions: ", displaySubdivisions(subdivisions));
 		//addSourceAndSink(ni.portionsClockwise, ni.source, ni.portionsAntiClockwise, ni.sink, fg, subdivisions);
-		checkFlowGraphIntegrity(fg, ni.source, ni.sink);
+		checkFlowGraphIntegrity(fg, ni.getSource(), ni.sink);
 		//log.send(log.go() ? null : "Splits: "+splits);
 		//log.send(log.go() ? null : "Current subdivisions: ", displaySubdivisions(subdivisions));
 		Map<Object, Integer> state = StateStorage.storeState(fg);
-		ConstrainedSSP ssp = new ConstrainedSSP(ni.source, ni.sink, splits);
+		ConstrainedSSP ssp = new ConstrainedSSP(ni.getSource(), ni.sink, splits);
 
 		// now build the two future possible states
 		int cornersBest = calculateCornersRequired(ni, true, true);
