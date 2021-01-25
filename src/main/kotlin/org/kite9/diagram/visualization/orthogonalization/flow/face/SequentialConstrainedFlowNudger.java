@@ -90,8 +90,8 @@ public class SequentialConstrainedFlowNudger extends AbstractConstraintNudger {
 		int cornersBest = calculateCornersRequired(ni, true, true);
 		int cornersWorst = calculateCornersRequired(ni, false, true);
 
-		NudgeChoice bestChoice = new NudgeChoice(fg, state, cornersBest, ni, constraintNumber, subdivisions, ssp);
-		NudgeChoice worstChoice = new NudgeChoice(fg, state, cornersWorst, ni, constraintNumber, subdivisions, ssp);
+		NudgeChoice bestChoice = new NudgeChoice(this, fg, state, cornersBest, ni, constraintNumber, subdivisions, ssp);
+		NudgeChoice worstChoice = new NudgeChoice(this, fg, state, cornersWorst, ni, constraintNumber, subdivisions, ssp);
 		
 		// order the choices
 		if ((Math.abs(cornersBest) == Math.abs(cornersWorst)) && (worstChoice.evaluate() < bestChoice.evaluate())) {

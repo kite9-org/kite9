@@ -35,64 +35,6 @@ import org.kite9.diagram.logging.Table;
  *
  */
 public abstract class AbstractConstraintNudger implements Logable, ConstraintNudger {
-	
-	protected class NudgeChoice {
-
-		MappedFlowGraph fg;
-
-		protected NudgeChoice(MappedFlowGraph fg, Map<Object, Integer> stateBefore, int corners, NudgeItem ni,
-				int constraintNumber, Collection<SubdivisionNode> subdivisions,
-				ConstrainedSSP ssp) {
-			super();
-			this.fg = fg;
-			this.stateBefore = stateBefore;
-			this.corners = corners;
-			this.ni = ni;
-			this.constraintNumber = constraintNumber;
-			this.subdivisions = subdivisions;
-			this.ssp = ssp;
-			this.note = constraintNumber + " nudge = " + ni.getId() + " corners: " + corners;
-		}
-
-		Map<Object, Integer> stateBefore;
-		Map<Object, Integer> stateAfter;
-		Integer cost;
-		int corners;
-		NudgeItem ni;
-		int constraintNumber;
-		Collection<SubdivisionNode> subdivisions;
-		ConstrainedSSP ssp;
-		String note;
-
-		public int evaluate() {
-			if (cost == null) {
-				if (corners == 0) {
-					stateAfter = stateBefore;
-					cost = 0;
-				} else {
-					StateStorage.restoreState(fg, stateBefore);
-					cost = introduceConstraints(fg, ni, constraintNumber, corners, note, ni.getSource(), ni.sink, subdivisions,
-							ssp);
-					stateAfter = StateStorage.storeState(fg);
-				}
-			}
-
-			return cost;
-		}
-
-		public void apply() {
-			if (stateAfter == null) {
-				evaluate();
-			}
-
-			StateStorage.restoreState(fg, stateAfter);
-		}
-
-		public String getNote() {
-			return note;
-		}
-
-	}
 
 	protected Kite9Log log = new Kite9Log(this);
 
