@@ -7,14 +7,14 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.visualization.planarization.Face
 
 
-internal class NudgeItem(
+class NudgeItem(
     var id: Int,
     private val r: Route,
     val faceCount: Int,
     val portionsClockwise: List<PortionNode>,
     val portionsAntiClockwise: List<PortionNode>
 ) {
-    internal enum class NudgeItemType {
+    enum class NudgeItemType {
         SINGLE_CORNER, SINGLE_FACE, MULTI_FACE
     }
 
