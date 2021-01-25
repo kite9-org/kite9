@@ -37,5 +37,5 @@ import org.kite9.diagram.visualization.orthogonalization.flow.face.SubdivisionNo
  */
 interface ConstraintNudger {
 
-    fun processNudges(fg: MappedFlowGraph, constraints: ConstraintGroup, faces: Collection<SubdivisionNode>)
+    fun processNudges(fg: MappedFlowGraph, constraints: ConstraintGroup, faces: MutableCollection<SubdivisionNode>)
 }

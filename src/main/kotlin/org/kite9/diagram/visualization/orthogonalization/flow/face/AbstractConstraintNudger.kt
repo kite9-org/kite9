@@ -38,7 +38,7 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
         return out
     }
 
-    protected fun createRouteList(constraintGroup: ConstraintGroup, fg: MappedFlowGraph): Collection<NudgeItem> {
+    protected fun createRouteList(constraintGroup: ConstraintGroup, fg: MappedFlowGraph): MutableCollection<NudgeItem> {
         val out: MutableCollection<NudgeItem> = TreeSet { o1, o2 ->
             if (o1.type !== o2.type) {
                 o1.type.compareTo(o2.type)
@@ -60,7 +60,7 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
         return out
     }
 
-    protected fun getNextNudgeItem(routes: MutableCollection<NudgeItem?>): NudgeItem? {
+    protected fun getNextNudgeItem(routes: MutableCollection<NudgeItem>): NudgeItem? {
         val i = routes.iterator()
         val out = i.next()
         i.remove()
