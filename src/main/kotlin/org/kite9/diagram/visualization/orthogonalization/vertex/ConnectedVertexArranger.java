@@ -175,7 +175,7 @@ public class ConnectedVertexArranger extends AbstractVertexArranger  {
 	protected DartFace convertDiagramElementToInnerFace(DiagramElement originalUnderlying, Vertex optionalExistingVertex, Orthogonalization o, Map<Direction, List<IncidentDart>> dartDirections) {
 		log.send(log.go() ? null : "Converting: " + originalUnderlying + " with edges: ", dartDirections);
 		
-		CornerVertices cv = em.getOuterCornerVertices(originalUnderlying);
+		CornerVertices cv = getEm().getOuterCornerVertices(originalUnderlying);
 
 		List<MultiCornerVertex> perimeter = gp.getClockwiseOrderedContainerVertices(cv);
 		return convertDiagramElementToInnerFaceWithCorners(originalUnderlying, o, dartDirections, perimeter);

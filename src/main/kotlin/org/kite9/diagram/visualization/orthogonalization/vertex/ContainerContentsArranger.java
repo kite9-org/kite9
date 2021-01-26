@@ -138,7 +138,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 		// set up vertices for each grid element
 		for (DiagramElement de : connectedElements) {
-			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
+			SubGridCornerVertices cv = (SubGridCornerVertices) getEm().getOuterCornerVertices(de);
 			createdVertices.addAll(cv.getVerticesAtThisLevel());
 		}
 		
@@ -146,7 +146,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 				
 		// link them together
 		for (DiagramElement de : connectedElements) {
-			SubGridCornerVertices cv = (SubGridCornerVertices) em.getOuterCornerVertices(de);
+			SubGridCornerVertices cv = (SubGridCornerVertices) getEm().getOuterCornerVertices(de);
 
 			// having created all the vertices, join them to form faces
 			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
