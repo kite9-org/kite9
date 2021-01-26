@@ -18,7 +18,7 @@ interface VertexArranger : ContentsConverter {
 
     interface TurnInformation {
 
-        fun getFirstEdgeClockwiseEdgeOnASide(): Edge
+        fun getFirstEdgeClockwiseEdgeOnASide(): Edge?
 
         /**
          * Direction of dart arriving at this vertex, after orthogonalization.

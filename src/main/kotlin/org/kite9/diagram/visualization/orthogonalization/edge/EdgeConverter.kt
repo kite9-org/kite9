@@ -31,7 +31,7 @@ interface EdgeConverter {
      * This is used for creating darts to represent the 2d shape of a vertex, which was a point in the planarization.
      */
     fun buildDartsBetweenVertices(
-        underlyings: Map<DiagramElement, Direction>,
+        underlyings: Map<DiagramElement, Direction?>,
         o: Orthogonalization,
         end1: Vertex,
         end2: Vertex,
