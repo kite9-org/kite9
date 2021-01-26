@@ -38,29 +38,7 @@ public abstract class AbstractVertexArranger implements VertexArranger, Logable,
 		super();
 		this.em = em;
 	}
-	
-	/**
-	 * Contains part of the overall vertex construction, between one incoming vertex and the next.
-	 * @author robmoffat
-	 *
-	 */
-	private static class Boundary {
-		
-		public Boundary(ExternalVertex from, ExternalVertex to, List<DartDirection> toInsert) {
-			super();
-			this.from = from;
-			this.to = to;
-			this.toInsert = toInsert;
-		}
 
-		final ExternalVertex from, to;
-		final List<DartDirection> toInsert;
-		
-		public String toString() {
-			return "Boundary [from=" + from + ", to=" + to + "]";
-		}
-	}
-	
 	private Map<Vertex, List<Boundary>> boundaries = new HashMap<>();
 
 	@Override
