@@ -41,7 +41,7 @@ import org.kite9.diagram.logging.LogicException;
  * 
  * @author robmoffat
  */
-public class ConnectedVertexArranger extends AbstractVertexArranger implements Logable, VertexArranger {
+public class ConnectedVertexArranger extends AbstractVertexArranger  {
 	
 	protected GridPositioner gp;
 	
