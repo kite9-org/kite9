@@ -104,7 +104,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 
 	private IncidentDart convertWithLabel(PlanarizationEdge e, Orthogonalization o, Direction incident, Direction labelJoinConnectionSide, Vertex externalVertex, Vertex sideVertex, Label l) {
 		Direction side = Direction.reverse(incident);
-		cc.convertDiagramElementToInnerFace(l, o);
+		getCc().convertDiagramElementToInnerFace(l, o);
 		CornerVertices cv = em.getOuterCornerVertices(l);
 		
 		Vertex sideToLabel;
@@ -196,7 +196,7 @@ public class LabellingEdgeConverter extends SimpleEdgeConverter {
 						Dart p1change = p1.getA().meets(end1) ? p1.getB() : p1.getA();
 						
 						o.splitDart(p1change, waypoints[3]);
-						cc.convertDiagramElementToInnerFace(e.getKey(), o);
+						getCc().convertDiagramElementToInnerFace(e.getKey(), o);
 
 						dart = p1keep;
 					}
