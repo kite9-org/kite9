@@ -19,11 +19,8 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter
 import org.kite9.diagram.visualization.orthogonalization.vertex.ContainerContentsArranger
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
-import java.util.*
 
-open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) : SimpleEdgeConverter(
-    cc
-) {
+open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) : SimpleEdgeConverter(cc) {
 
     override fun convertPlanarizationEdge(
         e: PlanarizationEdge,
@@ -160,8 +157,8 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
     fun addLabelsToContainerDart(
         o: Orthogonalization,
         darts: MutableList<Dart>,
-        from: Vertex?,
-        to: Vertex?,
+        from: Vertex,
+        to: Vertex,
         going: Direction?
     ) {
         var hasLabels = false
@@ -201,7 +198,7 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         }
         if (hasLabels) {
             darts.clear()
-            ContainerContentsArranger.populateInnerFaceDarts(darts, from, to, going)
+            ContainerContentsArranger.populateInnerFaceDarts(darts, from, to, going!!)
         }
     }
 
