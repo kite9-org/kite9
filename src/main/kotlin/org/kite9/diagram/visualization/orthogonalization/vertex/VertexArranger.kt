@@ -36,7 +36,7 @@ interface VertexArranger : ContentsConverter {
         peIn: PlanarizationEdge,
         outDirection: Direction,
         v: Vertex,
-        peOut: PlanarizationEdge?,
+        peOut: PlanarizationEdge,
         o: Orthogonalization,
         ti: TurnInformation
     ): List<DartDirection>

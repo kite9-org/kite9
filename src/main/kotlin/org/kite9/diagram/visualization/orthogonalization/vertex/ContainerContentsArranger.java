@@ -50,7 +50,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			DartFace outer = createGridFaceForContainerContents(o, c);
 			if (outer != null) {
 				outer.setContainedBy(inner);
-				log.send("Created container contents outer face: "+outer);
+				getLog().send("Created container contents outer face: "+outer);
 			}	
 		} else {
 			for (DiagramElement de : c.getContents()) {
@@ -58,8 +58,8 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 					DartFace df = convertDiagramElementToInnerFace(de, o);
 					DartFace outerFace = convertToOuterFace(o, df.getStartVertex(), (Rectangular) de);
 					outerFace.setContainedBy(inner);
-					log.send("Created face: "+df);
-					log.send("Created face: "+outerFace);
+					getLog().send("Created face: "+df);
+					getLog().send("Created face: "+outerFace);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 	private boolean placeContainerContentsOntoGrid(Orthogonalization o, Container c, 
 			Map<Direction, List<IncidentDart>> emptyMap, Set<MultiCornerVertex> createdVertices) {
 
-		DiagramElement[][] elementArray = gp.placeOnGrid(c, true);
+		DiagramElement[][] elementArray = getGp().placeOnGrid(c, true);
 		List<DiagramElement> connectedElements = Arrays.stream(elementArray)
 				.flatMap(e -> Arrays.stream(e))
 				.distinct()
@@ -149,7 +149,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 			SubGridCornerVertices cv = (SubGridCornerVertices) getEm().getOuterCornerVertices(de);
 
 			// having created all the vertices, join them to form faces
-			List<MultiCornerVertex> perimeterVertices = gp.getClockwiseOrderedContainerVertices(cv);
+			List<MultiCornerVertex> perimeterVertices = getGp().getClockwiseOrderedContainerVertices(cv);
 
 			MultiCornerVertex prev = null, start = null;
 			for (MultiCornerVertex current : perimeterVertices) {
@@ -157,7 +157,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 					// create a dart between prev and current
 					Direction d = getDirection(prev, current);
 					Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-					ec.buildDartsBetweenVertices(underlyings, o, prev, current, d);
+					getEc().buildDartsBetweenVertices(underlyings, o, prev, current, d);
 				} else {
 					start = current;
 					topLeftVertices.put(de, start);
@@ -169,7 +169,7 @@ public class ContainerContentsArranger extends MultiElementVertexArranger {
 
 			Direction d = getDirection(prev, start);
 			Map<DiagramElement, Direction> underlyings = Collections.singletonMap(de, Direction.rotateAntiClockwise(d));
-			ec.buildDartsBetweenVertices(underlyings, o, prev, start, d);
+			getEc().buildDartsBetweenVertices(underlyings, o, prev, start, d);
 		}
 		
 		// recurse

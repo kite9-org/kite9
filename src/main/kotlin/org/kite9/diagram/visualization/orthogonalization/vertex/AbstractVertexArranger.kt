@@ -30,10 +30,10 @@ abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexA
     private val boundaries: MutableMap<Vertex, List<Boundary>> = HashMap()
 
     override fun returnDartsBetween(
-        `in`: PlanarizationEdge,
+        i: PlanarizationEdge,
         outDirection: Direction,
         v: Vertex,
-        out: PlanarizationEdge?,
+        out: PlanarizationEdge,
         o: Orthogonalization,
         ti: TurnInformation
     ): List<DartDirection> {
@@ -42,10 +42,10 @@ abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexA
             convertVertex(o, v, ti)
             relevantBoundaries = boundaries[v]
         }
-        return findDartsToInsert(relevantBoundaries!!, `in`, outDirection, out)
+        return findDartsToInsert(relevantBoundaries!!, i, outDirection, out)
     }
 
-    protected abstract fun convertVertex(o: Orthogonalization, v: Vertex, ti: TurnInformation): DartFace
+    protected abstract fun convertVertex(o: Orthogonalization, v: Vertex, ti: TurnInformation): DartFace?
 
     /**
      * Works out which darts are needed from the vertex to fill a gap between in
@@ -110,7 +110,8 @@ abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexA
         boundaries[forVertex] = made
     }
 
-    private var newVertexId = 0
+    public var newVertexId = 0
+
     fun createExternalVertex(
         e: PlanarizationEdge?,
         end: Vertex
@@ -148,4 +149,10 @@ abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexA
             return out ?: `in`
         }
     }
+
+    override val prefix: String
+        get() = "VA  "
+
+    override val isLoggingEnabled: Boolean
+        get() = false
 }
