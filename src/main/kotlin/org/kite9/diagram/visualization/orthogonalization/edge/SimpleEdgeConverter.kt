@@ -34,7 +34,7 @@ open class SimpleEdgeConverter(val cc: ContentsConverter) : EdgeConverter {
         end1: Vertex,
         end2: Vertex,
         d: Direction
-    ): List<Dart> {
+    ): MutableList<Dart> {
         var end1 = end1
         var end2 = end2
         val start: MutableList<Dart> = ArrayList()
