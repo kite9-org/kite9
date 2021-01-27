@@ -19,10 +19,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
-import java.util.*
-import java.util.function.Function
-import java.util.stream.Collectors
-import java.util.stream.Stream
 
 /**
  * Handles the conversion of elements not in the planarization into Darts and DartFaces.  These could have been
@@ -139,7 +135,7 @@ class ContainerContentsArranger(em: ElementMapper) : MultiElementVertexArranger(
                 if (prev != null) {
                     // create a dart between prev and current
                     val d = getDirection(prev, current)
-                    val underlyings = Collections.singletonMap(de, rotateAntiClockwise(d))
+                    val underlyings = mutableMapOf(de to rotateAntiClockwise(d))
                     ec.buildDartsBetweenVertices(underlyings, o, prev, current, d)
                 } else {
                     start = current
@@ -148,7 +144,7 @@ class ContainerContentsArranger(em: ElementMapper) : MultiElementVertexArranger(
                 prev = current
             }
             val d = getDirection(prev, start)
-            val underlyings = Collections.singletonMap(de, rotateAntiClockwise(d))
+            val underlyings = mutableMapOf(de to rotateAntiClockwise(d))
             ec.buildDartsBetweenVertices(underlyings, o, prev!!, start!!, d)
         }
 

@@ -202,19 +202,29 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         }
     }
 
+    fun <T> leftShift(l: Array<T>, d: Int): Array<T> {
+        val newList = l.copyOf()
+        var shift = d
+        if (shift > l.size) shift %= l.size
+        l.forEachIndexed { index, value ->
+            val newIndex = (index + (l.size - shift)) % l.size
+            newList[newIndex] = value
+        }
+        return newList
+    }
+
     /**
      * Waypoints is ordered if d is left (i.e. the label is at the bottom) However,
      * it could be in any direction.
      */
     private fun rotateWaypointsCorrectly(cv: CornerVertices, d: Direction): Array<Vertex> {
         var d = d
-        val wp: List<Vertex?> =
-            Arrays.asList(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft())
+        var wp: Array<Vertex> = arrayOf(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft())
         while (d !== Direction.LEFT) {
-            Collections.rotate(wp, -1)
+            wp = leftShift(wp, 1)
             d = rotateClockwise(d)
         }
-        return wp.toTypedArray() as Array<Vertex>
+        return wp
     }
 
     override fun buildDartsBetweenVertices(
