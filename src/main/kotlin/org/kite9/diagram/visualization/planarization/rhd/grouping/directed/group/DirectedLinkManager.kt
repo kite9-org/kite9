@@ -15,7 +15,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
-import java.util.*
 
 class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group) : LinkManager {
 
@@ -56,20 +55,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         override val linkRank: Int,
         c: Iterable<BiDirectional<Connected>>
     ) : AbstractLinkDetail(d, g, o) {
-        override val connections: MutableList<BiDirectional<Connected>> = LinkedList()
-
-        constructor(toCopy: ActualLinkDetail, lmsGroup: Group?) : this(
-            toCopy.group,
-            lmsGroup,
-            toCopy.numberOfLinks,
-            toCopy.direction,
-            toCopy.isOrderingLink,
-            toCopy.linkRank,
-            toCopy.connections
-        ) {
-            inContainer = toCopy.inContainer
-            nearestNeighbour = toCopy.nearestNeighbour
-        }
+        override val connections: MutableList<BiDirectional<Connected>> = mutableListOf()
 
         private fun addConnections(c: Iterable<BiDirectional<Connected>>) {
             for (item in c) {
@@ -452,7 +438,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         override fun next(): Group {
             ensureNext()
             if (next == null) {
-                throw NoSuchElementException()
+                throw LogicException()
             }
             val out = next!!.key
             next = null
@@ -465,7 +451,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         override fun next(): LinkDetail {
             ensureNext()
             if (next == null) {
-                throw NoSuchElementException()
+                throw LogicException()
             }
             val out: LinkDetail = next!!.value
             next = null

@@ -14,7 +14,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.visualization.planarization.ordering.BasicVertexEdgeOrdering
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
-import java.util.*
 
 /**
  * Utility functions for manipulating the Planarization
@@ -50,7 +49,7 @@ class Tools : Logable {
         pln.edgeFaceMap.put(newEdges.b, ArrayList(faces))
 
         // new vertex will have same faces as edge
-        pln.vertexFaceMap.put(split, LinkedList(faces))
+        pln.vertexFaceMap.put(split, faces!!.filterNotNull().toMutableList() )
 
         // add to the edge ordering map. since there are only 2 edges, order not
         // important yet.

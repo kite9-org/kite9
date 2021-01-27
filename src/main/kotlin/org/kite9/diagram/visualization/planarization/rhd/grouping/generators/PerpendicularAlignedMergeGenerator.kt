@@ -11,7 +11,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
-import java.util.*
 
 /**
  * Looks for perpendicular aligned merges, where an aligned merge is a pair of groups sharing
@@ -58,8 +57,8 @@ class PerpendicularAlignedMergeGenerator(
     }
 
     companion object {
-        private val LEFT_RIGHT: Set<Direction?> = EnumSet.of(Direction.LEFT, Direction.RIGHT)
-        private val UP_DOWN: Set<Direction?> = EnumSet.of(Direction.UP, Direction.DOWN)
-        private val NONE: Set<Direction?> = emptySet()
+        private val LEFT_RIGHT: Set<Direction> = setOf(Direction.LEFT, Direction.RIGHT)
+        private val UP_DOWN: Set<Direction> = setOf(Direction.UP, Direction.DOWN)
+        private val NONE: Set<Direction> = emptySet()
     }
 }
