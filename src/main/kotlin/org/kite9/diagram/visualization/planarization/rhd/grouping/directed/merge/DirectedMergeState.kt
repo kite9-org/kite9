@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge
 
-import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -11,7 +10,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager.Companion.createMask
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
-import java.util.*
 
 open class DirectedMergeState(ch: ContradictionHandler, elements: Int) : BasicMergeState(ch, elements) {
 

@@ -25,7 +25,6 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
 import org.kite9.diagram.visualization.planarization.mgt.router.CrossingType
 import org.kite9.diagram.visualization.planarization.mgt.router.GeographyType
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
-import java.util.*
 
 /**
  * This handles the creation of edges for a diagram element border, and the
@@ -46,7 +45,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
 
     override fun processCorrectDirectedConnections(p: MGTPlanarization): Int {
         // does the container layout edges, which will also be directed.
-        val containerLayoutEdges: MutableList<PlanarizationEdge> = LinkedList()
+        val containerLayoutEdges: MutableList<PlanarizationEdge> = mutableListOf()
         addContainerLayoutEdges(p.diagram, p, containerLayoutEdges)
         log.send("Layout edges:", containerLayoutEdges)
         for (edge in containerLayoutEdges) {
@@ -253,7 +252,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         if (em.hasOuterCornerVertices(outer)) {
             val cv = em.getOuterCornerVertices(outer)
             val originalLabel = outer.getID()
-            val out = LinkedList<PlanarizationEdge>()
+            val out : MutableList<PlanarizationEdge> = mutableListOf()
             val em = EdgeMapping(outer, out)
             p.edgeMappings[outer] = em
             var i = 0

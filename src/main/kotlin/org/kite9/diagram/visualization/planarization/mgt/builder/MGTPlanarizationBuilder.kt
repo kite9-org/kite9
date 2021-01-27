@@ -13,7 +13,6 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizationImpl
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder
-import java.util.*
 
 /**
  * This follows the general GT approach to producing a maximal planar subgraph
