@@ -16,7 +16,6 @@ import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthog
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer.Companion.removeArcs
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph
 import org.kite9.diagram.visualization.planarization.Face
-import java.util.Comparator
 
 /**
  * Contains the basic code for testing nudges out, splitting the flow graph into halves, logging the results of a nudge and working out

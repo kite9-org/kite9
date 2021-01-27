@@ -13,7 +13,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
-import java.util.stream.Collectors
 
 /**
  * Creates darts for edges arriving at corners or sides of a planarization.

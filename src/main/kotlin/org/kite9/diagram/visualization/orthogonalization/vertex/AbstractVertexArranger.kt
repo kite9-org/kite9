@@ -15,7 +15,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
-import java.util.*
 
 /**
  * This mainly handles returning DartDirection objects which form the Boundary of a vertex in the diagram.

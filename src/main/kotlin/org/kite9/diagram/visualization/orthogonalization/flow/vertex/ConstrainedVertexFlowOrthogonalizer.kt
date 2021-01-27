@@ -20,7 +20,6 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger
 import org.kite9.diagram.visualization.planarization.Face
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
