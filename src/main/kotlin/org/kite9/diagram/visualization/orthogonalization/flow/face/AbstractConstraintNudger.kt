@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthog
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer.Companion.removeArcs
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph
 import org.kite9.diagram.visualization.planarization.Face
-import java.util.*
+import java.util.Comparator
 
 /**
  * Contains the basic code for testing nudges out, splitting the flow graph into halves, logging the results of a nudge and working out
@@ -39,13 +39,13 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
     }
 
     protected fun createRouteList(constraintGroup: ConstraintGroup, fg: MappedFlowGraph): MutableCollection<NudgeItem> {
-        val out: MutableCollection<NudgeItem> = TreeSet { o1, o2 ->
+        val out: MutableCollection<NudgeItem> = sortedSetOf(Comparator { o1, o2 ->
             if (o1.type !== o2.type) {
                 o1.type.compareTo(o2.type)
             } else {
                 o1.id.compareTo(o2.id)
             }
-        }
+        })
         //		Collection<NudgeItem> out = new LinkedList<NudgeItem>();
         var id = 0
         for (r in constraintGroup.getRequiredRoutes()) {
@@ -403,9 +403,8 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
         log.send("Sink Reachable: ", sort(ArrayList(foundSink)))
     }
 
-    private fun sort(out: List<Node?>): List<Node?> {
-        Collections.sort(out) { o1, o2 -> o1.toString().compareTo(o2.toString()) }
-        return out
+    private fun sort(out: List<Node>): List<Node> {
+        return out.sortedWith(Comparator { o1, o2 -> o1.toString().compareTo(o2.toString()) })
     }
 
     private fun reach(node: Node, found: MutableSet<Node>, pushing: Boolean) {

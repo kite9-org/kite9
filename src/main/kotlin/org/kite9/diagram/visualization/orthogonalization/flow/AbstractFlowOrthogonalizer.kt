@@ -9,7 +9,6 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger
 import org.kite9.diagram.visualization.planarization.Face
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
-import java.util.*
 
 /**
  * This class builds a corner-flow network to model the current Planarization.
@@ -42,7 +41,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
         }
 
         // output detail in log
-        val nodes: MutableCollection<String?> = TreeSet()
+        val nodes: MutableCollection<String> = sortedSetOf()
         for (n in fg.allNodes) {
             nodes.add(n.getID() + " has " + n.arcs.size + " arcs: " + n.arcs)
         }

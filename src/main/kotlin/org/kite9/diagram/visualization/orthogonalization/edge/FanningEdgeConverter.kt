@@ -10,7 +10,6 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
-import java.util.*
 
 class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : LabellingEdgeConverter(cc, em) {
 
@@ -32,9 +31,9 @@ class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : Labelling
                 val c =
                     if (incident === e.getDrawDirection()) (e as BiDirectionalPlanarizationEdge).getToConnected() else (e as BiDirectionalPlanarizationEdge).getFromConnected()
                 val fanOuter: Vertex =
-                    FanVertex(planVertex.getID() + "-fo-" + counter, false, Arrays.asList(incident, reverse(fan)))
+                    FanVertex(planVertex.getID() + "-fo-" + counter, false, listOf(incident, reverse(fan)!!))
                 val fanInner: Vertex =
-                    FanVertex(planVertex.getID() + "-fi-" + counter, true, Arrays.asList(incident, fan))
+                    FanVertex(planVertex.getID() + "-fi-" + counter, true, listOf(incident, fan!!))
                 counter++
                 val map = createMap(e)
                 o.createDart(externalVertex, fanOuter, map, incident)

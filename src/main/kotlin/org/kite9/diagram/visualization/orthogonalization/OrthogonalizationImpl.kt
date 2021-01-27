@@ -11,8 +11,6 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
 import org.kite9.diagram.visualization.planarization.Planarization
-import java.util.*
-import java.util.function.Consumer
 
 /**
  * This class manages the relationships of the [Dart]s to the [Edge]s, and keeps track of
@@ -92,7 +90,7 @@ class OrthogonalizationImpl(private val planarization: Planarization) : Orthogon
         partOfSide: Direction
     ): Dart {
         val next: MutableMap<DiagramElement, Direction> = HashMap()
-        partOf.forEach(Consumer { a: DiagramElement -> next[a] = partOfSide })
+        partOf.forEach { next[it] = partOfSide }
         return createDart(from, to, next, d)
     }
 
