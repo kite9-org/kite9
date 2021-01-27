@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt
 
 import org.kite9.diagram.common.BiDirectional
+import org.kite9.diagram.common.Collections
 import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.vertex.Vertex
@@ -14,7 +15,6 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashSet
@@ -315,7 +315,7 @@ class MGTPlanarizationImpl(
         byQuad.addAll(ab)
         val cmp = edgeOrderings[from]!!.getEdgesAsList()
         val i = byQuad.indexOf(cmp[0])
-        Collections.rotate(byQuad, -i)
+        Collections.leftShiftList(byQuad, -i)
         if (cmp != byQuad) {
             throw LogicException("Collections not same: \n$cmp\n$byQuad")
         }

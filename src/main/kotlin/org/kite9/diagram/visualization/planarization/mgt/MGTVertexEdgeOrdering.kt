@@ -7,9 +7,7 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.model.position.Direction
-import java.util.Collections
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
-import java.util.ArrayList
 
 class MGTVertexEdgeOrdering(val pl: MGTPlanarization, val v: Vertex) : AbstractCachingEdgeOrdering(),
     VertexEdgeOrdering {
@@ -46,7 +44,7 @@ class MGTVertexEdgeOrdering(val pl: MGTPlanarization, val v: Vertex) : AbstractC
             for (edge in out) {
                 addEdgeDirection(edge.getDrawDirectionFrom(v), isUnderlyingContradicting(edge))
             }
-            return Collections.unmodifiableList(out)
+            return out.toList()
         }
 
     private fun addAllBackwards(out: MutableList<PlanarizationEdge>, af2: List<PlanarizationEdge>) {

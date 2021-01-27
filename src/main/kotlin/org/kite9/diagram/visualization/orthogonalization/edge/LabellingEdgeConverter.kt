@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.edge
 
+import org.kite9.diagram.common.Collections
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.CornerVertices
@@ -202,17 +203,6 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         }
     }
 
-    fun <T> leftShift(l: Array<T>, d: Int): Array<T> {
-        val newList = l.copyOf()
-        var shift = d
-        if (shift > l.size) shift %= l.size
-        l.forEachIndexed { index, value ->
-            val newIndex = (index + (l.size - shift)) % l.size
-            newList[newIndex] = value
-        }
-        return newList
-    }
-
     /**
      * Waypoints is ordered if d is left (i.e. the label is at the bottom) However,
      * it could be in any direction.
@@ -221,7 +211,7 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         var d = d
         var wp: Array<Vertex> = arrayOf(cv.getBottomRight(), cv.getTopRight(), cv.getTopLeft(), cv.getBottomLeft())
         while (d !== Direction.LEFT) {
-            wp = leftShift(wp, 1)
+            wp = Collections.leftShift(wp, 1)
             d = rotateClockwise(d)
         }
         return wp
