@@ -26,19 +26,6 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
         return underlying is Rectangular
     }
 
-//    protected override fun addedSlideable(s: Slideable<Segment>) {
-//        // look for dependencies in the direction given
-//        // setupMinimumDistancesDueToDarts(s);
-//        updateMaps(s)
-//    }
-
-//    override fun addSlideables(s: Collection<Slideable<Segment>>) {
-//        for (slideable in s) {
-//            updateMaps(slideable)
-//        }
-//        super.addSlideables(s)
-//    }
-
     fun updateMaps(s: Slideable<Segment>) {
         val seg = s.underlying
         for (v in seg.getVerticesInSegment()) {
@@ -80,9 +67,7 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
 
     init {
         for (s in segments) {
-            val sli = Slideable<Segment>(
-                this, s
-            )
+            val sli = Slideable<Segment>(this, s)
             s.slideable = sli
             log.send(if (log.go()) null else "Created slideable: $sli")
             _allSlideables.add(sli)
