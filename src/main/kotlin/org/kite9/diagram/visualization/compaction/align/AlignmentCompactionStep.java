@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -61,5 +62,11 @@ public class AlignmentCompactionStep extends AbstractCompactionStep {
 		if (filtered.size() > 0) {
 			a.alignFor(de, filtered, c, horizontal);
 		}
+	}
+
+	@Nullable
+	@Override
+	public String getPrefix() {
+		return "ALGN";
 	}
 }

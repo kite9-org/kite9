@@ -201,7 +201,7 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
 
     private var leavingSegments: Set<Segment>? = null
 
-    fun getAdjoiningSegments(c: Compaction): Set<Segment?>? {
+    fun getAdjoiningSegments(c: Compaction): Set<Segment> {
         if (leavingSegments == null) {
             val isHorizontal = dimension === Dimension.H
 
@@ -214,7 +214,7 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
                 .toSet()
         }
 
-        return leavingSegments
+        return leavingSegments!!
     }
 
 }

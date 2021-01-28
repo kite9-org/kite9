@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.slideable;
 
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.model.Rectangular;
@@ -47,4 +48,9 @@ public class MaximizeCompactionStep extends AbstractSizingCompactionStep {
 		min.setMaximumPosition(min.getMinimumPosition());
 	}
 
+	@Nullable
+	@Override
+	public String getPrefix() {
+		return "MAXS";
+	}
 }
