@@ -14,7 +14,7 @@ interface Embedding {
      * Used in rectangularization
      */
     val dartFaces: List<DartFace>
-    val innerEmbeddings: List<Embedding>
+    var innerEmbeddings: List<Embedding>
     fun getVerticalSegments(c: Compaction): Collection<Segment>
     fun getHorizontalSegments(c: Compaction): Collection<Segment>
     val isTopEmbedding: Boolean

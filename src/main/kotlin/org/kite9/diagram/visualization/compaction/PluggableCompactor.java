@@ -1,12 +1,6 @@
 package org.kite9.diagram.visualization.compaction;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.common.elements.Dimension;
@@ -69,7 +63,7 @@ public class PluggableCompactor implements Compactor {
 			if (!done.containsKey(dartFace)) {
 				Set<DartFace> touching = new HashSet<>();
 				touching = getTouchingFaces(touching, dartFace, o);
-				EmbeddingImpl ei = new EmbeddingImpl(embeddingNumber++, touching);
+				EmbeddingImpl ei = new EmbeddingImpl(embeddingNumber++, new ArrayList<>(touching));
 				touching.forEach(df -> done.put(df, ei));
 			}
 		}
