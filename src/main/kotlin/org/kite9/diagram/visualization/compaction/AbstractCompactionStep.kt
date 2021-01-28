@@ -27,8 +27,8 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     override val isLoggingEnabled = true
 
-    fun getMinimumDistance(froms: Slideable<Segment?>, tos: Slideable<Segment?>?, d: Direction?): Double {
-        return froms.minimumDistanceTo(tos!!).toDouble()
+    fun getMinimumDistance(froms: Slideable<Segment>, tos: Slideable<Segment>, d: Direction): Double {
+        return froms.minimumDistanceTo(tos).toDouble()
     }
 
     fun getMinimumDistance(first: Segment, second: Segment, along: Segment?, concave: Boolean): Double {
@@ -147,7 +147,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     protected fun alignSingleConnections(
         c: Compaction,
-        r: Connected?,
+        r: Connected,
         horizontal: Boolean,
         withCheck: Boolean
     ): AlignmentResult? {
@@ -164,33 +164,33 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         }
     }
 
-    class AlignmentResult(val midPoint: Int, val safe: Boolean)
+    data class AlignmentResult(val midPoint: Int, val safe: Boolean)
 
     /**
      * Returns the half-dist value if an alignment was made, otherwise null.
      */
     protected fun alignSingleConnections(
         c: Compaction,
-        perp: OPair<Slideable<Segment>>,
-        along: OPair<Slideable<Segment>>,
+        perp: OPair<Slideable<Segment>?>,
+        along: OPair<Slideable<Segment>?>,
         checkNeeded: Boolean,
         minimizingContainer: Boolean
     ): AlignmentResult? {
-        val alongSSO = along.a.slackOptimisation as SegmentSlackOptimisation
-        val from = along.a
-        val to = along.b
-        val leavingConnectionsA = getLeavingConnections(perp.a.underlying, c)
-        val leavingConnectionsB = getLeavingConnections(perp.b.underlying, c)
+        val from = along.a!!
+        val alongSSO = from.slackOptimisation as SegmentSlackOptimisation
+        val to = along.b!!
+        val leavingConnectionsA = getLeavingConnections(perp.a!!.underlying, c)
+        val leavingConnectionsB = getLeavingConnections(perp.b!!.underlying, c)
         var halfDist = 0
         var connectionSegmentA: Slideable<Segment>? = null
         var connectionSegmentB: Slideable<Segment>? = null
         if (leavingConnectionsA.size == 1) {
-            connectionSegmentA = getConnectionSegment(perp.a, c)
+            connectionSegmentA = getConnectionSegment(perp.a!!, c)
             halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentA))
             halfDist = Math.max(halfDist, connectionSegmentA.minimumDistanceTo(to))
         }
         if (leavingConnectionsB.size == 1) {
-            connectionSegmentB = getConnectionSegment(perp.b, c)
+            connectionSegmentB = getConnectionSegment(perp.b!!, c)
             halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB))
             halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to))
         }

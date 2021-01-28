@@ -89,8 +89,9 @@ class CompactionImpl(
     }
 
     init {
-        horizontalSegmentSlackOptimisation = SegmentSlackOptimisation(horizontalSegments)
-        verticalSegmentSlackOptimisation = SegmentSlackOptimisation(verticalSegments)
+        val diagram = orthogonalization.getPlanarization().diagram
+        horizontalSegmentSlackOptimisation = SegmentSlackOptimisation(horizontalSegments, diagram)
+        verticalSegmentSlackOptimisation = SegmentSlackOptimisation(verticalSegments, diagram)
         this.topEmbedding = topEmbedding
     }
 }

@@ -14,7 +14,7 @@ abstract class AbstractSlackOptimisation<X> : Logable {
     val log = Kite9Log(this)
     var pushCount = 0
 
-    private var _allSlideables: MutableCollection<Slideable<X>> = LinkedHashSet()
+    protected var _allSlideables: MutableCollection<Slideable<X>> = LinkedHashSet()
 
     abstract fun getIdentifier(underneath: Any?): String?
 
@@ -77,25 +77,25 @@ abstract class AbstractSlackOptimisation<X> : Logable {
         }
     }
 
-    open fun addSlideables(s: Collection<Slideable<X>>) {
-        for (slideable in s) {
-            _allSlideables.add(slideable)
-        }
-        for (slideable in s) {
-            addedSlideable(slideable)
-        }
-    }
+//    open fun addSlideables(s: Collection<Slideable<X>>) {
+//        for (slideable in s) {
+//            _allSlideables.add(slideable)
+//        }
+//        for (slideable in s) {
+//            addedSlideable(slideable)
+//        }
+//    }
+//
+//    open fun addSlideables(vararg s: Slideable<X>) {
+//        for (slideable in s) {
+//            _allSlideables.add(slideable)
+//        }
+//        for (slideable in s) {
+//            addedSlideable(slideable)
+//        }
+//    }
 
-    open fun addSlideables(vararg s: Slideable<X>) {
-        for (slideable in s) {
-            _allSlideables.add(slideable)
-        }
-        for (slideable in s) {
-            addedSlideable(slideable)
-        }
-    }
-
-    protected abstract fun addedSlideable(s: Slideable<X>?)
+    //protected abstract fun addedSlideable(s: Slideable<X>?)
 
     override val prefix: String
         get() = "ASO "
