@@ -1,7 +1,5 @@
 package org.kite9.diagram.visualization.compaction
 
-import org.kite9.diagram.common.algorithms.so.Slideable
-import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.visualization.compaction.segment.Segment
@@ -27,12 +25,11 @@ interface Compaction {
      *
      * Rectangle is in top, right, bottom, left order.
      */
-    fun getFaceSpace(df: DartFace): Rectangle<FaceSide>
+    fun getFaceSpace(df: DartFace): Rectangle<FaceSide>?
     fun createFaceSpace(df: DartFace, r: Rectangle<FaceSide>)
     fun setFaceSpaceToDone(df: DartFace)
     fun getSegmentForDart(d: Dart): Segment
     fun getTopEmbedding(): Embedding
-    fun newSegment(d: Dimension?): Segment
 
     companion object {
         @JvmField

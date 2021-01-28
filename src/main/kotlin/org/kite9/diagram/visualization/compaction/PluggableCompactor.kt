@@ -93,13 +93,13 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
     }
 
     protected fun instantiateCompaction(
-        o: Orthogonalization?,
-        horizontal: List<Segment>?,
-        vertical: List<Segment>?,
-        dartToSegmentMap: Map<Dart, Segment>?,
-        horizontalSegmentMap: Map<Vertex, Segment>?,
-        verticalSegmentMap: Map<Vertex, Segment>?,
-        topEmbedding: Embedding?
+        o: Orthogonalization,
+        horizontal: List<Segment>,
+        vertical: List<Segment>,
+        dartToSegmentMap: Map<Dart, Segment>,
+        horizontalSegmentMap: Map<Vertex, Segment>,
+        verticalSegmentMap: Map<Vertex, Segment>,
+        topEmbedding: Embedding
     ): Compaction {
         return CompactionImpl(
             o,
