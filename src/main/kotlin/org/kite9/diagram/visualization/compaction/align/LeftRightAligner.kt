@@ -15,7 +15,7 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
  * then this is going to be inconsistent.
  */
 class LeftRightAligner : Aligner {
-    
+
     override fun alignFor(co: Container, des: Set<Rectangular>, c: Compaction, horizontal: Boolean) {
         val sso = if (horizontal) c.getVerticalSegmentSlackOptimisation() else c.getHorizontalSegmentSlackOptimisation()
         for (r in des) {
