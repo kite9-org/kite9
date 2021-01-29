@@ -5,9 +5,8 @@ import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
-import java.util.stream.Collectors
 
-open class NonEmbeddedFaceRectangularizer(cd: CompleteDisplayer?) : MidSideCheckingRectangularizer(cd) {
+open class NonEmbeddedFaceRectangularizer(cd: CompleteDisplayer) : MidSideCheckingRectangularizer(cd) {
 
     override fun compact(c: Compaction, r: Embedding, rc: Compactor) {
         log.send("NonEmbeddedFaceRectangularizer: $r")
