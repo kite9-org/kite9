@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.rect
 
+import org.kite9.diagram.common.Collections
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.logging.LogicException
@@ -11,8 +12,6 @@ import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
-import java.util.*
-import java.util.stream.Collectors
 
 /**
  * This class is responsible for 'completing' a dart diagram by ensuring that
@@ -117,14 +116,12 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
                     break
                 }
             }
-            val turnCopy: List<DartDirection> = ArrayList(turns)
-            Collections.rotate(turnCopy, -startPoint)
-            val segments = turnCopy.stream().map { dd: DartDirection ->
-                c.getSegmentForDart(
-                    dd!!.dart
-                )
-            }.collect(Collectors.toList())
-            val directions = turnCopy.stream().map { dd: DartDirection? -> dd!!.direction }.collect(Collectors.toList())
+            val turnCopy: MutableList<DartDirection> = ArrayList(turns)
+            java.util.Collections.rotate(turnCopy, -startPoint)
+
+            val segments = turnCopy.map { c.getSegmentForDart( it.dart ) }
+
+            val directions = turnCopy.map { it.direction }
             val uniqueSegments: MutableList<Segment> = ArrayList()
             val uniqueDirections: MutableList<Direction> = ArrayList()
             for (i in segments.indices) {
