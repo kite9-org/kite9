@@ -73,7 +73,9 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         }
     }
 
-    open fun performSecondarySizing(c: Compaction, stacks: Map<DartFace, List<VertexTurn>>) {}
+    open fun performSecondarySizing(c: Compaction, stacks: Map<DartFace, MutableList<VertexTurn>>) {
+
+    }
 
     protected abstract fun selectFacesToRectangularize(c: Compaction, faces: List<DartFace>): List<DartFace>
 
