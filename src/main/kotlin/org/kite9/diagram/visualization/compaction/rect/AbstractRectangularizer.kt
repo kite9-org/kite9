@@ -291,7 +291,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         }
 
         @JvmStatic
-		protected fun getItemRotating(stack: List<VertexTurn?>, index: Int): VertexTurn? {
+		protected fun getItemRotating(stack: List<VertexTurn>, index: Int): VertexTurn {
             var index = index
             while (index < 0) index += stack.size
             index = index % stack.size
