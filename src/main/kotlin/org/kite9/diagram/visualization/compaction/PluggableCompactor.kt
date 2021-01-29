@@ -142,21 +142,14 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
     }
 
     fun buildSegmentList(
-        o: Orthogonalization?,
-        direction: Set<Direction?>
+        o: Orthogonalization,
+        direction: Set<Direction>
     ): List<Segment> {
         return sb.buildSegmentList(o, direction, if (direction === HORIZONTAL) Dimension.H else Dimension.V)
     }
 
     companion object {
-        val VERTICAL = createSet<Direction?>(Direction.UP, Direction.DOWN)
-        val HORIZONTAL = createSet<Direction?>(Direction.LEFT, Direction.RIGHT)
-        fun <X> createSet(vararg d1: X): Set<X> {
-            val out = HashSet<X>()
-            for (x in d1) {
-                out.add(x)
-            }
-            return out
-        }
+        val VERTICAL = setOf<Direction>(Direction.UP, Direction.DOWN)
+        val HORIZONTAL = setOf<Direction>(Direction.LEFT, Direction.RIGHT)
     }
 }
