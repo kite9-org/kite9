@@ -11,7 +11,7 @@ open class RectOption(
     val vt4: VertexTurn,
     val vt5: VertexTurn,
     val match: PrioritizingRectangularizer.Match,
-    val stack: List<VertexTurn>
+    val stack: MutableList<VertexTurn>
 ) : Comparable<RectOption> {
 
     val meets: VertexTurn

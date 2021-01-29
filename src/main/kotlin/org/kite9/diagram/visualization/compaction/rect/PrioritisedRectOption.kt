@@ -13,7 +13,7 @@ class PrioritisedRectOption(
     vt4: VertexTurn,
     vt5: VertexTurn,
     m: PrioritizingRectangularizer.Match,
-    fromStack: List<VertexTurn>,
+    fromStack: MutableList<VertexTurn>,
     val acs: AbstractCompactionStep
 ) : RectOption(i, vt1, vt2, vt3, vt4, vt5, m, fromStack) {
     /**

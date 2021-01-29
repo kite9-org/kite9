@@ -192,7 +192,7 @@ public abstract class PrioritizingRectangularizer extends AbstractRectangularize
 		return out;
 	}
 	
-	public boolean turnMatch(Turn t1, Turn t2, Turn t3, List<Turn> turns) {
+	public boolean turnMatch(Turn t1, Turn t2, Turn t3, List<? extends Turn> turns) {
 		return turns.get(0).equals(t1) && turns.get(1).equals(t2) && turns.get(2).equals(t3);
 	}
 	

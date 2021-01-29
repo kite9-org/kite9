@@ -151,7 +151,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 	/**
 	 * Sets up the mid-points as part of secondary sizing.
 	 */
-	protected void performSecondarySizing(Compaction c, Map<DartFace, List<VertexTurn>> stacks) {
+	protected void performSecondarySizing(Compaction c, Map<DartFace, ? extends List<VertexTurn>> stacks) {
 		super.performSecondarySizing(c, stacks);
 		stacks.values().stream()
 			.flatMap(s -> s.stream())
