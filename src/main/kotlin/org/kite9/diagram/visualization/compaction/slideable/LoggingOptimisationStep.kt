@@ -1,20 +1,13 @@
 package org.kite9.diagram.visualization.compaction.slideable
 
-import org.kite9.diagram.logging.Kite9Log.send
-import org.kite9.diagram.visualization.compaction.Compaction.getHorizontalSegmentSlackOptimisation
-import org.kite9.diagram.visualization.compaction.Compaction.getVerticalSegmentSlackOptimisation
-import org.kite9.diagram.logging.Kite9Log.go
-import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation.getSize
-import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation.pushCount
-import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation.getAllSlideables
-import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.Embedding
 import org.kite9.diagram.visualization.compaction.Compactor
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.Embedding
+import org.kite9.diagram.visualization.display.CompleteDisplayer
 
-class LoggingOptimisationStep(cd: CompleteDisplayer?) : AbstractCompactionStep(cd!!) {
+class LoggingOptimisationStep(cd: CompleteDisplayer) : AbstractCompactionStep(cd) {
+
     override val prefix: String
         get() = "LOPS"
     override val isLoggingEnabled: Boolean

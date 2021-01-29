@@ -96,7 +96,7 @@ abstract class AbstractArrangementPipeline : ArrangementPipeline {
             DiagramSizeCompactionStep(cd),
             LoggingOptimisationStep(cd),
             MaximizeCompactionStep(cd),  //				new LoggingOptimisationStep(cd),
-            AlignmentCompactionStep(cd, arrayOf<Aligner>(LeftRightAligner(), CenteringAligner())),
+            AlignmentCompactionStep(cd, LeftRightAligner(), CenteringAligner()),
             ConnectionAlignmentCompactionStep(),
             ConnectionRouteCompactionStep(),
             RectangularPositionCompactionStep(cd),

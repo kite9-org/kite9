@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -21,7 +22,13 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer;
 public class AlignmentCompactionStep extends AbstractCompactionStep {
 
 	Aligner[] aligners;
-	
+
+	@Nullable
+	@Override
+	public String getPrefix() {
+		return "ALN ";
+	}
+
 	public AlignmentCompactionStep(CompleteDisplayer cd, Aligner...aligners) {
 		super(cd);
 		this.aligners = aligners;
