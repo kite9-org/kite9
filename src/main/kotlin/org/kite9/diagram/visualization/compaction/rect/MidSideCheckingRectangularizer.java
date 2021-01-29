@@ -56,7 +56,7 @@ public abstract class MidSideCheckingRectangularizer extends PrioritizingRectang
 
 		int parMinimumLength = checkMinimumLength(par, link, c);
 		
-		if ((ro.getScore() != ro.getInitialScore())) {
+		if ((ro.calculateScore() != ro.getInitialScore())) {
 			// change it and throw it back in - priority has changed.
 			log.send("Deferring: "+meetsMinimumLength+" for meets="+meets+"\n         "+parMinimumLength+" for par="+par);
 			return Action.PUT_BACK;

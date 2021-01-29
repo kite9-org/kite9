@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 /**
  * Stores the segments on the stack
  */
-internal class VertexTurn(
+class VertexTurn(
     val number: Int,
     val compaction: Compaction,
     val slideable: Slideable<Segment>,
@@ -25,7 +25,7 @@ internal class VertexTurn(
     var endsWith: Slideable<Segment>,
     val partOf: Rectangular?
 ) {
-    internal enum class TurnPriority(val costFactor: Int) {
+    enum class TurnPriority(val costFactor: Int) {
         MINIMIZE_RECTANGULAR(3), CONNECTION(1), MAXIMIZE_RECTANGULAR(0);
     }
 
