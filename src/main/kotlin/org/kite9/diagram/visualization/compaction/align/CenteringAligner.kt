@@ -14,8 +14,7 @@ import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
-import java.util.*
-import java.util.stream.Collectors
+
 
 /**
  * Basic approach:

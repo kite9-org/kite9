@@ -9,9 +9,6 @@ import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import java.util.function.Predicate
-import java.util.stream.Collectors
-
 /**
  * At the moment, this passes through each aligner in turn, from top-to-bottom of the diagram.
  */

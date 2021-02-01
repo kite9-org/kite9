@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction.insertion
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.factory.TemporaryConnected
 import org.kite9.diagram.common.elements.vertex.Vertex
-import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
@@ -16,7 +15,6 @@ import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
-import java.util.*
 
 /**
  * This step requires that all the subgraphs being inserted are already
@@ -69,10 +67,10 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
                 throw LogicException("Containment problem for $df")
             }
         }
-        val order: List<Int> = ArrayList(faceInsertionOrder.keys)
-        Collections.sort(order)
+        val order: MutableList<Int> = ArrayList(faceInsertionOrder.keys)
+        order.sort()
         if (directionOfInsertion === Direction.LEFT || directionOfInsertion === Direction.UP) {
-            Collections.reverse(order)
+            order.reverse()
         }
         var addedSomething = false
         for (i in order) {
