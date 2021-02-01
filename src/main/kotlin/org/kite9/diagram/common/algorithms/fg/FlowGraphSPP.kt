@@ -6,9 +6,6 @@ import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
 
 /**
  * This algorithm uses a Dijkstra-style shortest path in order to maximise flow
@@ -52,21 +49,6 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
 	nodes:    ${fg!!.allNodes.size}
 	arcs:     ${fg.allArcs.size}"""
         )
-        if (!log.go()) {
-            val out = File("ssp.info")
-            try {
-                val w = FileWriter(out, true)
-                w.write(
-                    """
-    $paths,$cost,${fg!!.allNodes.size},${fg.allArcs.size}
-    
-    """.trimIndent()
-                )
-                w.close()
-            } catch (e: IOException) {
-                throw LogicException("could not write ssp file: ", e)
-            }
-        }
         displayFlowInformation(fg)
         return cost
     }

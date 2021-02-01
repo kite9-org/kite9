@@ -1,5 +1,7 @@
 package org.kite9.diagram.common.algorithms.fg
 
+import kotlin.math.abs
+
 /**
  * A type of arc where positive or negative flow is permitted, within a boundary,
  * but any flow in either direction has a constant cost.
@@ -9,12 +11,12 @@ open class AbsoluteArc(val cost: Int, protected val capacity: Int, from: Node, t
     AbstractArc(from, to, label, 0) {
 
     open fun getFlowCost(): Int {
-        return Math.abs(flow) * cost
+        return abs(flow) * cost
     }
 
     override fun getIncrementalCost(flow: Int): Int {
-        val origCost = Math.abs(this.flow) * cost
-        val newCost = Math.abs(this.flow + flow) * cost
+        val origCost = abs(this.flow) * cost
+        val newCost = abs(this.flow + flow) * cost
         return newCost - origCost
     }
 

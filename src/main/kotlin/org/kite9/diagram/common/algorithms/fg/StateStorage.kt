@@ -8,7 +8,6 @@ package org.kite9.diagram.common.algorithms.fg
  */
 object StateStorage {
 
-    @JvmStatic
 	fun storeState(fg: FlowGraph): Map<Any, Int> {
         val state: MutableMap<Any, Int> = HashMap(100)
         for (n in fg.allNodes) {
@@ -20,7 +19,6 @@ object StateStorage {
         return state
     }
 
-    @JvmStatic
 	fun restoreState(fg: FlowGraph, state: Map<Any, Int>) {
         for (n in fg.allNodes) {
             val flow = state[n]!!

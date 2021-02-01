@@ -32,11 +32,11 @@ enum class Corner {
     }
 
     private fun max(a: Bounds, b: Bounds): Bounds {
-        return BasicBounds(Math.max(a.distanceMin, b.distanceMax), Math.max(a.distanceMax, b.distanceMax))
+        return BasicBounds(a.distanceMin.coerceAtLeast(b.distanceMax), a.distanceMax.coerceAtLeast(b.distanceMax))
     }
 
     private fun min(a: Bounds, b: Bounds): Bounds {
-        return BasicBounds(Math.min(a.distanceMin, b.distanceMin), Math.min(a.distanceMax, b.distanceMin))
+        return BasicBounds(a.distanceMin.coerceAtMost(b.distanceMin), a.distanceMax.coerceAtMost(b.distanceMin))
     }
 
     private fun narrow(a: Bounds, b: Bounds): Bounds {
@@ -45,7 +45,7 @@ enum class Corner {
         } else if (a.distanceMin > b.distanceMax) {
             BasicBounds(b.distanceMax, b.distanceMax)
         } else {
-            BasicBounds(Math.max(a.distanceMin, b.distanceMin), Math.min(a.distanceMax, b.distanceMax))
+            BasicBounds(a.distanceMin.coerceAtLeast(b.distanceMin), a.distanceMax.coerceAtMost(b.distanceMax))
         }
     }
 }

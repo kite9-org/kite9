@@ -14,9 +14,16 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<batik.version>1.12</batik.version>
-		<kotlin.version>1.4.20</kotlin.version>
+		<kotlin.version>1.4.21</kotlin.version>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jetbrains-all</id>
+			<url>http://repository.jetbrains.com/all</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
@@ -102,7 +109,7 @@
 					<execution>
 						<id>compile</id>
 						<goals>
-						<!--	<goal>js</goal> -->
+							<goal>js</goal>
 							<goal>compile</goal>
 						</goals>
 						<configuration>
@@ -240,6 +247,11 @@
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-js</artifactId>
 			<version>${kotlin.version}</version>
 		</dependency>
 		<dependency>

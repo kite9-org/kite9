@@ -21,5 +21,10 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="jetbrains-all" />
+      <option name="name" value="jetbrains-all" />
+      <option name="url" value="http://repository.jetbrains.com/all" />
+    </remote-repository>
   </component>
 </project>

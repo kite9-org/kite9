@@ -5,7 +5,6 @@ import org.kite9.diagram.model.position.Direction.Companion.isVertical
 import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
-import java.util.function.Predicate
 
 class EmbeddingImpl(private val number: Int, override val dartFaces: List<DartFace>) : Embedding {
 
@@ -23,11 +22,11 @@ class EmbeddingImpl(private val number: Int, override val dartFaces: List<DartFa
         return facesToSegments(c) { d: Dart -> isHorizontalDart(d) }
     }
 
-    private fun facesToSegments(c: Compaction, p: Predicate<in Dart>): Set<Segment> {
+    private fun facesToSegments(c: Compaction, p: (Dart) -> Boolean): Set<Segment> {
         return dartFaces
             .flatMap { it.dartsInFace }
             .map { it.dart }
-            .filter { dart -> p.test(dart) }
+            .filter { p.invoke( it ) }
             .map { c.getSegmentForDart(it) }
             .toSet()
     }
