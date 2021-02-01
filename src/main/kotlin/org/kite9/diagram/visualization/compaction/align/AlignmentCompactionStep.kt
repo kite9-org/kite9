@@ -40,14 +40,13 @@ class AlignmentCompactionStep(cd: CompleteDisplayer, vararg aligners: Aligner) :
         }
     }
 
-    fun alignOnAxis(c: Compaction, contents: List<DiagramElement>, a: Aligner, horizontal: Boolean, de: Container) {
-        val filtered: MutableSet<Rectangular> = contents.stream()
-            .filter { e: DiagramElement? -> e is Rectangular }
-            .map { e: DiagramElement? -> e as Rectangular? }
-            .filter(Predicate { e: Rectangular? -> a.willAlign(e!!, horizontal) })
-            .filter(Predicate { e: Rectangular? -> e is Connected })
-            .collect(Collectors.toSet())
-        if (filtered.size > 0) {
+    private fun alignOnAxis(c: Compaction, contents: List<DiagramElement>, a: Aligner, horizontal: Boolean, de: Container) {
+        val filtered = contents
+            .filterIsInstance<Rectangular>()
+            .filter { a.willAlign(it, horizontal) }
+            .filterIsInstance<Connected>()
+            .toSet()
+        if (filtered.isNotEmpty()) {
             a.alignFor(de, filtered, c, horizontal)
         }
     }
