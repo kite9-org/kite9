@@ -128,9 +128,11 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         } else true
     }
 
-    protected fun separate(s1: Slideable<Segment>, fs: FaceSide) {
-        for (s2 in fs.all) {
-            separate(s1, s2)
+    protected fun separate(s1: Slideable<Segment>?, fs: FaceSide) {
+        if (s1 != null) {
+            for (s2 in fs.all) {
+                separate(s1, s2)
+            }
         }
     }
 
@@ -140,9 +142,11 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         }
     }
 
-    protected fun separate(s1: Slideable<Segment>, s2: Slideable<Segment>) {
-        val minDistance = getMinimumDistance(s1.underlying, s2.underlying, null, true)
-        s1.slackOptimisation.ensureMinimumDistance(s1, s2, minDistance.toInt())
+    protected fun separate(s1: Slideable<Segment>?, s2: Slideable<Segment>?) {
+        if ((s1!=null) && (s2 !=null)) {
+            val minDistance = getMinimumDistance(s1.underlying, s2.underlying, null, true)
+            s1.slackOptimisation.ensureMinimumDistance(s1, s2, minDistance.toInt())
+        }
     }
 
     protected fun alignSingleConnections(
