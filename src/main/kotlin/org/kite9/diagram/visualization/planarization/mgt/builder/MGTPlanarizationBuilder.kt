@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder
  */
 abstract class MGTPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : RHDPlanarizationBuilder(em, gp), Logable {
 
-    @JvmField
+
 	protected var log = Kite9Log.instance(this)
 
     override fun buildPlanarization(

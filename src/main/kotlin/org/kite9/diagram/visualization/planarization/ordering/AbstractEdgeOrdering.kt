@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyin
 
 abstract class AbstractEdgeOrdering : EdgeOrdering {
 
-    @JvmField
+
 	protected var directions: Any? = null
 
     override fun getEdgeDirections(): Any? {

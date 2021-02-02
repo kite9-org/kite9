@@ -37,13 +37,13 @@ abstract class AbstractBiDiEdgeRouteFinder(
 ) : AbstractRouteFinder(
     p, rh, getEndZone(rh, ci), getExpensiveAxis(ci, gt), getBoundedAxis(ci, gt), ci
 ) {
-    @JvmField
+
 	var maximumBoundedAxisDistance: Double?
     var allowedCrossingDirections: Set<Direction?>
-    @JvmField
+
 	var startZone: RoutingInfo?
     var completeZone: RoutingInfo
-    @JvmField
+
 	var em: ElementMapper
     var it: CrossingType
     var gt: GeographyType

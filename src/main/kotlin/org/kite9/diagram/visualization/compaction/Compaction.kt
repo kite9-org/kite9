@@ -32,9 +32,9 @@ interface Compaction {
     fun getTopEmbedding(): Embedding
 
     companion object {
-        @JvmField
+
         val DONE_FACE_SIDE = FaceSide(null, setOf())
-        @JvmField
+
 		val DONE = Rectangle<FaceSide>(DONE_FACE_SIDE, DONE_FACE_SIDE, DONE_FACE_SIDE, DONE_FACE_SIDE)
     }
 }

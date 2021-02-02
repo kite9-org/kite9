@@ -562,7 +562,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     }
 
     companion object {
-        @JvmField
+
 		var LAST_PLANARIZATION_DEBUG: List<Vertex>? = null
         val CHANGE_CONTAINER_ORDER: Boolean = true
     }

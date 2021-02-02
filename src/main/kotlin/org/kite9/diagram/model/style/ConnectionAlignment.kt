@@ -1,8 +1,5 @@
 package org.kite9.diagram.model.style
 
-import org.kite9.diagram.model.style.ConnectionAlignment.Measurement
-import org.kite9.diagram.model.style.ConnectionAlignment
-
 data class ConnectionAlignment(val type: Measurement, val amount: Double) {
 
     enum class Measurement {
@@ -10,7 +7,7 @@ data class ConnectionAlignment(val type: Measurement, val amount: Double) {
     }
 
     companion object {
-        @JvmField
+
 		val NONE = ConnectionAlignment(Measurement.NONE, 0.0)
     }
 }

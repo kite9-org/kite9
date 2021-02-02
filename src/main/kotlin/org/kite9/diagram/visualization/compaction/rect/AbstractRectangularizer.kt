@@ -298,9 +298,9 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
             return stack[index]
         }
 
-        @JvmField
+
 		var patternA = createList(Turn.LEFT, Turn.RIGHT, Turn.RIGHT)
-        @JvmField
+
 		var patternD = createList(Turn.RIGHT, Turn.RIGHT, Turn.LEFT)
         private fun createList(vararg turns: Turn): List<Turn> {
             val out: MutableList<Turn> = ArrayList()

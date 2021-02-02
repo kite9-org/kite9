@@ -383,7 +383,7 @@ abstract class AxisHandlingGroupingStrategy(
     }
 
     companion object {
-        @JvmField
+
 		var LAST_MERGE_DEBUG: String? = null
     }
 

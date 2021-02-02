@@ -44,7 +44,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
     }
 
     protected val liveGroups: MutableSet<Group> = DetHashSet(elements * 2)
-    @JvmField
+
 	protected val optionQueue // options in processing order
 	    : PriorityQueue<MergeOption> = PriorityQueue(elements * 5 + 1, null)
     protected val bestOptions // contains all considered

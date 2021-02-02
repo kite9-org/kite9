@@ -42,7 +42,7 @@ abstract class GroupPhase(
     override val isLoggingEnabled: Boolean
         get() = true
 
-    @JvmField
+
     val allGroups: MutableSet<LeafGroup> = LinkedHashSet(elements * 2)
     private val pMap: MutableMap<Connected, LeafGroup> = LinkedHashMap(elements * 2)
     private val allLinks: MutableSet<Connection> = UnorderedSet(1000)
@@ -204,9 +204,9 @@ abstract class GroupPhase(
         }
     }
 
-    @JvmField
+
     var groupCount = 0
-    @JvmField
+
     var containerCount = 0
 
     private fun single(c: BiDirectional<Connected>): Set<BiDirectional<Connected>> {

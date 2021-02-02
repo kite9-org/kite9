@@ -63,7 +63,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         var xSize = xOrdinals.size
         var ySize = yOrdinals.size
         while (overlaps.size > 0) {
-            val row = Math.floorDiv(cell, xSize)
+            val row = cell / xSize
             val col = cell % xSize
             val yOrder = yOrdinals.toMutableList().also { it.sort() }
             val xOrder = xOrdinals.toMutableList().also { it.sort() }

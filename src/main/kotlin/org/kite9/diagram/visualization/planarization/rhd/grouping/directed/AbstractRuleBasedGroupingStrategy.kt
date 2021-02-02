@@ -156,23 +156,23 @@ abstract class AbstractRuleBasedGroupingStrategy(
 
     companion object {
         // different types of merges get different priorities.
-		@JvmField
+
 		var AXIS_SINGLE_NEIGHBOUR = 0
-        @JvmField
+
 		var AXIS_ALIGNED = 1
-        @JvmField
+
         var AXIS_MULTI_NEIGHBOUR = 2
-        @JvmField
+
 		var PERP_NEIGHBOUR = 3
-        @JvmField
+
 		var PERP_ALIGNED = 4
-        @JvmField
+
         var AXIS_ALIGNED_UNSURE = 5
-        @JvmField
+
 		var UNDIRECTED_LINKED = 6
-        @JvmField
+
 		var UNDIRECTED_ALIGNED = 7
-        @JvmField
+
 		var UNCONNECTED_NEIGHBOUR = 8
     }
 }

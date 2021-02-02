@@ -297,7 +297,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         private const val THICK_GUTTER = 0.01
         val TOP_HALF = BasicBounds(0.0, .5)
         val BOTTOM_HALF = BasicBounds(.5, 1.0)
-        @JvmField
+
 		val BASIC_AVOIDANCE_CORNERS: MutableMap<Routing, Corner> = HashMap()
 
         /**

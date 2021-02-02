@@ -41,10 +41,10 @@ abstract class AbstractRouteFinder(
     override val isLoggingEnabled: Boolean
         get() = false
 
-    @JvmField
+
 	@Deprecated("")
     protected val tolerance = 1e-10
-    @JvmField
+
 	protected var log = Kite9Log.instance(this)
     private var pathCount = 0
 
@@ -56,12 +56,12 @@ abstract class AbstractRouteFinder(
         var legalEdgeCrossCost = 0.0
         var totalEdgeCrossings = 0
         var totalPlanarizationCrossings = 0
-        @JvmField
+
 		var illegalEdgeCrossings = 0
         var minimumTotalDistance = 0.0
-        @JvmField
+
 		var minimumExpensiveAxisDistance = 0.0
-        @JvmField
+
 		var minimumBoundedAxisDistance = 0.0
 
         constructor() : super() {}
@@ -162,7 +162,7 @@ abstract class AbstractRouteFinder(
     abstract inner class EdgePath(g: Going, s: PlanarizationSide, prev: EdgePath?) {
 
         var pathNumber = pathCount++
-        @JvmField
+
 		var costing: Costing
         var going: Going
 
@@ -171,7 +171,7 @@ abstract class AbstractRouteFinder(
          */
         var side: PlanarizationSide
         var pathParts: Int
-        @JvmField
+
 		var prev: EdgePath? = null
         abstract val trail: LineRoutingInfo?
         abstract val trailEndVertex: Int
@@ -217,7 +217,7 @@ abstract class AbstractRouteFinder(
     abstract inner class LocatedEdgePath(l: Location, g: Going, side: PlanarizationSide, prev: EdgePath?) :
         EdgePath(g, side, prev), PathLocation<LocatedEdgePath> {
 
-        @JvmField
+
 		var l: Location
 		override val trailEndVertex = l.trailEndVertex
 
@@ -516,13 +516,13 @@ abstract class AbstractRouteFinder(
         HORIZONTAL, VERTICAL
     }
 
-    @JvmField
+
 	protected var illegalEdgeCross: Axis? = null
-    @JvmField
+
 	protected var entryDirection: Direction? = null
-    @JvmField
+
 	protected var exitDirection: Direction? = null
-    @JvmField
+
 	protected var pathDirection: Direction? = null
     fun addToQueue(pq: State<LocatedEdgePath>, ep: LocatedEdgePath?) {
         if (ep != null) {

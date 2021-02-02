@@ -17,7 +17,7 @@ internal class NudgeChoice(
 
     var stateAfter: Map<Any, Int>? = null
 
-    @JvmField
+
     var cost: Int? = null
 
     var note: String

@@ -440,7 +440,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
     }
 
     companion object {
-        @JvmField
+
 		var LAST_PLANARIZATION_DEBUG: String? = null
     }
 

@@ -79,7 +79,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
     }
 
     companion object {
-        @JvmField
+
 		val EMPTY_BOUNDS = BasicBounds(-1.0, -1.0)
     }
 

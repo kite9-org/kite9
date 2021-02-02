@@ -20,10 +20,10 @@ class NudgeItem(
 
 	val source: Node = SimpleNode("source-$id", 0, null)
 
-    @JvmField
+
 	val sink: Node = SimpleNode("sink-$id", 0, null)
 
-    @JvmField
+
 	val type = calculateType()
 
     val lastEdge: Edge by lazy {

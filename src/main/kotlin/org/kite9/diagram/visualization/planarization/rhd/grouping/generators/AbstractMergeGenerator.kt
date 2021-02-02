@@ -14,7 +14,7 @@ abstract class AbstractMergeGenerator(
     val grouper: GeneratorBasedGroupingStrategy
 ) : MergeGenerator, Logable {
 
-    @JvmField
+
 	protected var log = Kite9Log.instance(this)
 
     open fun addMergeOption(
