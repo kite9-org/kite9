@@ -109,7 +109,7 @@
 					<execution>
 						<id>compile</id>
 						<goals>
-							<goal>js</goal>
+							<!--<goal>js</goal> -->
 							<goal>compile</goal>
 						</goals>
 						<configuration>
