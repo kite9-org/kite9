@@ -19,33 +19,8 @@ package org.kite9.diagram.common.fraction
 /**
  * Thrown for any BigFraction issues
  */
-class FractionException : RuntimeException {
+class FractionException : Exception {
 
     constructor(v: String) : super(v);
-
-    /**
-     * Constructs an exception with specified formatted detail message.
-     * Message formatting is delegated to [java.text.MessageFormat].
-     * @param value double value to convert
-     * @param maxIterations maximal number of iterations allowed
-     */
-    constructor(value: Double, maxIterations: Int) : super(
-        "Unable to convert %d to fraction after %i iterations".format(
-        value,
-        maxIterations))
-
-    /**
-     * Constructs an exception with specified formatted detail message.
-     * Message formatting is delegated to [java.text.MessageFormat].
-     * @param value double value to convert
-     * @param p current numerator
-     * @param q current denominator
-     */
-    constructor(value: Double, p: Long, q: Long) : super(
-        "Overflow trying to convert %d to fraction (%l/%l)".format(
-        value,
-        p,
-        q)
-    )
 
 }

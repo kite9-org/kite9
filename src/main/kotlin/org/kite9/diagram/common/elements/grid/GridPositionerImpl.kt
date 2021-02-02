@@ -350,7 +350,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
 
     companion object {
-        
+
 		fun getYOccupies(diagramElement: Rectangular): IntegerRange {
             return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.y
         }

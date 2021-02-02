@@ -48,7 +48,6 @@ abstract class AbstractBaseCornerVertices(
     }
 
     companion object {
-        @JvmField
 		val FULL_RANGE = OPair(ZERO, ONE)
     }
 }

@@ -88,17 +88,15 @@ class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: Lo
     }
 
     companion object {
-        @JvmStatic
+
 		fun isMin(b: LongFraction): Boolean {
             return b.equals(ZERO)
         }
 
-        @JvmStatic
 		fun isMax(b: LongFraction): Boolean {
             return b.equals(ONE)
         }
 
-        @JvmStatic
 		fun getOrdForXDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.LEFT -> ZERO
@@ -107,7 +105,6 @@ class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: Lo
             }
         }
 
-        @JvmStatic
 		fun getOrdForYDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.UP -> ZERO
