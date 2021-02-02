@@ -18,13 +18,13 @@ open class State<P : PathLocation<P>>(private val ssp: AbstractSSP<P>) {
                 //System.out.println("Replacing: \n\t "+existing+"\n\t"+path+"\n\t"+location);
                 pq.add(path)
                 locationToPathMap[location] = path
-                maxStack = Math.max(pq.size().toLong(), maxStack)
+                maxStack = pq.size().toLong().coerceAtLeast(maxStack)
                 true
             } else {
                 //System.out.println("Not Adding: "+path);
                 false
             }
-        } catch (e: OutOfMemoryError) {
+        } catch (e: Exception) {
             throw SSPTooLargeException("SSP too large: queue=" + pq.size() + " map=" + locationToPathMap.size)
         }
     }

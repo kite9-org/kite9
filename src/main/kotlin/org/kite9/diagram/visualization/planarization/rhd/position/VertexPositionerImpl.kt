@@ -10,8 +10,8 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.getOrdForXDirection
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.getOrdForYDirection
 import org.kite9.diagram.common.elements.vertex.Vertex
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE_HALF
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
@@ -164,8 +164,8 @@ class VertexPositionerImpl(
         val bounds: RoutingInfo
         val bx: Bounds
         val by: Bounds
-        val fracMapX: Map<BigFraction, Double>
-        val fracMapY: Map<BigFraction, Double>
+        val fracMapX: Map<LongFraction, Double>
+        val fracMapY: Map<LongFraction, Double>
         if (cvs is SubGridCornerVertices) {
             val container = cvs.getGridContainer()
             bounds = rh.getPlacedPosition(container)!!
@@ -248,8 +248,8 @@ class VertexPositionerImpl(
         bx: Bounds,
         by: Bounds,
         out: MutableList<Vertex>,
-        fracMapX: Map<BigFraction, Double>,
-        fracMapY: Map<BigFraction, Double>
+        fracMapX: Map<LongFraction, Double>,
+        fracMapY: Map<LongFraction, Double>
     ) {
         var cv: MultiCornerVertex? = cv
         var bx = bx

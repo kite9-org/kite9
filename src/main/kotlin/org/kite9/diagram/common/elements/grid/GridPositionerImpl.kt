@@ -3,8 +3,8 @@ package org.kite9.diagram.common.elements.grid
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.mapping.CornerVertices
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.getReducedFraction
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.getReducedFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.common.range.BasicIntegerRange
 import org.kite9.diagram.common.range.IntegerRange
@@ -57,8 +57,8 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         // add remaining/dummy elements elements, by adding extra rows if need be.
         var cell = 0
         if (overlaps.size > 0) {
-            padOrdinal(xOrdinals, Math.max(1, ord.getGridColumns()))
-            padOrdinal(yOrdinals, Math.max(1, ord.getGridRows()))
+            padOrdinal(xOrdinals, 1.coerceAtLeast(ord.getGridColumns()))
+            padOrdinal(yOrdinals, 1.coerceAtLeast(ord.getGridRows()))
         }
         var xSize = xOrdinals.size
         var ySize = yOrdinals.size
@@ -69,7 +69,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             val xOrder = xOrdinals.toMutableList().also { it.sort() }
             if (row >= yOrder.size) {
                 ySize++
-                yOrder.add(yOrder.stream().reduce { a: Int, b: Int -> Math.max(a, b) }.orElse(0) + 1)
+                yOrder.add(yOrder.stream().reduce { a: Int, b: Int -> a.coerceAtLeast(b) }.orElse(0) + 1)
             }
             val co = xOrder[col]
             val ro = yOrder[row]
@@ -242,17 +242,17 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
                 // setup x range
                 var xr = if (xp.containsKey(de)) xp[de]!! else OPair(Int.MAX_VALUE, Int.MIN_VALUE)
-                xr = OPair(Math.min(x, xr.a), Math.max(x + 1, xr.b))
+                xr = OPair(x.coerceAtMost(xr.a), (x + 1).coerceAtLeast(xr.b))
                 xp[de] = xr
 
                 // setup y range
                 var yr = if (yp.containsKey(de)) yp[de]!! else OPair(Int.MAX_VALUE, Int.MIN_VALUE)
-                yr = OPair(Math.min(y, yr.a), Math.max(y + 1, yr.b))
+                yr = OPair(y.coerceAtMost(yr.a), (y + 1).coerceAtLeast(yr.b))
                 yp[de] = yr
             }
         }
         for (de in xp.keys) {
-            val ri = de!!.getRenderingInformation() as RectangleRenderingInformation
+            val ri = de.getRenderingInformation() as RectangleRenderingInformation
             val (a, b) = xp[de]!!
             val (a1, b1) = yp[de]!!
             val xin = OPair(
@@ -271,10 +271,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     override fun getClockwiseOrderedContainerVertices(cvs: CornerVertices): List<MultiCornerVertex> {
-        var minx: BigFraction? = null
-        var maxx: BigFraction? = null
-        var miny: BigFraction? = null
-        var maxy: BigFraction? = null
+        var minx: LongFraction? = null
+        var maxx: LongFraction? = null
+        var miny: LongFraction? = null
+        var maxy: LongFraction? = null
         cvs.identifyPerimeterVertices()
         val perimeterVertices = cvs.getPerimeterVertices()
         for (cv in perimeterVertices) {
@@ -297,7 +297,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         return plist
     }
 
-    private fun limit(current: BigFraction?, `in`: BigFraction, compare: Int): BigFraction? {
+    private fun limit(current: LongFraction?, `in`: LongFraction, compare: Int): LongFraction? {
         var current = current
         if (current == null || `in`.compareTo(current) == compare) {
             current = `in`
@@ -324,10 +324,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun collect(
-        minx: BigFraction?,
-        maxx: BigFraction?,
-        miny: BigFraction?,
-        maxy: BigFraction?,
+        minx: LongFraction?,
+        maxx: LongFraction?,
+        miny: LongFraction?,
+        maxy: LongFraction?,
         elements: Collection<MultiCornerVertex>
     ): List<MultiCornerVertex> {
         val out: MutableList<MultiCornerVertex> = ArrayList()

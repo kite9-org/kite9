@@ -10,7 +10,7 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMax
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMin
 import org.kite9.diagram.common.elements.vertex.Vertex
-import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -20,7 +20,6 @@ import org.kite9.diagram.visualization.planarization.Face
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.Tools
 import org.kite9.diagram.visualization.planarization.ordering.BasicVertexEdgeOrdering
-import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
 import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
 import org.kite9.diagram.visualization.planarization.transform.PlanarizationTransform
 
@@ -110,7 +109,7 @@ class ContainerConnectionTransform2(elementMapper: ElementMapper?) : Planarizati
         return !cornerOrd(v.xOrdinal) || !cornerOrd(v.yOrdinal)
     }
 
-    private fun cornerOrd(ord: BigFraction): Boolean {
+    private fun cornerOrd(ord: LongFraction): Boolean {
         return isMin(ord) || isMax(ord)
     }
 

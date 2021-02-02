@@ -1,22 +1,22 @@
 package org.kite9.diagram.common.elements.mapping
 
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 abstract class AbstractBaseCornerVertices(
     rootContainer: DiagramElement,
-    cx: OPair<BigFraction>,
-    cy: OPair<BigFraction>,
+    cx: OPair<LongFraction>,
+    cy: OPair<LongFraction>,
     depth: Int
 ) : AbstractCornerVertices(
     rootContainer, cx, cy, depth
 ) {
-    private val elements: MutableMap<OPair<BigFraction>, MultiCornerVertex> = HashMap()
+    private val elements: MutableMap<OPair<LongFraction>, MultiCornerVertex> = HashMap()
 
     /**
      * There are no duplicates for independent container vertices.
@@ -25,7 +25,7 @@ abstract class AbstractBaseCornerVertices(
         return cv
     }
 
-    override fun createVertex(x: BigFraction, y: BigFraction): MultiCornerVertex {
+    override fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex {
         return createVertexHere(x, y, elements)
     }
 

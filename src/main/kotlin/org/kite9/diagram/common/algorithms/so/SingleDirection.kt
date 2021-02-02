@@ -1,6 +1,7 @@
 package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
+import kotlin.math.abs
 
 /**
  * Handles the constraints for a [Slideable] in a single direction (e.g.
@@ -62,7 +63,7 @@ class SingleDirection(
                 }
             }
             ok
-        } catch (e: StackOverflowError) {
+        } catch (e: Exception) {
             throw LogicException("Couldn't adjust (SO): $this pos: $position cachePos: $cachePosition")
         }
     }
@@ -81,7 +82,7 @@ class SingleDirection(
         return if (ci.cacheItem !== cacheMarker) {
             // the two elements are independent, one doesn't push the other.
             null
-        } else Math.abs(ci.cachePosition!! - startPosition)
+        } else abs(ci.cachePosition!! - startPosition)
     }
 
     fun canAddForwardConstraint(to: SingleDirection, distance: Int): Boolean {
@@ -122,10 +123,10 @@ class SingleDirection(
         get() {
             var depth = 0
             for (fwd in forward.keys) {
-                depth = Math.max(depth, fwd.maxDepth + 1)
+                depth = depth.coerceAtLeast(fwd.maxDepth + 1)
             }
             for (back in backward.keys) {
-                depth = Math.max(depth, back.maxDepth + 1)
+                depth = depth.coerceAtLeast(back.maxDepth + 1)
             }
             return depth
         }

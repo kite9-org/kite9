@@ -1,7 +1,7 @@
 package org.kite9.diagram.common.elements.mapping
 
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
@@ -15,14 +15,14 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 class SubGridCornerVertices(
     c: DiagramElement,
-    x: OPair<BigFraction>,
-    y: OPair<BigFraction>,
+    x: OPair<LongFraction>,
+    y: OPair<LongFraction>,
     parentCV: BaseGridCornerVertices,
     depth: Int
 ) : AbstractCornerVertices(parentCV.getGridContainer(), getXSpan(x, parentCV), getYSpan(y, parentCV), depth) {
 
     var baseGrid: BaseGridCornerVertices
-    private val elements: MutableMap<OPair<BigFraction>, MultiCornerVertex>
+    private val elements: MutableMap<OPair<LongFraction>, MultiCornerVertex>
 
     override fun mergeDuplicates(cv: MultiCornerVertex, rh: RoutableHandler2D): MultiCornerVertex? {
         return if (elements.values.contains(cv)) {
@@ -47,7 +47,7 @@ class SubGridCornerVertices(
         return (baseGrid as AbstractCornerVertices).getTopContainerVertices()
     }
 
-    override fun createVertex(x: BigFraction, y: BigFraction): MultiCornerVertex {
+    override fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex {
         var x = x
         var y = y
         x = scale(x, xRange)
@@ -79,14 +79,14 @@ class SubGridCornerVertices(
     }
 
     companion object {
-        private fun getYSpan(y: OPair<BigFraction>, parentCV: CornerVertices): OPair<BigFraction> {
+        private fun getYSpan(y: OPair<LongFraction>, parentCV: CornerVertices): OPair<LongFraction> {
             return OPair(
                 scale(y.a, (parentCV as AbstractCornerVertices).yRange),
                 scale(y.b, parentCV.yRange)
             )
         }
 
-        private fun getXSpan(x: OPair<BigFraction>, parentCV: CornerVertices): OPair<BigFraction> {
+        private fun getXSpan(x: OPair<LongFraction>, parentCV: CornerVertices): OPair<LongFraction> {
             return OPair(
                 scale(x.a, (parentCV as AbstractCornerVertices).xRange),
                 scale(x.b, parentCV.xRange)

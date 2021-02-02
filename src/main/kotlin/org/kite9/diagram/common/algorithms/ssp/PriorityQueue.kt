@@ -14,10 +14,10 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
 
     private var queue : Array<Any?> = arrayOfNulls<Any?>(initialCapacity)
     private var modCount = 0
-    var size : Int = 0
+    private var _size : Int = 0
 
     fun size(): Int {
-        return size;
+        return _size;
     }
 
     fun peek(): E? {
@@ -40,23 +40,23 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
 
     fun add(e: E) : Boolean {
         modCount++
-        val i = size
+        val i = _size
         if (i >= queue.size) grow(i + 1)
         siftUp(i, e)
-        size = i + 1
+        _size = i + 1
         return true
     }
 
     fun remove(): E? {
         val es = queue;
 
-        if (size == 0) {
+        if (_size == 0) {
             return null
         }
 
         var result = es[0] as E
         modCount++;
-        val n = --size
+        val n = --_size
         val x = es[n];
         if (n > 0) {
             if (comparator == null)
@@ -69,8 +69,8 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
     }
 
     private fun siftDown(k: Int, x: E) {
-        if (comparator != null) siftDownUsingComparator(k, x, queue, size, comparator)
-            else siftDownComparable(k, x, queue, size)
+        if (comparator != null) siftDownUsingComparator(k, x, queue, _size, comparator)
+            else siftDownComparable(k, x, queue, _size)
     }
 
     private fun <T> siftDownComparable(k: Int, x: T, es: Array<Any?>, n: Int) {
@@ -138,7 +138,7 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
     }
 
     private fun hugeCapacity(minCapacity: Int): Int {
-        if (minCapacity < 0) throw OutOfMemoryError()
+        if (minCapacity < 0) throw SSPTooLargeException("can't continue")
         return if (minCapacity > MAX_ARRAY_SIZE) Int.MAX_VALUE else MAX_ARRAY_SIZE
     }
 

@@ -5,8 +5,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 import org.kite9.diagram.common.elements.mapping.BaseGridCornerVertices
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.OPair
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.elements.grid.FracMapperImpl
+import org.kite9.diagram.common.fraction.LongFraction
 
 interface FracMapper {
 
@@ -21,7 +20,7 @@ interface FracMapper {
         rh: RoutableHandler2D,
         containerVertices: BaseGridCornerVertices,
         bounds: RoutingInfo
-    ): OPair<Map<BigFraction, Double>>
+    ): OPair<Map<LongFraction, Double>>
 
     companion object {
         val NULL_FRAC_MAP = FracMapperImpl.createNullFracMap()

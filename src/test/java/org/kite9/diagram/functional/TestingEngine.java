@@ -10,7 +10,7 @@ import org.kite9.diagram.TestingHelp;
 import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.common.fraction.BigFraction;
+import org.kite9.diagram.common.fraction.LongFraction;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.logging.LogicException;
@@ -291,12 +291,12 @@ public class TestingEngine extends TestingHelp {
 			int xoffset = 0;
 			int yoffset = 0;
 			if (vertex instanceof MultiCornerVertex) {
-				if (((MultiCornerVertex) vertex).getXOrdinal().equals(BigFraction.Companion.getONE())) {
+				if (((MultiCornerVertex) vertex).getXOrdinal().equals(LongFraction.Companion.getONE())) {
 					xoffset = -20;
 				} else {
 					yoffset = 5;
 				}
-				if (((MultiCornerVertex) vertex).getYOrdinal().equals(BigFraction.Companion.getONE())) {
+				if (((MultiCornerVertex) vertex).getYOrdinal().equals(LongFraction.Companion.getONE())) {
 					yoffset = -20;
 				} else {
 					yoffset = 5;

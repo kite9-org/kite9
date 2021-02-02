@@ -1,14 +1,12 @@
 package org.kite9.diagram.model.position
 
-import org.kite9.diagram.model.position.AbstractRenderingInformationImpl
-import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.common.objects.OPair
-import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.LongFraction
 
 class RectangleRenderingInformationImpl : AbstractRenderingInformationImpl, RectangleRenderingInformation {
 
-    private var gx: OPair<BigFraction>? = null
-    private var gy: OPair<BigFraction>? = null
+    private var gx: OPair<LongFraction>? = null
+    private var gy: OPair<LongFraction>? = null
     private var sx = 0
     private var sy = 0
     override var cellXPositions: DoubleArray? = doubleArrayOf()
@@ -21,19 +19,19 @@ class RectangleRenderingInformationImpl : AbstractRenderingInformationImpl, Rect
         this.rendered = rendered
     }
 
-    override fun gridXPosition(): OPair<BigFraction>? {
+    override fun gridXPosition(): OPair<LongFraction>? {
         return gx
     }
 
-    override fun gridYPosition(): OPair<BigFraction>? {
+    override fun gridYPosition(): OPair<LongFraction>? {
         return gy
     }
 
-    override fun setGridXPosition(gx: OPair<BigFraction>?) {
+    override fun setGridXPosition(gx: OPair<LongFraction>?) {
         this.gx = gx
     }
 
-    override fun setGridYPosition(gy: OPair<BigFraction>?) {
+    override fun setGridYPosition(gy: OPair<LongFraction>?) {
         this.gy = gy
     }
 

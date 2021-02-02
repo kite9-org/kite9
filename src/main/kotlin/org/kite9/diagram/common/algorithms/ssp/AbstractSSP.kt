@@ -13,7 +13,6 @@ abstract class AbstractSSP<P : PathLocation<P>> : Logable {
         return path.getLocation()
     }
 
-    @Throws(NoFurtherPathException::class)
     open fun createShortestPath(): P {
         val s = createState()
         lastState = s

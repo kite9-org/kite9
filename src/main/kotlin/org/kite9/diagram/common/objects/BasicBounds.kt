@@ -1,6 +1,6 @@
 package org.kite9.diagram.common.objects
 
-import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.logging.LogicException
 
 data class BasicBounds(override val distanceMin: Double, override val distanceMax: Double) : Bounds {
@@ -54,7 +54,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         }
     }
 
-    override fun keep(buffer: Double, width: Double, atFraction: BigFraction): Bounds {
+    override fun keep(buffer: Double, width: Double, atFraction: LongFraction): Bounds {
         val span = distanceMax - distanceMin - buffer * 2.0
         val pos = atFraction.doubleValue() * span
         var lower = distanceMin + pos - width / 2.0 + buffer

@@ -68,7 +68,7 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         val lines: MutableList<String> = ArrayList()
         for (n in fg.allNodes) {
             n.ensureEulersEquilibrium()
-            val arcInfo = StringBuffer()
+            val arcInfo = StringBuilder()
             for (a in n.arcs) {
                 if (a.flow != 0) {
                     if (a.from === n) {

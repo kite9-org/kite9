@@ -91,7 +91,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var networkSizes: MutableMap<Group, Int> = HashMap(size * 2)
     var completedGroups: MutableSet<Group> = UnorderedSet(size * 2)
     override fun poll(): Group? {
-        while (todo.size > 0) {
+        while (todo.size() > 0) {
             val nw = todo.remove()!!
             val out = nw.group
             networkSizes.remove(out)

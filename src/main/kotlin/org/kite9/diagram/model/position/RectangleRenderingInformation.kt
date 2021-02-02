@@ -1,6 +1,6 @@
 package org.kite9.diagram.model.position
 
-import org.kite9.diagram.common.fraction.BigFraction
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.objects.OPair
 
 /**
@@ -14,10 +14,10 @@ interface RectangleRenderingInformation : RenderingInformation {
 
     fun gridXSize(): Int
     fun gridYSize(): Int
-    fun gridXPosition(): OPair<BigFraction>?
-    fun gridYPosition(): OPair<BigFraction>?
-    fun setGridXPosition(gx: OPair<BigFraction>?)
-    fun setGridYPosition(gy: OPair<BigFraction>?)
+    fun gridXPosition(): OPair<LongFraction>?
+    fun gridYPosition(): OPair<LongFraction>?
+    fun setGridXPosition(gx: OPair<LongFraction>?)
+    fun setGridYPosition(gy: OPair<LongFraction>?)
     fun setGridXSize(x: Int)
     fun setGridYSize(y: Int)
     var cellXPositions: DoubleArray?

@@ -1,9 +1,9 @@
 package org.kite9.diagram.common.elements.mapping
 
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.HPos
@@ -12,8 +12,8 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 abstract class AbstractCornerVertices(
     val rootContainer: DiagramElement,
-    val xRange: OPair<BigFraction>,
-    val yRange: OPair<BigFraction>,
+    val xRange: OPair<LongFraction>,
+    val yRange: OPair<LongFraction>,
     private val depth: Int
 ) : CornerVertices {
 
@@ -36,12 +36,12 @@ abstract class AbstractCornerVertices(
         }
     }
 
-    abstract override fun createVertex(x: BigFraction, y: BigFraction): MultiCornerVertex
+    abstract override fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex
 
     protected fun createVertexHere(
-        x: BigFraction,
-        y: BigFraction,
-        elements: MutableMap<OPair<BigFraction>, MultiCornerVertex>
+        x: LongFraction,
+        y: LongFraction,
+        elements: MutableMap<OPair<LongFraction>, MultiCornerVertex>
     ): MultiCornerVertex {
         val d = OPair(x, y)
         var cv = elements[d]
@@ -75,7 +75,7 @@ abstract class AbstractCornerVertices(
         perimeterVertices = pset
     }
 
-    private fun afterEq(`in`: BigFraction?, with: BigFraction): Boolean {
+    private fun afterEq(`in`: LongFraction?, with: LongFraction): Boolean {
         if (`in` == null) {
             return true
         }
@@ -83,7 +83,7 @@ abstract class AbstractCornerVertices(
         return c > -1
     }
 
-    private fun beforeEq(`in`: BigFraction?, with: BigFraction): Boolean {
+    private fun beforeEq(`in`: LongFraction?, with: LongFraction): Boolean {
         if (`in` == null) {
             return true
         }
@@ -92,10 +92,10 @@ abstract class AbstractCornerVertices(
     }
 
     private fun collect(
-        minx: BigFraction,
-        maxx: BigFraction,
-        miny: BigFraction,
-        maxy: BigFraction,
+        minx: LongFraction,
+        maxx: LongFraction,
+        miny: LongFraction,
+        maxy: LongFraction,
         out: MutableCollection<MultiCornerVertex>
     ) {
         for (cv in getTopContainerVertices().getAllDescendentVertices()) {
@@ -152,7 +152,7 @@ abstract class AbstractCornerVertices(
     }
 
     companion object {
-        fun scale(yy: BigFraction, range: OPair<BigFraction>): BigFraction {
+        fun scale(yy: LongFraction, range: OPair<LongFraction>): LongFraction {
             var y = yy
             val size = range.b.subtract(range.a)
             y = y.multiply(size)

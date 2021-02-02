@@ -3,10 +3,10 @@ package org.kite9.diagram.common.elements.grid
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.elements.mapping.BaseGridCornerVertices
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE_HALF
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.logging.LogicException
@@ -17,24 +17,24 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 class FracMapperImpl : FracMapper {
 
-    var fracMaps: MutableMap<DiagramElement, OPair<Map<BigFraction, Double>>> = HashMap()
+    var fracMaps: MutableMap<DiagramElement, OPair<Map<LongFraction, Double>>> = HashMap()
 
     override fun getFracMapForGrid(
         c: DiagramElement,
         rh: RoutableHandler2D,
         containerVertices: BaseGridCornerVertices,
         ri: RoutingInfo
-    ): OPair<Map<BigFraction, Double>> {
+    ): OPair<Map<LongFraction, Double>> {
         var out = fracMaps[c]
         if (out != null) {
             return out
         }
         val xBounds = rh.getBoundsOf(ri, true)
         val yBounds = rh.getBoundsOf(ri, false)
-        val left: MutableMap<BigFraction, Bounds?> = HashMap()
-        val right: MutableMap<BigFraction, Bounds?> = HashMap()
-        val up: MutableMap<BigFraction, Bounds?> = HashMap()
-        val down: MutableMap<BigFraction, Bounds?> = HashMap()
+        val left: MutableMap<LongFraction, Bounds?> = HashMap()
+        val right: MutableMap<LongFraction, Bounds?> = HashMap()
+        val up: MutableMap<LongFraction, Bounds?> = HashMap()
+        val down: MutableMap<LongFraction, Bounds?> = HashMap()
 
         // work out where this appears in relation to the neighbouring container's positions.
         val allVertices: Iterable<MultiCornerVertex> = containerVertices.getAllDescendentVertices()
@@ -100,7 +100,7 @@ class FracMapperImpl : FracMapper {
         return out
     }
 
-    private fun expand(boundsMap: MutableMap<BigFraction, Bounds?>, newBounds: Bounds, ord: BigFraction) {
+    private fun expand(boundsMap: MutableMap<LongFraction, Bounds?>, newBounds: Bounds, ord: LongFraction) {
         val oldBounds = boundsMap[ord]
         if (oldBounds == null) {
             boundsMap[ord] = newBounds
@@ -110,8 +110,8 @@ class FracMapperImpl : FracMapper {
     }
 
     companion object {
-        fun createNullFracMap(): MutableMap<BigFraction, Double> {
-            val xOut: MutableMap<BigFraction, Double> = HashMap()
+        fun createNullFracMap(): MutableMap<LongFraction, Double> {
+            val xOut: MutableMap<LongFraction, Double> = HashMap()
             xOut[ZERO] = 0.0
             xOut[ONE] = 1.0
             return xOut

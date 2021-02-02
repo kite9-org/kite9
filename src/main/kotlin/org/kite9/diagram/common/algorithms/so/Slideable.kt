@@ -4,6 +4,7 @@
 package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
+import kotlin.math.max
 
 class Slideable<X>(
     private val so: AbstractSlackOptimisation<X>,
@@ -33,7 +34,7 @@ class Slideable<X>(
             } else if (slack1 == null) {
                 slack2
             } else {
-                Math.max(slack1, slack2)
+                max(slack1, slack2)
             }
         } catch (e: NullPointerException) {
             throw LogicException("Some maximum size not set")

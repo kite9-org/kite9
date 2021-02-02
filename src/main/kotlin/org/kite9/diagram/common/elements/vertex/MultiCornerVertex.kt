@@ -1,9 +1,9 @@
 package org.kite9.diagram.common.elements.vertex
 
-import org.kite9.diagram.common.fraction.BigFraction
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ONE_HALF
-import org.kite9.diagram.common.fraction.BigFraction.Companion.ZERO
+import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
+import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -15,7 +15,7 @@ import org.kite9.diagram.model.position.VPos
  * For elements with grid-layout, these also represent points within the grid that will need to be connected up.
  * Multi-corners can be the corners of multiple different diagram elements.
  */
-class MultiCornerVertex(id: String, val xOrdinal: BigFraction, val yOrdinal: BigFraction) :
+class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: LongFraction) :
     AbstractAnchoringVertex(id + "_" + xOrdinal + "_" + yOrdinal), MultiElementVertex {
 
     override fun hasDimension(): Boolean {
@@ -89,17 +89,17 @@ class MultiCornerVertex(id: String, val xOrdinal: BigFraction, val yOrdinal: Big
 
     companion object {
         @JvmStatic
-		fun isMin(b: BigFraction): Boolean {
+		fun isMin(b: LongFraction): Boolean {
             return b.equals(ZERO)
         }
 
         @JvmStatic
-		fun isMax(b: BigFraction): Boolean {
+		fun isMax(b: LongFraction): Boolean {
             return b.equals(ONE)
         }
 
         @JvmStatic
-		fun getOrdForXDirection(d: Direction?): BigFraction {
+		fun getOrdForXDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.LEFT -> ZERO
                 Direction.RIGHT -> ONE
@@ -108,7 +108,7 @@ class MultiCornerVertex(id: String, val xOrdinal: BigFraction, val yOrdinal: Big
         }
 
         @JvmStatic
-		fun getOrdForYDirection(d: Direction?): BigFraction {
+		fun getOrdForYDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.UP -> ZERO
                 Direction.DOWN -> ONE
