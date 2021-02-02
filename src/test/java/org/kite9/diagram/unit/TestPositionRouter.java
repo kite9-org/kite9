@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
@@ -21,6 +24,11 @@ import org.kite9.diagram.common.HelpMethods;
 
 
 public class TestPositionRouter {
+
+	@BeforeClass
+	public static void setLoggingFactory() {
+		Kite9Log.Companion.setFactory(l -> new Kite9LogImpl(l));
+	}
 
 	PositionRoutableHandler2D prh = new PositionRoutableHandler2D();
 
@@ -489,7 +497,7 @@ public class TestPositionRouter {
 		for (PositionRoutingInfo b : l) {
 			if (b instanceof BoundsBasedPositionRoutingInfo) {
 				Map<Routing, Corner> avoidanceCorners = ((BoundsBasedPositionRoutingInfo)b).getAvoidanceCorners();
-				System.out.println(i+"    "+((avoidanceCorners==PositionRoutableHandler2D.BASIC_AVOIDANCE_CORNERS) ? "ac" : avoidanceCorners));
+				System.out.println(i+"    "+((avoidanceCorners==PositionRoutableHandler2D.Companion.getBASIC_AVOIDANCE_CORNERS()) ? "ac" : avoidanceCorners));
 				i++;
 			}
 		}

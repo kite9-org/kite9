@@ -202,7 +202,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		
 		// figure out bounds
 		int[] bounds = new int[]{100,100, 0, 0};
-		for (Group g : gp.allGroups) {
+		for (Group g : gp.getAllGroups()) {
 			extendBounds(bounds, g);
 		}
 		
@@ -236,7 +236,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			
 		}
 		
-		for (Group g : gp.allGroups) {
+		for (Group g : gp.getAllGroups()) {
 			int[] gbounds = new int[]{100,100, 0, 0};
 			extendBounds(gbounds, g);
 			int x = gbounds[0]*GRID+(GRID/2)-PAD;

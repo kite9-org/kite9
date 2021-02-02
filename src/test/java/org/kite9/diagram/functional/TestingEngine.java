@@ -73,14 +73,14 @@ public class TestingEngine extends TestingHelp {
 			try {
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d).getBytes());
-				if (HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
-					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG.getBytes());
+				if (HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
+					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG().getBytes());
 				}
-				if (AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG != null) {
-					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG.getBytes());
+				if (AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG() != null) {
+					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
-				if (RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
-					TestingEngine.drawPositions((Collection<Vertex>) RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG, RHDPlanarization.class, "positions", "vertex.png");
+				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
+					TestingEngine.drawPositions((Collection<Vertex>) RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), RHDPlanarization.class, "positions", "vertex.png");
 
 				}
 			} catch (PlanarizationException pe) {
@@ -201,7 +201,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isAligning(Connected v, Direction side) {
-				return v.getConnectionAlignment(side) != ConnectionAlignment.NONE;
+				return v.getConnectionAlignment(side) != ConnectionAlignment.Companion.getNONE();
 			}
 
 			/**

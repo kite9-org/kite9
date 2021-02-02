@@ -96,7 +96,7 @@ public class TemporaryConnectedImpl extends AbstractTemporaryConnected implement
 
 	@Override
 	public ConnectionAlignment getConnectionAlignment(Direction side) {
-		return ConnectionAlignment.NONE;
+		return ConnectionAlignment.Companion.getNONE();
 	}
 
 	@Override
