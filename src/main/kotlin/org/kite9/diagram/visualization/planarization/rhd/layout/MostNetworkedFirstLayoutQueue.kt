@@ -14,7 +14,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
  * This is based on a count of the number of groups that are already placed that the candidate groups link to.
  */
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
-    var log = Kite9Log(this)
+    var log = Kite9Log.instance(this)
 
     data class NetworkedItem(val group: Group, val size: Int) {
         override fun toString(): String {

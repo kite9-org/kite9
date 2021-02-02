@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  */
 public class BasicTemplater extends K9ElemTaggingProcessor implements XMLProcessor, Logable {
 	
-	protected Kite9Log log = new Kite9Log(this);
+	protected Kite9Log log = Kite9Log.Companion.instance(this);
 	
 	@Override
 	public String getPrefix() {

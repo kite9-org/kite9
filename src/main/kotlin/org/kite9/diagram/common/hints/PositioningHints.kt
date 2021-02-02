@@ -2,6 +2,8 @@ package org.kite9.diagram.common.hints
 
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Hints are attached to [PositionableDiagramElement]s.  These allow the grouping and layout
@@ -22,7 +24,6 @@ object PositioningHints {
     var PLANARIZATION_HINTS: MutableMap<String, Approach> = HashMap()
     var POSITION_HINTS: MutableMap<String, Approach> = HashMap()
     var ALL_HINTS: MutableMap<String, Approach> = HashMap()
-    @JvmStatic
 
 	fun merge(a: Map<String, Float?>, b: Map<String, Float?>): Map<String, Float?> {
         if (a.size == 0 && b.size == 0) {
@@ -45,12 +46,10 @@ object PositioningHints {
         }
     }
 
-    @JvmStatic
 	fun compareEitherXBounds(from: Map<String, Float?>, to: Map<String, Float?>): Int? {
         return compareEitherBounds(from, to, PLAN_MIN_X, PLAN_MAX_X, MIN_X, MAX_X)
     }
 
-    @JvmStatic
 	fun compareEitherYBounds(from: Map<String, Float?>, to: Map<String, Float?>): Int? {
         return compareEitherBounds(from, to, PLAN_MIN_Y, PLAN_MAX_Y, MIN_Y, MAX_Y)
     }
@@ -80,7 +79,7 @@ object PositioningHints {
         }
     }
 
-    @JvmStatic
+
 	fun planarizationDistance(a: Map<String, Float?>, b: Map<String, Float?>): Float? {
         val xD = scalarDistance(a, b, "px1", "px2")
         val yD = scalarDistance(a, b, "py1", "py2")
@@ -89,7 +88,7 @@ object PositioningHints {
         } else xD + yD
     }
 
-    @JvmStatic
+
 	fun positionDistance(a: Map<String, Float?>, b: Map<String, Float?>): Float? {
         val xD = scalarDistance(a, b, "x1", "x2")
         val yD = scalarDistance(a, b, "y1", "y2")
@@ -141,9 +140,9 @@ object PositioningHints {
             } else if (b == null) {
                 return a
             } else if (this == MAX) {
-                return Math.max(a, b)
+                return max(a, b)
             } else if (this == MIN) {
-                return Math.min(a, b)
+                return min(a, b)
             }
             return null
         }

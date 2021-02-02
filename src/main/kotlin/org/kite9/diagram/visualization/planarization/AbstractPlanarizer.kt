@@ -22,7 +22,7 @@ import org.kite9.diagram.visualization.planarization.transform.PlanarizationTran
  */
 abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, Planarizer {
 
-    protected val log = Kite9Log(this)
+    protected val log = Kite9Log.instance(this)
 
     val gridPositioner: GridPositioner
         get() = elementMapper.getGridPositioner()

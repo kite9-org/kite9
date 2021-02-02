@@ -15,7 +15,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
 
     var buffer: Double
 
-    protected var log = Kite9Log(this)
+    protected var log = Kite9Log.instance(this)
 
     override fun getMinimumDistanceBetween(
         a: DiagramElement,

@@ -40,7 +40,7 @@ class MappedFlowGraphOrthBuilder(
     private val clc: EdgeConverter
 ) : Logable, OrthBuilder {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
     private val turnInfoMap: MutableMap<Vertex, TurnInformation>
 
     internal enum class StartPointType {

@@ -45,7 +45,7 @@ abstract class AbstractRouteFinder(
 	@Deprecated("")
     protected val tolerance = 1e-10
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
     private var pathCount = 0
 
     enum class Going {

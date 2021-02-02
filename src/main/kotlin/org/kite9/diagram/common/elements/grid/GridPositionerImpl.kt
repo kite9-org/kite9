@@ -26,7 +26,7 @@ import org.kite9.diagram.model.style.GridContainerPosition
  */
 class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPositioner, Logable {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     var placed: MutableMap<Container, Array<Array<DiagramElement>>> = HashMap()
 
@@ -63,13 +63,14 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         var xSize = xOrdinals.size
         var ySize = yOrdinals.size
         while (overlaps.size > 0) {
-            val row = cell / xSize
+            val row = Math.floorDiv(cell, xSize)
             val col = cell % xSize
             val yOrder = yOrdinals.toMutableList().also { it.sort() }
             val xOrder = xOrdinals.toMutableList().also { it.sort() }
             if (row >= yOrder.size) {
                 ySize++
-                yOrder.add(yOrder.reduceOrNull { a: Int, b: Int -> a.coerceAtLeast(b) } ?: 0 + 1)
+                val max : Int = yOrder.reduceOrNull { a: Int, b: Int -> a.coerceAtLeast(b) } ?: 0
+                yOrder.add(max + 1)
             }
             val co = xOrder[col]
             val ro = yOrder[row]

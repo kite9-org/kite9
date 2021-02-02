@@ -11,7 +11,7 @@ enum class Direction {
     }
 
     companion object {
-        @JvmStatic
+
 		fun rotateAntiClockwise(d: Direction): Direction {
             var ord = d.ordinal
             ord = ord + 1
@@ -19,7 +19,7 @@ enum class Direction {
             return values()[ord]
         }
 
-        @JvmStatic
+
 		fun rotateClockwise(d: Direction): Direction {
             var ord = d.ordinal
             ord = ord + 3
@@ -27,7 +27,7 @@ enum class Direction {
             return values()[ord]
         }
 
-        @JvmStatic
+
 		fun reverse(d: Direction?): Direction? {
             if (d == null) return null
             var ord = d.ordinal
@@ -44,12 +44,12 @@ enum class Direction {
             }
         }
 
-        @JvmStatic
+
 		fun isHorizontal(d: Direction): Boolean {
             return d == LEFT || d == RIGHT
         }
 
-        @JvmStatic
+
 		fun isVertical(d: Direction): Boolean {
             return d == UP || d == DOWN
         }

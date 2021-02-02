@@ -102,7 +102,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
          * Effectively, this controls whether two groups are allowed to merge with one another.  If it returns null,
          * the merge isn't allowed.
          */
-		@JvmStatic
+
 		fun getMergePlane(a: Group, b: Group): MergePlane? {
             return when (getState(a)) {
                 MergePlane.X_FIRST_MERGE -> {
@@ -138,7 +138,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
         /**
          * Only allows the merge if the neighbour is in the right state
          */
-		@JvmStatic
+
 		fun compatibleNeighbour(originatingGroup: Group, destinationGroup: Group): Boolean {
             return getMergePlane(originatingGroup, destinationGroup) != null
         }
@@ -152,7 +152,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             return false
         }
 
-        @JvmStatic
+
 		fun getState(group: Group): MergePlane {
             return (group.axis as DirectedGroupAxis).state
         }
@@ -186,7 +186,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             }
         }
 
-        @JvmStatic
+
 		fun getType(g: Group): DirectedGroupAxis {
             return g.axis as DirectedGroupAxis
         }

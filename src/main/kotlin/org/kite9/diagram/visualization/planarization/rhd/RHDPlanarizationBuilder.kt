@@ -63,7 +63,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.VertexPosition
  */
 abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protected var gridHelp: GridPositioner) : PlanarizationBuilder, Logable {
 
-    private val log: Kite9Log = Kite9Log(this)
+    private val log: Kite9Log = Kite9Log.instance(this)
 	protected var routableReader: RoutableHandler2D = PositionRoutableHandler2D()
     private var vp: VertexPositioner = newVertexPositioner()
 

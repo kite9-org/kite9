@@ -12,7 +12,7 @@ import org.kite9.diagram.logging.Kite9Log
 abstract class AbstractOrthogonalizer : Orthogonalizer, Logable {
 
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
 
     override val prefix: String
         get() = "ORTH"

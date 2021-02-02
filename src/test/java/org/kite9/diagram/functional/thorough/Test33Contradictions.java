@@ -18,6 +18,7 @@ import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.functional.layout.Test36LayoutChoices;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -451,7 +452,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_33_28_ADLHierarchyStrict() throws Exception {
-		Kite9Log.Companion.setLogging(Destination.OFF);
+		Kite9LogImpl.setLogging(Destination.OFF);
 		generate("ContradictingADLClassHierarchy.xml");
 	}
 

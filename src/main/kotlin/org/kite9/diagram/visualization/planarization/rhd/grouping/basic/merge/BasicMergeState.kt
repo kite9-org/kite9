@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 
 open class BasicMergeState(var contradictionHandler: ContradictionHandler, elements: Int) : GroupResult(), Logable {
 
-    val log = Kite9Log(this)
+    val log = Kite9Log.instance(this)
 
     enum class GroupContainerState(var hasContent: Boolean, var isComplete: Boolean) {
         HAS_CONTENT(true, false), COMPLETE_WITH_CONTENT(true, true), NO_CONTENT(

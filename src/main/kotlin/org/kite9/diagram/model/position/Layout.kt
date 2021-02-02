@@ -9,7 +9,7 @@ enum class Layout {
     HORIZONTAL, VERTICAL, LEFT, RIGHT, UP, DOWN, GRID;
 
     companion object {
-        @JvmStatic
+
 		fun reverse(d: Layout?): Layout? {
             return if (d == null) null else when (d) {
                 HORIZONTAL -> HORIZONTAL
@@ -21,7 +21,7 @@ enum class Layout {
             }
         }
 
-        @JvmStatic
+
 		fun rotateClockwise(d: Layout?): Layout? {
             return if (d == null) null else when (d) {
                 HORIZONTAL -> VERTICAL
@@ -33,7 +33,7 @@ enum class Layout {
             }
         }
 
-        @JvmStatic
+
 		fun rotateAntiClockwise(d: Layout?): Layout? {
             return if (d == null) null else when (d) {
                 HORIZONTAL -> VERTICAL
@@ -45,7 +45,7 @@ enum class Layout {
             }
         }
 
-        @JvmStatic
+
 		fun isHorizontal(d: Layout?): Boolean {
             return if (d == null) true else when (d) {
                 HORIZONTAL, LEFT, RIGHT -> true

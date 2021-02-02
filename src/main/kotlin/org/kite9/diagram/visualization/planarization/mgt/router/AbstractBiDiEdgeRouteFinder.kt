@@ -334,8 +334,8 @@ abstract class AbstractBiDiEdgeRouteFinder(
             return getRoutingZone(rh, ci, false)!!
         }
 
-        @JvmStatic
-		protected fun checkContainerNotWithinGrid(c: Container) {
+
+		fun checkContainerNotWithinGrid(c: Container) {
             val parent = c.getContainer()
             if (parent != null && parent.getLayout() === Layout.GRID) {
                 throw EdgeRoutingException("Edge can't be routed as it can't come from a container embedded in a grid: $c")

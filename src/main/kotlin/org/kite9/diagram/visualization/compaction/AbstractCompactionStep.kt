@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer) : CompactionStep, Logable {
 
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
 
     override val isLoggingEnabled = true
 

@@ -604,7 +604,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         const val MASK_LEFT = 64
         const val MASK_RIGHT = 128
         const val MASK_NO_DIRECTION = 256
-        @JvmStatic
+
 		fun createMask(mp: MergePlane?, nearestNeighbour: Boolean, inContainer: Boolean, vararg d: Direction?): Int {
             var outMask = 0
             if (mp === MergePlane.X_FIRST_MERGE || mp === MergePlane.UNKNOWN || mp == null) {

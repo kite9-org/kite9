@@ -36,7 +36,7 @@ import org.w3c.dom.stylesheets.StyleSheet;
  */
 public class CachingSVGDOMImplementation extends SVG12DOMImplementation  implements Logable {
 
-	protected final Kite9Log log = new Kite9Log(this);
+	protected final Kite9Log log = Kite9Log.Companion.instance(this);
 	protected final Cache cache;
 
 	public CachingSVGDOMImplementation(Cache c) {

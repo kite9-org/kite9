@@ -9,9 +9,6 @@ import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
-import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrixEvaluator.calculateExtraExternalLinkDistance
-import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrixEvaluator.calculateInternalDistance
-import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrixEvaluator.countOverlaps
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
@@ -36,6 +33,8 @@ class DirectionPlacementApproach(
     log, aDirection, overall, rh, setHoriz, setVert, natural
 ) {
 
+    val ev = ExitMatrixEvaluator()
+
     override fun evaluate() {
         overall.layout = aDirection
         rh.clearTempPositions(false)
@@ -49,9 +48,9 @@ class DirectionPlacementApproach(
 
         // can't understand how this got reversed
         val matrixDirection = reverse(aDirection)
-        score = countOverlaps(aMatrix, bMatrix, matrixDirection!!, rh)
-        val externalDistance = calculateExtraExternalLinkDistance(aMatrix, bMatrix, matrixDirection, rh)
-        val internalDistance = calculateInternalDistance(overall.internalLinkA, rh)
+        score = ev.countOverlaps(aMatrix, bMatrix, matrixDirection!!, rh)
+        val externalDistance = ev.calculateExtraExternalLinkDistance(aMatrix, bMatrix, matrixDirection, rh)
+        val internalDistance = ev.calculateInternalDistance(overall.internalLinkA, rh)
         log.send("Overlap score: $score")
         log.send("Internal distance cost: $internalDistance")
         log.send("External distance cost: $externalDistance")

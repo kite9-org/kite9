@@ -39,7 +39,7 @@ import org.kite9.diagram.visualization.planarization.transform.PlanarizationTran
  */
 class ContainerConnectionTransform2(elementMapper: ElementMapper?) : PlanarizationTransform, Logable {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     override fun transform(pln: Planarization) {
         createContainerEdgeVertices(pln)

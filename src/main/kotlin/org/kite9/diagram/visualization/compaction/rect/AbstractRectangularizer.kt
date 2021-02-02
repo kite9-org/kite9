@@ -279,7 +279,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         /**
          * Works out the direction of turn between one segment and the next
          */
-		@JvmStatic
+
 		fun getTurn(t1: VertexTurn, t2: VertexTurn): Turn {
             val thisDirection = t1.direction
             val nextDirection = t2.direction
@@ -290,8 +290,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
             return items[(i + items.size) % items.size]
         }
 
-        @JvmStatic
-		protected fun getItemRotating(stack: List<VertexTurn>, index: Int): VertexTurn {
+
+		public fun getItemRotating(stack: List<VertexTurn>, index: Int): VertexTurn {
             var index = index
             while (index < 0) index += stack.size
             index = index % stack.size

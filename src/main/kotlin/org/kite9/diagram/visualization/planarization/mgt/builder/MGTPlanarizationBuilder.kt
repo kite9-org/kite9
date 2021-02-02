@@ -24,7 +24,7 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder
 abstract class MGTPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : RHDPlanarizationBuilder(em, gp), Logable {
 
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
 
     override fun buildPlanarization(
         d: Diagram,
@@ -55,7 +55,7 @@ abstract class MGTPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         get() = true
 
     companion object {
-        @JvmStatic
+
 		fun logPlanarEmbeddingDetails(pln: MGTPlanarization, log: Kite9Log) {
             val t = Table()
             val vertexOrder = pln.vertexOrder

@@ -26,7 +26,7 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
  */
 class CenteringAligner : Aligner, Logable {
 
-    protected var log = Kite9Log(this)
+    protected var log = Kite9Log.instance(this)
 
     override fun alignFor(co: Container, des: Set<Rectangular>, c: Compaction, horizontal: Boolean) {
         val sso = if (horizontal) c.getVerticalSegmentSlackOptimisation() else c.getHorizontalSegmentSlackOptimisation()

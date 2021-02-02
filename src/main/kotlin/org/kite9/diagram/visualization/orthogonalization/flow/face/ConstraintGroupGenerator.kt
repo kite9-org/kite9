@@ -31,7 +31,7 @@ import org.kite9.diagram.visualization.planarization.Planarization
  */
 class ConstraintGroupGenerator : Logable {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     fun getAllFloatingAndFixedConstraints(pln: Planarization): ConstraintGroup {
         val constrainedEdges = gatherConstrainedEdges(pln)

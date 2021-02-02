@@ -15,7 +15,7 @@ object Tools {
                 pointIntersect(item.maxY, container.minY, container.maxY)
     }
 
-    @JvmStatic
+
 	fun contains(amin: Double, amax: Double, bmin: Double, bmax: Double): Boolean {
         return pointIntersect(amin, bmin, bmax) &&
                 pointIntersect(amax, bmin, bmax)

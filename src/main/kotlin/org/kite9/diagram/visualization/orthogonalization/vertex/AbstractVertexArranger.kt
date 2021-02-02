@@ -24,7 +24,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.T
  */
 abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexArranger, Logable, ContentsConverter {
 
-    protected var log = Kite9Log(this)
+    protected var log = Kite9Log.instance(this)
 
     private val boundaries: MutableMap<Vertex, List<Boundary>> = HashMap()
 

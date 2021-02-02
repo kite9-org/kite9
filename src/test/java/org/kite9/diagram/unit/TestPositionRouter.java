@@ -218,7 +218,7 @@ public class TestPositionRouter {
 		lri2 = prh.move(lri2, posta9, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, posta6, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertTrue(PositionRoutableHandler2D.eq(.6842, lri2.getRunningCost()));
+		Assert.assertTrue(PositionRoutableHandler2D.Companion.eq(.6842, lri2.getRunningCost()));
 	}
 	
 	@Test
@@ -241,7 +241,7 @@ public class TestPositionRouter {
 		lri2 = prh.move(lri2, posta9, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, posta6, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertTrue(PositionRoutableHandler2D.eq(.1872, lri2.getRunningCost()));
+		Assert.assertTrue(PositionRoutableHandler2D.Companion.eq(.1872, lri2.getRunningCost()));
 	}
 	
 	@Test

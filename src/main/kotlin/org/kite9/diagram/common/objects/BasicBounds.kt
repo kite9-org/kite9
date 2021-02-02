@@ -14,8 +14,8 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         val o2 = other as BasicBounds
         //System.out.println("merging "+o2+" with "+this);
         return BasicBounds(
-            Math.min(o2.distanceMin, distanceMin),
-            Math.max(o2.distanceMax, distanceMax)
+            o2.distanceMin.coerceAtMost(distanceMin),
+            o2.distanceMax.coerceAtLeast(distanceMax)
         )
     }
 
@@ -26,8 +26,8 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
             return other
         }
         val o2 = other as BasicBounds
-        val lower = Math.max(o2.distanceMin, distanceMin)
-        val upper = Math.min(o2.distanceMax, distanceMax)
+        val lower = o2.distanceMin.coerceAtLeast(distanceMin)
+        val upper = o2.distanceMax.coerceAtMost(distanceMax)
         return if (lower >= upper) {
             EMPTY_BOUNDS
         } else BasicBounds(lower, upper)
@@ -59,8 +59,8 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         val pos = atFraction.doubleValue() * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
-        lower = Math.max(distanceMin + buffer, lower)
-        upper = Math.min(distanceMax - buffer, upper)
+        lower = (distanceMin + buffer).coerceAtLeast(lower)
+        upper = (distanceMax - buffer).coerceAtMost(upper)
         return BasicBounds(lower, upper)
     }
 
@@ -69,8 +69,8 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         val pos = fraction * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
-        lower = Math.max(distanceMin + buffer, lower)
-        upper = Math.min(distanceMax - buffer, upper)
+        lower = (distanceMin + buffer).coerceAtLeast(lower)
+        upper = (distanceMax - buffer).coerceAtMost(upper)
         return BasicBounds(lower, upper)
     }
 

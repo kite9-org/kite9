@@ -23,7 +23,7 @@ import org.kite9.diagram.logging.Logable;
  */
 public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 
-	protected Kite9Log log = new Kite9Log(this);
+	protected Kite9Log log = Kite9Log.Companion.instance(this);
 
 	CompleteDisplayer ded;
 	double gridSize;

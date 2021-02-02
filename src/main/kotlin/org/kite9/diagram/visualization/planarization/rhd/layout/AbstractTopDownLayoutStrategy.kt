@@ -26,7 +26,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : LayoutStrategy, Logable {
 
     @JvmField
-	var log = Kite9Log(this)
+	var log = Kite9Log.instance(this)
 
     private fun chooseBestCompoundGroupPlacement(gg: CompoundGroup) {
         rh.clearTempPositions(true)

@@ -28,7 +28,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     protected var tempy: MutableMap<Any?, Bounds> = HashMap(1000)
     protected var placedy: MutableMap<Any?, Bounds?> = HashMap(1000)
 
-    var log = Kite9Log(this)
+    var log = Kite9Log.instance(this)
 
     override fun getPlacedPosition(r: Any): RoutingInfo? {
         val x = placedx[r]
@@ -309,7 +309,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         private const val THROW_ON_ASSUMPTION_FAIL = true
         val OVERLAP = Any()
         private const val TOLERANCE = 0.000000001
-        @JvmStatic
+
 		fun eq(a: Double, b: Double): Boolean {
             return Math.abs(a - b) < TOLERANCE
         }

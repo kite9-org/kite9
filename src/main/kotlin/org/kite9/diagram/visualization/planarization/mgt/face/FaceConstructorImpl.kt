@@ -29,7 +29,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
  * @author robmoffat
  */
 class FaceConstructorImpl : FaceConstructor, Logable {
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     override fun createFaces(pl: MGTPlanarization) {
         val temps = introduceTemporaryEdges(pl)

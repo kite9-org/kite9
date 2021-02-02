@@ -15,7 +15,7 @@ import org.kite9.diagram.logging.LogicException
  */
 open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, Logable {
 
-    private var log = Kite9Log(this)
+    private var log = Kite9Log.instance(this)
     private var destination: List<Node>? = null
     private var startingPoints: List<Node>? = null
     var iterations = 0

@@ -31,7 +31,7 @@ class VertexPositionerImpl(
 ) : Logable, VertexPositioner {
 
     private val fracMapper: FracMapper = FracMapperImpl()
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     // temp workspace
     private var borderTrimAreaX = .25

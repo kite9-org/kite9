@@ -20,6 +20,7 @@ import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
@@ -42,7 +43,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	public void render(Map<Metrics, String> diagrams) throws IOException {
 		if (diagrams.size()>2) {
-			Kite9Log.Companion.setLogging(Destination.OFF);
+			Kite9LogImpl.setLogging(Destination.OFF);
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();

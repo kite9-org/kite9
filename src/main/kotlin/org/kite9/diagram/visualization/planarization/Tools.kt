@@ -21,7 +21,7 @@ import org.kite9.diagram.visualization.planarization.ordering.VertexEdgeOrdering
  * @author robmoffat
  */
 class Tools : Logable {
-    var log = Kite9Log(this)
+    var log = Kite9Log.instance(this)
     var elementNo = 0
     override val prefix: String
         get() = "PLNT"
@@ -390,7 +390,7 @@ class Tools : Logable {
     }
 
     companion object {
-        @JvmStatic
+
 		fun setUnderlyingContradiction(c: BiDirectional<*>?, state: Boolean) {
             if (c is BiDirectionalPlanarizationEdge) {
                 val underlying = c.getOriginalUnderlying()
@@ -402,7 +402,7 @@ class Tools : Logable {
             }
         }
 
-        @JvmStatic
+
 		fun isUnderlyingContradicting(c2: BiDirectional<*>?): Boolean {
             return if (c2 is BiDirectionalPlanarizationEdge) {
                 val underlying = c2.getOriginalUnderlying()
@@ -414,19 +414,19 @@ class Tools : Logable {
             }
         }
 
-        @JvmStatic
+
 		fun isConnectionContradicting(c: Connection): Boolean {
             val rri = c.getRenderingInformation()
             return rri.isContradicting
         }
 
-        @JvmStatic
+
 		fun isConnectionRendered(c: Connection): Boolean {
             val rri = c.getRenderingInformation()
             return rri.rendered
         }
 
-        @JvmStatic
+
 		fun setConnectionContradiction(c: Connection, contradicting: Boolean, rendering: Boolean) {
             val rri = c.getRenderingInformation()
             if (c.getDrawDirection() != null) {

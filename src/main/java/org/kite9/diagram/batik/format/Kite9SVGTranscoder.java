@@ -58,7 +58,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	public static final TranscodingHints.Key KEY_ENCAPSULATING = new BooleanKey();
 	
 	private final ADLExtensibleDOMImplementation domImpl;
-	private final Kite9Log log = new Kite9Log(this);
+	private final Kite9Log log = Kite9Log.Companion.instance(this);
 	private final Kite9DocumentFactory docFactory;
 	private final Kite9DocumentLoader docLoader;
 	private final Kite9BridgeContext bridgeContext;

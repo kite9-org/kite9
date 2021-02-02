@@ -15,7 +15,7 @@ abstract class AbstractMergeGenerator(
 ) : MergeGenerator, Logable {
 
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
 
     open fun addMergeOption(
         g1: Group,

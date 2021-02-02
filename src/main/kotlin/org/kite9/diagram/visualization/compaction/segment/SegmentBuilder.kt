@@ -27,7 +27,7 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
  */
 class SegmentBuilder : Logable {
 
-    var log = Kite9Log(this)
+    var log = Kite9Log.instance(this)
 
     fun buildSegmentList(o: Orthogonalization, planeDirection: Set<Direction>, direction: Dimension): List<Segment> {
         val transversePlane: MutableSet<Direction> = LinkedHashSet()

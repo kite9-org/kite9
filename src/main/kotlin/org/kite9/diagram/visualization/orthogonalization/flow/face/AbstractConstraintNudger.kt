@@ -25,7 +25,7 @@ import org.kite9.diagram.visualization.planarization.Face
 abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<PortionNode>>) : Logable, ConstraintNudger {
 
     @JvmField
-	protected var log = Kite9Log(this)
+	protected var log = Kite9Log.instance(this)
 
     protected fun getTableLogNodes(fg: MappedFlowGraph): Collection<Node> {
         val out: MutableList<Node> = ArrayList()

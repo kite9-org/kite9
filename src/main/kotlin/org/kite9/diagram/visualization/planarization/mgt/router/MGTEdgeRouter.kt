@@ -32,7 +32,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFin
 class MGTEdgeRouter(private val rh: RoutableReader, private val em: ElementMapper) : EdgeRouter, Logable {
     var t = Tools()
     var vertexIntro = 0
-    var log = Kite9Log(this)
+    var log = Kite9Log.instance(this)
     private fun applyRoute(ci: PlanarizationEdge, best: EdgePath, ep: EdgePath, p: MGTPlanarization): Boolean {
         var ci = ci
         var ep: EdgePath? = ep

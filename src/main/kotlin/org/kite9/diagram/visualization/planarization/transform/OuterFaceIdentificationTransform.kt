@@ -18,7 +18,7 @@ import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
  */
 class OuterFaceIdentificationTransform : PlanarizationTransform, Logable {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     override fun transform(pln: Planarization) {
         val d = pln.diagram

@@ -34,7 +34,7 @@ abstract class GroupPhase(
     val em: ElementMapper
 ) : GroupBuilder, Logable {
 
-    val log = Kite9Log(this)
+    val log = Kite9Log.instance(this)
 
     override val prefix: String
         get() = "GS  "
@@ -229,25 +229,25 @@ abstract class GroupPhase(
 
     companion object {
         const val LINK_WEIGHT = 1f
-        var log = Kite9Log(object : Logable {
+        var log = Kite9Log.instance(object : Logable {
             override val isLoggingEnabled: Boolean
                 get() = true
             override val prefix: String
                 get() = "GP  "
         })
 
-        @JvmStatic
+
         fun isHorizontalDirection(drawDirection: Direction?): Boolean {
             return drawDirection === Direction.LEFT || drawDirection === Direction.RIGHT
         }
 
-        @JvmStatic
+
         fun isVerticalDirection(drawDirection: Direction?): Boolean {
             return drawDirection === Direction.UP || drawDirection === Direction.DOWN
         }
 
         private val TEMPORARY_NEEDED: Set<Layout> = setOf(Layout.LEFT, Layout.RIGHT, Layout.UP, Layout.DOWN)
-        @JvmStatic
+
         fun getLayoutForDirection(currentDirection: Direction?): Layout? {
             return if (currentDirection == null) null else when (currentDirection) {
                 Direction.RIGHT -> Layout.RIGHT
@@ -258,7 +258,7 @@ abstract class GroupPhase(
             }
         }
 
-        @JvmStatic
+
         fun getDirectionForLayout(currentDirection: Layout?): Direction {
             return when (currentDirection) {
                 Layout.RIGHT -> Direction.RIGHT

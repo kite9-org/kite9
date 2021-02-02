@@ -245,7 +245,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		if (getFrom() == from) {
 			return getDrawDirection();
 		} else {
-			return Direction.reverse(getDrawDirection());
+			return Direction.Companion.reverse(getDrawDirection());
 		}
 	}
 
@@ -368,7 +368,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 			
 		}
 		
-		return Direction.reverse(drawDirection);
+		return Direction.Companion.reverse(drawDirection);
 	}
 
 	@Override

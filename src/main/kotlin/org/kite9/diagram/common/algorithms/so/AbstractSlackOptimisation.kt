@@ -11,7 +11,7 @@ import org.kite9.diagram.logging.LogicException
  * @author robmoffat
  */
 abstract class AbstractSlackOptimisation<X> : Logable {
-    val log = Kite9Log(this)
+    val log = Kite9Log.instance(this)
 
     var pushCount = 0
 

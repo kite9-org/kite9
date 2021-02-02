@@ -19,7 +19,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 
 class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionHandler {
 
-    private val log = Kite9Log(this)
+    private val log = Kite9Log.instance(this)
 
     override fun setContradicting(connections: Iterable<BiDirectional<Connected>>, dontRender: Boolean) {
         for (bic in connections) {

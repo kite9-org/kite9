@@ -140,7 +140,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
          * This is the cost of inserting a corner on an edge
          */
         const val CORNER = 100
-        @JvmStatic
+
 		fun createFaceVertex(from: Face?, to: Vertex, before: PlanarizationEdge, after: PlanarizationEdge): FaceVertex {
             val ff = FaceVertex(from!!, to, before, after)
             if (!before.meets(to) || !after.meets(to)) {
@@ -149,7 +149,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
             return ff
         }
 
-        @JvmStatic
+
 		fun createEdgeVertex(
             e: PlanarizationEdge?,
             to: Vertex?
@@ -157,7 +157,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
             return if (to == null) EdgeVertex(e!!) else EdgeVertex(e!!, to)
         }
 
-        @JvmStatic
+
 		fun removeArcs(fg: MappedFlowGraph, n: Node) {
             for (a in n.arcs) {
                 val otherEnd = if (a.from === n) a.to else a.from
@@ -167,7 +167,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
             n.arcs.clear()
         }
 
-        @JvmStatic
+
 		fun isConstrained(e: PlanarizationEdge): Boolean {
             return e.getDrawDirection() != null && !isUnderlyingContradicting(e)
         }

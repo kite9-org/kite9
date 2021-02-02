@@ -15,14 +15,13 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  *
  * @author robmoffat
  */
-object ExitMatrixEvaluator {
-    private const val OCCLUDED_COST = .5f
-    private const val STRAIGHT_VS_CORNER_COST = .5f
+class ExitMatrixEvaluator {
+
 
     /**
      * A heuristic calculation for the likely number of crossings due to this arragement
      */
-	@JvmStatic
+
 	fun countOverlaps(aMatrix: ExitMatrix, bMatrix: ExitMatrix, aDirection: Layout, rh: RoutableHandler2D): Double {
         val sideA = sumOneSide(aMatrix, bMatrix, aDirection, -1)
         val sideB = sumOneSide(aMatrix, bMatrix, aDirection, +1)
@@ -34,7 +33,7 @@ object ExitMatrixEvaluator {
     /**
      * Works out the extra distance of external links due to this arrangement
      */
-	@JvmStatic
+
 	fun calculateExtraExternalLinkDistance(
         aMatrix: ExitMatrix,
         bMatrix: ExitMatrix,
@@ -56,7 +55,7 @@ object ExitMatrixEvaluator {
     /**
      * Works out the cost score for the distance travelled by the internal links
      */
-	@JvmStatic
+
 	fun calculateInternalDistance(internal: LinkDetail?, rh: RoutableHandler2D): Double {
         if (internal == null) return 0.0
         val out = doubleArrayOf(0.0)
@@ -140,5 +139,11 @@ object ExitMatrixEvaluator {
     private fun getLinkCountOnSide(mat: ExitMatrix, ad: Layout?, side: Int): Float {
         return (mat.getLinkCount(ad, RelativeSide.FACING, side) + mat.getLinkCount(ad, RelativeSide.MIDDLE, side)
                 + mat.getLinkCount(ad, RelativeSide.OPPOSITE, side))
+    }
+
+    companion object {
+
+        private const val OCCLUDED_COST = .5f
+        private const val STRAIGHT_VS_CORNER_COST = .5f
     }
 }

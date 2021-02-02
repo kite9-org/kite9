@@ -28,7 +28,7 @@ import org.w3c.dom.Element;
 public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	
 	private final Cache cache;
-	private final Kite9Log log = new Kite9Log(this);
+	private final Kite9Log log = Kite9Log.Companion.instance(this);
 
 	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, Cache cache) {
 		super(userAgent);
