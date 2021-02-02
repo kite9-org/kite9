@@ -63,13 +63,13 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         var xSize = xOrdinals.size
         var ySize = yOrdinals.size
         while (overlaps.size > 0) {
-            val row = Math.floorDiv(cell, xSize)
+            val row = cell / xSize
             val col = cell % xSize
             val yOrder = yOrdinals.toMutableList().also { it.sort() }
             val xOrder = xOrdinals.toMutableList().also { it.sort() }
             if (row >= yOrder.size) {
                 ySize++
-                yOrder.add(yOrder.stream().reduce { a: Int, b: Int -> a.coerceAtLeast(b) }.orElse(0) + 1)
+                yOrder.add(yOrder.reduceOrNull { a: Int, b: Int -> a.coerceAtLeast(b) } ?: 0 + 1)
             }
             val co = xOrder[col]
             val ro = yOrder[row]
@@ -172,7 +172,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             if (last != null && last == line) {
                 yIt.remove()
                 height--
-            } else if (line.stream().filter { e: DiagramElement? -> e != null }.count() == 0L) {
+            } else if (line.filterNotNull().count() == 0) {
                 yIt.remove()
                 height--
             }
@@ -201,7 +201,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             if (last != null && last == line) {
                 remove = true
             }
-            if (line.stream().filter { e: DiagramElement? -> e != null }.count() == 0L) {
+            if (line.filterNotNull().count() == 0) {
                 remove = true
             }
             if (remove) {
@@ -348,13 +348,13 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     override val isLoggingEnabled: Boolean
         get() = true
 
+
     companion object {
-        @JvmStatic
+        
 		fun getYOccupies(diagramElement: Rectangular): IntegerRange {
             return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.y
         }
 
-        @JvmStatic
 		fun getXOccupies(diagramElement: Rectangular): IntegerRange {
             return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.x
         }
