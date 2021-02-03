@@ -34,16 +34,16 @@ public class DiagramAssert {
 			boolean ok = true;
 			switch (d) {
 			case UP:
-				ok= posa.getHeight() > posb.getHeight() + sizb.getHeight();
+				ok= posa.getH() > posb.getH() + sizb.getH();
 				break;
 			case DOWN:
-				ok =posa.getHeight() + siza.getHeight() < posb.getHeight();
+				ok =posa.getH() + siza.getH() < posb.getH();
 				break;
 			case LEFT:
-				ok =posa.getWidth() > posb.getWidth() + sizb.getWidth();
+				ok =posa.getW() > posb.getW() + sizb.getW();
 				break;
 			case RIGHT:
-				ok = posa.getWidth()+ siza.getWidth() < posb.getWidth();
+				ok = posa.getW()+ siza.getW() < posb.getW();
 				break;
 			}
 			

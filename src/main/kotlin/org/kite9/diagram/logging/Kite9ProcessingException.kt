@@ -1,8 +1,5 @@
 package org.kite9.diagram.logging
 
-import java.lang.RuntimeException
-import org.kite9.diagram.logging.Kite9ProcessingException
-
 /**
  * Thrown whenever there is a problem creating the kite9 item.
  * This is to do with input data not matching expectations, and
@@ -10,7 +7,8 @@ import org.kite9.diagram.logging.Kite9ProcessingException
  *
  * @author moffatr
  */
-open class Kite9ProcessingException : RuntimeException {
+open class Kite9ProcessingException : RuntimeException
+{
     protected constructor(arg0: String, arg1: Throwable?) : super(correctMessage(arg0, arg1), correctThrowable(arg1)) {}
     constructor(arg0: String?) : super(arg0) {}
 

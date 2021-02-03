@@ -10,7 +10,7 @@ interface RouteRenderingInformation : RenderingInformation {
     val hops: List<Boolean>?
     fun getWaypoint(pos: Int): Dimension2D?
     fun clear()
-    fun size(): Int
+    fun getLength(): Int
     fun add(d: Dimension2D)
     fun isHop(pos: Int): Boolean
     var isContradicting: Boolean

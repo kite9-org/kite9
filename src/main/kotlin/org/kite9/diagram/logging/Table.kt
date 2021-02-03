@@ -5,25 +5,27 @@ package org.kite9.diagram.logging
  *
  */
 class Table {
+
     var widths: MutableList<Int> = ArrayList()
     var rows: MutableList<Array<String?>> = ArrayList()
+
     fun addRow(vararg items: Any?) {
         val longRow: MutableList<String?> = ArrayList()
-        for (`object` in items) {
-            if (`object` == null) {
+        for (o in items) {
+            if (o == null) {
                 longRow.add("null")
-            } else if (`object`.javaClass.isArray) {
-                val length = java.lang.reflect.Array.getLength(`object`)
+            } else if (o is Array<*>) {
+                val length = o.size
                 for (i in 0 until length) {
-                    val item = java.lang.reflect.Array.get(`object`, i)
+                    val item = o[i]
                     longRow.add(item.toString())
                 }
-            } else if (`object` is Collection<*>) {
-                for (object2 in `object`) {
+            } else if (o is Collection<*>) {
+                for (object2 in o) {
                     longRow.add(object2?.toString() ?: "")
                 }
             } else {
-                longRow.add(`object`.toString())
+                longRow.add(o.toString())
             }
         }
         addArrayRow(longRow.toTypedArray())
@@ -57,12 +59,12 @@ class Table {
     fun addDoubleRow(row: DoubleArray) {
         val items = arrayOfNulls<String>(row.size)
         for (i in items.indices) {
-            items[i] = java.lang.Double.toString(row[i])
+            items[i] = row[i].toString()
         }
         addArrayRow(items)
     }
 
-    fun display(sb: StringBuffer) {
+    fun display(sb: StringBuilder) {
         for (row in rows) {
             var colno = 0
             for (col in row) {

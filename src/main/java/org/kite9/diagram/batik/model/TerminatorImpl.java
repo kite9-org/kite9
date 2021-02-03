@@ -118,9 +118,9 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		if (("x0".equals(name) )|| ("y0".equals(name))) {
 			return "0";
 		} else if ("x1".equals(name) || "width".equals(name)) {
-			return ""+getSizeBasedOnPadding().getWidth();
+			return ""+getSizeBasedOnPadding().width();
 		} else if ("y1".equals(name) || "height".equals(name)) {
-			return ""+getSizeBasedOnPadding().getHeight();
+			return ""+getSizeBasedOnPadding().height();
 		}
 		
 		return null;

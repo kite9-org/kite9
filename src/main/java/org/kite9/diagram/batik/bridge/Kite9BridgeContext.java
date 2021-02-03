@@ -78,8 +78,8 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
 
 	public void registerDiagramRenderedSize(Diagram d) {
 		RectangleRenderingInformation rri = d.getRenderingInformation();
-		double width = rri.getPosition().x()+rri.getSize().getWidth();
-		double height = rri.getPosition().y()+rri.getSize().getHeight();
+		double width = rri.getPosition().x()+rri.getSize().getW();
+		double height = rri.getPosition().y()+rri.getSize().getH();
 		double oldWidth = getDocumentSize().getWidth();
 		double oldHeight = getDocumentSize().getHeight();
 		setDocumentSize(new Dimension2DDouble(Math.max(width,  oldWidth), Math.max(height, oldHeight)));

@@ -1,24 +1,27 @@
 package org.kite9.diagram.model.position
 
+import kotlin.math.ceil
+
 interface Dimension2D {
-    val width: Double
-    val height: Double
+
+    val w: Double
+    val h: Double
     fun size(): Dimension2D
 
     fun x(): Double {
-        return width
+        return w
     }
 
     fun y(): Double {
-        return height
+        return h
     }
 
     fun width(): Double {
-        return width
+        return w
     }
 
     fun height(): Double {
-        return height
+        return h
     }
 
     fun divide(by: Dimension2D): Dimension2D {
@@ -38,8 +41,8 @@ interface Dimension2D {
 
     fun roundUpTo(factor: Dimension2D): Dimension2D {
         val d2 = BasicDimension2D(
-            Math.ceil(width() / factor.width()) * factor.width(),
-            Math.ceil(height() / factor.height()) * factor.height()
+            ceil(width() / factor.width()) * factor.width(),
+            ceil(height() / factor.height()) * factor.height()
         )
         return d2
     }

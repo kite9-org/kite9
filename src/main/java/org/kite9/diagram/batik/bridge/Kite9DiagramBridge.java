@@ -79,8 +79,8 @@ public class Kite9DiagramBridge implements GenericBridge {
 	private void ensureSvgSize(SVGOMSVGElement svg, RectangleRenderingInformation ri) {
 		SVGAnimatedLength width = svg.getWidth();
 		SVGAnimatedLength height = svg.getHeight();
-		width.getBaseVal().setValueAsString(ri.getSize().getWidth()+"px");
-		height.getBaseVal().setValueAsString(ri.getSize().getHeight()+"px");
+		width.getBaseVal().setValueAsString(ri.getSize().getW()+"px");
+		height.getBaseVal().setValueAsString(ri.getSize().getH()+"px");
 	}
 	
 

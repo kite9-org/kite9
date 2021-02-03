@@ -79,7 +79,7 @@ public class Kite9LogImpl implements Kite9Log {
 
 	public void send(String prefix, Table t) {
 		if (logFor.isLoggingEnabled() && (logFile != null)) {
-			StringBuffer sb = new StringBuffer(1000);
+			StringBuilder sb = new StringBuilder(1000);
 			t.display(sb);
 			send(prefix + sb.toString());
 		}
@@ -111,7 +111,7 @@ public class Kite9LogImpl implements Kite9Log {
 				}
 			}
 
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			t.display(sb);
 			logFile.println(sb.toString());
 		}

@@ -118,9 +118,9 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		if (("x0".equals(name) )|| ("y0".equals(name))) {
 			return "0";
 		} else if ("y1".equals(name) || "height".equals(name)) {
-			return ""+getRenderingInformation().getSize().getHeight();
+			return ""+getRenderingInformation().getSize().getH();
 		} else if ("x1".equals(name) || "width".equals(name)) {
-			return ""+getRenderingInformation().getSize().getWidth();
+			return ""+getRenderingInformation().getSize().getW();
 		} else if ((getLayout() == Layout.GRID) && (this instanceof Container)) {
 			boolean cellX = name.startsWith("cell-x-");
 			boolean cellY = name.startsWith("cell-y-");
@@ -160,7 +160,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 			double up = getPadding(Direction.UP);
 			double down = getPadding(Direction.DOWN);
 			Dimension2D bounds = getLeafBounds();
-			return ensureMinimumSize(new BasicDimension2D(left + right + bounds.getWidth(), up + down + bounds.getHeight()), within);
+			return ensureMinimumSize(new BasicDimension2D(left + right + bounds.getW(), up + down + bounds.getH()), within);
 		}
 	
 		throw new LogicException("Not sure how to size: "+this);
@@ -173,8 +173,8 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		}
 		
 		return new CostedDimension2D(
-				Math.max(c.getWidth(), min.getWidth()),
-				Math.max(c.getHeight(), min.getHeight()), within);
+				Math.max(c.getW(), min.getW()),
+				Math.max(c.getH(), min.getH()), within);
 	}
 	
 	private Dimension2D getLeafBounds() {

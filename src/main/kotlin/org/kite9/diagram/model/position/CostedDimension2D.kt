@@ -1,12 +1,14 @@
 package org.kite9.diagram.model.position
 
+import kotlin.math.max
+
 /**
  * This extends the idea of dimension, but allows you to associate a cost with the dimension
  * other than simply the size.
  *
  * @author robmoffat
  */
-data class CostedDimension2D(override val width: Double, override val height: Double, val cost: Long) : Dimension2D, Comparable<CostedDimension2D> {
+data class CostedDimension2D(override val w: Double, override val h: Double, val cost: Long) : Dimension2D, Comparable<CostedDimension2D> {
 
     constructor(d: Dimension2D) : this(d.width(), d.height(), 0)
     constructor(width: Double, height: Double) : this(width, height, 0)
@@ -23,8 +25,8 @@ data class CostedDimension2D(override val width: Double, override val height: Do
 		val UNBOUNDED: CostedDimension2D = CostedDimension2D(Double.MAX_VALUE, Double.MAX_VALUE, 0)
 
         fun calcCost(width: Double, height: Double, within: Dimension2D) : Long {
-            val extraHeight = Math.max(height - within.height(), 0.0)
-            val extraWidth = Math.max(width - within.width(), 0.0)
+            val extraHeight = max(height - within.height(), 0.0)
+            val extraWidth = max(width - within.width(), 0.0)
             val cost = (extraHeight * width + extraWidth * height + extraHeight * extraWidth).toLong()
             return cost
         }
@@ -41,14 +43,14 @@ data class CostedDimension2D(override val width: Double, override val height: Do
                 } else if (a.cost > b.cost) {
                     return b
                 }
-                if (a.height < b.height) {
+                if (a.h < b.h) {
                     return a
-                } else if (a.height > b.height) {
+                } else if (a.h > b.h) {
                     return b
                 }
-                if (a.width < b.width) {
+                if (a.w < b.w) {
                     return a
-                } else if (a.width > b.width) {
+                } else if (a.w > b.w) {
                     return b
                 }
                 a

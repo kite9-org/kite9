@@ -269,9 +269,9 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
         } else if (aSide == null || bSide == null) {
             throw LogicException("Don't know sides")
         } else if (aSide === Direction.LEFT || aSide === Direction.RIGHT) {
-            size(a, UNBOUNDED).width
+            size(a, UNBOUNDED).w
         } else {
-            size(a, UNBOUNDED).height
+            size(a, UNBOUNDED).h
         }
     }
 

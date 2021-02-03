@@ -70,7 +70,7 @@ public class TestingHelp {
 	 * Produces a report containing all the elements of the diagram
 	 */
 	public String getPositionalInformationADL(Kite9XMLElement d) {
-		StringBuffer details = new StringBuffer();
+		StringBuilder details = new StringBuilder();
 		Rowify cr = getIdentifiableRowify();
 		Rowify lr = getLinkRowify();
 
@@ -102,7 +102,7 @@ public class TestingHelp {
 			    	Direction lastD = null;
 			    	Dimension2D lastP= null;
 			    	
-			    	for (int i = 0; i < ri.size(); i++) {
+			    	for (int i = 0; i < ri.getLength(); i++) {
 						Dimension2D pos = ri.getWaypoint(i);
 						if (ri.isHop(i)) {
 							crosses ++;
@@ -110,21 +110,21 @@ public class TestingHelp {
 						
 						Direction currentD = null;
 						if (lastP!=null) {
-							if (pos.getWidth() > lastP.getWidth()) {
+							if (pos.getW() > lastP.getW()) {
 								currentD = Direction.RIGHT;
-							} else if (pos.getWidth() < lastP.getWidth()) {
+							} else if (pos.getW() < lastP.getW()) {
 								currentD = Direction.LEFT;
 							} else {
-								if (pos.getHeight() < lastP.getHeight()) {
+								if (pos.getH() < lastP.getH()) {
 									currentD = Direction.UP;
-								} else if (pos.getHeight() > lastP.getHeight()){
+								} else if (pos.getH() > lastP.getH()){
 									currentD = Direction.DOWN;
 								} else {
 									currentD = lastD;
 								}
 							}
 							
-							distance += Math.abs(pos.getWidth() - lastP.getWidth()) + Math.abs(pos.getHeight() - lastP.getHeight());
+							distance += Math.abs(pos.getW() - lastP.getW()) + Math.abs(pos.getH() - lastP.getH());
 						}
 						
 						if ((lastD != null) && (lastD!=currentD)) {
@@ -178,14 +178,14 @@ public class TestingHelp {
 			    		if (rri.getSize() == null) {
 			    			return new String[] { id, "na", "na", ""+connections };
 			    		}
-			    		double width = rri.getSize().getWidth();
-			    		double height = rri.getSize().getHeight();
+			    		double width = rri.getSize().getW();
+			    		double height = rri.getSize().getH();
 					    return new String[] { id, ""+width, ""+height, ""+connections };
 			    	} else {
 			    		RouteRenderingInformation rri = (RouteRenderingInformation) ri;
 			    		Dimension2D bounds = rri.getSize();
-			    		double width = bounds.getWidth();
-			    		double height = bounds.getHeight();
+			    		double width = bounds.getW();
+			    		double height = bounds.getH();
 					    return new String[] { id, ""+width, ""+height, ""+connections };			    		
 			    	}
 				
@@ -203,7 +203,7 @@ public class TestingHelp {
 		};
 	}
 	
-	private <X extends DiagramElement> void getPositions(Kite9XMLElement d, StringBuffer details, final Class<X> class1,
+	private <X extends DiagramElement> void getPositions(Kite9XMLElement d, StringBuilder details, final Class<X> class1,
 			Rowify r) {
 		final SortedSet<X> items = new TreeSet<X>();
 		new DiagramElementVisitor().visit((Container) d.getDiagramElement(), new VisitorAction() {

@@ -322,7 +322,7 @@ public class TestingEngine extends TestingHelp {
 		ConnectionAction ca = new ConnectionAction() {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
-				if ((rri == null) || (rri.size() == 0)) {
+				if ((rri == null) || (rri.getLength() == 0)) {
 					notPresent.add(c);
 				}
 				
@@ -653,7 +653,7 @@ public class TestingEngine extends TestingHelp {
 	private static Rectangle2D createRect(RenderingInformation r) {
 		if (r instanceof RectangleRenderingInformation) {
 			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
-			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
 		} else if (r instanceof RouteRenderingInformation) {
 			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
 					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))
@@ -720,26 +720,26 @@ public class TestingEngine extends TestingHelp {
 				if (l != null) {
 					switch (l) {
 					case HORIZONTAL:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
 						break;
 					case LEFT:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
-						checkBefore(ccPos.getWidth(), ccSize.getWidth(), prevPos.getWidth(), prevSize.getWidth(), cc, prev, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
+						checkBefore(ccPos.getW(), ccSize.getW(), prevPos.getW(), prevSize.getW(), cc, prev, l);
 						break;
 					case RIGHT:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
-						checkBefore(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
+						checkBefore(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
 						break;
 					case VERTICAL:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
 						break;
 					case UP:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
-						checkBefore(ccPos.getHeight(), ccSize.getHeight(), prevPos.getHeight(), prevSize.getHeight(), cc, prev, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
+						checkBefore(ccPos.getH(), ccSize.getH(), prevPos.getH(), prevSize.getH(), cc, prev, l);
 						break;
 					case DOWN:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
-						checkBefore(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
+						checkBefore(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
 						break;
 
 					}

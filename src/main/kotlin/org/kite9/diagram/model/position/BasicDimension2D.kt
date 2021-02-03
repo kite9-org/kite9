@@ -11,14 +11,14 @@ package org.kite9.diagram.model.position
  *
  * @author robmoffat
  */
-data class BasicDimension2D(override val width: Double, override val height: Double) : Dimension2D {
+data class BasicDimension2D(override val w: Double, override val h: Double) : Dimension2D {
 
     override fun height(): Double {
-        return height
+        return h
     }
 
     override fun width(): Double {
-        return width
+        return w
     }
 
     override fun size(): Dimension2D {

@@ -42,7 +42,7 @@ class RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractCompact
             val rri = r.getRenderingInformation()
             rri.position = BasicDimension2D(xMin, yMin)
             val size: Dimension2D = BasicDimension2D(xMax - xMin, yMax - yMin)
-            if (size.width < 0 || size.height < 0) {
+            if (size.w < 0 || size.h < 0) {
                 throw LogicException("Slideable issue")
             }
             rri.size = size

@@ -62,14 +62,13 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
         }
 
         // return just the top one
-        val topEmbedding = done.values.stream().filter { e: EmbeddingImpl -> isTopEmbedding(e) }
-            .findFirst().orElseThrow { LogicException("No top embedding") }
+        val topEmbedding = done.values.first { isTopEmbedding(it) }
         topEmbedding.isTopEmbedding = true
         return topEmbedding
     }
 
     private fun isTopEmbedding(e: Embedding): Boolean {
-        return e.dartFaces.stream().anyMatch { df: DartFace -> df.outerFace && df.getContainedBy() == null }
+        return e.dartFaces.firstOrNull { df: DartFace -> df.outerFace && df.getContainedBy() == null } != null
     }
 
     private fun getTouchingFaces(

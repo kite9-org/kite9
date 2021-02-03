@@ -56,7 +56,7 @@ public class DiagramChecker {
 	public static Object getRouteDirection(RouteRenderingInformation rri) {
 		Object current = NO_DISTANCE;
 	
-		for (int i = 0; i < rri.size()-1; i++) {
+		for (int i = 0; i < rri.getLength()-1; i++) {
 			Dimension2D start = rri.getWaypoint(i);
 			Dimension2D end = rri.getWaypoint(i+1);
 			Direction partD = singleDirection(start, end);

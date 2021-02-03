@@ -15,6 +15,8 @@ import org.kite9.diagram.visualization.compaction.segment.Side
 import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import kotlin.math.floor
+import kotlin.math.max
 
 /**
  * This contains utility methods to deal with insertion of sub-graphs within the overall graph.
@@ -57,7 +59,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         // ok, run all the combinations
         var max = 0.0
         for (fromUI in first.underlyingInfo) {
-            max = Math.max(max, getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave))
+            max = max(max, getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave))
         }
         return max
     }
@@ -71,7 +73,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
     ): Double {
         var max = 0.0
         for (toUI in second.underlyingInfo) {
-            max = Math.max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along, concave))
+            max = max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along, concave))
         }
         return max
     }
@@ -106,8 +108,9 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         return if (along == null) {
             null
         } else along.getUnderlyingWithSide(Side.NEITHER)
-            ?: return along.underlyingInfo.stream().map { (diagramElement) -> diagramElement }.findFirst()
-                .orElse(null)
+            ?: return along.underlyingInfo
+                .map { (diagramElement) -> diagramElement }
+                .firstOrNull()
     }
 
     private fun convertSideToDirection(horizontalDart: Boolean, side: Side, first: Boolean): Direction {
@@ -190,13 +193,13 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         var connectionSegmentB: Slideable<Segment>? = null
         if (leavingConnectionsA.size == 1) {
             connectionSegmentA = getConnectionSegment(perp.a!!, c)
-            halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentA))
-            halfDist = Math.max(halfDist, connectionSegmentA.minimumDistanceTo(to))
+            halfDist = max(halfDist, from.minimumDistanceTo(connectionSegmentA))
+            halfDist = max(halfDist, connectionSegmentA.minimumDistanceTo(to))
         }
         if (leavingConnectionsB.size == 1) {
             connectionSegmentB = getConnectionSegment(perp.b!!, c)
-            halfDist = Math.max(halfDist, from.minimumDistanceTo(connectionSegmentB))
-            halfDist = Math.max(halfDist, connectionSegmentB.minimumDistanceTo(to))
+            halfDist = max(halfDist, from.minimumDistanceTo(connectionSegmentB))
+            halfDist = max(halfDist, connectionSegmentB.minimumDistanceTo(to))
         }
         if (leavingConnectionsA.size + leavingConnectionsB.size == 0) {
             return null
@@ -204,7 +207,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         val totalDist = from.minimumDistanceTo(to)
         if (totalDist > halfDist * 2) {
             val halfTotal = totalDist.toDouble() / 2.0
-            halfDist = Math.floor(halfTotal).toInt()
+            halfDist = floor(halfTotal).toInt()
         }
         if (halfDist > 0) {
             if (connectionSegmentA != null) {

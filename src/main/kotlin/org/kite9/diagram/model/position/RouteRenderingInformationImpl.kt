@@ -1,5 +1,8 @@
 package org.kite9.diagram.model.position
 
+import kotlin.math.max
+import kotlin.math.min
+
 class RouteRenderingInformationImpl : AbstractRenderingInformationImpl(), RouteRenderingInformation {
 
     override val routePositions: MutableList<Dimension2D> = mutableListOf()
@@ -26,7 +29,7 @@ class RouteRenderingInformationImpl : AbstractRenderingInformationImpl(), RouteR
         hops.clear()
     }
 
-    override fun size(): Int {
+    override fun getLength(): Int {
         return routePositions.size
     }
 
@@ -40,10 +43,10 @@ class RouteRenderingInformationImpl : AbstractRenderingInformationImpl(), RouteR
         var miny = Double.MAX_VALUE
         var maxy = 0.0
         for (d in routePositions) {
-            minx = Math.min(d.x(), minx)
-            miny = Math.min(d.y(), miny)
-            maxx = Math.max(d.x(), maxx)
-            maxy = Math.max(d.y(), maxy)
+            minx = min(d.x(), minx)
+            miny = min(d.y(), miny)
+            maxx = max(d.x(), maxx)
+            maxy = max(d.y(), maxy)
         }
         position = BasicDimension2D(minx, miny)
         size = BasicDimension2D(maxx - minx, maxy - miny)

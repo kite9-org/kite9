@@ -37,7 +37,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         get() = (distanceMax + distanceMin) / 2.0
 
     override fun toString(): String {
-        return "(bb, g=%.2f - %.2f)".format(distanceMin, distanceMax);
+        return "(bb, g=$distanceMin%.2f - $distanceMax%.2f)"
     }
 
     /**

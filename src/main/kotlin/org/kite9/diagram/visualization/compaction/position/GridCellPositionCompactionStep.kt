@@ -40,10 +40,10 @@ class GridCellPositionCompactionStep : CompactionStep {
                 .map { c: DiagramElement -> c.getRenderingInformation() }.forEach { rri: RenderingInformation ->
                     val p = rri.position
                     val s = rri.size
-                    xs.add(p!!.width - parent!!.width)
-                    xs.add(p.width + s!!.width - parent.width)
-                    ys.add(p.height - parent.height)
-                    ys.add(p.height + s.height - parent.height)
+                    xs.add(p!!.w - parent!!.w)
+                    xs.add(p.w + s!!.w - parent.w)
+                    ys.add(p.h - parent.h)
+                    ys.add(p.h + s.h - parent.h)
                 }
             val xPositions = xs.stream().mapToDouble { d: Double -> d }.sorted().toArray()
             val yPositions = ys.stream().mapToDouble { d: Double -> d }.sorted().toArray()

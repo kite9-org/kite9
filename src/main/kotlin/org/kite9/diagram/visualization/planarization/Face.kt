@@ -41,7 +41,7 @@ class Face internal constructor(private val id: String, var pln: AbstractPlanari
     var partOf: Rectangular? = null
     var isOuterFace = false
     override fun toString(): String {
-        val out = StringBuffer(300)
+        val out = StringBuilder(300)
         out.append(
             """
     [FACE: $id${if (isOuterFace) "outer" + (if (containedBy == null) "" else ", inside " + containedBy!!.id) else "inner"}

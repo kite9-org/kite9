@@ -410,18 +410,18 @@ public class RoutePainterImpl {
 	}
 
 	private List<Move> createMoves(RouteRenderingInformation r, boolean closed) {
-		int fx = (int) (closed ? r.getWaypoint(r.size() - 1).getWidth() : r.getWaypoint(0).getWidth());
-		int fy = (int) (closed ? r.getWaypoint(r.size() - 1).getHeight() : r.getWaypoint(0).getHeight());
-		boolean fh = closed ? r.isHop(r.size() -1) : r.isHop(0);
+		int fx = (int) (closed ? r.getWaypoint(r.getLength() - 1).getW() : r.getWaypoint(0).getW());
+		int fy = (int) (closed ? r.getWaypoint(r.getLength() - 1).getH() : r.getWaypoint(0).getH());
+		boolean fh = closed ? r.isHop(r.getLength() -1) : r.isHop(0);
 		ArrayList<Move> out = new ArrayList<Move>();
 		Move a = null;
 		int i = closed ? 0 : 1;
-		int end = closed ? r.size() : r.size() -1;
+		int end = closed ? r.getLength() : r.getLength() -1;
 		while (i <= end) {
 
-			int xn = (int) r.getWaypoint(i % r.size()).getWidth();
-			int yn = (int) r.getWaypoint(i % r.size()).getHeight();
-			boolean hn = r.isHop(i % r.size());
+			int xn = (int) r.getWaypoint(i % r.getLength()).getW();
+			int yn = (int) r.getWaypoint(i % r.getLength()).getH();
+			boolean hn = r.isHop(i % r.getLength());
 
 			Move b = new Move(fx, fy, xn, yn, fh, hn);
 
