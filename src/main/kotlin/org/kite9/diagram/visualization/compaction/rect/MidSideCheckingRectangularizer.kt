@@ -133,11 +133,11 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
 
     protected fun alignSingleConnections(c: Compaction, vt: VertexTurn) {
         if (shouldSetMidpoint(vt, null)) {
-            val underlying = vt.segment.underlyingInfo.stream()
+            val underlying = vt.segment.underlyingInfo
                 .map { (diagramElement) -> diagramElement }
-                .filter { de: DiagramElement? -> de is Connected }
-                .findFirst().orElseThrow { LogicException() } as Connected
-            val out = alignSingleConnections(c!!, underlying, isHorizontal(vt.direction), false)
+                .filterIsInstance<Connected>()
+                .first()
+            val out = alignSingleConnections(c, underlying, isHorizontal(vt.direction), false)
             if (out != null) {
                 vt.ensureMinLength(out.midPoint.toDouble())
                 vt.isNonExpandingLength = out.safe
@@ -147,9 +147,9 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
 
     companion object {
         protected fun onlyAligned(vt: VertexTurn): Boolean {
-            return vt.segment.underlyingInfo.stream()
-                .filter { (diagramElement) -> diagramElement is Connected }
-                .filter { (diagramElement) -> diagramElement is Container }
+            return vt.segment.underlyingInfo
+                .filter { it.diagramElement is Connected }
+                .filter { it.diagramElement is Container }
                 .filter { (diagramElement, side) ->
                     (diagramElement as Connected).getConnectionAlignment(
                         getDirection(

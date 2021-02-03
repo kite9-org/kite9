@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction.rect
 
-import org.kite9.diagram.common.Collections
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.logging.LogicException
@@ -12,6 +11,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
+import kotlin.math.max
 
 /**
  * This class is responsible for 'completing' a dart diagram by ensuring that
@@ -215,7 +215,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         log.send(if (log.go()) null else " Early: $early late: $late")
         val along = if (initialSetting) link.segment else null
         val minDistance = getMinimumDistance(early1, late1, along, concave)
-        link.ensureMinLength(Math.max(minDistance, externalMin))
+        link.ensureMinLength(max(minDistance, externalMin))
         log.send(if (log.go()) null else "Fixed: $link min length $minDistance")
         return
     }

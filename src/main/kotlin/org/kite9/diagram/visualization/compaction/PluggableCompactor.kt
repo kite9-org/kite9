@@ -113,8 +113,8 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
 
     private fun calculateDartToSegmentMap(h1: List<Segment>, v1: List<Segment>): Map<Dart, Segment> {
         val out: MutableMap<Dart, Segment> = HashMap()
-        h1.stream().forEach { s: Segment -> addSegmentsToMap(out, s) }
-        v1.stream().forEach { s: Segment -> addSegmentsToMap(out, s) }
+        h1.forEach { s: Segment -> addSegmentsToMap(out, s) }
+        v1.forEach { s: Segment -> addSegmentsToMap(out, s) }
         return out
     }
 

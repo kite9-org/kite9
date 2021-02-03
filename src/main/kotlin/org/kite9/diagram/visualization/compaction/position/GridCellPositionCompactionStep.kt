@@ -35,9 +35,10 @@ class GridCellPositionCompactionStep : CompactionStep {
             val parent = pri.position
             val xs: MutableSet<Double> = HashSet()
             val ys: MutableSet<Double> = HashSet()
-            contents.stream()
+            contents
                 .filter { c: DiagramElement? -> c is Connected }
-                .map { c: DiagramElement -> c.getRenderingInformation() }.forEach { rri: RenderingInformation ->
+                .map { c: DiagramElement -> c.getRenderingInformation() }
+                .forEach { rri: RenderingInformation ->
                     val p = rri.position
                     val s = rri.size
                     xs.add(p!!.w - parent!!.w)
@@ -45,8 +46,8 @@ class GridCellPositionCompactionStep : CompactionStep {
                     ys.add(p.h - parent.h)
                     ys.add(p.h + s.h - parent.h)
                 }
-            val xPositions = xs.stream().mapToDouble { d: Double -> d }.sorted().toArray()
-            val yPositions = ys.stream().mapToDouble { d: Double -> d }.sorted().toArray()
+            val xPositions = xs.sorted().toDoubleArray()
+            val yPositions = ys.sorted().toDoubleArray()
             pri.cellXPositions = xPositions
             pri.cellYPositions = yPositions
         }

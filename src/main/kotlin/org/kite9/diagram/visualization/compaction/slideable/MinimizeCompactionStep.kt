@@ -8,6 +8,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import kotlin.math.max
 
 /**
  * In some sorted order, minimizes the size of Rectangular elements in the
@@ -84,7 +85,7 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
 
     private fun maxLeavingsInAxis(a: Rectangular, sso: SegmentSlackOptimisation, c: Compaction): Int {
         val (a1, b) = sso.getSlideablesFor(a)
-        return Math.max(leavingsOnSide(a1!!, c), leavingsOnSide(b!!, c))
+        return max(leavingsOnSide(a1!!, c), leavingsOnSide(b!!, c))
     }
 
     private fun leavingsOnSide(a2: Slideable<Segment>, c: Compaction): Int {

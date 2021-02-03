@@ -4,6 +4,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority
+import kotlin.math.max
 
 class PrioritisedRectOption(
     i: Int,
@@ -92,11 +93,11 @@ class PrioritisedRectOption(
             val parLength = par.getLength(true)
             var meetsExtension = 0.0
             meetsExtension = acs.getMinimumDistance(post.segment, extender.segment, meets.segment, true)
-            val distance = Math.max(0.0, parLength + meetsExtension - meetsLength).toInt()
+            val distance = max(0.0, parLength + meetsExtension - meetsLength).toInt()
             distance * tp.costFactor
         } else {
             val parLength = par.getLength(true)
-            val distance = Math.max(0.0, parLength - meetsLength).toInt()
+            val distance = max(0.0, parLength - meetsLength).toInt()
             distance * tp.costFactor
         }
     }
@@ -128,10 +129,11 @@ class PrioritisedRectOption(
 
     private fun inside(par: VertexTurn, meets: VertexTurn): Boolean {
         val containers = meets.segment.rectangulars
-        val count = par.segment.rectangulars.stream().filter { r: Rectangular ->
-            if (containers.contains(r.getParent())) {
-                return@filter true
-            }
+        val count = par.segment.rectangulars
+            .filter { r: Rectangular ->
+                if (containers.contains(r.getParent())) {
+                    return@filter true
+                }
             false
         }.count()
         return count > 0

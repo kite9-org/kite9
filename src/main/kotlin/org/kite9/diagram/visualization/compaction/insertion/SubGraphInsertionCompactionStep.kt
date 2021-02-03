@@ -15,6 +15,7 @@ import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
+import kotlin.math.min
 
 /**
  * This step requires that all the subgraphs being inserted are already
@@ -127,7 +128,7 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
                         // since the collection is ordered, position is important
                         val index = content.indexOf(de)
                         if (index != -1) {
-                            out = Math.min(out, index)
+                            out = min(out, index)
                             outDir = getDirectionOfInsertion(c.getLayout())
                         } else if (de is TemporaryConnected) {
                             out = 1

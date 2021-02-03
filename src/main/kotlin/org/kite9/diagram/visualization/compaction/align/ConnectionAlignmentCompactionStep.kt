@@ -22,8 +22,8 @@ class ConnectionAlignmentCompactionStep : CompactionStep {
     }
 
     private fun alignConnections(horizontalSegments: List<Segment>) {
-        horizontalSegments.stream()
-            .filter { s: Segment -> s.connections.size > 0 }
+        horizontalSegments
+            .filter { s: Segment -> s.connections.isNotEmpty() }
             .forEach { s: Segment -> alignSegment(s) }
     }
 

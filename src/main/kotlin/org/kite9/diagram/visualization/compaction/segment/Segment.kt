@@ -55,9 +55,9 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
     var singleSide: Side? = null
         get() {
             if (field == null) {
-                field = underlyingInfo.stream()
+                field = underlyingInfo
                     .map { ui: UnderlyingInfo -> ui.side }
-                    .reduce(null) { a: Side?, b: Side? -> sideReduce(a, b) }
+                    .reduceRightOrNull { a: Side?, b: Side? -> sideReduce(a, b) }
             }
             return field
         }
@@ -179,8 +179,8 @@ class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
     val adjoiningSegmentBalance: Int
         get() {
             val isHorizontal = dimension === Dimension.H
-            return getVerticesInSegment().stream()
-                .mapToInt { v: Vertex ->
+            return getVerticesInSegment()
+                .map { v: Vertex ->
                     if (isHorizontal) dartCount(v, Direction.DOWN) - dartCount(
                         v,
                         Direction.UP

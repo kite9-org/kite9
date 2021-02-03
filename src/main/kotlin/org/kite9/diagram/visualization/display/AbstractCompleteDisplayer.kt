@@ -10,6 +10,7 @@ import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
+import kotlin.math.max
 
 abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, DiagramSizer, Logable {
 
@@ -28,7 +29,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     ): Double {
         val distance = getMinimumDistanceInner(a, aSide, b, bSide, d, along, concave)
         log.send(if (log.go()) null else "Minimum distances between  $a  $aSide $b $bSide in $d is $distance")
-        return Math.max(distance, buffer)
+        return max(distance, buffer)
     }
 
     /**
@@ -99,7 +100,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
             } else {
                 val inset = getMargin(a, aSide)
                 val margin = getMargin(b, bSide)
-                val length = Math.max(inset, margin)
+                val length = max(inset, margin)
                 incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide)
             }
         } else {
@@ -110,7 +111,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
                 // we are inside a, so use the padding distance
                 val inset = getPadding(a, d)
                 val margin = getMargin(b, reverse(d))
-                val length = Math.max(inset, margin)
+                val length = max(inset, margin)
                 incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide)
             }
         }
@@ -131,10 +132,10 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
                 return `in`
             }
             val alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide)
-            Math.max(`in`, alongDist)
+            max(`in`, alongDist)
         } else if (along is Connected) {
             val alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide)
-            Math.max(`in`, alongDist)
+            max(`in`, alongDist)
         } else {
             `in`
         }
@@ -204,9 +205,9 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
         length = if (a === b) {
             getInternalDistance(a, aSide, bSide)
         } else if (isImmediateParent(b, a)) {
-            Math.max(getPadding(a, aSide), getMargin(b, bSide))
+            max(getPadding(a, aSide), getMargin(b, bSide))
         } else if (isImmediateParent(a, b)) {
-            Math.max(getPadding(b, bSide), getMargin(a, aSide))
+            max(getPadding(b, bSide), getMargin(a, aSide))
         } else if (concave) {
             if (aSide === bSide) {
                 // not facing each other
@@ -260,7 +261,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     ): Double {
         val marginA = getMargin(a, aSide)
         val marginB = getMargin(b, bSide)
-        return Math.max(marginA, marginB)
+        return max(marginA, marginB)
     }
 
     private fun getInternalDistance(a: DiagramElement?, aSide: Direction?, bSide: Direction?): Double {

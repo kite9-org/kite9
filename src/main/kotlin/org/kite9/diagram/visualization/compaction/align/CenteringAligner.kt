@@ -14,6 +14,8 @@ import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import kotlin.math.ceil
+import kotlin.math.min
 
 
 /**
@@ -45,7 +47,7 @@ class CenteringAligner : Aligner, Logable {
             }
             log.send("Slideables to Align: ", matches)
             var i = 0
-            while (i < Math.ceil(des.size / 2.0)) {
+            while (i < ceil(des.size / 2.0)) {
                 val leftD = matches[i * 2]
                 val rightD = matches[matches.size - i * 2 - 1]
                 centerSlideables(leftD, rightD, des.size - i * 2)
@@ -71,11 +73,11 @@ class CenteringAligner : Aligner, Logable {
     private fun centerSlideables(left: Slideable<Segment>?, right: Slideable<Segment>?, elementCount: Int) {
         val leftSlack = minSlack(left)
         val rightSlack = minSlack(right)
-        var slackToUse = Math.min(leftSlack, rightSlack)
+        var slackToUse = min(leftSlack, rightSlack)
         if (slackToUse == 0) {
             return
         }
-        slackToUse = slackToUse / (elementCount + 1)
+        slackToUse /= (elementCount + 1)
         try {
             val leftFixed = left!!.minimumPosition + slackToUse
             val rightFixed = right!!.maximumPosition!! - slackToUse
