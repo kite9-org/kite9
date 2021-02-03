@@ -82,8 +82,8 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
     }
 
     private fun hasLabels(con: Container, side: Direction?): Boolean {
-        return con.getContents().stream()
-            .filter { c: DiagramElement? -> c is Label }
+        return con.getContents()
+            .filterIsInstance<Label>()
             .filter { c: DiagramElement ->
                 (c as Label).getLabelPlacement()!!
                     .containerLabelPlacement(side!!)

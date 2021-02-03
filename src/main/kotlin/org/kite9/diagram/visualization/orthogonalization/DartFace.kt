@@ -23,6 +23,7 @@ class DartFace(val id: Int, val outerFace: Boolean, val dartsInFace: List<DartDi
 
     private var containedBy: DartFace? = null
     private val containing: MutableSet<DartFace> = HashSet()
+
     fun getContainedBy(): DartFace? {
         return containedBy
     }
@@ -63,13 +64,9 @@ class DartFace(val id: Int, val outerFace: Boolean, val dartsInFace: List<DartDi
     override fun equals(obj: Any?): Boolean {
         if (this === obj) return true
         if (obj == null) return false
-        if (javaClass != obj.javaClass) return false
-        val other = obj as DartFace
-        if (id != other.id) return false
-        return if (outerFace != other.outerFace) false else true
+        if (obj !is DartFace) return false
+        if (id != obj.id) return false
+        return outerFace == obj.outerFace
     }
 
-    companion object {
-        private const val serialVersionUID = -4395910839686963521L
-    }
 }

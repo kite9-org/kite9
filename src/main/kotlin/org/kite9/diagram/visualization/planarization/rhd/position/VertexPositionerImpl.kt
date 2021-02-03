@@ -23,6 +23,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.VPos
+import kotlin.math.min
 
 class VertexPositionerImpl(
     private val em: ElementMapper,
@@ -41,8 +42,8 @@ class VertexPositionerImpl(
     override fun checkMinimumGridSizes(ri: RoutingInfo) {
         if (ri is PositionRoutingInfo) {
             val pri = ri
-            borderTrimAreaX = Math.min(borderTrimAreaX, pri.getWidth() / 4.0)
-            borderTrimAreaY = Math.min(borderTrimAreaY, pri.getHeight() / 4.0)
+            borderTrimAreaX = min(borderTrimAreaX, pri.getWidth() / 4.0)
+            borderTrimAreaY = min(borderTrimAreaY, pri.getHeight() / 4.0)
         }
     }
 

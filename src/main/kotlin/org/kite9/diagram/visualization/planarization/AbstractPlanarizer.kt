@@ -33,7 +33,7 @@ abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, P
             for (pt in planarizationTransforms) {
                 log.send("PLan:" + pln.toString())
                 checkIntegrity(pln)
-                log.send("Applying transform: " + pt.javaClass)
+                log.send("Applying transform: " + pt)
                 pt.transform(pln)
             }
             checkIntegrity(pln)

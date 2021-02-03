@@ -15,6 +15,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
+import kotlin.math.max
 
 class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group) : LinkManager {
 
@@ -154,7 +155,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         }
 
         override val linkRank: Int
-            get() = Math.max(a!!.linkRank, b!!.linkRank)
+            get() = max(a!!.linkRank, b!!.linkRank)
 
         init {
             var a = a

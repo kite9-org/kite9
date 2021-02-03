@@ -5,6 +5,8 @@ import org.kite9.diagram.common.hints.PositioningHints.positionDistance
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import kotlin.math.abs
+import kotlin.math.round
 
 /**
  * Holds details about a potential merge. Best merges are done first.
@@ -109,8 +111,8 @@ class MergeOption(
             }
             else -> {
                 // merge together neighbours with least chance of being moved from the outside
-                val thistl = Math.round(totalLinks)
-                val arg0tl = Math.round(other.totalLinks)
+                val thistl = round(totalLinks)
+                val arg0tl = round(other.totalLinks)
                 if (thistl != arg0tl) {
                     return thistl.compareTo(arg0tl)
                 }
@@ -163,7 +165,7 @@ class MergeOption(
         linkCount(a, b)
         linkCount(b, a)
         size = a.size + b.size
-        ordinalDistance = Math.abs(a.groupOrdinal - b.groupOrdinal)
+        ordinalDistance = abs(a.groupOrdinal - b.groupOrdinal)
         planarDistance = planarizationDistance(a.hints, b.hints)
         renderedDistance = positionDistance(a.hints, b.hints)
     }

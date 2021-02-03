@@ -335,7 +335,7 @@ class Tools : Logable {
         pln.vertexFaceMap.remove(toGo)
         pln.edgeOrderings.remove(toGo)
         pln.edgeFaceMap.remove(b)
-        a.getDiagramElements().keys.stream().forEach { underlying: DiagramElement ->
+        a.getDiagramElements().keys.forEach { underlying: DiagramElement ->
             val list = pln.edgeMappings[underlying]
             //log.send("Edge Mapping before: "+list);
             if (list != null) {

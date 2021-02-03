@@ -6,6 +6,8 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Contains methods for:
@@ -48,8 +50,8 @@ abstract class AbstractPlanarization(override val diagram: Diagram) : Planarizat
             if (b[i] != null) return
             val row = CharArray(length) { ' ' }
             b[i] = row
-            minExtent = Math.min(minExtent, i)
-            maxExtent = Math.max(maxExtent, i)
+            minExtent = min(minExtent, i)
+            maxExtent = max(maxExtent, i)
         }
 
         fun vLine(rows: Int, col: Int, rowl: Int, highlight: Boolean) {

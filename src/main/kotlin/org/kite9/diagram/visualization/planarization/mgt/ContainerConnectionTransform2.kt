@@ -195,7 +195,7 @@ class ContainerConnectionTransform2(elementMapper: ElementMapper?) : Planarizati
         var receivingEdge = receivingEdge
         val orig = v as MultiCornerVertex
         val newVertex = ContainerSideVertex(vertexName)
-        orig.getAnchors().stream().forEach { a: AbstractAnchoringVertex.Anchor -> newVertex.addUnderlying(a.de) }
+        orig.getAnchors().forEach { a: AbstractAnchoringVertex.Anchor -> newVertex.addUnderlying(a.de) }
         t.breakEdge(receivingEdge, pln, newVertex)
 
         // need to move next to the new vertex

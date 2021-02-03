@@ -27,6 +27,7 @@ import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
 import org.kite9.diagram.visualization.planarization.Face
 import org.kite9.diagram.visualization.planarization.Planarization
+import kotlin.math.abs
 
 /**
  * This creates an orthogonalisation using the definition contained in the flow
@@ -132,11 +133,11 @@ class MappedFlowGraphOrthBuilder(
                     val eri = e.otherEnd(v).routingInfo
                     if (sri != null && eri != null) {
                         if (sri.centerX() < eri.centerX()) {
-                            tolerance = Math.abs(sri.centerY() - eri.centerY())
+                            tolerance = abs(sri.centerY() - eri.centerY())
                             type = StartPointType.INFERRED
                             d = Direction.RIGHT
                         } else {
-                            tolerance = Math.abs(sri.centerY() - eri.centerY())
+                            tolerance = abs(sri.centerY() - eri.centerY())
                             type = StartPointType.INFERRED
                             d = Direction.LEFT
                         }
@@ -200,7 +201,7 @@ class MappedFlowGraphOrthBuilder(
             } else {
                 val f = getCorrectFace(faces, sv, e1, e2)
                 val outCap = calculateTurns(f, fg, sv, e2, e1)
-                for (i in 0 until Math.abs(outCap)) {
+                for (i in 0 until abs(outCap)) {
                     d = rotate90(d, outCap)
                 }
                 if (outCap != -2) {
@@ -314,7 +315,7 @@ class MappedFlowGraphOrthBuilder(
 
     private fun turn(d: Direction?, edgeBends: Int): Direction? {
         var d = d
-        for (i in 0 until Math.abs(edgeBends)) {
+        for (i in 0 until abs(edgeBends)) {
             d = rotate90(d, edgeBends)
         }
         return d
@@ -400,7 +401,7 @@ class MappedFlowGraphOrthBuilder(
             throw LogicException("We have a problem")
         }
         var waypoints = doneEdges[e]
-        val wpCount = Math.abs(arcCost) + 1
+        val wpCount = abs(arcCost) + 1
         if (waypoints == null) {
             waypoints = ArrayList(wpCount)
             doneEdges[e] = waypoints

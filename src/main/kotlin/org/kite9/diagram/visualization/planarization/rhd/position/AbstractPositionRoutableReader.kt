@@ -2,6 +2,8 @@ package org.kite9.diagram.visualization.planarization.rhd.position
 
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  *
@@ -41,7 +43,7 @@ abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2
         } else if (a1 > b2) {
             doubleArrayOf(b2, b2, a1 - b2)
         } else {
-            doubleArrayOf(Math.max(a1, b1), Math.min(a2, b2), 0.0)
+            doubleArrayOf(max(a1, b1), min(a2, b2), 0.0)
         }
     }
 

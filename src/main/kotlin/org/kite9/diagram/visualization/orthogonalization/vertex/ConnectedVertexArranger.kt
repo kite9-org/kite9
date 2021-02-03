@@ -24,6 +24,8 @@ import org.kite9.diagram.visualization.orthogonalization.edge.EdgeConverter
 import org.kite9.diagram.visualization.orthogonalization.edge.FanningEdgeConverter
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
+import kotlin.math.ceil
+import kotlin.math.floor
 
 /**
  * This converts a ConnectedVertex to a face, and darts, which can then be added to the Orthogonalization.
@@ -125,8 +127,8 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
             val higherOrders = rotateAntiClockwise(
                 incident
             )
-            val lower = Math.floor(straightCount.toDouble() / 2.0 - 1.0).toInt()
-            val higher = Math.ceil(straightCount.toDouble() / 2.0).toInt()
+            val lower = floor(straightCount.toDouble() / 2.0 - 1.0).toInt()
+            val higher = ceil(straightCount.toDouble() / 2.0).toInt()
             fan = if (idx <= lower) lowerOrders else if (idx >= higher) higherOrders else null
         }
         return ec.convertPlanarizationEdge(e!!, o!!, incident!!, externalVertex, sideVertex, und, fan)

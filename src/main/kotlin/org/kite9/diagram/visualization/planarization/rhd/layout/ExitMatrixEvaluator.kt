@@ -9,6 +9,8 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Tries to work out the likelihood of an overlap.
@@ -115,8 +117,8 @@ class ExitMatrixEvaluator {
             val bOccluding = bMatrix.getLinkCount(ad, RelativeSide.OPPOSITE, 0)
 
             // works out the occluded span
-            val occludedMin = Math.max(aSpan!!.distanceMin, bSpan!!.distanceMin)
-            val occludedMax = Math.min(aSpan.distanceMax, bSpan.distanceMax)
+            val occludedMin = max(aSpan!!.distanceMin, bSpan!!.distanceMin)
+            val occludedMax = min(aSpan.distanceMax, bSpan.distanceMax)
             val topOccludedFrac = (occludedMax - occludedMin) / (aSpan.distanceMax - aSpan.distanceMin)
 
             // work out how much of b you would have to cross to get back to where you started from
@@ -133,7 +135,7 @@ class ExitMatrixEvaluator {
             lowerOccluding += lowerAmt.toFloat()
             higherOccluding += higherAmt.toFloat()
         }
-        return Math.min(lowerOccluding, higherOccluding) * OCCLUDED_COST
+        return min(lowerOccluding, higherOccluding) * OCCLUDED_COST
     }
 
     private fun getLinkCountOnSide(mat: ExitMatrix, ad: Layout?, side: Int): Float {

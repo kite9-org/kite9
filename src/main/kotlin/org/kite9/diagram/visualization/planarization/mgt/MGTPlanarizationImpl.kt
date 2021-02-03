@@ -18,6 +18,9 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationImpl
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashSet
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 class MGTPlanarizationImpl(
     d: Diagram,
@@ -169,7 +172,7 @@ class MGTPlanarizationImpl(
                     fromi = temp
                 }
                 if (fromi >= from && toi <= to && !(fromi == from && toi == to)) {
-                    nestings = Math.max(nestings, getNestings(edge, aboveSet, nestCache) + 1)
+                    nestings = max(nestings, getNestings(edge, aboveSet, nestCache) + 1)
                 }
             }
         }
@@ -227,7 +230,7 @@ class MGTPlanarizationImpl(
     override fun isAdjacency(edge: Edge): Boolean {
         val v1 = getVertexIndex(edge.getFrom())
         val v2 = getVertexIndex(edge.getTo())
-        return Math.abs(v1 - v2) <= 1
+        return abs(v1 - v2) <= 1
     }
 
     override fun crosses(edge: Edge, above: Boolean): Boolean {
@@ -255,8 +258,8 @@ class MGTPlanarizationImpl(
     }
 
     protected fun within(i1: Float, j1: Float, j2: Float): Boolean {
-        val ja = Math.min(j1, j2)
-        val jb = Math.max(j1, j2)
+        val ja = min(j1, j2)
+        val jb = max(j1, j2)
         return i1 > ja && i1 < jb
     }
 
@@ -381,7 +384,7 @@ class MGTPlanarizationImpl(
     }
 
     private fun edgeSpan(e: Edge): Int {
-        return Math.abs(getVertexIndex(e.getFrom()) - getVertexIndex(e.getTo()))
+        return abs(getVertexIndex(e.getFrom()) - getVertexIndex(e.getTo()))
     }
 
     init {

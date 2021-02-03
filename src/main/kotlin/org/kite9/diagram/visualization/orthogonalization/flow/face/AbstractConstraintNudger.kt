@@ -16,6 +16,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthog
 import org.kite9.diagram.visualization.orthogonalization.flow.AbstractFlowOrthogonalizer.Companion.removeArcs
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph
 import org.kite9.diagram.visualization.planarization.Face
+import kotlin.math.abs
 
 /**
  * Contains the basic code for testing nudges out, splitting the flow graph into halves, logging the results of a nudge and working out
@@ -267,9 +268,9 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
             c2 = requiredMod - actualMod
         }
         return if (bestDirection) {
-            if (Math.abs(c1) < Math.abs(c2)) c1 else c2
+            if (abs(c1) < abs(c2)) c1 else c2
         } else {
-            if (Math.abs(c1) >= Math.abs(c2)) c1 else c2
+            if (abs(c1) >= abs(c2)) c1 else c2
         }
     }
 

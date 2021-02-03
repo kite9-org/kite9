@@ -15,6 +15,9 @@ import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
 import org.kite9.diagram.visualization.planarization.rhd.position.Tools.contains
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Implementation of the [RoutableReader] functionality, but using 2D RoutableHandler Bounds as the underlying storage.
@@ -190,8 +193,8 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     }
 
     override fun overlaps(a: Bounds, b: Bounds): Boolean {
-        val highestMin = Math.max((a as BasicBounds).distanceMin, (b as BasicBounds).distanceMin)
-        val lowestMax = Math.min(a.distanceMax, b.distanceMax)
+        val highestMin = max((a as BasicBounds).distanceMin, (b as BasicBounds).distanceMin)
+        val lowestMax = min(a.distanceMax, b.distanceMax)
         return highestMin < lowestMax
     }
 
@@ -220,7 +223,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         } else if (cx == 0) {
             //System.out.println("cy = "+cy);
             cy
-        } else if (Math.abs(cx) < Math.abs(cy)) {
+        } else if (abs(cx) < abs(cy)) {
             //System.out.println("cx = "+cx);
             cx
         } else {
@@ -311,7 +314,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         private const val TOLERANCE = 0.000000001
 
 		fun eq(a: Double, b: Double): Boolean {
-            return Math.abs(a - b) < TOLERANCE
+            return abs(a - b) < TOLERANCE
         }
 
         fun meq(a: Double, b: Double): Boolean {

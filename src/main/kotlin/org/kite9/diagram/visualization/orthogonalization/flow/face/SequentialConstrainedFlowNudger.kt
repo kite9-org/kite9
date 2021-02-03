@@ -7,6 +7,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.logging.Table
 import org.kite9.diagram.visualization.orthogonalization.flow.MappedFlowGraph
 import org.kite9.diagram.visualization.planarization.Face
+import kotlin.math.abs
 
 /**
  * Handles nudges one-at-a-time, making the assumption that corners are fixed.
@@ -81,7 +82,7 @@ class SequentialConstrainedFlowNudger(facePortionMap: Map<Face, List<PortionNode
         var worstChoice = NudgeChoice(this, fg, state, cornersWorst, ni, constraintNumber, subdivisions, ssp)
 
         // order the choices
-        if (Math.abs(cornersBest) == Math.abs(cornersWorst) && worstChoice.evaluate() < bestChoice.evaluate()) {
+        if (abs(cornersBest) == abs(cornersWorst) && worstChoice.evaluate() < bestChoice.evaluate()) {
             val temp = bestChoice
             bestChoice = worstChoice
             worstChoice = temp

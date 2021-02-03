@@ -3,6 +3,8 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Represents the relative positions of two other groups within the diagram, allowing the immediate contents
@@ -17,8 +19,8 @@ abstract class AbstractCompoundGroup(
     hc: Int) :
     AbstractGroup(groupNumber, hc), CompoundGroup {
 
-    override val groupOrdinal = Math.min(a.groupOrdinal, b.groupOrdinal)
-    override val height: Int = Math.max(a.height, b.height) + 1
+    override val groupOrdinal = min(a.groupOrdinal, b.groupOrdinal)
+    override val height: Int = max(a.height, b.height) + 1
     override val hints: Map<String, Float?> = emptyMap()
     override var layout : Layout? = null
 

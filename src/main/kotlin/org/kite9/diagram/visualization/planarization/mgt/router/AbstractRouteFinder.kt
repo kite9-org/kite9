@@ -14,6 +14,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
 import org.kite9.diagram.visualization.planarization.mgt.router.AbstractRouteFinder.LocatedEdgePath
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing
+import kotlin.math.abs
 
 /**
  * This contains the EdgePath class structure, which is a way of traversing through an MGT planarization.
@@ -106,7 +107,7 @@ abstract class AbstractRouteFinder(
         }
 
         private fun equalWithinTolerance(a: Double, b: Double): Boolean {
-            return Math.abs(a - b) < tolerance
+            return abs(a - b) < tolerance
         }
 
         override fun toString(): String {
@@ -133,7 +134,7 @@ abstract class AbstractRouteFinder(
     ): LineRoutingInfo? {
         var current = current
         var from = from
-        while (Math.abs(from - to) > 1 && pl != null) {
+        while (abs(from - to) > 1 && pl != null) {
             from += if (from < to) 1 else -1
             current = move(current, from, g, pl)
         }
@@ -484,32 +485,6 @@ abstract class AbstractRouteFinder(
 
     enum class Place {
         ABOVE, BELOW
-    }
-
-    /**
-     * This class holds the location of the ssp node, which can be either outsideEdge or below or arriving at any given vertex.
-     */
-    class Location(var p: Place?, val trailEndVertex: Int, val vertex: Vertex) {
-        override fun toString(): String {
-            return "LOC[p=" + p + ", vertex=" + trailEndVertex + ",v=" + trailEndVertex + "]"
-        }
-
-        override fun hashCode(): Int {
-            val prime = 31
-            var result = 1
-            result = prime * result + if (p == null) 0 else p.hashCode()
-            result = prime * result + trailEndVertex
-            return result
-        }
-
-        override fun equals(obj: Any?): Boolean {
-            if (this === obj) return true
-            if (obj == null) return false
-            if (javaClass != obj.javaClass) return false
-            val other = obj as Location
-            if (p != other.p) return false
-            return if (trailEndVertex != other.trailEndVertex) false else true
-        }
     }
 
     enum class Axis {

@@ -5,6 +5,7 @@ import org.kite9.diagram.common.algorithms.fg.SimpleNode
 import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.visualization.planarization.Face
+import kotlin.math.min
 
 
 class NudgeItem(
@@ -68,7 +69,7 @@ class NudgeItem(
     }
 
     fun portionCount(): Int {
-        return Math.min(portionsClockwise!!.size, portionsAntiClockwise!!.size)
+        return min(portionsClockwise!!.size, portionsAntiClockwise!!.size)
     }
 
     override fun toString(): String {

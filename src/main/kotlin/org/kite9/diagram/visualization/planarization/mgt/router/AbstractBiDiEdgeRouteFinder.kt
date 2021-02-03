@@ -135,7 +135,7 @@ abstract class AbstractBiDiEdgeRouteFinder(
             // regular connection edge
             canCrossBidiEdge(e2, goingDown)
         } else {
-            throw LogicException("Don't know edge type: " + e2!!.javaClass)
+            throw LogicException("Don't know edge type: " + e2)
         }
     }
 

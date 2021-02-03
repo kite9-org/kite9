@@ -22,9 +22,7 @@ import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyin
  *
  * @author robmoffat
  */
-abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : MappedFlowOrthogonalizer(
-    va, clc
-) {
+abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : MappedFlowOrthogonalizer(va, clc) {
 
     var nodeNo = 0
 
@@ -41,7 +39,7 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
         }
 
         // output detail in log
-        val nodes: MutableCollection<String> = sortedSetOf()
+        val nodes: MutableSet<String> = sortedSetOf()
         for (n in fg.allNodes) {
             nodes.add(n.getID() + " has " + n.arcs.size + " arcs: " + n.arcs)
         }

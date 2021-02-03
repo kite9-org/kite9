@@ -19,6 +19,7 @@ import org.kite9.diagram.visualization.orthogonalization.flow.face.ConstrainedFa
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
+import kotlin.math.max
 
 /**
  * Implements several balancing improvements to multi-edge. These are as
@@ -176,15 +177,16 @@ open class BalancedFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : 
     private fun getDepthBasedWeight(e: PlanarizationEdge): Int {
         val depthFrom = getVertexMaxDepth(e.getFrom())
         val depthTo = getVertexMaxDepth(e.getTo())
-        val depth = Math.max(depthFrom, depthTo)
+        val depth = max(depthFrom, depthTo)
         val orig = super.weightCost(e)
         return orig - depth * 10
     }
 
     private fun getVertexMaxDepth(v: Vertex): Int {
-        return v.getDiagramElements().stream().map { de: DiagramElement -> de.getDepth() }
-            .reduce(0) { a: Int?, b: Int? ->
-                Math.max(
+        return v.getDiagramElements()
+            .map { de: DiagramElement -> de.getDepth() }
+            .reduce { a: Int, b: Int ->
+                max(
                     a!!, b!!
                 )
             }.toInt()

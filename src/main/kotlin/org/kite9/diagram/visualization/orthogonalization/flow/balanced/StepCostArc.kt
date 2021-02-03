@@ -2,6 +2,8 @@ package org.kite9.diagram.visualization.orthogonalization.flow.balanced
 
 import org.kite9.diagram.common.algorithms.fg.AbsoluteArc
 import org.kite9.diagram.common.algorithms.fg.Node
+import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Step cost arc is an absolute arc where the cost steps up when absolute flow meets a step point.
@@ -20,15 +22,15 @@ class StepCostArc(
 
     override fun getFlowCost(): Int {
         val regularCost = super.getFlowCost()
-        val increment = Math.max(0, Math.abs(flow) - stepAt)
+        val increment = max(0, abs(flow) - stepAt)
         val extraCost = increment * stepCost
         return regularCost + extraCost
     }
 
     override fun getIncrementalCost(flow: Int): Int {
         val cost = super.getIncrementalCost(flow)
-        val origStepCost = Math.max(0, Math.abs(this.flow) - stepAt) * stepCost
-        val newStepCost = Math.max(0, Math.abs(this.flow + flow) - stepAt) * stepCost
+        val origStepCost = max(0, abs(this.flow) - stepAt) * stepCost
+        val newStepCost = max(0, abs(this.flow + flow) - stepAt) * stepCost
         val stepCost = newStepCost - origStepCost
         return cost + stepCost
     }
