@@ -32,7 +32,7 @@ class Tools : Logable {
      * This inserts the new EdgeCrossingVertex into an edge to break it in two
      */
     fun breakEdge(e: PlanarizationEdge, pln: Planarization, split: Vertex): Vertex {
-        val faces = pln.edgeFaceMap[e]
+        val faces = pln.edgeFaceMap[e]!!
         val from = e.getFrom()
         val to = e.getTo()
         val fromEdgeOrdering = pln.edgeOrderings[from] as VertexEdgeOrdering?
@@ -45,11 +45,11 @@ class Tools : Logable {
 
         // new edges will have same faces
         pln.edgeFaceMap.remove(e)
-        pln.edgeFaceMap.put(newEdges.a, ArrayList(faces))
-        pln.edgeFaceMap.put(newEdges.b, ArrayList(faces))
+        pln.edgeFaceMap[newEdges.a] = faces.filterNotNull().toMutableList()
+        pln.edgeFaceMap[newEdges.b] = faces.filterNotNull().toMutableList()
 
         // new vertex will have same faces as edge
-        pln.vertexFaceMap.put(split, faces!!.filterNotNull().toMutableList() )
+        pln.vertexFaceMap[split] = faces.filterNotNull().toMutableList()
 
         // add to the edge ordering map. since there are only 2 edges, order not
         // important yet.

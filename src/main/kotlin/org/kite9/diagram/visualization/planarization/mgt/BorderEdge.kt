@@ -80,14 +80,8 @@ class BorderEdge(
         return out
     }
 
-    @Transient
-    private var bt: BorderTraversal? = null
-    val borderTraversal: BorderTraversal?
-        get() = if (bt != null) {
-            bt
-        } else {
-            bt = calculateTraversalRule()
-            bt
+    val borderTraversal: BorderTraversal? by lazy {
+            calculateTraversalRule()
         }
 
     private fun calculateTraversalRule(): BorderTraversal? {

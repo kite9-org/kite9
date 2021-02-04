@@ -38,12 +38,15 @@ abstract class AbstractFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter
             }
         }
 
-        // output detail in log
-        val nodes: MutableSet<String> = sortedSetOf()
-        for (n in fg.allNodes) {
-            nodes.add(n.getID() + " has " + n.arcs.size + " arcs: " + n.arcs)
+        if (log.go()) {
+            // output detail in log
+            val nodes: MutableList<String> = mutableListOf()
+            for (n in fg.allNodes) {
+                nodes.add(n.getID() + " has " + n.arcs.size + " arcs: " + n.arcs)
+            }
+            nodes.sort()
+            log.send("Node details: ", nodes)
         }
-        log.send(if (log.go()) null else "Node details: ", nodes)
     }
 
     interface VertexHandler {
