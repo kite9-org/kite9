@@ -166,7 +166,6 @@ abstract class AbstractBiDiEdgeRouteFinder(
     /**
      * Provides an extra directional check
      */
-    @Throws(NoFurtherPathException::class)
     override fun createShortestPath(): LocatedEdgePath {
         if (e.getDrawDirection() != null && gt !== GeographyType.RELAXED) {
             // check that destination is in the correct direction for this to even work

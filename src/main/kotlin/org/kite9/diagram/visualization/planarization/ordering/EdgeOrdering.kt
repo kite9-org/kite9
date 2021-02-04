@@ -49,7 +49,6 @@ interface EdgeOrdering {
     fun getUnderlyingLeavers(): Set<DiagramElement>
 
     companion object {
-        @kotlin.jvm.JvmField
 		val MUTLIPLE_DIRECTIONS = Any()
     }
 }
