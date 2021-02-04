@@ -13,18 +13,28 @@ object Collections {
         return newList
     }
 
-    fun <T> leftShiftList(l: MutableList<T>, d: Int) {
-        var scratch : T? = null
-        l.forEachIndexed { index, value ->
-            if (index == 0) {
-                scratch = l[index]
-            }
-            val newIndex = (index + (l.size - d)) % l.size
-            if (newIndex == 0) {
-                l[index] = scratch!!
-            } else {
-                l[index] = l[newIndex]
-            }
+    /**
+     * Stolen from java.util.Collections
+     */
+    fun <T> rotate(list: MutableList<T>, distance: Int) {
+        var distance = distance
+        val size = list.size
+        if (size == 0) return
+        distance = distance % size
+        if (distance < 0) distance += size
+        if (distance == 0) return
+        var cycleStart = 0
+        var nMoved = 0
+        while (nMoved != size) {
+            var displaced = list[cycleStart]
+            var i = cycleStart
+            do {
+                i += distance
+                if (i >= size) i -= size
+                displaced = list.set(i, displaced)
+                nMoved++
+            } while (i != cycleStart)
+            cycleStart++
         }
     }
 }

@@ -318,7 +318,7 @@ class MGTPlanarizationImpl(
         byQuad.addAll(ab)
         val cmp = edgeOrderings[from]!!.getEdgesAsList()
         val i = byQuad.indexOf(cmp[0])
-        Collections.leftShiftList(byQuad, -i)
+        Collections.rotate(byQuad, -i)
         if (cmp != byQuad) {
             throw LogicException("Collections not same: \n$cmp\n$byQuad")
         }

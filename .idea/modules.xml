@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kite9-visualization.iml" filepath="$PROJECT_DIR$/kite9-visualization.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kite9-visualization-js.iml" filepath="$PROJECT_DIR$/kite9-visualization-js.iml" />
     </modules>
   </component>
 </project>

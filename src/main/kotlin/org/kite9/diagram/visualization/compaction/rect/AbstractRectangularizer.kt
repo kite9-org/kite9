@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.rect
 
+import org.kite9.diagram.common.Collections
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.logging.LogicException
@@ -119,7 +120,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
                 }
             }
             val turnCopy: MutableList<DartDirection> = ArrayList(turns)
-            java.util.Collections.rotate(turnCopy, -startPoint)
+            Collections.rotate(turnCopy, -startPoint)
+            //java.util.Collections.rotate(turnCopy, -startPoint)
 
             val segments = turnCopy.map { c.getSegmentForDart( it.dart ) }
 

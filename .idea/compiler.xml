@@ -16,11 +16,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="kite9-visualization" />
+        <module name="kite9-visualization-js" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kite9-visualization" target="1.8" />
+      <module name="kite9-visualization-js" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
