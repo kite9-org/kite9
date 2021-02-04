@@ -409,17 +409,17 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         MutableIterator<X> {
         var i: Iterator<Map.Entry<Group, LinkDetail>>
         var mask: Int
-        var next: Map.Entry<Group, LinkDetail>? = null
+        var nxt: Map.Entry<Group, LinkDetail>? = null
         override fun hasNext(): Boolean {
             ensureNext()
-            return next != null
+            return nxt != null
         }
 
         protected fun ensureNext() {
-            while (next == null && i.hasNext()) {
-                next = i.next()
-                if (!matches(next!!.value, mask)) {
-                    next = null
+            while (nxt == null && i.hasNext()) {
+                nxt = i.next()
+                if (!matches(nxt!!.value, mask)) {
+                    nxt = null
                 }
             }
         }
@@ -438,11 +438,11 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         FilterIterator<Group>(links, mask) {
         override fun next(): Group {
             ensureNext()
-            if (next == null) {
+            if (nxt == null) {
                 throw LogicException()
             }
-            val out = next!!.key
-            next = null
+            val out = nxt!!.key
+            nxt = null
             return out
         }
     }
@@ -451,11 +451,11 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         FilterIterator<LinkDetail>(links, mask) {
         override fun next(): LinkDetail {
             ensureNext()
-            if (next == null) {
+            if (nxt == null) {
                 throw LogicException()
             }
-            val out: LinkDetail = next!!.value
-            next = null
+            val out: LinkDetail = nxt!!.value
+            nxt = null
             return out
         }
     }

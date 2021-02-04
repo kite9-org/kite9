@@ -18,7 +18,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
 
     val log = Kite9Log.instance(this)
 
-    enum class GroupContainerState(var hasContent: Boolean, var isComplete: Boolean) {
+    enum class GroupContainerState(var hc: Boolean, var isComplete: Boolean) {
         HAS_CONTENT(true, false), COMPLETE_WITH_CONTENT(true, true), NO_CONTENT(
             false,
             false
@@ -26,7 +26,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         COMPLETE_NO_CONTENT(false, true);
 
         fun hasContent(): Boolean {
-            return hasContent
+            return hc
         }
 
         companion object {

@@ -25,7 +25,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
 
     private val alreadyAdded: MutableSet<BiDirectional<Connected>> = UnorderedSet(1000)
     var log = Kite9Log.instance(this)
-    var hasContradictions = false
+    private var hasContradictions = false
 
     val comp  = { arg0: BiDirectional<Connected>, arg1: BiDirectional<Connected> ->
         val r0 = getRankFor(arg0)
