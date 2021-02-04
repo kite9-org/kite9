@@ -39,15 +39,8 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
     }
 
     protected fun createRouteList(constraintGroup: ConstraintGroup, fg: MappedFlowGraph): MutableCollection<NudgeItem> {
-        val out: MutableCollection<NudgeItem> = sortedSetOf(Comparator { o1, o2 ->
-            if (o1.type !== o2.type) {
-                o1.type.compareTo(o2.type)
-            } else {
-                o1.id.compareTo(o2.id)
-            }
-        })
-        //		Collection<NudgeItem> out = new LinkedList<NudgeItem>();
         var id = 0
+        var out = mutableListOf<NudgeItem>()
         for (r in constraintGroup.getRequiredRoutes()) {
             try {
                 val pc = getPortionsForConstraint(fg, r)
@@ -55,6 +48,13 @@ abstract class AbstractConstraintNudger(var facePortionMap: Map<Face, List<Porti
                 out.add(ni)
             } catch (e: Exception) {
                 throw LogicException("Could not convert route to nudge item: $r", e)
+            }
+        }
+        out.sortWith { o1, o2 ->
+            if (o1.type !== o2.type) {
+                o1.type.compareTo(o2.type)
+            } else {
+                o1.id.compareTo(o2.id)
             }
         }
         return out
