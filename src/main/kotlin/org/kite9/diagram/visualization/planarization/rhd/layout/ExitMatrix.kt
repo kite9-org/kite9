@@ -10,7 +10,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
-import java.lang.StringBuilder
 
 /**
  * The exit matrix keeps track of links leaving a group in order that we can perform
