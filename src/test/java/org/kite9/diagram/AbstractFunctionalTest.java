@@ -1,36 +1,52 @@
 package org.kite9.diagram;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
-
 import org.apache.batik.dom.AbstractDocument;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.GenericMutableXMLElement;
 import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.common.HelpMethods;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
-import org.kite9.framework.common.HelpMethods;
-import org.kite9.framework.common.StreamHelp;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.w3c.dom.Element;
+
+import java.io.*;
+import java.net.URL;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	public AbstractFunctionalTest() {
 		super();
+	}
+
+	@BeforeClass
+	public static void setLoggingFactory() {
+		Kite9Log.Companion.setFactory(l -> new Kite9LogImpl(l));
+	}
+
+	@Before
+	public void setLogging() {
+		if ("off".equals(System.getProperty("kite9.logging"))) {
+			Kite9LogImpl.setLogging(Destination.OFF);
+		} else {
+			Kite9LogImpl.setLogging(Destination.STREAM);
+			// if we are running more than one test, then there's no point in logging.
+			if (firstRun) {
+				firstRun = false;
+			} else {
+				Kite9LogImpl.setLogging(Destination.OFF);
+			}
+		}
 	}
 
 	@Before
@@ -113,20 +129,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	
 	static boolean firstRun = true;
 	
-	@Before
-	public void setLogging() {
-		if ("off".equals(System.getProperty("kite9.logging"))) {
-			Kite9Log.setLogging(Destination.OFF);
-		} else {
-			Kite9Log.setLogging(Destination.STREAM);
-			// if we are running more than one test, then there's no point in logging.
-			if (firstRun) {
-				firstRun = false;
-			} else {
-				Kite9Log.setLogging(Destination.OFF);
-			}	
-		}
-	}
+
 	
 
 	protected void copyToErrors(File output) {

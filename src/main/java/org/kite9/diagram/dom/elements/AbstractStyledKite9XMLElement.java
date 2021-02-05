@@ -13,13 +13,11 @@ import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.managers.EnumValue;
-import org.kite9.diagram.dom.model.DiagramElementFactory;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
-import org.kite9.framework.common.Kite9ProcessingException;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -153,7 +151,7 @@ public abstract class AbstractStyledKite9XMLElement extends SVGGraphicsElement i
 	public DiagramElement getDiagramElement() {
 		
 		if (cachedDiagramElement == null) {
-			DiagramElementFactory f = getOwnerDocument().getImplementation().getDiagramElementFactory();
+			XMLDiagramElementFactory f = getOwnerDocument().getImplementation().getDiagramElementFactory();
 			
 			if (f == null) {
 				throw new Kite9XMLProcessingException("No configured DiagramElementFactory on DOMImplementation", this);

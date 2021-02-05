@@ -2,7 +2,7 @@ package org.kite9.diagram.dom.painter;
 
 import java.util.Arrays;
 
-import org.apache.commons.math.fraction.BigFraction;
+import org.kite9.diagram.common.fraction.LongFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
@@ -24,7 +24,7 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -36,7 +36,6 @@ import org.w3c.dom.NamedNodeMap;
  * 
  * @author robmoffat
  *
- * @param <X>
  */
 public abstract class AbstractPainter implements Painter {
 
@@ -154,11 +153,11 @@ public abstract class AbstractPainter implements Painter {
 		return Arrays.stream(p).mapToObj(d -> "" + ((int) d)).reduce((a, b) -> a+", "+b).orElse("");
 	}
 
-	private Pair<Integer> scale(OPair<BigFraction> p, int s) {
-		BigFraction a = p.getA();
-		BigFraction as = a.multiply(s);
-		BigFraction b = p.getB();
-		BigFraction bs = b.multiply(s);
+	private Pair<Integer> scale(OPair<LongFraction> p, int s) {
+		LongFraction a = p.getA();
+		LongFraction as = a.multiply(s);
+		LongFraction b = p.getB();
+		LongFraction bs = b.multiply(s);
 		return new Pair<Integer>(as.intValue(), bs.intValue());
 	}
 

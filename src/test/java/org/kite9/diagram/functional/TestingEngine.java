@@ -1,55 +1,31 @@
 package org.kite9.diagram.functional;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.apache.commons.math.fraction.BigFraction;
+import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.BatikDisplayer;
-import org.kite9.diagram.common.elements.grid.AbstractTemporaryConnected;
+import org.kite9.diagram.TestingHelp;
+import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
+import org.kite9.diagram.common.fraction.LongFraction;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Decal;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.model.*;
+import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ConnectionAlignment;
-import org.kite9.diagram.model.visitors.DiagramChecker;
-import org.kite9.diagram.model.visitors.DiagramChecker.ConnectionAction;
-import org.kite9.diagram.model.visitors.DiagramChecker.ExpectedLayoutException;
-import org.kite9.diagram.model.visitors.DiagramElementVisitor;
-import org.kite9.diagram.model.visitors.HopChecker;
-import org.kite9.diagram.model.visitors.HopChecker.HopAction;
-import org.kite9.diagram.model.visitors.VisitorAction;
+import org.kite9.diagram.visitors.DiagramChecker;
+import org.kite9.diagram.visitors.DiagramChecker.ConnectionAction;
+import org.kite9.diagram.visitors.DiagramChecker.ExpectedLayoutException;
+import org.kite9.diagram.visitors.DiagramElementVisitor;
+import org.kite9.diagram.visitors.HopChecker;
+import org.kite9.diagram.visitors.HopChecker.HopAction;
+import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
@@ -60,11 +36,16 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.logging.LogicException;
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.*;
+
 
 /**
  * Responsible for running tests which check edges, hops, lines are straight etc.\
@@ -92,14 +73,14 @@ public class TestingEngine extends TestingHelp {
 			try {
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d).getBytes());
-				if (HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
-					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.LAST_PLANARIZATION_DEBUG.getBytes());
+				if (HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
+					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG().getBytes());
 				}
-				if (AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG != null) {
-					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG.getBytes());
+				if (AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG() != null) {
+					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
-				if (RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG != null) {
-					TestingEngine.drawPositions(RHDPlanarizationBuilder.LAST_PLANARIZATION_DEBUG , RHDPlanarization.class, "positions", "vertex.png");
+				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
+					TestingEngine.drawPositions((Collection<Vertex>) RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), RHDPlanarization.class, "positions", "vertex.png");
 
 				}
 			} catch (PlanarizationException pe) {
@@ -154,7 +135,7 @@ public class TestingEngine extends TestingHelp {
 			} else {
 				System.err.println("Not Addressed: "+afe.getMessage());
 			}
-		} catch (AssertionFailedError afe) {
+		} catch (AssertionError afe) {
 			throw afe;
 		}
 	}
@@ -220,7 +201,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isAligning(Connected v, Direction side) {
-				return v.getConnectionAlignment(side) != ConnectionAlignment.NONE;
+				return v.getConnectionAlignment(side) != ConnectionAlignment.Companion.getNONE();
 			}
 
 			/**
@@ -310,12 +291,12 @@ public class TestingEngine extends TestingHelp {
 			int xoffset = 0;
 			int yoffset = 0;
 			if (vertex instanceof MultiCornerVertex) {
-				if (((MultiCornerVertex) vertex).getXOrdinal().equals(BigFraction.ONE)) {
+				if (((MultiCornerVertex) vertex).getXOrdinal().equals(LongFraction.Companion.getONE())) {
 					xoffset = -20;
 				} else {
 					yoffset = 5;
 				}
-				if (((MultiCornerVertex) vertex).getYOrdinal().equals(BigFraction.ONE)) {
+				if (((MultiCornerVertex) vertex).getYOrdinal().equals(LongFraction.Companion.getONE())) {
 					yoffset = -20;
 				} else {
 					yoffset = 5;
@@ -341,7 +322,7 @@ public class TestingEngine extends TestingHelp {
 		ConnectionAction ca = new ConnectionAction() {
 
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
-				if ((rri == null) || (rri.size() == 0)) {
+				if ((rri == null) || (rri.getLength() == 0)) {
 					notPresent.add(c);
 				}
 				
@@ -475,7 +456,7 @@ public class TestingEngine extends TestingHelp {
 	 */
 	@Deprecated()
 	private static boolean checkTemporary(Rectangular cc) {
-		return cc instanceof AbstractTemporaryConnected;
+		return cc instanceof TemporaryConnected;
 	}
 
 	private void checkOverlap(final Diagram d) {
@@ -672,7 +653,7 @@ public class TestingEngine extends TestingHelp {
 	private static Rectangle2D createRect(RenderingInformation r) {
 		if (r instanceof RectangleRenderingInformation) {
 			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
-			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getWidth(), ri.getSize().getHeight());
+			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
 		} else if (r instanceof RouteRenderingInformation) {
 			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
 					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))
@@ -739,26 +720,26 @@ public class TestingEngine extends TestingHelp {
 				if (l != null) {
 					switch (l) {
 					case HORIZONTAL:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
 						break;
 					case LEFT:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
-						checkBefore(ccPos.getWidth(), ccSize.getWidth(), prevPos.getWidth(), prevSize.getWidth(), cc, prev, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
+						checkBefore(ccPos.getW(), ccSize.getW(), prevPos.getW(), prevSize.getW(), cc, prev, l);
 						break;
 					case RIGHT:
-						checkAligned(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
-						checkBefore(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
+						checkAligned(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
+						checkBefore(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
 						break;
 					case VERTICAL:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
 						break;
 					case UP:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
-						checkBefore(ccPos.getHeight(), ccSize.getHeight(), prevPos.getHeight(), prevSize.getHeight(), cc, prev, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
+						checkBefore(ccPos.getH(), ccSize.getH(), prevPos.getH(), prevSize.getH(), cc, prev, l);
 						break;
 					case DOWN:
-						checkAligned(prevPos.getWidth(), prevSize.getWidth(), ccPos.getWidth(), ccSize.getWidth(), prev, cc, l);
-						checkBefore(prevPos.getHeight(), prevSize.getHeight(), ccPos.getHeight(), ccSize.getHeight(), prev, cc, l);
+						checkAligned(prevPos.getW(), prevSize.getW(), ccPos.getW(), ccSize.getW(), prev, cc, l);
+						checkBefore(prevPos.getH(), prevSize.getH(), ccPos.getH(), ccSize.getH(), prev, cc, l);
 						break;
 
 					}

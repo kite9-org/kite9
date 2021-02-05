@@ -12,9 +12,9 @@ import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.framework.common.Kite9XMLProcessingException;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  */
 public class BasicTemplater extends K9ElemTaggingProcessor implements XMLProcessor, Logable {
 	
-	protected Kite9Log log = new Kite9Log(this);
+	protected Kite9Log log = Kite9Log.Companion.instance(this);
 	
 	@Override
 	public String getPrefix() {

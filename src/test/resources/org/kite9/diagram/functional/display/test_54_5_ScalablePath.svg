@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" width="324.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="324.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g k9-elem="diagram" id="one" style="kite9-type: diagram; kite9-padding: 50px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [324.0,324.0]; "
+><g k9-elem="diagram" id="one" style="kite9-type: diagram; kite9-padding: 50px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [324.0,324.0]; "
   ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g k9-elem="container" id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " transform="translate(50.0,50.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; horiz: CENTER; vert: CENTER; sizing: MINIMIZE; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [224.0,224.0]; "
+    ><g k9-elem="container" id="container1" style="kite9-type: container; kite9-sizing: minimize; kite9-padding: 10px; kite9-margin: 10px;  " transform="translate(50.0,50.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [50.0,50.0]; rect-size: [224.0,224.0]; "
       ><g style="fill: red; "
         ><g k9-elem="someadaptive" id="adap" style="kite9-type: svg; kite9-usage: decal; " k9-info=""
           ><path d="M0 0 H 224.0 V 224.0z"
           /></g
-          ><g k9-elem="someelement" id="someelement" style="kite9-type: svg; " transform="translate(-87.6,-88.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [60.0,60.0]; rect-size: [204.0,204.0]; "
+          ><g k9-elem="someelement" id="someelement" style="kite9-type: svg; " transform="translate(-87.6,-88.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [60.0,60.0]; rect-size: [204.0,204.0]; "
           ><path fill="red" d="M 100 100 L 300 100 L 200 300 z" stroke-width="3" stroke="blue"
           /></g
         ></g

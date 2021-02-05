@@ -1,19 +1,19 @@
 package org.kite9.diagram.dom.managers;
 
 import org.apache.batik.css.engine.value.AbstractValue;
-import org.kite9.diagram.model.style.IntegerRange;
+import org.kite9.diagram.common.range.IntegerRange;
 
 /**
- * An integer range, from and to.  
+ * An integer range, from and to.
  * Used for grid positioning in each axis.
- * 
+ *
  * @author robmoffat
  *
  */
 public class IntegerRangeValue extends AbstractValue implements IntegerRange {
 
 	private int from, to;
-	
+
 	@Override
 	public int getFrom() {
 		return from;
@@ -37,7 +37,7 @@ public class IntegerRangeValue extends AbstractValue implements IntegerRange {
 	public static boolean notSet(IntegerRangeValue in) {
 		return (in == null) || (in.from == -1);
 	}
-	
+
 	public String toString() {
 		if (from > to) {
 			return "*";

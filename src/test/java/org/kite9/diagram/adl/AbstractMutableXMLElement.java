@@ -2,7 +2,7 @@ package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.AbstractReferencingKite9XMLElement;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

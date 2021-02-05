@@ -13,9 +13,9 @@ import org.apache.batik.css.engine.value.ValueConstants;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.framework.common.Kite9XMLProcessingException;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -28,7 +28,7 @@ import org.w3c.dom.Element;
 public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	
 	private final Cache cache;
-	private final Kite9Log log = new Kite9Log(this);
+	private final Kite9Log log = Kite9Log.Companion.instance(this);
 
 	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, Cache cache) {
 		super(userAgent);

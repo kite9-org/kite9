@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 
 
 /**
@@ -23,7 +23,7 @@ import org.kite9.framework.logging.Logable;
  */
 public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 
-	protected Kite9Log log = new Kite9Log(this);
+	protected Kite9Log log = Kite9Log.Companion.instance(this);
 
 	CompleteDisplayer ded;
 	double gridSize;
@@ -72,7 +72,7 @@ public class GriddedCompleteDisplayer implements CompleteDisplayer, Logable {
 		ded.draw(element, ri);
 	}
 	
-	public CostedDimension size(DiagramElement element, Dimension2D within) {
+	public CostedDimension2D size(DiagramElement element, Dimension2D within) {
 //		CostedDimension cd = ded.size(element, within == null ? null : new Dimension2D(within.getWidth(), within.getHeight()));
 //		if (cd==CostedDimension.NOT_DISPLAYABLE) {
 //			return cd;

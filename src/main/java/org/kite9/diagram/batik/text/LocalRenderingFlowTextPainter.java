@@ -24,7 +24,7 @@ import org.apache.batik.gvt.font.GVTLineMetrics;
 import org.apache.batik.gvt.text.AttributedCharacterSpanIterator;
 import org.apache.batik.gvt.text.GVTAttributedCharacterIterator;
 import org.apache.batik.gvt.text.TextPaintInfo;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
 
 /**
  * Overrides the regular text bridge to allow SVG to be written as text, rather

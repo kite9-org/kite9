@@ -5,7 +5,7 @@ import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.visitors.DiagramChecker;
+import org.kite9.diagram.visitors.DiagramChecker;
 
 public class DiagramAssert {
 	
@@ -34,16 +34,16 @@ public class DiagramAssert {
 			boolean ok = true;
 			switch (d) {
 			case UP:
-				ok= posa.getHeight() > posb.getHeight() + sizb.getHeight();
+				ok= posa.getH() > posb.getH() + sizb.getH();
 				break;
 			case DOWN:
-				ok =posa.getHeight() + siza.getHeight() < posb.getHeight();
+				ok =posa.getH() + siza.getH() < posb.getH();
 				break;
 			case LEFT:
-				ok =posa.getWidth() > posb.getWidth() + sizb.getWidth();
+				ok =posa.getW() > posb.getW() + sizb.getW();
 				break;
 			case RIGHT:
-				ok = posa.getWidth()+ siza.getWidth() < posb.getWidth();
+				ok = posa.getW()+ siza.getW() < posb.getW();
 				break;
 			}
 			

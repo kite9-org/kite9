@@ -3,7 +3,7 @@ package org.kite9.diagram.batik.transform;
 import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.diagram.logging.Kite9ProcessingException;
 
 public class TransformFactory {
 

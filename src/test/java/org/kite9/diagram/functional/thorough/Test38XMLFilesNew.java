@@ -1,21 +1,14 @@
 package org.kite9.diagram.functional.thorough;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
-import org.kite9.framework.common.StreamHelp;
-import org.kite9.framework.common.TestingHelp;
 
 
 public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 
-//	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_38_1_CantFinishGrouping() throws Exception {
 		generate("cant_finish_grouping.xml");
@@ -25,6 +18,7 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 	/**
 	 * Renders but looks very messy and overlapping
 	 */
+	@Ignore("Broken in move to Kotlin - but probably not the change")
 	public void test_38_2_ADClassDiagram() throws Exception {
 		generate("diagramClassHierarchy.xml");
 	}
@@ -35,7 +29,6 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	@Ignore
 	public void test_38_4_OverlapIssue() throws Exception {
 		generate("layout_issue_planarization_diagram.xml");
 	}
@@ -44,7 +37,6 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 	 * Caused by someone adding two labels to the diagram.
 	 */
 	@Test
-	@Ignore
 	public void test_38_5_DuplicateFieldException() throws Exception {
 		generate("duplicate_field_exception.xml");
 	}
@@ -153,13 +145,11 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	// not addressed
 	public void test_38_24_WonkyCompaction() throws Exception {
 		generate("wonky_compaction.xml");
 	}
 	
 	@Test
-	// fixed
 	public void test_38_25_AnotherContradiction() throws Exception {
 		generate("another_contradiction_issue.xml");
 	}
@@ -209,7 +199,6 @@ public class Test38XMLFilesNew extends AbstractLayoutFunctionalTest {
 		generate("NonCenteredKey.xml");
 	}
 	
-	@Ignore("Broken in sprint 7")
 	@Test
 	public void test_38_36_KeyError() throws Exception {
 		generate("key_error.xml");

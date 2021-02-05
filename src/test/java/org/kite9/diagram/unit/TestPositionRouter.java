@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing;
@@ -16,12 +20,15 @@ import org.kite9.diagram.visualization.planarization.rhd.position.Corner;
 import org.kite9.diagram.visualization.planarization.rhd.position.LinePositionRoutingInfo;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
-import org.kite9.framework.common.HelpMethods;
-
-import junit.framework.Assert;
+import org.kite9.diagram.common.HelpMethods;
 
 
 public class TestPositionRouter {
+
+	@BeforeClass
+	public static void setLoggingFactory() {
+		Kite9Log.Companion.setFactory(l -> new Kite9LogImpl(l));
+	}
 
 	PositionRoutableHandler2D prh = new PositionRoutableHandler2D();
 
@@ -41,7 +48,7 @@ public class TestPositionRouter {
 		Assert.assertTrue(getHeight(lpri) == 0);
 		Assert.assertTrue(getWidth(lpri) == 0);
 		Assert.assertTrue(getMinX(lpri) == 6);
-		Assert.assertEquals(6d, lpri.getRunningCost());
+		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
 	}
 	
 	private int getMinX(LinePositionRoutingInfo lpri) {
@@ -84,7 +91,7 @@ public class TestPositionRouter {
 		Assert.assertEquals(0, getWidth(lpri));
 		Assert.assertEquals(7, getMinX(lpri));
 		Assert.assertEquals(2, getMinY(lpri));
-		Assert.assertEquals(4d, lpri.getRunningCost());
+		Assert.assertEquals(4d, lpri.getRunningCost(), 0.1);
 
 	}
 	
@@ -107,7 +114,7 @@ public class TestPositionRouter {
 		Assert.assertEquals(0, getWidth(lpri));
 		Assert.assertEquals(0, getMinX(lpri));
 		Assert.assertEquals(0, getMinY(lpri));
-		Assert.assertEquals(6d, lpri.getRunningCost()); 
+		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -144,7 +151,7 @@ public class TestPositionRouter {
 		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, post, Routing.UNDER_BACKWARDS);
 		lri2 = prh.move(lri2, start, null);
-		Assert.assertEquals(11d, lri2.getRunningCost());
+		Assert.assertEquals(11d, lri2.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -161,7 +168,7 @@ public class TestPositionRouter {
 		LineRoutingInfo lri2 = prh.move(null, start, null);
 		lri2 = prh.move(lri2, post, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(2d, lri2.getRunningCost());
+		Assert.assertEquals(2d, lri2.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -179,7 +186,7 @@ public class TestPositionRouter {
 		LineRoutingInfo lri2 = prh.move(null, start, null);
 		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(10d, lri2.getRunningCost());
+		Assert.assertEquals(10d, lri2.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -196,7 +203,7 @@ public class TestPositionRouter {
 		LineRoutingInfo lri2 = prh.move(null, start, null);
 		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(1d, lri2.getRunningCost());
+		Assert.assertEquals(1d, lri2.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -219,7 +226,7 @@ public class TestPositionRouter {
 		lri2 = prh.move(lri2, posta9, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, posta6, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertTrue(PositionRoutableHandler2D.eq(.6842, lri2.getRunningCost()));
+		Assert.assertTrue(PositionRoutableHandler2D.Companion.eq(.6842, lri2.getRunningCost()));
 	}
 	
 	@Test
@@ -242,7 +249,7 @@ public class TestPositionRouter {
 		lri2 = prh.move(lri2, posta9, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, posta6, Routing.UNDER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertTrue(PositionRoutableHandler2D.eq(.1872, lri2.getRunningCost()));
+		Assert.assertTrue(PositionRoutableHandler2D.Companion.eq(.1872, lri2.getRunningCost()));
 	}
 	
 	@Test
@@ -264,7 +271,7 @@ public class TestPositionRouter {
 		Assert.assertEquals(0, getWidth(lpri));
 		Assert.assertEquals(6, getMinX(lpri));
 		Assert.assertEquals(3, getMinY(lpri));
-		Assert.assertEquals(6d, lpri.getRunningCost());
+		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
 	}
 	
 	@Test
@@ -294,7 +301,7 @@ public class TestPositionRouter {
 			lri = prh.move(lri, obstacle, r);
 			lri = prh.move(lri, to, null);	
 			System.out.println("Octant "+i+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost());
+			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost(), 0.1);
 		}
 	}
 	
@@ -317,7 +324,7 @@ public class TestPositionRouter {
 			lri = prh.move(lri, obstacle, r);
 			lri = prh.move(lri, to, null);	
 			System.out.println("Octant "+i+": Xc: "+lri.getHorizontalRunningCost()+"Yc: "+lri.getVerticalRunningCost());
-			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost());
+			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost(), 0.1);
 		}
 	}
 	
@@ -352,7 +359,7 @@ public class TestPositionRouter {
 					if (total == null) {
 						total=ttt;
 					} else {
-						Assert.assertEquals("Not rotationally invariant", total, ttt);
+						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1d);
 					}
 
 					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -389,7 +396,7 @@ public class TestPositionRouter {
 			lri = prh.move(lri, to, null);
 			double ttt = lri.getRunningCost();
 			if (total != null) {
-				Assert.assertEquals("Not rotationally invariant", total, ttt);
+				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
 			}
 
 			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -427,7 +434,7 @@ public class TestPositionRouter {
 					if (total == null) {
 						total=ttt;
 					} else {
-						Assert.assertEquals("Not rotationally invariant", total, ttt);
+						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
 					}
 
 					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -466,7 +473,7 @@ public class TestPositionRouter {
 			if (total == null) {
 				total=ttt;
 			} else {
-				Assert.assertEquals("Not rotationally invariant", total, ttt);
+				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
 			}
 
 			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
@@ -490,7 +497,7 @@ public class TestPositionRouter {
 		for (PositionRoutingInfo b : l) {
 			if (b instanceof BoundsBasedPositionRoutingInfo) {
 				Map<Routing, Corner> avoidanceCorners = ((BoundsBasedPositionRoutingInfo)b).getAvoidanceCorners();
-				System.out.println(i+"    "+((avoidanceCorners==PositionRoutableHandler2D.BASIC_AVOIDANCE_CORNERS) ? "ac" : avoidanceCorners));
+				System.out.println(i+"    "+((avoidanceCorners==PositionRoutableHandler2D.Companion.getBASIC_AVOIDANCE_CORNERS()) ? "ac" : avoidanceCorners));
 				i++;
 			}
 		}

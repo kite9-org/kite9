@@ -16,8 +16,8 @@ import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.css.CachingCSSEngine;
 import org.kite9.diagram.dom.css.Kite9CSSParser;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CSSParseException;
 import org.w3c.css.sac.ErrorHandler;
@@ -36,7 +36,7 @@ import org.w3c.dom.stylesheets.StyleSheet;
  */
 public class CachingSVGDOMImplementation extends SVG12DOMImplementation  implements Logable {
 
-	protected final Kite9Log log = new Kite9Log(this);
+	protected final Kite9Log log = Kite9Log.Companion.instance(this);
 	protected final Cache cache;
 
 	public CachingSVGDOMImplementation(Cache c) {
