@@ -10,6 +10,7 @@ target
 .idea/# IntelliJ
 .idea/# IntelliJ
 .idea/
+.idea/*
 
 # Mac Nonsense
 *.DS_Store
