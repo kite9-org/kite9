@@ -70,7 +70,7 @@ public class ContentElementCopier extends ValueReplacingCopier {
 		for (Node n : toAdd) {
 			processContents(n, inside);
 		}
-		
+			
 		mergeTextNodes(inside.getChildNodes());
 
 		//System.out.println("Copied contents into : "+inside.getLocalName()+ " nodes "+nodes+" with value-replacer "+vr);

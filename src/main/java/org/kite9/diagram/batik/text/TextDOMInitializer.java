@@ -40,14 +40,6 @@ public class TextDOMInitializer {
 		// replace with new flowRoot
 		e.appendChild(flowRoot);
 		
-		
-//		e.removeChild(flowRoot);
-		
-//		if (group != null) {
-//			e.appendChild(group);
-//		}
-//		}
-		
 	}	
 	
 
