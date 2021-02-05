@@ -13,14 +13,9 @@ import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
-<<<<<<< HEAD
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
-=======
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.logging.LogicException;
->>>>>>> f28453fc4df71540e3664fe3582b68b6594dabbb
 import org.w3c.dom.Element;
 
 
