@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.framework.common.StreamHelp;
+import org.kite9.diagram.common.StreamHelp;
 
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	

@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction.unused;
 
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep;
 import org.kite9.diagram.visualization.compaction.Compaction;
 import org.kite9.diagram.visualization.compaction.Compactor;
@@ -139,6 +140,10 @@ public class SlackSharingCompactionStep extends AbstractCompactionStep {
 		// TODO Auto-generated method stub
 		
 	}
-
+	@Nullable
+	@Override
+	public String getPrefix() {
+		return "SSOS";
+	}
 	
 }

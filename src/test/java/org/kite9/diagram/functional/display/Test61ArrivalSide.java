@@ -5,15 +5,13 @@ import java.util.Collections;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.framework.common.HelpMethods;
+import org.kite9.diagram.common.HelpMethods;
 
 public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 

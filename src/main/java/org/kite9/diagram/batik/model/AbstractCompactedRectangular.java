@@ -8,6 +8,7 @@ import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.model.position.BasicDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -53,7 +54,7 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 	private void initMinimumSize() {
 		double w = getCssDoubleValue(CSSConstants.RECT_MINIMUM_WIDTH);
 		double h = getCssDoubleValue(CSSConstants.RECT_MINIMUM_HEIGHT);
-		this.minimumSize = new Dimension2D(w,h);
+		this.minimumSize = new BasicDimension2D(w,h);
 	}
 	
 	@Override

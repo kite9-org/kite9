@@ -26,7 +26,7 @@ public class DecalContainerImpl extends AbstractRectangular implements Decal, Co
 
 	@Override
 	public RectangleRenderingInformation getRenderingInformation() {
-		return (RectangleRenderingInformation) parent.getRenderingInformation();
+		return (RectangleRenderingInformation) getParent().getRenderingInformation();
 	}
 	
 	@Override

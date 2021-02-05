@@ -15,19 +15,13 @@ import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.Rectangular;
 import org.kite9.diagram.model.SizedRectangular;
 import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.position.CostedDimension;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RectangleRenderingInformationImpl;
-import org.kite9.diagram.model.position.RenderingInformation;
+import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.model.style.IntegerRange;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.common.range.IntegerRange;
+import org.kite9.diagram.logging.LogicException;
 
 public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
 	
@@ -124,9 +118,9 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 		if (("x0".equals(name) )|| ("y0".equals(name))) {
 			return "0";
 		} else if ("y1".equals(name) || "height".equals(name)) {
-			return ""+getRenderingInformation().getSize().getHeight();
+			return ""+getRenderingInformation().getSize().getH();
 		} else if ("x1".equals(name) || "width".equals(name)) {
-			return ""+getRenderingInformation().getSize().getWidth();
+			return ""+getRenderingInformation().getSize().getW();
 		} else if ((getLayout() == Layout.GRID) && (this instanceof Container)) {
 			boolean cellX = name.startsWith("cell-x-");
 			boolean cellY = name.startsWith("cell-y-");
@@ -153,7 +147,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 
 	
 	
-	public final CostedDimension getSize(Dimension2D within) {
+	public final CostedDimension2D getSize(Dimension2D within) {
 		if (this instanceof Decal) {
 			throw new LogicException("Shouldn't be using size for decals");
 		}else if (this instanceof Terminator) {
@@ -166,21 +160,21 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 			double up = getPadding(Direction.UP);
 			double down = getPadding(Direction.DOWN);
 			Dimension2D bounds = getLeafBounds();
-			return ensureMinimumSize(new Dimension2D(left + right + bounds.getWidth(), up + down + bounds.getHeight()), within);
+			return ensureMinimumSize(new BasicDimension2D(left + right + bounds.getW(), up + down + bounds.getH()), within);
 		}
 	
 		throw new LogicException("Not sure how to size: "+this);
 	}
 	
-	private CostedDimension ensureMinimumSize(Dimension2D c, Dimension2D within) {
-		Dimension2D min = CostedDimension.ZERO;
+	private CostedDimension2D ensureMinimumSize(Dimension2D c, Dimension2D within) {
+		Dimension2D min = CostedDimension2D.Companion.getZERO();
 		if (this instanceof SizedRectangular) {
 			min = ((SizedRectangular)this).getMinimumSize();
 		}
 		
-		return new CostedDimension(
-				Math.max(c.getWidth(), min.getWidth()), 
-				Math.max(c.getHeight(), min.getHeight()), within);
+		return new CostedDimension2D(
+				Math.max(c.getW(), min.getW()),
+				Math.max(c.getH(), min.getH()), within);
 	}
 	
 	private Dimension2D getLeafBounds() {
@@ -189,7 +183,7 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 			return ((LeafTransformer)transformer).getBounds((LeafPainter)  p);
 		}
 		
-		return CostedDimension.ZERO;
+		return CostedDimension2D.Companion.getZERO();
 	}
 
 }

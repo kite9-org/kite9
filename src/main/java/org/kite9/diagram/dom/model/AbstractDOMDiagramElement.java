@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.common.HintMap;
+import org.kite9.diagram.common.elements.factory.AbstractDiagramElement;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
@@ -13,7 +14,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -34,8 +35,8 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	
 	protected void ensureInitialized() {
 		if (!initialized) {
-			if (parent instanceof AbstractDOMDiagramElement) {
-				((AbstractDOMDiagramElement)parent).ensureInitialized();
+			if (getParent() instanceof AbstractDOMDiagramElement) {
+				((AbstractDOMDiagramElement)getParent()).ensureInitialized();
 			}
 			this.initialized = true;
 			//initializeDOMElement(this.theElement);
@@ -75,13 +76,8 @@ public abstract class AbstractDOMDiagramElement extends AbstractDiagramElement i
 	}
 
 	@Override
-	public HintMap getPositioningHints() {
-		return null;
-	}
-
-	@Override
 	public Element output(Document d, XMLProcessor p) {
-		if (getRenderingInformation().isRendered()) {
+		if (getRenderingInformation().getRendered()) {
 			ensureInitialized();
 			Element out = paintElementToDocument(d, p);
 			return out;

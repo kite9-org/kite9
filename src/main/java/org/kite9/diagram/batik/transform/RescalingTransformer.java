@@ -1,16 +1,16 @@
 package org.kite9.diagram.batik.transform;
 
-import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
-
 import org.kite9.diagram.batik.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.position.CostedDimension;
+import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 
 public class RescalingTransformer extends AbstractRectangularTransformer implements LeafTransformer  {
 
@@ -35,8 +35,8 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 			return out;
 		}
 		
-		double width = size.getWidth();
-		double height = size.getHeight();
+		double width = size.width();
+		double height = size.height();
 		
 		if ((p instanceof LeafPainter) && (out != null)) {
 			Rectangle2D myBounds = ((LeafPainter) p).bounds();
@@ -58,7 +58,7 @@ public class RescalingTransformer extends AbstractRectangularTransformer impleme
 
 	@Override
 	public Dimension2D getBounds(LeafPainter p) {
-		return CostedDimension.ZERO;
+		return CostedDimension2D.Companion.getZERO();
 	}
 
 }

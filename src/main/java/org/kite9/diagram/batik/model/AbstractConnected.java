@@ -61,7 +61,7 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 			return new ConnectionAlignment(ConnectionAlignment.Measurement.PIXELS, v.getFloatValue());
 		}
 		
-		return ConnectionAlignment.NONE;
+		return ConnectionAlignment.Companion.getNONE();
 	}
 
 

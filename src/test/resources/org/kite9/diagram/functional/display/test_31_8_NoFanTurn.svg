@@ -4,7 +4,7 @@
 <svg contentScriptType="text/ecmascript" width="285.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="135.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/robmoffat/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization-kotlin/target/test-classes/stylesheets/designer.css");</style
   ></defs
   ><g k9-elem="diagram" id="1" style="kite9-layout: right;" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: RIGHT; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [285.0,135.0]; "
   >
@@ -14,7 +14,7 @@
   <g transform="translate(15.0,15.0)" style="kite9-layout: right;" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: RIGHT; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [210.0,105.0]; " bordered="true" rank="0" id="c1" k9-elem="context"
       >
     
-    <g k9-elem="glyph" id="g2" transform="translate(22.0,43.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [37.0,58.0]; rect-size: [35.0,29.0]; "
+    <g k9-elem="glyph" id="g2" transform="translate(22.0,48.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [37.0,63.0]; rect-size: [35.0,29.0]; "
         >
     <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
           >
@@ -25,7 +25,7 @@
     <g class="glyph"
             >
       
-      <g k9-elem="label" id="g2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [47.0,64.0]; rect-size: [15.0,17.0]; "
+      <g k9-elem="label" id="g2-label" transform="translate(10.0,6.0)" k9-info="position: none; margin: 5.0 5.0 5.0 5.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [47.0,69.0]; rect-size: [15.0,17.0]; "
               >
     <g k9-info="" k9-elem="show-box"
                 >
@@ -37,7 +37,7 @@
                   >
     <g class="glyph-label-text"
                   >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [47.0,64.0]; rect-size: [15.0,17.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.3,.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [47.0,69.0]; rect-size: [15.0,17.0]; "
                     ><g font-family="'opensans-regular-webfont'" font-size="15px"
                       ><text x="0" xml:space="preserve" y="13.2708" stroke="none"
                         ><tspan
@@ -247,7 +247,7 @@
                                                                           />
   </g
                                                                           >
-    <g k9-elem="to" reference="g2" transform="translate(55.0,58.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [55.0,58.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="g2" transform="translate(55.0,63.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [55.0,63.0]; rect-size: [0.0,0.0]; "
                                                                           >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                             />
@@ -256,7 +256,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                             >
-      <path marker-start="url(#-start-marker)" d="M147 57 L147 37 L55 37 L55 58" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M147 57 L147 37 L55 37 L55 63" marker-end="url(#-end-marker)" class="link"
                                                                               />
     </g
                                                                               >
@@ -271,7 +271,7 @@
                                                                                   />
   </g
                                                                                   >
-    <g k9-elem="to" reference="g2" transform="translate(37.0,72.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [37.0,72.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="g2" transform="translate(37.0,77.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: g1-g2; terminates-at: g2; end: to; rectangular: terminator; rect-pos: [37.0,77.0]; rect-size: [0.0,0.0]; "
                                                                                   >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                     />
@@ -280,7 +280,7 @@
   
     <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                                     >
-      <path marker-start="url(#-start-marker)" d="M157 57 L157 27 L27 27 L27 72 L37 72" marker-end="url(#-end-marker)" class="link"
+      <path marker-start="url(#-start-marker)" d="M157 57 L157 27 L27 27 L27 77 L37 77" marker-end="url(#-end-marker)" class="link"
                                                                                       />
     </g
                                                                                       >

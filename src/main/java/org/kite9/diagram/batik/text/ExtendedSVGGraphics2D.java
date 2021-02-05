@@ -13,9 +13,9 @@ import org.apache.batik.gvt.font.GVTFontFace;
 import org.apache.batik.gvt.font.GVTFontFamily;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.util.ParsedURL;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Logable;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
+import org.kite9.diagram.logging.LogicException;
 import org.w3c.dom.Element;
 
 
@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
  */
 public class ExtendedSVGGraphics2D extends SVGGraphics2D implements ExtendedSVG, Logable {
 
-	private Kite9Log log = new Kite9Log(this);
+	private Kite9Log log = Kite9Log.Companion.instance(this);
 	private List<GVTFontFace> existingFontFaces = new ArrayList<>();
 	private StringBuilder styleInfo = new StringBuilder(1000);
 

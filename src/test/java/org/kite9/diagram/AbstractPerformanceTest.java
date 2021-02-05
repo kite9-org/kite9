@@ -20,25 +20,20 @@ import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.Dimension2D;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.model.visitors.DiagramElementVisitor;
-import org.kite9.diagram.model.visitors.VisitorAction;
+import org.kite9.diagram.model.position.*;
+import org.kite9.diagram.visitors.DiagramElementVisitor;
+import org.kite9.diagram.visitors.VisitorAction;
 import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.framework.common.Kite9XMLProcessingException;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.common.TestingHelp;
-import org.kite9.framework.logging.Kite9Log;
-import org.kite9.framework.logging.Kite9Log.Destination;
-import org.kite9.framework.logging.Table;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Table;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
@@ -47,7 +42,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	public void render(Map<Metrics, String> diagrams) throws IOException {
 		if (diagrams.size()>2) {
-			Kite9Log.setLogging(Destination.OFF);
+			Kite9LogImpl.setLogging(Destination.OFF);
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
@@ -94,7 +89,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		}
 		fw.close();
 
-		StringBuffer out = new StringBuffer(200);
+		StringBuilder out = new StringBuilder(200);
 		t.display(out);
 		//System.out.println(out);
 
@@ -154,7 +149,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		});
 		Dimension2D ds = d.getDiagramElement().getRenderingInformation().getSize();
 		
-		m.totalDiagramSize =(long) (ds.getWidth() * ds.getHeight());
+		m.totalDiagramSize =(long) (ds.getW() * ds.getH());
 		m.crossings = m.crossings / 4;
 		m.runDate = DF.format(new Date());
 	}
@@ -163,14 +158,14 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		RenderingInformation ri = o.getRenderingInformation();
 		if (ri instanceof RectangleRenderingInformation) {
 			RectangleRenderingInformation rri = (RectangleRenderingInformation) ri;
-			double width = rri.getSize().getWidth();
-			double height = rri.getSize().getHeight();
+			double width = rri.getSize().getW();
+			double height = rri.getSize().getH();
 			m.totalGlyphSize += width * height;
 		} else {
 			RouteRenderingInformation rri = (RouteRenderingInformation) ri;
 			Dimension2D bounds = rri.getSize();
-			double width = bounds.getWidth();
-			double height = bounds.getHeight();
+			double width = bounds.getW();
+			double height = bounds.getH();
 			m.totalGlyphSize += width * height;
 		}
 	}
@@ -183,7 +178,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		double turns = 0;
 		double crosses = 0;
 
-		for (int i = 0; i < ri.size(); i++) {
+		for (int i = 0; i < ri.getLength(); i++) {
 			Dimension2D pos = ri.getWaypoint(i);
 			boolean cross = ri.isHop(i);
 			if (cross) {
@@ -192,21 +187,21 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 			Direction currentD = null;
 			if (lastP != null) {
-				if (pos.getWidth() > lastP.getWidth()) {
+				if (pos.getW() > lastP.getW()) {
 					currentD = Direction.RIGHT;
-				} else if (pos.getWidth() < lastP.getWidth()) {
+				} else if (pos.getW() < lastP.getW()) {
 					currentD = Direction.LEFT;
 				} else {
-					if (pos.getHeight() < lastP.getHeight()) {
+					if (pos.getH() < lastP.getH()) {
 						currentD = Direction.UP;
-					} else if (pos.getHeight() > lastP.getHeight()) {
+					} else if (pos.getH() > lastP.getH()) {
 						currentD = Direction.DOWN;
 					} else {
 						currentD = lastD;
 					}
 				}
 
-				distance += Math.abs(pos.getWidth() - lastP.getWidth()) + Math.abs(pos.getHeight() - lastP.getHeight());
+				distance += Math.abs(pos.getW() - lastP.getW()) + Math.abs(pos.getH() - lastP.getH());
 			}
 
 			if ((lastD != null) && (lastD != currentD)) {

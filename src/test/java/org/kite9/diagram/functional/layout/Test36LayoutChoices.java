@@ -15,8 +15,8 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.LabelPlacement;
-import org.kite9.diagram.model.visitors.DiagramChecker;
-import org.kite9.framework.common.HelpMethods;
+import org.kite9.diagram.visitors.DiagramChecker;
+import org.kite9.diagram.common.HelpMethods;
 
 public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 

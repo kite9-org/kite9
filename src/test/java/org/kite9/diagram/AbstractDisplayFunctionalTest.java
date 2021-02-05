@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
@@ -22,9 +23,8 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.framework.common.StreamHelp;
-import org.kite9.framework.common.StackHelp;
-import org.kite9.framework.common.TestingHelp;
+import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.common.StackHelp;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,8 +35,6 @@ import org.xmlunit.diff.ComparisonListener;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DOMDifferenceEngine;
-
-import junit.framework.Assert;
 
 public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 

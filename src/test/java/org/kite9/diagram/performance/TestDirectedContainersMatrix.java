@@ -26,11 +26,11 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.CompoundGroup;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Group;
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.LeafGroup;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.BasicMergeState;
-import org.kite9.framework.logging.LogicException;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
@@ -202,7 +202,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		
 		// figure out bounds
 		int[] bounds = new int[]{100,100, 0, 0};
-		for (Group g : gp.allGroups) {
+		for (Group g : gp.getAllGroups()) {
 			extendBounds(bounds, g);
 		}
 		
@@ -236,7 +236,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			
 		}
 		
-		for (Group g : gp.allGroups) {
+		for (Group g : gp.getAllGroups()) {
 			int[] gbounds = new int[]{100,100, 0, 0};
 			extendBounds(gbounds, g);
 			int x = gbounds[0]*GRID+(GRID/2)-PAD;

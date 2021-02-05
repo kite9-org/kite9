@@ -19,7 +19,7 @@ import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
-import org.kite9.framework.common.StreamHelp;
+import org.kite9.diagram.common.StreamHelp;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGImageElement;

@@ -7,7 +7,7 @@ import java.util.List;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.framework.common.Kite9ProcessingException;
+import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.w3c.dom.Node;
 
 /**

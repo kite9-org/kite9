@@ -1,10 +1,9 @@
 package org.kite9.diagram.unit;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.common.algorithms.so.PositionChangeNotifiable;
 import org.kite9.diagram.common.algorithms.so.SingleDirection;
-
-import junit.framework.Assert;
 
 public class SingleDirectionTest {
 

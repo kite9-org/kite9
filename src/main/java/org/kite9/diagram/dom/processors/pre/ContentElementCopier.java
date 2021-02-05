@@ -7,7 +7,7 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
-import org.kite9.framework.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
