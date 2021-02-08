@@ -1,8 +1,7 @@
 package org.kite9.diagram.batik.transform;
 
 import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
-import org.kite9.diagram.dom.transform.NoopTransformer;
-import org.kite9.diagram.dom.transform.SVGTransformer;
+import org.kite9.diagram.dom.transform.*;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.ContentTransform;

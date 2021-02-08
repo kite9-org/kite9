@@ -8,7 +8,7 @@ import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 
 abstract class AbstractRectangularTransformer {
-    
+
     protected fun getRectangularRenderedSize(de: DiagramElement): Dimension2D? {
         val ri = de.getRenderingInformation()
         return if (ri is RectangleRenderingInformation) {
