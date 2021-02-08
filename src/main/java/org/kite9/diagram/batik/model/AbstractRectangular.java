@@ -1,27 +1,22 @@
 package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.LeafPainter;
-import org.kite9.diagram.batik.transform.LeafTransformer;
+import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
+import org.kite9.diagram.dom.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Decal;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.SizedRectangular;
+import org.kite9.diagram.dom.transform.LeafTransformer;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.common.range.IntegerRange;
-import org.kite9.diagram.logging.LogicException;
 
 public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
 	

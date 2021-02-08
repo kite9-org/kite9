@@ -9,6 +9,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
+import org.kite9.diagram.dom.painter.LeafPainter;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Element;
 

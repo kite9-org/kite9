@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.painter;
+package org.kite9.diagram.dom.painter;
 
 import java.awt.geom.Rectangle2D;
 

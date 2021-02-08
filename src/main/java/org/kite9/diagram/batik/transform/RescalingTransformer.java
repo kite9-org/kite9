@@ -1,8 +1,9 @@
 package org.kite9.diagram.batik.transform;
 
-import org.kite9.diagram.batik.painter.LeafPainter;
+import org.kite9.diagram.dom.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.transform.LeafTransformer;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Dimension2D;
@@ -12,7 +13,7 @@ import org.w3c.dom.Element;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
-public class RescalingTransformer extends AbstractRectangularTransformer implements LeafTransformer  {
+public class RescalingTransformer extends AbstractRectangularTransformer implements LeafTransformer {
 
 	private Leaf l;
 	

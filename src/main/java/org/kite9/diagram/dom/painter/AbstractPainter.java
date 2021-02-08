@@ -46,7 +46,7 @@ public abstract class AbstractPainter implements Painter {
 		this.r = de;
 	}
 
-	protected void addAttributes(StyledKite9XMLElement toUse, Element out) {
+	protected void addAttributes(Element toUse, Element out) {
 		copyAttributes(toUse, out);
 		
 		String id = r.getID();
