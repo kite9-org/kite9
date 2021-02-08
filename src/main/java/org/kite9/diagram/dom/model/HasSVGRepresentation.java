@@ -8,16 +8,16 @@ import org.w3c.dom.Element;
 /**
  * Means this {@link DiagramElement} can output XML
  * representing itself.
- * 
+ *
  * @author robmoffat
  *
  */
 public interface HasSVGRepresentation extends DiagramElement {
-	
+
 	/**
-	 * Creates SVG elements representing this DiagramElement and anything 
+	 * Creates SVG elements representing this DiagramElement and anything
 	 * nested within it.
-	 * @param p 
+	 * @param p
 	 */
 	public Element output(Document d, XMLProcessor p);
 
