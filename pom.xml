@@ -126,9 +126,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
+				<source>${java.version}</source>
+				<target>${java.version}</target>
+			</configuration>
 				<executions>
 					<execution>
 						<id>default-compile</id>
