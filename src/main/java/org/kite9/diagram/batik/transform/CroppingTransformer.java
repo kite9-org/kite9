@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import org.kite9.diagram.dom.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
+import org.kite9.diagram.dom.transform.AbstractRectangularTransformer;
 import org.kite9.diagram.dom.transform.LeafTransformer;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.SizedRectangular;
