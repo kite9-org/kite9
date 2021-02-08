@@ -1,14 +1,14 @@
-package org.kite9.diagram.batik.transform;
+package org.kite9.diagram.dom.transform;
 
-import org.kite9.diagram.batik.model.AbstractBatikDiagramElement;
 import org.kite9.diagram.dom.transform.*;
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.style.ContentTransform;
 
 public class TransformFactory {
 
-	public static SVGTransformer initializeTransformer(AbstractBatikDiagramElement diagramElement, ContentTransform t, ContentTransform defaultTransform) {
+	public static SVGTransformer initializeTransformer(DiagramElement diagramElement, ContentTransform t, ContentTransform defaultTransform) {
 		
 		if (t == ContentTransform.DEFAULT) {
 			t = defaultTransform;
