@@ -61,7 +61,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		ContentTransform t = null;
 		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM);
 		t = (ContentTransform) ev.getTheValue();
-		this.transformer = TransformFactory.initializeTransformer(this, t, this.defaultTransform);
+		this.transformer = TransformFactory.INSTANCE.initializeTransformer(this, t, this.defaultTransform);
 	}
 
 	@Override
