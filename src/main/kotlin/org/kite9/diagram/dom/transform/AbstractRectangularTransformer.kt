@@ -6,10 +6,7 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.RectangleRenderingInformation
-import java.lang.StringBuilder
 import kotlin.math.abs
-import kotlin.math.floor
-import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 abstract class AbstractRectangularTransformer {
