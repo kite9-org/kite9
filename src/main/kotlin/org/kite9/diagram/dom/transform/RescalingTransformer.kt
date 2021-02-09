@@ -8,11 +8,8 @@ import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.w3c.dom.Document
 import org.w3c.dom.Element
-import java.text.DecimalFormat
 
 class RescalingTransformer(private val l: Leaf) : AbstractRectangularTransformer(), LeafTransformer {
-
-    var oneDForm = DecimalFormat("#.0")
 
     /**
      * Ensures the decal is the same size as it's parent (for scaled decals)
@@ -34,7 +31,7 @@ class RescalingTransformer(private val l: Leaf) : AbstractRectangularTransformer
                 out.setAttribute(
                     "transform",
                     "scale(" + xs + "," + ys + ")" +
-                            "translate(" + oneDForm.format(-myBounds.x) + "," + oneDForm.format(-myBounds.y) + ")"
+                            "translate(" + oneDecimal(-myBounds.x) + "," + oneDecimal(-myBounds.y) + ")"
                 )
             }
         }

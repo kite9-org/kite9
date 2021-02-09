@@ -11,14 +11,13 @@ import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.w3c.dom.Document
 import org.w3c.dom.Element
-import java.text.DecimalFormat
 
 /**
  * This makes sure the content is positioned correctly inside it's container.
  * Content is all cropped between top-left and bottom right positions.
  */
 class CroppingTransformer(private val owner: Leaf) : AbstractRectangularTransformer(), LeafTransformer {
-    var oneDForm = DecimalFormat("#.0")
+
     override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
         // work out translation
         var position = getRenderedRelativePosition(owner)
@@ -38,7 +37,7 @@ class CroppingTransformer(private val owner: Leaf) : AbstractRectangularTransfor
                 if (position.x() != 0.0 || position.y() != 0.0) {
                     out.setAttribute(
                         "transform",
-                        "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")"
+                        "translate(" + oneDecimal(position.x()) + "," + oneDecimal(position.y()) + ")"
                     )
                 }
             }

@@ -1,34 +1,21 @@
 package org.kite9.diagram.dom.painter;
 
-import java.util.Arrays;
-
 import org.kite9.diagram.common.fraction.LongFraction;
 import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.objects.Pair;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.model.HasSVGRepresentation;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.model.AlignedRectangular;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Decal;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Rectangular;
-import org.kite9.diagram.model.SizedRectangular;
-import org.kite9.diagram.model.Temporary;
 import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+
+import java.util.Arrays;
 
 
 /**
@@ -195,15 +182,5 @@ public abstract class AbstractPainter implements Painter {
 				});
 		}
 	}
-	
 
-	protected void ensureNoChildKite9Elements(Element e) {
-		if (e instanceof Kite9XMLElement) {
-			if (((Kite9XMLElement) e).iterator().hasNext()) {
-				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
-			}
-		} else {
-			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
-		}
-	}
 }

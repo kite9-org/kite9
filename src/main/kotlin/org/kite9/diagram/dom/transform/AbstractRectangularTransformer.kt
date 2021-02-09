@@ -6,6 +6,11 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.RectangleRenderingInformation
+import java.lang.StringBuilder
+import kotlin.math.abs
+import kotlin.math.floor
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 abstract class AbstractRectangularTransformer {
 
@@ -52,5 +57,26 @@ abstract class AbstractRectangularTransformer {
             }
         }
         return ZERO
+    }
+
+    fun oneDecimal(d: Double): String {
+        val out = StringBuilder();
+        var lx = (d * 10).roundToLong()
+
+        if (lx < 0) {
+            out.append("-");
+            lx = abs(lx)
+        }
+
+        val decimal = lx % 10;
+        val units = ((lx - decimal) / 10)
+
+        if (units > 0) {
+            out.append(units);
+        }
+
+        out.append(".")
+        out.append(decimal.toString());
+        return out.toString()
     }
 }

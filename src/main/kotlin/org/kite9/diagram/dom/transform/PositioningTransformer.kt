@@ -8,7 +8,7 @@ import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 import org.w3c.dom.Document
 import org.w3c.dom.Element
-import java.text.DecimalFormat
+
 
 /**
  * This makes sure the content is positioned correctly inside it's container.
@@ -18,8 +18,6 @@ import java.text.DecimalFormat
  */
 class PositioningTransformer(private val owner: DiagramElement) : AbstractRectangularTransformer(), LeafTransformer {
 
-    var oneDForm = DecimalFormat("#.0")
-
     override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
         // work out translation
         val position = getRenderedRelativePosition(owner)
@@ -27,7 +25,7 @@ class PositioningTransformer(private val owner: DiagramElement) : AbstractRectan
         if ((position.x() != 0.0 || position.y() != 0.0) && out != null) {
             out.setAttribute(
                 "transform",
-                "translate(" + oneDForm.format(position.x()) + "," + oneDForm.format(position.y()) + ")"
+                "translate(" + oneDecimal(position.x()) + "," + oneDecimal(position.y()) + ")"
             )
         }
         return out

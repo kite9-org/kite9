@@ -3,6 +3,7 @@ package org.kite9.diagram.batik.model;
 import org.apache.batik.css.engine.value.Value;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.css.CSSConstants;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
@@ -11,6 +12,7 @@ import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.transform.SVGTransformer;
 import org.kite9.diagram.dom.transform.TransformFactory;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ContentTransform;
@@ -93,5 +95,15 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		double down = getPadding(Direction.DOWN);
 		return new CostedDimension2D(left + right, up + down, CostedDimension2D.Companion.getUNBOUNDED());
 	}
-	
+
+
+	protected void ensureNoChildKite9Elements(Element e) {
+		if (e instanceof Kite9XMLElement) {
+			if (((Kite9XMLElement) e).iterator().hasNext()) {
+				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
+			}
+		} else {
+			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
+		}
+	}
 }
