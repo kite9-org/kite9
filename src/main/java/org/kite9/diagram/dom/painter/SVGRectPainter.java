@@ -18,7 +18,7 @@ public class SVGRectPainter extends AbstractPainter {
 
 	@Override
 	public Element output(Document d, XMLProcessor postProcessor) {
-		RectangleRenderingInformation rri = (RectangleRenderingInformation) r.getRenderingInformation();
+		RectangleRenderingInformation rri = (RectangleRenderingInformation) getR().getRenderingInformation();
 		Dimension2D size = rri.getSize();
 
 		if ((size.getW() > 0) && (size.getH() > 0)) {
@@ -27,7 +27,7 @@ public class SVGRectPainter extends AbstractPainter {
 			out.setAttribute("height", ""+size.getH()+"px");
 			out.setAttribute("class", classes);
 			
-			DiagramElement parent = r.getParent();
+			DiagramElement parent = getR().getParent();
 			
 			Dimension2D position = rri.getPosition();
 			Dimension2D parentPosition = ((RectangleRenderingInformation) parent.getRenderingInformation()).getPosition();

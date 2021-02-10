@@ -1,12 +1,8 @@
 package org.kite9.diagram.batik.model;
 
-import java.util.Collection;
-
-import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
@@ -15,7 +11,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.ConnectionsSeparation;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.w3c.dom.css.CSSPrimitiveValue;
+
+import java.util.Collection;
 
 /**
  * Handles DiagramElements which are also Connnected.
@@ -26,7 +23,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public abstract class AbstractConnected extends AbstractCompactedRectangular implements Connected {
 	
-	public AbstractConnected(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractConnected(StyledKite9XMLElement el, DiagramElement parent, ElementContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 	
@@ -36,32 +33,19 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 	 */
 	protected void initialize() {
 		super.initialize();
-		linkGutter = getCSSStyleProperty(CSSConstants.LINK_GUTTER).getFloatValue();
-		linkInset = getCSSStyleProperty(CSSConstants.LINK_INSET).getFloatValue();
+		linkGutter = ctx.getCssDoubleValue(CSSConstants.LINK_GUTTER, getTheElement());
+		linkInset = ctx.getCssDoubleValue(CSSConstants.LINK_INSET, getTheElement());
 		initConnectionAlignment();
 	}
 
 
 	protected void initConnectionAlignment() {
 		alignments = new ConnectionAlignment[] {
-				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY),
-				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY),
-				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY),
-				getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY),			
+				ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY, getTheElement()),
+				ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY, getTheElement()),
+				ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY, getTheElement()),
+				ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY, getTheElement()),
 		};
-	}
-
-
-	public ConnectionAlignment getConnectionAlignment(String prop) {
-		Value v = getCSSStyleProperty(prop);
-		
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue());
-		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new ConnectionAlignment(ConnectionAlignment.Measurement.PIXELS, v.getFloatValue());
-		}
-		
-		return ConnectionAlignment.Companion.getNONE();
 	}
 
 
@@ -95,8 +79,8 @@ public abstract class AbstractConnected extends AbstractCompactedRectangular imp
 
 	@Override
 	public ConnectionsSeparation getConnectionsSeparationApproach() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONNECTIONS_PROPERTY);
-		return (ConnectionsSeparation) ev.getTheValue();
+		ConnectionsSeparation out = (ConnectionsSeparation) ctx.getCSSStyleProperty(CSSConstants.CONNECTIONS_PROPERTY, getTheElement());
+		return out;
 	}
 
 	@Override

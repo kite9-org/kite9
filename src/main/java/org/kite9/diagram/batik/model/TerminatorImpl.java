@@ -7,7 +7,6 @@ import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
@@ -22,8 +21,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing;
 
 public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	
-	private SVGOMMarkerElement markerElement;
-	private Value reference;
+	private String reference;
 	private double markerReserve;
 	private Direction arrivalSide;
 	private End end;
@@ -36,25 +34,14 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	protected void initialize() {
 		super.initialize();		
 		
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE);
-		arrivalSide = (Direction) ev.getTheValue();
-		
-		ev = (EnumValue) getCSSStyleProperty(CSSConstants.LINK_END);
-		end = (End) ev.getTheValue();
-
+		arrivalSide = (Direction) ctx.getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE, getTheElement());
+		end = (End) ctx.getCSSStyleProperty(CSSConstants.LINK_END, getTheElement());
 		boolean from = end == End.FROM;
 		
-		reference = from ? getCSSStyleProperty(CSSConstants.MARKER_START_REFERENCE) : 
-			getCSSStyleProperty(CSSConstants.MARKER_END_REFERENCE);
+		reference = from ? ctx.getCssStringValue(CSSConstants.MARKER_START_REFERENCE, getTheElement()) :
+			ctx.getCssStringValue(CSSConstants.MARKER_END_REFERENCE, getTheElement());
 		
-		markerReserve  = getCSSStyleProperty(CSSConstants.MARKER_RESERVE).getFloatValue();
-		
-		if (reference != ValueConstants.NONE_VALUE) {
-			Kite9DocumentLoader loader = (Kite9DocumentLoader) ctx.getDocumentLoader();
-			markerElement = (SVGOMMarkerElement) loader.loadElementFromUrl(reference, getDOMElement());
-		} 
-		
-		
+		markerReserve  = ctx.getCssDoubleValue(CSSConstants.MARKER_RESERVE, getTheElement());
 	}
 	
 	@Override
@@ -77,8 +64,8 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 
 	public String getMarkerUrl() {
 		ensureInitialized();
-		if (markerElement != null) {
-			return "url(#"+markerElement.getId()+")";
+		if (reference != null) {
+			return "url(#"+reference+")";
 		} else {
 			return null;
 		}

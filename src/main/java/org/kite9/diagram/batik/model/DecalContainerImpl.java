@@ -43,7 +43,7 @@ public class DecalContainerImpl extends AbstractRectangular implements Decal, Co
 	@Override
 	public int getGridColumns() {
 		if (getLayout() == Layout.GRID) {
-			return (int) getCSSStyleProperty(CSSConstants.GRID_COLUMNS_PROPERTY).getFloatValue();
+			return (int) ctx.getCssDoubleValue(CSSConstants.GRID_COLUMNS_PROPERTY, getTheElement());
 		} else {
 			return 0;
 		}
@@ -52,7 +52,7 @@ public class DecalContainerImpl extends AbstractRectangular implements Decal, Co
 	@Override
 	public int getGridRows() {
 		if (getLayout() == Layout.GRID) {
-			return (int) getCSSStyleProperty(CSSConstants.GRID_ROWS_PROPERTY).getFloatValue();
+			return (int) ctx.getCssDoubleValue(CSSConstants.GRID_ROWS_PROPERTY, getTheElement());
 		} else {
 			return 0;
 		}

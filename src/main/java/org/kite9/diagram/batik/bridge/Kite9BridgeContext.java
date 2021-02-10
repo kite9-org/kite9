@@ -1,32 +1,37 @@
 package org.kite9.diagram.batik.bridge;
 
-import java.util.List;
-
 import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.bridge.Bridge;
-import org.apache.batik.bridge.BridgeException;
-import org.apache.batik.bridge.BridgeExtension;
-import org.apache.batik.bridge.DocumentLoader;
-import org.apache.batik.bridge.GVTBuilder;
-import org.apache.batik.bridge.SVGBridgeExtension;
-import org.apache.batik.bridge.URIResolver;
-import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.bridge.*;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
+import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.range.IntegerRange;
+import org.kite9.diagram.dom.bridge.ElementContext;
+import org.kite9.diagram.dom.elements.ADLDocument;
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
+import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
+import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
+import org.kite9.diagram.dom.managers.EnumValue;
+import org.kite9.diagram.dom.managers.IntegerRangeValue;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.RectangleRenderingInformation;
+import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -36,7 +41,7 @@ import org.w3c.dom.svg.SVGDocument;
  * @author robmoffat
  *
  */
-public class Kite9BridgeContext extends SVG12BridgeContext {
+public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
 	
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, XMLDiagramElementFactory factory, boolean textAsGlyphs) {
@@ -191,5 +196,68 @@ public class Kite9BridgeContext extends SVG12BridgeContext {
             throw new Kite9XMLProcessingException("Problem with getting URL:"+uri, ex, e);
         }
     }
+
+	@Override
+	public double getCssDoubleValue(String prop, Element e) {
+		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		return v.getFloatValue();
+	}
+
+	@Override
+	public String getCssStringValue(String prop, Element e) {
+		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		return v == null ? null : v.getStringValue();
+	}
+
+	@Override
+	public Object getCSSStyleProperty(String prop, Element e) {
+    	Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+    	if (v == null) {
+    		return null;
+		}
+    	return ((EnumValue) v).getTheValue();
+    }
+
+	@Override
+	public List<DiagramElement> getChildDiagramElements(Element theElement, DiagramElement parent) {
+		List<DiagramElement> out = new ArrayList<>();
+		for(Kite9XMLElement child: ((Kite9XMLElement) theElement)) {
+			DiagramElement de = child.getDiagramElement();
+			out.add(de);
+		}
+		return out;
+	}
+
+	@Override
+	public IntegerRange getCSSStyleRangeProperty(String prop, Element e) {
+		IntegerRangeValue v = (IntegerRangeValue) ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		return v;
+	}
+
+
+	public ConnectionAlignment getConnectionAlignment(String prop, Element e) {
+		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+
+		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+			return new ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue());
+		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
+			return new ConnectionAlignment(ConnectionAlignment.Measurement.PIXELS, v.getFloatValue());
+		}
+
+		return ConnectionAlignment.Companion.getNONE();
+	}
+
+	@Override
+	public DiagramElement getReferencedElement(String id, Element e) {
+		ADLDocument owner = (ADLDocument) e.getOwnerDocument();
+		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, id);
+		return from.getDiagramElement();
+	}
+
+	@Override
+	public String getReference(String prop, Element e) {
+		String ref = ((ReferencingKite9XMLElement)e).getIDReference(prop);
+		return ref;
+	}
 
 }

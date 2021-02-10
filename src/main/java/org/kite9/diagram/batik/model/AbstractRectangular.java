@@ -1,10 +1,9 @@
 package org.kite9.diagram.batik.model;
 
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.common.range.IntegerRange;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.LeafPainter;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
@@ -31,10 +30,9 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	private RectangleRenderingInformation ri;
 	private Layout layout;
 	protected DiagramElementSizing sizingHoriz;	
-	protected DiagramElementSizing sizingVert;	
-	
+	protected DiagramElementSizing sizingVert;
 
-	public AbstractRectangular(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractRectangular(StyledKite9XMLElement el, DiagramElement parent, ElementContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 
@@ -65,25 +63,20 @@ public abstract class AbstractRectangular extends AbstractBatikDiagramElement im
 	}
 	
 	protected void initLayout() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY);
-		if (ev != null) {
-			layout = (Layout) ev.getTheValue();
-		}
+		layout = (Layout) ctx.getCSSStyleProperty(CSSConstants.LAYOUT_PROPERTY, getTheElement());
 	} 
 	
 	protected void initSizing() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY);
-		this.sizingHoriz = (DiagramElementSizing) ev.getTheValue();
-		ev = (EnumValue) getCSSStyleProperty(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY);
-		this.sizingVert = (DiagramElementSizing) ev.getTheValue();
+		this.sizingHoriz = (DiagramElementSizing) ctx.getCSSStyleProperty(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY, getTheElement());
+		this.sizingVert = (DiagramElementSizing) ctx.getCSSStyleProperty(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY, getTheElement());
 	}
 	
 	protected void initContainerPosition() {
 		if (containerPosition == null) {
 			if (getParent() instanceof Container) {
 				if (getContainer().getLayout() == Layout.GRID) {
-					IntegerRange x = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY);
-					IntegerRange y = (IntegerRange) getCSSStyleProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY);
+					IntegerRange x = ctx.getCSSStyleRangeProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY, getTheElement());
+					IntegerRange y = ctx.getCSSStyleRangeProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY, getTheElement());
 					containerPosition = new GridContainerPosition(x, y);
 				}
 			}

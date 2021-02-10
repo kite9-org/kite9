@@ -1,37 +1,27 @@
 package org.kite9.diagram.batik.model;
 
-import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.RoutePainterImpl;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
+import org.kite9.diagram.common.LinkReferenceException;
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.xpath.XPathAware;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Terminator;
-import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.position.End;
-import org.kite9.diagram.model.position.RenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.model.position.RouteRenderingInformationImpl;
-import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.diagram.common.LinkReferenceException;
 import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.model.Terminator;
+import org.kite9.diagram.model.*;
+import org.kite9.diagram.model.position.*;
+import org.kite9.diagram.model.style.ContentTransform;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
 
@@ -63,8 +53,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	 */
 	protected List<DiagramElement> initContents() {
 		List<DiagramElement> contents = new ArrayList<>();
-		for (Kite9XMLElement xmlElement : getDOMElement()) {
-			DiagramElement de = xmlElement.getDiagramElement();			
+		for (DiagramElement de : ctx.getChildDiagramElements(getTheElement(), this)) {
 			if (de instanceof Terminator) {
 				End e = ((Terminator) de).getEnd();
 				
@@ -97,34 +86,23 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 
 	protected void initSize() {
-		this.minimumLength = getCSSStyleProperty(CSSConstants.LINK_MINIMUM_LENGTH).getFloatValue();
-		this.cornerRadius = getCSSStyleProperty(CSSConstants.LINK_CORNER_RADIUS).getFloatValue();
+		this.minimumLength = ctx.getCssDoubleValue(CSSConstants.LINK_MINIMUM_LENGTH, getTheElement());
+		this.cornerRadius = ctx.getCssDoubleValue(CSSConstants.LINK_CORNER_RADIUS, getTheElement());
 	}
 
 	protected void initRank() {
-		Kite9XMLElement theElement = getDOMElement();
-		String rank = theElement.getAttribute("rank");
+		String rank = getTheElement().getAttribute("rank");
 		if (!"".equals(rank)) {
 			this.rank = Integer.parseInt(rank);
 		} else {
 			// if rank isn't set, then connections are ranked in order from last to first..
-			this.rank = indexOf(theElement, theElement.getParentNode().getChildNodes());
+			this.rank = indexOf(getTheElement(), getTheElement().getParentNode().getChildNodes());
 		}
 	}
 
 	protected void initFromTo() {
-		Kite9XMLElement fromElement = getReferencedElement(this.fromId);
-		if (fromElement == null) {
-			throw contextualException("Couldn't resolve 'from' reference for "+this.getID());
-		}
-
-		Kite9XMLElement toElement = getReferencedElement(this.toId);
-		if (toElement == null) {
-			throw contextualException("Couldn't resolve 'to' reference for "+this.getID());
-		}
-
-		from = (Connected) fromElement.getDiagramElement();
-		to = (Connected) toElement.getDiagramElement();
+		from = (Connected) ctx.getReferencedElement(this.fromId, getTheElement());
+		to = (Connected) ctx.getReferencedElement(this.toId, getTheElement());
 		
 		if (from == null) {
 			throw contextualException("Couldn't resolve 'from' reference for "+this.getID());
@@ -136,10 +114,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 	}
 	
 	private void initDrawDirection() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONNECTION_DIRECTION);
-		if (ev != null) {
-			drawDirection = (Direction) ev.getTheValue();
-		}
+		drawDirection = (Direction) ctx.getCSSStyleProperty(CSSConstants.CONNECTION_DIRECTION, getTheElement());
 	}
 
 	private int indexOf(Element e, NodeList within) {
@@ -151,41 +126,9 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		
 		return -1;
 	}
-
-
-	private Kite9XMLElement getReferencedElement(String id) {
-		ADLDocument owner = getDOMElement().getOwnerDocument();
-		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, id);
-		return from;
-	}
 	
 	private String getReference(String css) {
-		Kite9XMLElement theElement = getDOMElement();
-		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(css);
-		
-		if (theElement.getOwnerDocument().getElementById(reference) == null) {
-			
-			throw new LinkReferenceException(reference, getID(), ctx.getDocument());
-		}
-		
-		return reference;
-	}
-
-	public Kite9XMLElement getToElement() {
-		ADLDocument owner = getDOMElement().getOwnerDocument();
-		Kite9XMLElement to = (Kite9XMLElement) owner.getChildElementById(owner, toId);
-		return to;
-	}
-
-
-	public String getToReference() {
-		Kite9XMLElement theElement = getDOMElement();
-		String reference = ((ReferencingKite9XMLElement) theElement).getIDReference(CSSConstants.LINK_TO_XPATH);
-		
-		if (theElement.getOwnerDocument().getElementById(reference) == null) {
-			throw new LinkReferenceException(reference, getID(), ctx.getDocument());
-		}
-		
+		String reference = ctx.getReference(css, getTheElement());
 		return reference;
 	}
 	

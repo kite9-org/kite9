@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.managers.EnumValue;
@@ -18,19 +19,15 @@ public abstract class AbstractLabel extends AbstractCompactedRectangular impleme
 	private End end;
 	private LabelPlacement labelPlacement;
 	
-	public AbstractLabel(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractLabel(StyledKite9XMLElement el, DiagramElement parent, ElementContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 	
 	@Override
 	protected void initialize() {
 		super.initialize();
-		
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.LINK_END);
-		end = (End) ev.getTheValue();
-		
-		EnumValue ev2 = (EnumValue) getCSSStyleProperty(CSSConstants.LABEL_PLACEMENT);
-		labelPlacement = (LabelPlacement) ev2.getTheValue();
+		end = (End) ctx.getCSSStyleProperty(CSSConstants.LINK_END, getTheElement());
+		labelPlacement = (LabelPlacement) ctx.getCSSStyleProperty(CSSConstants.LABEL_PLACEMENT, getTheElement());
 	}
 
 	@Override 

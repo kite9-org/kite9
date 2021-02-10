@@ -1,9 +1,8 @@
 package org.kite9.diagram.batik.model;
 
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.model.AlignedRectangular;
 import org.kite9.diagram.model.DiagramElement;
@@ -17,7 +16,7 @@ import org.kite9.diagram.model.style.VerticalAlignment;
 
 public abstract class AbstractCompactedRectangular extends AbstractRectangular implements SizedRectangular, AlignedRectangular {
 
-	public AbstractCompactedRectangular(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public AbstractCompactedRectangular(StyledKite9XMLElement el, DiagramElement parent, ElementContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 
@@ -45,10 +44,8 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 	}
 
 	private void initAlignment() {
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.HORIZONTAL_ALIGNMENT);
-		horizontalAlignment = (HorizontalAlignment) ev.getTheValue();
-		ev = (EnumValue) getCSSStyleProperty(CSSConstants.VERTICAL_ALIGNMENT);
-		verticalAlignment = (VerticalAlignment) ev.getTheValue();
+		horizontalAlignment = (HorizontalAlignment) ctx.getCSSStyleProperty(CSSConstants.HORIZONTAL_ALIGNMENT, getTheElement());
+		verticalAlignment = (VerticalAlignment) ctx.getCSSStyleProperty(CSSConstants.VERTICAL_ALIGNMENT, getTheElement());
 	}
 	
 	private void initMinimumSize() {

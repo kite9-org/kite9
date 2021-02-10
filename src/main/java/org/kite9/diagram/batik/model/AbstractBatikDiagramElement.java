@@ -1,23 +1,24 @@
 package org.kite9.diagram.batik.model;
 
-import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.transform.SVGTransformer;
 import org.kite9.diagram.dom.transform.TransformFactory;
+import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.model.position.CostedDimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents {@link DiagramElement}s that contain SVG that will need rendering, and the method to render them
@@ -28,7 +29,7 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElement {
 	
-	public AbstractBatikDiagramElement(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter p, ContentTransform t) {
+	public AbstractBatikDiagramElement(Element el, DiagramElement parent, ElementContext ctx, Painter p, ContentTransform t) {
 		super(el, parent);
 		this.p = p;
 		this.p.setDiagramElement(this);
@@ -37,7 +38,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	protected Painter p;
-	protected Kite9BridgeContext ctx;
+	protected ElementContext ctx;
 	
 	private ContentTransform defaultTransform;
 	protected SVGTransformer transformer;
@@ -49,10 +50,9 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX);
 		initTransform();
 	}
-	
+
 	protected double getCssDoubleValue(String prop) {
-		Value v = getCSSStyleProperty(prop);
-		return v.getFloatValue();
+		return ctx.getCssDoubleValue(prop,  getTheElement());
 	}
 
 	protected Element paintElementToDocument(Document d, XMLProcessor postProcessor) {
@@ -60,9 +60,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 	private void initTransform() {
-		ContentTransform t = null;
-		EnumValue ev = (EnumValue) getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM);
-		t = (ContentTransform) ev.getTheValue();
+		ContentTransform t = (ContentTransform) ctx.getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM, getTheElement());
 		this.transformer = TransformFactory.INSTANCE.initializeTransformer(this, t, this.defaultTransform);
 	}
 
@@ -97,7 +95,7 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 	}
 
 
-	protected void ensureNoChildKite9Elements(Element e) {
+	/*protected void ensureNoChildKite9Elements(Element e) {
 		if (e instanceof Kite9XMLElement) {
 			if (((Kite9XMLElement) e).iterator().hasNext()) {
 				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
@@ -105,5 +103,27 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		} else {
 			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
 		}
+	}*/
+
+	protected Kite9XMLProcessingException contextualException(String reason, Throwable t) {
+		return new Kite9XMLProcessingException(reason, t, getTheElement());
+	}
+
+	protected Kite9XMLProcessingException contextualException(String reason) {
+		return contextualException(reason, null);
+	}
+
+	@Override
+	protected List<DiagramElement> initContents() {
+		List<DiagramElement> contents = new ArrayList<>();
+		for (DiagramElement de : ctx.getChildDiagramElements(getTheElement(), this)) {
+			if (de instanceof Connection) {
+				registerConnection((Connection) de);
+			} else if (de != null) {
+				contents.add(de);
+			}
+		}
+
+		return contents;
 	}
 }
