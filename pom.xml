@@ -109,8 +109,8 @@
 					<execution>
 						<id>compile</id>
 						<goals>
-							<goal>js</goal>
 							<goal>compile</goal>
+							<goal>js</goal>
 						</goals>
 						<configuration>
 							<sourceDirs>

@@ -15,4 +15,7 @@ interface ElementContext {
     fun getConnectionAlignment(prop: String?, e: Element?): ConnectionAlignment?
     fun getReferencedElement(prop: String?, e: Element?): DiagramElement?
     fun getReference(prop: String?, e: Element?): String?
+    fun contextualException(reason: String, t: Throwable, e: Element): RuntimeException
+    fun contextualException(reason: String, e: Element): RuntimeException
+
 }

@@ -3,7 +3,6 @@ package org.kite9.diagram.batik.model;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.processors.XMLProcessor;
@@ -92,25 +91,6 @@ public abstract class AbstractBatikDiagramElement extends AbstractDOMDiagramElem
 		double up = getPadding(Direction.UP);
 		double down = getPadding(Direction.DOWN);
 		return new CostedDimension2D(left + right, up + down, CostedDimension2D.Companion.getUNBOUNDED());
-	}
-
-
-	/*protected void ensureNoChildKite9Elements(Element e) {
-		if (e instanceof Kite9XMLElement) {
-			if (((Kite9XMLElement) e).iterator().hasNext()) {
-				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
-			}
-		} else {
-			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
-		}
-	}*/
-
-	protected Kite9XMLProcessingException contextualException(String reason, Throwable t) {
-		return new Kite9XMLProcessingException(reason, t, getTheElement());
-	}
-
-	protected Kite9XMLProcessingException contextualException(String reason) {
-		return contextualException(reason, null);
 	}
 
 	@Override

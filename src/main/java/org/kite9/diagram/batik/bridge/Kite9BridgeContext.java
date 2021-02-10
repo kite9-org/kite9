@@ -13,11 +13,7 @@ import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.bridge.ElementContext;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
+import org.kite9.diagram.dom.elements.*;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.model.Diagram;
@@ -260,4 +256,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		return ref;
 	}
 
+	@Override
+	public RuntimeException contextualException(String reason, Throwable t, Element e) {
+		return new Kite9XMLProcessingException(reason, t, e);
+	}
+
+	@Override
+	public RuntimeException contextualException(String reason, Element e) {
+		return contextualException(reason, null, e);
+	}
 }

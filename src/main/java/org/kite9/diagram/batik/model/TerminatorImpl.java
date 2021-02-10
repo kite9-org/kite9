@@ -1,10 +1,6 @@
 package org.kite9.diagram.batik.model;
 
-import org.apache.batik.anim.dom.SVGOMMarkerElement;
-import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.css.engine.value.ValueConstants;
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
@@ -26,7 +22,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 	private Direction arrivalSide;
 	private End end;
 
-	public TerminatorImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, Painter rp, ContentTransform t) {
+	public TerminatorImpl(StyledKite9XMLElement el, DiagramElement parent, ElementContext ctx, Painter rp, ContentTransform t) {
 		super(el, parent, ctx, rp, t);
 	}
 
@@ -52,7 +48,7 @@ public class TerminatorImpl extends AbstractRectangular implements Terminator {
 		} else if (this == c.getToDecoration()) {
 			return c.getTo().getContainer();
 		} else {
-			throw contextualException("Couldn't get container for terminator "+getID());
+			throw ctx.contextualException("Couldn't get container for terminator "+getID(), getTheElement());
 		}
 	}
 

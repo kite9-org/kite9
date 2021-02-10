@@ -105,11 +105,11 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		to = (Connected) ctx.getReferencedElement(this.toId, getTheElement());
 		
 		if (from == null) {
-			throw contextualException("Couldn't resolve 'from' reference for "+this.getID());
+			throw ctx.contextualException("Couldn't resolve 'from' reference for "+this.getID(), getTheElement());
 		}
 		
 		if (to == null) {
-			throw contextualException("Couldn't resolve 'to' reference for "+this.getID());
+			throw ctx.contextualException("Couldn't resolve 'to' reference for "+this.getID(), getTheElement());
 		}
 	}
 	
@@ -163,7 +163,7 @@ public class ConnectionImpl extends AbstractBatikDiagramElement implements Conne
 		} else if (end == getTo()) {
 			return getFrom();
 		} else {
-			throw contextualException("otherEnd of neither from or to "+this+" "+end);
+			throw ctx.contextualException("otherEnd of neither from or to "+this+" "+end, getTheElement());
 		}
 	}
 
