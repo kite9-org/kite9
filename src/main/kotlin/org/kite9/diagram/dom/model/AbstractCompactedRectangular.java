@@ -63,7 +63,7 @@ public abstract class AbstractCompactedRectangular extends AbstractRectangular i
 	@Override
 	public DiagramElementSizing getSizing(boolean horiz) {
 		ensureInitialized();
-		return horiz ? this.sizingHoriz : this.sizingVert;
+		return horiz ? this.getSizingHoriz() : this.getSizingVert();
 	}
 
 }

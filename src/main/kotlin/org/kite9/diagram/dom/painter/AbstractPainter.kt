@@ -132,7 +132,7 @@ abstract class AbstractPainter : Painter {
         }
         return p
             .map { it.toInt().toString() }
-            .reduceRight { a, b -> "$a, $b"}
+            .fold("") { a, b -> "$a, $b"}
     }
 
     private fun scale(p: OPair<LongFraction>?, s: Int): Pair<Int> {
