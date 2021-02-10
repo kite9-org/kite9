@@ -17,7 +17,7 @@ import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
 
-public abstract class AbstractRectangular extends AbstractBatikDiagramElement implements Rectangular, XPathAware {
+public abstract class AbstractRectangular extends AbstractModelDiagramElement implements Rectangular, XPathAware {
 	
 	public static final ContainerPosition NO_CONTAINER_POSITION = new ContainerPosition() {
 		

@@ -9,7 +9,7 @@ import org.kite9.diagram.model.Leaf;
 import org.kite9.diagram.model.position.RenderingInformation;
 import org.kite9.diagram.model.style.ContentTransform;
 
-public class DecalLeafImpl extends AbstractBatikDiagramElement implements Decal, Leaf {
+public class DecalLeafImpl extends AbstractModelDiagramElement implements Decal, Leaf {
 
 	public DecalLeafImpl(StyledKite9XMLElement el, DiagramElement parent, Kite9BridgeContext ctx, LeafPainter lo, ContentTransform t) {
 		super(el, parent, ctx, lo, t);

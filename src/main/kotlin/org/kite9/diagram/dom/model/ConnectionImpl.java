@@ -21,7 +21,7 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectionImpl extends AbstractBatikDiagramElement implements Connection, XPathAware {
+public class ConnectionImpl extends AbstractModelDiagramElement implements Connection, XPathAware {
 
 	private String fromId;
 	private String toId;

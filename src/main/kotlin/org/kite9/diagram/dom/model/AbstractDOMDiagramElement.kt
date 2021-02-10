@@ -14,8 +14,7 @@ import org.w3c.dom.Element
  * @author robmoffat
  */
 abstract class AbstractDOMDiagramElement(
-
-    protected var theElement: Element,
+    protected val theElement: Element,
     parent: DiagramElement?) :
     AbstractDiagramElement(parent), HasSVGRepresentation {
 
