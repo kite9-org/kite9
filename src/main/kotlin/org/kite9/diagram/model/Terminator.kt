@@ -33,7 +33,7 @@ interface Terminator : SizedRectangular {
     /**
      * Gives the side of the Connected element the terminator should be placed on.
      */
-    fun getArrivalSide(): Direction
+    fun getArrivalSide(): Direction?
 
     /**
      * Returns the connection that this is a terminator for.

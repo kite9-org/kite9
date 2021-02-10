@@ -56,7 +56,7 @@ abstract class AbstractDOMDiagramElement(
         }
     }
 
-    protected abstract fun paintElementToDocument(d: Document?, postProcessor: XMLProcessor?): Element
+    protected abstract fun paintElementToDocument(d: Document, postProcessor: XMLProcessor): Element
 
     /**
      * For elements which are not decals, this needs to be done before accessing properties

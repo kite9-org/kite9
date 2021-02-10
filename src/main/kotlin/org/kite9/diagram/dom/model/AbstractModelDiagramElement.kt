@@ -24,36 +24,31 @@ import org.w3c.dom.Element
 abstract class AbstractModelDiagramElement(
     el: Element,
     parent: DiagramElement?,
-    ctx: ElementContext,
+    protected val ctx: ElementContext,
     override val painter: Painter,
-    t: ContentTransform
+    protected val defaultTransform: ContentTransform
 ) : AbstractDOMDiagramElement(el, parent) {
-    @JvmField
-	protected var ctx: ElementContext
-    private val defaultTransform: ContentTransform
-    @JvmField
-	protected var transformer: SVGTransformer? = null
-    @JvmField
+
+	protected val transformer: SVGTransformer = findTransform()
 	protected var margin = DoubleArray(4)
-    @JvmField
 	protected var padding = DoubleArray(4)
+
     override fun initialize() {
         initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX)
         initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX)
-        initTransform()
     }
 
-    protected fun getCssDoubleValue(prop: String?): Double {
+    protected fun getCssDoubleValue(prop: String): Double {
         return ctx.getCssDoubleValue(prop, theElement)
     }
 
-    override fun paintElementToDocument(d: Document?, postProcessor: XMLProcessor?): Element {
-        return transformer!!.postProcess(painter, d!!, postProcessor!!)
+    override fun paintElementToDocument(d: Document, postProcessor: XMLProcessor): Element {
+        return transformer.postProcess(painter, d, postProcessor)
     }
 
-    private fun initTransform() {
+    private fun findTransform(): SVGTransformer {
         val t = ctx.getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM, theElement) as ContentTransform
-        transformer = initializeTransformer(this, t, defaultTransform)
+        return initializeTransformer(this, t, defaultTransform)
     }
 
     open fun getMargin(d: Direction): Double {
@@ -82,12 +77,12 @@ abstract class AbstractModelDiagramElement(
             return CostedDimension2D(left + right, up + down, UNBOUNDED)
         }
 
-    override fun initContents(): List<DiagramElement?>? {
-        val contents: MutableList<DiagramElement?> = ArrayList()
-        for (de in ctx.getChildDiagramElements(theElement, this)!!) {
+    override fun initContents(): MutableList<DiagramElement> {
+        val contents: MutableList<DiagramElement> = mutableListOf()
+        for (de in ctx.getChildDiagramElements(theElement, this)) {
             if (de is Connection) {
-                registerConnection((de as Connection?)!!)
-            } else if (de != null) {
+                registerConnection(de)
+            } else {
                 contents.add(de)
             }
         }
@@ -96,7 +91,5 @@ abstract class AbstractModelDiagramElement(
 
     init {
         painter.setDiagramElement(this)
-        this.ctx = ctx
-        defaultTransform = t
     }
 }

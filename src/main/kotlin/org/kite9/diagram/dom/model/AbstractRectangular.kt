@@ -2,7 +2,6 @@ package org.kite9.diagram.dom.model
 
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement
 import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.xpath.XPathAware
@@ -15,9 +14,11 @@ import org.kite9.diagram.model.style.ContainerPosition
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.GridContainerPosition
+import org.w3c.dom.Element
+import kotlin.math.max
 
 abstract class AbstractRectangular(
-    el: StyledKite9XMLElement,
+    el: Element,
     parent: DiagramElement?,
     ctx: ElementContext,
     rp: Painter,
@@ -136,8 +137,8 @@ abstract class AbstractRectangular(
             min = (this as SizedRectangular).getMinimumSize()
         }
         return CostedDimension2D(
-            Math.max(c.w, min.w),
-            Math.max(c.h, min.h), within
+            max(c.w, min.w),
+            max(c.h, min.h), within
         )
     }
 
