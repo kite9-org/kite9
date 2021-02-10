@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.model;
+package org.kite9.diagram.dom.model;
 
 import java.util.ArrayList;
 import java.util.Collection;

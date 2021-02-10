@@ -1,11 +1,10 @@
-package org.kite9.diagram.batik.model;
+package org.kite9.diagram.dom.model;
 
 import org.apache.batik.svggen.SVGPath;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.RoutePainterImpl;
 import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
 import org.kite9.diagram.common.BiDirectional;
-import org.kite9.diagram.common.LinkReferenceException;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.Painter;
@@ -15,7 +14,6 @@ import org.kite9.diagram.model.Terminator;
 import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContentTransform;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 

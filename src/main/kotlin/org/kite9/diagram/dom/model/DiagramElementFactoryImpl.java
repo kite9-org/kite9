@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.model;
+package org.kite9.diagram.dom.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.SVGContainerRectangularPainter;
@@ -11,7 +11,6 @@ import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.dom.managers.EnumValue;
-import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.ContentTransform;

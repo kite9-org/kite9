@@ -1,6 +1,5 @@
-package org.kite9.diagram.batik.model;
+package org.kite9.diagram.dom.model;
 
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;

@@ -1,4 +1,4 @@
-package org.kite9.diagram.batik.model;
+package org.kite9.diagram.dom.model;
 
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.dom.painter.LeafPainter;
