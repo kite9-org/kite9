@@ -19,16 +19,16 @@ class SVGRoute : Route {
         sb.append("Z")
     }
 
-    override fun arc(x1: Double, y1: Double, w: Double, h: Double, clockwise: Boolean) {
+    override fun arc(x1: Double, y1: Double, x2: Double, y2: Double, clockwise: Boolean) {
         sb.append("A")
-        sb.append(toString(w))
+        sb.append(toString(abs(x2-x1)))
         sb.append(" ")
-        sb.append(toString(h))
-        sb.append("0 0 ")
+        sb.append(toString(abs(y2-y1)))
+        sb.append(" 0 0 ")
         sb.append(if (clockwise) "1 " else "0 ")
-        sb.append(toString(x1))
+        sb.append(toString(x2))
         sb.append(" ")
-        sb.append(toString(y1))
+        sb.append(toString(y2))
         sb.append(" ")
     }
 

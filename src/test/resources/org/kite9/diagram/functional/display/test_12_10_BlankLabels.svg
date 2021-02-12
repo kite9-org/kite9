@@ -4,7 +4,7 @@
 <svg contentScriptType="text/ecmascript" width="155.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="137.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style xml:space="preserve"
-    >@defs url(file:/Users/rob/Documents/kite9/kite9-visualization-kotlin/target/test-classes/stylesheets/template.svg);
+    >@defs url(file:/Users/rob/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/template.svg);
 renderingInformation, fromDecoration, toDecoration, position, size, allLinks {
 kite9-type: NONE;
 }
@@ -636,17 +636,17 @@ stroke: black;
 fill: white;
 }
 
- @import url("file:/Users/rob/Documents/kite9/kite9-visualization-kotlin/target/test-classes/stylesheets/designer.css");</style
+ @import url("file:/Users/rob/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
     ></defs
-    ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [155.0,137.0]; " id="The Diagram" k9-elem="diagram"
+    ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=155.0, h=137.0); " id="The Diagram" k9-elem="diagram"
     >
     <g filter="url(#dropshadow)"
       >
       
-  <g k9-elem="context" bordered="true" id="c1" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [15.0,15.0]; rect-size: [55.0,78.0]; " rank="0"
+  <g k9-elem="context" bordered="true" id="c1" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=55.0, h=78.0); " rank="0"
         >
     
-    <g k9-elem="label" id="3" transform="translate(12.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [27.0,75.0]; rect-size: [31.0,18.0]; "
+    <g k9-elem="label" id="3" transform="translate(12.0,60.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=27.0, h=75.0); rect-size: BasicDimension2D(w=31.0, h=18.0); "
           >
     <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
             >
@@ -656,7 +656,7 @@ fill: white;
               >
     <g class="container-label-front"
               >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(2.9,1.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [31.0,79.0]; rect-size: [23.0,10.0]; "
+      <g k9-elem="front" style="kite9-type: text; " transform="translate(2.9,1.7)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=31.0, h=79.0); rect-size: BasicDimension2D(w=23.0, h=10.0); "
                 ><g fill="white" stroke="white"
                   ><path d="M1.1136 10.3173 L1.1136 2.4648 L3.2656 2.4648 Q4.723 2.4648 5.4033 2.9589 Q6.0872 3.4531 6.0872 4.4521 Q6.0872 5.1324 5.6683 5.5872 Q5.2529 6.0419 4.4544 6.1708 L4.4544 6.2031 Q5.3926 6.3427 5.8366 6.7975 Q6.2806 7.2486 6.2806 8.0615 Q6.2806 9.1464 5.5609 9.7337 Q4.8411 10.3173 3.5199 10.3173 L1.1136 10.3173 ZM1.6615 9.8339 L3.5091 9.8339 Q5.6898 9.8339 5.6898 8.0615 Q5.6898 6.443 3.391 6.443 L1.6615 6.443 L1.6615 9.8339 ZM1.6615 5.9596 L3.391 5.9596 Q4.4974 5.9596 4.9987 5.5944 Q5.5 5.2255 5.5 4.4414 Q5.5 3.6572 4.9342 3.3027 Q4.3685 2.9482 3.2441 2.9482 L1.6615 2.9482 L1.6615 5.9596 ZM7.7988 2.8551 Q7.7988 2.3395 8.139 2.3395 Q8.3037 2.3395 8.3968 2.4755 Q8.4935 2.608 8.4935 2.8551 Q8.4935 3.0986 8.3968 3.2382 Q8.3037 3.3779 8.139 3.3779 Q7.7988 3.3779 7.7988 2.8551 ZM7.874 10.3173 L7.874 4.4772 L8.4076 4.4772 L8.4076 10.3173 L7.874 10.3173 ZM9.6268 11.3557 Q9.6268 10.7542 9.9992 10.3531 Q10.3716 9.9557 11.0125 9.8125 Q10.7476 9.6979 10.59 9.4938 Q10.4325 9.2861 10.4325 9.0175 Q10.4325 8.4303 11.1772 7.9863 Q10.6688 7.775 10.3823 7.3274 Q10.0994 6.8798 10.0994 6.2998 Q10.0994 5.4225 10.6545 4.8961 Q11.2095 4.3662 12.1548 4.3662 Q12.7313 4.3662 13.0464 4.4772 L14.9155 4.4772 L14.9155 4.8496 L13.7088 4.9248 Q14.1922 5.5263 14.1922 6.246 Q14.1922 7.0875 13.63 7.6139 Q13.0679 8.1367 12.1226 8.1367 Q11.7251 8.1367 11.564 8.1044 Q11.2489 8.2692 11.0806 8.4947 Q10.9159 8.7203 10.9159 8.9746 Q10.9159 9.2539 11.1271 9.3828 Q11.3384 9.5117 11.8397 9.5117 L12.8602 9.5117 Q13.8091 9.5117 14.314 9.8948 Q14.8188 10.2779 14.8188 11.0335 Q14.8188 11.9573 14.0705 12.4586 Q13.3221 12.9599 11.9364 12.9599 Q10.8335 12.9599 10.2284 12.5338 Q9.6268 12.1113 9.6268 11.3557 ZM10.189 11.3056 Q10.189 12.5087 11.9793 12.5087 Q14.2782 12.5087 14.2782 11.0442 Q14.2782 10.5179 13.9165 10.2815 Q13.5584 10.0416 12.7528 10.0416 L11.7967 10.0416 Q10.189 10.0416 10.189 11.3056 ZM10.6366 6.2998 Q10.6366 6.9765 11.0448 7.3489 Q11.4565 7.7213 12.144 7.7213 Q12.8745 7.7213 13.2648 7.3525 Q13.6551 6.9801 13.6551 6.2783 Q13.6551 5.5299 13.2541 5.1575 Q12.853 4.7851 12.1333 4.7851 Q11.4351 4.7851 11.034 5.1861 Q10.6366 5.5836 10.6366 6.2998 ZM18.6878 6.3678 Q18.6878 5.1718 19.139 4.2587 Q19.5938 3.3457 20.446 2.8479 Q21.2982 2.3502 22.4261 2.3502 Q23.5755 2.3502 24.4814 2.7799 L24.263 3.274 Q23.4036 2.8444 22.4583 2.8444 Q20.9795 2.8444 20.1309 3.7897 Q19.2822 4.735 19.2822 6.3785 Q19.2822 8.0615 20.0807 8.9925 Q20.8828 9.9199 22.3724 9.9199 Q23.3607 9.9199 24.1878 9.6656 L24.1878 10.149 Q23.4072 10.4248 22.2435 10.4248 Q20.5892 10.4248 19.6367 9.3577 Q18.6878 8.2871 18.6878 6.3678 Z" stroke="none"
                   /></g
@@ -675,10 +675,10 @@ fill: white;
                   >
   </g
                   >
-  <g k9-elem="context" bordered="true" id="c2" transform="translate(80.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [80.0,15.0]; rect-size: [60.0,78.0]; " rank="1"
+  <g k9-elem="context" bordered="true" id="c2" transform="translate(80.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=80.0, h=15.0); rect-size: BasicDimension2D(w=60.0, h=78.0); " rank="1"
                   >
     
-    <g k9-elem="arrow" id="i1" transform="translate(31.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [111.0,30.0]; rect-size: [16.0,14.0]; "
+    <g k9-elem="arrow" id="i1" transform="translate(31.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=111.0, h=30.0); rect-size: BasicDimension2D(w=16.0, h=14.0); "
                     >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                       >
@@ -687,12 +687,12 @@ fill: white;
     </g
                         >
     
-      <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [116.0,33.0]; rect-size: [6.0,8.0]; "
+      <g k9-elem="label" id="1" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=116.0, h=33.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
                         >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                           >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [116.0,33.0]; rect-size: [6.0,8.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=116.0, h=33.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
                             ><g fill="white" stroke="white"
                               ><path d="M0.9492 2.4525 Q0.9492 2.1205 1.1133 1.9643 Q1.2773 1.808 1.5234 1.808 Q1.7578 1.808 1.9258 1.9682 Q2.0977 2.1244 2.0977 2.4525 Q2.0977 2.7807 1.9258 2.9447 Q1.7578 3.1049 1.5234 3.1049 Q1.2773 3.1049 1.1133 2.9447 Q0.9492 2.7807 0.9492 2.4525 ZM1.0312 10.6166 L1.0312 4.1947 L2.0039 4.1947 L2.0039 10.6166 L1.0312 10.6166 ZM4.1367 3.8002 L6.4062 2.0502 L7.2266 2.0502 L7.2266 10.6166 L6.2773 10.6166 L6.2773 4.5111 Q6.2773 3.7494 6.3242 3.0697 Q6.1992 3.1908 6.0469 3.3275 Q5.8945 3.4604 4.6523 4.4682 L4.1367 3.8002 Z" stroke="none"
                               /></g
@@ -705,7 +705,7 @@ fill: white;
     
   </g
                             >
-    <g k9-elem="arrow" id="i2" transform="translate(30.0,42.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [110.0,57.0]; rect-size: [18.0,14.0]; "
+    <g k9-elem="arrow" id="i2" transform="translate(30.0,42.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=110.0, h=57.0); rect-size: BasicDimension2D(w=18.0, h=14.0); "
                             >
     <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
                               >
@@ -714,12 +714,12 @@ fill: white;
     </g
                                 >
     
-      <g k9-elem="label" id="2" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: [115.0,60.0]; rect-size: [8.0,8.0]; "
+      <g k9-elem="label" id="2" transform="translate(5.0,3.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=115.0, h=60.0); rect-size: BasicDimension2D(w=8.0, h=8.0); "
                                 >
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                   >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [115.0,60.0]; rect-size: [8.0,8.0]; "
+      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=115.0, h=60.0); rect-size: BasicDimension2D(w=8.0, h=8.0); "
                                     ><g fill="white" stroke="white"
                                       ><path d="M0.9492 2.4525 Q0.9492 2.1205 1.1133 1.9643 Q1.2773 1.808 1.5234 1.808 Q1.7578 1.808 1.9258 1.9682 Q2.0977 2.1244 2.0977 2.4525 Q2.0977 2.7807 1.9258 2.9447 Q1.7578 3.1049 1.5234 3.1049 Q1.2773 3.1049 1.1133 2.9447 Q0.9492 2.7807 0.9492 2.4525 ZM1.0312 10.6166 L1.0312 4.1947 L2.0039 4.1947 L2.0039 10.6166 L1.0312 10.6166 ZM3.6211 10.6166 L3.6211 9.7768 L5.8789 7.5111 Q6.9102 6.4682 7.2383 6.0229 Q7.5664 5.5775 7.7305 5.1557 Q7.8945 4.7338 7.8945 4.2455 Q7.8945 3.5619 7.4766 3.1596 Q7.0625 2.7572 6.3242 2.7572 Q5.7891 2.7572 5.3125 2.933 Q4.8359 3.1088 4.25 3.5736 L3.7344 2.9096 Q4.918 1.9252 6.3125 1.9252 Q7.5195 1.9252 8.2031 2.5463 Q8.8906 3.1635 8.8906 4.2064 Q8.8906 5.0189 8.4336 5.8158 Q7.9766 6.6127 6.7227 7.8314 L4.8477 9.6674 L4.8477 9.7143 L9.2539 9.7143 L9.2539 10.6166 L3.6211 10.6166 Z" stroke="none"
                                       /></g
@@ -732,7 +732,7 @@ fill: white;
     
   </g
                                     >
-    <g k9-elem="label" id="4" transform="translate(26.0,66.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [106.0,81.0]; rect-size: [8.0,12.0]; "
+    <g k9-elem="label" id="4" transform="translate(26.0,66.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=106.0, h=81.0); rect-size: BasicDimension2D(w=8.0, h=12.0); "
                                     >
     <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
                                       >
@@ -742,7 +742,7 @@ fill: white;
                                         >
     <g class="container-label-front"
                                         >
-      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [110.0,87.0]; rect-size: [0.0,0.0]; " k9-elem="front"
+      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=110.0, h=87.0); rect-size: BasicDimension2D(w=0.0, h=0.0); " k9-elem="front"
                                           />
     </g
                                           >
@@ -757,9 +757,9 @@ fill: white;
                                             >
   </g
                                             >
-  <g k9-elem="key" id="7" transform="translate(15.0,103.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [15.0,103.0]; rect-size: [125.0,34.0]; " rank="2"
+  <g k9-elem="key" id="7" transform="translate(15.0,103.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=15.0, h=103.0); rect-size: BasicDimension2D(w=125.0, h=34.0); " rank="2"
                                             >
-    <g k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 2]; cell-xs: [12, 101]; cell-ys: [12, 16]; rectangular: connected; rect-pos: [21.0,106.0]; rect-size: [113.0,28.0]; " k9-elem="body" transform="translate(6.0,3.0)"
+    <g k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 2]; cell-xs: [, 12, 101]; cell-ys: [, 12, 16]; rectangular: connected; rect-pos: BasicDimension2D(w=21.0, h=106.0); rect-size: BasicDimension2D(w=113.0, h=28.0); " k9-elem="body" transform="translate(6.0,3.0)"
                                               >
       <g style="kite9-usage: decal; kite9-type: svg;" k9-info="" k9-elem="back"
                                                 >
@@ -768,40 +768,40 @@ fill: white;
       </g
                                                   >
       
-    <g k9-elem="bodyText" id="8" transform="translate(12.0,12.0)" k9-info="position: [0,0,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: LEFT; vert: TOP; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: [33.0,118.0]; rect-size: [89.0,4.0]; "
+    <g k9-elem="bodyText" id="8" transform="translate(12.0,12.0)" k9-info="position: [0,0,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: LEFT; vert: TOP; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=118.0); rect-size: BasicDimension2D(w=89.0, h=4.0); "
                                                   >
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="generic-text"
                                                     >
-      <g style="kite9-type: text;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [78.0,120.0]; rect-size: [0.0,0.0]; " k9-elem="text-label"
+      <g style="kite9-type: text;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=78.0, h=120.0); rect-size: BasicDimension2D(w=0.0, h=0.0); " k9-elem="text-label"
                                                       />
     </g
                                                       >
   </g
                                                       >
-    <g k9-info="position: [0,0,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: VERTICAL; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: [33.0,122.0]; rect-size: [89.0,0.0]; " k9-elem="text-lines" transform="translate(12.0,16.0)"
+    <g k9-info="position: [0,0,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: VERTICAL; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=122.0); rect-size: BasicDimension2D(w=89.0, h=0.0); " k9-elem="text-lines" transform="translate(12.0,16.0)"
                                                       />
   
     </g
                                                       >
   </g
                                                       >
-  <g k9-elem="link" id="c1-i1" drawDirection="RIGHT" k9-info="link: ['c1','i1']; direction: RIGHT; " rank="3"
+  <g k9-elem="link" id="c1-i1" drawDirection="RIGHT" style="kite9-link-corner-radius: 5px; " k9-info="link: ['c1','i1']; direction: RIGHT; " rank="3"
                                                       >
     
-    <g k9-elem="from" reference="c1" transform="translate(70.0,37.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i1; terminates-at: c1; end: from; rectangular: terminator; rect-pos: [70.0,37.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="c1" transform="translate(70.0,37.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i1; terminates-at: c1; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=70.0, h=37.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                           />
   </g
                                                           >
-    <g k9-elem="to" reference="i1" transform="translate(111.0,37.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i1; terminates-at: i1; end: to; rectangular: terminator; rect-pos: [111.0,37.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="i1" transform="translate(111.0,37.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i1; terminates-at: i1; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=111.0, h=37.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                           >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                             />
   </g
                                                             >
-    <g k9-elem="toLabel" id="5" transform="translate(93.0,27.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [93.0,27.0]; rect-size: [8.0,10.0]; "
+    <g k9-elem="toLabel" id="5" transform="translate(93.0,27.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=93.0, h=27.0); rect-size: BasicDimension2D(w=8.0, h=10.0); "
                                                             >
     <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                                               >
@@ -811,7 +811,7 @@ fill: white;
                                                                 >
     <g class="connection-label-front"
                                                                 >
-      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [97.0,32.0]; rect-size: [0.0,0.0]; " k9-elem="front"
+      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=97.0, h=32.0); rect-size: BasicDimension2D(w=0.0, h=0.0); " k9-elem="front"
                                                                   />
     </g
                                                                   >
@@ -826,22 +826,22 @@ fill: white;
                                                                     >
   </g
                                                                     >
-  <g k9-elem="link" id="c1-i2" drawDirection="RIGHT" k9-info="link: ['c1','i2']; direction: RIGHT; " rank="4"
+  <g k9-elem="link" id="c1-i2" drawDirection="RIGHT" style="kite9-link-corner-radius: 5px; " k9-info="link: ['c1','i2']; direction: RIGHT; " rank="4"
                                                                     >
     
-    <g k9-elem="from" reference="c1" transform="translate(70.0,64.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i2; terminates-at: c1; end: from; rectangular: terminator; rect-pos: [70.0,64.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="c1" transform="translate(70.0,64.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i2; terminates-at: c1; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=70.0, h=64.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                         />
   </g
                                                                         >
-    <g k9-elem="to" reference="i2" transform="translate(110.0,64.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i2; terminates-at: i2; end: to; rectangular: terminator; rect-pos: [110.0,64.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="i2" transform="translate(110.0,64.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: c1-i2; terminates-at: i2; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=110.0, h=64.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                                         >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                           />
   </g
                                                                           >
-    <g k9-elem="toLabel" id="6" transform="translate(92.0,54.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: [92.0,54.0]; rect-size: [8.0,10.0]; "
+    <g k9-elem="toLabel" id="6" transform="translate(92.0,54.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=92.0, h=54.0); rect-size: BasicDimension2D(w=8.0, h=10.0); "
                                                                           >
     <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
                                                                             >
@@ -851,7 +851,7 @@ fill: white;
                                                                               >
     <g class="connection-label-front"
                                                                               >
-      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [96.0,59.0]; rect-size: [0.0,0.0]; " k9-elem="front"
+      <g style="kite9-type: text; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=96.0, h=59.0); rect-size: BasicDimension2D(w=0.0, h=0.0); " k9-elem="front"
                                                                                 />
     </g
                                                                                 >
@@ -866,16 +866,16 @@ fill: white;
                                                                                   >
   </g
                                                                                   >
-  <g k9-elem="link" id="i1-i2" drawDirection="DOWN" k9-info="link: ['i1','i2']; direction: DOWN; " rank="5"
+  <g k9-elem="link" id="i1-i2" drawDirection="DOWN" style="kite9-link-corner-radius: 5px; " k9-info="link: ['i1','i2']; direction: DOWN; " rank="5"
                                                                                   >
     
-    <g k9-elem="from" reference="i1" transform="translate(119.0,44.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-i2; terminates-at: i1; end: from; rectangular: terminator; rect-pos: [119.0,44.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="from" reference="i1" transform="translate(119.0,44.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-i2; terminates-at: i1; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=119.0, h=44.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                                                     >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                       />
   </g
                                                                                       >
-    <g k9-elem="to" reference="i2" transform="translate(119.0,57.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-i2; terminates-at: i2; end: to; rectangular: terminator; rect-pos: [119.0,57.0]; rect-size: [0.0,0.0]; "
+    <g k9-elem="to" reference="i2" transform="translate(119.0,57.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-i2; terminates-at: i2; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=119.0, h=57.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
                                                                                       >
       <rect x="0" width="10.0" height="10.0" y="0" style="fill: none; stroke: none "
                                                                                         />

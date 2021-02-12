@@ -1,5 +1,6 @@
 package org.kite9.diagram.adl;
 
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
@@ -38,10 +39,12 @@ public class Link extends AbstractXMLConnectionElement {
 	
 	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle, Kite9XMLElement toLabel, Direction drawDirection, ADLDocument doc) {
 		super(id, "link", from, to, drawDirection, fromStyle, fromLabel, toEndStyle, toLabel, doc);
+		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
 	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel) {
 		super(from.getID()+"-"+to.getID(), "link",  from, to, null, fromStyle, fromLabel, toStyle, toLabel, TESTING_DOCUMENT);
+		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
 	public Link(String id, Kite9XMLElement from, Kite9XMLElement to) {

@@ -93,7 +93,7 @@ class RoutePainterImpl {
                 val c = m1.copy()
                 c.trim(0f, radius)
                 gp.lineTo(c.xe.toDouble(), c.ye.toDouble())
-                drawCorner(gp, m1, next, m1.direction, next.direction!!)
+                drawCorner(gp, m1, m1.direction, next.direction)
             } else {
                 gp.lineTo(m1.xe.toDouble(), m1.ye.toDouble())
             }
@@ -135,45 +135,33 @@ class RoutePainterImpl {
             return radius
         }
 
-        protected fun drawCorner(gp: Route, a: Move, b: Move?, da: Direction?, db: Direction) {
+        protected fun drawCorner(gp: Route, a: Move, da: Direction, db: Direction) {
             if (radius == 0f) {
                 return
             }
-            val cs = radius.toInt()
+            val cs = radius.toDouble()
             when (da) {
                 Direction.RIGHT -> if (db === Direction.UP) {
-                    doArcPortion(gp, a.xe - cs * 2, a.ye - cs * 2, false, radius)
+                    gp.arc(a.xe - cs, a.ye.toDouble() ,a.xe.toDouble(), a.ye-cs, false)
                 } else if (db === Direction.DOWN) {
-                    doArcPortion(gp, a.xe - cs * 2, a.ye, true, radius)
+                    gp.arc(a.xe - cs, a.ye.toDouble(), a.xe.toDouble(), a.ye+cs, true)
                 }
                 Direction.LEFT -> if (db === Direction.UP) {
-                    doArcPortion(gp, a.xe, a.ye - cs * 2, true, radius)
+                    gp.arc(a.xe + cs, a.ye.toDouble(),  a.xe.toDouble(), a.ye - cs, true)
                 } else if (db === Direction.DOWN) {
-                    doArcPortion(gp, a.xe, a.ye, false, radius)
+                    gp.arc(a.xe + cs, a.ye.toDouble(), a.xe.toDouble(), a.ye + cs, false)
                 }
                 Direction.UP -> if (db === Direction.LEFT) {
-                    doArcPortion(gp, a.xe - cs * 2, a.ye, false, radius)
+                    gp.arc(a.xe.toDouble(), a.ye + cs, a.xe - cs, a.ye.toDouble(), false)
                 } else if (db === Direction.RIGHT) {
-                    doArcPortion(gp, a.xe, a.ye, true, radius)
+                    gp.arc(a.xe.toDouble(), a.ye + cs, a.xe + cs, a.ye.toDouble(), true)
                 }
                 Direction.DOWN -> if (db === Direction.LEFT) {
-                    doArcPortion(gp, a.xe - cs * 2, a.ye - cs * 2, true, radius)
+                    gp.arc(a.xe.toDouble(), a.ye - cs, a.xe - cs, a.ye.toDouble(), true)
                 } else if (db === Direction.RIGHT) {
-                    doArcPortion(gp, a.xe, a.ye - cs * 2, false, radius)
+                    gp.arc(a.xe.toDouble(), a.ye - cs, a.xe + cs, a.ye.toDouble(), false)
                 }
             }
-        }
-
-        private fun doArcPortion(
-            gp: Route, tlx: Float, tly: Float, clockwise: Boolean, radius: Float
-        ) {
-            gp.arc(
-                tlx.toDouble(),
-                tly.toDouble(),
-                (radius * 2).toDouble(),
-                (radius * 2).toDouble(),
-                clockwise
-            )
         }
     }
 
@@ -286,7 +274,7 @@ class RoutePainterImpl {
             //throw new LogicException("Don't know what to do here");
         }
 
-        val direction: Direction?
+        val direction: Direction
             get() {
                 if (xe > xs) {
                     return Direction.RIGHT
@@ -297,7 +285,7 @@ class RoutePainterImpl {
                 } else if (ye < ys) {
                     return Direction.UP
                 }
-                return null
+                throw LogicException("empty move")
             }
 
         override fun toString(): String {
