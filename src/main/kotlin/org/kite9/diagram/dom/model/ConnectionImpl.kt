@@ -1,19 +1,18 @@
 package org.kite9.diagram.dom.model
 
-import org.apache.batik.svggen.SVGPath
-import org.kite9.diagram.batik.painter.RoutePainterImpl
-import org.kite9.diagram.batik.painter.RoutePainterImpl.CurvedCornerHopDisplayer
-import org.kite9.diagram.batik.painter.RoutePainterImpl.ReservedLengthEndDisplayer
-import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.dom.painter.RoutePainterImpl
 import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
-import org.kite9.diagram.model.position.*
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
+import org.kite9.diagram.model.position.End
+import org.kite9.diagram.model.position.RouteRenderingInformation
+import org.kite9.diagram.model.position.RouteRenderingInformationImpl
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Element
 import org.w3c.dom.NodeList
@@ -87,10 +86,10 @@ class ConnectionImpl(
     protected fun initRank() {
         val rank = theElement.getAttribute("rank")
         if ("" != rank) {
-            this.rank = rank.toInt()
+            this.rank = rank?.toInt() ?: 0
         } else {
             // if rank isn't set, then connections are ranked in order from last to first..
-            this.rank = indexOf(theElement, theElement.parentNode.childNodes)
+            this.rank = indexOf(theElement, theElement.parentNode!!.childNodes)
         }
     }
 
@@ -195,6 +194,8 @@ class ConnectionImpl(
     }
 
     private val ri: RouteRenderingInformation = RouteRenderingInformationImpl()
+
+
     override fun getRenderingInformation(): RouteRenderingInformation {
         return ri
     }
@@ -218,18 +219,15 @@ class ConnectionImpl(
         ensureInitialized()
         if ("path" == name) {
             val routePainter = RoutePainterImpl()
-            val ctx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(
-                dOMElement.ownerDocument
-            )
             val startReserve: Double = if (fromDecoration == null) 0.0 else fromDecoration!!.getMarkerReserve()
             val endReserve: Double = if (toDecoration == null) 0.0 else toDecoration!!.getMarkerReserve()
             val gp = routePainter.drawRouting(
                 getRenderingInformation(),
-                ReservedLengthEndDisplayer(startReserve),
-                ReservedLengthEndDisplayer(endReserve),
-                CurvedCornerHopDisplayer(getCornerRadius().toFloat()), false
+                RoutePainterImpl.ReservedLengthEndDisplayer(startReserve),
+                RoutePainterImpl.ReservedLengthEndDisplayer(endReserve),
+                RoutePainterImpl.CurvedCornerHopDisplayer(getCornerRadius().toFloat()), false
             )
-            return SVGPath.toSVGPathData(gp, ctx)
+            return gp.toString()
         } else if ("markerstart" == name) {
             if (fromDecoration is TerminatorImpl) {
                 return (fromDecoration as TerminatorImpl).markerUrl

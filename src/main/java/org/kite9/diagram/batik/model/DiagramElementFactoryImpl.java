@@ -13,6 +13,7 @@ import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.*;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
+import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.ContentTransform;
 import org.kite9.diagram.model.style.DiagramElementType;
@@ -115,6 +116,6 @@ public class DiagramElementFactoryImpl implements XMLDiagramElementFactory {
 
 	@Override
 	public TemporaryConnected createTemporaryConnected(DiagramElement parent, String idSuffix) {
-		return new TemporaryConnectedImpl(parent, idSuffix);
+		return new TemporaryConnectedImpl(parent, idSuffix, new SVGRectPainter("grid-temporary"));
 	}
 }

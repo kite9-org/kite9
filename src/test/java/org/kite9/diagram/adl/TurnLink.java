@@ -1,5 +1,6 @@
 package org.kite9.diagram.adl;
 
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 
@@ -20,17 +21,20 @@ public class TurnLink extends Link {
 			Kite9XMLElement toLabel, Direction drawDirection) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection);
 		setAttribute(LINK_TEST, TURN);
+		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
 	public TurnLink(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle,
 			Kite9XMLElement toLabel) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, null);
 		setAttribute(LINK_TEST, TURN);
+		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
 	public TurnLink(Kite9XMLElement from, Kite9XMLElement to) {
 		super(from, to);
 		setAttribute(LINK_TEST, TURN);
+		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
 	
