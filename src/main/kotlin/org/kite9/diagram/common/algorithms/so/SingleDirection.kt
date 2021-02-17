@@ -41,7 +41,7 @@ class SingleDirection(
             val moved = cachePosition == null || if (increasing) cachePosition!! < newPos else cachePosition!! > newPos
             var ok = true
             if (moved || changedConstraints) {
-//				System.out.println("moving: "+this+" to "+newPos);
+				System.out.println("moving: "+this+" to "+newPos);
                 cachePosition = newPos
                 //				System.out.println("(fwd)");
                 for (fwd in forward.keys) {

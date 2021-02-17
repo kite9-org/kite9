@@ -122,8 +122,8 @@ class TerminatorImpl(
 
     companion object {
         private fun attributesMatch(name: String, a: TerminatorImpl, b: TerminatorImpl): Boolean {
-            return a.dOMElement.getAttribute(name) ==
-                    b.dOMElement.getAttribute(name)
+            return a.theElement.getAttribute(name) ==
+                    b.theElement.getAttribute(name)
         }
     }
 }

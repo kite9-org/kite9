@@ -11,10 +11,12 @@ abstract class AbstractDiagramElement(private val p: DiagramElement?) : DiagramE
     }
 
     override fun hashCode(): Int {
-        return getID().hashCode()
+        return _hc;
     }
 
     private var depth = -1
+
+    private val _hc : Int by lazy { getID().hashCode() }
 
     override fun getDepth(): Int {
         if (depth == -1) {

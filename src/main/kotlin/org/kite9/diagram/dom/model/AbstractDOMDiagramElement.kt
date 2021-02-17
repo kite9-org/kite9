@@ -33,7 +33,7 @@ abstract class AbstractDOMDiagramElement(
 
     abstract val painter: Painter?
     override fun getID(): String {
-        return theElement.getAttribute("id") ?: ""
+        return theElement.getAttribute("id") ?: "noid-"+ (Companion.nextId++)
     }
 
     val diagram: Diagram
@@ -72,4 +72,11 @@ abstract class AbstractDOMDiagramElement(
      * For elements which are containers, call this method as part of initialize.
      */
     protected abstract fun initContents(): List<DiagramElement?>?
+
+    object Companion {
+
+        var nextId: Int = 0;
+
+
+    }
 }
