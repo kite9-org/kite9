@@ -14,6 +14,6 @@ jobs:
       with:
         java-version: 11.0.4
     - name: Build with Maven
-      run: mvn -B source:jar javadoc:javadoc deploy --file pom.xml --settings .github/workflows/settings.xml -P github
+      run: mvn -B source:jar deploy --file pom.xml --settings .github/workflows/settings.xml -P github
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

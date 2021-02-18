@@ -157,7 +157,9 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/classes/META-INF/webjars/kite9-visualization/${project.version}</outputDirectory>
+							<outputDirectory>
+								${basedir}/target/classes/META-INF/resources/webjars/kite9-visualization/${project.version}
+							</outputDirectory>
 							<resources>
 								<resource>
 									<directory>target/js</directory>
