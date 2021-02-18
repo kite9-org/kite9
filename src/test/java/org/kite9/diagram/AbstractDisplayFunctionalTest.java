@@ -22,6 +22,7 @@ import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
+import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.common.StackHelp;

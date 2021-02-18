@@ -1,27 +1,18 @@
-package org.kite9.diagram;
+package org.kite9.diagram.testing;
 
+import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.logging.Table;
+import org.kite9.diagram.model.*;
+import org.kite9.diagram.model.position.*;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import javax.imageio.ImageIO;
-
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.Leaf;
-import org.kite9.diagram.model.position.*;
-import org.kite9.diagram.visitors.DiagramElementVisitor;
-import org.kite9.diagram.visitors.VisitorAction;
-import org.kite9.diagram.logging.LogicException;
-import org.kite9.diagram.logging.Table;
 
 /**
  * Helps with comparing the results of tests

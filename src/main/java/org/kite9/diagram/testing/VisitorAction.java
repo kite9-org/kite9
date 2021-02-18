@@ -1,4 +1,4 @@
-package org.kite9.diagram.visitors;
+package org.kite9.diagram.testing;
 
 import org.kite9.diagram.model.DiagramElement;
 
