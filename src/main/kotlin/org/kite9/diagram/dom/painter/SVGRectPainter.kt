@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.painter
 
-import org.apache.batik.util.SVGConstants
 import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.w3c.dom.Document

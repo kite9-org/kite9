@@ -1,6 +1,5 @@
 package org.kite9.diagram.dom.model
 
-import org.kite9.diagram.common.Kite9XMLProcessingException
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.painter.LeafPainter
@@ -50,7 +49,7 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
                     getContainerPainter(el),
                     ContentTransform.POSITION
                 )
-                RectangularElementUsage.DECAL -> throw Kite9XMLProcessingException(
+                RectangularElementUsage.DECAL -> throw context!!.contextualException(
                     "Decal containers not supported yet: @" + getId(
                         el
                     ), el
