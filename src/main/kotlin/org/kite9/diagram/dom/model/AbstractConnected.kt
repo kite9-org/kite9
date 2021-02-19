@@ -33,8 +33,8 @@ abstract class AbstractConnected(
      */
     override fun initialize() {
         super.initialize()
-        linkGutter = ctx.getCssDoubleValue(CSSConstants.LINK_GUTTER, theElement)
-        linkInset = ctx.getCssDoubleValue(CSSConstants.LINK_INSET, theElement)
+        linkGutter = ctx.getCssStyleDoubleProperty(CSSConstants.LINK_GUTTER, theElement)
+        linkInset = ctx.getCssStyleDoubleProperty(CSSConstants.LINK_INSET, theElement)
         initConnectionAlignment()
     }
 
@@ -74,7 +74,7 @@ abstract class AbstractConnected(
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
-        return ctx.getCSSStyleProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement) as ConnectionsSeparation
+        return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement) as ConnectionsSeparation
     }
 
     override fun getLinkGutter(): Double {

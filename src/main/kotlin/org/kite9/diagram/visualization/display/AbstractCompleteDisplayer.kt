@@ -76,7 +76,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
                 bSide,
                 a,
                 aSide,
-                reverse(d),
+                reverse(d)!!,
                 along
             )
         } else {
@@ -90,7 +90,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
         aSide: Direction,
         b: Connection,
         bSide: Direction,
-        d: Direction?,
+        d: Direction,
         along: DiagramElement?
     ): Double {
         return if (aSide === d) {
@@ -110,7 +110,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
             } else {
                 // we are inside a, so use the padding distance
                 val inset = getPadding(a, d)
-                val margin = getMargin(b, reverse(d))
+                val margin = getMargin(b, reverse(d)!!)
                 val length = max(inset, margin)
                 incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide)
             }
@@ -119,7 +119,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
 
     private fun incorporateAlongMinimumLength(
         along: DiagramElement?,
-        d: Direction?,
+        d: Direction,
         `in`: Double,
         a: DiagramElement,
         aSide: Direction,
@@ -162,7 +162,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
 
     private fun getAlongMinimumLength(
         along: Connected,
-        d: Direction?,
+        d: Direction,
         a: DiagramElement,
         aSide: Direction,
         b: DiagramElement,
@@ -276,27 +276,27 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
         }
     }
 
-    abstract fun getPadding(a: DiagramElement?, d: Direction?): Double
-    abstract fun getMargin(element: DiagramElement?, d: Direction?): Double
-    protected abstract fun size(a: DiagramElement?, s: Dimension2D?): CostedDimension2D
+    abstract fun getPadding(a: DiagramElement, d: Direction): Double
+    abstract fun getMargin(element: DiagramElement, d: Direction): Double
+    protected abstract fun size(a: DiagramElement, s: Dimension2D): CostedDimension2D
 
     /**
      * The smallest possible length of element, when the element is starting or ending in the length being considered.
      * This should include terminators.
      */
-    protected abstract fun getLinkMinimumLength(element: Connection?, starting: Boolean, ending: Boolean): Double
+    protected abstract fun getLinkMinimumLength(element: Connection, starting: Boolean, ending: Boolean): Double
 
     /**
      * Distance from the edge of a connected element to the connection, minimum.  (Could be increased by terminators)
      */
-    protected abstract fun getLinkInset(element: Connected?, d: Direction?): Double
+    protected abstract fun getLinkInset(element: Connected, d: Direction): Double
 
     /**
      * This is the amount of space along the side of "along" that should be reserved between two
      * connections.   Should also consider the amount of room required for the terminators.
      */
     protected abstract fun getLinkGutter(
-        along: Connected?,
+        along: Connected,
         a: Terminator?,
         aSide: Direction?,
         b: Terminator?,
@@ -308,11 +308,6 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     override val isLoggingEnabled: Boolean
         get() = true
 
-    companion object {
-        const val MINIMUM_GLYPH_SIZE = 2.0
-        const val MINIMUM_ARROW_SIZE = 2.0
-        const val EDGE_DISTANCE = 2.0
-    }
 
     /**
      * Set buffer > 0 to ensure gaps even around invisible attr.  0 should be used for correct rendering

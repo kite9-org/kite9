@@ -39,7 +39,7 @@ class DecalContainerImpl(
 
     override fun getGridColumns(): Int {
         return if (getLayout() === Layout.GRID) {
-            ctx.getCssDoubleValue(CSSConstants.GRID_COLUMNS_PROPERTY, theElement).toInt()
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_COLUMNS_PROPERTY, theElement).toInt()
         } else {
             0
         }
@@ -47,7 +47,7 @@ class DecalContainerImpl(
 
     override fun getGridRows(): Int {
         return if (getLayout() === Layout.GRID) {
-            ctx.getCssDoubleValue(CSSConstants.GRID_ROWS_PROPERTY, theElement).toInt()
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_ROWS_PROPERTY, theElement).toInt()
         } else {
             0
         }

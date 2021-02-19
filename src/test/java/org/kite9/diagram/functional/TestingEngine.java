@@ -5,7 +5,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.batik.BatikDisplayer;
+import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
@@ -460,7 +460,7 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private void checkOverlap(final Diagram d) {
-		BatikDisplayer disp = new BatikDisplayer(false);
+		BasicCompleteDisplayer disp = new BasicCompleteDisplayer(false);
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
@@ -473,7 +473,7 @@ public class TestingEngine extends TestingHelp {
 		
 	}
 		
-	private void checkOverlap(Rectangular outer, Diagram d, BatikDisplayer disp) {
+	private void checkOverlap(Rectangular outer, Diagram d, BasicCompleteDisplayer disp) {
 		RectangleRenderingInformation ri = (RectangleRenderingInformation) outer.getRenderingInformation();
 		Rectangle2D outerRect;
 		try {
@@ -503,7 +503,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 		
-			private void checkSiblingMargins(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+			private void checkSiblingMargins(Rectangular outer, BasicCompleteDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
 				if (innerRect.intersects(outerRect)) {
 					throw new LogicException("Overlapped: " + outer + " by " + inner);
 				}
@@ -557,7 +557,7 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 
-			private void checkContainmentPadding(Rectangular outer, BatikDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
+			private void checkContainmentPadding(Rectangular outer, BasicCompleteDisplayer disp, Rectangle2D outerRect, DiagramElement inner, Rectangle2D innerRect) {
 				// de must be inside l
 
 				if (!innerRect.intersects(outerRect)) {

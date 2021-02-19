@@ -46,12 +46,12 @@ open class ConnectedContainerImpl(
     }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
-        return ctx.getCSSStyleProperty(TRAVERSAL_PROPERTIES[d]!!, theElement) as BorderTraversal
+        return ctx.getCSSStyleEnumProperty(TRAVERSAL_PROPERTIES[d]!!, theElement) as BorderTraversal
     }
 
     override fun getGridColumns(): Int {
         return if (getLayout() === Layout.GRID) {
-            ctx.getCssDoubleValue(CSSConstants.GRID_COLUMNS_PROPERTY, theElement).toInt()
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_COLUMNS_PROPERTY, theElement).toInt()
         } else {
             0
         }
@@ -59,7 +59,7 @@ open class ConnectedContainerImpl(
 
     override fun getGridRows(): Int {
         return if (getLayout() === Layout.GRID) {
-            ctx.getCssDoubleValue(CSSConstants.GRID_ROWS_PROPERTY, theElement).toInt()
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_ROWS_PROPERTY, theElement).toInt()
         } else {
             0
         }

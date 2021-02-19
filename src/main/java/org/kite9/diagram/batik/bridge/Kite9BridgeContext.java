@@ -194,19 +194,19 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
     }
 
 	@Override
-	public double getCssDoubleValue(String prop, Element e) {
+	public double getCssStyleDoubleProperty(String prop, Element e) {
 		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
 		return v.getFloatValue();
 	}
 
 	@Override
-	public String getCssStringValue(String prop, Element e) {
+	public String getCssStyleStringProperty(String prop, Element e) {
 		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
 		return v == null ? null : v.getStringValue();
 	}
 
 	@Override
-	public Object getCSSStyleProperty(String prop, Element e) {
+	public Object getCSSStyleEnumProperty(String prop, Element e) {
     	Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
     	if (v == null) {
     		return null;

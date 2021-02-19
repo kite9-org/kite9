@@ -46,8 +46,8 @@ abstract class AbstractCompactedRectangular(
 
     private fun initAlignment() {
         horizontalAlignment =
-            ctx.getCSSStyleProperty(CSSConstants.HORIZONTAL_ALIGNMENT, theElement) as HorizontalAlignment
-        verticalAlignment = ctx.getCSSStyleProperty(CSSConstants.VERTICAL_ALIGNMENT, theElement) as VerticalAlignment
+            ctx.getCSSStyleEnumProperty(CSSConstants.HORIZONTAL_ALIGNMENT, theElement) as HorizontalAlignment
+        verticalAlignment = ctx.getCSSStyleEnumProperty(CSSConstants.VERTICAL_ALIGNMENT, theElement) as VerticalAlignment
     }
 
     private fun initMinimumSize() {

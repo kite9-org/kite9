@@ -32,14 +32,14 @@ class TerminatorImpl(
 
     override fun initialize() {
         super.initialize()
-        arrivalSide = ctx.getCSSStyleProperty(CSSConstants.ARRIVAL_SIDE, theElement) as Direction?
-        end = ctx.getCSSStyleProperty(CSSConstants.LINK_END, theElement) as End?
+        arrivalSide = ctx.getCSSStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement) as Direction?
+        end = ctx.getCSSStyleEnumProperty(CSSConstants.LINK_END, theElement) as End?
         val from = end === End.FROM
         reference =
-            if (from) ctx.getCssStringValue(CSSConstants.MARKER_START_REFERENCE, theElement) else ctx.getCssStringValue(
+            if (from) ctx.getCssStyleStringProperty(CSSConstants.MARKER_START_REFERENCE, theElement) else ctx.getCssStyleStringProperty(
                 CSSConstants.MARKER_END_REFERENCE, theElement
             )
-        markerReserve = ctx.getCssDoubleValue(CSSConstants.MARKER_RESERVE, theElement)
+        markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }
 
     override fun getContainer(): Container? {

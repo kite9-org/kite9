@@ -5,7 +5,7 @@ import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GenericBridge;
 import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
-import org.kite9.diagram.batik.BatikDisplayer;
+import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
@@ -32,7 +32,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 	}
 
 	private BasicArrangementPipeline createPipeline() {
-		return new BasicArrangementPipeline(factory, new BatikDisplayer(false));
+		return new BasicArrangementPipeline(factory, new BasicCompleteDisplayer(false));
 	}
     
     public static BasicArrangementPipeline lastPipeline;

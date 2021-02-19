@@ -39,7 +39,7 @@ abstract class AbstractModelDiagramElement(
     }
 
     protected fun getCssDoubleValue(prop: String): Double {
-        return ctx.getCssDoubleValue(prop, theElement)
+        return ctx.getCssStyleDoubleProperty(prop, theElement)
     }
 
     override fun paintElementToDocument(d: Document, postProcessor: XMLProcessor): Element {
@@ -47,7 +47,7 @@ abstract class AbstractModelDiagramElement(
     }
 
     private fun findTransform(): SVGTransformer {
-        val t = ctx.getCSSStyleProperty(CSSConstants.CONTENT_TRANSFORM, theElement) as ContentTransform
+        val t = ctx.getCSSStyleEnumProperty(CSSConstants.CONTENT_TRANSFORM, theElement) as ContentTransform
         return initializeTransformer(this, t, defaultTransform)
     }
 

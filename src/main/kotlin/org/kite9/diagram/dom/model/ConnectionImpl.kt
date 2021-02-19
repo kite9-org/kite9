@@ -79,8 +79,8 @@ class ConnectionImpl(
     }
 
     protected fun initSize() {
-        minimumLength = ctx.getCssDoubleValue(CSSConstants.LINK_MINIMUM_LENGTH, theElement)
-        cornerRadius = ctx.getCssDoubleValue(CSSConstants.LINK_CORNER_RADIUS, theElement)
+        minimumLength = ctx.getCssStyleDoubleProperty(CSSConstants.LINK_MINIMUM_LENGTH, theElement)
+        cornerRadius = ctx.getCssStyleDoubleProperty(CSSConstants.LINK_CORNER_RADIUS, theElement)
     }
 
     protected fun initRank() {
@@ -105,7 +105,7 @@ class ConnectionImpl(
     }
 
     private fun initDrawDirection() {
-        drawDirection = ctx.getCSSStyleProperty(CSSConstants.CONNECTION_DIRECTION, theElement) as Direction?
+        drawDirection = ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTION_DIRECTION, theElement) as Direction?
     }
 
     private fun indexOf(e: Element, within: NodeList): Int {
