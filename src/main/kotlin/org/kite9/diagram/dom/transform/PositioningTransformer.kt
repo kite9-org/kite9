@@ -18,7 +18,7 @@ import org.w3c.dom.Element
  */
 class PositioningTransformer(private val owner: DiagramElement) : AbstractRectangularTransformer(), LeafTransformer {
 
-    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
+    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {
         // work out translation
         val position = getRenderedRelativePosition(owner)
         val out = p.output(d, postProcessor)

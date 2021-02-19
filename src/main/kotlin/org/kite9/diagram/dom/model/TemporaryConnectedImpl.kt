@@ -82,7 +82,7 @@ class TemporaryConnectedImpl(parent: DiagramElement, id: String, val painter: Pa
 
     override fun output(d: Document, p: XMLProcessor): Element {
         painter.setDiagramElement(this)
-        return painter.output(d, p)
+        return painter.output(d, p)!!
     }
 
     override fun getMargin(d: Direction): Double {

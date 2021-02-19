@@ -18,7 +18,7 @@ import org.w3c.dom.Element
  */
 class CroppingTransformer(private val owner: Leaf) : AbstractRectangularTransformer(), LeafTransformer {
 
-    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
+    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {
         // work out translation
         var position = getRenderedRelativePosition(owner)
         val out = p.output(d, postProcessor)

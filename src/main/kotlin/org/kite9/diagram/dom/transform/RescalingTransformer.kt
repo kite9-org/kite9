@@ -14,7 +14,7 @@ class RescalingTransformer(private val l: Leaf) : AbstractRectangularTransformer
     /**
      * Ensures the decal is the same size as it's parent (for scaled decals)
      */
-    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
+    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {
         val size = getRectangularRenderedSize(l)
         val out = p.output(d, postProcessor)
         if (size == null) {

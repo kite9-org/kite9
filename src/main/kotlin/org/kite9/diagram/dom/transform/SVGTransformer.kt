@@ -14,6 +14,6 @@ import org.w3c.dom.Element
 </g> */
 interface SVGTransformer {
 
-    fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element
+    fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element?
 
 }

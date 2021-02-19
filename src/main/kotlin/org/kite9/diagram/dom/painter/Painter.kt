@@ -21,7 +21,7 @@ interface Painter {
      * Paints the XML to a new document (i.e. copy).  This forces the conversion from
      * Kite9 ADL document into SVG.
      */
-    fun output(d: Document, postProcessor: XMLProcessor): Element
+    fun output(d: Document, postProcessor: XMLProcessor): Element?
 
     fun setDiagramElement(de: DiagramElement)
 }

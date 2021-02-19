@@ -50,7 +50,7 @@ public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPaint
 	protected GraphicsNode getGraphicsNode() {
 		GraphicsNode out = graphicsNodeCache;
 		if (out == null) {
-			out = initGraphicsNode(theElement, (Kite9BridgeContext) ctx);
+			out = initGraphicsNode(getTheElement(), (Kite9BridgeContext) ctx);
 			graphicsNodeCache = out;
 			return out;
 		}

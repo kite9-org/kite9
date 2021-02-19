@@ -43,7 +43,7 @@ abstract class AbstractModelDiagramElement(
     }
 
     override fun paintElementToDocument(d: Document, postProcessor: XMLProcessor): Element {
-        return transformer.postProcess(painter, d, postProcessor)
+        return transformer.postProcess(painter, d, postProcessor)!!
     }
 
     private fun findTransform(): SVGTransformer {

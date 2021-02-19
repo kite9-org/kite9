@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 
 class NoopTransformer : SVGTransformer {
 
-    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element {
+    override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {
         return p.output(d, postProcessor)
     }
 }
