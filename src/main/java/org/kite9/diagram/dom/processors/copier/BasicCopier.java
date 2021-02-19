@@ -5,7 +5,7 @@ import javax.xml.XMLConstants;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.processors.xpath.AbstractProcessor;
+import org.kite9.diagram.dom.processors.AbstractProcessor;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -123,7 +123,7 @@ public class BasicCopier extends AbstractProcessor {
 			}
 			NodeList contents = n.getChildNodes();
 			mergeTextNodes(contents);
-			processContents(contents, destination);
+			processNodeList(contents, destination);
 			return null;
 		}
 	}

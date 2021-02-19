@@ -135,6 +135,6 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
     protected abstract fun getTextPainter(el: Element): LeafPainter
 
     protected fun getId(el: Element): String {
-        return el.getAttribute("id")
+        return el.getAttribute("id")!!
     }
 }

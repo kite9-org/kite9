@@ -34,7 +34,7 @@ public class Kite9ExpandingCopier extends PrefixingCopier {
 		}
 	}
 
-	protected void processContents(NodeList contents, Node inside) {
+	protected void processNodeList(NodeList contents, Node inside) {
 		for (int i = 0; i < contents.getLength(); i++) {
 			Node n = contents.item(i);
 			Node out = null;

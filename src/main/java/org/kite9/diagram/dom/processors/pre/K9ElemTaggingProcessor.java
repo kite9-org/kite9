@@ -2,7 +2,7 @@ package org.kite9.diagram.dom.processors.pre;
 
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.processors.xpath.AbstractInlineProcessor;
+import org.kite9.diagram.dom.processors.AbstractInlineProcessor;
 import org.w3c.dom.Element;
 
 /**
