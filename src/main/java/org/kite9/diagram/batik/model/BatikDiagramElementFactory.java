@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.model;
 
-import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.painter.BatikLeafPainter;
 import org.kite9.diagram.batik.text.TextLeafPainter;
@@ -13,6 +12,8 @@ import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.model.AbstractDiagramElementFactory;
 import org.kite9.diagram.dom.model.TemporaryConnectedImpl;
+import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
+import org.kite9.diagram.dom.painter.Painter;
 import org.kite9.diagram.dom.painter.SVGContainerRectangularPainter;
 import org.kite9.diagram.dom.painter.SVGRectPainter;
 import org.kite9.diagram.model.DiagramElement;
@@ -44,17 +45,17 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<Ki
 
 	@Override
 	protected TextLeafPainter getTextPainter(Element el) {
-		return new TextLeafPainter(el, (Kite9BridgeContext) context);
+		return new TextLeafPainter(el, (Kite9BridgeContext) getContext());
 	}
 
 	@Override
 	protected BatikLeafPainter getLeafPainter(Element el) {
-		return new BatikLeafPainter(el, context);
+		return new BatikLeafPainter(el, getContext());
 	}
 
 	@Override
 	protected SVGContainerRectangularPainter getContainerPainter(Element el) {
-		return new SVGContainerRectangularPainter(el, context);
+		return new SVGContainerRectangularPainter(el, getContext());
 	}
 
 	public static RectangularElementUsage getElementUsage(StyledKite9XMLElement in2) {
@@ -72,5 +73,8 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<Ki
 		return new TemporaryConnectedImpl(parent, idSuffix, new SVGRectPainter("grid-temporary"));
 	}
 
-
+	@Override
+	protected Painter getDirectPainter(Element el) {
+		return new DirectSVGGroupPainter(el);
+	}
 }
