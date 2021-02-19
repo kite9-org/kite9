@@ -4,7 +4,7 @@ import org.apache.batik.anim.dom.SVGOMSVGElement;
 import org.apache.batik.bridge.Bridge;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GenericBridge;
-import org.kite9.diagram.batik.BatikArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
 import org.kite9.diagram.batik.BatikDisplayer;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.Kite9XMLElement;
@@ -31,11 +31,11 @@ public class Kite9DiagramBridge implements GenericBridge {
 		this.factory = factory;
 	}
 
-	private BatikArrangementPipeline createPipeline() {
-		return new BatikArrangementPipeline(factory, new BatikDisplayer(false));
+	private BasicArrangementPipeline createPipeline() {
+		return new BasicArrangementPipeline(factory, new BatikDisplayer(false));
 	}
     
-    public static BatikArrangementPipeline lastPipeline;
+    public static BasicArrangementPipeline lastPipeline;
     public static Kite9XMLElement lastDiagram;
 
 
@@ -59,7 +59,7 @@ public class Kite9DiagramBridge implements GenericBridge {
 		Kite9XMLElement d = (Kite9XMLElement) e;
        	
        	// work out the positions of all the elements in te diagram, 
-       	BatikArrangementPipeline pipeline = createPipeline();
+       	BasicArrangementPipeline pipeline = createPipeline();
        	
        	DiagramElement de = d.getDiagramElement();
        	
