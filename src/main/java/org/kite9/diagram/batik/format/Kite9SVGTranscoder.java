@@ -12,7 +12,7 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
-import org.kite9.diagram.batik.model.DiagramElementFactoryImpl;
+import org.kite9.diagram.batik.model.BatikDiagramElementFactory;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
@@ -75,7 +75,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		domImpl = new ADLExtensibleDOMImplementation(c);
 		docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
-		XMLDiagramElementFactory def = new DiagramElementFactoryImpl();
+		XMLDiagramElementFactory def = new BatikDiagramElementFactory();
 		domImpl.setDiagramElementFactory(def);
 		bridgeContext = new Kite9BridgeContext(userAgent, docLoader, def, false);
 		TranscodingHints hints = new TranscodingHints();

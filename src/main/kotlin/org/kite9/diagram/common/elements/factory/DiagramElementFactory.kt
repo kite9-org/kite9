@@ -1,5 +1,6 @@
 package org.kite9.diagram.common.elements.factory
 
+import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.model.DiagramElement
 
 /**
@@ -8,6 +9,8 @@ import org.kite9.diagram.model.DiagramElement
  * @author robmoffat
  */
 interface DiagramElementFactory<X> {
+
+    fun setElementContext(ec: ElementContext)
 
     fun createDiagramElement(x: X, parent: DiagramElement): DiagramElement
 

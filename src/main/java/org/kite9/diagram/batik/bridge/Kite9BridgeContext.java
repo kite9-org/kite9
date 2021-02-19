@@ -43,7 +43,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, XMLDiagramElementFactory factory, boolean textAsGlyphs) {
 		super(userAgent, loader);
 		this.factory = factory;
-		factory.setBridgeContext(this);
+		factory.setElementContext(this);
 		setTextAsGlyphs(textAsGlyphs);
 		dBridge = new Kite9DiagramBridge(factory);
 	}

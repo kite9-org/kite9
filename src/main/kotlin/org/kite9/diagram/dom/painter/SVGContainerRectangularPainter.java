@@ -1,9 +1,8 @@
-package org.kite9.diagram.batik.painter;
+package org.kite9.diagram.dom.painter;
 
-import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
+import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.model.style.DiagramElementType;
+import org.w3c.dom.Element;
 
 /**
  * Handles painting for {@link DiagramElementType.CONTAINER}
@@ -15,7 +14,7 @@ import org.kite9.diagram.model.style.DiagramElementType;
  */
 public class SVGContainerRectangularPainter extends DirectSVGGroupPainter {
 
-	public SVGContainerRectangularPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
+	public SVGContainerRectangularPainter(Element theElement, ElementContext ctx) {
 		super(theElement);
 	}
 

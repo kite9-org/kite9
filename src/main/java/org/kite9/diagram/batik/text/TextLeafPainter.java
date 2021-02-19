@@ -8,7 +8,7 @@ import java.awt.geom.AffineTransform;
 import org.apache.batik.bridge.FlowTextNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
-import org.kite9.diagram.batik.painter.SVGLeafPainter;
+import org.kite9.diagram.batik.painter.BatikLeafPainter;
 import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.model.style.DiagramElementType;
@@ -25,9 +25,9 @@ import org.w3c.dom.Element;
  * @author robmoffat
  *
  */
-public class TextLeafPainter extends SVGLeafPainter {
+public class TextLeafPainter extends BatikLeafPainter {
 	
-	public TextLeafPainter(StyledKite9XMLElement theElement, Kite9BridgeContext ctx) {
+	public TextLeafPainter(Element theElement, Kite9BridgeContext ctx) {
 		super(theElement, ctx);
 	}
 	
@@ -42,7 +42,7 @@ public class TextLeafPainter extends SVGLeafPainter {
 	}
 
 	@Override
-	protected Element processOutput(StyledKite9XMLElement in, Document d, XMLProcessor postProcessor) {
+	protected Element processOutput(Element in, Document d, XMLProcessor postProcessor) {
 		Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 		ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 		ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);

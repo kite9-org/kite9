@@ -11,9 +11,9 @@ import org.w3c.dom.Element;
  */
 public class DirectSVGGroupPainter extends AbstractPainter {
 
-	protected StyledKite9XMLElement theElement;
+	protected Element theElement;
 	
-	public DirectSVGGroupPainter(StyledKite9XMLElement theElement) {
+	public DirectSVGGroupPainter(Element theElement) {
 		this.theElement = theElement;
 	}
 	
@@ -30,7 +30,7 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	}
 	
 
-	protected Element processOutput(StyledKite9XMLElement in, Document d, XMLProcessor postProcessor) {
+	protected Element processOutput(Element in, Document d, XMLProcessor postProcessor) {
 		Element out = (Element) postProcessor.processContents(in);
 		handleTemporaryElements(out, d, postProcessor);
 		return out;
@@ -39,6 +39,6 @@ public class DirectSVGGroupPainter extends AbstractPainter {
 	/**
 	 * Ensures that the element has the correct contents before the pre-processor is called.
 	 */
-	protected void setupElementXML(StyledKite9XMLElement e) {
+	protected void setupElementXML(Element e) {
 	}
 }
