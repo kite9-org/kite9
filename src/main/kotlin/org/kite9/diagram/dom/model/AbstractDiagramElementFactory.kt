@@ -31,7 +31,7 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
         } else when (lt) {
             DiagramElementType.DIAGRAM -> {
                 if (parent != null) {
-                    throw Kite9XMLProcessingException("Can't nest type 'diagram' @ " + getId(el), el)
+                    throw context!!.contextualException("Can't nest type 'diagram' @ " + getId(el), el)
                 }
                 DiagramImpl(el, context!!, getContainerPainter(el)!!, ContentTransform.POSITION)
             }
@@ -55,7 +55,7 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
                         el
                     ), el
                 )
-                else -> throw Kite9XMLProcessingException("Decal containers not supported yet: @" + getId(el), el)
+                else -> throw context!!.contextualException("Decal containers not supported yet: @" + getId(el), el)
             }
             DiagramElementType.TEXT -> when (usage) {
                 RectangularElementUsage.LABEL -> LabelLeafImpl(
@@ -120,7 +120,7 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
                 ContentTransform.POSITION
             )
             DiagramElementType.NONE -> null
-            DiagramElementType.UNSPECIFIED -> throw Kite9XMLProcessingException(
+            DiagramElementType.UNSPECIFIED -> throw context!!.contextualException(
                 "Don't know how to process element: " + el + "(" + el.tagName + ") with type " + lt + " and usage " + usage + " and parent " + parent,
                 el
             )

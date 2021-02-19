@@ -12,7 +12,7 @@ class SVGRectPainter(private val classes: String) : AbstractPainter() {
         val rri = r!!.getRenderingInformation() as RectangleRenderingInformation
         val size = rri.size
         return if (size!!.w > 0 && size.h > 0) {
-            val out = d.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_RECT_TAG)
+            val out = d.createElementNS("http://www.w3.org/2000/svg", "rect")
             out.setAttribute("width", "" + size.w + "px")
             out.setAttribute("height", "" + size.h + "px")
             out.setAttribute("class", classes)
