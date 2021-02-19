@@ -12,7 +12,7 @@ interface DiagramElementFactory<X> {
 
     fun setElementContext(ec: ElementContext)
 
-    fun createDiagramElement(x: X, parent: DiagramElement): DiagramElement
+    fun createDiagramElement(x: X, parent: DiagramElement?): DiagramElement?
 
     fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnected
 

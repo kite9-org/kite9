@@ -18,16 +18,11 @@ class JSDiagramElementFactory(context: ElementContext?) : AbstractDiagramElement
         this.context = context
     }
 
-    override fun createDiagramElement(x: Element, parent: DiagramElement): DiagramElement {
+    override fun createDiagramElement(x: Element, parent: DiagramElement?): DiagramElement? {
         var type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x) as DiagramElementType
         var usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x) as RectangularElementUsage
         var out = instantiateDiagramElement(parent, x, type, usage)
-
-        if (out == null) {
-            throw context!!.contextualException("Don't know how to create diagram element from "+x+"#"+getId(x), x);
-        } else {
-            return out
-        }
+        return out
     }
 
     override fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnected {

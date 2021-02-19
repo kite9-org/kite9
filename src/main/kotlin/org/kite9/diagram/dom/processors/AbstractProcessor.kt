@@ -6,7 +6,7 @@ abstract class AbstractProcessor : XMLProcessor {
 
     protected abstract val isAppending: Boolean
 
-    fun processContents(n: Node, inside: Node?): Node {
+    fun processContents(n: Node, inside: Node?): Node? {
         //System.out.println("Process Contents : "+this.getClass()+ "    "+n.getLocalName()+"  inside "+inside);
         return if (n is Element) {
             val out = processTag(n)
@@ -22,7 +22,7 @@ abstract class AbstractProcessor : XMLProcessor {
         } else if (n is Document) {
             val contents = n.childNodes
             processNodeList(contents, inside)
-            inside!!
+            inside
         } else if (n is Comment) {
             val out = processComment(n)
             checkDoAppend(inside, out)
