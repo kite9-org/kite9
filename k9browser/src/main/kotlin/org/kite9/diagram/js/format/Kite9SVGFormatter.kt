@@ -12,6 +12,7 @@ import org.w3c.dom.Element
  * Kite9 SVG properly in-browser
  */
 
+@JsName("formatSVG")
 fun formatSVG(e: Element) {
     val context = JSElementContext()
     val ef = JSDiagramElementFactory(context)

@@ -17,6 +17,7 @@ class CSSConfig {
 
 }
 
+@JsName("initCSS")
 fun init() {
 
     val css = window.asDynamic().CSS as CSSRegistry
