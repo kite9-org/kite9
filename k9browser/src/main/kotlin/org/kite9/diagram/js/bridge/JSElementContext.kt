@@ -4,23 +4,32 @@ import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.w3c.dom.Element
-import kotlinx.browser.document
+import kotlin.reflect.KClass
 
 class JSElementContext : ElementContext {
 
-    override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {
-        val s = e.getComputedStyleMap().get(prop);
-        return s as Double
+    override fun getCssStyleDoubleProperty(prop: String, e: Element, ): Double {
+        val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
+        return 0.0
     }
 
     override fun getCssStyleStringProperty(prop: String, e: Element): String? {
-        TODO("Not yet implemented")
+        val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
+        return if (s == null) {
+            null
+        } else {
+            s[0].trim()
+        }
     }
 
-    override fun getCSSStyleEnumProperty(prop: String, e: Element): Any? {
-        TODO("Not yet implemented")
+    override fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X {
+        val s = getCssStyleStringProperty(prop, e)!!.trim()
+        return (c.asDynamic().jClass.values() as Array<X>)
+            .filter { (it.asDynamic().name as String).toLowerCase() == s }
+            .first()
     }
 
     override fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange? {

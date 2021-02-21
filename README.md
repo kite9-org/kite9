@@ -15,9 +15,15 @@ For examples, head over to the [Risk-First](riskfirst.org) website to see some e
 - [Text Flow](docs/Text.md). You can intelligently size SVG elements according to the text they contain, and flow text within the element a la HTML.
 - [Grids](docs/Grids.md).  It's possible to add SVG elements to a grid, and have the grid resize to contain them all.
 
-## Batik
+## Output Formats
 
-Kite9 is written in Java, and heavily based on [Apache Batik SVG Toolkit](https://xmlgraphics.apache.org/batik/), which supplies parsers for SVG and CSS, as well as conversion from SVG primitives to Java Graphics2D primitives for sizing and layout.
+### 1.  Batik
+
+Kite9 supports writing SVG using Java and heavily based on [Apache Batik SVG Toolkit](https://xmlgraphics.apache.org/batik/), which supplies parsers for SVG and CSS, as well as conversion from SVG primitives to Java Graphics2D primitives for sizing and layout.
+
+### 2. JavaScript
+
+Kite9 is cross-compiled into JS to run in the browser, using Houdini APIs. More coming.
 
 ## General Principles
 
@@ -73,3 +79,6 @@ Kite9 implements Batik's `Transcoder` interface, called `Kite9SVGTranscoder`.
 Instructions for using this [are here](https://xmlgraphics.apache.org/batik/using/transcoder.html)
 
 It transcodes XML into SVG, (rather than into JPEG as shown in the example).  You should modify the output filename accordingly.
+
+## Deploying Batik
+
