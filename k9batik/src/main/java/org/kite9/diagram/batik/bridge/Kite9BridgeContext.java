@@ -1,10 +1,13 @@
 package org.kite9.diagram.batik.bridge;
 
+import kotlin.jvm.JvmClassMappingKt;
+import kotlin.reflect.KClass;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.*;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.parser.ScannerUtilities;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
@@ -16,10 +19,12 @@ import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.elements.*;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
+import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
+import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -205,13 +210,11 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		return v == null ? null : v.getStringValue();
 	}
 
+
 	@Override
-	public Object getCSSStyleEnumProperty(String prop, Element e) {
+	public <X> X getCSSStyleEnumProperty(String prop, Element e, KClass<X> c) {
     	Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
-    	if (v == null) {
-    		return null;
-		}
-    	return ((EnumValue) v).getTheValue();
+		return (X) ((EnumValue)v).getTheValue();
     }
 
 	@Override
@@ -257,12 +260,12 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 	@Override
-	public RuntimeException contextualException(String reason, Throwable t, Element e) {
+	public Kite9ProcessingException contextualException(String reason, Throwable t, Element e) {
 		return new Kite9XMLProcessingException(reason, t, e);
 	}
 
 	@Override
-	public RuntimeException contextualException(String reason, Element e) {
+	public Kite9ProcessingException contextualException(String reason, Element e) {
 		return contextualException(reason, null, e);
 	}
 }

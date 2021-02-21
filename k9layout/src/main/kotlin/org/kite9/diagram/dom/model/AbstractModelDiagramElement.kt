@@ -47,7 +47,7 @@ abstract class AbstractModelDiagramElement(
     }
 
     private fun findTransform(): SVGTransformer {
-        val t = ctx.getCSSStyleEnumProperty(CSSConstants.CONTENT_TRANSFORM, theElement) as ContentTransform
+        val t = ctx.getCSSStyleEnumProperty(CSSConstants.CONTENT_TRANSFORM, theElement, ContentTransform::class)
         return initializeTransformer(this, t, defaultTransform)
     }
 

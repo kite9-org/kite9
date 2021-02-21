@@ -32,10 +32,10 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
     	
     	
     	AbstractMutableXMLElement fromT = l1.getProperty("from");
-    	fromT.setAttribute("style", "kite9-arrival-side: up; ");
+    	fromT.setAttribute("style", "--kite9-arrival-side: up; ");
     	
     	AbstractMutableXMLElement toT = l1.getProperty("to");
-    	toT.setAttribute("style", "kite9-arrival-side: down; ");
+    	toT.setAttribute("style", "--kite9-arrival-side: down; ");
     	
     	DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(outer), null);
     	renderDiagram(d);

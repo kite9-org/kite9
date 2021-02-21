@@ -67,7 +67,7 @@
   </svg:defs>
 
   <template id='glyph'>
-    <back style='kite9-usage: decal; kite9-type: svg; '>
+    <back style='--kite9-usage: decal; --kite9-type: svg; '>
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class="glyph-back" />
     </back>
     <svg:g class="glyph">
@@ -76,12 +76,12 @@
   </template>
   
   <template id='glyph-parameterized'>
-    <back style='kite9-usage: decal; kite9-type: svg; '>
+    <back style='--kite9-usage: decal; --kite9-type: svg; '>
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class="glyph-back" />
     </back>
     <svg:g class="glyph">
       <svg:g class="glyph-label-text">
-        <text-label style="kite9-type: text;" class="glyph-label-text">
+        <text-label style="--kite9-type: text;" class="glyph-label-text">
       	  <contents xpath="$template-1" type="string" />
         </text-label>
       </svg:g>
@@ -95,7 +95,7 @@
   
   <template id='key'>
     <body>
-      <back style='kite9-usage: decal; kite9-type: svg;'>
+      <back style='--kite9-usage: decal; --kite9-type: svg;'>
         <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='0' ry='0' class="key-back" />
       </back>
       <contents optional="true" />
@@ -103,29 +103,29 @@
   </template>
 
   <template id='arrow'>
-    <back style='kite9-usage: decal; kite9-type: svg; ' class="arrow-back">
+    <back style='--kite9-usage: decal; --kite9-type: svg; ' class="arrow-back">
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='4' ry='4' style='fill: black; ' />
     </back>
     <contents optional="true" />
   </template>
 
   <template id='connection-label'>
-    <back style='kite9-usage: decal; kite9-type: svg;  '>
+    <back style='--kite9-usage: decal; --kite9-type: svg;  '>
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='4' ry='4' class="connection-label-back" />
     </back>
     <svg:g class="connection-label-front">
-      <front style="kite9-type: text; ">
+      <front style="--kite9-type: text; ">
         <contents optional="true" />
       </front>
     </svg:g>
   </template>
 
   <template id='container-label'>
-    <back style="kite9-usage: decal; kite9-type: svg;">
+    <back style="--kite9-usage: decal; --kite9-type: svg;">
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='4' ry='4' class="container-label-back" />
     </back>
     <svg:g class="container-label-front">
-      <front style="kite9-type: text; ">
+      <front style="--kite9-type: text; ">
         <contents optional="true" />
       </front>
     </svg:g>
@@ -138,41 +138,41 @@
 
   <template id='context'>
     <contents optional="true" />
-    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+    <back style='--kite9-usage: decal; --kite9-type: svg;  ' >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' class="context-back" />
     </back>
   </template>
 
   <template id='grid'>
-    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+    <back style='--kite9-usage: decal; --kite9-type: svg;  ' >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' class="grid-back" />
     </back>
     <contents optional="true" />
-    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+    <back style='--kite9-usage: decal; --kite9-type: svg;  ' >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' class="grid-frame" />
     </back>
   </template>
   
   <template id='grid-triangles'>
-    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+    <back style='--kite9-usage: decal; --kite9-type: svg;  ' >
       <svg:path d="#{$x0}, #{$y0} #{$x2} #{$y1} #{$x0},#{$y0} z" stroke="red" />
     </back>
     <contents optional="true" />
-    <back style='kite9-usage: decal; kite9-type: svg;  ' >
+    <back style='--kite9-usage: decal; --kite9-type: svg;  ' >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' class="grid-frame" />
     </back>
   </template>
   
   
   <template id='cell'>
-    <back style='kite9-usage: decal; kite9-type: svg;  '>
+    <back style='--kite9-usage: decal; --kite9-type: svg;  '>
       <svg:path d='M 0,#{$height} L0,0 L#{$width},0' class="cell-edge" />
     </back>
     <contents optional="true"  />
   </template>
   
   <template id='show-box'>
-    <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
+    <!-- <back style="- -kite9-usage: decal; - -kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
     </back>
     <contents />  -->
@@ -181,7 +181,7 @@
   <template id="generic-text">
     <!--  svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <svg:g class="generic-text">
-      <text-label style="kite9-type: text;">
+      <text-label style="--kite9-type: text;">
         <contents optional="true" />
       </text-label>
     </svg:g>
@@ -190,7 +190,7 @@
   <template id="glyph-stereotype-text">
     <show-box />
     <svg:g class="glyph-stereotype-text">
-      <text-label style="kite9-type: text;">
+      <text-label style="--kite9-type: text;">
         <contents optional="true" />
       </text-label>
     </svg:g>
@@ -200,7 +200,7 @@
   <template id="glyph-label-text">
     <show-box />
     <svg:g class="glyph-label-text">
-      <text-label style="kite9-type: text;" class="glyph-label-text">
+      <text-label style="--kite9-type: text;" class="glyph-label-text">
         <contents optional="true"  />
       </text-label>
     </svg:g>
@@ -209,7 +209,7 @@
   <template id="arrow-label-text">
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <svg:g class="arrow-label-text">
-      <text-label style="kite9-type: text;" class="arrow-label-text">
+      <text-label style="--kite9-type: text;" class="arrow-label-text">
         <contents optional="true" />
       </text-label>
     </svg:g>
@@ -218,7 +218,7 @@
   <template id="bold-text">
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <svg:g class="bold-text">
-      <text-label style="kite9-type: text;">
+      <text-label style="--kite9-type: text;">
         <contents optional="true" />
       </text-label>
     </svg:g>
@@ -248,7 +248,7 @@
   
   <template id="link">
     <contents />
-    <link-body style="kite9-type: svg; kite9-usage: decal;">
+    <link-body style="--kite9-type: svg; --kite9-usage: decal;">
       <svg:path d="#{$path}" class="link" 
         marker-start="pre:url(##{concat(adl:from/@class,'-start-marker')})"
         marker-end="pre:url(##{concat(adl:to/@class,'-end-marker')})" />

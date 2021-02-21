@@ -80,11 +80,11 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		TextLabel tall = new TextLabel("7. Tall", LabelPlacement.RIGHT);
 		TextLabel down = new TextLabel("8. Bottom", LabelPlacement.BOTTOM);
 		
-		top.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: top;");
-		right.setAttribute("style", "kite9-horizontal-sizing: maximize; kite9-label-placement: right;");
+		top.setAttribute("style", "--kite9-horizontal-sizing: maximize; --kite9-label-placement: top;");
+		right.setAttribute("style", "--kite9-horizontal-sizing: maximize; --kite9-label-placement: right;");
 		
-		tall.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-label-placement: right;");
-		down.setAttribute("style", "kite9-horizontal-sizing: minimize; kite9-label-placement: bottom;");
+		tall.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-label-placement: right;");
+		down.setAttribute("style", "--kite9-horizontal-sizing: minimize; --kite9-label-placement: bottom;");
 		
 		Context con2 = new Context("b2", 
 				createList(two, 
@@ -101,21 +101,21 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 						new TextLabel("12. Left \n2", LabelPlacement.LEFT)), true, null, null);
 		
 		TextLabel topl = new TextLabel("13. Top \n1", LabelPlacement.LEFT);
-		topl.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
+		topl.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-horizontal-sizing: minimize; --kite9-label-placement: top;");
 		
 		Context con4 = new Context("b4", 
 				createList(four, topl), true, null, null);
 		
-		con4.setAttribute("style", "kite9-sizing: minimize;");
+		con4.setAttribute("style", "--kite9-sizing: minimize;");
 		
 		TextLabel left = new TextLabel("14. Left Left \n1", LabelPlacement.LEFT);
-		left.setAttribute("style", "kite9-vertical-sizing: maximize; kite9-horizontal-sizing: minimize; kite9-label-placement: left;");
+		left.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-horizontal-sizing: minimize; --kite9-label-placement: left;");
 		
 		
 		Context con5 = new Context("b5", 
 				createList(five, left), true, null, null);
 		
-		con5.setAttribute("style", "kite9-sizing: minimize;");
+		con5.setAttribute("style", "--kite9-sizing: minimize;");
 		
 		new Link(one, two);
 		new Link(three, four);
@@ -160,7 +160,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		Glyph two = new Glyph("two", "Stereo", "two", null, null);
 		
 		Context con1 = new Context("b1", createList(one), true, null, Layout.RIGHT);
-		con1.setAttribute("style", "kite9-sizing: minimize; kite9-horizontal-sizing: minimize; kite9-label-placement: top;");
+		con1.setAttribute("style", "--kite9-sizing: minimize; --kite9-horizontal-sizing: minimize; --kite9-label-placement: top;");
 		
 		new Link(one, two, null,null,null,null,Direction.DOWN);
 	

@@ -70,7 +70,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-								${basedir}/target/classes/META-INF/resources/webjars/kite9-visualization/${project.version}
+								${basedir}/target/classes/META-INF/resources/webjars/k9browser/${project.version}
 							</outputDirectory>
 							<resources>
 								<resource>

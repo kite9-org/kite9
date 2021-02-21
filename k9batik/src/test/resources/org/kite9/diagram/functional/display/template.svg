@@ -24,21 +24,21 @@
   
   <template id="double" templateAtt="set">
   	<svg:circle cx="10" cy="10" r="5" class="pre:#{@item}" />
-  	<container style="kite9-type: container;  ">
+  	<container style="--kite9-type: container;  ">
   		<svg:circle cx="40" cy="40" r="5" class="pre:#{@item} #{$template-1}" />
   		<contents />
   	</container>
   </template>
   
   <template id="templated-decal">
-  	<back style="kite9-usage: decal; kite9-type: svg">
+  	<back style="--kite9-usage: decal; --kite9-type: svg">
   		<svg:rect x="0" y="0" width="#{$width}" height="#{$height}" class="pre:#{$template-1}" />
   	</back>
   	<contents />
   </template>
   
   <template id="arg-problem">
-      <elem style="kite9-usage: decal; kite9-type: svg; kite9-template: url(template.svg#arg-problem-inner); ">
+      <elem style="--kite9-usage: decal; --kite9-type: svg; --kite9-template: url(template.svg#arg-problem-inner); ">
       	<svg:rect x="0" y="0" width="50px" height="50px" stroke="pre:#{$template-2}" />
       </elem>
       <svg:g id="special">

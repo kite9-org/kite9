@@ -209,7 +209,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		Glyph a = new Glyph("", "a", null, null);
 		
 		Key k = new Key("some bold text taking lots of space dsjhksdjfhjkdskj ds" , null , createNarrowSymbolList(7));
-		k.setAttribute("style", "kite9-label-placement: right; ");
+		k.setAttribute("style", "--kite9-label-placement: right; ");
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a), k);
 		renderDiagram(d);

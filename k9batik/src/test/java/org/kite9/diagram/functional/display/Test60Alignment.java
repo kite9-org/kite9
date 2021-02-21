@@ -23,11 +23,11 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 		g3 = new Glyph("three", "","three ", null, null);
 		c4 = new Context("c4", listOf(g1), true, null, null);
 		c5 = new Context("c5", listOf(g2, g3), true, null, null);
-		g1.setAttribute("style", "kite9-vertical-align: "+gva+"; kite9-horizontal-align: "+gha);
-		g2.setAttribute("style", "kite9-vertical-align: "+gva+"; kite9-horizontal-align: "+gha);
-		g3.setAttribute("style", "kite9-vertical-align: "+gva+"; kite9-horizontal-align: "+gha);
-		c4.setAttribute("style", "kite9-min-height: 80px; kite9-sizing: minimize; kite9-vertical-align: "+c4Align+"; kite9-layout: "+c4Layout);
-		c5.setAttribute("style", "kite9-min-height: 200px; kite9-layout: "+c5Layout);
+		g1.setAttribute("style", "--kite9-vertical-align: "+gva+"; --kite9-horizontal-align: "+gha);
+		g2.setAttribute("style", "--kite9-vertical-align: "+gva+"; --kite9-horizontal-align: "+gha);
+		g3.setAttribute("style", "--kite9-vertical-align: "+gva+"; --kite9-horizontal-align: "+gha);
+		c4.setAttribute("style", "--kite9-min-height: 80px; --kite9-sizing: minimize; --kite9-vertical-align: "+c4Align+"; --kite9-layout: "+c4Layout);
+		c5.setAttribute("style", "--kite9-min-height: 200px; --kite9-layout: "+c5Layout);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("diagram"+diagramLayout.name(), Arrays.asList(c4, c5), diagramLayout, null);
 		return d;
@@ -38,10 +38,10 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 		g2 = new Glyph("two", "","two ", null, null);
 		g3 = new Glyph("three", "","three ", null, null);
 		c5 = new Context("c5", listOf(g1, g2, g3), true, null, null);
-		g1.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.TOP+"; kite9-horizontal-align: "+HorizontalAlignment.LEFT);
-		g2.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-		g3.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.BOTTOM+"; kite9-horizontal-align: "+HorizontalAlignment.RIGHT);
-		c5.setAttribute("style", "kite9-min-size: 200px 200px; kite9-layout: "+cLayout);
+		g1.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.TOP+"; --kite9-horizontal-align: "+HorizontalAlignment.LEFT);
+		g2.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.CENTER+"; --kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+		g3.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.BOTTOM+"; --kite9-horizontal-align: "+HorizontalAlignment.RIGHT);
+		c5.setAttribute("style", "--kite9-min-size: 200px 200px; --kite9-layout: "+cLayout);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("diagram", Arrays.asList(c5), cLayout, null);
 		return d;
@@ -55,11 +55,11 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 		c4 = new Context("c4", null, true, null, null);
 
 		if (addAlignments) {
-			g1.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-			g2.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
-			g3.setAttribute("style", "kite9-vertical-align: "+VerticalAlignment.CENTER+"; kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+			g1.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.CENTER+"; --kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+			g2.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.CENTER+"; --kite9-horizontal-align: "+HorizontalAlignment.CENTER);
+			g3.setAttribute("style", "--kite9-vertical-align: "+VerticalAlignment.CENTER+"; --kite9-horizontal-align: "+HorizontalAlignment.CENTER);
 		}
-		c5.setAttribute("style", "kite9-min-size: 400px 200px; "+(cLayout != null ? "kite9-layout: "+cLayout : ""));
+		c5.setAttribute("style", "--kite9-min-size: 400px 200px; "+(cLayout != null ? "--kite9-layout: "+cLayout : ""));
 		
 		if (link) {
 			new Link(g1, g3);

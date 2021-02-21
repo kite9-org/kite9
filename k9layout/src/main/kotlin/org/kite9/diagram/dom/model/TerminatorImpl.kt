@@ -32,8 +32,8 @@ class TerminatorImpl(
 
     override fun initialize() {
         super.initialize()
-        arrivalSide = ctx.getCSSStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement) as Direction?
-        end = ctx.getCSSStyleEnumProperty(CSSConstants.LINK_END, theElement) as End?
+        arrivalSide = ctx.getCSSStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement, Direction::class)
+        end = ctx.getCSSStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
         val from = end === End.FROM
         reference =
             if (from) ctx.getCssStyleStringProperty(CSSConstants.MARKER_START_REFERENCE, theElement) else ctx.getCssStyleStringProperty(

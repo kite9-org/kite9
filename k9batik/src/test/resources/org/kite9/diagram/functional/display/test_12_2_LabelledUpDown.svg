@@ -4,167 +4,167 @@
 <svg contentScriptType="text/ecmascript" width="133.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="166.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 ><defs
   ><style xml:space="preserve"
-    >@defs url(file:/Users/rob/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/template.svg);
+    >@defs url(file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/template.svg);
 renderingInformation, fromDecoration, toDecoration, position, size, allLinks {
-kite9-type: NONE;
+--kite9-type: NONE;
 }
 
 context, diagram, glyph, arrow, link {
-kite9-margin-top: 10px;
-kite9-margin-right: 10px;
-kite9-margin-bottom: 10px;
-kite9-margin-left: 10px;
-kite9-link-inset: 10px;
-kite9-link-gutter: 10px;
+--kite9-margin-top: 10px;
+--kite9-margin-right: 10px;
+--kite9-margin-bottom: 10px;
+--kite9-margin-left: 10px;
+--kite9-link-inset: 10px;
+--kite9-link-gutter: 10px;
 }
 
 diagram {
-kite9-type: DIAGRAM;
-kite9-padding-top: 15px;
-kite9-padding-right: 15px;
-kite9-padding-bottom: 15px;
-kite9-padding-left: 15px;
-kite9-traversal-bottom: NONE;
-kite9-traversal-left: NONE;
-kite9-traversal-right: NONE;
-kite9-traversal-top: NONE;
-kite9-template: url(template.svg#diagram);
+--kite9-type: DIAGRAM;
+--kite9-padding-top: 15px;
+--kite9-padding-right: 15px;
+--kite9-padding-bottom: 15px;
+--kite9-padding-left: 15px;
+--kite9-traversal-bottom: NONE;
+--kite9-traversal-left: NONE;
+--kite9-traversal-right: NONE;
+--kite9-traversal-top: NONE;
+--kite9-template: url(template.svg#diagram);
 }
 
 key {
-kite9-type: CONTAINER;
-kite9-usage: LABEL;
-kite9-padding-top: 3px;
-kite9-padding-right: 6px;
-kite9-padding-bottom: 3px;
-kite9-padding-left: 6px;
-kite9-template: url(template.svg#key);
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-label-placement: BOTTOM;
+--kite9-type: CONTAINER;
+--kite9-usage: LABEL;
+--kite9-padding-top: 3px;
+--kite9-padding-right: 6px;
+--kite9-padding-bottom: 3px;
+--kite9-padding-left: 6px;
+--kite9-template: url(template.svg#key);
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-label-placement: BOTTOM;
 }
 
 key body {
-kite9-type: CONTAINER;
-kite9-layout: GRID;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-grid-columns: 1;
-kite9-grid-rows: 3;
-kite9-padding-top: 12px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 12px;
-kite9-padding-left: 12px;
+--kite9-type: CONTAINER;
+--kite9-layout: GRID;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-grid-columns: 1;
+--kite9-grid-rows: 3;
+--kite9-padding-top: 12px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 12px;
+--kite9-padding-left: 12px;
 }
 
 key text-lines {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-layout: VERTICAL;
-kite9-occupies-x: 0 0;
-kite9-occupies-y: 2 2;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-layout: VERTICAL;
+--kite9-occupies-x: 0 0;
+--kite9-occupies-y: 2 2;
 }
 
 key boldText {
-kite9-occupies-x: 0 0;
-kite9-occupies-y: 0 0;
+--kite9-occupies-x: 0 0;
+--kite9-occupies-y: 0 0;
 }
 
 key bodyText {
-kite9-occupies-x: 0 0;
-kite9-occupies-y: 1 1;
+--kite9-occupies-x: 0 0;
+--kite9-occupies-y: 1 1;
 }
 
 glyph {
-kite9-type: CONTAINER;
-kite9-layout: DOWN;
-kite9-template: url(template.svg#glyph);
-kite9-padding-top: 6px;
-kite9-padding-right: 10px;
-kite9-padding-bottom: 6px;
-kite9-padding-left: 10px;
-kite9-margin-top: 10px;
-kite9-margin-right: 10px;
-kite9-margin-bottom: 10px;
-kite9-margin-left: 10px;
-kite9-connection-align-top: 50%;
-kite9-connection-align-right: 50%;
-kite9-connection-align-bottom: 50%;
-kite9-connection-align-left: 50%;
+--kite9-type: CONTAINER;
+--kite9-layout: DOWN;
+--kite9-template: url(template.svg#glyph);
+--kite9-padding-top: 6px;
+--kite9-padding-right: 10px;
+--kite9-padding-bottom: 6px;
+--kite9-padding-left: 10px;
+--kite9-margin-top: 10px;
+--kite9-margin-right: 10px;
+--kite9-margin-bottom: 10px;
+--kite9-margin-left: 10px;
+--kite9-connection-align-top: 50%;
+--kite9-connection-align-right: 50%;
+--kite9-connection-align-bottom: 50%;
+--kite9-connection-align-left: 50%;
 }
 
 glyph.hibaby {
-kite9-template: url(template.svg#glyph-parameterized),"Hello Baby";
+--kite9-template: url(template.svg#glyph-parameterized),"Hello Baby";
 }
 
 glyph symbols {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-layout: HORIZONTAL;
-kite9-margin-top: 5px;
-kite9-margin-right: 5px;
-kite9-margin-bottom: 5px;
-kite9-margin-left: 5px;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-layout: HORIZONTAL;
+--kite9-margin-top: 5px;
+--kite9-margin-right: 5px;
+--kite9-margin-bottom: 5px;
+--kite9-margin-left: 5px;
 }
 
 diagram glyph label {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-template: url(template.svg#glyph-label-text);
-kite9-vertical-align: TOP;
-kite9-margin-top: 5px;
-kite9-margin-right: 5px;
-kite9-margin-bottom: 5px;
-kite9-margin-left: 5px;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-template: url(template.svg#glyph-label-text);
+--kite9-vertical-align: TOP;
+--kite9-margin-top: 5px;
+--kite9-margin-right: 5px;
+--kite9-margin-bottom: 5px;
+--kite9-margin-left: 5px;
 }
 
 glyph stereotype {
-kite9-type: CONTAINER;
-kite9-template: url(template.svg#glyph-stereotype-text);
-kite9-vertical-align: BOTTOM;
-kite9-horizontal-align: CENTER;
-kite9-margin-top: 5px;
-kite9-margin-right: 5px;
-kite9-margin-bottom: 5px;
-kite9-margin-left: 5px;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
+--kite9-type: CONTAINER;
+--kite9-template: url(template.svg#glyph-stereotype-text);
+--kite9-vertical-align: BOTTOM;
+--kite9-horizontal-align: CENTER;
+--kite9-margin-top: 5px;
+--kite9-margin-right: 5px;
+--kite9-margin-bottom: 5px;
+--kite9-margin-left: 5px;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
 text-align: middle;
 }
 
 glyph text-lines {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-layout: VERTICAL;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-layout: VERTICAL;
 }
 
 symbol-text-line {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-layout: GRID;
-kite9-grid-columns: 2;
-kite9-grid-rows: 1;
-kite9-connection-align-top: 50%;
-kite9-connection-align-right: 50%;
-kite9-connection-align-bottom: 50%;
-kite9-connection-align-left: 50%;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-layout: GRID;
+--kite9-grid-columns: 2;
+--kite9-grid-rows: 1;
+--kite9-connection-align-top: 50%;
+--kite9-connection-align-right: 50%;
+--kite9-connection-align-bottom: 50%;
+--kite9-connection-align-left: 50%;
 }
 
 key text-lines text-label, glyph text-lines text-label, symbol-text-line k9-text {
-kite9-horizontal-align: LEFT;
+--kite9-horizontal-align: LEFT;
 }
 
 symbol-text-line symbols {
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-horizontal-align: RIGHT;
-kite9-occupies-x: 1 1;
-kite9-occupies-y: 0 0;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-horizontal-align: RIGHT;
+--kite9-occupies-x: 1 1;
+--kite9-occupies-y: 0 0;
 margin-top: 0px;
 margin-right: 0px;
 margin-bottom: 0px;
@@ -172,97 +172,97 @@ margin-left: 0px;
 }
 
 show-box {
-kite9-template: url(template.svg#show-box);
-kite9-usage: DECAL;
-kite9-type: SVG;
+--kite9-template: url(template.svg#show-box);
+--kite9-usage: DECAL;
+--kite9-type: SVG;
 }
 
 context {
-kite9-template: url(template.svg#context);
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-traversal-bottom: ALWAYS;
-kite9-traversal-left: ALWAYS;
-kite9-traversal-right: ALWAYS;
-kite9-traversal-top: ALWAYS;
-kite9-padding-top: 12px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 12px;
-kite9-padding-left: 12px;
-kite9-link-inset: 12px;
+--kite9-template: url(template.svg#context);
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
+--kite9-padding-top: 12px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 12px;
+--kite9-padding-left: 12px;
+--kite9-link-inset: 12px;
 }
 
 cell &gt; label, context &gt; label {
-kite9-usage: LABEL;
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-template: url(template.svg#container-label);
-kite9-padding-top: 4px;
-kite9-padding-right: 4px;
-kite9-padding-bottom: 4px;
-kite9-padding-left: 4px;
-kite9-label-placement: BOTTOM;
+--kite9-usage: LABEL;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-template: url(template.svg#container-label);
+--kite9-padding-top: 4px;
+--kite9-padding-right: 4px;
+--kite9-padding-bottom: 4px;
+--kite9-padding-left: 4px;
+--kite9-label-placement: BOTTOM;
 }
 
 grid {
-kite9-template: url(template.svg#grid);
-kite9-padding-top: 0px;
-kite9-padding-right: 0px;
-kite9-padding-bottom: 0px;
-kite9-padding-left: 0px;
-kite9-margin-top: 0px;
-kite9-margin-right: 0px;
-kite9-margin-bottom: 0px;
-kite9-margin-left: 0px;
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-traversal-bottom: ALWAYS;
-kite9-traversal-left: ALWAYS;
-kite9-traversal-right: ALWAYS;
-kite9-traversal-top: ALWAYS;
-kite9-layout: GRID;
+--kite9-template: url(template.svg#grid);
+--kite9-padding-top: 0px;
+--kite9-padding-right: 0px;
+--kite9-padding-bottom: 0px;
+--kite9-padding-left: 0px;
+--kite9-margin-top: 0px;
+--kite9-margin-right: 0px;
+--kite9-margin-bottom: 0px;
+--kite9-margin-left: 0px;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
+--kite9-layout: GRID;
 }
 
 grid.triangles {
-kite9-template: url(template.svg#grid-triangles);
+--kite9-template: url(template.svg#grid-triangles);
 }
 
 cell {
-kite9-template: url(template.svg#cell);
-kite9-padding-top: 0px;
-kite9-padding-right: 0px;
-kite9-padding-bottom: 0px;
-kite9-padding-left: 0px;
-kite9-margin-top: 0px;
-kite9-margin-right: 0px;
-kite9-margin-bottom: 0px;
-kite9-margin-left: 0px;
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-traversal-bottom: ALWAYS;
-kite9-traversal-left: ALWAYS;
-kite9-traversal-right: ALWAYS;
-kite9-traversal-top: ALWAYS;
+--kite9-template: url(template.svg#cell);
+--kite9-padding-top: 0px;
+--kite9-padding-right: 0px;
+--kite9-padding-bottom: 0px;
+--kite9-padding-left: 0px;
+--kite9-margin-top: 0px;
+--kite9-margin-right: 0px;
+--kite9-margin-bottom: 0px;
+--kite9-margin-left: 0px;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
 }
 
 toLabel, fromLabel {
-kite9-usage: LABEL;
-kite9-type: CONTAINER;
-kite9-padding-top: 4px;
-kite9-padding-right: 4px;
-kite9-padding-bottom: 4px;
-kite9-padding-left: 4px;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-template: url(template.svg#connection-label);
-kite9-margin-top: 4px;
-kite9-margin-right: 4px;
-kite9-margin-bottom: 4px;
-kite9-margin-left: 4px;
+--kite9-usage: LABEL;
+--kite9-type: CONTAINER;
+--kite9-padding-top: 4px;
+--kite9-padding-right: 4px;
+--kite9-padding-bottom: 4px;
+--kite9-padding-left: 4px;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-template: url(template.svg#connection-label);
+--kite9-margin-top: 4px;
+--kite9-margin-right: 4px;
+--kite9-margin-bottom: 4px;
+--kite9-margin-left: 4px;
 }
 
 *[k9-elem="_temporary"] {
@@ -270,204 +270,204 @@ fill: none;
 }
 
 toLabel, to {
-kite9-link-end: TO;
+--kite9-link-end: TO;
 }
 
 fromLabel, from {
-kite9-link-end: FROM;
+--kite9-link-end: FROM;
 }
 
 text-label {
-kite9-horizontal-align: CENTER;
-kite9-vertical-align: CENTER;
+--kite9-horizontal-align: CENTER;
+--kite9-vertical-align: CENTER;
 }
 
 link {
-kite9-type: LINK;
-kite9-template: url(template.svg#link);
+--kite9-type: LINK;
+--kite9-template: url(template.svg#link);
 }
 
 *[drawDirection="LEFT"] {
-kite9-direction: LEFT;
+--kite9-direction: LEFT;
 }
 
 *[drawDirection="RIGHT"] {
-kite9-direction: RIGHT;
+--kite9-direction: RIGHT;
 }
 
 *[drawDirection="UP"] {
-kite9-direction: UP;
+--kite9-direction: UP;
 }
 
 *[drawDirection="DOWN"] {
-kite9-direction: DOWN;
+--kite9-direction: DOWN;
 }
 
 from, to {
-kite9-type: LINK_END;
-kite9-template: url(template.svg#empty-terminator);
-kite9-padding-top: 5px;
-kite9-padding-right: 5px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 5px;
+--kite9-type: LINK_END;
+--kite9-template: url(template.svg#empty-terminator);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 5px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 5px;
 }
 
 from.circle, to.circle {
-kite9-marker-start-reference: url(template.svg#circle-marker);
-kite9-marker-end-reference: url(template.svg#circle-marker);
+--kite9-marker-start-reference: url(template.svg#circle-marker);
+--kite9-marker-end-reference: url(template.svg#circle-marker);
 }
 
 from.arrow, to.arrow {
-kite9-marker-start-reference: url(template.svg#arrow-start-marker);
-kite9-marker-end-reference: url(template.svg#arrow-end-marker);
-kite9-padding-top: 5px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 1px;
+--kite9-marker-start-reference: url(template.svg#arrow-start-marker);
+--kite9-marker-end-reference: url(template.svg#arrow-end-marker);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 1px;
 }
 
 from.arrow-open, to.arrow-open {
-kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
-kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
-kite9-padding-top: 5px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 1px;
+--kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
+--kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 1px;
 }
 
 from.gap, to.gap {
-kite9-marker-reserve: 2px;
+--kite9-marker-reserve: 2px;
 }
 
 from.diamond, to.diamond {
-kite9-marker-start-reference: url(template.svg#diamond-start-marker);
-kite9-marker-end-reference: url(template.svg#diamond-end-marker);
-kite9-padding-top: 5px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 1px;
+--kite9-marker-start-reference: url(template.svg#diamond-start-marker);
+--kite9-marker-end-reference: url(template.svg#diamond-end-marker);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 1px;
 }
 
 from.diamond-open, to.diamond-open {
-kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
-kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
-kite9-padding-top: 5px;
-kite9-padding-right: 12px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 1px;
+--kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
+--kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 12px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 1px;
 }
 
 from.barbed-arrow, to.barbed-arrow {
-kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
-kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
-kite9-padding-top: 5px;
-kite9-padding-right: 7px;
-kite9-padding-bottom: 5px;
-kite9-padding-left: 1px;
+--kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
+--kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
+--kite9-padding-top: 5px;
+--kite9-padding-right: 7px;
+--kite9-padding-bottom: 5px;
+--kite9-padding-left: 1px;
 }
 
 symbols {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-layout: HORIZONTAL;
-kite9-occupies-x: 1 1;
-kite9-occupies-y: 0 0;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-layout: HORIZONTAL;
+--kite9-occupies-x: 1 1;
+--kite9-occupies-y: 0 0;
 }
 
 symbol {
-kite9-type: SVG;
-kite9-margin-top: 0;
-kite9-margin-right: 2px;
-kite9-margin-bottom: 0;
-kite9-margin-left: 2px;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-connection-align-top: 50%;
-kite9-connection-align-right: 50%;
-kite9-connection-align-bottom: 50%;
-kite9-connection-align-left: 50%;
-kite9-link-inset: 0px;
+--kite9-type: SVG;
+--kite9-margin-top: 0;
+--kite9-margin-right: 2px;
+--kite9-margin-bottom: 0;
+--kite9-margin-left: 2px;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-connection-align-top: 50%;
+--kite9-connection-align-right: 50%;
+--kite9-connection-align-bottom: 50%;
+--kite9-connection-align-left: 50%;
+--kite9-link-inset: 0px;
 }
 
 symbol.circle {
-kite9-template: url(template.svg#circle);
+--kite9-template: url(template.svg#circle);
 }
 
 symbol.hexagon {
-kite9-template: url(template.svg#hexagon);
+--kite9-template: url(template.svg#hexagon);
 }
 
 symbol.diamond {
-kite9-template: url(template.svg#diamond);
+--kite9-template: url(template.svg#diamond);
 }
 
 symbol.square {
-kite9-template: url(template.svg#square);
+--kite9-template: url(template.svg#square);
 }
 
 text-line, k9-text, boldText, bodyText {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MAXIMIZE;
-kite9-vertical-sizing: MAXIMIZE;
-kite9-padding-top: 2px;
-kite9-padding-bottom: 2px;
-kite9-padding-left: 0px;
-kite9-padding-right: 0px;
-kite9-margin-top: 0;
-kite9-margin-right: 0;
-kite9-margin-bottom: 0;
-kite9-margin-left: 0;
-kite9-vertical-align: TOP;
-kite9-connection-align-top: 50%;
-kite9-connection-align-right: 50%;
-kite9-connection-align-bottom: 50%;
-kite9-connection-align-left: 50%;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-padding-top: 2px;
+--kite9-padding-bottom: 2px;
+--kite9-padding-left: 0px;
+--kite9-padding-right: 0px;
+--kite9-margin-top: 0;
+--kite9-margin-right: 0;
+--kite9-margin-bottom: 0;
+--kite9-margin-left: 0;
+--kite9-vertical-align: TOP;
+--kite9-connection-align-top: 50%;
+--kite9-connection-align-right: 50%;
+--kite9-connection-align-bottom: 50%;
+--kite9-connection-align-left: 50%;
 }
 
 text-line, k9-text, bodyText {
-kite9-horizontal-align: LEFT;
-kite9-template: url(template.svg#generic-text);
+--kite9-horizontal-align: LEFT;
+--kite9-template: url(template.svg#generic-text);
 }
 
 boldText {
-kite9-template: url(template.svg#bold-text);
-kite9-horizontal-align: CENTER;
+--kite9-template: url(template.svg#bold-text);
+--kite9-horizontal-align: CENTER;
 }
 
 arrow {
-kite9-padding-top: 3px;
-kite9-padding-right: 5px;
-kite9-padding-bottom: 3px;
-kite9-padding-left: 5px;
-kite9-margin-top: 10;
-kite9-margin-right: 10;
-kite9-margin-bottom: 10;
-kite9-margin-left: 10;
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-template: url(template.svg#arrow);
-kite9-connections: SEPARATE;
-kite9-connection-align-top: 50%;
-kite9-connection-align-right: 50%;
-kite9-connection-align-bottom: 50%;
-kite9-connection-align-left: 50%;
-kite9-link-inset: 4px;
+--kite9-padding-top: 3px;
+--kite9-padding-right: 5px;
+--kite9-padding-bottom: 3px;
+--kite9-padding-left: 5px;
+--kite9-margin-top: 10;
+--kite9-margin-right: 10;
+--kite9-margin-bottom: 10;
+--kite9-margin-left: 10;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-template: url(template.svg#arrow);
+--kite9-connections: SEPARATE;
+--kite9-connection-align-top: 50%;
+--kite9-connection-align-right: 50%;
+--kite9-connection-align-bottom: 50%;
+--kite9-connection-align-left: 50%;
+--kite9-link-inset: 4px;
 }
 
 arrow &gt; label {
-kite9-type: CONTAINER;
-kite9-horizontal-sizing: MINIMIZE;
-kite9-vertical-sizing: MINIMIZE;
-kite9-template: url(template.svg#arrow-label-text);
-kite9-horizontal-align: CENTER;
-kite9-vertical-align: CENTER;
+--kite9-type: CONTAINER;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-template: url(template.svg#arrow-label-text);
+--kite9-horizontal-align: CENTER;
+--kite9-vertical-align: CENTER;
 }
 
 arrow &gt; label &gt; contents {
-kite9-horizontal-align: CENTER;
-kite9-vertical-align: CENTER;
+--kite9-horizontal-align: CENTER;
+--kite9-vertical-align: CENTER;
 }
 
 *.copyright {
@@ -560,10 +560,10 @@ font-family: "opensans-bold-webfont";
 font-size: 12px;
 fill: black;
 stroke: none;
-kite9-padding-top: 2px;
-kite9-padding-right: 2px;
-kite9-padding-bottom: 2px;
-kite9-padding-left: 2px;
+--kite9-padding-top: 2px;
+--kite9-padding-right: 2px;
+--kite9-padding-bottom: 2px;
+--kite9-padding-left: 2px;
 }
 
 *.generic-text {
@@ -636,7 +636,7 @@ stroke: black;
 fill: white;
 }
 
- @import url("file:/Users/rob/Documents/kite9/kite9-visualization/target/test-classes/stylesheets/designer.css");</style
+ @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</style
     ></defs
     ><g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=133.0, h=166.0); " id="The Diagram" k9-elem="diagram"
     >
@@ -645,7 +645,7 @@ fill: white;
       
   <g k9-elem="glyph" id="a" transform="translate(43.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=43.0, h=15.0); rect-size: BasicDimension2D(w=26.0, h=20.0); " rank="0"
         >
-    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
+    <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="back"
           >
       <rect x="0" y="0" width="26.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="20.0"
             />
@@ -658,7 +658,7 @@ fill: white;
               >
     <g k9-info="" k9-elem="show-box"
                 >
-    <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
+    <!-- <back style="- -kite9-usage: decal; - -kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
     </back>
     <contents />  -->
@@ -666,7 +666,7 @@ fill: white;
                   >
     <g class="glyph-label-text"
                   >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-.7,-5.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=21.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
+      <g k9-elem="text-label" style="--kite9-type: text;" class="glyph-label-text" transform="translate(-.7,-5.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=21.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
                     ><g
                       ><path d="M0.6885 11.0491 Q0.6885 8.6174 4.5801 8.5002 L5.9424 8.4563 L5.9424 7.9583 Q5.9424 7.0159 5.5322 6.5667 Q5.127 6.1125 4.2334 6.1125 Q3.2324 6.1125 1.9629 6.7278 L1.5918 5.8 Q2.1826 5.4778 2.8906 5.2971 Q3.5986 5.1116 4.3066 5.1116 Q5.7422 5.1116 6.4355 5.7512 Q7.1289 6.386 7.1289 7.7922 L7.1289 13.2708 L6.2256 13.2708 L5.9863 12.1282 L5.9277 12.1282 Q5.3271 12.8801 4.7266 13.1487 Q4.1309 13.4172 3.2373 13.4172 Q2.0459 13.4172 1.3672 12.802 Q0.6885 12.1868 0.6885 11.0491 ZM1.9629 11.0637 Q1.9629 11.7229 2.3633 12.0696 Q2.7637 12.4114 3.4814 12.4114 Q4.6143 12.4114 5.2637 11.7913 Q5.9131 11.1663 5.9131 10.0481 L5.9131 9.3206 L4.6973 9.3743 Q3.2471 9.4231 2.6025 9.8235 Q1.9629 10.2239 1.9629 11.0637 Z" stroke="none"
                       /></g
@@ -683,7 +683,7 @@ fill: white;
                     >
   <g k9-elem="glyph" id="b" transform="translate(43.0,128.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=43.0, h=128.0); rect-size: BasicDimension2D(w=27.0, h=23.0); " rank="1"
                     >
-    <g style="kite9-usage: decal; kite9-type: svg; " k9-info="" k9-elem="back"
+    <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="back"
                       >
       <rect x="0" y="0" width="27.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="23.0"
                         />
@@ -696,7 +696,7 @@ fill: white;
                           >
     <g k9-info="" k9-elem="show-box"
                             >
-    <!-- <back style="kite9-usage: decal; kite9-type: svg;" >
+    <!-- <back style="- -kite9-usage: decal; - -kite9-type: svg;" >
       <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='12' ry='12' style="stroke: black; fill: none; stroke-width: 1px;" />
     </back>
     <contents />  -->
@@ -704,7 +704,7 @@ fill: white;
                               >
     <g class="glyph-label-text"
                               >
-      <g k9-elem="text-label" style="kite9-type: text;" class="glyph-label-text" transform="translate(-1.3,-1.9)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=134.0); rect-size: BasicDimension2D(w=7.0, h=11.0); "
+      <g k9-elem="text-label" style="--kite9-type: text;" class="glyph-label-text" transform="translate(-1.3,-1.9)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=134.0); rect-size: BasicDimension2D(w=7.0, h=11.0); "
                                 ><g
                                   ><path d="M1.2891 13.2708 L1.2891 1.8743 L2.5049 1.8743 L2.5049 4.6428 Q2.5049 5.5706 2.4463 6.3127 L2.5049 6.3127 Q3.3545 5.1116 5.0244 5.1116 Q6.6064 5.1116 7.4805 6.1907 Q8.3594 7.2698 8.3594 9.2473 Q8.3594 11.2249 7.4756 12.3235 Q6.5918 13.4172 5.0244 13.4172 Q4.2432 13.4172 3.5938 13.1292 Q2.9443 12.8362 2.5049 12.2356 L2.417 12.2356 L2.1631 13.2708 L1.2891 13.2708 ZM2.5049 9.2473 Q2.5049 10.9417 3.0664 11.6692 Q3.6328 12.3967 4.8779 12.3967 Q6.001 12.3967 6.5479 11.5813 Q7.0996 10.7659 7.0996 9.2327 Q7.0996 7.6653 6.5479 6.8987 Q6.001 6.1272 4.8486 6.1272 Q3.6035 6.1272 3.0518 6.845 Q2.5049 7.5579 2.5049 9.2473 Z" stroke="none"
                                   /></g
@@ -721,7 +721,7 @@ fill: white;
                                 >
   <g k9-elem="arrow" id="i1" transform="translate(48.0,74.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=48.0, h=74.0); rect-size: BasicDimension2D(w=16.0, h=14.0); " rank="2"
                                 >
-    <g k9-elem="back" style="kite9-usage: decal; kite9-type: svg; " class="arrow-back" k9-info=""
+    <g k9-elem="back" style="--kite9-usage: decal; --kite9-type: svg; " class="arrow-back" k9-info=""
                                   >
       <rect x="0" y="0" width="16.0" style="fill: black; " rx="4" ry="4" height="14.0"
                                     />
@@ -733,7 +733,7 @@ fill: white;
     <!-- svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='2' ry='2' stroke="black" fill="none" stroke-width="1" / -->
     <g class="arrow-label-text"
                                       >
-      <g k9-elem="text-label" style="kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=77.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
+      <g k9-elem="text-label" style="--kite9-type: text;" class="arrow-label-text" transform="translate(-.9,-1.8)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=77.0); rect-size: BasicDimension2D(w=6.0, h=8.0); "
                                         ><g fill="white" stroke="white"
                                           ><path d="M0.9492 2.4525 Q0.9492 2.1205 1.1133 1.9643 Q1.2773 1.808 1.5234 1.808 Q1.7578 1.808 1.9258 1.9682 Q2.0977 2.1244 2.0977 2.4525 Q2.0977 2.7807 1.9258 2.9447 Q1.7578 3.1049 1.5234 3.1049 Q1.2773 3.1049 1.1133 2.9447 Q0.9492 2.7807 0.9492 2.4525 ZM1.0312 10.6166 L1.0312 4.1947 L2.0039 4.1947 L2.0039 10.6166 L1.0312 10.6166 ZM4.1367 3.8002 L6.4062 2.0502 L7.2266 2.0502 L7.2266 10.6166 L6.2773 10.6166 L6.2773 4.5111 Q6.2773 3.7494 6.3242 3.0697 Q6.1992 3.1908 6.0469 3.3275 Q5.8945 3.4604 4.6523 4.4682 L4.1367 3.8002 Z" stroke="none"
                                           /></g
@@ -746,7 +746,7 @@ fill: white;
   
   </g
                                         >
-  <g k9-elem="link" id="i1-a" drawDirection="UP" style="kite9-link-corner-radius: 5px; " k9-info="link: ['i1','a']; direction: UP; " rank="3"
+  <g k9-elem="link" id="i1-a" drawDirection="UP" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['i1','a']; direction: UP; " rank="3"
                                         >
     
     <g k9-elem="from" reference="i1" transform="translate(56.0,74.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-a; terminates-at: i1; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=56.0, h=74.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
@@ -761,9 +761,9 @@ fill: white;
                                               />
   </g
                                               >
-    <g k9-elem="toLabel" id="2" style="kite9-label-placement: right" transform="translate(56.0,45.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=56.0, h=45.0); rect-size: BasicDimension2D(w=62.0, h=19.0); "
+    <g k9-elem="toLabel" id="2" style="--kite9-label-placement: right" transform="translate(56.0,45.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=56.0, h=45.0); rect-size: BasicDimension2D(w=62.0, h=19.0); "
                                               >
-    <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
+    <g style="--kite9-usage: decal; --kite9-type: svg;  " k9-info="" k9-elem="back"
                                                 >
       <rect x="0" y="0" width="62.0" rx="4" class="connection-label-back" ry="4" height="19.0"
                                                   />
@@ -771,7 +771,7 @@ fill: white;
                                                   >
     <g class="connection-label-front"
                                                   >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.8,2.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=49.0); rect-size: BasicDimension2D(w=54.0, h=11.0); "
+      <g k9-elem="front" style="--kite9-type: text; " transform="translate(3.8,2.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=49.0); rect-size: BasicDimension2D(w=54.0, h=11.0); "
                                                     ><g fill="white" stroke="white"
                                                       ><path d="M0.1576 4.9391 L0.1576 4.6276 L1.2425 4.4306 L1.2425 3.9794 Q1.2425 2.9052 1.6364 2.4039 Q2.0303 1.899 2.929 1.899 Q3.4124 1.899 3.8958 2.0458 L3.7705 2.5078 Q3.3408 2.3717 2.9183 2.3717 Q2.2952 2.3717 2.0339 2.7405 Q1.7725 3.1093 1.7725 3.9365 L1.7725 4.4772 L3.1475 4.4772 L3.1475 4.9391 L1.7725 4.9391 L1.7725 10.3173 L1.2425 10.3173 L1.2425 4.9391 L0.1576 4.9391 ZM4.2754 10.3173 L4.2754 4.4772 L4.7266 4.4772 L4.7803 5.5299 L4.8197 5.5299 Q5.1777 4.8854 5.5859 4.6276 Q5.9941 4.3662 6.5742 4.3662 Q6.9466 4.3662 7.3691 4.4414 L7.2689 4.9498 Q6.9036 4.8603 6.5098 4.8603 Q5.765 4.8603 5.2852 5.4941 Q4.8089 6.1279 4.8089 7.0947 L4.8089 10.3173 L4.2754 10.3173 ZM8.2196 7.3883 Q8.2196 5.9596 8.9106 5.1647 Q9.6053 4.3662 10.812 4.3662 Q12.0151 4.3662 12.6991 5.1754 Q13.3866 5.9811 13.3866 7.3883 Q13.3866 8.817 12.6919 9.6227 Q12.0008 10.4248 10.7798 10.4248 Q10.0135 10.4248 9.4263 10.0559 Q8.8426 9.6835 8.5311 8.9925 Q8.2196 8.2978 8.2196 7.3883 ZM8.7782 7.3883 Q8.7782 8.5914 9.3045 9.2682 Q9.8345 9.9414 10.8013 9.9414 Q11.7681 9.9414 12.298 9.2682 Q12.828 8.5914 12.828 7.3883 Q12.828 6.1816 12.2909 5.5156 Q11.7573 4.8496 10.7905 4.8496 Q9.8237 4.8496 9.3009 5.512 Q8.7782 6.1744 8.7782 7.3883 ZM15.0015 10.3173 L15.0015 4.4772 L15.4419 4.4772 L15.5565 5.2792 L15.5887 5.2792 Q15.8286 4.8424 16.2726 4.6061 Q16.7202 4.3662 17.2573 4.3662 Q18.6395 4.3662 19.0298 5.401 L19.0513 5.401 Q19.3377 4.9033 19.8175 4.6347 Q20.2974 4.3662 20.9097 4.3662 Q21.8657 4.3662 22.342 4.8782 Q22.8218 5.3867 22.8218 6.4967 L22.8218 10.3173 L22.2954 10.3173 L22.2954 6.486 Q22.2954 5.6337 21.9624 5.2434 Q21.6294 4.8496 20.9419 4.8496 Q20.0467 4.8496 19.617 5.3437 Q19.1873 5.8378 19.1873 6.8942 L19.1873 10.3173 L18.6431 10.3173 L18.6431 6.3248 Q18.6431 4.8496 17.2896 4.8496 Q16.3729 4.8496 15.9539 5.3831 Q15.535 5.9166 15.535 7.0947 L15.535 10.3173 L15.0015 10.3173 ZM27.0327 7.3024 Q27.0327 5.8808 27.4481 4.6419 Q27.867 3.3994 28.6512 2.4648 L29.2563 2.4648 Q28.4614 3.4423 28.0353 4.6813 Q27.6128 5.9166 27.6128 7.2916 Q27.6128 9.8876 29.2456 12.0576 L28.6512 12.0576 Q27.8599 11.1445 27.4445 9.927 Q27.0327 8.706 27.0327 7.3024 ZM30.5615 10.3173 L30.5615 4.4772 L31.0127 4.4772 L31.0664 5.5299 L31.1058 5.5299 Q31.4639 4.8854 31.8721 4.6276 Q32.2803 4.3662 32.8604 4.3662 Q33.2327 4.3662 33.6553 4.4414 L33.555 4.9498 Q33.1898 4.8603 32.7959 4.8603 Q32.0511 4.8603 31.5713 5.4941 Q31.0951 6.1279 31.0951 7.0947 L31.0951 10.3173 L30.5615 10.3173 ZM34.7671 2.8551 Q34.7671 2.3395 35.1073 2.3395 Q35.272 2.3395 35.3651 2.4755 Q35.4618 2.608 35.4618 2.8551 Q35.4618 3.0986 35.3651 3.2382 Q35.272 3.3779 35.1073 3.3779 Q34.7671 3.3779 34.7671 2.8551 ZM34.8423 10.3173 L34.8423 4.4772 L35.3758 4.4772 L35.3758 10.3173 L34.8423 10.3173 ZM36.5951 11.3557 Q36.5951 10.7542 36.9674 10.3531 Q37.3398 9.9557 37.9808 9.8125 Q37.7158 9.6979 37.5583 9.4938 Q37.4007 9.2861 37.4007 9.0175 Q37.4007 8.4303 38.1455 7.9863 Q37.637 7.775 37.3506 7.3274 Q37.0677 6.8798 37.0677 6.2998 Q37.0677 5.4225 37.6227 4.8961 Q38.1777 4.3662 39.123 4.3662 Q39.6995 4.3662 40.0146 4.4772 L41.8838 4.4772 L41.8838 4.8496 L40.6771 4.9248 Q41.1605 5.5263 41.1605 6.246 Q41.1605 7.0875 40.5983 7.6139 Q40.0361 8.1367 39.0908 8.1367 Q38.6934 8.1367 38.5322 8.1044 Q38.2171 8.2692 38.0488 8.4947 Q37.8841 8.7203 37.8841 8.9746 Q37.8841 9.2539 38.0954 9.3828 Q38.3066 9.5117 38.8079 9.5117 L39.8284 9.5117 Q40.7773 9.5117 41.2822 9.8948 Q41.7871 10.2779 41.7871 11.0335 Q41.7871 11.9573 41.0387 12.4586 Q40.2904 12.9599 38.9046 12.9599 Q37.8018 12.9599 37.1966 12.5338 Q36.5951 12.1113 36.5951 11.3557 ZM37.1572 11.3056 Q37.1572 12.5087 38.9476 12.5087 Q41.2464 12.5087 41.2464 11.0442 Q41.2464 10.5179 40.8848 10.2815 Q40.5267 10.0416 39.721 10.0416 L38.765 10.0416 Q37.1572 10.0416 37.1572 11.3056 ZM37.6048 6.2998 Q37.6048 6.9765 38.013 7.3489 Q38.4248 7.7213 39.1123 7.7213 Q39.8428 7.7213 40.2331 7.3525 Q40.6234 6.9801 40.6234 6.2783 Q40.6234 5.5299 40.2223 5.1575 Q39.8213 4.7851 39.1016 4.7851 Q38.4033 4.7851 38.0023 5.1861 Q37.6048 5.5836 37.6048 6.2998 ZM43.0815 10.3173 L43.0815 1.9599 L43.6151 1.9599 L43.6151 4.6168 L43.5864 5.3652 L43.6258 5.3652 Q43.9517 4.8388 44.4494 4.6025 Q44.9507 4.3662 45.6919 4.3662 Q47.6792 4.3662 47.6792 6.4967 L47.6792 10.3173 L47.1528 10.3173 L47.1528 6.5289 Q47.1528 5.6481 46.7804 5.2506 Q46.4116 4.8496 45.6346 4.8496 Q44.5854 4.8496 44.0985 5.3795 Q43.6151 5.9059 43.6151 7.0947 L43.6151 10.3173 L43.0815 10.3173 ZM48.7284 4.9391 L48.7284 4.6276 L49.5913 4.3876 L49.8599 3.0664 L50.1356 3.0664 L50.1356 4.4772 L51.8472 4.4772 L51.8472 4.9391 L50.1356 4.9391 L50.1356 8.6344 Q50.1356 9.3076 50.3719 9.6298 Q50.6082 9.9521 51.1131 9.9521 Q51.618 9.9521 51.994 9.8662 L51.994 10.2958 Q51.6073 10.4248 51.1024 10.4248 Q50.3289 10.4248 49.9601 10.013 Q49.5913 9.5976 49.5913 8.7096 L49.5913 4.9391 L48.7284 4.9391 ZM52.6063 2.4648 L53.2114 2.4648 Q54.0028 3.4029 54.4146 4.649 Q54.8299 5.8916 54.8299 7.3059 Q54.8299 8.7167 54.411 9.9378 Q53.9956 11.1552 53.2114 12.0576 L52.617 12.0576 Q54.2498 9.8876 54.2498 7.2916 Q54.2498 5.913 53.8237 4.6741 Q53.4012 3.4352 52.6063 2.4648 Z" stroke="none"
                                                       /></g
@@ -782,7 +782,7 @@ fill: white;
   </g
                                                     >
   
-    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
+    <g style="--kite9-type: svg; --kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                     >
       <path marker-start="url(#-start-marker)" d="M56 74 L56 35" marker-end="url(#-end-marker)" class="link"
                                                       />
@@ -790,7 +790,7 @@ fill: white;
                                                       >
   </g
                                                       >
-  <g k9-elem="link" id="i1-b" drawDirection="DOWN" style="kite9-link-corner-radius: 5px; " k9-info="link: ['i1','b']; direction: DOWN; " rank="4"
+  <g k9-elem="link" id="i1-b" drawDirection="DOWN" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['i1','b']; direction: DOWN; " rank="4"
                                                       >
     
     <g k9-elem="from" reference="i1" transform="translate(56.0,88.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: i1-b; terminates-at: i1; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=56.0, h=88.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
@@ -805,9 +805,9 @@ fill: white;
                                                             />
   </g
                                                             >
-    <g k9-elem="toLabel" id="3" style="kite9-label-placement: left" transform="translate(15.0,98.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=15.0, h=98.0); rect-size: BasicDimension2D(w=41.0, h=18.0); "
+    <g k9-elem="toLabel" id="3" style="--kite9-label-placement: left" transform="translate(15.0,98.0)" k9-info="position: none; margin: 4.0 4.0 4.0 4.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=15.0, h=98.0); rect-size: BasicDimension2D(w=41.0, h=18.0); "
                                                             >
-    <g style="kite9-usage: decal; kite9-type: svg;  " k9-info="" k9-elem="back"
+    <g style="--kite9-usage: decal; --kite9-type: svg;  " k9-info="" k9-elem="back"
                                                               >
       <rect x="0" y="0" width="41.0" rx="4" class="connection-label-back" ry="4" height="18.0"
                                                                 />
@@ -815,7 +815,7 @@ fill: white;
                                                                 >
     <g class="connection-label-front"
                                                                 >
-      <g k9-elem="front" style="kite9-type: text; " transform="translate(3.9,2.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=19.0, h=102.0); rect-size: BasicDimension2D(w=33.0, h=10.0); "
+      <g k9-elem="front" style="--kite9-type: text; " transform="translate(3.9,2.1)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=19.0, h=102.0); rect-size: BasicDimension2D(w=33.0, h=10.0); "
                                                                   ><g fill="white" stroke="white"
                                                                     ><path d="M0.1361 4.9391 L0.1361 4.6276 L0.999 4.3876 L1.2676 3.0664 L1.5433 3.0664 L1.5433 4.4772 L3.2549 4.4772 L3.2549 4.9391 L1.5433 4.9391 L1.5433 8.6344 Q1.5433 9.3076 1.7796 9.6298 Q2.016 9.9521 2.5208 9.9521 Q3.0257 9.9521 3.4017 9.8662 L3.4017 10.2958 Q3.015 10.4248 2.5101 10.4248 Q1.7367 10.4248 1.3678 10.013 Q0.999 9.5976 0.999 8.7096 L0.999 4.9391 L0.1361 4.9391 ZM4.3255 7.3883 Q4.3255 5.9596 5.0166 5.1647 Q5.7113 4.3662 6.918 4.3662 Q8.1211 4.3662 8.805 5.1754 Q9.4925 5.9811 9.4925 7.3883 Q9.4925 8.817 8.7979 9.6227 Q8.1068 10.4248 6.8857 10.4248 Q6.1195 10.4248 5.5322 10.0559 Q4.9486 9.6835 4.637 8.9925 Q4.3255 8.2978 4.3255 7.3883 ZM4.8841 7.3883 Q4.8841 8.5914 5.4105 9.2682 Q5.9404 9.9414 6.9072 9.9414 Q7.874 9.9414 8.404 9.2682 Q8.9339 8.5914 8.9339 7.3883 Q8.9339 6.1816 8.3968 5.5156 Q7.8633 4.8496 6.8965 4.8496 Q5.9297 4.8496 5.4069 5.512 Q4.8841 6.1744 4.8841 7.3883 ZM13.4277 7.3024 Q13.4277 5.8808 13.8431 4.6419 Q14.262 3.3994 15.0462 2.4648 L15.6514 2.4648 Q14.8564 3.4423 14.4303 4.6813 Q14.0078 5.9166 14.0078 7.2916 Q14.0078 9.8876 15.6406 12.0576 L15.0462 12.0576 Q14.2549 11.1445 13.8395 9.927 Q13.4277 8.706 13.4277 7.3024 ZM16.9565 10.3173 L16.9565 1.9599 L17.4901 1.9599 L17.4901 10.3173 L16.9565 10.3173 ZM19.1068 7.442 Q19.1068 6.0455 19.7943 5.2076 Q20.4818 4.3662 21.6455 4.3662 Q22.6768 4.3662 23.2712 5.0859 Q23.8691 5.8056 23.8691 7.041 L23.8691 7.4707 L19.6654 7.4707 Q19.6761 8.6738 20.224 9.3076 Q20.7754 9.9414 21.8031 9.9414 Q22.3008 9.9414 22.6803 9.8733 Q23.0599 9.8017 23.64 9.569 L23.64 10.0524 Q23.1458 10.2672 22.7269 10.346 Q22.3079 10.4248 21.8031 10.4248 Q20.5283 10.4248 19.8158 9.6406 Q19.1068 8.8564 19.1068 7.442 ZM19.6976 6.998 L23.307 6.998 Q23.307 5.9811 22.8665 5.4117 Q22.4261 4.8388 21.6455 4.8388 Q20.804 4.8388 20.292 5.3938 Q19.7835 5.9488 19.6976 6.998 ZM24.6605 4.9391 L24.6605 4.6276 L25.7454 4.4306 L25.7454 3.9794 Q25.7454 2.9052 26.1393 2.4039 Q26.5332 1.899 27.432 1.899 Q27.9154 1.899 28.3988 2.0458 L28.2734 2.5078 Q27.8438 2.3717 27.4212 2.3717 Q26.7982 2.3717 26.5368 2.7405 Q26.2754 3.1093 26.2754 3.9365 L26.2754 4.4772 L27.6504 4.4772 L27.6504 4.9391 L26.2754 4.9391 L26.2754 10.3173 L25.7454 10.3173 L25.7454 4.9391 L24.6605 4.9391 ZM27.9368 4.9391 L27.9368 4.6276 L28.7998 4.3876 L29.0684 3.0664 L29.3441 3.0664 L29.3441 4.4772 L31.0557 4.4772 L31.0557 4.9391 L29.3441 4.9391 L29.3441 8.6344 Q29.3441 9.3076 29.5804 9.6298 Q29.8167 9.9521 30.3216 9.9521 Q30.8265 9.9521 31.2025 9.8662 L31.2025 10.2958 Q30.8158 10.4248 30.3109 10.4248 Q29.5374 10.4248 29.1686 10.013 Q28.7998 9.5976 28.7998 8.7096 L28.7998 4.9391 L27.9368 4.9391 ZM31.8148 2.4648 L32.4199 2.4648 Q33.2113 3.4029 33.623 4.649 Q34.0384 5.8916 34.0384 7.3059 Q34.0384 8.7167 33.6195 9.9378 Q33.2041 11.1552 32.4199 12.0576 L31.8255 12.0576 Q33.4583 9.8876 33.4583 7.2916 Q33.4583 5.913 33.0322 4.6741 Q32.6097 3.4352 31.8148 2.4648 Z" stroke="none"
                                                                     /></g
@@ -826,7 +826,7 @@ fill: white;
   </g
                                                                   >
   
-    <g style="kite9-type: svg; kite9-usage: decal;" k9-info="" k9-elem="link-body"
+    <g style="--kite9-type: svg; --kite9-usage: decal;" k9-info="" k9-elem="link-body"
                                                                   >
       <path marker-start="url(#-start-marker)" d="M56 88 L56 128" marker-end="url(#arrow-end-marker)" class="link"
                                                                     />

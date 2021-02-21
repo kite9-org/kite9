@@ -1,17 +1,17 @@
 
 
-## `kite9-template`
+## `--kite9-template`
 
 This css directive allows you to replace the element of xml with the one from the template.  For example, in the css stylesheet for the examples, we have:
 
 ```css
 glyph {
-	kite9-type: container;
-	kite9-layout: down;	
-	kite9-template: url(template.svg#glyph);
-	kite9-padding: 6px 10px 6px 10px; 
-	kite9-margin: 10px;
-	kite9-connection-align: 50%;
+	--kite9-type: container;
+	--kite9-layout: down;	
+	--kite9-template: url(template.svg#glyph);
+	--kite9-padding: 6px 10px 6px 10px; 
+	--kite9-margin: 10px;
+	--kite9-connection-align: 50%;
 }
 ```
 

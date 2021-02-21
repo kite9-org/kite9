@@ -27,7 +27,7 @@ public abstract class AbstractXMLContainerElement extends AbstractMutableXMLElem
 	
 	public void setLayoutDirection(Layout layoutDirection) {
 		if (layoutDirection != null) {
-			setAttribute("style", "kite9-layout: "+layoutDirection.toString().toLowerCase()+";");
+			setAttribute("style", "--kite9-layout: "+layoutDirection.toString().toLowerCase()+";");
 		} else {
 			removeAttribute("style");
 		}

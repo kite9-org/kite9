@@ -6,7 +6,7 @@ interface CSSConstants {
         const val RIGHT = "right"
         const val TOP = "top"
         const val BOTTOM = "bottom"
-        const val KITE9_CSS_PROPERTY_PREFIX = "kite9-"
+        const val KITE9_CSS_PROPERTY_PREFIX = "--kite9-"
         const val ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "type"
         const val ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "usage"
         const val CONTENT_TRANSFORM = KITE9_CSS_PROPERTY_PREFIX + "transform"

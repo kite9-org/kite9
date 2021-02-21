@@ -1,5 +1,3 @@
-package org.kite9.diagram.js.format
-
 import org.kite9.diagram.js.bridge.JSElementContext
 import org.kite9.diagram.js.model.JSDiagramElementFactory
 import org.kite9.diagram.js.processors.DiagramStructureProcessor

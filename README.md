@@ -10,7 +10,7 @@ For examples, head over to the [Risk-First](riskfirst.org) website to see some e
 
 - [Sizing Instructions](docs/Sizing.md) Such as `horizontal-align`, `min-width`, `padding` and `margin`.  These are used in HTML CSS, but are now available for use in SVG.
 - [Various Element Types](docs/Element-Types.md) such as links, text, containers, decals, and various ways to layout and transform them.
-- [Templating](docs/Templating.md).  Use the `kite9-template` CSS directive to specify an SVG template to use to render a piece of XML.
+- [Templating](docs/Templating.md).  Use the `--kite9-template` CSS directive to specify an SVG template to use to render a piece of XML.
 - [Links](docs/links.md). You can link elements together to create graphs.
 - [Text Flow](docs/Text.md). You can intelligently size SVG elements according to the text they contain, and flow text within the element a la HTML.
 - [Grids](docs/Grids.md).  It's possible to add SVG elements to a grid, and have the grid resize to contain them all.

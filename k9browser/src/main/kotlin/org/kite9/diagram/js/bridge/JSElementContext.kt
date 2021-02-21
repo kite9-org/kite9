@@ -2,14 +2,17 @@ package org.kite9.diagram.js.bridge
 
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
+import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.w3c.dom.Element
+import kotlinx.browser.document
 
 class JSElementContext : ElementContext {
 
     override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {
-        TODO("Not yet implemented")
+        val s = e.getComputedStyleMap().get(prop);
+        return s as Double
     }
 
     override fun getCssStyleStringProperty(prop: String, e: Element): String? {
@@ -40,12 +43,12 @@ class JSElementContext : ElementContext {
         TODO("Not yet implemented")
     }
 
-    override fun contextualException(reason: String, t: Throwable, e: Element): RuntimeException {
-        TODO("Not yet implemented")
+    override fun contextualException(reason: String, t: Throwable, e: Element): Kite9ProcessingException {
+        return Kite9ProcessingException(reason+" "+t.message+" on "+e);
     }
 
-    override fun contextualException(reason: String, e: Element): RuntimeException {
-        TODO("Not yet implemented")
+    override fun contextualException(reason: String, e: Element): Kite9ProcessingException {
+        return Kite9ProcessingException("$reason on $e");
     }
 
 }

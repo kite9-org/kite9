@@ -54,7 +54,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Arrow a = new Arrow("a");
-		a.setAttribute("style","	kite9-sizing: maximize;");
+		a.setAttribute("style","	--kite9-sizing: maximize;");
 		new Link(a, one, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
@@ -71,7 +71,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("one", "Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("two","Stereo", "Two", null, null);
 		Arrow a = new Arrow("a", "a");
-		a.setAttribute("style","	kite9-sizing: maximize;");
+		a.setAttribute("style","	--kite9-sizing: maximize;");
 		new Link(a, tl, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));

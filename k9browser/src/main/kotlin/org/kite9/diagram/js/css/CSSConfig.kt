@@ -1,21 +1,6 @@
-package org.kite9.diagram.js.css
-
+import kotlinx.browser.window
 import org.kite9.diagram.dom.css.CSSConstants
-import kotlinx.browser.*
-
-data class CSSProperty(val name: String, val syntax: String, val initialValue: String, val inherits: Boolean)
-
-external interface CSSRegistry {
-
-    fun registerProperty(p: CSSProperty)
-
-
-}
-
-class CSSConfig {
-
-
-}
+import org.kite9.diagram.js.css.CSSProperty
 
 @JsName("initCSS")
 fun init() {

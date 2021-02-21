@@ -57,7 +57,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 			elems[i] = new Cell[size];
 			for (int j = 0; j < elems[i].length; j++) {
 				elems[i][j] = new Cell("c" + i + "-" + j, null);
-				elems[i][j].setAttribute("style", "kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
+				elems[i][j].setAttribute("style", "--kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
 				if (addLinks) {
 					if (j > 0) {
 						new Link(elems[i][j], elems[i][j - 1], "", null, "", null, Direction.RIGHT);
@@ -100,21 +100,21 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell bl = new Cell("bl", Arrays.asList(g3));
 		Cell br = new Cell("br", Arrays.asList(g4));
 		
-		tl.setAttribute("style", "kite9-occupies: 0 0; kite9-min-size: 100px 100px; ");
-		bl.setAttribute("style", "kite9-occupies: 0 1; kite9-min-size: 40px 40px; ");
+		tl.setAttribute("style", "--kite9-occupies: 0 0; --kite9-min-size: 100px 100px; ");
+		bl.setAttribute("style", "--kite9-occupies: 0 1; --kite9-min-size: 40px 40px; ");
 
-		tr.setAttribute("style", "kite9-occupies: 0 0; kite9-min-size: 40px 40px; ");
-		br.setAttribute("style", "kite9-occupies: 0 1; kite9-min-size: 40px 10px; ");
+		tr.setAttribute("style", "--kite9-occupies: 0 0; --kite9-min-size: 40px 40px; ");
+		br.setAttribute("style", "--kite9-occupies: 0 1; --kite9-min-size: 40px 10px; ");
 		Grid lg = new Grid("lg", Arrays.asList(tl, bl), null);
 		Grid rg = new Grid("lg", Arrays.asList(tr, br), null);
 
 		Cell l = new Cell("l", Arrays.asList(lg));
 		Cell r = new Cell("r", Arrays.asList(rg));
-		l.setAttribute("style", "kite9-occupies: 0 0; kite9-padding: "+leftPad+"px"); 
-		r.setAttribute("style", "kite9-occupies: 1 0; kite9-padding: "+rightPad+"px"); 
+		l.setAttribute("style", "--kite9-occupies: 0 0; --kite9-padding: "+leftPad+"px");
+		r.setAttribute("style", "--kite9-occupies: 1 0; --kite9-padding: "+rightPad+"px");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(l, r), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 1;");
 
 		return ctx;
 	}
@@ -122,7 +122,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_56_4_OddSupergrid() throws Exception {
 		Grid ctx = createSupergrid(false, true, 5);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 5 5;"); 
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 5 5;");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 	
@@ -142,11 +142,11 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell tl = new Cell("tl", Arrays.asList(g1));
 		Cell br = new Cell("br", Arrays.asList());
 		
-		tl.setAttribute("style", "kite9-occupies: 0 0; ");
-		br.setAttribute("style", "kite9-occupies: 1 1; kite9-min-size: 100px 100px;");
+		tl.setAttribute("style", "--kite9-occupies: 0 0; ");
+		br.setAttribute("style", "--kite9-occupies: 1 1; --kite9-min-size: 100px 100px;");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(tl, br), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2; ");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2; ");
 		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
@@ -159,13 +159,13 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell t3 = new Cell("3", Arrays.asList());
 		Cell t4 = new Cell("4", Arrays.asList());
 		
-		t1.setAttribute("style", "fill: green; kite9-min-size: 50px 50px; ");
-		t2.setAttribute("style", "fill: red; kite9-min-size: 50px 50px; ");
-		t3.setAttribute("style", "fill: blue; kite9-min-size: 50px 50px; ");
-		t4.setAttribute("style", "fill: yellow; kite9-min-size: 50px 50px; ");
+		t1.setAttribute("style", "fill: green; --kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "fill: red; --kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "fill: blue; --kite9-min-size: 50px 50px; ");
+		t4.setAttribute("style", "fill: yellow; --kite9-min-size: 50px 50px; ");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 		
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -181,13 +181,13 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell t3 = new Cell("3", Arrays.asList(g3));
 		Cell t4 = new Cell("4", Arrays.asList());
 		
-		t1.setAttribute("style", "kite9-occupies: 6 6 2 2; kite9-min-size: 50px 50px; ");
-		t2.setAttribute("style", "kite9-occupies: 6 6 0 0; kite9-min-size: 50px 50px; ");
-		t3.setAttribute("style", "kite9-occupies: 3 3 3 3; kite9-min-size: 50px 50px; ");
-		t4.setAttribute("style", "kite9-occupies: 3 3 1 1; kite9-min-size: 50px 50px; ");
+		t1.setAttribute("style", "--kite9-occupies: 6 6 2 2; --kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "--kite9-occupies: 6 6 0 0; --kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "--kite9-occupies: 3 3 3 3; --kite9-min-size: 50px 50px; ");
+		t4.setAttribute("style", "--kite9-occupies: 3 3 1 1; --kite9-min-size: 50px 50px; ");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 		new Link(g2, g1, null, null, "DIAMOND", null, null);
 		new TurnLink(g2, g3, null, null, null, null, null);
 	
@@ -204,12 +204,12 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell t2 = new Cell("2", Arrays.asList(g2));
 		Cell t3 = new Cell("3", Arrays.asList(g3));
 		
-		t1.setAttribute("style", "kite9-occupies: -5 -4 -3 -2; kite9-min-size: 50px 50px; ");
-		t2.setAttribute("style", "kite9-occupies: 0 0 1 1; kite9-min-size: 50px 50px; ");
-		t3.setAttribute("style", "kite9-occupies: 8 8 8 8; kite9-min-size: 50px 50px; ");
+		t1.setAttribute("style", "--kite9-occupies: -5 -4 -3 -2; --kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "--kite9-occupies: 0 0 1 1; --kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "--kite9-occupies: 8 8 8 8; --kite9-min-size: 50px 50px; ");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 		new Link(g2, g1, null, null, "DIAMOND", null, null);
 		new TurnLink(g2, g3, null, null, null, null, null);
 	
@@ -230,10 +230,10 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell t4 = new Cell("c4", Arrays.asList(g4));
 		Cell t5 = new Cell("c5", Arrays.asList(g5));
 		
-		t5.setAttribute("style", "kite9-occupies: 2 2 2 2; ");
+		t5.setAttribute("style", "--kite9-occupies: 2 2 2 2; ");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4, t5), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-columns: 3; ");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-columns: 3; ");
 		new Link(g2, g1, null, null, "DIAMOND", null, null);
 		new TurnLink(g2, g3, null, null, null, null, null);
 	

@@ -19,8 +19,8 @@ class JSDiagramElementFactory(context: ElementContext?) : AbstractDiagramElement
     }
 
     override fun createDiagramElement(x: Element, parent: DiagramElement?): DiagramElement? {
-        var type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x) as DiagramElementType
-        var usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x) as RectangularElementUsage
+        var type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)
+        var usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)
         var out = instantiateDiagramElement(parent, x, type, usage)
         return out
     }
