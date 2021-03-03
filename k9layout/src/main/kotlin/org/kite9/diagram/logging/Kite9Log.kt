@@ -14,7 +14,6 @@ interface Kite9Log {
     fun send(prefix: String?, items: Map<*, *>)
     fun error(string: String?)
     fun error(string: String?, e: Throwable)
-    fun send(prefix: String?, arg0: Exception)
 
     companion object {
 

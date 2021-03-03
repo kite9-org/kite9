@@ -14,10 +14,10 @@ class JSLeafPainter(e: Element, val context: ElementContext) : DirectSVGGroupPai
         val mtrx = g.getCTM()!!;
         val bbox = g.getBBox()!!;
         return Rectangle2D(
-            (mtrx.e + bbox.x).toDouble(),
-            (mtrx.f + bbox.y).toDouble(),
-            bbox.width.toDouble(),
-            bbox.height.toDouble())
+            (mtrx.e + bbox.x),
+            (mtrx.f + bbox.y),
+            bbox.width,
+            bbox.height)
     }
 
 }

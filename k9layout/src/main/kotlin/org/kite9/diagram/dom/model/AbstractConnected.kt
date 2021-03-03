@@ -74,7 +74,7 @@ abstract class AbstractConnected(
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
-        return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)
+        return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
     }
 
     override fun getLinkGutter(): Double {

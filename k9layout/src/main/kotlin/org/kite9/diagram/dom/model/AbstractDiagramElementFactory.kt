@@ -10,7 +10,7 @@ import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.RectangularElementUsage
 import org.w3c.dom.Element
 
-abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
+abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified : Boolean = true) : DiagramElementFactory<X> {
 
     protected var context: ElementContext? = null
 
@@ -119,10 +119,15 @@ abstract class AbstractDiagramElementFactory<X> : DiagramElementFactory<X> {
                 ContentTransform.POSITION
             )
             DiagramElementType.NONE -> null
-            DiagramElementType.UNSPECIFIED -> throw context!!.contextualException(
-                "Don't know how to process element: " + el + "(" + el.tagName + ") with type " + lt + " and usage " + usage + " and parent " + parent,
-                el
-            )
+            DiagramElementType.UNSPECIFIED ->
+                if (failOnUnspecified) {
+                    throw context!!.contextualException(
+                        "Don't know how to process element: " + el + "(" + el.tagName + ") with type " + lt + " and usage " + usage + " and parent " + parent,
+                        el
+                    )
+                } else {
+                    return null
+                }
         }
     }
 

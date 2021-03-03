@@ -1,7 +1,7 @@
 package org.kite9.diagram.model.style
 
 enum class BorderTraversal {
-    ALWAYS, LEAVING, NONE;
+    ALWAYS, LEAVING, PREVENT;
 
     companion object {
         fun reduce(a: BorderTraversal?, b: BorderTraversal?): BorderTraversal? {
@@ -10,7 +10,7 @@ enum class BorderTraversal {
             } else if (b == null) {
                 a
             } else if (a != ALWAYS && b != ALWAYS) {
-                NONE
+                PREVENT
             } else {
                 ALWAYS
             }

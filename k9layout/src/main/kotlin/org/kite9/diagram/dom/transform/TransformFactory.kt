@@ -13,7 +13,7 @@ object TransformFactory {
         defaultTransform: ContentTransform
     ): SVGTransformer {
         var t = t
-        if (t === ContentTransform.DEFAULT) {
+        if (t === ContentTransform.NORMAL) {
             t = defaultTransform
         }
         return when (t) {
@@ -29,7 +29,7 @@ object TransformFactory {
             }
             ContentTransform.POSITION -> PositioningTransformer(diagramElement)
             ContentTransform.NONE -> NoopTransformer()
-            ContentTransform.DEFAULT -> throw Kite9ProcessingException("No transform defined for $diagramElement")
+            ContentTransform.NORMAL -> throw Kite9ProcessingException("No transform defined for $diagramElement")
             else -> throw Kite9ProcessingException("No transform defined for $diagramElement")
         }
     }

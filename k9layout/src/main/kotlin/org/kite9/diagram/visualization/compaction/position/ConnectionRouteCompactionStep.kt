@@ -87,7 +87,6 @@ class ConnectionRouteCompactionStep : CompactionStep {
         if (t == null) {
             return
         }
-        val r = getTerminatorRotation(pos, from)
         val x1 = pos!!.x() // - getRotatedSize(t,r,Direction.LEFT);
         val y1 = pos.y() // - getRotatedSize(t,r,Direction.UP);
         val x2 = pos.x() // + getRotatedSize(t,r,Direction.RIGHT);

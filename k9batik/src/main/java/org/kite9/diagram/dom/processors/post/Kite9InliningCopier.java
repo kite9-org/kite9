@@ -18,7 +18,7 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.kite9.diagram.common.StreamHelp;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -36,7 +36,7 @@ public class Kite9InliningCopier extends Kite9ExpandingCopier {
 	
 	private UserAgent ua;
 
-	public Kite9InliningCopier(String newPrefix, Document destination, ValueReplacer vr, UserAgent ua) {
+	public Kite9InliningCopier(String newPrefix, Document destination, PatternValueReplacer vr, UserAgent ua) {
 		super(newPrefix, destination, vr);
 		this.ua = ua;
 	}

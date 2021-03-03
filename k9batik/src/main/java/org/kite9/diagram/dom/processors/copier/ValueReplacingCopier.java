@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.processors.copier;
 
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,9 +15,9 @@ import org.w3c.dom.Text;
  */
 public abstract class ValueReplacingCopier extends BasicCopier {
 	
-	protected ValueReplacer vr;
+	protected PatternValueReplacer vr;
 
-	public ValueReplacingCopier(Node destination, boolean copyTop, ValueReplacer vr) {
+	public ValueReplacingCopier(Node destination, boolean copyTop, PatternValueReplacer vr) {
 		super(destination, copyTop);
 		this.vr = vr;
 	}

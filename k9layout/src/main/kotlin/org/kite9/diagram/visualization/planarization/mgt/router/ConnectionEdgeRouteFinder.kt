@@ -35,7 +35,7 @@ class ConnectionEdgeRouteFinder(
 
     override fun canCrossBorderEdge(crossing: BorderEdge?, ep: EdgePath?): Boolean {
         val traversalRule = getTraversalRule(crossing)
-        if (traversalRule === BorderTraversal.NONE) {
+        if (traversalRule === BorderTraversal.PREVENT) {
             return false
         } else if (traversalRule === BorderTraversal.LEAVING) {
             val allPresent = mustCrossContainers.containsAll(crossing!!.getDiagramElements().keys)

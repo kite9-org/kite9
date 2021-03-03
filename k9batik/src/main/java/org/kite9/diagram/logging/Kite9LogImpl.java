@@ -126,8 +126,4 @@ public class Kite9LogImpl implements Kite9Log {
 	    e.printStackTrace();
 	}
 
-	public void send(String prefix, Exception arg0) {
-	    logFile.println(logFor.getPrefix()+" "+prefix);
-	    arg0.printStackTrace(System.out);
-	}
 }

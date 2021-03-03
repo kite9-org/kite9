@@ -44,17 +44,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
- * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
- * handing for Kite9 CSS definitions.
+ * Extends the SVG DOM Implementation by adding handing for Kite9 CSS definitions.
  * 
  * @author robmoffat
  *
  */
 public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation {
 	
-	public static final boolean USE_GENERIC_XML_ELEMENT = true;	
-    private XMLDiagramElementFactory diagramElementFactory;
-    
+	public static final boolean USE_GENERIC_XML_ELEMENT = true;
 
 	public ADLExtensibleDOMImplementation() {
 		this(Cache.NO_CACHE);
@@ -62,14 +59,6 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 	
 	public ADLExtensibleDOMImplementation(Cache cache) {
 		super(cache);
-		registerCustomElementFactory(XMLHelper.KITE9_NAMESPACE, XMLHelper.CONTENTS_ELEMENT, new ElementFactory() {
-			 
-			public Element create(String prefix, Document doc) {
-				ContentsElement out = new ContentsElement((ADLDocument) doc);
-				out.setOwnerDocument(doc);
-				return out;
-			}
-		});
 		
 		// PADDING CSS
 		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.PADDING_PROPERTY));
@@ -91,7 +80,7 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_TYPE_PROPERTY, DiagramElementType.class, DiagramElementType.UNSPECIFIED, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_USAGE_PROPERTY, RectangularElementUsage.class, RectangularElementUsage.REGULAR, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LAYOUT_PROPERTY, Layout.class, null, false));
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONTENT_TRANSFORM, ContentTransform.class, ContentTransform.DEFAULT, false));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONTENT_TRANSFORM, ContentTransform.class, ContentTransform.NORMAL, false));
 		
 		// SIZING
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY, DiagramElementSizing.class, DiagramElementSizing.MINIMIZE, false));
@@ -163,37 +152,11 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 10000f, true));
 	}
 
-	public XMLDiagramElementFactory getDiagramElementFactory() {
-		return diagramElementFactory;
-	}
-
-	public void setDiagramElementFactory(XMLDiagramElementFactory diagramElementFactory) {
-		this.diagramElementFactory = diagramElementFactory;
-	}
-
-
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(
 			new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, -1),
 			new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, -1),
 			new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, -1));
 
-
-	@Override
-	public Element createElementNS(AbstractDocument document, String namespaceURI, String qualifiedName) {
-		if (USE_GENERIC_XML_ELEMENT) {
-			if (XMLHelper.KITE9_NAMESPACE.equals(namespaceURI)) {
-				if (!"contents".equals(qualifiedName)) {
-					return createGenericADLElement(document, qualifiedName);
-				}
-			} 
-		}
-		
-		return super.createElementNS(document, namespaceURI, qualifiedName);
-	}
-
-	public Element createGenericADLElement(AbstractDocument document, String qualifiedName) {
-		return new GenericKite9XMLElement(qualifiedName, (ADLDocument) document);
-	}
 
 	
 	public Document createDocument(String namespaceURI, String qualifiedName, DocumentType doctype) throws DOMException {

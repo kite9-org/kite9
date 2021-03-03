@@ -28,7 +28,7 @@ class LabelContainerImpl(
 ), Label, Container {
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
-        return BorderTraversal.NONE
+        return BorderTraversal.PREVENT
     }
 
     override fun getGridColumns(): Int {

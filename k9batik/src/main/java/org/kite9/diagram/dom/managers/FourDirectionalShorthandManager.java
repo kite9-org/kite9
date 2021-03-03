@@ -66,10 +66,12 @@ public class FourDirectionalShorthandManager
             lu = lu.getNextLexicalUnit();
         }
         switch (cnt) {
-        case 1: lus[3] = lus[2] = lus[1] = lus[0]; break;
-        case 2: lus[2] = lus[0];  lus[3] = lus[1]; break;
-        case 3: lus[3] = lus[1]; break;
-        default:
+            case 2:  // temporary disable to be consistent with JS
+            case 3:
+            case 1: lus[3] = lus[2] = lus[1] = lus[0]; break;
+    //    case 2: lus[2] = lus[0];  lus[3] = lus[1]; break;
+    //    case 3: lus[3] = lus[1]; break;
+    //    default:
         }
 
         ph.property(propertyPrefix+"-top",    lus[0], imp);

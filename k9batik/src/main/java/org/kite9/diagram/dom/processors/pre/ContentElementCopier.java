@@ -6,7 +6,7 @@ import java.util.List;
 import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.dom.elements.ContentsElement;
 import org.kite9.diagram.dom.processors.copier.ValueReplacingCopier;
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -25,7 +25,7 @@ import org.w3c.dom.xpath.XPathResult;
  */
 public class ContentElementCopier extends ValueReplacingCopier {
 
-	public ContentElementCopier(Node destination, ValueReplacer vr) {
+	public ContentElementCopier(Node destination, PatternValueReplacer vr) {
 		super(destination, false, vr);
 	}
 

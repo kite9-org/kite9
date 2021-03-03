@@ -2,6 +2,7 @@ package org.kite9.diagram.dom.css
 
 interface CSSConstants {
     companion object {
+
         const val LEFT = "left"
         const val RIGHT = "right"
         const val TOP = "top"
@@ -52,9 +53,6 @@ interface CSSConstants {
         const val TRAVERSAL_TOP_PROPERTY = KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX + TOP
         const val TRAVERSAL_RIGHT_PROPERTY = KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX + RIGHT
         const val TRAVERSAL_LEFT_PROPERTY = KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX + LEFT
-
-        // for importing SVG content into an element
-        const val TEMPLATE = KITE9_CSS_PROPERTY_PREFIX + "template"
 
         // for referencing <defs> within CSS
         const val MARKER_START_REFERENCE = KITE9_CSS_PROPERTY_PREFIX + "marker-start-reference"

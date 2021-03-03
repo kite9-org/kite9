@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.processors.post;
 
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.xpath.XPathEvaluator;
@@ -12,7 +12,7 @@ import org.w3c.dom.xpath.XPathResult;
  * @author robmoffat
  *
  */
-public class DocumentValueReplacer extends ValueReplacer {
+public class DocumentValueReplacer extends PatternValueReplacer {
 	
 	Document d;
 

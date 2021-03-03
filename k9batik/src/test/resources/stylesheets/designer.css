@@ -252,7 +252,7 @@ from,
 to {
 	--kite9-type: link-end;
 	--kite9-template: url(template.svg#empty-terminator);
-	--kite9-padding: 5px 5px 5px 5px; 
+	--kite9-padding: 5px;
 } 
 
 from.circle,
@@ -265,14 +265,20 @@ from.arrow,
 to.arrow {
 	--kite9-marker-start-reference: url(template.svg#arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#arrow-end-marker);
-	--kite9-padding: 5px 12px 5px 1px;
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
 }
 
 from.arrow-open,
 to.arrow-open {
 	--kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
-	--kite9-padding: 5px 12px 5px 1px;
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
 }
 
 from.gap,
@@ -284,21 +290,30 @@ from.diamond,
 to.diamond {
 	--kite9-marker-start-reference: url(template.svg#diamond-start-marker);
 	--kite9-marker-end-reference: url(template.svg#diamond-end-marker);
-	--kite9-padding: 5px 12px 5px 1px;
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
 }
 
 from.diamond-open, 
 to.diamond-open {
 	--kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
 	--kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
-	--kite9-padding: 5px 12px 5px 1px;
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
 }
 
 from.barbed-arrow, 
 to.barbed-arrow {
 	--kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
-	--kite9-padding: 5px 7px 5px 1px;
+ 	--kite9-padding-top: 5px;
+ 	--kite9-padding-right: 7px;
+ 	--kite9-padding-bottom: 5px;
+ 	--kite9-padding-left: 1px;
 }
 
 
@@ -313,8 +328,11 @@ symbols {
 
 symbol {
 	--kite9-type: svg;
-	--kite9-margin: 0 2px 0 2px;
-	--kite9-sizing: minimize;
+    --kite9-margin-top: 0px;
+    --kite9-margin-right: 2px;
+    --kite9-margin-bottom: 0px;
+    --kite9-margin-left: 2px;
+    --kite9-sizing: minimize;
 	--kite9-connection-align: 50%;
 	--kite9-link-inset: 0px;
 }
@@ -342,7 +360,7 @@ text-line, k9-text, boldText, bodyText {
 	--kite9-padding-bottom: 2px;
 	--kite9-padding-left: 0px;
 	--kite9-padding-right: 0px;
-	--kite9-margin: 0 0 0 0; 
+	--kite9-margin: 0;
 	--kite9-vertical-align: top;
 	--kite9-connection-align: 50%;
 }
@@ -362,7 +380,7 @@ boldText {
 /* Arrow */
 arrow {
 	--kite9-padding: 3px 5px 3px 5px; 
-	--kite9-margin: 10 10 10 10; 
+	--kite9-margin: 10;
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-template: url(template.svg#arrow);

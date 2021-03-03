@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.processors.copier;
 
-import org.kite9.diagram.dom.processors.xpath.ValueReplacer;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -17,7 +17,7 @@ public class PrefixingCopier extends ValueReplacingCopier {
 	private String newPrefix;
 	private String namespace;
 	
-	public PrefixingCopier(Node destination, boolean copyTop, ValueReplacer vr, String prefix, String namespace) {
+	public PrefixingCopier(Node destination, boolean copyTop, PatternValueReplacer vr, String prefix, String namespace) {
 		super(destination, copyTop, vr);
 		this.newPrefix = prefix;
 		this.namespace = namespace;

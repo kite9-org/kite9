@@ -6,5 +6,5 @@ package org.kite9.diagram.model.style
  * @author robmoffat
  */
 enum class ContentTransform {
-    NONE, RESCALE, DEFAULT, POSITION, CROP
+    NONE, RESCALE, NORMAL, POSITION, CROP
 }
