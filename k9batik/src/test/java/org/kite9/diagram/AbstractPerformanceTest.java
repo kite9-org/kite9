@@ -1,5 +1,29 @@
 package org.kite9.diagram;
 
+import org.junit.Test;
+import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.Context;
+import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.logging.Kite9Log.Destination;
+import org.kite9.diagram.logging.Kite9LogImpl;
+import org.kite9.diagram.logging.Table;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.*;
+import org.kite9.diagram.performance.Metrics;
+import org.kite9.diagram.testing.DiagramElementVisitor;
+import org.kite9.diagram.testing.TestingHelp;
+import org.kite9.diagram.testing.VisitorAction;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
+import org.w3c.dom.Element;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,31 +34,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
-
-import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.logging.Kite9LogImpl;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.*;
-import org.kite9.diagram.testing.DiagramElementVisitor;
-import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.testing.VisitorAction;
-import org.kite9.diagram.performance.Metrics;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
-import org.kite9.diagram.common.StackHelp;
-import org.kite9.diagram.logging.Kite9Log.Destination;
-import org.kite9.diagram.logging.Table;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	
@@ -101,9 +100,9 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		}
 	}
 	
-	protected String wrap(DiagramKite9XMLElement x) {
+	protected String wrap(Element x) {
 		String xml = new XMLHelper().toXML(x.getOwnerDocument());
-		return addSVGFurniture(xml);
+		return xml;
 	}
 
 	private void writeFailedDiagram(Metrics key, String value) {
@@ -120,12 +119,12 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			currentMetrics = m;
 			
 			transcodeSVG(xml);
-			Kite9XMLElement d = Kite9DiagramBridge.lastDiagram;
-			AbstractArrangementPipeline pipeline = Kite9DiagramBridge.lastPipeline;
+			Diagram d = Kite9SVGTranscoder.lastDiagram;
+			AbstractArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
 			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
-			TestingEngine.testLayout((Container) d.getDiagramElement());
+			TestingEngine.testLayout(d);
 			
 			// write the outputs
 			measure(d, m);
@@ -137,8 +136,8 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	}
 
-	private void measure(Kite9XMLElement d, final Metrics m) {
-		new DiagramElementVisitor().visit((Container) d.getDiagramElement(), new VisitorAction() {
+	private void measure(Diagram d, final Metrics m) {
+		new DiagramElementVisitor().visit(d, new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {
@@ -148,7 +147,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 				}
 			}
 		});
-		Dimension2D ds = d.getDiagramElement().getRenderingInformation().getSize();
+		Dimension2D ds = d.getRenderingInformation().getSize();
 		
 		m.totalDiagramSize =(long) (ds.getW() * ds.getH());
 		m.crossings = m.crossings / 4;

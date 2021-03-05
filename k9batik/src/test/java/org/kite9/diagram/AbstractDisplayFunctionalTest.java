@@ -1,41 +1,26 @@
 package org.kite9.diagram;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
+import org.junit.Assert;
+import org.junit.Test;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.dom.XMLHelper;
+import org.w3c.dom.Element;
+import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.functional.TestingEngine.Checks;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.testing.TestingHelp;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.w3c.dom.*;
+import org.xmlunit.builder.Input;
+import org.xmlunit.diff.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.functional.TestingEngine.Checks;
-import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.common.StreamHelp;
-import org.kite9.diagram.common.StackHelp;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xmlunit.builder.Input;
-import org.xmlunit.diff.Comparison;
-import org.xmlunit.diff.ComparisonListener;
-import org.xmlunit.diff.ComparisonResult;
-import org.xmlunit.diff.ComparisonType;
-import org.xmlunit.diff.DOMDifferenceEngine;
+import java.io.*;
+import java.lang.reflect.Method;
 
 public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
@@ -47,11 +32,10 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		try {
 			super.transcodeSVG(s);
 			
-			Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
+			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
 			if (lastDiagram != null) {
-				AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
-				writeTemplateExpandedSVG(lastDiagram);
-				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);		
+				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
 			}
 			if (checkXML()) {
 				checkIdenticalXML();
@@ -64,15 +48,6 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			}
 		}
 	}
-	
-	protected void writeTemplateExpandedSVG(Kite9XMLElement lastDiagram) throws IOException {
-		ADLDocument d = lastDiagram.getOwnerDocument();
-		File f = getOutputFile("-expanded.svg");
-		String input2 = new XMLHelper().toXML(d);
-		FileWriter fw = new FileWriter(f);
-		fw.write(input2);
-		fw.close();
-	}
 
 	protected Checks checks() {
 		Checks out = new Checks();
@@ -81,14 +56,14 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		return out;
 	}
 	
-	protected void renderDiagram(DiagramKite9XMLElement d) throws Exception {
+	protected void renderDiagram(Element d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
 		renderDiagram(xml);
 	}
 	
 	protected void renderDiagram(String xml) throws Exception {
 		//transcodePNG(addSVGFurniture(xml));
-		transcodeSVG(addSVGFurniture(xml));
+		transcodeSVG(xml);
 	}
 
 	public boolean checkIdenticalXML() throws Exception {

@@ -1,55 +1,47 @@
 package org.kite9.diagram;
 
+import org.junit.Test;
+import org.kite9.diagram.adl.Link;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.common.StackHelp;
+import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.functional.TestingEngine;
+import org.kite9.diagram.functional.TestingEngine.Checks;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.model.Connection;
+import org.kite9.diagram.model.Diagram;
+import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.RouteRenderingInformation;
+import org.kite9.diagram.testing.DiagramChecker;
+import org.kite9.diagram.testing.TestingHelp;
+import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
+import org.w3c.dom.*;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-import org.junit.Test;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.batik.bridge.Kite9DiagramBridge;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.functional.TestingEngine.Checks;
-import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Diagram;
-import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.testing.DiagramChecker;
-import org.kite9.diagram.testing.DiagramElementVisitor;
-import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.testing.VisitorAction;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.common.StreamHelp;
-import org.kite9.diagram.common.StackHelp;
-import org.kite9.diagram.logging.LogicException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
-	protected Kite9XMLElement renderDiagram(Kite9XMLElement d) throws Exception {
+	protected void renderDiagram(Element d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument());
-		return renderDiagram(xml);
+		renderDiagram(xml);
 	}
 
 
-	protected Kite9XMLElement renderDiagram(String xml) throws Exception {
-		String full = addSVGFurniture(xml);
+	protected void renderDiagram(String xml) throws Exception {
 		//transcodePNG(full);
-		transcodeSVG(full);
+		transcodeSVG(xml);
 		copyTo(getOutputFile(".svg"), "svg-output");
-		Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
-		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+		Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+		AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 		boolean addressed = isAddressed();
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
-		return lastDiagram;
 	}
 
 	private boolean isAddressed() {
@@ -109,23 +101,13 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		return true;
 	}
 		
-	protected DiagramElement getById(final String id, Kite9XMLElement d) {
-		DiagramElementVisitor vis = new DiagramElementVisitor();
-		final DiagramElement[] found = { null };
-		vis.visit((Diagram) d.getDiagramElement(), new VisitorAction() {
-			
-			@Override
-			public void visit(DiagramElement de) {
-				if (de.getID().equals(id)) {
-						found[0] = de;
-				}
-			}
-		});
-		
-		return found[0];
+	protected DiagramElement getById(final String id, Element d) {
+		Element x = d.getOwnerDocument().getElementById(id);
+		DiagramElement de = Kite9SVGTranscoder.lastContext.getRegisteredDiagramElement(x);
+		return de;
 	}
 
-	protected void mustTurn(Kite9XMLElement d, Link l) {
+	protected void mustTurn(Diagram d, Link l) {
 		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
 	
 			@Override
@@ -139,7 +121,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		});
 	}
 
-	protected void mustContradict(Kite9XMLElement diag, Link l) {
+	protected void mustContradict(Diagram diag, Link l) {
 		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
 			
 			@Override
@@ -159,18 +141,17 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		StringWriter sw = new StringWriter();
 		StreamHelp.streamCopy(isr, sw, true);
 		String s = sw.toString();
-		s = addSVGFurniture(s);
 		XMLHelper xmlHelper = new XMLHelper();
-		ADLDocument dxe = xmlHelper.fromXML(s);
-		convertOldStructure(dxe.getRootElement());
+		Document dxe = xmlHelper.fromXML(s);
+		convertOldStructure(dxe.getDocumentElement());
 		
 		// fix for old-style <allLinks> tag
 		String theXML = xmlHelper.toXML(dxe);
 		//Kite9Log.setLogging(false);
 		transcodeSVG(theXML);
 		boolean addressed = isAddressed();
-		Kite9XMLElement lastDiagram = Kite9DiagramBridge.lastDiagram;
-		AbstractArrangementPipeline lastPipeline = Kite9DiagramBridge.lastPipeline;
+		Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+		AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		
 	}

@@ -11,7 +11,7 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 
@@ -19,12 +19,12 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 
 	@Test
 	public void test_30_1_BigSquareDirected() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, Layout.HORIZONTAL);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -39,12 +39,12 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 
 	@Test
 	public void test_30_2_BigL() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 4, contents, null);
 
 		Context top = new Context("top", listOf(contents.get(0), contents.get(1)), true, null, Layout.HORIZONTAL);
 		Context bottom = new Context("bottom", listOf(contents.get(2), contents.get(3)), true, null, Layout.HORIZONTAL);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(top);
 		out2.add(bottom);
 
@@ -63,7 +63,7 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 	
 	@Test
 	public void test_30_4_DifferentContainerDepths() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 4, 2, contents, null);
 
 		Glyph[] out2 = GraphConstructionTools.createX("h", 12, contents);
@@ -101,7 +101,7 @@ public class Test30VertexOrderingContained extends AbstractLayoutFunctionalTest 
 	
 		Context top = new Context("top", listOf(a, b), true, null, Layout.RIGHT);
 		Context bottom = new Context("bottom", listOf(c), true, null, Layout.HORIZONTAL);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(top);
 		out2.add(bottom);
 	

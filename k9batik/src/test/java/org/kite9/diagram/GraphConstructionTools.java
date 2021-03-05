@@ -7,17 +7,17 @@ import org.kite9.diagram.adl.Arrow;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
+import org.w3c.dom.Element;
 
 public class GraphConstructionTools {
 
-	public static Glyph[][] createGrid(int x, int y, List<Kite9XMLElement> collection, boolean fixDirection) {
+	public static Glyph[][] createGrid(int x, int y, List<Element> collection, boolean fixDirection) {
 		return createGrid("", x, y, collection, fixDirection);
 	}
 
-	public static Glyph[][] createGrid(String prefix, int x, int y, List<Kite9XMLElement> collection, boolean fixDirection) {
+	public static Glyph[][] createGrid(String prefix, int x, int y, List<Element> collection, boolean fixDirection) {
 		int arrowNo = 0;
 		Glyph[][] out = new Glyph[x][];
 		for (int i = 0; i < x; i++) {
@@ -47,12 +47,12 @@ public class GraphConstructionTools {
 	}
 
 	public static Glyph[][] createXContainers(String prefix, int glyphsPerContainer, int containers,
-			List<Kite9XMLElement> out, Layout containerLayout) {
+			List<Element> out, Layout containerLayout) {
 		int gi = 0;
 		Glyph[][] result = new Glyph[containers][];
 		for (int i = 0; i < containers; i++) {
 			result[i] = new Glyph[glyphsPerContainer];
-			List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>(glyphsPerContainer);
+			List<Element> contents = new ArrayList<Element>(glyphsPerContainer);
 			for (int j = 0; j < glyphsPerContainer; j++) {
 				Glyph g = new Glyph(prefix + (gi), "", "" + gi, null, null);
 				gi++;
@@ -66,7 +66,7 @@ public class GraphConstructionTools {
 		return result;
 	}
 
-	public static Glyph[] createX(String prefix, int glyphs, List<Kite9XMLElement> out) {
+	public static Glyph[] createX(String prefix, int glyphs, List<Element> out) {
 		int gi = 0;
 		Glyph[] result = new Glyph[glyphs];
 		for (int j = 0; j < glyphs; j++) {

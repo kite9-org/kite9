@@ -1,20 +1,14 @@
 package org.kite9.diagram.performance;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
+import org.w3c.dom.Element;
+
+import java.util.*;
 
 public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 
@@ -33,7 +27,7 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m, int size) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
 		Random r = new Random(m.hashCode());
 
 		Glyph[][] space = new Glyph[size][];
@@ -95,7 +89,7 @@ public class TestDirectedUndirectedMatrix extends AbstractPerformanceTest {
 			
 		}
 
-		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
+		List<Element> cl = new ArrayList<Element>(items.length);
 		Collections.addAll(cl, items);
 		m.connections = connections;
 

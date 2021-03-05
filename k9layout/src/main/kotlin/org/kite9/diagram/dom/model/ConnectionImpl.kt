@@ -50,7 +50,7 @@ class ConnectionImpl(
      */
     override fun initContents(): MutableList<DiagramElement> {
         val contents: MutableList<DiagramElement> = mutableListOf()
-        for (de in ctx.getChildDiagramElements(theElement, this)!!) {
+        for (de in ctx.getChildDiagramElements(this)) {
             if (de is Terminator) {
                 val e = de.getEnd()
                 if (e === End.FROM) {

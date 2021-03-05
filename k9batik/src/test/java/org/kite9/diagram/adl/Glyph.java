@@ -1,10 +1,10 @@
 package org.kite9.diagram.adl;
 
-import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 
 /**
@@ -23,11 +23,11 @@ public class Glyph extends AbstractMutableXMLElement {
 		this.tagName = "glyph";
 	}
 	
-	public Glyph(String id, ADLDocument doc) {
+	public Glyph(String id, Document doc) {
 		super(id, "glyph", doc);
 	}
 	
-	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols, boolean divider, ADLDocument doc) {
+	public Glyph(String id, String stereotype, String label, List<Element> text, List<Element> symbols, boolean divider, Document doc) {
 		super(id, "glyph", doc);
 
 		if (symbols!=null) {
@@ -48,35 +48,35 @@ public class Glyph extends AbstractMutableXMLElement {
 		
 	}
 	
-	public Glyph(String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {
-		this(TESTING_DOCUMENT.createUniqueId()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
+	public Glyph(String stereotype, String label,  List<Element> text, List<Element> symbols) {
+		this(AbstractMutableXMLElement.createID()+(label == null ? "" : "-"+label.toLowerCase()), stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
-	public Glyph(String id, String stereotype, String label,  List<Kite9XMLElement> text, List<Kite9XMLElement> symbols) {
+	public Glyph(String id, String stereotype, String label,  List<Element> text, List<Element> symbols) {
 		this(id, stereotype, label, text, symbols, false, TESTING_DOCUMENT);
 	}
 
-	public Kite9XMLElement getStereotype() {
+	public Element getStereotype() {
 		return getProperty("stereotype");
 	}
 
-	public void setStereotype(Kite9XMLElement sterotype) {
+	public void setStereotype(Element sterotype) {
 		replaceProperty("stereotype", sterotype);
 	}
 
-	public Kite9XMLElement getText() {
+	public Element getText() {
 		return getProperty("text-lines");
 	}
 
-	public void setText(Kite9XMLElement text) {
+	public void setText(Element text) {
 		replaceProperty("text-lines", text);
 	}
 
-	public Kite9XMLElement getSymbols() {
+	public Element getSymbols() {
 		return getProperty("symbols");
 	}
 	
-	public void setSymbols(Kite9XMLElement syms) {
+	public void setSymbols(Element syms) {
 		replaceProperty("symbols", syms);
 	}
 
@@ -84,11 +84,11 @@ public class Glyph extends AbstractMutableXMLElement {
 		return true;
 	}
 	
-	public Kite9XMLElement getLabel() {
+	public Element getLabel() {
 		return getProperty("label");
 	}
 
-	public void setLabel(Kite9XMLElement name) {
+	public void setLabel(Element name) {
 		replaceProperty("label", name);
 	}
 	
@@ -98,7 +98,7 @@ public class Glyph extends AbstractMutableXMLElement {
 	
 	@Override
 	protected Node newNode() {
-		return new Glyph(null, (ADLDocument) ownerDocument);
+		return new Glyph(null, (Document) ownerDocument);
 	}
 	
 }

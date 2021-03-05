@@ -1,5 +1,20 @@
 package org.kite9.diagram.dom;
 
+import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.dom.AbstractDocument;
+import org.apache.batik.dom.svg.SVGDocumentFactory;
+import org.apache.batik.dom.util.SAXDocumentFactory;
+import org.apache.batik.util.MimeTypeConstants;
+import org.apache.batik.util.ParsedURL;
+import org.apache.batik.util.SVGConstants;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -7,21 +22,6 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.util.MissingResourceException;
 import java.util.Properties;
-
-import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.dom.AbstractDocument;
-import org.apache.batik.dom.svg.SVGDocumentFactory;
-import org.apache.batik.dom.util.SAXDocumentFactory;
-import org.apache.batik.util.MimeTypeConstants;
-import org.apache.batik.util.ParsedURL;
-import org.apache.batik.util.SVGConstants;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.svg.SVGDocument;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * This class contains methods for creating SVGDocument instances
@@ -184,7 +184,7 @@ public class Kite9DocumentFactory
 
         isrc.setSystemId(uri);
 
-        ADLDocument doc = (ADLDocument) super.createDocument
+        SVGOMDocument doc = (SVGOMDocument) super.createDocument
             (SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, isrc);
         doc.setParsedURL(new ParsedURL(uri));
         doc.setDocumentInputEncoding(charset);
@@ -210,7 +210,7 @@ public class Kite9DocumentFactory
             doc = super.createDocument
                 (SVGConstants.SVG_NAMESPACE_URI, "svg", uri, is);
             if (uri != null) {
-                ((ADLDocument)doc).setParsedURL(new ParsedURL(uri));
+                ((SVGOMDocument)doc).setParsedURL(new ParsedURL(uri));
             }
 
             AbstractDocument d = (AbstractDocument) doc;
@@ -241,7 +241,7 @@ public class Kite9DocumentFactory
             doc = super.createDocument
                 (XMLHelper.KITE9_NAMESPACE, "diagram", uri, is);
             if (uri != null) {
-                ((ADLDocument)doc).setParsedURL(new ParsedURL(uri));
+                ((SVGOMDocument)doc).setParsedURL(new ParsedURL(uri));
             }
 
             AbstractDocument d = (AbstractDocument) doc;

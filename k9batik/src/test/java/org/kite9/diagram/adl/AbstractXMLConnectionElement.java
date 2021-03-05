@@ -1,9 +1,8 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Direction;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -25,7 +24,7 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 	/**
 	 * Call this with modify verteConnected false to avoid adding the edge connection to the vertex
 	 */
-	public AbstractXMLConnectionElement(String id, String tag, Kite9XMLElement from, Kite9XMLElement to, Direction drawDirection, String fromDecoration, Kite9XMLElement fromLabel, String toDecoration, Kite9XMLElement tolabel, ADLDocument doc) {
+	public AbstractXMLConnectionElement(String id, String tag, Element from, Element to, Direction drawDirection, String fromDecoration, Element fromLabel, String toDecoration, Element tolabel, Document doc) {
 		super(id, tag, doc);
 		setFrom(from);
 		setTo(to);
@@ -46,16 +45,15 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 		if (tolabel!=null) { 
 			setToLabel(tolabel);
 		}
-		
-		doc.addConnection(this);
-		
+
+		AbstractMutableXMLElement.CONNECTION_ELEMENTS.add(this);
 	}
 
-	public Kite9XMLElement getFromLabel() {
+	public Element getFromLabel() {
 		return getProperty("fromLabel");
 	}
 
-	public Kite9XMLElement getToLabel() {
+	public Element getToLabel() {
 		return getProperty("toLabel");
 	}
 
@@ -79,11 +77,11 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 		fromElement.setAttribute("class", toDecoration.toLowerCase());
 	}
 
-	public void setFromLabel(Kite9XMLElement fromLabel) {
+	public void setFromLabel(Element fromLabel) {
 	    replaceProperty("fromLabel", fromLabel);
 	}
 
-	public void setToLabel(Kite9XMLElement toLabel) {
+	public void setToLabel(Element toLabel) {
 	    replaceProperty("toLabel", toLabel);
 	}
 	
@@ -95,29 +93,29 @@ public abstract class AbstractXMLConnectionElement extends AbstractMutableXMLEle
 		return Direction.valueOf(dd);
 	}
 	
-	public Kite9XMLElement getFrom() {
+	public Element getFrom() {
 		Element fromEl = getProperty("from");
 		String reference = fromEl.getAttribute("reference");
-		Kite9XMLElement from = (Kite9XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
+		Element from = (Element) ownerDocument.getChildElementById(ownerDocument, reference);
 		return from;
 	}
 
-	public Kite9XMLElement getTo() {
+	public Element getTo() {
 		Element toEl = getProperty("to");
 		String reference = toEl.getAttribute("reference");
-		Kite9XMLElement to = (Kite9XMLElement) ownerDocument.getChildElementById(ownerDocument, reference);
+		Element to = (Element) ownerDocument.getChildElementById(ownerDocument, reference);
 		return to;
 	}
 
-	public void setFrom(Kite9XMLElement v) {
-		GenericMutableXMLElement from = new GenericMutableXMLElement("from", (ADLDocument) ownerDocument);
-		from.setAttribute("reference", v.getID());
+	public void setFrom(Element v) {
+		GenericMutableXMLElement from = new GenericMutableXMLElement("from", (Document) ownerDocument);
+		from.setAttribute("reference", getID(v));
 		replaceProperty("from", from);
 	}
 
-	public void setTo(Kite9XMLElement v) {
-		GenericMutableXMLElement to = new GenericMutableXMLElement("to", (ADLDocument) ownerDocument);
-		to.setAttribute("reference", v.getID());
+	public void setTo(Element v) {
+		GenericMutableXMLElement to = new GenericMutableXMLElement("to", (Document) ownerDocument);
+		to.setAttribute("reference", getID(v));
 		replaceProperty("to", to);
 	}
 

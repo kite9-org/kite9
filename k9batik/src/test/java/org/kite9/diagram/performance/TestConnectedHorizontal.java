@@ -1,21 +1,15 @@
 package org.kite9.diagram.performance;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Layout;
+import org.w3c.dom.Element;
+
+import java.io.IOException;
+import java.util.*;
 
 public class TestConnectedHorizontal extends AbstractPerformanceTest {
 
@@ -54,7 +48,7 @@ public class TestConnectedHorizontal extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
 		
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
@@ -79,7 +73,7 @@ public class TestConnectedHorizontal extends AbstractPerformanceTest {
 			}
 		}
 
-		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
+		List<Element> cl = new ArrayList<Element>(items.length);
 		Collections.addAll(cl, items);
 
 		DiagramKite9XMLElement out = new DiagramKite9XMLElement("bigd", cl, Layout.HORIZONTAL, null);

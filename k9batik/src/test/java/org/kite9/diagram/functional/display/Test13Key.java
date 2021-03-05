@@ -185,7 +185,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 		new Link(c, e);
 		
 		Key key = new Key("Big Movies", "some text\nhere blah blah bah", null);
-		key.setId("key");
+		key.setID("key");
 		Context ctx = new Context("ctx", listOf(a, b, c), true, null, null);
 		ctx.appendChild(key);
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(ctx, d, e), null);

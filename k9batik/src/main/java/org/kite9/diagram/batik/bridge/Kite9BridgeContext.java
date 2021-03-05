@@ -1,22 +1,20 @@
 package org.kite9.diagram.batik.bridge;
 
-import kotlin.jvm.JvmClassMappingKt;
 import kotlin.reflect.KClass;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.*;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
+import org.apache.batik.css.engine.CSSEngine;
+import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
-import org.apache.batik.css.parser.ScannerUtilities;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
-import org.kite9.diagram.batik.text.LocalRenderingFlowTextPainter;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.bridge.ElementContext;
-import org.kite9.diagram.dom.elements.*;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.logging.Kite9ProcessingException;
@@ -24,15 +22,17 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
-import org.kite9.diagram.model.style.HorizontalAlignment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.xpath.XPathResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -44,21 +44,17 @@ import java.util.List;
  */
 public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
 	
-	
-	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, XMLDiagramElementFactory factory, boolean textAsGlyphs) {
+	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
 		super(userAgent, loader);
-		this.factory = factory;
-		factory.setElementContext(this);
 		setTextAsGlyphs(textAsGlyphs);
-		dBridge = new Kite9DiagramBridge(factory);
 	}
 	
 	public void setTextAsGlyphs(boolean textAsGlyphs) {
-		if (!textAsGlyphs) {
-			setTextPainter(new LocalRenderingFlowTextPainter());
-		} else {
-			setTextPainter(null);
-		}
+//		if (!textAsGlyphs) {
+//			setTextPainter(new LocalRenderingFlowTextPainter());
+//		} else {
+//			setTextPainter(null);
+//		}
 	}
 	
 	/**
@@ -70,16 +66,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	public boolean isDynamic() {
 		return false;
-	}
-
-	private final XMLDiagramElementFactory factory;
-	private final Kite9Bridge gBridge = new Kite9Bridge();
-	private final Kite9DiagramBridge dBridge;
-	
-	@Override
-	public void registerSVGBridges() {
-		super.registerSVGBridges();
-		putBridge(dBridge);
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {
@@ -116,21 +102,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public void initializeDocument(Document document) {
 		super.initializeDocument(document);
-	}
-
-	
-	
-	@Override
-	public Bridge getBridge(Element element) {
-		if (element instanceof Kite9XMLElement) {
-			if (((Kite9XMLElement) element).getDiagramElement() instanceof Diagram) {
-				return dBridge;
-			} else {
-				return gBridge;
-			}
-		}
-		
-		return super.getBridge(element);
 	}
 
 	/**
@@ -200,42 +171,39 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@Override
 	public double getCssStyleDoubleProperty(String prop, Element e) {
-		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		Value v = getCSSValue(prop, e);
 		return v.getFloatValue();
+	}
+
+	private Value getCSSValue(String prop, Element e) {
+		CSSEngine cssEngine = ((SVGOMDocument) e.getOwnerDocument()).getCSSEngine();
+		int idx = cssEngine.getPropertyIndex(prop);
+		Value v = cssEngine.getComputedStyle((CSSStylableElement) e, null, idx);
+		return v;
 	}
 
 	@Override
 	public String getCssStyleStringProperty(String prop, Element e) {
-		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		Value v = getCSSValue(prop, e);
 		return v == null ? null : v.getStringValue();
 	}
 
 
 	@Override
 	public <X> X getCSSStyleEnumProperty(String prop, Element e, KClass<X> c) {
-    	Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		Value v = getCSSValue(prop, e);
 		return (X) ((EnumValue)v).getTheValue();
-    }
-
-	@Override
-	public List<DiagramElement> getChildDiagramElements(Element theElement, DiagramElement parent) {
-		List<DiagramElement> out = new ArrayList<>();
-		for(Kite9XMLElement child: ((Kite9XMLElement) theElement)) {
-			DiagramElement de = child.getDiagramElement();
-			out.add(de);
-		}
-		return out;
 	}
 
 	@Override
 	public IntegerRange getCSSStyleRangeProperty(String prop, Element e) {
-		IntegerRangeValue v = (IntegerRangeValue) ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		IntegerRangeValue v = (IntegerRangeValue) getCSSValue(prop, e);
 		return v;
 	}
 
 
 	public ConnectionAlignment getConnectionAlignment(String prop, Element e) {
-		Value v = ((StyledKite9XMLElement) e).getCSSStyleProperty(prop);
+		Value v = getCSSValue(prop, e);
 
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
 			return new ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue());
@@ -248,15 +216,16 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@Override
 	public DiagramElement getReferencedElement(String id, Element e) {
-		ADLDocument owner = (ADLDocument) e.getOwnerDocument();
-		Kite9XMLElement from = (Kite9XMLElement) owner.getChildElementById(owner, id);
-		return from.getDiagramElement();
+		Document ownerDocument = e.getOwnerDocument();
+		Element r = ownerDocument.getElementById(id);
+		DiagramElement de = getRegisteredDiagramElement(r);
+		return de;
 	}
 
 	@Override
 	public String getReference(String prop, Element e) {
-		String ref = ((ReferencingKite9XMLElement)e).getIDReference(prop);
-		return ref;
+		String xpath = getCssStyleStringProperty(prop, e);
+		return evaluateXPath(xpath, e);
 	}
 
 	@Override
@@ -268,4 +237,40 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	public Kite9ProcessingException contextualException(String reason, Element e) {
 		return contextualException(reason, null, e);
 	}
+
+
+	private Map<Element, DiagramElement> xmlToDiagram = new HashMap<>();
+	private Map<DiagramElement, List<DiagramElement>> children = new HashMap<>();
+
+	@Override
+	public void addChild(DiagramElement parent, DiagramElement c) {
+		List<DiagramElement> contents = children.getOrDefault(parent, new ArrayList<>());
+		contents.add(c);
+		children.putIfAbsent(parent, contents);
+	}
+
+
+	@Override
+	public List<DiagramElement> getChildDiagramElements(DiagramElement theElement) {
+		return children.getOrDefault(theElement, new ArrayList<>());
+	}
+
+
+	@Override
+	public String evaluateXPath(String x, Element e) {
+		SVGOMDocument ownerDocument = (SVGOMDocument) e.getOwnerDocument();
+		XPathResult result = (XPathResult) ownerDocument.evaluate(x, e, ownerDocument.createNSResolver(e), XPathResult.STRING_TYPE, null);
+		return result.getStringValue();
+	}
+
+	@Override
+	public void register(Element x, DiagramElement out) {
+		xmlToDiagram.put(x, out);
+	}
+
+	@Override
+	public DiagramElement getRegisteredDiagramElement(Element x) {
+		return xmlToDiagram.get(x);
+	}
+
 }

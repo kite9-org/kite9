@@ -1,12 +1,11 @@
 package org.kite9.diagram.adl;
 
-import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Layout;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 
 /**
@@ -26,26 +25,26 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 		this(TESTING_DOCUMENT);
 	}
 	
-	public DiagramKite9XMLElement(ADLDocument doc) {
-		this(doc.createUniqueId(), doc);
+	public DiagramKite9XMLElement(Document doc) {
+		this(AbstractMutableXMLElement.createID(), doc);
 	}
 	
-	public DiagramKite9XMLElement(String id, ADLDocument doc) {
+	public DiagramKite9XMLElement(String id, Document doc) {
 		this(id, null, null, doc);
 	}
 
-	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Kite9XMLElement k) {
+	public DiagramKite9XMLElement(String id, List<Element> contents, Element k) {
 		this(id, contents, k, TESTING_DOCUMENT);
 	}
 	
-	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Kite9XMLElement k, ADLDocument doc) {
+	public DiagramKite9XMLElement(String id, List<Element> contents, Element k, Document doc) {
 		super(id, "diagram", doc);
 		if (doc.getDocumentElement() == null) {
 			doc.appendChild(this);
 		} 
 		
 		if (contents != null) {
-			for (Kite9XMLElement contained : contents) {
+			for (Element contained : contents) {
 				appendChild(contained);
 			}
 		}
@@ -54,44 +53,45 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 		}
 		
 		// home all temporary connections (due to Link)
-		for (Kite9XMLElement xmlElement : doc.getConnectionElements()) {
+		for (Element xmlElement : AbstractMutableXMLElement.CONNECTION_ELEMENTS) {
 			appendChild(xmlElement);
 		}
+
+		AbstractMutableXMLElement.CONNECTION_ELEMENTS.clear();
 		
 		// set ranks for all children that don't have them
 		int rank = 0;
-		for (Node childElement : this) {
-			if (childElement instanceof Kite9XMLElement) {
-				Kite9XMLElement xmlElement = (Kite9XMLElement) childElement;
+		for (Node childElement : iterator(this)) {
+			if (childElement instanceof Element) {
+				Element xmlElement = (Element) childElement;
 				String rankString = xmlElement.getAttribute("rank");
 				if ("".equals(rankString)) {
 					xmlElement.setAttribute("rank", ""+(rank++));
 				}
 			}
 		}
-		doc.setDiagramCreated(true);
-		doc.getConnectionElements().clear();
-		
+
+		setAttribute("template", AbstractMutableXMLElement.TRANSFORM);
 	}
 	
-	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents) {
+	public DiagramKite9XMLElement(String id, List<Element> contents) {
 		this(id, contents, null, TESTING_DOCUMENT);
 	}
 
-	public DiagramKite9XMLElement(String id, List<Kite9XMLElement> contents, Layout l, Kite9XMLElement k) {
+	public DiagramKite9XMLElement(String id, List<Element> contents, Layout l, Element k) {
 		this(id, contents, k, TESTING_DOCUMENT);
 		this.setLayoutDirection(l);
 	}
 
-	public DiagramKite9XMLElement(List<Kite9XMLElement> contents, Kite9XMLElement k) {
-		this(TESTING_DOCUMENT.createUniqueId(), contents, k);
+	public DiagramKite9XMLElement(List<Element> contents, Element k) {
+		this(AbstractMutableXMLElement.createID(), contents, k);
 	}
 
-	public Kite9XMLElement getKey() {
+	public Element getKey() {
 		return getProperty("key");
 	}
 
-	public void setKey(Kite9XMLElement k) {
+	public void setKey(Element k) {
 	    replaceProperty("key", k);
 	}
 
@@ -115,9 +115,4 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 	protected Node newNode() {
 		return new DiagramKite9XMLElement();
 	}
-	
-	public Diagram getDiagramElement() {
-		return (Diagram) super.getDiagramElement();
-	}
-	
 }

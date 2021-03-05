@@ -12,7 +12,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 
@@ -20,11 +20,11 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_28_1_VertexPushing() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, Layout.HORIZONTAL);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -39,11 +39,11 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_28_2_VertexPushing() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][2], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.LEFT);
@@ -62,11 +62,11 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_28_3_BigERelaxed() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 5, 2, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -91,11 +91,11 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_28_4_FragmentDirected() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 6, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -111,11 +111,11 @@ public class Test28VertexOrderingMixed extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_28_5_BuddiesAndSeparateOrderMerging() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);

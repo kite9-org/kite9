@@ -1,57 +1,28 @@
 package org.kite9.diagram.dom;
 
-import org.kite9.diagram.dom.elements.XMLDiagramElementFactory;
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
 import org.apache.batik.css.engine.value.svg.MarkerManager;
-import org.apache.batik.dom.AbstractDocument;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.ContentsElement;
-import org.kite9.diagram.dom.elements.GenericKite9XMLElement;
-import org.kite9.diagram.dom.managers.ConnectionAlignmentLengthManager;
-import org.kite9.diagram.dom.managers.EnumManager;
-import org.kite9.diagram.dom.managers.FourDirectionalShorthandManager;
-import org.kite9.diagram.dom.managers.GridSizeManager;
-import org.kite9.diagram.dom.managers.GridSizeShorthandManager;
-import org.kite9.diagram.dom.managers.IntegerRangeManager;
-import org.kite9.diagram.dom.managers.LinkLengthManager;
-import org.kite9.diagram.dom.managers.OccupiesShorthandManager;
-import org.kite9.diagram.dom.managers.PaddingLengthManager;
-import org.kite9.diagram.dom.managers.SizeShorthandManager;
-import org.kite9.diagram.dom.managers.SizingShorthandManager;
-import org.kite9.diagram.dom.managers.TemplateManager;
-import org.kite9.diagram.dom.managers.TraversalShorthandManager;
-import org.kite9.diagram.dom.managers.WidthHeightManager;
-import org.kite9.diagram.dom.managers.XPathManager;
+import org.kite9.diagram.dom.managers.*;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.diagram.model.style.ConnectionsSeparation;
-import org.kite9.diagram.model.style.ContentTransform;
-import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.DiagramElementType;
-import org.kite9.diagram.model.style.HorizontalAlignment;
-import org.kite9.diagram.model.style.LabelPlacement;
-import org.kite9.diagram.model.style.RectangularElementUsage;
-import org.kite9.diagram.model.style.VerticalAlignment;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
+import org.kite9.diagram.model.style.*;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
- * Extends the SVG DOM Implementation by adding handing for Kite9 CSS definitions.
+ * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
+ * handing for Kite9 CSS definitions.
  * 
  * @author robmoffat
  *
  */
 public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation {
 	
-	public static final boolean USE_GENERIC_XML_ELEMENT = true;
+	public static final boolean USE_GENERIC_XML_ELEMENT = true;	
+
 
 	public ADLExtensibleDOMImplementation() {
 		this(Cache.NO_CACHE);
@@ -59,7 +30,7 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 	
 	public ADLExtensibleDOMImplementation(Cache cache) {
 		super(cache);
-		
+
 		// PADDING CSS
 		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.PADDING_PROPERTY));
 		registerCustomCSSValueManager(new PaddingLengthManager(CSSConstants.PADDING_LEFT_PROPERTY));
@@ -101,9 +72,6 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_RIGHT_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_LEFT_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_TOP_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
-		
-		// TEMPLATES
-		registerCustomCSSValueManager(new TemplateManager());
 		
 		// CONNECTION SIDES
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTIONS_PROPERTY, ConnectionsSeparation.class, ConnectionsSeparation.SAME_SIDE, false));
@@ -158,14 +126,5 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 			new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, -1));
 
 
-	
-	public Document createDocument(String namespaceURI, String qualifiedName, DocumentType doctype) throws DOMException {
-		ADLDocument result = new ADLDocument(this);
-		result.setIsSVG12(false);		// prevent creation of extraneous xml:id fields.
-        if (qualifiedName != null)
-            result.appendChild(result.createElementNS(namespaceURI,
-                                                      qualifiedName));
-        return result;
-	}
 
 }

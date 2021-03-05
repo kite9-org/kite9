@@ -9,7 +9,8 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 
@@ -26,9 +27,9 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		
 		Link l = new Link(g2, g6);
 
-		Kite9XMLElement d = new DiagramKite9XMLElement("diagram", Arrays.asList(g1, c5, g2, g3), Layout.RIGHT, null);
-		d = renderDiagram(d);
-		mustTurn(d, l);
+		Element d = new DiagramKite9XMLElement("diagram", Arrays.asList(g1, c5, g2, g3), Layout.RIGHT, null);
+		renderDiagram(d);
+		mustTurn(Kite9SVGTranscoder.lastDiagram, l);
 	}
 
 	@Test
@@ -52,10 +53,10 @@ public class Test53BorderTraversal extends AbstractLayoutFunctionalTest {
 		Link l = new ContradictingLink(a, e, null, null, null, null, Direction.DOWN);
 		l.setRank(-1000);
 
-		Kite9XMLElement diag = new DiagramKite9XMLElement("dia", createList(a, b, c, d, e), null);
-		diag = renderDiagram(diag);
+		Element diag = new DiagramKite9XMLElement("dia", createList(a, b, c, d, e), null);
+		renderDiagram(diag);
 
-		mustContradict(diag, l);
+		mustContradict(Kite9SVGTranscoder.lastDiagram, l);
 		
 	}
 

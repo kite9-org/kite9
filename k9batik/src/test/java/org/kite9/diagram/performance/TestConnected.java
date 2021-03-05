@@ -1,21 +1,18 @@
 package org.kite9.diagram.performance;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
+import org.apache.batik.anim.dom.SVG12OMDocument;
+import org.apache.batik.dom.GenericDocument;
+import org.apache.batik.dom.GenericElement;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
+import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
+
+import java.io.IOException;
+import java.util.*;
 
 public class TestConnected extends AbstractPerformanceTest {
 
@@ -54,7 +51,7 @@ public class TestConnected extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+		AbstractMutableXMLElement.TESTING_DOCUMENT = new GenericDocument(null, AbstractMutableXMLElement.DOM_IMPLEMENTATION);
 		
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
@@ -79,10 +76,11 @@ public class TestConnected extends AbstractPerformanceTest {
 			}
 		}
 
-		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
+		List<Element> cl = new ArrayList<>(items.length);
 		Collections.addAll(cl, items);
 
-		DiagramKite9XMLElement out = new DiagramKite9XMLElement( cl, null);
+		GenericElement out = new GenericElement( "diagram", AbstractMutableXMLElement.TESTING_DOCUMENT);
+		Arrays.stream(items).forEach(i -> out.appendChild(i));
 		
 		return wrap(out);
 	}

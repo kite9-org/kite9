@@ -9,13 +9,13 @@ import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 
 public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_10_1_Grid() throws Exception {
-		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
+		List<Element> vertices = new ArrayList<Element>();
 		GraphConstructionTools.createGrid(3, 3, vertices, true);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", vertices, null);
 
@@ -30,7 +30,7 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 	 */
 	@Test
 	public void test_10_2_CrossingEdges() throws Exception {
-		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
+		List<Element> vertices = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createGrid(2, 5, vertices, true);
 		
 		new TurnLink(out[0][0], out[0][2]);
@@ -55,7 +55,7 @@ public class Test10CrossingEdges extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_10_3_SmallGrid() throws Exception {
-		List<Kite9XMLElement> vertices = new ArrayList<Kite9XMLElement>();
+		List<Element> vertices = new ArrayList<Element>();
 		GraphConstructionTools.createGrid(2, 2, vertices, true);
 		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", vertices, null);

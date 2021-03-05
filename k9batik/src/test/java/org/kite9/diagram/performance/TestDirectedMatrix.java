@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.batik.dom.GenericDocument;
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 
 public class TestDirectedMatrix extends AbstractPerformanceTest {
@@ -33,7 +33,7 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m, int size) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = new GenericDocument(null, DiagramKite9XMLElement.DOM_IMPLEMENTATION);
 		Random r = new Random(666);
 
 		Glyph[][] space = new Glyph[size][];
@@ -84,10 +84,10 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 			}
 		}
 
-		List<Kite9XMLElement> cl = new ArrayList<Kite9XMLElement>(items.length);
+		List<Element> cl = new ArrayList<Element>(items.length);
 		Collections.addAll(cl, items);
 		m.connections = connections;
-		
+
 		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 		return wrap(out);
 	}

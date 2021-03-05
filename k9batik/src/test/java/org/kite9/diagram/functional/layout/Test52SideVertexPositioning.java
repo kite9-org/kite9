@@ -9,7 +9,7 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
@@ -25,7 +25,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g6 = new Glyph("six", "","six ", null, null);
 		Context c5 = new Context("five", listOf(g6), true, null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
@@ -43,7 +43,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g6 = new Glyph("six", "","six ", null, null);
 		Context c5 = new Context("five", listOf(g6), true, null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
@@ -119,7 +119,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Glyph g6 = new Glyph("six", "","six ", null, null);
 		Glyph g7 = new Glyph("seven", "","seven", null, null);
 		Context c5 = new Context("five", listOf(g6), true, null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Context ctx = new Context("outer", contexts, true, null, Layout.GRID);
 		ctx.setAttribute("style", "layout: grid; grid-size: 2 2;");
 		
@@ -137,7 +137,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		return false;
 	}
 
-	public static List<Kite9XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	public static List<Element> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Context tl = new Context("tl", listOf(g1), true,  null, null);
 		Context tr = new Context("tr", listOf(g2), true, null, null);
 		Context bl = new Context("bl", listOf(g3), true,  null, null);
@@ -149,7 +149,7 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		bl.setAttribute("style", "kite9-occupies: 0 1");
 		br.setAttribute("style", "kite9-occupies: 1 1");
 		
-		List<Kite9XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
+		List<Element> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
 	}
 }

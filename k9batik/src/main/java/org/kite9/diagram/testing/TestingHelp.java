@@ -1,6 +1,5 @@
 package org.kite9.diagram.testing;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.logging.Table;
 import org.kite9.diagram.model.*;
@@ -60,7 +59,7 @@ public class TestingHelp {
 	/**
 	 * Produces a report containing all the elements of the diagram
 	 */
-	public String getPositionalInformationADL(Kite9XMLElement d) {
+	public String getPositionalInformationADL(Diagram d) {
 		StringBuilder details = new StringBuilder();
 		Rowify cr = getIdentifiableRowify();
 		Rowify lr = getLinkRowify();
@@ -194,10 +193,10 @@ public class TestingHelp {
 		};
 	}
 	
-	private <X extends DiagramElement> void getPositions(Kite9XMLElement d, StringBuilder details, final Class<X> class1,
+	private <X extends DiagramElement> void getPositions(Diagram d, StringBuilder details, final Class<X> class1,
 			Rowify r) {
 		final SortedSet<X> items = new TreeSet<X>();
-		new DiagramElementVisitor().visit((Container) d.getDiagramElement(), new VisitorAction() {
+		new DiagramElementVisitor().visit(d, new VisitorAction() {
 
 			@SuppressWarnings("unchecked")
 			public void visit(DiagramElement de) {

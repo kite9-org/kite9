@@ -41,7 +41,7 @@ class JSElementContext : ElementContext {
 
     private val xmlToDiagram = mutableMapOf<Element, DiagramElement>()
 
-    fun register(x: Element, out: DiagramElement) {
+    override fun register(x: Element, out: DiagramElement) {
         xmlToDiagram[x] = out
     }
 
@@ -108,7 +108,7 @@ class JSElementContext : ElementContext {
         TODO("Not yet implemented")
     }
 
-    override fun getChildDiagramElements(theElement: Element, parent: DiagramElement): List<DiagramElement> {
+    override fun getChildDiagramElements(parent: DiagramElement): List<DiagramElement> {
         return children.getOrElse(parent) { emptyList() }
     }
 

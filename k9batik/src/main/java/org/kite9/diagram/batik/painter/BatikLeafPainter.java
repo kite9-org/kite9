@@ -1,20 +1,18 @@
 package org.kite9.diagram.batik.painter;
 
-import java.awt.geom.AffineTransform;
-
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.gvt.CompositeGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.bridge.ElementContext;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
 import org.kite9.diagram.dom.painter.DirectSVGGroupPainter;
 import org.kite9.diagram.dom.painter.LeafPainter;
+import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Rectangle2D;
-import org.kite9.diagram.model.style.DiagramElementType;
 import org.w3c.dom.Element;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
+
+import java.awt.geom.AffineTransform;
 
 public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPainter {
 	
@@ -59,19 +57,16 @@ public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPaint
 	}
 	
 	protected GraphicsNode initGraphicsNode(Element e, Kite9BridgeContext ctx) {
-		ensureNoChildKite9Elements(e);
+		DiagramElement de = ctx.getRegisteredDiagramElement(e);
+		ensureNoChildKite9Elements(de, e);
 		GVTBuilder builder = ctx.getGVTBuilder();
 		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
 		return out;
 	}
 
-	protected void ensureNoChildKite9Elements(Element e) {
-		if (e instanceof Kite9XMLElement) {
-			if (((Kite9XMLElement) e).iterator().hasNext()) {
-				throw new Kite9XMLProcessingException(e+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
-			}
-		} else {
-			throw new Kite9XMLProcessingException("How is "+e+" not a Kite9 element? ", e);
+	protected void ensureNoChildKite9Elements(DiagramElement de, Element e) {
+		if (ctx.getChildDiagramElements(de).size() > 0) {
+			throw new Kite9XMLProcessingException(de+" shouldn't have nested Kite9 elements - it's supposed to be a leaf (svg elements only). ", e);
 		}
 	}
 

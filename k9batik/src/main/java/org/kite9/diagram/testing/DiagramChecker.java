@@ -1,39 +1,35 @@
 package org.kite9.diagram.testing;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
-import org.kite9.diagram.logging.LogicException;
 
 public class DiagramChecker {
 	
-	public static interface ConnectionAction {
+	public interface ConnectionAction {
 		
-		public void action(RouteRenderingInformation rri, Object d, Connection c);
+		void action(RouteRenderingInformation rri, Object d, Connection c);
 		
 	}
 
-	public static void checkConnnectionElements(Kite9XMLElement d, final ConnectionAction ca) {
+	public static void checkConnnectionElements(Diagram d, final ConnectionAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
-		dev.visit((Diagram) d.getDiagramElement(), new VisitorAction() {
+		dev.visit(d, de -> {
+			if (de instanceof Connection) {
+				Connection con = (Connection) de;
 
-			public void visit(DiagramElement de) {
-				if (de instanceof Connection) {
-					Connection con = (Connection) de;
-
-					try {
-						RouteRenderingInformation rri = (RouteRenderingInformation) con.getRenderingInformation();
-						Object routeDirection = getRouteDirection(rri);
-						ca.action(rri, routeDirection, con);
-					} catch (ExpectedLayoutException e) {
-						throw e;
-					} catch (Exception e) {
-						throw new RuntimeException("Could not find location of : " + con);
-					}
+				try {
+					RouteRenderingInformation rri = con.getRenderingInformation();
+					Object routeDirection = getRouteDirection(rri);
+					ca.action(rri, routeDirection, con);
+				} catch (ExpectedLayoutException e) {
+					throw e;
+				} catch (Exception e) {
+					throw new RuntimeException("Could not find location of : " + con);
 				}
 			}
 		});

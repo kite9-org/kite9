@@ -1,17 +1,17 @@
 package org.kite9.diagram.common;
 
+import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.css.engine.CSSEngine;
+import org.apache.batik.css.engine.CSSStylableElement;
+import org.apache.batik.css.engine.value.Value;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.batik.css.engine.CSSEngine;
-import org.apache.batik.css.engine.value.Value;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.StyledKite9XMLElement;
-import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.w3c.dom.Node;
-import org.w3c.dom.Document;
 
 /**
  * Allows the context to be passed as a specific piece of XML.
@@ -51,14 +51,14 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 	
 	public static String debugCss(Node n) {
 		List<String> out = new ArrayList<>();
-		if (n instanceof StyledKite9XMLElement) {
-			StyledKite9XMLElement el = (StyledKite9XMLElement) n;
-			ADLDocument doc = el.getOwnerDocument();
+		if (n instanceof CSSStylableElement) {
+			CSSStylableElement el = (CSSStylableElement) n;
+			SVGOMDocument doc = (SVGOMDocument) n.getOwnerDocument();
 			CSSEngine e = doc.getCSSEngine();
 			for (int i = 0; i < e.getNumberOfProperties(); i++) {
 				try {
 					String name = e.getPropertyName(i);
-					Value v = el.getCSSStyleProperty(name);
+					Value v = e.getComputedStyle(el, null, i);
 					
 					if (v != null) {
 						out.add("  "+name+": "+v+";");

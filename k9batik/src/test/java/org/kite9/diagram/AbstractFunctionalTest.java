@@ -1,27 +1,23 @@
 package org.kite9.diagram;
 
-import org.apache.batik.dom.AbstractDocument;
+import org.apache.batik.dom.GenericDocument;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
-import org.kite9.diagram.adl.GenericMutableXMLElement;
 import org.kite9.diagram.batik.format.Kite9PNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.HelpMethods;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
-import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.kite9.diagram.logging.Kite9LogImpl;
-import org.w3c.dom.Element;
 
 import java.io.*;
-import java.net.URL;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
 
@@ -32,6 +28,17 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	@BeforeClass
 	public static void setLoggingFactory() {
 		Kite9Log.Companion.setFactory(l -> new Kite9LogImpl(l));
+	}
+
+	@BeforeClass
+	public static void setupTestDOMImplementation() {
+		AbstractMutableXMLElement.DOM_IMPLEMENTATION = new ADLExtensibleDOMImplementation();
+	}
+
+	@Before
+	public void setupTestXMLDocument() {
+		AbstractMutableXMLElement.TRANSFORM = AbstractFunctionalTest.class.getResource("/stylesheets/designer.xslt").getFile();
+		AbstractMutableXMLElement.TESTING_DOCUMENT = AbstractMutableXMLElement.newDocument();
 	}
 
 	@Before
@@ -51,16 +58,8 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	@Before
 	public void initTestDocument() {
-		AbstractMutableXMLElement.TESTING_DOCUMENT =  new ADLDocument(new ADLExtensibleDOMImplementation() {
-
-			@Override
-			public Element createGenericADLElement(AbstractDocument document, String qualifiedName) {
-				return new GenericMutableXMLElement(qualifiedName, (ADLDocument) document);
-			}
-			
-			
-			
-		});
+		AbstractMutableXMLElement.TESTING_DOCUMENT = new GenericDocument(null, AbstractMutableXMLElement.DOM_IMPLEMENTATION);
+		AbstractMutableXMLElement.nextId = 0;
 	}
 
 	protected void transcodePNG(String s) throws Exception {
@@ -109,19 +108,6 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		return root+"/"+packageName.replace('.', '/') + "/" + name;
 	}
 
-	public String getDesignerStylesheetReference() {
-		URL u = this.getClass().getResource("/stylesheets/designer.css");
-		return "<svg:defs><svg:style type=\"text/css\"> @import url(\""+u+"\");</svg:style></svg:defs>";
-	}
-
-	protected String addSVGFurniture(String xml) {
-		String prefix = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
-		String style = getDesignerStylesheetReference();
-		String suffix = "</svg:svg>";
-		xml = xml.replaceFirst("<\\?.*\\?>","");
-		String full = prefix + style + xml + suffix;
-		return full;
-	}
 	
 	protected String getTestMethod() {
 		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();

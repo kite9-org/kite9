@@ -1,7 +1,7 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
+import org.w3c.dom.Element;
 
 /** 
  * Link which allows contradiction 
@@ -16,19 +16,19 @@ public class ContradictingLink extends Link {
 		super();
 	}
 
-	public ContradictingLink(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle,
-			Kite9XMLElement toLabel, Direction drawDirection) {
+	public ContradictingLink(Element from, Element to, String fromStyle, Element fromLabel, String toEndStyle,
+							 Element toLabel, Direction drawDirection) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection);
 		setAttribute(LINK_TEST, CONTRADICTING);
 	}
 
-	public ContradictingLink(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle,
-			Kite9XMLElement toLabel) {
+	public ContradictingLink(Element from, Element to, String fromStyle, Element fromLabel, String toEndStyle,
+			Element toLabel) {
 		super(from, to, fromStyle, fromLabel, toEndStyle, toLabel);
 		setAttribute(LINK_TEST, CONTRADICTING);
 	}
 
-	public ContradictingLink(Kite9XMLElement from, Kite9XMLElement to) {
+	public ContradictingLink(Element from, Element to) {
 		super(from, to);
 		setAttribute(LINK_TEST, CONTRADICTING);
 	}

@@ -10,10 +10,10 @@ import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
+import org.w3c.dom.Element;
 
 public class Test31Fan extends AbstractDisplayFunctionalTest {
 
@@ -69,9 +69,9 @@ public class Test31Fan extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_31_3_LotsInABox() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
+		List<Element> out = new ArrayList<Element>();
 		out.add(g1);
-		List<Kite9XMLElement> cc = new ArrayList<Kite9XMLElement>();
+		List<Element> cc = new ArrayList<Element>();
 		Glyph[] l = GraphConstructionTools.createX("fan", 7, cc);
 		Context c1 = new Context("c1", cc,  true, null, null);
 		out.add(c1);
@@ -104,7 +104,7 @@ public class Test31Fan extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_31_4_RightFanFixedFirst() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
+		List<Element> out = new ArrayList<Element>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -131,7 +131,7 @@ public class Test31Fan extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_31_5_LeftFanFixedFirst() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
+		List<Element> out = new ArrayList<Element>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 6, out);
 		
@@ -157,7 +157,7 @@ public class Test31Fan extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_31_6_DownFanFixedMiddles() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
+		List<Element> out = new ArrayList<Element>();
 		out.add(g1);
 		Glyph[] l = GraphConstructionTools.createX("fan", 8, out);
 		

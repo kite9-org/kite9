@@ -1,11 +1,11 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public class GenericMutableXMLElement extends AbstractMutableXMLElement {
 
-	public GenericMutableXMLElement(String name, ADLDocument owner) {
+	public GenericMutableXMLElement(String name, Document owner) {
 		super(name, owner);
 	}
 

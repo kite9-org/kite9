@@ -1,11 +1,11 @@
 package org.kite9.diagram.adl;
 
-import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Layout;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 
 /**
@@ -28,11 +28,11 @@ public class Context extends AbstractXMLContainerElement {
 		this.tagName = "context";
 	}
 	
-	public Context(String id, List<Kite9XMLElement> contents, boolean bordered, Kite9XMLElement label, Layout layoutDirection, ADLDocument doc) {
+	public Context(String id, List<Element> contents, boolean bordered, Element label, Layout layoutDirection, Document doc) {
 		super(id, "context", doc);
 		
 		if (contents != null) {
-			for (Kite9XMLElement contained : contents) {
+			for (Element contained : contents) {
 				if (contained != null) {
 					appendChild(contained);
 				}
@@ -45,12 +45,12 @@ public class Context extends AbstractXMLContainerElement {
 		setBordered(bordered);
 	}
 
-	public Context(String id, List<Kite9XMLElement> contents, boolean bordered, Kite9XMLElement label, Layout layoutDirection) {
+	public Context(String id, List<Element> contents, boolean bordered, Element label, Layout layoutDirection) {
 		this(id, contents, bordered, label, layoutDirection, TESTING_DOCUMENT);
 	}
 
-	public Context(List<Kite9XMLElement> contents, boolean b, Kite9XMLElement label, Layout l) {
-		this(TESTING_DOCUMENT.createUniqueId(), contents, b, label, l);
+	public Context(List<Element> contents, boolean b, Element label, Layout l) {
+		this(AbstractMutableXMLElement.createID(), contents, b, label, l);
 	}
 
 	public boolean isBordered() {

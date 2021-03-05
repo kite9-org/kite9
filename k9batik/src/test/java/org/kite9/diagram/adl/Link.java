@@ -1,10 +1,10 @@
 package org.kite9.diagram.adl;
 
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+
 import org.kite9.diagram.model.position.Direction;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.w3c.dom.*;
 
 /**
  * Joins glyphs and arrows to one another. 
@@ -25,33 +25,33 @@ public class Link extends AbstractXMLConnectionElement {
 		this.tagName = "link";
 	}
 	
-	public Link(Kite9XMLElement from, Kite9XMLElement to) {
-		this(from.getID()+"-"+to.getID(), from, to, TESTING_DOCUMENT);
+	public Link(Element from, Element to) {
+		this(getID(from)+"-"+getID(to), from, to, TESTING_DOCUMENT);
 	}
 		
-	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, ADLDocument doc) {
+	public Link(String id, Element from, Element to, Document doc) {
 		this(id, from, to, null, null, null, null, null, doc);
 	}
 	
-	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle, Kite9XMLElement toLabel, Direction drawDirection) {
-		this(from.getID()+"-"+to.getID(), from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection, TESTING_DOCUMENT);
+	public Link(Element from, Element to, String fromStyle, Element fromLabel, String toEndStyle, Element toLabel, Direction drawDirection) {
+		this(getID(from)+"-"+getID(to), from, to, fromStyle, fromLabel, toEndStyle, toLabel, drawDirection, TESTING_DOCUMENT);
 	}
 	
-	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toEndStyle, Kite9XMLElement toLabel, Direction drawDirection, ADLDocument doc) {
+	public Link(String id, Element from, Element to, String fromStyle, Element fromLabel, String toEndStyle, Element toLabel, Direction drawDirection, Document doc) {
 		super(id, "link", from, to, drawDirection, fromStyle, fromLabel, toEndStyle, toLabel, doc);
 		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
-	public Link(Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel) {
-		super(from.getID()+"-"+to.getID(), "link",  from, to, null, fromStyle, fromLabel, toStyle, toLabel, TESTING_DOCUMENT);
+	public Link(Element from, Element to, String fromStyle, Element fromLabel, String toStyle, Element toLabel) {
+		super(getID(from)+"-"+getID(to), "link",  from, to, null, fromStyle, fromLabel, toStyle, toLabel, TESTING_DOCUMENT);
 		setAttribute("style", CSSConstants.LINK_CORNER_RADIUS+": 5px; ");
 	}
 
-	public Link(String id, Kite9XMLElement from, Kite9XMLElement to) {
+	public Link(String id, Element from, Element to) {
 		this(id, from, to, TESTING_DOCUMENT);
 	}
 
-	public Link(String id, Kite9XMLElement from, Kite9XMLElement to, String fromStyle, Kite9XMLElement fromLabel, String toStyle, Kite9XMLElement toLabel, Direction d) {
+	public Link(String id, Element from, Element to, String fromStyle, Element fromLabel, String toStyle, Element toLabel, Direction d) {
 		this(id, from, to, fromStyle, fromLabel, toStyle, toLabel, d,  TESTING_DOCUMENT);
 	}
 

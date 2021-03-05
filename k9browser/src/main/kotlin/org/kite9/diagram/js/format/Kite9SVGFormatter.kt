@@ -1,10 +1,9 @@
-import org.kite9.diagram.dom.model.HasSVGRepresentation
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer
 import org.kite9.diagram.js.bridge.JSElementContext
 import org.kite9.diagram.js.logging.JSKite9Log
 import org.kite9.diagram.js.model.JSDiagramElementFactory
-import org.kite9.diagram.js.processors.DiagramPositionProcessor
-import org.kite9.diagram.js.processors.DiagramStructureProcessor
+import org.kite9.diagram.dom.processors.DiagramPositionProcessor
+import org.kite9.diagram.dom.processors.DiagramStructureProcessor
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer
 import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline

@@ -1,10 +1,10 @@
 package org.kite9.diagram.adl;
 
-import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 
 /**
@@ -27,11 +27,11 @@ public class Grid extends AbstractXMLContainerElement {
 		this.tagName = "grid";
 	}
 	
-	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label, ADLDocument doc) {
+	public Grid(String id, List<Element> contents, Element label, Document doc) {
 		super(id, "grid", doc);
 		
 		if (contents != null) {
-			for (Kite9XMLElement contained : contents) {
+			for (Element contained : contents) {
 				if (contained != null) {
 					appendChild(contained);
 				}
@@ -41,12 +41,12 @@ public class Grid extends AbstractXMLContainerElement {
 		addLabel(label);
 	}
 
-	public Grid(String id, List<Kite9XMLElement> contents, Kite9XMLElement label) {
+	public Grid(String id, List<Element> contents, Element label) {
 		this(id, contents, label, TESTING_DOCUMENT);
 	}
 
-	public Grid(List<Kite9XMLElement> contents, Kite9XMLElement label) {
-		this(TESTING_DOCUMENT.createUniqueId(), contents, label);
+	public Grid(List<Element> contents, Element label) {
+		this(AbstractMutableXMLElement.createID(), contents, label);
 	}
 
 	@Override

@@ -1,36 +1,27 @@
 package org.kite9.diagram.performance;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-import javax.imageio.ImageIO;
-
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
-import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState;
+import org.w3c.dom.Element;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.List;
+import java.util.*;
 
 public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
@@ -49,13 +40,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 	@SuppressWarnings("rawtypes")
 	private String generateDiagram(Metrics m, int size) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
 		//System.out.println("Starting"+size+" "+m.connecteds);
 		Random r = new Random(666);
 
-		Kite9XMLElement[][] space = new Kite9XMLElement[size][];
+		Element[][] space = new Element[size][];
 		for (int i = 0; i < space.length; i++) {
-			space[i] = new Kite9XMLElement[size];
+			space[i] = new Element[size];
 		}
 		
 		List<Glyph> items = new ArrayList<Glyph>(m.connecteds);
@@ -75,7 +66,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join horiz
 		for (int y = 0; y < size; y++) {
-			Kite9XMLElement current = null;
+			Element current = null;
 			for (int x = 0; x < size; x++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -89,7 +80,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 		// join vert
 		for (int x = 0; x < size; x++) {
-			Kite9XMLElement current = null;
+			Element current = null;
 			for (int y = 0; y < size; y++) {
 				if (space[y][x] != null) {
 					if (current != null) {
@@ -116,13 +107,13 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			int x3 = horiz ? Math.min(size-1, x1+x2) : x1;
 			int y3 = !horiz ? Math.min(size-1, y1+y2) : y1;
 
-			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<Kite9XMLElement>(), true, null, null);
+			Context c = new Context("x"+x1+"y"+y1+"w"+x3+"h"+y3, new ArrayList<Element>(), true, null, null);
 
-			List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+			List<Element> contents = new ArrayList<Element>();
 			boolean fail = false;
 			for (int x = x1; x <= x3; x++) {
 				for (int y = y1; y <= y3; y++) {
-					Kite9XMLElement contained = space[x][y];
+					Element contained = space[x][y];
 					if (contained != null) {
 						contents.add(contained);
 					}
@@ -139,7 +130,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 			
 			if (!fail) {
 				
-				for (Kite9XMLElement connected : contents) {
+				for (Element connected : contents) {
 					c.appendChild(connected);
 					items.remove(connected);
 					//System.out.println("Context "+c+" contains "+contents);
@@ -154,7 +145,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 		}
 		
 
-		Set<Kite9XMLElement> cl = new LinkedHashSet<Kite9XMLElement>(size*size);
+		Set<Element> cl = new LinkedHashSet<Element>(size*size);
 		cl.addAll(contexts);
 		cl.addAll(items);
 		m.connections = connections;

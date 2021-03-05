@@ -11,7 +11,9 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.LabelPlacement;
@@ -36,7 +38,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		createLink(going, g1, g4);
 		createLink(going, g2, g3);
 		createLink(going, g0, g3);
-		
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
@@ -76,7 +78,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 		createLink(going, g4, gn4);
 		createLink(going, g5, gn4);
-		
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2),dl, null);
 		return d;
 	}
@@ -129,7 +131,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 		new Link(a5, g6, null, null, null, null, going);
 		new Link(a6, g6, null, null, null, null, going);
-		
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2, cona), dl, null);
 		return d;
 	}
@@ -178,7 +180,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		new Link(a6, g5, null, null, null, null, going);
 		new Link(a7, g6, null, null, null, null, going);
 		new Link(a8, g6, null, null, null, null, going);
-		
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", HelpMethods.listOf(con1, con2, con3, cona),dl, null);
 		return d;
 	}
@@ -210,7 +212,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		
 	}
 
-	private boolean assertDirection(Kite9XMLElement d2, Direction d) {
+	private boolean assertDirection(Element d2, Direction d) {
 		try {
 			DiagramAssert.assertInDirection(d, 
 					getById("g5", d2), 
@@ -272,8 +274,10 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_36_14_SimpleCombSlackAllButOrdered() throws Exception {
 		DiagramKite9XMLElement d = doSimpleComb(null, null, null, false);
-		Kite9XMLElement d2 = renderDiagram(d);
-		if ((assertDirection(d2, Direction.UP) || assertDirection(d2, Direction.DOWN))) {
+		renderDiagram(d);
+		Document doc = Kite9SVGTranscoder.lastOutputDocument;
+		Element t = doc.getDocumentElement();
+		if ((assertDirection(t, Direction.UP) || assertDirection(t, Direction.DOWN))) {
 			// ok
 		}  else {
 			throw new DiagramChecker.ExpectedLayoutException("Should be up or down");

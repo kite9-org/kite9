@@ -1,12 +1,9 @@
 package org.kite9.diagram.dom;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import org.apache.batik.dom.util.SAXDocumentFactory;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
@@ -14,12 +11,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.batik.dom.util.SAXDocumentFactory;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import java.io.*;
 
 /**
  * Utility methods for converting to and from XML in the expected format.
@@ -70,23 +62,23 @@ public class XMLHelper {
 		}
 	}
 
-	public ADLDocument fromXML(String s)  {
+	public Document fromXML(String s)  {
 		return fromXML(new StringReader(s));
 	}
 	
 
-	public ADLDocument fromXML(Reader s) {
+	public Document fromXML(Reader s) {
 		try {
 			SAXDocumentFactory sdf = new SAXDocumentFactory(new ADLExtensibleDOMImplementation(), null);
 			Document d = sdf.createDocument(null, s);
-			return (ADLDocument) d;		
+			return  d;
 		} catch (IOException e) {
 			throw new Kite9XMLProcessingException("Couldn't parse xml: ", e);
 		}
 
 	}
 
-	public ADLDocument fromXML(InputStream s) {
+	public Document fromXML(InputStream s) {
 		return fromXML(new InputStreamReader(s));
 	}
 

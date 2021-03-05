@@ -1,12 +1,12 @@
 package org.kite9.diagram.adl;
 
+import org.kite9.diagram.model.DiagramElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
-import org.kite9.diagram.model.DiagramElement;
-import org.w3c.dom.Node;
 
 /**
  * TODO: rename to text-box.  This is a formatted area containing text, and could
@@ -26,7 +26,7 @@ public class TextLine extends AbstractMutableXMLElement {
 		this.tagName = "text-line";
 	}
 	
-	public TextLine(String text, ADLDocument doc) {
+	public TextLine(String text, Document doc) {
 		this(null, "text-line", text, doc);
 	}
 
@@ -38,7 +38,7 @@ public class TextLine extends AbstractMutableXMLElement {
 		this(text, TESTING_DOCUMENT);
 	}
 	
-	public TextLine(String id, String tag, String text, ADLDocument doc) {
+	public TextLine(String id, String tag, String text, Document doc) {
 		super(id, tag, doc);
 		setText(text);
 	}
@@ -47,11 +47,11 @@ public class TextLine extends AbstractMutableXMLElement {
 		this(id, tag, text, TESTING_DOCUMENT);
 	}
 
-	public Kite9XMLElement getSymbols() {
+	public Element getSymbols() {
 		return getProperty("symbols");
 	}
 	
-	public void setSymbols(Kite9XMLElement syms) {
+	public void setSymbols(Element syms) {
 		replaceProperty("symbols", syms);
 	}
 	

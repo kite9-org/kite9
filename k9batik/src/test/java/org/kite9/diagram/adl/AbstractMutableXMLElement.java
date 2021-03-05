@@ -1,33 +1,69 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractReferencingKite9XMLElement;
+import org.apache.batik.dom.AbstractDocument;
+import org.apache.batik.dom.GenericDOMImplementation;
+import org.apache.batik.dom.GenericDocument;
+import org.apache.batik.dom.GenericElement;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.Text;
+import org.w3c.dom.*;
 
-public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9XMLElement {
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * Used only in test methods.
-	 */
-	public static ADLDocument TESTING_DOCUMENT = new ADLDocument();
-	
-	public AbstractMutableXMLElement(String id, String tag, ADLDocument doc) {
+public abstract class AbstractMutableXMLElement extends GenericElement {
+
+    public static String TRANSFORM;
+
+    public static DOMImplementation DOM_IMPLEMENTATION;
+
+	public static GenericDocument newDocument() {
+		return new GenericDocument(null, DOM_IMPLEMENTATION);
+	}
+
+	public static GenericDocument TESTING_DOCUMENT;
+
+	public static List<Element> CONNECTION_ELEMENTS = new ArrayList<>();
+
+	public static int nextId = 100;
+
+	protected String tagName;
+
+	public String getNodeName() {
+		return tagName;
+	}
+
+	@Override
+	public String getLocalName() {
+		return getNodeName();
+	}
+
+	public String getXMLId() {
+		return getId();
+	}
+
+	public final String getID() {
+		return getAttribute("id");
+	}
+
+	public static String getID(Element e) {
+		return e.getAttribute("id");
+	}
+
+	public AbstractMutableXMLElement(String id, String tag, Document doc) {
 		this(tag, doc);
+		this.tagName = tag;
 		
 		if ((id == null) || (id.length()==0)) {
-			id = doc.createUniqueId();
+			id = createID();
 		}
 		
 		setID(id);
 	}
 	
 
-	protected synchronized String createID() {
-		return getOwnerDocument().createUniqueId();
+	public static synchronized String createID() {
+		return ""+(nextId++);
 	}
 	
 
@@ -41,8 +77,8 @@ public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9
 		super();
 	}
 
-	public AbstractMutableXMLElement(String name, ADLDocument owner) {
-		super(name, owner);
+	public AbstractMutableXMLElement(String name, Document owner) {
+		super( name, (AbstractDocument) owner);
 	}
 
 	@Override
@@ -54,8 +90,8 @@ public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9
 		}		
 	}
 
-	public void setOwnerDocument(ADLDocument doc) {
-		this.ownerDocument = doc;
+	public void setOwnerDocument(Document doc) {
+		this.ownerDocument = (AbstractDocument) doc;
 	}
 	
 
@@ -89,7 +125,7 @@ public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9
 		}
 	
 		((AbstractMutableXMLElement)e).setTagName(propertyName);
-		((AbstractMutableXMLElement)e).setOwnerDocument((ADLDocument) this.ownerDocument); 
+		((AbstractMutableXMLElement)e).setOwnerDocument((Document) this.ownerDocument);
 		
 		if (!e.getNodeName().equals(propertyName)) {
 			throw new Kite9ProcessingException("Incorrect name.  Expected "+propertyName+" but was "+e.getNodeName());
@@ -102,6 +138,50 @@ public abstract class AbstractMutableXMLElement extends AbstractReferencingKite9
 		this.appendChild(e);
 		
 		return e;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public <E extends Element> E getProperty(String name) {
+		E found = null;
+		for (int i = 0; i < getChildNodes().getLength(); i++) {
+			Node n = getChildNodes().item(i);
+			if ((n instanceof Element) && (((Element)n).getTagName().equals(name))) {
+				if (found == null) {
+					found = (E) n;
+				} else {
+					throw new Kite9XMLProcessingException("Not a unique node name: "+name, this);
+				}
+			}
+		}
+
+		return found;
+	}
+
+	protected String getTextData() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < getChildNodes().getLength(); i++) {
+			Node n = getChildNodes().item(i);
+			if (n instanceof Text) {
+				sb.append(((Text) n).getData());
+			}
+		}
+
+		return sb.toString().trim();
+	}
+
+	public static List<Element> iterator(Element from) {
+		final List<Element> elems = new ArrayList<Element>();
+
+		NodeList nl = from.getChildNodes();
+		for (int i = 0; i < nl.getLength(); i++) {
+			Node item = nl.item(i);
+			if (item instanceof Element) {
+				elems.add((Element) item);
+			}
+		}
+
+		return elems;
 	}
 
 }

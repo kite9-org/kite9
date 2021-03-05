@@ -14,7 +14,7 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 
 public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
@@ -22,11 +22,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_27_1_LooseOrdering() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 10, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][1], out[0][4], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -47,11 +47,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	@Test
 	@Ignore("Stack overflow issue")
 	public void test_27_2_ZigZag() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][1], out[0][2], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -70,11 +70,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_27_3_BigE() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 5, 2, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -102,11 +102,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	@Test
     /** @see http://www.kite9.com/content/non-optimal-creation-routes-ie-one-route-prevents-another */
 	public void test_27_4_BigPatch() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 9, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -124,11 +124,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_27_5_SimpleC() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 6, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -144,11 +144,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_27_6_Inner() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new HopLink(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -172,11 +172,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_27_7_HopOver() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 9, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		// top row
@@ -202,11 +202,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_27_9_NaziCross() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 9, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -226,11 +226,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_27_10_BuddiesWithDirection() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 7, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][0], out[0][1], LinkEndStyle.ARROW, null, null, null, Direction.RIGHT);
@@ -250,11 +250,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	public void test_27_11_NotAdjacentConnections() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		// first row
@@ -281,11 +281,11 @@ public class Test27VertexOrderingDirected extends AbstractLayoutFunctionalTest {
 	@Test
 	@Ignore("Currently failing in travis")
 	public void test_27_12_ZigZagUD() throws Exception {
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", 8, 1, contents, null);
 
 		Context overall = new Context("co", contents, true, null, null);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 
 		new Link(out[0][1], out[0][2], LinkEndStyle.ARROW, null, null, null, Direction.DOWN);

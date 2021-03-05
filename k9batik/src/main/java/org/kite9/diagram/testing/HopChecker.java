@@ -1,6 +1,5 @@
 package org.kite9.diagram.testing;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
@@ -15,9 +14,9 @@ public class HopChecker {
 		
 	}
 
-	public static void checkHops(Kite9XMLElement d, final HopAction ca) {
+	public static void checkHops(Diagram d, final HopAction ca) {
 		DiagramElementVisitor dev = new DiagramElementVisitor();
-		dev.visit((Diagram) d.getDiagramElement(), new VisitorAction() {
+		dev.visit(d, new VisitorAction() {
 
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {

@@ -1,11 +1,9 @@
 package org.kite9.diagram.common;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.w3c.dom.Element;
 
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelpMethods {
 
@@ -17,9 +15,9 @@ public class HelpMethods {
     	return out;
     }
     
-    public static List<Kite9XMLElement> listOf(Kite9XMLElement... d1) {
-    	ArrayList<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>();
-    	for (Kite9XMLElement x : d1) {
+    public static List<Element> listOf(Element... d1) {
+    	ArrayList<Element> out = new ArrayList<Element>();
+    	for (Element x : d1) {
     		out.add(x);
     	}
     	return out;

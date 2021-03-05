@@ -10,7 +10,8 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Diagram;
@@ -37,7 +38,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(b, two);
 		new Link(c, three);
 		new Link(c, one, null, null, LinkEndStyle.ARROW, null, Direction.UP);
-		
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList( one, b, two, c, three), null);
 		renderDiagram(d);
 	}
@@ -94,12 +95,12 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 	
 	@Test
     public void test_9_4_HierarchicalContainers() throws Exception {
-		Kite9XMLElement one = new Glyph("Stereo", "one", null, null);
-		Kite9XMLElement two = new Glyph("Stereo", "two", null, null);
-		Kite9XMLElement con1 = new Context("b1", createList(one), true, null, null);
-		Kite9XMLElement con2 = new Context("b2", createList(two), true, null, null);
-		Kite9XMLElement con3 = new Context("b3", createList(con1, con2), true, null, null);
-			
+		Element one = new Glyph("Stereo", "one", null, null);
+		Element two = new Glyph("Stereo", "two", null, null);
+		Element con1 = new Context("b1", createList(one), true, null, null);
+		Element con2 = new Context("b2", createList(two), true, null, null);
+		Element con3 = new Context("b3", createList(con1, con2), true, null, null);
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram",createList(con3), null);
 		renderDiagram(d);
     }
@@ -154,9 +155,10 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		new Link(one, four, null, null, null, null, d);
 		
 		
-		Kite9XMLElement d1 = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
-		Kite9XMLElement d2 = renderDiagram(d1);
-		new DiagramElementVisitor().visit((Diagram) d2.getDiagramElement(), new VisitorAction() {
+		Element d1 = new DiagramKite9XMLElement("The Diagram",createList(one, two, three, four), null);
+		renderDiagram(d1);
+
+		new DiagramElementVisitor().visit(Kite9SVGTranscoder.lastDiagram, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement de) {

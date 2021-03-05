@@ -17,7 +17,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -51,7 +51,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	}
 	
 	private Context createMockSupergrid(int size) {
-		List<Kite9XMLElement> contents = new ArrayList<>();
+		List<Element> contents = new ArrayList<>();
 		Context[][] elems = new Context[size][];
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Context[size];
@@ -84,7 +84,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	}
 
 	private Grid createSupergrid(boolean addContentLink, int size) {
-		List<Kite9XMLElement> contents = new ArrayList<>();
+		List<Element> contents = new ArrayList<>();
 		Cell[][] elems = new Cell[size][];
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Cell[size];
@@ -139,7 +139,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx)));
 	}
 	
-	private List<Kite9XMLElement> createGlyphContents(String text) {
+	private List<Element> createGlyphContents(String text) {
 		return Collections.singletonList(new Glyph(null, text, null, null));
 	}
 
@@ -179,7 +179,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		return ctx;
 	}
 	
-	public static List<Kite9XMLElement> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+	public static List<Element> createSquareGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Cell tl = new Cell("tl", listOf(g1));
 		Cell tr = new Cell("tr", listOf(g2));
 		Cell bl = new Cell("bl", listOf(g3));
@@ -191,7 +191,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		bl.setAttribute("style", "kite9-occupies: 0 1");
 		br.setAttribute("style", "kite9-occupies: 1 1");
 		
-		List<Kite9XMLElement> contexts = Arrays.asList(tl, tr, bl, br);
+		List<Element> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
 	}
 
@@ -255,7 +255,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -275,7 +275,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -291,7 +291,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -307,7 +307,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -323,7 +323,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -339,7 +339,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -355,7 +355,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -374,7 +374,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -391,7 +391,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("three", "","three ", null, null);
 		Glyph g4 = new Glyph("four", "","four ", null, null);
 		Glyph g5 = new Glyph("five", "","five ", null, null);
-		List<Kite9XMLElement> contexts = createSquareGridContext(g1, g2, g3, g4);
+		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
 		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
 		
@@ -548,7 +548,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	public void test_51_29_MassiveGridNoLinks() throws Exception {
 		//Kite9Log.setLogging(Destination.OFF);
 		List<Glyph> glyphs = new ArrayList<Glyph>();
-		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
+		List<Element> cells = new ArrayList<Element>();
 		
 		for (int i = 0; i < 100; i++) {
 			Glyph g = new Glyph("g"+i,"", ""+i, null, null);
@@ -568,7 +568,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	public void test_51_30_MassiveGridAndLink() throws Exception {
 		//Kite9Log.setLogging(Destination.STREAM);
 		List<Glyph> glyphs = new ArrayList<Glyph>();
-		List<Kite9XMLElement> cells = new ArrayList<Kite9XMLElement>();
+		List<Element> cells = new ArrayList<Element>();
 		
 		for (int i = 0; i < 36; i++) {
 			Glyph g = new Glyph("g"+i,"", ""+i, null, null);

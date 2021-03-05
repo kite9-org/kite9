@@ -13,7 +13,7 @@ import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.logging.Kite9LogImpl;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -29,7 +29,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 	
 	public void testGrid(int glyphs, int containers, Layout withinContainer, Layout overallL, Direction d) throws Exception {
 		Random r = new Random(101);
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", glyphs, containers, contents, withinContainer);
 		
 		for (int i = 0; i < glyphs; i++) {
@@ -38,18 +38,18 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 			}
 		}
 		
-		for (Kite9XMLElement c : contents) {
+		for (Element c : contents) {
 			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, overallL);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 		
 		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 
-	private void shuffleElements(Random r, Kite9XMLElement c) {
+	private void shuffleElements(Random r, Element c) {
 		NodeList l = c.getChildNodes();
 		List<Node> items = new ArrayList<>(l.getLength());
 		for (int i = 0; i < l.getLength(); i++) {
@@ -115,7 +115,7 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 		Kite9LogImpl.setLogging(Destination.OFF);
 		Random r = new Random(101);
 		int n = 30;
-		List<Kite9XMLElement> contents = new ArrayList<Kite9XMLElement>();
+		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", n, 3, contents, Layout.HORIZONTAL);
 		
 		for (int i = 0; i < n; i++) {
@@ -126,12 +126,12 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 		
 		((Context)contents.get(0)).setLayoutDirection(Layout.RIGHT);
 		
-		for (Kite9XMLElement c : contents) {
+		for (Element c : contents) {
 			shuffleElements(r, c);
 		}
 		
 		Context overall = new Context("co", contents, true, null, Layout.VERTICAL);
-		List<Kite9XMLElement> out2 = new ArrayList<Kite9XMLElement>();
+		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
 		
 		renderDiagram(new DiagramKite9XMLElement(out2, null));

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -20,20 +21,20 @@ import org.w3c.dom.Node;
  */
 public class ContainerProperty extends AbstractMutableXMLElement {
 
-	public ContainerProperty(String id, String part, ADLDocument d) {
+	public ContainerProperty(String id, String part, Document d) {
 		super(id, part, d);
 	}
 	
-	public ContainerProperty(String id, String part, ADLDocument d, Collection<? extends Kite9XMLElement> contents) {
+	public ContainerProperty(String id, String part, Document d, Collection<? extends Element> contents) {
 		this(id, part, d);
-		for (Kite9XMLElement e : contents) {
+		for (Element e : contents) {
 			appendChild(e);
 		}
 	}
 
 	@Override
 	protected Node newNode() {
-		return new ContainerProperty(createID(), tagName, (ADLDocument) ownerDocument);
+		return new ContainerProperty(createID(), tagName, (Document) ownerDocument);
 	}
 
 	public int size() {
@@ -50,9 +51,9 @@ public class ContainerProperty extends AbstractMutableXMLElement {
 		}
 	}
 	
-	public List<Kite9XMLElement> asList() {
-		ArrayList<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>(size());
-		for (Kite9XMLElement e : this) {
+	public List<Element> asList() {
+		ArrayList<Element> out = new ArrayList<Element>(size());
+		for (Element e : iterator(this)) {
 			out.add(e);
 		}
 		return out;

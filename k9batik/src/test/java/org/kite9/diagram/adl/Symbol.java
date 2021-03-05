@@ -1,7 +1,7 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.model.DiagramElement;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public class Symbol extends AbstractMutableXMLElement {
@@ -30,7 +30,7 @@ public class Symbol extends AbstractMutableXMLElement {
 		this.tagName = "symbol";
 	}
 
-	public Symbol(String text, char preferredChar, SymbolShape shape, ADLDocument doc) {
+	public Symbol(String text, char preferredChar, SymbolShape shape, Document doc) {
 		super(null, "symbol", doc);
 		setTextContent(""+text);
 		setChar(preferredChar);
@@ -77,7 +77,7 @@ public class Symbol extends AbstractMutableXMLElement {
 
 	@Override
 	protected Node newNode() {
-		return new Symbol("new", 'n', SymbolShape.CIRCLE, (ADLDocument) ownerDocument);
+		return new Symbol("new", 'n', SymbolShape.CIRCLE, (Document) ownerDocument);
 	}
 
 	public void setText(String text) {

@@ -79,7 +79,7 @@ abstract class AbstractModelDiagramElement(
 
     override fun initContents(): MutableList<DiagramElement> {
         val contents: MutableList<DiagramElement> = mutableListOf()
-        for (de in ctx.getChildDiagramElements(theElement, this)) {
+        for (de in ctx.getChildDiagramElements(this)) {
             if (de is Connection) {
                 registerConnection(de)
             } else {

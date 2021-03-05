@@ -1,12 +1,12 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.model.style.LabelPlacement;
+import org.w3c.dom.Document;
 
 public class TextLabel extends TextLine {
 
-	public TextLabel(String text, ADLDocument doc) {
-		super(TESTING_DOCUMENT.createUniqueId(), "label", text, doc);
+	public TextLabel(String text, Document doc) {
+		super(AbstractMutableXMLElement.createID(), "label", text, doc);
 	}
 
 	public TextLabel(String text) {

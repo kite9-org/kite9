@@ -13,7 +13,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Grid;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 
 
@@ -51,7 +51,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 	
 	private Grid createSupergrid(boolean addLinks, boolean addContentLink, int size) {
-		List<Kite9XMLElement> contents = new ArrayList<>();
+		List<Element> contents = new ArrayList<>();
 		Cell[][] elems = new Cell[size][];
 		for (int i = 0; i < elems.length; i++) {
 			elems[i] = new Cell[size];

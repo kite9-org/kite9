@@ -14,7 +14,7 @@ import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.common.HelpMethods;
 
@@ -114,7 +114,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 	public static final String[] STYLES = {"ARROW", "ARROW-OPEN", "CIRCLE", "GAP", "NONE", "DIAMOND", "DIAMOND-OPEN", "BARBED-ARROW"};
 	@Test 
 	public void test_39_9_AllTheTerminators2012() throws Exception {
-		List<Kite9XMLElement> elems = new ArrayList<Kite9XMLElement>();
+		List<Element> elems = new ArrayList<Element>();
 		
 		for (String s : STYLES) {
 			Glyph a = new Glyph("", "A", null, null);
@@ -132,7 +132,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 			elems.add(d);
 			elems.add(e);
 		}
-		
+
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement(elems, null);
 		renderDiagram(d);
 
@@ -152,8 +152,8 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		new Link(g1, c1, LinkEndStyle.CIRCLE, null, LinkEndStyle.CIRCLE, null, Direction.RIGHT);	
 		new Link(g2, c2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null, Direction.RIGHT);	
 		new Link(g3, c3, LinkEndStyle.GAP, null, LinkEndStyle.GAP, null, Direction.LEFT);	
-		new Link(g4, c4, LinkEndStyle.NONE, null, LinkEndStyle.NONE, null, Direction.LEFT);	
-		
+		new Link(g4, c4, LinkEndStyle.NONE, null, LinkEndStyle.NONE, null, Direction.LEFT);
+
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(g1, c1, g2, c2, g3, c3, g4, c4), null);
 		//d.setLayoutDirection(Layout.RIGHT);
 		return d;

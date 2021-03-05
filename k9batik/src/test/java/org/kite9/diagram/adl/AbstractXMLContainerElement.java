@@ -1,8 +1,8 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Layout;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public abstract class AbstractXMLContainerElement extends AbstractMutableXMLElement {
 
@@ -10,16 +10,16 @@ public abstract class AbstractXMLContainerElement extends AbstractMutableXMLElem
 		super();
 	}
 
-	public AbstractXMLContainerElement(String name, ADLDocument owner) {
+	public AbstractXMLContainerElement(String name, Document owner) {
 		super(name, owner);
 	}
 
-	public AbstractXMLContainerElement(String id, String tag, ADLDocument doc) {
+	public AbstractXMLContainerElement(String id, String tag, Document doc) {
 		super(id, tag, doc);
 	}
 	
 
-	public void addLabel(Kite9XMLElement label) {
+	public void addLabel(Element label) {
 		if (label != null) {
 			appendChild(label);
 		}

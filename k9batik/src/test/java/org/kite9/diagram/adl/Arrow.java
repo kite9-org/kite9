@@ -1,7 +1,7 @@
 package org.kite9.diagram.adl;
 
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -20,16 +20,16 @@ public class Arrow extends AbstractMutableXMLElement {
 		this.tagName = "arrow";
 	}
 		
-	public Kite9XMLElement getLabel() {
+	public Element getLabel() {
 		return getProperty("label");
 	}
 
-	public void setLabel(Kite9XMLElement name) {
+	public void setLabel(Element name) {
 		replaceProperty("label", name);
 	}
 
 	
-	public Arrow(String id, String label, ADLDocument doc) {
+	public Arrow(String id, String label, Document doc) {
 		super(id, "arrow", doc);
 
 		if (label != null) {

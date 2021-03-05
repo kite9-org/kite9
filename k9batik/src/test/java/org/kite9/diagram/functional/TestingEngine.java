@@ -11,7 +11,6 @@ import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.fraction.LongFraction;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Container;
@@ -66,7 +65,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkMidConnection = true;
 	}
 	
-	public void testDiagram(Kite9XMLElement d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
+	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
 			Planarization pln = null;
@@ -113,11 +112,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			if (c.checkLayout) {
-				testLayout((Container) d.getDiagramElement());
+				testLayout(d);
 			}
 			
 			if (c.checkOcclusion) {
-				checkOverlap((Diagram) d.getDiagramElement());
+				checkOverlap(d);
 			}
 	
 			// check the outputs. only going to check final diagrams now
@@ -140,8 +139,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testConnectionsMeetConnecteds(Kite9XMLElement d, final boolean checkMidConnection) {
-		Diagram d2 = (Diagram) d.getDiagramElement();
+	public static void testConnectionsMeetConnecteds(Diagram d2, final boolean checkMidConnection) {
 		new DiagramElementVisitor().visit(d2, new VisitorAction() {
 			
 			@Override
@@ -316,7 +314,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	public static void testConnectionPresence(Kite9XMLElement d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
+	public static void testConnectionPresence(Diagram d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
 		final Set<Connection> notPresent = new HashSet<>();
 
 		ConnectionAction ca = new ConnectionAction() {
@@ -375,7 +373,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void testHopCount(Kite9XMLElement d) {
+	public static void testHopCount(Diagram d) {
 		HopChecker.checkHops(d, new HopAction() {
 
 			@Override

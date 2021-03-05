@@ -1,10 +1,10 @@
 package org.kite9.diagram.adl;
 
-import java.util.List;
-
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 
 /**
@@ -27,11 +27,11 @@ public class Cell extends AbstractXMLContainerElement {
 		this.tagName = "cell";
 	}
 	
-	public Cell(String id, List<Kite9XMLElement> contents, ADLDocument doc) {
+	public Cell(String id, List<Element> contents, Document doc) {
 		super(id, "cell", doc);
 		
 		if (contents != null) {
-			for (Kite9XMLElement contained : contents) {
+			for (Element contained : contents) {
 				if (contained != null) {
 					appendChild(contained);
 				}
@@ -40,7 +40,7 @@ public class Cell extends AbstractXMLContainerElement {
 
 	}
 
-	public Cell(String id, List<Kite9XMLElement> contents) {
+	public Cell(String id, List<Element> contents) {
 		this(id, contents, TESTING_DOCUMENT);
 	}
 

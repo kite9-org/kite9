@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.kite9.diagram.adl.Symbol.SymbolShape;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.AbstractStyledKite9XMLElement;
+import org.w3c.dom.Document;
+
 
 /**
  * Helps in the creation of keys by making sure that symbols don't reuse the
@@ -56,13 +56,13 @@ public class KeyHelper {
 
 	Set<UsedKey> used = new HashSet<UsedKey>();
 	Map<String, Symbol> declared = new HashMap<String, Symbol>();
-	private ADLDocument doc;
+	private Document doc;
 	
 	public KeyHelper() {
 		this(AbstractMutableXMLElement.TESTING_DOCUMENT);
 	}
 
-	public KeyHelper(ADLDocument doc) {
+	public KeyHelper(Document doc) {
 		this.doc = doc;
 	}
 

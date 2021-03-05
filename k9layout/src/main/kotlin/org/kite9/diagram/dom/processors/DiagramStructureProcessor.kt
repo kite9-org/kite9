@@ -1,18 +1,17 @@
-package org.kite9.diagram.js.processors
+package org.kite9.diagram.dom.processors
 
-import org.kite9.diagram.dom.processors.AbstractInlineProcessor
-import org.kite9.diagram.js.bridge.JSElementContext
-import org.kite9.diagram.js.model.JSDiagramElementFactory
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
+import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.w3c.dom.Element
 
-class DiagramStructureProcessor(val ef : JSDiagramElementFactory, val ctx: JSElementContext) : AbstractInlineProcessor() {
+class DiagramStructureProcessor(val ef : DiagramElementFactory<Element>, val ctx: ElementContext) : AbstractInlineProcessor() {
 
     var first : Diagram? = null
 
     override fun processTag(n: Element): Element {
-        val parent = getParentDiagramElement(n.parentElement)
+        val parent = getParentDiagramElement(n.parentNode as? Element)
         val de = ef.createDiagramElement(n, parent)
         if (first == null) {
             if (de is Diagram) {
@@ -39,6 +38,6 @@ class DiagramStructureProcessor(val ef : JSDiagramElementFactory, val ctx: JSEle
             return ctx.getRegisteredDiagramElement(n)
         }
 
-        return getParentDiagramElement(n.parentElement)
+        return getParentDiagramElement(n.parentNode as? Element)
     }
 }

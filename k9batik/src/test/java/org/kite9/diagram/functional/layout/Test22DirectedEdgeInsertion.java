@@ -14,7 +14,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TextLine;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.mgt.builder.DirectedEdgePlanarizationBuilder;
@@ -31,7 +31,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_1_UnconnectedWindows() throws Exception {
-		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
+		List<Element> glyphs = new ArrayList<Element>();
 		GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 
@@ -43,7 +43,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_2_NextToWindows() throws Exception {
-		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
+		List<Element> glyphs = new ArrayList<Element>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 
@@ -57,7 +57,7 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_22_3_EmbeddedToWindows() throws Exception {
-		List<Kite9XMLElement> glyphs = new ArrayList<Kite9XMLElement>();
+		List<Element> glyphs = new ArrayList<Element>();
 		Glyph[][] a = GraphConstructionTools.createGrid("a", 2, 2, glyphs, true);
 		Glyph[][] b = GraphConstructionTools.createGrid("b", 2, 2, glyphs, true);
 

@@ -45,14 +45,14 @@ public abstract class ValueReplacingCopier extends BasicCopier {
 
 	protected abstract boolean canValueReplace(Node n);
 
-	protected Text processText(Text n) {
-		Text out = super.processText(n);
-		if (canValueReplace(out)) {
-			String newData = vr.performValueReplace(out.getData(), n);
-			out.setData(newData);
-		}
-		return out;		
-	}
+//	protected Text processText(Text n) {
+//		Text out = super.processText(n);
+//		if (canValueReplace(out)) {
+//			String newData = vr.performValueReplace(out.getData(), n);
+//			out.setData(newData);
+//		}
+//		return out;
+//	}
 
 	
 	

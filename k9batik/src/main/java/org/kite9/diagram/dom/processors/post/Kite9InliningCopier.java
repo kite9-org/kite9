@@ -1,10 +1,6 @@
 package org.kite9.diagram.dom.processors.post;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
+import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.anim.dom.SVGOMScriptElement;
 import org.apache.batik.anim.dom.SVGOMStyleElement;
 import org.apache.batik.bridge.UserAgent;
@@ -16,13 +12,20 @@ import org.apache.batik.dom.AbstractNode;
 import org.apache.batik.util.Base64EncoderStream;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.bridge.ElementContext;
+import org.kite9.diagram.dom.processors.AbstractInlineProcessor;
+import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
+import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGImageElement;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * - Removes script tags
@@ -32,12 +35,12 @@ import org.w3c.dom.svg.SVGImageElement;
  * @author robmoffat
  *
  */
-public class Kite9InliningCopier extends Kite9ExpandingCopier {
+public class Kite9InliningCopier extends DiagramPositionProcessor {
 	
 	private UserAgent ua;
 
-	public Kite9InliningCopier(String newPrefix, Document destination, PatternValueReplacer vr, UserAgent ua) {
-		super(newPrefix, destination, vr);
+	public Kite9InliningCopier(ElementContext ec, PatternValueReplacer vr, UserAgent ua) {
+		super(ec, vr);
 		this.ua = ua;
 	}
 	
@@ -45,10 +48,11 @@ public class Kite9InliningCopier extends Kite9ExpandingCopier {
 	
 	@Override
 	protected Element processTag(Element from) {
+		super.processTag(from);
 		if (from instanceof SVGOMStyleElement) {
-			Element out = getDestinationDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_STYLE_TAG);
+			//Element out = getDestinationDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_STYLE_TAG);
 			
-			CSSEngine cssEngine = ((ADLDocument) from.getOwnerDocument()).getCSSEngine();
+			CSSEngine cssEngine = ((SVGOMDocument) from.getOwnerDocument()).getCSSEngine();
 			SVGOMStyleElement style = (SVGOMStyleElement) from;
 			StyleSheet ss = (StyleSheet) style.getCSSStyleSheet();
 			StringBuilder rules = new StringBuilder();
@@ -56,9 +60,10 @@ public class Kite9InliningCopier extends Kite9ExpandingCopier {
 			
 			String contents = rules.toString();
 			
-			out.setTextContent(contents);
-			return out;
+			from.setTextContent(contents);
+			return from;
 		} else if (from instanceof SVGOMScriptElement) {
+			from.getParentNode().removeChild(from);
 			return null;
 		} else {
 			return super.processTag(from);
@@ -119,7 +124,7 @@ public class Kite9InliningCopier extends Kite9ExpandingCopier {
 	 * URLs.
 	 */
 	@Override
-	protected void processAttributes(Element from, Element context) {
+	public void processAttributes(Element from, Element context) {
 		super.processAttributes(from, context);
 		
 		if (from instanceof SVGImageElement) {

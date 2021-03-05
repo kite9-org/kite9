@@ -101,13 +101,13 @@ public class Test60Alignment extends AbstractDisplayFunctionalTest {
 	 * Result of these tests is unspecified, because it depends on the order you process the elements.
 	 * @Test
 	public void test_60_5_ContentsAlignedDifferentlyUp() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram2(Layout.UP);
+		DiagramElement d = setUpDiagram2(Layout.UP);
 		renderDiagram(d);
 	}
 	
 	@Test
 	public void test_60_6_ContentsAlignedDifferentlyLeft() throws Exception {
-		DiagramKite9XMLElement d = setUpDiagram2(Layout.LEFT);
+		DiagramElement d = setUpDiagram2(Layout.LEFT);
 		renderDiagram(d);
 	}*/
 	

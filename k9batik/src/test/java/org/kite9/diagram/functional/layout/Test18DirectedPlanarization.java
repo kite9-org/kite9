@@ -13,7 +13,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
@@ -302,7 +302,7 @@ public class Test18DirectedPlanarization extends AbstractLayoutFunctionalTest {
 		renderDiagram(diag);
 	}
 
-	private List<Kite9XMLElement> emptyContained() {
+	private List<Element> emptyContained() {
 		return Collections.emptyList();
 	}
 	@Test

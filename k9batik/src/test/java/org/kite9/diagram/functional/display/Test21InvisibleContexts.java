@@ -12,7 +12,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
+import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 
@@ -21,8 +21,8 @@ public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 	int id = 0;
 	
 	
-	List<Kite9XMLElement> createGlyphs(int count) {
-		List<Kite9XMLElement> out = new ArrayList<Kite9XMLElement>(count);
+	List<Element> createGlyphs(int count) {
+		List<Element> out = new ArrayList<Element>(count);
 		for (int i = 0; i < count; i++) {
 			id ++;
 			Glyph g = new Glyph("id"+id, "bob", "id"+id, null, null);
@@ -34,80 +34,80 @@ public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_21_1_3x3NoLinks() throws Exception {
-		List<Kite9XMLElement> row1 = createGlyphs(3);
-		List<Kite9XMLElement> row2 = createGlyphs(3);
-		List<Kite9XMLElement> row3 = createGlyphs(3);
+		List<Element> row1 = createGlyphs(3);
+		List<Element> row2 = createGlyphs(3);
+		List<Element> row3 = createGlyphs(3);
 		
 		Context c1 = new Context("ctx1", row1, false, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, false, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Kite9XMLElement) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((Element) c1, c2, c3), true, null, Layout.DOWN);
 		
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Kite9XMLElement) cc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Element) cc), null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_2_Nx3NoLinks() throws Exception {
-		List<Kite9XMLElement> row1 = createGlyphs(8);
-		List<Kite9XMLElement> row2 = createGlyphs(7);
-		List<Kite9XMLElement> row3 = createGlyphs(5);
+		List<Element> row1 = createGlyphs(8);
+		List<Element> row2 = createGlyphs(7);
+		List<Element> row3 = createGlyphs(5);
 		
 		Context c1 = new Context("ctx1", row1, false, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, false, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, false, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Kite9XMLElement) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((Element) c1, c2, c3), true, null, Layout.DOWN);
 		
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Kite9XMLElement) cc), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Element) cc), null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_3_Nx3SomeLinksWithDirectedContext() throws Exception {
-		List<Kite9XMLElement> row1 = createGlyphs(8);
-		List<Kite9XMLElement> row2 = createGlyphs(7);
-		List<Kite9XMLElement> row3 = createGlyphs(15);
+		List<Element> row1 = createGlyphs(8);
+		List<Element> row2 = createGlyphs(7);
+		List<Element> row3 = createGlyphs(15);
 		
 		Context c1 = new Context("ctx1", row1, true, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, true, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, true, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Kite9XMLElement) c1, c2, c3), true, null, Layout.DOWN);
+		Context cc = new Context("ctxn", createList((Element) c1, c2, c3), true, null, Layout.DOWN);
 		
 //		new Link(c1, c2, null, null, null, null, Direction.DOWN);
 //		new Link(c2, c3, null, null, null, null, Direction.DOWN);
 		
 		
-		new Link((Kite9XMLElement)c1.getChildNodes().item(2), (Kite9XMLElement) c2.getChildNodes().item(3), null, null, null, null, null);
+		new Link((Element)c1.getChildNodes().item(2), (Element) c2.getChildNodes().item(3), null, null, null, null, null);
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
-		new Link((Kite9XMLElement) c1.getChildNodes().item(4), (Kite9XMLElement) c3.getChildNodes().item(4), null, null, null, null, null);
+		new Link((Element) c1.getChildNodes().item(4), (Element) c3.getChildNodes().item(4), null, null, null, null, null);
 //		
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Kite9XMLElement) cc), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Element) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}
 	
 	@Test
 	public void test_21_4_Nx3SomeLinksWithLinkedContexts() throws Exception {
-		List<Kite9XMLElement> row1 = createGlyphs(8);
-		List<Kite9XMLElement> row2 = createGlyphs(7);
-		List<Kite9XMLElement> row3 = createGlyphs(15);
+		List<Element> row1 = createGlyphs(8);
+		List<Element> row2 = createGlyphs(7);
+		List<Element> row3 = createGlyphs(15);
 		
 		Context c1 = new Context("ctx1", row1, true, null, Layout.RIGHT);
 		Context c2 = new Context("ctx2", row2, true, null, Layout.RIGHT);
 		Context c3 = new Context("ctx3", row3, true, null, Layout.RIGHT);
-		Context cc = new Context("ctxn", createList((Kite9XMLElement) c1, c2, c3), true, null, null);
+		Context cc = new Context("ctxn", createList((Element) c1, c2, c3), true, null, null);
 		
 		new Link(c1, c2, null, null, null, null, Direction.DOWN);
 		new Link(c2, c3, null, null, null, null, Direction.DOWN);
 		
 		
-		new Link((Kite9XMLElement) c1.getChildNodes().item(2), (Kite9XMLElement) c2.getChildNodes().item(3), null, null, null, null, null);
+		new Link((Element) c1.getChildNodes().item(2), (Element) c2.getChildNodes().item(3), null, null, null, null, null);
 //		new Link((Connected) c1.getContents().get(4), (Connected) c2.getContents().get(3), null, null, null);
-		new Link((Kite9XMLElement) c1.getChildNodes().item(4), (Kite9XMLElement) c3.getChildNodes().item(4), null, null, null, null, null);
+		new Link((Element) c1.getChildNodes().item(4), (Element) c3.getChildNodes().item(4), null, null, null, null, null);
 //		
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Kite9XMLElement) cc), Layout.DOWN, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d", createList((Element) cc), Layout.DOWN, null);
 		renderDiagram(d);
 		
 	}

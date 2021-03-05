@@ -1,21 +1,15 @@
 package org.kite9.diagram.performance;
 
-import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.Kite9XMLElement;
 import org.kite9.diagram.model.position.Direction;
+import org.w3c.dom.Element;
+
+import java.io.IOException;
+import java.util.*;
 
 public class TestHierarchy extends AbstractPerformanceTest {
 
@@ -34,9 +28,9 @@ public class TestHierarchy extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m, int size, Direction d) {
-		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
-		List<Kite9XMLElement> allGlyphs = new ArrayList<Kite9XMLElement>();
-		Deque<Kite9XMLElement> needChildren = new ArrayDeque<Kite9XMLElement>();
+		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
+		List<Element> allGlyphs = new ArrayList<Element>();
+		Deque<Element> needChildren = new ArrayDeque<Element>();
 		
 		Glyph top = new Glyph("g"+allGlyphs.size(), null, "top", null, null);
 		allGlyphs.add(top);
@@ -51,7 +45,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 		return wrap(out);
 	}
 
-	private void createNewLevel(Glyph top, List<Kite9XMLElement> allGlyphs, int connecteds, int size, Direction d, Deque<Kite9XMLElement> needChildren) {
+	private void createNewLevel(Glyph top, List<Element> allGlyphs, int connecteds, int size, Direction d, Deque<Element> needChildren) {
 		List<Glyph> newOnes = new ArrayList<Glyph>();
 		for (int i = 0; i < size; i++) {
 			Glyph g = new Glyph("g"+allGlyphs.size(), null, "g"+allGlyphs.size(), null, null);

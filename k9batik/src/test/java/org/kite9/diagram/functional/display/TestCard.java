@@ -19,7 +19,7 @@ import org.kite9.diagram.common.HelpMethods;
 public class TestCard extends AbstractDisplayFunctionalTest {
 
 	public DiagramKite9XMLElement createTestCard() {
-//		DiagramKite9XMLElement.TESTING_DOCUMENT = new ADLDocument();
+//		DiagramElement.TESTING_DOCUMENT = new Document();
 		Symbol aDia = new Symbol("Some description\n taking multiple lines", 'a', SymbolShape.DIAMOND);
 		Symbol MDia = new Symbol("Some description blah blah blah", 'M', SymbolShape.DIAMOND);
 		Symbol QCir = new Symbol("Some description sdkjfsd flksdjf", 'Q', SymbolShape.CIRCLE);
@@ -90,9 +90,9 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 		new Link(a1, other);
 		
 		new Link(a1, withStereo);
-		
-		
-		
+
+
+
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(emptyContext, otherContext, a2, withSymbols, text1, other), k);
 		return d;
