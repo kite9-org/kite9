@@ -176,10 +176,14 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 	private Value getCSSValue(String prop, Element e) {
-		CSSEngine cssEngine = ((SVGOMDocument) e.getOwnerDocument()).getCSSEngine();
-		int idx = cssEngine.getPropertyIndex(prop);
-		Value v = cssEngine.getComputedStyle((CSSStylableElement) e, null, idx);
-		return v;
+		if (e instanceof CSSStylableElement) {
+			CSSEngine cssEngine = ((SVGOMDocument) e.getOwnerDocument()).getCSSEngine();
+			int idx = cssEngine.getPropertyIndex(prop);
+			Value v = cssEngine.getComputedStyle((CSSStylableElement) e, null, idx);
+			return v;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -192,7 +196,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public <X> X getCSSStyleEnumProperty(String prop, Element e, KClass<X> c) {
 		Value v = getCSSValue(prop, e);
-		return (X) ((EnumValue)v).getTheValue();
+		return  v == null ? null : (X) ((EnumValue)v).getTheValue();
 	}
 
 	@Override

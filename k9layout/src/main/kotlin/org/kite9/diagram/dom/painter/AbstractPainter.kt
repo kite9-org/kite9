@@ -26,7 +26,7 @@ abstract class AbstractPainter : Painter {
     }
 
     protected fun addAttributes(toUse: Element, out: Element) {
-        copyAttributes(toUse, out)
+        //copyAttributes(toUse, out)
         val id = r!!.getID()
         if (id.length > 0) {
             out.setAttribute("id", id)

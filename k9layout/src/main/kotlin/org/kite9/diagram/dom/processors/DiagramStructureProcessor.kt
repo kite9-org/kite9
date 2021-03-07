@@ -8,17 +8,13 @@ import org.w3c.dom.Element
 
 class DiagramStructureProcessor(val ef : DiagramElementFactory<Element>, val ctx: ElementContext) : AbstractInlineProcessor() {
 
-    var first : Diagram? = null
+    var diagrams = mutableListOf<Diagram>()
 
     override fun processTag(n: Element): Element {
         val parent = getParentDiagramElement(n.parentNode as? Element)
         val de = ef.createDiagramElement(n, parent)
-        if (first == null) {
-            if (de is Diagram) {
-                first = de
-            } else {
-                throw UnsupportedOperationException("Top Element not diagram! " + de)
-            }
+        if (de is Diagram) {
+            diagrams.add(de)
         }
 
         if (de != null) {

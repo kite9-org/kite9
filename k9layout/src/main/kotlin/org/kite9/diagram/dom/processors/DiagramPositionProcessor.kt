@@ -9,6 +9,7 @@ import org.w3c.dom.Element
 open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueReplacer) : AbstractInlineProcessor() {
 
     private val KITE9_NAMESPACE = "http://www.kite9.org/schema/adl"
+    private val SVG_NAMESPACE = "http://www.w3.org/2000/svg"
 
     private val noop = NullXMLProcessor()
 
@@ -40,11 +41,12 @@ open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueRepla
 
     protected fun updateAttribute(n: Element, a: Attr, newValue: String) {
         val attName = a.localName;
-        n.setAttribute(attName.substring(3), newValue)
+        n.setAttribute(attName, newValue)
     }
 
     protected fun canValueReplace(n: Attr, e: Element): Boolean {
-        return n.localName.startsWith("k9-")
+        return n.namespaceURI == KITE9_NAMESPACE
+        //return n.localName.startsWith("k9-")
     }
 
 

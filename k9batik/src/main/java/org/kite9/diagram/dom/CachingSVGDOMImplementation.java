@@ -11,6 +11,7 @@ import org.apache.batik.css.engine.value.ShorthandManager;
 import org.apache.batik.css.engine.value.ValueManager;
 import org.apache.batik.css.parser.ExtendedParser;
 import org.apache.batik.css.parser.ExtendedParserWrapper;
+import org.apache.batik.css.parser.Parser;
 import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
@@ -65,7 +66,7 @@ public class CachingSVGDOMImplementation extends SVG12DOMImplementation  impleme
 		
 		ParsedURL durl = null; // ((ADLDocument)doc).getParsedURL();
 		
-		ep = ExtendedParserWrapper.wrap(new Kite9CSSParser());
+		ep = ExtendedParserWrapper.wrap(new Parser());
 		
 		CSSEngine result = new CachingCSSEngine(doc, durl, ep, vms, sms, ctx, cache);
 		

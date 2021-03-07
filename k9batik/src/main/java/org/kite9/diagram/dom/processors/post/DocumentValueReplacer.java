@@ -13,7 +13,7 @@ import org.w3c.dom.xpath.XPathResult;
  * @author robmoffat
  *
  */
-public class DocumentValueReplacer extends PatternValueReplacer {
+public abstract class DocumentValueReplacer extends PatternValueReplacer {
 	
 	Document d;
 

@@ -13,8 +13,6 @@
 	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
 }
 
-@defs url(template.svg);
-
 /*
  * Required so we can process old XML content
  */
@@ -39,11 +37,10 @@ link {
 	--kite9-link-gutter: 10px;
 }
 
-diagram {
+svg {
 	--kite9-type: diagram;
 	--kite9-padding: 15px;
 	--kite9-traversal: none;
-	--kite9-template: url(template.svg#diagram);
 }
 
 key {

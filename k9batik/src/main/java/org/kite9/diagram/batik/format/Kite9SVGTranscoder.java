@@ -1,11 +1,11 @@
 package org.kite9.diagram.batik.format;
 
+import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
-import org.apache.batik.dom.util.DocumentFactory;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.*;
@@ -25,15 +25,12 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
 import org.kite9.diagram.dom.processors.DiagramStructureProcessor;
 import org.kite9.diagram.dom.processors.XMLProcessor;
-import org.kite9.diagram.dom.processors.post.DocumentValueReplacer;
-import org.kite9.diagram.dom.processors.post.Kite9InliningCopier;
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -50,8 +47,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -181,46 +180,47 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return doc;
 	}
 
-	private Document outputDocument;
-
 	public static Diagram lastDiagram; // for testing only
 	public static AbstractArrangementPipeline lastPipeline; // testing only
 	public static Kite9BridgeContext lastContext; //testing only
 	public static Document lastOutputDocument; // testing only
-	
+
+	private Document outputDocument;
+
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
 		try {
 			// turn into SVG
-			input = handleTransformToAdl(input);
+			Document transformed = handleTransformToAdl(input);
 
 			// prepare context + css
 			input.setDocumentURI(uri);
 			setupBridgeContext();
-			ensureCSSEngine((SVGOMDocument) input);
+			ensureCSSEngine((SVGOMDocument) transformed);
 
 			// create GVT tree
-			super.transcode(input, uri, output);
 			this.builder = new GVTBuilder();
-			GraphicsNode gvtRoot = this.builder.build(this.ctx, input);
+			GraphicsNode gvtRoot = this.builder.build(this.ctx, transformed);
 
 			// create diagram element structure
 			DiagramStructureProcessor p = new DiagramStructureProcessor(def, (Kite9BridgeContext) ctx);
-			p.processContents(input.getDocumentElement());
-			Diagram d = p.getFirst();
+			p.processContents(transformed.getDocumentElement());
+			for (Diagram d: p.getDiagrams()) {
 
-			// arrange diagram
-			BasicArrangementPipeline pipeline = new BasicArrangementPipeline(def, new BasicCompleteDisplayer(false));
-			d = pipeline.arrange(d);
-			lastDiagram = d;
-			lastPipeline = pipeline;
-			lastContext = (Kite9BridgeContext) ctx;
+				// arrange diagram
+				BasicArrangementPipeline pipeline = new BasicArrangementPipeline(def, new BasicCompleteDisplayer(false));
+				d = pipeline.arrange(d);
+				lastDiagram = d;
+				lastPipeline = pipeline;
+				lastContext = (Kite9BridgeContext) ctx;
+
+			}
+
 
 			// position diagram OR produce new output
-			XMLProcessor copier = buildOutputProcessor(input);
-			Node outputNode = copier.processContents(input.getDocumentElement());
-			this.outputDocument.appendChild(outputNode);
-			lastOutputDocument = this.outputDocument;
-
+			XMLProcessor postProcessor = buildOutputProcessor(transformed);
+			postProcessor.processContents(transformed.getDocumentElement());
+			lastOutputDocument = transformed;
+			outputDocument = transformed;
 		} catch (Exception e) {
 			String s = new XMLHelper().toXML(input);
 			log.error("Problem with XML: ",e);
@@ -235,19 +235,29 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			return input;
 		}
 
+		URI uri = new URI(template);
+		URI baseUri = uri.resolve("/");
+		URI templatePath = uri.resolve("");
+
 		// load the transform document
 		Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
 		if (trans == null) {
-			Source domSource = new DOMSource(docLoader.loadDocument(template));
-			domSource.setSystemId(template);
-			trans = transFact.newTransformer(domSource);
+			Source source = new StreamSource(new FileInputStream(template));
+			source.setSystemId(template);
+			trans = transFact.newTransformer(source);
+			trans.setParameter("base-uri", baseUri.toString());
+			trans.setParameter("template-uri", uri.toString());
+			trans.setParameter("template-path", templatePath.toString());
 			cache.set(template, TRANSFORMER, trans);
 		}
 
+		SVG12OMDocument r = new SVG12OMDocument(null, domImpl);
 		Source inSource = new DOMSource(input);
-		DOMResult result = new DOMResult();
+		DOMResult result = new DOMResult(r);
 		trans.transform(inSource, result);
-		return result.getNode().getOwnerDocument();
+		Document out = (Document) result.getNode();
+		return out;
+
 	}
 
 
@@ -257,13 +267,17 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			// in this mode, we are converting the whole diagram into a single SVG file without
 			// external references.
 			ctx.setTextAsGlyphs(true);
-			return new Kite9InliningCopier(ctx, new DocumentValueReplacer(input), getUserAgent());
+			//return new Kite9InliningCopier(ctx, new DocumentValueReplacer(input), getUserAgent());
+			throw new UnsupportedOperationException();
 		} else {
 			// this version is an "editable" svg diagram, which still uses stylesheets etc.
 			ctx.setTextAsGlyphs(false);
 			return new DiagramPositionProcessor(ctx, new XPathValueReplacer(ctx));
 		}
 	}
+
+
+
 	
 	protected void setupBridgeContext() {
 		Kite9BridgeContext ctx = createBridgeContext();

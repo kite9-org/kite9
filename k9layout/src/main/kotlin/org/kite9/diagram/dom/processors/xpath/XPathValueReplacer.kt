@@ -5,20 +5,14 @@ import org.w3c.dom.Element
 
 class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
 
-    override fun getReplacementStringValue(s: String, at: Element): String {
-        val av = replaceVariables(s, at)
-        val result = evaluateXPath(av, at)
+    override fun performValueReplace(input: String, at: Element): String {
+        val p = Regex("\\$([a-z\\-]+)")
+        val done = replacePattern(p, input, at) { s, a -> getReplacementStringValue(s.groupValues[1].toLowerCase(), a) }
+        val result = evaluateXPath(done, at)
         return result ?: ""
     }
 
-
-    fun replaceVariables(s: String, at: Element) : String {
-        val p = Regex("\\$[a-z]+")
-        val out = replacePattern(p, s, at) { mr, at -> getVariableValue(mr.groupValues[0].substring(1), at) }
-        return out
-    }
-
-    fun getVariableValue(v: String, at: Element) : String {
+    override fun getReplacementStringValue(v: String, at: Element) : String {
         var at : Element? = at;
         do {
             if (at is Element) {

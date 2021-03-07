@@ -17,7 +17,7 @@
 	<url>http://www.kite9.com</url>
 
 	<properties>
-		<batik.version>1.14.0-SNAPSHOT</batik.version>
+		<batik.version>1.14.1-SNAPSHOT</batik.version>
 	</properties>
 
 	<build>

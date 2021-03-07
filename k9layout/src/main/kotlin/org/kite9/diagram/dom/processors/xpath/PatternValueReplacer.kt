@@ -11,11 +11,6 @@ abstract class PatternValueReplacer : ValueReplacer {
 
     abstract fun getReplacementStringValue(s: String, at: Element): String
 
-    override fun performValueReplace(input: String, at: Element): String {
-        val p = Regex("\\#\\{(.*?)\\}")
-        return replacePattern(p, input, at) { s, a -> getReplacementStringValue(s.groupValues[1].toLowerCase(), a) }
-    }
-
     protected fun replacePattern(p: Regex, input: String, at: Element, replacer: (MatchResult, Element) -> String): String {
         var mr = p.find(input, 0)
         val out = StringBuilder()

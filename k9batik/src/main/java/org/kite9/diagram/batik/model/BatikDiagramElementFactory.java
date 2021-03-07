@@ -15,27 +15,30 @@ import org.w3c.dom.Element;
 
 public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<Element> {
 
-	private ElementContext context;
-
 	public BatikDiagramElementFactory(ElementContext ctx) {
 		super();
-		this.context = ctx;
+		setContext(ctx);
 	}
 
 	/**
 	 * Produces the diagram element for the underlying XML.
 	 */
 	public DiagramElement createDiagramElement(Element x, DiagramElement parent) {
-		DiagramElementType type = context.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(DiagramElementType.class));
-		RectangularElementUsage usage = context.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(RectangularElementUsage.class));
+		DiagramElementType type = getContext().getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(DiagramElementType.class));
+		RectangularElementUsage usage = getContext().getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(RectangularElementUsage.class));
+
+		if ((type == null) || (usage == null)) {
+			return null;
+		}
+
 		DiagramElement out = instantiateDiagramElement(parent, x, type, usage);
 
 		if (out != null) {
 			if (parent != null) {
-				context.addChild(parent, out);
+				getContext().addChild(parent, out);
 			}
 
-			context.register(x, out);
+			getContext().register(x, out);
 		}
 
 		return out;
