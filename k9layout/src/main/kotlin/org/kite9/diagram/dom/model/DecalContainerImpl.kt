@@ -57,6 +57,5 @@ class DecalContainerImpl(
         super.initialize()
         initLayout()
         initSizing()
-        initContents()
     }
 }

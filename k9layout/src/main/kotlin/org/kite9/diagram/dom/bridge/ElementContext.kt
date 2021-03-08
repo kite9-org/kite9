@@ -16,7 +16,7 @@ interface ElementContext {
     fun getConnectionAlignment(prop: String, e: Element): ConnectionAlignment
 
     fun addChild(parent: DiagramElement, out: DiagramElement)
-    fun getChildDiagramElements(parent: DiagramElement): List<DiagramElement>
+    fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement>
 
     // these might get removed now
     fun getReferencedElement(id: String, e: Element): DiagramElement?

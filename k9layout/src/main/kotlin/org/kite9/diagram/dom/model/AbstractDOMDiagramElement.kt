@@ -68,11 +68,6 @@ abstract class AbstractDOMDiagramElement(
             return theElement
         }
 
-    /**
-     * For elements which are containers, call this method as part of initialize.
-     */
-    protected abstract fun initContents(): List<DiagramElement?>?
-
     object Companion {
 
         var nextId: Int = 0;

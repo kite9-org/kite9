@@ -36,13 +36,10 @@ open class ConnectedContainerImpl(
         }
     }
 
-    private var contents: MutableList<DiagramElement> = mutableListOf()
-
     override fun initialize() {
         super.initialize()
         initLayout()
         initSizing()
-        contents = initContents()
     }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
@@ -67,6 +64,6 @@ open class ConnectedContainerImpl(
 
     override fun getContents(): MutableList<DiagramElement> {
         ensureInitialized()
-        return contents
+        return ctx.getChildDiagramElements(this)
     }
 }

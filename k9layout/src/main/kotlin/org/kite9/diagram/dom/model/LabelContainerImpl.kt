@@ -47,15 +47,8 @@ class LabelContainerImpl(
         }
     }
 
-    private var contents: MutableList<DiagramElement> = mutableListOf()
-
-    override fun initialize() {
-        super.initialize()
-        contents = initContents()
-    }
-
     override fun getContents(): MutableList<DiagramElement> {
         ensureInitialized()
-        return contents
+        return ctx.getChildDiagramElements(this)
     }
 }

@@ -27,11 +27,11 @@ allLinks {
 
 /* Definitions of Kite9 Elements */
 
-context, 
-diagram,
-glyph,
-arrow,
-link {
+[k9-elem=context],
+[k9-elem=diagram],
+[k9-elem=glyph],
+[k9-elem=arrow],
+[k9-elem=link] {
 	--kite9-margin: 10px;
 	--kite9-link-inset: 10px;
 	--kite9-link-gutter: 10px;
@@ -43,7 +43,7 @@ svg {
 	--kite9-traversal: none;
 }
 
-key {
+[k9-elem=key] {
 	--kite9-type: container;
 	--kite9-usage: label;
 	--kite9-padding: 3px 6px 3px 6px; 
@@ -53,7 +53,7 @@ key {
   --kite9-label-placement: bottom;
 }
 
-key body {
+[k9-elem=key] [k9-elem=body]ß {
 	--kite9-type: container;
 	--kite9-layout: grid;
 	--kite9-sizing: maximize;
@@ -61,7 +61,7 @@ key body {
 	--kite9-padding: 12px 12px 12px 12px;
 }
 
-key text-lines {
+[k9-elem=key] [k9-elem=text-lines] {
 	--kite9-type: container;
 	--kite9-sizing: maximize;
 	--kite9-layout: vertical;
@@ -78,7 +78,7 @@ key bodyText {
 
 /* GLYPH GENERAL SHAPE */
 
-glyph {
+[k9-elem=glyph] {
 	--kite9-type: container;
 	--kite9-layout: down;	
 	--kite9-template: url(template.svg#glyph);

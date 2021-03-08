@@ -32,9 +32,9 @@ class ConnectionImpl(
 
     override fun initialize() {
         super.initialize()
+        initLabelsAndDecorations()
         initReferences()
         initFromTo()
-        initContents()
         initDrawDirection()
         initRank()
         initSize()
@@ -48,8 +48,7 @@ class ConnectionImpl(
     /**
      * For elements which are containers, call this method as part of initialize.
      */
-    override fun initContents(): MutableList<DiagramElement> {
-        val contents: MutableList<DiagramElement> = mutableListOf()
+    fun initLabelsAndDecorations() {
         for (de in ctx.getChildDiagramElements(this)) {
             if (de is Terminator) {
                 val e = de.getEnd()
@@ -75,7 +74,6 @@ class ConnectionImpl(
                 }
             }
         }
-        return contents
     }
 
     protected fun initSize() {

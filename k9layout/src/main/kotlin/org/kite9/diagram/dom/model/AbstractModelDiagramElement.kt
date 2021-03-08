@@ -77,17 +77,6 @@ abstract class AbstractModelDiagramElement(
             return CostedDimension2D(left + right, up + down, UNBOUNDED)
         }
 
-    override fun initContents(): MutableList<DiagramElement> {
-        val contents: MutableList<DiagramElement> = mutableListOf()
-        for (de in ctx.getChildDiagramElements(this)) {
-            if (de is Connection) {
-                registerConnection(de)
-            } else {
-                contents.add(de)
-            }
-        }
-        return contents
-    }
 
     init {
         painter.setDiagramElement(this)

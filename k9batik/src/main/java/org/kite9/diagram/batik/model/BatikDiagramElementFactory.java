@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<Element> {
 
 	public BatikDiagramElementFactory(ElementContext ctx) {
-		super();
+		super(false);
 		setContext(ctx);
 	}
 
