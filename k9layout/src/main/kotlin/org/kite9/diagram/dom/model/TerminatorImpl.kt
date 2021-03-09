@@ -43,7 +43,7 @@ class TerminatorImpl(
     }
 
     override fun getContainer(): Container? {
-        val c = getParent() as Connection
+        val c = getConnection()
         return if (this === c.getFromDecoration()) {
             c.getFrom().getContainer()
         } else if (this === c.getToDecoration()) {

@@ -3,6 +3,7 @@ package org.kite9.diagram.dom.model
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -40,6 +41,7 @@ open class ConnectedContainerImpl(
         super.initialize()
         initLayout()
         initSizing()
+        initConnections()
     }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
@@ -60,6 +62,12 @@ open class ConnectedContainerImpl(
         } else {
             0
         }
+    }
+
+    fun initConnections() {
+        ctx.getChildDiagramElements(this)
+            .filterIsInstance<Connection>()
+            .forEach { registerConnection(it) }
     }
 
     override fun getContents(): MutableList<DiagramElement> {

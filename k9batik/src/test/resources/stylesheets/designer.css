@@ -53,7 +53,7 @@ svg {
   --kite9-label-placement: bottom;
 }
 
-[k9-elem=key] [k9-elem=body]ß {
+[k9-elem=key] [k9-elem=body] {
 	--kite9-type: container;
 	--kite9-layout: grid;
 	--kite9-sizing: maximize;
@@ -98,17 +98,16 @@ glyph symbols {
 	--kite9-margin: 5px 
 }
 
-diagram glyph label {
-	--kite9-type: container;
+[k9-elem=text-label] {
+    --kite9-usage: text;
+	--kite9-type: svg;
 	--kite9-sizing: minimize;
-	--kite9-template: url(template.svg#glyph-label-text);
 	--kite9-vertical-align: top;
-	--kite9-margin: 5px 
+	--kite9-margin: 10px;
 }
 
 glyph stereotype {
 	--kite9-type: container;
-	--kite9-template: url(template.svg#glyph-stereotype-text);
 	--kite9-vertical-align: bottom;
 	--kite9-horizontal-align: center;
 	--kite9-margin: 5px; 
@@ -133,9 +132,9 @@ symbol-text-line {
 	/* --kite9-template: url(template.svg#show-box); */
 } 
 
-key text-lines text-label,
-glyph text-lines text-label,
-symbol-text-line k9-text {
+[k9-elem=key] [k9-elem=text-lines] [k9-elem=text-label],
+[k9-elem=glyph] [k9-elem=text-lines] [k9-elem=text-label],
+[k9-elem=symbol-text-line] [k9-elem=k9-text] {
 	--kite9-horizontal-align: left;
 }
 
@@ -169,7 +168,7 @@ context > label {
 	--kite9-sizing: minimize;
 	--kite9-template: url(template.svg#container-label);
 	--kite9-padding: 4px;
-  --kite9-label-placement: bottom;
+    --kite9-label-placement: bottom;
 }
 
 grid {
@@ -195,8 +194,8 @@ cell {
 	--kite9-traversal: always;
 }
 
-toLabel, 
-fromLabel {
+[k9-elem=toLabel],
+[k9-elem=fromLabel] {
 	--kite9-usage: label;
 	--kite9-type: container; 
 	--kite9-padding: 4px; 
@@ -209,13 +208,13 @@ fromLabel {
 	fill: none;
 }
 
-toLabel,
-to {
+[k9-elem=toLabel],
+[k9-elem=to] {
 	--kite9-link-end: to;
 }
 
-fromLabel,
-from {
+[k9-elem=fromLabel],
+[k9-elem=from] {
 	--kite9-link-end: from;
 }
 
@@ -224,7 +223,7 @@ text-label {
 	--kite9-vertical-align: center;
 }
 
-link {
+[k9-elem=link] {
 	--kite9-type: link;
 	--kite9-template: url(template.svg#link);
 }
@@ -245,21 +244,21 @@ link {
 	--kite9-direction: down;
 }
 
-from,
-to {
+[k9-elem=from],
+[k9-elem=to] {
 	--kite9-type: link-end;
 	--kite9-template: url(template.svg#empty-terminator);
 	--kite9-padding: 5px;
 } 
 
-from.circle,
-to.circle {
+[k9-elem=from].circle,
+[k9-elem=to].circle {
 	--kite9-marker-start-reference: url(template.svg#circle-marker);
 	--kite9-marker-end-reference: url(template.svg#circle-marker);
 }
 
-from.arrow,
-to.arrow {
+[k9-elem=from].arrow,
+[k9-elem=to].arrow {
 	--kite9-marker-start-reference: url(template.svg#arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#arrow-end-marker);
 	--kite9-padding-top: 5px;
@@ -268,8 +267,8 @@ to.arrow {
 	--kite9-padding-left: 1px;
 }
 
-from.arrow-open,
-to.arrow-open {
+[k9-elem=from].arrow-open,
+[k9-elem=to].arrow-open {
 	--kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
 	--kite9-padding-top: 5px;
@@ -278,13 +277,13 @@ to.arrow-open {
 	--kite9-padding-left: 1px;
 }
 
-from.gap,
-to.gap {
+[k9-elem=from].gap,
+[k9-elem=to].gap {
 	--kite9-marker-reserve: 2px;
 }
 
-from.diamond, 
-to.diamond {
+[k9-elem=from].diamond,
+[k9-elem=to].diamond {
 	--kite9-marker-start-reference: url(template.svg#diamond-start-marker);
 	--kite9-marker-end-reference: url(template.svg#diamond-end-marker);
 	--kite9-padding-top: 5px;
@@ -293,8 +292,8 @@ to.diamond {
 	--kite9-padding-left: 1px;
 }
 
-from.diamond-open, 
-to.diamond-open {
+[k9-elem=from].diamond-open,
+[k9-elem=to].diamond-open {
 	--kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
 	--kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
 	--kite9-padding-top: 5px;
@@ -303,8 +302,8 @@ to.diamond-open {
 	--kite9-padding-left: 1px;
 }
 
-from.barbed-arrow, 
-to.barbed-arrow {
+[k9-elem=from].barbed-arrow,
+[k9-elem=to].barbed-arrow {
 	--kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
 	--kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
  	--kite9-padding-top: 5px;

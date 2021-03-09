@@ -225,7 +225,7 @@ class ConnectionImpl(
                 RoutePainterImpl.ReservedLengthEndDisplayer(endReserve),
                 RoutePainterImpl.CurvedCornerHopDisplayer(getCornerRadius().toFloat()), false
             )
-            return gp.toString()
+            return "'" + gp.toString() +"'"
         } else if ("markerstart" == name) {
             if (fromDecoration is TerminatorImpl) {
                 return (fromDecoration as TerminatorImpl).markerUrl

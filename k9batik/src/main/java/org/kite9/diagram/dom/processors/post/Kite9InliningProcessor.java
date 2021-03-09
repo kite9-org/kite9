@@ -35,11 +35,11 @@ import java.io.InputStream;
  * @author robmoffat
  *
  */
-public class Kite9InliningCopier extends DiagramPositionProcessor {
+public class Kite9InliningProcessor extends DiagramPositionProcessor {
 	
 	private UserAgent ua;
 
-	public Kite9InliningCopier(ElementContext ec, PatternValueReplacer vr, UserAgent ua) {
+	public Kite9InliningProcessor(ElementContext ec, PatternValueReplacer vr, UserAgent ua) {
 		super(ec, vr);
 		this.ua = ua;
 	}
@@ -48,9 +48,8 @@ public class Kite9InliningCopier extends DiagramPositionProcessor {
 	
 	@Override
 	protected Element processTag(Element from) {
-		super.processTag(from);
 		if (from instanceof SVGOMStyleElement) {
-			//Element out = getDestinationDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_STYLE_TAG);
+			Element out = from.getOwnerDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_STYLE_TAG);
 			
 			CSSEngine cssEngine = ((SVGOMDocument) from.getOwnerDocument()).getCSSEngine();
 			SVGOMStyleElement style = (SVGOMStyleElement) from;
@@ -60,8 +59,8 @@ public class Kite9InliningCopier extends DiagramPositionProcessor {
 			
 			String contents = rules.toString();
 			
-			from.setTextContent(contents);
-			return from;
+			out.setTextContent(contents);
+			return out;
 		} else if (from instanceof SVGOMScriptElement) {
 			from.getParentNode().removeChild(from);
 			return null;
