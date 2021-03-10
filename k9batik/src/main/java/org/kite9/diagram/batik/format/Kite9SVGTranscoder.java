@@ -24,6 +24,7 @@ import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
 import org.kite9.diagram.dom.processors.DiagramStructureProcessor;
+import org.kite9.diagram.dom.processors.TextWrapProcessor;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.Kite9InliningProcessor;
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer;
@@ -36,6 +37,7 @@ import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLFilter;
@@ -200,6 +202,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			// create GVT tree
 			this.builder = new GVTBuilder();
 			GraphicsNode gvtRoot = this.builder.build(this.ctx, outputDocument);
+
+			// handle text-wrapping
+			TextWrapProcessor wrapProcessor = new TextWrapProcessor((Kite9BridgeContext) this.ctx);
+			wrapProcessor.processContents(outputDocument.getDocumentElement());
 
 			// create diagram element structure
 			DiagramStructureProcessor p = new DiagramStructureProcessor(def, (Kite9BridgeContext) ctx);

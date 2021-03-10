@@ -374,7 +374,7 @@ boldText {
 
 
 /* Arrow */
-arrow {
+[k9-elem=arrow] {
 	--kite9-padding: 3px 5px 3px 5px; 
 	--kite9-margin: 10;
 	--kite9-type: container;
@@ -386,7 +386,7 @@ arrow {
 }
 
 
-arrow > label {
+[k9-elem=arrow] > [k9-elem=label] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-template: url(template.svg#arrow-label-text);
@@ -394,7 +394,7 @@ arrow > label {
 	--kite9-vertical-align: center;
 }
 
-arrow > label > contents {
+[k9-elem=arrow] > [k9-elem=label] > [k9-elem=contents] {
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: center;
 }

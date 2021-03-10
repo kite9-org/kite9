@@ -14,6 +14,7 @@ import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
+import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
@@ -28,30 +29,28 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 
 	
 	protected void transcodeSVG(String s) throws Exception {
-		// TODO: re-implement encapsulation
-//		try {
-//			TranscoderOutput out = getTranscoderOutputSVG();
-//			TranscoderInput in = getTranscoderInput(s);
-//			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE);
-//			transcoder.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
-//			transcoder.transcode(in, out);
-//
-//			Element lastDiagram = Kite9SVGTranscoder.lastDiagram;
-//			if (lastDiagram != null) {
-//				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
-//				writeTemplateExpandedSVG(lastDiagram);
-//				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
-//			}
-//			if (checkXML()) {
-//				checkIdenticalXML();
-//			}
-//		} finally {
-//			try {
-//				copyTo(getOutputFile(".svg"), "svg-output");
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
+		try {
+			TranscoderOutput out = getTranscoderOutputSVG();
+			TranscoderInput in = getTranscoderInput(s);
+			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE);
+			transcoder.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
+			transcoder.transcode(in, out);
+
+			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+			if (lastDiagram != null) {
+				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
+			}
+			if (checkXML()) {
+				checkIdenticalXML();
+			}
+		} finally {
+			try {
+				copyTo(getOutputFile(".svg"), "svg-output");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

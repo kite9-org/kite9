@@ -16,7 +16,6 @@ import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.css.CachingCSSEngine;
-import org.kite9.diagram.dom.css.Kite9CSSParser;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.w3c.css.sac.CSSException;

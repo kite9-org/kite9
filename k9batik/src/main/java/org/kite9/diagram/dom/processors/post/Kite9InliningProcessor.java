@@ -60,6 +60,8 @@ public class Kite9InliningProcessor extends DiagramPositionProcessor {
 			String contents = rules.toString();
 			
 			out.setTextContent(contents);
+			from.getParentNode().insertBefore(out, from);
+			from.getParentNode().removeChild(from);
 			return out;
 		} else if (from instanceof SVGOMScriptElement) {
 			from.getParentNode().removeChild(from);

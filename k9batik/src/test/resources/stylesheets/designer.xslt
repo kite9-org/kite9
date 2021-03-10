@@ -124,6 +124,22 @@
         </g>
     </xsl:template>
 
+    <xsl:template match="context">
+        <g k9-elem="context">
+            <xsl:copy-of select="@*" />
+            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='12' ry='12' class="context-back" />
+            <xsl:apply-templates/>
+        </g>
+    </xsl:template>
+
+    <xsl:template match='arrow'>
+        <g k9-elem="arrow">
+            <xsl:copy-of select="@*" />
+            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' style='fill: black; ' />
+            <xsl:apply-templates/>
+        </g>
+    </xsl:template>
+
     <xsl:template match="link">
         <g k9-elem="link">
             <xsl:copy-of select="@*" />
