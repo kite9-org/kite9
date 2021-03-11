@@ -152,8 +152,7 @@ show-box {
 	--kite9-type: svg;
 }
 
-context {
-	--kite9-template: url(template.svg#context);
+[k9-elem=context] {
 	--kite9-type: container;
 	--kite9-sizing: maximize;
 	--kite9-traversal: always;
@@ -161,8 +160,8 @@ context {
 	--kite9-link-inset: 12px;
 }
 
-cell > label, 
-context > label {
+[k9-elem=cell] > [k9-elem=label],
+[k9-elem=context] > [k9-elem=label] {
 	--kite9-usage: label;
 	--kite9-type: container; 
 	--kite9-sizing: minimize;

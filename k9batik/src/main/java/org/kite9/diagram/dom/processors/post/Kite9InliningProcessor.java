@@ -1,17 +1,19 @@
 package org.kite9.diagram.dom.processors.post;
 
-import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.anim.dom.SVGOMScriptElement;
-import org.apache.batik.anim.dom.SVGOMStyleElement;
+import org.apache.batik.anim.dom.*;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.ImportRule;
 import org.apache.batik.css.engine.Rule;
 import org.apache.batik.css.engine.StyleSheet;
 import org.apache.batik.dom.AbstractNode;
+import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.Base64EncoderStream;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
+import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
+import org.kite9.diagram.batik.text.ExtendedSVGGeneratorContext;
+import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.bridge.ElementContext;
@@ -22,10 +24,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGImageElement;
 
+import java.awt.geom.AffineTransform;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static org.apache.batik.util.SVGConstants.SVG_G_TAG;
+import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
 /**
  * - Removes script tags
@@ -38,19 +44,35 @@ import java.io.InputStream;
 public class Kite9InliningProcessor extends DiagramPositionProcessor {
 	
 	private UserAgent ua;
+	private Kite9BridgeContext bridge;
 
-	public Kite9InliningProcessor(ElementContext ec, PatternValueReplacer vr, UserAgent ua) {
+	public Kite9InliningProcessor(Kite9BridgeContext ec, PatternValueReplacer vr, UserAgent ua) {
 		super(ec, vr);
 		this.ua = ua;
+		this.bridge = ec;
 	}
 	
 	
 	
 	@Override
 	protected Element processTag(Element from) {
+		if (from instanceof SVGOMTextElement) {
+			// text elements are getting replaced with glyphs.
+			Document d = from.getOwnerDocument();
+			Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+			groupElem.setAttributeNS(DiagramPositionProcessor.Companion.getKITE9_NAMESPACE(), "rendered", "true");
+			ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
+			ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
+			GraphicsNode gn = bridge.getGraphicsNode(from);
+			gn.paint(g2d);
+			gn.setTransform(new AffineTransform());
+			from.getParentNode().insertBefore(groupElem, from);
+			from.getParentNode().removeChild(from);
+			return groupElem;
+		}
 		if (from instanceof SVGOMStyleElement) {
+			// the first style tag in the document will get replaced with all the styles
 			Element out = from.getOwnerDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_STYLE_TAG);
-			
 			CSSEngine cssEngine = ((SVGOMDocument) from.getOwnerDocument()).getCSSEngine();
 			SVGOMStyleElement style = (SVGOMStyleElement) from;
 			StyleSheet ss = (StyleSheet) style.getCSSStyleSheet();

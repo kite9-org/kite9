@@ -125,7 +125,7 @@
     </xsl:template>
 
     <xsl:template match="context">
-        <g k9-elem="context">
+        <g k9-elem="context" class=".context-back">
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='12' ry='12' class="context-back" />
             <xsl:apply-templates/>
