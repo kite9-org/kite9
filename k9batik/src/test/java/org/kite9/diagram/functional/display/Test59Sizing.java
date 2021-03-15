@@ -3,7 +3,12 @@ package org.kite9.diagram.functional.display;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.processors.AbstractProcessor;
+
+import java.io.File;
+import java.net.URI;
 
 public class Test59Sizing extends AbstractDisplayFunctionalTest {
 
@@ -62,14 +67,6 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	/**
-	 * Uses contents AND padding to set the size of the decal
-	 */
-	@Test
-	public void test_59_7_InsetShapeWithPadding2() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(svgLeaf(ellipse(), "--kite9-padding: 15px;"),"")));
-	}
-	
-	/**
 	 * Uses contents to set the size of the decal again
 	 */
 	@Test
@@ -90,39 +87,29 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	 */
 	@Test
 	public void test_59_10_TextAndBadge() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello something", "font-size: 33px;")+badgeDecal(),"--kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("<svg:text>hello something</svg:text>", "font-size: 33px;")+badgeDecal(),"--kite9-padding: 10px;")));
 	}
 	
 	@Test
 	public void test_59_11_TextAndScaledDecal() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "font-size: 25px;")+polyDecal(),"--kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("<svg:text>hello something else</svg:text>", "font-size: 25px;")+polyDecal(),"--kite9-padding: 10px;")));
 	}
 	
 	@Test
 	public void test_59_12_TestContainerMinimumSize() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "font-size: 25px;")+text("hello b", "font-size: 15px; --kite9-vertical-align: bottom;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
-	}
-	
-	@Test
-	public void test_59_13_TestContainerMinimumSize() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("hello something else", "font-size: 25px;")+text("hello b", "font-size: 15px; --kite9-vertical-align: bottom;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
+		renderDiagram(basicDiagram(glyphContainer(text("<svg:text>hello something else</svg:text>", "font-size: 25px;")+text("hello b", "font-size: 15px; --kite9-vertical-align: bottom;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
 	}
 	
 	@Test
 	public void test_59_14_TextAlign() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
-				text("hello something else", "font-size: 25px;")+
-				text("hello 2", "font-size: 25px;")+
-				text("bette\nmiddler", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; text-align: middle;")+
-				text("hello\n bottom", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; text-align: end;"),
+				text("<svg:text>hello something else</svg:text>", "font-size: 25px;")+
+				text("<svg:text>hello 2</svg:text>", "font-size: 25px;")+
+				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; text-align: middle;")+
+				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; text-align: end;"),
 			"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-size: 150px 150px")));
 	}
-	
-	@Test
-	public void test_59_15_TextInShape() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text(para(), "font-size: 8px;  ", textPath()),"")));
-	}
-	
+
 	@Test
 	public void test_59_16_ScaledLeaf() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(svgLeaf(scaled(ellipse()),""),"")));
@@ -131,39 +118,39 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_59_17_TextDescenders() throws Exception {
 		String frs =  "<svg:rect width=\"70pt\" height=\"400pt\" />";
-		String text1 = "hello hello hello hello";
-		String text2 = "pello hello pello";
+		String text1 = "<svg:text>hello hello hello hello</svg:text>";
+		String text2 = "<svg:text>pello hello pello</svg:text>";
 		
 		
 		renderDiagram(basicDiagram(
 				glyphContainer(
 			glyphContainer(
-				text("hello 1", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
-				text("pello 2", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
+				text("<svg:text>hello 1</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
+				text("<svg:text>pello 2</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
 			"--kite9-padding: 0px; --kite9-layout: right; --kite9-min-size: 150px 150px") +
 			glyphContainer(
-					text(text1, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px", frs)+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px", frs),
+					text(text1, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
 				"--kite9-padding: 0px; --kite9-layout: down; ")+
 			glyphContainer(
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px", frs)+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px", frs),
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
 				"--kite9-padding: 00px; --kite9-layout: down;"), "--kite9-vertical-align: top")));
 	}
 	
 	@Test
 	public void test_59_18_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
-				text("hello something else", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
-				+text("a b c d e f g h i j k l m n o p q r s t u v w x y z", "font-size: 25px; --kite9-text-bounds: 150px 100px; ")
-				+text("hello b this could be a long bit of text", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
+				text("<svg:text>hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
+				+text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 100px; ")
+				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
 	}
 	
 	@Test
 	public void test_59_19_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
-				text("hello something else", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
-				+text("hello b this could be a long bit of text", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
+				text("<svg:text style=\" white-space: pre;\" >hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
+				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
 	}
 	
 	@Test
@@ -189,49 +176,51 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	
 	private String para() {
-		return "<svg:flowDiv><svg:flowPara>Search the world's information, including webpages, images, videos and more.</svg:flowPara> "+
-			      "<svg:flowPara>Google has many special features to help you find exactly what you.</svg:flowPara></svg:flowDiv>";
-	}
-	
-	private String textPath() {
-		return "<svg:path d=\"M100,50L50,300L250,300L200,50z\" />";
+		return "<svg:text>Search the world's information, including webpages, images, videos and more.\n"+
+			      "Google has many special features to help you find exactly what you.</svg:text>";
 	}
 	
 	private String svgLeaf(String xml, String extraAtts) {
-		return    "      <shape style=\"--kite9-type: svg; "+extraAtts+"\">\n"
+		return    "      <svg:g style=\"--kite9-type: svg; "+extraAtts+"\">\n"
 				+ xml 
-				+ "      </shape>";
+				+ "      </svg:g>";
 	}
 	
 	private String svgLeaf(String xml, String extraAtts, String transform) {
-		return    "      <shape transform=\""+transform+"\" style=\"--kite9-type: svg; "+extraAtts+"\">\n"
+		return    "      <svg:g transform=\""+transform+"\" style=\"--kite9-type: svg; "+extraAtts+"\">\n"
 				+ xml 
-				+ "      </shape>";
+				+ "      </svg:g>";
 	}
 	
 	private String textWithTransform(String xml, String extraAtts, String transform) {
-		return    "      <text transform=\""+transform+"\" style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n"
+		return    "      <svg:g style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\"><svg:g transform=\""+transform+"\">\n"
 				+ "        "+xml+"\n"
-				+ "      </text>\n";
+				+ "      </svg:g></svg:g>\n";
 	}
 	
 	private String text(String xml, String extraAtts) {
-		return    "      <text style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n"
+		return    "      <svg:g style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n"
 				+ "        "+xml+"\n"
-				+ "      </text>\n";
-	}
-	
-	private String text(String xml, String extraAtts, String flowRegionShape) {
-		return    "      <text style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\">\n"
-				+ "        "+xml+"\n"
-				+ "        <svg:flowRegion>"
-				+ "          "+flowRegionShape
-				+ "        </svg:flowRegion>"
-				+ "      </text>\n";
+				+ "      </svg:g>\n";
 	}
 
-	private String basicDiagram(String xml) {
-		return "\n  <diagram xmlns=\"http://www.kite9.org/schema/adl\" id=\"The Diagram\">\n" + xml +"\n  </diagram>\n"; 
+	private String basicDiagram(String xml) throws Exception {
+		return "\n  <svg:svg style=\"--kite9-type: diagram; \" "+
+			//	"transform=\""+ DiagramKite9XMLElement.TRANSFORM+"\" "+
+				"xmlns:svg=\""+ AbstractProcessor.Companion.getSVG_NAMESPACE()+"\" "+
+				"xmlns:k9=\""+AbstractProcessor.Companion.getKITE9_NAMESPACE()+"\" "+
+				"k9:width=\"$width\" k9:height=\"$height\" "+
+				"id=\"The Diagram\">\n" +
+
+				"<svg:defs>"+
+				"<svg:style> @import url(\""+Test59Sizing.class.getResource("/stylesheets/designer.css").toURI().toString()+"\");</svg:style>"+
+                "<svg:linearGradient id='glyph-background' x1='0%' x2='0%' y1='0%' y2='100%'>"+
+                    "<svg:stop offset='0%' stop-color='#FFF'/>"+
+                    "<svg:stop offset='100%' stop-color='#DDD'/>"+
+                "</svg:linearGradient>"+
+				"</svg:defs>"+
+
+				xml +"\n  </svg:svg>\n";
 	}
 
 	private String scaled(String xml) {
@@ -242,22 +231,20 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String glyphContainer(String xml, String extraAtts) {
-		return "    <rect style=\"--kite9-type: container; " +extraAtts+" \">\n"+
-	           "      <decal style='--kite9-usage: decal; --kite9-type: svg; '>\n" +
-	           "        <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
-	           "      </decal>\n" + 
+		return "    <svg:g style=\"--kite9-type: container; " +extraAtts+" \">\n"+
+	           "      <svg:rect x='0' y='0' width='0' k9:width='$width' height='0' k9:height='$height' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
 	           xml + 
-	           "    </rect>";
+	           "    </svg:g>";
 	           
 	}
 	
 	private String glyphLeaf(String xml, String extraAtts) {
-		return "    <rect style=\"--kite9-type: svg; " +extraAtts+" \">\n"+
-	           "      <decal style='--kite9-usage: decal; --kite9-type: svg; '>\n" +
+		return "    <svg:g style=\"--kite9-type: svg; " +extraAtts+" \">\n"+
+	           "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; '>\n" +
 	           "        <svg:rect x='0' y='0' width='#{$x1}' height='#{$y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
-	           "      </decal>\n" + 
+	           "      </svg:g>\n" +
 	           xml + 
-	           "    </rect>";
+	           "    </svg:g>";
 	           
 	}
 
@@ -275,14 +262,14 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String badgeDecal() {
-		return "      <badge style='--kite9-usage: decal; --kite9-type: svg; --kite9-transform: none; '>\n" +
-	           "        <svg:circle cx='#{$width - (5 * $px)}' cy='5' r='15' fill='red' /> \n"+
-	           "      </badge>\n";
+		return "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; --kite9-transform: none; '>\n" +
+	           "        <svg:circle cx='0' k9:cx='$width - (5 * $px)' cy='5' r='15' fill='red' /> \n"+
+	           "      </svg:g>\n";
 	}
 	
 	private String polyDecal() {
-		return "      <bg style='--kite9-usage: decal; --kite9-type: svg; --kite9-transform: rescale;'>\n" + polygon() +
- 	           "      </bg>\n";
+		return "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; --kite9-transform: rescale;'>\n" + polygon() +
+ 	           "      </svg:g>\n";
 	}
 	
 	private String polygon() {

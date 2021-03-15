@@ -307,25 +307,17 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		Document document;
 
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-
 			String uri = input.getURI();
-			InputSource is;
 
 			if (input.getInputStream() != null) {
-				is = new InputSource(input.getInputStream());
+				document = docFactory.createDocument(uri, input.getInputStream());
 			} else if (input.getReader() != null) {
-				is = new InputSource(input.getReader());
+				document = docFactory.createDocument(uri, input.getReader());
 			} else if (uri != null) {
-				is = new InputSource(uri);
+				document = docFactory.createDocument(uri);
 			} else {
 				throw new UnsupportedOperationException();
 			}
-
-			is.setSystemId(uri);
-
-			document = builder.parse(is);
 		} catch (Exception e) {
 			throw new TranscoderException("Couldn't create Dom document", e);
 		}

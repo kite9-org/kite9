@@ -134,65 +134,6 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 		transcodePNG(xml);
 		// no svg, as it won't render in any browser!
 	}
-	
-	@Test
-	public void test_54_12_GeneralTemplating() throws Exception {
-		String someXML = 
-			svgOpen() + 
-		 	diagramOpen() +
-				gTemplatedElement("1", svgRect1())+
-				gTemplatedElement("2", svgRect1())+
-				diagramClose() +
-			svgClose();
-		transcodeSVG(someXML);
-	}
-	
-	@Test
-	public void test_54_13_Kite9Templating() throws Exception {
-		String someXML = 
-			svgOpen() + 
-			 	diagramOpen() +
-					myTemplatedElement(svgRect1()) + 
-					myTemplatedElement(svgRect1())+
-				diagramClose() +
-			svgClose();
-		transcodeSVG(someXML);
-	}
-	
-	@Test
-	public void test_54_14_NestedTemplate() throws Exception {
-		String someXML = 
-			svgOpen() + 
-			 	diagramOpen() +
-			 		nestedTemplatedElement(svgRect1())+
-				diagramClose() +
-			svgClose();
-		transcodeSVG(someXML);
-	}
-	
-	@Test
-	public void test_54_15_DecalTemplate1() throws Exception {
-		String someXML = 
-			svgOpen() + 
-			 	diagramOpen() +
-			 		containerOpen("container1", "red")+
-				 		templatedDecalElement(svgRect1())+
-				 	containerClose() +
-				diagramClose() +
-			svgClose();
-		transcodeSVG(someXML);
-	}
-	
-	@Test
-	public void test_54_16_DecalTemplate2() throws Exception {
-		String someXML = 
-			svgOpen() + 
-			 	diagramOpen() +
-			 		"<templated-thing style=\"--kite9-template: url(template.svg#arg-problem) 'abc' 'red'; --kite9-type: container;\"><svg:circle cx=\"40\" cy=\"40\" r=\"5\" stroke=\"green\" /></templated-thing>" +
-				diagramClose() +
-			svgClose();
-		transcodeSVG(someXML);
-	}
 
 	/**
 	 * Important thing in this test is that it doesn't crash in the presence of a broken image
@@ -229,19 +170,19 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String myTemplatedElement(String inside) {
-		return "<my item=\"bob\" style=\"--kite9-template: url(template.svg#simple) 'template-arg'; --kite9-type: svg; \">"+inside+"</my>";
+		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#simple) 'template-arg'; --kite9-type: svg; \">"+inside+"</svg:g>";
 	}
 	
 	private String nestedTemplatedElement(String inside) {
-		return "<my item=\"bob\" style=\"--kite9-template: url(template.svg#double) 'template-arg'; --kite9-type: container; \">"+inside+"</my>";
+		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#double) 'template-arg'; --kite9-type: container; \">"+inside+"</svg:g>";
 	}
 	
 	private String templatedDecalElement(String inside) {
-		return "<my item=\"bob\" style=\"--kite9-template: url(template.svg#templated-decal) 'template-arg'; --kite9-type: container; \">"+inside+"</my>";
+		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#templated-decal) 'template-arg'; --kite9-type: container; \">"+inside+"</svg:g>";
 	}
 	
 	private String containerDecalElement(String inside) {
-		return "<my item=\"bob\" style=\"--kite9-usage: decal; --kite9-type: container; \">"+inside+"</my>";
+		return "<svg:g item=\"bob\" style=\"--kite9-usage: decal; --kite9-type: container; \">"+inside+"</svg:g>";
 	}
 	
 	private String scalablePath() {
@@ -257,11 +198,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String diagramClose() {
-		return "</svg:g></diagram>";
+		return "</svg:g></svg:g>";
 	}
 
 	private String diagramOpen() {
-		return "<diagram xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='--kite9-type: diagram; --kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<svg:g xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='--kite9-type: diagram; --kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 
@@ -274,28 +215,28 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scaledOpen() {
-		return "<somescaled style='--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; '>";
+		return "<svg:g style='--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; '>";
 	}
 	
 	private String scaledClose() {
-		return "</somescaled>"; 
+		return "</svg:g>";
 	}
-	
+
 	private String adaptiveOpen() {
-		return "<someadaptive id=\"adap\" style='--kite9-type: svg; --kite9-usage: decal; '>";
+		return "<svg:g id=\"adap\" style='--kite9-type: svg; --kite9-usage: decal; '>";
 	}
 	
 	private String adaptiveClose() {
-		return "</someadaptive>"; 
+		return "</svg:g>";
 	}
 
 
 	private String containerOpen(String id, String fill) {
-		return "<container id='"+id+"' style='--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  '><svg:g style='fill: "+fill+"; '>";
+		return "<svg:g id='"+id+"' style='--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  '><svg:g style='fill: "+fill+"; '>";
 	}
 
 	private String containerClose() {
-		return "</svg:g></container>";
+		return "</svg:g></svg:g>";
 	}
 	
 	private String svgSquiggle() {

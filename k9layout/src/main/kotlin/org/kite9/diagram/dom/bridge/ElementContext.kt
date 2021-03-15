@@ -1,14 +1,19 @@
 package org.kite9.diagram.dom.bridge
 
+import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.w3c.dom.Element
 import kotlin.reflect.KClass
 
 interface ElementContext {
 
+    /**
+     * For returning a pixel amount
+     */
     fun getCssStyleDoubleProperty(prop: String, e: Element): Double
     fun getCssStyleStringProperty(prop: String, e: Element): String?
     fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
@@ -29,4 +34,13 @@ interface ElementContext {
 
     fun register(x: Element, out: DiagramElement)
     fun getRegisteredDiagramElement(x: Element): DiagramElement?
+
+    fun bounds(x: Element) : Rectangle2D?
+
+    /**
+     * Returns length of text, used for wrapping.
+     */
+    fun textWidth(s: String, inside: Element) : Double
+
+    fun getCssUnitSizeInPixels(prop: String, e: Element) : Double
 }

@@ -7,6 +7,7 @@ import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Element
+import java.util.HashSet
 
 /**
  * This contains extra code relating to the Diagram itself, specifically, managing
@@ -37,4 +38,18 @@ class DiagramImpl(
         }
         return out
     }
+
+    private val UNITS: Set<String> = setOf("pt", "cm", "em", "in", "ex", "px")
+
+    /**
+     * Because our ADLDocument knows about the CSSContext, we can resolve units in the xpath expressions.
+     */
+    override fun getXPathVariable(name: String): String? {
+        if (UNITS.contains(name)) {
+            return "" + ctx.getCssUnitSizeInPixels(name, theElement);
+        }
+
+        return super.getXPathVariable(name)
+    }
+
 }

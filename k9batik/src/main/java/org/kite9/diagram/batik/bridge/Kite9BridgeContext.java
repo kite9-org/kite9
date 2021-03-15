@@ -5,6 +5,7 @@ import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.*;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
+import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
 import org.apache.batik.css.engine.value.Value;
@@ -12,7 +13,10 @@ import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
 import org.apache.xmlgraphics.java2d.Dimension2DDouble;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.managers.EnumValue;
@@ -20,15 +24,18 @@ import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathResult;
 
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,8 +71,11 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		return true;	
 	}
 
+	/**
+	 * Allows us to change the document and update the GraphicsNode tree.
+	 */
 	public boolean isDynamic() {
-		return false;
+		return true;
 	}
 
 	public void registerDiagramRenderedSize(Diagram d) {
@@ -277,4 +287,60 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		return xmlToDiagram.get(x);
 	}
 
+	@Nullable
+	@Override
+	public Rectangle2D bounds(@NotNull Element x) {
+		GraphicsNode gn = getGraphicsNode(x);
+		java.awt.geom.Rectangle2D g = gn.getBounds();
+		if (g==null) {
+			return null;
+		}
+		return convertRect(g);
+	}
+
+	@NotNull
+	private Rectangle2D convertRect(java.awt.geom.Rectangle2D g) {
+		return new Rectangle2D(g.getX(), g.getY(), g.getWidth(), g.getHeight());
+	}
+
+	@NotNull
+	@Override
+	public double textWidth(@NotNull String s, @NotNull Element inside) {
+		GraphicsNode gn = getGraphicsNode(inside);
+		if (gn instanceof TextNode) {
+			TextNode tn = (TextNode) gn;
+			int idx = inside.getTextContent().indexOf(s);
+			TextPainter tp = tn.getTextPainter();
+			Mark start = tp.getMark(tn, idx, true);
+			Mark end = tp.getMark(tn, idx + s.length() - 1, false);
+			java.awt.geom.Rectangle2D sb = tp.getHighlightShape(start, end).getBounds();
+			return sb.getWidth();
+		} else {
+			return 0;
+		}
+	}
+
+	@Override
+	public double getCssUnitSizeInPixels(@NotNull String prop, @NotNull Element e) {
+		CSSContext ctx = getCSSEngineForElement(e).getCSSContext();
+		UnitProcessor.Context me = new UnitProcessor.Context() {
+
+			public Element getElement() { return null; }
+			public float getFontSize() { return 0; }
+			public float getXHeight() { return 0; }
+			public float getViewportHeight() {return 0;}
+			public float getViewportWidth() {return 0;}
+
+			public float getPixelUnitToMillimeter() {
+				return ctx.getPixelUnitToMillimeter();
+			}
+
+			public float getPixelToMM() {
+				return ctx.getPixelToMillimeter();
+			}
+
+		};
+		float f = UnitProcessor.svgToUserSpace("1"+prop, "", UnitProcessor.HORIZONTAL_LENGTH, me);
+		return f;
+	}
 }

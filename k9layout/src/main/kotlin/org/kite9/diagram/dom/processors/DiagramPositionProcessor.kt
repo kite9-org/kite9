@@ -8,11 +8,6 @@ import org.w3c.dom.Element
 
 open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueReplacer) : AbstractInlineProcessor() {
 
-    companion object {
-        val KITE9_NAMESPACE = "http://www.kite9.org/schema/adl"
-    }
-
-    //val SVG_NAMESPACE = "http://www.w3.org/2000/svg"
 
     private val noop = NullXMLProcessor()
 

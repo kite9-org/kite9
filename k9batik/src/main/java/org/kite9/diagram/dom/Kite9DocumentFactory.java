@@ -10,6 +10,7 @@ import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.SVGConstants;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -207,7 +208,7 @@ public class Kite9DocumentFactory
         is.setSystemId(uri);
 
         try {
-            doc = super.createDocument
+            doc = createDocument
                 (SVGConstants.SVG_NAMESPACE_URI, "svg", uri, is);
             if (uri != null) {
                 ((SVGOMDocument)doc).setParsedURL(new ParsedURL(uri));
@@ -238,8 +239,7 @@ public class Kite9DocumentFactory
         is.setSystemId(uri);
 
         try {
-            doc = super.createDocument
-                (XMLHelper.KITE9_NAMESPACE, "diagram", uri, is);
+            doc = createDocument(null, null, uri, is);
             if (uri != null) {
                 ((SVGOMDocument)doc).setParsedURL(new ParsedURL(uri));
             }
@@ -348,5 +348,51 @@ public class Kite9DocumentFactory
 		super.warning(ex);
 	}
 
-    
+    protected Document createDocument(String ns, String root, String uri,
+                                      InputSource is)
+            throws IOException {
+        Document ret = createDocument(is);
+        Element docElem = ret.getDocumentElement();
+
+        if (root != null) {
+            String lname = root;
+            String nsURI = ns;
+            if (ns == null) {
+                int idx = lname.indexOf(':');
+                String nsp = (idx == -1 || idx == lname.length() - 1)
+                        ? ""
+                        : lname.substring(0, idx);
+                nsURI = namespaces.get(nsp);
+                if (idx != -1 && idx != lname.length() - 1) {
+                    lname = lname.substring(idx + 1);
+                }
+            }
+
+
+            String docElemNS = docElem.getNamespaceURI();
+            if ((docElemNS != nsURI) &&
+                    ((docElemNS == null) || (!docElemNS.equals(nsURI))))
+                throw new IOException
+                        ("Root element namespace does not match that requested:\n" +
+                                "Requested: " + nsURI + "\n" +
+                                "Found: " + docElemNS);
+
+            if (docElemNS != null) {
+                if (!docElem.getLocalName().equals(lname))
+                    throw new IOException
+                            ("Root element does not match that requested:\n" +
+                                    "Requested: " + lname + "\n" +
+                                    "Found: " + docElem.getLocalName());
+            } else {
+                if (!docElem.getNodeName().equals(lname))
+                    throw new IOException
+                            ("Root element does not match that requested:\n" +
+                                    "Requested: " + lname + "\n" +
+                                    "Found: " + docElem.getNodeName());
+            }
+
+        }
+
+        return ret;
+    }
 }

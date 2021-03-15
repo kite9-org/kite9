@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.model;
 
 import kotlin.jvm.JvmClassMappingKt;
 import org.kite9.diagram.batik.painter.BatikLeafPainter;
+import org.kite9.diagram.batik.painter.BatikTextPainter;
 import org.kite9.diagram.common.elements.factory.TemporaryConnected;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
@@ -46,8 +47,7 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 
 	@Override
 	protected LeafPainter getTextPainter(Element el) {
-		return getLeafPainter(el);	// for now
-		//return new TextLeafPainter(el, (Kite9BridgeContext) getContext());
+		return new BatikTextPainter(el, getContext());
 	}
 
 	@Override

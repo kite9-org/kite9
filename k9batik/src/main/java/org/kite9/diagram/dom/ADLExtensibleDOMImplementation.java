@@ -116,8 +116,8 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		
 		// TEXT BOUNDS
 		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.TEXT_BOUNDS_WIDTH, CSSConstants.TEXT_BOUNDS_HEIGHT, CSSConstants.TEXT_BOUNDS));
-		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_WIDTH, 10000f, true));
-		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 10000f, true));
+		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_WIDTH, 0f, true));
+		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 0f, true));
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

@@ -3,6 +3,7 @@ package org.kite9.diagram.dom.processors.xpath
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.w3c.dom.Element
 
+
 class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
 
     override fun performValueReplace(input: String, at: Element): String {
@@ -42,4 +43,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
     fun evaluateXPath(s: String, at: Element) : String? {
         return ctx.evaluateXPath(s, at)
     }
+
+
+
 }

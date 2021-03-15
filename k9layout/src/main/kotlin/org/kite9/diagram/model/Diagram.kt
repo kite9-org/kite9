@@ -9,4 +9,5 @@ package org.kite9.diagram.model
 interface Diagram : Container {
 
     fun getConnectionsFor(c: Connected): Collection<Connection>
+
 }

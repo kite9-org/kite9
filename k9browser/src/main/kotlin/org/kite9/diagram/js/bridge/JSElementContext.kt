@@ -60,6 +60,8 @@ class JSElementContext : ElementContext {
             val generic = getUndirectedVersion(prop)
             if (generic != null) {
                 return getCssStyleDoubleProperty(generic, e)
+            } else {
+                return 0.0
             }
         }
 

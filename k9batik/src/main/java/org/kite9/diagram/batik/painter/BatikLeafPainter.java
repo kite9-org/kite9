@@ -16,8 +16,7 @@ import java.awt.geom.AffineTransform;
 
 public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPainter {
 	
-	private ElementContext ctx;
-	protected AffineTransform transform;
+	protected ElementContext ctx;
 
 	public BatikLeafPainter(Element theElement, ElementContext ctx) {
 		super(theElement);
@@ -26,21 +25,7 @@ public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPaint
 	
 	@Override
 	public Rectangle2D bounds() {
-		GraphicsNode gn = getGraphicsNode();
-		if (transform != null) {
-			java.awt.geom.Rectangle2D g = gn.getTransformedBounds(transform);
-			if (g==null) {
-				return null;
-			}
-			return new Rectangle2D(g.getX(), g.getY(), g.getWidth(), g.getHeight());
-		} else {
-			java.awt.geom.Rectangle2D g = gn.getBounds();
-			if (g==null) {
-				return null;
-			}
-			return new Rectangle2D(g.getX(), g.getY(), g.getWidth(), g.getHeight());
-		}
-		
+		return ctx.bounds(getTheElement());
 	}
 
 	private GraphicsNode graphicsNodeCache;
@@ -60,7 +45,7 @@ public class BatikLeafPainter extends DirectSVGGroupPainter implements LeafPaint
 		DiagramElement de = ctx.getRegisteredDiagramElement(e);
 		ensureNoChildKite9Elements(de, e);
 		GVTBuilder builder = ctx.getGVTBuilder();
-		CompositeGraphicsNode out = (CompositeGraphicsNode) builder.build(ctx, e);
+		GraphicsNode out = builder.build(ctx, e);
 		return out;
 	}
 
