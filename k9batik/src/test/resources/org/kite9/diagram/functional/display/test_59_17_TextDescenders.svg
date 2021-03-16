@@ -1,254 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="280.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="235.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><defs
-  ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</style
-  ></defs
+<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="585" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=585.0, h=180.0); " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
+>
+<svg:defs
+  ><svg:style xml:space="preserve"
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</svg:style
+    ><svg:linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+    ><svg:stop stop-color="#FFF" offset="0%"
+      /><svg:stop stop-color="#DDD" offset="100%"
+    /></svg:linearGradient
+  ></svg:defs
+  >    <svg:g style="--kite9-type: container; --kite9-vertical-align: top " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=555.0, h=150.0); " transform="translate(15.0,15.0)"
   >
-  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=280.0, h=235.0); " id="The Diagram" k9-elem="diagram"
-  >
-    <g filter="url(#dropshadow)"
+      <svg:rect x="0" y="0" k9:width="$width" width="555" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="150"
+    />
+    <svg:g style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: right; --kite9-min-size: 150px 150px " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: RIGHT; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=150.0, h=150.0); "
     >
-      
-    <g k9-elem="rect" style="--kite9-type: container; --kite9-vertical-align: top " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=250.0, h=205.0); "
+      <svg:rect x="0" y="0" k9:width="$width" width="150" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="150"
+      />
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=19.0, h=140.0); rect-size: BasicDimension2D(w=67.0, h=25.0); " transform="translate(1.8,144.0)"
       >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
+        <svg:text
+        >hello 1</svg:text
         >
-        <rect x="0" y="0" width="250.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="205.0"
-          />
-      </g
+      </svg:g
+        >
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=90.0, h=140.0); rect-size: BasicDimension2D(w=71.0, h=25.0); " transform="translate(72.8,144.0)"
+        >
+        <svg:text
+          >pello 2</svg:text
           >
-    <g k9-elem="rect" style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: right; --kite9-min-size: 150px 150px " transform="translate(.0,28.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: RIGHT; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=43.0); rect-size: BasicDimension2D(w=150.0, h=150.0); "
+      </svg:g
           >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
+    </svg:g
+          >    <svg:g style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: down;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=165.0, h=65.0); rect-size: BasicDimension2D(w=233.0, h=50.0); " transform="translate(150.0,50.0)"
+          >
+      <svg:rect x="0" y="0" k9:width="$width" width="233" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="50"
+            />
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=165.0, h=65.0); rect-size: BasicDimension2D(w=233.0, h=25.0); " transform="translate(-2.2,19.0)"
             >
-        <rect x="0" y="0" width="150.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="150.0"
-              />
-      </g
+        <svg:text
+              >hello hello hello hello</svg:text
               >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(1.8,119.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=19.0, h=159.0); rect-size: BasicDimension2D(w=67.0, h=34.0); "
-              ><g font-family="'opensans-light-webfont'" font-size="25px"
-                ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                  ><tspan
-                    >h</tspan
-                    ><tspan
-                    >ello </tspan
-                    ><tspan
-                    >1</tspan
-                  ></text
-                ></g
-              ></g
+      </svg:g
               >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(72.8,119.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=90.0, h=159.0); rect-size: BasicDimension2D(w=71.0, h=34.0); "
-              ><g font-family="'opensans-light-webfont'" font-size="25px"
-                ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                  ><tspan
-                    >p</tspan
-                    ><tspan
-                    >ello </tspan
-                    ><tspan
-                    >2</tspan
-                  ></text
-                ></g
-              ></g
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=196.0, h=90.0); rect-size: BasicDimension2D(w=172.0, h=25.0); " transform="translate(28.8,44.0)"
               >
-    </g
-              >    <g k9-elem="rect" style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: down;  " transform="translate(150.0,.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=165.0, h=15.0); rect-size: BasicDimension2D(w=50.0, h=205.0); "
-              >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
+        <svg:text
+                >pello hello pello</svg:text
                 >
-        <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="205.0"
+      </svg:g
+                >
+    </svg:g
+                >    <svg:g style="--kite9-type: container; --kite9-padding: 00px; --kite9-layout: down; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=398.0, h=65.0); rect-size: BasicDimension2D(w=172.0, h=50.0); " transform="translate(383.0,50.0)"
+                >
+      <svg:rect x="0" y="0" k9:width="$width" width="172" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="50"
                   />
-      </g
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=398.0, h=65.0); rect-size: BasicDimension2D(w=172.0, h=25.0); " transform="translate(-2.2,19.0)"
                   >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(-2.2,3.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=165.0, h=15.0); rect-size: BasicDimension2D(w=50.0, h=116.0); "
-                  ><g font-family="'opensans-light-webfont'" font-size="25px"
-                    ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                      ><tspan
-                        >h</tspan
-                        ><tspan
-                        >ello </tspan
-                      ></text
-                      ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-                      >hello </text
-                      ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-                      >hello </text
-                      ><text x="0" xml:space="preserve" y="105.9485" stroke="none"
-                      >hello</text
-                    ></g
-                  ></g
-                  >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(-2.2,119.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=165.0, h=131.0); rect-size: BasicDimension2D(w=50.0, h=89.0); "
-                  ><g font-family="'opensans-light-webfont'" font-size="25px"
-                    ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                      ><tspan
-                        >p</tspan
-                        ><tspan
-                        >ello </tspan
-                      ></text
-                      ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-                      >hello </text
-                      ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-                      >pello</text
-                    ></g
-                  ></g
-                  >
-    </g
-                  >    <g k9-elem="rect" style="--kite9-type: container; --kite9-padding: 00px; --kite9-layout: down; " transform="translate(200.0,14.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=215.0, h=29.0); rect-size: BasicDimension2D(w=50.0, h=178.0); "
-                  >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
+        <svg:text
+                    >pello hello pello</svg:text
                     >
-        <rect x="0" y="0" width="50.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="178.0"
-                      />
-      </g
+      </svg:g
+                    >
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=398.0, h=90.0); rect-size: BasicDimension2D(w=172.0, h=25.0); " transform="translate(-2.2,44.0)"
+                    >
+        <svg:text
+                      >pello hello pello</svg:text
                       >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(-2.2,3.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=215.0, h=29.0); rect-size: BasicDimension2D(w=50.0, h=89.0); "
-                      ><g font-family="'opensans-light-webfont'" font-size="25px"
-                        ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                          ><tspan
-                            >p</tspan
-                            ><tspan
-                            >ello </tspan
-                          ></text
-                          ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-                          >hello </text
-                          ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-                          >pello</text
-                        ></g
-                      ></g
+      </svg:g
                       >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px" transform="translate(-2.2,92.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=215.0, h=118.0); rect-size: BasicDimension2D(w=50.0, h=89.0); "
-                      ><g font-family="'opensans-light-webfont'" font-size="25px"
-                        ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-                          ><tspan
-                            >p</tspan
-                            ><tspan
-                            >ello </tspan
-                          ></text
-                          ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-                          >hello </text
-                          ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-                          >pello</text
-                        ></g
-                      ></g
+    </svg:g
+                      >    </svg:g
                       >
-    </g
-                      >    </g
-                      >
-  
-    </g
-                      >
-  </g
-                      >
-<defs
-                      >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-                        >
-      <stop stop-color="#FFF" offset="0%"
-                          />
-      <stop stop-color="#DDD" offset="100%"
-                          />
-    </linearGradient
-                          >
-    
-    <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-                          >
-      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                            /> 
-      <feOffset dx="2pt" dy="2pt"
-                            /> 
-      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                            />
-      <feMerge
-                            > 
-        <feMergeNode
-                              />
-        <feMergeNode in="SourceGraphic"
-                              /> 
-      </feMerge
-                              >
-    </filter
-                              >
-
-    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
-                              >
-      <circle r="2" cx="3" class="circle-marker" cy="3"
-                                />
-    </marker
-                                >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                                >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                                  />
-    </marker
-                                  >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                                  >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                                    />
-    </marker
-                                    >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                                    >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                                      />
-    </marker
-                                      >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                                      >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                                        />
-    </marker
-                                        >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                        >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
-                                          />
-    </marker
-                                          >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                          >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
-                                            />
-    </marker
-                                            >
- 
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                            >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
-                                              />
-    </marker
-                                              >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                              >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
-                                                />
-    </marker
-                                                >
-  
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
-                                                  />
-    </marker
-                                                  >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                                  >
-       <polygon class="arrow-marker" points="6,4 2,2 2,6"
-                                                    />
-   </marker
-                                                    >
-    
-  </defs
-                                                  ></svg
-                                                >
+  </svg:svg
+                    >

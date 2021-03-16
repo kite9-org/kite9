@@ -1,248 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="196.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="281.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><defs
-  ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</style
-  ></defs
+<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="177" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=177.0, h=310.0); " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
+>
+<svg:defs
+  ><svg:style xml:space="preserve"
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</svg:style
+    ><svg:linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+    ><svg:stop stop-color="#FFF" offset="0%"
+      /><svg:stop stop-color="#DDD" offset="100%"
+    /></svg:linearGradient
+  ></svg:defs
+  >    <svg:g style="--kite9-type: container; --kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=147.0, h=280.0); " transform="translate(15.0,15.0)"
   >
-  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=196.0, h=281.0); " id="The Diagram" k9-elem="diagram"
-  >
-    <g filter="url(#dropshadow)"
+      <svg:rect x="0" y="0" k9:width="$width" width="147" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="280"
+    />
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 150px 500px; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=30.0, h=25.0); rect-size: BasicDimension2D(w=117.0, h=75.0); " transform="translate(14.0,29.0)"
     >
-      
-    <g k9-elem="rect" style="--kite9-type: container; --kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=166.0, h=251.0); "
+        <svg:text
+      ><tspan x="0px" y="0.0px"
+        >hello </tspan
+        ><tspan x="0px" y="25.0px"
+        >something </tspan
+        ><tspan x="0px" y="50.0px"
+        >else</tspan
+      ></svg:text
       >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
+      </svg:g
+      >
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 150px 100px; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=100.0); rect-size: BasicDimension2D(w=127.0, h=125.0); " transform="translate(10.0,104.1)"
+      >
+        <svg:text
+        ><tspan x="0px" y="0.0px"
+          >a b c d e f g </tspan
+          ><tspan x="0px" y="25.0px"
+          >h i j k l m n </tspan
+          ><tspan x="0px" y="50.0px"
+          >o p q r s t u </tspan
+          ><tspan x="0px" y="75.0px"
+          >v w x y z</tspan
+        ></svg:text
         >
-        <rect x="0" y="0" width="166.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="251.0"
-          />
-      </g
+      </svg:g
+        >
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=53.0, h=225.0); rect-size: BasicDimension2D(w=72.0, h=60.0); " transform="translate(37.8,221.4)"
+        >
+        <svg:text
+          ><tspan x="0px" y="0.0px"
+            >hello b this </tspan
+            ><tspan x="0px" y="15.0px"
+            >could be a </tspan
+            ><tspan x="0px" y="30.0px"
+            >long bit of </tspan
+            ><tspan x="0px" y="45.0px"
+            >text</tspan
+          ></svg:text
           >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 150px 500px; " transform="translate(24.0,13.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=40.0, h=25.0); rect-size: BasicDimension2D(w=117.0, h=89.0); "
-          ><g font-family="'opensans-light-webfont'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-              ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-              >something </text
-              ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-              >else</text
-            ></g
-          ></g
+      </svg:g
           >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 150px 100px; " transform="translate(8.8,102.3)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=114.0); rect-size: BasicDimension2D(w=146.0, h=89.0); "
-          ><g font-family="'opensans-light-webfont'" font-size="25px"
-            ><text x="0" xml:space="preserve" y="23.4485" stroke="none"
-              ><tspan
-                >a</tspan
-                ><tspan
-                > </tspan
-                ><tspan
-                >b </tspan
-                ><tspan
-                >c </tspan
-                ><tspan
-                >d </tspan
-                ><tspan
-                >e </tspan
-                ><tspan
-                >f </tspan
-                ><tspan
-                >g </tspan
-                ><tspan
-                >h </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="50.9485" stroke="none"
-              ><tspan
-                >i </tspan
-                ><tspan
-                >j </tspan
-                ><tspan
-                >k </tspan
-                ><tspan
-                >l </tspan
-                ><tspan
-                >m </tspan
-                ><tspan
-                >n </tspan
-                ><tspan
-                >o </tspan
-                ><tspan
-                >p </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="78.4485" stroke="none"
-              ><tspan
-                >q </tspan
-                ><tspan
-                >r </tspan
-                ><tspan
-                >s </tspan
-                ><tspan
-                >t </tspan
-                ><tspan
-                >u </tspan
-                ><tspan
-                >v </tspan
-                ><tspan
-                >w </tspan
-                ><tspan
-                >x </tspan
-              ></text
-            ></g
-          ></g
+    </svg:g
           >
-      <g k9-elem="text" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;" transform="translate(35.1,190.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=51.0, h=203.0); rect-size: BasicDimension2D(w=95.0, h=53.0); "
-          ><g font-family="'opensans-light-webfont'" font-size="15px"
-            ><text x="0" xml:space="preserve" y="14.0691" stroke="none"
-              ><tspan
-                >h</tspan
-                ><tspan
-                >ello </tspan
-                ><tspan
-                >b </tspan
-                ><tspan
-                >this </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="30.5691" stroke="none"
-              ><tspan
-                >could </tspan
-                ><tspan
-                >be </tspan
-                ><tspan
-                >a </tspan
-              ></text
-              ><text x="0" xml:space="preserve" y="47.0691" stroke="none"
-              ><tspan
-                >long </tspan
-                ><tspan
-                >bit </tspan
-                ><tspan
-                >of </tspan
-                ><tspan
-                >text</tspan
-              ></text
-            ></g
-          ></g
-          >
-    </g
-          >
-  
-    </g
-          >
-  </g
-          >
-<defs
-          >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-            >
-      <stop stop-color="#FFF" offset="0%"
-              />
-      <stop stop-color="#DDD" offset="100%"
-              />
-    </linearGradient
-              >
-    
-    <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                /> 
-      <feOffset dx="2pt" dy="2pt"
-                /> 
-      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                />
-      <feMerge
-                > 
-        <feMergeNode
-                  />
-        <feMergeNode in="SourceGraphic"
-                  /> 
-      </feMerge
-                  >
-    </filter
-                  >
-
-    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
-                  >
-      <circle r="2" cx="3" class="circle-marker" cy="3"
-                    />
-    </marker
-                    >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                    >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                      />
-    </marker
-                      >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                      >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                        />
-    </marker
-                        >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                        >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                          />
-    </marker
-                          >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                          >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                            />
-    </marker
-                            >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                            >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
-                              />
-    </marker
-                              >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                              >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
-                                />
-    </marker
-                                >
- 
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
-                                  />
-    </marker
-                                  >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                  >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
-                                    />
-    </marker
-                                    >
-  
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                    >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
-                                      />
-    </marker
-                                      >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                      >
-       <polygon class="arrow-marker" points="6,4 2,2 2,6"
-                                        />
-   </marker
-                                        >
-    
-  </defs
-                                      ></svg
-                                    >
+  </svg:svg
+        >

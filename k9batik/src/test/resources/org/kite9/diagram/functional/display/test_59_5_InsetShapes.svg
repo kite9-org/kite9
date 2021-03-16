@@ -1,144 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="280.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="240.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><defs
-  ><style type="text/css" xml:space="preserve"
-    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</style
-  ></defs
+<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="280" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=280.0, h=240.0); " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
+>
+<svg:defs
+  ><svg:style xml:space="preserve"
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");</svg:style
+    ><svg:linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+    ><svg:stop stop-color="#FFF" offset="0%"
+      /><svg:stop stop-color="#DDD" offset="100%"
+    /></svg:linearGradient
+  ></svg:defs
+  >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=250.0, h=210.0); " transform="translate(15.0,15.0)"
   >
-  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=280.0, h=240.0); " id="The Diagram" k9-elem="diagram"
-  >
-    <g filter="url(#dropshadow)"
+      <svg:rect x="0" y="0" k9:width="$width" width="250" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="210"
+    />
+      <svg:g style="--kite9-type: svg; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=250.0, h=210.0); " transform="translate(.5,.5)"
     >
-      
-    <g k9-elem="rect" style="--kite9-type: container;  " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=250.0, h=210.0); "
+      <svg:ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"
+      />      <svg:polygon style="fill:lime;stroke-width:0" points="200,10 250,190 160,210"
+      />      </svg:g
+      >    </svg:g
       >
-      <g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="" k9-elem="decal"
-        >
-        <rect x="0" y="0" width="250.0" style="fill: url(#glyph-background); " rx="8" class="glyph-back" ry="8" height="210.0"
-          />
-      </g
-          >
-      <g k9-elem="shape" style="--kite9-type: svg; " transform="translate(.5,.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=250.0, h=210.0); "
-          >
-      <ellipse rx="20" ry="20" stroke-width="1" cx="20" cy="20" stroke="black"
-            />      <polygon style="fill:lime;stroke-width:0" points="200,10 250,190 160,210"
-            />      </g
-            >    </g
-            >
-  
-    </g
-            >
-  </g
-            >
-<defs
-            >
-    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-              >
-      <stop stop-color="#FFF" offset="0%"
-                />
-      <stop stop-color="#DDD" offset="100%"
-                />
-    </linearGradient
-                >
-    
-    <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-      <feGaussianBlur stdDeviation="1" in="SourceAlpha"
-                  /> 
-      <feOffset dx="2pt" dy="2pt"
-                  /> 
-      <feColorMatrix values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0" type="matrix"
-                  />
-      <feMerge
-                  > 
-        <feMergeNode
-                    />
-        <feMergeNode in="SourceGraphic"
-                    /> 
-      </feMerge
-                    >
-    </filter
-                    >
-
-    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-marker" markerWidth="6" refX="3"
-                    >
-      <circle r="2" cx="3" class="circle-marker" cy="3"
-                      />
-    </marker
-                      >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                      >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                        />
-    </marker
-                        >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                        >
-      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-                          />
-    </marker
-                          >
-    
-    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                          >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                            />
-    </marker
-                            >
-    
-     <marker refX="7" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-                            >
-      <polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-                              />
-    </marker
-                              >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                              >
-      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
-                                />
-    </marker
-                                >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                >
-      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
-                                  />
-    </marker
-                                  >
- 
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                  >
-      <polygon class="open-arrow-marker" points="6,4 2,2 2,6"
-                                    />
-    </marker
-                                    >
-
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                    >
-      <polygon class="open-arrow-marker" points="2,4 6,2 6,6"
-                                      />
-    </marker
-                                      >
-  
-    <marker refX="2" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                      >
-      <polygon class="arrow-marker" points="2,4 6,2 6,6"
-                                        />
-    </marker
-                                        >
-
-    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-                                        >
-       <polygon class="arrow-marker" points="6,4 2,2 2,6"
-                                          />
-   </marker
-                                          >
-    
-  </defs
-                                        ></svg
-                                      >
+  </svg:svg
+    >

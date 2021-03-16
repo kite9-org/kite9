@@ -37,13 +37,9 @@ import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 import org.w3c.dom.svg.SVGDocument;
-import org.xml.sax.InputSource;
 import org.xml.sax.XMLFilter;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
