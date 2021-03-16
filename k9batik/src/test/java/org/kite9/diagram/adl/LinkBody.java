@@ -12,12 +12,12 @@ import org.w3c.dom.Node;
  *
  */
 
-public class Arrow extends AbstractMutableXMLElement {
+public class LinkBody extends AbstractMutableXMLElement {
 
 	private static final long serialVersionUID = 5054715961820271315L;
 
-	public Arrow() {
-		this.tagName = "arrow";
+	public LinkBody() {
+		this.tagName = "link-body";
 	}
 		
 	public Element getLabel() {
@@ -29,8 +29,8 @@ public class Arrow extends AbstractMutableXMLElement {
 	}
 
 	
-	public Arrow(String id, String label, Document doc) {
-		super(id, "arrow", doc);
+	public LinkBody(String id, String label, Document doc) {
+		super(id, "link-body", doc);
 
 		if (label != null) {
 			setLabel(new TextLine(null, "label", label, doc));
@@ -38,11 +38,11 @@ public class Arrow extends AbstractMutableXMLElement {
 		
 	}
 	
-	public Arrow(String id, String label) {
+	public LinkBody(String id, String label) {
 		this(id, label, TESTING_DOCUMENT);
 	}
 
-	public Arrow(String label) {
+	public LinkBody(String label) {
 		this(label, label);
 	}
 
@@ -56,7 +56,7 @@ public class Arrow extends AbstractMutableXMLElement {
 	
 	@Override
 	protected Node newNode() {
-		return new Arrow();
+		return new LinkBody();
 	}
 
 }

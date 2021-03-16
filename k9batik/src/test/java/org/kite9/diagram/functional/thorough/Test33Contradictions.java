@@ -338,7 +338,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		Element con1 = new Context("b1", createList((Element) one, two), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
@@ -359,7 +359,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		Element con1 = new Context("b1", createList((Element) one, two), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
@@ -451,7 +451,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 			Element con1 = new Context("b1", createList((Element) one, two), true, null, null);
 
-			Arrow a = new Arrow("links", "links");
+			LinkBody a = new LinkBody("links", "links");
 
 			new Link(one, con1);
 			new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);

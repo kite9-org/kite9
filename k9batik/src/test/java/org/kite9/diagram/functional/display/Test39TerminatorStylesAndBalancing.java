@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -24,7 +24,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 	public void test_39_1_BalancedTwo() throws Exception {
 		Glyph g1 = new Glyph("g1", null, "g1", null, null);
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		Link l = new Link(g1, a1);
 		new Link(g2, a1);
 		l.setAttribute("style", CSSConstants.LINK_MINIMUM_LENGTH+": 50px; ");
@@ -36,7 +36,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g1 = new Glyph("g1", null, "g1", null, null);
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		a1.setAttribute("style", CSSConstants.LINK_GUTTER+": 50px; ");
 		new Link(g1, a1);
 		new Link(g2, a1);
@@ -50,7 +50,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		new Link(g1, a1);
 		new Link(g2, a1);
 		new Link(g3, a1);	
@@ -65,7 +65,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		new TurnLink(g1, a1);
 		new TurnLink(g2, a1);
 		new TurnLink(g3, a1);	
@@ -80,7 +80,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g1", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		new TurnLink(g1, a1);
 		new TurnLink(g2, a1);
 		new TurnLink(g3, a1);	
@@ -96,7 +96,7 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 		Glyph g2 = new Glyph("g2", null, "g2", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Arrow a1 = new Arrow("meets");
+		LinkBody a1 = new LinkBody("meets");
 		new TurnLink(g1, a1, LinkEndStyle.CIRCLE, null, null, null);
 		new TurnLink(g2, a1);
 		new TurnLink(g3, a1, LinkEndStyle.CIRCLE, null, null, null);	

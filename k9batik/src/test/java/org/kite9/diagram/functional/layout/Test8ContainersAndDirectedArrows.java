@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -22,7 +22,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 
 		Context con1 = new Context("b1", createList(one), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two);
@@ -35,7 +35,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 	public void test_8_2_DirectedArrowInsideContainer() throws Exception {
 		Glyph one = new Glyph("", "one", null, null);
 		Glyph two = new Glyph("", "two", null, null);
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		Context con1 = new Context("b1", createList(one, a), true, null, null);
 
@@ -54,7 +54,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 
 		Context con1 = new Context("b1", createList(one, two, three), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new TurnLink(a, two);
@@ -72,7 +72,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 
 		Context con1 = new Context("b1", createList(one, two, three), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new TurnLink(a, three);
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
@@ -91,7 +91,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		Context con1 = new Context("b1", createList(one, two), true, null, null);
 		Context con2 = new Context("b2", createList(con1, three), true, null, null);
 
-		Arrow a = new Arrow("links", "links");
+		LinkBody a = new LinkBody("links", "links");
 
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new TurnLink(a, two);

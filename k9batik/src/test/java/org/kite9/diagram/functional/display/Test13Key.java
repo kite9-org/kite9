@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -118,7 +118,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 	public void test_13_6_WithLotsOfWidth() throws Exception {
 		
 		Glyph a = new Glyph("", "fairly tediously long arrow", null, null);
-		Arrow b = new Arrow("Gordon bennett this is a very long arrow");
+		LinkBody b = new LinkBody("Gordon bennett this is a very long arrow");
 		new Link(a, b, null, null, null, null, Direction.RIGHT);
 		
 		
@@ -134,7 +134,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 	public void test_13_7_WithLotsOfLabelWidth() throws Exception {
 		
 		Glyph a = new Glyph("", "a", null, null);
-		Arrow b = new Arrow("b");
+		LinkBody b = new LinkBody("b");
 		new Link(a, b, null, null, null, null, Direction.RIGHT);
 		
 		
@@ -161,7 +161,7 @@ public class Test13Key extends AbstractDisplayFunctionalTest {
 	public void test_13_9_WonkyContextLabel() throws Exception {
 			Glyph hf = new Glyph("harrison_ford","Actor","Harrison Ford", null, null);
 			Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
-			Arrow ww = new Arrow("worked_with", "worked with");
+			LinkBody ww = new LinkBody("worked_with", "worked with");
 			
 			new Link(ww, hf, null, null, null, null, Direction.RIGHT);
 			new Link(ww, rs);

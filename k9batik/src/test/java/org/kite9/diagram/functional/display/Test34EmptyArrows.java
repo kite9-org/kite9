@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -15,7 +15,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 
 	@Test
 	public void test_34_1_3WayPointArrow() throws Exception {
-		Arrow a = new Arrow("a", null);
+		LinkBody a = new LinkBody("a", null);
 		Glyph ga = new Glyph("g1","The 1", null, null);
 		Glyph gb = new Glyph("g2","The 2", null, null);
 		Glyph gc = new Glyph("g3","The 3", null, null);
@@ -29,7 +29,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_2_4WayPointArrow() throws Exception {
-		Arrow a = new Arrow("a", "a");
+		LinkBody a = new LinkBody("a", "a");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -45,7 +45,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_3_5WayPointArrow() throws Exception {
-		Arrow a = new Arrow("middle", "");
+		LinkBody a = new LinkBody("middle", "");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -63,7 +63,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_4_3WayNonPointArrow() throws Exception {
-		Arrow a = new Arrow("middle", "middle");
+		LinkBody a = new LinkBody("middle", "middle");
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -77,7 +77,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_5_3WayPointArrowWithBuffers() throws Exception {
-		Arrow a = new Arrow("a", null);
+		LinkBody a = new LinkBody("a", null);
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);
@@ -90,7 +90,7 @@ public class Test34EmptyArrows extends AbstractDisplayFunctionalTest  {
 	
 	@Test
 	public void test_34_6_3WayPointArrowWithTerms() throws Exception {
-		Arrow a = new Arrow("a", null);
+		LinkBody a = new LinkBody("a", null);
 		Glyph ga = new Glyph("ga","The a", null, null);
 		Glyph gb = new Glyph("gb","The b", null, null);
 		Glyph gc = new Glyph("gc","The c", null, null);

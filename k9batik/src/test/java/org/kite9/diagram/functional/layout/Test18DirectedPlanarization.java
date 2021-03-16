@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -134,11 +134,11 @@ public class Test18DirectedPlanarization extends AbstractLayoutFunctionalTest {
 		Glyph from = new Glyph("from", "From", null, null, null);
 		Glyph to = new Glyph("to", "To", null, null, null);
 
-		Arrow a = new Arrow("a", "a");
-		Arrow b = new Arrow("b", "b");
-		Arrow c = new Arrow("c", "c");
-		Arrow d = new Arrow("d", "d");
-		Arrow e = new Arrow("e", "e");
+		LinkBody a = new LinkBody("a", "a");
+		LinkBody b = new LinkBody("b", "b");
+		LinkBody c = new LinkBody("c", "c");
+		LinkBody d = new LinkBody("d", "d");
+		LinkBody e = new LinkBody("e", "e");
 
 		new TurnLink(from, a);
 		new TurnLink(from, b);

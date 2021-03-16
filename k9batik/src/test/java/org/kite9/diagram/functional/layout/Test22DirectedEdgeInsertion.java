@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -75,12 +75,12 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Glyph diagram = new Glyph("xml", "A Diagram Definition", null, null);
 		Glyph response = new Glyph("zip file", "Response", createList(new TextLine("PNG Image (or) "), new TextLine("PDF Image"), new TextLine("Client-side image map")), null);
 
-		Arrow sends = new Arrow("sends");
-		Arrow receives = new Arrow("receives");
+		LinkBody sends = new LinkBody("sends");
+		LinkBody receives = new LinkBody("receives");
 
 		Glyph objects = new Glyph("java objects", "ADL Model", null, null);
 		Glyph xstream = new Glyph("", "XStream", null, null);
-		Arrow converts = new Arrow("converts");
+		LinkBody converts = new LinkBody("converts");
 
 		Glyph client = new Glyph("client side", "Kite9 Java Tool", createList(new TextLine("(or another tool)")), null);
 

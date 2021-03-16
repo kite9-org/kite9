@@ -3,7 +3,7 @@ package org.kite9.diagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -28,14 +28,14 @@ public class GraphConstructionTools {
 				collection.add(g);
 				if (j > 0) {
 					String label = "a" + prefix + arrowNo++;
-					Arrow a = new Arrow(label, label);
+					LinkBody a = new LinkBody(label, label);
 					collection.add(a);
 					new Link(out[i][j - 1], a, null, null, null, null, fixDirection ? Direction.RIGHT : null);
 					new Link(a, out[i][j], null, null, null, null, fixDirection ? Direction.RIGHT : null);
 				}
 				if (i > 0) {
 					String label = "a" + prefix + arrowNo++;
-					Arrow a = new Arrow(label, label);
+					LinkBody a = new LinkBody(label, label);
 					collection.add(a);
 					new Link(out[i - 1][j], a, null, null, null, null, fixDirection ? Direction.DOWN : null);
 					new Link(a, out[i][j], null, null, null, null, fixDirection ? Direction.DOWN : null);

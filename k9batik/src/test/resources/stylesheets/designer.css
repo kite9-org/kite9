@@ -115,7 +115,7 @@ glyph stereotype {
 	text-align: middle;
 }
 
-glyph text-lines {
+[k9-elem=glyph] [k9-elem=text-lines] {
 	--kite9-type: container;
 	--kite9-sizing: maximize;
 	--kite9-layout: vertical;
@@ -314,14 +314,14 @@ text-label {
 
 /* Symbols */
 
-symbols {
+[k9-elem=symbols] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-layout: horizontal;
 	--kite9-occupies: 1 0;
 }
 
-symbol {
+[k9-elem=symbol] {
 	--kite9-type: svg;
     --kite9-margin-top: 0px;
     --kite9-margin-right: 2px;
@@ -348,7 +348,7 @@ symbol.square {
 	--kite9-template: url(template.svg#square);
 }
 
-text-line, k9-text, boldText, bodyText {
+[k9-elem=text-line], k9-text, boldText, bodyText {
 	--kite9-type: container;
 	--kite9-sizing: maximize;
 	--kite9-padding-top: 2px;
@@ -360,7 +360,7 @@ text-line, k9-text, boldText, bodyText {
 	--kite9-connection-align: 50%;
 }
 
-text-line, k9-text, bodyText {
+[k9-elem=text-line], k9-text, bodyText {
 	--kite9-horizontal-align: left;
 	--kite9-template: url(template.svg#generic-text);
 }
@@ -372,28 +372,26 @@ boldText {
 
 
 
-/* Arrow */
-[k9-elem=arrow] {
+/* Link Body */
+[k9-elem=link-body] {
 	--kite9-padding: 3px 5px 3px 5px; 
 	--kite9-margin: 10;
 	--kite9-type: container;
 	--kite9-sizing: minimize;
-	--kite9-template: url(template.svg#arrow);
 	--kite9-connections: separate;
 	--kite9-connection-align: 50%;
 	--kite9-link-inset: 4px;
 }
 
 
-[k9-elem=arrow] > [k9-elem=label] {
+[k9-elem=link-body] > [k9-elem=label] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
-	--kite9-template: url(template.svg#arrow-label-text);
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: center;
 }
 
-[k9-elem=arrow] > [k9-elem=label] > [k9-elem=contents] {
+[k9-elem=link-body] > [k9-elem=label] > [k9-elem=contents] {
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: center;
 }
@@ -476,9 +474,10 @@ boldText {
 	fill: black;
 	font-family: "opensans-regular-webfont";
 	stroke: none;
+	text-align: middle;
 }
 
-.arrow-label-text {
+.link-body-label-text {
 	fill: white;
 	stroke: none;
 	font-size: 12px;
@@ -490,7 +489,8 @@ boldText {
 	font-size: 12px;
 	fill: black;
 	stroke: none;
-	--kite9-padding: 2px 2px 2px 2px; 
+	text-align: middle;
+    --kite9-padding: 2px 2px 2px 2px;
 }
 
 .generic-text {

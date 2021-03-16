@@ -18,7 +18,6 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.w3c.dom.Element;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -61,7 +60,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 //		Glyph a = new Glyph("g1", "", "aasdsad", null, null);
 		Glyph b = new Glyph("g2", "", "b", null, null);
 		
-		Arrow i1 = new Arrow("arrow1", "i1asdas ");
+		LinkBody i1 = new LinkBody("arrow1", "i1asdas ");
 		
 		TextLabel fromLabel = new TextLabel("from (down)", LabelPlacement.BOTTOM);
 		fromLabel.setID("fromLabel");
@@ -81,7 +80,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		
-		Arrow i1 = new Arrow("i1", "i1");
+		LinkBody i1 = new LinkBody("i1", "i1");
 		
 		new Link(i1, a, null, null, null, new TextLabel("from (right)", LabelPlacement.RIGHT), Direction.UP);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to (left)", LabelPlacement.LEFT), Direction.DOWN);
@@ -99,7 +98,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		Glyph a = new Glyph("stereo", "a", null, createList(kh.createSymbol("bob", 'b', SymbolShape.CIRCLE)));
 		Glyph b = new Glyph("", "Something\nWicked", createList(new TextLine("some line of data")), createList(kh.createSymbol("terv", 'b', SymbolShape.HEXAGON)));
 		
-		Arrow i1 = new Arrow("i1");
+		LinkBody i1 = new LinkBody("i1");
 
 		
 		new Link(i1, a, null, new TextLine("lines"), null, null, Direction.LEFT);
@@ -124,7 +123,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
 		
-		Arrow i1 = new Arrow("i1");
+		LinkBody i1 = new LinkBody("i1");
 		
 		new Link(i1, a, null, null, null, new TextLabel("from the wild side"), Direction.UP);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side"), Direction.DOWN);
@@ -141,7 +140,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		
-		Arrow i1 = new Arrow("i1", "i1");
+		LinkBody i1 = new LinkBody("i1", "i1");
 		
 		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
 		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side"), Direction.DOWN);
@@ -157,9 +156,9 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		
 		Glyph a = new Glyph("", "a", null, null);
 		
-		Arrow i1 = new Arrow("i1");
-		Arrow i2 = new Arrow("i2");
-		Arrow i3 = new Arrow("i3");
+		LinkBody i1 = new LinkBody("i1");
+		LinkBody i2 = new LinkBody("i2");
+		LinkBody i3 = new LinkBody("i3");
 		
 		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog"), Direction.UP);
 		new Link(i2, a, null, null, LinkEndStyle.ARROW, null /* new LabelTextLine("to the safe side A") */, Direction.UP);
@@ -177,8 +176,8 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		Glyph b = new Glyph("b", "", "b", null, null);
 		
 		
-		Arrow i1 = new Arrow("i1", "i1");
-		Arrow i2 = new Arrow("i2", "i2");
+		LinkBody i1 = new LinkBody("i1", "i1");
+		LinkBody i2 = new LinkBody("i2", "i2");
 		
 		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
 		new Link(i1, b, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), Direction.LEFT);
@@ -193,7 +192,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	@Test
 	public void test_12_8_TestLabelledBothEnds() throws Exception {
 		Glyph a = new Glyph("glyph","", "a", null, null);
-		Arrow i1 = new Arrow("arrow", "i1");
+		LinkBody i1 = new LinkBody("arrow", "i1");
 		Link l = new Link(i1, a);
 		l.setDrawDirection(Direction.RIGHT);
 		l.setFromLabel(new TextLabel("arrow-hello"));
@@ -209,8 +208,8 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	@Test
 	public void test_12_9_ChainOfLabels() throws Exception {
 				
-		Arrow i1 = new Arrow("i1", "i1");
-		Arrow i2 = new Arrow("i2", "i2");
+		LinkBody i1 = new LinkBody("i1", "i1");
+		LinkBody i2 = new LinkBody("i2", "i2");
 		
 		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLabel("Big C"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLabel("Arrow Holder"), null);
@@ -228,8 +227,8 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test_12_10_BlankLabels() throws Exception {
-		Arrow i1 = new Arrow("i1", "i1");
-		Arrow i2 = new Arrow("i2", "i2");
+		LinkBody i1 = new LinkBody("i1", "i1");
+		LinkBody i2 = new LinkBody("i2", "i2");
 		
 		Context c = new Context("c1", Collections.EMPTY_LIST, true, new TextLabel("Big C"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(i1, i2), true, new TextLabel(""), null);

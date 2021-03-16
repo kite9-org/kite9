@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -18,8 +18,8 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);
 		
-		Arrow i1 = new Arrow("i1", "i1");
-		Arrow o1 = new Arrow("o1", "o1");
+		LinkBody i1 = new LinkBody("i1", "i1");
+		LinkBody o1 = new LinkBody("o1", "o1");
 		
 		new Link(inside, i1, null, null, null, null, Direction.RIGHT);
 		new Link(outside, o1, null, null, null, null, Direction.LEFT);
@@ -39,8 +39,8 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);
 		
-		Arrow i1 = new Arrow("i1","i1");
-		Arrow o1 = new Arrow("o1", "o1");
+		LinkBody i1 = new LinkBody("i1","i1");
+		LinkBody o1 = new LinkBody("o1", "o1");
 		
 		new Link(inside, i1, null, null, null, null, Direction.RIGHT);
 		new Link(outside, o1, null, null, null, null, Direction.LEFT);
@@ -65,8 +65,8 @@ public class Test11MultiFaceDirectedArrows extends AbstractLayoutFunctionalTest 
 		Glyph inside = new Glyph("inside", "", "inside", null, null);
 		Glyph outside = new Glyph("outside", "", "outside", null, null);
 		
-		Arrow i1 = new Arrow("i1", "i1");
-		Arrow o1 = new Arrow("o1", "o1");
+		LinkBody i1 = new LinkBody("i1", "i1");
+		LinkBody o1 = new LinkBody("o1", "o1");
 		
 		new Link(inside, i1, null, null , null, null, Direction.RIGHT);
 		new Link(outside, o1, null, null, null, null, Direction.LEFT);

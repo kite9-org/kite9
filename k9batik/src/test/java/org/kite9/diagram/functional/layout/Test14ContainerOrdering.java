@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -20,7 +20,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 	Glyph four;
 
 	Context con1;
-	Arrow outside;
+	LinkBody outside;
 
 	public void setUp() {
 		one = new Glyph("a0", "", "a0", null, null);
@@ -29,7 +29,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		four = new Glyph("a3", "", "a3", null, null);
 		con1 = new Context("b1", createList(one, two, three, four),
 				true, new TextLine("inside"),  Layout.RIGHT);
-		outside = new Arrow("outside", "outside");
+		outside = new LinkBody("outside", "outside");
 	}
 
 	@Test

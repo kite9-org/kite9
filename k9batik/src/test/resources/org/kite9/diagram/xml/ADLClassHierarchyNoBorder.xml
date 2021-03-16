@@ -153,7 +153,7 @@
      <text-lines></text-lines>
      <symbols></symbols>
     </glyph>
-    <glyph id="project_java_class:org.kite9.diagram.adl.Arrow" stereotype="" label="Arrow">
+    <glyph id="project_java_class:org.kite9.diagram.adl.LinkBody" stereotype="" label="Arrow">
      <text-lines></text-lines>
      <symbols></symbols>
     </glyph>
@@ -463,11 +463,11 @@
     <toDecoration>ARROW</toDecoration>
    </link>
    <link id="auto:144" drawDirection="UP">
-    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkBody"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_extends"></to>
    </link>
    <link id="auto:146" drawDirection="UP">
-    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkBody"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></to>
    </link>
    <link id="auto:154" drawDirection="UP">

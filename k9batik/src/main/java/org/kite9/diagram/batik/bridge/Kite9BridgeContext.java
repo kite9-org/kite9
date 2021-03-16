@@ -8,6 +8,7 @@ import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
+import org.apache.batik.css.engine.value.InheritValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
@@ -199,7 +200,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public String getCssStyleStringProperty(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
-		return v == null ? null : v.getStringValue();
+		return ((v == null) || (v instanceof InheritValue)) ? null : v.getStringValue();
 	}
 
 
@@ -309,7 +310,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		GraphicsNode gn = getGraphicsNode(inside);
 		if (gn instanceof TextNode) {
 			TextNode tn = (TextNode) gn;
-			int idx = inside.getTextContent().indexOf(s);
+			int idx = tn.getText().indexOf(s);
 			TextPainter tp = tn.getTextPainter();
 			Mark start = tp.getMark(tn, idx, true);
 			Mark end = tp.getMark(tn, idx + s.length() - 1, false);

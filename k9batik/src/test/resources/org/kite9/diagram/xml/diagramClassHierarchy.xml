@@ -1,5 +1,5 @@
 <?xml version="1.0" ?><diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="project_java_class:org.kite9.diagram.Diagrams/diagramClassHierarchy()">
-  <glyph id="project_java_class:org.kite9.diagram.adl.Arrow" stereotype="class" label="Arrow">
+  <glyph id="project_java_class:org.kite9.diagram.adl.LinkBody" stereotype="class" label="Arrow">
    <text-lines></text-lines>
    <symbols></symbols>
   </glyph>
@@ -189,11 +189,11 @@
   <arrow id="project_java_class:org.kite9.diagram.primitives.AbstractConnection/rel_extends" label="extends"></arrow>
   
    <link id="auto:58" drawDirection="UP">
-    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkBody"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_implements"></to>
    </link>
    <link id="auto:104" drawDirection="UP">
-    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.Arrow"></from>
+    <from xsi:type="glyph" reference="project_java_class:org.kite9.diagram.adl.LinkBody"></from>
     <to xsi:type="arrow" reference="project_java_class:org.kite9.diagram.adl.Arrow/rel_extends"></to>
    </link>
    <link id="auto:0">

@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -14,7 +14,6 @@ import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Dimension2D;
 import org.kite9.diagram.model.position.Direction;
@@ -31,8 +30,8 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		Glyph two = new Glyph("", "two", null, null);
 		Glyph three = new Glyph("", "three", null, null);
 
-		Arrow b = new Arrow("drinks");
-		Arrow c = new Arrow("thinks");
+		LinkBody b = new LinkBody("drinks");
+		LinkBody c = new LinkBody("thinks");
 		
 		new Link(b, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(b, two);
@@ -50,10 +49,10 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		Glyph tr = new Glyph("TR","", "TR", null, null);
 		Glyph bl = new Glyph("BL","", "BL", null, null);
 
-		Arrow top = new Arrow("t", "top");
-		Arrow left = new Arrow("l","left");
-		Arrow right = new Arrow("r","right");
-		Arrow bottom = new Arrow("b", "bottom");
+		LinkBody top = new LinkBody("t", "top");
+		LinkBody left = new LinkBody("l","left");
+		LinkBody right = new LinkBody("r","right");
+		LinkBody bottom = new LinkBody("b", "bottom");
 
 		new Link(top, tl, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(top, tr, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
@@ -78,10 +77,10 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph("", "Three", null, null);
 		Glyph four = new Glyph("", "Four", null, null);
 
-		Arrow meets = new Arrow("meets");
-		Arrow sees = new Arrow("sees");
-		Arrow asks = new Arrow("asks");
-		Arrow looks = new Arrow("looks");
+		LinkBody meets = new LinkBody("meets");
+		LinkBody sees = new LinkBody("sees");
+		LinkBody asks = new LinkBody("asks");
+		LinkBody looks = new LinkBody("looks");
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);

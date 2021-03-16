@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -52,8 +52,8 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_1_5_TwoArrowsFinal() throws Exception {
-		Element one = new Arrow("One\nMultiline");
-		Element two = new Arrow("Two");
+		Element one = new LinkBody("One\nMultiline");
+		Element two = new LinkBody("Two");
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two));
 		renderDiagram(d);
 	}
@@ -69,8 +69,8 @@ public class Test1ArrowGlyphContainer extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_1_7_TwoArrowsInContainerFinal() throws Exception {
-		Element one = new Arrow("One");
-		Element two = new Arrow("Two");
+		Element one = new LinkBody("One");
+		Element two = new LinkBody("Two");
 		Element con = new Context("Context", createList(one, two), true, null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con));
 		renderDiagram(d);

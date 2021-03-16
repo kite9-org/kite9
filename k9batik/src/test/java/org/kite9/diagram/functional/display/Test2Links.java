@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -20,7 +20,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	public void test_2_2_2GlyphsArrowFinal() throws Exception {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
 		Glyph two = new Glyph("two", "Stereo", "Two", null, null);
-		Arrow a = new Arrow("meets", "meets");
+		LinkBody a = new LinkBody("meets", "meets");
 		new Link(a, one);
 		new Link(a, two);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
@@ -32,7 +32,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	public void test_2_3_2GlyphsHeadedArrow() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, one);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, null);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
@@ -44,8 +44,8 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	public void test_2_4_2Glyphs2Arrows() throws Exception {
 		Glyph one = new Glyph("One", "Stereo", "One", null, null);
 		Glyph two = new Glyph("Two", "Stereo", "Two", null, null);
-		Arrow meets = new Arrow("meets", "meets");
-		Arrow eats = new Arrow("eats", "eats");
+		LinkBody meets = new LinkBody("meets", "meets");
+		LinkBody eats = new LinkBody("eats", "eats");
 		new Link(meets, one, null, null, null, null, Direction.LEFT);
 		new TurnLink(meets, two);
 		new ContradictingLink(eats, one, null, null, null, null, Direction.UP);
@@ -60,8 +60,8 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
 		Glyph two = new Glyph("two", "Stereo", "Two", null, null);
 		Glyph three = new Glyph("three",null, "Three", null, null);
-		Arrow a = new Arrow("meets", "meets");
-		Arrow b = new Arrow("eats", "eats");
+		LinkBody a = new LinkBody("meets", "meets");
+		LinkBody b = new LinkBody("eats", "eats");
 		new Link(a, one);
 		new Link(a, two);
 		new Link(b, three);
@@ -78,7 +78,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_2_6_1Glyph1Arrow() throws Exception {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
-		Arrow a = new Arrow("meets", "meets");
+		LinkBody a = new LinkBody("meets", "meets");
 		TurnLink tl1 = new TurnLink(a, one);
 		TurnLink tl2 =new TurnLink(a, one);
 		TurnLink tl3 =new TurnLink(a, one);
@@ -103,7 +103,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_2_7_1Glyph1Arrow2() throws Exception {
 		Glyph one = new Glyph("one", "Stereo", "One", null, null);
-		Arrow a = new Arrow("meets", "meets");
+		LinkBody a = new LinkBody("meets", "meets");
 		TurnLink tl1 = new TurnLink(a, one);
 		TurnLink tl2 = new TurnLink(a, one);
 		TurnLink tl3 = new TurnLink(a, one);

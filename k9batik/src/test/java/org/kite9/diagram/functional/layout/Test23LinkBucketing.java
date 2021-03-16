@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Before;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -17,7 +17,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 
 	// the players
 
-	Arrow one;
+	LinkBody one;
 	//Glyph one;
 	Glyph two;
 	Glyph three;
@@ -30,7 +30,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 
 	@Before
 	public void setUp() {
-		one = new Arrow("a1", "a1");
+		one = new LinkBody("a1", "a1");
 		// one = new Glyph("g1", "", "one", null, null);
 		two = new Glyph("g2", "", "two", null, null);
 		three = new Glyph("g3", "", "three", null, null);

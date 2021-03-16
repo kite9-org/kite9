@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -14,9 +14,9 @@ public class Test16BendyArrows extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
 		Glyph c = new Glyph("", "c", null, null);
-		Arrow ab= new Arrow("ab");
-		Arrow bc= new Arrow("bc");
-		Arrow ac= new Arrow("ac");
+		LinkBody ab= new LinkBody("ab");
+		LinkBody bc= new LinkBody("bc");
+		LinkBody ac= new LinkBody("ac");
 		
 		new Link(ab, a);
 		new Link(ab, b);
@@ -34,9 +34,9 @@ public class Test16BendyArrows extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("", "a", null, null);
 		Glyph b = new Glyph("", "b", null, null);
 		Glyph c = new Glyph("", "c", null, null);
-		Arrow ab= new Arrow("ab");
-		Arrow bc= new Arrow("bc");
-		Arrow ac= new Arrow("ac");
+		LinkBody ab= new LinkBody("ab");
+		LinkBody bc= new LinkBody("bc");
+		LinkBody ac= new LinkBody("ac");
 		
 		new Link(ab, a);
 		new Link( ab, b);

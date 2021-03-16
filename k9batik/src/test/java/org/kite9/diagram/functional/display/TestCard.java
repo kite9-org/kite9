@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -49,9 +49,9 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 				new TextLine("Another text line")
 				),  HelpMethods.createList(aDia, QCir, gHex));
 		
-		Arrow a1 = new Arrow("a1", "Arrow with a label");
+		LinkBody a1 = new LinkBody("a1", "Arrow with a label");
 		
-		Arrow a2 = new Arrow("a2", null);
+		LinkBody a2 = new LinkBody("a2", null);
 		
 		
 

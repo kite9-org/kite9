@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -115,7 +115,7 @@ public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_21_5_hiddenContext() throws Exception {
 		Glyph rs = new Glyph("ridley_scott", "Director", "Ridley Scott", null, null);
-		Arrow directed = new Arrow("directed");
+		LinkBody directed = new LinkBody("directed");
 		
 		new Link(directed, rs);
 

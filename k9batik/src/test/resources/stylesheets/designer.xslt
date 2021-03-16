@@ -132,11 +132,17 @@
         </g>
     </xsl:template>
 
-    <xsl:template match='arrow'>
-        <g k9-elem="arrow">
+    <xsl:template match='link-body'>
+        <g k9-elem="link-body">
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' style='fill: black; ' />
             <xsl:apply-templates/>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="link-body/label">
+        <g k9-elem="text-label">
+            <text class="link-body-label-text"><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 
@@ -154,17 +160,68 @@
         </g>
     </xsl:template>
 
+    <xsl:template match="glyph/label">
+        <g k9-elem="text-label">
+            <text class="glyph-label-text"><xsl:apply-templates select="text()" /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="glyph/stereotype">
+        <g k9-elem="text-label">
+            <text class="glyph-stereotype-text"><xsl:apply-templates select="text()" /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="glyph/text-lines">
+        <g k9-elem="text-lines">
+            <xsl:for-each select="text-line">
+                <g k9-elem="text-label">
+                    <xsl:copy-of select="@*" />
+                    <text class="generic-text"><xsl:apply-templates select="text()" /></text>
+                </g>
+            </xsl:for-each>
+        </g>
+    </xsl:template>
+
+    <!-- symbol -->
+    <xsl:template match="symbol[@shape='CIRCLE']">
+        <g k9-elem="symbol">
+            <xsl:copy-of select="@*" />
+            <circle style="fill: #00A070;  stroke: none" cx="6" cy="6" r="6" />
+            <text x="6" y="9" class="symbol-text"><xsl:value-of select="substring(@theChar,1, 1)" /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="symbol[@shape='HEXAGON']">
+        <g k9-elem="symbol">
+            <xsl:copy-of select="@*" />
+            <polygon points="0,3 6,0 12,3 12,9 6,12 0,9" style="fill: #AA2030;  stroke: none"/>
+            <text x="6" y="9" class="symbol-text"><xsl:value-of select="substring(@theChar,1, 1)" /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="symbol[@shape='DIAMOND']">
+        <g k9-elem="symbol">
+            <xsl:copy-of select="@*" />
+            <polygon points="6,0 12,6 6,12 0,6"  style="fill: #BB8040;  stroke: none" />
+            <text x="6" y="9" class="symbol-text"><xsl:value-of select="substring(@theChar,1, 1)"  /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="symbol[@shape='SQUARE']">
+        <g k9-elem="symbol">
+            <xsl:copy-of select="@*" />
+            <rect width="12" height="12" x="0" y="0"  style="fill: #CC8050; stroke: none" />
+            <text x="6" y="9" class="symbol-text"><xsl:value-of select="substring(@theChar,1, 1)" /></text>
+        </g>
+    </xsl:template>
+
+
     <xsl:template match="*">
         <g>
             <xsl:attribute name="k9-elem"><xsl:value-of select="name(.)" /></xsl:attribute>
             <xsl:copy-of select="@*" />
             <xsl:apply-templates />
-        </g>
-    </xsl:template>
-
-    <xsl:template match="glyph/label">
-        <g k9-elem="text-label">
-            <text class="glyph-label-text"><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 

@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -15,7 +15,7 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Glyph three = new Glyph(null, "Three", null, null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link( a, one);
 		new TurnLink(a, two);
 		new TurnLink( a, three);
@@ -31,12 +31,12 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph(null, "Three", null, null);
 		Glyph four = new Glyph(null, "Four", null, null);
 
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, one);
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		Arrow b = new Arrow("eats");
+		LinkBody b = new LinkBody("eats");
 		new TurnLink(b, two);
 		new TurnLink( b, three);
 		new Link(b, four);
@@ -52,17 +52,17 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph(null, "Three", null, null);
 		Glyph four = new Glyph(null, "Four", null, null);
 
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new TurnLink(a, one);
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		Arrow b = new Arrow("eats");
+		LinkBody b = new LinkBody("eats");
 		new TurnLink(b, two);
 		new TurnLink(b, three);
 		new TurnLink(b, four);
 
-		Arrow c = new Arrow("gets");
+		LinkBody c = new LinkBody("gets");
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);
@@ -78,17 +78,17 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph("g3", null, "Three", null, null);
 		Glyph four = new Glyph("g4", null, "Four", null, null);
 
-		Arrow a = new Arrow("a1", "");
+		LinkBody a = new LinkBody("a1", "");
 		new TurnLink(a, one);
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		Arrow b = new Arrow("a2","");
+		LinkBody b = new LinkBody("a2","");
 		new TurnLink(b, two);
 		new TurnLink(b, three);
 		new TurnLink(b, four);
 
-		Arrow c = new Arrow("a3","");
+		LinkBody c = new LinkBody("a3","");
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);

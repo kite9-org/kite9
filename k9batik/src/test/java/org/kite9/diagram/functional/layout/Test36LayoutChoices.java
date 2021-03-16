@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.DiagramAssert;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -97,12 +97,12 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
 		Glyph g3 = new Glyph("g3", "", "g3", null, null);
 		
-		Arrow a1 = new Arrow("a1", "a1");
-		Arrow a2 = new Arrow("a2", "a2");
-		Arrow a3 = new Arrow("a3", "a3");
-		Arrow a4 = new Arrow("a4", "a4");
-		Arrow a5 = new Arrow("a5", "a5");
-		Arrow a6 = new Arrow("a6", "a6");
+		LinkBody a1 = new LinkBody("a1", "a1");
+		LinkBody a2 = new LinkBody("a2", "a2");
+		LinkBody a3 = new LinkBody("a3", "a3");
+		LinkBody a4 = new LinkBody("a4", "a4");
+		LinkBody a5 = new LinkBody("a5", "a5");
+		LinkBody a6 = new LinkBody("a6", "a6");
 
 		Glyph g4 = new Glyph("g4", "", "g4", null, null);
 		Glyph g5 = new Glyph("g5", "", "g5", null, null);
@@ -149,14 +149,14 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("g5", "", "g5", null, null);
 		Glyph g6 = new Glyph("g6", "", "g6", null, null);
 		
-		Arrow a1 = new Arrow("a1", "a1");
-		Arrow a2 = new Arrow("a2", "a2");
-		Arrow a3 = new Arrow("a3", "a3");
-		Arrow a4 = new Arrow("a4", "a4");
-		Arrow a5 = new Arrow("a5", "a5");
-		Arrow a6 = new Arrow("a6", "a6");
-		Arrow a7 = new Arrow("a7", "a7");
-		Arrow a8 = new Arrow("a8", "a8");
+		LinkBody a1 = new LinkBody("a1", "a1");
+		LinkBody a2 = new LinkBody("a2", "a2");
+		LinkBody a3 = new LinkBody("a3", "a3");
+		LinkBody a4 = new LinkBody("a4", "a4");
+		LinkBody a5 = new LinkBody("a5", "a5");
+		LinkBody a6 = new LinkBody("a6", "a6");
+		LinkBody a7 = new LinkBody("a7", "a7");
+		LinkBody a8 = new LinkBody("a8", "a8");
 
 		
 		Context con1 = new Context("con1", HelpMethods.listOf(g0), true, new TextLine("c1"), l);

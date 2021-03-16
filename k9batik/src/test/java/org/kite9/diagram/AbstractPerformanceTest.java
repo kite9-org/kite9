@@ -1,7 +1,7 @@
 package org.kite9.diagram;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -142,7 +142,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			public void visit(DiagramElement de) {
 				if (de instanceof Connection) {
 					measureLink((Connection) de, m);
-				} else if ((de instanceof Glyph) || (de instanceof Arrow) || (de instanceof Context)) {
+				} else if ((de instanceof Glyph) || (de instanceof LinkBody) || (de instanceof Context)) {
 					measureElement(de, m);
 				}
 			}

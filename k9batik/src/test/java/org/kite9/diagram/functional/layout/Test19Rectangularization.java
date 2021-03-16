@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import org.junit.Before;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -18,10 +18,10 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 	Glyph c;
 	Glyph d;
 
-	Arrow a1;
-	Arrow b1;
-	Arrow c1;
-	Arrow d1;
+	LinkBody a1;
+	LinkBody b1;
+	LinkBody c1;
+	LinkBody d1;
 
 	@Before
 	public void setUp() {
@@ -30,10 +30,10 @@ public class Test19Rectangularization extends AbstractLayoutFunctionalTest {
 		c = new Glyph("C", "", "C", null, null);
 		d = new Glyph("D", "", "D", null, null);
 
-		a1 = new Arrow("a1","a1");
-		b1 = new Arrow("b1", "b1");
-		c1 = new Arrow("c1", "c1");
-		d1 = new Arrow("d1", "d1");
+		a1 = new LinkBody("a1","a1");
+		b1 = new LinkBody("b1", "b1");
+		c1 = new LinkBody("c1", "c1");
+		d1 = new LinkBody("d1", "d1");
 	}
 
 	@Test

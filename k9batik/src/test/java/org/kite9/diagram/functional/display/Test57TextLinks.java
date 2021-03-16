@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -26,7 +26,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	public void test_57_1_TextLineLink1() throws Exception {
 		TextLine tl = new TextLine("linker", "some row");
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, tl, null, null, null, null, Direction.RIGHT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, a));
 
@@ -38,8 +38,8 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		TextLine tl = new TextLine("linker", "some row");
 		TextLine tl2 = new TextLine("linker2", "some other row");
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl, tl2), null);
-		Arrow a = new Arrow("a");
-		Arrow b = new Arrow("b");
+		LinkBody a = new LinkBody("a");
+		LinkBody b = new LinkBody("b");
 		new Link(a, tl, null, null, null, null, Direction.RIGHT);
 		new Link(b, tl2, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, a, b));
@@ -53,7 +53,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		TextLine tl = new TextLine("linker", "some row blah blah blah");
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
-		Arrow a = new Arrow("a");
+		LinkBody a = new LinkBody("a");
 		a.setAttribute("style","	--kite9-sizing: maximize;");
 		new Link(a, one, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
@@ -70,7 +70,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		TextLine tl = new TextLine("linker", "some row blah blah blah");
 		Glyph one = new Glyph("one", "Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("two","Stereo", "Two", null, null);
-		Arrow a = new Arrow("a", "a");
+		LinkBody a = new LinkBody("a", "a");
 		a.setAttribute("style","	--kite9-sizing: maximize;");
 		new Link(a, tl, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);

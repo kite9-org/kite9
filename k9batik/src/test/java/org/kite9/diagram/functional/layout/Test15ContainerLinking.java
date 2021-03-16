@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -17,7 +17,7 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 	public void test_15_1_LabelledContainerLinks() throws Exception {
 
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
-		Arrow a = new Arrow("a1");
+		LinkBody a = new LinkBody("a1");
 
 		Context con1 = new Context("con1", createList(g1), true, new TextLine("c1"), null);
 		Context con2 = new Context("con2", null, true, new TextLine("c2"), null);

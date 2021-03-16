@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.layout;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Arrow;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
@@ -23,7 +23,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Glyph three = new Glyph(null, "Three", null, null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two);
 		new Link(a, three);
@@ -38,8 +38,8 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("", "One", null, null);
 		Glyph two = new Glyph("", "Two", null, null);
 
-		Arrow meets = new Arrow("meets");
-		Arrow sees = new Arrow("sees");
+		LinkBody meets = new LinkBody("meets");
+		LinkBody sees = new LinkBody("sees");
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
@@ -56,10 +56,10 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph("", "Three", null, null);
 		Glyph four = new Glyph("", "Four", null, null);
 
-		Arrow meets = new Arrow("meets");
-		Arrow sees = new Arrow("sees");
-		Arrow asks = new Arrow("asks");
-		Arrow looks = new Arrow("looks");
+		LinkBody meets = new LinkBody("meets");
+		LinkBody sees = new LinkBody("sees");
+		LinkBody asks = new LinkBody("asks");
+		LinkBody looks = new LinkBody("looks");
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
@@ -76,8 +76,8 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("One", "", "One", null, null);
 		Glyph two = new Glyph("Two", "", "Two", null, null);
 
-		Arrow meets = new Arrow("meets", "meets");
-		Arrow sees = new Arrow("sees", "sees");
+		LinkBody meets = new LinkBody("meets", "meets");
+		LinkBody sees = new LinkBody("sees", "sees");
 
 		new Link(meets, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(sees, two, null, null, LinkEndStyle.ARROW, null, Direction.UP);
@@ -95,7 +95,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Glyph three = new Glyph(null, "Three", null, null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
@@ -110,7 +110,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", null, null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Glyph three = new Glyph(null, "Three", null, null);
-		Arrow a = new Arrow("meets");
+		LinkBody a = new LinkBody("meets");
 		new Link(a, one, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 		new Link(a, two, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(a, three, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
@@ -127,10 +127,10 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph tr = new Glyph("TR", "", "TR", null, null);
 		Glyph bl = new Glyph("BL", "", "BL", null, null);
 
-		Arrow top = new Arrow("top", "top");
-		Arrow left = new Arrow("left", "left");
-		Arrow right = new Arrow("right", "right");
-		Arrow bottom = new Arrow("bottom", "bottom");
+		LinkBody top = new LinkBody("top", "top");
+		LinkBody left = new LinkBody("left", "left");
+		LinkBody right = new LinkBody("right", "right");
+		LinkBody bottom = new LinkBody("bottom", "bottom");
 
 		new Link(top, tl, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(top, tr, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
@@ -155,10 +155,10 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph tr = new Glyph("TR", "", "TR", null, null);
 		Glyph bl = new Glyph("BL", "", "BL", null, null);
 
-		Arrow top = new Arrow("top","top\ntop\ntop");
-		Arrow left = new Arrow("left","left lefty left left");
-		Arrow right = new Arrow("right","right");
-		Arrow bottom = new Arrow("bottom","bottom");
+		LinkBody top = new LinkBody("top","top\ntop\ntop");
+		LinkBody left = new LinkBody("left","left lefty left left");
+		LinkBody right = new LinkBody("right","right");
+		LinkBody bottom = new LinkBody("bottom","bottom");
 
 		new Link(top, tl, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(top, tr, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
