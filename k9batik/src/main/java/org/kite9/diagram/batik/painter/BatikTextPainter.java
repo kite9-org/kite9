@@ -12,7 +12,7 @@ public class BatikTextPainter extends BatikLeafPainter {
 
     @Override
     public Rectangle2D bounds() {
-        double lineHeight = ctx.getCssStyleDoubleProperty("font-size", getTheElement());
+        double lineHeight = ctx.getCssStyleDoubleProperty("line-height", getTheElement());
         Rectangle2D ir = super.bounds();
         if (ir == null) {
             return null;

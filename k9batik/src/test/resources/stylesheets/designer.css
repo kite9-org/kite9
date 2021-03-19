@@ -13,17 +13,6 @@
 	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
 }
 
-/*
- * Required so we can process old XML content
- */
-renderingInformation,
-fromDecoration,
-toDecoration, 
-position,
-size,
-allLinks {
-	--kite9-type: none;
-}
 
 /* Definitions of Kite9 Elements */
 
@@ -41,16 +30,16 @@ svg {
 	--kite9-type: diagram;
 	--kite9-padding: 15px;
 	--kite9-traversal: none;
+	line-height: 120%;
 }
 
 [k9-elem=key] {
 	--kite9-type: container;
 	--kite9-usage: label;
 	--kite9-padding: 3px 6px 3px 6px; 
-	--kite9-template: url(template.svg#key);
 	--kite9-horizontal-sizing: maximize;
 	--kite9-vertical-sizing: minimize;
-  --kite9-label-placement: bottom;
+    --kite9-label-placement: bottom;
 }
 
 [k9-elem=key] [k9-elem=body] {
@@ -68,11 +57,11 @@ svg {
 	--kite9-occupies: 0 2;
 }
 
-key boldText {
+[k9-elem=key] [k9-elem=boldText] {
 	--kite9-occupies: 0 0;
 }
 
-key bodyText {
+[k9-elem=key] [k9-elem=bodyText]  {
 	--kite9-occupies: 0 1;
 }
 
@@ -81,17 +70,12 @@ key bodyText {
 [k9-elem=glyph] {
 	--kite9-type: container;
 	--kite9-layout: down;	
-	--kite9-template: url(template.svg#glyph);
-	--kite9-padding: 6px 10px 6px 10px; 
+	--kite9-padding: 6px 10px 6px 10px;
 	--kite9-margin: 10px;
 	--kite9-connection-align: 50%;
 }
 
-glyph.hibaby {
-	--kite9-template: url(template.svg#glyph-parameterized), "Hello Baby";
-}
-
-glyph symbols {
+[k9-elem=glyph]  [k9-elem=symbols] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-layout: horizontal;
@@ -99,14 +83,14 @@ glyph symbols {
 }
 
 [k9-elem=text-label] {
-    --kite9-usage: text;
-	--kite9-type: svg;
+    --kite9-usage: connected;
+	--kite9-type: text;
 	--kite9-sizing: minimize;
 	--kite9-vertical-align: top;
-	--kite9-margin: 10px;
+	--kite9-margin: 3px;
 }
 
-glyph stereotype {
+[k9-elem=glyph]  [k9-elem=stereotype] {
 	--kite9-type: container;
 	--kite9-vertical-align: bottom;
 	--kite9-horizontal-align: center;
@@ -123,14 +107,13 @@ glyph stereotype {
 
 /* SYMBOLS */
 
-symbol-text-line {
+[k9-elem=symbol-text-line] {
 	--kite9-type: container;
 	--kite9-sizing: maximize;
 	--kite9-layout: grid;
 	--kite9-grid-size: 2 1;
 	--kite9-connection-align: 50%;
-	/* --kite9-template: url(template.svg#show-box); */
-} 
+}
 
 [k9-elem=key] [k9-elem=text-lines] [k9-elem=text-label],
 [k9-elem=glyph] [k9-elem=text-lines] [k9-elem=text-label],
@@ -138,18 +121,11 @@ symbol-text-line {
 	--kite9-horizontal-align: left;
 }
 
-symbol-text-line symbols {
+[k9-elem=symbol-text-line] [k9-elem=symbols] {
 	--kite9-sizing: maximize;
 	--kite9-horizontal-align: right;
 	--kite9-occupies: 1 0;
 	margin: 0px;
-	/* --kite9-template: url(template.svg#show-box) */
-}
-
-show-box {
-	--kite9-template: url(template.svg#show-box);
-	--kite9-usage: decal;
-	--kite9-type: svg;
 }
 
 [k9-elem=context] {
@@ -165,13 +141,11 @@ show-box {
 	--kite9-usage: label;
 	--kite9-type: container; 
 	--kite9-sizing: minimize;
-	--kite9-template: url(template.svg#container-label);
 	--kite9-padding: 4px;
     --kite9-label-placement: bottom;
 }
 
-grid {
-	--kite9-template: url(template.svg#grid);
+[k9-elem=grid] {
 	--kite9-padding: 0px;
 	--kite9-margin: 0px;
 	--kite9-type: container;
@@ -180,12 +154,7 @@ grid {
 	--kite9-layout: grid;
 }
 
-grid.triangles {
-	--kite9-template: url(template.svg#grid-triangles);
-}
-
-cell {
-	--kite9-template: url(template.svg#cell);
+[k9-elem=cell] {
 	--kite9-padding: 0px;
 	--kite9-margin: 0px;
 	--kite9-type: container;
@@ -197,10 +166,9 @@ cell {
 [k9-elem=fromLabel] {
 	--kite9-usage: label;
 	--kite9-type: container; 
-	--kite9-padding: 4px; 
+	--kite9-padding: 0px;
 	--kite9-sizing: minimize;
-	--kite9-template: url(template.svg#connection-label);
-	--kite9-margin: 4px;	
+	--kite9-margin: 4px;
 }
 
 [k9-elem=_temporary] {
@@ -217,14 +185,13 @@ cell {
 	--kite9-link-end: from;
 }
 
-text-label {
+[k9-elem=text-label] {
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: center;
 }
 
 [k9-elem=link] {
 	--kite9-type: link;
-	--kite9-template: url(template.svg#link);
 }
 
 [drawDirection=LEFT] {
@@ -246,9 +213,8 @@ text-label {
 [k9-elem=from],
 [k9-elem=to] {
 	--kite9-type: link-end;
-	--kite9-template: url(template.svg#empty-terminator);
 	--kite9-padding: 5px;
-} 
+}
 
 [k9-elem=from].circle,
 [k9-elem=to].circle {
@@ -332,24 +298,12 @@ text-label {
 	--kite9-link-inset: 0px;
 }
 
-symbol.circle {
-	--kite9-template: url(template.svg#circle);	 
-}
-
-symbol.hexagon {
-	--kite9-template: url(template.svg#hexagon);
-}
-
-symbol.diamond {
-	--kite9-template: url(template.svg#diamond);
-}
-
-symbol.square {
-	--kite9-template: url(template.svg#square);
-}
-
-[k9-elem=text-line], k9-text, boldText, bodyText {
-	--kite9-type: container;
+[k9-elem=text-line],
+[k9-elem=k9-text],
+[k9-elem=boldText],
+[k9-elem=bodyText] {
+	--kite9-type: text;
+	--kite9-usage: connected;
 	--kite9-sizing: maximize;
 	--kite9-padding-top: 2px;
 	--kite9-padding-bottom: 2px;
@@ -360,13 +314,13 @@ symbol.square {
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=text-line], k9-text, bodyText {
+[k9-elem=text-line],
+[k9-elem=k9-text],
+[k9-elem=bodyText] {
 	--kite9-horizontal-align: left;
-	--kite9-template: url(template.svg#generic-text);
 }
 
-boldText {
-	--kite9-template: url(template.svg#bold-text);
+[k9-elem=boldText] {
 	--kite9-horizontal-align: center;
 }
 
@@ -457,6 +411,8 @@ boldText {
 	font-size: 11px;
 	font-family: "opensans-light-webfont";
 	fill: white;
+	--kite9-margin: 0px;
+	--kite9-padding: 6px;
 }
 
 .connection-label-back {
@@ -467,6 +423,11 @@ boldText {
 	stroke-width: 1px;
 	stroke: black;
 	fill: white;
+}
+
+.link-body-back {
+    fill: black;
+    stroke-width: 0;
 }
 
 .glyph-label-text {
@@ -490,7 +451,7 @@ boldText {
 	fill: black;
 	stroke: none;
 	text-align: middle;
-    --kite9-padding: 2px 2px 2px 2px;
+    --kite9-padding: 0px;
 }
 
 .generic-text {
@@ -509,7 +470,15 @@ boldText {
 	font-size: 10px;
 }
 
-.red {
+.body-text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;
+	font-size: 10px;
+}
+
+.red {f
 	font-size: 25px;
 	fill: red;
 }

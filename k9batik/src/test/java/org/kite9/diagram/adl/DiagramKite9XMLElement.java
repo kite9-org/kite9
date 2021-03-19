@@ -54,6 +54,7 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 		
 		// home all temporary connections (due to Link)
 		for (Element xmlElement : AbstractMutableXMLElement.CONNECTION_ELEMENTS) {
+			this.ownerDocument.adoptNode(xmlElement);
 			appendChild(xmlElement);
 		}
 

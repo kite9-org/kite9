@@ -103,6 +103,15 @@
                     <polygon points="6,4 2,2 2,6" class="arrow-marker"></polygon>
                 </marker>
 
+                <marker id="circle-start-marker" markerWidth="6" markerHeight="6" refX="3" refY="3">
+                    <circle cx="3" cy="3" r="2" class="circle-marker"></circle>
+                </marker>
+
+                <marker id="circle-end-marker" markerWidth="6" markerHeight="6" refX="3" refY="3">
+                    <circle cx="3" cy="3" r="2" class="circle-marker"></circle>
+                </marker>
+
+
                 <marker id="-start-marker" />
                 <marker id="-end-marker" />
                 <marker id="gap-start-marker" />
@@ -132,17 +141,27 @@
         </g>
     </xsl:template>
 
+    <xsl:template match='context/label'>
+        <g k9-elem="label" class="container-label">
+            <xsl:copy-of select="@*" />
+            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="container-label-back" />
+            <g k9-elem="text-label" class="container-label-front">
+                <text><xsl:value-of select="text()" /></text>
+            </g>
+        </g>
+    </xsl:template>
+
     <xsl:template match='link-body'>
         <g k9-elem="link-body">
             <xsl:copy-of select="@*" />
-            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' style='fill: black; ' />
+            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="link-body-back" />
             <xsl:apply-templates/>
         </g>
     </xsl:template>
 
     <xsl:template match="link-body/label">
-        <g k9-elem="text-label">
-            <text class="link-body-label-text"><xsl:apply-templates select="text()" /></text>
+        <g k9-elem="text-label" class="link-body-label-text">
+            <text><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 
@@ -160,24 +179,35 @@
         </g>
     </xsl:template>
 
+    <xsl:template match='fromLabel | toLabel'>
+        <g>
+            <xsl:copy-of select="@*" />
+            <xsl:attribute name="k9-elem"><xsl:value-of select="name(.)" /></xsl:attribute>
+            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="connection-label-back" />
+            <g k9-elem="text-label" class="connection-label-front">
+                <text><xsl:value-of select="text()" /></text>
+            </g>
+        </g>
+    </xsl:template>
+
     <xsl:template match="glyph/label">
-        <g k9-elem="text-label">
-            <text class="glyph-label-text"><xsl:apply-templates select="text()" /></text>
+        <g class="glyph-label-text" k9-elem="text-label">
+            <text><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 
     <xsl:template match="glyph/stereotype">
-        <g k9-elem="text-label">
-            <text class="glyph-stereotype-text"><xsl:apply-templates select="text()" /></text>
+        <g k9-elem="text-label" class="glyph-stereotype-text">
+            <text><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 
-    <xsl:template match="glyph/text-lines">
+    <xsl:template match="glyph/text-lines | key/text-lines">
         <g k9-elem="text-lines">
             <xsl:for-each select="text-line">
-                <g k9-elem="text-label">
+                <g k9-elem="text-label" class="generic-text">
                     <xsl:copy-of select="@*" />
-                    <text class="generic-text"><xsl:apply-templates select="text()" /></text>
+                    <text><xsl:apply-templates select="text()" /></text>
                 </g>
             </xsl:for-each>
         </g>
@@ -216,6 +246,46 @@
         </g>
     </xsl:template>
 
+    <xsl:template match="key">
+        <g k9-elem="key">
+            <xsl:copy-of select="@*" />
+            <g k9-elem="body">
+                <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" style="fill: url(#glyph-background); " class="key-back"/>
+                <xsl:apply-templates/>
+            </g>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="key/boldText">
+        <g k9-elem="boldText" class="bold-text">
+            <xsl:copy-of select="@*" />
+            <text><xsl:apply-templates select="text()" /></text>
+        </g>
+    </xsl:template>
+
+    <xsl:template match="key/bodyText">
+        <g k9-elem="bodyText" class="body-text">
+            <xsl:copy-of select="@*" />
+            <text><xsl:apply-templates select="text()" /></text>
+        </g>
+    </xsl:template>
+
+
+    <xsl:template match='grid'>
+        <g k9-elem="grid">
+            <xsl:copy-of select="@*" />
+            <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" class="grid-back"/>
+            <xsl:apply-templates/>
+        </g>
+    </xsl:template>
+
+    <xsl:template match='cell'>
+        <g k9-elem="cell">
+            <xsl:copy-of select="@*" />
+            <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" class="cell-edge"/>
+            <xsl:apply-templates/>
+        </g>
+    </xsl:template>
 
     <xsl:template match="*">
         <g>

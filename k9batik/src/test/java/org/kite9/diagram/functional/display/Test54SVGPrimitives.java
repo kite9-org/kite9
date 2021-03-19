@@ -186,11 +186,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scalablePath() {
-		return "<svg:path d='M0 0 H #{$width} V #{$height}z' />";
+		return "<svg:path k9:d=\"'M0 0 H $width V $height z'\" d='' />";
 	}
 
 	private String svgOpen() {
-		return "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg'>";
+		return "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg' xmlns:k9='http://www.kite9.org/schema/adl'>";
 	}
 	
 	private String svgClose() {
@@ -207,11 +207,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
 
 	private String fixedSizeClose() {
-		return "</someelement>";
+		return "</svg:g>";
 	}
 
 	private String fixedSizeOpen() {
-		return "<someelement id='someelement' style='--kite9-type: svg; '>";
+		return "<svg:g id='someelement' style='--kite9-type: svg; '>";
 	}
 	
 	private String scaledOpen() {

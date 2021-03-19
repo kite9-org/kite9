@@ -34,7 +34,8 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             if ((width > 0.0) || (height > 0.0) || (theText.contains("\n"))) {
                 val spans = splitIntoSpans(theText)
                 val lines = buildLines(n, spans, replaceZero(width))
-                val lineHeight = ctx.getCssStyleDoubleProperty("font-size", n)
+                val fontSize = ctx.getCssStyleDoubleProperty("font-size", n)
+                val lineHeight = ctx.getCssStyleDoubleProperty("line-height", n)
                 removeAllChildren(n)
                 replaceWithCSpans(n, lines, lineHeight, align, lines.map { it.second }.maxOf { it }, replaceZero(height))
             }

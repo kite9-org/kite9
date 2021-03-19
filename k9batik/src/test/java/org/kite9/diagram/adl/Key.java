@@ -28,7 +28,8 @@ public class Key extends AbstractMutableXMLElement {
 	}
 	
 	public Element convert(List<Symbol> symbols) {
-		Element out = (Element) ownerDocument.createElement("text-lines");
+		Element out = new GenericMutableXMLElement("text-lines", ownerDocument);
+		this.ownerDocument.adoptNode(out);
 		if (symbols == null) {
 			return out;
 		}
