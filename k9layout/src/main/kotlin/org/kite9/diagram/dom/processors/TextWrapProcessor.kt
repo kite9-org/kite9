@@ -29,13 +29,12 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
             val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start";
-            val theText = n.textContent
+            val theText = n.textContent ?: ""
 
             if ((width > 0.0) || (height > 0.0) || (theText.contains("\n"))) {
                 val spans = splitIntoSpans(theText)
                 val lines = buildLines(n, spans, replaceZero(width))
-                val fontSize = ctx.getCssStyleDoubleProperty("font-size", n)
-                val lineHeight = ctx.getCssStyleDoubleProperty("line-height", n)
+                var lineHeight = calculateLineHeight(n, ctx)
                 removeAllChildren(n)
                 replaceWithCSpans(n, lines, lineHeight, align, lines.map { it.second }.maxOf { it }, replaceZero(height))
             }
@@ -46,6 +45,20 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
     }
 
+    companion object {
+
+        fun calculateLineHeight(n: Element, ctx: ElementContext): Double {
+            val fontSize = ctx.getCssStyleDoubleProperty("font-size", n)
+            var lineHeight = ctx.getCssStyleDoubleProperty("line-height", n)
+            if (lineHeight == 0.0) {
+                lineHeight = 1.2 * fontSize;
+            }
+            return lineHeight
+        }
+    }
+
+
+
     fun removeAllChildren(e: Element) {
         while (e.childNodes.length > 0) {
             e.removeChild(e.childNodes.item(0))
@@ -53,7 +66,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     }
 
     fun replaceWithCSpans(e: Element, lines: List<Pair<String, Double>>, lineHeight: Double, align: String, maxLineWidth: Double, maxHeight: Double)  {
-        val od = e.ownerDocument
+        val od = e.ownerDocument!!
 
         for ((lineNumber, t) in lines.withIndex()) {
             val cspan = od.createElementNS(SVG_NAMESPACE, "tspan")

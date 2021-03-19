@@ -62,6 +62,12 @@
       ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
       ><polygon class="arrow-marker" points="6,4 2,2 2,6"
       /></marker
+      ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+      ><circle r="2" cx="3" class="circle-marker" cy="3"
+      /></marker
+      ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+      ><circle r="2" cx="3" class="circle-marker" cy="3"
+      /></marker
       ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
       /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"
       /><marker id="gap-start-marker" preserveAspectRatio="xMidYMid meet"

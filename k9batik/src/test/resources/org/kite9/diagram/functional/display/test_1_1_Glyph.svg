@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="335" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=335.0, h=106.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
+<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="335" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=335.0, h=109.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
@@ -11,25 +11,25 @@
   ><g filter="url(#dropshadow)"
   >
   <g k9-elem="glyph" id="0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=305.0, h=76.0); " rank="0"
-    ><rect x="0" y="0" k9:width="$width" width="305" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="76"
+line 2" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=305.0, h=79.0); " rank="0"
+    ><rect x="0" y="0" k9:width="$width" width="305" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="79"
       />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=149.0, h=25.0); rect-size: BasicDimension2D(w=37.0, h=20.0); " k9-elem="text-label" transform="translate(133.4,18.7)"
-      ><text class="glyph-stereotype-text"
+    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(133.4,14.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=149.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=28.0); "
+      ><text
         ><tspan x="0.0px" y="0.0px"
           >Stereo
 </tspan
-          ><tspan x="4.0px" y="12.0px"
+          ><tspan x="4.0px" y="14.399999999999999px"
           >Mike</tspan
         ></text
       ></g
       >
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=55.0); rect-size: BasicDimension2D(w=285.0, h=26.0); " k9-elem="text-label" transform="translate(8.5,51.5)"
-      ><text class="glyph-label-text"
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(8.5,48.5)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=52.0); rect-size: BasicDimension2D(w=285.0, h=36.0); "
+      ><text
         ><tspan x="0.0px" y="0.0px"
           >Rob's Glyph df  sfsdfs  weferw asfsdf sdfsd
 </tspan
-          ><tspan x="128.5px" y="15.0px"
+          ><tspan x="128.5px" y="18.0px"
           >Line 2</tspan
         ></text
       ></g
@@ -83,6 +83,12 @@ line 2" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 1
         /></marker
         ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
         ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+        /></marker
+        ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+        ><circle r="2" cx="3" class="circle-marker" cy="3"
+        /></marker
+        ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+        ><circle r="2" cx="3" class="circle-marker" cy="3"
         /></marker
         ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
         /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"

@@ -30,7 +30,6 @@ svg {
 	--kite9-type: diagram;
 	--kite9-padding: 15px;
 	--kite9-traversal: none;
-	line-height: 120%;
 }
 
 [k9-elem=key] {
@@ -478,7 +477,7 @@ svg {
 	font-size: 10px;
 }
 
-.red {f
+.red {
 	font-size: 25px;
 	fill: red;
 }

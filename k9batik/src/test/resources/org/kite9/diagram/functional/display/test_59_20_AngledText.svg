@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="3511" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=3511.0, h=894.0); " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
+<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="1935" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=1935.0, h=510.0); " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
 >
 <svg:defs
   ><svg:style xml:space="preserve"
@@ -11,46 +11,58 @@
       /><svg:stop stop-color="#DDD" offset="100%"
     /></svg:linearGradient
   ></svg:defs
-  >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=427.0); rect-size: BasicDimension2D(w=2080.0, h=40.0); " transform="translate(15.0,427.0)"
+  >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=217.0); rect-size: BasicDimension2D(w=1113.0, h=76.0); " transform="translate(15.0,217.0)"
   >
-      <svg:rect x="0" y="0" k9:width="$width" width="2080" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="40"
+      <svg:rect x="0" y="0" k9:width="$width" width="1113" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="76"
     />
-      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=427.0); rect-size: BasicDimension2D(w=2080.0, h=40.0); " transform="translate(-1.7,24.5)"
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=217.0); rect-size: BasicDimension2D(w=1113.0, h=76.0); " transform="translate(-1.7,24.5)"
     ><svg:g transform="scale(4)"
       >
         <svg:text
-        >Search the world's information, including webpages, images, videos and more.
-Google has many special features to help you find exactly what you.</svg:text
+        ><tspan x="0px" y="0.0px"
+          >Search the world's information, including webpages, images, videos and more.
+</tspan
+          ><tspan x="0px" y="9.6px"
+          >Google has many special features to help you find exactly what you.</tspan
+        ></svg:text
         >
       </svg:g
       ></svg:g
       >
     </svg:g
-      >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=2095.0, h=15.0); rect-size: BasicDimension2D(w=609.0, h=864.0); " transform="translate(2095.0,15.0)"
+      >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=1128.0, h=15.0); rect-size: BasicDimension2D(w=348.0, h=480.0); " transform="translate(1128.0,15.0)"
       >
-      <svg:rect x="0" y="0" k9:width="$width" width="609" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="864"
+      <svg:rect x="0" y="0" k9:width="$width" width="348" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="480"
         />
-      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 16px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=2095.0, h=15.0); rect-size: BasicDimension2D(w=609.0, h=864.0); " transform="translate(2.6,6.3)"
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 16px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=1128.0, h=15.0); rect-size: BasicDimension2D(w=348.0, h=480.0); " transform="translate(18.4,6.3)"
         ><svg:g transform="rotate(55)"
           >
         <svg:text
-            >Search the world's information, including webpages, images, videos and more.
-Google has many special features to help you find exactly what you.</svg:text
+            ><tspan x="0px" y="0.0px"
+              >Search the world's information, including webpages, images, videos and more.
+</tspan
+              ><tspan x="0px" y="19.2px"
+              >Google has many special features to help you find exactly what you.</tspan
+            ></svg:text
             >
       </svg:g
           ></svg:g
           >
     </svg:g
-          >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=2704.0, h=439.0); rect-size: BasicDimension2D(w=792.0, h=16.0); " transform="translate(2704.0,439.0)"
+          >    <svg:g style="--kite9-type: container;  " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=1476.0, h=241.0); rect-size: BasicDimension2D(w=444.0, h=28.0); " transform="translate(1476.0,241.0)"
           >
-      <svg:rect x="0" y="0" k9:width="$width" width="792" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="16"
+      <svg:rect x="0" y="0" k9:width="$width" width="444" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="28"
             />
-      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=2704.0, h=439.0); rect-size: BasicDimension2D(w=792.0, h=16.0); " transform="translate(2.2,9.2)"
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 8px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=1476.0, h=241.0); rect-size: BasicDimension2D(w=444.0, h=28.0); " transform="translate(16.6,9.2)"
             ><svg:g transform="skewX(-45) scale(1.5)"
               >
         <svg:text
-                >Search the world's information, including webpages, images, videos and more.
-Google has many special features to help you find exactly what you.</svg:text
+                ><tspan x="0px" y="0.0px"
+                  >Search the world's information, including webpages, images, videos and more.
+</tspan
+                  ><tspan x="0px" y="9.6px"
+                  >Google has many special features to help you find exactly what you.</tspan
+                ></svg:text
                 >
       </svg:g
               ></svg:g

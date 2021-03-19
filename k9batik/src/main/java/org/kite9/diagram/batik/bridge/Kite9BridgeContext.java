@@ -8,6 +8,7 @@ import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
+import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.InheritValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.dom.util.SAXIOException;
@@ -183,7 +184,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public double getCssStyleDoubleProperty(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
-		return v.getFloatValue();
+		return (v instanceof FloatValue) ? v.getFloatValue() : 0.0;
 	}
 
 	private Value getCSSValue(String prop, Element e) {

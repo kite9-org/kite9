@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="149" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=149.0, h=70.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
+<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="129" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=129.0, h=64.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
@@ -11,26 +11,26 @@
   ><g filter="url(#dropshadow)"
   >
   <g k9-elem="link-body" id="One
-Multiline" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=67.0, h=40.0); " rank="0"
-    ><rect x="0" y="0" width="67" k9:width="$width" style="fill: black; " k9:height="$height" rx="4" ry="4" height="40"
+Multiline" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=34.0); " rank="0"
+    ><rect x="0" y="0" width="57" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="34"
       />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=47.0, h=20.0); " k9-elem="text-label" transform="translate(9.3,18.7)"
-      ><text class="link-body-label-text"
+    <g k9-elem="text-label" class="link-body-label-text" transform="translate(4.3,11.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=20.0, h=18.0); rect-size: BasicDimension2D(w=47.0, h=28.0); "
+      ><text
         ><tspan x="0px" y="0.0px"
           >One
 </tspan
-          ><tspan x="0px" y="12.0px"
+          ><tspan x="0px" y="14.399999999999999px"
           >Multiline</tspan
         ></text
       ></g
       >
   </g
       >
-  <g k9-elem="link-body" id="Two" transform="translate(92.0,21.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=92.0, h=21.0); rect-size: BasicDimension2D(w=42.0, h=28.0); " rank="1"
-      ><rect x="0" y="0" width="42" k9:width="$width" style="fill: black; " k9:height="$height" rx="4" ry="4" height="28"
+  <g k9-elem="link-body" id="Two" transform="translate(82.0,22.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=22.0); rect-size: BasicDimension2D(w=32.0, h=20.0); " rank="1"
+      ><rect x="0" y="0" width="32" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="20"
         />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=102.0, h=31.0); rect-size: BasicDimension2D(w=22.0, h=8.0); " k9-elem="text-label" transform="translate(9.9,18.6)"
-        ><text class="link-body-label-text"
+    <g k9-elem="text-label" class="link-body-label-text" transform="translate(4.9,11.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=87.0, h=25.0); rect-size: BasicDimension2D(w=22.0, h=14.0); "
+        ><text
           >Two</text
         ></g
         >
@@ -83,6 +83,12 @@ Multiline" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.
           /></marker
           ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
           ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
           /></marker
           ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
           /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"

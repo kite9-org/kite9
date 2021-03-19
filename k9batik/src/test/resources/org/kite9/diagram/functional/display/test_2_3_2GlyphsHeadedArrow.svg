@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="224" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=224.0, h=79.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
+<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="214" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=214.0, h=77.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
@@ -10,41 +10,41 @@
   ></defs
   ><g filter="url(#dropshadow)"
   >
-  <g k9-elem="glyph" id="0-one" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=49.0); " rank="0"
-    ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="49"
+  <g k9-elem="glyph" id="0-one" transform="translate(15.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=47.0); " rank="0"
+    ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="47"
       />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=37.0, h=8.0); " k9-elem="text-label" transform="translate(9.4,18.7)"
-      ><text class="glyph-stereotype-text"
+    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,14.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=14.0); "
+      ><text
         >Stereo</text
       ></g
       >
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=30.0, h=43.0); rect-size: BasicDimension2D(w=27.0, h=11.0); " k9-elem="text-label" transform="translate(14.1,38.9)"
-      ><text class="glyph-label-text"
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(14.1,33.9)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=30.0, h=38.0); rect-size: BasicDimension2D(w=27.0, h=18.0); "
+      ><text
         >One</text
       ></g
       >
   </g
       >
-  <g k9-elem="glyph" id="1-two" transform="translate(152.0,16.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=152.0, h=16.0); rect-size: BasicDimension2D(w=57.0, h=48.0); " rank="1"
-      ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="48"
+  <g k9-elem="glyph" id="1-two" transform="translate(142.0,15.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=142.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=47.0); " rank="1"
+      ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="47"
         />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=162.0, h=26.0); rect-size: BasicDimension2D(w=37.0, h=8.0); " k9-elem="text-label" transform="translate(9.4,18.7)"
-        ><text class="glyph-stereotype-text"
+    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,14.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=152.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=14.0); "
+        ><text
           >Stereo</text
         ></g
         >
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=167.0, h=44.0); rect-size: BasicDimension2D(w=28.0, h=10.0); " k9-elem="text-label" transform="translate(14.9,38.7)"
-        ><text class="glyph-label-text"
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(14.9,33.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=157.0, h=38.0); rect-size: BasicDimension2D(w=28.0, h=18.0); "
+        ><text
           >Two</text
         ></g
         >
   </g
         >
-  <g k9-elem="link-body" id="meets" transform="translate(82.0,26.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=26.0); rect-size: BasicDimension2D(w=53.0, h=28.0); " rank="2"
-        ><rect x="0" y="0" width="53" k9:width="$width" style="fill: black; " k9:height="$height" rx="4" ry="4" height="28"
+  <g k9-elem="link-body" id="meets" transform="translate(82.0,29.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=29.0); rect-size: BasicDimension2D(w=43.0, h=20.0); " rank="2"
+        ><rect x="0" y="0" width="43" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="20"
           />
-    <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=92.0, h=36.0); rect-size: BasicDimension2D(w=33.0, h=8.0); " k9-elem="text-label" transform="translate(9.0,17.9)"
-          ><text class="link-body-label-text"
+    <g k9-elem="text-label" class="link-body-label-text" transform="translate(4.0,10.9)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=87.0, h=32.0); rect-size: BasicDimension2D(w=33.0, h=14.0); "
+          ><text
             >meets</text
           ></g
           >
@@ -52,23 +52,23 @@
           >
   <g k9-elem="link" id="meets-0-one" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['meets','0-one']; direction: null; " rank="3"
           >
-    <g k9-elem="from" reference="meets" transform="translate(82.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-0-one; terminates-at: meets; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=82.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="from" reference="meets" transform="translate(82.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-0-one; terminates-at: meets; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=82.0, h=39.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
             />
-    <g k9-elem="to" reference="0-one" transform="translate(72.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-0-one; terminates-at: 0-one; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=72.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="to" reference="0-one" transform="translate(72.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-0-one; terminates-at: 0-one; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=72.0, h=39.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
             />
   <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: null; rect-size: null; " k9-elem="link-body"
-            ><path marker-start="url(#-start-marker)" d="M82 40 L72 40 " marker-end="url(#-end-marker)" class="link" k9:d="$path"
+            ><path marker-start="url(#-start-marker)" d="M82 39 L72 39 " marker-end="url(#-end-marker)" class="link" k9:d="$path"
             /></g
           ></g
           >
   <g k9-elem="link" id="meets-1-two" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['meets','1-two']; direction: null; " rank="4"
           >
-    <g k9-elem="from" reference="meets" transform="translate(135.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-1-two; terminates-at: meets; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=135.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="from" reference="meets" transform="translate(125.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: meets-1-two; terminates-at: meets; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=125.0, h=39.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
             />
-    <g k9-elem="to" id="3" reference="1-two" class="arrow" transform="translate(152.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; sizing: MINIMIZE MINIMIZE; terminates: meets-1-two; terminates-at: 1-two; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=152.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="to" id="3" reference="1-two" class="arrow" transform="translate(142.0,39.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; sizing: MINIMIZE MINIMIZE; terminates: meets-1-two; terminates-at: 1-two; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=142.0, h=39.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
             />
   <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: null; rect-size: null; " k9-elem="link-body"
-            ><path marker-start="url(#-start-marker)" d="M135 40 L152 40 " marker-end="url(#arrow-end-marker)" class="link" k9:d="$path"
+            ><path marker-start="url(#-start-marker)" d="M125 39 L142 39 " marker-end="url(#arrow-end-marker)" class="link" k9:d="$path"
             /></g
           ></g
           >
@@ -119,6 +119,12 @@
             /></marker
             ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
             ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+            /></marker
+            ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+            ><circle r="2" cx="3" class="circle-marker" cy="3"
+            /></marker
+            ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+            ><circle r="2" cx="3" class="circle-marker" cy="3"
             /></marker
             ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
             /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"

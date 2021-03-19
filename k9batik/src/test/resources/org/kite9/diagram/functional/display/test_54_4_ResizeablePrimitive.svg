@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" width="394.0px" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="344.0px" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><g k9-elem="diagram" id="one" style="--kite9-type: diagram; --kite9-padding: 50px;" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=394.0, h=344.0); "
-  ><g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><g k9-elem="container" id="container1" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(50.0,50.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=50.0); rect-size: BasicDimension2D(w=244.0, h=244.0); "
-      ><g style="fill: red; "
-        ><g k9-elem="somescaled" style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " transform="scale(244.0,244.0)translate(.0,.0)" k9-info=""
-          ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
-          /></g
-          ><g k9-elem="container" id="container2" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(10.0,10.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=60.0); rect-size: BasicDimension2D(w=224.0, h=224.0); "
-          ><g style="fill: yellow; "
-            ><g k9-elem="somescaled" style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " transform="scale(224.0,224.0)translate(.0,.0)" k9-info=""
-              ><rect x="0" width="1" stroke-width="0" y="0" height="1" stroke="black"
-              /></g
-              ><g k9-elem="someelement" id="someelement" style="--kite9-type: svg; " transform="translate(-87.6,-88.5)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=70.0, h=70.0); rect-size: BasicDimension2D(w=204.0, h=204.0); "
-              ><path fill="red" d="M 100 100 L 300 100 L 200 300 z" stroke-width="3" stroke="blue"
-              /></g
-            ></g
-          ></g
-        ></g
-      ></g
-      ><g k9-elem="container" id="container3" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(304.0,152.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=304.0, h=152.0); rect-size: BasicDimension2D(w=40.0, h=40.0); "
-      ><g style="fill: green; "
-        ><g k9-elem="somescaled" style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " transform="scale(13.333333333333334,13.333333333333334)translate(-1.0,-1.0)" k9-info=""
-          ><rect x="1" width="3" stroke-width="0" y="1" height="3" stroke="black"
-          /></g
-          ><g k9-elem="container" id="container4" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(10.0,10.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=314.0, h=162.0); rect-size: BasicDimension2D(w=20.0, h=20.0); "
-          ><g style="fill: blue; "
-            ><g k9-elem="somescaled" style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " transform="scale(0.6451612903225806,1.8181818181818181)translate(.5,-29.5)" k9-info=""
-              ><rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
-              /></g
-            ></g
-          ></g
-        ></g
-      ></g
-    ></g
-  ></g
-></svg
+<svg:svg xmlns:k9="http://www.kite9.org/schema/adl" contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><svg:g id="one" style="--kite9-type: diagram; --kite9-padding: 50px;" xmlns="http://www.kite9.org/schema/adl" xml:id="one" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=394.0, h=344.0); "
+  ><svg:g style="fill: white; stroke: grey; stroke-width: 3px; "
+    ><svg:g id="container1" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(50.0,50.0)" xml:id="container1" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=50.0); rect-size: BasicDimension2D(w=244.0, h=244.0); "
+      ><svg:g style="fill: red; "
+        ><svg:g style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " k9-info="" transform="scale(244.0,244.0)translate(.0,.0)"
+          ><svg:rect x="0" width="1" stroke-width="0" height="1" y="0" stroke="black"
+          /></svg:g
+          ><svg:g id="container2" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(10.0,10.0)" xml:id="container2" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=60.0); rect-size: BasicDimension2D(w=224.0, h=224.0); "
+          ><svg:g style="fill: yellow; "
+            ><svg:g style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " k9-info="" transform="scale(224.0,224.0)translate(.0,.0)"
+              ><svg:rect x="0" width="1" stroke-width="0" height="1" y="0" stroke="black"
+              /></svg:g
+              ><svg:g id="someelement" style="--kite9-type: svg; " transform="translate(-87.6,-88.5)" xml:id="someelement" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=70.0, h=70.0); rect-size: BasicDimension2D(w=204.0, h=204.0); "
+              ><svg:path fill="red" stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" stroke="blue"
+              /></svg:g
+            ></svg:g
+          ></svg:g
+        ></svg:g
+      ></svg:g
+      ><svg:g id="container3" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(304.0,152.0)" xml:id="container3" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=304.0, h=152.0); rect-size: BasicDimension2D(w=40.0, h=40.0); "
+      ><svg:g style="fill: green; "
+        ><svg:g style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " k9-info="" transform="scale(13.333333333333334,13.333333333333334)translate(-1.0,-1.0)"
+          ><svg:rect x="1" width="3" stroke-width="0" height="3" y="1" stroke="black"
+          /></svg:g
+          ><svg:g id="container4" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(10.0,10.0)" xml:id="container4" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=314.0, h=162.0); rect-size: BasicDimension2D(w=20.0, h=20.0); "
+          ><svg:g style="fill: blue; "
+            ><svg:g style="--kite9-usage: decal; --kite9-transform: rescale; --kite9-type: svg; " k9-info="" transform="scale(0.6451612903225806,1.8181818181818181)translate(.5,-29.5)"
+              ><svg:rect x="0" y="30" width="30" rx="3" ry="3" height="10" stroke="black" stroke-width="1"
+              /></svg:g
+            ></svg:g
+          ></svg:g
+        ></svg:g
+      ></svg:g
+    ></svg:g
+  ></svg:g
+></svg:svg
 >

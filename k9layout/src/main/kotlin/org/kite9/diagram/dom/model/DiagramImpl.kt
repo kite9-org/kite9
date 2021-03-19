@@ -7,7 +7,6 @@ import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Element
-import java.util.HashSet
 
 /**
  * This contains extra code relating to the Diagram itself, specifically, managing
