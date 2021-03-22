@@ -44,7 +44,9 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	private boolean isContradicting(Element l) {
-		DiagramElement de = Kite9SVGTranscoder.lastContext.getRegisteredDiagramElement(l);
+		String id = l.getAttribute("id");
+		Element el = Kite9SVGTranscoder.lastOutputDocument.getElementById(id);
+		DiagramElement de = Kite9SVGTranscoder.lastContext.getRegisteredDiagramElement(el);
 		return ((RouteRenderingInformation) de.getRenderingInformation()).isContradicting();
 	}
 

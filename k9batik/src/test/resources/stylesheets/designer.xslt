@@ -25,8 +25,10 @@
              preserveAspectRatio="xMidYMid"
              version="1.0"
              k9-elem="diagram">
+            <xsl:copy-of select="@*" />
             <xsl:attribute name="k9:width">$width</xsl:attribute>
             <xsl:attribute name="k9:height">$height</xsl:attribute>
+
 
             <defs>
                 <style type="text/css">
