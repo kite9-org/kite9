@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
+import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.w3c.dom.Element;
@@ -79,7 +80,7 @@ public class TestConnected extends AbstractPerformanceTest {
 		List<Element> cl = new ArrayList<>(items.length);
 		Collections.addAll(cl, items);
 
-		GenericElement out = new GenericElement( "diagram", AbstractMutableXMLElement.TESTING_DOCUMENT);
+		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 		Arrays.stream(items).forEach(i -> out.appendChild(i));
 		
 		return wrap(out);
