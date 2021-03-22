@@ -63,12 +63,4 @@
 		</repository>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>github</id>
-			<name>GitHub Kite9-Org Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/kite9-org/kite9-visualization</url>
-		</repository>
-	</repositories>
-
 </project>
