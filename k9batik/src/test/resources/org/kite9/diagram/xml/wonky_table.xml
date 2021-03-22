@@ -3,7 +3,7 @@
   <svg:defs>
     <svg:style type="text/css"> @import url("risk.css");</svg:style>
   </svg:defs>
-  <diagram xmlns="http://www.kite9.org/schema/adl" id="diagram-157" name="SD Interface / Implementation">
+  <diagram  id="diagram-157" name="SD Interface / Implementation">
 
     <table>
       <cell style="kite9-occupies: 0 0; ">

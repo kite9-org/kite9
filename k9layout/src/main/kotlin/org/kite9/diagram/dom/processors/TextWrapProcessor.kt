@@ -4,6 +4,7 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.model.position.Rectangle2D
 import org.w3c.dom.Element
+import org.w3c.dom.NodeList
 import org.w3c.dom.Text
 
 /**
@@ -60,8 +61,9 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
 
     fun removeAllChildren(e: Element) {
-        while (e.childNodes.length > 0) {
-            e.removeChild(e.childNodes.item(0))
+        val childNodes : NodeList = e.childNodes
+        while (childNodes.length > 0) {
+            e.removeChild(childNodes.item(0)!!)
         }
     }
 

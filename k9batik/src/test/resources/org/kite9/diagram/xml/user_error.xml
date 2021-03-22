@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:4594">
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:4594">
 
 <context id="id_0" bordered="true">
 
@@ -12,11 +12,11 @@
   <text>Pascal Timur 3/10</text>
   <symbols/>
  </label>
-<context xmlns="" bordered="true"><glyph xmlns="http://www.kite9.org/schema/adl" id="id_7" label="New Part">
+<context xmlns="" bordered="true"><glyph  id="id_7" label="New Part">
 
   <text-lines/>
   <symbols/>
- </glyph><glyph xmlns="http://www.kite9.org/schema/adl" id="id_10" label="New Part">
+ </glyph><glyph  id="id_10" label="New Part">
 
   <text-lines/>
   <symbols/>
@@ -24,11 +24,11 @@
 
   <text-lines/>
   <symbols/>
- </glyph><context xmlns="" bordered="true"><glyph xmlns="http://www.kite9.org/schema/adl" id="id_6" label="New Part">
+ </glyph><context xmlns="" bordered="true"><glyph  id="id_6" label="New Part">
 
   <text-lines/>
   <symbols/>
- </glyph><link xmlns="http://www.kite9.org/schema/adl" id="id_16" drawDirection="RIGHT">
+ </glyph><link  id="id_16" drawDirection="RIGHT">
 
   <from xsi:type="glyph" reference="id_7"/>
   <to xsi:type="glyph" reference="id_17"/>

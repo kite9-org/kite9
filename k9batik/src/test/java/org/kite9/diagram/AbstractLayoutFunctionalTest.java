@@ -1,6 +1,7 @@
 package org.kite9.diagram;
 
 import org.junit.Test;
+import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
@@ -144,6 +145,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		XMLHelper xmlHelper = new XMLHelper();
 		Document dxe = xmlHelper.fromXML(s);
 		convertOldStructure(dxe.getDocumentElement());
+		dxe.getDocumentElement().setAttribute("template", AbstractMutableXMLElement.TRANSFORM);
 		
 		// fix for old-style <allLinks> tag
 		String theXML = xmlHelper.toXML(dxe);

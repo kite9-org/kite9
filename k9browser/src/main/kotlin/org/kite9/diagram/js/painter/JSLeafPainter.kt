@@ -10,7 +10,7 @@ import org.w3c.dom.svg.SVGGraphicsElement
 class JSLeafPainter(e: Element, val context: ElementContext) : DirectSVGGroupPainter(e), LeafPainter {
 
     override fun bounds(): Rectangle2D {
-        return context.bounds(theElement)
+        return context.bounds(theElement)!!
     }
 
 }

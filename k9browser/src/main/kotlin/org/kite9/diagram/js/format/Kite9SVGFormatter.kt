@@ -21,11 +21,12 @@ fun formatSVG(e: Element) {
     val ef = JSDiagramElementFactory(context)
     var p = DiagramStructureProcessor(ef, context)
     p.processContents(e)
-    val d = p.first!!;
-    val pipeline = BasicArrangementPipeline(ef, BasicCompleteDisplayer(false))
-    pipeline.arrange(d)
-    val p2 = DiagramPositionProcessor(context, XPathValueReplacer(context))
-    p2.processContents(e)
+    for (d in p.diagrams) {
+        val pipeline = BasicArrangementPipeline(ef, BasicCompleteDisplayer(false))
+        pipeline.arrange(d)
+        val p2 = DiagramPositionProcessor(context, XPathValueReplacer(context))
+        p2.processContents(e)
+    }
 }
 
 

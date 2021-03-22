@@ -3,7 +3,7 @@
         xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns:k9="http://www.kite9.org/schema/adl"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-        version="1.0" xmlns:xsL="http://www.w3.org/1999/XSL/Transform">
+        version="1.0">
 
     <xsl:param name="base-uri"/>
     <xsl:param name="template-uri"/>
@@ -151,7 +151,7 @@
         </g>
     </xsl:template>
 
-    <xsl:template match='link-body'>
+    <xsl:template match='link-body | arrow'>
         <g k9-elem="link-body">
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="link-body-back" />

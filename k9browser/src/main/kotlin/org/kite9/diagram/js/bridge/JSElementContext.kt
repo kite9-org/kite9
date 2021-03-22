@@ -5,9 +5,11 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.kite9.diagram.model.style.ConnectionAlignment.Companion.NONE
 import org.w3c.dom.Element
+import org.w3c.dom.svg.SVGGraphicsElement
 import kotlin.reflect.KClass
 
 class JSElementContext : ElementContext {
@@ -34,7 +36,8 @@ class JSElementContext : ElementContext {
         return null;
     }
 
-    fun addChild(parent: DiagramElement, out: DiagramElement) {
+
+    override fun addChild(parent: DiagramElement, out: DiagramElement) {
         val contents = children.getOrPut(parent) { mutableListOf<DiagramElement>() }
         contents.add(out)
     }
@@ -110,8 +113,8 @@ class JSElementContext : ElementContext {
         TODO("Not yet implemented")
     }
 
-    override fun getChildDiagramElements(parent: DiagramElement): List<DiagramElement> {
-        return children.getOrElse(parent) { emptyList() }
+    override fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement> {
+        return children.getOrElse(parent) { mutableListOf() }
     }
 
     override fun getConnectionAlignment(prop: String, e: Element): ConnectionAlignment {
@@ -159,5 +162,22 @@ class JSElementContext : ElementContext {
         return Kite9ProcessingException("$reason on $e");
     }
 
+    override fun bounds(g: Element): Rectangle2D {
+        val g = g as SVGGraphicsElement
+        val mtrx = g.getCTM()!!;
+        val bbox = g.getBBox()!!;
+        return Rectangle2D(
+            (mtrx.e + bbox.x),
+            (mtrx.f + bbox.y),
+            bbox.width,
+            bbox.height)
+    }
 
+    override fun textWidth(s: String, inside: Element): Double {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCssUnitSizeInPixels(prop: String, e: Element): Double {
+        TODO("Not yet implemented")
+    }
 }

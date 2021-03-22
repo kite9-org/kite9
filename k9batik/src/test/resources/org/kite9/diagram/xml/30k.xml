@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  id="project_java_class:org.kite9.diagram.builders.Test18ObjectDependencyWizard/test18_1_ObjectDependencyWizard1()">
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  id="project_java_class:org.kite9.diagram.builders.Test18ObjectDependencyWizard/test18_1_ObjectDependencyWizard1()">
   <glyph id="class org.kite9.diagram.builders.Test18ObjectDependencyWizard$MyOb0" stereotype="instance" label="MyOb">
    <text-lines></text-lines>
    <symbols></symbols>
