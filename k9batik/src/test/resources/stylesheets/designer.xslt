@@ -143,7 +143,7 @@
         </g>
     </xsl:template>
 
-    <xsl:template match='context/label'>
+    <xsl:template match='context/label | cell/label'>
         <g k9-elem="label" class="container-label">
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="container-label-back" />

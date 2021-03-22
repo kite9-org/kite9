@@ -143,11 +143,11 @@ public class Test52SideVertexPositioning extends AbstractLayoutFunctionalTest {
 		Context bl = new Context("bl", listOf(g3), true,  null, null);
 		Context br = new Context("br", listOf(g4), true,  null, null);
 		
-		tl.setAttribute("style", "kite9-occupies: 0 0;");
-		tr.setAttribute("style", "kite9-occupies: 1 0;");
+		tl.setAttribute("style", "--kite9-occupies: 0 0;");
+		tr.setAttribute("style", "--kite9-occupies: 1 0;");
 		
-		bl.setAttribute("style", "kite9-occupies: 0 1");
-		br.setAttribute("style", "kite9-occupies: 1 1");
+		bl.setAttribute("style", "--kite9-occupies: 0 1");
+		br.setAttribute("style", "--kite9-occupies: 1 1");
 		
 		List<Element> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;

@@ -7,16 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
-import org.kite9.diagram.adl.Cell;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.ContradictingLink;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Grid;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.adl.TextLine;
-import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.adl.*;
 import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 import org.kite9.diagram.model.position.Direction;
@@ -34,12 +25,12 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Context bl = new Context("bl", null, true,  null, null);
 		Context br = new Context("br", null, true,  null, null);
 		
-		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0;");
-		bl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 1 1;");
-		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1;");
+		tr.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 0;");
+		bl.setAttribute("style", "--kite9-occupies-x: 0; --kite9-occupies-y: 1 1;");
+		br.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 1;");
 		
 		Context ctx = new Context("outer", Arrays.asList(tl, tr, bl, br), true, null, Layout.GRID);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-columns: 2;"); 
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-columns: 2;");
 		
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -57,7 +48,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 			elems[i] = new Context[size];
 			for (int j = 0; j < elems[i].length; j++) {
 				elems[i][j] = new Context("c" + i + "-" + j, null, true,  null , null);
-				elems[i][j].setAttribute("style", "kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
+				elems[i][j].setAttribute("style", "--kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
 					if (j > 0) {
 						new Link(elems[i][j], elems[i][j - 1], "", null, "", null, Direction.RIGHT);
 					}
@@ -90,7 +81,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 			elems[i] = new Cell[size];
 			for (int j = 0; j < elems[i].length; j++) {
 				elems[i][j] = new Cell("c" + i + "-" + j, null);
-				elems[i][j].setAttribute("style", "kite9-occupies: "+i+" "+i+" "+j+" "+j+";");				
+				elems[i][j].setAttribute("style", "--kite9-occupies: "+i+" "+i+" "+j+" "+j+";");
 				contents.add(elems[i][j]);
 			}
 		}
@@ -115,7 +106,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		
 		
 		Grid ctx = new Grid("outer", contents, null);
-		ctx.setAttribute("style", "kite9-grid-size: "+size+" "+size+";");
+		ctx.setAttribute("style", "--kite9-grid-size: "+size+" "+size+";");
 		return ctx;
 	}
 	
@@ -128,12 +119,12 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell tl = new Cell("tl", createGlyphContents("Top\nLeft"));
 		Cell tr = new Cell("tr", createGlyphContents("Top\nRight"));
 		Cell br = new Cell("br", createGlyphContents("Bottom\nRight"));
-		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0;");
-		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0;");
-		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1;");
+		tl.setAttribute("style", "--kite9-occupies-x: 0; --kite9-occupies-y: 0;");
+		tr.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 0;");
+		br.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 1;");
 		
 		Grid ctx = new Grid("inner", Arrays.asList(tl, tr, br), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;"); 
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx)));
@@ -163,19 +154,19 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell bl = new Cell("bl", Arrays.asList(g3));
 		Cell r = new Cell("r", Arrays.asList(g4));
 		
-		tl1.setAttribute("style", "kite9-occupies: 0 0;");
-		tl2.setAttribute("style", "kite9-occupies: 1 0;");
+		tl1.setAttribute("style", "--kite9-occupies: 0 0;");
+		tl2.setAttribute("style", "--kite9-occupies: 1 0;");
 
 		Grid tl = new Grid("tl", Arrays.asList(tl1, tl2), null);
-		tl.setAttribute("style", "kite9-occupies: 0 0; kite9-grid-size: 2 1;");
-		bl.setAttribute("style", "kite9-occupies: 0 1;");
+		tl.setAttribute("style", "--kite9-occupies: 0 0; --kite9-grid-size: 2 1;");
+		bl.setAttribute("style", "--kite9-occupies: 0 1;");
 		
 		Grid l = new Grid("l", Arrays.asList(tl, bl),  null);
-		l.setAttribute("style", "kite9-grid-size: 1 2; kite9-occupies: 0 0;"); 
-		r.setAttribute("style", "kite9-occupies: 1 0;"); 
+		l.setAttribute("style", "--kite9-grid-size: 1 2; --kite9-occupies: 0 0;");
+		r.setAttribute("style", "--kite9-occupies: 1 0;");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(l, r), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 1;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 1;");
 		return ctx;
 	}
 	
@@ -185,11 +176,11 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell bl = new Cell("bl", listOf(g3));
 		Cell br = new Cell("br", listOf(g4));
 		
-		tl.setAttribute("style", "kite9-occupies: 0 0;");
-		tr.setAttribute("style", "kite9-occupies: 1 0;");
+		tl.setAttribute("style", "--kite9-occupies: 0 0;");
+		tr.setAttribute("style", "--kite9-occupies: 1 0;");
 		
-		bl.setAttribute("style", "kite9-occupies: 0 1");
-		br.setAttribute("style", "kite9-occupies: 1 1");
+		bl.setAttribute("style", "--kite9-occupies: 0 1");
+		br.setAttribute("style", "--kite9-occupies: 1 1");
 		
 		List<Element> contexts = Arrays.asList(tl, tr, bl, br);
 		return contexts;
@@ -200,15 +191,15 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell tl = new Cell("tl", Arrays.asList(new TextLine("tll", "label", "Top \n Left")));
 		Cell tr = new Cell("tr", Arrays.asList(new TextLine("trl","label", "Top Right")));
 		Cell br = new Cell("br", Arrays.asList(new TextLine("brl","label",  "Bottom Right")));
-		tl.setAttribute("style", "kite9-occupies-x: 0; kite9-occupies-y: 0; ");
-		tr.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 0; ");
-		br.setAttribute("style", "kite9-occupies-x: 1; kite9-occupies-y: 1; ");
+		tl.setAttribute("style", "--kite9-occupies-x: 0; --kite9-occupies-y: 0; ");
+		tr.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 0; ");
+		br.setAttribute("style", "--kite9-occupies-x: 1; --kite9-occupies-y: 1; ");
 		
 		Grid ctx = new Grid("inner", Arrays.asList(tl, tr, br), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2; kite9-padding: 4px; "); 
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2; --kite9-padding: 4px; ");
 		
 		
-		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new TextLine("key", "key", "Bits missing")));
+		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), new Key("key", "Bits missing", Collections.emptyList())));
 	}
 	
 	@Test
@@ -241,7 +232,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 
 	private Grid setupContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
 		Grid ctx = new Grid("outer", createSquareGridContext(g1, g2, g3, g4), null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		return ctx;
 	}
 	
@@ -257,7 +248,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new Link(contexts.get(0), g5, null, null, null, null, null);
 
@@ -277,7 +268,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new Link(contexts.get(0), g3, null, null, null, null, null);
 
@@ -293,7 +284,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new Link(g1, g5, null, null, null, null, null);
 
@@ -309,7 +300,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new ContradictingLink(g4, g5, null, null, null, null, Direction.RIGHT);
 
@@ -325,7 +316,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new ContradictingLink(g1, g5, null, null, null, null, Direction.RIGHT);
 
@@ -341,7 +332,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new Link(ctx, g5, null, null, null, null, null);
 
@@ -357,7 +348,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new Link(ctx, g2, null, null, null, null, null);
 
@@ -376,7 +367,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new ContradictingLink(g1, g2, null, null, null, null, Direction.LEFT);
 
@@ -393,7 +384,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("five", "","five ", null, null);
 		List<Element> contexts = createSquareGridContext(g1, g2, g3, g4);
 		Grid ctx = new Grid("outer", contexts,null);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 2 2;");
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
 		
 		new ContradictingLink(g1, g4, null, null, null, null, Direction.DOWN);
 
@@ -420,7 +411,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_51_22_OddSupergrid() throws Exception {
 		Grid ctx = createSupergrid(true, 5);
-		ctx.setAttribute("style", "kite9-layout: grid; kite9-grid-size: 5 5;"); 
+		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 5 5;");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
@@ -432,7 +423,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell tl = new Cell("tl", Arrays.asList(g1));
 		
 		Grid ctx = new Grid("outer", Arrays.asList(tl), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 		new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx, g2), null));
@@ -442,7 +433,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	public void test_51_24_NoCellGrid() throws Exception {
 		
 		Grid ctx = new Grid("outer", Arrays.asList(), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
@@ -462,17 +453,17 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell t7 = new Cell("7", Arrays.asList());
 		Cell t8 = new Cell("8", Arrays.asList());
 		
-		t1.setAttribute("style", "kite9-occupies: 0 0 2 2; kite9-min-size: 50px 50px; ");
-		t2.setAttribute("style", "kite9-occupies: 0 0 3 3; kite9-min-size: 50px 50px; ");
-		t3.setAttribute("style", "kite9-occupies: 1 1 2 2; kite9-min-size: 50px 50px; ");
-		t4.setAttribute("style", "kite9-occupies: 3 3 2 2; kite9-min-size: 50px 50px; ");
-		t5.setAttribute("style", "kite9-occupies: 2 2 0 0; kite9-min-size: 50px 50px; ");
-		t6.setAttribute("style", "kite9-occupies: 3 3 4 4; kite9-min-size: 50px 50px; ");
-		t7.setAttribute("style", "kite9-occupies: 1 1 5 5; kite9-min-size: 50px 50px; ");
-		t8.setAttribute("style", "kite9-occupies: 0 0 6 6; kite9-min-size: 50px 50px; ");
+		t1.setAttribute("style", "--kite9-occupies: 0 0 2 2; --kite9-min-size: 50px 50px; ");
+		t2.setAttribute("style", "--kite9-occupies: 0 0 3 3; --kite9-min-size: 50px 50px; ");
+		t3.setAttribute("style", "--kite9-occupies: 1 1 2 2; --kite9-min-size: 50px 50px; ");
+		t4.setAttribute("style", "--kite9-occupies: 3 3 2 2; --kite9-min-size: 50px 50px; ");
+		t5.setAttribute("style", "--kite9-occupies: 2 2 0 0; --kite9-min-size: 50px 50px; ");
+		t6.setAttribute("style", "--kite9-occupies: 3 3 4 4; --kite9-min-size: 50px 50px; ");
+		t7.setAttribute("style", "--kite9-occupies: 1 1 5 5; --kite9-min-size: 50px 50px; ");
+		t8.setAttribute("style", "--kite9-occupies: 0 0 6 6; --kite9-min-size: 50px 50px; ");
 		
 		Grid ctx = new Grid("outer", Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8), null);
-		ctx.setAttribute("style", "kite9-layout: grid;");
+		ctx.setAttribute("style", "--kite9-layout: grid;");
 		new Link(g3, g1, null, null, "DIAMOND", null, null);
 		new TurnLink(g1, g2, null, null, null, null, null);
 	
@@ -482,14 +473,14 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_51_26_GridWithContainerLabel() throws Exception {
 		Cell t1 = new Cell("cell1", Arrays.asList());
-		t1.setAttribute("style","kite9-min-size: 100px 100px");
+		t1.setAttribute("style","--kite9-min-size: 100px 100px");
 		Context c1 = new Context("ctx1", Collections.emptyList(), true, new TextLabel("Some label"), Layout.RIGHT);
-		c1.setAttribute("style", "kite9-sizing: maximize;");
+		c1.setAttribute("style", "--kite9-sizing: maximize;");
 		Cell t2 = new Cell("cell2", Arrays.asList(c1));
-		t2.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
+		t2.setAttribute("style", "--kite9-occupies: 1 1 6 7; --kite9-layout: right; --kite9-min-size: 100px 100px");
 		
 		Grid g = new Grid("table", Arrays.asList(t1, t2), null);
-		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
+		g.setAttribute("style", "--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(g), null));
 	}
 	
@@ -497,19 +488,19 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 	public void test_51_27_GridWithCellLabel() throws Exception {
 		
 		Cell t0 = new Cell("cell2", Arrays.asList(new TextLabel("Cell Label Left", LabelPlacement.LEFT)));
-		t0.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
+		t0.setAttribute("style", "--kite9-occupies: 1 1 6 7; --kite9-layout: right; --kite9-min-size: 100px 100px");
 
 		Cell t1 = new Cell("cell0", Arrays.asList(new TextLabel("Cell Label TR", LabelPlacement.BOTTOM)));
-		t1.setAttribute("style","kite9-min-size: 100px 100px");
+		t1.setAttribute("style","--kite9-min-size: 100px 100px");
 
 		
 		Cell t2 = new Cell("cell1", Arrays.asList(new TextLabel("Cell Label B", LabelPlacement.TOP), new TextLabel("Cell Label B", LabelPlacement.LEFT)));
-		t2.setAttribute("style","kite9-min-size: 100px 100px");
+		t2.setAttribute("style","--kite9-min-size: 100px 100px");
 		
 		
 		
 		Grid g = new Grid("table", Arrays.asList(t0, t1, t2), null);
-		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
+		g.setAttribute("style", "--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(g), null));
 	}
 	
@@ -522,25 +513,25 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		Cell t0 = new Cell("cell2", Arrays.asList(
 				// new TextLabel("1 Cell Label Left", LabelPlacement.LEFT), 
 				g1));
-		t0.setAttribute("style", "kite9-occupies: 1 1 6 7; kite9-layout: right; kite9-min-size: 100px 100px");
+		t0.setAttribute("style", "--kite9-occupies: 1 1 6 7; --kite9-layout: right; --kite9-min-size: 100px 100px");
 
 		Cell t1 = new Cell("cell0", Arrays.asList(
 				new TextLabel("2 Cell Label Bottom", LabelPlacement.BOTTOM), 
 				g2));
-		t1.setAttribute("style","kite9-min-size: 100px 100px");
+		t1.setAttribute("style","--kite9-min-size: 100px 100px");
 
 		
 		Cell t2 = new Cell("cell1", Arrays.asList(
 //				new TextLabel("3 Cell Label B Top", LabelPlacement.TOP), 
 //				new TextLabel("4 Cell Label B left", LabelPlacement.LEFT)
 				));
-		t2.setAttribute("style","kite9-min-size: 100px 100px");
+		t2.setAttribute("style","--kite9-min-size: 100px 100px");
 		
 		new Link(g1, g2);
 		
 		
 		Grid g = new Grid("table", Arrays.asList(t0, t1, t2), null);
-		g.setAttribute("style", "kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0");
+		g.setAttribute("style", "--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(g), null));
 	}
 	
@@ -558,7 +549,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		}
 		
 		Grid ctx = new Grid("outer", cells, null);
-		ctx.setAttribute("style", "kite9-grid-size: 10 10;");
+		ctx.setAttribute("style", "--kite9-grid-size: 10 10;");
 	
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 		
@@ -578,7 +569,7 @@ public class Test51Grid extends AbstractLayoutFunctionalTest {
 		}
 		
 		Grid ctx = new Grid("outer", cells, null);
-		ctx.setAttribute("style", "kite9-grid-size: 6 6;");
+		ctx.setAttribute("style", "--kite9-grid-size: 6 6;");
 //		new TurnLink(glyphs.get(15), glyphs.get(21));
 //		new TurnLink(glyphs.get(11), glyphs.get(22));
 		new TurnLink(glyphs.get(4), glyphs.get(23));
