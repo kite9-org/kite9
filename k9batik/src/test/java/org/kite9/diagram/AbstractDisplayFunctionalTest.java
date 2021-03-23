@@ -101,6 +101,11 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        			// ignore the info
 		        			return;
 		        		}
+
+		        		if (comparison.getControlDetails().getXPath().endsWith("@template")) {
+		        			// ignore template location
+							return;
+						}
 		        		
 		        		if (comparison.getControlDetails().getXPath().endsWith("@d")) {
 		        			if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&

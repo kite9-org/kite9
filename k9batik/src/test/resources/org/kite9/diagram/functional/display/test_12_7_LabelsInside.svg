@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="502" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=502.0, h=163.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
+<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="502" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" template="/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.xslt" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=502.0, h=163.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
 ><defs
   ><style xml:space="preserve"
     >*[k9-elem="context"], *[k9-elem="diagram"], *[k9-elem="glyph"], *[k9-elem="arrow"], *[k9-elem="link"] {
