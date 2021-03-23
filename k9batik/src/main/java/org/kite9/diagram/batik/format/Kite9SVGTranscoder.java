@@ -230,7 +230,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 
 	private Document handleTransformToAdl(Document input) throws Exception {
-		input.get
 		String template = input.getDocumentElement().getAttribute("template");
 
 		if ((template == null) || (template.length() == 0)) {
