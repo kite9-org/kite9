@@ -171,9 +171,9 @@ class RoutePainterImpl {
     fun drawRouting(
         r: RouteRenderingInformation?,
         start: EndDisplayer, end: EndDisplayer, line: LineDisplayer, closed: Boolean
-    ): String? {
+    ): String {
         if (r == null || r.routePositions!!.size == 0) {
-            return null
+            return ""
         }
         val moves = createMoves(r, closed)
         val gp: Route = SVGRoute()

@@ -30,7 +30,7 @@ open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueRepla
             if (canValueReplace(a, n)) {
                 val oldValue: String = a.value
                 val newValue: String = vr.performValueReplace(oldValue, n)
-                if (oldValue != newValue) {
+                if ((oldValue != newValue) && (newValue != null)) {
                     updateAttribute(n, a, newValue)
                 }
             }
