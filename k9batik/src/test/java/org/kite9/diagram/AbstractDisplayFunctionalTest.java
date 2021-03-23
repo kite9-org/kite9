@@ -135,7 +135,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        	
 					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
 						copyToErrors(output);	
-						Assert.fail("found a difference: " + comparison+" at "+comparison.getControlDetails().getXPath());
+						Assert.fail("found a difference at "+comparison.getControlDetails().getXPath()+ ":  "+comparison);
 					}
 		        }
 
