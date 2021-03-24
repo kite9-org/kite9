@@ -117,8 +117,9 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        		}
 		        		
 		        	}
-		        	if (comparison.getType() == ComparisonType.TEXT_VALUE) {
-		        		String c1 = comparison.getControlDetails().getValue().toString().trim();
+					String v = comparison.getControlDetails().getValue().toString();
+					if (comparison.getType() == ComparisonType.TEXT_VALUE) {
+		        		String c1 = v.trim();
 		        		String c2 = comparison.getTestDetails().getValue().toString().trim();
 		        		if (c1.equals(c2)) {
 		        			return;
@@ -130,10 +131,15 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        			countNonWSChildren(comparison.getTestDetails().getTarget())) {
 		        			return;
 		        		}
-		        		
+
 		        	}
+
+		        	if (v.contains("@import")) {
+		        		// this will always be relative
+						return;
+					}
 		        	
-					if (!comparison.getControlDetails().getValue().toString().contains("file:")) {
+					if (!v.contains("file:")) {
 						copyToErrors(output);	
 						Assert.fail("found a difference at "+comparison.getControlDetails().getXPath()+ ":  "+comparison);
 					}
