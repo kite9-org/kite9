@@ -92,7 +92,7 @@ class PrioritisedRectOption(
         return if (turnShape == TurnShape.G) {
             val parLength = par.getLength(true)
             var meetsExtension = 0.0
-            meetsExtension = acs.getMinimumDistance(post.segment, extender.segment, meets.segment, true)
+            meetsExtension = acs.getMinimumDistance(post.slideable, extender.slideable, meets.slideable, true)
             val distance = max(0.0, parLength + meetsExtension - meetsLength).toInt()
             distance * tp.costFactor
         } else {

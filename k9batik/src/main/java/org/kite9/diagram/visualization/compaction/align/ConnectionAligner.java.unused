@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.common.algorithms.so.AlignStyle;
-import org.kite9.diagram.common.algorithms.so.Slideable;
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable;
 import org.kite9.diagram.model.Connection;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Rectangular;
@@ -46,7 +46,7 @@ public class ConnectionAligner implements Aligner {
 	}
 
 	private void alignSegment(Segment s) {
-		Slideable sl = s.getSlideable();
+		SegmentSlideable sl = s.getSlideable();
 		if (s.getAlignStyle() == AlignStyle.MAX) {
 			Integer max = sl.getMaximumPosition();
 			sl.setMinimumPosition(max);
@@ -56,7 +56,7 @@ public class ConnectionAligner implements Aligner {
 		} else {
 			int balance = s.getAdjoiningSegmentBalance();
 			int pos = 0;
-			Slideable slideable = s.getSlideable();
+			SegmentSlideable slideable = s.getSlideable();
 			if (balance == 0) {
 				int slack = slideable.getMaximumPosition() - slideable.getMinimumPosition();
 				pos = slideable.getMinimumPosition() + (slack/2);

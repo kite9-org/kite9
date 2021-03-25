@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction.align
 
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -12,8 +12,8 @@ import org.kite9.diagram.model.position.Layout.Companion.isHorizontal
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -64,13 +64,14 @@ class CenteringAligner : Aligner, Logable {
         }
     }
 
-    fun findRelevantSlideables(des: Set<Rectangular>, sso: SegmentSlackOptimisation): List<Slideable> {
+    fun findRelevantSlideables(des: Set<Rectangular>, sso: SegmentSlackOptimisation): List<SegmentSlideable> {
         return sso.getAllSlideables()
+            .filterIsInstance<SegmentSlideable>()
             .filter { it.underlying.hasUnderlying(des) }
             .sortedBy { it.minimumPosition }
     }
 
-    private fun centerSlideables(left: Slideable?, right: Slideable?, elementCount: Int) {
+    private fun centerSlideables(left: SegmentSlideable?, right: SegmentSlideable?, elementCount: Int) {
         val leftSlack = minSlack(left)
         val rightSlack = minSlack(right)
         var slackToUse = min(leftSlack, rightSlack)
@@ -92,7 +93,7 @@ class CenteringAligner : Aligner, Logable {
         }
     }
 
-    private fun minSlack(l: Slideable?): Int {
+    private fun minSlack(l: SegmentSlideable?): Int {
         val leftMin = l!!.minimumPosition
         val leftMax = l.maximumPosition
         return leftMax!! - leftMin

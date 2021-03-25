@@ -4,15 +4,14 @@ import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority
-import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.segment.Side
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 
@@ -159,11 +158,11 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
                     ) !== ConnectionAlignment.NONE
                 }
                 .filter { (diagramElement) ->
-                    (matchesPattern(diagramElement as Container, vt.startsWith.underlying, vt.endsWith.underlying)
+                    (matchesPattern(diagramElement as Container, vt.startsWith, vt.endsWith)
                             || matchesPattern(
                         diagramElement,
-                        vt.endsWith.underlying,
-                        vt.startsWith.underlying
+                        vt.endsWith,
+                        vt.startsWith
                     ))
                 }
                 .count() > 0
@@ -189,8 +188,8 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
             throw LogicException()
         }
 
-        private fun matchesPattern(underlying: Container, underlyingEnd: Segment, connectionEnd: Segment): Boolean {
-            return underlyingEnd.hasUnderlying(underlying) && connectionEnd.connections.size == 1
+        private fun matchesPattern(underlying: Container, underlyingEnd: ElementSlideable, connectionEnd: ElementSlideable): Boolean {
+            return underlyingEnd.hasUnderlying(underlying) && connectionEnd.getConnections().size == 1
         }
     }
 }

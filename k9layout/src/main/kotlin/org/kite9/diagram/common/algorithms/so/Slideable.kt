@@ -1,18 +1,22 @@
-/**
- *
- */
 package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import kotlin.math.max
 
-class Slideable (
-    private val so: AbstractSlackOptimisation,
-    val underlying: Segment) : PositionChangeNotifiable {
-    private val minimum = SingleDirection(this, true)
-    private val maximum = SingleDirection(this, false)
+open class Slideable(val so: SlackOptimisation) : PositionChangeNotifiable {
+    protected val minimum = SingleDirection(this, true)
+    protected val maximum = SingleDirection(this, false)
     private var hasBackwardConstraints = false
+    var minimumPosition: Int
+        get() = minimum.position
+        set(i) {
+            minimum.increasePosition(i!!)
+        }
+    var maximumPosition: Int?
+        get() = maximum.position
+        set(i) {
+            maximum.increasePosition(i!!)
+        }
 
     /**
      * Works out how much closer the current slideable can get to s.
@@ -25,7 +29,7 @@ class Slideable (
     fun minimumDistanceTo(s: Slideable): Int {
         return try {
             var maxSet = maximumPosition
-            maxSet = maxSet ?: 20000 // 
+            maxSet = maxSet ?: 20000 //
             val slack1 = minimum.minimumDistanceTo(s.minimum, maxSet)
             so.log.send("Calculating minimum distance from $this to $s $slack1")
             val slack2 = s.maximum.minimumDistanceTo(maximum, s.minimumPosition)
@@ -41,23 +45,6 @@ class Slideable (
             throw LogicException("Some maximum size not set")
         }
     }
-
-    override fun toString(): String {
-        return "<" + so.getIdentifier(underlying) + " " + minimum.position + "," + maximum.position + ">"
-    }
-
-    var minimumPosition: Int
-        get() = minimum.position
-        set(i) {
-            minimum.increasePosition(i!!)
-        }
-    var maximumPosition: Int?
-        get() = maximum.position
-        set(i) {
-            maximum.increasePosition(i!!)
-        }
-    val slackOptimisation: AbstractSlackOptimisation
-        get() = so.getSelf()
 
     override fun changedPosition(pos: Int) {
         so.pushCount++

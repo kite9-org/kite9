@@ -8,7 +8,7 @@ import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 
 /**
  * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right wants to align left)

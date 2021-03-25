@@ -1,12 +1,12 @@
 package org.kite9.diagram.visualization.compaction.slideable
 
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.segment.Segment
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import kotlin.math.max
 
@@ -37,8 +37,8 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
 
     private fun minimizeDistance(
         opt: SegmentSlackOptimisation,
-        from: Slideable,
-        to: Slideable
+        from: SegmentSlideable,
+        to: SegmentSlideable
     ): Int {
         val minDist = from.minimumDistanceTo(to)
         opt.ensureMaximumDistance(from, to, minDist)
@@ -88,8 +88,8 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
         return max(leavingsOnSide(a1!!, c), leavingsOnSide(b!!, c))
     }
 
-    private fun leavingsOnSide(a2: Slideable, c: Compaction): Int {
-        val connections = getLeavingConnections(a2.underlying, c)
+    private fun leavingsOnSide(a2: SegmentSlideable, c: Compaction): Int {
+        val connections = getLeavingConnections(a2, c)
         return connections.size
     }
 }

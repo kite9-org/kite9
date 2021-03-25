@@ -1,14 +1,14 @@
 package org.kite9.diagram.visualization.compaction.rect
 
 import org.kite9.diagram.common.Collections
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Turn
 import org.kite9.diagram.visualization.compaction.*
 import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection
@@ -30,7 +30,7 @@ import kotlin.math.max
  * <pre>
  * |          <- (post - not changed)
  * ------    <- (meets)
- * |   <-  (link)
+ *       |   <-  (link)
  * ---    <-  (par)
  * |       <- (extender)
  * |
@@ -126,13 +126,13 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
             val segments = turnCopy.map { c.getSegmentForDart( it.dart ) }
 
             val directions = turnCopy.map { it.direction }
-            val uniqueSegments: MutableList<Segment> = ArrayList()
+            val uniqueSegments: MutableList<ElementSlideable> = ArrayList()
             val uniqueDirections: MutableList<Direction> = ArrayList()
             for (i in segments.indices) {
                 val segment = segments[i]
                 val d = directions[i]
-                if (i == 0 || segment != uniqueSegments[uniqueSegments.size - 1]) {
-                    uniqueSegments.add(segment)
+                if (i == 0 || segment.slideable != uniqueSegments[uniqueSegments.size - 1]) {
+                    uniqueSegments.add(segment.slideable!!)
                     uniqueDirections.add(d)
                 }
             }
@@ -144,7 +144,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
                 val current = uniqueSegments[i]
                 val next = uniqueSegments[(i + 1) % us]
                 val d = uniqueDirections[i]
-                val t = VertexTurn(i, c, current.slideable!!, d, last.slideable!!, next.slideable!!, df.partOf)
+                val t = VertexTurn(i, c, current, d, last, next, df.partOf)
                 theStack.add(t)
             }
             log.send("Stack for face $df", theStack)
@@ -164,8 +164,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
     }
 
     private fun getSlideableInDirection(vt: List<VertexTurn>, d: Direction, outer: Boolean): FaceSide {
-        val others: MutableSet<Slideable> = HashSet()
-        var main: Slideable? = null
+        val others: MutableSet<ElementSlideable> = HashSet()
+        var main: ElementSlideable? = null
         for (i in vt.indices) {
             val prev = vt[(i + vt.size - 1) % vt.size]
             val curr = vt[i]
@@ -190,8 +190,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         par: VertexTurn, link: VertexTurn, meets: VertexTurn, shape: TurnShape
     ) {
         // logRectangularizationContext(ext, par, link, meets);
-        val first: Slideable = ext.endsWith
-        val to: Slideable = meets.slideable
+        val first: ElementSlideable = ext.endsWith
+        val to: ElementSlideable = meets.slideable
         performRectangularization(c, meets, link, par, ext, first, to, shape)
         cutRectangleCorner(stack, par, link)
     }
@@ -212,11 +212,9 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
     ) {
         val early = if (link!!.increasingDirection()) link.startsWith else link.endsWith
         val late = if (link.increasingDirection()) link.endsWith else link.startsWith
-        val early1 = early.underlying
-        val late1 = late.underlying
         log.send(if (log.go()) null else " Early: $early late: $late")
-        val along = if (initialSetting) link.segment else null
-        val minDistance = getMinimumDistance(early1, late1, along, concave)
+        val along = if (initialSetting) link.slideable else null
+        val minDistance = getMinimumDistance(early, late, along, concave)
         link.ensureMinLength(max(minDistance, externalMin))
         log.send(if (log.go()) null else "Fixed: $link min length $minDistance")
         return
@@ -227,15 +225,15 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         link: VertexTurn, par: VertexTurn, ext: VertexTurn, shape: TurnShape
     ) {
         // logRectangularizationContext(meets, link, par, ext);
-        val first: Slideable = ext.startsWith
-        val to: Slideable = meets.slideable
+        val first: ElementSlideable = ext.startsWith
+        val to: ElementSlideable = meets.slideable
         performRectangularization(c, meets, link, par, ext, first, to, shape)
         cutRectangleCorner(stack, link, par)
     }
 
     protected fun performRectangularization(
         c: Compaction, meets: VertexTurn, link: VertexTurn,
-        par: VertexTurn, extender: VertexTurn, from: Slideable, to: Slideable, shape: TurnShape
+        par: VertexTurn, extender: VertexTurn, from: ElementSlideable, to: ElementSlideable, shape: TurnShape
     ) {
         val newExtenderLength = extender.getLength(false) + link.getLength(false)
         if (extender.startsWith == from) {

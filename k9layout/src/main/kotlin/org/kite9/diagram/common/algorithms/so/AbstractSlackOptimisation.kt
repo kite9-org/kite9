@@ -10,25 +10,25 @@ import org.kite9.diagram.logging.LogicException
  *
  * @author robmoffat
  */
-abstract class AbstractSlackOptimisation : Logable {
-    val log = Kite9Log.instance(this)
+abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
+    override val log = Kite9Log.instance(this)
 
-    var pushCount = 0
+    override var pushCount = 0
 
     protected val _allSlideables: MutableCollection<Slideable> = LinkedHashSet()
 
     abstract fun getIdentifier(underneath: Any?): String?
 
-    fun getSize(): Int {
+    override fun getSize(): Int {
         return _allSlideables.size
     }
 
-    fun getAllSlideables(): Collection<Slideable> {
+    override fun getAllSlideables(): Collection<Slideable> {
         return _allSlideables
     }
 
-    fun ensureMinimumDistance(left: Slideable, right: Slideable, minLength: Int) {
-        if (left.slackOptimisation !== right.slackOptimisation) {
+    override fun ensureMinimumDistance(left: Slideable, right: Slideable, minLength: Int) {
+        if (left.so !== right.so) {
             throw LogicException("Mixing dimensions")
         }
 
@@ -65,8 +65,8 @@ abstract class AbstractSlackOptimisation : Logable {
         }
     }
 
-    fun ensureMaximumDistance(left: Slideable, right: Slideable, maxLength: Int) {
-        if (left.slackOptimisation !== right.slackOptimisation) {
+    override fun ensureMaximumDistance(left: Slideable, right: Slideable, maxLength: Int) {
+        if (left.so !== right.so) {
             throw LogicException("Mixing dimensions")
         }
         try {
@@ -84,10 +84,6 @@ abstract class AbstractSlackOptimisation : Logable {
 
     override val isLoggingEnabled: Boolean
         get() = false
-
-    fun getSelf(): AbstractSlackOptimisation {
-        return this
-    }
 
     abstract fun initialiseSlackOptimisation()
 }

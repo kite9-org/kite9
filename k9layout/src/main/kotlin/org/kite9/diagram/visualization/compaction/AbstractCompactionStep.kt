@@ -1,19 +1,13 @@
 package org.kite9.diagram.visualization.compaction
 
-import org.kite9.diagram.common.algorithms.so.Slideable
-import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.common.elements.DirectionEnforcingElement
+import org.kite9.diagram.common.algorithms.so.SlackOptimisation
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.segment.Side
-import org.kite9.diagram.visualization.compaction.segment.UnderlyingInfo
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import kotlin.math.floor
 import kotlin.math.max
@@ -21,117 +15,24 @@ import kotlin.math.max
 /**
  * This contains utility methods to deal with insertion of sub-graphs within the overall graph.
  * You should extend this wherever you need to add vertices to a segment.
+ *
+ *
  */
 abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer) : CompactionStep, Logable {
-
 
 	protected var log = Kite9Log.instance(this)
 
     override val isLoggingEnabled = true
 
-    fun getMinimumDistance(froms: Slideable, tos: Slideable, d: Direction): Double {
+    fun getMinimumDistance(froms: ElementSlideable, tos: ElementSlideable, d: Direction): Double {
         return froms.minimumDistanceTo(tos).toDouble()
     }
 
-    fun getMinimumDistance(first: Segment, second: Segment, along: Segment?, concave: Boolean): Double {
-        val horizontalDartFirst = first.dimension === Dimension.V
-        val horizontalDartSecond = second.dimension === Dimension.V
-        if (horizontalDartFirst != horizontalDartSecond) {
-            throw LogicException()
-        }
-        if (first.underlyingInfo.size > 1 && second.underlyingInfo.size > 1) {
-            // we're in a grid, look for common diagram elements
-            val combined: MutableSet<Rectangular> = HashSet(first.rectangulars)
-            val secondRs = second.rectangulars
-            combined.retainAll(secondRs)
-            if (combined.size == 1) {
-                // ok, run just the single found combination
-                val max = 0.0
-                for (fromUI in first.underlyingInfo) {
-                    if (combined.contains(fromUI.diagramElement)) {
-                        return getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave)
-                    }
-                }
-                throw LogicException()
-            }
-        }
-
-        // ok, run all the combinations
-        var max = 0.0
-        for (fromUI in first.underlyingInfo) {
-            max = max(max, getMinimumDistance(horizontalDartFirst, fromUI, second, along, concave))
-        }
-        return max
+    fun getMinimumDistance(first: ElementSlideable, second: ElementSlideable, along: ElementSlideable?, concave: Boolean): Double {
+        return first.getMinimumDistancePossible(second, along, concave, displayer)
     }
 
-    private fun getMinimumDistance(
-        horizontalDart: Boolean,
-        fromUI: UnderlyingInfo,
-        second: Segment,
-        along: Segment?,
-        concave: Boolean
-    ): Double {
-        var max = 0.0
-        for (toUI in second.underlyingInfo) {
-            max = max(max, getMinimumDistance(horizontalDart, fromUI, toUI, along, concave))
-        }
-        return max
-    }
-
-    private fun getMinimumDistance(
-        horizontalDart: Boolean,
-        fromUI: UnderlyingInfo,
-        toUI: UnderlyingInfo,
-        along: Segment?,
-        concave: Boolean
-    ): Double {
-        val fromde = fromUI.diagramElement
-        val fromUnderlyingSide = convertSideToDirection(horizontalDart, fromUI.side, true)
-        val tode = toUI.diagramElement
-        val toUnderlyingSide = convertSideToDirection(horizontalDart, toUI.side, false)
-        if (!needsLength(fromde, tode)) {
-            return 0.0
-        }
-        val alongDe = getAlongDiagramElement(along)
-        return displayer.getMinimumDistanceBetween(
-            fromde,
-            fromUnderlyingSide,
-            tode,
-            toUnderlyingSide,
-            if (horizontalDart) Direction.RIGHT else Direction.DOWN,
-            alongDe,
-            concave
-        )
-    }
-
-    private fun getAlongDiagramElement(along: Segment?): DiagramElement? {
-        return if (along == null) {
-            null
-        } else along.getUnderlyingWithSide(Side.NEITHER)
-            ?: return along.underlyingInfo
-                .map { (diagramElement) -> diagramElement }
-                .firstOrNull()
-    }
-
-    private fun convertSideToDirection(horizontalDart: Boolean, side: Side, first: Boolean): Direction {
-        return when (side) {
-            Side.END -> if (horizontalDart) Direction.RIGHT else Direction.DOWN
-            Side.START -> if (horizontalDart) Direction.LEFT else Direction.UP
-            else -> if (horizontalDart) {
-                if (first) Direction.RIGHT else Direction.LEFT
-            } else {
-                if (first) Direction.DOWN else Direction.UP
-            }
-        }
-    }
-
-    private fun needsLength(a: DiagramElement, b: DiagramElement): Boolean {
-        return if (a is DirectionEnforcingElement || b is DirectionEnforcingElement) {
-            false
-        } else true
-    }
-
-    protected fun separate(s1: Slideable?, fs: FaceSide) {
+    protected fun separate(s1: ElementSlideable?, fs: FaceSide) {
         if (s1 != null) {
             for (s2 in fs.all) {
                 separate(s1, s2)
@@ -139,16 +40,16 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         }
     }
 
-    protected fun separate(fs: FaceSide, s2: Slideable) {
+    protected fun separate(fs: FaceSide, s2: ElementSlideable) {
         for (s1 in fs.all) {
             separate(s1, s2)
         }
     }
 
-    protected fun separate(s1: Slideable?, s2: Slideable?) {
+    protected fun separate(s1: ElementSlideable?, s2: ElementSlideable?) {
         if ((s1!=null) && (s2 !=null)) {
-            val minDistance = getMinimumDistance(s1.underlying, s2.underlying, null, true)
-            s1.slackOptimisation.ensureMinimumDistance(s1, s2, minDistance.toInt())
+            val minDistance = getMinimumDistance(s1, s2, null, true)
+            s1.so.ensureMinimumDistance(s1, s2, minDistance.toInt())
         }
     }
 
@@ -178,19 +79,19 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
      */
     protected fun alignSingleConnections(
         c: Compaction,
-        perp: OPair<Slideable?>,
-        along: OPair<Slideable?>,
+        perp: OPair<out ElementSlideable?>,
+        along: OPair<out ElementSlideable?>,
         checkNeeded: Boolean,
         minimizingContainer: Boolean
     ): AlignmentResult? {
         val from = along.a!!
-        val alongSSO = from.slackOptimisation as SegmentSlackOptimisation
+        val alongSSO = from.so
         val to = along.b!!
-        val leavingConnectionsA = getLeavingConnections(perp.a!!.underlying, c)
-        val leavingConnectionsB = getLeavingConnections(perp.b!!.underlying, c)
+        val leavingConnectionsA = getLeavingConnections(perp.a, c)
+        val leavingConnectionsB = getLeavingConnections(perp.b, c)
         var halfDist = 0
-        var connectionSegmentA: Slideable? = null
-        var connectionSegmentB: Slideable? = null
+        var connectionSegmentA: ElementSlideable? = null
+        var connectionSegmentB: ElementSlideable? = null
         if (leavingConnectionsA.size == 1) {
             connectionSegmentA = getConnectionSegment(perp.a!!, c)
             halfDist = max(halfDist, from.minimumDistanceTo(connectionSegmentA))
@@ -227,10 +128,10 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
     }
 
     private fun addWithCheck(
-        alongSSO: SegmentSlackOptimisation,
-        from: Slideable,
+        alongSSO: SlackOptimisation,
+        from: ElementSlideable,
         dist: Int,
-        to: Slideable,
+        to: ElementSlideable,
         checkNeeded: Boolean
     ) {
         if (checkNeeded) {
@@ -242,18 +143,21 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
     }
 
     protected fun getLeavingConnections(
-        s: Segment,
+        s: ElementSlideable?,
         c: Compaction
     ): Set<Connection> {
-        return s.getAdjoiningSegments(c)
-            .flatMap { seg: Segment -> seg.connections }
+        if (s==null) {
+            return emptySet()
+        }
+
+        return s.getAdjoiningSlideables(c)
+            .flatMap { it.getConnections() }
             .toSet()
     }
 
-    private fun getConnectionSegment(s1: Slideable, c: Compaction): Slideable {
-        return s1.underlying.getAdjoiningSegments(c)
-            .filter { it.connections.isNotEmpty() }
-            .map { it.slideable!! }
+    private fun getConnectionSegment(s1: ElementSlideable, c: Compaction): ElementSlideable {
+        return s1.getAdjoiningSlideables(c)
+            .filter { it.getConnections().isNotEmpty() }
             .first()
     }
 }

@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.compaction.segment
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.algorithms.so.AlignStyle
-import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
@@ -13,6 +12,8 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.orthogonalization.Dart
 
 import org.kite9.diagram.visualization.compaction.Compaction
+import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction.UnderlyingInfo
 
 
 /**
@@ -23,9 +24,7 @@ import org.kite9.diagram.visualization.compaction.Compaction
  */
 class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
 
-    var slideable: Slideable? = null
-
-    val bob: Int by lazy { 6 }
+    var slideable: SegmentSlideable? = null
 
     val rectangulars: Set<Rectangular> by lazy {
         underlyingInfo

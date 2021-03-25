@@ -4,6 +4,7 @@ import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 
 class LoggingOptimisationStep(cd: CompleteDisplayer) : AbstractCompactionStep(cd) {

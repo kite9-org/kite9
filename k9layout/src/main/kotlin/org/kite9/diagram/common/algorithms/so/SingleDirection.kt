@@ -4,7 +4,7 @@ import org.kite9.diagram.logging.LogicException
 import kotlin.math.abs
 
 /**
- * Handles the constraints for a [Slideable] in a single direction (e.g.
+ * Handles the constraints for a [SegmentSlideable] in a single direction (e.g.
  * increasing or decreasing).
  *
  * This is a DAG, and we should be able to prove it.

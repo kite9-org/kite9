@@ -15,7 +15,7 @@ data class OPair<X>(val a: X, val b: X) {
         return a === item || b === item
     }
 
-    fun otherOne(`in`: X): X? {
+    fun otherOne(`in`: Any): X? {
         return if (a === `in`) {
             b
         } else if (b === `in`) {

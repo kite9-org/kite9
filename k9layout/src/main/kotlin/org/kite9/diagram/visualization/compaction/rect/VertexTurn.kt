@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction.rect
 
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.common.elements.vertex.FanVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
@@ -10,8 +10,9 @@ import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.segment.Side
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 
 /**
  * Stores the segments on the stack
@@ -19,18 +20,18 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 class VertexTurn(
     val number: Int,
     val compaction: Compaction,
-    val slideable: Slideable,
+    val slideable: ElementSlideable,
     val direction: Direction,
-    var startsWith: Slideable,
-    var endsWith: Slideable,
+    var startsWith: ElementSlideable,
+    var endsWith: ElementSlideable,
     val partOf: Rectangular?
 ) {
     enum class TurnPriority(val costFactor: Int) {
         MINIMIZE_RECTANGULAR(3), CONNECTION(1), MAXIMIZE_RECTANGULAR(0);
     }
 
-    private var start: Vertex? = commonVertex(slideable.underlying, startsWith.underlying)
-    private var end: Vertex? = commonVertex(slideable.underlying, endsWith.underlying)
+    private var start: Vertex? = commonVertex(slideable, startsWith)
+    private var end: Vertex? = commonVertex(slideable, endsWith)
 
     var turnPriority: TurnPriority = calculateTurnPriority(slideable)
         private set
@@ -63,16 +64,16 @@ class VertexTurn(
         return length
     }
 
-    private fun commonVertex(a: Segment, b: Segment): Vertex? {
-        return a.getVerticesInSegment().first { b.getVerticesInSegment().contains(it) }
+    private fun commonVertex(a: ElementSlideable, b: ElementSlideable): Vertex? {
+        return a.getVerticesOnSlideable().first { b.getVerticesOnSlideable().contains(it) }
     }
 
 
     private fun recalculateLength(): Double {
-        val startUse: Slideable? = checkMinimizeSlideable(
+        val startUse: ElementSlideable? = checkMinimizeSlideable(
             startsWith, true
         )
-        val endUse: Slideable? = checkMinimizeSlideable(
+        val endUse: ElementSlideable? = checkMinimizeSlideable(
             endsWith, false
         )
         val increasing: Boolean = increasingDirection()
@@ -100,21 +101,21 @@ class VertexTurn(
      * length to the whole slideable in order that we can calculate a length based on the whole thing (?)
      */
     private fun checkMinimizeSlideable(
-        orig: Slideable,
+        orig: ElementSlideable,
         from: Boolean
-    ): Slideable? {
+    ): ElementSlideable? {
         if (calculateTurnPriority(orig) != TurnPriority.MINIMIZE_RECTANGULAR) {
             return orig
         }
         val maxTo: Boolean = increasingDirection()
         val needed: Side = if ((maxTo == from)) Side.START else Side.END
-        val current: Side? = orig.underlying.singleSide
+        val current: Side? = orig.getSingleSide()
         if ((current === needed) || (current === Side.BOTH)) {
             return orig
         }
-        val rects: Set<Rectangular> = orig.underlying.rectangulars
+        val rects: Set<Rectangular> = orig.getRectangulars()
         val rect: Rectangular = getTopmostRectangular(rects)
-        return (orig.slackOptimisation as SegmentSlackOptimisation).getSlideablesFor(rect).otherOne(orig)
+        return (orig.so as SegmentSlackOptimisation).getSlideablesFor(rect).otherOne(orig)
     }
 
     private fun getTopmostRectangular(rects: Set<Rectangular>): Rectangular {
@@ -137,20 +138,20 @@ class VertexTurn(
     }
 
     val segment: Segment
-        get() = slideable.underlying
+        get() = (slideable as SegmentSlideable).underlying
 
     override fun toString(): String {
         return "[$number $turnPriority\n     s=$slideable\n  from=$startsWith\n    to=$endsWith\n     d=$direction\n]"
     }
 
-    fun resetEndsWith(s: Slideable, tp: TurnPriority, minLength: Double) {
+    fun resetEndsWith(s: ElementSlideable, tp: TurnPriority, minLength: Double) {
         endsWith = s
         end = null
         turnPriority = TurnPriority.values()[tp.ordinal.coerceAtLeast(turnPriority.ordinal)]
         length = 0.0.coerceAtLeast(minLength)
     }
 
-    fun resetStartsWith(s: Slideable, tp: TurnPriority, minLength: Double) {
+    fun resetStartsWith(s: ElementSlideable, tp: TurnPriority, minLength: Double) {
         startsWith = s
         start = null
         turnPriority = TurnPriority.values()[tp.ordinal.coerceAtLeast(turnPriority.ordinal)]
@@ -158,9 +159,9 @@ class VertexTurn(
     }
 
     fun ensureMinLength(l: Double) {
-        val early: Slideable = if (increasingDirection()) startsWith else endsWith
-        val late: Slideable = if (increasingDirection()) endsWith else startsWith
-        early.slackOptimisation.ensureMinimumDistance(early, late, l.toInt())
+        val early: ElementSlideable = if (increasingDirection()) startsWith else endsWith
+        val late: ElementSlideable = if (increasingDirection()) endsWith else startsWith
+        early.so.ensureMinimumDistance(early, late, l.toInt())
         length = l
     }
 
@@ -181,7 +182,7 @@ class VertexTurn(
      * The order of deciding this is important, since a segment
      * can be shared by a label.
      */
-    private fun calculateTurnPriority(s: Slideable): TurnPriority {
+    private fun calculateTurnPriority(s: ElementSlideable): TurnPriority {
         if (isConnection(s)) {
             return TurnPriority.CONNECTION
         } else if (isMaximizeRectangular(s)) {
@@ -212,7 +213,7 @@ class VertexTurn(
         private get() = (start is FanVertex) && (start as FanVertex).isInner
 
     fun isContainerLabelOnSide(d: Direction?): Boolean {
-        val labels: Int = slideable.underlying.underlyingInfo
+        val labels: Int = slideable.getUnderlyingInfo()
             .map { it.diagramElement }
             .filterIsInstance<Label>()
             .filter { l: Label -> !l.isConnectionLabel() }
@@ -232,16 +233,16 @@ class VertexTurn(
         return { r: Rectangular -> ((r is SizedRectangular) && (r.getSizing(horiz) === DiagramElementSizing.MAXIMIZE)) || (r === partOf) }
     }
 
-    fun isMinimizeRectangular(s: Slideable): Boolean {
-        val rects: Int = s.underlying.underlyingInfo
+    fun isMinimizeRectangular(s: ElementSlideable): Boolean {
+        val rects: Int = s.getUnderlyingInfo()
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
             .filter(minimize(isHorizontal(direction))).count()
         return rects > 0
     }
 
-    fun isMaximizeRectangular(s: Slideable): Boolean {
-        val rects: Int = s.underlying.underlyingInfo
+    fun isMaximizeRectangular(s: ElementSlideable): Boolean {
+        val rects: Int = s.getUnderlyingInfo()
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
             .filter(maximize(isHorizontal(direction))).count()
@@ -257,8 +258,8 @@ class VertexTurn(
         }
 
     companion object {
-        fun isConnection(s: Slideable): Boolean {
-            val connections: Int = s.underlying.underlyingInfo
+        fun isConnection(s: ElementSlideable): Boolean {
+            val connections: Int = s.getUnderlyingInfo()
                 .map { it.diagramElement }
                 .filterIsInstance<Connection>()
                 .count()

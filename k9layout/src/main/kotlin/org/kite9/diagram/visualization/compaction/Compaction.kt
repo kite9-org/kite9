@@ -3,7 +3,7 @@ package org.kite9.diagram.visualization.compaction
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization

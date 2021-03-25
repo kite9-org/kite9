@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction.insertion
 
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.common.elements.factory.TemporaryConnected
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Logable
@@ -149,10 +149,10 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
     </direction> */
     protected fun getLimits(
         df: DartFace,
-        map: Map<Vertex?, Slideable>,
+        map: Map<Vertex?, SegmentSlideable>,
         direction: Direction
-    ): Set<Slideable> {
-        val out: MutableSet<Slideable> = LinkedHashSet(4)
+    ): Set<SegmentSlideable> {
+        val out: MutableSet<SegmentSlideable> = LinkedHashSet(4)
         for ((d) in df.dartsInFace) {
             val from = d.getFrom()
             val to = d.getTo()

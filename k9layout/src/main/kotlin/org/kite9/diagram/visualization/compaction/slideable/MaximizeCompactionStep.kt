@@ -1,11 +1,10 @@
 package org.kite9.diagram.visualization.compaction.slideable
 
-import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 
 class MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractSizingCompactionStep(cd) {
@@ -36,7 +35,7 @@ class MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractSizingCompactionSt
         }
     }
 
-    private fun maximizeDistance(min: Slideable?, max: Slideable?) {
+    private fun maximizeDistance(min: SegmentSlideable?, max: SegmentSlideable?) {
         max!!.minimumPosition = max.maximumPosition!!
         min!!.maximumPosition = min.minimumPosition
     }
