@@ -27,9 +27,9 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
     //				Dimension dimension = meets.getSegment().getDimension();
     //				Direction d = meets.getDirection();
     //				boolean horiz = dimension == Dimension.H;				
-    //				Slideable<Segment> old = meets.getSlideable(); 
+    //				Slideable old = meets.getSlideable();
     //				SegmentSlackOptimisation sso = (SegmentSlackOptimisation) old.getSlackOptimisation();
-    //				Slideable<Segment> bufferSlideable = new Slideable<Segment>(sso, null);
+    //				Slideable bufferSlideable = new Slideable(sso, null);
     //				sso.updateMaps(bufferSlideable);
     //				
     //				Slideable left = (d ==Direction.UP) || ( )

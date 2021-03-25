@@ -37,8 +37,8 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
 
     private fun minimizeDistance(
         opt: SegmentSlackOptimisation,
-        from: Slideable<Segment>,
-        to: Slideable<Segment>
+        from: Slideable,
+        to: Slideable
     ): Int {
         val minDist = from.minimumDistanceTo(to)
         opt.ensureMaximumDistance(from, to, minDist)
@@ -88,7 +88,7 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
         return max(leavingsOnSide(a1!!, c), leavingsOnSide(b!!, c))
     }
 
-    private fun leavingsOnSide(a2: Slideable<Segment>, c: Compaction): Int {
+    private fun leavingsOnSide(a2: Slideable, c: Compaction): Int {
         val connections = getLeavingConnections(a2.underlying, c)
         return connections.size
     }

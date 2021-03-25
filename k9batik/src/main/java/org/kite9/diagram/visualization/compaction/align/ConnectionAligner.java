@@ -46,7 +46,7 @@ public class ConnectionAligner implements Aligner {
 	}
 
 	private void alignSegment(Segment s) {
-		Slideable<Segment> sl = s.getSlideable();
+		Slideable sl = s.getSlideable();
 		if (s.getAlignStyle() == AlignStyle.MAX) {
 			Integer max = sl.getMaximumPosition();
 			sl.setMinimumPosition(max);
@@ -56,7 +56,7 @@ public class ConnectionAligner implements Aligner {
 		} else {
 			int balance = s.getAdjoiningSegmentBalance();
 			int pos = 0;
-			Slideable<Segment> slideable = s.getSlideable();
+			Slideable slideable = s.getSlideable();
 			if (balance == 0) {
 				int slack = slideable.getMaximumPosition() - slideable.getMinimumPosition();
 				pos = slideable.getMinimumPosition() + (slack/2);

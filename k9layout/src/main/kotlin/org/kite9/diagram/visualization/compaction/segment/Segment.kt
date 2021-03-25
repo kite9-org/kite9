@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.compaction.Compaction
  */
 class Segment(val dimension: Dimension, val number: Int) : Comparable<Segment> {
 
-    var slideable: Slideable<Segment>? = null
+    var slideable: Slideable? = null
 
     val bob: Int by lazy { 6 }
 

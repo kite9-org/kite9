@@ -64,13 +64,13 @@ class CenteringAligner : Aligner, Logable {
         }
     }
 
-    fun findRelevantSlideables(des: Set<Rectangular>, sso: SegmentSlackOptimisation): List<Slideable<Segment>> {
+    fun findRelevantSlideables(des: Set<Rectangular>, sso: SegmentSlackOptimisation): List<Slideable> {
         return sso.getAllSlideables()
             .filter { it.underlying.hasUnderlying(des) }
             .sortedBy { it.minimumPosition }
     }
 
-    private fun centerSlideables(left: Slideable<Segment>?, right: Slideable<Segment>?, elementCount: Int) {
+    private fun centerSlideables(left: Slideable?, right: Slideable?, elementCount: Int) {
         val leftSlack = minSlack(left)
         val rightSlack = minSlack(right)
         var slackToUse = min(leftSlack, rightSlack)
@@ -92,7 +92,7 @@ class CenteringAligner : Aligner, Logable {
         }
     }
 
-    private fun minSlack(l: Slideable<Segment>?): Int {
+    private fun minSlack(l: Slideable?): Int {
         val leftMin = l!!.minimumPosition
         val leftMax = l.maximumPosition
         return leftMax!! - leftMin

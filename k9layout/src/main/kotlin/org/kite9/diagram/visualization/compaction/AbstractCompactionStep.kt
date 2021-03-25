@@ -29,7 +29,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     override val isLoggingEnabled = true
 
-    fun getMinimumDistance(froms: Slideable<Segment>, tos: Slideable<Segment>, d: Direction): Double {
+    fun getMinimumDistance(froms: Slideable, tos: Slideable, d: Direction): Double {
         return froms.minimumDistanceTo(tos).toDouble()
     }
 
@@ -131,7 +131,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         } else true
     }
 
-    protected fun separate(s1: Slideable<Segment>?, fs: FaceSide) {
+    protected fun separate(s1: Slideable?, fs: FaceSide) {
         if (s1 != null) {
             for (s2 in fs.all) {
                 separate(s1, s2)
@@ -139,13 +139,13 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         }
     }
 
-    protected fun separate(fs: FaceSide, s2: Slideable<Segment>) {
+    protected fun separate(fs: FaceSide, s2: Slideable) {
         for (s1 in fs.all) {
             separate(s1, s2)
         }
     }
 
-    protected fun separate(s1: Slideable<Segment>?, s2: Slideable<Segment>?) {
+    protected fun separate(s1: Slideable?, s2: Slideable?) {
         if ((s1!=null) && (s2 !=null)) {
             val minDistance = getMinimumDistance(s1.underlying, s2.underlying, null, true)
             s1.slackOptimisation.ensureMinimumDistance(s1, s2, minDistance.toInt())
@@ -178,8 +178,8 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
      */
     protected fun alignSingleConnections(
         c: Compaction,
-        perp: OPair<Slideable<Segment>?>,
-        along: OPair<Slideable<Segment>?>,
+        perp: OPair<Slideable?>,
+        along: OPair<Slideable?>,
         checkNeeded: Boolean,
         minimizingContainer: Boolean
     ): AlignmentResult? {
@@ -189,8 +189,8 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         val leavingConnectionsA = getLeavingConnections(perp.a!!.underlying, c)
         val leavingConnectionsB = getLeavingConnections(perp.b!!.underlying, c)
         var halfDist = 0
-        var connectionSegmentA: Slideable<Segment>? = null
-        var connectionSegmentB: Slideable<Segment>? = null
+        var connectionSegmentA: Slideable? = null
+        var connectionSegmentB: Slideable? = null
         if (leavingConnectionsA.size == 1) {
             connectionSegmentA = getConnectionSegment(perp.a!!, c)
             halfDist = max(halfDist, from.minimumDistanceTo(connectionSegmentA))
@@ -228,9 +228,9 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     private fun addWithCheck(
         alongSSO: SegmentSlackOptimisation,
-        from: Slideable<Segment>,
+        from: Slideable,
         dist: Int,
-        to: Slideable<Segment>,
+        to: Slideable,
         checkNeeded: Boolean
     ) {
         if (checkNeeded) {
@@ -250,7 +250,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
             .toSet()
     }
 
-    private fun getConnectionSegment(s1: Slideable<Segment>, c: Compaction): Slideable<Segment> {
+    private fun getConnectionSegment(s1: Slideable, c: Compaction): Slideable {
         return s1.underlying.getAdjoiningSegments(c)
             .filter { it.connections.isNotEmpty() }
             .map { it.slideable!! }

@@ -17,16 +17,16 @@ import org.kite9.diagram.visualization.compaction.segment.Side
  *
  * @author robmoffat
  */
-class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram) : AbstractSlackOptimisation<Segment>(), Logable {
+class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram) : AbstractSlackOptimisation(), Logable {
 
-    private val vertexToSlidableMap: MutableMap<Vertex, Slideable<Segment>> = HashMap()
-    private val rectangularElementToSlideableMap: MutableMap<DiagramElement, OPair<Slideable<Segment>?>> = HashMap()
+    private val vertexToSlidableMap: MutableMap<Vertex, Slideable> = HashMap()
+    private val rectangularElementToSlideableMap: MutableMap<DiagramElement, OPair<Slideable?>> = HashMap()
 
     private fun isRectangular(underlying: DiagramElement): Boolean {
         return underlying is Rectangular
     }
 
-    fun updateMaps(s: Slideable<Segment>) {
+    fun updateMaps(s: Slideable) {
         val seg = s.underlying
         for (v in seg.getVerticesInSegment()) {
             vertexToSlidableMap[v] = s
@@ -35,7 +35,7 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
             if (isRectangular(underlying)) {
                 var parts = rectangularElementToSlideableMap[underlying]
                 if (parts == null) {
-                    parts = OPair<Slideable<Segment>?>(null, null)
+                    parts = OPair<Slideable?>(null, null)
                 }
                 if (side === Side.START) {
                     parts = OPair(s, parts.b)
@@ -48,7 +48,7 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
         }
     }
 
-    fun getVertexToSlidableMap(): Map<Vertex, Slideable<Segment>?> {
+    fun getVertexToSlidableMap(): Map<Vertex, Slideable?> {
         return vertexToSlidableMap
     }
 
@@ -61,13 +61,13 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
         a!!.minimumPosition = 0
     }
 
-    fun getSlideablesFor(de: DiagramElement): OPair<Slideable<Segment>?> {
+    fun getSlideablesFor(de: DiagramElement): OPair<Slideable?> {
         return rectangularElementToSlideableMap[de]!!
     }
 
     init {
         for (s in segments) {
-            val sli = Slideable<Segment>(this, s)
+            val sli = Slideable(this, s)
             s.slideable = sli
             log.send(if (log.go()) null else "Created slideable: $sli")
             _allSlideables.add(sli)

@@ -36,7 +36,7 @@ class MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractSizingCompactionSt
         }
     }
 
-    private fun maximizeDistance(min: Slideable<Segment>?, max: Slideable<Segment>?) {
+    private fun maximizeDistance(min: Slideable?, max: Slideable?) {
         max!!.minimumPosition = max.maximumPosition!!
         min!!.maximumPosition = min.minimumPosition
     }

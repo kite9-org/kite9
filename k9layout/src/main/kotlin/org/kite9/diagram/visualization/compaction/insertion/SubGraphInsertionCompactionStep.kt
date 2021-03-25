@@ -149,10 +149,10 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
     </direction> */
     protected fun getLimits(
         df: DartFace,
-        map: Map<Vertex?, Slideable<Segment>>,
+        map: Map<Vertex?, Slideable>,
         direction: Direction
-    ): Set<Slideable<Segment>> {
-        val out: MutableSet<Slideable<Segment>> = LinkedHashSet(4)
+    ): Set<Slideable> {
+        val out: MutableSet<Slideable> = LinkedHashSet(4)
         for ((d) in df.dartsInFace) {
             val from = d.getFrom()
             val to = d.getTo()

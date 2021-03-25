@@ -4,11 +4,12 @@
 package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.visualization.compaction.segment.Segment
 import kotlin.math.max
 
-class Slideable<X>(
-    private val so: AbstractSlackOptimisation<X>,
-    val underlying: X) : PositionChangeNotifiable {
+class Slideable (
+    private val so: AbstractSlackOptimisation,
+    val underlying: Segment) : PositionChangeNotifiable {
     private val minimum = SingleDirection(this, true)
     private val maximum = SingleDirection(this, false)
     private var hasBackwardConstraints = false
@@ -21,7 +22,7 @@ class Slideable<X>(
      * We can't move the element any further than the max position without breaking other
      * constraints.
      */
-    fun minimumDistanceTo(s: Slideable<X>): Int {
+    fun minimumDistanceTo(s: Slideable): Int {
         return try {
             var maxSet = maximumPosition
             maxSet = maxSet ?: 20000 // 
@@ -55,7 +56,7 @@ class Slideable<X>(
         set(i) {
             maximum.increasePosition(i!!)
         }
-    val slackOptimisation: AbstractSlackOptimisation<X>
+    val slackOptimisation: AbstractSlackOptimisation
         get() = so.getSelf()
 
     override fun changedPosition(pos: Int) {
@@ -67,11 +68,11 @@ class Slideable<X>(
         }
     }
 
-    fun canAddMinimumForwardConstraint(to: Slideable<X>, dist: Int): Boolean {
+    fun canAddMinimumForwardConstraint(to: Slideable, dist: Int): Boolean {
         return minimum.canAddForwardConstraint(to.minimum, dist)
     }
 
-    fun addMinimumForwardConstraint(to: Slideable<X>, dist: Int) {
+    fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
         try {
             minimum.addForwardConstraint(to.minimum, dist)
         } catch (e: RuntimeException) {
@@ -79,7 +80,7 @@ class Slideable<X>(
         }
     }
 
-    fun addMinimumBackwardConstraint(to: Slideable<X>, dist: Int) {
+    fun addMinimumBackwardConstraint(to: Slideable, dist: Int) {
         try {
             minimum.addBackwardConstraint(to.minimum, dist)
             hasBackwardConstraints = true
@@ -88,7 +89,7 @@ class Slideable<X>(
         }
     }
 
-    fun addMaximumForwardConstraint(to: Slideable<X>, dist: Int) {
+    fun addMaximumForwardConstraint(to: Slideable, dist: Int) {
         try {
             maximum.addForwardConstraint(to.maximum, dist)
         } catch (e: RuntimeException) {
@@ -96,7 +97,7 @@ class Slideable<X>(
         }
     }
 
-    fun addMaximumBackwardConstraint(to: Slideable<X>, dist: Int) {
+    fun addMaximumBackwardConstraint(to: Slideable, dist: Int) {
         try {
             maximum.addBackwardConstraint(to.maximum, dist)
             hasBackwardConstraints = true
@@ -105,15 +106,15 @@ class Slideable<X>(
         }
     }
 
-    fun getForwardSlideables(increasing: Boolean): Set<Slideable<X>> {
-        val out: MutableSet<Slideable<X>> = HashSet()
+    fun getForwardSlideables(increasing: Boolean): Set<Slideable> {
+        val out: MutableSet<Slideable> = HashSet()
         if (increasing) {
             for (sd in minimum.forward.keys) {
-                out.add(sd.owner as Slideable<X>)
+                out.add(sd.owner as Slideable)
             }
         } else {
             for (sd in maximum.forward.keys) {
-                out.add(sd.owner as Slideable<X>)
+                out.add(sd.owner as Slideable)
             }
         }
         return out

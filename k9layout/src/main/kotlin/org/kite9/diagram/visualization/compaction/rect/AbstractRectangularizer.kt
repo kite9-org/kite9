@@ -164,8 +164,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
     }
 
     private fun getSlideableInDirection(vt: List<VertexTurn>, d: Direction, outer: Boolean): FaceSide {
-        val others: MutableSet<Slideable<Segment>> = HashSet()
-        var main: Slideable<Segment>? = null
+        val others: MutableSet<Slideable> = HashSet()
+        var main: Slideable? = null
         for (i in vt.indices) {
             val prev = vt[(i + vt.size - 1) % vt.size]
             val curr = vt[i]
@@ -190,8 +190,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         par: VertexTurn, link: VertexTurn, meets: VertexTurn, shape: TurnShape
     ) {
         // logRectangularizationContext(ext, par, link, meets);
-        val first: Slideable<Segment> = ext.endsWith
-        val to: Slideable<Segment> = meets.slideable
+        val first: Slideable = ext.endsWith
+        val to: Slideable = meets.slideable
         performRectangularization(c, meets, link, par, ext, first, to, shape)
         cutRectangleCorner(stack, par, link)
     }
@@ -227,15 +227,15 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         link: VertexTurn, par: VertexTurn, ext: VertexTurn, shape: TurnShape
     ) {
         // logRectangularizationContext(meets, link, par, ext);
-        val first: Slideable<Segment> = ext.startsWith
-        val to: Slideable<Segment> = meets.slideable
+        val first: Slideable = ext.startsWith
+        val to: Slideable = meets.slideable
         performRectangularization(c, meets, link, par, ext, first, to, shape)
         cutRectangleCorner(stack, link, par)
     }
 
     protected fun performRectangularization(
         c: Compaction, meets: VertexTurn, link: VertexTurn,
-        par: VertexTurn, extender: VertexTurn, from: Slideable<Segment>, to: Slideable<Segment>, shape: TurnShape
+        par: VertexTurn, extender: VertexTurn, from: Slideable, to: Slideable, shape: TurnShape
     ) {
         val newExtenderLength = extender.getLength(false) + link.getLength(false)
         if (extender.startsWith == from) {

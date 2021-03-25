@@ -19,10 +19,10 @@ import org.kite9.diagram.visualization.compaction.slideable.SegmentSlackOptimisa
 class VertexTurn(
     val number: Int,
     val compaction: Compaction,
-    val slideable: Slideable<Segment>,
+    val slideable: Slideable,
     val direction: Direction,
-    var startsWith: Slideable<Segment>,
-    var endsWith: Slideable<Segment>,
+    var startsWith: Slideable,
+    var endsWith: Slideable,
     val partOf: Rectangular?
 ) {
     enum class TurnPriority(val costFactor: Int) {
@@ -69,10 +69,10 @@ class VertexTurn(
 
 
     private fun recalculateLength(): Double {
-        val startUse: Slideable<Segment>? = checkMinimizeSlideable(
+        val startUse: Slideable? = checkMinimizeSlideable(
             startsWith, true
         )
-        val endUse: Slideable<Segment>? = checkMinimizeSlideable(
+        val endUse: Slideable? = checkMinimizeSlideable(
             endsWith, false
         )
         val increasing: Boolean = increasingDirection()
@@ -100,9 +100,9 @@ class VertexTurn(
      * length to the whole slideable in order that we can calculate a length based on the whole thing (?)
      */
     private fun checkMinimizeSlideable(
-        orig: Slideable<Segment>,
+        orig: Slideable,
         from: Boolean
-    ): Slideable<Segment>? {
+    ): Slideable? {
         if (calculateTurnPriority(orig) != TurnPriority.MINIMIZE_RECTANGULAR) {
             return orig
         }
@@ -143,14 +143,14 @@ class VertexTurn(
         return "[$number $turnPriority\n     s=$slideable\n  from=$startsWith\n    to=$endsWith\n     d=$direction\n]"
     }
 
-    fun resetEndsWith(s: Slideable<Segment>, tp: TurnPriority, minLength: Double) {
+    fun resetEndsWith(s: Slideable, tp: TurnPriority, minLength: Double) {
         endsWith = s
         end = null
         turnPriority = TurnPriority.values()[tp.ordinal.coerceAtLeast(turnPriority.ordinal)]
         length = 0.0.coerceAtLeast(minLength)
     }
 
-    fun resetStartsWith(s: Slideable<Segment>, tp: TurnPriority, minLength: Double) {
+    fun resetStartsWith(s: Slideable, tp: TurnPriority, minLength: Double) {
         startsWith = s
         start = null
         turnPriority = TurnPriority.values()[tp.ordinal.coerceAtLeast(turnPriority.ordinal)]
@@ -158,8 +158,8 @@ class VertexTurn(
     }
 
     fun ensureMinLength(l: Double) {
-        val early: Slideable<Segment> = if (increasingDirection()) startsWith else endsWith
-        val late: Slideable<Segment> = if (increasingDirection()) endsWith else startsWith
+        val early: Slideable = if (increasingDirection()) startsWith else endsWith
+        val late: Slideable = if (increasingDirection()) endsWith else startsWith
         early.slackOptimisation.ensureMinimumDistance(early, late, l.toInt())
         length = l
     }
@@ -181,7 +181,7 @@ class VertexTurn(
      * The order of deciding this is important, since a segment
      * can be shared by a label.
      */
-    private fun calculateTurnPriority(s: Slideable<Segment>): TurnPriority {
+    private fun calculateTurnPriority(s: Slideable): TurnPriority {
         if (isConnection(s)) {
             return TurnPriority.CONNECTION
         } else if (isMaximizeRectangular(s)) {
@@ -232,7 +232,7 @@ class VertexTurn(
         return { r: Rectangular -> ((r is SizedRectangular) && (r.getSizing(horiz) === DiagramElementSizing.MAXIMIZE)) || (r === partOf) }
     }
 
-    fun isMinimizeRectangular(s: Slideable<Segment>): Boolean {
+    fun isMinimizeRectangular(s: Slideable): Boolean {
         val rects: Int = s.underlying.underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
@@ -240,7 +240,7 @@ class VertexTurn(
         return rects > 0
     }
 
-    fun isMaximizeRectangular(s: Slideable<Segment>): Boolean {
+    fun isMaximizeRectangular(s: Slideable): Boolean {
         val rects: Int = s.underlying.underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
@@ -257,7 +257,7 @@ class VertexTurn(
         }
 
     companion object {
-        fun isConnection(s: Slideable<Segment>): Boolean {
+        fun isConnection(s: Slideable): Boolean {
             val connections: Int = s.underlying.underlyingInfo
                 .map { it.diagramElement }
                 .filterIsInstance<Connection>()

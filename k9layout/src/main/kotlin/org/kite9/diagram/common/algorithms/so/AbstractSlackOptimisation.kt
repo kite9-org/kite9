@@ -10,12 +10,12 @@ import org.kite9.diagram.logging.LogicException
  *
  * @author robmoffat
  */
-abstract class AbstractSlackOptimisation<X> : Logable {
+abstract class AbstractSlackOptimisation : Logable {
     val log = Kite9Log.instance(this)
 
     var pushCount = 0
 
-    protected val _allSlideables: MutableCollection<Slideable<X>> = LinkedHashSet()
+    protected val _allSlideables: MutableCollection<Slideable> = LinkedHashSet()
 
     abstract fun getIdentifier(underneath: Any?): String?
 
@@ -23,11 +23,11 @@ abstract class AbstractSlackOptimisation<X> : Logable {
         return _allSlideables.size
     }
 
-    fun getAllSlideables(): Collection<Slideable<X>> {
+    fun getAllSlideables(): Collection<Slideable> {
         return _allSlideables
     }
 
-    fun ensureMinimumDistance(left: Slideable<X>, right: Slideable<X>, minLength: Int) {
+    fun ensureMinimumDistance(left: Slideable, right: Slideable, minLength: Int) {
         if (left.slackOptimisation !== right.slackOptimisation) {
             throw LogicException("Mixing dimensions")
         }
@@ -42,7 +42,7 @@ abstract class AbstractSlackOptimisation<X> : Logable {
     }
 
     private fun debugOutput(minimums: Boolean) {
-        val alreadyDone: MutableSet<Slideable<X>> = HashSet()
+        val alreadyDone: MutableSet<Slideable> = HashSet()
         for (slideable in _allSlideables) {
             if (!alreadyDone.contains(slideable)) {
                 debugOutputSlideable(minimums, slideable, alreadyDone, 0)
@@ -52,8 +52,8 @@ abstract class AbstractSlackOptimisation<X> : Logable {
 
     private fun debugOutputSlideable(
         minimums: Boolean,
-        slideable: Slideable<X>,
-        alreadyDone: MutableSet<Slideable<X>>,
+        slideable: Slideable,
+        alreadyDone: MutableSet<Slideable>,
         indent: Int
     ) {
         log.send(indent, slideable.toString())
@@ -65,7 +65,7 @@ abstract class AbstractSlackOptimisation<X> : Logable {
         }
     }
 
-    fun ensureMaximumDistance(left: Slideable<X>, right: Slideable<X>, maxLength: Int) {
+    fun ensureMaximumDistance(left: Slideable, right: Slideable, maxLength: Int) {
         if (left.slackOptimisation !== right.slackOptimisation) {
             throw LogicException("Mixing dimensions")
         }
@@ -85,7 +85,7 @@ abstract class AbstractSlackOptimisation<X> : Logable {
     override val isLoggingEnabled: Boolean
         get() = false
 
-    fun getSelf(): AbstractSlackOptimisation<X> {
+    fun getSelf(): AbstractSlackOptimisation {
         return this
     }
 
