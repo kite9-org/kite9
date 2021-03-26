@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.hierarchy
 
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
 import org.kite9.diagram.visualization.compaction.Compaction

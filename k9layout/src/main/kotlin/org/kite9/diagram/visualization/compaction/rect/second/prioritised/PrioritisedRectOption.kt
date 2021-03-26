@@ -1,8 +1,9 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.rect.second.prioritised
 
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority
 import kotlin.math.max
 

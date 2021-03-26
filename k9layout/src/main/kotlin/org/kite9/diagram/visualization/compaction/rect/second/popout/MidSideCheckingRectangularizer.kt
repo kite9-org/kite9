@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.rect.second.popout
 
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.LogicException
@@ -10,7 +10,10 @@ import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction.rect.second.prioritised.RectOption
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority
+import org.kite9.diagram.visualization.compaction.rect.second.prioritised.PrioritizingRectangularizer
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace

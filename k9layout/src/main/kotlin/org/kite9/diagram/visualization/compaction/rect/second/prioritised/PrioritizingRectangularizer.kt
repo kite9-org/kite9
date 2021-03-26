@@ -1,10 +1,12 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.rect.second.prioritised
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Turn
 import org.kite9.diagram.visualization.compaction.Compaction
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn
+import org.kite9.diagram.visualization.compaction.rect.AbstractRectangularizer
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 
@@ -63,7 +65,7 @@ abstract class PrioritizingRectangularizer(cd: CompleteDisplayer?) : AbstractRec
         }
     }
 
-    fun performChange(
+    open fun performChange(
         c: Compaction,
         pq: PriorityQueue<RectOption>,
         onStack: MutableSet<VertexTurn>,

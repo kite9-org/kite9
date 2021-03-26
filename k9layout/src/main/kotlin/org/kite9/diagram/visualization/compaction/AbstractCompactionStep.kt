@@ -24,10 +24,6 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     override val isLoggingEnabled = true
 
-    fun getMinimumDistance(froms: ElementSlideable, tos: ElementSlideable, d: Direction): Double {
-        return froms.minimumDistanceTo(tos).toDouble()
-    }
-
     fun getMinimumDistance(first: ElementSlideable, second: ElementSlideable, along: ElementSlideable?, concave: Boolean): Double {
         return first.getMinimumDistance(second, along, concave, displayer)
     }

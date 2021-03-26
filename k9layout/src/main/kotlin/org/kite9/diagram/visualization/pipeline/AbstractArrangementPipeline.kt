@@ -13,9 +13,9 @@ import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCom
 import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep
 import org.kite9.diagram.visualization.compaction.position.GridCellPositionCompactionStep
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep
-import org.kite9.diagram.visualization.compaction.rect.HierarchicalCompactionStep
-import org.kite9.diagram.visualization.compaction.rect.InnerFaceWithEmbeddingRectangularizer
-import org.kite9.diagram.visualization.compaction.rect.PopOutRectangularizer
+import org.kite9.diagram.visualization.compaction.hierarchy.HierarchicalCompactionStep
+import org.kite9.diagram.visualization.compaction.rect.first.InnerFaceWithEmbeddingRectangularizer
+import org.kite9.diagram.visualization.compaction.rect.second.popout.PopOutRectangularizer
 import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep
 import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep

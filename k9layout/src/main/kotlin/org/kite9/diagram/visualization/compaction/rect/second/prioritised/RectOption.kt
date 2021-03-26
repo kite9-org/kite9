@@ -1,7 +1,8 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.rect.second.prioritised
 
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn
 
 open class RectOption(
     protected val i: Int,

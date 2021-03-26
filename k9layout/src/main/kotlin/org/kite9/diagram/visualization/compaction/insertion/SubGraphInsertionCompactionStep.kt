@@ -15,7 +15,6 @@ import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
-import javax.swing.text.Element
 import kotlin.math.min
 
 /**

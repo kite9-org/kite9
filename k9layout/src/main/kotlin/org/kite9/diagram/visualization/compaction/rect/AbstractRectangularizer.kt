@@ -2,13 +2,12 @@ package org.kite9.diagram.visualization.compaction.rect
 
 import org.kite9.diagram.common.Collections
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Turn
 import org.kite9.diagram.visualization.compaction.*
-import org.kite9.diagram.visualization.compaction.rect.PrioritisedRectOption.TurnShape
+import org.kite9.diagram.visualization.compaction.rect.second.prioritised.PrioritisedRectOption.TurnShape
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.DartFace.DartDirection

@@ -1,8 +1,10 @@
-package org.kite9.diagram.visualization.compaction.rect
+package org.kite9.diagram.visualization.compaction.rect.first
 
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
+import org.kite9.diagram.visualization.compaction.rect.VertexTurn
+import org.kite9.diagram.visualization.compaction.rect.AbstractRectangularizer
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 
