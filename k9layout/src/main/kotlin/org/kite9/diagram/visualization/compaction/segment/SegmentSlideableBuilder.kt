@@ -1,26 +1,15 @@
 package org.kite9.diagram.visualization.compaction.segment
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.common.algorithms.so.AlignStyle
-import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.common.elements.vertex.FanVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.AlignedRectangular
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
-import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.model.style.HorizontalAlignment
-import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.PluggableCompactor
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
-import javax.swing.text.Segment
 
 /**
  * This looks at the orthogonal representation and works out from the available Darts what
