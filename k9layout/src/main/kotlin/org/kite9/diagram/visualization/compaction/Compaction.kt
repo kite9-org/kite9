@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.compaction
 
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
@@ -14,10 +14,10 @@ interface Compaction {
     fun getVerticalSegmentSlackOptimisation(): SegmentSlackOptimisation
     fun getSlackOptimisation(horizontal: Boolean): SegmentSlackOptimisation
     fun getOrthogonalization(): Orthogonalization
-    fun getVerticalSegments(): List<Segment>
-    fun getHorizontalSegments(): List<Segment>
-    fun getHorizontalVertexSegmentMap(): Map<Vertex, Segment>
-    fun getVerticalVertexSegmentMap(): Map<Vertex, Segment>
+    fun getVerticalSegments(): List<ElementSlideable>
+    fun getHorizontalSegments(): List<ElementSlideable>
+    fun getHorizontalVertexSegmentMap(): Map<Vertex, ElementSlideable>
+    fun getVerticalVertexSegmentMap(): Map<Vertex, ElementSlideable>
 
     /**
      * For an internal face, returns the empty rectangle in the centre of the space that can
@@ -28,7 +28,7 @@ interface Compaction {
     fun getFaceSpace(df: DartFace): Rectangle<FaceSide>?
     fun createFaceSpace(df: DartFace, r: Rectangle<FaceSide>)
     fun setFaceSpaceToDone(df: DartFace)
-    fun getSegmentForDart(d: Dart): Segment
+    fun getSegmentForDart(d: Dart): ElementSlideable
     fun getTopEmbedding(): Embedding
 
     companion object {

@@ -15,7 +15,7 @@ import org.kite9.diagram.visualization.compaction.Side
  *
  * @author robmoffat
  */
-class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram) : AbstractSlackOptimisation(), Logable {
+class SegmentSlackOptimisation(val theDiagram: Diagram) : AbstractSlackOptimisation(), Logable {
 
     private val vertexToSlidableMap: MutableMap<Vertex, SegmentSlideable> = HashMap()
     private val rectangularElementToSegmentSlideableMap: MutableMap<DiagramElement, OPair<SegmentSlideable?>> = HashMap()
@@ -25,11 +25,12 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
     }
 
     fun updateMaps(s: SegmentSlideable) {
-        val seg = s.underlying
-        for (v in seg.getVerticesInSegment()) {
+        log.send(if (log.go()) null else "Added slideable: $s")
+        _allSlideables.add(s)
+        for (v in s.verticesOnSlideable) {
             vertexToSlidableMap[v] = s
         }
-        for ((underlying, side) in seg.underlyingInfo) {
+        for ((underlying, side) in s.underlyingInfo) {
             if (isRectangular(underlying)) {
                 var parts = rectangularElementToSegmentSlideableMap[underlying]
                 if (parts == null) {
@@ -50,10 +51,6 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
         return vertexToSlidableMap
     }
 
-    override fun getIdentifier(underneath: Any?): String? {
-        return (underneath as Segment?)!!.identifier
-    }
-
     override fun initialiseSlackOptimisation() {
         val (a) = rectangularElementToSegmentSlideableMap[theDiagram]!!
         a!!.minimumPosition = 0
@@ -63,15 +60,4 @@ class SegmentSlackOptimisation(segments: List<Segment>, val theDiagram: Diagram)
         return rectangularElementToSegmentSlideableMap[de]!!
     }
 
-    init {
-        for (s in segments) {
-            val sli = SegmentSlideable(this, s)
-            s.slideable = sli
-            log.send(if (log.go()) null else "Created slideable: $sli")
-            _allSlideables.add(sli)
-            updateMaps(sli)
-        }
-        pushCount = 0
-        initialiseSlackOptimisation()
-    }
 }

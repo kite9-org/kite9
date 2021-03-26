@@ -67,7 +67,7 @@ class CenteringAligner : Aligner, Logable {
     fun findRelevantSlideables(des: Set<Rectangular>, sso: SegmentSlackOptimisation): List<SegmentSlideable> {
         return sso.getAllSlideables()
             .filterIsInstance<SegmentSlideable>()
-            .filter { it.underlying.hasUnderlying(des) }
+            .filter { it.hasUnderlying(des) }
             .sortedBy { it.minimumPosition }
     }
 

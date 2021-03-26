@@ -41,7 +41,7 @@ open class RectOption(
     }
 
     override fun toString(): String {
-        return "[RO: (" + initialScore + ") extender = " + extender.segment + "]"
+        return "[RO: (" + initialScore + ") extender = " + extender.slideable + "]"
     }
 
     fun getTurnDirection(vt: VertexTurn): Direction? {

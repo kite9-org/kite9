@@ -1,11 +1,14 @@
 package org.kite9.diagram.visualization.compaction
 
+import org.kite9.diagram.common.algorithms.so.SlackOptimisation
+import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.compaction.segment.Segment
-import org.kite9.diagram.visualization.compaction.segment.SegmentBuilder
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlideableBuilder
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
@@ -19,14 +22,14 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
  */
 class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor {
 
-    protected var sb = SegmentBuilder()
+    protected var sb = SegmentSlideableBuilder()
 
     override fun compactDiagram(o: Orthogonalization): Compaction {
-        val horizontal = buildSegmentList(o, HORIZONTAL)
-        val vertical = buildSegmentList(o, VERTICAL)
-        val dartToSegmentMap = calculateDartToSegmentMap(horizontal, vertical)
-        val horizontalSegmentMap = createVertexSegmentMap(horizontal)
-        val verticalSegmentMap = createVertexSegmentMap(vertical)
+        val horizontal = sb.buildSegmentList(o, HORIZONTAL)
+        val vertical = sb.buildSegmentList(o, VERTICAL)
+        val dartToSegmentMap = calculateDartToSegmentMap(horizontal.getAllSlideables(), vertical.getAllSlideables())
+        val horizontalSegmentMap = createVertexSegmentMap(horizontal.getAllSlideables())
+        val verticalSegmentMap = createVertexSegmentMap(vertical.getAllSlideables())
         val topEmbedding = generateEmbeddings(o)
         val compaction = instantiateCompaction(
             o,
@@ -93,34 +96,36 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
 
     protected fun instantiateCompaction(
         o: Orthogonalization,
-        horizontal: List<Segment>,
-        vertical: List<Segment>,
-        dartToSegmentMap: Map<Dart, Segment>,
-        horizontalSegmentMap: Map<Vertex, Segment>,
-        verticalSegmentMap: Map<Vertex, Segment>,
+        horizontal: SegmentSlackOptimisation,
+        vertical: SegmentSlackOptimisation,
+        dartToSegmentMap: Map<Dart, ElementSlideable>,
+        horizontalSegmentMap: Map<Vertex, ElementSlideable>,
+        verticalSegmentMap: Map<Vertex, ElementSlideable>,
         topEmbedding: Embedding
     ): Compaction {
         return CompactionImpl(
             o,
-            horizontal,
-            vertical,
             horizontalSegmentMap,
             verticalSegmentMap,
             dartToSegmentMap,
-            topEmbedding
+            topEmbedding,
+            horizontal,
+            vertical
         )
     }
 
-    private fun calculateDartToSegmentMap(h1: List<Segment>, v1: List<Segment>): Map<Dart, Segment> {
-        val out: MutableMap<Dart, Segment> = HashMap()
-        h1.forEach { s: Segment -> addSegmentsToMap(out, s) }
-        v1.forEach { s: Segment -> addSegmentsToMap(out, s) }
+    private fun calculateDartToSegmentMap(h1: Collection<Slideable>, v1: Collection<Slideable>): Map<Dart, ElementSlideable> {
+        val out: MutableMap<Dart, ElementSlideable> = HashMap()
+        h1.forEach { addSegmentsToMap(out, it) }
+        v1.forEach { addSegmentsToMap(out, it) }
         return out
     }
 
-    private fun addSegmentsToMap(dartSegmentMap: MutableMap<Dart, Segment>, segment: Segment) {
-        for (d in segment.dartsInSegment) {
-            dartSegmentMap[d] = segment
+    private fun addSegmentsToMap(dartSegmentMap: MutableMap<Dart, ElementSlideable>, segment: Slideable) {
+        if (segment is SegmentSlideable) {
+            for (d in segment.dartsInSegment) {
+                dartSegmentMap[d] = segment
+            }
         }
     }
 
@@ -130,22 +135,18 @@ class PluggableCompactor(protected var steps: Array<CompactionStep>) : Compactor
         }
     }
 
-    protected fun createVertexSegmentMap(segs: List<Segment>): Map<Vertex, Segment> {
-        val vertexToSegmentMap: MutableMap<Vertex, Segment> = HashMap()
+    protected fun createVertexSegmentMap(segs: Collection<Slideable>): Map<Vertex, ElementSlideable> {
+        val vertexToSegmentMap: MutableMap<Vertex, ElementSlideable> = HashMap()
         for (segment in segs) {
-            for (v in segment.getVerticesInSegment()) {
-                vertexToSegmentMap[v] = segment
+            if (segment is ElementSlideable) {
+                for (v in segment.verticesOnSlideable) {
+                    vertexToSegmentMap[v] = segment
+                }
             }
         }
         return vertexToSegmentMap
     }
 
-    fun buildSegmentList(
-        o: Orthogonalization,
-        direction: Set<Direction>
-    ): List<Segment> {
-        return sb.buildSegmentList(o, direction, if (direction === HORIZONTAL) Dimension.H else Dimension.V)
-    }
 
     companion object {
         val VERTICAL = setOf<Direction>(Direction.UP, Direction.DOWN)

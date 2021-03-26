@@ -11,10 +11,11 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.*
-import org.kite9.diagram.visualization.compaction.segment.Segment
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
+import javax.swing.text.Element
 import kotlin.math.min
 
 /**
@@ -158,10 +159,10 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
             val to = d.getTo()
             val fs = map[from]!!
             val ts = map[to]!!
-            if (!out.contains(fs) && testSegment(direction, fs.underlying)) {
+            if (!out.contains(fs) && testSegment(direction, fs)) {
                 out.add(fs)
             }
-            if (!out.contains(ts) && testSegment(direction, ts.underlying)) {
+            if (!out.contains(ts) && testSegment(direction, ts)) {
                 out.add(ts)
             }
         }
@@ -174,8 +175,8 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
     /**
      * Tests that the segment has no darts in the direction given.
      */
-    protected fun testSegment(dir: Direction, possible: Segment): Boolean {
-        for (v in possible.getVerticesInSegment()) {
+    protected fun testSegment(dir: Direction, possible: ElementSlideable): Boolean {
+        for (v in possible.verticesOnSlideable) {
             for (e in v.getEdges()) {
                 if (e is Dart) {
                     if (e.getDrawDirectionFrom(v) === dir) {

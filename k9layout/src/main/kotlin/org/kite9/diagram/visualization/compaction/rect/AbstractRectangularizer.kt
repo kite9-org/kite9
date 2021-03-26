@@ -131,8 +131,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
             for (i in segments.indices) {
                 val segment = segments[i]
                 val d = directions[i]
-                if (i == 0 || segment.slideable != uniqueSegments[uniqueSegments.size - 1]) {
-                    uniqueSegments.add(segment.slideable!!)
+                if (i == 0 || segment != uniqueSegments[uniqueSegments.size - 1]) {
+                    uniqueSegments.add(segment)
                     uniqueDirections.add(d)
                 }
             }

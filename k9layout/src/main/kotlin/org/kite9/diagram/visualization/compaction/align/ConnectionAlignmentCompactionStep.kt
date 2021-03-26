@@ -5,7 +5,7 @@ import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.CompactionStep
 import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
-import org.kite9.diagram.visualization.compaction.segment.Segment
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 /**
  * Figures out how to align connections - usually trying to minimize length.
@@ -21,34 +21,32 @@ class ConnectionAlignmentCompactionStep : CompactionStep {
         }
     }
 
-    private fun alignConnections(horizontalSegments: List<Segment>) {
+    private fun alignConnections(horizontalSegments: List<ElementSlideable>) {
         horizontalSegments
-            .filter { s: Segment -> s.connections.isNotEmpty() }
-            .forEach { s: Segment -> alignSegment(s) }
+            .filter { s: ElementSlideable -> s.connections.isNotEmpty() }
+            .forEach { s: ElementSlideable -> alignSegment(s) }
     }
 
-    private fun alignSegment(s: Segment) {
-        val sl = s.slideable
-        if (s.alignStyle === AlignStyle.MAX) {
+    private fun alignSegment(sl: ElementSlideable) {
+        if (sl.alignStyle === AlignStyle.MAX) {
             val max = sl!!.maximumPosition
             sl.minimumPosition = max!!
-        } else if (s.alignStyle === AlignStyle.MIN) {
+        } else if (sl.alignStyle === AlignStyle.MIN) {
             val min = sl!!.minimumPosition
             sl.maximumPosition = min
         } else {
-            val balance = s.adjoiningSegmentBalance
+            val balance = sl.adjoiningSegmentBalance
             var pos = 0
-            val slideable = s.slideable!!
             pos = if (balance == 0) {
-                val slack = slideable.maximumPosition!! - slideable.minimumPosition
-                slideable.minimumPosition + slack / 2
+                val slack = sl.maximumPosition!! - sl.minimumPosition
+                sl.minimumPosition + slack / 2
             } else if (balance < 0) {
-                slideable.minimumPosition
+                sl.minimumPosition
             } else {
-                slideable.maximumPosition!!
+                sl.maximumPosition!!
             }
-            slideable.minimumPosition = pos
-            slideable.maximumPosition = pos
+            sl.minimumPosition = pos
+            sl.maximumPosition = pos
         }
     }
 }

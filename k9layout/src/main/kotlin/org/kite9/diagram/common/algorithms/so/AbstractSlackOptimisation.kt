@@ -17,8 +17,6 @@ abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
 
     protected val _allSlideables: MutableCollection<Slideable> = LinkedHashSet()
 
-    abstract fun getIdentifier(underneath: Any?): String?
-
     override fun getSize(): Int {
         return _allSlideables.size
     }

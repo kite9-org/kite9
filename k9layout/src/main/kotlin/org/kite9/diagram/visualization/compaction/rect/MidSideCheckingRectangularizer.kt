@@ -72,7 +72,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
     private fun shouldSetMidpoint(vt: VertexTurn, link: VertexTurn?): Boolean {
         val connecteds = getConnecteds(vt)
         if (connecteds.size == 1) {
-            if (link == null || link.segment.connections.size == 1) {
+            if (link == null || link.slideable.connections.size == 1) {
                 val leavingConnections = vt.leavingConnections
                 if (leavingConnections.size == 1) {
                     val theConnected = connecteds.iterator().next()
@@ -81,7 +81,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
                         // we should only do a mid-point if we're connecting to this element
                         return false
                     }
-                    if (link == null || link.segment.connections.containsAll(leavingConnections)) {
+                    if (link == null || link.slideable.connections.containsAll(leavingConnections)) {
                         return true
                     }
                 }
@@ -91,13 +91,13 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
     }
 
     private fun getConnecteds(vt: VertexTurn): Set<Connected> {
-        return vt.segment.rectangulars
+        return vt.slideable.rectangulars
             .filterIsInstance<Connected>()
             .toSet()
     }
 
     private fun getRectangular(vt: VertexTurn): Rectangular? {
-        val r = vt.segment.rectangulars
+        val r = vt.slideable.rectangulars
         if (r.size == 2) {
             // label and container
             val i = r.iterator()
@@ -132,7 +132,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
 
     protected fun alignSingleConnections(c: Compaction, vt: VertexTurn) {
         if (shouldSetMidpoint(vt, null)) {
-            val underlying = vt.segment.underlyingInfo
+            val underlying = vt.slideable.underlyingInfo
                 .map { (diagramElement) -> diagramElement }
                 .filterIsInstance<Connected>()
                 .first()
@@ -146,7 +146,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
 
     companion object {
         protected fun onlyAligned(vt: VertexTurn): Boolean {
-            return vt.segment.underlyingInfo
+            return vt.slideable.underlyingInfo
                 .filter { it.diagramElement is Connected }
                 .filter { it.diagramElement is Container }
                 .filter { (diagramElement, side) ->
@@ -189,7 +189,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
         }
 
         private fun matchesPattern(underlying: Container, underlyingEnd: ElementSlideable, connectionEnd: ElementSlideable): Boolean {
-            return underlyingEnd.hasUnderlying(underlying) && connectionEnd.getConnections().size == 1
+            return underlyingEnd.hasUnderlying(underlying) && connectionEnd.connections.size == 1
         }
     }
 }

@@ -9,10 +9,8 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 
 /**
  * Stores the segments on the stack
@@ -65,7 +63,7 @@ class VertexTurn(
     }
 
     private fun commonVertex(a: ElementSlideable, b: ElementSlideable): Vertex? {
-        return a.getVerticesOnSlideable().first { b.getVerticesOnSlideable().contains(it) }
+        return a.verticesOnSlideable.first { b.verticesOnSlideable.contains(it) }
     }
 
 
@@ -109,11 +107,11 @@ class VertexTurn(
         }
         val maxTo: Boolean = increasingDirection()
         val needed: Side = if ((maxTo == from)) Side.START else Side.END
-        val current: Side? = orig.getSingleSide()
+        val current: Side? = orig.singleSide
         if ((current === needed) || (current === Side.BOTH)) {
             return orig
         }
-        val rects: Set<Rectangular> = orig.getRectangulars()
+        val rects: Set<Rectangular> = orig.rectangulars
         val rect: Rectangular = getTopmostRectangular(rects)
         return (orig.so as SegmentSlackOptimisation).getSlideablesFor(rect).otherOne(orig)
     }
@@ -136,9 +134,6 @@ class VertexTurn(
     fun increasingDirection(): Boolean {
         return (direction === Direction.DOWN) || (direction === Direction.RIGHT)
     }
-
-    val segment: Segment
-        get() = (slideable as SegmentSlideable).underlying
 
     override fun toString(): String {
         return "[$number $turnPriority\n     s=$slideable\n  from=$startsWith\n    to=$endsWith\n     d=$direction\n]"
@@ -213,7 +208,7 @@ class VertexTurn(
         private get() = (start is FanVertex) && (start as FanVertex).isInner
 
     fun isContainerLabelOnSide(d: Direction?): Boolean {
-        val labels: Int = slideable.getUnderlyingInfo()
+        val labels: Int = slideable.underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Label>()
             .filter { l: Label -> !l.isConnectionLabel() }
@@ -234,7 +229,7 @@ class VertexTurn(
     }
 
     fun isMinimizeRectangular(s: ElementSlideable): Boolean {
-        val rects: Int = s.getUnderlyingInfo()
+        val rects: Int = s.underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
             .filter(minimize(isHorizontal(direction))).count()
@@ -242,7 +237,7 @@ class VertexTurn(
     }
 
     fun isMaximizeRectangular(s: ElementSlideable): Boolean {
-        val rects: Int = s.getUnderlyingInfo()
+        val rects: Int = s.underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
             .filter(maximize(isHorizontal(direction))).count()
@@ -251,7 +246,7 @@ class VertexTurn(
 
     val leavingConnections: Set<Connection>
         get() {
-            val leavingConnections: Set<Connection> = segment.getAdjoiningSegments(compaction)
+            val leavingConnections: Set<Connection> = slideable.getAdjoiningSlideables(compaction)
                 .flatMap { it.connections }
                 .toSet()
             return leavingConnections
@@ -259,7 +254,7 @@ class VertexTurn(
 
     companion object {
         fun isConnection(s: ElementSlideable): Boolean {
-            val connections: Int = s.getUnderlyingInfo()
+            val connections: Int = s.underlyingInfo
                 .map { it.diagramElement }
                 .filterIsInstance<Connection>()
                 .count()

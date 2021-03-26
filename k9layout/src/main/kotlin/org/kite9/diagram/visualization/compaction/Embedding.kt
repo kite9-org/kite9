@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction
 
-import org.kite9.diagram.visualization.compaction.segment.Segment
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 
 /**
@@ -15,7 +15,7 @@ interface Embedding {
      */
     val dartFaces: List<DartFace>
     var innerEmbeddings: List<Embedding>
-    fun getVerticalSegments(c: Compaction): Collection<Segment>
-    fun getHorizontalSegments(c: Compaction): Collection<Segment>
+    fun getVerticalSegments(c: Compaction): Collection<ElementSlideable>
+    fun getHorizontalSegments(c: Compaction): Collection<ElementSlideable>
     val isTopEmbedding: Boolean
 }

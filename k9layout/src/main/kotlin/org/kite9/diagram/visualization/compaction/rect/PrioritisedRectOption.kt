@@ -128,8 +128,8 @@ class PrioritisedRectOption(
     }
 
     private fun inside(par: VertexTurn, meets: VertexTurn): Boolean {
-        val containers = meets.segment.rectangulars
-        val count = par.segment.rectangulars
+        val containers = meets.slideable.rectangulars
+        val count = par.slideable.rectangulars
             .filter { r: Rectangular ->
                 if (containers.contains(r.getParent())) {
                     return@filter true
@@ -200,7 +200,7 @@ class PrioritisedRectOption(
     override fun toString(): String {
         return """
             
-            [RO: $i(${initialScore}), meetsType = $type, extender = ${extender.segment}]
+            [RO: $i(${initialScore}), meetsType = $type, extender = ${extender.slideable}]
             """.trimIndent()
     }
 

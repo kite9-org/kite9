@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.compaction
 
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
@@ -17,28 +17,29 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
  */
 class CompactionImpl(
     private val orthogonalization: Orthogonalization,
-    private val horizontalSegments: List<Segment>,
-    private val verticalSegments: List<Segment>,
-    private val hMap: Map<Vertex, Segment>,
-    private val vMap: Map<Vertex, Segment>,
-    private val dartToSegmentMap: Map<Dart, Segment>,
-    topEmbedding: Embedding
+    private val hMap: Map<Vertex, ElementSlideable>,
+    private val vMap: Map<Vertex, ElementSlideable>,
+    private val dartToSegmentMap: Map<Dart, ElementSlideable>,
+    private val topEmbedding: Embedding,
+    private val horizontalSegmentSlackOptimisation: SegmentSlackOptimisation,
+    private val verticalSegmentSlackOptimisation: SegmentSlackOptimisation
 ) : Compaction {
+
     override fun getOrthogonalization(): Orthogonalization {
         return orthogonalization
     }
 
-    override fun getVerticalSegments(): List<Segment> {
-        return verticalSegments
+    override fun getVerticalSegments(): List<ElementSlideable> {
+        return verticalSegmentSlackOptimisation.getAllSlideables()
+            .filterIsInstance<ElementSlideable>()
     }
 
-    override fun getHorizontalSegments(): List<Segment> {
-        return horizontalSegments
+    override fun getHorizontalSegments(): List<ElementSlideable> {
+        return horizontalSegmentSlackOptimisation.getAllSlideables()
+            .filterIsInstance<ElementSlideable>()
     }
 
-    private val topEmbedding: Embedding
-    private val horizontalSegmentSlackOptimisation: SegmentSlackOptimisation
-    private val verticalSegmentSlackOptimisation: SegmentSlackOptimisation
+
     override fun getHorizontalSegmentSlackOptimisation(): SegmentSlackOptimisation {
         return horizontalSegmentSlackOptimisation
     }
@@ -47,7 +48,7 @@ class CompactionImpl(
         return verticalSegmentSlackOptimisation
     }
 
-    override fun getHorizontalVertexSegmentMap(): Map<Vertex, Segment> {
+    override fun getHorizontalVertexSegmentMap(): Map<Vertex, ElementSlideable> {
         return hMap
     }
 
@@ -55,7 +56,7 @@ class CompactionImpl(
         return faceSpaces[df]
     }
 
-    override fun getVerticalVertexSegmentMap(): Map<Vertex, Segment> {
+    override fun getVerticalVertexSegmentMap(): Map<Vertex, ElementSlideable> {
         return vMap
     }
 
@@ -71,7 +72,7 @@ class CompactionImpl(
 
 
 
-    override fun getSegmentForDart(r: Dart): Segment {
+    override fun getSegmentForDart(r: Dart): ElementSlideable {
         val out = dartToSegmentMap[r]
         return out!!
     }
@@ -86,12 +87,5 @@ class CompactionImpl(
 
     override fun getTopEmbedding(): Embedding {
         return topEmbedding
-    }
-
-    init {
-        val diagram = orthogonalization.getPlanarization().diagram
-        horizontalSegmentSlackOptimisation = SegmentSlackOptimisation(horizontalSegments, diagram)
-        verticalSegmentSlackOptimisation = SegmentSlackOptimisation(verticalSegments, diagram)
-        this.topEmbedding = topEmbedding
     }
 }

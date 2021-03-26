@@ -7,8 +7,8 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.segment.Segment
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 /**
  * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right wants to align left)
@@ -26,17 +26,16 @@ class LeftRightAligner : Aligner {
     private fun alignRectangular(de: Rectangular, sso: SegmentSlackOptimisation) {
         val oss = sso.getSlideablesFor(de)
         if (oss != null) {
-            alignSegment(oss.a!!.underlying)
-            alignSegment(oss.b!!.underlying)
+            alignSegment(oss.a!!)
+            alignSegment(oss.b!!)
         }
     }
 
-    private fun alignSegment(s: Segment) {
-        val sl = s.slideable
-        if (s.alignStyle === AlignStyle.MAX) {
+    private fun alignSegment(sl: ElementSlideable) {
+        if (sl.alignStyle === AlignStyle.MAX) {
             val max = sl!!.maximumPosition
             sl.minimumPosition = max!!
-        } else if (s.alignStyle === AlignStyle.MIN) {
+        } else if (sl.alignStyle === AlignStyle.MIN) {
             val min = sl!!.minimumPosition
             sl.maximumPosition = min
         }

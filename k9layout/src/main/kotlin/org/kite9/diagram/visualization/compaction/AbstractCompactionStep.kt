@@ -29,7 +29,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
     }
 
     fun getMinimumDistance(first: ElementSlideable, second: ElementSlideable, along: ElementSlideable?, concave: Boolean): Double {
-        return first.getMinimumDistancePossible(second, along, concave, displayer)
+        return first.getMinimumDistance(second, along, concave, displayer)
     }
 
     protected fun separate(s1: ElementSlideable?, fs: FaceSide) {
@@ -151,13 +151,13 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
         }
 
         return s.getAdjoiningSlideables(c)
-            .flatMap { it.getConnections() }
+            .flatMap { it.connections }
             .toSet()
     }
 
     private fun getConnectionSegment(s1: ElementSlideable, c: Compaction): ElementSlideable {
         return s1.getAdjoiningSlideables(c)
-            .filter { it.getConnections().isNotEmpty() }
+            .filter { it.connections.isNotEmpty() }
             .first()
     }
 }
