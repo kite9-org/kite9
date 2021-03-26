@@ -63,7 +63,7 @@ class VertexTurn(
     }
 
     private fun commonVertex(a: ElementSlideable, b: ElementSlideable): Vertex? {
-        return a.verticesOnSlideable.first { b.verticesOnSlideable.contains(it) }
+        return a.verticesOnSlideable.firstOrNull() { b.verticesOnSlideable.contains(it) }
     }
 
 

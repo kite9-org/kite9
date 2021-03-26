@@ -102,6 +102,8 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         return prev!!.direction !== next!!.direction
     }
 
+    var nextTurnNumber = 0;
+
     private fun buildStack(
         df: DartFace,
         theStack: MutableList<VertexTurn>,
@@ -143,7 +145,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
                 val current = uniqueSegments[i]
                 val next = uniqueSegments[(i + 1) % us]
                 val d = uniqueDirections[i]
-                val t = VertexTurn(i, c, current, d, last, next, df.partOf)
+                val t = VertexTurn(nextTurnNumber++, c, current, d, last, next, df.partOf)
                 theStack.add(t)
             }
             log.send("Stack for face $df", theStack)

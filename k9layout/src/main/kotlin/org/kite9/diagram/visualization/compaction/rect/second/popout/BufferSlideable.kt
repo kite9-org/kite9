@@ -21,7 +21,7 @@ class BufferSlideable(
 
 
     override fun toString(): String {
-        return "<$dimension B($bufferingIds)>"
+        return "<$dimension B($bufferingIds) $underlyingInfo ${minimum.position},${maximum.position}>"
     }
 
     val bufferingIds : String by lazy {
