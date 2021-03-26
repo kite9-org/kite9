@@ -144,8 +144,9 @@ open abstract class ElementSlideable(
                 .firstOrNull()
             if (toUse != null) {
                 decideRectangularAlignStyle(s, toUse)
+            } else {
+                null
             }
-            null
         } else {
             throw LogicException()
         }

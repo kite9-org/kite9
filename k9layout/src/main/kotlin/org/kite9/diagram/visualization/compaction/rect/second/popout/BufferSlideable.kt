@@ -1,13 +1,13 @@
 package org.kite9.diagram.visualization.compaction.rect.second.popout
 
+import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.visualization.compaction.UnderlyingInfo
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 class BufferSlideable(
-    so: SegmentSlackOptimisation,
+    so: SlackOptimisation,
     dimension: Dimension,
     val buffering: List<ElementSlideable>): ElementSlideable(so, dimension, so.getSize()) {
 

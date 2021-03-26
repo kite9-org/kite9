@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction.segment
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
+import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.logging.Logable
@@ -8,6 +9,7 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 /**
  * Augments SlackOptimisation to keep track of segments underlying the slideables.
@@ -24,25 +26,27 @@ class SegmentSlackOptimisation(val theDiagram: Diagram) : AbstractSlackOptimisat
         return underlying is Rectangular
     }
 
-    fun updateMaps(s: SegmentSlideable) {
+    override fun updateMaps(s: Slideable) {
         log.send(if (log.go()) null else "Added slideable: $s")
         _allSlideables.add(s)
-        for (v in s.verticesOnSlideable) {
-            vertexToSlidableMap[v] = s
-        }
-        for ((underlying, side) in s.underlyingInfo) {
-            if (isRectangular(underlying)) {
-                var parts = rectangularElementToSegmentSlideableMap[underlying]
-                if (parts == null) {
-                    parts = OPair<SegmentSlideable?>(null, null)
-                }
-                if (side === Side.START) {
-                    parts = OPair(s, parts.b)
-                } else if (side === Side.END) {
-                    parts = OPair(parts.a, s)
-                }
-                rectangularElementToSegmentSlideableMap[underlying] = parts
+        if (s is SegmentSlideable) {
+            for (v in s.verticesOnSlideable) {
+                vertexToSlidableMap[v] = s
+            }
+            for ((underlying, side) in s.underlyingInfo) {
+                if (isRectangular(underlying)) {
+                    var parts = rectangularElementToSegmentSlideableMap[underlying]
+                    if (parts == null) {
+                        parts = OPair<SegmentSlideable?>(null, null)
+                    }
+                    if (side === Side.START) {
+                        parts = OPair(s, parts.b)
+                    } else if (side === Side.END) {
+                        parts = OPair(parts.a, s)
+                    }
+                    rectangularElementToSegmentSlideableMap[underlying] = parts
 
+                }
             }
         }
     }

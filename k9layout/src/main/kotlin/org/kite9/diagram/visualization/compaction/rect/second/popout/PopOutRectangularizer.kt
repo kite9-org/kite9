@@ -1,6 +1,9 @@
 package org.kite9.diagram.visualization.compaction.rect.second.popout
 
+import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
+import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -25,22 +28,25 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
 //    ) {
 //        val pro = ro as PrioritisedRectOption
 //        if (pro.turnShape == PrioritisedRectOption.TurnShape.U) {
-//            val par = pro.par;
-//            val meets = pro.meets;
 //
-//            if ((par.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR) &&
-//                (meets.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR)) {
-//
-//    				// change the slideable on meets
-//    				Dimension dimension = meets.getSegment().getDimension();
-//    				Direction d = meets.getDirection();
-//    				boolean horiz = dimension == Dimension.H;
-//    				Slideable old = meets.getSlideable();
-//    				SegmentSlackOptimisation sso = (SegmentSlackOptimisation) old.getSlackOptimisation();
-//    				Slideable bufferSlideable = new Slideable(sso, null);
+//            if ((pro.par.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR) &&
+//                (pro.meets.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR)) {
+//    				// change the slideable on meets, extender to bufferSlideable
+//    				val dimension = pro.extender.slideable.dimension
+//                    val oldSlideables = listOf(pro.post.slideable, pro.extender.slideable)
+//    				val sso = pro.post.slideable.so
+//    				val bufferSlideable = BufferSlideable(sso, dimension, oldSlideables)
 //    				sso.updateMaps(bufferSlideable);
 //
-//    				Slideable left = (d ==Direction.UP) || ( )
+//                    // make sure everything is the right distance
+//                    when (pro.meets.direction) {
+//                        Direction.DOWN -> {
+//                            sso.ensureMinimumDistance(bufferSlideable, pro.post.slideable, 0)
+//                            sso.ensureMinimumDistance(bufferSlideable, pro.extender.slideable, 0)
+//                        }
+//                        Direction.UP, Direction.LEFT -> sso.ensureMaximumDistance()
+//                    }
+//    				val left = (d == Direction.UP) || ( )
 //
 //    				sso.ensureMinimumDistance(left, right, minLength);
 //
@@ -54,6 +60,6 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
 //
 //    		super.performChange(c, pq, onStack, ro, theStack);
 //    	}
-
-    protected fun SidesMinimized(pro: PrioritisedRectOption?) {}
+//
+//    protected fun SidesMinimized(pro: PrioritisedRectOption?) {}
 }
