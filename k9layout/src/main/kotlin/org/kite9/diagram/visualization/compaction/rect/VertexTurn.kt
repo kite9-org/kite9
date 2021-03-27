@@ -68,12 +68,12 @@ class VertexTurn(
 
 
     private fun recalculateLength(): Double {
-        val startUse: ElementSlideable? = checkMinimizeSlideable(
+        val startUse: ElementSlideable? = startsWith /*checkMinimizeSlideable(
             startsWith, true
-        )
-        val endUse: ElementSlideable? = checkMinimizeSlideable(
+        ) */
+        val endUse: ElementSlideable? = endsWith /*checkMinimizeSlideable(
             endsWith, false
-        )
+        )*/
         val increasing: Boolean = increasingDirection()
         val mainDistance: Double = if (increasing) startUse!!.minimumDistanceTo((endUse)!!)
             .toDouble() else endUse!!.minimumDistanceTo((startUse)!!).toDouble()
@@ -178,7 +178,7 @@ class VertexTurn(
      * can be shared by a label.
      */
     private fun calculateTurnPriority(s: ElementSlideable): TurnPriority {
-        if (isConnection(s)) {
+        if (s.connections.isNotEmpty()) {
             return TurnPriority.CONNECTION
         } else if (isMaximizeRectangular(s)) {
             return TurnPriority.MAXIMIZE_RECTANGULAR
@@ -229,17 +229,13 @@ class VertexTurn(
     }
 
     fun isMinimizeRectangular(s: ElementSlideable): Boolean {
-        val rects: Int = s.underlyingInfo
-            .map { it.diagramElement }
-            .filterIsInstance<Rectangular>()
+        val rects: Int = s.rectangulars
             .filter(minimize(isHorizontal(direction))).count()
         return rects > 0
     }
 
     fun isMaximizeRectangular(s: ElementSlideable): Boolean {
-        val rects: Int = s.underlyingInfo
-            .map { it.diagramElement }
-            .filterIsInstance<Rectangular>()
+        val rects: Int = s.rectangulars
             .filter(maximize(isHorizontal(direction))).count()
         return rects > 0
     }
@@ -251,15 +247,5 @@ class VertexTurn(
                 .toSet()
             return leavingConnections
         }
-
-    companion object {
-        fun isConnection(s: ElementSlideable): Boolean {
-            val connections: Int = s.underlyingInfo
-                .map { it.diagramElement }
-                .filterIsInstance<Connection>()
-                .count()
-            return connections > 0
-        }
-    }
 
 }

@@ -153,14 +153,14 @@ open abstract class ElementSlideable(
     }
 
 
-    val rectangulars: Set<Rectangular> by lazy {
+    open val rectangulars: Set<Rectangular> by lazy {
         underlyingInfo
             .map { it.diagramElement }
             .filterIsInstance<Rectangular>()
             .toSet()
     }
 
-    val connections: Set<Connection> by lazy {
+    open val connections: Set<Connection> by lazy {
         underlyingInfo
             .map { it.diagramElement }
             .filter { it is Connection }

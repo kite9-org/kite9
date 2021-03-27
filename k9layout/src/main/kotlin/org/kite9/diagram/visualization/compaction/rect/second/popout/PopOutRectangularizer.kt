@@ -50,6 +50,10 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                     sso.ensureMinimumDistance(pro.vt5.slideable, bufferSlideable, 0)
                 }
 
+                val dist = getMinimumDistance(pro.vt2.slideable, pro.vt4.slideable, pro.vt3.slideable, false )
+                fixSize(c, pro.vt3, dist, false, false)
+
+
                 // we need to remove all 5 vertex turns and replace with the buffer slideable
                 val endsWith = otherEndOf(pro.vt5, pro.vt4.slideable)
                 val startsWith = otherEndOf(pro.vt1, pro.vt2.slideable)
@@ -62,14 +66,26 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 onStack.remove(pro.vt5)
                 onStack.add(vtNew)
 
-                val point = theStack.indexOf(pro.vt3)
-                theStack[point] = vtNew
+                // fix ends of turns before / after
+                var firstIndex = theStack.indexOf(pro.vt1)
+                var prevIndex = if (firstIndex == 0) theStack.size - 1 else firstIndex - 1
+                val vt0 = theStack.get(prevIndex)
+                vt0.resetEndsWith(bufferSlideable, vt0.turnPriority, vt0.getLength(false))
+
+                var lastIndex = theStack.indexOf(pro.vt5)
+                var nextIndex = if (lastIndex == theStack.size - 1) 0 else lastIndex + 1
+                val vt6 = theStack.get(nextIndex)
+                vt6.resetStartsWith(bufferSlideable, vt6.turnPriority, vt6.getLength(false))
+
+                // tidy up the stack
                 theStack.remove(pro.vt1)
                 theStack.remove(pro.vt2)
                 theStack.remove(pro.vt4)
                 theStack.remove(pro.vt5)
+                val point = theStack.indexOf(pro.vt3)
+                theStack[point] = vtNew
 
-                afterChange(c, pq, theStack, point)
+                afterChange(c, pq, theStack, point-4)
                 return
             }
         }
