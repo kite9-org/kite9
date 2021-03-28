@@ -22,146 +22,147 @@
       >
   <g k9-elem="link-body" id="b" transform="translate(256.0,20.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=256.0, h=20.0); rect-size: BasicDimension2D(w=15.0, h=20.0); " rank="1"
       ><rect x="0" y="0" width="15" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="20"
-        />
-    <g k9-elem="text-label" class="link-body-label-text" transform="translate(4.0,12.1)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=261.0, h=23.0); rect-size: BasicDimension2D(w=5.0, h=14.0); "
+        /><g k9-elem="text-label" class="link-body-label-text" transform="translate(4.0,12.1)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=261.0, h=23.0); rect-size: BasicDimension2D(w=5.0, h=14.0); "
         ><text
-          >b</text
+          ><tspan x="0px" y="0.0px"
+            >    b
+</tspan
+          ></text
+        ></g
+      ></g
+      >
+  <g k9-elem="key" id="7" transform="translate(15.0,55.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=15.0, h=55.0); rect-size: BasicDimension2D(w=358.0, h=206.0); " rank="2"
+      ><g k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 3]; cell-xs: [, 12, 334]; cell-ys: [, 12, 28, 44, 188]; rectangular: connected; rect-pos: BasicDimension2D(w=21.0, h=58.0); rect-size: BasicDimension2D(w=346.0, h=200.0); " k9-elem="body" transform="translate(6.0,3.0)"
+        ><rect x="0" y="0" k9:width="$width" width="346" style="fill: url(#glyph-background); " k9:height="$height" class="key-back" height="200"
+          />
+    <g k9-elem="boldText" id="8" class="bold-text" transform="translate(11.1,21.7)" k9-info="position: [0,0,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: TOP; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=70.0); rect-size: BasicDimension2D(w=322.0, h=16.0); "
+          ><text
+            >Here is a very long item of bold text which takes up a lot of width</text
+          ></g
+          >
+    <g k9-elem="bodyText" id="9" class="body-text" transform="translate(11.5,37.6)" k9-info="position: [0,0,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: LEFT; vert: TOP; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=86.0); rect-size: BasicDimension2D(w=322.0, h=16.0); "
+          ><text
+            >shamu</text
+          ></g
+          >
+    <g k9-info="position: [0,0,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: VERTICAL; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=102.0); rect-size: BasicDimension2D(w=322.0, h=144.0); " k9-elem="text-lines" transform="translate(12.0,44.0)"
+          ><g k9-elem="text-label" id="10" class="generic-text" transform="translate(2.5,10.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=105.0); rect-size: BasicDimension2D(w=82.0, h=12.0); "
+            ><text
+              >Some information</text
+            ></g
+            ><g k9-elem="text-label" id="11" class="generic-text" transform="translate(2.0,25.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=120.0); rect-size: BasicDimension2D(w=41.0, h=12.0); "
+            ><text
+              >Partridge</text
+            ></g
+            ><g k9-elem="text-label" id="12" class="generic-text" transform="translate(2.4,40.2)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=135.0); rect-size: BasicDimension2D(w=70.0, h=12.0); "
+            ><text
+              >Gemstone Beta</text
+            ></g
+            ><g k9-elem="text-label" id="13" class="generic-text" transform="translate(2.4,55.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=150.0); rect-size: BasicDimension2D(w=141.0, h=36.0); "
+            ><text
+              ><tspan x="0px" y="0.0px"
+                >Multiline and very complicated
+</tspan
+                ><tspan x="0px" y="12.0px"
+                >description of the symbol
+</tspan
+                ><tspan x="0px" y="24.0px"
+                >itself</tspan
+              ></text
+            ></g
+            ><g k9-elem="text-label" id="14" class="generic-text" transform="translate(2.8,94.1)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=189.0); rect-size: BasicDimension2D(w=40.0, h=24.0); "
+            ><text
+              ><tspan x="0px" y="0.0px"
+                >Par
+</tspan
+                ><tspan x="0px" y="12.0px"
+                >two lines</tspan
+              ></text
+            ></g
+            ><g k9-elem="text-label" id="15" class="generic-text" transform="translate(2.5,121.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=216.0); rect-size: BasicDimension2D(w=82.0, h=12.0); "
+            ><text
+              >Some information</text
+            ></g
+            ><g k9-elem="text-label" id="16" class="generic-text" transform="translate(2.0,136.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=231.0); rect-size: BasicDimension2D(w=41.0, h=12.0); "
+            ><text
+              >Partridge</text
+            ></g
+          ></g
+          >
+  </g
         ></g
         >
-  </g
-        >
-  <g k9-elem="key" id="7" transform="translate(15.0,55.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; sizing: MINIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=15.0, h=55.0); rect-size: BasicDimension2D(w=358.0, h=206.0); " rank="2"
-        ><g k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 3]; cell-xs: [, 12, 334]; cell-ys: [, 12, 28, 44, 188]; rectangular: connected; rect-pos: BasicDimension2D(w=21.0, h=58.0); rect-size: BasicDimension2D(w=346.0, h=200.0); " k9-elem="body" transform="translate(6.0,3.0)"
-          ><rect x="0" y="0" k9:width="$width" width="346" style="fill: url(#glyph-background); " k9:height="$height" class="key-back" height="200"
-            />
-    <g k9-elem="boldText" id="8" class="bold-text" transform="translate(11.1,21.7)" k9-info="position: [0,0,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: TOP; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=70.0); rect-size: BasicDimension2D(w=322.0, h=16.0); "
-            ><text
-              >Here is a very long item of bold text which takes up a lot of width</text
-            ></g
-            >
-    <g k9-elem="bodyText" id="9" class="body-text" transform="translate(11.5,37.6)" k9-info="position: [0,0,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: LEFT; vert: TOP; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=86.0); rect-size: BasicDimension2D(w=322.0, h=16.0); "
-            ><text
-              >shamu</text
-            ></g
-            >
-    <g k9-info="position: [0,0,2,2]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: VERTICAL; grid-x: [0,1]; grid-y: [2,3]; rectangular: connected; rect-pos: BasicDimension2D(w=33.0, h=102.0); rect-size: BasicDimension2D(w=322.0, h=144.0); " k9-elem="text-lines" transform="translate(12.0,44.0)"
-            ><g k9-elem="text-label" id="10" class="generic-text" transform="translate(2.5,10.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=105.0); rect-size: BasicDimension2D(w=82.0, h=12.0); "
-              ><text
-                >Some information</text
-              ></g
-              ><g k9-elem="text-label" id="11" class="generic-text" transform="translate(2.0,25.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=120.0); rect-size: BasicDimension2D(w=41.0, h=12.0); "
-              ><text
-                >Partridge</text
-              ></g
-              ><g k9-elem="text-label" id="12" class="generic-text" transform="translate(2.4,40.2)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=135.0); rect-size: BasicDimension2D(w=70.0, h=12.0); "
-              ><text
-                >Gemstone Beta</text
-              ></g
-              ><g k9-elem="text-label" id="13" class="generic-text" transform="translate(2.4,55.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=150.0); rect-size: BasicDimension2D(w=141.0, h=36.0); "
-              ><text
-                ><tspan x="0px" y="0.0px"
-                  >Multiline and very complicated
-</tspan
-                  ><tspan x="0px" y="12.0px"
-                  >description of the symbol
-</tspan
-                  ><tspan x="0px" y="24.0px"
-                  >itself</tspan
-                ></text
-              ></g
-              ><g k9-elem="text-label" id="14" class="generic-text" transform="translate(2.8,94.1)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=189.0); rect-size: BasicDimension2D(w=40.0, h=24.0); "
-              ><text
-                ><tspan x="0px" y="0.0px"
-                  >Par
-</tspan
-                  ><tspan x="0px" y="12.0px"
-                  >two lines</tspan
-                ></text
-              ></g
-              ><g k9-elem="text-label" id="15" class="generic-text" transform="translate(2.5,121.7)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=216.0); rect-size: BasicDimension2D(w=82.0, h=12.0); "
-              ><text
-                >Some information</text
-              ></g
-              ><g k9-elem="text-label" id="16" class="generic-text" transform="translate(2.0,136.6)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=36.0, h=231.0); rect-size: BasicDimension2D(w=41.0, h=12.0); "
-              ><text
-                >Partridge</text
-              ></g
-            ></g
-            >
-  </g
-          ></g
-          >
   <g k9-elem="link" id="0-a-b" drawDirection="RIGHT" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['0-a','b']; direction: RIGHT; " rank="3"
-          >
+        >
     <g k9-elem="from" reference="0-a" transform="translate(143.0,30.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: 0-a-b; terminates-at: 0-a; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=143.0, h=30.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
-            />
+          />
     <g k9-elem="to" reference="b" transform="translate(256.0,30.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: 0-a-b; terminates-at: b; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=256.0, h=30.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
-            />
+          />
   <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: null; rect-size: null; " k9-elem="link-body"
-            ><path marker-start="url(#-start-marker)" d="M143 30 L256 30 " marker-end="url(#-end-marker)" class="link" k9:d="$path"
-            /></g
-          ></g
-          >
+          ><path marker-start="url(#-start-marker)" d="M143 30 L256 30 " marker-end="url(#-end-marker)" class="link" k9:d="$path"
+          /></g
+        ></g
+        >
 </g
-          ><defs
-          ><linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
-            ><stop offset="0%" stop-color="#FFF"
-              /><stop offset="100%" stop-color="#DDD"
-            /></linearGradient
-            ><filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
-            ><feGaussianBlur stdDeviation="1" in="SourceAlpha"
-              /><feOffset dx="2" dy="2"
-              /><feColorMatrix type="matrix" values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0"
-              /><feMerge
-              ><feMergeNode
-                /><feMergeNode in="SourceGraphic"
-              /></feMerge
-            ></filter
-            ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
-            ><circle r="2" cx="3" class="circle-marker" cy="3"
-            /></marker
-            ><marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-            ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-            /></marker
-            ><marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-            ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
-            /></marker
-            ><marker refX="1" refY="3" orient="auto" id="diamond-open-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-            ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-            /></marker
-            ><marker refX="7" refY="3" orient="auto" id="diamond-open-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
-            ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
-            /></marker
-            ><marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
-            /></marker
-            ><marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
-            /></marker
-            ><marker refX="6" refY="4" orient="auto" id="arrow-open-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><polygon class="open-arrow-marker" points="6,4 2,2 2,6"
-            /></marker
-            ><marker refX="2" refY="4" orient="auto" id="arrow-open-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><polygon class="open-arrow-marker" points="2,4 6,2 6,6"
-            /></marker
-            ><marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><polygon class="arrow-marker" points="2,4 6,2 6,6"
-            /></marker
-            ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
-            ><polygon class="arrow-marker" points="6,4 2,2 2,6"
-            /></marker
-            ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
-            ><circle r="2" cx="3" class="circle-marker" cy="3"
-            /></marker
-            ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
-            ><circle r="2" cx="3" class="circle-marker" cy="3"
-            /></marker
-            ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
-            /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"
-            /><marker id="gap-start-marker" preserveAspectRatio="xMidYMid meet"
-            /><marker id="gap-end-marker" preserveAspectRatio="xMidYMid meet"
-            /><marker id="none-start-marker" preserveAspectRatio="xMidYMid meet"
-            /><marker id="none-end-marker" preserveAspectRatio="xMidYMid meet"
-          /></defs
-        ></svg
-      >
+        ><defs
+        ><linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
+          ><stop offset="0%" stop-color="#FFF"
+            /><stop offset="100%" stop-color="#DDD"
+          /></linearGradient
+          ><filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
+          ><feGaussianBlur stdDeviation="1" in="SourceAlpha"
+            /><feOffset dx="2" dy="2"
+            /><feColorMatrix type="matrix" values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0"
+            /><feMerge
+            ><feMergeNode
+              /><feMergeNode in="SourceGraphic"
+            /></feMerge
+          ></filter
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="1" refY="3" orient="auto" id="diamond-open-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="7" refY="3" orient="auto" id="diamond-open-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="arrow-open-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="arrow-open-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="arrow-marker" points="2,4 6,2 6,6"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="gap-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="gap-end-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="none-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="none-end-marker" preserveAspectRatio="xMidYMid meet"
+        /></defs
+      ></svg
+    >

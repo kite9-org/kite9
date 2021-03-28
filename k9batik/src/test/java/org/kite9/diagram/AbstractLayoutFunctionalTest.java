@@ -151,6 +151,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		String theXML = xmlHelper.toXML(dxe);
 		//Kite9Log.setLogging(false);
 		transcodeSVG(theXML);
+		copyTo(getOutputFile(".svg"), "svg-output");
 		boolean addressed = isAddressed();
 		Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
 		AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;

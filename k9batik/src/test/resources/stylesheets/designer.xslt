@@ -148,7 +148,7 @@
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="container-label-back" />
             <g k9-elem="text-label" class="container-label-front">
-                <text><xsl:value-of select="text()" /></text>
+                <text><xsl:value-of select="string(.)" /></text>
             </g>
         </g>
     </xsl:template>
@@ -157,13 +157,9 @@
         <g k9-elem="link-body">
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="link-body-back" />
-            <xsl:apply-templates/>
-        </g>
-    </xsl:template>
-
-    <xsl:template match="link-body/label">
-        <g k9-elem="text-label" class="link-body-label-text">
-            <text><xsl:apply-templates select="text()" /></text>
+            <g k9-elem="text-label" class="link-body-label-text">
+                <text><xsl:value-of select="@label" /><xsl:value-of select="string(.)" /></text>
+            </g>
         </g>
     </xsl:template>
 
@@ -187,7 +183,7 @@
             <xsl:attribute name="k9-elem"><xsl:value-of select="name(.)" /></xsl:attribute>
             <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="connection-label-back" />
             <g k9-elem="text-label" class="connection-label-front">
-                <text><xsl:value-of select="text()" /></text>
+                <text><xsl:value-of select="string(.)" /></text>
             </g>
         </g>
     </xsl:template>

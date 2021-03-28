@@ -89,8 +89,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		renderDiagram(d);
 	}
 	
-	@NotAddressed("See technical_debt/getLength()")
-	@Test(expected=LayoutErrorException.class)
+	@Test
 	public void test_12_3_SymbolLabels() throws Exception {
 		KeyHelper kh = new KeyHelper();
 		
