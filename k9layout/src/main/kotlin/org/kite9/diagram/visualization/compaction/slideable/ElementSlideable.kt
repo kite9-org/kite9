@@ -256,6 +256,20 @@ open abstract class ElementSlideable(
             } else true
         }
 
+        fun startsAndEnds(uis: Set<UnderlyingInfo>) : Boolean {
+            if (uis.size < 2) {
+                return false;
+            }
+            var starts = false;
+            var ends = false;
+            uis.forEach {
+                starts = starts || it.side == Side.START
+                ends = ends || it.side == Side.END
+            }
+
+            return starts && ends
+        }
+
         fun getAlongDiagramElement(along: ElementSlideable?): DiagramElement? {
             return if (along == null) {
                 null
@@ -312,7 +326,7 @@ open abstract class ElementSlideable(
             throw LogicException()
         }
 
-        if (underlyingInfo.size > 1 && second.underlyingInfo.size > 1) {
+        if ((startsAndEnds(underlyingInfo)) && (startsAndEnds(second.underlyingInfo))) {
             // we're in a grid, look for common diagram elements
             val combined: MutableSet<Rectangular> = HashSet(rectangulars)
             val secondRs = second.rectangulars

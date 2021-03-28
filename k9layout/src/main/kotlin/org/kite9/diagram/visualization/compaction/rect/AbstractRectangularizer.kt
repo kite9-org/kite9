@@ -96,7 +96,7 @@ abstract class AbstractRectangularizer(cd: CompleteDisplayer) : AbstractCompacti
         return stacks
     }
 
-    private fun isConcave(theStack: List<VertexTurn?>, i: Int): Boolean {
+    protected fun isConcave(theStack: List<VertexTurn?>, i: Int): Boolean {
         val prev = getIthElementRotating(theStack, i - 1)
         val next = getIthElementRotating(theStack, i + 1)
         return prev!!.direction !== next!!.direction

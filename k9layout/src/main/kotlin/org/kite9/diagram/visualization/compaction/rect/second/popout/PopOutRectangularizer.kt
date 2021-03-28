@@ -73,13 +73,13 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 var prevIndex = if (firstIndex == 0) theStack.size - 1 else firstIndex - 1
                 val vt0 = theStack.get(prevIndex)
                 vt0.resetEndsWith(bufferSlideable, vt0.turnPriority, vt0.getLength(false))
-                fixSize(c, vt0, 0.0, false, true)
+                fixSize(c, vt0, 0.0, isConcave(theStack, prevIndex), true)
 
                 var lastIndex = theStack.indexOf(pro.vt5)
                 var nextIndex = if (lastIndex == theStack.size - 1) 0 else lastIndex + 1
                 val vt6 = theStack.get(nextIndex)
                 vt6.resetStartsWith(bufferSlideable, vt6.turnPriority, vt6.getLength(false))
-                fixSize(c, vt6, 0.0, false, true)
+                fixSize(c, vt6, 0.0, isConcave(theStack, nextIndex), true)
 
                 // tidy up the stack
                 theStack.remove(pro.vt1)
@@ -96,6 +96,7 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
 
         super.performChange(c, pq, onStack, ro, theStack);
     }
+
 
     private fun otherEndOf(vt: VertexTurn, end: Slideable) : ElementSlideable {
         if (vt.endsWith == end) {
