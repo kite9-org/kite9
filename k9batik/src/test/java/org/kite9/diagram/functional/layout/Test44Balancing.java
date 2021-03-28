@@ -60,6 +60,7 @@ public class Test44Balancing extends AbstractLayoutFunctionalTest {
 		Glyph longone = new Glyph("long", "", "very long glyph to keep everything separate", null, null);
 		
 		new Link(a,b1, null, null, null, null, Direction.RIGHT);
+		new Link(a,b1, null, null, null, null, Direction.RIGHT);
 		new Link(a,b2, null, null, null, null, Direction.RIGHT);
 		
 		new Link(b1,b2, null, null, null, null, Direction.RIGHT);
