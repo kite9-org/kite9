@@ -78,17 +78,17 @@ public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 		Glyph three = new Glyph("g3", null, "Three", null, null);
 		Glyph four = new Glyph("g4", null, "Four", null, null);
 
-		LinkBody a = new LinkBody("a1", "");
+		LinkBody a = new LinkBody("a1", "a1");
 		new TurnLink(a, one);
 		new TurnLink(a, two);
 		new TurnLink(a, three);
 
-		LinkBody b = new LinkBody("a2","");
+		LinkBody b = new LinkBody("a2","a2");
 		new TurnLink(b, two);
 		new TurnLink(b, three);
 		new TurnLink(b, four);
 
-		LinkBody c = new LinkBody("a3","");
+		LinkBody c = new LinkBody("a3","a3");
 		new TurnLink(c, one);
 		new TurnLink(c, three);
 		new TurnLink(c, four);

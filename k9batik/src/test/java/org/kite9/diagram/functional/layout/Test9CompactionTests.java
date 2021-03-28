@@ -164,7 +164,7 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 				if (de instanceof Connection) {
 					RouteRenderingInformation rri = ((Connection)de).getRenderingInformation();
 					Dimension2D size = rri.getSize();
-					if ((size.getW() > 50) || (size.getH() > 50)) {
+					if ((size.getW() > 80) || (size.getH() > 80)) {
 						throw new TestingEngine.LayoutErrorException("Link too long: "+de);
 					}
 				}

@@ -42,6 +42,7 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 sso.updateMaps(bufferSlideable);
 
                 // make sure everything is the right distance from the buffer
+
                 if (pro.vt2.increasingDirection()) {
                     sso.ensureMinimumDistance(bufferSlideable, pro.vt1.slideable, 0)
                     sso.ensureMinimumDistance(bufferSlideable, pro.vt5.slideable, 0)
@@ -58,6 +59,7 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 val endsWith = otherEndOf(pro.vt5, pro.vt4.slideable)
                 val startsWith = otherEndOf(pro.vt1, pro.vt2.slideable)
                 val vtNew = VertexTurn(nextTurnNumber++, c, bufferSlideable, pro.vt3.direction, startsWith, endsWith, null)
+                vtNew.ensureMinLength(0.0)
 
                 onStack.remove(pro.vt1)
                 onStack.remove(pro.vt2)
@@ -71,11 +73,13 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 var prevIndex = if (firstIndex == 0) theStack.size - 1 else firstIndex - 1
                 val vt0 = theStack.get(prevIndex)
                 vt0.resetEndsWith(bufferSlideable, vt0.turnPriority, vt0.getLength(false))
+                fixSize(c, vt0, 0.0, false, true)
 
                 var lastIndex = theStack.indexOf(pro.vt5)
                 var nextIndex = if (lastIndex == theStack.size - 1) 0 else lastIndex + 1
                 val vt6 = theStack.get(nextIndex)
                 vt6.resetStartsWith(bufferSlideable, vt6.turnPriority, vt6.getLength(false))
+                fixSize(c, vt6, 0.0, false, true)
 
                 // tidy up the stack
                 theStack.remove(pro.vt1)

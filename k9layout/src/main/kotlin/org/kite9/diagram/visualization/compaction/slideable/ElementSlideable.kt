@@ -306,15 +306,12 @@ open abstract class ElementSlideable(
             return max
         }
 
-
-
-
-
         val horizontalDartFirst = this.dimension === Dimension.V
         val horizontalDartSecond = second.dimension === Dimension.V
         if (horizontalDartFirst != horizontalDartSecond) {
             throw LogicException()
         }
+
         if (underlyingInfo.size > 1 && second.underlyingInfo.size > 1) {
             // we're in a grid, look for common diagram elements
             val combined: MutableSet<Rectangular> = HashSet(rectangulars)
