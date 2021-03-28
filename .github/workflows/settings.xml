@@ -28,6 +28,9 @@
           <url>https://maven.pkg.github.com/kite9-org/kite9-visualization</url>
         </repository>
       </repositories>
+      <properties> 
+        <kite9.loggging>off</kite9-logging>
+      </properties>
     </profile>
   </profiles>
 
