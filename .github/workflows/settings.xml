@@ -29,7 +29,7 @@
         </repository>
       </repositories>
       <properties> 
-        <kite9.loggging>off</kite9-logging>
+        <kite9.loggging>off</kite9.logging>
       </properties>
     </profile>
   </profiles>
