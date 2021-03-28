@@ -30,7 +30,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
             val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start";
-            val theText = n.textContent ?: ""
+            val theText = n.textContent?.trim() ?: ""
 
             if ((width > 0.0) || (height > 0.0) || (theText.contains("\n"))) {
                 val spans = splitIntoSpans(theText)

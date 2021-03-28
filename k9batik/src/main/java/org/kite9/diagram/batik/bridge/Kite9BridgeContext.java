@@ -37,6 +37,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathResult;
 
+import java.awt.*;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +53,9 @@ import java.util.Map;
  *
  */
 public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
-	
+
+	private Mark end;
+
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
 		super(userAgent, loader);
 		setTextAsGlyphs(textAsGlyphs);
@@ -315,7 +318,8 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 			TextPainter tp = tn.getTextPainter();
 			Mark start = tp.getMark(tn, idx, true);
 			Mark end = tp.getMark(tn, idx + s.length() - 1, false);
-			java.awt.geom.Rectangle2D sb = tp.getHighlightShape(start, end).getBounds();
+			Shape shape = tp.getHighlightShape(start, end);
+			java.awt.geom.Rectangle2D sb = shape.getBounds();
 			return sb.getWidth();
 		} else {
 			return 0;
