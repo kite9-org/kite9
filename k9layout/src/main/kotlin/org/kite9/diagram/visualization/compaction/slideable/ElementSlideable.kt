@@ -148,7 +148,7 @@ open abstract class ElementSlideable(
                 null
             }
         } else {
-            throw LogicException()
+            null
         }
     }
 
