@@ -6,6 +6,7 @@ import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.CornerVertices
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.Vertex
+import org.kite9.diagram.dom.model.LayoutAligns
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
@@ -15,6 +16,9 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
+import org.kite9.diagram.model.style.HorizontalAlignment
+import org.kite9.diagram.model.style.LabelPlacement
+import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter
@@ -33,6 +37,7 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         fan: Direction?
     ): IncidentDart {
         var l: Label? = null
+        var labelSide: Direction? = null
         if (e is ConnectionEdge) {
             val ce = e
             val fromEnd = planVertex.isPartOf(ce.getFromConnected())
@@ -52,15 +57,17 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
                 l = null
             }
         } else if (e is BorderEdge) {
-            val labelSide = rotateAntiClockwise(incident)
+            labelSide = rotateAntiClockwise(incident)
             val de = e.getElementForSide(labelSide)
             if (de is Container) {
                 l = findUnprocessedLabel(de, labelSide)
             }
         }
         return if (l != null) {
-            val labelSide = getLabelDirection(l, incident, fan)
-            convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l)
+            labelSide = labelSide ?: getLabelDirection(l, incident, fan)
+            var incidentDart = convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l)
+            handleLabelAlignment(l, incident)
+            return incidentDart
         } else {
             super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan)
         }
@@ -77,14 +84,26 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         return labelSide
     }
 
-    open protected fun getDefaultLabelDirection(incident: Direction, fan: Direction?): Direction {
-        return if (!Direction.isHorizontal(incident)) Direction.LEFT else Direction.UP
+    fun handleLabelAlignment(l: Label, incident: Direction) {
+        if (l is LayoutAligns) {
+            when (incident) {
+                Direction.UP -> l.setVerticalAlignment(VerticalAlignment.TOP)
+                Direction.DOWN -> l.setVerticalAlignment(VerticalAlignment.BOTTOM)
+                Direction.LEFT -> l.setHorizontalAlignment(HorizontalAlignment.LEFT)
+                Direction.RIGHT -> l.setHorizontalAlignment(HorizontalAlignment.RIGHT)
+            }
+        }
     }
 
-    private fun findUnprocessedLabel(c: Container, side: Direction?): Label? {
+
+    open protected fun getDefaultLabelDirection(incident: Direction, fan: Direction?): Direction {
+        return if (!Direction.isHorizontal(incident)) Direction.RIGHT else Direction.DOWN
+    }
+
+    private fun findUnprocessedLabel(c: Container, side: Direction): Label? {
         for (de in c.getContents()) {
             if (de is Label) {
-                if (de.getLabelPlacement()!!.containerLabelPlacement(side!!)) {
+                if (LabelPlacement.containerLabelPlacement(de.getLabelPlacement(), side, Direction.UP)) {
                     if (!em.hasOuterCornerVertices(de)) {
                         return de
                     }
@@ -94,12 +113,11 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         return null
     }
 
-    private fun hasLabels(con: Container, side: Direction?): Boolean {
+    private fun hasLabels(con: Container, side: Direction): Boolean {
         return con.getContents()
             .filterIsInstance<Label>()
-            .filter { c: DiagramElement ->
-                (c as Label).getLabelPlacement()!!
-                    .containerLabelPlacement(side!!)
+            .filter { c ->
+                LabelPlacement.containerLabelPlacement(c.getLabelPlacement(), side, Direction.UP)
             }
             .count() > 0
     }
@@ -179,13 +197,11 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         for (dart in darts) {
             for (de in dart.getDiagramElements().keys) {
                 if (de is Container) {
-                    val sideDirection = dart.getDiagramElements()[de]
+                    val sideDirection = dart.getDiagramElements()[de]!!
                     hasLabels = hasLabels || hasLabels(de, sideDirection)
 
                     // clockwise direction around container
-                    val d = rotateClockwise(
-                        sideDirection!!
-                    )
+                    val d = rotateClockwise(sideDirection)
                     val end1 = if (dart.getDrawDirection() === d) dart.getFrom() else dart.getTo()
 
                     // greedily collect all possible labels

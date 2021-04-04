@@ -9,16 +9,6 @@ enum class LabelPlacement {
 
     TOP, LEFT, BOTTOM, RIGHT, TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT;
 
-    fun containerLabelPlacement(d: Direction): Boolean {
-        return when (this) {
-            TOP, TOP_LEFT, TOP_RIGHT -> d === Direction.UP
-            LEFT -> d === Direction.LEFT
-            RIGHT -> d === Direction.RIGHT
-            BOTTOM_LEFT, BOTTOM_RIGHT, BOTTOM -> d === Direction.DOWN
-            else -> d === Direction.DOWN
-        }
-    }
-
     fun sameAxis(d: Direction?): Boolean {
         return when (this) {
             TOP, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, BOTTOM -> isHorizontal(
@@ -49,4 +39,17 @@ enum class LabelPlacement {
     val isVertical: Any?
         get() =// TODO Auto-generated method stub
             null
+
+    companion object {
+        fun containerLabelPlacement(lp: LabelPlacement?, d: Direction, default: Direction): Boolean {
+            return when (lp) {
+                TOP, TOP_LEFT, TOP_RIGHT -> d === Direction.UP
+                LEFT -> d === Direction.LEFT
+                RIGHT -> d === Direction.RIGHT
+                BOTTOM_LEFT, BOTTOM_RIGHT, BOTTOM -> d === Direction.DOWN
+                else -> d === default
+            }
+        }
+
+    }
 }

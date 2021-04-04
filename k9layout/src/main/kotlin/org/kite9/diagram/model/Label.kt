@@ -1,7 +1,9 @@
 package org.kite9.diagram.model
 
 import org.kite9.diagram.model.position.End
+import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.LabelPlacement
+import org.kite9.diagram.model.style.VerticalAlignment
 
 /**
  * DiagramElement to contain a label for an edge, container or diagram.
@@ -18,4 +20,5 @@ interface Label : Rectangular {
     fun getEnd(): End?
 
     fun getLabelPlacement(): LabelPlacement?
+
 }

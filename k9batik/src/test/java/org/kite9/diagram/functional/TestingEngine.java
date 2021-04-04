@@ -5,6 +5,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.common.elements.factory.TemporaryConnected;
@@ -598,7 +599,8 @@ public class TestingEngine extends TestingHelp {
 
 
 			private boolean isLabelOn(Direction d, DiagramElement inner) {
-				return (inner instanceof Label) && (((Label)inner).getLabelPlacement().containerLabelPlacement(d));
+				return (inner instanceof Label) &&
+						LabelPlacement.Companion.containerLabelPlacement(((Label)inner).getLabelPlacement(), d, Direction.UP);
 			}
 
 

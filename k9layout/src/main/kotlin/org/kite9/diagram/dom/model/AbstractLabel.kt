@@ -9,7 +9,9 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.style.ContentTransform
+import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.LabelPlacement
+import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
 
 abstract class AbstractLabel(
@@ -20,7 +22,7 @@ abstract class AbstractLabel(
     t: ContentTransform
 ) : AbstractCompactedRectangular(
     el, parent, ctx, rp, t
-), Label {
+), Label, LayoutAligns {
 
     private var end: End? = null
     private var labelPlacement: LabelPlacement? = null
@@ -74,5 +76,24 @@ abstract class AbstractLabel(
     override fun getLabelPlacement(): LabelPlacement? {
         ensureInitialized()
         return labelPlacement
+    }
+
+    private var overrideHorizontalAlignment: HorizontalAlignment? = null
+    private var overrideVerticalAlignment: VerticalAlignment? = null
+
+    override fun getVerticalAlignment(): VerticalAlignment {
+        return overrideVerticalAlignment ?: super.getVerticalAlignment()
+    }
+
+    override fun getHorizontalAlignment(): HorizontalAlignment {
+        return overrideHorizontalAlignment ?: super.getHorizontalAlignment()
+    }
+
+    override fun setVerticalAlignment(va: VerticalAlignment) {
+        overrideVerticalAlignment = va
+    }
+
+    override fun setHorizontalAlignment(ha: HorizontalAlignment) {
+        overrideHorizontalAlignment = ha
     }
 }

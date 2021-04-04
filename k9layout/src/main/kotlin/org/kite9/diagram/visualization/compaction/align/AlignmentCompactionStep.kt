@@ -41,7 +41,7 @@ class AlignmentCompactionStep(cd: CompleteDisplayer, vararg aligners: Aligner) :
         val filtered = contents
             .filterIsInstance<Rectangular>()
             .filter { a.willAlign(it, horizontal) }
-            .filterIsInstance<Connected>()
+       //     .filterIsInstance<Connected>()
             .toSet()
         if (filtered.isNotEmpty()) {
             a.alignFor(de, filtered, c, horizontal)

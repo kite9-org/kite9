@@ -31,8 +31,8 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
         val pro = ro as PrioritisedRectOption
         if (pro.turnShape == PrioritisedRectOption.TurnShape.U) {
 
-            if ((pro.vt2.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR) &&
-                (pro.vt4.turnPriority == VertexTurn.TurnPriority.MINIMIZE_RECTANGULAR)
+            if ((pro.vt2.turnPriority != VertexTurn.TurnPriority.MAXIMIZE_RECTANGULAR) ||
+                (pro.vt4.turnPriority != VertexTurn.TurnPriority.MAXIMIZE_RECTANGULAR)
             ) {
                 // change the slideable on meets, extender to bufferSlideable
                 val dimension = pro.vt5.slideable.dimension
@@ -80,6 +80,8 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 val vt6 = theStack.get(nextIndex)
                 vt6.resetStartsWith(bufferSlideable, vt6.turnPriority, vt6.getLength(false))
                 fixSize(c, vt6, 0.0, isConcave(theStack, nextIndex), true)
+
+                log.send("Created: \n$bufferSlideable")
 
                 // tidy up the stack
                 theStack.remove(pro.vt1)
