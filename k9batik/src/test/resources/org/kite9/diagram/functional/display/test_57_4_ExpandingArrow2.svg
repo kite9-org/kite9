@@ -47,9 +47,9 @@
         >
   </g
         >
-  <g k9-elem="link-body" id="a" style="	--kite9-sizing: maximize;" transform="translate(15.0,95.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=95.0); rect-size: BasicDimension2D(w=206.0, h=20.0); " rank="2"
-        ><rect x="0" y="0" width="206" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="20"
-          /><g k9-elem="text-label" class="link-body-label-text" transform="translate(100.4,9.5)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=116.0, h=98.0); rect-size: BasicDimension2D(w=5.0, h=14.0); "
+  <g k9-elem="link-body" id="a" style="	--kite9-sizing: maximize;" transform="translate(82.0,95.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=95.0); rect-size: BasicDimension2D(w=139.0, h=20.0); " rank="2"
+        ><rect x="0" y="0" width="139" k9:width="$width" k9:height="$height" rx="4" class="link-body-back" ry="4" height="20"
+          /><g k9-elem="text-label" class="link-body-label-text" transform="translate(66.4,9.5)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=149.0, h=98.0); rect-size: BasicDimension2D(w=5.0, h=14.0); "
           ><text
             >
     a

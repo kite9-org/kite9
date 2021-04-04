@@ -46,9 +46,9 @@
             >
     </g
             >
-    <g k9-elem="label" id="1" class="container-label" transform="translate(105.0,112.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=355.0, h=127.0); rect-size: BasicDimension2D(w=18.0, h=21.0); "
+    <g k9-elem="label" id="1" class="container-label" transform="translate(12.0,112.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 4.0 4.0 4.0 4.0; sizing: MINIMIZE MINIMIZE; horiz: LEFT; vert: CENTER; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=262.0, h=127.0); rect-size: BasicDimension2D(w=18.0, h=21.0); "
             ><rect x="0" y="0" width="18" k9:width="$width" k9:height="$height" rx="4" class="container-label-back" ry="4" height="21"
-              /><g k9-elem="text-label" class="container-label-front" transform="translate(3.4,12.0)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=359.0, h=131.0); rect-size: BasicDimension2D(w=10.0, h=13.0); "
+              /><g k9-elem="text-label" class="container-label-front" transform="translate(3.4,12.0)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=266.0, h=131.0); rect-size: BasicDimension2D(w=10.0, h=13.0); "
               ><text
                 >c2</text
               ></g
