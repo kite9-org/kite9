@@ -29,18 +29,18 @@ enum class LabelPlacement {
         }
     }
 
-    fun connectionLabelPlacementDirection(d: Direction): Direction {
+    fun connectionLabelPlacementDirection(d: Direction, default: Direction): Direction {
         return if (d === Direction.UP || d === Direction.DOWN) {
             when (this) {
                 LEFT, TOP_LEFT, BOTTOM_LEFT -> Direction.RIGHT
                 TOP, BOTTOM, BOTTOM_RIGHT, TOP_RIGHT, RIGHT -> Direction.LEFT
-                else -> Direction.LEFT
+                else -> default
             }
         } else {
             when (this) {
                 RIGHT, BOTTOM, LEFT, BOTTOM_LEFT -> Direction.UP
                 BOTTOM_RIGHT, TOP, TOP_LEFT, TOP_RIGHT -> Direction.DOWN
-                else -> Direction.UP
+                else -> default
             }
         }
     }

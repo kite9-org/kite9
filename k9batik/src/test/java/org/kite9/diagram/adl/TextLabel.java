@@ -13,7 +13,8 @@ public class TextLabel extends TextLine {
 		this(text, TESTING_DOCUMENT);
 	}
 	
-	public TextLabel(String text, LabelPlacement lp) {
+	public
+	TextLabel(String text, LabelPlacement lp) {
 		this(text, TESTING_DOCUMENT);
 		setAttribute("style", "--kite9-label-placement: "+lp.toString().toLowerCase().replace("_","-"));
 	}

@@ -33,7 +33,6 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         fan: Direction?
     ): IncidentDart {
         var l: Label? = null
-        var labelSide: Direction? = null
         if (e is ConnectionEdge) {
             val ce = e
             val fromEnd = planVertex.isPartOf(ce.getFromConnected())
@@ -53,19 +52,33 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
                 l = null
             }
         } else if (e is BorderEdge) {
-            labelSide = rotateAntiClockwise(incident)
+            val labelSide = rotateAntiClockwise(incident)
             val de = e.getElementForSide(labelSide)
             if (de is Container) {
                 l = findUnprocessedLabel(de, labelSide)
             }
         }
         return if (l != null) {
-            val lp = l.getLabelPlacement()
-            labelSide = labelSide ?: lp!!.connectionLabelPlacementDirection(incident)
+            val labelSide = getLabelDirection(l, incident, fan)
             convertWithLabel(e, o, incident, labelSide, externalVertex, sideVertex, l)
         } else {
             super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, fan)
         }
+    }
+
+    fun getLabelDirection(
+        l: Label,
+        incident: Direction,
+        fan: Direction?
+    ): Direction {
+        val lp = l.getLabelPlacement()
+        val defaultDirection = getDefaultLabelDirection(incident, fan)
+        val labelSide = lp?.connectionLabelPlacementDirection(incident, defaultDirection) ?: defaultDirection
+        return labelSide
+    }
+
+    open protected fun getDefaultLabelDirection(incident: Direction, fan: Direction?): Direction {
+        return if (!Direction.isHorizontal(incident)) Direction.LEFT else Direction.UP
     }
 
     private fun findUnprocessedLabel(c: Container, side: Direction?): Label? {
