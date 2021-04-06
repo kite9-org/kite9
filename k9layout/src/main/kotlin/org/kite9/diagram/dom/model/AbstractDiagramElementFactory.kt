@@ -119,7 +119,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified : Boolean 
                 ContentTransform.POSITION
             )
             DiagramElementType.NONE -> null
-            DiagramElementType.PORT -> null
+            DiagramElementType.PORT -> PortImpl(el, parent!!, context!!, getDirectPainter(el), ContentTransform.POSITION)
             DiagramElementType.UNSPECIFIED ->
                 if (failOnUnspecified) {
                     throw context!!.contextualException(

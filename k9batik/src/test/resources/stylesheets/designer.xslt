@@ -285,6 +285,13 @@
         </g>
     </xsl:template>
 
+    <xsl:template match="socket">
+        <g k9-elem="socket" >
+            <ellipse cx="0" cy="0" rx="3" ry="3" class="socket-circle" />
+        </g>
+        <xsl:apply-templates/>
+    </xsl:template>
+
     <xsl:template match="*">
         <g>
             <xsl:attribute name="k9-elem"><xsl:value-of select="name(.)" /></xsl:attribute>

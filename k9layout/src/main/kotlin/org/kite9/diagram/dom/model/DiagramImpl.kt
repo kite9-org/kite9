@@ -2,6 +2,7 @@ package org.kite9.diagram.dom.model
 
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Diagram
@@ -28,7 +29,7 @@ class DiagramImpl(
         connections.add(c)
     }
 
-    override fun getConnectionsFor(c: ConnectedRectangular): Collection<Connection> {
+    override fun getConnectionsFor(c: Connected): Collection<Connection> {
         val out: MutableCollection<Connection> = ArrayList()
         for (co in connections) {
             if (co.getFrom() === c || co.getTo() === c) {

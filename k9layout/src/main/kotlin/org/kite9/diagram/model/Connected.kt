@@ -14,11 +14,22 @@ interface Connected : DiagramElement {
      */
     fun getLinks(): Collection<Connection>
 
+    private fun firstConnectionTo(c: Connected): Connection? {
+        for (link in getLinks()) {
+            if (link.meets(c)) {
+                return link
+            }
+        }
+        return null
+    }
+
     /**
      * Means that there exists a connection with this object at one end and c
      * at the other.
      */
-    fun isConnectedDirectlyTo(c: Connected): Boolean
+    fun isConnectedDirectlyTo(c: Connected): Boolean {
+        return firstConnectionTo(c) != null
+    }
 
     fun getConnectionsSeparationApproach(): ConnectionsSeparation
 
@@ -26,6 +37,7 @@ interface Connected : DiagramElement {
      * In the case of single connections on a side, returns how that connection
      * should meet the side.
      */
+    @Deprecated("Use ports")
     fun getConnectionAlignment(side: Direction): ConnectionAlignment
 
 }

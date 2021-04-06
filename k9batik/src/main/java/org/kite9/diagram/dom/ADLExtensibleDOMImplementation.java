@@ -12,6 +12,8 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.*;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
+import javax.swing.text.html.CSS;
+
 /**
  * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
  * handing for Kite9 CSS definitions.
@@ -118,6 +120,11 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSShorthandManager(new SizeShorthandManager(CSSConstants.TEXT_BOUNDS_WIDTH, CSSConstants.TEXT_BOUNDS_HEIGHT, CSSConstants.TEXT_BOUNDS));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_WIDTH, 0f, true));
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 0f, true));
+
+		// PORTS
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.PORT_SIDE, PortSide.class, PortSide.BOTTOM, false));
+		registerCustomCSSValueManager(new PortPlacementManager(CSSConstants.PORT_POSITION));
+
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

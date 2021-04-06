@@ -411,8 +411,9 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
-				if ((cc instanceof Label) || (cc instanceof Connected)) {
-					checkContentContainment((Rectangular) cc, d);
+				RenderingInformation ri = cc.getRenderingInformation();
+				if ((ri instanceof RectangleRenderingInformation)) {
+					checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
 				}
 				if (cc instanceof Container) {
 					testLayout((Container) cc);
@@ -421,17 +422,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 	
-	private static void checkContentContainment(Rectangular cc, Container d) {
-		
-		if (checkTemporary(cc)) {
-			return;
-		}
-		
-		if ((cc instanceof Label) && (cc.getParent() instanceof Container)) {
-			return; // not processing container labels just yet
-		}
-		
-		RectangleRenderingInformation inside =  cc.getRenderingInformation();
+	private static void checkContentContainment(DiagramElement cc, Container d, RectangleRenderingInformation inside) {
 		RectangleRenderingInformation outside = d.getRenderingInformation();
 		
 		Rectangle2D inR;

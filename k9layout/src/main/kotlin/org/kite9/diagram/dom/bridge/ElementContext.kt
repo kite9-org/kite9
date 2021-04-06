@@ -6,6 +6,7 @@ import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.ConnectionAlignment
+import org.kite9.diagram.model.style.PortPlacement
 import org.w3c.dom.Element
 import kotlin.reflect.KClass
 
@@ -18,6 +19,7 @@ interface ElementContext {
     fun getCssStyleStringProperty(prop: String, e: Element): String?
     fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
     fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange?
+    fun getCSSStylePlacementProperty(prop: String, e: Element): PortPlacement
     fun getConnectionAlignment(prop: String, e: Element): ConnectionAlignment
 
     fun addChild(parent: DiagramElement, out: DiagramElement)

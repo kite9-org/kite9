@@ -29,6 +29,7 @@ import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
 import org.kite9.diagram.model.style.Measurement;
+import org.kite9.diagram.model.style.PortPlacement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -186,6 +187,15 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	public double getCssStyleDoubleProperty(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
 		return (v instanceof FloatValue) ? v.getFloatValue() : 0.0;
+	}
+
+
+	@NotNull
+	@Override
+	public PortPlacement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
+		Value v = getCSSValue(prop, e);
+
+		return new PortPlacement(Measurement.PERCENTAGE, v.getFloatValue());
 	}
 
 	private Value getCSSValue(String prop, Element e) {
@@ -347,4 +357,5 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		float f = UnitProcessor.svgToUserSpace("1"+prop, "", UnitProcessor.HORIZONTAL_LENGTH, me);
 		return f;
 	}
+
 }

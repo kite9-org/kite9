@@ -10,7 +10,7 @@ import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
 /**
- * Used for creating a CSS property that reflects an enum in Java.
+ * Used for creating a CSS property that reflects an {@link org.kite9.diagram.common.range.IntegerRange} in Java.
  */
 public class IntegerRangeManager extends AbstractValueManager {
 	

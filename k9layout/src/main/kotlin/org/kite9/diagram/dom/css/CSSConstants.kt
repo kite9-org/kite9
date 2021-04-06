@@ -101,6 +101,8 @@ interface CSSConstants {
 
         const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
         const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
+        const val PORT_SIDE_MEASUREMENT = KITE9_CSS_PROPERTY_PREFIX + "port-side-measurement"
+
 
     }
 }

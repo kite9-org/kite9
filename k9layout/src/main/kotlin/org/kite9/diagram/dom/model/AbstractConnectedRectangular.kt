@@ -61,19 +61,6 @@ abstract class AbstractConnectedRectangular(
         return links!!
     }
 
-    private fun firstConnectionTo(c: Connected): Connection? {
-        for (link in getLinks()) {
-            if (link.meets(c)) {
-                return link
-            }
-        }
-        return null
-    }
-
-    override fun isConnectedDirectlyTo(c: Connected): Boolean {
-        return firstConnectionTo(c) != null
-    }
-
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
         return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
     }
