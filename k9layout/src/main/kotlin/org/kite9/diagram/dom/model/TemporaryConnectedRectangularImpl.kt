@@ -1,6 +1,6 @@
 package org.kite9.diagram.dom.model
 
-import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnected
+import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnectedRectangular
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.model.Container
@@ -18,9 +18,9 @@ import org.w3c.dom.Element
  *
  * @author robmoffat
  */
-class TemporaryConnectedImpl(parent: DiagramElement, id: String, val painter: Painter) :
+class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val painter: Painter) :
 
-    AbstractTemporaryConnected(parent.getID() + "-g-" + id, parent), Container, HasSVGRepresentation, SizedRectangular {
+    AbstractTemporaryConnectedRectangular(parent.getID() + "-g-" + id, parent), Container, HasSVGRepresentation, SizedRectangular {
 
     private var gcp: ContainerPosition? = null
     override fun toString(): String {

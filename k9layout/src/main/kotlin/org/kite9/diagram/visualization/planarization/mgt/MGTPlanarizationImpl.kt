@@ -6,10 +6,7 @@ import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Diagram
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting

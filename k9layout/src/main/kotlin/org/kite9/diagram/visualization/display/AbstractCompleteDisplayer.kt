@@ -104,7 +104,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
                 incorporateAlongMinimumLength(along, d, length, a, aSide, b, bSide)
             }
         } else {
-            if (a is Connected && b.meets(a)) {
+            if (a is ConnectedRectangular && b.meets(a)) {
                 // a connection arriving at a rectangular
                 incorporateAlongMinimumLength(along, d, 0.0, a, aSide, b, bSide)
             } else {
@@ -133,7 +133,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
             }
             val alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide)
             max(`in`, alongDist)
-        } else if (along is Connected) {
+        } else if (along is ConnectedRectangular) {
             val alongDist = getAlongMinimumLength(along, d, a, aSide, b, bSide)
             max(`in`, alongDist)
         } else {
@@ -142,8 +142,8 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     }
 
     private fun passingThrough(along: Connection, a: DiagramElement, b: DiagramElement): Boolean {
-        val touchesA = a is Connected && along.meets(a)
-        val touchesB = b is Connected && along.meets(b)
+        val touchesA = a is ConnectedRectangular && along.meets(a)
+        val touchesB = b is ConnectedRectangular && along.meets(b)
         return !touchesA && !touchesB
     }
 
@@ -161,7 +161,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     }
 
     private fun getAlongMinimumLength(
-        along: Connected,
+        along: ConnectedRectangular,
         d: Direction,
         a: DiagramElement,
         aSide: Direction,
@@ -223,7 +223,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     }
 
     protected fun isImmediateParent(a: DiagramElement, parent: DiagramElement): Boolean {
-        return (a as Rectangular).getContainer() === parent
+        return a.getContainer() === parent
     }
 
     protected fun isEventualParent(d: DiagramElement?, parent: DiagramElement): Boolean {
@@ -289,14 +289,14 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     /**
      * Distance from the edge of a connected element to the connection, minimum.  (Could be increased by terminators)
      */
-    protected abstract fun getLinkInset(element: Connected, d: Direction): Double
+    protected abstract fun getLinkInset(element: ConnectedRectangular, d: Direction): Double
 
     /**
      * This is the amount of space along the side of "along" that should be reserved between two
      * connections.   Should also consider the amount of room required for the terminators.
      */
     protected abstract fun getLinkGutter(
-        along: Connected,
+        along: ConnectedRectangular,
         a: Terminator?,
         aSide: Direction?,
         b: Terminator?,

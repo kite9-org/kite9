@@ -5,6 +5,7 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 
 /**

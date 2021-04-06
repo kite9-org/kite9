@@ -92,8 +92,8 @@ class ConnectionImpl(
     }
 
     protected fun initFromTo() {
-        from = ctx.getReferencedElement(fromId!!, theElement) as Connected?
-        to = ctx.getReferencedElement(toId!!, theElement) as Connected?
+        from = ctx.getReferencedElement(fromId!!, theElement) as ConnectedRectangular?
+        to = ctx.getReferencedElement(toId!!, theElement) as ConnectedRectangular?
         if (from == null) {
             throw ctx.contextualException("Couldn't resolve 'from' reference for " + getID(), theElement)
         }
@@ -119,8 +119,8 @@ class ConnectionImpl(
         return ctx.getReference(css, theElement)
     }
 
-    private var from: Connected? = null
-    private var to: Connected? = null
+    private var from: ConnectedRectangular? = null
+    private var to: ConnectedRectangular? = null
     private var drawDirection: Direction? = null
     private var fromDecoration: Terminator? = null
     private var toDecoration: Terminator? = null
@@ -273,5 +273,9 @@ class ConnectionImpl(
         return if (toDecoration != null && toDecoration!!.getArrivalSide() != null) {
             toDecoration!!.getArrivalSide()
         } else drawDirection
+    }
+
+    override fun getContainer() : Container? {
+        return diagram
     }
 }

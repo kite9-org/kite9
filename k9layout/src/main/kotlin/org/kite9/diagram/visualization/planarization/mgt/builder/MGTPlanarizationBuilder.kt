@@ -8,6 +8,7 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.Table
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization

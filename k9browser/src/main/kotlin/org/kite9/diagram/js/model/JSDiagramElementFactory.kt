@@ -1,10 +1,9 @@
 package org.kite9.diagram.js.model
 
-import org.kite9.diagram.common.elements.factory.TemporaryConnected
-import org.kite9.diagram.dom.bridge.ElementContext
+import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.model.AbstractDiagramElementFactory
-import org.kite9.diagram.dom.model.TemporaryConnectedImpl
+import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl
 import org.kite9.diagram.dom.painter.*
 import org.kite9.diagram.js.bridge.JSElementContext
 import org.kite9.diagram.js.painter.JSLeafPainter
@@ -35,8 +34,8 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
         return out
     }
 
-    override fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnected {
-        return TemporaryConnectedImpl(parent, idSuffix, SVGRectPainter("grid-temporary"))
+    override fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnectedRectangular {
+        return TemporaryConnectedRectangularImpl(parent, idSuffix, SVGRectPainter("grid-temporary"))
     }
 
     override fun getDirectPainter(el: Element): Painter {

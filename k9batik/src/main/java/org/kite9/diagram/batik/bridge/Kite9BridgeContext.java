@@ -18,7 +18,6 @@ import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
-import org.kite9.diagram.common.objects.OPair;
 import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.managers.EnumValue;
@@ -29,16 +28,15 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
+import org.kite9.diagram.model.style.Measurement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathResult;
 
 import java.awt.*;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -225,9 +223,9 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		Value v = getCSSValue(prop, e);
 
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue());
+			return new ConnectionAlignment(Measurement.PERCENTAGE, v.getFloatValue());
 		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new ConnectionAlignment(ConnectionAlignment.Measurement.PIXELS, v.getFloatValue());
+			return new ConnectionAlignment(Measurement.PIXELS, v.getFloatValue());
 		}
 
 		return ConnectionAlignment.Companion.getNONE();

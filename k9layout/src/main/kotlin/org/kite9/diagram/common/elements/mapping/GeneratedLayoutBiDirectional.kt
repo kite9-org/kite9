@@ -38,8 +38,9 @@ class GeneratedLayoutBiDirectional(private val f: Connected, private val t: Conn
         return null
     }
 
-    val container: Container?
-        get() = null
+    override fun getContainer(): Container? {
+        return null
+    }
 
     override fun getDepth(): Int {
         return 1

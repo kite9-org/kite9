@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.compaction.slideable
 
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
@@ -58,11 +58,11 @@ class MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractSizingCompactionS
         if (a.getDepth() != b.getDepth()) {
             return -a.getDepth().compareTo(b.getDepth())
         }
-        if (a !is Connected && b !is Connected) {
+        if (a !is ConnectedRectangular && b !is ConnectedRectangular) {
             return 0
-        } else if (a !is Connected) {
+        } else if (a !is ConnectedRectangular) {
             return -1
-        } else if (b !is Connected) {
+        } else if (b !is ConnectedRectangular) {
             return 1
         } else {
             // return elements with least number of connections on a side

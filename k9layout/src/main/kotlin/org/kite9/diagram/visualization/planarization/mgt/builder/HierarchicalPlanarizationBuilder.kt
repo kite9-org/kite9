@@ -11,6 +11,7 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -123,7 +124,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         inside: Container
     ): Boolean {
         val d = getDirectionForLayout(inside)
-        if (vUnd is Connected && prevUnd is Connected) {
+        if (vUnd is ConnectedRectangular && prevUnd is ConnectedRectangular) {
             val vOrd = getRelevantEdgeOrdering(vUnd, pln)
             val prevOrd = getRelevantEdgeOrdering(prevUnd, pln)
             if (vOrd == null || vOrd.size() == 0 || prevOrd == null || prevOrd.size() == 0) {
@@ -398,8 +399,8 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
                 getVertexFor(prev),
                 getVertexFor(current),
                 d,
-                (prev as Connected),
-                (current as Connected)
+                (prev as ConnectedRectangular),
+                (current as ConnectedRectangular)
             )
             val und = e.getOriginalUnderlying()
             val em = EdgeMapping(und, e)
@@ -418,7 +419,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
                 }
             }
         }
-        if (c is Connected) {
+        if (c is ConnectedRectangular) {
             return em.getPlanarizationVertex(c)
         }
         throw LogicException("Can't get a vertex for $c")

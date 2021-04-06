@@ -7,6 +7,7 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 

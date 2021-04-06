@@ -18,7 +18,7 @@ open class ConnectedContainerImpl(
     ctx: ElementContext,
     rp: Painter,
     t: ContentTransform
-) : AbstractConnected(
+) : AbstractConnectedRectangular(
     el, parent, ctx, rp, t
 ), Container {
 

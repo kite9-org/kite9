@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connected;
+import org.kite9.diagram.model.ConnectedRectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;

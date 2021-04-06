@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 

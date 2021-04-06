@@ -14,6 +14,6 @@ interface DiagramElementFactory<X> {
 
     fun createDiagramElement(x: X, parent: DiagramElement?): DiagramElement?
 
-    fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnected
+    fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnectedRectangular
 
 }

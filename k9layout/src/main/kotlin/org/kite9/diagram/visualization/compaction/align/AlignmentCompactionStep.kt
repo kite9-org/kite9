@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction.align
 
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular

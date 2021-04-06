@@ -18,6 +18,6 @@ class ConnectedLeafImpl(
     ctx: ElementContext,
     lo: LeafPainter,
     t: ContentTransform
-) : AbstractConnected(
+) : AbstractConnectedRectangular(
     el, parent, ctx, lo, t
 ), Leaf

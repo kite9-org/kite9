@@ -7,7 +7,7 @@ import org.kite9.diagram.common.algorithms.fg.Node
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex
+import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.model.Connection
@@ -135,7 +135,7 @@ open class BalancedFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : 
         }
 
         // this is used for arrows - try and make heads and tails appear opposite sides
-        if (v is ConnectedVertex && v.isSeparatingConnections()) {
+        if (v is ConnectedRectangularVertex && v.isSeparatingConnections()) {
             if (listOfEdges.size <= 2) {
                 // place edges on opposite sides
                 return BalanceChoice.OPPOSITE_SIDE_PREFERRED

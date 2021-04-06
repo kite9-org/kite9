@@ -16,6 +16,7 @@ import org.kite9.diagram.common.elements.vertex.NoElementVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -62,7 +63,7 @@ abstract class AbstractBiDiEdgeRouteFinder(
         return if (ok) {
             if (pathDirection != null) {
                 // check that the two edges intersect
-                val c = a.getOriginalUnderlying() as BiDirectional<Connected>
+                val c = a.getOriginalUnderlying() as BiDirectional<ConnectedRectangular>
                 val from = routeHandler.getPlacedPosition(c.getFrom())
                 val to = routeHandler.getPlacedPosition(c.getTo())
                 val area = routeHandler.increaseBounds(from!!, to!!)

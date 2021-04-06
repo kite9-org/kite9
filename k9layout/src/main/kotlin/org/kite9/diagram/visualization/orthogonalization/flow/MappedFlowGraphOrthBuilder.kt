@@ -4,7 +4,7 @@ import org.kite9.diagram.common.algorithms.fg.Node
 import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex
+import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
@@ -99,7 +99,7 @@ class MappedFlowGraphOrthBuilder(
             val dfContainer = if (container != null) doneFaces[container] else null
             if (!doneFaces.containsKey(f)) {
                 // single-vertex face
-                val corner = f.getCorner(0) as ConnectedVertex
+                val corner = f.getCorner(0) as ConnectedRectangularVertex
                 val innerFaceDarts = va.returnAllDarts(corner, o)
                 val topLeft = innerFaceDarts[0].dart.getFrom()
                 val df = va.convertToOuterFace(o, topLeft, corner.getOriginalUnderlying())

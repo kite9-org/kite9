@@ -10,10 +10,7 @@ import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Diagram
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.Planarization
@@ -21,7 +18,6 @@ import org.kite9.diagram.visualization.planarization.PlanarizationBuilder
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
@@ -80,7 +76,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
 
     fun countConnectedElements(de: DiagramElement): Int {
         var out: Int = 0
-        if (de is Connected) {
+        if (de is ConnectedRectangular) {
             out++
             if (de is Container) {
                 for (c: DiagramElement in (de as Container).getContents()) {
@@ -174,10 +170,10 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         val contents: List<DiagramElement> = c.getContents()
         for (i in contents.indices) {
             val ci: DiagramElement = contents.get(i)
-            if (ci is Connected) {
+            if (ci is ConnectedRectangular) {
                 for (j in 0 until i) {
                     val cj: DiagramElement = contents.get(j)
-                    if (cj is Connected) {
+                    if (cj is ConnectedRectangular) {
                         if (overlaps(ci, cj)) {
                             log.error("Overlap in positions of: $ci  $cj")
                             return false
@@ -283,7 +279,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val lg: AbstractLeafGroup = start as AbstractLeafGroup
             log.send("Processing Group: $lg")
             // g is a leaf group.  can we place it?
-            val l: Connected? = lg.contained
+            val l: ConnectedRectangular? = lg.contained
             val c: Container? = lg.container
 
             // sizing
@@ -301,7 +297,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
 
     private fun ensureContainerBoundsAreLargeEnough(ri: RoutingInfo, c: Container?, lg: AbstractLeafGroup) {
         var c: Container? = c
-        var l: Connected
+        var l: ConnectedRectangular
         while (c != null) {
             // make sure container bounds are big enough for the contents
             var cri: RoutingInfo? = routableReader.getPlacedPosition(c)
@@ -313,7 +309,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
                 log.send("Increased bounds of $c to $cri2 due to $lg")
             }
             routableReader.setPlacedPosition(c, cri2)
-            l = c as Connected
+            l = c as ConnectedRectangular
             c = l.getContainer()
         }
     }

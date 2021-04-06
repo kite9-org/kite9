@@ -4,7 +4,7 @@ import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex
+import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.DartJunctionVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
@@ -48,7 +48,7 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
      * This implementation handles ConnectedVertex implementations embedded in the planarization.
      */
     override fun convertVertex(o: Orthogonalization, v: Vertex, ti: TurnInformation): DartFace? {
-        if (v !is ConnectedVertex) throw LogicException()
+        if (v !is ConnectedRectangularVertex) throw LogicException()
         val dartDirections = getDartsInDirection(v, o, ti)
         val originalUnderlying = v.getOriginalUnderlying()
         val out = convertDiagramElementToInnerFace(originalUnderlying, o, dartDirections)
@@ -68,11 +68,11 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
     }
 
     override fun needsConversion(v: Vertex): Boolean {
-        return v is ConnectedVertex
+        return v is ConnectedRectangularVertex
     }
 
     override fun returnAllDarts(v: Vertex, o: Orthogonalization): List<DartDirection> {
-        if (v !is ConnectedVertex) throw LogicException()
+        if (v !is ConnectedRectangularVertex) throw LogicException()
         val c = v.getOriginalUnderlying()
         val faces = o.getDartFacesForRectangular(c)
         return if (faces.size == 1) {

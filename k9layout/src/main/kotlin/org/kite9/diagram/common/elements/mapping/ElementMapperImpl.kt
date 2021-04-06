@@ -3,7 +3,7 @@ package org.kite9.diagram.common.elements.mapping
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex
+import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
@@ -102,8 +102,8 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     override fun getPlanarizationVertex(c: DiagramElement): Vertex {
         var v = singleVertices[c]
         if (v == null) {
-            if (c is Connected) {
-                v = ConnectedVertex(c.getID(), c)
+            if (c is ConnectedRectangular) {
+                v = ConnectedRectangularVertex(c.getID(), c)
                 singleVertices[c] = v
             } else {
                 throw LogicException("Not sure how to create vertex for $c")
@@ -145,7 +145,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         }
 
         // is it embedded in a grid?  If yes, use corners
-        if (c is Connected) {
+        if (c is ConnectedRectangular) {
             val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
             return l == Layout.GRID
         }
@@ -171,7 +171,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             return hasConnections[c]!!
         }
         var has = false
-        if (c is Connected) {
+        if (c is ConnectedRectangular) {
             has = c.getLinks().size > 0
         }
         if (has == false && c is Container) {

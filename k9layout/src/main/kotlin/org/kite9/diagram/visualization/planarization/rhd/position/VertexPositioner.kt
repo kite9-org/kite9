@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.elements.mapping.CornerVertices
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 
 /**

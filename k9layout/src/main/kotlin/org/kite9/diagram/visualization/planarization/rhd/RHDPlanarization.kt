@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd
 
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.Planarization

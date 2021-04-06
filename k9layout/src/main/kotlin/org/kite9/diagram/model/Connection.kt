@@ -9,6 +9,7 @@ import org.kite9.diagram.model.position.RouteRenderingInformation
  * 'from' and 'to', as well as decorations to show how the links should look.
  */
 interface Connection : DiagramElement, BiDirectional<Connected> {
+
     /**
      * The shape of the end of the edge at the from end
      */

@@ -6,7 +6,7 @@ import org.kite9.diagram.common.algorithms.fg.Node
 import org.kite9.diagram.common.algorithms.fg.SimpleNode
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
-import org.kite9.diagram.common.elements.vertex.ConnectedVertex
+import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
@@ -139,7 +139,7 @@ abstract class ConstrainedVertexFlowOrthogonalizer(va: VertexArranger, clc: Edge
             log.send("Not Setting Turns between $before and $after as edges aren't straight")
             return null
         }
-        val vUnd = (v as ConnectedVertex).getOriginalUnderlying()
+        val vUnd = (v as ConnectedRectangularVertex).getOriginalUnderlying()
         val beforeUnd =
             (before as BiDirectionalPlanarizationEdge?)!!.getOriginalUnderlying() as BiDirectional<Connected>
         val afterUnd = (after as BiDirectionalPlanarizationEdge?)!!.getOriginalUnderlying() as BiDirectional<Connected>

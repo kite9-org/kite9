@@ -1,11 +1,12 @@
 package org.kite9.diagram.visualization.compaction.insertion
 
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
-import org.kite9.diagram.common.elements.factory.TemporaryConnected
+import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
@@ -122,7 +123,7 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
         for ((dart) in ef.dartsInFace) {
             for (de in dart.getDiagramElements().keys) {
                 if (de is Connected) {
-                    val c = (de as Rectangular).getContainer()
+                    val c = (de as Connected).getContainer()
                     if (c != null) {
                         val content: List<DiagramElement> = c.getContents()
                         // since the collection is ordered, position is important
@@ -130,7 +131,7 @@ class SubGraphInsertionCompactionStep(cd: CompleteDisplayer) : AbstractCompactio
                         if (index != -1) {
                             out = min(out, index)
                             outDir = getDirectionOfInsertion(c.getLayout())
-                        } else if (de is TemporaryConnected) {
+                        } else if (de is TemporaryConnectedRectangular) {
                             out = 1
                             outDir = Direction.DOWN // doesn't matter since there will only be one.
                         } else {

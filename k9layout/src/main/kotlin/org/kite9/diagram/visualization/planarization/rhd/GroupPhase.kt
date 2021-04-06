@@ -44,7 +44,7 @@ abstract class GroupPhase(
 
 
     val allGroups: MutableSet<LeafGroup> = LinkedHashSet(elements * 2)
-    private val pMap: MutableMap<Connected, LeafGroup> = LinkedHashMap(elements * 2)
+    private val pMap: MutableMap<ConnectedRectangular, LeafGroup> = LinkedHashMap(elements * 2)
     private val allLinks: MutableSet<Connection> = UnorderedSet(1000)
     protected val hashCodeGenerator = Random(elements.toLong())
 
@@ -55,9 +55,9 @@ abstract class GroupPhase(
      * @param pMap Map of Connected to LeafGroups (created)
      */
     private fun populateLeafGroups(
-        ord: Connected,
-        prev1: Connected?,
-        pMap: MutableMap<Connected, LeafGroup>
+        ord: ConnectedRectangular,
+        prev1: ConnectedRectangular?,
+        pMap: MutableMap<ConnectedRectangular, LeafGroup>
     ): LeafGroup? {
         if (pMap[ord] != null) {
             throw LogicException("Diagram Element $ord appears multiple times in the diagram definition")
@@ -85,7 +85,7 @@ abstract class GroupPhase(
                     for (x in grid[0].indices) {
                         val de = grid[y][x]
                         if (!gridGroups.containsKey(de)) {
-                            var gg = populateLeafGroups(de as Connected, null, pMap)
+                            var gg = populateLeafGroups(de as ConnectedRectangular, null, pMap)
                             if (gg == null) {
                                 gg = getConnectionEnd(de)
                             }
@@ -97,9 +97,9 @@ abstract class GroupPhase(
                 // link them up
                 for (y in grid.indices) {
                     for (x in grid[0].indices) {
-                        val prevy = (if (y > 0) grid[y - 1][x] else null) as Connected?
-                        val prevx = (if (x > 0) grid[y][x - 1] else null) as Connected?
-                        val c = grid[y][x] as Connected
+                        val prevy = (if (y > 0) grid[y - 1][x] else null) as ConnectedRectangular?
+                        val prevx = (if (x > 0) grid[y][x - 1] else null) as ConnectedRectangular?
+                        val c = grid[y][x] as ConnectedRectangular
                         if (c !== prevx && prevx != null) {
                             val tc = OrderingTemporaryBiDirectional(prevx, c, Direction.RIGHT, cnr!!)
                             val from = gridGroups[prevx]!!
@@ -117,9 +117,9 @@ abstract class GroupPhase(
                     }
                 }
             } else {
-                var prev: Connected? = null
+                var prev: ConnectedRectangular? = null
                 for (c in (ord as Container).getContents()) {
-                    if (c is Connected) {
+                    if (c is ConnectedRectangular) {
                         populateLeafGroups(c, prev, pMap)
                         prev = c
                     }
@@ -130,7 +130,7 @@ abstract class GroupPhase(
     }
 
     private fun setupLinks(o: DiagramElement) {
-        if (o is Connected) {
+        if (o is ConnectedRectangular) {
             for (c in o.getLinks()) {
                 if (!allLinks.contains(c)) {
                     allLinks.add(c)
@@ -164,7 +164,7 @@ abstract class GroupPhase(
         }
     }
 
-    private fun needsLeafGroup(ord: Connected): Boolean {
+    private fun needsLeafGroup(ord: ConnectedRectangular): Boolean {
         return if (ord is Diagram && !hasConnectedContents(ord as Diagram)) {
             // we need at least one group in the GroupPhase, so if the diagram is empty, return a
             // single leaf group.
@@ -174,7 +174,7 @@ abstract class GroupPhase(
 
     private fun hasConnectedContents(d: Diagram): Boolean {
         for (de in d.getContents()) {
-            if (de is Connected) {
+            if (de is ConnectedRectangular) {
                 return true
             }
         }
@@ -182,8 +182,8 @@ abstract class GroupPhase(
     }
 
     private fun addContainerOrderingInfo(
-        current: Connected,
-        prev: Connected?,
+        current: ConnectedRectangular,
+        prev: ConnectedRectangular?,
         cnr: Container?,
         gridDimension: Dimension?
     ) {
@@ -276,7 +276,7 @@ abstract class GroupPhase(
 
 
     override fun buildInitialGroups() {
-        populateLeafGroups(top as Connected, null, pMap)
+        populateLeafGroups(top as ConnectedRectangular, null, pMap)
         setupLinks(top)
         for (group in allGroups) {
             group.log(log)

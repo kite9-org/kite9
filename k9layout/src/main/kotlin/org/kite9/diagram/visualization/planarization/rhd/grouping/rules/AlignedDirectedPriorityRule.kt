@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.rules
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -275,8 +275,8 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
     private fun getParentContainers(ac: Set<Container?>, done: Set<Container?>): Set<Container?> {
         val out: MutableSet<Container?> = UnorderedSet(ac.size)
         for (c in ac) {
-            if (!done.contains(c) && c is Connected) {
-                out.add((c as Connected).getContainer())
+            if (!done.contains(c) && c is ConnectedRectangular) {
+                out.add((c as ConnectedRectangular).getContainer())
             }
         }
         return out

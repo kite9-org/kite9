@@ -1,6 +1,6 @@
 package org.kite9.diagram.visualization.compaction.position
 
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Layout
@@ -36,7 +36,7 @@ class GridCellPositionCompactionStep : CompactionStep {
             val xs: MutableSet<Double> = HashSet()
             val ys: MutableSet<Double> = HashSet()
             contents
-                .filter { c: DiagramElement? -> c is Connected }
+                .filter { c: DiagramElement? -> c is ConnectedRectangular }
                 .map { c: DiagramElement -> c.getRenderingInformation() }
                 .forEach { rri: RenderingInformation ->
                     val p = rri.position

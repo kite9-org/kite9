@@ -6,7 +6,7 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMin
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
@@ -38,7 +38,7 @@ class ContainerContentsArranger(em: ElementMapper) : MultiElementVertexArranger(
             }
         } else {
             for (de in c.getContents()) {
-                if (de is Connected) {
+                if (de is ConnectedRectangular) {
                     val df = convertDiagramElementToInnerFace(de, o)
                     val outerFace = convertToOuterFace(o, df.startVertex, de as Rectangular)
                     outerFace.setContainedBy(inner)

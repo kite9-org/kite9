@@ -6,7 +6,6 @@ import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.*
-import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import kotlin.math.floor
@@ -51,7 +50,7 @@ abstract class AbstractCompactionStep(protected val displayer: CompleteDisplayer
 
     protected fun alignSingleConnections(
         c: Compaction,
-        r: Connected,
+        r: ConnectedRectangular,
         horizontal: Boolean,
         withCheck: Boolean
     ): AlignmentResult? {

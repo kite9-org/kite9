@@ -65,7 +65,7 @@ public class TestingHelp {
 		Rowify lr = getLinkRowify();
 
 		getPositions(d, details, Container.class, cr);
-		getPositions(d, details, Connected.class, cr);
+		getPositions(d, details, ConnectedRectangular.class, cr);
 		getPositions(d, details, Diagram.class, cr);
 		getPositions(d, details, Label.class, cr);
 		getPositions(d, details, Leaf.class, cr);
@@ -159,7 +159,7 @@ public class TestingHelp {
 
 			public String[] rowify(Object o) {
 			    if (o instanceof DiagramElement ) {
-			    	int connections = (o instanceof Connected) ? ((Connected)o).getLinks().size() : 0;
+			    	int connections = (o instanceof ConnectedRectangular) ? ((ConnectedRectangular)o).getLinks().size() : 0;
 			    
 			    	String id = ((DiagramElement) o).getID();
 			    	RenderingInformation ri = ((DiagramElement)o).getRenderingInformation();

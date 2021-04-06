@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.compaction.rect.second.popout
 
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
@@ -94,9 +94,9 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
         return false
     }
 
-    private fun getConnecteds(vt: VertexTurn): Set<Connected> {
+    private fun getConnecteds(vt: VertexTurn): Set<ConnectedRectangular> {
         return vt.slideable.rectangulars
-            .filterIsInstance<Connected>()
+            .filterIsInstance<ConnectedRectangular>()
             .toSet()
     }
 
@@ -138,7 +138,7 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
         if (shouldSetMidpoint(vt, null)) {
             val underlying = vt.slideable.underlyingInfo
                 .map { (diagramElement) -> diagramElement }
-                .filterIsInstance<Connected>()
+                .filterIsInstance<ConnectedRectangular>()
                 .first()
             val out = alignSingleConnections(c, underlying, isHorizontal(vt.direction), false)
             if (out != null) {
@@ -151,10 +151,10 @@ abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : Prioriti
     companion object {
         protected fun onlyAligned(vt: VertexTurn): Boolean {
             return vt.slideable.underlyingInfo
-                .filter { it.diagramElement is Connected }
+                .filter { it.diagramElement is ConnectedRectangular }
                 .filter { it.diagramElement is Container }
                 .filter { (diagramElement, side) ->
-                    (diagramElement as Connected).getConnectionAlignment(
+                    (diagramElement as ConnectedRectangular).getConnectionAlignment(
                         getDirection(
                             side,
                             vt.direction

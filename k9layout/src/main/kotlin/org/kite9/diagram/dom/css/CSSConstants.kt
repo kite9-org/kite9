@@ -7,7 +7,7 @@ interface CSSConstants {
         const val RIGHT = "right"
         const val TOP = "top"
         const val BOTTOM = "bottom"
-        const val KITE9_CSS_PROPERTY_PREFIX = "--kite9-"
+        private const val KITE9_CSS_PROPERTY_PREFIX = "--kite9-"
         const val ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "type"
         const val ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "usage"
         const val CONTENT_TRANSFORM = KITE9_CSS_PROPERTY_PREFIX + "transform"
@@ -67,8 +67,8 @@ interface CSSConstants {
         const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
 
         // controls whether we try and align connections along the mid-point of the connected.
+        private const val CONNECTION_ALIGN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX + "connection-align-"
         const val CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "connection-align"
-        const val CONNECTION_ALIGN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX + "connection-align-"
         const val CONNECTION_ALIGN_BOTTOM_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + BOTTOM
         const val CONNECTION_ALIGN_TOP_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + TOP
         const val CONNECTION_ALIGN_RIGHT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + RIGHT
@@ -89,9 +89,6 @@ interface CSSConstants {
         const val RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "min-width"
         const val RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "min-height"
 
-        // Scripting
-        const val SCRIPT = KITE9_CSS_PROPERTY_PREFIX + "script"
-
         // for link dynamics
         const val LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX + "link-from-xpath"
         const val LINK_TO_XPATH = KITE9_CSS_PROPERTY_PREFIX + "link-to-xpath"
@@ -101,5 +98,9 @@ interface CSSConstants {
         const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-width"
         const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-height"
         const val TEXT_BOUNDS = KITE9_CSS_PROPERTY_PREFIX + "text-bounds"
+
+        const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
+        const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
+
     }
 }

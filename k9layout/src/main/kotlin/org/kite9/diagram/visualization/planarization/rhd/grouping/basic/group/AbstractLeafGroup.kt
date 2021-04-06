@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.position.Direction
@@ -11,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
  * Represents a single vertex (glyph, context) within the diagram
  */
 abstract class AbstractLeafGroup(
-    override val contained: Connected?,
+    override val contained: ConnectedRectangular?,
     override val container: Container?,
     groupNumber: Int,
     hc: Int,

@@ -132,17 +132,17 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
             setContradiction(c, true)
             return
         }
-        if ((from as Connected?)!!.getContainer()!!.getLayout() === Layout.GRID) {
+        if ((from as ConnectedRectangular?)!!.getContainer()!!.getLayout() === Layout.GRID) {
             setContradiction(c, true)
             return
         }
-        if ((to as Connected?)!!.getContainer()!!.getLayout() === Layout.GRID) {
+        if ((to as ConnectedRectangular?)!!.getContainer()!!.getLayout() === Layout.GRID) {
             setContradiction(c, true)
             return
         }
         while (true) {
-            val fromC = (from as Connected?)!!.getContainer()
-            val toC = (to as Connected?)!!.getContainer()
+            val fromC = (from as ConnectedRectangular?)!!.getContainer()
+            val toC = (to as ConnectedRectangular?)!!.getContainer()
             if (drawDirection != null) {
 
                 // directed connections breaking normal layouts
@@ -195,7 +195,7 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
         }
     }
 
-    private fun gridContradiction(c: Connection, drawDirection: Direction, fromC: Connected?, toC: Connected?) {
+    private fun gridContradiction(c: Connection, drawDirection: Direction, fromC: ConnectedRectangular?, toC: ConnectedRectangular?) {
 
         // do special grid checking
         when (drawDirection) {
@@ -267,8 +267,8 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
     protected fun checkOrdinalContradiction(
         l: Layout?,
         d: Direction,
-        from: Connected?,
-        to: Connected?,
+        from: ConnectedRectangular?,
+        to: ConnectedRectangular?,
         fromC: Container?,
         c: Connection?
     ) {

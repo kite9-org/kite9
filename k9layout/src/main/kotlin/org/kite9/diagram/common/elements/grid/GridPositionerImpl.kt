@@ -12,7 +12,7 @@ import org.kite9.diagram.common.range.IntegerRange.Companion.notSet
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.Table
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
@@ -223,7 +223,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun shoudAddToGrid(diagramElement: DiagramElement): Boolean {
-        return diagramElement is Connected
+        return diagramElement is ConnectedRectangular
     }
 
     /**

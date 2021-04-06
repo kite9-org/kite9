@@ -6,7 +6,7 @@ import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -117,7 +117,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
             csi = ContainerStateInfo(c2)
             super.containerStates[c2] = csi
             for (c in c2.getContents()) {
-                if (c is Container && c is Connected) {
+                if (c is Container && c is ConnectedRectangular) {
                     val csi2 = getStateFor(c as Container)
                     if (csi2 != null) {
                         csi.incompleteSubcontainers.add((c as Container))

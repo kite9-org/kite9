@@ -14,11 +14,6 @@ interface Rectangular : DiagramElement {
     override fun getRenderingInformation(): RectangleRenderingInformation
 
     /**
-     * Returns the container that this rectangular is in.
-     */
-    fun getContainer(): Container?
-
-    /**
      * Any other details about how this rectangular is to be positioned in the container.
      */
     fun getContainerPosition(): ContainerPosition?

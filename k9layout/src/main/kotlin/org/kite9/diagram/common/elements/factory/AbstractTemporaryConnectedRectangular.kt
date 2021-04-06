@@ -1,11 +1,8 @@
 package org.kite9.diagram.common.elements.factory
 
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 
-abstract class AbstractTemporaryConnected(private val _id: String, private val p: DiagramElement) : AbstractDiagramElement(p), TemporaryConnected {
+abstract class AbstractTemporaryConnectedRectangular(private val _id: String, private val p: DiagramElement) : AbstractDiagramElement(p), TemporaryConnectedRectangular {
 
     private val links: Collection<Connection> = ArrayList()
 

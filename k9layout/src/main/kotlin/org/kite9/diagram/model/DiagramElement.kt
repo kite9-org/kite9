@@ -19,4 +19,10 @@ interface DiagramElement : Comparable<DiagramElement>, Deterministic {
      * Returns the number of levels deep which this element is embedded in the diagram hierarchy, with zero the top level.
      */
     fun getDepth(): Int
+
+    /**
+     * Similar to parent element, but sometimes the parent doesn't do the containing.  e.g. with a terminator, the
+     * container will be the thing the terminator is in, whereas the parent will be the link.
+     */
+    fun getContainer() : Container?
 }

@@ -17,6 +17,7 @@ import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -236,7 +237,7 @@ class VertexPositionerImpl(
     override fun setCentralVertexPosition(c: DiagramElement, out: MutableList<Vertex>) {
         var bounds = rh.getPlacedPosition(c)
         log.send("Placed position: $c is $bounds")
-        val v = em.getPlanarizationVertex((c as Connected))
+        val v = em.getPlanarizationVertex((c as ConnectedRectangular))
         out.add(v)
         bounds = rh.narrow(bounds, borderTrimAreaX, borderTrimAreaY)
         v.routingInfo = bounds

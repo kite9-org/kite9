@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.grou
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse

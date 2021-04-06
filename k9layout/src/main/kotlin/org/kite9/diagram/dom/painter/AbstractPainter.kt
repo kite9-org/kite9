@@ -81,8 +81,8 @@ abstract class AbstractPainter : Painter {
                 debug.append("cell-ys: [" + commaIntList(rri.cellYPositions) + "]; ")
             }
         }
-        if (r is Connected) {
-            val c = r as Connected
+        if (r is ConnectedRectangular) {
+            val c = r as ConnectedRectangular
             val rri = c.getRenderingInformation()
             if (c.getParent() is Container) {
                 val parent = c.getParent() as Container?
@@ -148,7 +148,7 @@ abstract class AbstractPainter : Painter {
             "diagram"
         } else if (rect is Decal) {
             "decal"
-        } else if (rect is Connected) {
+        } else if (rect is ConnectedRectangular) {
             "connected"
         } else if (rect is Label) {
             "label"

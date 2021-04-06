@@ -4,7 +4,7 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -130,7 +130,7 @@ abstract class AxisHandlingGroupingStrategy(
                 private fun getFirstExpandingContainer(ms: BasicMergeState?, from: Container?): Container? {
                     return if (expandingContainers.contains(from)) {
                         from
-                    } else if (from is Connected) {
+                    } else if (from is ConnectedRectangular) {
                         getFirstExpandingContainer(ms, from.getContainer())
                     } else {
                         null
@@ -337,7 +337,7 @@ abstract class AxisHandlingGroupingStrategy(
         a.linkManager.notifyAxisChange()
     }
 
-    override fun createLeafGroup(ord: Connected?, cnr: Container?): LeafGroup {
+    override fun createLeafGroup(ord: ConnectedRectangular?, cnr: Container?): LeafGroup {
         if (ord is Container) {
             containerCount++
         }

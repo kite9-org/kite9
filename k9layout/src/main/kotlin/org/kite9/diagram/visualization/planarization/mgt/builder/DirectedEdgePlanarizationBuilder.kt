@@ -7,6 +7,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout

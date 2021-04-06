@@ -3,11 +3,11 @@ package org.kite9.diagram.batik.model;
 import kotlin.jvm.JvmClassMappingKt;
 import org.kite9.diagram.batik.painter.BatikLeafPainter;
 import org.kite9.diagram.batik.painter.BatikTextPainter;
-import org.kite9.diagram.common.elements.factory.TemporaryConnected;
+import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.model.AbstractDiagramElementFactory;
-import org.kite9.diagram.dom.model.TemporaryConnectedImpl;
+import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl;
 import org.kite9.diagram.dom.painter.*;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
@@ -61,8 +61,8 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 	}
 
 	@Override
-	public TemporaryConnected createTemporaryConnected(DiagramElement parent, String idSuffix) {
-		return new TemporaryConnectedImpl(parent, idSuffix, new SVGRectPainter("grid-temporary"));
+	public TemporaryConnectedRectangular createTemporaryConnected(DiagramElement parent, String idSuffix) {
+		return new TemporaryConnectedRectangularImpl(parent, idSuffix, new SVGRectPainter("grid-temporary"));
 	}
 
 	@Override

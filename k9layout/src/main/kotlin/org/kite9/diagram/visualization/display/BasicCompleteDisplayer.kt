@@ -43,7 +43,7 @@ class BasicCompleteDisplayer(buffer: Boolean) : AbstractCompleteDisplayer(buffer
     }
 
     override fun getLinkGutter(
-        along: Connected,
+        along: ConnectedRectangular,
         a: Terminator?,
         aSide: Direction?,
         b: Terminator?,
@@ -77,7 +77,7 @@ class BasicCompleteDisplayer(buffer: Boolean) : AbstractCompleteDisplayer(buffer
         return true
     }
 
-    override fun getLinkInset(element: Connected, d: Direction): Double {
+    override fun getLinkInset(element: ConnectedRectangular, d: Direction): Double {
         return element.getLinkInset()
     }
 }

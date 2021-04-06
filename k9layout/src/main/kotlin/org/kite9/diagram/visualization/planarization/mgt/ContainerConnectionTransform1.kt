@@ -7,7 +7,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.EdgeMapping
@@ -38,8 +38,8 @@ class ContainerConnectionTransform1(elementMapper: ElementMapper) : Planarizatio
         val toRemove: MutableCollection<PlanarizationEdge> = DetHashSet()
         for ((de, edgeMapping) in pln.edgeMappings) {
             if (de is BiDirectional<*>) {
-                val from = de.getFrom() as Connected
-                val to = de.getTo() as Connected
+                val from = de.getFrom() as ConnectedRectangular
+                val to = de.getTo() as ConnectedRectangular
                 if (from is Container || to is Container) {
                     val forwardList: List<PlanarizationEdge> = edgeMapping.edges
                     eraseEnds(edgeMapping, de, from, to, toRemove, forwardList, edgeMapping.startVertex)

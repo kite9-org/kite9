@@ -4,6 +4,7 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -18,7 +19,7 @@ import org.w3c.dom.Element
  *
  * @author robmoffat
  */
-abstract class AbstractConnected(
+abstract class AbstractConnectedRectangular(
     el: Element,
     parent: DiagramElement?,
     ctx: ElementContext,
@@ -26,7 +27,7 @@ abstract class AbstractConnected(
     t: ContentTransform
 ) : AbstractCompactedRectangular(
     el, parent, ctx, rp, t
-), Connected {
+), ConnectedRectangular {
     /**
      * Call this method prior to using the functionality, so that we can ensure
      * all the members are set up correctly.

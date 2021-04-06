@@ -8,7 +8,7 @@ import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.common.elements.factory.TemporaryConnected;
+import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.common.fraction.LongFraction;
@@ -455,7 +455,7 @@ public class TestingEngine extends TestingHelp {
 	 */
 	@Deprecated()
 	private static boolean checkTemporary(Rectangular cc) {
-		return cc instanceof TemporaryConnected;
+		return cc instanceof TemporaryConnectedRectangular;
 	}
 
 	private void checkOverlap(final Diagram d) {
@@ -464,7 +464,7 @@ public class TestingEngine extends TestingHelp {
 			
 			@Override
 			public void visit(DiagramElement de) {
-				if ((de instanceof Label) || (de instanceof Connected))  {
+				if ((de instanceof Label) || (de instanceof ConnectedRectangular))  {
 					checkOverlap((Rectangular) de, d, disp);
 				}
 			}
@@ -613,7 +613,7 @@ public class TestingEngine extends TestingHelp {
 
 		
 			private boolean isInGrid(Rectangular inner) {
-				return (inner instanceof Connected) && (inner.getContainer().getLayout() == Layout.GRID);
+				return (inner instanceof ConnectedRectangular) && (inner.getContainer().getLayout() == Layout.GRID);
 			}
 
 			protected boolean alongside(double a1, double a2, double b1, double b2) {
@@ -669,7 +669,7 @@ public class TestingEngine extends TestingHelp {
 	public static void checkContentsOverlap(Container d, final Layout l) {
 		List<RectangleRenderingInformation> contRI = new ArrayList<RectangleRenderingInformation>(d.getContents().size());
 		for (DiagramElement c : d.getContents()) {
-			if (c instanceof Connected) {
+			if (c instanceof ConnectedRectangular) {
 				RectangleRenderingInformation cRI = (RectangleRenderingInformation) c.getRenderingInformation();
 				contRI.add(cRI);
 			}
