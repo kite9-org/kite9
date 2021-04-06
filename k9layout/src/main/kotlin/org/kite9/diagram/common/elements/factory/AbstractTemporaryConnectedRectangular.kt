@@ -10,7 +10,7 @@ abstract class AbstractTemporaryConnectedRectangular(private val _id: String, pr
         return links
     }
 
-    override fun getConnectionTo(c: Connected): Connection? {
+    private fun firstConnectionTo(c: Connected): Connection? {
         for (link in getLinks()) {
             if (link.meets(c)) {
                 return link
@@ -20,7 +20,7 @@ abstract class AbstractTemporaryConnectedRectangular(private val _id: String, pr
     }
 
     override fun isConnectedDirectlyTo(c: Connected): Boolean {
-        return getConnectionTo(c) != null
+        return firstConnectionTo(c) != null
     }
 
     override fun getContainer(): Container {

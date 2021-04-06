@@ -20,10 +20,6 @@ interface Connected : DiagramElement {
      */
     fun isConnectedDirectlyTo(c: Connected): Boolean
 
-    /**
-     * Returns the connection between this object and c.
-     */
-    fun getConnectionTo(c: Connected): Connection?
     fun getConnectionsSeparationApproach(): ConnectionsSeparation
 
     /**

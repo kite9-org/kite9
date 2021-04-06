@@ -61,7 +61,7 @@ abstract class AbstractConnectedRectangular(
         return links!!
     }
 
-    override fun getConnectionTo(c: Connected): Connection? {
+    private fun firstConnectionTo(c: Connected): Connection? {
         for (link in getLinks()) {
             if (link.meets(c)) {
                 return link
@@ -71,7 +71,7 @@ abstract class AbstractConnectedRectangular(
     }
 
     override fun isConnectedDirectlyTo(c: Connected): Boolean {
-        return getConnectionTo(c) != null
+        return firstConnectionTo(c) != null
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
