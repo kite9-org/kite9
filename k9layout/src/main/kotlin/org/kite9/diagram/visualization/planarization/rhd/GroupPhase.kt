@@ -132,7 +132,7 @@ abstract class GroupPhase(
     }
 
     private fun setupLinks(o: DiagramElement) {
-        if (o is ConnectedRectangular) {
+        if (o is Connected) {
             for (c in o.getLinks()) {
                 if (!allLinks.contains(c)) {
                     allLinks.add(c)

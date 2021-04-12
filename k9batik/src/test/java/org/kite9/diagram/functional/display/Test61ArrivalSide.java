@@ -46,10 +46,39 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 		one.appendChild(oneSocket);
 
 		Glyph two = new Glyph("Stereo", "Two", null, null);
-		Link l4 = new Link(oneSocket, two);
+		two.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "50%");
+		two.appendChild(twoSocket);
+		Link l4 = new Link(oneSocket, twoSocket);
+		//Link l3 = new Link(one, twoSocket);
 
-		DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(two, one), null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(two, one), Layout.DOWN, null);
 		renderDiagram(d);
+	}
+
+	@Test
+	public void test_61_3_MultipleLinksToPort() throws Exception {
+
+	}
+
+	@Test
+	public void test_61_4_ComplexArrivalSides() throws Exception {
+
+	}
+
+	@Test
+	public void test_61_5_OffsetPortsAndMiddles() throws Exception {
+
+	}
+
+	@Test
+	public void test_61_6_DirectedPorts1() throws Exception {
+
+	}
+
+	@Test
+	public void test_61_7_DirectedPortSideContradiction() throws Exception {
+
 	}
 
 	@SuppressWarnings("unchecked")
