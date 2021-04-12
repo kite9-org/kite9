@@ -6,6 +6,7 @@ import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
+import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
@@ -138,7 +139,9 @@ class ConnectionEdgeRouteFinder(
 
     override fun createInitialPaths(pq: State<LocatedEdgePath>) {
         val from = e.getFrom()
-        if (from is MultiCornerVertex) {
+        if (from is PortVertex) {
+            createInitialPathsFrom(pq, from)
+        } else if (from is MultiCornerVertex) {
             val c = (e as BiDirectionalPlanarizationEdge).getFromConnected() as Container?
             checkContainerNotWithinGrid(c!!)
             val cvs = em.getOuterCornerVertices(c)

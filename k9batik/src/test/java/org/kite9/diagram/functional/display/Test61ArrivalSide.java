@@ -11,6 +11,7 @@ import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
+import org.kite9.diagram.model.style.BorderTraversal;
 import org.w3c.dom.Element;
 
 public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
@@ -40,13 +41,14 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_61_2_SimpleLinkToPort() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", null, null);
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Link l4 = new Link(oneSocket, two);
 
-		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(two, one), Layout.DOWN, null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(two, one), null);
 		renderDiagram(d);
 	}
 
