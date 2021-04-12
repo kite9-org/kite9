@@ -5,12 +5,12 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.vertex.ConnectedRectangularVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
-import org.kite9.diagram.visualization.orthogonalization.vertex.PortVertex
 
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
 
@@ -100,20 +100,32 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         }
     }
 
-    override fun getPlanarizationVertex(c: DiagramElement): Vertex {
-        var v = singleVertices[c]
+    override fun getPlanarizationVertex(de: DiagramElement): Vertex {
+        var v = singleVertices[de]
         if (v == null) {
-            if (c is ConnectedRectangular) {
-                v = ConnectedRectangularVertex(c.getID(), c)
-                singleVertices[c] = v
-            }else if (c is Port) {
-                v = PortVertex(c.getID(), c)
-                singleVertices[c] = v
+            if (de is ConnectedRectangular) {
+                v = ConnectedRectangularVertex(de.getID(), de)
+                singleVertices[de] = v
+            }else if (de is Port) {
+                val c1 = de.getContainer()!!
+                val cv = getOuterCornerVertices(c1)
+                val (fracX, fracY) = buildFractions(c1, de)
+                v = cv.createVertex(fracX, fracY, de)
+                singleVertices[de] = v
             } else {
-                throw LogicException("Not sure how to create vertex for $c")
+                throw LogicException("Not sure how to create vertex for $de")
             }
         }
         return v
+    }
+
+    private fun buildFractions(c1: Container, de: Port): Pair<LongFraction, LongFraction> {
+        return when (de.getPortDirection()) {
+            Direction.UP -> Pair(LongFraction.ONE_HALF, LongFraction.ZERO)
+            Direction.DOWN -> Pair(LongFraction.ONE_HALF, LongFraction.ONE)
+            Direction.LEFT -> Pair(LongFraction.ZERO, LongFraction.ONE_HALF)
+            Direction.RIGHT -> Pair(LongFraction.ONE, LongFraction.ONE_HALF)
+        }
     }
 
     /**

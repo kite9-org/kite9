@@ -26,53 +26,53 @@
           >One</text
         ></g
         >
-      <g k9-elem="socket" id="1" style="--kite9-port-side: top; --kite9-port-position: 10px;" transform="translate(10.0,.0)" k9-info="pos: CostedDimension2D(w=37.0, h=27.0, cost=0); "
+      <g k9-elem="socket" id="1-port" style="--kite9-port-side: top; --kite9-port-position: 10px;" transform="translate(10.0,.0)" k9-info="pos: CostedDimension2D(w=37.0, h=27.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-      <g k9-elem="socket" id="2" style="--kite9-port-side: top; --kite9-port-position: -10px;" transform="translate(47.0,.0)" k9-info="pos: CostedDimension2D(w=74.0, h=27.0, cost=0); "
+      <g k9-elem="socket" id="2-port" style="--kite9-port-side: top; --kite9-port-position: -10px;" transform="translate(47.0,.0)" k9-info="pos: CostedDimension2D(w=74.0, h=27.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-      <g k9-elem="socket" id="3" style="--kite9-port-side: bottom; --kite9-port-position: 10%;" transform="translate(5.7,47.0)" k9-info="pos: CostedDimension2D(w=32.7, h=74.0, cost=0); "
+      <g k9-elem="socket" id="3-port" style="--kite9-port-side: bottom; --kite9-port-position: 10%;" transform="translate(5.7,47.0)" k9-info="pos: CostedDimension2D(w=32.7, h=74.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-      <g k9-elem="socket" id="4" style="--kite9-port-side: bottom; --kite9-port-position: 90%;" transform="translate(51.3,47.0)" k9-info="pos: CostedDimension2D(w=78.30000000000001, h=74.0, cost=0); "
+      <g k9-elem="socket" id="4-port" style="--kite9-port-side: bottom; --kite9-port-position: 90%;" transform="translate(51.3,47.0)" k9-info="pos: CostedDimension2D(w=78.30000000000001, h=74.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-      <g k9-elem="socket" id="5" style="--kite9-port-side: left; --kite9-port-position: 50%;" transform="translate(.0,23.5)" k9-info="pos: CostedDimension2D(w=27.0, h=50.5, cost=0); "
+      <g k9-elem="socket" id="5-port" style="--kite9-port-side: left; --kite9-port-position: 50%;" transform="translate(.0,23.5)" k9-info="pos: CostedDimension2D(w=27.0, h=50.5, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-      <g k9-elem="socket" id="6" style="--kite9-port-side: right; --kite9-port-position: 50%;" transform="translate(57.0,23.5)" k9-info="pos: CostedDimension2D(w=84.0, h=50.5, cost=0); "
+      <g k9-elem="socket" id="6-port" style="--kite9-port-side: right; --kite9-port-position: 50%;" transform="translate(57.0,23.5)" k9-info="pos: CostedDimension2D(w=84.0, h=50.5, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
     </g
         >
-    <g k9-elem="socket" id="7" style="--kite9-port-side: top; --kite9-port-position: 10px;" transform="translate(10.0,.0)" k9-info="pos: CostedDimension2D(w=25.0, h=15.0, cost=0); "
+    <g k9-elem="socket" id="7-port" style="--kite9-port-side: top; --kite9-port-position: 10px;" transform="translate(10.0,.0)" k9-info="pos: CostedDimension2D(w=25.0, h=15.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-    <g k9-elem="socket" id="8" style="--kite9-port-side: top; --kite9-port-position: -10px;" transform="translate(71.0,.0)" k9-info="pos: CostedDimension2D(w=86.0, h=15.0, cost=0); "
+    <g k9-elem="socket" id="8-port" style="--kite9-port-side: top; --kite9-port-position: -10px;" transform="translate(71.0,.0)" k9-info="pos: CostedDimension2D(w=86.0, h=15.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-    <g k9-elem="socket" id="9" style="--kite9-port-side: bottom; --kite9-port-position: 10%;" transform="translate(8.1,71.0)" k9-info="pos: CostedDimension2D(w=23.1, h=86.0, cost=0); "
+    <g k9-elem="socket" id="9-port" style="--kite9-port-side: bottom; --kite9-port-position: 10%;" transform="translate(8.1,71.0)" k9-info="pos: CostedDimension2D(w=23.1, h=86.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-    <g k9-elem="socket" id="10" style="--kite9-port-side: bottom; --kite9-port-position: 90%;" transform="translate(72.9,71.0)" k9-info="pos: CostedDimension2D(w=87.9, h=86.0, cost=0); "
+    <g k9-elem="socket" id="10-port" style="--kite9-port-side: bottom; --kite9-port-position: 90%;" transform="translate(72.9,71.0)" k9-info="pos: CostedDimension2D(w=87.9, h=86.0, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-    <g k9-elem="socket" id="11" style="--kite9-port-side: left; --kite9-port-position: 50%;" transform="translate(.0,35.5)" k9-info="pos: CostedDimension2D(w=15.0, h=50.5, cost=0); "
+    <g k9-elem="socket" id="11-port" style="--kite9-port-side: left; --kite9-port-position: 50%;" transform="translate(.0,35.5)" k9-info="pos: CostedDimension2D(w=15.0, h=50.5, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >
-    <g k9-elem="socket" id="12" style="--kite9-port-side: right; --kite9-port-position: 50%;" transform="translate(81.0,35.5)" k9-info="pos: CostedDimension2D(w=96.0, h=50.5, cost=0); "
+    <g k9-elem="socket" id="12-port" style="--kite9-port-side: right; --kite9-port-position: 50%;" transform="translate(81.0,35.5)" k9-info="pos: CostedDimension2D(w=96.0, h=50.5, cost=0); "
         ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
         /></g
         >

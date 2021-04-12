@@ -6,6 +6,7 @@ import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 abstract class AbstractBaseCornerVertices(
@@ -25,8 +26,8 @@ abstract class AbstractBaseCornerVertices(
         return cv
     }
 
-    override fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex {
-        return createVertexHere(x, y, elements)
+    override fun createVertex(x: LongFraction, y: LongFraction, p: Port?): MultiCornerVertex {
+        return createVertexHere(x, y, elements, p)
     }
 
     override fun getTopContainerVertices(): AbstractCornerVertices {

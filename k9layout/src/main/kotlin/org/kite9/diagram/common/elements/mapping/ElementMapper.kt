@@ -29,4 +29,5 @@ interface ElementMapper {
      * Used for debugging purposes
      */
     fun allVertices(): Collection<Vertex>
+
 }

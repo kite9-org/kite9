@@ -1,11 +1,13 @@
 package org.kite9.diagram.common.elements.mapping
 
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
+import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.VPos
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
@@ -24,10 +26,10 @@ abstract class AbstractCornerVertices(
     private var br: MultiCornerVertex? = null
 
     protected fun createInitialVertices(c: DiagramElement?) {
-        tl = createVertex(ZERO, ZERO)
-        tr = createVertex(ONE, ZERO)
-        bl = createVertex(ZERO, ONE)
-        br = createVertex(ONE, ONE)
+        tl = createVertex(ZERO, ZERO, null)
+        tr = createVertex(ONE, ZERO, null)
+        bl = createVertex(ZERO, ONE, null)
+        br = createVertex(ONE, ONE, null)
         if (c != null) {
             tl!!.addAnchor(HPos.LEFT, VPos.UP, c)
             tr!!.addAnchor(HPos.RIGHT, VPos.UP, c)
@@ -36,17 +38,22 @@ abstract class AbstractCornerVertices(
         }
     }
 
-    abstract override fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex
+    abstract override fun createVertex(x: LongFraction, y: LongFraction, p: Port?): MultiCornerVertex
 
     protected fun createVertexHere(
         x: LongFraction,
         y: LongFraction,
-        elements: MutableMap<OPair<LongFraction>, MultiCornerVertex>
+        elements: MutableMap<OPair<LongFraction>, MultiCornerVertex>,
+        p: Port?
     ): MultiCornerVertex {
         val d = OPair(x, y)
         var cv = elements[d]
         if (cv == null) {
-            cv = MultiCornerVertex(getVertexIDStem(), x, y)
+            if (p == null) {
+                cv = MultiCornerVertex(getVertexIDStem(), x, y)
+            } else {
+                cv = PortVertex(getVertexIDStem()+"-"+p.getID(), x, y, p)
+            }
             elements[d] = cv
         }
         return cv

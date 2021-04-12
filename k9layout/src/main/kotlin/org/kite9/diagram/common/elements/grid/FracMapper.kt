@@ -22,7 +22,4 @@ interface FracMapper {
         bounds: RoutingInfo
     ): OPair<Map<LongFraction, Double>>
 
-    companion object {
-        val NULL_FRAC_MAP = FracMapperImpl.createNullFracMap()
-    }
 }

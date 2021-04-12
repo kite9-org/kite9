@@ -1,6 +1,6 @@
-package org.kite9.diagram.visualization.orthogonalization.vertex
+package org.kite9.diagram.common.elements.vertex
 
-import org.kite9.diagram.common.elements.vertex.AbstractVertex
+import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.CostedDimension2D
@@ -14,7 +14,7 @@ import org.kite9.diagram.model.position.CostedDimension2D
  *
  * @author robmoffat
  */
-class PortVertex(id: String, val port: Port) : AbstractVertex(id) {
+class PortVertex(id: String, xOrdinal: LongFraction, yOrdinal: LongFraction, val port: Port) : MultiCornerVertex(id, xOrdinal, yOrdinal) {
 
     override fun getDiagramElements(): Set<DiagramElement> {
         return setOf(port)

@@ -39,7 +39,7 @@ class LayoutEdgeRouteFinder(
         return if (em.hasOuterCornerVertices(und!!)) {
             val c = und as Container?
             val cvs = em.getOuterCornerVertices(c!!)
-            cvs.createVertex(getOrdForXDirection(d), getOrdForYDirection(d))
+            cvs.createVertex(getOrdForXDirection(d), getOrdForYDirection(d), null)
         } else {
             if (from) pe.getFrom() else pe.getTo()
         }

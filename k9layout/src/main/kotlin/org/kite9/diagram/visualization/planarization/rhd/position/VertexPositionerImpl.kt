@@ -9,6 +9,7 @@ import org.kite9.diagram.common.elements.mapping.SubGridCornerVertices
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.getOrdForXDirection
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.getOrdForYDirection
+import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
@@ -17,7 +18,6 @@ import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -66,7 +66,7 @@ class VertexPositionerImpl(
             when (d) {
                 Direction.UP, Direction.DOWN -> {
                     val yOrd = getOrdForYDirection(d)
-                    val cvNew = cvs.createVertex(ONE_HALF, yOrd)
+                    val cvNew = cvs.createVertex(ONE_HALF, yOrd, null)
                     val left = if (d === Direction.UP) cvs.getTopLeft() else cvs.getBottomLeft()
                     val right = if (d === Direction.UP) cvs.getTopRight() else cvs.getBottomRight()
                     val leftBounds = rh.getBoundsOf(left.routingInfo, true)
@@ -80,7 +80,7 @@ class VertexPositionerImpl(
                 }
                 Direction.LEFT, Direction.RIGHT -> {
                     val xOrd = getOrdForXDirection(d)
-                    val cvNew = cvs.createVertex(xOrd, ONE_HALF)
+                    val cvNew = cvs.createVertex(xOrd, ONE_HALF, null)
                     val up = if (d === Direction.LEFT) cvs.getTopLeft() else cvs.getTopRight()
                     val down = if (d === Direction.LEFT) cvs.getBottomLeft() else cvs.getBottomRight()
                     val upBounds = rh.getBoundsOf(up.routingInfo, false)
@@ -166,8 +166,8 @@ class VertexPositionerImpl(
         val bounds: RoutingInfo
         val bx: Bounds
         val by: Bounds
-        val fracMapX: Map<LongFraction, Double>
-        val fracMapY: Map<LongFraction, Double>
+        var fracMapX: Map<LongFraction, Double>
+        var fracMapY: Map<LongFraction, Double>
         if (cvs is SubGridCornerVertices) {
             val container = cvs.getGridContainer()
             bounds = rh.getPlacedPosition(container)!!
@@ -180,8 +180,18 @@ class VertexPositionerImpl(
             bounds = rh.getPlacedPosition(c)!!
             bx = rh.getBoundsOf(bounds, true)
             by = rh.getBoundsOf(bounds, false)
-            fracMapX = FracMapper.NULL_FRAC_MAP
-            fracMapY = FracMapper.NULL_FRAC_MAP
+            val xm = FracMapperImpl.createNullFracMap()
+            val ym = FracMapperImpl.createNullFracMap()
+
+            cvs.getVerticesAtThisLevel()
+                .filterIsInstance<PortVertex>()
+                .forEach {
+                    xm.put( it.xOrdinal, it.xOrdinal.doubleValue())
+                    ym.put(it.yOrdinal, it.yOrdinal.doubleValue())
+                }
+            
+            fracMapX = xm
+            fracMapY = ym
         }
 
         // set up frac maps to control where the vertices will be positioned	

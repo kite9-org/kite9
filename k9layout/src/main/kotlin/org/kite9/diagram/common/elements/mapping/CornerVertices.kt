@@ -5,6 +5,7 @@ package org.kite9.diagram.common.elements.mapping
 
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.fraction.LongFraction
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
@@ -26,7 +27,7 @@ interface CornerVertices {
      * Creates or returns a vertex from within the rectangle of the container.
      *
      */
-    fun createVertex(x: LongFraction, y: LongFraction): MultiCornerVertex
+    fun createVertex(x: LongFraction, y: LongFraction, p: Port?): MultiCornerVertex
 
     /**
      * Returns all vertices in the container, and in any parent containers (if a gridded container).

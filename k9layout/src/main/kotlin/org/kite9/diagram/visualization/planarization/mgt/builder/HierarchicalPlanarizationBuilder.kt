@@ -179,37 +179,6 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         start: Vertex, edges: List<PlanarizationEdge>, d: Direction, inside: Container
     ): Route {
         throw UnsupportedOperationException()
-
-//		Route b = null;
-//		for (int j = 0; j < edges.size(); j++) {
-//			Edge edge = edges.get(j);
-//			boolean metV = start.getOriginalUnderlying()==vUnd;
-//			boolean metVPrev = start.getOriginalUnderlying()==prevUnd;
-//			
-//			if ((metV || metVPrev) && (b!=null)) {
-//				b.end = j-1;
-//				return b;
-//			}  
-//				
-//			if ((metVPrev || metV) && (b==null)) {
-//				b = new Route();
-//				b.start = j;
-//				b.sv = start;
-//				b.reverse = metV;					
-//			} 
-//			
-//	//			if ((!metV && !metVPrev) && (b!=null)) {
-//	//				// we are in the route - make sure nothing is interferes
-//	//				DiagramElement under = start.getOriginalUnderlying();
-//	//				if (under!=null) {
-//	//					return null;
-//	//				}
-//	//			}
-//			
-//			start = edge.otherEnd(start);
-//		}
-//		
-//		return b;
     }
 
     /**
@@ -364,7 +333,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
         contents = if (layingOut) {
             p.containerOrderingMap[c]
         } else {
-            getConnectedContainerContents(c.getContents())
+            getConnectedRectangularContainerContents(c.getContents())
         }
         if (contents != null) {
             var prev: DiagramElement? = null

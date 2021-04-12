@@ -3,14 +3,15 @@ package org.kite9.diagram.dom.model
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
-import org.kite9.diagram.model.*
+import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl
 import org.kite9.diagram.model.style.*
 import org.w3c.dom.Element
-import java.lang.UnsupportedOperationException
 
 class PortImpl(
     el: Element,

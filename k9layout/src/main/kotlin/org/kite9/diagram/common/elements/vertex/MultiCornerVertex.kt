@@ -15,7 +15,7 @@ import org.kite9.diagram.model.position.VPos
  * For elements with grid-layout, these also represent points within the grid that will need to be connected up.
  * Multi-corners can be the corners of multiple different diagram elements.
  */
-class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: LongFraction) :
+open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: LongFraction) :
     AbstractAnchoringVertex(id + "_" + xOrdinal + "_" + yOrdinal), MultiElementVertex {
 
     override fun hasDimension(): Boolean {
@@ -48,24 +48,6 @@ class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: Lo
 
     fun addAnchor(lr: HPos?, ud: VPos?, underlying: DiagramElement) {
         anchors.add(Anchor(ud, lr, underlying))
-    }
-
-    fun getVPosFor(c: DiagramElement): VPos? {
-        for (anchor in anchors) {
-            if (anchor.de === c) {
-                return anchor.ud
-            }
-        }
-        throw LogicException("No anchor found for container $c")
-    }
-
-    fun getHPosFor(c: DiagramElement): HPos? {
-        for (anchor in anchors) {
-            if (anchor.de === c) {
-                return anchor.lr
-            }
-        }
-        throw LogicException("No anchor found for container $c")
     }
 
     fun hasAnchorFor(c: DiagramElement): Boolean {

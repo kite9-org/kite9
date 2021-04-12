@@ -92,7 +92,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         var run: PlanarizationRun = PlanarizationRun.FIRST
         val out: MutableList<Vertex> = ArrayList(elements * 2)
         var connections: ConnectionManager? = null
-        var sortedContainerContents: MutableMap<Container, MutableList<Connected>> = mutableMapOf()
+        var sortedContainerContents: MutableMap<Container, MutableList<ConnectedRectangular>> = mutableMapOf()
         try {
             while (run != PlanarizationRun.DONE) {
                 routableReader = PositionRoutableHandler2D()
@@ -157,7 +157,11 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             em.getOuterCornerVertices(c)
             if (c is Container) {
                 for (de: DiagramElement in c.getContents()) {
-                    instantiateContainerVertices(de)
+                    if (de is Port) {
+                        em.getPlanarizationVertex(de)
+                    } else {
+                        instantiateContainerVertices(de)
+                    }
                 }
             }
         }
@@ -322,7 +326,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         c: DiagramElement,
         after: Connected?,
         out: MutableList<Vertex>,
-        sortedContainerContents: MutableMap<Container, MutableList<Connected>>
+        sortedContainerContents: MutableMap<Container, MutableList<ConnectedRectangular>>
     ) {
         if (em.hasOuterCornerVertices(c)) {
             val cvs: CornerVertices = em.getOuterCornerVertices(c)
@@ -341,10 +345,10 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     private fun buildVertexListForContainerContents(
         out: MutableList<Vertex>,
         container: Container,
-        sortedContainerContents: MutableMap<Container, MutableList<Connected>>
+        sortedContainerContents: MutableMap<Container, MutableList<ConnectedRectangular>>
     ) {
         val layingOut: Boolean = container.getLayout() != null
-        val contents: MutableList<Connected> = getConnectedContainerContents(container.getContents())
+        val contents: MutableList<ConnectedRectangular> = getConnectedRectangularContainerContents(container.getContents())
         if (layingOut) {
             contents.sortWith { arg0: Connected, arg1: Connected ->
                 compareDiagramElements(arg0, arg1)
@@ -377,9 +381,9 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         return null
     }
 
-    protected fun getConnectedContainerContents(contents: List<DiagramElement>): MutableList<Connected> {
-        val out: MutableList<Connected> = contents
-            .filterIsInstance<Connected>()
+    protected fun getConnectedRectangularContainerContents(contents: List<DiagramElement>): MutableList<ConnectedRectangular> {
+        val out = contents
+            .filterIsInstance<ConnectedRectangular>()
             .toMutableList()
         return out
     }
