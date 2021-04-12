@@ -19,16 +19,16 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_61_1_PortPlacement() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", null, null);
-		addEightPorts(one);
+		addSixPorts(one);
 
 		Context i1 = new Context("i1", Arrays.asList( one ), true, null, Layout.DOWN);
-		addEightPorts(i1);
+		addSixPorts(i1);
 
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement(HelpMethods.listOf(i1), null);
 		renderDiagram(d);
 	}
 
-	private void addEightPorts(Element e) {
+	private void addSixPorts(Element e) {
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.TOP, "10px"));
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.TOP, "-10px"));
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.BOTTOM, "10%"));

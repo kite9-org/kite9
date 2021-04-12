@@ -25,6 +25,7 @@ import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Port;
 import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.ConnectionAlignment;
@@ -194,8 +195,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public PortPlacement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
 		Value v = getCSSValue(prop, e);
-
-		return new PortPlacement(Measurement.PERCENTAGE, v.getFloatValue());
+		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+			return new PortPlacement(Measurement.PERCENTAGE, v.getFloatValue());
+		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
+			return new PortPlacement(Measurement.PIXELS, v.getFloatValue());
+		} else {
+			return new PortPlacement(Measurement.PERCENTAGE, 50.0F);
+		}
 	}
 
 	private Value getCSSValue(String prop, Element e) {

@@ -2,6 +2,7 @@ package org.kite9.diagram.dom.transform
 
 import org.kite9.diagram.model.Decal
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
@@ -28,7 +29,7 @@ abstract class AbstractRectangularTransformer {
         var position: Dimension2D = ZERO
         if (de is Decal) {
             return position
-        } else if (de is Rectangular) {
+        } else if ((de is Rectangular) || (de is Port)) {
             position = getOrigin(de)
         }
         val parentPosition = getParentOrigin(de)
@@ -36,7 +37,7 @@ abstract class AbstractRectangularTransformer {
     }
 
     fun getOrigin(de: DiagramElement): Dimension2D {
-        val rri = (de as Rectangular).getRenderingInformation()
+        val rri = de.getRenderingInformation() as RectangleRenderingInformation
         val position = rri.position
         return position ?: ZERO
     }

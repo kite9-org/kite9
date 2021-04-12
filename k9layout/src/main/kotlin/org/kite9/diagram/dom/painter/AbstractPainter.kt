@@ -48,9 +48,13 @@ abstract class AbstractPainter : Painter {
 
     protected fun addInfoAttributes(out: Element) {
         val debug = StringBuilder()
-        if (r is Rectangular) {
-            debug.append("position: " + (r as Rectangular).getContainerPosition() + "; ")
+
+        if (r is Port) {
+            var pr = r as Port
+            val rri = pr.getRenderingInformation()
+            debug.append("pos: " + rri.position + "; ")
         }
+
         if (r is SizedRectangular) {
             val sr = r as SizedRectangular
             debug.append(
@@ -81,9 +85,15 @@ abstract class AbstractPainter : Painter {
                 debug.append("cell-ys: [" + commaIntList(rri.cellYPositions) + "]; ")
             }
         }
-        if (r is ConnectedRectangular) {
-            val c = r as ConnectedRectangular
+        if (r is Rectangular) {
+            val c = r as Rectangular
             val rri = c.getRenderingInformation()
+            val usage = getUsage(r as Rectangular)
+            debug.append("rectangular: $usage; ")
+            debug.append("rect-pos: " + rri.position + "; ")
+            debug.append("rect-size: " + rri.size + "; ")
+            debug.append("position: " + (r as Rectangular).getContainerPosition() + "; ")
+
             if (c.getParent() is Container) {
                 val parent = c.getParent() as Container?
                 val prri = parent!!.getRenderingInformation()
@@ -111,18 +121,11 @@ abstract class AbstractPainter : Painter {
                 debug.append("contradicting: yes; ")
             }
         }
-        if (r is Rectangular) {
-            val usage = getUsage(r as Rectangular)
-            debug.append("rectangular: $usage; ")
-        }
-        if (r is Rectangular) {
-            val rri = (r as Rectangular).getRenderingInformation()
-            debug.append("rect-pos: " + rri.position + "; ")
-            debug.append("rect-size: " + rri.size + "; ")
-        }
+
         if (r is Temporary) {
             debug.append("temporary: true; ")
         }
+
         out.setAttribute("k9-info", debug.toString())
     }
 

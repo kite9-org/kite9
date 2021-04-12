@@ -287,6 +287,7 @@
 
     <xsl:template match="socket">
         <g k9-elem="socket" >
+            <xsl:copy-of select="@*" />
             <ellipse cx="0" cy="0" rx="3" ry="3" class="socket-circle" />
         </g>
         <xsl:apply-templates/>

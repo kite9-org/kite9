@@ -1,7 +1,5 @@
 package org.kite9.diagram.common.elements.vertex
 
-import org.kite9.diagram.common.elements.vertex.AbstractVertex
-import org.kite9.diagram.common.elements.vertex.NoElementVertex
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 
