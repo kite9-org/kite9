@@ -14,7 +14,7 @@ public class BasicSocket extends AbstractMutableXMLElement {
 	}
 
 	public BasicSocket(String id, Document doc, String arrivalSide, String pos) {
-		super(id, "socket", doc);
+		super(id+"-port", "socket", doc);
 		setAttribute("style", CSSConstants.PORT_SIDE+": "+arrivalSide+"; "+CSSConstants.PORT_POSITION+": "+pos+";");
 	}
 

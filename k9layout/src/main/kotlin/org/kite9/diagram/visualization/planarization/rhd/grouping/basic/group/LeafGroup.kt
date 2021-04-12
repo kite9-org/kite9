@@ -8,9 +8,11 @@ import org.kite9.diagram.model.position.Direction
 
 interface LeafGroup : Group {
 
-    val contained: Connected?
+    val connected: Connected?
 
     val container: Container?
+
+    fun occupiesSpace() : Boolean
 
     fun sortLink(
         d: Direction?,

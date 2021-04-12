@@ -37,6 +37,19 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%"));
 	}
 
+	@Test
+	public void test_61_2_SimpleLinkToPort() throws Exception {
+		Glyph one = new Glyph("Stereo", "One", null, null);
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
+
+		Glyph two = new Glyph("Stereo", "Two", null, null);
+		Link l4 = new Link(oneSocket, two);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(two, one), Layout.DOWN, null);
+		renderDiagram(d);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	@Ignore

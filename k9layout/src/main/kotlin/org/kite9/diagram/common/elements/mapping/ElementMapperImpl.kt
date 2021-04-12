@@ -10,6 +10,7 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
+import org.kite9.diagram.visualization.orthogonalization.vertex.PortVertex
 
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
 
@@ -105,6 +106,9 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             if (c is ConnectedRectangular) {
                 v = ConnectedRectangularVertex(c.getID(), c)
                 singleVertices[c] = v
+            }else if (c is Port) {
+                v = PortVertex(c.getID(), c)
+                singleVertices[c] = v
             } else {
                 throw LogicException("Not sure how to create vertex for $c")
             }
@@ -171,7 +175,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             return hasConnections[c]!!
         }
         var has = false
-        if (c is ConnectedRectangular) {
+        if (c is Connected) {
             has = c.getLinks().size > 0
         }
         if (has == false && c is Container) {

@@ -8,7 +8,6 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.Connected;
-import org.kite9.diagram.model.ConnectedRectangular;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
@@ -250,7 +249,7 @@ public class TestDirectedContainersMatrix extends AbstractPerformanceTest {
 
 	private static void extendBounds(int[] bounds, Group g) {
 		if (g instanceof LeafGroup) {
-			Connected c = ((LeafGroup)g).getContained();
+			Connected c = ((LeafGroup)g).getConnected();
 			if (c instanceof Glyph) {
 				int x = extract('x', c.getID());
 				int y = extract('y', c.getID());

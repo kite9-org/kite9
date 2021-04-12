@@ -49,8 +49,8 @@ class DistancePlacementApproach(
                 score += cost
                 log.send(
                     """Evaluating: $cost
-	from ${(from as LeafGroup).contained} at $aRI
-	to ${(to as LeafGroup).contained} at $bRI"""
+	from ${(from as LeafGroup).connected} at $aRI
+	to ${(to as LeafGroup).connected} at $bRI"""
                 )
             }
         })

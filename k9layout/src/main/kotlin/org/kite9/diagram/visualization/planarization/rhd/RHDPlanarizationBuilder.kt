@@ -279,14 +279,14 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val lg: AbstractLeafGroup = start as AbstractLeafGroup
             log.send("Processing Group: $lg")
             // g is a leaf group.  can we place it?
-            val l: ConnectedRectangular? = lg.contained
+            val l: Connected? = lg.connected
             val c: Container? = lg.container
 
             // sizing
             val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
             vp.checkMinimumGridSizes(ri)
-            if (l != null) {
-                routableReader.setPlacedPosition(l, ri)
+            if (lg.occupiesSpace()) {
+                routableReader.setPlacedPosition(l as Rectangular, ri)
             }
             ensureContainerBoundsAreLargeEnough(ri, c, lg)
 

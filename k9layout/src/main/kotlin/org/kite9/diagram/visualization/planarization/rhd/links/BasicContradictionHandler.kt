@@ -123,8 +123,8 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
      */
     override fun checkForContainerContradiction(c: Connection) {
         val drawDirection = c.getDrawDirection()
-        var from: DiagramElement? = c.getFrom()
-        var to: DiagramElement? = c.getTo()
+        var from: DiagramElement = c.getFrom()
+        var to: DiagramElement = c.getTo()
         if (from === to) {
             setContradiction(c, true)
         }
@@ -132,17 +132,17 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
             setContradiction(c, true)
             return
         }
-        if ((from as ConnectedRectangular?)!!.getContainer()!!.getLayout() === Layout.GRID) {
+        if ((from as Connected).getContainer()?.getLayout() === Layout.GRID) {
             setContradiction(c, true)
             return
         }
-        if ((to as ConnectedRectangular?)!!.getContainer()!!.getLayout() === Layout.GRID) {
+        if ((to as Connected).getContainer()?.getLayout() === Layout.GRID) {
             setContradiction(c, true)
             return
         }
         while (true) {
-            val fromC = (from as ConnectedRectangular?)!!.getContainer()
-            val toC = (to as ConnectedRectangular?)!!.getContainer()
+            val fromC = (from as? Connected)?.getContainer()
+            val toC = (to as? Connected)?.getContainer()
             if (drawDirection != null) {
 
                 // directed connections breaking normal layouts
@@ -157,12 +157,12 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
                             Layout.UP, Layout.DOWN, Layout.LEFT, Layout.RIGHT -> checkOrdinalContradiction(
                                 l,
                                 drawDirection,
-                                from,
-                                to,
+                                from as Connected,
+                                to as Connected,
                                 fromC,
                                 c
                             )
-                            Layout.GRID -> gridContradiction(c, drawDirection, from, to)
+                            Layout.GRID -> gridContradiction(c, drawDirection, from as ConnectedRectangular, to as ConnectedRectangular)
                         }
                     }
                 }
@@ -267,8 +267,8 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
     protected fun checkOrdinalContradiction(
         l: Layout?,
         d: Direction,
-        from: ConnectedRectangular?,
-        to: ConnectedRectangular?,
+        from: Connected?,
+        to: Connected?,
         fromC: Container?,
         c: Connection?
     ) {

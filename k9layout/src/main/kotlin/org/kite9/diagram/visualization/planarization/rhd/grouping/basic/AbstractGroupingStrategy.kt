@@ -215,7 +215,7 @@ abstract class AbstractGroupingStrategy(
         if (c2 != null) {
             ms.addGroupContainerMapping(
                 toAdd, c2,
-                if (toAdd.contained != null) GroupContainerState.HAS_CONTENT else GroupContainerState.NO_CONTENT
+                if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT else GroupContainerState.NO_CONTENT
             )
         }
         leaves?.add(toAdd)

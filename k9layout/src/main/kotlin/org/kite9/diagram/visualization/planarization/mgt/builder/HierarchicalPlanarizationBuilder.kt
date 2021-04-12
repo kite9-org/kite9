@@ -10,10 +10,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
@@ -419,7 +416,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
                 }
             }
         }
-        if (c is ConnectedRectangular) {
+        if ((c is ConnectedRectangular) || (c is Port)) {
             return em.getPlanarizationVertex(c)
         }
         throw LogicException("Can't get a vertex for $c")

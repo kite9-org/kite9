@@ -63,7 +63,7 @@ class PortImpl(
     }
 
     override fun getContainer(): Container? {
-        throw UnsupportedOperationException()
+        return getParent() as? Container
     }
 
 

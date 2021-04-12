@@ -237,7 +237,7 @@ class VertexPositionerImpl(
     override fun setCentralVertexPosition(c: DiagramElement, out: MutableList<Vertex>) {
         var bounds = rh.getPlacedPosition(c)
         log.send("Placed position: $c is $bounds")
-        val v = em.getPlanarizationVertex((c as ConnectedRectangular))
+        val v = em.getPlanarizationVertex(c)
         out.add(v)
         bounds = rh.narrow(bounds, borderTrimAreaX, borderTrimAreaY)
         v.routingInfo = bounds

@@ -4,6 +4,7 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
@@ -337,7 +338,7 @@ abstract class AxisHandlingGroupingStrategy(
         a.linkManager.notifyAxisChange()
     }
 
-    override fun createLeafGroup(ord: ConnectedRectangular?, cnr: Container?): LeafGroup {
+    override fun createLeafGroup(ord: Connected?, cnr: Container?): LeafGroup {
         if (ord is Container) {
             containerCount++
         }

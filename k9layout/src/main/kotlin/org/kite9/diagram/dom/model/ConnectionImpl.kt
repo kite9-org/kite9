@@ -92,8 +92,8 @@ class ConnectionImpl(
     }
 
     protected fun initFromTo() {
-        from = ctx.getReferencedElement(fromId!!, theElement) as ConnectedRectangular?
-        to = ctx.getReferencedElement(toId!!, theElement) as ConnectedRectangular?
+        from = ctx.getReferencedElement(fromId!!, theElement) as Connected?
+        to = ctx.getReferencedElement(toId!!, theElement) as Connected?
         if (from == null) {
             throw ctx.contextualException("Couldn't resolve 'from' reference for " + getID(), theElement)
         }
@@ -119,8 +119,8 @@ class ConnectionImpl(
         return ctx.getReference(css, theElement)
     }
 
-    private var from: ConnectedRectangular? = null
-    private var to: ConnectedRectangular? = null
+    private var from: Connected? = null
+    private var to: Connected? = null
     private var drawDirection: Direction? = null
     private var fromDecoration: Terminator? = null
     private var toDecoration: Terminator? = null

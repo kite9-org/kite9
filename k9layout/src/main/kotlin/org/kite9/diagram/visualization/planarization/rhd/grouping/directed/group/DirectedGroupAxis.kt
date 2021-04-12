@@ -76,7 +76,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             }
             if (!temp && g is LeafGroup) {
                 // this means the routable handler also has final positions for each contained element
-                rh.setPlacedPosition((g as LeafGroup).contained, out, horiz)
+                rh.setPlacedPosition((g as LeafGroup).connected, out, horiz)
             }
             out
         } else {

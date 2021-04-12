@@ -44,7 +44,7 @@ abstract class GroupPhase(
 
 
     val allGroups: MutableSet<LeafGroup> = LinkedHashSet(elements * 2)
-    private val pMap: MutableMap<ConnectedRectangular, LeafGroup> = LinkedHashMap(elements * 2)
+    private val pMap: MutableMap<Connected, LeafGroup> = LinkedHashMap(elements * 2)
     private val allLinks: MutableSet<Connection> = UnorderedSet(1000)
     protected val hashCodeGenerator = Random(elements.toLong())
 
@@ -55,9 +55,9 @@ abstract class GroupPhase(
      * @param pMap Map of Connected to LeafGroups (created)
      */
     private fun populateLeafGroups(
-        ord: ConnectedRectangular,
+        ord: Connected,
         prev1: ConnectedRectangular?,
-        pMap: MutableMap<ConnectedRectangular, LeafGroup>
+        pMap: MutableMap<Connected, LeafGroup>
     ): LeafGroup? {
         if (pMap[ord] != null) {
             throw LogicException("Diagram Element $ord appears multiple times in the diagram definition")
@@ -70,7 +70,7 @@ abstract class GroupPhase(
             pMap[ord] = g
             allGroups.add(g)
         }
-        if (prev1 != null && prev1 !== ord) {
+        if (prev1 != null && prev1 !== ord && ord is ConnectedRectangular) {
             addContainerOrderingInfo(ord, prev1, cnr, null)
         }
         if (!leaf) {
@@ -119,9 +119,11 @@ abstract class GroupPhase(
             } else {
                 var prev: ConnectedRectangular? = null
                 for (c in (ord as Container).getContents()) {
-                    if (c is ConnectedRectangular) {
+                    if (c is Connected) {
                         populateLeafGroups(c, prev, pMap)
-                        prev = c
+                        if (c is ConnectedRectangular) {
+                            prev = c
+                        }
                     }
                 }
             }
@@ -164,7 +166,7 @@ abstract class GroupPhase(
         }
     }
 
-    private fun needsLeafGroup(ord: ConnectedRectangular): Boolean {
+    private fun needsLeafGroup(ord: Connected): Boolean {
         return if (ord is Diagram && !hasConnectedContents(ord as Diagram)) {
             // we need at least one group in the GroupPhase, so if the diagram is empty, return a
             // single leaf group.
@@ -174,7 +176,7 @@ abstract class GroupPhase(
 
     private fun hasConnectedContents(d: Diagram): Boolean {
         for (de in d.getContents()) {
-            if (de is ConnectedRectangular) {
+            if (de is Connected) {
                 return true
             }
         }
