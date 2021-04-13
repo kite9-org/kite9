@@ -739,7 +739,7 @@ abstract class AbstractRouteFinder(
     }
 
     protected abstract fun canRouteToVertex(
-        from: Vertex?,
+        from: Vertex,
         outsideOf: PlanarizationEdge?,
         above: Boolean,
         g: Going?,

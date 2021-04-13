@@ -23,22 +23,4 @@ class PortVertex(id: String, xOrdinal: LongFraction, yOrdinal: LongFraction, val
     override fun isPartOf(de: DiagramElement?): Boolean {
         return de == port
     }
-
-    override var x: Double
-        get() = super.x
-        set(x) {
-            super.x = x
-            val pos = port.getRenderingInformation().position
-            val y = pos?.h ?: 0.0
-            port.getRenderingInformation().position = CostedDimension2D(x, y)
-        }
-
-    override var y: Double
-        get() = super.y
-        set(y) {
-            super.y = y
-            val pos = port.getRenderingInformation().position
-            val x = pos?.w ?: 0.0
-            port.getRenderingInformation().position = CostedDimension2D(x, y)
-        }
 }

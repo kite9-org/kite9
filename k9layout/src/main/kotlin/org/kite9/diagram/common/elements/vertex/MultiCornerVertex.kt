@@ -28,24 +28,6 @@ open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdina
         return anchors
     }
 
-    override var x: Double
-        get() = super.x
-        set(x) {
-            super.x = x
-            for (anchor in anchors) {
-                anchor.setX(x)
-            }
-        }
-
-    override var y: Double
-        get() = super.y
-        set(y) {
-            super.y = y
-            for (anchor in anchors) {
-                anchor.setY(y)
-            }
-        }
-
     fun addAnchor(lr: HPos?, ud: VPos?, underlying: DiagramElement) {
         anchors.add(Anchor(ud, lr, underlying))
     }

@@ -81,7 +81,7 @@ class ContainerEdgeRouteFinder(p: MGTPlanarization, rh: RoutableReader, e: Borde
     }
 
     override fun canRouteToVertex(
-        from: Vertex?, outsideOf: PlanarizationEdge?,
+        from: Vertex, outsideOf: PlanarizationEdge?,
         above: Boolean, g: Going?, arriving: Boolean
     ): Boolean {
         return true

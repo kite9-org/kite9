@@ -85,14 +85,14 @@ abstract class AbstractBiDiEdgeRouteFinder(
     }
 
     override fun canRouteToVertex(
-        to: Vertex?,
+        to: Vertex,
         edge: PlanarizationEdge?,
         pathAbove: Boolean,
         g: Going?,
         arriving: Boolean
     ): Boolean {
         var edge = edge
-        if (to!!.position == null || to is NoElementVertex) {
+        if (to is NoElementVertex) {
             return false
         }
         val forwards = g === Going.FORWARDS

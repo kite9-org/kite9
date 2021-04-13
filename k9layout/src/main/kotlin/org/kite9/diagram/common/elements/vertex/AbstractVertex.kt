@@ -57,19 +57,6 @@ abstract class AbstractVertex(private val id: String) : Vertex {
         }
     }
 
-    override var position : Dimension2D = CostedDimension2D.Companion.ZERO
-        protected set
-    override var x: Double
-        get() = position.x()
-        set(x) {
-            position = position.setX(x)
-        }
-    override var y: Double
-        get() = position.y()
-        set(y) {
-            position = position.setY(y)
-        }
-
     override fun hashCode(): Int {
         return id.hashCode()
     }

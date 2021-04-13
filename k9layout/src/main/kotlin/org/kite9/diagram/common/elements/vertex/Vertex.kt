@@ -2,7 +2,6 @@ package org.kite9.diagram.common.elements.vertex
 
 import org.kite9.diagram.common.algorithms.det.Deterministic
 import org.kite9.diagram.common.elements.ConstructionElement
-import org.kite9.diagram.common.elements.Positioned
 import org.kite9.diagram.common.elements.Routable
 import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.model.DiagramElement
@@ -15,7 +14,7 @@ import org.kite9.diagram.model.DiagramElement
  *
  * @param <E>
 </E> */
-interface Vertex : Comparable<Vertex>, ConstructionElement, Positioned, Routable, Deterministic {
+interface Vertex : Comparable<Vertex>, ConstructionElement, Routable, Deterministic {
     /**
      * True if this vertex is connected by an edge to v.
      */
