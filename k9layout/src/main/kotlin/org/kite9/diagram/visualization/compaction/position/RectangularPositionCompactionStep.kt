@@ -80,10 +80,13 @@ class RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractCompact
 
 
     fun setPortPosition(p: Port, x: Double, y: Double) {
+
         val pos = p.getRenderingInformation().position
-        val newPos = CostedDimension2D(x, y)
-        p.getRenderingInformation().position = newPos
-        p.getRenderingInformation().size = CostedDimension2D(0.0,0.0)
+        if (pos == null) {
+            val newPos = CostedDimension2D(x, y)
+            p.getRenderingInformation().position = newPos
+            p.getRenderingInformation().size = CostedDimension2D(0.0, 0.0)
+        }
     }
 
     fun measure(start: Double, size: Double, pa: PortPlacement) : Double {

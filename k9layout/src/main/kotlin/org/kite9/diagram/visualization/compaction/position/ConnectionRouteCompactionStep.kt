@@ -3,12 +3,10 @@ package org.kite9.diagram.visualization.compaction.position
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Terminator
-import org.kite9.diagram.model.position.BasicDimension2D
-import org.kite9.diagram.model.position.Dimension2D
-import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.*
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
-import org.kite9.diagram.model.position.RouteRenderingInformation
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.CompactionStep
 import org.kite9.diagram.visualization.compaction.Compactor
@@ -55,6 +53,7 @@ class ConnectionRouteCompactionStep : CompactionStep {
         var prev: Dimension2D? = null
         for (v in vertices!!) {
             val next = addToRoute(out, v, c, last)
+            setPortPosition(v, next)
             if (first && last != null && next != null) {
                 setTerminatorPositionAndOrientation(tle.getFromDecoration(), last, next)
                 first = false
@@ -65,6 +64,18 @@ class ConnectionRouteCompactionStep : CompactionStep {
             }
         }
         setTerminatorPositionAndOrientation(tle.getToDecoration(), last, prev)
+    }
+
+    private fun setPortPosition(v: Vertex, d2: Dimension2D?) {
+        if (d2 == null) {
+            return
+        }
+        v.getDiagramElements()
+            .filterIsInstance<Port>()
+            .forEach {
+                it.getRenderingInformation().position = CostedDimension2D(d2.x(), d2.y())
+                it.getRenderingInformation().size = CostedDimension2D(0.0, 0.0)
+            }
     }
 
     private fun addToRoute(out: RouteRenderingInformation, v: Vertex, c: Compaction, prev: Dimension2D?): Dimension2D? {
