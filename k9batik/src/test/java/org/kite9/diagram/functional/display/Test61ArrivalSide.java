@@ -69,19 +69,23 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_61_5_OffsetPortsAndMiddles() throws Exception {
 		Glyph one = new Glyph("Stereo", "One", null, null);
-		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";"+CSSConstants.RECT_MINIMUM_HEIGHT+": 300px;");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "30px");
 		one.appendChild(oneSocket);
 		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "130px");
 		one.appendChild(twoSocket);
+		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "75%");
+		one.appendChild(threeSocket);
 
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		Glyph three = new Glyph("Stereo", "Three", null, null);
+		Glyph four = new Glyph("Stereo", "Four", null, null);
 
 		Link l4 = new Link(oneSocket, two);
 		Link l3 = new Link(three, twoSocket);
+		Link l5 = new Link(four, threeSocket);
 
-		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(two, one, three), null);
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(two, one, three, four), null);
 		renderDiagram(d);
 	}
 
@@ -92,11 +96,6 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_61_7_DirectedPortSideContradiction() throws Exception {
-
-	}
-
-	@Test
-	public void test_61_8_PortsNotOnAllSides() throws Exception {
 
 	}
 
