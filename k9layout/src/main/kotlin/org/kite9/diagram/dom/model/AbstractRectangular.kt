@@ -113,42 +113,6 @@ abstract class AbstractRectangular(
         }
     }
 
-    fun getSize(within: Dimension2D): CostedDimension2D {
-        if (this is Decal) {
-            throw LogicException("Shouldn't be using size for decals")
-        } else if (this is Terminator) {
-            throw LogicException("Shouldn't be using size for terminators")
-        } else if (this is Container) {
-            return ensureMinimumSize(sizeBasedOnPadding, within)
-        } else if (this is Leaf) {
-            val left = getPadding(Direction.LEFT)
-            val right = getPadding(Direction.RIGHT)
-            val up = getPadding(Direction.UP)
-            val down = getPadding(Direction.DOWN)
-            val bounds = leafBounds
-            return ensureMinimumSize(BasicDimension2D(left + right + bounds.w, up + down + bounds.h), within)
-        }
-        throw LogicException("Not sure how to size: $this")
-    }
-
-    private fun ensureMinimumSize(c: Dimension2D, within: Dimension2D): CostedDimension2D {
-        var min: Dimension2D = ZERO
-        if (this is SizedRectangular) {
-            min = (this as SizedRectangular).getMinimumSize()
-        }
-        return CostedDimension2D(
-            max(c.w, min.w),
-            max(c.h, min.h), within
-        )
-    }
-
-    private val leafBounds: Dimension2D
-        private get() {
-            val p = painter
-            return if (p is LeafPainter && transformer is LeafTransformer) {
-                (transformer as LeafTransformer).getBounds(p)
-            } else ZERO
-        }
 
     companion object {
         val NO_CONTAINER_POSITION: ContainerPosition = object : ContainerPosition {

@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction.rect.second.popout
 
-import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
@@ -10,9 +9,7 @@ import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.ConnectionAlignment
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction.rect.second.prioritised.RectOption
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn
-import org.kite9.diagram.visualization.compaction.rect.VertexTurn.TurnPriority
 import org.kite9.diagram.visualization.compaction.rect.second.prioritised.PrioritizingRectangularizer
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -23,55 +20,6 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace
  * respecting middle-alignment of connections.
  */
 abstract class MidSideCheckingRectangularizer(cd: CompleteDisplayer?) : PrioritizingRectangularizer(cd) {
-
-    /**
-     * If we have a 'safe' rectangularization, make sure meets can't increase
-     */
-    override fun checkRectOptionIsOk(
-        onStack: Set<VertexTurn>,
-        ro: RectOption,
-        pq: PriorityQueue<RectOption>,
-        c: Compaction
-    ): Action {
-        val superAction = super.checkRectOptionIsOk(onStack, ro, pq, c)
-        if (superAction !== Action.OK) {
-            return superAction
-        }
-        log.send("Checking: $ro")
-        val turnDirection = ro.getTurnDirection(ro.extender)
-        log.send("Extender: " + ro.extender + " dir= " + turnDirection)
-        val meets = ro.meets
-        val link = ro.link
-        val par = ro.par
-        val meetsMinimumLength = checkMinimumLength(meets, link, c)
-        val parMinimumLength = checkMinimumLength(par, link, c)
-        if (ro.calculateScore() != ro.initialScore) {
-            // change it and throw it back in - priority has changed.
-            log.send("Deferring: $meetsMinimumLength for meets=$meets\n         $parMinimumLength for par=$par")
-            return Action.PUT_BACK
-        }
-        return Action.OK
-        //		log.send("Allowing: meets="+ro.getMeets()+"\n          for par="+ro.getPar());
-    }
-
-    private fun checkMinimumLength(rect: VertexTurn, link: VertexTurn, c: Compaction): Int {
-        if (rect.turnPriority === TurnPriority.MINIMIZE_RECTANGULAR) {
-            if (shouldSetMidpoint(rect, link)) {
-
-                // ok, size is needed of overall rectangle then half.
-                val r = getRectangular(rect)
-                val isHorizontal = !isHorizontal(rect.direction)
-                val along =
-                    (if (isHorizontal) c.getHorizontalSegmentSlackOptimisation() else c.getVerticalSegmentSlackOptimisation())
-                        .getSlideablesFor(r!!)
-                val perp =
-                    (if (!isHorizontal) c.getHorizontalSegmentSlackOptimisation() else c.getVerticalSegmentSlackOptimisation())
-                        .getSlideablesFor(r)
-                alignSingleConnections(c, perp, along, false, true)
-            }
-        }
-        return rect.getLength(true).toInt()
-    }
 
     private fun shouldSetMidpoint(vt: VertexTurn, link: VertexTurn?): Boolean {
         val connecteds = getConnecteds(vt)

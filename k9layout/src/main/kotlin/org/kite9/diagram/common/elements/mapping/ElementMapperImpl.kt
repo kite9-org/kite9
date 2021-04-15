@@ -120,11 +120,20 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     }
 
     private fun buildFractions(c1: Container, de: Port): Pair<LongFraction, LongFraction> {
+        val portsOnSide = c1.getContents()
+            .filterIsInstance<Port>()
+            .filter { it.getPortDirection() == de.getPortDirection() }
+            .sortedBy { it.getPortPosition() }
+
+        val num = portsOnSide.indexOf(de) + 1
+        val denom = portsOnSide.size + 2
+        val fraction = LongFraction(num.toLong(), denom.toLong())
+
         return when (de.getPortDirection()) {
-            Direction.UP -> Pair(LongFraction.ONE_HALF, LongFraction.ZERO)
-            Direction.DOWN -> Pair(LongFraction.ONE_HALF, LongFraction.ONE)
-            Direction.LEFT -> Pair(LongFraction.ZERO, LongFraction.ONE_HALF)
-            Direction.RIGHT -> Pair(LongFraction.ONE, LongFraction.ONE_HALF)
+            Direction.UP -> Pair(fraction, LongFraction.ZERO)
+            Direction.DOWN -> Pair(fraction, LongFraction.ONE)
+            Direction.LEFT -> Pair(LongFraction.ZERO, fraction)
+            Direction.RIGHT -> Pair(LongFraction.ONE, fraction)
         }
     }
 

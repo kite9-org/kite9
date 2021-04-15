@@ -200,7 +200,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isAligning(Connected v, Direction side) {
-				return v.getConnectionAlignment(side) != ConnectionAlignment.Companion.getNONE();
+				return (!(v instanceof Port)) && (v.getConnectionAlignment(side) != ConnectionAlignment.Companion.getNONE());
 			}
 
 			/**

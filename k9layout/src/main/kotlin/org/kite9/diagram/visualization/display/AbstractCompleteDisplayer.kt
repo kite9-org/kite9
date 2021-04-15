@@ -9,7 +9,10 @@ import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.position.Direction.Companion.reverse
+import org.kite9.diagram.model.style.Measurement
+import kotlin.math.abs
 import kotlin.math.max
 
 abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, DiagramSizer, Logable {
@@ -170,10 +173,10 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     ): Double {
         return if (along === a && b is Connection) {
             // link meeting connected, and we're working out distance to corner.
-            getLinkInset(along, d)
+            max(getLinkInset(along, d), getPortDistance(along, a, b, d))
         } else if (along === b && a is Connection) {
             // link meeting connected, and we're working out distance to corner.
-            getLinkInset(along, d)
+            max(getLinkInset(along, d), getPortDistance(along, a, b, d))
         } else if (a is Connection && b is Connection) {
             // the gutter space between two connections arriving on a side
             val startA =
@@ -184,11 +187,61 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
                 if (b.meets(along)) b.getDecorationForEnd(
                     along
                 ) else null
-            getLinkGutter(along, startA, aSide, startB, bSide)
+            max(getLinkGutter(along, startA, aSide, startB, bSide), getPortDistance(along, a, b, d))
         } else {
             // sides of a rectangle or something
             0.0
         }
+    }
+
+    private fun portPositionPixels(p: Port, d: Direction, on: Rectangular) : Double {
+        val elementLength = getInternalDistance(on, d, reverse(d))
+        val pxDist : Double = when {
+            p.getPortPosition().measurement == Measurement.PERCENTAGE ->  elementLength * p.getPortPosition().amount / 100
+            p.getPortPosition().amount < 0 -> elementLength + p.getPortPosition().amount
+            else  -> p.getPortPosition().amount.toDouble()
+        }
+
+        return when (d) {
+            Direction.UP, Direction.LEFT -> max(0.0, elementLength - pxDist)
+            Direction.DOWN, Direction.RIGHT -> max(0.0, pxDist)
+        }
+    }
+
+    private fun getPortFor(a: ConnectedRectangular, c1: DiagramElement?, favourFrom: Boolean) : Port? {
+        if (c1 is Connection) {
+            val order : List<Port?> = if (favourFrom)
+                listOf(c1.getFrom() as? Port,  c1.getTo() as? Port)
+            else
+                listOf(c1.getTo() as? Port,  c1.getFrom() as? Port)
+
+            val first = order
+                .filterNotNull()
+                .filter { it.getContainer() == a }
+                .firstOrNull()
+
+            return first
+        }
+
+        return null
+    }
+
+    private fun getPortDistance(a: Rectangular, c1: DiagramElement?, c2: DiagramElement?, d: Direction) : Double {
+        if (a is ConnectedRectangular) {
+            val p1 = getPortFor(a, c1, false)
+            val p2 = getPortFor(a, c2, true)
+            if ((p1 is Port) && (p2 is Port)) {
+                var p1d = portPositionPixels(p1, d, a)
+                var p2d = portPositionPixels(p2, d, a)
+                return abs(p1d - p2d)
+            } else if ((p1 is Port) || (p2 is Port)) {
+                val p = p1 as Port? ?: p2 as Port
+                val pp = portPositionPixels(p, d, a)
+                return pp
+            }
+        }
+
+        return 0.0
     }
 
     private fun getMinimumDistanceRectangularToRectangular(

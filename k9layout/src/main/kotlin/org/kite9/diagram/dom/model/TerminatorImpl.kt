@@ -3,10 +3,12 @@ package org.kite9.diagram.dom.model
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Terminator
+import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
@@ -114,6 +116,10 @@ class TerminatorImpl(
     override fun getEnd(): End {
         ensureInitialized()
         return end!!
+    }
+
+    override fun getSize(within: Dimension2D): CostedDimension2D {
+        throw LogicException("Shouldn't be using size for terminators")
     }
 
     override fun getSizing(horiz: Boolean): DiagramElementSizing {
