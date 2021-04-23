@@ -26,7 +26,7 @@ class PortImpl(
         out
     }
 
-    private val portPlacement : PortPlacement by lazy {
+    private val portPlacement : Placement by lazy {
         ctx.getCSSStylePlacementProperty(CSSConstants.PORT_POSITION, theElement)
     }
 
@@ -35,7 +35,7 @@ class PortImpl(
         return portSide.getDirection()
     }
 
-    override fun getPortPosition(): PortPlacement {
+    override fun getPortPosition(): Placement {
         ensureInitialized()
         return portPlacement
     }
@@ -59,7 +59,7 @@ class PortImpl(
         return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
     }
 
-    override fun getConnectionAlignment(side: Direction): ConnectionAlignment {
+    override fun getConnectionAlignment(side: Direction): Placement {
         throw UnsupportedOperationException()
     }
 

@@ -73,6 +73,10 @@ interface CSSConstants {
         const val CONNECTION_ALIGN_TOP_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + TOP
         const val CONNECTION_ALIGN_RIGHT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + RIGHT
         const val CONNECTION_ALIGN_LEFT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + LEFT
+        const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
+        const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
+        const val PORT_SIDE_MEASUREMENT = KITE9_CSS_PROPERTY_PREFIX + "port-side-measurement"
+
 
         // for aligning content within a container
         const val VERTICAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX + "vertical-align"
@@ -98,10 +102,6 @@ interface CSSConstants {
         const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-width"
         const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-height"
         const val TEXT_BOUNDS = KITE9_CSS_PROPERTY_PREFIX + "text-bounds"
-
-        const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
-        const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
-        const val PORT_SIDE_MEASUREMENT = KITE9_CSS_PROPERTY_PREFIX + "port-side-measurement"
 
 
     }

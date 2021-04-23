@@ -58,7 +58,21 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_61_3_MultipleLinksToPort() throws Exception {
+		Glyph one = new Glyph("Stereo", "One", null, null);
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "30px");
+		one.appendChild(oneSocket);
 
+		Glyph two = new Glyph("Stereo", "Two", null, null);
+		Glyph three = new Glyph("Stereo", "Three", null, null);
+		Glyph four = new Glyph("Stereo", "Four", null, null);
+
+		Link l4 = new Link(oneSocket, two);
+		Link l3 = new Link(oneSocket, three, null, null, null, null, Direction.RIGHT);
+		Link l5 = new Link(oneSocket, four);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(two, one, three, four), null);
+		renderDiagram(d);
 	}
 
 	@Test
@@ -96,7 +110,16 @@ public class Test61ArrivalSide extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_61_7_DirectedPortSideContradiction() throws Exception {
+		Glyph one = new Glyph("Stereo", "One", null, null);
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
 
+		Glyph two = new Glyph("Stereo", "Two", null, null);
+		ContradictingLink l4 = new ContradictingLink(oneSocket, two, null, null, null, null, Direction.LEFT);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(two, one), Layout.RIGHT, null);
+		renderDiagram(d);
 	}
 
 	@SuppressWarnings("unchecked")

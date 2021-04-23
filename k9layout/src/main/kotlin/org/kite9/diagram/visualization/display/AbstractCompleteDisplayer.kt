@@ -197,7 +197,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     private fun portPositionPixels(p: Port, d: Direction, on: Rectangular) : Double {
         val elementLength = getInternalDistance(on, d, reverse(d))
         val pxDist : Double = when {
-            p.getPortPosition().measurement == Measurement.PERCENTAGE ->  elementLength * p.getPortPosition().amount / 100
+            p.getPortPosition().type == Measurement.PERCENTAGE ->  elementLength * p.getPortPosition().amount / 100
             p.getPortPosition().amount < 0 -> elementLength + p.getPortPosition().amount
             else  -> p.getPortPosition().amount.toDouble()
         }

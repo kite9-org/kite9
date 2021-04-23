@@ -5,6 +5,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -23,7 +24,12 @@ class SegmentSlideable(
         return "<$identifier $verticesOnSlideable ${minimum.position},${maximum.position}>"
     }
 
-
+    override val ports: Set<Port> by lazy {
+        verticesOnSlideable
+            .flatMap { it.getDiagramElements() }
+            .filterIsInstance<Port>()
+            .toSet()
+    }
 
     override val underlyingInfo: Set<UnderlyingInfo> by lazy {
         dartsInSegment

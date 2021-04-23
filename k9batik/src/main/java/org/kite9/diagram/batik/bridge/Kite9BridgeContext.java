@@ -25,12 +25,10 @@ import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
-import org.kite9.diagram.model.Port;
 import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.style.ConnectionAlignment;
+import org.kite9.diagram.model.style.Placement;
 import org.kite9.diagram.model.style.Measurement;
-import org.kite9.diagram.model.style.PortPlacement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -193,14 +191,14 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@NotNull
 	@Override
-	public PortPlacement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
+	public Placement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
 		Value v = getCSSValue(prop, e);
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new PortPlacement(Measurement.PERCENTAGE, v.getFloatValue());
+			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());
 		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new PortPlacement(Measurement.PIXELS, v.getFloatValue());
+			return new Placement(Measurement.PIXELS, v.getFloatValue());
 		} else {
-			return new PortPlacement(Measurement.PERCENTAGE, 50.0F);
+			return new Placement(Measurement.PERCENTAGE, 50.0F);
 		}
 	}
 
@@ -235,16 +233,16 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 
-	public ConnectionAlignment getConnectionAlignment(String prop, Element e) {
+	public Placement getConnectionAlignment(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
 
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new ConnectionAlignment(Measurement.PERCENTAGE, v.getFloatValue());
+			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());
 		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new ConnectionAlignment(Measurement.PIXELS, v.getFloatValue());
+			return new Placement(Measurement.PIXELS, v.getFloatValue());
 		}
 
-		return ConnectionAlignment.Companion.getNONE();
+		return Placement.Companion.getNONE();
 	}
 
 	@Override

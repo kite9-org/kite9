@@ -9,7 +9,7 @@ import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.*
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.style.*
-import org.kite9.diagram.model.style.ConnectionAlignment.Companion.NONE
+import org.kite9.diagram.model.style.Placement.Companion.NONE
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -76,7 +76,7 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return 0.0
     }
 
-    override fun getConnectionAlignment(side: Direction): ConnectionAlignment {
+    override fun getConnectionAlignment(side: Direction): Placement {
         return NONE
     }
 

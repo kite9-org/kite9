@@ -7,7 +7,7 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.style.ConnectionAlignment
+import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.ConnectionsSeparation
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.Measurement
@@ -53,7 +53,7 @@ abstract class AbstractConnectedRectangular(
     private var links: Collection<Connection>? = null
     private var linkGutter = 0.0
     private var linkInset = 0.0
-    private var alignments: Array<ConnectionAlignment> = emptyArray()
+    private var alignments: Array<Placement> = emptyArray()
 
     override fun getLinks(): Collection<Connection> {
         ensureInitialized()
@@ -75,7 +75,7 @@ abstract class AbstractConnectedRectangular(
         return linkInset
     }
 
-    override fun getConnectionAlignment(d: Direction): ConnectionAlignment {
+    override fun getConnectionAlignment(d: Direction): Placement {
         ensureInitialized()
         return alignments[d.ordinal]
     }
@@ -87,7 +87,7 @@ abstract class AbstractConnectedRectangular(
         if (this is Container) {
             val portSizing = getContents()
                 .filterIsInstance<Port>()
-                .filter { it.getPortPosition().measurement == Measurement.PIXELS }
+                .filter { it.getPortPosition().type == Measurement.PIXELS }
                 .groupBy { Direction.isHorizontal(it.getPortDirection()) }
                 .mapValues {
                     it.value

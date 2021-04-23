@@ -3,11 +3,11 @@ package org.kite9.diagram.visualization.compaction.rect.second
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
 import org.kite9.diagram.visualization.compaction.Embedding
-import org.kite9.diagram.visualization.compaction.rect.second.popout.MidSideCheckingRectangularizer
+import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 
-open class NonEmbeddedFaceRectangularizer(cd: CompleteDisplayer) : MidSideCheckingRectangularizer(cd) {
+open class NonEmbeddedFaceRectangularizer(cd: CompleteDisplayer) : AligningRectangularizer(cd) {
 
     override fun compact(c: Compaction, r: Embedding, rc: Compactor) {
         log.send("NonEmbeddedFaceRectangularizer: $r")

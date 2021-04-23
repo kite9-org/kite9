@@ -18,7 +18,7 @@ import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.position.*;
-import org.kite9.diagram.model.style.ConnectionAlignment;
+import org.kite9.diagram.model.style.Placement;
 import org.kite9.diagram.testing.DiagramChecker;
 import org.kite9.diagram.testing.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.testing.DiagramChecker.ExpectedLayoutException;
@@ -200,7 +200,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isAligning(Connected v, Direction side) {
-				return (!(v instanceof Port)) && (v.getConnectionAlignment(side) != ConnectionAlignment.Companion.getNONE());
+				return (!(v instanceof Port)) && (v.getConnectionAlignment(side) != Placement.Companion.getNONE());
 			}
 
 			/**

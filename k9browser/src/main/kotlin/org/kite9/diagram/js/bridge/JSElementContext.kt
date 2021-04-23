@@ -6,8 +6,8 @@ import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
-import org.kite9.diagram.model.style.ConnectionAlignment
-import org.kite9.diagram.model.style.ConnectionAlignment.Companion.NONE
+import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.Placement.Companion.NONE
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGGraphicsElement
 import kotlin.reflect.KClass
@@ -117,7 +117,7 @@ class JSElementContext : ElementContext {
         return children.getOrElse(parent) { mutableListOf() }
     }
 
-    override fun getConnectionAlignment(prop: String, e: Element): ConnectionAlignment {
+    override fun getConnectionAlignment(prop: String, e: Element): Placement {
         val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
 
         if (s.asDynamic().value == "none") {

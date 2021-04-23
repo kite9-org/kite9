@@ -1,12 +1,10 @@
 package org.kite9.diagram.dom.bridge
 
-import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
-import org.kite9.diagram.model.style.ConnectionAlignment
-import org.kite9.diagram.model.style.PortPlacement
+import org.kite9.diagram.model.style.Placement
 import org.w3c.dom.Element
 import kotlin.reflect.KClass
 
@@ -19,8 +17,8 @@ interface ElementContext {
     fun getCssStyleStringProperty(prop: String, e: Element): String?
     fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
     fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange?
-    fun getCSSStylePlacementProperty(prop: String, e: Element): PortPlacement
-    fun getConnectionAlignment(prop: String, e: Element): ConnectionAlignment
+    fun getCSSStylePlacementProperty(prop: String, e: Element): Placement
+    fun getConnectionAlignment(prop: String, e: Element): Placement
 
     fun addChild(parent: DiagramElement, out: DiagramElement)
     fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement>

@@ -2,7 +2,7 @@ package org.kite9.diagram.model
 
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RectangleRenderingInformation
-import org.kite9.diagram.model.style.ConnectionAlignment
+import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.ConnectionsSeparation
 
 interface Connected : DiagramElement {
@@ -37,7 +37,6 @@ interface Connected : DiagramElement {
      * In the case of single connections on a side, returns how that connection
      * should meet the side.
      */
-    @Deprecated("Use ports")
-    fun getConnectionAlignment(side: Direction): ConnectionAlignment
+    fun getConnectionAlignment(side: Direction): Placement
 
 }

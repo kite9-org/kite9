@@ -4,6 +4,7 @@ import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.UnderlyingInfo
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
@@ -14,6 +15,8 @@ class BufferSlideable(
     val buffering: List<ElementSlideable>): ElementSlideable(so, dimension, so.getSize()) {
 
     override val verticesOnSlideable = emptySet<Vertex>()
+
+    override val ports = emptySet<Port>()
 
     override val underlyingInfo: Set<UnderlyingInfo> by lazy {
         buffering
