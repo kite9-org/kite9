@@ -1,11 +1,13 @@
 package org.kite9.diagram.functional;
 
+import kotlin.Pair;
 import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.style.LabelPlacement;
+import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
@@ -174,7 +176,8 @@ public class TestingEngine extends TestingHelp {
 							case UP:
 							case DOWN:
 								if (isAligning(v, connectionSide)) {
-									if (Math.abs(p2d.getX() - r2d.getCenterX()) > 1) {
+									double alignPoint = getAlignPoint(r2d.getX(), r2d.getWidth(), v, connectionSide);
+									if (Math.abs(p2d.getX() - alignPoint) > 1) {
 										if (!straightWithLayoutException(c, v)) {
 											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
@@ -184,7 +187,7 @@ public class TestingEngine extends TestingHelp {
 							case LEFT:
 							case RIGHT:
 								if (isAligning(v, connectionSide)) {
-									if (Math.abs(p2d.getY() - r2d.getCenterY()) > 1) {
+									if (Math.abs(p2d.getY() - getAlignPoint(r2d.getY(), r2d.getHeight(), v, connectionSide)) > 1) {
 										if (!straightWithLayoutException(c, v)) {
 											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
@@ -197,6 +200,12 @@ public class TestingEngine extends TestingHelp {
 
 					}
 				}
+			}
+
+			private double getAlignPoint(double s, double len, Connected v, Direction connectionSide) {
+				Placement p = v.getConnectionAlignment(connectionSide);
+				Pair<Double, Double> out = AligningRectangularizer.Companion.calculatePositionForPlacement(p, (int) len);
+				return s + out.component1();
 			}
 
 			private boolean isAligning(Connected v, Direction side) {

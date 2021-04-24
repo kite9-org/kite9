@@ -2,15 +2,11 @@ package org.kite9.diagram.visualization.compaction.rect.second.popout
 
 import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.objects.OPair
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.style.Placement
-import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction.rect.VertexTurn
 import org.kite9.diagram.visualization.compaction.rect.second.prioritised.PrioritizingRectangularizer
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
@@ -18,8 +14,6 @@ import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
-import kotlin.math.floor
-import kotlin.math.max
 
 /**
  * Does extra calculations of the [PrioritisedRectOption] to make sure that it will be
@@ -130,24 +124,6 @@ abstract class AligningRectangularizer(cd: CompleteDisplayer?) : PrioritizingRec
         addWithCheck(sso, ps, pixelsFromEnd.toInt(), extent.b!!, true)
     }
 
-    private fun calculatePositionForPlacement(
-        p: Placement,
-        totalDist: Int
-    ): Pair<Double, Double> {
-        val amount = p.amount
-
-        val pixelsFromStart = when (p.type) {
-            Measurement.PIXELS -> if (amount < 0) totalDist + amount else amount
-            else -> totalDist * amount / 100
-        }
-
-        val pixelsFromEnd = when (p.type) {
-            Measurement.PIXELS -> if (amount < 0) Math.abs(amount) else totalDist - amount
-            else -> totalDist - pixelsFromStart
-        }
-        return Pair(pixelsFromStart, pixelsFromEnd)
-    }
-
     private fun getSlideablesForStraightConnections(connectionSlideablesA: Set<ElementSlideable>) =
         connectionSlideablesA
             .filter {
@@ -188,5 +164,25 @@ abstract class AligningRectangularizer(cd: CompleteDisplayer?) : PrioritizingRec
             .toSet()
     }
 
+    companion object {
+
+        fun calculatePositionForPlacement(
+            p: Placement,
+            totalDist: Int
+        ): Pair<Double, Double> {
+            val amount = p.amount
+
+            val pixelsFromStart = when (p.type) {
+                Measurement.PIXELS -> if (amount < 0) totalDist + amount else amount
+                else -> totalDist * amount / 100
+            }
+
+            val pixelsFromEnd = when (p.type) {
+                Measurement.PIXELS -> if (amount < 0) Math.abs(amount) else totalDist - amount
+                else -> totalDist - pixelsFromStart
+            }
+            return Pair(pixelsFromStart, pixelsFromEnd)
+        }
+    }
 
 }

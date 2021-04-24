@@ -261,27 +261,37 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
         }
         val outMap: MutableMap<Direction, List<IncidentDart>> = HashMap()
         for (dir in inMap.keys) {
-            val list: List<PlanarizationEdge> = inMap[dir]!!
-            val outList: MutableList<IncidentDart> = ArrayList(inMap.size)
-            val fanBuckets = createFanBuckets(list, ti)
-            val straightCount = fanBuckets.size.toLong()
-            for (i in list.indices) {
-                val current = list[i]
-                val idx = getFanBucket(current, fanBuckets)
-                val id = convertEdgeToIncidentDart(
-                    current,
-                    cd,
-                    o,
-                    ti.getIncidentDartDirection(current),
-                    idx,
-                    from,
-                    straightCount.toInt()
-                )
-                outList.add(id)
-            }
+            val outList: List<IncidentDart> = createIncidentDarts(ti, cd, o, from, inMap[dir]!!)
             outMap[dir] = outList
         }
         return outMap
+    }
+
+    protected fun createIncidentDarts(
+        ti: TurnInformation,
+        cd: Set<DiagramElement>,
+        o: Orthogonalization,
+        from: Vertex,
+        list: List<PlanarizationEdge>
+    ): MutableList<IncidentDart> {
+        val outList = mutableListOf<IncidentDart>()
+        val fanBuckets = createFanBuckets(list, ti)
+        val straightCount = fanBuckets.size.toLong()
+        for (i in list.indices) {
+            val current = list[i]
+            val idx = getFanBucket(current, fanBuckets)
+            val id = convertEdgeToIncidentDart(
+                current,
+                cd,
+                o,
+                ti.getIncidentDartDirection(current),
+                idx,
+                from,
+                straightCount.toInt()
+            )
+            outList.add(id)
+        }
+        return outList
     }
 
     private fun getFanBucket(current: PlanarizationEdge, fanBuckets: List<Set<PlanarizationEdge>>): Int {

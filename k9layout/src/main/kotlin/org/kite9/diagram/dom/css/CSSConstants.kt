@@ -75,7 +75,6 @@ interface CSSConstants {
         const val CONNECTION_ALIGN_LEFT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + LEFT
         const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
         const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
-        const val PORT_SIDE_MEASUREMENT = KITE9_CSS_PROPERTY_PREFIX + "port-side-measurement"
 
 
         // for aligning content within a container
