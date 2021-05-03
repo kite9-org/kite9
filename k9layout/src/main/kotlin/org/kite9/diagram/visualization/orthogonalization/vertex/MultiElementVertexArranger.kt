@@ -14,8 +14,6 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
-import kotlin.math.ceil
-import kotlin.math.floor
 
 /**
  * Creates darts for edges arriving at corners or sides of a planarization.
@@ -117,11 +115,11 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
         }
     }
 
-    fun createExternalVertex(
+    private fun createPortTreeExternalVertex(
         e: PortVertex,
         list: List<PlanarizationEdge>
     ): ExternalVertex {
-        return ExternalVertex(e.getID() + "-pve" + newVertexId++, list.toSet(), setOf(e.port))
+        return ExternalVertex(e.getID() + "-pve" + newVertexId++, list.toSet(), true)
     }
 
     override fun handleEdgeBucketing(
@@ -135,7 +133,7 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
         if ((from is PortVertex) && (list.size > 1)) {
             // in this case we need to _not_ separate out elements into different side vertices.
             var sideVertex = createSideVertex(cd, from)
-            val portTreeVertex: Vertex = createExternalVertex(from, list)
+            val portTreeVertex: Vertex = createPortTreeExternalVertex(from, list)
 
             val outList = mutableListOf<IncidentDart>()
             val fanBuckets = createFanBuckets(list, ti)

@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.*;
 import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
@@ -69,7 +68,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
 		Link l4 = new Link(oneSocket, two);
-		Link l3 = new Link(oneSocket, three, null, new TextLabel("from"), null, new TextLabel("hello"), null);
+		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
 
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
 		renderDiagram(d);

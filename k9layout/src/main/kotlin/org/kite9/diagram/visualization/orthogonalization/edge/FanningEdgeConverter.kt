@@ -14,6 +14,7 @@ import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.contents.ContentsConverter
+import org.kite9.diagram.visualization.orthogonalization.vertex.ExternalVertex
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
 
 class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : LabellingEdgeConverter(cc, em) {
@@ -67,8 +68,11 @@ class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : Labelling
     }
 
     protected fun portNeedsFan(sideVertex: Vertex, e: PlanarizationEdge): Boolean {
-        return (sideVertex.getDiagramElements().filterIsInstance<Port>().isNotEmpty()) &&
-                (e.getDiagramElements().keys.filterIsInstance<Connection>().isNotEmpty())
+        if (e.getDiagramElements().keys.filterIsInstance<Connection>().isNotEmpty()) {
+            return (sideVertex is ExternalVertex) && (sideVertex.portTree)
+        } else {
+            return false
+        }
     }
 
     protected fun elementNeedsFan(incident: Direction, diagramElements: Set<DiagramElement>): Boolean {
