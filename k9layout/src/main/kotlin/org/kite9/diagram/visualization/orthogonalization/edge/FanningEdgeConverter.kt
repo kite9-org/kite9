@@ -52,14 +52,13 @@ class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : Labelling
                         FanVertex(planVertex.getID() + "-fo-" + counter, false, listOf(incident, reverse(fan)!!))
                     counter++
                     val map = createMap(e)
-                    o.createDart(externalVertex, fanOuter, map, incident)
                     o.createDart(fanOuter, sideVertex, map, reverse(fan)!!)
-                    sideVertex
+                    fanOuter
                 } else {
-                    externalVertex
+                    sideVertex
                 }
 
-                val out = super.convertPlanarizationEdge(e, o, incident, toJoin, sideVertex, planVertex, fan)
+                val out = super.convertPlanarizationEdge(e, o, incident, externalVertex, toJoin, planVertex, fan)
                 out.external = externalVertex
                 return out
             }

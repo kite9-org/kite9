@@ -67,8 +67,8 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
-		Link l4 = new Link(oneSocket, two);
-		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
+		Link l4 = new Link(oneSocket, two, null, new TextLabel("from end 2"), null, new TextLabel("to end 2"), null);
+		Link l3 = new Link(oneSocket, three, null, new TextLabel("from end"), null, new TextLabel("to end"), null);
 
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
 		renderDiagram(d);
