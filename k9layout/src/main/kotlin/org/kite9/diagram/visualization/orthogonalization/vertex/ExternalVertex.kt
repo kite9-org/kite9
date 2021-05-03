@@ -14,10 +14,10 @@ import org.kite9.diagram.model.DiagramElement
  *
  * @author robmoffat
  */
-class ExternalVertex(id: String, private val joins: PlanarizationEdge) : AbstractVertex(id), NoElementVertex {
+class ExternalVertex(id: String, private val joins: Set<PlanarizationEdge>, private val elements: Set<DiagramElement> = emptySet()) : AbstractVertex(id), NoElementVertex {
 
     override fun getDiagramElements(): Set<DiagramElement> {
-        return emptySet()
+        return elements
     }
 
     override fun isPartOf(de: DiagramElement?): Boolean {
@@ -25,6 +25,6 @@ class ExternalVertex(id: String, private val joins: PlanarizationEdge) : Abstrac
     }
 
     fun joins(e: PlanarizationEdge): Boolean {
-        return e === joins
+        return joins.contains(e)
     }
 }

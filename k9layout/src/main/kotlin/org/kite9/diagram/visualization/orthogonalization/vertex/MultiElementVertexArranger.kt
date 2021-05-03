@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.orthogonalization.vertex
 
+import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.*
 import org.kite9.diagram.common.objects.OPair
@@ -13,6 +14,8 @@ import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
+import kotlin.math.ceil
+import kotlin.math.floor
 
 /**
  * Creates darts for edges arriving at corners or sides of a planarization.
@@ -63,18 +66,20 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
         val outDirection = b.arrivalSide
         if (inDirection === outDirection) {
             // single side
-            var sideDirection: Direction? = rotateClockwise(inDirection)
-            val aUnderlying = (a.dueTo as BorderEdge).getDiagramElements() as Map<DiagramElement, Direction>
-            val bUnderlying = (b.dueTo as BorderEdge).getDiagramElements() as Map<DiagramElement, Direction>
-            if (aUnderlying != bUnderlying || aUnderlying == null) {
-                throw LogicException()
+            if (a.internal != b.internal) {
+                var sideDirection: Direction? = rotateClockwise(inDirection)
+                val aUnderlying = (a.dueTo as BorderEdge).getDiagramElements() as Map<DiagramElement, Direction>
+                val bUnderlying = (b.dueTo as BorderEdge).getDiagramElements() as Map<DiagramElement, Direction>
+                if (aUnderlying != bUnderlying || aUnderlying == null) {
+                    throw LogicException()
+                }
+                var dartsToUse = map[sideDirection]!!
+                if (dartsToUse.size == 0) {
+                    sideDirection = reverse(sideDirection)
+                    dartsToUse = map[sideDirection]!!
+                }
+                createSide(a.internal, b.internal, dartsToUse, o, inDirection, aUnderlying)
             }
-            var dartsToUse = map[sideDirection]!!
-            if (dartsToUse.size == 0) {
-                sideDirection = reverse(sideDirection)
-                dartsToUse = map[sideDirection]!!
-            }
-            createSide(a.internal, b.internal, dartsToUse, o, inDirection, aUnderlying)
         } else {
             val midPoint: Vertex = DartJunctionVertex("mcv-" + newVertexId++, v.getDiagramElements())
             val aSide = reverse(outDirection)
@@ -109,6 +114,65 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
             OPair(to, from)
         } else {
             throw LogicException()
+        }
+    }
+
+    fun createExternalVertex(
+        e: PortVertex,
+        list: List<PlanarizationEdge>
+    ): ExternalVertex {
+        return ExternalVertex(e.getID() + "-pve" + newVertexId++, list.toSet(), setOf(e.port))
+    }
+
+    override fun handleEdgeBucketing(
+        ti: TurnInformation,
+        cd: Set<DiagramElement>,
+        o: Orthogonalization,
+        from: Vertex,
+        list: List<PlanarizationEdge>
+    ): List<IncidentDart> {
+        var incidentDirection : Direction = Direction.DOWN
+        if ((from is PortVertex) && (list.size > 1)) {
+            // in this case we need to _not_ separate out elements into different side vertices.
+            var sideVertex = createSideVertex(cd, from)
+            val portTreeVertex: Vertex = createExternalVertex(from, list)
+
+            val outList = mutableListOf<IncidentDart>()
+            val fanBuckets = createFanBuckets(list, ti)
+            val straightCount = fanBuckets.size.toLong()
+            for (i in list.indices) {
+                val current = list[i]
+                incidentDirection = ti.getIncidentDartDirection(current)
+                val idx = getFanBucket(current, fanBuckets)
+                val id = convertEdgeToIncidentDart(
+                    current,
+                    o,
+                    incidentDirection,
+                    idx,
+                    from,
+                    straightCount.toInt(),
+                    portTreeVertex,
+                    createExternalVertex(current, from)
+                )
+
+                outList.add(id)
+            }
+
+            // join the portTree to the side
+            o.createDart(portTreeVertex, sideVertex,
+                list
+                    .flatMap { it.getDiagramElements().keys }
+                    .map { it to null}
+                    .toMap(),
+                incidentDirection
+            )
+
+            // rewrite incident darts using side
+            return outList.map {
+                IncidentDart(it.external, sideVertex, it.arrivalSide, it.dueTo)
+            }
+        } else {
+            return super.handleEdgeBucketing(ti, cd, o, from, list)
         }
     }
 }

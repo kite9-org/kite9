@@ -115,7 +115,7 @@ abstract class AbstractVertexArranger(protected var em: ElementMapper) : VertexA
         e: PlanarizationEdge?,
         end: Vertex
     ): ExternalVertex {
-        return ExternalVertex(end.getID() + "-ve" + newVertexId++, e!!)
+        return ExternalVertex(end.getID() + "-ve" + newVertexId++, setOf(e!!))
     }
 
     companion object {

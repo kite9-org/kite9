@@ -97,9 +97,9 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
         }
     }
 
-    protected fun setupBoundariesFromIncidentDarts(dartOrdering: List<IncidentDart?>, v: Vertex) {
+    protected fun setupBoundariesFromIncidentDarts(dartOrdering: List<IncidentDart>, v: Vertex) {
         val externalVertices : Set<Vertex> = dartOrdering
-            .map { id: IncidentDart? -> id!!.external }
+            .map { id  -> id.external }
             .toSet()
         setupBoundaries(externalVertices, v)
     }
@@ -108,17 +108,16 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
      * Creates a dart or darts that arrives at the vertex.  Where more than one dart is created, return just the dart hitting
      * the vertex.
      */
-    private fun convertEdgeToIncidentDart(
+    protected fun convertEdgeToIncidentDart(
         e: PlanarizationEdge,
-        cd: Set<DiagramElement>,
         o: Orthogonalization,
         incident: Direction,
         idx: Int,
         und: Vertex,
-        straightCount: Int
+        straightCount: Int,
+        sideVertex: Vertex,
+        externalVertex: Vertex
     ): IncidentDart {
-        val sideVertex = createSideVertex(cd, und)
-        val externalVertex: Vertex = createExternalVertex(e, und)
         var fan: Direction? = null
         if (idx != -1 && straightCount > 1) {
             val lowerOrders = rotateClockwise(
@@ -134,7 +133,7 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
         return ec.convertPlanarizationEdge(e!!, o!!, incident!!, externalVertex, sideVertex, und, fan)
     }
 
-    private fun createSideVertex(
+    protected fun createSideVertex(
         cd: Set<DiagramElement>,
         und: Vertex
     ): Vertex {
@@ -261,40 +260,47 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
         }
         val outMap: MutableMap<Direction, List<IncidentDart>> = HashMap()
         for (dir in inMap.keys) {
-            val outList: List<IncidentDart> = createIncidentDarts(ti, cd, o, from, inMap[dir]!!)
+            val outList: List<IncidentDart> = handleEdgeBucketing(ti, cd, o, from, inMap[dir]!!)
             outMap[dir] = outList
         }
         return outMap
     }
 
-    protected fun createIncidentDarts(
+    protected open fun handleEdgeBucketing(
         ti: TurnInformation,
         cd: Set<DiagramElement>,
         o: Orthogonalization,
         from: Vertex,
         list: List<PlanarizationEdge>
-    ): MutableList<IncidentDart> {
+    ): List<IncidentDart> {
         val outList = mutableListOf<IncidentDart>()
         val fanBuckets = createFanBuckets(list, ti)
         val straightCount = fanBuckets.size.toLong()
         for (i in list.indices) {
             val current = list[i]
             val idx = getFanBucket(current, fanBuckets)
+            var sideVertex = createSideVertex(cd, from)
+            val externalVertex = createExternalVertex(current, from)
+
             val id = convertEdgeToIncidentDart(
                 current,
-                cd,
                 o,
                 ti.getIncidentDartDirection(current),
                 idx,
                 from,
-                straightCount.toInt()
+                straightCount.toInt(),
+                sideVertex,
+                externalVertex
             )
-            outList.add(id)
+
+            if (id != null) {
+                outList.add(id)
+            }
         }
         return outList
     }
 
-    private fun getFanBucket(current: PlanarizationEdge, fanBuckets: List<Set<PlanarizationEdge>>): Int {
+    protected fun getFanBucket(current: PlanarizationEdge, fanBuckets: List<Set<PlanarizationEdge>>): Int {
         for (i in fanBuckets.indices) {
             if (fanBuckets[i].contains(current)) {
                 return i
@@ -307,7 +313,7 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
      * Arranges the [PlanarizationEdge]s into buckets of same destination.   All elements to same destination
      * will get the same fan-style.
      */
-    private fun createFanBuckets(inEdges: List<PlanarizationEdge>, ti: TurnInformation): List<Set<PlanarizationEdge>> {
+    protected fun createFanBuckets(inEdges: List<PlanarizationEdge>, ti: TurnInformation): List<Set<PlanarizationEdge>> {
         val out: MutableList<Set<PlanarizationEdge>> = ArrayList()
         var currentSet: MutableSet<PlanarizationEdge> = HashSet()
         var last: PlanarizationEdge? = null
@@ -340,15 +346,14 @@ open class ConnectedVertexArranger(em: ElementMapper) : AbstractVertexArranger(e
     ): List<Dart> {
         val out: MutableList<Dart> = ArrayList()
         var last = from
-        var incidentDart: IncidentDart? = null
-        if (onSide != null) {
-            for (j in onSide.indices) {
-                incidentDart = onSide[j]
-                val vsv = incidentDart!!.internal
-                out.addAll(ec.buildDartsBetweenVertices(underlyings, o!!, last!!, vsv, goingIn!!))
-                last = vsv
+
+        onSide
+            .map { it.internal }
+            .distinct()
+            .forEach {
+                out.addAll(ec.buildDartsBetweenVertices(underlyings, o, last, it, goingIn))
+                last = it
             }
-        }
 
         // finally, join to corner
         out.addAll(ec.buildDartsBetweenVertices(underlyings, o!!, last!!, to!!, goingIn!!))

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.*;
 import org.kite9.diagram.dom.css.CSSConstants;
+import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
@@ -67,18 +68,39 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
-//		Glyph four = createGlyph("Four");
-//		Glyph five = createGlyph("Five");
-
-//		Context i1 = new Context("i1", Arrays.asList( two, three, four, five ), true, null, Layout.DOWN);
-
 		Link l4 = new Link(oneSocket, two);
-		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
-//		Link l5 = new Link(oneSocket, four);
-//		Link l6 = new Link(one, five);
+		Link l3 = new Link(oneSocket, three, null, new TextLabel("from"), null, new TextLabel("hello"), null);
 
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
 		renderDiagram(d);
+	}
+
+	@Test
+	public void test_61_8_MultipleUndirectedLinksToPort2() throws Exception {
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "30px");
+		one.appendChild(oneSocket);
+
+		Glyph two = createGlyph("Two");
+		Glyph three = createGlyph("Three");
+		Glyph four = createGlyph("Four");
+		Glyph five = createGlyph("Five");
+
+		Context i1 = new Context("i1", Arrays.asList( two, three, four, five ), true, null, Layout.DOWN);
+
+		Link l4 = new Link(oneSocket, two);
+		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
+		Link l5 = new Link(oneSocket, four);
+		Link l6 = new Link(one, five);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
+		renderDiagram(d);
+	}
+
+	@Test
+	public void test61_8_PortFanningWithLabels() throws Exception{
+
 	}
 
 	@Test
