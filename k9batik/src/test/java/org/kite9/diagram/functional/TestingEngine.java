@@ -630,12 +630,12 @@ public class TestingEngine extends TestingHelp {
 			private boolean isChildOf(DiagramElement de, DiagramElement p) {
 				if (p instanceof Container) {
 					if (de instanceof Rectangular) {
-						if (((Rectangular) de).getContainer() == p) {
+						if (((Container) p).getContents().contains(de)) {
 							return true;
-						} else if (((Rectangular) de).getContainer() == null) {
+						} else if (de.getContainer() == null) {
 							return false;
 						} else {
-							return isChildOf(((Rectangular) de).getContainer(), p);
+							return isChildOf(de.getContainer(), p);
 						}
 					} else {
 						return false;

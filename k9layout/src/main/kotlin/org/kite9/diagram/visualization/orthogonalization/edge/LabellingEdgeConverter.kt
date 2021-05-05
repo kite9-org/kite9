@@ -8,10 +8,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.dom.model.LayoutAligns
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Label
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
@@ -172,13 +169,21 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
     @Deprecated("")
     private fun handleLabelContainment(c: Connection, l: Label) {
         if (c.getFromLabel() === l) {
-            val cc = c.getFrom().getContainer()
-            cc!!.getContents().add(l)
+            val cc = getContainer(c.getFrom())
+            cc.getContents().add(l)
         } else if (c.getToLabel() === l) {
-            val cc = c.getTo().getContainer()
-            cc!!.getContents().add(l)
+            val cc = getContainer(c.getTo())
+            cc.getContents().add(l)
         } else {
             throw LogicException()
+        }
+    }
+
+    fun getContainer(c: Connected) : Container {
+        if (c is Port) {
+            return c.getContainer()!!.getContainer()!!
+        } else {
+            return c.getContainer()!!
         }
     }
 

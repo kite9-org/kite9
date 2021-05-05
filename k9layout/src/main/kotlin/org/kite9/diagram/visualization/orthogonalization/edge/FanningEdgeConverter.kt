@@ -46,32 +46,9 @@ class FanningEdgeConverter(cc: ContentsConverter, em: ElementMapper) : Labelling
                     out.external = externalVertex
                     return out
                 }
-            } else if (portNeedsFan(sideVertex, e)) {
-                val toJoin = if (fan != null) {
-                    val fanOuter: Vertex =
-                        FanVertex(planVertex.getID() + "-fo-" + counter, false, listOf(incident, reverse(fan)!!))
-                    counter++
-                    val map = createMap(e)
-                    o.createDart(fanOuter, sideVertex, map, reverse(fan)!!)
-                    fanOuter
-                } else {
-                    sideVertex
-                }
-
-                val out = super.convertPlanarizationEdge(e, o, incident, externalVertex, toJoin, planVertex, fan)
-                out.external = externalVertex
-                return out
             }
         }
         return super.convertPlanarizationEdge(e, o, incident, externalVertex, sideVertex, planVertex, null)
-    }
-
-    protected fun portNeedsFan(sideVertex: Vertex, e: PlanarizationEdge): Boolean {
-        if (e.getDiagramElements().keys.filterIsInstance<Connection>().isNotEmpty()) {
-            return (sideVertex is ExternalVertex) && (sideVertex.portTree)
-        } else {
-            return false
-        }
     }
 
     protected fun elementNeedsFan(incident: Direction, diagramElements: Set<DiagramElement>): Boolean {
