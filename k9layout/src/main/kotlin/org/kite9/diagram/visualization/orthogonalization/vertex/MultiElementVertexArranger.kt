@@ -136,24 +136,44 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
             val portTreeVertex: Vertex = createPortTreeExternalVertex(from, list)
 
             val outList = mutableListOf<IncidentDart>()
-            val fanBuckets = createFanBuckets(list, ti)
-            val straightCount = fanBuckets.size.toLong()
+            var lastStartVertex : Vertex? = null
+            val midPoint : Float = (list.size - 1.0f) / 2.0f
             for (i in list.indices) {
                 val current = list[i]
                 incidentDirection = ti.getIncidentDartDirection(current)
-                val idx = getFanBucket(current, fanBuckets)
-                val id = convertEdgeToIncidentDart(
-                    current,
-                    o,
-                    incidentDirection,
-                    idx,
-                    from,
-                    straightCount.toInt(),
-                    portTreeVertex,
-                    createExternalVertex(current, from)
-                )
+                var startVertex = if (i.toFloat() == midPoint) portTreeVertex else createExternalVertex(current, from)
+                var id = ec.convertPlanarizationEdge(current, o, incidentDirection, createExternalVertex(current, from), startVertex, from, null)
 
                 outList.add(id)
+
+                if (lastStartVertex != null) {
+                    val subList = if ( i <= midPoint) {
+                        list.subList(0, i)
+                    } else {
+                        list.subList(i, list.size)
+                    }
+
+                    val underlyings = subList
+                        .flatMap { it.getDiagramElements().keys }
+                        .map { it to null }
+                        .toMap()
+
+                    o.createDart(lastStartVertex, startVertex, underlyings, Direction.rotateAntiClockwise(incidentDirection))
+                }
+
+                lastStartVertex = startVertex
+
+                if ((i < midPoint) && (i + 1 > midPoint)) {
+                    // join fork up with portTreeVertex
+                    val subList = list.subList(0, i+1)
+                    val underlyings = subList
+                        .flatMap { it.getDiagramElements().keys }
+                        .map { it to null }
+                        .toMap()
+
+                    o.createDart(startVertex, portTreeVertex, underlyings, Direction.rotateAntiClockwise(incidentDirection))
+                    lastStartVertex = portTreeVertex
+                }
             }
 
             // join the portTree to the side

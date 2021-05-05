@@ -30,4 +30,10 @@ data class ExternalVertex(val id: String,
     fun joins(e: PlanarizationEdge): Boolean {
         return joins.contains(e)
     }
+
+    override fun toString(): String {
+        return "ExternalVertex(id='$id', portTree=$portTree)"
+    }
+
+
 }
